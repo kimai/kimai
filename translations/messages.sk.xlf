@@ -526,65 +526,13 @@
         <source>stats.durationTotal</source>
         <target>Celkový pracovný čas</target>
       </trans-unit>
-      <trans-unit id="023M9Ta" resname="stats.amountToday">
-        <source>stats.amountToday</source>
-        <target>Príjmy dnes</target>
-      </trans-unit>
-      <trans-unit id="xnJvYAE" resname="stats.amountWeek">
-        <source>stats.amountWeek</source>
-        <target>Príjmy tento týždeň</target>
-      </trans-unit>
-      <trans-unit id="ulr3reE" resname="stats.amountMonth">
-        <source>stats.amountMonth</source>
-        <target>Príjmy tento mesiac</target>
-      </trans-unit>
-      <trans-unit id="bQZyZaO" resname="stats.amountYear">
-        <source>stats.amountYear</source>
-        <target>Príjmy tento rok</target>
-      </trans-unit>
       <trans-unit id="Z0fz23v" resname="stats.amountTotal">
         <source>stats.amountTotal</source>
         <target>Celkové príjmy</target>
       </trans-unit>
-      <trans-unit id="HzICegM" resname="stats.activeUsersToday">
-        <source>stats.activeUsersToday</source>
-        <target>Aktívni používatelia dnes</target>
-      </trans-unit>
-      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek">
-        <source>stats.activeUsersWeek</source>
-        <target>Aktívni používatelia týždeň</target>
-      </trans-unit>
-      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth">
-        <source>stats.activeUsersMonth</source>
-        <target>Aktívni používatelia mesiac</target>
-      </trans-unit>
-      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
-        <source>stats.activeUsersYear</source>
-        <target>Aktívni používatelia rok</target>
-      </trans-unit>
-      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">
-        <source>stats.activeUsersTotal</source>
-        <target>Aktívni používatelia</target>
-      </trans-unit>
       <trans-unit id="lEW82ex" resname="stats.activeRecordings">
         <source>stats.activeRecordings</source>
         <target>Aktívne záznamy</target>
-      </trans-unit>
-      <trans-unit id="t5eIWp8" resname="stats.userTotal">
-        <source>stats.userTotal</source>
-        <target>Počet používateľov</target>
-      </trans-unit>
-      <trans-unit id="Bor.76M" resname="stats.activityTotal">
-        <source>stats.activityTotal</source>
-        <target>Počet aktivít</target>
-      </trans-unit>
-      <trans-unit id="67uSaR3" resname="stats.projectTotal">
-        <source>stats.projectTotal</source>
-        <target>Počet projektov</target>
-      </trans-unit>
-      <trans-unit id="tnD6aPj" resname="stats.customerTotal">
-        <source>stats.customerTotal</source>
-        <target>Počet zákazníkov</target>
       </trans-unit>
       <trans-unit id="unC5MXv" resname="stats.percentUsed">
         <source>stats.percentUsed</source>
@@ -1014,10 +962,6 @@
         <source>stats.amountFinancialYear</source>
         <target state="translated">Obrat tento finančný rok</target>
       </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target state="translated">Aktívny užívatelia tento finančny rok</target>
-      </trans-unit>
       <trans-unit id="Uvo1CbP" resname="status.pending">
         <source>status.pending</source>
         <target state="translated">Prebieh</target>
@@ -1045,10 +989,6 @@
       <trans-unit id="mjKOAgQ" resname="skin.light">
         <source>skin.light</source>
         <target state="translated">Svetlá</target>
-      </trans-unit>
-      <trans-unit id="BjyLITj" resname="stats.userDurationYear">
-        <source>stats.userDurationYear</source>
-        <target state="translated">Moje pracovné hodiny tento rok</target>
       </trans-unit>
       <trans-unit id="L27KvC9" resname="includeNoWork">
         <source>includeNoWork</source>
@@ -1089,18 +1029,6 @@
       <trans-unit id="On18MKP" resname="plugin.installed">
         <source>plugin.installed</source>
         <target state="translated">Nainštalované doplnky</target>
-      </trans-unit>
-      <trans-unit id="EI5gPkp" resname="stats.userDurationToday">
-        <source>stats.userDurationToday</source>
-        <target state="translated">Moje dnešné pracovné hodiny</target>
-      </trans-unit>
-      <trans-unit id="0WpgaGa" resname="stats.userDurationMonth">
-        <source>stats.userDurationMonth</source>
-        <target state="translated">Moje pracovné hodiny tento mesiac</target>
-      </trans-unit>
-      <trans-unit id="EedlgkM" resname="stats.userDurationTotal">
-        <source>stats.userDurationTotal</source>
-        <target state="translated">Moje pracovné hodiny celkovo</target>
       </trans-unit>
       <trans-unit id="9jlbhkf" resname="stats.userAmountTotal">
         <source>stats.userAmountTotal</source>
@@ -1149,10 +1077,6 @@
       <trans-unit id="BrOQ92O" resname="notifications.denied">
         <source>You have rejected notifications. Please refer to your web-browser documentation to find out how to turn them on.</source>
         <target state="translated">Odmietli ste používanie notifikácií. Prosím, skontrolujte dokumentáciu vášho webového prehliadača ako notifikácie povoliť.</target>
-      </trans-unit>
-      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek">
-        <source>stats.userDurationWeek</source>
-        <target state="translated">Moje pracovné hodiny tento týždeň</target>
       </trans-unit>
       <trans-unit id="xvdsZsS" resname="stats.userAmountYear">
         <source>stats.userAmountYear</source>

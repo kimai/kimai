@@ -17,7 +17,6 @@ class SystemConfigurationFactory
 {
     /**
      * @param array<mixed> $settings
-     * @return SystemConfiguration
      */
     public static function create(ConfigLoaderInterface $repository, array $settings): SystemConfiguration
     {
@@ -26,7 +25,6 @@ class SystemConfigurationFactory
 
     /**
      * @param array<mixed> $settings
-     * @return SystemConfiguration
      */
     public static function createStub(array $settings = []): SystemConfiguration
     {

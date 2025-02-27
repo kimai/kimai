@@ -16,7 +16,6 @@ use App\Entity\User;
 use App\Model\Statistic\Day;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\DateTimeFactory;
-use App\Widget\WidgetInterface;
 use DateTime;
 use DateTimeInterface;
 
@@ -27,16 +26,6 @@ final class DailyWorkingTimeChart extends AbstractWidget
 {
     public function __construct(private readonly TimesheetRepository $repository)
     {
-    }
-
-    public function getWidth(): int
-    {
-        return WidgetInterface::WIDTH_FULL;
-    }
-
-    public function getHeight(): int
-    {
-        return WidgetInterface::HEIGHT_LARGE;
     }
 
     public function getPermissions(): array

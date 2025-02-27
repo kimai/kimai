@@ -458,65 +458,13 @@
         <source>stats.yourWorkingHours</source>
         <target state="translated">근무시간</target>
       </trans-unit>
-      <trans-unit id="023M9Ta" resname="stats.amountToday">
-        <source>stats.amountToday</source>
-        <target state="translated">오늘 수익</target>
-      </trans-unit>
-      <trans-unit id="xnJvYAE" resname="stats.amountWeek">
-        <source>stats.amountWeek</source>
-        <target state="translated">이번 주 수익</target>
-      </trans-unit>
-      <trans-unit id="ulr3reE" resname="stats.amountMonth">
-        <source>stats.amountMonth</source>
-        <target state="translated">이번 달 수익</target>
-      </trans-unit>
-      <trans-unit id="bQZyZaO" resname="stats.amountYear">
-        <source>stats.amountYear</source>
-        <target state="translated">올해 수익</target>
-      </trans-unit>
       <trans-unit id="Z0fz23v" resname="stats.amountTotal">
         <source>stats.amountTotal</source>
         <target state="translated">총 수익</target>
       </trans-unit>
-      <trans-unit id="HzICegM" resname="stats.activeUsersToday">
-        <source>stats.activeUsersToday</source>
-        <target state="translated">오늘 활성화 사용자</target>
-      </trans-unit>
-      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek">
-        <source>stats.activeUsersWeek</source>
-        <target state="translated">이번 주 활성화 사용자</target>
-      </trans-unit>
-      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth">
-        <source>stats.activeUsersMonth</source>
-        <target state="translated">이번 달 활성화 사용자</target>
-      </trans-unit>
-      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
-        <source>stats.activeUsersYear</source>
-        <target state="translated">올해 활성화 사용자</target>
-      </trans-unit>
-      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">
-        <source>stats.activeUsersTotal</source>
-        <target state="translated">항시 활성화 사용자</target>
-      </trans-unit>
       <trans-unit id="lEW82ex" resname="stats.activeRecordings">
         <source>stats.activeRecordings</source>
         <target state="translated">활성화 기록</target>
-      </trans-unit>
-      <trans-unit id="t5eIWp8" resname="stats.userTotal">
-        <source>stats.userTotal</source>
-        <target state="translated">사용자 합계</target>
-      </trans-unit>
-      <trans-unit id="Bor.76M" resname="stats.activityTotal">
-        <source>stats.activityTotal</source>
-        <target state="translated">활동 합계</target>
-      </trans-unit>
-      <trans-unit id="67uSaR3" resname="stats.projectTotal">
-        <source>stats.projectTotal</source>
-        <target state="translated">프로젝트 합계</target>
-      </trans-unit>
-      <trans-unit id="tnD6aPj" resname="stats.customerTotal">
-        <source>stats.customerTotal</source>
-        <target state="translated">총 고객수</target>
       </trans-unit>
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
@@ -985,10 +933,6 @@
       <trans-unit id="jdbtx6z" resname="action.add">
         <source>action.add</source>
         <target>첨부</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>이번 회계연도 활성화 사용자</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>

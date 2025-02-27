@@ -462,65 +462,13 @@
         <source>stats.yourWorkingHours</source>
         <target>Moje hodiny</target>
       </trans-unit>
-      <trans-unit id="023M9Ta" resname="stats.amountToday">
-        <source>stats.amountToday</source>
-        <target>Příjem dnes</target>
-      </trans-unit>
-      <trans-unit id="xnJvYAE" resname="stats.amountWeek">
-        <source>stats.amountWeek</source>
-        <target>Příjem tento týden</target>
-      </trans-unit>
-      <trans-unit id="ulr3reE" resname="stats.amountMonth">
-        <source>stats.amountMonth</source>
-        <target>Příjem tento měsíc</target>
-      </trans-unit>
-      <trans-unit id="bQZyZaO" resname="stats.amountYear">
-        <source>stats.amountYear</source>
-        <target>Přjem tento rok</target>
-      </trans-unit>
       <trans-unit id="Z0fz23v" resname="stats.amountTotal">
         <source>stats.amountTotal</source>
         <target>Celkový příjem</target>
       </trans-unit>
-      <trans-unit id="HzICegM" resname="stats.activeUsersToday">
-        <source>stats.activeUsersToday</source>
-        <target>Aktivní uživatelé dnes</target>
-      </trans-unit>
-      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek">
-        <source>stats.activeUsersWeek</source>
-        <target>Aktivní uživatelé tento týden</target>
-      </trans-unit>
-      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth">
-        <source>stats.activeUsersMonth</source>
-        <target>Aktivní uživatelé tento měsíc</target>
-      </trans-unit>
-      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
-        <source>stats.activeUsersYear</source>
-        <target>Aktivní uživatelé tento rok</target>
-      </trans-unit>
-      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">
-        <source>stats.activeUsersTotal</source>
-        <target>Aktivní uživatelé celkem</target>
-      </trans-unit>
       <trans-unit id="lEW82ex" resname="stats.activeRecordings">
         <source>stats.activeRecordings</source>
         <target>Aktivní evidence</target>
-      </trans-unit>
-      <trans-unit id="t5eIWp8" resname="stats.userTotal">
-        <source>stats.userTotal</source>
-        <target state="translated">Uživatelé</target>
-      </trans-unit>
-      <trans-unit id="Bor.76M" resname="stats.activityTotal">
-        <source>stats.activityTotal</source>
-        <target>Činnosti</target>
-      </trans-unit>
-      <trans-unit id="67uSaR3" resname="stats.projectTotal">
-        <source>stats.projectTotal</source>
-        <target>Projekty</target>
-      </trans-unit>
-      <trans-unit id="tnD6aPj" resname="stats.customerTotal">
-        <source>stats.customerTotal</source>
-        <target>Zákazníci</target>
       </trans-unit>
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
@@ -978,10 +926,6 @@
         <source>stats.durationFinancialYear</source>
         <target>Pracovní doba tento finanční rok</target>
       </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>Aktivní uživatelé tento finanční rok</target>
-      </trans-unit>
       <trans-unit id="crrlEUA" resname="preview.skipped_rows">
         <source>preview.skipped_rows</source>
         <target>Přeskočen náhled %rows% dalších řádků…</target>
@@ -1190,14 +1134,6 @@
         <source>login.2fa_intro</source>
         <target state="translated">Pro dokončení procesu přihlášení zadejte potvrzovací kód.</target>
       </trans-unit>
-      <trans-unit id="EI5gPkp" resname="stats.userDurationToday">
-        <source>stats.userDurationToday</source>
-        <target state="translated">Mé dnešní pracovní hodiny</target>
-      </trans-unit>
-      <trans-unit id="EedlgkM" resname="stats.userDurationTotal">
-        <source>stats.userDurationTotal</source>
-        <target state="translated">Mé pracovní hodiny celkem</target>
-      </trans-unit>
       <trans-unit id="t.jgy7A" resname="all_invoices">
         <source>all_invoices</source>
         <target state="translated">Historie faktur</target>
@@ -1241,10 +1177,6 @@
       <trans-unit id="nqEYrfk" resname="security.unlock.intro">
         <source>security.unlock.intro</source>
         <target state="translated">Pro plný přístup zadejte své heslo</target>
-      </trans-unit>
-      <trans-unit id="0WpgaGa" resname="stats.userDurationMonth">
-        <source>stats.userDurationMonth</source>
-        <target state="translated">Mé pracovní hodiny tento měsíc</target>
       </trans-unit>
       <trans-unit id="1MfS6X5" resname="remove_filter">
         <source>remove_filter</source>
@@ -1317,14 +1249,6 @@
       <trans-unit id="0Hhg4zQ" resname="system_account.help">
         <source>system_account.help</source>
         <target state="translated">Bude skrytý v záznamech a rozevíracích nabídkách</target>
-      </trans-unit>
-      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek">
-        <source>stats.userDurationWeek</source>
-        <target state="translated">Mé pracovní hodiny tento týden</target>
-      </trans-unit>
-      <trans-unit id="BjyLITj" resname="stats.userDurationYear">
-        <source>stats.userDurationYear</source>
-        <target state="translated">Mé pracovní hodiny v tomto roce</target>
       </trans-unit>
       <trans-unit id="xvdsZsS" resname="stats.userAmountYear">
         <source>stats.userAmountYear</source>

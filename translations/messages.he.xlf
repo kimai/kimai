@@ -566,65 +566,13 @@
         <source>stats.yourWorkingHours</source>
         <target>שעות העבודה שלי</target>
       </trans-unit>
-      <trans-unit id="023M9Ta" resname="stats.amountToday">
-        <source>stats.amountToday</source>
-        <target>הכנסות היום</target>
-      </trans-unit>
-      <trans-unit id="xnJvYAE" resname="stats.amountWeek">
-        <source>stats.amountWeek</source>
-        <target>הכנסות השבוע</target>
-      </trans-unit>
-      <trans-unit id="ulr3reE" resname="stats.amountMonth">
-        <source>stats.amountMonth</source>
-        <target>הכנסות החודש</target>
-      </trans-unit>
-      <trans-unit id="bQZyZaO" resname="stats.amountYear">
-        <source>stats.amountYear</source>
-        <target>הכנסות השנה</target>
-      </trans-unit>
       <trans-unit id="Z0fz23v" resname="stats.amountTotal">
         <source>stats.amountTotal</source>
         <target>סך ההכנסות</target>
       </trans-unit>
-      <trans-unit id="HzICegM" resname="stats.activeUsersToday">
-        <source>stats.activeUsersToday</source>
-        <target>משתמשים פעילים היום</target>
-      </trans-unit>
-      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek">
-        <source>stats.activeUsersWeek</source>
-        <target>משתמשים פעילים השבוע</target>
-      </trans-unit>
-      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth">
-        <source>stats.activeUsersMonth</source>
-        <target>משתמשים פעילים החודש</target>
-      </trans-unit>
-      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
-        <source>stats.activeUsersYear</source>
-        <target>משתמשים פעילים השנה</target>
-      </trans-unit>
-      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">
-        <source>stats.activeUsersTotal</source>
-        <target>משתמשים פעילים אי פעם</target>
-      </trans-unit>
       <trans-unit id="lEW82ex" resname="stats.activeRecordings">
         <source>stats.activeRecordings</source>
         <target>רשומות פעילות</target>
-      </trans-unit>
-      <trans-unit id="t5eIWp8" resname="stats.userTotal">
-        <source>stats.userTotal</source>
-        <target>משתמשים</target>
-      </trans-unit>
-      <trans-unit id="Bor.76M" resname="stats.activityTotal">
-        <source>stats.activityTotal</source>
-        <target>פעילויות</target>
-      </trans-unit>
-      <trans-unit id="67uSaR3" resname="stats.projectTotal">
-        <source>stats.projectTotal</source>
-        <target>מיזמים</target>
-      </trans-unit>
-      <trans-unit id="tnD6aPj" resname="stats.customerTotal">
-        <source>stats.customerTotal</source>
-        <target>לקוחות</target>
       </trans-unit>
       <trans-unit id="unC5MXv" resname="stats.percentUsed">
         <source>stats.percentUsed</source>
@@ -926,10 +874,6 @@
         <source>invoice.payment_date</source>
         <target>תאריך תשלום</target>
       </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>משתמשים פעילים בשנה הפיננסית הזאת</target>
-      </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
         <source>stats.amountFinancialYear</source>
         <target>הכנסות בשנה הפיננסית הזאת</target>
@@ -1198,14 +1142,6 @@
         <source>profile.2fa_intro</source>
         <target state="final">אפשר להפעיל מכשיר חדש על ידי סריקת התמונה ביישומון שלך.</target>
       </trans-unit>
-      <trans-unit id="BjyLITj" resname="stats.userDurationYear">
-        <source>stats.userDurationYear</source>
-        <target state="translated">שעות העבודה שלי השנה</target>
-      </trans-unit>
-      <trans-unit id="0WpgaGa" resname="stats.userDurationMonth">
-        <source>stats.userDurationMonth</source>
-        <target state="translated">שעות העבודה שלי החודש</target>
-      </trans-unit>
       <trans-unit id="FeFBn_3" resname="profile.2fa" xml:space="preserve" approved="yes">
         <source>profile.2fa</source>
         <target state="final">דו־שלבי (2FA)</target>
@@ -1213,14 +1149,6 @@
       <trans-unit id="Y0PRG9Z" resname="profile.2fa_confirmation" xml:space="preserve" approved="yes">
         <source>profile.2fa_confirmation</source>
         <target state="final">נא לאשר את הקוד שיפעיל את האימות הדו־שלבי לחשבון הזה.</target>
-      </trans-unit>
-      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek">
-        <source>stats.userDurationWeek</source>
-        <target state="translated">שעות העבודה שלי השבוע</target>
-      </trans-unit>
-      <trans-unit id="EedlgkM" resname="stats.userDurationTotal">
-        <source>stats.userDurationTotal</source>
-        <target state="translated">שעות העבודה שלי בסך הכול</target>
       </trans-unit>
       <trans-unit id="t.jgy7A" resname="all_invoices">
         <source>all_invoices</source>
@@ -1337,10 +1265,6 @@
       <trans-unit id="On18MKP" resname="plugin.installed">
         <source>plugin.installed</source>
         <target state="translated">תוספים מותקנים</target>
-      </trans-unit>
-      <trans-unit id="EI5gPkp" resname="stats.userDurationToday">
-        <source>stats.userDurationToday</source>
-        <target state="translated">שעות העבודה שלי היום</target>
       </trans-unit>
       <trans-unit id="Fkrev.q" resname="help.globalActivities">
         <source>help.globalActivities</source>

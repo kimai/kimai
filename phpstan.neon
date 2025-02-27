@@ -4558,11 +4558,6 @@ parameters:
             path: src/Widget/Type/AbstractWidgetType.php
 
         -
-            message: "#^Method App\\\\Widget\\\\Type\\\\AbstractWidgetType\\:\\:setPermissions\\(\\) has parameter \\$permissions with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Widget/Type/AbstractWidgetType.php
-
-        -
             message: "#^Method App\\\\Widget\\\\Type\\\\PaginatedWorkingTimeChart\\:\\:getLastWeekInYear\\(\\) has parameter \\$year with no type specified\\.$#"
             count: 1
             path: src/Widget/Type/PaginatedWorkingTimeChart.php

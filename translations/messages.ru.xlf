@@ -358,65 +358,13 @@
         <source>stats.durationTotal</source>
         <target>Отработано всего</target>
       </trans-unit>
-      <trans-unit id="023M9Ta" resname="stats.amountToday">
-        <source>stats.amountToday</source>
-        <target>Оборот за сегодня</target>
-      </trans-unit>
-      <trans-unit id="xnJvYAE" resname="stats.amountWeek">
-        <source>stats.amountWeek</source>
-        <target>Оборот этой недели</target>
-      </trans-unit>
-      <trans-unit id="ulr3reE" resname="stats.amountMonth">
-        <source>stats.amountMonth</source>
-        <target>Оборот этого месяца</target>
-      </trans-unit>
-      <trans-unit id="bQZyZaO" resname="stats.amountYear">
-        <source>stats.amountYear</source>
-        <target>Оборот этого года</target>
-      </trans-unit>
       <trans-unit id="Z0fz23v" resname="stats.amountTotal">
         <source>stats.amountTotal</source>
         <target>Итоговый оборот</target>
       </trans-unit>
-      <trans-unit id="HzICegM" resname="stats.activeUsersToday">
-        <source>stats.activeUsersToday</source>
-        <target>Активные пользователи сегодня</target>
-      </trans-unit>
-      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek">
-        <source>stats.activeUsersWeek</source>
-        <target>Активные пользователи на этой неделе</target>
-      </trans-unit>
-      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth">
-        <source>stats.activeUsersMonth</source>
-        <target>Активные пользователи в этом месяце</target>
-      </trans-unit>
-      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
-        <source>stats.activeUsersYear</source>
-        <target>Активные пользователи за этот год</target>
-      </trans-unit>
-      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">
-        <source>stats.activeUsersTotal</source>
-        <target>Всего активных пользователей</target>
-      </trans-unit>
       <trans-unit id="lEW82ex" resname="stats.activeRecordings">
         <source>stats.activeRecordings</source>
         <target>Активные временные записи</target>
-      </trans-unit>
-      <trans-unit id="t5eIWp8" resname="stats.userTotal">
-        <source>stats.userTotal</source>
-        <target>Количество пользователей</target>
-      </trans-unit>
-      <trans-unit id="Bor.76M" resname="stats.activityTotal">
-        <source>stats.activityTotal</source>
-        <target state="translated">Активности</target>
-      </trans-unit>
-      <trans-unit id="67uSaR3" resname="stats.projectTotal">
-        <source>stats.projectTotal</source>
-        <target>Количество проектов</target>
-      </trans-unit>
-      <trans-unit id="tnD6aPj" resname="stats.customerTotal">
-        <source>stats.customerTotal</source>
-        <target>Количество клиентов</target>
       </trans-unit>
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
@@ -954,10 +902,6 @@
         <source>invoice.payment_date</source>
         <target>Дата платежа</target>
       </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>Активных пользователей в этом финансовом году</target>
-      </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
         <source>stats.amountFinancialYear</source>
         <target>Выручка в этом финансовом году</target>
@@ -1238,17 +1182,9 @@
         <source>plugin.installed</source>
         <target state="translated">Установленные плагины</target>
       </trans-unit>
-      <trans-unit id="BjyLITj" resname="stats.userDurationYear">
-        <source>stats.userDurationYear</source>
-        <target state="translated">Мои рабочие часы в этом году</target>
-      </trans-unit>
       <trans-unit id="0Hhg4zQ" resname="system_account.help">
         <source>system_account.help</source>
         <target state="translated">Будет скрыт в отчетах и выпадающих списках</target>
-      </trans-unit>
-      <trans-unit id="EI5gPkp" resname="stats.userDurationToday">
-        <source>stats.userDurationToday</source>
-        <target state="translated">Мои рабочие часы сегодня</target>
       </trans-unit>
       <trans-unit id="EYXzfTO" resname="deleted">
         <source>deleted</source>
@@ -1317,18 +1253,6 @@
       <trans-unit id="PLLl1E0" resname="system_account">
         <source>system_account</source>
         <target state="translated">Системная учетная запись</target>
-      </trans-unit>
-      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek">
-        <source>stats.userDurationWeek</source>
-        <target state="translated">Мои рабочие часы на этой неделе</target>
-      </trans-unit>
-      <trans-unit id="0WpgaGa" resname="stats.userDurationMonth">
-        <source>stats.userDurationMonth</source>
-        <target state="translated">Мои рабочие часы в этом месяце</target>
-      </trans-unit>
-      <trans-unit id="EedlgkM" resname="stats.userDurationTotal">
-        <source>stats.userDurationTotal</source>
-        <target state="translated">Общее количество моих рабочих часов</target>
       </trans-unit>
       <trans-unit id="mQMcndl" resname="stats.userAmountToday">
         <source>stats.userAmountToday</source>

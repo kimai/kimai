@@ -346,7 +346,7 @@ class ProjectRepository extends EntityRepository
     /**
      * @return int<0, max>
      */
-    public function countProjectsForQuery(ProjectQuery $query): int
+    private function countProjectsForQuery(ProjectQuery $query): int
     {
         $qb = $this->getQueryBuilderForQuery($query);
         $qb

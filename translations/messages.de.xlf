@@ -926,45 +926,9 @@
         <source>stats.durationTotal</source>
         <target>Gesamt</target>
       </trans-unit>
-      <trans-unit id="EI5gPkp" resname="stats.userDurationToday">
-        <source>stats.userDurationToday</source>
-        <target>Meine Arbeitszeit heute</target>
-      </trans-unit>
-      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek">
-        <source>stats.userDurationWeek</source>
-        <target>Meine Arbeitszeit diese Woche</target>
-      </trans-unit>
-      <trans-unit id="0WpgaGa" resname="stats.userDurationMonth">
-        <source>stats.userDurationMonth</source>
-        <target>Meine Arbeitszeit diesen Monat</target>
-      </trans-unit>
-      <trans-unit id="BjyLITj" resname="stats.userDurationYear">
-        <source>stats.userDurationYear</source>
-        <target>Meine Arbeitszeit dieses Jahr</target>
-      </trans-unit>
-      <trans-unit id="EedlgkM" resname="stats.userDurationTotal">
-        <source>stats.userDurationTotal</source>
-        <target>Meine Arbeitszeit gesamt</target>
-      </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
         <target>Meine Arbeitszeiten</target>
-      </trans-unit>
-      <trans-unit id="023M9Ta" resname="stats.amountToday">
-        <source>stats.amountToday</source>
-        <target>Umsatz heute</target>
-      </trans-unit>
-      <trans-unit id="xnJvYAE" resname="stats.amountWeek">
-        <source>stats.amountWeek</source>
-        <target>Umsatz diese Woche</target>
-      </trans-unit>
-      <trans-unit id="ulr3reE" resname="stats.amountMonth">
-        <source>stats.amountMonth</source>
-        <target>Umsatz diesen Monat</target>
-      </trans-unit>
-      <trans-unit id="bQZyZaO" resname="stats.amountYear">
-        <source>stats.amountYear</source>
-        <target>Umsatz dieses Jahr</target>
       </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
         <source>stats.amountFinancialYear</source>
@@ -973,6 +937,10 @@
       <trans-unit id="Z0fz23v" resname="stats.amountTotal">
         <source>stats.amountTotal</source>
         <target>Umsatz gesamt</target>
+      </trans-unit>
+      <trans-unit id="Nsr3yxW" resname="stats.userRevenue">
+        <source>stats.userRevenue</source>
+        <target>Mein Umsatz</target>
       </trans-unit>
       <trans-unit id="mQMcndl" resname="stats.userAmountToday">
         <source>stats.userAmountToday</source>
@@ -994,49 +962,17 @@
         <source>stats.userAmountTotal</source>
         <target>Mein Umsatz gesamt</target>
       </trans-unit>
-      <trans-unit id="HzICegM" resname="stats.activeUsersToday">
-        <source>stats.activeUsersToday</source>
-        <target>Aktive Benutzer heute</target>
+      <trans-unit id="b6VM6O3" resname="stats.activeUsers">
+        <source>stats.activeUsers</source>
+        <target>Aktive Benutzer</target>
       </trans-unit>
-      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek">
-        <source>stats.activeUsersWeek</source>
-        <target>Aktive Benutzer diese Woche</target>
-      </trans-unit>
-      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth">
-        <source>stats.activeUsersMonth</source>
-        <target>Aktive Benutzer diesen Monat</target>
-      </trans-unit>
-      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
-        <source>stats.activeUsersYear</source>
-        <target>Aktive Benutzer dieses Jahr</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>Aktive Benutzer dieses Geschäftsjahr</target>
-      </trans-unit>
-      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">
-        <source>stats.activeUsersTotal</source>
-        <target>Aktive Benutzer jemals</target>
+      <trans-unit id="wHaIOmq" resname="all_users">
+        <source>all_users</source>
+        <target>Alle Benutzer</target>
       </trans-unit>
       <trans-unit id="lEW82ex" resname="stats.activeRecordings">
         <source>stats.activeRecordings</source>
         <target>Aktive Zeitmessungen</target>
-      </trans-unit>
-      <trans-unit id="t5eIWp8" resname="stats.userTotal">
-        <source>stats.userTotal</source>
-        <target>Anzahl Benutzer</target>
-      </trans-unit>
-      <trans-unit id="Bor.76M" resname="stats.activityTotal">
-        <source>stats.activityTotal</source>
-        <target>Anzahl Tätigkeiten</target>
-      </trans-unit>
-      <trans-unit id="67uSaR3" resname="stats.projectTotal">
-        <source>stats.projectTotal</source>
-        <target>Anzahl Projekte</target>
-      </trans-unit>
-      <trans-unit id="tnD6aPj" resname="stats.customerTotal">
-        <source>stats.customerTotal</source>
-        <target>Anzahl Kunden</target>
       </trans-unit>
       <trans-unit id="unC5MXv" resname="stats.percentUsed">
         <source>stats.percentUsed</source>

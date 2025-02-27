@@ -12,26 +12,23 @@ namespace App\Tests\Widget\Type;
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
-use App\Widget\Type\AbstractCounterYear;
 use App\Widget\Type\AbstractWidget;
-use App\Widget\Type\AbstractWidgetType;
-use App\Widget\Type\ActiveUsersYear;
+use App\Widget\Type\ActiveUsers;
 
 /**
- * @covers \App\Widget\Type\ActiveUsersYear
- * @covers \App\Widget\Type\AbstractCounterYear
+ * @covers \App\Widget\Type\ActiveUsers
  */
-class ActiveUsersYearTest extends AbstractWidgetTypeTestCase
+class ActiveUsersTest extends AbstractWidgetTestCase
 {
     /**
-     * @return AbstractCounterYear
+     * @return ActiveUsers
      */
-    public function createSut(): AbstractWidgetType
+    public function createSut(): AbstractWidget
     {
         $repository = $this->createMock(TimesheetRepository::class);
         $configuration = SystemConfigurationFactory::createStub();
 
-        $sut = new ActiveUsersYear($repository, $configuration);
+        $sut = new ActiveUsers($repository, $configuration);
         $sut->setUser(new User());
 
         return $sut;
@@ -44,17 +41,14 @@ class ActiveUsersYearTest extends AbstractWidgetTypeTestCase
 
     public function getDefaultOptions(): array
     {
-        return [
-            'icon' => 'users',
-            'color' => 'yellow',
-        ];
+        return [];
     }
 
     public function testSettings(): void
     {
         $sut = $this->createSut();
 
-        self::assertEquals('widget/widget-counter.html.twig', $sut->getTemplateName());
-        self::assertEquals('activeUsersYear', $sut->getId());
+        self::assertEquals('widget/widget-active-users.html.twig', $sut->getTemplateName());
+        self::assertEquals('ActiveUsers', $sut->getId());
     }
 }

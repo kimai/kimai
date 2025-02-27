@@ -356,7 +356,7 @@ class ActivityRepository extends EntityRepository
     /**
      * @return int<0, max>
      */
-    public function countActivitiesForQuery(ActivityQuery $query): int
+    private function countActivitiesForQuery(ActivityQuery $query): int
     {
         $qb = $this->getQueryBuilderForQuery($query);
         $qb
