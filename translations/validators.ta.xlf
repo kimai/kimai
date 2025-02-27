@@ -30,9 +30,9 @@
         <source>This value is not a valid role.</source>
         <target state="final">இந்த மதிப்பு சரியான பாத்திரம் அல்ல.</target>
       </trans-unit>
-      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve" approved="no">
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve" approved="yes">
         <source>The end date must not be earlier than the start date.</source>
-        <target state="needs-translation">இறுதி தேதி தொடக்க தேதியைவிட முந்தையதாக இருக்கக் கூடாது.</target>
+        <target state="final">இறுதி தேதி தொடக்க தேதியைவிட முந்தையதாக இருக்கக் கூடாது.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future." xml:space="preserve" approved="yes">
         <source>The begin date cannot be in the future.</source>

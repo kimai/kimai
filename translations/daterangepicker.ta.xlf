@@ -32,7 +32,19 @@
       </trans-unit>
       <trans-unit id="m0lJOke" resname="daterangepicker.allTime" xml:space="preserve" approved="yes">
         <source>daterangepicker.allTime</source>
-        <target state="final">மொத்த காலம்</target>
+        <target state="final">முழு காலம்</target>
+      </trans-unit>
+      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth" xml:space="preserve" approved="yes">
+        <source>daterangepicker.thisMonth</source>
+        <target state="final">இந்தத் திங்கள்</target>
+      </trans-unit>
+      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth" xml:space="preserve" approved="yes">
+        <source>daterangepicker.lastMonth</source>
+        <target state="final">போன திங்கள்</target>
+      </trans-unit>
+      <trans-unit id="mgJ2Z7M" resname="daterangepicker.thisFinancialYear" xml:space="preserve" approved="yes">
+        <source>daterangepicker.thisFinancialYear</source>
+        <target state="final">இந்த நிதி ஆண்டு</target>
       </trans-unit>
     </body>
   </file>
