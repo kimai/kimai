@@ -16,8 +16,10 @@ use App\Widget\WidgetInterface;
 
 final class UserDurationYear extends AbstractCounterYear
 {
-    public function __construct(private TimesheetRepository $repository, SystemConfiguration $systemConfiguration)
-    {
+    public function __construct(
+        private readonly TimesheetRepository $repository,
+        SystemConfiguration $systemConfiguration
+    ) {
         parent::__construct($systemConfiguration);
     }
 
@@ -46,7 +48,7 @@ final class UserDurationYear extends AbstractCounterYear
     /**
      * @param array<string, string|bool|int|null|array<string, mixed>> $options
      */
-    protected function getYearData(\DateTimeInterface $begin, \DateTimeInterface $end, array $options = []): mixed
+    protected function getYearData(\DateTimeInterface $begin, \DateTimeInterface $end, array $options = []): int
     {
         try {
             return $this->repository->getDurationForTimeRange($begin, $end, $this->getUser());

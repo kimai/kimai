@@ -42,6 +42,13 @@ parameters:
         containerXmlPath: %rootDir%/../../../var/cache/dev/App_KernelDevDebugContainer.xml
     ignoreErrors:
         - '#^Method .*\(\) has parameter \$builder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'
+
+        -
+            message: '#^Call to an undefined method DateTimeInterface\:\:modify\(\)\.$#'
+            identifier: method.notFound
+            count: 1
+            path: src/Timesheet/DateTimeFactory.php
+
         -
             message: "#^Parameter \\#1 \\$user of class App\\\\Event\\\\PageActionsEvent constructor expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 4
@@ -1483,11 +1490,6 @@ parameters:
             path: src/Event/PermissionsEvent.php
 
         -
-            message: "#^Method App\\\\Event\\\\RevenueStatisticEvent\\:\\:getRevenue\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Event/RevenueStatisticEvent.php
-
-        -
             message: "#^Method App\\\\Event\\\\ThemeJavascriptTranslationsEvent\\:\\:getTranslations\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Event/ThemeJavascriptTranslationsEvent.php
@@ -1496,11 +1498,6 @@ parameters:
             message: "#^Parameter \\#1 \\$string of function strtolower expects string, string\\|null given\\.$#"
             count: 2
             path: src/Event/UserPreferenceEvent.php
-
-        -
-            message: "#^Method App\\\\Event\\\\UserRevenueStatisticEvent\\:\\:getRevenue\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Event/UserRevenueStatisticEvent.php
 
         -
             message: "#^Method App\\\\EventSubscriber\\\\Actions\\\\AbstractActionsSubscriber\\:\\:isGranted\\(\\) has parameter \\$attributes with no type specified\\.$#"

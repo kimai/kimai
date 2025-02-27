@@ -35,6 +35,9 @@ final class RevenueStatisticEvent extends Event
         return $this->end;
     }
 
+    /**
+     * @return array<string, float>
+     */
     public function getRevenue(): array
     {
         return $this->revenue;

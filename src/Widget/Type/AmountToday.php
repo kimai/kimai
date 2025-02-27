@@ -29,8 +29,9 @@ final class AmountToday extends AbstractAmountPeriod
 
     /**
      * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     * @return array<string, float>
      */
-    public function getData(array $options = []): mixed
+    public function getData(array $options = []): array
     {
         return $this->getRevenue($this->createTodayStartDate(), $this->createTodayEndDate(), $options);
     }

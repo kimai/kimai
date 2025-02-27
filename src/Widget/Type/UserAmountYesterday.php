@@ -11,7 +11,7 @@ namespace App\Widget\Type;
 
 use App\Widget\WidgetInterface;
 
-final class UserAmountMonth extends AbstractUserRevenuePeriod
+final class UserAmountYesterday extends AbstractUserRevenuePeriod
 {
     /**
      * @param array<string, string|bool|int|null|array<string, mixed>> $options
@@ -19,12 +19,12 @@ final class UserAmountMonth extends AbstractUserRevenuePeriod
      */
     public function getOptions(array $options = []): array
     {
-        return array_merge(['color' => WidgetInterface::COLOR_MONTH], parent::getOptions($options));
+        return array_merge(['color' => WidgetInterface::COLOR_TODAY], parent::getOptions($options));
     }
 
     public function getId(): string
     {
-        return 'UserAmountMonth';
+        return 'UserAmountYesterday';
     }
 
     /**
@@ -33,6 +33,6 @@ final class UserAmountMonth extends AbstractUserRevenuePeriod
      */
     public function getData(array $options = []): array
     {
-        return $this->getRevenue($this->createMonthStartDate(), $this->createMonthEndDate(), $options);
+        return $this->getRevenue($this->createYesterdayStartDate(), $this->createYesterdayEndDate(), $options);
     }
 }
