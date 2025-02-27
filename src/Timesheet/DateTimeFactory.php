@@ -69,6 +69,19 @@ final class DateTimeFactory
         return DateTime::createFromInterface($date);
     }
 
+    private function createDate(DateTimeInterface|string|null $date = null): \DateTimeImmutable
+    {
+        if ($date === null) {
+            $date = 'now';
+        }
+
+        if (\is_string($date)) {
+            return $this->create($date);
+        }
+
+        return \DateTimeImmutable::createFromInterface($date);
+    }
+
     public function getStartOfWeek(DateTimeInterface|string|null $date = null): DateTime
     {
         $date = $this->getDate($date);
@@ -137,6 +150,20 @@ final class DateTimeFactory
     public function create(string $datetime = 'now'): \DateTimeImmutable
     {
         return new \DateTimeImmutable($datetime, $this->getTimezone());
+    }
+
+    public function createStartOfDay(DateTimeInterface|string|null $date = null): \DateTimeImmutable
+    {
+        $date = $this->createDate($date);
+
+        return $date->modify('00:00:00');
+    }
+
+    public function createEndOfDay(DateTimeInterface|string|null $date = null): \DateTimeImmutable
+    {
+        $date = $this->createDate($date);
+
+        return $date->modify('23:59:59');
     }
 
     /**
