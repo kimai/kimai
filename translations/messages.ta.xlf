@@ -72,23 +72,23 @@
       </trans-unit>
       <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve" approved="no">
         <source>stats.durationToday</source>
-        <target state="translated">இன்றைய வேலை நேரம்</target>
+        <target state="needs-translation">இன்றைய வேலை நேரம்</target>
       </trans-unit>
       <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve" approved="no">
         <source>stats.durationWeek</source>
-        <target state="translated">இந்த வார வேலை நேரம்</target>
+        <target state="needs-translation">இந்த வார வேலை நேரம்</target>
       </trans-unit>
       <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve" approved="no">
         <source>stats.durationMonth</source>
-        <target state="translated">இந்த மாத வேலை நேரம்</target>
+        <target state="needs-translation">இந்த மாத வேலை நேரம்</target>
       </trans-unit>
       <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve" approved="no">
         <source>stats.durationYear</source>
-        <target state="translated">இந்த ஆண்டு வேலை நேரம்</target>
+        <target state="needs-translation">இந்த ஆண்டு வேலை நேரம்</target>
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve" approved="no">
         <source>stats.durationFinancialYear</source>
-        <target state="translated">இந்தப் பொருள் ஆண்டு வேலை நேரம்</target>
+        <target state="needs-translation">இந்தப் பொருள் ஆண்டு வேலை நேரம்</target>
       </trans-unit>
       <trans-unit id="DXcvOMM" resname="stats.userDurationWeek" xml:space="preserve" approved="no">
         <source>stats.userDurationWeek</source>
@@ -376,7 +376,7 @@
       </trans-unit>
       <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve" approved="no">
         <source>stats.durationTotal</source>
-        <target state="translated">வேலை நேரம் மொத்தம்</target>
+        <target state="needs-translation">வேலை நேரம் மொத்தம்</target>
       </trans-unit>
       <trans-unit id="EI5gPkp" resname="stats.userDurationToday" xml:space="preserve" approved="no">
         <source>stats.userDurationToday</source>

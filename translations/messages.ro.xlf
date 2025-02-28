@@ -514,25 +514,25 @@
         <source>ROLE_USER</source>
         <target>Utilizator</target>
       </trans-unit>
-      <trans-unit id="TdBJBAl" resname="stats.durationToday">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target>Ore lucrate azi</target>
+        <target state="needs-translation">Ore lucrate azi</target>
       </trans-unit>
-      <trans-unit id="XhKalZH" resname="stats.durationWeek">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target>Ore lucrate săptămâna aceasta</target>
+        <target state="needs-translation">Ore lucrate săptămâna aceasta</target>
       </trans-unit>
-      <trans-unit id="uaOwf_P" resname="stats.durationMonth">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target>Ore lucrate luna aceasta</target>
+        <target state="needs-translation">Ore lucrate luna aceasta</target>
       </trans-unit>
-      <trans-unit id="WqF84KR" resname="stats.durationYear">
+      <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target>Ore lucrate anul aceasta</target>
+        <target state="needs-translation">Ore lucrate anul aceasta</target>
       </trans-unit>
-      <trans-unit id="YtvPnl1" resname="stats.durationTotal">
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
-        <target>Număr total de ore lucrate</target>
+        <target state="needs-translation">Număr total de ore lucrate</target>
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
@@ -1014,9 +1014,9 @@
         <source>stats.amountFinancialYear</source>
         <target>Venituri în acest exercițiu financiar</target>
       </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
         <source>stats.durationFinancialYear</source>
-        <target>Ore de lucru în acest exercițiu financiar</target>
+        <target state="needs-translation">Ore de lucru în acest exercițiu financiar</target>
       </trans-unit>
       <trans-unit id="Nx9_QiO" resname="revenue">
         <source>revenue</source>

@@ -542,25 +542,25 @@
         <source>ROLE_USER</source>
         <target state="translated">משתמשים</target>
       </trans-unit>
-      <trans-unit id="TdBJBAl" resname="stats.durationToday">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target>שעות עבודה היום</target>
+        <target state="needs-translation">שעות עבודה היום</target>
       </trans-unit>
-      <trans-unit id="XhKalZH" resname="stats.durationWeek">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target>שעות עבודה השבוע</target>
+        <target state="needs-translation">שעות עבודה השבוע</target>
       </trans-unit>
-      <trans-unit id="uaOwf_P" resname="stats.durationMonth">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target>שעות עבודה החודש</target>
+        <target state="needs-translation">שעות עבודה החודש</target>
       </trans-unit>
-      <trans-unit id="WqF84KR" resname="stats.durationYear">
+      <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target>שעות עבודה השנה</target>
+        <target state="needs-translation">שעות עבודה השנה</target>
       </trans-unit>
-      <trans-unit id="YtvPnl1" resname="stats.durationTotal">
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
-        <target>סך שעות העבודה</target>
+        <target state="needs-translation">סך שעות העבודה</target>
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
@@ -934,9 +934,9 @@
         <source>stats.amountFinancialYear</source>
         <target>הכנסות בשנה הפיננסית הזאת</target>
       </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
         <source>stats.durationFinancialYear</source>
-        <target>שעות עבודה בשנה הפיננסית הזאת</target>
+        <target state="needs-translation">שעות עבודה בשנה הפיננסית הזאת</target>
       </trans-unit>
       <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
         <source>stats.workingTimeFinancialYear</source>

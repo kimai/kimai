@@ -570,29 +570,29 @@
         <source>revenue</source>
         <target state="final">營收</target>
       </trans-unit>
-      <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve" approved="yes">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve" approved="no">
         <source>stats.durationToday</source>
-        <target state="final">本日工時</target>
+        <target state="needs-translation">本日工時</target>
       </trans-unit>
-      <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve" approved="yes">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve" approved="no">
         <source>stats.durationWeek</source>
-        <target state="final">本週工時</target>
+        <target state="needs-translation">本週工時</target>
       </trans-unit>
-      <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve" approved="yes">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve" approved="no">
         <source>stats.durationMonth</source>
-        <target state="final">本月工時</target>
+        <target state="needs-translation">本月工時</target>
       </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve" approved="yes">
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve" approved="no">
         <source>stats.durationFinancialYear</source>
-        <target state="final">本會計年度工時</target>
+        <target state="needs-translation">本會計年度工時</target>
       </trans-unit>
-      <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve" approved="yes">
+      <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve" approved="no">
         <source>stats.durationYear</source>
-        <target state="final">本年度工時</target>
+        <target state="needs-translation">本年度工時</target>
       </trans-unit>
-      <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve" approved="yes">
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve" approved="no">
         <source>stats.durationTotal</source>
-        <target state="final">總工時</target>
+        <target state="needs-translation">總工時</target>
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours" xml:space="preserve" approved="yes">
         <source>stats.yourWorkingHours</source>

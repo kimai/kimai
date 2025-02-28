@@ -506,25 +506,25 @@
         <source>ROLE_USER</source>
         <target>Użytkownik</target>
       </trans-unit>
-      <trans-unit id="TdBJBAl" resname="stats.durationToday">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target state="translated">Przepracowane godziny dzisiaj</target>
+        <target state="needs-translation">Przepracowane godziny dzisiaj</target>
       </trans-unit>
-      <trans-unit id="XhKalZH" resname="stats.durationWeek">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target>Przepracowane godziny w tym tygodniu</target>
+        <target state="needs-translation">Przepracowane godziny w tym tygodniu</target>
       </trans-unit>
-      <trans-unit id="uaOwf_P" resname="stats.durationMonth">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target>Przepracowane godziny w tym miesiącu</target>
+        <target state="needs-translation">Przepracowane godziny w tym miesiącu</target>
       </trans-unit>
-      <trans-unit id="WqF84KR" resname="stats.durationYear">
+      <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target>Przepracowane godziny w tym roku</target>
+        <target state="needs-translation">Przepracowane godziny w tym roku</target>
       </trans-unit>
-      <trans-unit id="YtvPnl1" resname="stats.durationTotal">
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
-        <target>Łacznie przepracowanych godzin</target>
+        <target state="needs-translation">Łacznie przepracowanych godzin</target>
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
@@ -950,9 +950,9 @@
         <source>stats.amountFinancialYear</source>
         <target state="translated">Przychód w tym roku budżetowym</target>
       </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
         <source>stats.durationFinancialYear</source>
-        <target>Godziny pracy w roku budżetowym</target>
+        <target state="needs-translation">Godziny pracy w roku budżetowym</target>
       </trans-unit>
       <trans-unit id="Nx9_QiO" resname="revenue">
         <source>revenue</source>
