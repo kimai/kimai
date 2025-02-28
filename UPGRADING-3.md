@@ -16,3 +16,9 @@ Perform EACH version specific task between your version and the new one, otherwi
 Removed translations:
 - `action.edit`: use `edit` instead
 - `my.profile`: use `user_profile` instead
+- `stats.userAmountToday`: use `` instead
+- `stats.userAmountWeek`: use `` instead
+- `stats.userAmountMonth`: use `` instead
+- `stats.userAmountYear`: use `` instead
+- `stats.userAmountTotal`: use `` instead
+- `update_multiple`

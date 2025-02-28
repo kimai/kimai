@@ -43,7 +43,7 @@ abstract class AbstractUserPeriodControllerTestCase extends AbstractControllerBa
     public static function getTestData(): array
     {
         return [
-            [4, 'duration', 'Working hours total'],
+            [4, 'duration', 'Total'],
             [4, 'rate', 'Total revenue'],
             [4, 'internalRate', 'Internal price'],
         ];
@@ -98,6 +98,6 @@ abstract class AbstractUserPeriodControllerTestCase extends AbstractControllerBa
         $select = $client->getCrawler()->filterXPath("//select[@id='user']");
         self::assertEquals(0, $select->count());
         $cell = $client->getCrawler()->filterXPath("//th[contains(@class, 'reportDataTypeTitle')]");
-        self::assertEquals('Working hours total', $cell->text());
+        self::assertEquals('Total', $cell->text());
     }
 }

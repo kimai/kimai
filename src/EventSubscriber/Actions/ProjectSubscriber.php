@@ -50,16 +50,21 @@ final class ProjectSubscriber extends AbstractActionsSubscriber
             $event->addDivider();
         }
 
+        $dateRange = '';
+        if (isset($payload['daterange']) && \is_string($payload['daterange'])) {
+            $dateRange = $payload['daterange'];
+        }
+
         if ($this->isGranted('view_activity')) {
             $event->addActionToSubmenu('filter', 'activity', ['title' => 'activities', 'url' => $this->path('admin_activity', ['customers[]' => $customer->getId(), 'projects[]' => $project->getId()])]);
         }
 
         if ($this->isGranted('view_other_timesheet')) {
-            $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet.filter', 'url' => $this->path('admin_timesheet', ['customers[]' => $customer->getId(), 'projects[]' => $project->getId()])]);
+            $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet.filter', 'url' => $this->path('admin_timesheet', ['customers[]' => $customer->getId(), 'projects[]' => $project->getId(), 'daterange' => $dateRange])]);
         }
 
         if ($this->isGranted('create_export')) {
-            $event->addActionToSubmenu('filter', 'export', ['title' => 'export', 'url' => $this->path('export', ['customers[]' => $customer->getId(), 'projects[]' => $project->getId(), 'exported' => 1, 'daterange' => ''])]);
+            $event->addActionToSubmenu('filter', 'export', ['title' => 'export', 'url' => $this->path('export', ['customers[]' => $customer->getId(), 'projects[]' => $project->getId(), 'exported' => 1, 'daterange' => $dateRange])]);
         }
 
         if ($event->hasSubmenu('filter')) {

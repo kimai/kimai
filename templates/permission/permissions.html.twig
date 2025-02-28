@@ -31,7 +31,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-2">
                         <h4 class="card-title">
-                            {{ role.getName()|trans }}
+                            <span ondblclick="navigator.clipboard.writeText('{{ role.getName() }}');" title="{{ role.getName() }}">{{ role.getName()|trans }}</span>
                             {% if canEditPermissions and (role.name not in system_roles) %}
                                 &nbsp;
                                 <a href="{{ path('admin_user_role_delete', {'role': role.id, 'csrfToken': token}) }}" class="confirmation-link" data-question="confirm.delete">{{ icon('trash') }}</a>

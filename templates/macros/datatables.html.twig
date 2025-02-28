@@ -250,7 +250,7 @@
     {% if (route is not empty and entries is not null) or multi_update_form is not null %}
     <div class="card-footer d-flex align-items-center">
         {% if multi_update_form is not null %}
-            {{ form_start(multi_update_form, {'attr': {'class': 'multi_update_form', 'style': 'display:none', 'data-question': 'update_multiple'|trans}}) }}
+            {{ form_start(multi_update_form, {'attr': {'class': 'multi_update_form', 'style': 'display:none', 'data-question': '%action%'}}) }}
                 {% for formChild in multi_update_form.children %}
                     {{ form_widget(formChild) }}
                 {% endfor %}

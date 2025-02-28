@@ -3,7 +3,7 @@
 {% block main %}
     {% set formEditTemplate = 'default/_form.html.twig' %}
     {% set formOptions = {
-        'title': 'update_multiple'|trans({'%action%': 'edit'|trans, '%count%': dto.entities|length}),
+        'title': 'edit'|trans,
         'form': form,
         'back': path(back),
     } %}
