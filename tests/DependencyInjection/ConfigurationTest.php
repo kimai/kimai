@@ -410,6 +410,11 @@ class ConfigurationTest extends TestCase
                     'attribute' => null,
                     'mapping' => []
                 ],
+                'teams' => [
+                    'resetOnLogin' => true,
+                    'attribute' => null,
+                    'mapping' => []
+                ],
                 'mapping' => [],
                 'connection' => [
                     'organization' => []
