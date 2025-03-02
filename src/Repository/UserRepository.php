@@ -169,6 +169,9 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
 
     public function refreshUser(UserInterface $user): User
     {
+        // TODO 3.0 add a last_updated field to user and ONLY load this for comparison.
+        // TODO then only execute the below code if last_updated != session.last_updated
+
         return $this->loadUserByIdentifier($user->getUserIdentifier());
     }
 
