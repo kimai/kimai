@@ -562,3 +562,18 @@
         <span class="work_time_positive text-green">+{{ result|duration(decimal) }}</span>
     {% endif %}
 {% endmacro %}
+
+{% macro pagination_simple(back, forward) %}
+    <ul class="pagination ms-auto m-0">
+        {% if back %}
+            <li class="page-item"><a class="page-link pagination-link" {% if back is iterable %}{% for key, value in back %}{{ key }}="{{ value }}" {% endfor %}{% else %}href="{{ back }}"{% endif%} rel="prev"><i class="fas fa-chevron-left"></i></a></li>
+        {% else %}
+            <li class="page-item disabled"><span class="page-link pagination-link"><i class="fas fa-chevron-left"></i></span></li>
+        {% endif %}
+        {% if forward %}
+            <li class="page-item"><a class="page-link pagination-link" {% if forward is iterable %}{% for key, value in forward %}{{ key }}="{{ value }}" {% endfor %}{% else %}href="{{ forward }}"{% endif%} rel="next"><i class="fas fa-chevron-right"></i></a></li>
+        {% else %}
+            <li class="page-item disabled"><span class="page-link pagination-link"><i class="fas fa-chevron-right"></i></span></li>
+        {% endif %}
+    </ul>
+{% endmacro %}
