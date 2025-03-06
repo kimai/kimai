@@ -266,17 +266,17 @@ class TimesheetEditForm extends AbstractType
                 if ($time === null) {
                     throw new \Exception('Cannot work with timesheets without start time');
                 }
-                
+
                 // Use duration to determine the actual end date
                 $duration = $timesheet->getDuration();
                 if ($duration !== null && $duration > 0) {
                     // Calculate expected end time based on duration
                     $expectedEnd = clone $time;
                     $expectedEnd->modify('+ ' . $duration . ' seconds');
-                    
-                    // Create end time using the date from expected end time 
+
+                    // Create end time using the date from expected end time
                     $newEnd = new \DateTime($expectedEnd->format('Y-m-d') . ' ' . $end->format('H:i:s'), new \DateTimeZone($expectedEnd->getTimezone()->getName()));
-                    
+
                     // If the new end time is less than the expected end time, add one day
                     // This handles cases where user selects a time that would make the duration shorter than specified
                     if ($newEnd < $expectedEnd) {
@@ -286,7 +286,7 @@ class TimesheetEditForm extends AbstractType
                     // No duration set, use traditional logic with single day rollover
                     $newEnd = clone $time;
                     $newEnd->setTime($end->format('H'), $end->format('i'));
-                    
+
                     if ($newEnd < $time) {
                         $newEnd->modify('+ 1 day');
                     }
