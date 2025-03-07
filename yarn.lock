@@ -3796,13 +3796,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gridstack@npm:^7":
-  version: 7.3.0
-  resolution: "gridstack@npm:7.3.0"
-  checksum: 10/125339be00976d6d4acc709f2b3486f5a01bbf8fb90042e9a7325117f101cebcb5b12fbbc339aae6c4285a54c7e7118b865267fb586476eef81a02c40596ad69
-  languageName: node
-  linkType: hard
-
 "has-flag@npm:^3.0.0":
   version: 3.0.0
   resolution: "has-flag@npm:3.0.0"
@@ -4242,7 +4235,6 @@ __metadata:
     core-js: "npm:^3"
     eslint: "npm:^9"
     globals: "npm:^15"
-    gridstack: "npm:^7"
     litepicker: "npm:^2"
     luxon: "npm:^3"
     sass: "npm:^1"

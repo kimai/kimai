@@ -15,7 +15,6 @@ Encore
     .addEntry('invoice-pdf', './assets/invoice-pdf.js')
     .addEntry('chart', './assets/chart.js')
     .addEntry('calendar', './assets/calendar.js')
-    .addEntry('dashboard', './assets/dashboard.js')
 
     .splitEntryChunks()
     .configureSplitChunks((splitChunks) => {

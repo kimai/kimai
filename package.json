@@ -44,7 +44,6 @@
     "core-js": "^3",
     "eslint": "^9",
     "globals": "^15",
-    "gridstack": "^7",
     "litepicker": "^2",
     "luxon": "^3",
     "sass": "^1",
