@@ -582,25 +582,25 @@
         <source>stats.workingTimeYear</source>
         <target state="final">Anno intero %year%</target>
       </trans-unit>
-      <trans-unit id="TdBJBAl" resname="stats.durationToday" approved="yes">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday" approved="yes" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target state="final">Ore lavorative oggi</target>
+        <target state="final">Oggi</target>
       </trans-unit>
-      <trans-unit id="XhKalZH" resname="stats.durationWeek" approved="yes">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek" approved="yes" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target state="final">Ore lavorative questa settimana</target>
+        <target state="final">Questa settimana</target>
       </trans-unit>
-      <trans-unit id="uaOwf_P" resname="stats.durationMonth" approved="yes">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth" approved="yes" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target state="final">Ore lavorative questo mese</target>
+        <target state="final">Questo mese</target>
       </trans-unit>
-      <trans-unit id="WqF84KR" resname="stats.durationYear" approved="yes">
+      <trans-unit id="WqF84KR" resname="stats.durationYear" approved="yes" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target state="final">Ore lavorative quest'anno</target>
+        <target state="final">Quest'anno</target>
       </trans-unit>
-      <trans-unit id="YtvPnl1" resname="stats.durationTotal" approved="yes">
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal" approved="yes" xml:space="preserve">
         <source>stats.durationTotal</source>
-        <target state="final">Totale ore lavorative</target>
+        <target state="final">Totale</target>
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours" approved="yes">
         <source>stats.yourWorkingHours</source>
@@ -994,9 +994,9 @@
         <source>stats.activeUsersFinancialYear</source>
         <target state="final">Utenti attivi in quest'anno finanziario</target>
       </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" approved="yes">
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" approved="yes" xml:space="preserve">
         <source>stats.durationFinancialYear</source>
-        <target state="final">Ore lavorative in quest'anno finanziario</target>
+        <target state="final">Anno finanziario</target>
       </trans-unit>
       <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear" approved="yes">
         <source>stats.workingTimeFinancialYear</source>

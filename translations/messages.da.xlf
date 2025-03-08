@@ -486,25 +486,25 @@
         <source>ROLE_USER</source>
         <target>Bruger</target>
       </trans-unit>
-      <trans-unit id="TdBJBAl" resname="stats.durationToday">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target>Arbejdstimer i dag</target>
+        <target state="needs-translation">Arbejdstimer i dag</target>
       </trans-unit>
-      <trans-unit id="XhKalZH" resname="stats.durationWeek">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target>Arbejdstimer denne uge</target>
+        <target state="needs-translation">Arbejdstimer denne uge</target>
       </trans-unit>
-      <trans-unit id="uaOwf_P" resname="stats.durationMonth">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target>Arbejdstimer denne måned</target>
+        <target state="needs-translation">Arbejdstimer denne måned</target>
       </trans-unit>
-      <trans-unit id="WqF84KR" resname="stats.durationYear">
+      <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target>Arbejdstimer dette år</target>
+        <target state="needs-translation">Arbejdstimer dette år</target>
       </trans-unit>
-      <trans-unit id="YtvPnl1" resname="stats.durationTotal">
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
-        <target>Arbejdstimer i alt</target>
+        <target state="needs-translation">Arbejdstimer i alt</target>
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
@@ -1344,7 +1344,7 @@
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
         <source>stats.durationFinancialYear</source>
-        <target state="translated">Arbejdstimer dette finansielle år</target>
+        <target state="needs-translation">Arbejdstimer dette finansielle år</target>
       </trans-unit>
       <trans-unit id="E3Kj9lt" resname="stats.userAmountMonth" xml:space="preserve">
         <source>stats.userAmountMonth</source>
