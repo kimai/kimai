@@ -49,7 +49,7 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         $year = (new \DateTime())->format('Y');
         self::assertStringContainsString('<h3 class="card-title">' . $year, $content);
         self::assertStringContainsString('new Chart(', $content);
-        self::assertStringContainsString('<canvas id="userProfileChart' . $year . '"', $content);
+        self::assertStringContainsString('<canvas class="chartjs" id="userProfileChart' . $year . '"', $content);
     }
 
     public function testIndexAction(): void
@@ -76,7 +76,7 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         foreach ($dates as $start) {
             $year = $start->format('Y');
             self::assertStringContainsString('<h3 class="card-title">' . $year, $content);
-            self::assertStringContainsString('<canvas id="userProfileChart' . $year . '"', $content);
+            self::assertStringContainsString('<canvas class="chartjs" id="userProfileChart' . $year . '"', $content);
         }
 
         $this->assertHasProfileBox($client, 'John Doe');
