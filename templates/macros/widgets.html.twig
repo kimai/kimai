@@ -61,7 +61,7 @@
             {# what to do here ? #}
         {% else %}
             {% if values.children is defined and values.children|length > 0 %}
-                <div class="dropdown">
+                <div class="dropdown{% if values.class is defined %} {{ values.class }}{% endif %}">
                     <button type="button" class="btn {{ btnClasses }} dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{ icon(icon, true) }}{% if large %} {{ values.title is defined ? values.title|trans : icon|trans }}{% endif %}
                     </button>
