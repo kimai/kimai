@@ -11,6 +11,7 @@ namespace App\Export\Base;
 
 use App\Entity\ExportableItem;
 use App\Entity\MetaTableTypeInterface;
+use App\Entity\User;
 use App\Event\ActivityMetaDisplayEvent;
 use App\Event\CustomerMetaDisplayEvent;
 use App\Event\MetaDisplayEventInterface;
@@ -143,7 +144,10 @@ final class SpreadsheetRenderer
     {
         $showRates = $this->isRenderRate($query);
 
-        $durationFormatter = $this->voter->getUser()?->isExportDecimal() ? 'duration_decimal' : 'duration';
+        $durationFormatter = 'duration';
+        if (($user = $this->voter->getUser()) instanceof User) {
+            $durationFormatter = $user->isExportDecimal() ? 'duration_decimal' : 'duration';
+        }
 
         $columns = [];
 
