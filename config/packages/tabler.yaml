@@ -93,6 +93,7 @@ tabler:
         manual: fas fa-book
         mobile: fas fa-mobile
         money: fas fa-coins
+        move: fas fa-up-down-left-right
         ods: fas fa-table
         off: fas fa-toggle-off
         on: fas fa-toggle-on
@@ -116,6 +117,7 @@ tabler:
         rejected: fas fa-ban
         right: fas fa-chevron-right
         right2: fas fa-angle-double-right
+        remove: fas fa-xmark
         roles: fas fa-user-shield
         save: far fa-save
         search: fas fa-search
@@ -139,7 +141,5 @@ tabler:
         visibility: far fa-eye
         warning: fas fa-exclamation
         weekly-times: fas fa-th
-        widget_add: fas fa-folder-plus
-        widget_remove: fas fa-folder-minus
         work_times: fas fa-calculator
         xlsx: fas fa-file-excel
