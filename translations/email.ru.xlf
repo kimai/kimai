@@ -32,11 +32,11 @@
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="needs-translation">Сбросить пароль</target>
+        <target state="translated">Войти</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="needs-translation">… вы забыли пароль? Не беспокойтесь: Kimai поможет Вам создать новый:</target>
+        <target state="translated">Данная ссылка будет активна только в течении 15 минут.</target>
       </trans-unit>
     </body>
   </file>

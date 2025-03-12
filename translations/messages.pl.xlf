@@ -506,25 +506,25 @@
         <source>ROLE_USER</source>
         <target>Użytkownik</target>
       </trans-unit>
-      <trans-unit id="TdBJBAl" resname="stats.durationToday">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target state="translated">Przepracowane godziny dzisiaj</target>
+        <target state="translated">Dzisiaj</target>
       </trans-unit>
-      <trans-unit id="XhKalZH" resname="stats.durationWeek">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target>Przepracowane godziny w tym tygodniu</target>
+        <target state="translated">W tym tygodniu</target>
       </trans-unit>
-      <trans-unit id="uaOwf_P" resname="stats.durationMonth">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target>Przepracowane godziny w tym miesiącu</target>
+        <target state="translated">W tym miesiącu</target>
       </trans-unit>
-      <trans-unit id="WqF84KR" resname="stats.durationYear">
+      <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target>Przepracowane godziny w tym roku</target>
+        <target state="translated">W tym roku</target>
       </trans-unit>
-      <trans-unit id="YtvPnl1" resname="stats.durationTotal">
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
-        <target>Łacznie przepracowanych godzin</target>
+        <target state="translated">Łącznie</target>
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
@@ -950,9 +950,9 @@
         <source>stats.amountFinancialYear</source>
         <target state="translated">Przychód w tym roku budżetowym</target>
       </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
         <source>stats.durationFinancialYear</source>
-        <target>Godziny pracy w roku budżetowym</target>
+        <target state="translated">W roku budżetowym</target>
       </trans-unit>
       <trans-unit id="Nx9_QiO" resname="revenue">
         <source>revenue</source>
@@ -990,9 +990,9 @@
         <source>file</source>
         <target state="translated">Pliki</target>
       </trans-unit>
-      <trans-unit id="VSo_gmO" resname="orderBy">
+      <trans-unit id="VSo_gmO" resname="orderBy" xml:space="preserve">
         <source>orderBy</source>
-        <target state="translated">Zamówione przez</target>
+        <target state="translated">Sortuj według</target>
       </trans-unit>
       <trans-unit id="l4ZOh4." resname="desc">
         <source>desc</source>
@@ -1925,6 +1925,10 @@
       <trans-unit id="wvt4jH3" resname="training" xml:space="preserve">
         <source>training</source>
         <target state="translated">Trenowanie</target>
+      </trans-unit>
+      <trans-unit id="HQ2YM1b" resname="attendance_only_project" xml:space="preserve">
+        <source>attendance_only_project</source>
+        <target state="translated">Uwzględniaj tylko wpisy z wybranego projektu jako czas pracy</target>
       </trans-unit>
     </body>
   </file>

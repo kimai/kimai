@@ -530,25 +530,25 @@
         <source>stats.yourWorkingHours</source>
         <target>Mínir arbeiðistímar</target>
       </trans-unit>
-      <trans-unit id="YtvPnl1" resname="stats.durationTotal">
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
-        <target>Arbeiðistímar tilsamans</target>
+        <target state="needs-translation">Arbeiðistímar tilsamans</target>
       </trans-unit>
-      <trans-unit id="WqF84KR" resname="stats.durationYear">
+      <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target>Arbeiðistímar hetta árið</target>
+        <target state="needs-translation">Arbeiðistímar hetta árið</target>
       </trans-unit>
-      <trans-unit id="uaOwf_P" resname="stats.durationMonth">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target>Arbeiðistímar hendan mánaðin</target>
+        <target state="needs-translation">Arbeiðistímar hendan mánaðin</target>
       </trans-unit>
-      <trans-unit id="XhKalZH" resname="stats.durationWeek">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target>Arbeiðistímar hesa vikuna</target>
+        <target state="needs-translation">Arbeiðistímar hesa vikuna</target>
       </trans-unit>
-      <trans-unit id="TdBJBAl" resname="stats.durationToday">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target>Arbeiðistímar í dag</target>
+        <target state="needs-translation">Arbeiðistímar í dag</target>
       </trans-unit>
       <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">
         <source>stats.activeUsersTotal</source>

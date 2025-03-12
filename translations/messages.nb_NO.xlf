@@ -646,21 +646,21 @@
         <source>revenue</source>
         <target>Inntekter</target>
       </trans-unit>
-      <trans-unit id="TdBJBAl" resname="stats.durationToday">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target>Arbeidstimer i dag</target>
+        <target state="needs-translation">Arbeidstimer i dag</target>
       </trans-unit>
-      <trans-unit id="XhKalZH" resname="stats.durationWeek">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target>Arbeidstimer denne uken</target>
+        <target state="needs-translation">Arbeidstimer denne uken</target>
       </trans-unit>
-      <trans-unit id="uaOwf_P" resname="stats.durationMonth">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target>Arbeidstimer denne måneden</target>
+        <target state="needs-translation">Arbeidstimer denne måneden</target>
       </trans-unit>
-      <trans-unit id="WqF84KR" resname="stats.durationYear">
+      <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target>Arbeidstimer dette året</target>
+        <target state="needs-translation">Arbeidstimer dette året</target>
       </trans-unit>
       <trans-unit id="dherSTU" resname="export_decimal">
         <source>export_decimal</source>
@@ -690,9 +690,9 @@
         <source>stats.workingTimeMonth</source>
         <target>%month% %year%</target>
       </trans-unit>
-      <trans-unit id="YtvPnl1" resname="stats.durationTotal">
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
-        <target>Arbeidstimer totalt</target>
+        <target state="needs-translation">Arbeidstimer totalt</target>
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
@@ -782,9 +782,9 @@
         <source>total_rate</source>
         <target>Total pris</target>
       </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
         <source>stats.durationFinancialYear</source>
-        <target>Arbeidstimer dette budsjettåret</target>
+        <target state="needs-translation">Arbeidstimer dette budsjettåret</target>
       </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
         <source>stats.amountFinancialYear</source>

@@ -354,25 +354,25 @@
         <source>stats.yourWorkingHours</source>
         <target>Meine Arbeitszeiten</target>
       </trans-unit>
-      <trans-unit id="YtvPnl1" resname="stats.durationTotal">
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
-        <target>Arbeitszeit total</target>
+        <target state="needs-translation">Arbeitszeit total</target>
       </trans-unit>
-      <trans-unit id="WqF84KR" resname="stats.durationYear">
+      <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target>Arbeitszeit dieses Jahr</target>
+        <target state="needs-translation">Arbeitszeit dieses Jahr</target>
       </trans-unit>
-      <trans-unit id="uaOwf_P" resname="stats.durationMonth">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target>Arbeitszeit diesen Monat</target>
+        <target state="needs-translation">Arbeitszeit diesen Monat</target>
       </trans-unit>
-      <trans-unit id="XhKalZH" resname="stats.durationWeek">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target>Arbeitszeit diese Woche</target>
+        <target state="needs-translation">Arbeitszeit diese Woche</target>
       </trans-unit>
-      <trans-unit id="TdBJBAl" resname="stats.durationToday">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target>Arbeitszeit heute</target>
+        <target state="needs-translation">Arbeitszeit heute</target>
       </trans-unit>
       <trans-unit id="JnUFsNi" resname="stats.workingTimeYear">
         <source>stats.workingTimeYear</source>
@@ -1010,9 +1010,9 @@
         <source>stats.amountFinancialYear</source>
         <target>Umsatz dieses Geschäftsjahr</target>
       </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
         <source>stats.durationFinancialYear</source>
-        <target>Arbeitszeit dieses Geschäftsjahr</target>
+        <target state="needs-translation">Arbeitszeit dieses Geschäftsjahr</target>
       </trans-unit>
       <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
         <source>stats.workingTimeFinancialYear</source>
