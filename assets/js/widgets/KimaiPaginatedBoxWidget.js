@@ -16,7 +16,6 @@ export default class KimaiPaginatedBoxWidget {
     constructor(boxId) {
         this.selector = boxId;
         const widget = document.querySelector(this.selector);
-        this.href = widget.dataset['href'];
 
         if (widget.dataset['reload'] !== undefined) {
             this.events = widget.dataset['reload'].split(' ');
