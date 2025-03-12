@@ -51,14 +51,6 @@ class PaginatedWorkingTimeChartTest extends TestCase
         self::assertEquals('trääääää', $sut->getOptions()['föööö']);
     }
 
-    public function testGetOptions(): void
-    {
-        $sut = $this->createSut();
-
-        $options = $sut->getOptions(['type' => 'xxx']);
-        self::assertEquals('bar', $options['type']);
-    }
-
     public function testGetData(): void
     {
         $activity = $this->createMock(Activity::class);
@@ -70,7 +62,8 @@ class PaginatedWorkingTimeChartTest extends TestCase
         $repository = $this->createMock(TimesheetRepository::class);
 
         $expectedKeys = [
-            'begin', 'end', 'dateYear', 'thisMonth', 'lastWeekInYear', 'lastWeekInLastYear', 'day', 'week', 'month', 'year', 'financial', 'financialBegin'
+            'begin', 'end', 'dateYear', 'thisMonth', 'lastWeekInYear', 'lastWeekInLastYear', 'day', 'week', 'month',
+            'year', 'financial', 'financialBegin', 'pagination_year', 'pagination_week'
         ];
 
         $configuration = SystemConfigurationFactory::createStub(['company' => ['financial_year' => null]]);
@@ -98,7 +91,8 @@ class PaginatedWorkingTimeChartTest extends TestCase
         $repository = $this->createMock(TimesheetRepository::class);
 
         $expectedKeys = [
-            'begin', 'end', 'dateYear', 'thisMonth', 'lastWeekInYear', 'lastWeekInLastYear', 'day', 'week', 'month', 'year', 'financial', 'financialBegin'
+            'begin', 'end', 'dateYear', 'thisMonth', 'lastWeekInYear', 'lastWeekInLastYear', 'day', 'week', 'month',
+            'year', 'financial', 'financialBegin', 'pagination_year', 'pagination_week'
         ];
 
         $configuration = SystemConfigurationFactory::createStub(['company' => ['financial_year' => '2020-01-01']]);

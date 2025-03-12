@@ -10,7 +10,6 @@
 namespace App\Tests\Twig\Runtime;
 
 use App\Entity\User;
-use App\Tests\Widget\Type\More;
 use App\Twig\Runtime\WidgetExtension;
 use App\Widget\WidgetService;
 use PHPUnit\Framework\TestCase;
@@ -62,16 +61,6 @@ class WidgetExtensionTest extends TestCase
         return $env;
     }
 
-    public function testRenderWidgetForInvalidValue(): void
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Widget must be either a WidgetInterface or a string');
-
-        $sut = $this->getSut();
-        /* @phpstan-ignore argument.type */
-        $sut->renderWidget($this->getEnvironment(), true);
-    }
-
     public function testRenderWidgetForUnknownWidget(): void
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -83,7 +72,7 @@ class WidgetExtensionTest extends TestCase
 
     public function testRenderWidgetByString(): void
     {
-        $widget = new More();
+        $widget = new TestWidget();
         $widget->setId('test');
         $sut = $this->getSut(true, $widget);
         $options = ['foo' => 'bar', 'dataType' => 'blub'];
@@ -94,7 +83,7 @@ class WidgetExtensionTest extends TestCase
 
     public function testRenderWidgetObject(): void
     {
-        $widget = new More();
+        $widget = new TestWidget();
         $sut = $this->getSut(null, null);
         $options = ['foo' => 'bar', 'dataType' => 'blub'];
         $result = $sut->renderWidget($this->getEnvironment(), $widget, $options);

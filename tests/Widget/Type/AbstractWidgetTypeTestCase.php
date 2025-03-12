@@ -13,6 +13,7 @@ use App\Widget\Type\AbstractWidgetType;
 
 /**
  * @covers \App\Widget\Type\AbstractWidgetType
+ * @deprecated
  */
 abstract class AbstractWidgetTypeTestCase extends AbstractWidgetTestCase
 {

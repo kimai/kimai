@@ -147,7 +147,7 @@ final class DashboardController extends AbstractController
                         break;
                     }
                     foreach ($options as $key => $value) {
-                        if (!is_scalar($value)) {
+                        if (!\is_scalar($value)) {
                             continue;
                         }
                         $tmpWidget->setOption($key, $value);
@@ -201,7 +201,7 @@ final class DashboardController extends AbstractController
             } else {
                 $widgetsJson = $form->getData()['widgets'];
                 $json = false;
-                if (is_string($widgetsJson)) {
+                if (\is_string($widgetsJson)) {
                     $json = json_decode($widgetsJson, true);
                 }
                 if ($json === false) {
@@ -209,7 +209,7 @@ final class DashboardController extends AbstractController
                 } else {
                     try {
                         foreach ($json as $widget) {
-                            if (!is_array($widget) || !isset($widget['name']) || !isset($widget['options'])) {
+                            if (!\is_array($widget) || !isset($widget['name']) || !isset($widget['options'])) {
                                 $error = 'Invalid widget configuration';
                             } else {
                                 $widgetId = $widget['name'];

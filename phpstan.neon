@@ -709,7 +709,7 @@ parameters:
 
         -
             message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
-            count: 2
+            count: 1
             path: src/Controller/DashboardController.php
 
         -
@@ -724,16 +724,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Controller\\\\DashboardController\\:\\:saveBookmark\\(\\) has parameter \\$widgets with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Controller/DashboardController.php
-
-        -
-            message: "#^Parameter \\#1 \\$name of method App\\\\Widget\\\\WidgetInterface\\:\\:setOption\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/Controller/DashboardController.php
-
-        -
-            message: "#^Parameter \\#2 \\$value of method App\\\\Widget\\\\WidgetInterface\\:\\:setOption\\(\\) expects bool\\|int\\|string, mixed given\\.$#"
             count: 1
             path: src/Controller/DashboardController.php
 
@@ -4136,11 +4126,6 @@ parameters:
             message: "#^Method App\\\\Twig\\\\Runtime\\\\ThemeExtension\\:\\:getTimePresets\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Twig/Runtime/ThemeExtension.php
-
-        -
-            message: "#^Method App\\\\Twig\\\\Runtime\\\\WidgetExtension\\:\\:renderWidget\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Twig/Runtime/WidgetExtension.php
 
         -
             message: "#^Method App\\\\User\\\\LoginManager\\:\\:logInUser\\(\\) has no return type specified\\.$#"

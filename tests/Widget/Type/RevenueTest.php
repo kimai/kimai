@@ -36,7 +36,7 @@ class RevenueTest extends AbstractWidgetTestCase
 
     public function getDefaultOptions(): array
     {
-        return [];
+        return ['daterange' => 'month'];
     }
 
     public function testSettings(): void

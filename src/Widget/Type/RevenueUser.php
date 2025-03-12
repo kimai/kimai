@@ -33,7 +33,7 @@ final class RevenueUser extends AbstractWidget
      */
     public function getData(array $options = []): mixed
     {
-        $range = is_string($options['daterange']) ? $options['daterange'] : DateRangeEnum::MONTH->value;
+        $range = \is_string($options['daterange']) ? $options['daterange'] : DateRangeEnum::MONTH->value;
         $factory = DateTimeFactory::createByUser($this->getUser());
         $type = DateRangeEnum::tryFrom($range);
         $type ??= DateRangeEnum::MONTH;
