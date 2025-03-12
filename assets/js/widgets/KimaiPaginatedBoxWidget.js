@@ -92,7 +92,7 @@ export default class KimaiPaginatedBoxWidget {
         if (node.tagName !== undefined && node.tagName === 'SCRIPT') {
             const script  = document.createElement('script');
             script.text = node.innerHTML;
-            node.parentNode.replaceChild(script, node );
+            node.parentNode.replaceChild(script, node);
         } else {
             for (const child of node.childNodes) {
                 this._makeScriptExecutable(child);
