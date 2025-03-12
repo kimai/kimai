@@ -9,23 +9,14 @@
 
 namespace App\Export\Package\CellFormatter;
 
-use App\Utils\Duration;
-
-final class DurationFormatter implements CellFormatterInterface
+final class DurationDecimalFormatter implements CellFormatterInterface
 {
-    private Duration $duration;
-
-    public function __construct()
-    {
-        $this->duration = new Duration();
-    }
-
     public function formatValue(mixed $value): mixed
     {
         if (is_numeric($value)) {
-            return $this->duration->format((int) $value);
+            return (float) number_format($value / 3600, 2, '.', '');
         }
 
-        return $this->duration->format(0);
+        return 0.0;
     }
 }

@@ -22,6 +22,7 @@ use App\Export\Package\CellFormatter\BooleanFormatter;
 use App\Export\Package\CellFormatter\CellFormatterInterface;
 use App\Export\Package\CellFormatter\DateFormatter;
 use App\Export\Package\CellFormatter\DefaultFormatter;
+use App\Export\Package\CellFormatter\DurationDecimalFormatter;
 use App\Export\Package\CellFormatter\DurationFormatter;
 use App\Export\Package\CellFormatter\RateFormatter;
 use App\Export\Package\CellFormatter\TextFormatter;
@@ -130,6 +131,7 @@ final class SpreadsheetRenderer
             'date' => new DateFormatter(),
             'time' => new TimeFormatter(),
             'duration' => new DurationFormatter(),
+            'duration_decimal' => new DurationDecimalFormatter(),
             default => new DefaultFormatter()
         };
     }
@@ -141,12 +143,14 @@ final class SpreadsheetRenderer
     {
         $showRates = $this->isRenderRate($query);
 
+        $durationFormatter = $this->voter->getUser()?->isExportDecimal() ? 'duration_decimal' : 'duration';
+
         $columns = [];
 
         $columns[] = (new Column('date', $this->getFormatter('date')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getBegin());
         $columns[] = (new Column('begin', $this->getFormatter('time')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getBegin())->withColumnWidth(ColumnWidth::SMALL);
         $columns[] = (new Column('end', $this->getFormatter('time')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getEnd())->withColumnWidth(ColumnWidth::SMALL);
-        $columns[] = (new Column('duration', $this->getFormatter('duration')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getDuration())->withColumnWidth(ColumnWidth::SMALL);
+        $columns[] = (new Column('duration', $this->getFormatter($durationFormatter)))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getDuration())->withColumnWidth(ColumnWidth::SMALL);
 
         if ($showRates) {
             $columns[] = (new Column('currency', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getProject()?->getCustomer()?->getCurrency())->withColumnWidth(ColumnWidth::SMALL);

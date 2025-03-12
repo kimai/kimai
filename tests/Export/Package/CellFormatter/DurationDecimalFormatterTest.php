@@ -9,46 +9,46 @@
 
 namespace App\Tests\Export\Package\CellFormatter;
 
-use App\Export\Package\CellFormatter\DurationFormatter;
+use App\Export\Package\CellFormatter\DurationDecimalFormatter;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Export\Package\CellFormatter\DurationFormatter
+ * @covers \App\Export\Package\CellFormatter\DurationDecimalFormatter
  */
-class DurationFormatterTest extends TestCase
+class DurationDecimalFormatterTest extends TestCase
 {
     public function testFormatValueReturnsFormattedDurationForNumericValue(): void
     {
-        $formatter = new DurationFormatter();
+        $formatter = new DurationDecimalFormatter();
         $result = $formatter->formatValue(7200);
-        self::assertEquals('2:00', $result);
+        self::assertEquals(2.00, $result);
     }
 
     public function testFormatValueReturnsZeroForNonNumericValue(): void
     {
-        $formatter = new DurationFormatter();
+        $formatter = new DurationDecimalFormatter();
         $result = $formatter->formatValue('not a number');
-        self::assertEquals('0:00', $result);
+        self::assertEquals(0.0, $result);
     }
 
     public function testFormatValueReturnsFormattedDurationForFloatValue(): void
     {
-        $formatter = new DurationFormatter();
+        $formatter = new DurationDecimalFormatter();
         $result = $formatter->formatValue(4500.5);
-        self::assertEquals('1:15', $result);
+        self::assertEquals(1.25, $result);
     }
 
     public function testFormatValueReturnsZeroForNullValue(): void
     {
-        $formatter = new DurationFormatter();
+        $formatter = new DurationDecimalFormatter();
         $result = $formatter->formatValue(null);
-        self::assertEquals('0:00', $result);
+        self::assertEquals(0.0, $result);
     }
 
     public function testFormatValueReturnsFormattedDurationForNegativeValue(): void
     {
-        $formatter = new DurationFormatter();
+        $formatter = new DurationDecimalFormatter();
         $result = $formatter->formatValue(-3600);
-        self::assertEquals('-1:00', $result);
+        self::assertEquals(-1.00, $result);
     }
 }
