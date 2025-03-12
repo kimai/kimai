@@ -10,7 +10,6 @@
 namespace App\Twig\Runtime;
 
 use App\Entity\User;
-use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 use App\Widget\WidgetService;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -19,22 +18,18 @@ use Twig\Extension\RuntimeExtensionInterface;
 
 final class WidgetExtension implements RuntimeExtensionInterface
 {
-    public function __construct(private WidgetService $service, private Security $security)
+    public function __construct(
+        private readonly WidgetService $service,
+        private readonly Security $security
+    )
     {
     }
 
     /**
-     * @param WidgetInterface|string $widget
-     * @param array $options
-     * @return string
-     * @throws WidgetException
+     * @param array<string, string|bool|int|float> $options
      */
-    public function renderWidget(Environment $environment, $widget, array $options = []): string
+    public function renderWidget(Environment $environment, WidgetInterface|string $widget, array $options = []): string
     {
-        if (!($widget instanceof WidgetInterface) && !\is_string($widget)) {
-            throw new \InvalidArgumentException('Widget must be either a WidgetInterface or a string');
-        }
-
         if (\is_string($widget)) {
             if (!$this->service->hasWidget($widget)) {
                 throw new \InvalidArgumentException(\sprintf('Unknown widget "%s" requested', $widget));
@@ -48,7 +43,7 @@ final class WidgetExtension implements RuntimeExtensionInterface
             $widget->setUser($user);
         }
 
-        $options = $widget->getOptions($options);
+        $options = array_merge($widget->getOptions(), $options);
 
         return $environment->render($widget->getTemplateName(), [
             'data' => $widget->getData($options),

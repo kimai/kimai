@@ -12,7 +12,9 @@ namespace App\Widget\Type;
 use App\Configuration\SystemConfiguration;
 use App\Event\UserRevenueStatisticEvent;
 use App\Repository\TimesheetRepository;
+use App\Timesheet\DateRangeEnum;
 use App\Timesheet\DateTimeFactory;
+use App\Widget\WidgetInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
 final class RevenueUser extends AbstractWidget
@@ -23,32 +25,51 @@ final class RevenueUser extends AbstractWidget
         private readonly EventDispatcherInterface $dispatcher
     )
     {
+        $this->setOption('daterange', DateRangeEnum::MONTH->value);
     }
 
     /**
-     * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     * @param array<string, string|bool|int|float> $options
      */
     public function getData(array $options = []): mixed
     {
-        $financialYear = null;
+        $range = is_string($options['daterange']) ? $options['daterange'] : DateRangeEnum::MONTH->value;
         $factory = DateTimeFactory::createByUser($this->getUser());
+        $type = DateRangeEnum::tryFrom($range);
+        $type ??= DateRangeEnum::MONTH;
 
-        if (null !== ($yearConfig = $this->systemConfiguration->getFinancialYearStart())) {
-            $begin = $factory->createStartOfFinancialYear($yearConfig);
-            $end = $factory->createEndOfFinancialYear($begin);
-            $financialYear = $this->getRevenue($begin, $end);
+        $data = null;
+
+        if ($type === DateRangeEnum::FINANCIAL) {
+            if (null !== ($yearConfig = $this->systemConfiguration->getFinancialYearStart())) {
+                $begin = $factory->createStartOfFinancialYear($yearConfig);
+                $end = $factory->createEndOfFinancialYear($begin);
+                $data = $this->getRevenue($begin, $end);
+            } else {
+                $type = DateRangeEnum::YEAR;
+            }
+        }
+
+        if ($data === null) {
+            $data = match ($type) {
+                DateRangeEnum::TODAY => $this->getRevenue($factory->createStartOfDay(), $factory->createEndOfDay()),
+                DateRangeEnum::WEEK => $this->getRevenue($factory->getStartOfWeek(), $factory->getEndOfWeek()),
+                DateRangeEnum::YEAR => $this->getRevenue($factory->createStartOfYear(), $factory->createEndOfYear()),
+                DateRangeEnum::TOTAL => $this->getRevenue(null, null),
+                default => $this->getRevenue($factory->getStartOfMonth(), $factory->getEndOfMonth()),
+            };
         }
 
         return [
-            'today' => $this->getRevenue($factory->createStartOfDay(), $factory->createEndOfDay()),
-            'week' => $this->getRevenue($factory->getStartOfWeek(), $factory->getEndOfWeek()),
-            'month' => $this->getRevenue($factory->getStartOfMonth(), $factory->getEndOfMonth()),
-            'year' => $this->getRevenue($factory->createStartOfYear(), $factory->createEndOfYear()),
-            'total' => $this->getRevenue(null, null),
-            'financial' => $financialYear,
+            'title' => $this->getDateRangeTitle($type),
+            'color' => $this->getDateRangeColor($type),
+            'value' => $data
         ];
     }
 
+    /**
+     * @return array<float>
+     */
     private function getRevenue(?\DateTimeInterface $begin, ?\DateTimeInterface $end): array
     {
         $user = $this->getUser();
@@ -63,6 +84,11 @@ final class RevenueUser extends AbstractWidget
         $this->dispatcher->dispatch($event);
 
         return $event->getRevenue();
+    }
+
+    public function getWidth(): int
+    {
+        return WidgetInterface::WIDTH_SMALL;
     }
 
     public function getTitle(): string

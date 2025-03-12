@@ -10,27 +10,45 @@
 namespace App\Widget\Type;
 
 use App\Entity\User;
+use App\Timesheet\DateRangeEnum;
 use App\Widget\WidgetInterface;
-use Symfony\Component\Form\Form;
 
 abstract class AbstractWidget implements WidgetInterface
 {
     private array $options = [];
     private ?User $user = null;
 
+    public function getDateRangeColor(DateRangeEnum $dateRangeEnum): string
+    {
+        return match ($dateRangeEnum) {
+            DateRangeEnum::TODAY => 'green',
+            DateRangeEnum::WEEK => 'blue',
+            DateRangeEnum::MONTH => 'purple',
+            DateRangeEnum::FINANCIAL, DateRangeEnum::YEAR => 'yellow',
+            DateRangeEnum::TOTAL => 'red',
+        };
+    }
+
+    public function getDateRangeTitle(DateRangeEnum $dateRangeEnum): string
+    {
+        return match ($dateRangeEnum) {
+            DateRangeEnum::TODAY => 'daterangepicker.today',
+            DateRangeEnum::WEEK => 'daterangepicker.thisWeek',
+            DateRangeEnum::MONTH => 'daterangepicker.thisMonth',
+            DateRangeEnum::YEAR => 'daterangepicker.thisYear',
+            DateRangeEnum::FINANCIAL => 'daterangepicker.thisFinancialYear',
+            DateRangeEnum::TOTAL => 'daterangepicker.allTime',
+        };
+    }
+
     public function getTranslationDomain(): string
     {
         return 'messages';
     }
 
-    public function hasForm(): bool
+    public function getWidth(): int
     {
-        return false;
-    }
-
-    public function getForm(): ?Form
-    {
-        return null;
+        return WidgetInterface::WIDTH_NORMAL;
     }
 
     public function getPermissions(): array
@@ -48,31 +66,22 @@ abstract class AbstractWidget implements WidgetInterface
         return $this->user;
     }
 
-    /**
-     * @param mixed $value
-     */
-    public function setOption(string $name, $value): void
+    public function setOption(string $name, string|bool|int|float $value): void
     {
         $this->options[$name] = $value;
     }
 
     /**
-     * @param array<string, string|bool|int|null|array<string, mixed>> $options
-     * @return array<string, string|bool|int|null|array<string, mixed>>
+     * @return array<string, string|bool|int|float>
      */
-    public function getOptions(array $options = []): array
+    public function getOptions(): array
     {
-        return array_merge($this->options, $options);
+        return $this->options;
     }
 
     public function isInternal(): bool
     {
         return false;
-    }
-
-    public function getId(): string
-    {
-        return (new \ReflectionClass($this))->getShortName();
     }
 
     public function getTemplateName(): string

@@ -1,44 +1,20 @@
-{% embed '@theme/embeds/card.html.twig' with {'margin_bottom': 0, fullsize: true} %}
-    {% import "macros/widgets.html.twig" as widgets %}
+{% embed 'dashboard/widget-small.html.twig' with {fullsize: true} %}
     {% import "macros/progressbar.html.twig" as progress %}
     {% from 'macros/widgets.html.twig' import label %}
-    {% block box_title %}{{ title|trans }}{% endblock %}
     {% block box_body %}
-        {% set id = tabler_unique_id('chart_revenue') %}
-        {% set values = [
-            {title: 'daterangepicker.today'|trans({}, 'daterangepicker'), value: data.today, color: 'green'},
-            {title: 'daterangepicker.thisWeek'|trans({}, 'daterangepicker'), value: data.week, color: 'blue'},
-            {title: 'daterangepicker.thisMonth'|trans({}, 'daterangepicker'), value: data.month, color: 'purple'},
-            {title: 'daterangepicker.thisYear'|trans({}, 'daterangepicker'), value: data.year, color: 'yellow'},
-        ] %}
-        {% if data.financial is not null %}
-            {% set values = values|merge([
-                {title: 'daterangepicker.thisFinancialYear'|trans({}, 'daterangepicker'), value: data.financial, color: 'yellow' },
-            ]) %}
+        {% set values = data.value %}
+        {% if values is empty %}
+            {% set values = {(null): 0.00} %}
         {% endif %}
-        {% set values = values|merge([
-            {title: 'daterangepicker.allTime'|trans({}, 'daterangepicker'), value: data.total, color: 'red' },
-        ]) %}
-        <div class="row">
-            <div class="col-12">
-                <table class="table table-hover dataTable">
-                {% for row in values %}
-                    {% set data = row.value %}
-                    <tr>
-                        <td>{{ row.title }}</td>
-                        <td class="text-end">
-                            {% if data is empty %}
-                                {% set data = {(null): 0.00} %}
-                            {% endif %}
-                            {% for currency, revenue in data %}
-                                {{ label(revenue|money(currency|default(options.currency|default(null))), row.color) }}
-                            {% endfor %}
-                        </td>
-                    </tr>
-                {% endfor %}
-                </table>
-            </div>
-        </div>
-
+        <table class="w-100 mt-3">
+            <tr>
+                <td>{{ data.title|trans({}, 'daterangepicker') }}</td>
+                <td class="text-end">
+                    {% for currency, revenue in values %}
+                        {{ label(revenue|money(currency|default(options.currency|default(null))), data.color) }}
+                    {% endfor %}
+                </td>
+            </tr>
+        </table>
     {% endblock %}
 {% endembed %}

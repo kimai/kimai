@@ -1,7 +1,6 @@
-{% embed '@theme/embeds/card.html.twig' with {'margin_bottom': 0} %}
+{% embed 'dashboard/widget.html.twig' %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% import "macros/progressbar.html.twig" as progress %}
-    {% block box_title %}{{ title|trans }}{% endblock %}
     {% block box_body %}
         {% set id = tabler_unique_id('chart_duration') %}
         {% set values = [

@@ -145,6 +145,10 @@
  */
 
 /*!
+ * [KIMAI] KimaiSortable: allow sorting of HTML elements
+ */
+
+/*!
  * [KIMAI] KimaiStorage: simple wrapper to handle localStorage access
  */
 
@@ -170,4 +174,11 @@
 
 /*!
  * [KIMAI] Wrapper class for loading Kimai app in browser script scope
+ */
+
+/**!
+ * Sortable 1.15.6
+ * @author	RubaXa   <trash@rubaxa.org>
+ * @author	owenm    <owen23355@gmail.com>
+ * @license MIT
  */

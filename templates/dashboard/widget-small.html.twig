@@ -1,0 +1,16 @@
+{% set _id = id|default(tabler_unique_id('widget')) %}
+
+<div id="{{ _id }}" class="card mb-0" {% block box_attributes %}{% endblock %}>
+    <div class="card-body">
+        <div class="d-flex align-items-center">
+            <div class="subheader text-uppercase">{{ title|trans({}, widget.translationDomain) }}</div>
+            <div class="ms-auto lh-1">
+                {% block box_options %}{% include 'dashboard/widget-options.html.twig' %}{% endblock %}
+                <a href="#" class="widget_edit d-none" onclick="removeWidget('{{ _id }}')">
+                    {{ icon('remove') }}
+                </a>
+            </div>
+        </div>
+        {% block box_body %}{% endblock %}
+    </div>
+</div>

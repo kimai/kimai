@@ -13,6 +13,7 @@ use App\Configuration\SystemConfiguration;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\DateTimeFactory;
 use App\Widget\WidgetException;
+use App\Widget\WidgetInterface;
 use DateTime;
 
 final class PaginatedWorkingTimeChart extends AbstractWidget
@@ -22,6 +23,11 @@ final class PaginatedWorkingTimeChart extends AbstractWidget
         private readonly SystemConfiguration $systemConfiguration
     )
     {
+    }
+
+    public function getWidth(): int
+    {
+        return WidgetInterface::WIDTH_FULL;
     }
 
     public function getPermissions(): array
@@ -39,37 +45,6 @@ final class PaginatedWorkingTimeChart extends AbstractWidget
         return 'widget/widget-paginatedworkingtimechart.html.twig';
     }
 
-    /**
-     * @param array<string, string|bool|int|null|array<string, mixed>> $options
-     @return array<string, string|bool|int|null|array<string, mixed>>
-     */
-    public function getOptions(array $options = []): array
-    {
-        $options = parent::getOptions($options);
-
-        if (!\array_key_exists('type', $options) || !\in_array($options['type'], ['bar', 'line'])) {
-            $options['type'] = 'bar';
-        }
-
-        if (!\array_key_exists('year', $options) || !\array_key_exists('week', $options)) {
-            $timezone = date_default_timezone_get();
-            if ($this->getUser() !== null) {
-                $timezone = $this->getUser()->getTimezone();
-            }
-            $now = new DateTime('now', new \DateTimeZone($timezone));
-
-            if (!\array_key_exists('year', $options)) {
-                $options['year'] = $now->format('o');
-            }
-
-            if (!\array_key_exists('week', $options)) {
-                $options['week'] = $now->format('W');
-            }
-        }
-
-        return $options;
-    }
-
     private function getLastWeekInYear($year): int
     {
         $lastWeekInYear = new DateTime();
@@ -79,13 +54,29 @@ final class PaginatedWorkingTimeChart extends AbstractWidget
     }
 
     /**
-     * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     * @param array<string, string|bool|int|float> $options
      */
     public function getData(array $options = []): mixed
     {
         $user = $this->getUser();
 
         $dateTimeFactory = DateTimeFactory::createByUser($user);
+
+        if (!\array_key_exists('year', $options) || !\array_key_exists('week', $options)) {
+            $timezone = date_default_timezone_get();
+            if ($this->getUser() !== null) {
+                $timezone = $this->getUser()->getTimezone();
+            }
+            $now = new \DateTimeImmutable('now', new \DateTimeZone($timezone));
+
+            if (!\array_key_exists('year', $options)) {
+                $options['year'] = $now->format('o');
+            }
+
+            if (!\array_key_exists('week', $options)) {
+                $options['week'] = $now->format('W');
+            }
+        }
 
         $year = $options['year'];
         if (\is_string($year)) {
@@ -134,6 +125,8 @@ final class PaginatedWorkingTimeChart extends AbstractWidget
         }
 
         return [
+            'pagination_year' => $options['year'],
+            'pagination_week' => $options['week'],
             'begin' => clone $weekBegin,
             'end' => clone $weekEnd,
             'dateYear' => $year,

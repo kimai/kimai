@@ -11,7 +11,6 @@ namespace App\Widget;
 
 use App\Entity\User;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
-use Symfony\Component\Form\Form;
 
 /**
  * No BC promise!
@@ -20,21 +19,25 @@ use Symfony\Component\Form\Form;
 #[AutoconfigureTag]
 interface WidgetInterface
 {
+    /** @deprecated */
     public const COLOR_TODAY = 'green';
+    /** @deprecated */
     public const COLOR_WEEK = 'blue';
+    /** @deprecated */
     public const COLOR_MONTH = 'purple';
+    /** @deprecated */
     public const COLOR_YEAR = 'yellow';
+    /** @deprecated */
     public const COLOR_TOTAL = 'red';
 
-    /** @deprecated */
     public const WIDTH_FULL = 4;
-    /** @deprecated */
-    public const WIDTH_LARGE = 3;
-    /** @deprecated */
-    public const WIDTH_HALF = 2;
-    /** @deprecated */
+    public const WIDTH_NORMAL = 2;
     public const WIDTH_SMALL = 1;
 
+    /** @deprecated */
+    public const WIDTH_LARGE = 2;
+    /** @deprecated */
+    public const WIDTH_HALF = 2;
     /** @deprecated */
     public const HEIGHT_MAXIMUM = 6;
     /** @deprecated */
@@ -46,11 +49,13 @@ interface WidgetInterface
 
     /**
      * Returns a unique ID for this widget.
+     * @return non-empty-string
      */
     public function getId(): string;
 
     /**
-     * Returns the widget title (must be non-empty).
+     * Returns the widget title.
+     * @return non-empty-string
      */
     public function getTitle(): string;
 
@@ -58,6 +63,11 @@ interface WidgetInterface
      * Returns the translation domain used by this widget.
      */
     public function getTranslationDomain(): string;
+
+    /**
+     * Returns the width for this widget.
+     */
+    public function getWidth(): int;
 
     /**
      * Injects the current user.
@@ -71,31 +81,27 @@ interface WidgetInterface
      * make sure that the given $options will overwrite the internal option for
      * this one call.
      *
-     * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     * @param array<string, string|bool|int|float> $options
      * @return mixed|null
      */
     public function getData(array $options = []): mixed;
 
     /**
-     * Returns all widget options to be used in the frontend.
+     * Returns all widget options, which should be configurable in the frontend.
      *
-     * The given $options are not meant to be persisted, but only to
-     * overwrite the default values one time.
+     * Kimai supports the following named options by default:
+     * - daterange: see AbstractWidget::getDateRangeColor() and AbstractWidget::getDateRangeTitle()
      *
-     * You can validate the options or simply return:
-     * return array_merge($this->options, $options);
+     * Do not return internal options from this method.
      *
-     * @param array<string, string|bool|int|null|array<string, mixed>> $options
-     * @return array<string, string|bool|int|null|array<string, mixed>>
+     * @return array<string, string|bool|int|float>
      */
-    public function getOptions(array $options = []): array;
+    public function getOptions(): array;
 
     /**
-     * Sets one widget option, both for internal use and for frontend rendering.
-     *
-     * The given option should be persisted and permanently overwrite the internal option.
+     * Sets one widget option, overwriting the default value.
      */
-    public function setOption(string $name, string|bool|int $value): void;
+    public function setOption(string $name, string|bool|int|float $value): void;
 
     /**
      * Return a list of granted syntax string.

@@ -28,49 +28,43 @@ final class DashboardSubscriber extends AbstractActionsSubscriber
         /** @var WidgetInterface[] $available */
         $available = $payload['available'];
 
-        if (!$event->isView('edit')) {
-            $event->addConfig($this->path('dashboard_edit'));
-        } else {
-            $ids = [];
-
-            $event->addAction('save', ['title' => 'action.save', 'onclick' => 'saveDashboard(); return false;', 'icon' => 'save']);
-
-            foreach ($widgets as $widget) {
-                $ids[] = $widget->getId();
-            }
-
-            foreach ($available as $widget) {
-                if ($widget->isInternal()) {
-                    continue;
-                }
-
-                // prevent to use the same widget multiple times
-                if (\in_array($widget->getId(), $ids)) {
-                    continue;
-                }
-
-                $permissions = $widget->getPermissions();
-                if (\count($permissions) > 0) {
-                    $allow = false;
-                    foreach ($widget->getPermissions() as $permission) {
-                        if ($this->isGranted($permission)) {
-                            $allow = true;
-                        }
-                    }
-
-                    if (!$allow) {
-                        continue;
-                    }
-                }
-
-                if (empty($widget->getTitle())) {
-                    continue;
-                }
-
-                $event->addActionToSubmenu('widget_add', $widget->getId(), ['url' => $this->path('dashboard_add', ['widget' => $widget->getId()]), 'title' => $widget->getTitle(), 'translation_domain' => $widget->getTranslationDomain()]);
-            }
-
-            $event->addAction('reset', ['title' => 'action.reset', 'url' => $this->path('dashboard_reset'), 'icon' => 'delete', 'class' => 'confirmation-link', 'attr' => ['data-question' => 'confirm.delete']]);
+        $ids = [];
+        foreach ($widgets as $widget) {
+            $ids[] = $widget->getId();
         }
+
+        foreach ($available as $widget) {
+            if ($widget->isInternal()) {
+                continue;
+            }
+
+            // prevent to use the same widget multiple times
+            if (\in_array($widget->getId(), $ids)) {
+                continue;
+            }
+
+            $permissions = $widget->getPermissions();
+            if (\count($permissions) > 0) {
+                $allow = false;
+                foreach ($widget->getPermissions() as $permission) {
+                    if ($this->isGranted($permission)) {
+                        $allow = true;
+                    }
+                }
+
+                if (!$allow) {
+                    continue;
+                }
+            }
+
+            if (!$event->hasAction('create')) {
+                $event->addAction('create', ['title' => 'action.add']);
+            }
+            $event->addActionToSubmenu('create', $widget->getId(), ['url' => $this->path('dashboard_add', ['widget' => $widget->getId()]), 'title' => $widget->getTitle(), 'translation_domain' => $widget->getTranslationDomain()]);
+        }
+
+        $event->addAction('reset', ['title' => 'action.reset', 'url' => $this->path('dashboard_reset'), 'icon' => false, 'class' => 'confirmation-link widget_edit d-none btn-outline-danger', 'attr' => ['data-question' => 'confirm.delete']]);
+        $event->addAction('save', ['url' => '#', 'title' => 'action.save', 'onclick' => 'saveDashboard()', 'class' => 'widget_edit d-none btn-primary', 'icon' => false]);
+        $event->addAction('edit', ['url' => '#', 'title' => 'edit', 'icon' => 'settings', 'onclick' => 'editDashboard()', 'class' => 'widget_edit']);
     }
 }

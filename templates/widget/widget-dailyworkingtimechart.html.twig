@@ -1,5 +1,5 @@
-{% set type = options.type|default('bar') %}
-{% set chart_id = options.id %}
+{% set type = 'bar' %}
+{% set chart_id = tabler_unique_id('DailyWorkingTimeChart_') %}
 {% set backgroundColor = config('theme.chart.background_color') %}
 {% set gridColor = config('theme.chart.grid_color') %}
 {% set activities = data.activities %}

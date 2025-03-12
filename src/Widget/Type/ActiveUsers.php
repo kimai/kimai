@@ -59,11 +59,11 @@ final class ActiveUsers extends AbstractWidget
         $qb = $this->repository->createQueryBuilder('t');
         $qb->select($qb->expr()->count('t'))->where($qb->expr()->isNull('t.end'));
 
-        return (int) $qb->getQuery()->getSingleScalarResult(); // @phpstan-ignore-line
+        return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
     /**
-     * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     * @param array<string, string|bool|int|float> $options
      */
     public function getData(array $options = []): mixed
     {

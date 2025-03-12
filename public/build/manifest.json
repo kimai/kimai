@@ -1,6 +1,6 @@
 {
   "build/app.css": "/build/app.079f3158.css",
-  "build/app.js": "/build/app.7719f352.js",
+  "build/app.js": "/build/app.1bb6240b.js",
   "build/app-rtl.css": "/build/app-rtl.f2a83683.css",
   "build/app-rtl.js": "/build/app-rtl.7a875ca7.js",
   "build/export-pdf.css": "/build/export-pdf.d8a6c23b.css",
@@ -12,9 +12,7 @@
   "build/chart.js": "/build/chart.62631acc.js",
   "build/calendar.css": "/build/calendar.d757753e.css",
   "build/calendar.js": "/build/calendar.7415ab21.js",
-  "build/dashboard.css": "/build/dashboard.b7129fa1.css",
-  "build/dashboard.js": "/build/dashboard.632f98fb.js",
-  "build/runtime.js": "/build/runtime.6c399d29.js",
+  "build/runtime.js": "/build/runtime.1440a7f0.js",
   "build/fonts/fa-solid-900.ttf": "/build/fonts/fa-solid-900.ad1782c7.ttf",
   "build/fonts/fa-brands-400.ttf": "/build/fonts/fa-brands-400.26b80c88.ttf",
   "build/fonts/fa-solid-900.woff2": "/build/fonts/fa-solid-900.83a538a0.woff2",

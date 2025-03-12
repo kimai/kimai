@@ -10,7 +10,7 @@
 namespace App\Widget\Type;
 
 /**
- * @deprecated since 2.31.0, use AbstractWidget instead
+ * @deprecated since 3.0: use AbstractWidget instead
  */
 abstract class AbstractWidgetType extends AbstractWidget
 {
@@ -19,5 +19,10 @@ abstract class AbstractWidgetType extends AbstractWidget
         foreach ($options as $key => $value) {
             $this->setOption($key, $value);
         }
+    }
+
+    public function getId(): string
+    {
+        return (new \ReflectionClass($this))->getShortName(); // @phpstan-ignore-line
     }
 }

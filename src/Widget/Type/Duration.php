@@ -55,7 +55,7 @@ final class Duration extends AbstractWidget
     }
 
     /**
-     * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     * @param array<string, string|bool|int|float> $options
      */
     public function getData(array $options = []): mixed
     {

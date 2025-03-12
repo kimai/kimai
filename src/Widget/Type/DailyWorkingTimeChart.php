@@ -39,29 +39,14 @@ final class DailyWorkingTimeChart extends AbstractWidget
     }
 
     /**
-     * @param array<string, string|bool|int|null|array<string, mixed>> $options
-     * @return array<string, string|bool|int|null|array<string, mixed>>
-     */
-    public function getOptions(array $options = []): array
-    {
-        return array_merge([
-            'begin' => null,
-            'end' => null,
-            'color' => '',
-            'type' => 'bar',
-            'id' => uniqid('DailyWorkingTimeChart_'),
-        ], parent::getOptions($options));
-    }
-
-    /**
-     * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     * @param array<string, string|bool|int|float> $options
      */
     public function getData(array $options = []): mixed
     {
         $user = $this->getUser();
         $dateTimeFactory = DateTimeFactory::createByUser($user);
 
-        $begin = $options['begin'];
+        $begin = $options['begin'] ?? null;
         if (!($begin instanceof \DateTimeInterface)) {
             if (\is_string($begin)) {
                 $begin = new \DateTimeImmutable($begin, new \DateTimeZone($user->getTimezone()));
@@ -70,7 +55,7 @@ final class DailyWorkingTimeChart extends AbstractWidget
             }
         }
 
-        $end = $options['end'];
+        $end = $options['end'] ?? null;
         if (!($end instanceof \DateTimeInterface)) {
             if (\is_string($end)) {
                 $end = new \DateTimeImmutable($end, new \DateTimeZone($user->getTimezone()));
