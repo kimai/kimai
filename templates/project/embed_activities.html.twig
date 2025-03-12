@@ -1,4 +1,4 @@
-    {% embed '@theme/embeds/card.html.twig' with {'project': project, 'activities': activities, 'page': page} %}
+    {% embed '@theme/embeds/card.html.twig' with {'project': project, 'activities': activities, 'page': page, 'id': 'activity_list_box'} %}
         {% import "activity/actions.html.twig" as actions %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_title %}{{ 'activities'|trans }}{% endblock %}
