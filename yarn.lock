@@ -4239,6 +4239,7 @@ __metadata:
     luxon: "npm:^3"
     sass: "npm:^1"
     sass-loader: "npm:^16"
+    sortablejs: "npm:^1.15.6"
     tom-select: "npm:^2"
     webpack: "npm:^5"
     webpack-cli: "npm:^5"
@@ -5821,6 +5822,13 @@ __metadata:
     ip: "npm:^1.1.5"
     smart-buffer: "npm:^4.2.0"
   checksum: 10/820232ddaeb847ef33312c429fb51aae03e1b774917f189ef491048bb4c4d7742924064f72d7730e3aa08a3ddb6cc2bdcd5949d34c35597e4f6a66eefd994f14
+  languageName: node
+  linkType: hard
+
+"sortablejs@npm:^1.15.6":
+  version: 1.15.6
+  resolution: "sortablejs@npm:1.15.6"
+  checksum: 10/3179071352662e6cff20d7d10792a934fc892a83a01ae09c7e604d2dd51daaf07283b00a8f2b13025f27959ff68a1469959bc94ef2a7049723d4c381a368a5ac
   languageName: node
   linkType: hard
 

@@ -48,6 +48,7 @@
     "luxon": "^3",
     "sass": "^1",
     "sass-loader": "^16",
+    "sortablejs": "^1.15.6",
     "tom-select": "^2",
     "webpack": "^5",
     "webpack-cli": "^5"
