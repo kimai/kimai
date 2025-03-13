@@ -38,6 +38,13 @@ class DurationDecimalFormatterTest extends TestCase
         self::assertEquals(1.25, $result);
     }
 
+    public function testFormatValueReturnsFormattedDurationForStringValue(): void
+    {
+        $formatter = new DurationDecimalFormatter();
+        $result = $formatter->formatValue('4500.5');
+        self::assertEquals(1.25, $result);
+    }
+
     public function testFormatValueReturnsZeroForNullValue(): void
     {
         $formatter = new DurationDecimalFormatter();
@@ -49,6 +56,13 @@ class DurationDecimalFormatterTest extends TestCase
     {
         $formatter = new DurationDecimalFormatter();
         $result = $formatter->formatValue(-3600);
+        self::assertEquals(-1.00, $result);
+    }
+
+    public function testFormatValueReturnsFormattedDurationForNegativeStringValue(): void
+    {
+        $formatter = new DurationDecimalFormatter();
+        $result = $formatter->formatValue('-3600');
         self::assertEquals(-1.00, $result);
     }
 }
