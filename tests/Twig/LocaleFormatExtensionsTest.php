@@ -459,6 +459,7 @@ class LocaleFormatExtensionsTest extends TestCase
                 'name' => null,
                 'admin' => false,
                 'superAdmin' => false,
+                'roles' => [],
             ],
         ];
         $user = $this->createMock(User::class);
@@ -488,6 +489,7 @@ class LocaleFormatExtensionsTest extends TestCase
                 'name' => 'anonymous',
                 'admin' => false,
                 'superAdmin' => false,
+                'roles' => [],
             ],
         ];
 

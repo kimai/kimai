@@ -730,11 +730,6 @@ class TimesheetRepository extends EntityRepository
                 ->setParameter('begin', \DateTimeImmutable::createFromInterface($startFrom), Types::DATETIME_IMMUTABLE);
         }
 
-        $qb->join('t.project', 'p');
-        $qb->join('p.customer', 'c');
-
-        $this->addPermissionCriteria($qb, $user);
-
         $results = $qb->getQuery()->getScalarResult();
 
         if (empty($results)) {
