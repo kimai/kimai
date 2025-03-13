@@ -64,7 +64,7 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
             'users' => [],
             'activities' => [],
         ]);
-        $this->setAllowedOrderColumns(self::TIMESHEET_ORDER_ALLOWED);
+        $this->setAllowedOrderColumns(self::TIMESHEET_ORDER_ALLOWED); // @phpstan-ignore-line
     }
 
     public function addQueryHint(TimesheetQueryHint $hint): void
