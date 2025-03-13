@@ -45,6 +45,7 @@ final class TimesheetTeamController extends TimesheetAbstractController
     public function indexAction(int $page, Request $request): Response
     {
         $query = $this->createDefaultQuery();
+        $query->addAllowedOrderColumns('user');
         $query->setPage($page);
 
         return $this->index($query, $request, 'admin_timesheet', 'admin_timesheet_paginated', TimesheetMetaDisplayEvent::TEAM_TIMESHEET);
