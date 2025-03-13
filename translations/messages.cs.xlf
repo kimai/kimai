@@ -438,25 +438,25 @@
         <source>ROLE_USER</source>
         <target>Uživatel</target>
       </trans-unit>
-      <trans-unit id="TdBJBAl" resname="stats.durationToday">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target>Dnešní pracovní doba</target>
+        <target state="needs-translation">Dnešní pracovní doba</target>
       </trans-unit>
-      <trans-unit id="XhKalZH" resname="stats.durationWeek">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target>Pracovní doba tento týden</target>
+        <target state="needs-translation">Pracovní doba tento týden</target>
       </trans-unit>
-      <trans-unit id="uaOwf_P" resname="stats.durationMonth">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target>Pracovní doba tento měsíc</target>
+        <target state="needs-translation">Pracovní doba tento měsíc</target>
       </trans-unit>
-      <trans-unit id="WqF84KR" resname="stats.durationYear">
+      <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target>Pracovní doba tento rok</target>
+        <target state="needs-translation">Pracovní doba tento rok</target>
       </trans-unit>
-      <trans-unit id="YtvPnl1" resname="stats.durationTotal">
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
-        <target>Pracovní doba celkem</target>
+        <target state="needs-translation">Pracovní doba celkem</target>
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
@@ -974,9 +974,9 @@
         <source>revenue</source>
         <target>Příjmy</target>
       </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
         <source>stats.durationFinancialYear</source>
-        <target>Pracovní doba tento finanční rok</target>
+        <target state="needs-translation">Pracovní doba tento finanční rok</target>
       </trans-unit>
       <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
         <source>stats.activeUsersFinancialYear</source>

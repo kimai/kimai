@@ -626,25 +626,25 @@
         <source>stats.workingTimeYear</source>
         <target>Πλήρες έτος %year%</target>
       </trans-unit>
-      <trans-unit id="TdBJBAl" resname="stats.durationToday">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target>Σημερινές ώρες εργασίας</target>
+        <target state="needs-translation">Σημερινές ώρες εργασίας</target>
       </trans-unit>
-      <trans-unit id="XhKalZH" resname="stats.durationWeek">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target>Ώρες εργασίας τρέχουσας εβδομάδας</target>
+        <target state="needs-translation">Ώρες εργασίας τρέχουσας εβδομάδας</target>
       </trans-unit>
-      <trans-unit id="uaOwf_P" resname="stats.durationMonth">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target>Ώρες εργασίας τρέχοντος μηνός</target>
+        <target state="needs-translation">Ώρες εργασίας τρέχοντος μηνός</target>
       </trans-unit>
-      <trans-unit id="WqF84KR" resname="stats.durationYear">
+      <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target>Ώρες εργασίας τρέχοντος έτους</target>
+        <target state="needs-translation">Ώρες εργασίας τρέχοντος έτους</target>
       </trans-unit>
-      <trans-unit id="YtvPnl1" resname="stats.durationTotal">
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
-        <target>Συνολικές ώρες εργασίας</target>
+        <target state="needs-translation">Συνολικές ώρες εργασίας</target>
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
@@ -998,9 +998,9 @@
         <source>stats.amountFinancialYear</source>
         <target>Έσοδα τρέχοντος οικονομικού έτους</target>
       </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
         <source>stats.durationFinancialYear</source>
-        <target>Ώρες εργασίας κατά το τρέχον οικονομικό έτος</target>
+        <target state="needs-translation">Ώρες εργασίας κατά το τρέχον οικονομικό έτος</target>
       </trans-unit>
       <trans-unit id="Nx9_QiO" resname="revenue">
         <source>revenue</source>

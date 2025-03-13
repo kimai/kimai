@@ -530,25 +530,25 @@
         <source>ROLE_USER</source>
         <target>Uzanto</target>
       </trans-unit>
-      <trans-unit id="TdBJBAl" resname="stats.durationToday">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target>Laborhoroj hodiaŭ</target>
+        <target state="needs-translation">Laborhoroj hodiaŭ</target>
       </trans-unit>
-      <trans-unit id="XhKalZH" resname="stats.durationWeek">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target>Laborhoroj ĉi-semajne</target>
+        <target state="needs-translation">Laborhoroj ĉi-semajne</target>
       </trans-unit>
-      <trans-unit id="uaOwf_P" resname="stats.durationMonth">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target>Laborhoroj ĉi-monate</target>
+        <target state="needs-translation">Laborhoroj ĉi-monate</target>
       </trans-unit>
-      <trans-unit id="WqF84KR" resname="stats.durationYear">
+      <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target>Laborhoroj ĉi-jare</target>
+        <target state="needs-translation">Laborhoroj ĉi-jare</target>
       </trans-unit>
-      <trans-unit id="YtvPnl1" resname="stats.durationTotal">
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
-        <target>Laborhoroj entute</target>
+        <target state="needs-translation">Laborhoroj entute</target>
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
@@ -994,9 +994,9 @@
         <source>stats.activeUsersFinancialYear</source>
         <target>Aktivaj uzantoj ĉi-financjare</target>
       </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
         <source>stats.durationFinancialYear</source>
-        <target>Laborhoroj ĉi-financjare</target>
+        <target state="needs-translation">Laborhoroj ĉi-financjare</target>
       </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
         <source>stats.amountFinancialYear</source>

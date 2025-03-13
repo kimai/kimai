@@ -582,25 +582,25 @@
         <source>stats.workingTimeYear</source>
         <target state="translated">Koko vuosi %year%</target>
       </trans-unit>
-      <trans-unit id="TdBJBAl" resname="stats.durationToday">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target state="translated">Työaika tänään</target>
+        <target state="needs-translation">Työaika tänään</target>
       </trans-unit>
-      <trans-unit id="XhKalZH" resname="stats.durationWeek">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target state="translated">Työaika tällä viikolla</target>
+        <target state="needs-translation">Työaika tällä viikolla</target>
       </trans-unit>
-      <trans-unit id="uaOwf_P" resname="stats.durationMonth">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target state="translated">Työaika tässä kuussa</target>
+        <target state="needs-translation">Työaika tässä kuussa</target>
       </trans-unit>
-      <trans-unit id="WqF84KR" resname="stats.durationYear">
+      <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target state="translated">Työaika tänä vuonna</target>
+        <target state="needs-translation">Työaika tänä vuonna</target>
       </trans-unit>
-      <trans-unit id="YtvPnl1" resname="stats.durationTotal">
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
-        <target state="translated">Työtunteja yhteensä</target>
+        <target state="needs-translation">Työtunteja yhteensä</target>
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
@@ -970,9 +970,9 @@
         <source>stats.amountFinancialYear</source>
         <target>Tulo tällä tilikaudella</target>
       </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
         <source>stats.durationFinancialYear</source>
-        <target>Työaika tällä tilikaudella</target>
+        <target state="needs-translation">Työaika tällä tilikaudella</target>
       </trans-unit>
       <trans-unit id="Nx9_QiO" resname="revenue">
         <source>revenue</source>

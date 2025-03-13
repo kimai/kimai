@@ -542,25 +542,25 @@
         <source>ROLE_USER</source>
         <target state="translated">משתמשים</target>
       </trans-unit>
-      <trans-unit id="TdBJBAl" resname="stats.durationToday">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve" approved="yes">
         <source>stats.durationToday</source>
-        <target>שעות עבודה היום</target>
+        <target state="final">היום</target>
       </trans-unit>
-      <trans-unit id="XhKalZH" resname="stats.durationWeek">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve" approved="yes">
         <source>stats.durationWeek</source>
-        <target>שעות עבודה השבוע</target>
+        <target state="final">השבוע</target>
       </trans-unit>
-      <trans-unit id="uaOwf_P" resname="stats.durationMonth">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve" approved="yes">
         <source>stats.durationMonth</source>
-        <target>שעות עבודה החודש</target>
+        <target state="final">החודש</target>
       </trans-unit>
-      <trans-unit id="WqF84KR" resname="stats.durationYear">
+      <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve" approved="yes">
         <source>stats.durationYear</source>
-        <target>שעות עבודה השנה</target>
+        <target state="final">השנה</target>
       </trans-unit>
-      <trans-unit id="YtvPnl1" resname="stats.durationTotal">
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve" approved="yes">
         <source>stats.durationTotal</source>
-        <target>סך שעות העבודה</target>
+        <target state="final">סך הכול</target>
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
@@ -934,9 +934,9 @@
         <source>stats.amountFinancialYear</source>
         <target>הכנסות בשנה הפיננסית הזאת</target>
       </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve" approved="yes">
         <source>stats.durationFinancialYear</source>
-        <target>שעות עבודה בשנה הפיננסית הזאת</target>
+        <target state="final">שנה פיננסית</target>
       </trans-unit>
       <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
         <source>stats.workingTimeFinancialYear</source>
@@ -1214,9 +1214,9 @@
         <source>profile.2fa_confirmation</source>
         <target state="final">נא לאשר את הקוד שיפעיל את האימות הדו־שלבי לחשבון הזה.</target>
       </trans-unit>
-      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek">
+      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek" xml:space="preserve" approved="yes">
         <source>stats.userDurationWeek</source>
-        <target state="translated">שעות העבודה שלי השבוע</target>
+        <target state="final">שעות העבודה שלי השבוע</target>
       </trans-unit>
       <trans-unit id="EedlgkM" resname="stats.userDurationTotal">
         <source>stats.userDurationTotal</source>
@@ -1338,9 +1338,9 @@
         <source>plugin.installed</source>
         <target state="translated">תוספים מותקנים</target>
       </trans-unit>
-      <trans-unit id="EI5gPkp" resname="stats.userDurationToday">
+      <trans-unit id="EI5gPkp" resname="stats.userDurationToday" xml:space="preserve" approved="yes">
         <source>stats.userDurationToday</source>
-        <target state="translated">שעות העבודה שלי היום</target>
+        <target state="final">שעות העבודה שלי היום</target>
       </trans-unit>
       <trans-unit id="Fkrev.q" resname="help.globalActivities">
         <source>help.globalActivities</source>
@@ -1925,6 +1925,10 @@
       <trans-unit id="f0kKHXR" resname="sessions_logout" xml:space="preserve">
         <source>Log out of all devices</source>
         <target state="translated">הוצאת כל המכשירים</target>
+      </trans-unit>
+      <trans-unit id="HQ2YM1b" resname="attendance_only_project" xml:space="preserve" approved="yes">
+        <source>attendance_only_project</source>
+        <target state="final">למנות רק רשומות של המיזמים הנבחרים כשעות עבודה</target>
       </trans-unit>
     </body>
   </file>
