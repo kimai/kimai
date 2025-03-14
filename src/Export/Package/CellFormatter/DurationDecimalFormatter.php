@@ -11,7 +11,7 @@ namespace App\Export\Package\CellFormatter;
 
 use App\Utils\Duration;
 
-final class DurationFormatter implements CellFormatterInterface
+final class DurationDecimalFormatter implements CellFormatterInterface
 {
     private Duration $duration;
 
@@ -23,9 +23,9 @@ final class DurationFormatter implements CellFormatterInterface
     public function formatValue(mixed $value): mixed
     {
         if (is_numeric($value)) {
-            return $this->duration->format((int) $value);
+            return $this->duration->formatDecimal((int) $value);
         }
 
-        return $this->duration->format(0);
+        return 0.0;
     }
 }

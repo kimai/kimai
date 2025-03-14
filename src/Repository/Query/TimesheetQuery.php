@@ -25,7 +25,10 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
     public const STATE_EXPORTED = 4;
     public const STATE_NOT_EXPORTED = 5;
 
-    public const TIMESHEET_ORDER_ALLOWED = ['begin', 'end', 'duration', 'rate', 'hourlyRate', 'customer', 'project', 'activity', 'description'];
+    /**
+     * @deprecated since 2.31.0
+     */
+    public const TIMESHEET_ORDER_ALLOWED = ['begin', 'end', 'duration', 'rate', 'hourlyRate', 'customer', 'project', 'activity', 'description', 'billable', 'exported'];
 
     private ?User $timesheetUser = null;
     /** @var array<Activity> */
@@ -61,6 +64,7 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
             'users' => [],
             'activities' => [],
         ]);
+        $this->setAllowedOrderColumns(self::TIMESHEET_ORDER_ALLOWED); // @phpstan-ignore-line
     }
 
     public function addQueryHint(TimesheetQueryHint $hint): void

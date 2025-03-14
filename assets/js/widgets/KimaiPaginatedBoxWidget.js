@@ -16,7 +16,6 @@ export default class KimaiPaginatedBoxWidget {
     constructor(boxId) {
         this.selector = boxId;
         const widget = document.querySelector(this.selector);
-        this.href = widget.dataset['href'];
 
         if (widget.dataset['reload'] !== undefined) {
             this.events = widget.dataset['reload'].split(' ');
@@ -93,7 +92,7 @@ export default class KimaiPaginatedBoxWidget {
         if (node.tagName !== undefined && node.tagName === 'SCRIPT') {
             const script  = document.createElement('script');
             script.text = node.innerHTML;
-            node.parentNode.replaceChild(script, node );
+            node.parentNode.replaceChild(script, node);
         } else {
             for (const child of node.childNodes) {
                 this._makeScriptExecutable(child);

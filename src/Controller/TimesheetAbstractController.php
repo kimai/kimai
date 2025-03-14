@@ -106,11 +106,11 @@ abstract class TimesheetAbstractController extends AbstractController
         }
 
         if ($canSeeUsername) {
-            $table->addColumn('username', ['class' => 'd-none d-md-table-cell', 'orderBy' => false]);
+            $table->addColumn('username', ['class' => 'd-none d-md-table-cell', 'orderBy' => 'user']);
         }
 
-        $table->addColumn('billable', ['class' => 'text-center d-none w-min', 'orderBy' => false]);
-        $table->addColumn('exported', ['class' => 'text-center d-none w-min', 'orderBy' => false]);
+        $table->addColumn('billable', ['class' => 'text-center d-none w-min']);
+        $table->addColumn('exported', ['class' => 'text-center d-none w-min']);
         $table->addColumn('actions', ['class' => 'actions']);
 
         $page = $this->createPageSetup();

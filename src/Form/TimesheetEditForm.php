@@ -18,6 +18,7 @@ use App\Form\Type\DescriptionType;
 use App\Form\Type\DurationType;
 use App\Form\Type\FixedRateType;
 use App\Form\Type\HourlyRateType;
+use App\Form\Type\InternalRateType;
 use App\Form\Type\MetaFieldsCollectionType;
 use App\Form\Type\TagsType;
 use App\Form\Type\TimePickerType;
@@ -364,6 +365,9 @@ class TimesheetEditForm extends AbstractType
                 'currency' => $currency,
             ])
             ->add('hourlyRate', HourlyRateType::class, [
+                'currency' => $currency,
+            ])
+            ->add('internalRate', InternalRateType::class, [
                 'currency' => $currency,
             ]);
     }

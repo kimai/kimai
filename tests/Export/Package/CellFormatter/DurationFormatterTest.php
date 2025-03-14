@@ -21,34 +21,34 @@ class DurationFormatterTest extends TestCase
     {
         $formatter = new DurationFormatter();
         $result = $formatter->formatValue(7200);
-        self::assertEquals(2.00, $result);
+        self::assertEquals('2:00', $result);
     }
 
     public function testFormatValueReturnsZeroForNonNumericValue(): void
     {
         $formatter = new DurationFormatter();
         $result = $formatter->formatValue('not a number');
-        self::assertEquals(0.0, $result);
+        self::assertEquals('0:00', $result);
     }
 
     public function testFormatValueReturnsFormattedDurationForFloatValue(): void
     {
         $formatter = new DurationFormatter();
         $result = $formatter->formatValue(4500.5);
-        self::assertEquals(1.25, $result);
+        self::assertEquals('1:15', $result);
     }
 
     public function testFormatValueReturnsZeroForNullValue(): void
     {
         $formatter = new DurationFormatter();
         $result = $formatter->formatValue(null);
-        self::assertEquals(0.0, $result);
+        self::assertEquals('0:00', $result);
     }
 
     public function testFormatValueReturnsFormattedDurationForNegativeValue(): void
     {
         $formatter = new DurationFormatter();
         $result = $formatter->formatValue(-3600);
-        self::assertEquals(-1.00, $result);
+        self::assertEquals('-1:00', $result);
     }
 }
