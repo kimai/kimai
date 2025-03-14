@@ -34,6 +34,9 @@ final class UserRevenueStatisticEvent extends Event
         return $this->event->getEnd();
     }
 
+    /**
+     * @return array<string, float>
+     */
     public function getRevenue(): array
     {
         return $this->event->getRevenue();
