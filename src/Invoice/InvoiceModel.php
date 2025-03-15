@@ -51,6 +51,7 @@ final class InvoiceModel
      */
     private array $itemHydrator = [];
     private ?string $invoiceNumber = null;
+    private bool $isPreview = false;
     /**
      * @var array<string, string|array|null|bool>
      */
@@ -282,5 +283,15 @@ final class InvoiceModel
     public function setHideZeroTax(bool $hideZeroTax): void
     {
         $this->options['hide_zero_tax'] = $hideZeroTax;
+    }
+
+    public function isPreview(): bool
+    {
+        return $this->isPreview;
+    }
+
+    public function setPreview(bool $preview): void
+    {
+        $this->isPreview = $preview;
     }
 }
