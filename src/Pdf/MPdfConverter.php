@@ -18,22 +18,26 @@ use Mpdf\Output\Destination;
 
 final class MPdfConverter implements HtmlToPdfConverter
 {
-    public function __construct(private FileHelper $fileHelper, private string $cacheDirectory)
+
+    public function __construct(private readonly FileHelper $fileHelper, private readonly string $cacheDirectory)
     {
     }
 
+    /**
+     * @param array<string, mixed|array<string, mixed>> $options
+     * @return array<string, mixed|array<string, mixed>>
+     */
     private function sanitizeOptions(array $options): array
     {
-        $configs = new ConfigVariables();
-        $fonts = new FontVariables();
-        $allowed = [
-            'mode', 'format', 'default_font_size', 'default_font', 'margin_left', 'margin_right', 'margin_top',
-            'margin_bottom', 'margin_header', 'margin_footer', 'orientation', 'fonts',
-        ];
-
-        $filtered = array_filter($options, function ($key) use ($allowed, $configs, $fonts): bool {
+        $filtered = array_filter($options, function ($key): bool {
+            $allowed = [
+                'mode', 'format', 'default_font_size', 'default_font', 'margin_left', 'margin_right', 'margin_top',
+                'margin_bottom', 'margin_header', 'margin_footer', 'orientation', 'fonts', 'associated_files'
+            ];
             if (!\in_array($key, $allowed)) {
+                $configs = new ConfigVariables();
                 if (!\array_key_exists($key, $configs->getDefaults())) {
+                    $fonts = new FontVariables();
                     return \array_key_exists($key, $fonts->getDefaults());
                 }
             }
@@ -49,10 +53,7 @@ final class MPdfConverter implements HtmlToPdfConverter
     }
 
     /**
-     * @param string $html
-     * @param array $options
-     * @return string
-     * @throws \Mpdf\MpdfException
+     * @param array<string, mixed|array<string, mixed>> $options
      */
     public function convertToPdf(string $html, array $options = []): string
     {
@@ -93,8 +94,7 @@ final class MPdfConverter implements HtmlToPdfConverter
     }
 
     /**
-     * @param array<string, array<mixed>> $options
-     * @return Mpdf
+     * @param array<string, mixed|array<string, mixed>> $options
      */
     private function initMpdf(array $options): Mpdf
     {
@@ -120,8 +120,8 @@ final class MPdfConverter implements HtmlToPdfConverter
     }
 
     /**
-     * @param array<string, array<mixed>> $options
-     * @return array<string, array<mixed>>
+     * @param array<string, mixed|array<string, mixed>> $options
+     * @return array<string, mixed|array<string, mixed>>
      */
     private function mergeFontData(array $options): array
     {

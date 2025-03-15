@@ -23,7 +23,7 @@ final class PdfRenderer extends AbstractTwigRenderer implements DispositionInlin
 {
     use PDFRendererTrait;
 
-    public function __construct(Environment $twig, private HtmlToPdfConverter $converter)
+    public function __construct(Environment $twig, private readonly HtmlToPdfConverter $converter)
     {
         parent::__construct($twig);
     }
