@@ -101,8 +101,18 @@ final class MPdfConverter implements HtmlToPdfConverter
         $options['fontDir'] = $this->getFontDirectories();
         $options['fontdata'] = $this->mergeFontData($options);
 
+        $associatedFiles = [];
+        if (array_key_exists('associated_files', $options) && is_array($options['associated_files'])) {
+            $associatedFiles = $options['associated_files'];
+            unset($options['associated_files']);
+        }
+
         $mpdf = new Mpdf($options);
         $mpdf->creator = Constants::SOFTWARE;
+
+        if (count($associatedFiles) > 0) {
+            $mpdf->SetAssociatedFiles($associatedFiles);
+        }
 
         return $mpdf;
     }
