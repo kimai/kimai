@@ -51,7 +51,13 @@ final class InvoiceModel
      */
     private array $itemHydrator = [];
     private ?string $invoiceNumber = null;
-    private bool $hideZeroTax = false;
+    private bool $isPreview = false;
+    /**
+     * @var array<string, string|array|null|bool>
+     */
+    private array $options = [
+        'hide_zero_tax' => false,
+    ];
 
     /**
      * @internal use InvoiceModelFactory
@@ -66,6 +72,16 @@ final class InvoiceModel
         $this->addModelHydrator(new InvoiceModelActivityHydrator($activityStatistic));
         $this->addModelHydrator(new InvoiceModelUserHydrator());
         $this->addItemHydrator(new InvoiceItemDefaultHydrator());
+    }
+
+    public function setOption(string $key, string|array|null|bool $value): void
+    {
+        $this->options[$key] = $value;
+    }
+
+    public function getOptions(): array
+    {
+        return $this->options;
     }
 
     public function getQuery(): ?InvoiceQuery
@@ -258,11 +274,24 @@ final class InvoiceModel
 
     public function isHideZeroTax(): bool
     {
-        return $this->hideZeroTax;
+        return $this->options['hide_zero_tax'];
     }
 
+    /**
+     * @deprecated since 2.32.0, use setOption('hide_zero_tax') instead
+     */
     public function setHideZeroTax(bool $hideZeroTax): void
     {
-        $this->hideZeroTax = $hideZeroTax;
+        $this->options['hide_zero_tax'] = $hideZeroTax;
+    }
+
+    public function isPreview(): bool
+    {
+        return $this->isPreview;
+    }
+
+    public function setPreview(bool $preview): void
+    {
+        $this->isPreview = $preview;
     }
 }

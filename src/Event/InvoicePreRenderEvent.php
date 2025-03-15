@@ -16,7 +16,11 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class InvoicePreRenderEvent extends Event
 {
-    public function __construct(private InvoiceModel $model, private InvoiceDocument $document, private RendererInterface $renderer)
+    public function __construct(
+        private readonly InvoiceModel $model,
+        private readonly InvoiceDocument $document,
+        private readonly RendererInterface $renderer
+    )
     {
     }
 

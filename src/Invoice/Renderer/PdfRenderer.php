@@ -23,7 +23,7 @@ final class PdfRenderer extends AbstractTwigRenderer implements DispositionInlin
 {
     use PDFRendererTrait;
 
-    public function __construct(Environment $twig, private HtmlToPdfConverter $converter)
+    public function __construct(Environment $twig, private readonly HtmlToPdfConverter $converter)
     {
         parent::__construct($twig);
     }
@@ -45,7 +45,7 @@ final class PdfRenderer extends AbstractTwigRenderer implements DispositionInlin
         $context->setOption('margin_bottom', '8');
 
         $content = $this->renderTwigTemplate($document, $model, ['pdfContext' => $context]);
-        $content = $this->converter->convertToPdf($content, $context->getOptions());
+        $content = $this->converter->convertToPdf($content, array_merge($model->getOptions(), $context->getOptions()));
 
         return $this->createPdfResponse($content, $context);
     }

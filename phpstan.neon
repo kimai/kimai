@@ -3433,26 +3433,6 @@ parameters:
             path: src/Model/Statistic/Month.php
 
         -
-            message: "#^Method App\\\\Pdf\\\\HtmlToPdfConverter\\:\\:convertToPdf\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Pdf/HtmlToPdfConverter.php
-
-        -
-            message: "#^Method App\\\\Pdf\\\\MPdfConverter\\:\\:convertToPdf\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Pdf/MPdfConverter.php
-
-        -
-            message: "#^Method App\\\\Pdf\\\\MPdfConverter\\:\\:sanitizeOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Pdf/MPdfConverter.php
-
-        -
-            message: "#^Method App\\\\Pdf\\\\MPdfConverter\\:\\:sanitizeOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Pdf/MPdfConverter.php
-
-        -
             message: "#^Method App\\\\Pdf\\\\PdfContext\\:\\:getOption\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Pdf/PdfContext.php
