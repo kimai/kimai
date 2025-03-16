@@ -18,8 +18,10 @@ use Mpdf\Output\Destination;
 
 final class MPdfConverter implements HtmlToPdfConverter
 {
-
-    public function __construct(private readonly FileHelper $fileHelper, private readonly string $cacheDirectory)
+    public function __construct(
+        private readonly FileHelper $fileHelper,
+        private readonly string $cacheDirectory
+    )
     {
     }
 
@@ -38,6 +40,7 @@ final class MPdfConverter implements HtmlToPdfConverter
                 $configs = new ConfigVariables();
                 if (!\array_key_exists($key, $configs->getDefaults())) {
                     $fonts = new FontVariables();
+
                     return \array_key_exists($key, $fonts->getDefaults());
                 }
             }
@@ -102,7 +105,7 @@ final class MPdfConverter implements HtmlToPdfConverter
         $options['fontdata'] = $this->mergeFontData($options);
 
         $associatedFiles = [];
-        if (array_key_exists('associated_files', $options) && is_array($options['associated_files'])) {
+        if (\array_key_exists('associated_files', $options) && \is_array($options['associated_files'])) {
             $associatedFiles = $options['associated_files'];
             unset($options['associated_files']);
         }
@@ -110,7 +113,7 @@ final class MPdfConverter implements HtmlToPdfConverter
         $mpdf = new Mpdf($options);
         $mpdf->creator = Constants::SOFTWARE;
 
-        if (count($associatedFiles) > 0) {
+        if (\count($associatedFiles) > 0) {
             $mpdf->SetAssociatedFiles($associatedFiles);
         }
 
