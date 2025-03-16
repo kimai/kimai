@@ -43,6 +43,7 @@ class InvoiceModelTest extends TestCase
         $sut->setFormatter($newFormatter);
         self::assertNotSame($formatter, $sut->getFormatter());
         self::assertSame($newFormatter, $sut->getFormatter());
+        self::assertEquals([], $sut->getOptions());
     }
 
     public function testEmptyObjectThrowsExceptionOnNumberGenerator(): void
@@ -75,6 +76,23 @@ class InvoiceModelTest extends TestCase
 
         self::assertSame($template, $sut->getTemplate());
         self::assertInstanceOf(\DateTimeInterface::class, $sut->getDueDate());
+
+        $sut->setOption('foo-int', 123);
+        $sut->setOption('foo-float', 123.45);
+        $sut->setOption('foo-string', '12345');
+        $sut->setOption('foo-null', null);
+        $sut->setOption('foo-bool', true);
+        $sut->setOption('foo-array', ['foo' => 'bar']);
+        $sut->setOption('foo-array2', ['foo', 'bar']);
+        self::assertEquals([
+            'foo-int' => 123,
+            'foo-float' => 123.45,
+            'foo-string' => '12345',
+            'foo-null' => null,
+            'foo-bool' => true,
+            'foo-array' => ['foo' => 'bar'],
+            'foo-array2' => ['foo', 'bar']
+        ], $sut->getOptions());
     }
 
     public function testDueDate(): void

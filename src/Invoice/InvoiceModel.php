@@ -51,13 +51,12 @@ final class InvoiceModel
      */
     private array $itemHydrator = [];
     private ?string $invoiceNumber = null;
+    private bool $hideZeroTax = false;
     private bool $isPreview = false;
     /**
-     * @var array<string, string|array|null|bool>
+     * @var array<string, string|array<string|int, mixed>|null|bool|int|float>
      */
-    private array $options = [
-        'hide_zero_tax' => false,
-    ];
+    private array $options = [];
 
     /**
      * @internal use InvoiceModelFactory
@@ -74,11 +73,17 @@ final class InvoiceModel
         $this->addItemHydrator(new InvoiceItemDefaultHydrator());
     }
 
-    public function setOption(string $key, string|array|null|bool $value): void
+    /**
+     * @param string|array<string|int, mixed>|null|bool|int|float $value
+     */
+    public function setOption(string $key, string|array|null|bool|int|float $value): void
     {
         $this->options[$key] = $value;
     }
 
+    /**
+     * @return array<string, string|array<string|int, mixed>|null|bool|int|float>
+     */
     public function getOptions(): array
     {
         return $this->options;
@@ -274,15 +279,12 @@ final class InvoiceModel
 
     public function isHideZeroTax(): bool
     {
-        return $this->options['hide_zero_tax'];
+        return $this->hideZeroTax;
     }
 
-    /**
-     * @deprecated since 2.32.0, use setOption('hide_zero_tax') instead
-     */
     public function setHideZeroTax(bool $hideZeroTax): void
     {
-        $this->options['hide_zero_tax'] = $hideZeroTax;
+        $this->hideZeroTax = $hideZeroTax;
     }
 
     public function isPreview(): bool
