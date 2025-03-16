@@ -166,12 +166,7 @@ final class DateTimeFactory
         return $date->modify('23:59:59');
     }
 
-    /**
-     * @param string $format
-     * @param null|string $datetime
-     * @return bool|DateTime
-     */
-    public function createDateTimeFromFormat(string $format, ?string $datetime = 'now'): bool|DateTime
+    public function createDateTimeFromFormat(string $format, ?string $datetime = 'now'): false|DateTime
     {
         return DateTime::createFromFormat($format, $datetime ?? 'now', $this->getTimezone());
     }
