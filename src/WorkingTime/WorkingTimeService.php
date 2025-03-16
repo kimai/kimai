@@ -155,12 +155,14 @@ final class WorkingTimeService
                 $dayDate = $day->getDay();
                 $result = new WorkingTime($user, $dayDate);
 
-                if (($firstDay === null || $firstDay <= $dayDate) && ($lastDay === null || $lastDay >= $dayDate)) {
-                    $result->setExpectedTime($calculator->getWorkHoursForDay($dayDate));
-                }
+                if ($dayDate <= $until) {
+                    if (($firstDay === null || $firstDay <= $dayDate) && ($lastDay === null || $lastDay >= $dayDate)) {
+                        $result->setExpectedTime($calculator->getWorkHoursForDay($dayDate));
+                    }
 
-                if (\array_key_exists($key, $stats)) {
-                    $result->setActualTime($stats[$key]);
+                    if (\array_key_exists($key, $stats)) {
+                        $result->setActualTime($stats[$key]);
+                    }
                 }
 
                 $day->setWorkingTime($result);
