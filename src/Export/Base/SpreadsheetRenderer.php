@@ -164,7 +164,8 @@ final class SpreadsheetRenderer
             $columns[] = (new Column('fixedRate', new RateFormatter()))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getFixedRate());
         }
 
-        $columns[] = (new Column('username', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getUser()?->getDisplayName())->withColumnWidth(ColumnWidth::MEDIUM);
+        $columns[] = (new Column('alias', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getUser()?->getDisplayName())->withColumnWidth(ColumnWidth::MEDIUM);
+        $columns[] = (new Column('username', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getUser()?->getUserIdentifier())->withColumnWidth(ColumnWidth::MEDIUM);
         $columns[] = (new Column('account_number', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getUser()?->getAccountNumber());
         $columns[] = (new Column('customer', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getProject()?->getCustomer()?->getName())->withColumnWidth(ColumnWidth::MEDIUM);
         $columns[] = (new Column('project', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getProject()?->getName())->withColumnWidth(ColumnWidth::MEDIUM);
