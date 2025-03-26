@@ -1,15 +1,21 @@
 services:
   - type: web
     name: kimai
-    env: php
+    env: docker
     plan: free
     region: frankfurt
-    buildCommand: "composer install --no-dev --optimize-autoloader"
-    startCommand: "php public/index.php"
-    rootDir: .
-    autoDeploy: true
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: APP_ENV
         value: prod
       - key: APP_SECRET
         generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: kimai-db
+          property: connectionString
+databases:
+  - name: kimai-db
+    plan: free
+    region: frankfurt
+    postgresMajorVersion: 13
