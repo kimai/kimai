@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: kimai
+    env: php
+    plan: free
+    region: frankfurt
+    buildCommand: "composer install --no-dev --optimize-autoloader"
+    startCommand: ""
+    rootDir: .
+    autoDeploy: true
+    envVars:
+      - key: APP_ENV
+        value: prod
+      - key: APP_SECRET
+        generateValue: true
