@@ -5,7 +5,7 @@ services:
     plan: free
     region: frankfurt
     buildCommand: "composer install --no-dev --optimize-autoloader"
-    startCommand: ""
+    startCommand: "php public/index.php"
     rootDir: .
     autoDeploy: true
     envVars:
