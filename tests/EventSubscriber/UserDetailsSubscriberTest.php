@@ -23,6 +23,7 @@ class UserDetailsSubscriberTest extends TestCase
         $events = UserDetailsSubscriber::getSubscribedEvents();
         self::assertArrayHasKey(UserDetailsEvent::class, $events);
         $methodName = $events[UserDetailsEvent::class][0];
+        self::assertIsString($methodName);
         self::assertTrue(method_exists(UserDetailsSubscriber::class, $methodName));
     }
 }

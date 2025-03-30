@@ -27,6 +27,7 @@ class EmailSubscriberTest extends TestCase
         $events = EmailSubscriber::getSubscribedEvents();
         self::assertArrayHasKey(EmailEvent::class, $events);
         $methodName = $events[EmailEvent::class][0];
+        self::assertIsString($methodName);
         self::assertTrue(method_exists(EmailSubscriber::class, $methodName));
     }
 

@@ -31,10 +31,12 @@ class LastLoginSubscriberTest extends TestCase
 
         self::assertArrayHasKey(UserInteractiveLoginEvent::class, $events);
         $methodName = $events[UserInteractiveLoginEvent::class];
+        self::assertIsString($methodName);
         self::assertTrue(method_exists(LastLoginSubscriber::class, $methodName));
 
         self::assertArrayHasKey(LoginSuccessEvent::class, $events);
         $methodName = $events[LoginSuccessEvent::class];
+        self::assertIsString($methodName);
         self::assertTrue(method_exists(LastLoginSubscriber::class, $methodName));
     }
 
