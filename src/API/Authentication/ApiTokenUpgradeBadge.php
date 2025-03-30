@@ -9,7 +9,6 @@
 
 namespace App\API\Authentication;
 
-use App\Entity\User;
 use Symfony\Component\Security\Core\Exception\LogicException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\BadgeInterface;
