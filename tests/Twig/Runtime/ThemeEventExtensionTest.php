@@ -50,7 +50,7 @@ class ThemeEventExtensionTest extends TestCase
         ];
     }
 
-    protected function getSut(bool $hasListener = true, string $title = null): ThemeExtension
+    protected function getSut(bool $hasListener = true): ThemeExtension
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->method('hasListeners')->willReturn($hasListener);
@@ -155,18 +155,6 @@ class ThemeEventExtensionTest extends TestCase
     public function testGetTitle(): void
     {
         $sut = $this->getSut(false);
-        self::assertEquals('Kimai – foo', $sut->generateTitle());
-        self::assertEquals('sdfsdf | Kimai – foo', $sut->generateTitle('sdfsdf | '));
-        self::assertEquals('<b>Kimai</b> ... foo', $sut->generateTitle('<b>', '</b> ... '));
-        self::assertEquals('Kimai | foo', $sut->generateTitle(null, ' | '));
-    }
-
-    public function testGetBrandedTitle(): void
-    {
-        $sut = $this->getSut(false, 'MyCompany');
-        self::assertEquals('Kimai – foo', $sut->generateTitle());
-        self::assertEquals('sdfsdf | Kimai – foo', $sut->generateTitle('sdfsdf | '));
-        self::assertEquals('<b>Kimai</b> ... foo', $sut->generateTitle('<b>', '</b> ... '));
-        self::assertEquals('Kimai | foo', $sut->generateTitle(null, ' | '));
+        self::assertEquals('Kimai', $sut->generateTitle());
     }
 }
