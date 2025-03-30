@@ -16,11 +16,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\BadgeInterface;
 
 final class ApiTokenUpgradeBadge implements BadgeInterface
 {
-    /**
-     * @param string|null $plaintextApiToken
-     * @param PasswordUpgraderInterface<User> $passwordUpgrader
-     */
-    public function __construct(private ?string $plaintextApiToken, private PasswordUpgraderInterface $passwordUpgrader)
+    public function __construct(private ?string $plaintextApiToken, private readonly PasswordUpgraderInterface $passwordUpgrader)
     {
     }
 
@@ -36,9 +32,6 @@ final class ApiTokenUpgradeBadge implements BadgeInterface
         return $password;
     }
 
-    /**
-     * @return PasswordUpgraderInterface<User>
-     */
     public function getPasswordUpgrader(): PasswordUpgraderInterface
     {
         return $this->passwordUpgrader;
