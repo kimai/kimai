@@ -191,10 +191,6 @@ final class WorkingTimeService
                 continue;
             }
 
-            if ($workingTime->getId() !== null) {
-                continue;
-            }
-
             if ($month->isLocked() || $workingTime->isApproved()) {
                 continue;
             }
