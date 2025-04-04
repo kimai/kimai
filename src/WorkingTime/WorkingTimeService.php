@@ -209,6 +209,27 @@ final class WorkingTimeService
         $this->eventDispatcher->dispatch(new WorkingTimeApproveMonthEvent($user, $month, $approvalDate, $approvedBy));
     }
 
+    public function unlockMonth(User $user, Month $month): void
+    {
+        foreach ($month->getDays() as $day) {
+            $workingTime = $day->getWorkingTime();
+            if ($workingTime === null || $workingTime->getId() === null) {
+                continue;
+            }
+
+            if (!$month->isLocked() || !$workingTime->isApproved()) {
+                continue;
+            }
+
+            $this->workingTimeRepository->scheduleWorkingTimeDelete($workingTime);
+        }
+
+        $this->workingTimeRepository->persistScheduledWorkingTimes();
+
+        $user->setPreferenceValue(self::LATEST_APPROVAL_PREF, $this->workingTimeRepository->getLatestApprovalDate($user)?->format(self::LATEST_APPROVAL_FORMAT));
+        $this->userRepository->saveUser($user);
+    }
+
     /**
      * @param \DateTimeInterface $year
      * @param User $user
