@@ -24,15 +24,17 @@ use Twig\Extension\RuntimeExtensionInterface;
 
 final class ThemeExtension implements RuntimeExtensionInterface
 {
-    public function __construct(private EventDispatcherInterface $eventDispatcher, private TranslatorInterface $translator, private SystemConfiguration $configuration, private Security $security)
+    public function __construct(
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly TranslatorInterface $translator,
+        private readonly SystemConfiguration $configuration,
+        private readonly Security $security
+    )
     {
     }
 
     /**
-     * @param Environment $environment
-     * @param string $eventName
      * @param array<string, mixed> $payload
-     * @return ThemeEvent
      */
     public function trigger(Environment $environment, string $eventName, array $payload = []): ThemeEvent
     {
