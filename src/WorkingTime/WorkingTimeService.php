@@ -13,6 +13,7 @@ use App\Entity\User;
 use App\Entity\WorkingTime;
 use App\Event\WorkingTimeApproveMonthEvent;
 use App\Event\WorkingTimeQueryStatsEvent;
+use App\Event\WorkingTimeUnlockMonthEvent;
 use App\Event\WorkingTimeYearEvent;
 use App\Event\WorkingTimeYearSummaryEvent;
 use App\Repository\TimesheetRepository;
@@ -183,6 +184,7 @@ final class WorkingTimeService
         return $year->getMonth($monthDate);
     }
 
+    // deprecated 3.0 remove $user, fetch from $month->getUser() instead
     public function approveMonth(User $user, Month $month, \DateTimeInterface $approvalDate, User $approvedBy): void
     {
         foreach ($month->getDays() as $day) {
@@ -203,13 +205,14 @@ final class WorkingTimeService
 
         $this->workingTimeRepository->persistScheduledWorkingTimes();
 
+        // $user = $month->getUser();
         $user->setPreferenceValue(self::LATEST_APPROVAL_PREF, $this->workingTimeRepository->getLatestApprovalDate($user)?->format(self::LATEST_APPROVAL_FORMAT));
         $this->userRepository->saveUser($user);
 
-        $this->eventDispatcher->dispatch(new WorkingTimeApproveMonthEvent($user, $month, $approvalDate, $approvedBy));
+        $this->eventDispatcher->dispatch(new WorkingTimeApproveMonthEvent($month, $approvedBy));
     }
 
-    public function unlockMonth(User $user, Month $month): void
+    public function unlockMonth(Month $month, User $unlockedBy): void
     {
         foreach ($month->getDays() as $day) {
             $workingTime = $day->getWorkingTime();
@@ -217,7 +220,7 @@ final class WorkingTimeService
                 continue;
             }
 
-            if (!$month->isLocked() || !$workingTime->isApproved()) {
+            if (!$workingTime->isApproved()) {
                 continue;
             }
 
@@ -226,13 +229,14 @@ final class WorkingTimeService
 
         $this->workingTimeRepository->persistScheduledWorkingTimes();
 
+        $user = $month->getUser();
         $user->setPreferenceValue(self::LATEST_APPROVAL_PREF, $this->workingTimeRepository->getLatestApprovalDate($user)?->format(self::LATEST_APPROVAL_FORMAT));
         $this->userRepository->saveUser($user);
+
+        $this->eventDispatcher->dispatch(new WorkingTimeUnlockMonthEvent($month, $unlockedBy));
     }
 
     /**
-     * @param \DateTimeInterface $year
-     * @param User $user
      * @return array<string, int>
      */
     private function getYearStatistics(\DateTimeInterface $year, User $user): array

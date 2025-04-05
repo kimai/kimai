@@ -13,21 +13,13 @@ use App\Entity\User;
 use App\WorkingTime\Model\Month;
 use Symfony\Contracts\EventDispatcher\Event;
 
-final class WorkingTimeApproveMonthEvent extends Event
+final class WorkingTimeUnlockMonthEvent extends Event
 {
     public function __construct(
         private readonly Month $month,
-        private readonly User $approvedBy
+        private readonly User $unlockedBy
     )
     {
-    }
-
-    /**
-     * @deprecated use getMonth()->getUser() instead)
-     */
-    public function getUser(): User
-    {
-        return $this->getMonth()->getUser();
     }
 
     public function getMonth(): Month
@@ -35,8 +27,8 @@ final class WorkingTimeApproveMonthEvent extends Event
         return $this->month;
     }
 
-    public function getApprovedBy(): User
+    public function getUnlockedBy(): User
     {
-        return $this->approvedBy;
+        return $this->unlockedBy;
     }
 }
