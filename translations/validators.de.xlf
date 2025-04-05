@@ -158,6 +158,10 @@
         <source>An absence cannot be booked after the last working day.</source>
         <target>Eine Abwesenheit kann nicht nach dem letzten Arbeitstag gebucht werden.</target>
       </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending.">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target>Ausgewählter Zeitraum kann nicht gesperrt werden: unbestätigte Abwesenheitsanträge stehen an.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
