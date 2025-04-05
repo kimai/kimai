@@ -458,21 +458,21 @@
         <source>filter</source>
         <target state="translated">தரவை வடிகட்டு</target>
       </trans-unit>
-      <trans-unit id="CT59X9u" resname="contact" approved="no" xml:space="preserve">
+      <trans-unit id="CT59X9u" resname="contact" approved="yes" xml:space="preserve">
         <source>Contact</source>
-        <target state="translated">தொடர்பு</target>
+        <target state="final">தொடர்பு</target>
       </trans-unit>
-      <trans-unit id="mz4ieCN" resname="donate" xml:space="preserve" approved="no">
+      <trans-unit id="mz4ieCN" resname="donate" xml:space="preserve" approved="yes">
         <source>donate</source>
-        <target state="translated">நன்கொடை</target>
+        <target state="final">நன்கொடை</target>
       </trans-unit>
       <trans-unit id="XohImNo" resname="password" approved="yes" xml:space="preserve">
         <source>Password</source>
         <target state="final">கடவுச்சொல்</target>
       </trans-unit>
-      <trans-unit id="yQRveje" resname="description" approved="no" xml:space="preserve">
+      <trans-unit id="yQRveje" resname="description" approved="yes" xml:space="preserve">
         <source>Description</source>
-        <target state="translated">விவரம்</target>
+        <target state="final">விவரம்</target>
       </trans-unit>
       <trans-unit id="k5Apjz_" resname="no" xml:space="preserve" approved="yes">
         <source>no</source>

@@ -882,6 +882,30 @@
         <source>skin</source>
         <target state="translated">デザイン</target>
       </trans-unit>
+      <trans-unit id="jdbtx6z" resname="action.add" xml:space="preserve">
+        <source>action.add</source>
+        <target state="translated">足す</target>
+      </trans-unit>
+      <trans-unit id="G.GEdlk" resname="user_role.title" xml:space="preserve">
+        <source>user_role.title</source>
+        <target state="translated">ユーザーのロール</target>
+      </trans-unit>
+      <trans-unit id="lfSTZGe" resname="stats.workingTimeToday" xml:space="preserve">
+        <source>stats.workingTimeToday</source>
+        <target state="translated">今日は%day%</target>
+      </trans-unit>
+      <trans-unit id="Qc5nsFn" resname="recalculate_rates" xml:space="preserve">
+        <source>recalculate_rates</source>
+        <target state="translated">価格を再評価する</target>
+      </trans-unit>
+      <trans-unit id="i7aSJ1i" resname="notifications" xml:space="preserve">
+        <source>notifications</source>
+        <target state="translated">通知</target>
+      </trans-unit>
+      <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve">
+        <source>Project number</source>
+        <target state="translated">プロジェクト番号</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

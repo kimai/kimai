@@ -974,6 +974,962 @@
         <source>revenue</source>
         <target state="translated">Pendapatan</target>
       </trans-unit>
+      <trans-unit id="Od3xvQK" resname="button.report" xml:space="preserve">
+        <source>button.report</source>
+        <target state="translated">Lapor</target>
+      </trans-unit>
+      <trans-unit id="0xFBb6O" resname="Expenses" xml:space="preserve">
+        <source>Expenses</source>
+        <target state="translated">Pengeluaran</target>
+      </trans-unit>
+      <trans-unit id="JmpBuQ1" resname="Translations" xml:space="preserve">
+        <source>Translations</source>
+        <target state="translated">Translasi</target>
+      </trans-unit>
+      <trans-unit id="b712axp" resname="Translation" xml:space="preserve">
+        <source>Translation</source>
+        <target state="translated">Translasi</target>
+      </trans-unit>
+      <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
+        <source>stats.durationToday</source>
+        <target state="translated">Hari ini</target>
+      </trans-unit>
+      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth" xml:space="preserve">
+        <source>stats.activeUsersMonth</source>
+        <target state="translated">Pengguna aktif bulan ini</target>
+      </trans-unit>
+      <trans-unit id="EedlgkM" resname="stats.userDurationTotal" xml:space="preserve">
+        <source>stats.userDurationTotal</source>
+        <target state="translated">Total jam kerja saya</target>
+      </trans-unit>
+      <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours" xml:space="preserve">
+        <source>stats.yourWorkingHours</source>
+        <target state="translated">Jam kerja saya</target>
+      </trans-unit>
+      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear" xml:space="preserve">
+        <source>stats.activeUsersYear</source>
+        <target state="translated">Pengguna aktif tahun ini</target>
+      </trans-unit>
+      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear" xml:space="preserve">
+        <source>stats.activeUsersFinancialYear</source>
+        <target state="translated">Pengguna aktif tahun fiskal ini</target>
+      </trans-unit>
+      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal" xml:space="preserve">
+        <source>stats.activeUsersTotal</source>
+        <target state="translated">Pengguna aktif sejauh ini</target>
+      </trans-unit>
+      <trans-unit id="Bor.76M" resname="stats.activityTotal" xml:space="preserve">
+        <source>stats.activityTotal</source>
+        <target state="translated">Aktifitas</target>
+      </trans-unit>
+      <trans-unit id="lEW82ex" resname="stats.activeRecordings" xml:space="preserve">
+        <source>stats.activeRecordings</source>
+        <target state="translated">Rekor aktif</target>
+      </trans-unit>
+      <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title" xml:space="preserve">
+        <source>admin_invoice_template.title</source>
+        <target state="translated">Template faktur</target>
+      </trans-unit>
+      <trans-unit id="ov4OQOh" resname="invoice.filter" xml:space="preserve">
+        <source>invoice.filter</source>
+        <target state="translated">Filter data faktur</target>
+      </trans-unit>
+      <trans-unit id="WXXPG7p" resname="preview" xml:space="preserve">
+        <source>preview</source>
+        <target state="translated">Pratinjau</target>
+      </trans-unit>
+      <trans-unit id="4XKFnWh" resname="invoice.from" xml:space="preserve">
+        <source>invoice.from</source>
+        <target state="translated">Dari</target>
+      </trans-unit>
+      <trans-unit id="hx7vsMA" resname="invoice.to" xml:space="preserve">
+        <source>invoice.to</source>
+        <target state="translated">Kepada</target>
+      </trans-unit>
+      <trans-unit id="x_W5sV4" resname="invoice.number" xml:space="preserve">
+        <source>invoice.number</source>
+        <target state="translated">Nomor Faktur</target>
+      </trans-unit>
+      <trans-unit id="033t0aO" resname="payment_terms" xml:space="preserve">
+        <source>payment_terms</source>
+        <target state="translated">Syarat pembayaran</target>
+      </trans-unit>
+      <trans-unit id="opDmYAa" resname="status.approved" xml:space="preserve">
+        <source>status.approved</source>
+        <target state="translated">Disetujui</target>
+      </trans-unit>
+      <trans-unit id="Na24cyT" resname="status.requested" xml:space="preserve">
+        <source>status.requested</source>
+        <target state="translated">Diminta</target>
+      </trans-unit>
+      <trans-unit id="f1Cgptu" resname="batch_table_checkbox" xml:space="preserve">
+        <source>batch_table_checkbox</source>
+        <target state="translated">Tambahkan entri ke daftar pembaruan batch</target>
+      </trans-unit>
+      <trans-unit id="5NugIxO" resname="includeWithBudget" xml:space="preserve">
+        <source>includeWithBudget</source>
+        <target state="translated">Munculkan entri dengan anggaran</target>
+      </trans-unit>
+      <trans-unit id="vpqPF8v" resname="last_record_before" xml:space="preserve">
+        <source>last_record_before</source>
+        <target state="translated">Belum memiliki waktu pemesanan sejak</target>
+      </trans-unit>
+      <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve">
+        <source>booking_allow_only_work_days</source>
+        <target state="translated">Izinkan entri waktu hanya untuk hari-hari yang jam kerjanya tertera dalam kontrak kerja</target>
+      </trans-unit>
+      <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve">
+        <source>Expiry date</source>
+        <target state="translated">Tanggal kedaluwarsa</target>
+      </trans-unit>
+      <trans-unit id="o0hsx2H" resname="mark_as_open" xml:space="preserve">
+        <source>mark_as_open</source>
+        <target state="translated">Tandai sebagai dibuka</target>
+      </trans-unit>
+      <trans-unit id="1GruCMx" resname="export" xml:space="preserve">
+        <source>export</source>
+        <target state="translated">Ekspor</target>
+      </trans-unit>
+      <trans-unit id="lswYe8s" resname="invoice_bank_account" xml:space="preserve">
+        <source>invoice_bank_account</source>
+        <target state="translated">Akun bank</target>
+      </trans-unit>
+      <trans-unit id="f8oNzSP" resname="quick_entry.title" xml:space="preserve">
+        <source>quick_entry.title</source>
+        <target state="translated">Waktu mingguan</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
+        <source>absence_comment_mandatory</source>
+        <target state="translated">Absensi: Keterangan harus diisi</target>
+      </trans-unit>
+      <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve">
+        <source>stats.durationWeek</source>
+        <target state="translated">Minggu ini</target>
+      </trans-unit>
+      <trans-unit id="HzICegM" resname="stats.activeUsersToday" xml:space="preserve">
+        <source>stats.activeUsersToday</source>
+        <target state="translated">Pengguna aktif hari ini</target>
+      </trans-unit>
+      <trans-unit id="E3Kj9lt" resname="stats.userAmountMonth" xml:space="preserve">
+        <source>stats.userAmountMonth</source>
+        <target state="translated">Pendapatan saya bulan ini</target>
+      </trans-unit>
+      <trans-unit id="xvdsZsS" resname="stats.userAmountYear" xml:space="preserve">
+        <source>stats.userAmountYear</source>
+        <target state="translated">Pendapatan saya tahun ini</target>
+      </trans-unit>
+      <trans-unit id="t.jgy7A" resname="all_invoices" xml:space="preserve">
+        <source>all_invoices</source>
+        <target state="translated">Riwayat faktur</target>
+      </trans-unit>
+      <trans-unit id="ojfv7Jl" resname="invoice_form.title" xml:space="preserve">
+        <source>invoice_form.title</source>
+        <target state="translated">Buat Faktur</target>
+      </trans-unit>
+      <trans-unit id="vC2IsaP" resname="button.xlsx" xml:space="preserve">
+        <source>button.xlsx</source>
+        <target state="translated">Excel</target>
+      </trans-unit>
+      <trans-unit id="ohNu8DK" resname="due_days" xml:space="preserve">
+        <source>due_days</source>
+        <target state="translated">Jangka waktu pembayaran hari ini</target>
+      </trans-unit>
+      <trans-unit id="ccCiXyR" resname="entryState.not_exported" xml:space="preserve">
+        <source>entryState.not_exported</source>
+        <target state="translated">Buka</target>
+      </trans-unit>
+      <trans-unit id="L27KvC9" resname="includeNoWork" xml:space="preserve">
+        <source>includeNoWork</source>
+        <target state="translated">Munculkan entri tanpa pemesanan</target>
+      </trans-unit>
+      <trans-unit id="QT8.BCN" resname="api_password.missing_title" xml:space="preserve">
+        <source>api_password.missing_title</source>
+        <target state="translated">API tidak dapat digunakan</target>
+      </trans-unit>
+      <trans-unit id="Uu8YvYV" resname="deactivated" xml:space="preserve">
+        <source>Deactivated</source>
+        <target state="translated">Ternonaktifkan</target>
+      </trans-unit>
+      <trans-unit id="3WHV.yf" resname="activated" xml:space="preserve">
+        <source>Activated</source>
+        <target state="translated">Teraktivasi</target>
+      </trans-unit>
+      <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
+        <source>sickness.intro</source>
+        <target state="translated">Penyakit, Kunjungan dokter, merawat kerabat dekat, dll.</target>
+      </trans-unit>
+      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="translated">Sejauh ini, anda telah mengajukan %used% dari %days% hari cuti yang tersedia untuk anda.</target>
+      </trans-unit>
+      <trans-unit id="TTnaBm4" resname="day_full" xml:space="preserve">
+        <source>day_full</source>
+        <target state="translated">Sehari penuh</target>
+      </trans-unit>
+      <trans-unit id="CDTC1gc" resname="supervisor" xml:space="preserve">
+        <source>supervisor</source>
+        <target state="translated">Atasan (Bos)</target>
+      </trans-unit>
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve">
+        <source>stats.durationMonth</source>
+        <target state="translated">Bulan ini</target>
+      </trans-unit>
+      <trans-unit id="xnJvYAE" resname="stats.amountWeek" xml:space="preserve">
+        <source>stats.amountWeek</source>
+        <target state="translated">Pendapatan minggu ini</target>
+      </trans-unit>
+      <trans-unit id="BzwWNMS" resname="status" xml:space="preserve">
+        <source>status</source>
+        <target state="translated">Status</target>
+      </trans-unit>
+      <trans-unit id="718iPw6" resname="ROLE_ADMIN" xml:space="preserve">
+        <source>ROLE_ADMIN</source>
+        <target state="translated">Administrator</target>
+      </trans-unit>
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
+        <source>stats.durationTotal</source>
+        <target state="translated">Total</target>
+      </trans-unit>
+      <trans-unit id="qtjPKUT" resname="export.mark_all" xml:space="preserve">
+        <source>export.mark_all</source>
+        <target state="translated">Tandai semua riwayat sebagai dibersihkan?</target>
+      </trans-unit>
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
+        <source>stats.durationFinancialYear</source>
+        <target state="translated">Tahun Keuangan</target>
+      </trans-unit>
+      <trans-unit id="9Wt8Pp_" resname="help.batch_meta_fields" xml:space="preserve">
+        <source>help.batch_meta_fields</source>
+        <target state="translated">Kolom yang akan diperbarui harus diaktifkan dengan mengklik checkbox pada kolom yang diinginkan.</target>
+      </trans-unit>
+      <trans-unit id="ViUuILv" resname="includeBudgetType_month" xml:space="preserve">
+        <source>includeBudgetType_month</source>
+        <target state="translated">Munculkan entri dengan anggaran "bulanan"</target>
+      </trans-unit>
+      <trans-unit id="Qn2ouiL" resname="exported" xml:space="preserve">
+        <source>exported</source>
+        <target state="translated">Diekspor</target>
+      </trans-unit>
+      <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
+        <source>stats.durationYear</source>
+        <target state="translated">Tahun ini</target>
+      </trans-unit>
+      <trans-unit id="9jlbhkf" resname="stats.userAmountTotal" xml:space="preserve">
+        <source>stats.userAmountTotal</source>
+        <target state="translated">Total pendapatan saya</target>
+      </trans-unit>
+      <trans-unit id="_DDecAV" resname="entryState.exported" xml:space="preserve">
+        <source>entryState.exported</source>
+        <target state="translated">Dibersihkan</target>
+      </trans-unit>
+      <trans-unit id="KH2hgil" resname="account_number" xml:space="preserve">
+        <source>account_number</source>
+        <target state="translated">Nomor staff</target>
+      </trans-unit>
+      <trans-unit id="2lL9ACs" resname="help.invoiceTemplate" xml:space="preserve">
+        <source>help.invoiceTemplate</source>
+        <target state="translated">Faktur dibentuk pada template ini.</target>
+      </trans-unit>
+      <trans-unit id="KukrzcT" resname="includeBudgetType_full" xml:space="preserve">
+        <source>includeBudgetType_full</source>
+        <target state="translated">Munculkan entri dengan anggaran "siklus hidup"</target>
+      </trans-unit>
+      <trans-unit id="XN4PEpj" resname="template" xml:space="preserve">
+        <source>template</source>
+        <target state="translated">Template faktur</target>
+      </trans-unit>
+      <trans-unit id="3tegKgk" resname="orderNumber" xml:space="preserve">
+        <source>orderNumber</source>
+        <target state="translated">Nomor Pemesanan</target>
+      </trans-unit>
+      <trans-unit id="vKY0tof" resname="export.date_copyright" xml:space="preserve">
+        <source>export.date_copyright</source>
+        <target state="translated">Dibentuk %date% dengan %kimai%</target>
+      </trans-unit>
+      <trans-unit id="ulr3reE" resname="stats.amountMonth" xml:space="preserve">
+        <source>stats.amountMonth</source>
+        <target state="translated">Pendapatan bulan ini</target>
+      </trans-unit>
+      <trans-unit id="Xij3oQl" resname="invoice.payment_date" xml:space="preserve">
+        <source>invoice.payment_date</source>
+        <target state="translated">Tanggal Pembayaran</target>
+      </trans-unit>
+      <trans-unit id="Zngu6M9" resname="status.planned" xml:space="preserve">
+        <source>status.planned</source>
+        <target state="translated">Direncanakan</target>
+      </trans-unit>
+      <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve">
+        <source>reject</source>
+        <target state="translated">Tolak</target>
+      </trans-unit>
+      <trans-unit id="tnD6aPj" resname="stats.customerTotal" xml:space="preserve">
+        <source>stats.customerTotal</source>
+        <target state="translated">Pelanggan</target>
+      </trans-unit>
+      <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer" xml:space="preserve">
+        <source>help.invoiceTemplate_customer</source>
+        <target state="translated">Faktur untuk klien ini secara default dihasilkan pada template ini. Jika diperlukan, template ini dapat diubah selama proses pembuatan faktur.</target>
+      </trans-unit>
+      <trans-unit id="zzjZXJx" resname="amount" xml:space="preserve">
+        <source>amount</source>
+        <target state="translated">Jumlah</target>
+      </trans-unit>
+      <trans-unit id="rAJrxSK" resname="invoice.due_days" xml:space="preserve">
+        <source>invoice.due_days</source>
+        <target state="translated">Target pembayaran</target>
+      </trans-unit>
+      <trans-unit id="L0hRlcf" resname="includeNoBudget" xml:space="preserve">
+        <source>includeNoBudget</source>
+        <target state="translated">Munculkan entri tanpa anggaran</target>
+      </trans-unit>
+      <trans-unit id="TPzFWUs" resname="invoice.service_date" xml:space="preserve">
+        <source>invoice.service_date</source>
+        <target state="translated">Tanggal Layanan</target>
+      </trans-unit>
+      <trans-unit id="Q9ykNhO" resname="invoice.signature_customer" xml:space="preserve">
+        <source>invoice.signature_customer</source>
+        <target state="translated">Konfirmasi: Tanggal / Nama Pelanggan / Tanda Tangan</target>
+      </trans-unit>
+      <trans-unit id="tCNBGKG" resname="orderDate" xml:space="preserve">
+        <source>orderDate</source>
+        <target state="translated">Tanggal pemesanan</target>
+      </trans-unit>
+      <trans-unit id="gT9W2pZ" resname="status.canceled" xml:space="preserve">
+        <source>status.canceled</source>
+        <target state="translated">Dibatalkan</target>
+      </trans-unit>
+      <trans-unit id="EwPAaws" resname="type" xml:space="preserve">
+        <source>type</source>
+        <target state="translated">Tipe</target>
+      </trans-unit>
+      <trans-unit id="spHpd_I" resname="entryState.stopped" xml:space="preserve">
+        <source>entryState.stopped</source>
+        <target state="translated">Hentikan</target>
+      </trans-unit>
+      <trans-unit id="QR1nvcR" resname="create-timesheet" xml:space="preserve">
+        <source>create-timesheet</source>
+        <target state="translated">Buat lembar waktu</target>
+      </trans-unit>
+      <trans-unit id="NNsA8i2" resname="globalsOnly" xml:space="preserve">
+        <source>globalsOnly</source>
+        <target state="translated">Hanya umum</target>
+      </trans-unit>
+      <trans-unit id="_YiKaOT" resname="last_record" xml:space="preserve">
+        <source>last_record</source>
+        <target state="translated">Entri terakhir</target>
+      </trans-unit>
+      <trans-unit id="IFT9pou" resname="last_working_day" xml:space="preserve">
+        <source>last_working_day</source>
+        <target state="translated">Hari kerja terakhir</target>
+      </trans-unit>
+      <trans-unit id="4Ndj7Xo" resname="budgetType" xml:space="preserve">
+        <source>budgetType</source>
+        <target state="translated">Tipe anggaran</target>
+      </trans-unit>
+      <trans-unit id="wYqyL6A" resname="budgetType_month" xml:space="preserve">
+        <source>budgetType_month</source>
+        <target state="translated">Bulanan</target>
+      </trans-unit>
+      <trans-unit id="5kFod8o" resname="team.configure_teamlead.help" xml:space="preserve">
+        <source>team.configure_teamlead.help</source>
+        <target state="translated">User yang dipilih / disorot adalah pemimpin tim.</target>
+      </trans-unit>
+      <trans-unit id="4PMHpIp" resname="time_off" xml:space="preserve">
+        <source>time_off</source>
+        <target state="translated">Cuti Pribadi (Melebihi waktu lembur)</target>
+      </trans-unit>
+      <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
+        <source>settings</source>
+        <target state="translated">Preferensi</target>
+      </trans-unit>
+      <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
+        <source>absence_other.intro</source>
+        <target state="translated">Acara keluarga, pindahan rumah, cuaca buruk, dll.</target>
+      </trans-unit>
+      <trans-unit id="Eml59KV" resname="day_half" xml:space="preserve">
+        <source>day_half</source>
+        <target state="translated">Setengah hari</target>
+      </trans-unit>
+      <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
+        <source>api_token_hidden</source>
+        <target state="translated">Hanya sekali dan saat ini kunci ini ditampilkan selamanya! Jadi agar aman, pastikan anda menyalinnya sebelum menutup jendela ini.</target>
+      </trans-unit>
+      <trans-unit id="Qh5mV5Q" resname="create-timesheet-multiuser" xml:space="preserve">
+        <source>create-timesheet-multiuser</source>
+        <target state="translated">Untuk beberapa pengguna</target>
+      </trans-unit>
+      <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
+        <source>hours_per_day</source>
+        <target state="translated">Jam per hari</target>
+      </trans-unit>
+      <trans-unit id="4G2jBDS" resname="trash" xml:space="preserve">
+        <source>trash</source>
+        <target state="translated">Hapus</target>
+      </trans-unit>
+      <trans-unit id="J0sRBY_" resname="profile-stats" xml:space="preserve">
+        <source>profile-stats</source>
+        <target state="translated">Profil</target>
+      </trans-unit>
+      <trans-unit id="UbouFOs" resname="create-activity" xml:space="preserve">
+        <source>create-activity</source>
+        <target state="translated">Buat aktifitas</target>
+      </trans-unit>
+      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek" xml:space="preserve">
+        <source>stats.userDurationWeek</source>
+        <target state="translated">Jam kerja saya minggu ini</target>
+      </trans-unit>
+      <trans-unit id="0WpgaGa" resname="stats.userDurationMonth" xml:space="preserve">
+        <source>stats.userDurationMonth</source>
+        <target state="translated">Jam kerja saya bulan ini</target>
+      </trans-unit>
+      <trans-unit id="023M9Ta" resname="stats.amountToday" xml:space="preserve">
+        <source>stats.amountToday</source>
+        <target state="translated">Pendapatan Hari ini</target>
+      </trans-unit>
+      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear" xml:space="preserve">
+        <source>stats.amountFinancialYear</source>
+        <target state="translated">Pendapatan tahun fiskal ini</target>
+      </trans-unit>
+      <trans-unit id="Z0fz23v" resname="stats.amountTotal" xml:space="preserve">
+        <source>stats.amountTotal</source>
+        <target state="translated">Total pendapatan</target>
+      </trans-unit>
+      <trans-unit id="mQMcndl" resname="stats.userAmountToday" xml:space="preserve">
+        <source>stats.userAmountToday</source>
+        <target state="translated">Pendapatan saya hari ini</target>
+      </trans-unit>
+      <trans-unit id="LDS9o5X" resname="stats.userAmountWeek" xml:space="preserve">
+        <source>stats.userAmountWeek</source>
+        <target state="translated">Pendapatan saya minggu ini</target>
+      </trans-unit>
+      <trans-unit id="t5eIWp8" resname="stats.userTotal" xml:space="preserve">
+        <source>stats.userTotal</source>
+        <target state="translated">Pengguna</target>
+      </trans-unit>
+      <trans-unit id="c3d6p33" resname="invoice.total_working_time" xml:space="preserve">
+        <source>invoice.total_working_time</source>
+        <target state="translated">Durasi Total</target>
+      </trans-unit>
+      <trans-unit id="SR2r1Cs" resname="invoices" xml:space="preserve">
+        <source>invoices</source>
+        <target state="translated">Faktur</target>
+      </trans-unit>
+      <trans-unit id="W_TXvSi" resname="button.csv" xml:space="preserve">
+        <source>button.csv</source>
+        <target state="translated">CSV</target>
+      </trans-unit>
+      <trans-unit id="Uvo1CbP" resname="status.pending" xml:space="preserve">
+        <source>status.pending</source>
+        <target state="translated">Tertunda</target>
+      </trans-unit>
+      <trans-unit id="d5wyWRD" resname="export.full_list" xml:space="preserve">
+        <source>export.full_list</source>
+        <target state="translated">Daftar Lengkap</target>
+      </trans-unit>
+      <trans-unit id="WVU_S.A" resname="recent.activities" xml:space="preserve">
+        <source>recent.activities</source>
+        <target state="translated">Ulangi salah satu aktifitas terakhir anda</target>
+      </trans-unit>
+      <trans-unit id="dTHY7Mw" resname="timesheet.start" xml:space="preserve">
+        <source>timesheet.start</source>
+        <target state="translated">Mulai pelacakan waktu</target>
+      </trans-unit>
+      <trans-unit id="igCkqAP" resname="pageSize" xml:space="preserve">
+        <source>pageSize</source>
+        <target state="translated">Ukuran halaman</target>
+      </trans-unit>
+      <trans-unit id="cjgNYUB" resname="entryState" xml:space="preserve">
+        <source>entryState</source>
+        <target state="translated">Riwayat</target>
+      </trans-unit>
+      <trans-unit id="Fkrev.q" resname="help.globalActivities" xml:space="preserve">
+        <source>help.globalActivities</source>
+        <target state="translated">Jika pengaturan tidak aktif, waktu hanya dapat direkam pada aktifitas proyek-spesifik.</target>
+      </trans-unit>
+      <trans-unit id="IPHM4iP" resname="updated_at" xml:space="preserve">
+        <source>Updated at</source>
+        <target state="translated">Diperbarui pada</target>
+      </trans-unit>
+      <trans-unit id="tp.gIrE" resname="team.add_user.help" xml:space="preserve">
+        <source>team.add_user.help</source>
+        <target state="translated">Tambahkan pengguna baru kedalam tim dengan memilihnya pada daftar. Setelah itu, anda dapat memutuskan jika pengguna tersebut dapat menjadi pemimpin tim.</target>
+      </trans-unit>
+      <trans-unit id="mjKOAgQ" resname="skin.light" xml:space="preserve">
+        <source>skin.light</source>
+        <target state="translated">Terang</target>
+      </trans-unit>
+      <trans-unit id="WOFPb2i" resname="skin.dark" xml:space="preserve">
+        <source>skin.dark</source>
+        <target state="translated">Gelap</target>
+      </trans-unit>
+      <trans-unit id="dru_Thv" resname="please_choose" xml:space="preserve">
+        <source>please_choose</source>
+        <target state="translated">Tolong pilih</target>
+      </trans-unit>
+      <trans-unit id="WbT2QLP" resname="extended_settings" xml:space="preserve">
+        <source>extended_settings</source>
+        <target state="translated">Pengaturan lanjutan</target>
+      </trans-unit>
+      <trans-unit id="ZZaqTEr" resname="no_activity" xml:space="preserve">
+        <source>no_activity</source>
+        <target state="translated">Tanpa aktifitas</target>
+      </trans-unit>
+      <trans-unit id="ulgdXdi" resname="hour_24" xml:space="preserve">
+        <source>hour_24</source>
+        <target state="translated">24 Jam</target>
+      </trans-unit>
+      <trans-unit id="M2B0gF." resname="time" xml:space="preserve">
+        <source>time</source>
+        <target state="translated">Waktu</target>
+      </trans-unit>
+      <trans-unit id="95DUED0" resname="send_to" xml:space="preserve">
+        <source>send_to</source>
+        <target state="translated">Kirim ke %name%</target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories" xml:space="preserve">
+        <source>Categories</source>
+        <target state="translated">Seluruh kategori</target>
+      </trans-unit>
+      <trans-unit id="7Sycs4M" resname="Importer" xml:space="preserve">
+        <source>Importer</source>
+        <target state="translated">Pengimpor</target>
+      </trans-unit>
+      <trans-unit id="ulYFDIo" resname="button.ods" xml:space="preserve">
+        <source>button.ods</source>
+        <target state="translated">ODS</target>
+      </trans-unit>
+      <trans-unit id="86KyrKO" resname="invoice.subtotal" xml:space="preserve">
+        <source>invoice.subtotal</source>
+        <target state="translated">Subtotal</target>
+      </trans-unit>
+      <trans-unit id="EO57yXg" resname="invoice.tax" xml:space="preserve">
+        <source>invoice.tax</source>
+        <target state="translated">Pajak</target>
+      </trans-unit>
+      <trans-unit id="N68vyvo" resname="invoice.total" xml:space="preserve">
+        <source>invoice.total</source>
+        <target state="translated">Total</target>
+      </trans-unit>
+      <trans-unit id="BAkWQqr" resname="total_rate" xml:space="preserve">
+        <source>total_rate</source>
+        <target state="translated">Total harga</target>
+      </trans-unit>
+      <trans-unit id="IoKfYkz" resname="unit_price" xml:space="preserve">
+        <source>unit_price</source>
+        <target state="translated">Harga unit</target>
+      </trans-unit>
+      <trans-unit id="iwWaUoa" resname="export.filter" xml:space="preserve">
+        <source>export.filter</source>
+        <target state="translated">Filter data untuk ekspor</target>
+      </trans-unit>
+      <trans-unit id="Zif614Q" resname="add_user.label" xml:space="preserve">
+        <source>add_user.label</source>
+        <target state="translated">Tambahkan pengguna</target>
+      </trans-unit>
+      <trans-unit id="yNWIi5U" resname="default_value_new" xml:space="preserve">
+        <source>default_value_new</source>
+        <target state="translated">Nilai default untuk entri baru</target>
+      </trans-unit>
+      <trans-unit id="5buBUCm" resname="receive_from" xml:space="preserve">
+        <source>receive_from</source>
+        <target state="translated">Diterima dari %name%</target>
+      </trans-unit>
+      <trans-unit id="cR5DD88" resname="invoice_number_generator.date" xml:space="preserve">
+        <source>invoice_number_generator.date</source>
+        <target state="translated">Tanggal</target>
+      </trans-unit>
+      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear" xml:space="preserve">
+        <source>stats.workingTimeFinancialYear</source>
+        <target state="translated">Tahun Keuangan</target>
+      </trans-unit>
+      <trans-unit id="EI5gPkp" resname="stats.userDurationToday" xml:space="preserve">
+        <source>stats.userDurationToday</source>
+        <target state="translated">Jam kerja saya hari ini</target>
+      </trans-unit>
+      <trans-unit id="BjyLITj" resname="stats.userDurationYear" xml:space="preserve">
+        <source>stats.userDurationYear</source>
+        <target state="translated">Jam kerja saya tahun ini</target>
+      </trans-unit>
+      <trans-unit id="bQZyZaO" resname="stats.amountYear" xml:space="preserve">
+        <source>stats.amountYear</source>
+        <target state="translated">Pendapatan tahun ini</target>
+      </trans-unit>
+      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek" xml:space="preserve">
+        <source>stats.activeUsersWeek</source>
+        <target state="translated">Pengguna aktif minggu ini</target>
+      </trans-unit>
+      <trans-unit id="67uSaR3" resname="stats.projectTotal" xml:space="preserve">
+        <source>stats.projectTotal</source>
+        <target state="translated">Proyek</target>
+      </trans-unit>
+      <trans-unit id="X70dwP8" resname="button.print" xml:space="preserve">
+        <source>button.print</source>
+        <target state="translated">Cetak</target>
+      </trans-unit>
+      <trans-unit id="aAa5uRR" resname="button.pdf" xml:space="preserve">
+        <source>button.pdf</source>
+        <target state="translated">PDF</target>
+      </trans-unit>
+      <trans-unit id="zPcx3O_" resname="invoice_print" xml:space="preserve">
+        <source>invoice_print</source>
+        <target state="translated">Faktur</target>
+      </trans-unit>
+      <trans-unit id="dicW36D" resname="mark_as_exported" xml:space="preserve">
+        <source>mark_as_exported</source>
+        <target state="translated">Tandai sebagai diekspor</target>
+      </trans-unit>
+      <trans-unit id="NOEx3FF" resname="invoice_date.help" xml:space="preserve">
+        <source>invoice_date.help</source>
+        <target state="translated">Anda dapat mengubah tanggal faktur disini</target>
+      </trans-unit>
+      <trans-unit id="F7xeAn4" resname="invoice_date" xml:space="preserve">
+        <source>invoice_date</source>
+        <target state="translated">Tanggal faktur</target>
+      </trans-unit>
+      <trans-unit id="9p2KQag" resname="invoice.signature_user" xml:space="preserve">
+        <source>invoice.signature_user</source>
+        <target state="translated">Konfirmasi: Tanggal / Nama Konsultan / Tanda Tangan</target>
+      </trans-unit>
+      <trans-unit id="WMJwy8r" resname="invoice_tax_number" xml:space="preserve">
+        <source>invoice_tax_number</source>
+        <target state="translated">no. VAT:</target>
+      </trans-unit>
+      <trans-unit id="X_NRsed" resname="status.new" xml:space="preserve">
+        <source>status.new</source>
+        <target state="translated">Ini dimaksud "Faktur baru" - dibandingkan dengan "faktur terbayar, faktur tertunda atau faktur jatuh tempo"</target>
+      </trans-unit>
+      <trans-unit id="PHJwR4w" resname="status.paid" xml:space="preserve">
+        <source>status.paid</source>
+        <target state="translated">Terbayar</target>
+      </trans-unit>
+      <trans-unit id="m8V2yFG" resname="status.progress" xml:space="preserve">
+        <source>status.progress</source>
+        <target state="translated">Dalam proses</target>
+      </trans-unit>
+      <trans-unit id="HF70hZq" resname="status.closed" xml:space="preserve">
+        <source>status.closed</source>
+        <target state="translated">Selesai</target>
+      </trans-unit>
+      <trans-unit id="dOIWgOr" resname="approve" xml:space="preserve">
+        <source>approve</source>
+        <target state="translated">Setuju</target>
+      </trans-unit>
+      <trans-unit id="H1i5FFs" resname="request" xml:space="preserve">
+        <source>request</source>
+        <target state="translated">Minta</target>
+      </trans-unit>
+      <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve" approved="no">
+        <source>Rejected</source>
+        <target state="translated">Ditolak</target>
+      </trans-unit>
+      <trans-unit id="vjmoQGo" resname="export.period" xml:space="preserve">
+        <source>export.period</source>
+        <target state="translated">Periode</target>
+      </trans-unit>
+      <trans-unit id="3CQ7A2m" resname="export.document_title" xml:space="preserve">
+        <source>export.document_title</source>
+        <target state="translated">Ekspor lembar waktu</target>
+      </trans-unit>
+      <trans-unit id="N778uJ6" resname="export.summary" xml:space="preserve">
+        <source>export.summary</source>
+        <target state="translated">Ringkasan</target>
+      </trans-unit>
+      <trans-unit id="OxdYMR3" resname="active.entries" xml:space="preserve">
+        <source>active.entries</source>
+        <target state="translated">Pengukuran waktu aktif anda</target>
+      </trans-unit>
+      <trans-unit id="mR_Y5Mv" resname="timesheet.stop" xml:space="preserve">
+        <source>timesheet.stop</source>
+        <target state="translated">Hentikan pelacakan waktu</target>
+      </trans-unit>
+      <trans-unit id="XvXvA2S" resname="all" xml:space="preserve">
+        <source>all</source>
+        <target state="translated">Semua</target>
+      </trans-unit>
+      <trans-unit id="xm7mqoK" resname="entryState.running" xml:space="preserve">
+        <source>entryState.running</source>
+        <target state="translated">Aktif</target>
+      </trans-unit>
+      <trans-unit id="BhsaLxX" resname="export.clear_all" xml:space="preserve">
+        <source>export.clear_all</source>
+        <target state="translated">Tandai semua riwayat sebagai terbuka?</target>
+      </trans-unit>
+      <trans-unit id="FxwWVFI" resname="help.globalActivity" xml:space="preserve">
+        <source>help.globalActivity</source>
+        <target state="translated">Jika anda tidak memilih sebuah proyek, aktifitas ini akan menjadi umum, dan dapat digabung dengan proyek lainnya. Jika anda memilih sebuah proyek, aktifitas hanya akan digunakan pada proyek tersebut. Pengaturan ini tidak dapat diubah kedepannya.</target>
+      </trans-unit>
+      <trans-unit id="HNFpvnH" resname="globalActivities" xml:space="preserve">
+        <source>globalActivities</source>
+        <target state="translated">Izinkan aktifitas umum</target>
+      </trans-unit>
+      <trans-unit id="8BPmHPa" resname="batch_meta_fields" xml:space="preserve">
+        <source>batch_meta_fields</source>
+        <target state="translated">Kolom tambahan</target>
+      </trans-unit>
+      <trans-unit id="ekN4GLW" resname="batch_table_checkbox_all" xml:space="preserve">
+        <source>batch_table_checkbox_all</source>
+        <target state="translated">Pilih semua entri untuk daftar pembaruan batch</target>
+      </trans-unit>
+      <trans-unit id="2dm.ZWM" resname="not_exported" xml:space="preserve">
+        <source>not_exported</source>
+        <target state="translated">Belum diekspor</target>
+      </trans-unit>
+      <trans-unit id="o0yOFHL" resname="not_invoiced" xml:space="preserve">
+        <source>not_invoiced</source>
+        <target state="translated">Belum ditagih</target>
+      </trans-unit>
+      <trans-unit id="dnQEYoJ" resname="budgetType_full" xml:space="preserve">
+        <source>budgetType_full</source>
+        <target state="translated">Siklus Hidup</target>
+      </trans-unit>
+      <trans-unit id="J_teUVB" resname="updated" xml:space="preserve">
+        <source>Updated</source>
+        <target state="translated">Diperbarui</target>
+      </trans-unit>
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
+        <source>api_password.intro</source>
+        <target state="translated">Disini anda dapat mengelola API token anda, yang digunakan untuk mengautentikasi aplikasi anda ke Kimai.</target>
+      </trans-unit>
+      <trans-unit id="WwesQPU" resname="deactivate" xml:space="preserve">
+        <source>Deactivate</source>
+        <target state="translated">Nonaktifkan</target>
+      </trans-unit>
+      <trans-unit id="IAx_YiA" resname="activate" xml:space="preserve">
+        <source>Activate</source>
+        <target state="translated">Aktivasi</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title" xml:space="preserve">
+        <source>about.title</source>
+        <target state="translated">Tentang Kimai</target>
+      </trans-unit>
+      <trans-unit id="i_XOmN4" resname="help_locales" xml:space="preserve">
+        <source>help_locales</source>
+        <target state="translated">Berikut merupakan contoh dari aturan formatting untuk bahasa yang didukung</target>
+      </trans-unit>
+      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve" approved="no">
+        <source>Time, date and currency format</source>
+        <target state="translated">Format waktu, tanggal, dan mata uang</target>
+      </trans-unit>
+      <trans-unit id="JmkKf48" resname="user.language.help" xml:space="preserve">
+        <source>user.language.help</source>
+        <target state="translated">Pengaturan ini bertanggung jawab atas translasi pada software</target>
+      </trans-unit>
+      <trans-unit id="fWuGTog" resname="public_holiday" xml:space="preserve">
+        <source>public_holiday</source>
+        <target state="translated">Cuti bersama</target>
+      </trans-unit>
+      <trans-unit id="zlmddHB" resname="public_holidays" xml:space="preserve">
+        <source>public_holidays</source>
+        <target state="translated">Seluruh cuti bersama</target>
+      </trans-unit>
+      <trans-unit id="u4lbYD5" resname="public_holiday.group" xml:space="preserve">
+        <source>public_holiday.group</source>
+        <target state="translated">Grup cuti</target>
+      </trans-unit>
+      <trans-unit id="GIgQHa4" resname="absence" xml:space="preserve">
+        <source>absence</source>
+        <target state="translated">Absensi</target>
+      </trans-unit>
+      <trans-unit id="YTzKpcP" resname="Absence calendar" xml:space="preserve">
+        <source>Absence calendar</source>
+        <target state="translated">Kalender Absensi</target>
+      </trans-unit>
+      <trans-unit id="_WlU8Fp" resname="sickness" xml:space="preserve">
+        <source>sickness</source>
+        <target state="translated">Sakit</target>
+      </trans-unit>
+      <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
+        <source>Sickness of a relative</source>
+        <target state="translated">Kerabat sedang sakit</target>
+      </trans-unit>
+      <trans-unit id="2SmKENG" resname="other" xml:space="preserve">
+        <source>other</source>
+        <target state="translated">Lainnya</target>
+      </trans-unit>
+      <trans-unit id="DA1.Ln_" resname="time_off.intro" xml:space="preserve">
+        <source>time_off.intro</source>
+        <target state="translated">Akun waktu kerja anda memiliki saldo %hours% jam.</target>
+      </trans-unit>
+      <trans-unit id=".wmq_rT" resname="force_password_change" xml:space="preserve">
+        <source>force_password_change</source>
+        <target state="translated">Ajukan password baru</target>
+      </trans-unit>
+      <trans-unit id="0bKwA0k" resname="force_password_change_help" xml:space="preserve">
+        <source>force_password_change_help</source>
+        <target state="translated">Berikutnya, saat pengguna masuk, mereka harus memasukkan kata sandi baru.</target>
+      </trans-unit>
+      <trans-unit id="vURcRit" resname="overview" xml:space="preserve">
+        <source>Overview</source>
+        <target state="translated">Tinjauan</target>
+      </trans-unit>
+      <trans-unit id="YRRgZCe" resname="Custom content" xml:space="preserve">
+        <source>Custom content</source>
+        <target state="translated">Konten kustom</target>
+      </trans-unit>
+      <trans-unit id="q1EATp1" resname="days" xml:space="preserve">
+        <source>days</source>
+        <target state="translated">Hari</target>
+      </trans-unit>
+      <trans-unit id="Ga4bvUX" resname="unpaid_vacation" xml:space="preserve">
+        <source>unpaid_vacation</source>
+        <target state="translated">Cuti tanpa bayaran</target>
+      </trans-unit>
+      <trans-unit id="q59lI2y" resname="user_identifier" xml:space="preserve">
+        <source>user_identifier</source>
+        <target state="translated">ID Pengguna</target>
+      </trans-unit>
+      <trans-unit id="uqv2Lrv" resname="user_identifier.help" xml:space="preserve">
+        <source>user_identifier.help</source>
+        <target state="translated">Pengidentifikasi pengguna unik digunakan untuk otentikasi dan dalam ekspor</target>
+      </trans-unit>
+      <trans-unit id="Qh1X4Vu" resname="invoice_number_generator.default" xml:space="preserve">
+        <source>invoice_number_generator.default</source>
+        <target state="translated">Format yang dikonfigurasi</target>
+      </trans-unit>
+      <trans-unit id="HQ2YM1b" resname="attendance_only_project" xml:space="preserve">
+        <source>attendance_only_project</source>
+        <target state="translated">Hanya hitung entri dari proyek terpilih sebagai jam kerja</target>
+      </trans-unit>
+      <trans-unit id="rkCw7Ml" resname="last_usage" xml:space="preserve">
+        <source>Last usage</source>
+        <target state="translated">Penggunaan terakhir</target>
+      </trans-unit>
+      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
+        <source>api_password_deprecated</source>
+        <target state="translated">Kata sandi API telah usang: sebagai gantinya, tolong gunakan token API.</target>
+      </trans-unit>
+      <trans-unit id="y7KtuSS" resname="hours_per_week" xml:space="preserve">
+        <source>hours_per_week</source>
+        <target state="translated">Jam perminggu</target>
+      </trans-unit>
+      <trans-unit id="07e8ywS" resname="hours_per_month" xml:space="preserve">
+        <source>hours_per_month</source>
+        <target state="translated">Jam per bulan</target>
+      </trans-unit>
+      <trans-unit id="7p_pFHl" resname="work_days" xml:space="preserve">
+        <source>work_days</source>
+        <target state="translated">Hari kerja</target>
+      </trans-unit>
+      <trans-unit id="2pbkbn_" resname="work_hours_mode" xml:space="preserve">
+        <source>work_hours_mode</source>
+        <target state="translated">Kalkulasi jam kerja</target>
+      </trans-unit>
+      <trans-unit id="FOvlalA" resname="break" xml:space="preserve">
+        <source>break</source>
+        <target state="translated">Istirahat</target>
+      </trans-unit>
+      <trans-unit id="JiEhxTc" resname="edit" xml:space="preserve">
+        <source>Edit</source>
+        <target state="translated">Ubah</target>
+      </trans-unit>
+      <trans-unit id="hF6RgxM" resname="report" xml:space="preserve">
+        <source>report</source>
+        <target state="translated">Laporkan</target>
+      </trans-unit>
+      <trans-unit id="JeK2sQZ" resname="repeat" xml:space="preserve">
+        <source>repeat</source>
+        <target state="translated">Mulai lagi</target>
+      </trans-unit>
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
+        <source>Filter timesheets</source>
+        <target state="translated">Lembar waktu</target>
+      </trans-unit>
+      <trans-unit id="b1pgNOd" resname="copy" xml:space="preserve">
+        <source>copy</source>
+        <target state="translated">Buat salinan</target>
+      </trans-unit>
+      <trans-unit id="hHIeqOW" resname="invoice.pending" xml:space="preserve">
+        <source>invoice.pending</source>
+        <target state="translated">Menunggu pembayaran</target>
+      </trans-unit>
+      <trans-unit id="9M4b2ZN" resname="invoice.paid" xml:space="preserve">
+        <source>invoice.paid</source>
+        <target state="translated">Faktur dibayar</target>
+      </trans-unit>
+      <trans-unit id="SEyZupT" resname="invoice.cancel" xml:space="preserve">
+        <source>invoice.cancel</source>
+        <target state="translated">Batalkan faktur</target>
+      </trans-unit>
+      <trans-unit id="38M3a4J" resname="filter" xml:space="preserve">
+        <source>filter</source>
+        <target state="translated">Filter data</target>
+      </trans-unit>
+      <trans-unit id="YCc5UoO" resname="widget_remove" xml:space="preserve">
+        <source>Remove widget</source>
+        <target state="translated">Hapus widget</target>
+      </trans-unit>
+      <trans-unit id="5vJvarK" resname="syncronisation" xml:space="preserve">
+        <source>Synchronization</source>
+        <target state="translated">Sinkronisasi</target>
+      </trans-unit>
+      <trans-unit id="2UL2SIZ" resname="import" xml:space="preserve">
+        <source>import</source>
+        <target state="translated">Impor</target>
+      </trans-unit>
+      <trans-unit id="EiWubBr" resname="sessions" xml:space="preserve">
+        <source>Sessions</source>
+        <target state="translated">Sesi</target>
+      </trans-unit>
+      <trans-unit id="f0kKHXR" resname="sessions_logout" xml:space="preserve">
+        <source>Log out of all devices</source>
+        <target state="translated">Keluar dari semua perangkat</target>
+      </trans-unit>
+      <trans-unit id="9qIU96X" resname="result" xml:space="preserve">
+        <source>result</source>
+        <target state="translated">Hasil</target>
+      </trans-unit>
+      <trans-unit id="wvt4jH3" resname="training" xml:space="preserve">
+        <source>training</source>
+        <target state="translated">Latihan</target>
+      </trans-unit>
+      <trans-unit id="aP9j_4L" resname="download" xml:space="preserve">
+        <source>download</source>
+        <target state="translated">Unduh</target>
+      </trans-unit>
+      <trans-unit id="pJzNT.n" resname="vcard" xml:space="preserve">
+        <source>vcard</source>
+        <target state="translated">Kartu bisnis</target>
+      </trans-unit>
+      <trans-unit id="2cMESs." resname="widget_add" xml:space="preserve">
+        <source>Add widget</source>
+        <target state="translated">Tambahkan widget</target>
+      </trans-unit>
+      <trans-unit id="0jvo0RQ" resname="profit" xml:space="preserve">
+        <source>profit</source>
+        <target state="translated">Keuntungan</target>
+      </trans-unit>
+      <trans-unit id="vN5pKOU" resname="costs" xml:space="preserve">
+        <source>costs</source>
+        <target state="translated">Biaya</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category" xml:space="preserve">
+        <source>Category</source>
+        <target state="translated">Kategori</target>
+      </trans-unit>
+      <trans-unit id="J6EJUj9" resname="Meta fields" xml:space="preserve">
+        <source>Meta fields</source>
+        <target state="translated">Kolom kustom</target>
+      </trans-unit>
+      <trans-unit id="Vp7xjKh" resname="Audit logs" xml:space="preserve">
+        <source>Audit logs</source>
+        <target state="translated">Log audit</target>
+      </trans-unit>
+      <trans-unit id="T_PN1AT" resname="permissions" xml:space="preserve">
+        <source>permissions</source>
+        <target state="translated">Perizinan</target>
+      </trans-unit>
+      <trans-unit id="Qf.Yt2r" resname="details" xml:space="preserve">
+        <source>details</source>
+        <target state="translated">Tampilkan</target>
+      </trans-unit>
+      <trans-unit id="TqFAWIF" resname="home" xml:space="preserve">
+        <source>home</source>
+        <target state="translated">Halaman utama</target>
+      </trans-unit>
+      <trans-unit id="PBlIO2x" resname="create-project" xml:space="preserve">
+        <source>create-project</source>
+        <target state="translated">Buat proyek</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
