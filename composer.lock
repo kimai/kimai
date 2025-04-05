@@ -2075,16 +2075,16 @@
         },
         {
             "name": "gedmo/doctrine-extensions",
-            "version": "v3.19.0",
+            "version": "v3.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine-extensions/DoctrineExtensions.git",
-                "reference": "5b0b8a442d19e6701ae64535dc08f7944e2895d2"
+                "reference": "ea1d37586b8e4bae2a815feb38b177894b12c44c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine-extensions/DoctrineExtensions/zipball/5b0b8a442d19e6701ae64535dc08f7944e2895d2",
-                "reference": "5b0b8a442d19e6701ae64535dc08f7944e2895d2",
+                "url": "https://api.github.com/repos/doctrine-extensions/DoctrineExtensions/zipball/ea1d37586b8e4bae2a815feb38b177894b12c44c",
+                "reference": "ea1d37586b8e4bae2a815feb38b177894b12c44c",
                 "shasum": ""
             },
             "require": {
@@ -2179,10 +2179,9 @@
                 "uploadable"
             ],
             "support": {
-                "email": "gediminas.morkevicius@gmail.com",
+                "docs": "https://github.com/doctrine-extensions/DoctrineExtensions/tree/main/doc",
                 "issues": "https://github.com/doctrine-extensions/DoctrineExtensions/issues",
-                "source": "https://github.com/doctrine-extensions/DoctrineExtensions/tree/v3.19.0",
-                "wiki": "https://github.com/Atlantic18/DoctrineExtensions/tree/main/doc"
+                "source": "https://github.com/doctrine-extensions/DoctrineExtensions/tree/v3.20.0"
             },
             "funding": [
                 {
@@ -2202,7 +2201,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-24T22:12:57+00:00"
+            "time": "2025-04-04T17:19:27+00:00"
         },
         {
             "name": "jms/metadata",
@@ -10979,16 +10978,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.74.0",
+            "version": "v3.75.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "6b7cb12a6cf592fd9a2b46a2d5d4c3b44003973d"
+                "reference": "399a128ff2fdaf4281e4e79b755693286cdf325c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/6b7cb12a6cf592fd9a2b46a2d5d4c3b44003973d",
-                "reference": "6b7cb12a6cf592fd9a2b46a2d5d4c3b44003973d",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/399a128ff2fdaf4281e4e79b755693286cdf325c",
+                "reference": "399a128ff2fdaf4281e4e79b755693286cdf325c",
                 "shasum": ""
             },
             "require": {
@@ -11071,7 +11070,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.74.0"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.75.0"
             },
             "funding": [
                 {
@@ -11079,7 +11078,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-03-27T22:31:30+00:00"
+            "time": "2025-03-31T18:40:42+00:00"
         },
         {
             "name": "masterminds/html5",
