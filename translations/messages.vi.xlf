@@ -6,9 +6,9 @@
         <source>Time Tracking</source>
         <target state="translated">Theo dõi thời gian</target>
       </trans-unit>
-      <trans-unit id="inmIkP6" resname="yes">
+      <trans-unit id="inmIkP6" resname="yes" xml:space="preserve">
         <source>yes</source>
-        <target>Đúng</target>
+        <target state="translated">Có</target>
       </trans-unit>
       <trans-unit id="k5Apjz_" resname="no">
         <source>no</source>
@@ -208,7 +208,7 @@
       </trans-unit>
       <trans-unit id="1C7xSXk" resname="visible" xml:space="preserve">
         <source>Visible</source>
-        <target state="translated">Hiện</target>
+        <target state="translated">Hiển thị</target>
       </trans-unit>
       <trans-unit id="CvlqjtY" resname="budget">
         <source>budget</source>
@@ -1216,7 +1216,7 @@
       </trans-unit>
       <trans-unit id="oq1jcSQ" resname="help.billable" xml:space="preserve">
         <source>help.billable</source>
-        <target state="translated">Nếu cài đặt tắt, tất cả thời gian được lưu trong tương lai sẽ được đánh dấu là "không cần thanh toán".</target>
+        <target state="translated">Nếu tắt cài đặt, tất cả bảng chấm công được lưu trong tương lai sẽ được đánh dấu là "không cần lên hóa đơn".</target>
       </trans-unit>
       <trans-unit id="KgBw0BS" resname="skin" xml:space="preserve">
         <source>skin</source>
@@ -1786,9 +1786,9 @@
         <source>permissions</source>
         <target>Phân quyền nhóm</target>
       </trans-unit>
-      <trans-unit id="Qf.Yt2r" resname="details">
+      <trans-unit id="Qf.Yt2r" resname="details" xml:space="preserve">
         <source>details</source>
-        <target>Hiện</target>
+        <target state="translated">Hiển thị</target>
       </trans-unit>
       <trans-unit id="aP9j_4L" resname="download">
         <source>download</source>
