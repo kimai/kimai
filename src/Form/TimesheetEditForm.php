@@ -360,16 +360,13 @@ class TimesheetEditForm extends AbstractType
             return;
         }
 
+        $moneyOptions = ['currency' => $currency];
+
         $builder
-            ->add('fixedRate', FixedRateType::class, [
-                'currency' => $currency,
-            ])
-            ->add('hourlyRate', HourlyRateType::class, [
-                'currency' => $currency,
-            ])
-            ->add('internalRate', InternalRateType::class, [
-                'currency' => $currency,
-            ]);
+            ->add('fixedRate', FixedRateType::class, $moneyOptions)
+            ->add('hourlyRate', HourlyRateType::class, $moneyOptions)
+            //->add('internalRate', InternalRateType::class, $moneyOptions)
+        ;
     }
 
     protected function addUser(FormBuilderInterface $builder, array $options): void

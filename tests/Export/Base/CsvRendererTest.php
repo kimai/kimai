@@ -109,6 +109,7 @@ class CsvRendererTest extends AbstractRendererTestCase
             '0',
             '0',
             '84',
+            'Kevin',
             'kevin',
             '',
             'Customer Name',
@@ -142,6 +143,7 @@ class CsvRendererTest extends AbstractRendererTestCase
             '0',
             '0',
             '-100.92',
+            'niveK',
             'nivek',
             '',
             'Customer Name',
@@ -168,6 +170,6 @@ class CsvRendererTest extends AbstractRendererTestCase
         self::assertEquals($expected, $all[5]);
         self::assertEquals($expected2, $all[6]);
         self::assertEquals(\count($expected), \count($all[0]));
-        self::assertEquals('foo', $all[4][16]);
+        self::assertEquals('foo', $all[4][17]);
     }
 }

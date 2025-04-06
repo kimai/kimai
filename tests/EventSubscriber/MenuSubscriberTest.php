@@ -23,6 +23,7 @@ class MenuSubscriberTest extends TestCase
         $events = MenuSubscriber::getSubscribedEvents();
         self::assertArrayHasKey(ConfigureMainMenuEvent::class, $events);
         $methodName = $events[ConfigureMainMenuEvent::class][0];
+        self::assertIsString($methodName);
         self::assertTrue(method_exists(MenuSubscriber::class, $methodName));
     }
 }

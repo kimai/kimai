@@ -454,10 +454,12 @@ final class TranslationCommand extends Command
 
         foreach ($xml->file->body->{'trans-unit'} as $unit) {
             $source = $unit->source;
-            if (!isset($unit['resname'])) {
+            if (!isset($unit['resname']) && $source !== null) {
                 $unit['resname'] = $source;
             }
-            $unit['id'] = $this->generateId($unit['resname']);
+            if ($unit['resname'] !== null) {
+                $unit['id'] = $this->generateId($unit['resname']); // @phpstan-ignore offsetAssign.valueType
+            }
         }
 
         $xmlDocument = new \DOMDocument('1.0');
@@ -491,7 +493,7 @@ final class TranslationCommand extends Command
                 );
             }
             $unit->target[0] = $translations[$key];
-            $unit->target['state'] = 'needs-translation';
+            $unit->target['state'] = 'needs-translation'; // @phpstan-ignore assign.propertyType
             $foundEmpty = true;
         }
 

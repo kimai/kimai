@@ -23,6 +23,7 @@ class WizardSubscriberTest extends TestCase
         $events = WizardSubscriber::getSubscribedEvents();
         self::assertArrayHasKey(KernelEvents::REQUEST, $events);
         $methodName = $events[KernelEvents::REQUEST][0];
+        self::assertIsString($methodName);
         self::assertTrue(method_exists(WizardSubscriber::class, $methodName));
     }
 }

@@ -164,6 +164,7 @@ final class InvoiceController extends AbstractController
             try {
                 $query->setCustomers([$customer]);
                 $model = $this->service->createModel($query);
+                $model->setPreview(true);
 
                 return $this->service->renderInvoice($model, $this->dispatcher, true);
             } catch (Exception $ex) {

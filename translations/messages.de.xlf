@@ -614,6 +614,14 @@
         <source>complete_month.help</source>
         <target>Dies wird alle Tage des Jahres vor dem gewählten Datum abschliessen. Der Benutzer wird für den abgeschlossenen Zeitraum keine Zeiten mehr anlegen oder bearbeiten können.</target>
       </trans-unit>
+      <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="yes">
+        <source>Unlock month</source>
+        <target state="final">Monat entsperren</target>
+      </trans-unit>
+      <trans-unit id="mhOe3Iy" resname="unlock_month.help">
+        <source>unlock_month.help</source>
+        <target>Dadurch werden alle Tage des Jahres nach dem ausgewählten Datum entsperrt.</target>
+      </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>
         <target>Monats-Abschluss PDF</target>

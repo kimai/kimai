@@ -56,7 +56,7 @@ class SelfRegistrationControllerTest extends AbstractControllerBaseTestCase
         self::assertTrue($response->isSuccessful());
 
         $content = $response->getContent();
-        self::assertStringContainsString('<title>Kimai – Time Tracking</title>', $content);
+        self::assertStringContainsString('<title>Kimai</title>', $content);
         self::assertStringContainsString('Register a new account', $content);
         self::assertStringContainsString('<form name="user_registration_form" method="post" action="/en/register/"', $content);
         self::assertStringContainsString('<input type="email"', $content);
@@ -115,7 +115,7 @@ class SelfRegistrationControllerTest extends AbstractControllerBaseTestCase
         $this->createUser($client, 'example', 'register@example.com', 'test1234');
 
         $content = $client->getResponse()->getContent();
-        self::assertStringContainsString('<title>Kimai – Time Tracking</title>', $content);
+        self::assertStringContainsString('<title>Kimai</title>', $content);
         self::assertStringContainsString('An e-mail has been sent to register@example.com. It contains a link you must click to activate your account.', $content);
         self::assertStringContainsString('<a href="/en/login">', $content);
     }
