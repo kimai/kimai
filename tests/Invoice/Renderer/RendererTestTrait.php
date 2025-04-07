@@ -199,7 +199,7 @@ trait RendererTestTrait
             "bar\r\n" .
             'Hello'
         );
-        $timesheet->setMetaField((new TimesheetMeta())->setName('foo-timesheet3')->setValue('bluuuub')->setIsVisible(true));
+        $timesheet4->setMetaField((new TimesheetMeta())->setName('foo-timesheet3')->setValue('bluuuub')->setIsVisible(true));
 
         $userKevin = new User();
         $userKevin->setUserIdentifier('kevin');
@@ -270,6 +270,7 @@ trait RendererTestTrait
         $user->addPreference(new UserPreference('hello', 'world'));
 
         $customer = new Customer('customer,with/special#name');
+        $customer->setCountry('DE');
         $customer->setCurrency('USD');
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
 
@@ -277,6 +278,7 @@ trait RendererTestTrait
         $template->setTitle('a test invoice template title');
         $template->setVat(19);
         $template->setLanguage('it');
+        $template->setCustomer($customer);
 
         $project = new Project();
         $project->setName('project name');
