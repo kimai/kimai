@@ -213,9 +213,15 @@ class TimesheetEditForm extends AbstractType
                     return;
                 }
 
+                // if the user did not change the time, make sure to keep the seconds
+                $seconds = 0;
+                if ($data->getBegin()?->format('H:i') === $time->format('H:i')) {
+                    $seconds = $data->getBegin()?->format('s');
+                }
+
                 // mutable datetime are a problem for doctrine
                 $newDate = clone $date;
-                $newDate->setTime($time->format('H'), $time->format('i'));
+                $newDate->setTime($time->format('H'), $time->format('i'), $seconds);
 
                 if ($data->getBegin() === null || $data->getBegin()->getTimestamp() !== $newDate->getTimestamp()) {
                     $data->setBegin($newDate);
@@ -267,8 +273,15 @@ class TimesheetEditForm extends AbstractType
                 if ($time === null) {
                     throw new \Exception('Cannot work with timesheets without start time');
                 }
+
+                // if the user did not change the time, make sure to keep the seconds
+                $seconds = 0;
+                if ($timesheet->getEnd()?->format('H:i') === $end->format('H:i')) {
+                    $seconds = $timesheet->getEnd()?->format('s');
+                }
+
                 $newEnd = clone $time;
-                $newEnd->setTime($end->format('H'), $end->format('i'));
+                $newEnd->setTime($end->format('H'), $end->format('i'), $seconds);
 
                 if ($newEnd < $time) {
                     $newEnd->modify('+ 1 day');
