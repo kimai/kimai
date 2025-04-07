@@ -14,9 +14,9 @@ use App\Timesheet\DateTimeFactory;
 
 abstract class AbstractCounterYear extends AbstractWidgetType
 {
-    private bool $isFinancialYear = false;
+    protected bool $isFinancialYear = false;
 
-    public function __construct(private SystemConfiguration $systemConfiguration)
+    public function __construct(protected SystemConfiguration $systemConfiguration)
     {
     }
 
@@ -25,8 +25,8 @@ abstract class AbstractCounterYear extends AbstractWidgetType
      */
     public function getData(array $options = []): mixed
     {
-        $begin = $this->createDate('01 january this year 00:00:00');
-        $end = $this->createDate('31 december this year 23:59:59');
+        $begin = $this->createYearStartDate();
+        $end = $this->createYearEndDate();
 
         if (null !== ($financialYear = $this->systemConfiguration->getFinancialYearStart())) {
             $factory = new DateTimeFactory($this->getTimezone());

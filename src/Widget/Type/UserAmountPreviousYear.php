@@ -13,11 +13,12 @@ use App\Configuration\SystemConfiguration;
 use App\Event\UserRevenueStatisticEvent;
 use App\Model\Revenue;
 use App\Repository\TimesheetRepository;
+use App\Timesheet\DateTimeFactory;
 use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
-final class UserAmountYear extends AbstractCounterYear
+final class UserAmountPreviousYear extends AbstractCounterYear
 {
     public function __construct(
         private readonly TimesheetRepository $repository,
@@ -39,12 +40,12 @@ final class UserAmountYear extends AbstractCounterYear
 
     protected function getFinancialYearTitle(): string
     {
-        return 'stats.amountFinancialYear';
+        return 'stats.amountPreviousFinancialYear';
     }
 
     public function getId(): string
     {
-        return 'UserAmountYear';
+        return 'UserAmountPreviousYear';
     }
 
     /**
@@ -57,6 +58,25 @@ final class UserAmountYear extends AbstractCounterYear
             'icon' => 'money',
             'color' => WidgetInterface::COLOR_YEAR,
         ], parent::getOptions($options));
+    }
+
+    /**
+     * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     * @return array<string, float>
+     */
+    public function getData(array $options = []): array
+    {
+        $begin = $this->createPreviousYearStartDate();
+        $end = $this->createPreviousYearEndDate();
+
+        if (null !== ($financialYear = $this->systemConfiguration->getFinancialYearStart())) {
+            $factory = new DateTimeFactory($this->getTimezone());
+            $begin = $factory->createStartOfPreviousFinancialYear($financialYear);
+            $end = $factory->createEndOfPreviousFinancialYear($begin);
+            $this->isFinancialYear = true;
+        }
+
+        return $this->getYearData($begin, $end, $options);
     }
 
     /**

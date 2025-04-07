@@ -9,6 +9,7 @@
 
 namespace App\Widget\Type;
 
+use App\Model\ProjectBudgetStatisticModel;
 use App\Project\ProjectStatisticService;
 use App\Repository\Loader\TeamLoader;
 use App\Widget\WidgetInterface;
@@ -19,8 +20,7 @@ final class UserTeamProjects extends AbstractWidget
     public function __construct(
         private readonly ProjectStatisticService $statisticService,
         private readonly EntityManagerInterface $entityManager
-    )
-    {
+    ) {
     }
 
     public function getWidth(): int
@@ -61,8 +61,9 @@ final class UserTeamProjects extends AbstractWidget
 
     /**
      * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     * @return ProjectBudgetStatisticModel[]
      */
-    public function getData(array $options = []): mixed
+    public function getData(array $options = []): array
     {
         $user = $this->getUser();
         $teams = $user->getTeams();

@@ -9,6 +9,7 @@
 
 namespace App\Widget\Type;
 
+use App\Entity\Team;
 use App\Widget\WidgetInterface;
 
 final class UserTeams extends AbstractWidget
@@ -48,8 +49,9 @@ final class UserTeams extends AbstractWidget
 
     /**
      * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     * @return Team[]
      */
-    public function getData(array $options = []): mixed
+    public function getData(array $options = []): array
     {
         return $this->getUser()->getTeams();
     }

@@ -15,7 +15,7 @@ use App\Widget\WidgetInterface;
 
 final class TotalsProject extends AbstractWidget
 {
-    public function __construct(private ProjectRepository $project)
+    public function __construct(private readonly ProjectRepository $project)
     {
     }
 
@@ -40,7 +40,7 @@ final class TotalsProject extends AbstractWidget
     /**
      * @param array<string, string|bool|int|null|array<string, mixed>> $options
      */
-    public function getData(array $options = []): mixed
+    public function getData(array $options = []): int
     {
         $user = $this->getUser();
         $query = new ProjectQuery();
