@@ -207,6 +207,7 @@ class TimesheetEditForm extends AbstractType
 
                 /** @var \DateTime|null $date */
                 $date = $event->getForm()->get('begin_date')->getData();
+                /** @var \DateTime|null $time */
                 $time = $event->getForm()->get('begin_time')->getData();
 
                 if ($date === null || $time === null) {
@@ -216,12 +217,12 @@ class TimesheetEditForm extends AbstractType
                 // if the user did not change the time, make sure to keep the seconds
                 $seconds = 0;
                 if ($data->getBegin()?->format('H:i') === $time->format('H:i')) {
-                    $seconds = $data->getBegin()?->format('s');
+                    $seconds = $data->getBegin()->format('s') ?? 0;
                 }
 
                 // mutable datetime are a problem for doctrine
                 $newDate = clone $date;
-                $newDate->setTime($time->format('H'), $time->format('i'), $seconds);
+                $newDate->setTime((int) $time->format('H'), (int) $time->format('i'), (int) $seconds);
 
                 if ($data->getBegin() === null || $data->getBegin()->getTimestamp() !== $newDate->getTimestamp()) {
                     $data->setBegin($newDate);
@@ -257,6 +258,7 @@ class TimesheetEditForm extends AbstractType
                 $timesheet = $event->getData();
                 $oldEnd = $timesheet->getEnd();
 
+                /** @var \DateTime|null $end */
                 $end = $event->getForm()->get('end_time')->getData();
                 if ($end === null || $end === false) {
                     $timesheet->setEnd(null);
@@ -276,12 +278,12 @@ class TimesheetEditForm extends AbstractType
 
                 // if the user did not change the time, make sure to keep the seconds
                 $seconds = 0;
-                if ($timesheet->getEnd()?->format('H:i') === $end->format('H:i')) {
-                    $seconds = $timesheet->getEnd()?->format('s');
+                if ($oldEnd !== null && $oldEnd->format('H:i') === $end->format('H:i')) {
+                    $seconds = $oldEnd->format('s') ?? 0;
                 }
 
                 $newEnd = clone $time;
-                $newEnd->setTime($end->format('H'), $end->format('i'), $seconds);
+                $newEnd->setTime((int) $end->format('H'), (int) $end->format('i'), (int) $seconds);
 
                 if ($newEnd < $time) {
                     $newEnd->modify('+ 1 day');
