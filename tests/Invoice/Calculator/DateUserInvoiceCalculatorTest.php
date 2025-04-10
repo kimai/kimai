@@ -57,54 +57,49 @@ class DateUserInvoiceCalculatorTest extends AbstractCalculatorTestCase
         $project3->method('getId')->willReturn(3);
 
         $timesheet = new Timesheet();
-        $timesheet
-            ->setBegin(new DateTime('2018-11-29'))
-            ->setEnd(new DateTime())
-            ->setDuration(3600)
-            ->setRate(293.27)
-            ->setUser($user1)
-            ->setActivity((new Activity())->setName('sdsd'))
-            ->setProject($project1);
+        $timesheet->setBegin(new DateTime('2018-11-29'));
+        $timesheet->setEnd(new DateTime());
+        $timesheet->setDuration(3600);
+        $timesheet->setRate(293.27);
+        $timesheet->setUser($user1);
+        $timesheet->setActivity((new Activity())->setName('sdsd'));
+        $timesheet->setProject($project1);
 
         $timesheet2 = new Timesheet();
-        $timesheet2
-            ->setBegin(new DateTime('2018-11-29'))
-            ->setEnd(new DateTime())
-            ->setDuration(400)
-            ->setRate(84.75)
-            ->setUser($user1)
-            ->setActivity((new Activity())->setName('bar'))
-            ->setProject($project2);
+        $timesheet2->setBegin(new DateTime('2018-11-29'));
+        $timesheet2->setEnd(new DateTime());
+        $timesheet2->setDuration(400);
+        $timesheet2->setRate(84.75);
+        $timesheet2->setUser($user1);
+        $timesheet2->setActivity((new Activity())->setName('bar'));
+        $timesheet2->setProject($project2);
 
         $timesheet3 = new Timesheet();
-        $timesheet3
-            ->setBegin(new DateTime('2018-11-28'))
-            ->setEnd(new DateTime())
-            ->setDuration(1800)
-            ->setRate(111.11)
-            ->setUser($user1)
-            ->setActivity((new Activity())->setName('foo'))
-            ->setProject($project1);
+        $timesheet3->setBegin(new DateTime('2018-11-28'));
+        $timesheet3->setEnd(new DateTime());
+        $timesheet3->setDuration(1800);
+        $timesheet3->setRate(111.11);
+        $timesheet3->setUser($user1);
+        $timesheet3->setActivity((new Activity())->setName('foo'));
+        $timesheet3->setProject($project1);
 
         $timesheet4 = new Timesheet();
-        $timesheet4
-            ->setBegin(new DateTime())
-            ->setEnd(new DateTime())
-            ->setDuration(400)
-            ->setRate(1947.99)
-            ->setUser($user1)
-            ->setActivity((new Activity())->setName('blub'))
-            ->setProject($project2);
+        $timesheet4->setBegin(new DateTime());
+        $timesheet4->setEnd(new DateTime());
+        $timesheet4->setDuration(400);
+        $timesheet4->setRate(1947.99);
+        $timesheet4->setUser($user1);
+        $timesheet4->setActivity((new Activity())->setName('blub'));
+        $timesheet4->setProject($project2);
 
         $timesheet5 = new Timesheet();
-        $timesheet5
-            ->setBegin(new DateTime('2018-11-28'))
-            ->setEnd(new DateTime())
-            ->setDuration(400)
-            ->setRate(84)
-            ->setUser($user2)
-            ->setActivity(new Activity())
-            ->setProject($project3);
+        $timesheet5->setBegin(new DateTime('2018-11-28'));
+        $timesheet5->setEnd(new DateTime());
+        $timesheet5->setDuration(400);
+        $timesheet5->setRate(84);
+        $timesheet5->setUser($user2);
+        $timesheet5->setActivity(new Activity());
+        $timesheet5->setProject($project3);
 
         $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5];
 

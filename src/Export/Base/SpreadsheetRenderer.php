@@ -105,7 +105,7 @@ final class SpreadsheetRenderer
                 $formula = null;
                 if (\in_array($column->getName(), $totalColumns)) {
                     $columnName = $columnNames[$totalColumn - 1];
-                    $formula = \sprintf('=SUM(%s2:%s%s)', $columnName, $columnName, $currentRow);
+                    $formula = \sprintf('=SUBTOTAL(9,%s2:%s%s)', $columnName, $columnName, $currentRow);
                 }
                 $totalRow[] = $formula;
                 $totalColumn++;

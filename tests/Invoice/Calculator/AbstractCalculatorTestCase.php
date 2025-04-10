@@ -86,14 +86,13 @@ abstract class AbstractCalculatorTestCase extends TestCase
         }
 
         $timesheet = new Timesheet();
-        $timesheet
-            ->setDescription('timesheet description')
-            ->setBegin(new \DateTime())
-            ->setDuration(3600)
-            ->setRate(293.27)
-            ->setUser($user)
-            ->setActivity($activity)
-            ->setProject($project);
+        $timesheet->setDescription('timesheet description');
+        $timesheet->setBegin(new \DateTime());
+        $timesheet->setDuration(3600);
+        $timesheet->setRate(293.27);
+        $timesheet->setUser($user);
+        $timesheet->setActivity($activity);
+        $timesheet->setProject($project);
 
         $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), $customer, $template, $query);
         $model->addEntries([$timesheet]);

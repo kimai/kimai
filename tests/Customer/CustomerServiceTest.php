@@ -157,4 +157,84 @@ class CustomerServiceTest extends TestCase
         $Customer = new Customer('foo');
         $sut->saveNewCustomer($Customer);
     }
+
+    /**
+     * @dataProvider getTestData
+     */
+    public function testCustomerNumber(string $format, int|string $expected): void
+    {
+        $configuration = SystemConfigurationFactory::createStub([
+            'defaults' => [
+                'customer' => [
+                    'timezone' => 'Europe/Vienna',
+                    'country' => 'IN',
+                    'currency' => 'RUB',
+                ]
+            ],
+            'customer' => [
+                'number_format' => $format
+            ]
+        ]);
+
+        $sut = $this->getSut(null, null, null, $configuration);
+        $customer = $sut->createNewCustomer('Test');
+
+        self::assertEquals((string) $expected, $customer->getNumber());
+    }
+
+    /**
+     * @return array<int, array<int, string|\DateTime|int>>
+     */
+    public static function getTestData(): array
+    {
+        $dateTime = new \DateTime();
+
+        $yearLong = (int) $dateTime->format('Y');
+        $yearShort = (int) $dateTime->format('y');
+        $monthLong = $dateTime->format('m');
+        $monthShort = (int) $dateTime->format('n');
+        $dayLong = $dateTime->format('d');
+        $dayShort = (int) $dateTime->format('j');
+
+        return [
+            // simple tests for single calls
+            ['{cc,1}', '2'],
+            ['{cc,2}', '02'],
+            ['{cc,3}', '002'],
+            ['{cc,4}', '0002'],
+            ['{Y}', $yearLong],
+            ['{y}', $yearShort],
+            ['{M}', $monthLong],
+            ['{m}', $monthShort],
+            ['{D}', $dayLong],
+            ['{d}', $dayShort],
+            // number formatting (not testing the lower case versions, as the tests might break depending on the date)
+            ['{Y,6}', '00' . $yearLong],
+            ['{M,3}', '0' . $monthLong],
+            ['{D,3}', '0' . $dayLong],
+            // increment dates
+            ['{YY}', $yearLong + 1],
+            ['{YY+1}', $yearLong + 1],
+            ['{YY+2}', $yearLong + 2],
+            ['{YY+3}', $yearLong + 3],
+            ['{YY-1}', $yearLong - 1],
+            ['{YY-2}', $yearLong - 2],
+            ['{YY-3}', $yearLong - 3],
+            ['{yy}', $yearShort + 1],
+            ['{yy+1}', $yearShort + 1],
+            ['{yy+2}', $yearShort + 2],
+            ['{yy+3}', $yearShort + 3],
+            ['{yy-1}', $yearShort - 1],
+            ['{yy-2}', $yearShort - 2],
+            ['{yy-3}', $yearShort - 3],
+            ['{MM}', $monthShort + 1], // cast to int removes leading zero
+            ['{MM+1}', $monthShort + 1], // cast to int removes leading zero
+            ['{MM+2}', $monthShort + 2], // cast to int removes leading zero
+            ['{MM+3}', $monthShort + 3], // cast to int removes leading zero
+            ['{DD}', $dayShort + 1], // cast to int removes leading zero
+            ['{DD+1}', $dayShort + 1], // cast to int removes leading zero
+            ['{DD+2}', $dayShort + 2], // cast to int removes leading zero
+            ['{DD+3}', $dayShort + 3], // cast to int removes leading zero
+        ];
+    }
 }
