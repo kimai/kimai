@@ -9,6 +9,7 @@
 
 namespace App\Tests\Project;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Team;
@@ -38,7 +39,7 @@ class ProjectServiceTest extends TestCase
     private function getSut(
         ?EventDispatcherInterface $dispatcher = null,
         ?ValidatorInterface $validator = null,
-        bool $copyTeamsOnCreate = false
+        ?SystemConfiguration $configuration = null
     ): ProjectService {
         $repository = $this->createMock(ProjectRepository::class);
 
@@ -54,7 +55,11 @@ class ProjectServiceTest extends TestCase
             $validator->method('validate')->willReturn(new ConstraintViolationList());
         }
 
-        $configuration = SystemConfigurationFactory::createStub(['project' => ['copy_teams_on_create' => $copyTeamsOnCreate]]);
+        if ($configuration === null) {
+            $configuration = SystemConfigurationFactory::createStub(
+                ['project' => ['copy_teams_on_create' => false]]
+            );
+        }
 
         return new ProjectService($repository, $configuration, $dispatcher, $validator);
     }
@@ -151,8 +156,11 @@ class ProjectServiceTest extends TestCase
     public function testCreateNewProjectCopiesTeam(): void
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
+        $configuration = SystemConfigurationFactory::createStub(
+            ['project' => ['copy_teams_on_create' => true]]
+        );
 
-        $sut = $this->getSut($dispatcher, null, true);
+        $sut = $this->getSut($dispatcher, null, $configuration);
 
         $team1 = new Team('foo');
         $team2 = new Team('bar');
@@ -175,5 +183,79 @@ class ProjectServiceTest extends TestCase
 
         $project = $sut->createNewProject();
         self::assertNull($project->getCustomer());
+    }
+
+    /**
+     * @dataProvider getTestData
+     */
+    public function testProjectNumber(string $format, int|string $expected): void
+    {
+        $configuration = SystemConfigurationFactory::createStub([
+            'project' => [
+                'copy_teams_on_create' => true,
+                'number_format' => $format,
+            ]
+        ]);
+
+        $sut = $this->getSut(null, null, $configuration);
+        $project = $sut->createNewProject();
+
+        self::assertEquals((string) $expected, $project->getNumber());
+    }
+
+    /**
+     * @return array<int, array<int, string|\DateTime|int>>
+     */
+    public static function getTestData(): array
+    {
+        $dateTime = new \DateTime();
+
+        $yearLong = (int) $dateTime->format('Y');
+        $yearShort = (int) $dateTime->format('y');
+        $monthLong = $dateTime->format('m');
+        $monthShort = (int) $dateTime->format('n');
+        $dayLong = $dateTime->format('d');
+        $dayShort = (int) $dateTime->format('j');
+
+        return [
+            // simple tests for single calls
+            ['{pc,1}', '2'],
+            ['{pc,2}', '02'],
+            ['{pc,3}', '002'],
+            ['{pc,4}', '0002'],
+            ['{Y}', $yearLong],
+            ['{y}', $yearShort],
+            ['{M}', $monthLong],
+            ['{m}', $monthShort],
+            ['{D}', $dayLong],
+            ['{d}', $dayShort],
+            // number formatting (not testing the lower case versions, as the tests might break depending on the date)
+            ['{Y,6}', '00' . $yearLong],
+            ['{M,3}', '0' . $monthLong],
+            ['{D,3}', '0' . $dayLong],
+            // increment dates
+            ['{YY}', $yearLong + 1],
+            ['{YY+1}', $yearLong + 1],
+            ['{YY+2}', $yearLong + 2],
+            ['{YY+3}', $yearLong + 3],
+            ['{YY-1}', $yearLong - 1],
+            ['{YY-2}', $yearLong - 2],
+            ['{YY-3}', $yearLong - 3],
+            ['{yy}', $yearShort + 1],
+            ['{yy+1}', $yearShort + 1],
+            ['{yy+2}', $yearShort + 2],
+            ['{yy+3}', $yearShort + 3],
+            ['{yy-1}', $yearShort - 1],
+            ['{yy-2}', $yearShort - 2],
+            ['{yy-3}', $yearShort - 3],
+            ['{MM}', $monthShort + 1], // cast to int removes leading zero
+            ['{MM+1}', $monthShort + 1], // cast to int removes leading zero
+            ['{MM+2}', $monthShort + 2], // cast to int removes leading zero
+            ['{MM+3}', $monthShort + 3], // cast to int removes leading zero
+            ['{DD}', $dayShort + 1], // cast to int removes leading zero
+            ['{DD+1}', $dayShort + 1], // cast to int removes leading zero
+            ['{DD+2}', $dayShort + 2], // cast to int removes leading zero
+            ['{DD+3}', $dayShort + 3], // cast to int removes leading zero
+        ];
     }
 }
