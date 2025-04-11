@@ -1930,6 +1930,14 @@
         <source>attendance_only_project</source>
         <target state="final">Contare solo le voci del progetto selezionato come tempo di lavoro</target>
       </trans-unit>
+      <trans-unit id="mhOe3Iy" resname="unlock_month.help" xml:space="preserve" approved="yes">
+        <source>unlock_month.help</source>
+        <target state="final">In questo modo vengono sbloccati tutti i giorni dell'anno successivi alla data selezionata.</target>
+      </trans-unit>
+      <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="yes">
+        <source>Unlock month</source>
+        <target state="final">Sblocca mese</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

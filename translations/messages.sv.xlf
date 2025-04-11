@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
         <source>Time Tracking</source>
-        <target state="translated">Tidrapportering</target>
+        <target state="translated">Tidsrapportering</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -420,23 +420,23 @@
       </trans-unit>
       <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target state="needs-translation">Tid idag</target>
+        <target state="translated">Idag</target>
       </trans-unit>
       <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target state="needs-translation">Tid denna vecka</target>
+        <target state="translated">Denna vecka</target>
       </trans-unit>
       <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target state="needs-translation">Tid denna månad</target>
+        <target state="translated">Denna månad</target>
       </trans-unit>
       <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target state="needs-translation">Tid innevarande år</target>
+        <target state="translated">Detta år</target>
       </trans-unit>
       <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
-        <target state="needs-translation">Tid, summa</target>
+        <target state="translated">Summa</target>
       </trans-unit>
       <trans-unit id="023M9Ta" resname="stats.amountToday">
         <source>stats.amountToday</source>
@@ -1004,7 +1004,7 @@
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
         <source>stats.durationFinancialYear</source>
-        <target state="needs-translation">Tid innevarande budgetår</target>
+        <target state="translated">Budgetår</target>
       </trans-unit>
       <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
         <source>stats.workingTimeFinancialYear</source>
@@ -1484,7 +1484,7 @@
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
-        <target state="needs-translation">Du har använt %used% av %days% semesterdagar.</target>
+        <target state="translated">Du har skickat in %used% av %days% semesterdagar.</target>
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro">
         <source>absence_other.intro</source>
@@ -1772,7 +1772,7 @@
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target state="needs-translation">Tidrapport</target>
+        <target state="translated">Tidsrapporter</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
@@ -1921,6 +1921,22 @@
       <trans-unit id="EiWubBr" resname="sessions" xml:space="preserve">
         <source>Sessions</source>
         <target state="translated">Sessioner</target>
+      </trans-unit>
+      <trans-unit id="HQ2YM1b" resname="attendance_only_project" xml:space="preserve">
+        <source>attendance_only_project</source>
+        <target state="translated">Räkna endast poster för det valda projektet som arbetstid</target>
+      </trans-unit>
+      <trans-unit id="2pbkbn_" resname="work_hours_mode" xml:space="preserve">
+        <source>work_hours_mode</source>
+        <target state="translated">Arbetsstidsuträkning</target>
+      </trans-unit>
+      <trans-unit id="mhOe3Iy" resname="unlock_month.help" xml:space="preserve">
+        <source>unlock_month.help</source>
+        <target state="translated">Detta låser upp alla dagar av året efter det valda datumet.</target>
+      </trans-unit>
+      <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="no">
+        <source>Unlock month</source>
+        <target state="translated">Lås upp månad</target>
       </trans-unit>
     </body>
   </file>

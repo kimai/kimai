@@ -142,6 +142,10 @@
         <source>An absence cannot be booked after the last working day.</source>
         <target state="translated">Відсутність одразу після останнього робочого дня неможлива.</target>
       </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve" approved="no">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target state="translated">Вибраний період неможливо заблокувати: непідтверджені запити на відсутність очікують на розгляд.</target>
+      </trans-unit>
     </body>
   </file>
   <file original="validators.en.xlf" source-language="en" target-language="uk" datatype="plaintext">

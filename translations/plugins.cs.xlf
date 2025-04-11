@@ -18,6 +18,10 @@
         <source>plugin.marketplace</source>
         <target state="translated">Nové pluginy z obchodu</target>
       </trans-unit>
+      <trans-unit id="aNvGEaj" resname="update_available" xml:space="preserve">
+        <source>Update available</source>
+        <target state="translated">Dostupná aktualizace: %version%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
