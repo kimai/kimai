@@ -158,6 +158,10 @@
         <source>An absence cannot be booked after the last working day.</source>
         <target state="final">Un congedo non può essere prenotato dopo l'ultimo giorno lavorativo.</target>
       </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve" approved="yes">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target state="final">Il periodo selezionato non può essere bloccato: sono in sospeso richieste di congedo non confermate.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -158,6 +158,10 @@
         <source>An absence cannot be booked after the last working day.</source>
         <target state="translated">Absenci nelze rezervovat po posledním pracovním dni.</target>
       </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target state="translated">Zvolené období nelze uzamknout: čekají nevyřízené žádosti o absenci.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

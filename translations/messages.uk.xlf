@@ -1930,6 +1930,14 @@
         <source>attendance_only_project</source>
         <target state="translated">Зараховувати як робочий час лише записи вибраного проекту</target>
       </trans-unit>
+      <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="no">
+        <source>Unlock month</source>
+        <target state="translated">Розблокувати місяць</target>
+      </trans-unit>
+      <trans-unit id="mhOe3Iy" resname="unlock_month.help" xml:space="preserve" approved="no">
+        <source>unlock_month.help</source>
+        <target state="translated">Це розблокує всі дні року після вибраної дати.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
