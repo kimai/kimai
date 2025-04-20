@@ -199,7 +199,7 @@ final class RegenerateLocalesCommand extends Command
 
         // in the future this list should be reduced to the list of available translations, but for a long time users
         // could choose from the entire list of all locales, so we likely have to keep that forever ...
-        $listOfLocales = array_map(fn($locale) => "'$locale'", $locales);
+        $listOfLocales = array_map(fn ($locale) => "'$locale'", $locales);
         $filename = 'config/services.yaml';
         $targetFile = $this->projectDirectory . DIRECTORY_SEPARATOR . $filename;
         $content = file_get_contents($targetFile);
