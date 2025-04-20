@@ -52,7 +52,7 @@
       </trans-unit>
       <trans-unit id="DYHuW58" resname="confirm.delete" xml:space="preserve">
         <source>confirm.delete</source>
-        <target state="translated">De veritat voleu eliminar-lo?</target>
+        <target state="translated">Confirmeu que voleu eliminar-lo?</target>
       </trans-unit>
     </body>
   </file>

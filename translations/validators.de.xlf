@@ -94,9 +94,9 @@
         <source>Cannot stop running timesheet</source>
         <target>Sie haben eine aktive Zeitmessung, die nicht automatisch beendet werden kann.</target>
       </trans-unit>
-      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token." xml:space="preserve">
         <source>The given code is not the correct TOTP token.</source>
-        <target>Der übermittelte Code ist nicht der korrekte TOTP Token.</target>
+        <target state="translated">Der übermittelte Code ist nicht der korrekte TOTP-Token.</target>
       </trans-unit>
       <trans-unit id="7mqg3TC" resname="This value is not a valid role name.">
         <source>This value is not a valid role name.</source>
