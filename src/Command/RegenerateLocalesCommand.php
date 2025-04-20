@@ -39,7 +39,7 @@ final class RegenerateLocalesCommand extends Command
      *
      * @var string[]
      */
-    private array $noRegionCode = ['ar', 'id', 'pa', 'sl', 'ca'];
+    private array $noRegionCode = ['ar', 'id', 'pa', 'sl', 'ca', 'ta'];
     /**
      * A list of locales that will be activated, no matter if translation files exist for them.
      *
@@ -47,11 +47,11 @@ final class RegenerateLocalesCommand extends Command
      */
     private array $addLocaleToList = ['zh_Hant_TW'];
     /**
-     * A list of locales that will NOT be activated, as no translations exist by now.
+     * A list of locales that will NOT be activated, as not enough translations exist by now.
      *
      * @var string[]
      */
-    private array $skipLocale = ['ca'];
+    private array $skipLocale = ['ca', 'et'];
 
     public function __construct(
         private readonly string $projectDirectory,
