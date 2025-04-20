@@ -203,15 +203,19 @@ final class RegenerateLocalesCommand extends Command
         $filename = 'config/services.yaml';
         $targetFile = $this->projectDirectory . DIRECTORY_SEPARATOR . $filename;
         $content = file_get_contents($targetFile);
-        $content = preg_replace(
-            '/^(\s*kimai_locales:\s*\[).*?(\])$/m',
-            '${1}' . implode(', ', $listOfLocales) . '${2}',
-            $content
-        );
+        if ($content === false) {
+            $io->error('Failed reading configuration file at ' . $filename);
+        } else {
+            $content = preg_replace(
+                '/^(\s*kimai_locales:\s*\[).*?(\])$/m',
+                '${1}' . implode(', ', $listOfLocales) . '${2}',
+                $content
+            );
 
-        file_put_contents($targetFile, $content);
+            file_put_contents($targetFile, $content);
 
-        $io->success('Replaced locale definitions in: ' . $filename);
+            $io->success('Replaced locale definitions in: ' . $filename);
+        }
 
         ksort($appLocales);
 
