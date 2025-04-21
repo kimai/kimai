@@ -97,9 +97,9 @@ final class ThemeExtension implements RuntimeExtensionInterface
         return $class;
     }
 
-    public function generateTitle(?string $prefix = null, string $delimiter = ' – '): string
+    public function generateTitle(): string
     {
-        return ($prefix ?? '') . Constants::SOFTWARE;
+        return Constants::SOFTWARE;
     }
 
     public function colorize(?string $color, ?string $identifier = null): string
