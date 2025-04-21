@@ -1938,6 +1938,22 @@
         <source>training</source>
         <target>Fortbildung</target>
       </trans-unit>
+      <trans-unit id="rD4oQRR" resname="postcode">
+        <source>Postcode</source>
+        <target>Postleitzahl</target>
+      </trans-unit>
+      <trans-unit id="EaYsI0E" resname="city">
+        <source>City</source>
+        <target>Stadt</target>
+      </trans-unit>
+      <trans-unit id="y1XHR1Q" resname="address_deprecated">
+        <source>address_deprecated</source>
+        <target>Dieses Feld wird in Kürze entfernt. Bitte übertragen Sie die Adresse, um weiterhin gültige Rechnungen zu erzeugen (z.B. für E-Rechnungen).</target>
+      </trans-unit>
+      <trans-unit id="nsbR30p" resname="sending_company">
+        <source>sending_company</source>
+        <target>Rechnungsabsender</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
