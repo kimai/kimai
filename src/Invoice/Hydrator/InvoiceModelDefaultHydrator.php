@@ -11,7 +11,6 @@ namespace App\Invoice\Hydrator;
 
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
-use Symfony\Component\Intl\Countries;
 
 final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
 {
