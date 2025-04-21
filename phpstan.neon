@@ -3018,46 +3018,6 @@ parameters:
             path: src/Invoice/Hydrator/InvoiceModelCustomerHydrator.php
 
         -
-            message: "#^Cannot call method getAddress\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getCompany\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getContact\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getDueDays\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getLanguage\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getName\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getPaymentDetails\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getPaymentTerms\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
             message: "#^Cannot call method getSubtotal\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
@@ -3073,22 +3033,12 @@ parameters:
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
 
         -
-            message: "#^Cannot call method getTitle\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
             message: "#^Cannot call method getTotal\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
 
         -
             message: "#^Cannot call method getVat\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getVatId\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
 

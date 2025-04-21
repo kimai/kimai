@@ -88,6 +88,7 @@ trait RendererTestTrait
         $customer = new Customer('customer,with/special#name');
         $customer->setAddress('Foo' . PHP_EOL . 'Street' . PHP_EOL . '1111 City');
         $customer->setCurrency('EUR');
+        $customer->setCountry('AT');
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
 
         $template = new InvoiceTemplate();

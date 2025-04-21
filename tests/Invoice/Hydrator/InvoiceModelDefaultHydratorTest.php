@@ -60,6 +60,7 @@ class InvoiceModelDefaultHydratorTest extends TestCase
             'invoice.subtotal_plain',
             'template.name',
             'template.company',
+            'template.country',
             'template.address',
             'template.title',
             'template.payment_terms',
