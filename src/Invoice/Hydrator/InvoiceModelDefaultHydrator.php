@@ -83,13 +83,6 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             'user.see_others' => ($model->getQuery()?->getUser() === null),
         ];
 
-        $customer = $template->getCustomer();
-        if ($customer !== null) {
-            $country = $customer->getCountry();
-            $values['template.country'] = $country; // since 2.33
-            $values['template.country_name'] = Countries::getName($country, $language); // since 2.33
-        }
-
         $query = $model->getQuery();
         if ($query !== null) {
             $begin = $query->getBegin();
