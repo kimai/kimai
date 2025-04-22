@@ -336,6 +336,7 @@ class DateTimeFactoryTest extends TestCase
     {
         $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
         $dateTime = $sut->createDateTimeFromFormat('H:i:s m.d-Y', '17:29:30 04.22-2025');
+        self::assertInstanceOf(DateTime::class, $dateTime);
         self::assertEquals(17, $dateTime->format('H'));
         self::assertEquals(29, $dateTime->format('i'));
         self::assertEquals(30, $dateTime->format('s'));
