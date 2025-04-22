@@ -39,7 +39,7 @@ final class RegenerateLocalesCommand extends Command
      *
      * @var string[]
      */
-    private array $noRegionCode = ['ar', 'id', 'pa', 'sl', 'ca'];
+    private array $noRegionCode = ['ar', 'id', 'pa', 'sl', 'ca', 'ta'];
     /**
      * A list of locales that will be activated, no matter if translation files exist for them.
      *
@@ -47,11 +47,11 @@ final class RegenerateLocalesCommand extends Command
      */
     private array $addLocaleToList = ['zh_Hant_TW'];
     /**
-     * A list of locales that will NOT be activated, as no translations exist by now.
+     * A list of locales that will NOT be activated, as not enough translations exist by now.
      *
      * @var string[]
      */
-    private array $skipLocale = ['ca'];
+    private array $skipLocale = ['ca', 'et'];
 
     public function __construct(
         private readonly string $projectDirectory,
@@ -86,6 +86,7 @@ final class RegenerateLocalesCommand extends Command
             $firstLevelLocales[] = $l;
         }
         $firstLevelLocales = array_unique(array_merge($firstLevelLocales, $this->addLocaleToList));
+
         $io->title('First level locales found');
         $io->writeln(implode('|', $firstLevelLocales));
 
@@ -198,8 +199,23 @@ final class RegenerateLocalesCommand extends Command
 
         // in the future this list should be reduced to the list of available translations, but for a long time users
         // could choose from the entire list of all locales, so we likely have to keep that forever ...
-        $io->title('List of "kimai_locales" for services.yaml');
-        $io->writeln("['" . implode("', '", $locales) . "']");
+        $listOfLocales = array_map(fn ($locale) => "'$locale'", $locales);
+        $filename = 'config/services.yaml';
+        $targetFile = $this->projectDirectory . DIRECTORY_SEPARATOR . $filename;
+        $content = file_get_contents($targetFile);
+        if ($content === false) {
+            $io->error('Failed reading configuration file at ' . $filename);
+        } else {
+            $content = preg_replace(
+                '/^(\s*kimai_locales:\s*\[).*?(\])$/m',
+                '${1}' . implode(', ', $listOfLocales) . '${2}',
+                $content
+            );
+
+            file_put_contents($targetFile, $content);
+
+            $io->success('Replaced locale definitions in: ' . $filename);
+        }
 
         ksort($appLocales);
 

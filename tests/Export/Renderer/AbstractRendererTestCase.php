@@ -67,84 +67,72 @@ abstract class AbstractRendererTestCase extends KernelTestCase
         $user2->method('getUsername')->willReturn('hello-world');
 
         $timesheet = new Timesheet();
-        $timesheet
-            ->setDuration(3600) // 60 minutes
-            ->setRate(293.27)
-            ->setUser($user1)
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setBegin(new \DateTime())
-            ->setEnd(new \DateTime())
-        ;
+        $timesheet->setDuration(3600);
+        $timesheet->setRate(293.27);
+        $timesheet->setUser($user1);
+        $timesheet->setActivity($activity);
+        $timesheet->setProject($project);
+        $timesheet->setBegin(new \DateTime());
+        $timesheet->setEnd(new \DateTime());
 
         $timesheet2 = new Timesheet();
-        $timesheet2
-            ->setDuration(400)
-            ->setRate(84.75)
-            ->setUser($user2)
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setBegin(new \DateTime())
-            ->setEnd(new \DateTime())
-        ;
+        $timesheet2->setDuration(400);
+        $timesheet2->setRate(84.75);
+        $timesheet2->setUser($user2);
+        $timesheet2->setActivity($activity);
+        $timesheet2->setProject($project);
+        $timesheet2->setBegin(new \DateTime());
+        $timesheet2->setEnd(new \DateTime());
 
         $timesheet3 = new Timesheet();
-        $timesheet3
-            ->setDuration(1800)
-            ->setRate(111.11)
-            ->setUser($user1)
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setBegin(new \DateTime())
-            ->setEnd(new \DateTime())
-        ;
+        $timesheet3->setDuration(1800);
+        $timesheet3->setRate(111.11);
+        $timesheet3->setUser($user1);
+        $timesheet3->setActivity($activity);
+        $timesheet3->setProject($project);
+        $timesheet3->setBegin(new \DateTime());
+        $timesheet3->setEnd(new \DateTime());
 
         $timesheet4 = new Timesheet();
-        $timesheet4
-            ->setDuration(400)
-            ->setRate(1947.99)
-            ->setUser($user2)
-            ->setDescription('== jhg ljhg ') // make sure that spreadsheets don't render it as formula
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setBegin(new \DateTime())
-            ->setEnd(new \DateTime())
-            ->addTag((new Tag())->setName('foo'))
-        ;
+        $timesheet4->setDuration(400);
+        $timesheet4->setRate(1947.99);
+        $timesheet4->setUser($user2);
+        $timesheet4->setDescription('== jhg ljhg '); // make sure that spreadsheets don't render it as formula
+        $timesheet4->setActivity($activity);
+        $timesheet4->setProject($project);
+        $timesheet4->setBegin(new \DateTime());
+        $timesheet4->setEnd(new \DateTime());
+        $timesheet4->addTag((new Tag())->setName('foo'));
 
         $userKevin = new User();
         $userKevin->setAlias('Kevin');
         $userKevin->setUserIdentifier('kevin');
 
         $timesheet5 = new Timesheet();
-        $timesheet5
-            ->setDuration(400)
-            ->setFixedRate(84)
-            ->setUser($userKevin)
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setBegin(new \DateTime('2019-06-16 12:00:00'))
-            ->setEnd(new \DateTime('2019-06-16 12:06:40'))
-            ->addTag((new Tag())->setName('foo'))
-            ->addTag((new Tag())->setName('bar'))
-            ->setMetaField((new TimesheetMeta())->setName('foo')->setValue('meta-bar')->setIsVisible(true))
-            ->setMetaField((new TimesheetMeta())->setName('foo2')->setValue('meta-bar2')->setIsVisible(true))
-        ;
+        $timesheet5->setDuration(400);
+        $timesheet5->setFixedRate(84);
+        $timesheet5->setUser($userKevin);
+        $timesheet5->setActivity($activity);
+        $timesheet5->setProject($project);
+        $timesheet5->setBegin(new \DateTime('2019-06-16 12:00:00'));
+        $timesheet5->setEnd(new \DateTime('2019-06-16 12:06:40'));
+        $timesheet5->addTag((new Tag())->setName('foo'));
+        $timesheet5->addTag((new Tag())->setName('bar'));
+        $timesheet5->setMetaField((new TimesheetMeta())->setName('foo')->setValue('meta-bar')->setIsVisible(true));
+        $timesheet5->setMetaField((new TimesheetMeta())->setName('foo2')->setValue('meta-bar2')->setIsVisible(true));
 
         $userNivek = new User();
         $userNivek->setAlias('niveK');
         $userNivek->setUserIdentifier('nivek');
 
         $timesheet6 = new Timesheet();
-        $timesheet6
-            ->setDuration(400)
-            ->setFixedRate(-100.92)
-            ->setUser($userNivek)
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setBegin(new \DateTime('2019-06-16 12:00:00'))
-            ->setEnd(new \DateTime('2019-06-16 12:06:40'))
-        ;
+        $timesheet6->setDuration(400);
+        $timesheet6->setFixedRate(-100.92);
+        $timesheet6->setUser($userNivek);
+        $timesheet6->setActivity($activity);
+        $timesheet6->setProject($project);
+        $timesheet6->setBegin(new \DateTime('2019-06-16 12:00:00'));
+        $timesheet6->setEnd(new \DateTime('2019-06-16 12:06:40'));
 
         $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5, $timesheet6];
 

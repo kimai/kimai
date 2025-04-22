@@ -88,6 +88,7 @@ trait RendererTestTrait
         $customer = new Customer('customer,with/special#name');
         $customer->setAddress('Foo' . PHP_EOL . 'Street' . PHP_EOL . '1111 City');
         $customer->setCurrency('EUR');
+        $customer->setCountry('AT');
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
 
         $template = new InvoiceTemplate();
@@ -152,61 +153,54 @@ trait RendererTestTrait
         $user2->method('getVisiblePreferences')->willReturn([$pref1, $pref2]);
 
         $timesheet = new Timesheet();
-        $timesheet
-            ->setDuration(3600)
-            ->setRate(293.27)
-            ->setUser($user1)
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setBegin(new \DateTime('2020-12-13 14:00:00'))
-            ->setEnd(new \DateTime('2020-12-13 15:00:00'))
-            ->setMetaField((new TimesheetMeta())->setName('foo-timesheet')->setValue('bar-timesheet')->setIsVisible(true));
+        $timesheet->setDuration(3600);
+        $timesheet->setRate(293.27);
+        $timesheet->setUser($user1);
+        $timesheet->setActivity($activity);
+        $timesheet->setProject($project);
+        $timesheet->setBegin(new \DateTime('2020-12-13 14:00:00'));
+        $timesheet->setEnd(new \DateTime('2020-12-13 15:00:00'));
+        $timesheet->setMetaField((new TimesheetMeta())->setName('foo-timesheet')->setValue('bar-timesheet')->setIsVisible(true));
 
         $timesheet2 = new Timesheet();
-        $timesheet2
-            ->setDuration(400)
-            ->setRate(84.75)
-            ->setUser($user2)
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setBegin(new \DateTime('2020-08-13 14:00:00'))
-            ->setEnd(new \DateTime('2020-08-13 14:06:40'))
-            ->setMetaField((new TimesheetMeta())->setName('foo-timesheet')->setValue('bar-timesheet'))
-            ->setMetaField((new TimesheetMeta())->setName('foo-timesheet2')->setValue('bar-timesheet2')->setIsVisible(true))
-        ;
+        $timesheet2->setDuration(400);
+        $timesheet2->setRate(84.75);
+        $timesheet2->setUser($user2);
+        $timesheet2->setActivity($activity);
+        $timesheet2->setProject($project);
+        $timesheet2->setBegin(new \DateTime('2020-08-13 14:00:00'));
+        $timesheet2->setEnd(new \DateTime('2020-08-13 14:06:40'));
+        $timesheet2->setMetaField((new TimesheetMeta())->setName('foo-timesheet')->setValue('bar-timesheet'));
+        $timesheet2->setMetaField((new TimesheetMeta())->setName('foo-timesheet2')->setValue('bar-timesheet2')->setIsVisible(true));
 
         $timesheet3 = new Timesheet();
-        $timesheet3
-            ->setDuration(1800)
-            ->setRate(111.11)
-            ->setUser($user1)
-            ->setActivity($activity2)
-            ->setDescription('== jhg ljhg ') // make sure that spreadsheets don't render it as formula
-            ->setProject($project2)
-            ->setBegin(new \DateTime('2020-08-12 18:00:00'))
-            ->setEnd(new \DateTime('2020-08-12 18:30:00'))
-            ->setMetaField((new TimesheetMeta())->setName('foo-timesheet')->setValue('bar-timesheet1')->setIsVisible(true))
-        ;
+        $timesheet3->setDuration(1800);
+        $timesheet3->setRate(111.11);
+        $timesheet3->setUser($user1);
+        $timesheet3->setActivity($activity2);
+        $timesheet3->setDescription('== jhg ljhg '); // make sure that spreadsheets don't render it as formula
+        $timesheet3->setProject($project2);
+        $timesheet3->setBegin(new \DateTime('2020-08-12 18:00:00'));
+        $timesheet3->setEnd(new \DateTime('2020-08-12 18:30:00'));
+        $timesheet3->setMetaField((new TimesheetMeta())->setName('foo-timesheet')->setValue('bar-timesheet1')->setIsVisible(true));
 
         $timesheet4 = new Timesheet();
-        $timesheet4
-            ->setDuration(400)
-            ->setRate(1947.99)
-            ->setUser($user2)
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setBegin(new \DateTime('2020-12-13 14:00:00'))
-            ->setEnd(new \DateTime('2020-12-13 14:06:40'))
-            ->setDescription(
-                "foo\n" .
-                "foo\r\n" .
-                'foo' . PHP_EOL .
-                "bar\n" .
-                "bar\r\n" .
-                'Hello'
-            )
-            ->setMetaField((new TimesheetMeta())->setName('foo-timesheet3')->setValue('bluuuub')->setIsVisible(true))
-        ;
+        $timesheet4->setDuration(400);
+        $timesheet4->setRate(1947.99);
+        $timesheet4->setUser($user2);
+        $timesheet4->setActivity($activity);
+        $timesheet4->setProject($project);
+        $timesheet4->setBegin(new \DateTime('2020-12-13 14:00:00'));
+        $timesheet4->setEnd(new \DateTime('2020-12-13 14:06:40'));
+        $timesheet4->setDescription(
+            "foo\n" .
+            "foo\r\n" .
+            'foo' . PHP_EOL .
+            "bar\n" .
+            "bar\r\n" .
+            'Hello'
+        );
+        $timesheet4->setMetaField((new TimesheetMeta())->setName('foo-timesheet3')->setValue('bluuuub')->setIsVisible(true));
 
         $userKevin = new User();
         $userKevin->setUserIdentifier('kevin');
@@ -214,23 +208,21 @@ trait RendererTestTrait
         $userKevin->addPreference($pref2);
 
         $timesheet5 = new Timesheet();
-        $timesheet5
-            ->setDuration(400)
-            ->setFixedRate(84)
-            ->setUser($userKevin)
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setBegin(new \DateTime('2021-03-12 12:13:00'))
-            ->setEnd(new \DateTime('2021-03-12 12:17:40'))
-            ->setDescription(
-                "foo\n" .
-                "foo\r\n" .
-                'foo' . PHP_EOL .
-                "bar\n" .
-                "bar\r\n" .
-                'Hello'
-            )
-        ;
+        $timesheet5->setDuration(400);
+        $timesheet5->setFixedRate(84);
+        $timesheet5->setUser($userKevin);
+        $timesheet5->setActivity($activity);
+        $timesheet5->setProject($project);
+        $timesheet5->setBegin(new \DateTime('2021-03-12 12:13:00'));
+        $timesheet5->setEnd(new \DateTime('2021-03-12 12:17:40'));
+        $timesheet5->setDescription(
+            "foo\n" .
+            "foo\r\n" .
+            'foo' . PHP_EOL .
+            "bar\n" .
+            "bar\r\n" .
+            'Hello'
+        );
 
         $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5];
 
@@ -279,6 +271,7 @@ trait RendererTestTrait
         $user->addPreference(new UserPreference('hello', 'world'));
 
         $customer = new Customer('customer,with/special#name');
+        $customer->setCountry('DE');
         $customer->setCurrency('USD');
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
 
@@ -307,15 +300,13 @@ trait RendererTestTrait
         $user1->method('getVisiblePreferences')->willReturn([$pref1, $pref2]);
 
         $timesheet = new Timesheet();
-        $timesheet
-            ->setDuration(3600)
-            ->setRate(293.27)
-            ->setUser($user1)
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setBegin(new \DateTime('2020-08-12 18:00:00'))
-            ->setEnd(new \DateTime('2021-03-12 18:30:00'))
-        ;
+        $timesheet->setDuration(3600);
+        $timesheet->setRate(293.27);
+        $timesheet->setUser($user1);
+        $timesheet->setActivity($activity);
+        $timesheet->setProject($project);
+        $timesheet->setBegin(new \DateTime('2020-08-12 18:00:00'));
+        $timesheet->setEnd(new \DateTime('2021-03-12 18:30:00'));
 
         $entries = [$timesheet];
 

@@ -26,7 +26,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SpoutSpreadsheet implements SpreadsheetPackage
 {
-    private Style $dateStyle;
+    /** @var array<int, Style|null> */
+    private array $styles = [];
 
     public function __construct(
         private readonly WriterInterface $writer,
@@ -34,7 +35,6 @@ class SpoutSpreadsheet implements SpreadsheetPackage
     )
     {
         $this->writer->setCreator(Constants::SOFTWARE);
-        $this->dateStyle = (new Style())->setFormat('yyyy-mm-dd');
     }
 
     /**
@@ -48,9 +48,15 @@ class SpoutSpreadsheet implements SpreadsheetPackage
         }
 
         $tmp = [];
+        $i = 0;
         foreach ($columns as $column) {
             $title = $this->translator->trans($column->getHeader());
             $tmp[] = Cell::fromValue($title);
+            $style = null;
+            if ($column->getFormat() !== null) {
+                $style = (new Style())->setFormat($column->getFormat());
+            }
+            $this->styles[$i++] = $style;
         }
 
         $style = new Style();
@@ -100,12 +106,9 @@ class SpoutSpreadsheet implements SpreadsheetPackage
         }
 
         $tmp = [];
+        $i = 0;
         foreach ($columns as $column) {
-            if ($column instanceof \DateTimeInterface) {
-                $tmp[] = Cell::fromValue($column, $this->dateStyle);
-            } else {
-                $tmp[] = Cell::fromValue($column); // @phpstan-ignore argument.type
-            }
+            $tmp[] = Cell::fromValue($column, $this->styles[$i++]); // @phpstan-ignore argument.type
         }
 
         $this->writer->addRow(new Row($tmp, $style));

@@ -28,10 +28,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class CsvRendererTest extends AbstractRendererTestCase
 {
-    protected function getAbstractRenderer(): CsvRenderer
+    protected function getAbstractRenderer(bool $exportDecimal = false): CsvRenderer
     {
+        $user = $this->createMock(User::class);
+        $user->expects($this->any())->method('isExportDecimal')->willReturn($exportDecimal);
+
         $security = $this->createMock(Security::class);
-        $security->expects($this->any())->method('getUser')->willReturn(new User());
+        $security->expects($this->any())->method('getUser')->willReturn($user);
         $security->expects($this->any())->method('isGranted')->willReturn(true);
 
         $translator = $this->createMock(TranslatorInterface::class);
@@ -53,16 +56,17 @@ class CsvRendererTest extends AbstractRendererTestCase
     public static function getTestModel(): array
     {
         return [
-            ['400', '2437.12', '1947.99', 7, 6, 1, 2, 2]
+            ['400', '2437.12', '1947.99', 7, 6, 1, 2, 2, false],
+            ['400', '2437.12', '1947.99', 7, 6, 1, 2, 2, true]
         ];
     }
 
     /**
      * @dataProvider getTestModel
      */
-    public function testRender(string $totalDuration, string $totalRate, string $expectedRate, int $expectedRows, int $expectedDescriptions, int $expectedUser1, int $expectedUser2, int $expectedUser3): void
+    public function testRender(string $totalDuration, string $totalRate, string $expectedRate, int $expectedRows, int $expectedDescriptions, int $expectedUser1, int $expectedUser2, int $expectedUser3, bool $exportDecimal): void
     {
-        $sut = $this->getAbstractRenderer();
+        $sut = $this->getAbstractRenderer($exportDecimal);
 
         /** @var BinaryFileResponse $response */
         $response = $this->render($sut);
@@ -102,7 +106,7 @@ class CsvRendererTest extends AbstractRendererTestCase
             '2019-06-16',
             '12:00',
             '12:06',
-            '0:06',
+            ($exportDecimal ? '0.11' : '0:06:40'),
             //'0.11',
             'EUR',
             '0',
@@ -136,7 +140,7 @@ class CsvRendererTest extends AbstractRendererTestCase
             '2019-06-16',
             '12:00',
             '12:06',
-            '0:06',
+            ($exportDecimal ? '0.11' : '0:06:40'),
             //'0.11',
             'EUR',
             '0',

@@ -17,38 +17,57 @@ use PHPUnit\Framework\TestCase;
  */
 class DurationFormatterTest extends TestCase
 {
+    public function testGetFormat(): void
+    {
+        $formatter = new DurationFormatter();
+        self::assertEquals('[hh]:mm:ss', $formatter->getFormat());
+    }
+
+    public function testFormatValueReturnsFormattedDurationQuiteLong(): void
+    {
+        $formatter = new DurationFormatter();
+        $result = $formatter->formatValue(701213);
+        self::assertInstanceOf(\DateInterval::class, $result);
+        self::assertEquals('194:46:53', $result->format('%r%H:%I:%S'));
+    }
+
     public function testFormatValueReturnsFormattedDurationForNumericValue(): void
     {
         $formatter = new DurationFormatter();
-        $result = $formatter->formatValue(7200);
-        self::assertEquals('2:00', $result);
+        $result = $formatter->formatValue(7213);
+        self::assertInstanceOf(\DateInterval::class, $result);
+        self::assertEquals('02:00:13', $result->format('%r%H:%I:%S'));
     }
 
     public function testFormatValueReturnsZeroForNonNumericValue(): void
     {
         $formatter = new DurationFormatter();
         $result = $formatter->formatValue('not a number');
-        self::assertEquals('0:00', $result);
+        self::assertInstanceOf(\DateInterval::class, $result);
+        self::assertEquals('00:00:00', $result->format('%r%H:%I:%S'));
     }
 
     public function testFormatValueReturnsFormattedDurationForFloatValue(): void
     {
         $formatter = new DurationFormatter();
-        $result = $formatter->formatValue(4500.5);
-        self::assertEquals('1:15', $result);
+        $result = $formatter->formatValue(4521.5);
+        self::assertInstanceOf(\DateInterval::class, $result);
+        self::assertEquals('01:15:21', $result->format('%r%H:%I:%S'));
     }
 
     public function testFormatValueReturnsZeroForNullValue(): void
     {
         $formatter = new DurationFormatter();
         $result = $formatter->formatValue(null);
-        self::assertEquals('0:00', $result);
+        self::assertInstanceOf(\DateInterval::class, $result);
+        self::assertEquals('00:00:00', $result->format('%r%H:%I:%S'));
     }
 
     public function testFormatValueReturnsFormattedDurationForNegativeValue(): void
     {
         $formatter = new DurationFormatter();
         $result = $formatter->formatValue(-3600);
-        self::assertEquals('-1:00', $result);
+        self::assertInstanceOf(\DateInterval::class, $result);
+        self::assertEquals('-01:00:00', $result->format('%r%H:%I:%S'));
     }
 }

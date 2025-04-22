@@ -11,6 +11,7 @@ namespace App\Export\Package;
 
 use App\Entity\ExportableItem;
 use App\Export\Package\CellFormatter\CellFormatterInterface;
+use App\Export\Package\CellFormatter\CellWithFormatInterface;
 
 class Column
 {
@@ -70,5 +71,14 @@ class Column
     public function getHeader(): string
     {
         return $this->header ?? $this->name;
+    }
+
+    public function getFormat(): ?string
+    {
+        if ($this->formatter instanceof CellWithFormatInterface) {
+            return $this->formatter->getFormat();
+        }
+
+        return null;
     }
 }
