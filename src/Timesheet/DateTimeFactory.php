@@ -75,6 +75,10 @@ final class DateTimeFactory
         return $this->createDateTime($date->format('Y-m-d H:i:s'));
     }
 
+    /**
+     * @deprecated
+     * @codeCoverageIgnore
+     */
     private function createDate(DateTimeInterface|string|null $date = null): \DateTimeImmutable
     {
         if ($date === null) {
