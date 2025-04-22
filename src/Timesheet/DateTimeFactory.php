@@ -50,6 +50,8 @@ final class DateTimeFactory
 
     public function getStartOfLastMonth(): DateTimeInterface
     {
+        @trigger_error('The method "DateTimeFactory::getStartOfLastMonth()" will be removed soon', E_USER_DEPRECATED);
+
         $date = $this->createDateTime('first day of -1 month');
         $date = $date->setTime(0, 0, 0);
 
@@ -127,6 +129,8 @@ final class DateTimeFactory
 
     public function getEndOfLastMonth(): DateTimeInterface
     {
+        @trigger_error('The method "DateTimeFactory::getEndOfLastMonth()" will be removed soon', E_USER_DEPRECATED);
+
         $date = $this->createDateTime('last day of -1 month');
         $date = $date->setTime(23, 59, 59);
 
@@ -154,6 +158,8 @@ final class DateTimeFactory
 
     public function createStartOfDay(DateTimeInterface|string|null $date = null): \DateTimeImmutable
     {
+        @trigger_error('The method "DateTimeFactory::createStartOfDay()" will be removed soon', E_USER_DEPRECATED);
+
         $date = $this->createDate($date);
 
         return $date->modify('00:00:00');
@@ -161,6 +167,8 @@ final class DateTimeFactory
 
     public function createEndOfDay(DateTimeInterface|string|null $date = null): \DateTimeImmutable
     {
+        @trigger_error('The method "DateTimeFactory::createEndOfDay()" will be removed soon', E_USER_DEPRECATED);
+
         $date = $this->createDate($date);
 
         return $date->modify('23:59:59');
