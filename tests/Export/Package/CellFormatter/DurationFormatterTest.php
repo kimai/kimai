@@ -17,6 +17,12 @@ use PHPUnit\Framework\TestCase;
  */
 class DurationFormatterTest extends TestCase
 {
+    public function testGetFormat(): void
+    {
+        $formatter = new DurationFormatter();
+        self::assertEquals('[hh]:mm:ss', $formatter->getFormat());
+    }
+
     public function testFormatValueReturnsFormattedDurationQuiteLong(): void
     {
         $formatter = new DurationFormatter();
