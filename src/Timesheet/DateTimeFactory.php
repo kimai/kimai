@@ -66,7 +66,7 @@ final class DateTimeFactory
             return $this->createDateTime($date);
         }
 
-        return DateTime::createFromInterface($date);
+        return $this->createDateTime($date->format('Y-m-d 00:00:00'));
     }
 
     private function createDate(DateTimeInterface|string|null $date = null): \DateTimeImmutable
@@ -79,7 +79,7 @@ final class DateTimeFactory
             return $this->create($date);
         }
 
-        return \DateTimeImmutable::createFromInterface($date);
+        return $this->create($date->format('Y-m-d 00:00:00'));
     }
 
     public function getStartOfWeek(DateTimeInterface|string|null $date = null): DateTime
