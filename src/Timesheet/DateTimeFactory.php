@@ -48,6 +48,10 @@ final class DateTimeFactory
         return $date;
     }
 
+    /**
+     * @deprecated
+     * @codeCoverageIgnore
+     */
     public function getStartOfLastMonth(): DateTimeInterface
     {
         @trigger_error('The method "DateTimeFactory::getStartOfLastMonth()" will be removed soon', E_USER_DEPRECATED);
@@ -68,7 +72,7 @@ final class DateTimeFactory
             return $this->createDateTime($date);
         }
 
-        return $this->createDateTime($date->format('Y-m-d 00:00:00'));
+        return $this->createDateTime($date->format('Y-m-d H:i:s'));
     }
 
     private function createDate(DateTimeInterface|string|null $date = null): \DateTimeImmutable
@@ -81,7 +85,7 @@ final class DateTimeFactory
             return $this->create($date);
         }
 
-        return $this->create($date->format('Y-m-d 00:00:00'));
+        return $this->create($date->format('Y-m-d H:i:s'));
     }
 
     public function getStartOfWeek(DateTimeInterface|string|null $date = null): DateTime
@@ -127,6 +131,10 @@ final class DateTimeFactory
         return $date;
     }
 
+    /**
+     * @deprecated
+     * @codeCoverageIgnore
+     */
     public function getEndOfLastMonth(): DateTimeInterface
     {
         @trigger_error('The method "DateTimeFactory::getEndOfLastMonth()" will be removed soon', E_USER_DEPRECATED);
@@ -156,6 +164,10 @@ final class DateTimeFactory
         return new \DateTimeImmutable($datetime, $this->getTimezone());
     }
 
+    /**
+     * @deprecated
+     * @codeCoverageIgnore
+     */
     public function createStartOfDay(DateTimeInterface|string|null $date = null): \DateTimeImmutable
     {
         @trigger_error('The method "DateTimeFactory::createStartOfDay()" will be removed soon', E_USER_DEPRECATED);
@@ -165,6 +177,10 @@ final class DateTimeFactory
         return $date->modify('00:00:00');
     }
 
+    /**
+     * @deprecated
+     * @codeCoverageIgnore
+     */
     public function createEndOfDay(DateTimeInterface|string|null $date = null): \DateTimeImmutable
     {
         @trigger_error('The method "DateTimeFactory::createEndOfDay()" will be removed soon', E_USER_DEPRECATED);

@@ -318,4 +318,30 @@ class DateTimeFactoryTest extends TestCase
         self::assertEquals('31', $year->format('d'));
         self::assertEquals('23:59:59', $year->format('H:i:s'));
     }
+
+    public function testCreate(): void
+    {
+        $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
+        $dateTime = $sut->create('2025-04-22 17:29:30');
+        self::assertEquals(17, $dateTime->format('H'));
+        self::assertEquals(29, $dateTime->format('i'));
+        self::assertEquals(30, $dateTime->format('s'));
+        self::assertEquals('22', $dateTime->format('d'));
+        self::assertEquals('04', $dateTime->format('m'));
+        self::assertEquals('2025', $dateTime->format('Y'));
+        self::assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
+    }
+
+    public function testCreateFromFormat(): void
+    {
+        $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
+        $dateTime = $sut->createDateTimeFromFormat('H:i:s m.d-Y', '17:29:30 04.22-2025');
+        self::assertEquals(17, $dateTime->format('H'));
+        self::assertEquals(29, $dateTime->format('i'));
+        self::assertEquals(30, $dateTime->format('s'));
+        self::assertEquals('22', $dateTime->format('d'));
+        self::assertEquals('04', $dateTime->format('m'));
+        self::assertEquals('2025', $dateTime->format('Y'));
+        self::assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
+    }
 }
