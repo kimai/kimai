@@ -14,21 +14,21 @@
         <source>short</source>
         <target state="translated">Ώρες: αθροισμένα μητρώα, μια καταχώριση συνολικά</target>
       </trans-unit>
-      <trans-unit id="BPiZbad" resname="user">
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
         <source>user</source>
-        <target state="translated">Χρήστης: μια καταχώριση ανά χρήστη</target>
+        <target state="translated">Χρήστης</target>
       </trans-unit>
-      <trans-unit id="BlGGO.X" resname="activity">
+      <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve">
         <source>activity</source>
-        <target state="translated">Δραστηριότητα: μια καταχώριση ανά δραστηριότητα</target>
+        <target state="translated">Δραστηριότητα</target>
       </trans-unit>
-      <trans-unit id="JEIQ5IQ" resname="project">
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
         <source>project</source>
-        <target state="translated">Πρότζεκτ: μια καταχώριση ανά πρότζεκτ</target>
+        <target state="translated">Έργο</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
-        <target state="translated">Ημερομηνία: μια καταχώριση ανα ημέρα (χρησιμοποιεί ημέρα έναρξης)</target>
+        <target state="translated">Ημερομηνία</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
