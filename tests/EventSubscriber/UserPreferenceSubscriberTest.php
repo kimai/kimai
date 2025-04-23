@@ -44,6 +44,7 @@ class UserPreferenceSubscriberTest extends TestCase
         $events = UserPreferenceSubscriber::getSubscribedEvents();
         self::assertArrayHasKey(PrepareUserEvent::class, $events);
         $methodName = $events[PrepareUserEvent::class][0];
+        self::assertIsString($methodName);
         self::assertTrue(method_exists(UserPreferenceSubscriber::class, $methodName));
     }
 

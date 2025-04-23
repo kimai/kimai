@@ -21,14 +21,14 @@ class ThemeJavascriptTranslationsEventTest extends TestCase
 
     public function testDefaultValues(): void
     {
-        $sut = new ThemeJavascriptTranslationsEvent();
+        $sut = new ThemeJavascriptTranslationsEvent(); // @phpstan-ignore new.deprecated
 
         self::assertCount(self::COUNTER, $sut->getTranslations());
     }
 
     public function testGetterAndSetter(): void
     {
-        $sut = new ThemeJavascriptTranslationsEvent();
+        $sut = new ThemeJavascriptTranslationsEvent(); // @phpstan-ignore new.deprecated
         $sut->setTranslation('foo', 'bar');
         $sut->setTranslation('hello', 'world', 'testing');
 

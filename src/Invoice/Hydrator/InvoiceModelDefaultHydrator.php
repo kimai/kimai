@@ -18,11 +18,17 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
 
     public function hydrate(InvoiceModel $model): array
     {
+        $template = $model->getTemplate();
+        if ($template === null) {
+            throw new \InvalidArgumentException('InvoiceModel needs a template');
+        }
+
         $currency = $model->getCurrency();
         $tax = $model->getCalculator()->getTax();
         $total = $model->getCalculator()->getTotal();
         $subtotal = $model->getCalculator()->getSubtotal();
         $formatter = $model->getFormatter();
+        $language = $template->getLanguage();
 
         $values = [
             'invoice.due_date' => $formatter->getFormattedDateTime($model->getDueDate()),
@@ -31,7 +37,7 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             'invoice.date_process' => $model->getInvoiceDate()->format(self::DATE_PROCESS_FORMAT), // since 2.14
             'invoice.number' => $model->getInvoiceNumber(),
             'invoice.currency' => $currency,
-            'invoice.language' => $model->getTemplate()->getLanguage(), // since 1.9
+            'invoice.language' => $language, // since 1.9
             'invoice.currency_symbol' => $formatter->getCurrencySymbol($currency),
             'invoice.vat' => $model->getCalculator()->getVat(),
             'invoice.tax_hide' => $model->isHideZeroTax() && $tax === 0.00,
@@ -47,15 +53,17 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             'invoice.subtotal_nc' => $formatter->getFormattedMoney($subtotal, $currency, false),
             'invoice.subtotal_plain' => $subtotal,
 
-            'template.name' => $model->getTemplate()->getName() ?? '',
-            'template.company' => $model->getTemplate()->getCompany() ?? '',
-            'template.address' => $model->getTemplate()->getAddress() ?? '',
-            'template.title' => $model->getTemplate()->getTitle() ?? '',
-            'template.payment_terms' => $model->getTemplate()->getPaymentTerms() ?? '',
-            'template.due_days' => $model->getTemplate()->getDueDays(),
-            'template.vat_id' => $model->getTemplate()->getVatId() ?? '',
-            'template.contact' => $model->getTemplate()->getContact() ?? '',
-            'template.payment_details' => $model->getTemplate()->getPaymentDetails() ?? '',
+            'template.name' => $template->getName() ?? '',
+            'template.company' => $template->getCompany() ?? '',
+            'template.address' => $template->getAddress() ?? '',
+            'template.title' => $template->getTitle() ?? '',
+            'template.payment_terms' => $template->getPaymentTerms() ?? '',
+            'template.due_days' => $template->getDueDays(),
+            'template.vat_id' => $template->getVatId() ?? '',
+            'template.contact' => $template->getContact() ?? '',
+            'template.country' => null,
+            'template.country_name' => null,
+            'template.payment_details' => $template->getPaymentDetails() ?? '',
 
             'query.begin' => '',
             'query.begin_day' => '',

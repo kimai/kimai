@@ -137,12 +137,23 @@ final class CustomerService
         // we cannot use max(number) because a varchar column returns unexpected results
         $start = $this->repository->countCustomer();
         $i = 0;
+        $createDate = new \DateTimeImmutable();
 
         do {
             $start++;
 
-            $numberGenerator = new NumberGenerator($format, function (string $originalFormat, string $format, int $increaseBy) use ($start): string|int {
+            $numberGenerator = new NumberGenerator($format, function (string $originalFormat, string $format, int $increaseBy) use ($start, $createDate): string|int {
                 return match ($format) {
+                    'Y' => $createDate->format('Y'),
+                    'y' => $createDate->format('y'),
+                    'M' => $createDate->format('m'),
+                    'm' => $createDate->format('n'),
+                    'D' => $createDate->format('d'),
+                    'd' => $createDate->format('j'),
+                    'YY' => (int) $createDate->format('Y') + $increaseBy,
+                    'yy' => (int) $createDate->format('y') + $increaseBy,
+                    'MM' => (int) $createDate->format('m') + $increaseBy,
+                    'DD' => (int) $createDate->format('d') + $increaseBy,
                     'cc' => $start + $increaseBy,
                     default => $originalFormat,
                 };

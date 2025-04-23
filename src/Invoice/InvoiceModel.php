@@ -52,6 +52,11 @@ final class InvoiceModel
     private array $itemHydrator = [];
     private ?string $invoiceNumber = null;
     private bool $hideZeroTax = false;
+    private bool $isPreview = false;
+    /**
+     * @var array<string, string|array<string|int, mixed>|null|bool|int|float>
+     */
+    private array $options = [];
 
     /**
      * @internal use InvoiceModelFactory
@@ -66,6 +71,22 @@ final class InvoiceModel
         $this->addModelHydrator(new InvoiceModelActivityHydrator($activityStatistic));
         $this->addModelHydrator(new InvoiceModelUserHydrator());
         $this->addItemHydrator(new InvoiceItemDefaultHydrator());
+    }
+
+    /**
+     * @param string|array<string|int, mixed>|null|bool|int|float $value
+     */
+    public function setOption(string $key, string|array|null|bool|int|float $value): void
+    {
+        $this->options[$key] = $value;
+    }
+
+    /**
+     * @return array<string, string|array<string|int, mixed>|null|bool|int|float>
+     */
+    public function getOptions(): array
+    {
+        return $this->options;
     }
 
     public function getQuery(): ?InvoiceQuery
@@ -264,5 +285,15 @@ final class InvoiceModel
     public function setHideZeroTax(bool $hideZeroTax): void
     {
         $this->hideZeroTax = $hideZeroTax;
+    }
+
+    public function isPreview(): bool
+    {
+        return $this->isPreview;
+    }
+
+    public function setPreview(bool $preview): void
+    {
+        $this->isPreview = $preview;
     }
 }

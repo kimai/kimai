@@ -9,12 +9,12 @@
 
 namespace App\Export\Package\CellFormatter;
 
-final class DurationFormatter implements CellFormatterInterface, CellWithFormatInterface
+final class DurationPlainFormatter implements CellFormatterInterface
 {
     public function formatValue(mixed $value): mixed
     {
         if (!is_numeric($value) || (int) $value === 0) {
-            return new \DateInterval('PT0S');
+            return '0:00:00';
         }
 
         $value = (int) $value;
@@ -32,11 +32,6 @@ final class DurationFormatter implements CellFormatterInterface, CellWithFormatI
             $interval->invert = 1;
         }
 
-        return $interval;
-    }
-
-    public function getFormat(): string
-    {
-        return '[hh]:mm:ss';
+        return $interval->format('%r%h:%I:%S');
     }
 }

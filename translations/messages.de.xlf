@@ -614,6 +614,14 @@
         <source>complete_month.help</source>
         <target>Dies wird alle Tage des Jahres vor dem gewählten Datum abschliessen. Der Benutzer wird für den abgeschlossenen Zeitraum keine Zeiten mehr anlegen oder bearbeiten können.</target>
       </trans-unit>
+      <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="yes">
+        <source>Unlock month</source>
+        <target state="final">Monat entsperren</target>
+      </trans-unit>
+      <trans-unit id="mhOe3Iy" resname="unlock_month.help">
+        <source>unlock_month.help</source>
+        <target>Dadurch werden alle Tage des Jahres nach dem ausgewählten Datum entsperrt.</target>
+      </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>
         <target>Monats-Abschluss PDF</target>
@@ -1929,6 +1937,22 @@
       <trans-unit id="wvt4jH3" resname="training">
         <source>training</source>
         <target>Fortbildung</target>
+      </trans-unit>
+      <trans-unit id="rD4oQRR" resname="postcode">
+        <source>Postcode</source>
+        <target>Postleitzahl</target>
+      </trans-unit>
+      <trans-unit id="EaYsI0E" resname="city">
+        <source>City</source>
+        <target>Stadt</target>
+      </trans-unit>
+      <trans-unit id="y1XHR1Q" resname="address_deprecated">
+        <source>address_deprecated</source>
+        <target>Dieses Feld wird in Kürze entfernt. Bitte übertragen Sie die Adresse, um weiterhin gültige Rechnungen zu erzeugen (z.B. für E-Rechnungen).</target>
+      </trans-unit>
+      <trans-unit id="nsbR30p" resname="sending_company">
+        <source>sending_company</source>
+        <target>Rechnungsabsender</target>
       </trans-unit>
     </body>
   </file>

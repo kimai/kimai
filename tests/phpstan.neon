@@ -1312,49 +1312,9 @@ parameters:
             path: EventSubscriber/Actions/AbstractActionsSubscriberTestCase.php
 
         -
-            message: "#^Parameter \\#2 \\$method of function method_exists expects string, array\\<int\\|string, int\\|string\\>\\|int\\|string given\\.$#"
-            count: 1
-            path: EventSubscriber/EmailSubscriberTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$method of function method_exists expects string, array\\<int\\|string, array\\<int\\|string, int\\|string\\>\\|int\\|string\\>\\|string given\\.$#"
-            count: 2
-            path: EventSubscriber/LastLoginSubscriberTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$method of function method_exists expects string, array\\<int\\|string, int\\|string\\>\\|int\\|string given\\.$#"
-            count: 1
-            path: EventSubscriber/MenuSubscriberTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$method of function method_exists expects string, array\\<int\\|string, int\\|string\\>\\|int\\|string given\\.$#"
-            count: 1
-            path: EventSubscriber/PagerfantaExceptionSubscriberTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\EventSubscriber\\\\ProfileSubscriberTest\\:\\:getInvalidCookies\\(\\) has no return type specified\\.$#"
             count: 1
             path: EventSubscriber/ProfileSubscriberTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$method of function method_exists expects string, array\\<int\\|string, array\\<int\\|string, int\\|string\\>\\|int\\|string\\>\\|string given\\.$#"
-            count: 1
-            path: EventSubscriber/ProfileSubscriberTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$method of function method_exists expects string, array\\<int\\|string, int\\|string\\>\\|int\\|string given\\.$#"
-            count: 1
-            path: EventSubscriber/UserDetailsSubscriberTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$method of function method_exists expects string, array\\<int\\|string, int\\|string\\>\\|int\\|string given\\.$#"
-            count: 1
-            path: EventSubscriber/UserPreferenceSubscriberTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$method of function method_exists expects string, array\\<int\\|string, int\\|string\\>\\|int\\|string given\\.$#"
-            count: 1
-            path: EventSubscriber/WizardSubscriberTest.php
 
         -
             message: "#^Parameter \\#1 \\$haystack of function substr_count expects string, string\\|false given\\.$#"

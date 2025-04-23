@@ -17,6 +17,12 @@ use PHPUnit\Framework\TestCase;
  */
 class DateFormatterTest extends TestCase
 {
+    public function testGetFormat(): void
+    {
+        $formatter = new DateFormatter();
+        self::assertEquals('yyyy-mm-dd', $formatter->getFormat());
+    }
+
     public function testFormatValueReturnsFormattedDateForDateTime(): void
     {
         $formatter = new DateFormatter();

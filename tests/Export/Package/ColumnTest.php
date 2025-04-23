@@ -11,6 +11,7 @@ namespace App\Tests\Export\Package;
 
 use App\Entity\ExportableItem;
 use App\Export\Package\CellFormatter\CellFormatterInterface;
+use App\Export\Package\CellFormatter\DateFormatter;
 use App\Export\Package\Column;
 use PHPUnit\Framework\TestCase;
 
@@ -84,5 +85,18 @@ class ColumnTest extends TestCase
         $formatter = $this->createMock(CellFormatterInterface::class);
         $column = new Column('testName', $formatter);
         self::assertEquals('testName', $column->getHeader());
+    }
+
+    public function testWithFormatReturnsNull(): void
+    {
+        $formatter = $this->createMock(CellFormatterInterface::class);
+        $column = new Column('testName', $formatter);
+        self::assertNull($column->getFormat());
+    }
+
+    public function testWithFormatReturnsValueFromFormatter(): void
+    {
+        $column = new Column('testName', new DateFormatter());
+        self::assertEquals('yyyy-mm-dd', $column->getFormat());
     }
 }

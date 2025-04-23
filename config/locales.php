@@ -1868,6 +1868,13 @@
     'rtl' => false,
     'translation' => false,
   ],
+  'ta' => 
+  [
+    'date' => 'd/M/yy',
+    'time' => 'h:mm a',
+    'rtl' => false,
+    'translation' => true,
+  ],
   'tr' => 
   [
     'date' => 'd.MM.y',

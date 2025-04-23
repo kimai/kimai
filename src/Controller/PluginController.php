@@ -34,11 +34,20 @@ final class PluginController extends AbstractController
         $page = new PageSetup('menu.plugin');
         $page->setHelp('plugins.html');
 
+        $all = $this->getPluginInformation($client, $cache);
+        $bundles = [];
+        foreach ($all as $item) {
+            if ($item['bundle'] !== null) {
+                $bundles[$item['bundle']] = $item;
+            }
+        }
+
         return $this->render('plugin/index.html.twig', [
             'page_setup' => $page,
             'plugins' => $plugins,
             'installed' => $installed,
-            'extensions' => $this->getPluginInformation($client, $cache)
+            'extensions' => $all,
+            'bundles' => $bundles,
         ]);
     }
 

@@ -47,6 +47,9 @@ final class InvoiceDocumentsEvent extends Event
         $this->documents = $documents;
     }
 
+    /**
+     * @CloudRequired
+     */
     public function setMaximumAllowedDocuments(int $max): void
     {
         $this->maximum = $max;

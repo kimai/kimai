@@ -136,15 +136,13 @@ class RateServiceTest extends TestCase
         $activity->setProject($project);
 
         $timesheet = new Timesheet();
-        $timesheet
-            ->setEnd(self::createDateTime())
-            ->setHourlyRate($timesheetHourly)
-            ->setFixedRate($timesheetFixed)
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setDuration($duration)
-            ->setUser($this->getTestUser($userRate, $userInternalRate))
-        ;
+        $timesheet->setEnd(self::createDateTime());
+        $timesheet->setHourlyRate($timesheetHourly);
+        $timesheet->setFixedRate($timesheetFixed);
+        $timesheet->setActivity($activity);
+        $timesheet->setProject($project);
+        $timesheet->setDuration($duration);
+        $timesheet->setUser($this->getTestUser($userRate, $userInternalRate));
 
         $rates = [];
 

@@ -35,7 +35,8 @@ class ActivityServiceTest extends TestCase
     private function getSut(
         ?EventDispatcherInterface $dispatcher = null,
         ?ValidatorInterface $validator = null,
-        ?ActivityRepository $repository = null
+        ?ActivityRepository $repository = null,
+        array $configuration = []
     ): ActivityService {
         if ($repository === null) {
             $repository = $this->createMock(ActivityRepository::class);
@@ -50,7 +51,7 @@ class ActivityServiceTest extends TestCase
             $validator->method('validate')->willReturn(new ConstraintViolationList());
         }
 
-        $configuration = SystemConfigurationFactory::createStub(['activity' => []]);
+        $configuration = SystemConfigurationFactory::createStub(['activity' => $configuration]);
 
         $service = new ActivityService($repository, $configuration, $dispatcher, $validator);
 
@@ -154,5 +155,72 @@ class ActivityServiceTest extends TestCase
 
         $project = $sut->createNewActivity();
         self::assertNull($project->getProject());
+    }
+
+    /**
+     * @dataProvider getTestData
+     */
+    public function testActivityNumber(string $format, int|string $expected): void
+    {
+        $sut = $this->getSut(null, null, null, ['number_format' => $format]);
+        $activity = $sut->createNewActivity();
+
+        self::assertEquals((string) $expected, $activity->getNumber());
+    }
+
+    /**
+     * @return array<int, array<int, string|\DateTime|int>>
+     */
+    public static function getTestData(): array
+    {
+        $dateTime = new \DateTime();
+
+        $yearLong = (int) $dateTime->format('Y');
+        $yearShort = (int) $dateTime->format('y');
+        $monthLong = $dateTime->format('m');
+        $monthShort = (int) $dateTime->format('n');
+        $dayLong = $dateTime->format('d');
+        $dayShort = (int) $dateTime->format('j');
+
+        return [
+            // simple tests for single calls
+            ['{ac,1}', '2'],
+            ['{ac,2}', '02'],
+            ['{ac,3}', '002'],
+            ['{ac,4}', '0002'],
+            ['{Y}', $yearLong],
+            ['{y}', $yearShort],
+            ['{M}', $monthLong],
+            ['{m}', $monthShort],
+            ['{D}', $dayLong],
+            ['{d}', $dayShort],
+            // number formatting (not testing the lower case versions, as the tests might break depending on the date)
+            ['{Y,6}', '00' . $yearLong],
+            ['{M,3}', '0' . $monthLong],
+            ['{D,3}', '0' . $dayLong],
+            // increment dates
+            ['{YY}', $yearLong + 1],
+            ['{YY+1}', $yearLong + 1],
+            ['{YY+2}', $yearLong + 2],
+            ['{YY+3}', $yearLong + 3],
+            ['{YY-1}', $yearLong - 1],
+            ['{YY-2}', $yearLong - 2],
+            ['{YY-3}', $yearLong - 3],
+            ['{yy}', $yearShort + 1],
+            ['{yy+1}', $yearShort + 1],
+            ['{yy+2}', $yearShort + 2],
+            ['{yy+3}', $yearShort + 3],
+            ['{yy-1}', $yearShort - 1],
+            ['{yy-2}', $yearShort - 2],
+            ['{yy-3}', $yearShort - 3],
+            ['{MM}', $monthShort + 1], // cast to int removes leading zero
+            ['{MM+1}', $monthShort + 1], // cast to int removes leading zero
+            ['{MM+2}', $monthShort + 2], // cast to int removes leading zero
+            ['{MM+3}', $monthShort + 3], // cast to int removes leading zero
+            ['{DD}', $dayShort + 1], // cast to int removes leading zero
+            ['{DD+1}', $dayShort + 1], // cast to int removes leading zero
+            ['{DD+2}', $dayShort + 2], // cast to int removes leading zero
+            ['{DD+3}', $dayShort + 3], // cast to int removes leading zero
+        ];
     }
 }

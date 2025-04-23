@@ -19,7 +19,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
- * @template-implements PasswordUpgraderInterface<User>
  * @template-implements UserProviderInterface<User>
  */
 final class KimaiUserProvider implements UserProviderInterface, PasswordUpgraderInterface
@@ -29,7 +28,7 @@ final class KimaiUserProvider implements UserProviderInterface, PasswordUpgrader
     /**
      * @param iterable<UserProviderInterface<User>> $providers
      */
-    public function __construct(private iterable $providers, private SystemConfiguration $configuration)
+    public function __construct(private readonly iterable $providers, private readonly SystemConfiguration $configuration)
     {
     }
 

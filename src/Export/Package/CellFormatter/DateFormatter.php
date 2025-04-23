@@ -9,7 +9,7 @@
 
 namespace App\Export\Package\CellFormatter;
 
-final class DateFormatter implements CellFormatterInterface
+final class DateFormatter implements CellFormatterInterface, CellWithFormatInterface
 {
     public function formatValue(mixed $value): mixed
     {
@@ -22,5 +22,10 @@ final class DateFormatter implements CellFormatterInterface
         }
 
         throw new \InvalidArgumentException('Only DateTimeInterface can be formatted');
+    }
+
+    public function getFormat(): string
+    {
+        return 'yyyy-mm-dd';
     }
 }
