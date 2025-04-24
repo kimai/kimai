@@ -45,6 +45,25 @@ abstract class AbstractTimesheetSubscriber extends AbstractActionsSubscriber
                 $event->addDivider();
             }
 
+            $activity = $timesheet->getActivity();
+            if ($activity !== null && $this->isGranted('edit', $activity)) {
+                $event->addActionToSubmenu('details', 'activity', ['title' => 'activity', 'url' => $this->path('activity_details', ['id' => $activity->getId()])]);
+            }
+
+            $project = $timesheet->getProject();
+            if ($project !== null && $this->isGranted('view', $project)) {
+                $event->addActionToSubmenu('details', 'project', ['title' => 'project', 'url' => $this->path('project_details', ['id' => $project->getId()])]);
+
+                $customer = $project->getCustomer();
+                if ($customer !== null && $this->isGranted('view', $customer)) {
+                    $event->addActionToSubmenu('details', 'customer', ['title' => 'customer', 'url' => $this->path('customer_details', ['id' => $customer->getId()])]);
+                }
+            }
+
+            if ($event->hasSubmenu('details')) {
+                $event->addDivider();
+            }
+
             if (($event->isIndexView() || $event->isView('calendar')) && $this->isGranted('delete', $timesheet)) {
                 $event->addAction('trash', [
                     'url' => $this->path('delete_timesheet', ['id' => $timesheet->getId()]),
