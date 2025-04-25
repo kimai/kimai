@@ -89,7 +89,7 @@ trait RepositorySearchTrait
                 $subqueryName = 'metaNotExists' . $metaName;
 
                 if ($metaValue === '*') {
-                    $qb->leftJoin($rootAlias . '.meta', $alias);
+                    $qb->leftJoin($metaFieldRef, $alias);
                     $and->add($qb->expr()->eq($alias . '.name', ':' . $paramName));
                     $qb->setParameter($paramName, $metaName);
                     $and->add($qb->expr()->isNotNull($alias . '.value'));
