@@ -109,14 +109,29 @@ trait RepositorySearchTrait
             $or = $qb->expr()->orX();
             $i = 0;
             foreach ($fields as $field) {
-                $param = 'searchTerm' . $i++;
                 if (stripos($field, '.') === false) {
                     $field = $rootAlias . '.' . $field;
                 }
-                $or->add(
-                    $qb->expr()->like($field, ':' . $param),
-                );
-                $qb->setParameter($param, '%' . $searchTerm->getSearchTerm() . '%');
+                foreach ($searchTerm->getParts() as $part) {
+                    // currently only meta fields have a name, so we do not use them here
+                    if ($part->getField() !== null) {
+                        continue;
+                    }
+                    $param = 'searchTerm' . $i++;
+                    if ($part->isExcluded()) {
+                        $searchAnd->add(
+                            $qb->expr()->orX()->addMultiple([
+                                $qb->expr()->isNull($field),
+                                $qb->expr()->notLike($field, ':' . $param),
+                            ])
+                        );
+                    } else {
+                        $or->add(
+                            $qb->expr()->like($field, ':' . $param),
+                        );
+                    }
+                    $qb->setParameter($param, '%' . $part->getTerm() . '%');
+                }
             }
             $searchAnd->add($or);
         }
