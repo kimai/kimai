@@ -75,6 +75,7 @@ trait RepositorySearchTrait
         $metaFieldRef = $rootAlias . '.' . $this->getEntityFieldName();
 
         $searchAnd = $qb->expr()->andX();
+        $or = $qb->expr()->orX();
 
         if ($this->supportsMetaFields()) {
             $i = 0;
@@ -123,8 +124,7 @@ trait RepositorySearchTrait
 
         $fields = $this->getSearchableFields();
 
-        if ($searchTerm->hasSearchTerm() && \count($fields) > 0) {
-            $or = $qb->expr()->orX();
+        if ($searchTerm->hasSearchTerm()) {
             $i = 0;
             foreach ($fields as $field) {
                 if (stripos($field, '.') === false) {
@@ -151,6 +151,9 @@ trait RepositorySearchTrait
                     $qb->setParameter($param, '%' . $part->getTerm() . '%');
                 }
             }
+        }
+
+        if ($or->count() > 0) {
             $searchAnd->add($or);
         }
 
