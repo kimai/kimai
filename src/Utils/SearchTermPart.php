@@ -22,7 +22,7 @@ final class SearchTermPart
             // search strings like 'name:' are NOT field searches, but simply terms with a colon
             if (\count($tmp) === 2 && $tmp[1] !== '') {
                 $this->field = $tmp[0];
-                $term = $tmp[1];
+                $term = $tmp[1] !== '""' ? $tmp[1] : '';
             }
         }
 

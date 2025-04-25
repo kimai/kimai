@@ -133,13 +133,36 @@ class SearchTermTest extends TestCase
         self::assertTrue($sut->hasSearchTerm());
         self::assertEquals('1 :', $sut->getSearchTerm());
         self::assertNotEmpty($sut->getSearchFields());
-        self::assertSame([1 => '.'], $sut->getSearchFields()); // this is weird, should be sa string, but PHP seems to think otherwise
+        self::assertSame([1 => '.'], $sut->getSearchFields()); // this is weird, should be a string, but PHP seems to think otherwise
         self::assertEquals('1 : 1:.', $sut->getOriginalSearch());
         self::assertCount(3, $sut->getParts());
         $expectedParts = [
             ['1', null, false],
             [':', null, false],
             ['.', '1', false],
+        ];
+        $i = 0;
+        foreach ($sut->getParts() as $part) {
+            $expected = $expectedParts[$i++];
+            self::assertEquals($expected[0], $part->getTerm());
+            self::assertEquals($expected[1], $part->getField());
+            self::assertEquals($expected[2], $part->isExcluded());
+        }
+    }
+
+    public function testEmptySearchTerm(): void
+    {
+        $sut = new SearchTerm('ABC-123:"" abcd:"" abcd');
+        self::assertTrue($sut->hasSearchTerm());
+        self::assertEquals('abcd', $sut->getSearchTerm());
+        self::assertNotEmpty($sut->getSearchFields());
+        self::assertEquals(['ABC-123' => '', 'abcd' => ''], $sut->getSearchFields());
+        self::assertEquals('ABC-123:"" abcd:"" abcd', $sut->getOriginalSearch());
+        self::assertCount(3, $sut->getParts());
+        $expectedParts = [
+            ['', 'ABC-123', false],
+            ['', 'abcd', false],
+            ['abcd', null, false],
         ];
         $i = 0;
         foreach ($sut->getParts() as $part) {
