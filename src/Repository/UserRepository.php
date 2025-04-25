@@ -39,6 +39,34 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  */
 class UserRepository extends EntityRepository implements UserLoaderInterface, UserProviderInterface, PasswordUpgraderInterface
 {
+    // ----------------- SEARCH -----------------
+    use RepositorySearchTrait;
+
+    private function getMetaFieldClass(): string
+    {
+        return UserPreference::class;
+    }
+
+    private function getMetaFieldName(): string
+    {
+        return 'user';
+    }
+
+    private function getEntityFieldName(): string
+    {
+        return 'preferences';
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function getSearchableFields(): array
+    {
+        return ['u.alias', 'u.title', 'u.accountNumber', 'u.email', 'u.username'];
+    }
+
+    // ----------------- SEARCH -----------------
+
     public function deleteUserPreference(UserPreference $preference, bool $flush = false): void
     {
         $entityManager = $this->getEntityManager();
@@ -323,39 +351,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
             $qb->setParameter('system', $query->getSystemAccount(), Types::BOOLEAN);
         }
 
-        $searchTerm = $query->getSearchTerm();
-        if ($searchTerm !== null) {
-            $searchAnd = $qb->expr()->andX();
-
-            foreach ($searchTerm->getSearchFields() as $metaName => $metaValue) {
-                $qb->leftJoin('u.preferences', 'meta');
-                $searchAnd->add(
-                    $qb->expr()->andX(
-                        $qb->expr()->eq('meta.name', ':metaName'),
-                        $qb->expr()->like('meta.value', ':metaValue')
-                    )
-                );
-                $qb->setParameter('metaName', $metaName);
-                $qb->setParameter('metaValue', '%' . $metaValue . '%');
-            }
-
-            if ($searchTerm->hasSearchTerm()) {
-                $searchAnd->add(
-                    $qb->expr()->orX(
-                        $qb->expr()->like('u.alias', ':searchTerm'),
-                        $qb->expr()->like('u.title', ':searchTerm'),
-                        $qb->expr()->like('u.accountNumber', ':searchTerm'),
-                        $qb->expr()->like('u.email', ':searchTerm'),
-                        $qb->expr()->like('u.username', ':searchTerm')
-                    )
-                );
-                $qb->setParameter('searchTerm', '%' . $searchTerm->getSearchTerm() . '%');
-            }
-
-            if ($searchAnd->count() > 0) {
-                $qb->andWhere($searchAnd);
-            }
-        }
+        $this->addSearchTerm($qb, $query);
 
         return $qb;
     }
