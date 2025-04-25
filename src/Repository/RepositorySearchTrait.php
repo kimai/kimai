@@ -14,14 +14,31 @@ use Doctrine\ORM\QueryBuilder;
 
 trait RepositorySearchTrait
 {
+    /**
+     * The name of the meta-field class, e.g. ProjectMeta::class.
+     * Null if entity does not support meta-fields.
+     */
     private function getMetaFieldClass(): ?string
     {
         return null;
     }
 
+    /**
+     * This is the attribute/field name of the parent class within the meta-field class from getMetaFieldClass()
+     * Null if entity does not support meta-fields.
+     */
     private function getMetaFieldName(): ?string
     {
         return null;
+    }
+
+    /**
+     * This is the attribute/field name of meta-field class within the entity
+     * Null if entity does not support meta-fields.
+     */
+    private function getEntityFieldName(): ?string
+    {
+        return 'meta';
     }
 
     /**
@@ -35,7 +52,7 @@ trait RepositorySearchTrait
     private function supportsMetaFields(): bool
     {
         /* @phpstan-ignore-next-line  */
-        return $this->getMetaFieldClass() !== null && $this->getMetaFieldName() !== null;
+        return $this->getMetaFieldClass() !== null && $this->getMetaFieldName() !== null && $this->getEntityFieldName() !== null;
     }
 
     private function addSearchTerm(QueryBuilder $qb, BaseQuery $query): void
@@ -55,6 +72,7 @@ trait RepositorySearchTrait
             throw new RepositoryException('No alias was set before invoking addSearchTerm().');
         }
         $rootAlias = $aliases[0];
+        $metaFieldRef = $rootAlias . '.' . $this->getEntityFieldName();
 
         $searchAnd = $qb->expr()->andX();
 
@@ -80,7 +98,7 @@ trait RepositorySearchTrait
                         \sprintf('NOT EXISTS(SELECT %s FROM %s %s WHERE %s.%s = %s.id)', $subqueryName, $this->getMetaFieldClass(), $subqueryName, $subqueryName, $this->getMetaFieldName(), $rootAlias)
                     );
                 } elseif ($metaValue === '' || $metaValue === null) {
-                    $qb->leftJoin($rootAlias . '.meta', $alias);
+                    $qb->leftJoin($metaFieldRef, $alias);
                     $and->add(
                         $qb->expr()->orX(
                             $qb->expr()->andX(
@@ -92,7 +110,7 @@ trait RepositorySearchTrait
                     );
                     $qb->setParameter($paramName, $metaName);
                 } else {
-                    $qb->leftJoin($rootAlias . '.meta', $alias);
+                    $qb->leftJoin($metaFieldRef, $alias);
                     $and->add($qb->expr()->eq($alias . '.name', ':' . $paramName));
                     $and->add($qb->expr()->like($alias . '.value', ':' . $paramValue));
                     $qb->setParameter($paramName, $metaName);
