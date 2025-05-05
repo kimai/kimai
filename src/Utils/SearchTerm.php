@@ -72,6 +72,7 @@ final class SearchTerm
      */
     public function getSearchFields(): array
     {
+        // TODO deprecated 3.0 - all places that use this method should use the RepositorySearchTrait instead (soft deprecation for plugins)
         $fields = [];
         foreach ($this->parts as $part) {
             if (($field = $part->getField()) !== null) {
@@ -90,14 +91,15 @@ final class SearchTerm
         return $this->parts;
     }
 
-    // TODO deprecated 3.0 - all places that use this method should use the RepositorySearchTrait instead
     public function getSearchTerm(): string
     {
+        // TODO deprecated 3.0 - all places that use this method should use the RepositorySearchTrait instead (soft deprecation for plugins)
         return $this->term;
     }
 
     public function hasSearchTerm(): bool
     {
+        // TODO refactor and use the parts and check if any part has an emoty field name
         return $this->term !== '';
     }
 

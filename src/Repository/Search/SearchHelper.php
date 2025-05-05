@@ -50,9 +50,8 @@ final class SearchHelper
             $c = 0;
             $j = 0;
             foreach ($searchTerm->getParts() as $part) {
-                $metaName = $part->getField();
                 // we do NOT search for unspecific/global terms as of now, because it is not clear if the user wants that
-                if ($metaName === null) {
+                if (($metaName = $part->getField()) === null) {
                     continue;
                 }
                 $alias = 'meta' . $j++;
@@ -103,10 +102,9 @@ final class SearchHelper
             }
         }
 
-        $fields = $this->configuration->getSearchableFields();
-
         if ($searchTerm->hasSearchTerm()) {
             $i = 0;
+            $fields = $this->configuration->getSearchableFields();
             foreach ($fields as $field) {
                 foreach ($searchTerm->getParts() as $part) {
                     // currently only meta fields have a name, so we do not use them here

@@ -14,7 +14,10 @@ use App\Repository\Search\SearchConfiguration;
 use App\Repository\Search\SearchHelper;
 use Doctrine\ORM\QueryBuilder;
 
-trait RepositorySearchTrait
+/**
+ * @deprecated since 2.34.0 use SearchHelper instead
+ */
+trait RepositorySearchTrait // @phpstan-ignore trait.unused
 {
     /**
      * The name of the meta-field class, e.g. ProjectMeta::class.
