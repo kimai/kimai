@@ -107,12 +107,12 @@ final class SearchHelper
             $fields = $this->configuration->getSearchableFields();
             $and = $qb->expr()->andX();
             foreach ($searchTerm->getParts() as $part) {
+                // currently only meta fields have a name, so we do not use them here
+                if ($part->getField() !== null) {
+                    continue;
+                }
                 $or = $qb->expr()->orX();
                 foreach ($fields as $field) {
-                    // currently only meta fields have a name, so we do not use them here
-                    if ($part->getField() !== null) {
-                        continue;
-                    }
                     if (stripos($field, '.') === false) {
                         $field = $rootAlias . '.' . $field;
                     }
