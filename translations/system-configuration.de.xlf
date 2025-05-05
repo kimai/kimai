@@ -180,19 +180,19 @@
       </trans-unit>
       <trans-unit id="jmsE4EY" resname="Ceil">
         <source>Ceil</source>
-        <target>Ceil: Start, Ende und Dauer werden nach oben gerundet</target>
+        <target>Start, Ende und Dauer werden nach oben gerundet</target>
       </trans-unit>
       <trans-unit id="Y_qmsDz" resname="Closest">
         <source>Closest</source>
-        <target>Closest: Mathematische Rundung zum nächsten Wert</target>
+        <target>Mathematische Rundung zum nächsten Wert</target>
       </trans-unit>
       <trans-unit id="IbERy.5" resname="Default">
         <source>Default</source>
-        <target>Standard: Start wird nach unten, Ende und Dauer nach oben gerundet</target>
+        <target>Start wird nach unten, Ende und Dauer nach oben gerundet</target>
       </trans-unit>
       <trans-unit id="0mjJxEk" resname="Floor">
         <source>Floor</source>
-        <target>Floor: Start, Ende und Dauer werden nach unten gerundet</target>
+        <target>Start, Ende und Dauer werden nach unten gerundet</target>
       </trans-unit>
       <trans-unit id="_0OBfZf" resname="timesheet.default_begin" xml:space="preserve">
         <source>timesheet.default_begin</source>
