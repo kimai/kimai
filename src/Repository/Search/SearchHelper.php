@@ -105,8 +105,10 @@ final class SearchHelper
         if ($searchTerm->hasSearchTerm()) {
             $i = 0;
             $fields = $this->configuration->getSearchableFields();
-            foreach ($fields as $field) {
-                foreach ($searchTerm->getParts() as $part) {
+            $and = $qb->expr()->andX();
+            foreach ($searchTerm->getParts() as $part) {
+                $or = $qb->expr()->orX();
+                foreach ($fields as $field) {
                     // currently only meta fields have a name, so we do not use them here
                     if ($part->getField() !== null) {
                         continue;
@@ -123,12 +125,18 @@ final class SearchHelper
                             ])
                         );
                     } else {
-                        $searchAnd->add(
+                        $or->add(
                             $qb->expr()->like($field, ':' . $param),
                         );
                     }
                     $qb->setParameter($param, '%' . $part->getTerm() . '%');
                 }
+                if ($or->count() > 0) {
+                    $and->add($or);
+                }
+            }
+            if ($and->count() > 0) {
+                $searchAnd->add($and);
             }
         }
 
