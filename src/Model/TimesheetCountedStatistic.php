@@ -9,9 +9,6 @@
 
 namespace App\Model;
 
-/**
- * @internal
- */
 class TimesheetCountedStatistic implements \JsonSerializable
 {
     private int $counter = 0;

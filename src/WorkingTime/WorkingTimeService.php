@@ -27,9 +27,6 @@ use App\WorkingTime\Model\Year;
 use App\WorkingTime\Model\YearPerUserSummary;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
-/**
- * @internal this API and the entire namespace is experimental: expect changes!
- */
 final class WorkingTimeService
 {
     private const LATEST_APPROVAL_PREF = '_latest_approval';
