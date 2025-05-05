@@ -4373,11 +4373,6 @@ parameters:
             path: src/Utils/ReleaseVersion.php
 
         -
-            message: "#^Method App\\\\Utils\\\\SearchTerm\\:\\:getSearchFields\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Utils/SearchTerm.php
-
-        -
             message: "#^Cannot access offset 'pattern' on mixed\\.$#"
             count: 1
             path: src/Validator/Constraints/Duration.php

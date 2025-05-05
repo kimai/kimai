@@ -22,6 +22,8 @@ use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\ProjectFormTypeQuery;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\Query\ProjectQueryHydrate;
+use App\Repository\Search\SearchConfiguration;
+use App\Repository\Search\SearchHelper;
 use App\Utils\Pagination;
 use DateTime;
 use Doctrine\DBAL\ParameterType;
@@ -38,8 +40,6 @@ use Doctrine\ORM\QueryBuilder;
  */
 class ProjectRepository extends EntityRepository
 {
-    use RepositorySearchTrait;
-
     /**
      * @param int[] $projectIds
      * @return array<Project>
@@ -281,27 +281,15 @@ class ProjectRepository extends EntityRepository
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser());
 
-        $this->addSearchTerm($qb, $query);
+        $configuration = new SearchConfiguration(
+            ['p.name', 'p.comment', 'p.orderNumber', 'p.number'],
+            ProjectMeta::class,
+            'project'
+        );
+        $helper = new SearchHelper($configuration);
+        $helper->addSearchTerm($qb, $query);
 
         return $qb;
-    }
-
-    private function getMetaFieldClass(): string
-    {
-        return ProjectMeta::class;
-    }
-
-    private function getMetaFieldName(): string
-    {
-        return 'project';
-    }
-
-    /**
-     * @return array<string>
-     */
-    private function getSearchableFields(): array
-    {
-        return ['p.name', 'p.comment', 'p.orderNumber', 'p.number'];
     }
 
     private function addProjectStartAndEndDate(QueryBuilder $qb, ?DateTime $begin, ?DateTime $end): Andx

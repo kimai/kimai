@@ -20,6 +20,8 @@ use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\UserFormTypeQuery;
 use App\Repository\Query\UserQuery;
 use App\Repository\Query\VisibilityInterface;
+use App\Repository\Search\SearchConfiguration;
+use App\Repository\Search\SearchHelper;
 use App\Utils\Pagination;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Types\Types;
@@ -323,39 +325,14 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
             $qb->setParameter('system', $query->getSystemAccount(), Types::BOOLEAN);
         }
 
-        $searchTerm = $query->getSearchTerm();
-        if ($searchTerm !== null) {
-            $searchAnd = $qb->expr()->andX();
-
-            foreach ($searchTerm->getSearchFields() as $metaName => $metaValue) {
-                $qb->leftJoin('u.preferences', 'meta');
-                $searchAnd->add(
-                    $qb->expr()->andX(
-                        $qb->expr()->eq('meta.name', ':metaName'),
-                        $qb->expr()->like('meta.value', ':metaValue')
-                    )
-                );
-                $qb->setParameter('metaName', $metaName);
-                $qb->setParameter('metaValue', '%' . $metaValue . '%');
-            }
-
-            if ($searchTerm->hasSearchTerm()) {
-                $searchAnd->add(
-                    $qb->expr()->orX(
-                        $qb->expr()->like('u.alias', ':searchTerm'),
-                        $qb->expr()->like('u.title', ':searchTerm'),
-                        $qb->expr()->like('u.accountNumber', ':searchTerm'),
-                        $qb->expr()->like('u.email', ':searchTerm'),
-                        $qb->expr()->like('u.username', ':searchTerm')
-                    )
-                );
-                $qb->setParameter('searchTerm', '%' . $searchTerm->getSearchTerm() . '%');
-            }
-
-            if ($searchAnd->count() > 0) {
-                $qb->andWhere($searchAnd);
-            }
-        }
+        $configuration = new SearchConfiguration(
+            ['u.alias', 'u.title', 'u.accountNumber', 'u.email', 'u.username'],
+            UserPreference::class,
+            'user'
+        );
+        $configuration->setEntityFieldName('preferences');
+        $helper = new SearchHelper($configuration);
+        $helper->addSearchTerm($qb, $query);
 
         return $qb;
     }

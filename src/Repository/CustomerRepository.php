@@ -21,6 +21,8 @@ use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\CustomerFormTypeQuery;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\CustomerQueryHydrate;
+use App\Repository\Search\SearchConfiguration;
+use App\Repository\Search\SearchHelper;
 use App\Utils\Pagination;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityRepository;
@@ -35,8 +37,6 @@ use Doctrine\ORM\QueryBuilder;
  */
 class CustomerRepository extends EntityRepository
 {
-    use RepositorySearchTrait;
-
     /**
      * @param int[] $customerIDs
      * @return array<Customer>
@@ -209,27 +209,15 @@ class CustomerRepository extends EntityRepository
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
 
-        $this->addSearchTerm($qb, $query);
+        $configuration = new SearchConfiguration(
+            ['c.name', 'c.comment', 'c.company', 'c.vatId', 'c.number', 'c.contact', 'c.phone', 'c.email', 'c.address'],
+            CustomerMeta::class,
+            'customer'
+        );
+        $helper = new SearchHelper($configuration);
+        $helper->addSearchTerm($qb, $query);
 
         return $qb;
-    }
-
-    private function getMetaFieldClass(): string
-    {
-        return CustomerMeta::class;
-    }
-
-    private function getMetaFieldName(): string
-    {
-        return 'customer';
-    }
-
-    /**
-     * @return array<string>
-     */
-    private function getSearchableFields(): array
-    {
-        return ['c.name', 'c.comment', 'c.company', 'c.vatId', 'c.number', 'c.contact', 'c.phone', 'c.email', 'c.address'];
     }
 
     public function getPagerfantaForQuery(CustomerQuery $query): Pagination
