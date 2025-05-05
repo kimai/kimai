@@ -26,6 +26,8 @@ use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\Query\TimesheetQueryHint;
 use App\Repository\Result\TimesheetResult;
+use App\Repository\Search\SearchConfiguration;
+use App\Repository\Search\SearchHelper;
 use App\Utils\Pagination;
 use DateInterval;
 use DateTime;
@@ -43,8 +45,6 @@ use InvalidArgumentException;
  */
 class TimesheetRepository extends EntityRepository
 {
-    use RepositorySearchTrait;
-
     /** @deprecated since 2.0.35 */
     public const STATS_QUERY_DURATION = 'duration';
     /** @deprecated since 2.0.35 */
@@ -646,7 +646,13 @@ class TimesheetRepository extends EntityRepository
 
         $requiresTeams = $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
 
-        $this->addSearchTerm($qb, $query);
+        $configuration = new SearchConfiguration(
+            ['t.description'],
+            TimesheetMeta::class,
+            'timesheet'
+        );
+        $helper = new SearchHelper($configuration);
+        $helper->addSearchTerm($qb, $query);
 
         if ($requiresCustomer || $requiresProject || $requiresTeams) {
             $qb->leftJoin('t.project', 'p');
@@ -665,24 +671,6 @@ class TimesheetRepository extends EntityRepository
         }
 
         return $qb;
-    }
-
-    private function getMetaFieldClass(): string
-    {
-        return TimesheetMeta::class;
-    }
-
-    private function getMetaFieldName(): string
-    {
-        return 'timesheet';
-    }
-
-    /**
-     * @return array<string>
-     */
-    private function getSearchableFields(): array
-    {
-        return ['t.description'];
     }
 
     /**

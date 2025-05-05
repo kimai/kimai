@@ -20,6 +20,8 @@ use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\UserFormTypeQuery;
 use App\Repository\Query\UserQuery;
 use App\Repository\Query\VisibilityInterface;
+use App\Repository\Search\SearchConfiguration;
+use App\Repository\Search\SearchHelper;
 use App\Utils\Pagination;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Types\Types;
@@ -39,34 +41,6 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  */
 class UserRepository extends EntityRepository implements UserLoaderInterface, UserProviderInterface, PasswordUpgraderInterface
 {
-    // ----------------- SEARCH -----------------
-    use RepositorySearchTrait;
-
-    private function getMetaFieldClass(): string
-    {
-        return UserPreference::class;
-    }
-
-    private function getMetaFieldName(): string
-    {
-        return 'user';
-    }
-
-    private function getEntityFieldName(): string
-    {
-        return 'preferences';
-    }
-
-    /**
-     * @return array<string>
-     */
-    private function getSearchableFields(): array
-    {
-        return ['u.alias', 'u.title', 'u.accountNumber', 'u.email', 'u.username'];
-    }
-
-    // ----------------- SEARCH -----------------
-
     public function deleteUserPreference(UserPreference $preference, bool $flush = false): void
     {
         $entityManager = $this->getEntityManager();
@@ -351,7 +325,14 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
             $qb->setParameter('system', $query->getSystemAccount(), Types::BOOLEAN);
         }
 
-        $this->addSearchTerm($qb, $query);
+        $configuration = new SearchConfiguration(
+            ['u.alias', 'u.title', 'u.accountNumber', 'u.email', 'u.username'],
+            UserPreference::class,
+            'user'
+        );
+        $configuration->setEntityFieldName('preferences');
+        $helper = new SearchHelper($configuration);
+        $helper->addSearchTerm($qb, $query);
 
         return $qb;
     }
