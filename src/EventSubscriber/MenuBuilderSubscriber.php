@@ -53,7 +53,7 @@ final class MenuBuilderSubscriber implements EventSubscriberInterface
             $event->addItem($menuEvent->getSystemMenu());
         }
 
-        $route = $event->getRequest()->get('_route');
+        $route = $event->getRequest()->attributes->get('_route');
         if (!\is_string($route)) {
             return;
         }

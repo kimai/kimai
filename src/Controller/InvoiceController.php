@@ -333,7 +333,7 @@ final class InvoiceController extends AbstractController
     {
         $invoice = null;
 
-        if (null !== ($id = $request->get('id'))) {
+        if (null !== ($id = $request->query->get('id'))) {
             $invoice = $this->invoiceRepository->find($id);
         }
 
