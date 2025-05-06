@@ -13,12 +13,11 @@ use App\Entity\User;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
-use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Event\CheckPassportEvent;
 
 final class LdapCredentialsSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private LdapManager $ldapManager)
+    public function __construct(private readonly LdapManager $ldapManager)
     {
     }
 
@@ -78,6 +77,6 @@ final class LdapCredentialsSubscriber implements EventSubscriberInterface
         }
 
         // make sure that the normal auth process is not triggered
-        $passwordCredentials->markResolved();
+        $passwordCredentials->markResolved(); // @phpstan-ignore method.internal
     }
 }

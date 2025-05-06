@@ -62,7 +62,7 @@ abstract class AbstractTrackingMode implements TrackingModeInterface
     protected function setFromToFromRequest(Timesheet $entry, Request $request): void
     {
         $from = $request->query->get('from');
-        if (!is_string($from)) {
+        if (!\is_string($from)) {
             return;
         }
 
@@ -75,7 +75,7 @@ abstract class AbstractTrackingMode implements TrackingModeInterface
 
         // only check for an end date if a valid begin date was given
         $to = $request->query->get('to');
-        if (!is_string($to)) {
+        if (!\is_string($to)) {
             return;
         }
 

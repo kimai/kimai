@@ -23,7 +23,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class ValidationFailedExceptionErrorHandler implements SubscribingHandlerInterface
 {
-    public function __construct(private TranslatorInterface $translator, private FlattenExceptionHandler $exceptionHandler, private Security $security)
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private readonly FlattenExceptionHandler $exceptionHandler, // @phpstan-ignore-line
+        private readonly Security $security
+    )
     {
     }
 
@@ -47,7 +51,7 @@ final class ValidationFailedExceptionErrorHandler implements SubscribingHandlerI
     public function serializeExceptionToJson(JsonSerializationVisitor $visitor, FlattenException $exception, array $type, Context $context)
     {
         if ($exception->getClass() !== ValidationFailedException::class) {
-            return $this->exceptionHandler->serializeToJson($visitor, $exception, $type, $context);
+            return $this->exceptionHandler->serializeToJson($visitor, $exception, $type, $context); // @phpstan-ignore method.internalClass
         }
 
         $original = $context->getAttribute('exception');
@@ -55,7 +59,7 @@ final class ValidationFailedExceptionErrorHandler implements SubscribingHandlerI
             return $this->serializeValidationExceptionToJson($visitor, $original, $type, $context);
         }
 
-        return $this->exceptionHandler->serializeToJson($visitor, $exception, $type, $context);
+        return $this->exceptionHandler->serializeToJson($visitor, $exception, $type, $context); // @phpstan-ignore method.internalClass
     }
 
     public function serializeValidationExceptionToJson(JsonSerializationVisitor $visitor, ValidationFailedException $exception, array $type, Context $context)

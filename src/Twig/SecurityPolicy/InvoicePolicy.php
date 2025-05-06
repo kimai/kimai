@@ -204,7 +204,7 @@ final class InvoicePolicy implements SecurityPolicyInterface
 
     public function checkMethodAllowed($obj, $method): void
     {
-        if ($obj instanceof Template || $obj instanceof Markup || $obj instanceof UnicodeString) {
+        if ($obj instanceof Template || $obj instanceof Markup || $obj instanceof UnicodeString) { // @phpstan-ignore instanceof.internalClass
             return;
         }
 
