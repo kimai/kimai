@@ -16,6 +16,7 @@ use App\Saml\SamlProvider;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\User\UserService;
+use App\Repository\TeamRepository;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -57,7 +58,9 @@ class SamlProviderTest extends TestCase
             $userProvider->method('loadUserByIdentifier')->willReturn(new User());
         }
 
-        $provider = new SamlProvider($userService, $userProvider, $samlConfig, $this->createMock(LoggerInterface::class));
+        $teamRepository = $this->createMock(TeamRepository::class);
+
+        $provider = new SamlProvider($userService, $userProvider, $teamRepository, $samlConfig, $this->createMock(LoggerInterface::class));
 
         return $provider;
     }
