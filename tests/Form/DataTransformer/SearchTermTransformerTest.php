@@ -47,7 +47,18 @@ class SearchTermTransformerTest extends TestCase
         self::assertEquals('hello world:xxxxx foo bar test:1234', $term->getOriginalSearch());
         self::assertEquals('hello foo bar', $term->getSearchTerm());
         self::assertEquals(['world' => 'xxxxx', 'test' => '1234'], $term->getSearchFields());
-        self::assertEquals('xxxxx', $term->getSearchField('world'));
-        self::assertEquals('1234', $term->getSearchField('test'));
+        $expectedParts = [
+            ['hello', null],
+            ['xxxxx', 'world'],
+            ['foo', null],
+            ['bar', null],
+            ['1234', 'test'],
+        ];
+        $i = 0;
+        foreach ($term->getParts() as $part) {
+            $expected = $expectedParts[$i++];
+            self::assertEquals($expected[0], $part->getTerm());
+            self::assertEquals($expected[1], $part->getField());
+        }
     }
 }

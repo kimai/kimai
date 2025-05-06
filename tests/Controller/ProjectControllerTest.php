@@ -72,9 +72,27 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
 
         $fixture = new ProjectFixtures();
         $fixture->setAmount(5);
-        $fixture->setCallback(function (Project $project) {
+        $i = 0;
+        $fixture->setCallback(function (Project $project) use (&$i) {
             $project->setVisible(true);
-            $project->setComment('I am a foobar with tralalalala some more content');
+            switch ($i++) {
+                case 0:
+                    $project->setComment('I am a foo');
+                    break;
+                case 1:
+                    $project->setComment('I am a foo with tralalalala some more content');
+                    break;
+                case 2:
+                    $project->setComment('I am a barfoo with tralalalala some more content');
+                    break;
+                case 3:
+                    $project->setName($project->getName() . ' with');
+                    $project->setComment('I am a foobar tralalalala some more content');
+                    break;
+                default:
+                    $project->setComment('I am a foobar with tralalalala some more content');
+                    break;
+            }
             $project->setMetaField((new ProjectMeta())->setName('location')->setValue('homeoffice'));
             $project->setMetaField((new ProjectMeta())->setName('feature')->setValue('timetracking'));
         });
@@ -89,7 +107,7 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
 
         $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
-            'searchTerm' => 'feature:timetracking foo',
+            'searchTerm' => 'feature:timetracking foo with',
             'visibility' => 1,
             'customers' => [1],
             'size' => 50,
@@ -98,7 +116,7 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
 
         self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasDataTable($client);
-        $this->assertDataTableRowCount($client, 'datatable_project_admin', 5);
+        $this->assertDataTableRowCount($client, 'datatable_project_admin', 4);
     }
 
     public function testExportIsSecureForRole(): void

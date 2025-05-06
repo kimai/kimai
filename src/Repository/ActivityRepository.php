@@ -21,6 +21,8 @@ use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\ActivityFormTypeQuery;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\ActivityQueryHydrate;
+use App\Repository\Search\SearchConfiguration;
+use App\Repository\Search\SearchHelper;
 use App\Utils\Pagination;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityRepository;
@@ -35,8 +37,6 @@ use Doctrine\ORM\QueryBuilder;
  */
 class ActivityRepository extends EntityRepository
 {
-    use RepositorySearchTrait;
-
     /**
      * @param int[] $activityIds
      * @return array<Activity>
@@ -330,27 +330,15 @@ class ActivityRepository extends EntityRepository
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams(), $query->isGlobalsOnly());
 
-        $this->addSearchTerm($qb, $query);
+        $configuration = new SearchConfiguration(
+            ['a.name', 'a.comment', 'a.number'],
+            ActivityMeta::class,
+            'activity'
+        );
+        $helper = new SearchHelper($configuration);
+        $helper->addSearchTerm($qb, $query);
 
         return $qb;
-    }
-
-    private function getMetaFieldClass(): string
-    {
-        return ActivityMeta::class;
-    }
-
-    private function getMetaFieldName(): string
-    {
-        return 'activity';
-    }
-
-    /**
-     * @return array<string>
-     */
-    private function getSearchableFields(): array
-    {
-        return ['a.name', 'a.comment', 'a.number'];
     }
 
     /**
