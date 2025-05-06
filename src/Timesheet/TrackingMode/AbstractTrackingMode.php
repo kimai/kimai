@@ -27,7 +27,7 @@ abstract class AbstractTrackingMode implements TrackingModeInterface
         $this->setFromToFromRequest($timesheet, $request);
     }
 
-    protected function setBeginEndFromRequest(Timesheet $entry, Request $request)
+    protected function setBeginEndFromRequest(Timesheet $entry, Request $request): void
     {
         $start = $request->get('begin');
         if (null === $start) {
@@ -59,7 +59,7 @@ abstract class AbstractTrackingMode implements TrackingModeInterface
         $entry->setDuration($end->getTimestamp() - $start->getTimestamp());
     }
 
-    protected function setFromToFromRequest(Timesheet $entry, Request $request)
+    protected function setFromToFromRequest(Timesheet $entry, Request $request): void
     {
         $from = $request->get('from');
         if (null === $from) {

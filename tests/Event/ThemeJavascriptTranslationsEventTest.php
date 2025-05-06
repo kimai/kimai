@@ -14,6 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Event\ThemeJavascriptTranslationsEvent
+ * @group legacy
  */
 class ThemeJavascriptTranslationsEventTest extends TestCase
 {
@@ -21,18 +22,18 @@ class ThemeJavascriptTranslationsEventTest extends TestCase
 
     public function testDefaultValues(): void
     {
-        $sut = new ThemeJavascriptTranslationsEvent(); // @phpstan-ignore new.deprecated
+        $sut = new ThemeJavascriptTranslationsEvent(); // @phpstan-ignore new.deprecatedClass
 
-        self::assertCount(self::COUNTER, $sut->getTranslations());
+        self::assertCount(self::COUNTER, $sut->getTranslations()); // @phpstan-ignore method.deprecatedClass
     }
 
     public function testGetterAndSetter(): void
     {
-        $sut = new ThemeJavascriptTranslationsEvent(); // @phpstan-ignore new.deprecated
-        $sut->setTranslation('foo', 'bar');
-        $sut->setTranslation('hello', 'world', 'testing');
+        $sut = new ThemeJavascriptTranslationsEvent(); // @phpstan-ignore new.deprecatedClass
+        $sut->setTranslation('foo', 'bar'); // @phpstan-ignore method.deprecatedClass
+        $sut->setTranslation('hello', 'world', 'testing'); // @phpstan-ignore method.deprecatedClass
 
-        $result = $sut->getTranslations();
+        $result = $sut->getTranslations(); // @phpstan-ignore method.deprecatedClass
         self::assertCount(self::COUNTER + 2, $result);
         self::assertArrayHasKey('foo', $result);
         self::assertEquals(['bar', 'messages'], $result['foo']);

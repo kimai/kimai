@@ -21,7 +21,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 final class MenuBuilderSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private MenuService $menuService)
+    public function __construct(private readonly MenuService $menuService)
     {
     }
 
