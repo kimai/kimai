@@ -11,16 +11,32 @@ namespace App\Widget\Type;
 
 use App\Configuration\SystemConfiguration;
 use App\Repository\TimesheetRepository;
+use App\Timesheet\DateTimeFactory;
 use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 
-final class DurationYear extends AbstractCounterYear
+final class UserDurationPreviousYear extends AbstractCounterYear
 {
     public function __construct(
         private readonly TimesheetRepository $repository,
         SystemConfiguration $systemConfiguration
     ) {
         parent::__construct($systemConfiguration);
+    }
+
+    public function getId(): string
+    {
+        return 'UserDurationPreviousYear';
+    }
+
+    protected function getFinancialYearTitle(): string
+    {
+        return 'stats.durationPreviousFinancialYear';
+    }
+
+    public function getTemplateName(): string
+    {
+        return 'widget/widget-counter-duration.html.twig';
     }
 
     /**
@@ -38,34 +54,32 @@ final class DurationYear extends AbstractCounterYear
     /**
      * @param array<string, string|bool|int|null|array<string, mixed>> $options
      */
+    public function getData(array $options = []): int
+    {
+        $begin = $this->createPreviousYearStartDate();
+        $end = $this->createPreviousYearEndDate();
+
+        if (null !== ($financialYear = $this->systemConfiguration->getFinancialYearStart())) {
+            $factory = new DateTimeFactory($this->getTimezone());
+            $begin = $factory->createStartOfPreviousFinancialYear($financialYear);
+            $end = $factory->createEndOfPreviousFinancialYear($begin);
+            $this->isFinancialYear = true;
+        }
+
+        return $this->getYearData($begin, $end, $options);
+    }
+
+    /**
+     * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     */
     protected function getYearData(\DateTimeInterface $begin, \DateTimeInterface $end, array $options = []): int
     {
         try {
-            return $this->repository->getDurationForTimeRange($begin, $end, null);
+            return $this->repository->getDurationForTimeRange($begin, $end, $this->getUser());
         } catch (\Exception $ex) {
             throw new WidgetException(
                 'Failed loading widget data: ' . $ex->getMessage()
             );
         }
-    }
-
-    public function getPermissions(): array
-    {
-        return ['view_other_timesheet'];
-    }
-
-    protected function getFinancialYearTitle(): string
-    {
-        return 'stats.durationFinancialYear';
-    }
-
-    public function getTemplateName(): string
-    {
-        return 'widget/widget-counter-duration.html.twig';
-    }
-
-    public function getId(): string
-    {
-        return 'DurationYear';
     }
 }

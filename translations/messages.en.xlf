@@ -902,9 +902,9 @@
         <source>stats.workingTimeFinancialYear</source>
         <target>Financial year</target>
       </trans-unit>
-      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve" approved="yes">
+      <trans-unit id="BXBFJP8" resname="stats.workingTime">
         <source>Working hours</source>
-        <target state="final">Working hours</target>
+        <target>Working hours</target>
       </trans-unit>
       <trans-unit id="Nx9_QiO" resname="revenue">
         <source>revenue</source>
@@ -914,21 +914,41 @@
         <source>stats.durationToday</source>
         <target>Today</target>
       </trans-unit>
+      <trans-unit id="7R2dowt" resname="stats.durationYesterday">
+        <source>stats.durationYesterday</source>
+        <target>Working hours yesterday</target>
+      </trans-unit>
       <trans-unit id="XhKalZH" resname="stats.durationWeek">
         <source>stats.durationWeek</source>
         <target>This week</target>
+      </trans-unit>
+      <trans-unit id="t5QlmRi" resname="stats.durationPreviousWeek">
+        <source>stats.durationPreviousWeek</source>
+        <target>Working hours previous week</target>
       </trans-unit>
       <trans-unit id="uaOwf_P" resname="stats.durationMonth">
         <source>stats.durationMonth</source>
         <target>This month</target>
       </trans-unit>
+      <trans-unit id="c7yE5.3" resname="stats.durationPreviousMonth">
+        <source>stats.durationPreviousMonth</source>
+        <target>Working hours previous month</target>
+      </trans-unit>
       <trans-unit id="WqF84KR" resname="stats.durationYear">
         <source>stats.durationYear</source>
         <target>This year</target>
       </trans-unit>
+      <trans-unit id="Uh1JUB5" resname="stats.durationPreviousYear">
+        <source>stats.durationPreviousYear</source>
+        <target>Working hours previous year</target>
+      </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
         <source>stats.durationFinancialYear</source>
         <target>Financial year</target>
+      </trans-unit>
+      <trans-unit id="MxLC46J" resname="stats.durationPreviousFinancialYear">
+        <source>stats.durationPreviousFinancialYear</source>
+        <target>Working hours previous financial year</target>
       </trans-unit>
       <trans-unit id="YtvPnl1" resname="stats.durationTotal">
         <source>stats.durationTotal</source>
@@ -938,17 +958,33 @@
         <source>stats.userDurationToday</source>
         <target>My working hours today</target>
       </trans-unit>
+      <trans-unit id="k5ZZw6d" resname="stats.userDurationYesterday">
+        <source>stats.userDurationYesterday</source>
+        <target>My working hours yesterday</target>
+      </trans-unit>
       <trans-unit id="DXcvOMM" resname="stats.userDurationWeek">
         <source>stats.userDurationWeek</source>
         <target>My working hours this week</target>
+      </trans-unit>
+      <trans-unit id="uxUdtKD" resname="stats.userDurationPreviousWeek">
+        <source>stats.userDurationPreviousWeek</source>
+        <target>My working hours previous week</target>
       </trans-unit>
       <trans-unit id="0WpgaGa" resname="stats.userDurationMonth">
         <source>stats.userDurationMonth</source>
         <target>My working hours this month</target>
       </trans-unit>
+      <trans-unit id="Y_jQvXv" resname="stats.userDurationPreviousMonth">
+        <source>stats.userDurationPreviousMonth</source>
+        <target>My working hours previous month</target>
+      </trans-unit>
       <trans-unit id="BjyLITj" resname="stats.userDurationYear">
         <source>stats.userDurationYear</source>
         <target>My working hours this year</target>
+      </trans-unit>
+      <trans-unit id="NVwZpsz" resname="stats.userDurationPreviousYear">
+        <source>stats.userDurationPreviousYear</source>
+        <target>My working hours previous year</target>
       </trans-unit>
       <trans-unit id="EedlgkM" resname="stats.userDurationTotal">
         <source>stats.userDurationTotal</source>
@@ -962,21 +998,41 @@
         <source>stats.amountToday</source>
         <target>Revenue today</target>
       </trans-unit>
+      <trans-unit id="sP2cnvE" resname="stats.amountYesterday">
+        <source>stats.amountYesterday</source>
+        <target>Revenue yesterday</target>
+      </trans-unit>
       <trans-unit id="xnJvYAE" resname="stats.amountWeek">
         <source>stats.amountWeek</source>
         <target>Revenue this week</target>
+      </trans-unit>
+      <trans-unit id="7hEUrao" resname="stats.amountPreviousWeek">
+        <source>stats.amountPreviousWeek</source>
+        <target>Revenue previous week</target>
       </trans-unit>
       <trans-unit id="ulr3reE" resname="stats.amountMonth">
         <source>stats.amountMonth</source>
         <target>Revenue this month</target>
       </trans-unit>
+      <trans-unit id="28vpRIL" resname="stats.amountPreviousMonth">
+        <source>stats.amountPreviousMonth</source>
+        <target>Revenue previous month</target>
+      </trans-unit>
       <trans-unit id="bQZyZaO" resname="stats.amountYear">
         <source>stats.amountYear</source>
         <target>Revenue this year</target>
       </trans-unit>
+      <trans-unit id="1jHLd_9" resname="stats.amountPreviousYear">
+        <source>stats.amountPreviousYear</source>
+        <target>Revenue previous year</target>
+      </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
         <source>stats.amountFinancialYear</source>
         <target>Revenue this financial year</target>
+      </trans-unit>
+      <trans-unit id="AAnLEzy" resname="stats.amountPreviousFinancialYear">
+        <source>stats.amountPreviousFinancialYear</source>
+        <target>Revenue previous financial year</target>
       </trans-unit>
       <trans-unit id="Z0fz23v" resname="stats.amountTotal">
         <source>stats.amountTotal</source>
@@ -986,17 +1042,33 @@
         <source>stats.userAmountToday</source>
         <target>My revenue today</target>
       </trans-unit>
+      <trans-unit id="rI6FnFK" resname="stats.userAmountYesterday">
+        <source>stats.userAmountYesterday</source>
+        <target>My revenue yesterday</target>
+      </trans-unit>
       <trans-unit id="LDS9o5X" resname="stats.userAmountWeek">
         <source>stats.userAmountWeek</source>
         <target>My revenue this week</target>
+      </trans-unit>
+      <trans-unit id="c_eMtvp" resname="stats.userAmountPreviousWeek">
+        <source>stats.userAmountPreviousWeek</source>
+        <target>My revenue previous week</target>
       </trans-unit>
       <trans-unit id="E3Kj9lt" resname="stats.userAmountMonth">
         <source>stats.userAmountMonth</source>
         <target>My revenue this month</target>
       </trans-unit>
+      <trans-unit id=".RqeEEx" resname="stats.userAmountPreviousMonth">
+        <source>stats.userAmountPreviousMonth</source>
+        <target>My revenue previous month</target>
+      </trans-unit>
       <trans-unit id="xvdsZsS" resname="stats.userAmountYear">
         <source>stats.userAmountYear</source>
         <target>My revenue this year</target>
+      </trans-unit>
+      <trans-unit id="uZKsdVm" resname="stats.userAmountPreviousYear">
+        <source>stats.userAmountPreviousYear</source>
+        <target>My revenue previous year</target>
       </trans-unit>
       <trans-unit id="9jlbhkf" resname="stats.userAmountTotal">
         <source>stats.userAmountTotal</source>
