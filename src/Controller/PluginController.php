@@ -28,7 +28,7 @@ final class PluginController extends AbstractController
         $installed = [];
         $plugins = $manager->getPlugins();
         foreach ($plugins as $plugin) {
-            $installed[] = $plugin->getId();
+            $installed[$plugin->getId()] = $plugin;
         }
 
         $page = new PageSetup('menu.plugin');
@@ -36,18 +36,23 @@ final class PluginController extends AbstractController
 
         $all = $this->getPluginInformation($client, $cache);
         $bundles = [];
+        $updates = [];
         foreach ($all as $item) {
             if ($item['bundle'] !== null) {
                 $bundles[$item['bundle']] = $item;
+                if (\array_key_exists($item['bundle'], $installed)) {
+                    $updates[$item['bundle']] = version_compare($installed[$item['bundle']]->getMetadata()->getVersion(), $item['latest_release']) === -1;
+                }
             }
         }
 
         return $this->render('plugin/index.html.twig', [
             'page_setup' => $page,
             'plugins' => $plugins,
-            'installed' => $installed,
+            'installed' => array_keys($installed),
             'extensions' => $all,
             'bundles' => $bundles,
+            'updates' => $updates,
         ]);
     }
 

@@ -33,6 +33,18 @@ final class QuickEntryForm extends AbstractType
         $builder->addModelTransformer(new CallbackTransformer(
             function ($value) {
                 // page is loaded, nothing to do
+                if (!$value instanceof QuickEntryWeek) {
+                    return $value;
+                }
+
+                foreach ($value->getRows() as $row) {
+                    foreach ($row->getTimesheets() as $timesheet) {
+                        foreach ($timesheet->getMetaFields() as $metaField) {
+                            $row->setMetaFieldValue($metaField);
+                        }
+                    }
+                }
+
                 return $value;
             },
             function (?QuickEntryWeek $value) {
@@ -49,6 +61,24 @@ final class QuickEntryForm extends AbstractType
                     foreach ($row->getTimesheets() as $timesheet) {
                         $timesheet->setProject($project);
                         $timesheet->setActivity($activity);
+                        foreach ($row->getMetaFields() as $metaField) {
+                            if (null === ($name = $metaField->getName())) {
+                                continue;
+                            }
+
+                            if (null === $timesheet->getMetaField($name)) {
+                                $timesheet->setMetaField($metaField);
+                            }
+
+                            if (null === ($tmpField = $timesheet->getMetaField($name))) {
+                                continue;
+                            }
+
+                            if ($tmpField->getValue() !== $metaField->getValue()) {
+                                $tmpField->setValue($metaField->getValue());
+                                $timesheet->markAsModified();
+                            }
+                        }
                     }
                 }
 

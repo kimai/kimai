@@ -214,9 +214,9 @@ class TimesheetEditForm extends AbstractType
                     return;
                 }
 
-                // if the user did not change the time, make sure to keep the seconds
                 $seconds = 0;
-                if ($data->getBegin()?->format('H:i') === $time->format('H:i')) {
+                // if the user did not change the time, make sure to keep the seconds (ONLY if the timesheet is already existing)
+                if ($data->getBegin()?->format('H:i') === $time->format('H:i') && $data->getId() !== null) {
                     $seconds = $data->getBegin()->format('s') ?? 0;
                 }
 
@@ -276,9 +276,9 @@ class TimesheetEditForm extends AbstractType
                     throw new \Exception('Cannot work with timesheets without start time');
                 }
 
-                // if the user did not change the time, make sure to keep the seconds
                 $seconds = 0;
-                if ($oldEnd !== null && $oldEnd->format('H:i') === $end->format('H:i')) {
+                // if the user did not change the time, make sure to keep the seconds (ONLY if the timesheet is already existing)
+                if ($oldEnd !== null && $oldEnd->format('H:i') === $end->format('H:i') && $timesheet->getId() !== null) {
                     $seconds = $oldEnd->format('s') ?? 0;
                 }
 

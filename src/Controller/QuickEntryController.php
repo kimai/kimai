@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Configuration\SystemConfiguration;
+use App\Event\QuickEntryMetaDisplayEvent;
 use App\Form\QuickEntryForm;
 use App\Form\WeekByUserForm;
 use App\Model\QuickEntryWeek;
@@ -19,6 +20,7 @@ use App\Repository\TimesheetRepository;
 use App\Timesheet\FavoriteRecordService;
 use App\Timesheet\TimesheetService;
 use App\Utils\PageSetup;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -34,7 +36,8 @@ final class QuickEntryController extends AbstractController
         private readonly SystemConfiguration $configuration,
         private readonly TimesheetService $timesheetService,
         private readonly TimesheetRepository $repository,
-        private readonly FavoriteRecordService $favoriteRecordService
+        private readonly FavoriteRecordService $favoriteRecordService,
+        private readonly EventDispatcherInterface $dispatcher,
     )
     {
     }
@@ -149,6 +152,11 @@ final class QuickEntryController extends AbstractController
         $defaultHour = (int) $defaultBegin->format('H');
         $defaultMinute = (int) $defaultBegin->format('i');
 
+        // find additional meta-fields exclusively for QuickEntry view
+        $event = new QuickEntryMetaDisplayEvent($query);
+        $this->dispatcher->dispatch($event);
+        $metaFields = $event->getFields();
+
         $formModel = new QuickEntryWeek($startWeek);
 
         foreach ($rows as $id => $row) {
@@ -168,10 +176,12 @@ final class QuickEntryController extends AbstractController
                     $model->addTimesheet($day['entry']);
                 }
             }
+            $model->setMetaFields($metaFields);
         }
 
         // create prototype model
         $empty = $formModel->createRow($user);
+        $empty->setMetaFields($metaFields);
         $empty->markAsPrototype();
         foreach ($week as $dayId => $day) {
             $tmp = $this->timesheetService->createNewTimesheet($user);
@@ -219,7 +229,11 @@ final class QuickEntryController extends AbstractController
                 foreach ($tmpModel->getTimesheets() as $timesheet) {
                     if ($timesheet->getId() !== null) {
                         $duration = $timesheet->getDuration(false);
-                        if ($duration === null || $timesheet->isRunning()) {
+                        // previously running timesheets were deleted, which was wrong
+                        // so now we distinguish between running timesheets and null duration
+                        if ($timesheet->isRunning()) {
+                            $saveTimesheets[] = $timesheet;
+                        } elseif ($duration === null) {
                             $deleteTimesheets[] = $timesheet;
                         } else {
                             $saveTimesheets[] = $timesheet;
@@ -263,6 +277,7 @@ final class QuickEntryController extends AbstractController
             'page_setup' => $page,
             'days' => $week,
             'form' => $form->createView(),
+            'metaColumns' => $metaFields,
         ]);
     }
 }

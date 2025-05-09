@@ -28,6 +28,9 @@
                     <tr>
                         <th>{{ 'project'|trans }}</th>
                         <th>{{ 'activity'|trans }}</th>
+                        {% for field in metaColumns|sort((a, b) => a.order <=> b.order) %}
+                            <th style="min-width: 70px">{{ field.label }}</th>
+                        {% endfor %}
                         {% for id, week in days %}
                         <th class="text-center{% if week.day is weekend %} weekend{% endif %}{% if week.day is today %} today{% endif %}">
                             {{ week.day|date_weekday }}
@@ -43,6 +46,9 @@
                     <tr class="summary">
                         <td>{{ 'stats.durationTotal'|trans }}</td>
                         <td></td>
+                        {% for field in metaColumns %}
+                            <td></td>
+                        {% endfor %}
                         {% for id, week in days %}
                             <td class="text-center" id="qe-totals-day-{{ loop.index0 }}"></td>
                         {% endfor %}
