@@ -229,7 +229,11 @@ final class QuickEntryController extends AbstractController
                 foreach ($tmpModel->getTimesheets() as $timesheet) {
                     if ($timesheet->getId() !== null) {
                         $duration = $timesheet->getDuration(false);
-                        if ($duration === null || $timesheet->isRunning()) {
+                        // previously running timesheets were deleted, which was wrong
+                        // so now we distinguish between running timesheets and null duration
+                        if ($timesheet->isRunning()) {
+                            $saveTimesheets[] = $timesheet;
+                        } elseif ($duration === null) {
                             $deleteTimesheets[] = $timesheet;
                         } else {
                             $saveTimesheets[] = $timesheet;
