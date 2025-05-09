@@ -224,7 +224,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     {
         $this->tags = new ArrayCollection();
         $this->meta = new ArrayCollection();
-        $this->setModifiedAt(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
+        $this->markAsModified();
     }
 
     /**
@@ -611,7 +611,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     {
         // this needs to be done, otherwise doctrine will not see the item as changed
         // and the calculators will not run
-        $this->setModifiedAt(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
+        $this->markAsModified();
 
         if (null === ($current = $this->getMetaField($meta->getName()))) {
             $meta->setEntity($this);
@@ -659,7 +659,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
             $this->id = null;
         }
 
-        $this->setModifiedAt(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
+        $this->markAsModified();
         $this->exported = false;
 
         $currentMeta = $this->meta;
