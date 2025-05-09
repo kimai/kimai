@@ -294,6 +294,18 @@
         <source>invoice_number_generator.date</source>
         <target state="translated">ਤਾਰੀਖ਼</target>
       </trans-unit>
+      <trans-unit id="DYHuW58" resname="confirm.delete" xml:space="preserve">
+        <source>confirm.delete</source>
+        <target state="translated">ਕੀ ਤੁਸੀਂ ਸੱਚਮੁੱਚ ਇਸਨੂੰ ਮਿਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?</target>
+      </trans-unit>
+      <trans-unit id="CiA4s9E" resname="set_as_default" xml:space="preserve">
+        <source>set_as_default</source>
+        <target state="translated">ਸੈਟਿੰਗ ਨੂੰ ਖੋਜ ਪਸੰਦੀਦਾ ਵਜੋਂ ਸੁਰੱਖਿਅਤ ਕਰੋ</target>
+      </trans-unit>
+      <trans-unit id="XP5zkiN" resname="modal.dirty" xml:space="preserve">
+        <source>modal.dirty</source>
+        <target state="translated">ਫਾਰਮ ਬਦਲ ਗਿਆ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਬਦਲਾਵਾਂ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰਨ ਲਈ "ਸੇਵ" 'ਤੇ ਕਲਿੱਕ ਕਰੋ ਜਾਂ ਰੱਦ ਕਰਨ ਲਈ "ਬੰਦ ਕਰੋ" 'ਤੇ ਕਲਿੱਕ ਕਰੋ।</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
