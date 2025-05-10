@@ -18,6 +18,10 @@
         <source>Available plugins</source>
         <target state="translated">Plugins disponibles</target>
       </trans-unit>
+      <trans-unit id="aNvGEaj" resname="update_available" xml:space="preserve">
+        <source>Update available</source>
+        <target state="translated">Actualización disponible: %version%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

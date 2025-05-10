@@ -126,21 +126,21 @@
         <source>Sunday</source>
         <target>Søndag</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target>Ceil: start, slut, og varighed rundes op</target>
+        <target state="needs-translation">Ceil: start, slut, og varighed rundes op</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target>Tætteste: matematisk afrunding til nærmeste værdi</target>
+        <target state="needs-translation">Tætteste: matematisk afrunding til nærmeste værdi</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target>Standard: start rundes ned, og slut rundes op</target>
+        <target state="needs-translation">Standard: start rundes ned, og slut rundes op</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target>Floor: start, slut, og varighed rundes ned</target>
+        <target state="needs-translation">Floor: start, slut, og varighed rundes ned</target>
       </trans-unit>
       <trans-unit id="SnkW0Pk" resname="theme.avatar_url">
         <source>theme.avatar_url</source>

@@ -86,21 +86,21 @@
         <source>timesheet.default_begin</source>
         <target>Výchozí čas začátku (není použito ve všech módech sledování času)</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target>Podlaha: začátek, konec a trvání budou zaokrouhleny dolů</target>
+        <target state="needs-translation">Podlaha: začátek, konec a trvání budou zaokrouhleny dolů</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target>Standardní: začátek bude zaokrouhlen dolů, konec a trvání nahoru</target>
+        <target state="needs-translation">Standardní: začátek bude zaokrouhlen dolů, konec a trvání nahoru</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target>Nejbližší: matematické zaokrouhlování k nejbližší hodnotě</target>
+        <target state="needs-translation">Nejbližší: matematické zaokrouhlování k nejbližší hodnotě</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target>Strop: začátek, konec a trvání budou zaokrouhleny nahoru</target>
+        <target state="needs-translation">Strop: začátek, konec a trvání budou zaokrouhleny nahoru</target>
       </trans-unit>
       <trans-unit id="hz.vdg5" resname="Sunday">
         <source>Sunday</source>

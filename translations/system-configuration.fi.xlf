@@ -142,21 +142,21 @@
         <source>Sunday</source>
         <target state="translated">Sunnuntai</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target state="translated">Katto: alku, loppu ja kesto pyöristetään ylöspäin</target>
+        <target state="needs-translation">Katto: alku, loppu ja kesto pyöristetään ylöspäin</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target state="translated">Lähin: matemaattinen pyöristys lähimpään arvoon</target>
+        <target state="needs-translation">Lähin: matemaattinen pyöristys lähimpään arvoon</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target state="translated">Vakio: alku pyöristetään alaspäin, loppu ja kesto ylöspäin</target>
+        <target state="needs-translation">Vakio: alku pyöristetään alaspäin, loppu ja kesto ylöspäin</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target state="translated">Pohja: alku, loppu ja kesto pyöristetään alaspäin</target>
+        <target state="needs-translation">Pohja: alku, loppu ja kesto pyöristetään alaspäin</target>
       </trans-unit>
       <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
         <source>timesheet.default_begin</source>

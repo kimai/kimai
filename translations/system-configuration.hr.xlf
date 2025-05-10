@@ -162,21 +162,21 @@
         <source>Sunday</source>
         <target>Nedjelja</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target>Plafon: početak, kraj i trajanje će se zaokružiti prema gore</target>
+        <target state="needs-translation">Plafon: početak, kraj i trajanje će se zaokružiti prema gore</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target>Najbliže: matematičko zaokruživanje na najbližu vrijednost</target>
+        <target state="needs-translation">Najbliže: matematičko zaokruživanje na najbližu vrijednost</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target>Standardno: početak će se zaokružiti prema dolje, kraj i trajanje prema gore</target>
+        <target state="needs-translation">Standardno: početak će se zaokružiti prema dolje, kraj i trajanje prema gore</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target>Pod: početak, kraj i trajanje će se zaokružiti prema dolje</target>
+        <target state="needs-translation">Pod: početak, kraj i trajanje će se zaokružiti prema dolje</target>
       </trans-unit>
       <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
         <source>timesheet.default_begin</source>
