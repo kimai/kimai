@@ -146,21 +146,21 @@
         <source>Sunday</source>
         <target>الأحد</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target>السقف: سيتم تقريب البداية والنهاية والمدة</target>
+        <target state="needs-translation">السقف: سيتم تقريب البداية والنهاية والمدة</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target>الأقرب: التقريب الحسابي لأقرب قيمة</target>
+        <target state="needs-translation">الأقرب: التقريب الحسابي لأقرب قيمة</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target>قياسي: سيتم تقريب البداية إلى الأدنى ، والنهاية والمدة لأعلى</target>
+        <target state="needs-translation">قياسي: سيتم تقريب البداية إلى الأدنى ، والنهاية والمدة لأعلى</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target>الطابق: سيتم تقريب البداية والنهاية والمدة</target>
+        <target state="needs-translation">الطابق: سيتم تقريب البداية والنهاية والمدة</target>
       </trans-unit>
       <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
         <source>timesheet.default_begin</source>

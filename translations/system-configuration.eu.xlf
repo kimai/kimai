@@ -82,21 +82,21 @@
         <source>timesheet.default_begin</source>
         <target>Hasierako denbora lehenetsia (ez da erabiltzen denbora-jarraipena egiteko modu guztietan)</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target>Zorua: hasiera, amaiera eta iraupena biribilduko dira</target>
+        <target state="needs-translation">Zorua: hasiera, amaiera eta iraupena biribilduko dira</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target>Estandarra: hasiera behera biribilduko da, amaiera eta iraupena gora</target>
+        <target state="needs-translation">Estandarra: hasiera behera biribilduko da, amaiera eta iraupena gora</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target>Hurbilena: biribiltze matematikoa balio hurbilenera arte</target>
+        <target state="needs-translation">Hurbilena: biribiltze matematikoa balio hurbilenera arte</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target>Sabaia: hasiera, amaiera eta iraupena biribilduko dira</target>
+        <target state="needs-translation">Sabaia: hasiera, amaiera eta iraupena biribilduko dira</target>
       </trans-unit>
       <trans-unit id="hz.vdg5" resname="Sunday">
         <source>Sunday</source>

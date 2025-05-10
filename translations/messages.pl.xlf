@@ -1930,6 +1930,14 @@
         <source>attendance_only_project</source>
         <target state="translated">Uwzględniaj tylko wpisy z wybranego projektu jako czas pracy</target>
       </trans-unit>
+      <trans-unit id="mhOe3Iy" resname="unlock_month.help" xml:space="preserve">
+        <source>unlock_month.help</source>
+        <target state="translated">Ta opcja odblokowuje wszystkie pozostałe dni roku po zaznaczonej dacie.</target>
+      </trans-unit>
+      <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="no">
+        <source>Unlock month</source>
+        <target state="translated">Odblokuj miesiąc</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

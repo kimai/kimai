@@ -114,25 +114,25 @@
         <source>Sunday</source>
         <target state="final">星期日</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve" approved="yes">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve" approved="no">
         <source>Ceil</source>
-        <target state="final">無條件進位：開始、結束時間與持續時長將無條件進位</target>
+        <target state="needs-translation">無條件進位：開始、結束時間與持續時長將無條件進位</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve" approved="yes">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve" approved="no">
         <source>Closest</source>
-        <target state="final">四捨五入：取最近整數</target>
+        <target state="needs-translation">四捨五入：取最近整數</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve" approved="yes">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve" approved="no">
         <source>Default</source>
-        <target state="final">標準：開始時間將無條件捨去，結束時間與持續時長則將無條件進位</target>
+        <target state="needs-translation">標準：開始時間將無條件捨去，結束時間與持續時長則將無條件進位</target>
       </trans-unit>
       <trans-unit id="UTurPF1" resname="invoice.number_format" xml:space="preserve" approved="yes">
         <source>invoice.number_format</source>
         <target state="final">收支單編號格式</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve" approved="yes">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve" approved="no">
         <source>Floor</source>
-        <target state="final">無條件捨去：開始、結束時間與持續時長將無條件捨去</target>
+        <target state="needs-translation">無條件捨去：開始、結束時間與持續時長將無條件捨去</target>
       </trans-unit>
       <trans-unit id="6CSB6iM" resname="first_weekday" xml:space="preserve" approved="yes">
         <source>first_weekday</source>

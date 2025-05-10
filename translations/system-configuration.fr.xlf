@@ -66,21 +66,21 @@
         <source>timesheet.default_begin</source>
         <target>Heure de début par défaut (non utilisé dans tous les modes de suivi du temps)</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target>Inférieur : l'heure de début, de fin et la durée seront arrondies à l'inférieur</target>
+        <target state="needs-translation">Inférieur : l'heure de début, de fin et la durée seront arrondies à l'inférieur</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target>Standard : l'heure de début sera arrondie à l'inférieur, l'heure de fin et la durée au supérieur</target>
+        <target state="needs-translation">Standard : l'heure de début sera arrondie à l'inférieur, l'heure de fin et la durée au supérieur</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target>Supérieur : l'heure de début, de fin et la durée seront arrondies au supérieur</target>
+        <target state="needs-translation">Supérieur : l'heure de début, de fin et la durée seront arrondies au supérieur</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target>Au plus proche : arrondi mathématique à la valeur la plus proche</target>
+        <target state="needs-translation">Au plus proche : arrondi mathématique à la valeur la plus proche</target>
       </trans-unit>
       <trans-unit id="hz.vdg5" resname="Sunday">
         <source>Sunday</source>

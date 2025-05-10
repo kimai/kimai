@@ -126,21 +126,21 @@
         <source>Sunday</source>
         <target state="translated">niedziela</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target state="translated">Sufit: początek, koniec i długość (czas trwania) będą zaokrąglane w górę</target>
+        <target state="needs-translation">Sufit: początek, koniec i długość (czas trwania) będą zaokrąglane w górę</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target state="translated">Najbliższe: matematyczne zaokrąglanie do najbliższej wartości</target>
+        <target state="needs-translation">Najbliższe: matematyczne zaokrąglanie do najbliższej wartości</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target state="translated">Standard: początek będzie zaokrąglany w dół, koniec i długość (czas trwania) w górę</target>
+        <target state="needs-translation">Standard: początek będzie zaokrąglany w dół, koniec i długość (czas trwania) w górę</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target state="translated">W dół: początek, koniec i długość (czas trwania) będą zaokrąglane w dół</target>
+        <target state="needs-translation">W dół: początek, koniec i długość (czas trwania) będą zaokrąglane w dół</target>
       </trans-unit>
       <trans-unit id="6CSB6iM" resname="first_weekday">
         <source>first_weekday</source>
