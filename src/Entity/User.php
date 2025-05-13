@@ -225,6 +225,10 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[Serializer\Groups(['User_Entity'])]
     #[OA\Property(ref: '#/components/schemas/User')]
     private ?User $supervisor = null;
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private bool $billable = false;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $position = null;
 
     use ColorTrait;
 
@@ -1463,5 +1467,27 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function setWorkContractMode(string $mode): void
     {
         $this->setPreferenceValue(UserPreference::WORK_CONTRACT_TYPE, $mode);
+    }
+
+    public function isBillable(): bool
+    {
+        return $this->billable;
+    }
+
+    public function setBillable(bool $billable): self
+    {
+        $this->billable = $billable;
+        return $this;
+    }
+
+    public function getPosition(): ?string
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?string $position): self
+    {
+        $this->position = $position;
+        return $this;
     }
 }

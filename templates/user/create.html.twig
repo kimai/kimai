@@ -37,6 +37,15 @@
             </div>
 
             <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.billable) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.position) }}
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-md{% if form.avatar is defined %}-6{% endif %}">
                     {{ form_row(form.color) }}
                 </div>

@@ -12,6 +12,8 @@ namespace App\Form\API;
 use App\Form\Type\UserRoleType;
 use App\Form\UserCreateType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -55,6 +57,20 @@ final class UserApiCreateForm extends UserCreateType
                 'expanded' => false,
             ]);
         }
+
+        $builder->add('billable', ChoiceType::class, [
+            'label' => 'Billable Status',
+            'choices' => [
+                'Yes' => true,
+                'No' => false,
+            ],
+            'required' => true,
+        ]);
+
+        $builder->add('position', TextType::class, [
+            'label' => 'Position',
+            'required' => true,
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -80,6 +80,11 @@ final class UserController extends AbstractController
         $table->addColumn('lastLogin', ['class' => 'd-none', 'orderBy' => false]);
         $table->addColumn('roles', ['class' => 'd-none', 'orderBy' => false]);
         $table->addColumn('system_account', ['class' => 'd-none', 'orderBy' => 'systemAccount']);
+        $table->addColumn('billable', [
+            'class' => 'alwaysVisible',
+            'title' => 'Billable',
+            'orderBy' => 'billable'
+        ]);
 
         foreach ($event->getPreferences() as $userPreference) {
             $table->addColumn('mf_' . $userPreference->getName(), ['title' => $userPreference->getLabel(), 'class' => 'd-none', 'orderBy' => false, 'translation_domain' => 'messages', 'data' => $userPreference]);
