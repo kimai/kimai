@@ -11,6 +11,7 @@ namespace App\Entity;
 
 use App\Form\Type\YesNoType;
 use App\WorkingTime\Calculator\WorkingTimeCalculatorDay;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -53,19 +54,19 @@ class UserPreference
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     private ?int $id = null;
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'preferences')]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     private ?User $user = null;
-    #[ORM\Column(name: 'name', type: 'string', length: 50, nullable: false)]
+    #[ORM\Column(name: 'name', type: Types::STRING, length: 50, nullable: false)]
     #[Assert\NotNull]
     #[Assert\Length(min: 2, max: 50)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private string $name;
-    #[ORM\Column(name: 'value', type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(name: 'value', type: Types::STRING, length: 255, nullable: true)]
     #[Assert\Length(max: 250)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]

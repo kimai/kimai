@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use App\Repository\RolePermissionRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -21,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(['role', 'permission'])]
 class RolePermission
 {
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private ?int $id = null;
@@ -29,10 +30,10 @@ class RolePermission
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     private ?Role $role = null;
-    #[ORM\Column(name: 'permission', type: 'string', length: 50, nullable: false)]
+    #[ORM\Column(name: 'permission', type: Types::STRING, length: 50, nullable: false)]
     #[Assert\Length(max: 50)]
     private ?string $permission = null;
-    #[ORM\Column(name: 'allowed', type: 'boolean', nullable: false, options: ['default' => false])]
+    #[ORM\Column(name: 'allowed', type: Types::BOOLEAN, nullable: false, options: ['default' => false])]
     #[Assert\NotNull]
     private bool $allowed = false;
 
