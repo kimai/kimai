@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use App\Export\Annotation as Exporter;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -19,7 +20,7 @@ trait BudgetTrait
     /**
      * The total monetary budget, will be zero if not configured.
      */
-    #[ORM\Column(name: 'budget', type: 'float', nullable: false)]
+    #[ORM\Column(name: 'budget', type: Types::FLOAT, nullable: false)]
     #[Assert\Range(min: 0.00, max: 900000000000.00)]
     #[Assert\NotNull]
     #[Serializer\Expose]
@@ -29,7 +30,7 @@ trait BudgetTrait
     /**
      * The time budget in seconds, will be zero if not configured.
      */
-    #[ORM\Column(name: 'time_budget', type: 'integer', nullable: false)]
+    #[ORM\Column(name: 'time_budget', type: Types::INTEGER, nullable: false)]
     #[Assert\Range(min: 0, max: 2145600000)]
     #[Assert\NotNull]
     #[Serializer\Expose]
@@ -41,7 +42,7 @@ trait BudgetTrait
      *  - null      = default / full time
      *  - month     = monthly budget
      */
-    #[ORM\Column(name: 'budget_type', type: 'string', length: 10, nullable: true)]
+    #[ORM\Column(name: 'budget_type', type: Types::STRING, length: 10, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Activity_Entity', 'Project_Entity', 'Customer_Entity'])]
     #[Exporter\Expose(label: 'budgetType')]

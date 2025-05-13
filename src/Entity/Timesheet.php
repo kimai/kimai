@@ -17,6 +17,7 @@ use DateTime;
 use DateTimeZone;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use OpenApi\Attributes as OA;
@@ -81,7 +82,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     /**
      * Unique Timesheet ID
      */
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[Serializer\Expose]
@@ -91,7 +92,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
      * Reflects the date in the user timezone (not in UTC).
      * This value is automatically set through the begin column and ONLY used in statistic queries.
      */
-    #[ORM\Column(name: 'date_tz', type: 'date_immutable', nullable: false)]
+    #[ORM\Column(name: 'date_tz', type: Types::DATE_IMMUTABLE, nullable: false)]
     #[Assert\NotNull]
     private ?\DateTimeImmutable $date = null;
     /**
@@ -99,7 +100,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      */
-    #[ORM\Column(name: 'start_time', type: 'datetime', nullable: false)]
+    #[ORM\Column(name: 'start_time', type: Types::DATETIME_MUTABLE, nullable: false)]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -111,7 +112,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      */
-    #[ORM\Column(name: 'end_time', type: 'datetime', nullable: true)]
+    #[ORM\Column(name: 'end_time', type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: 'DateTime')]
@@ -120,18 +121,18 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     /**
      * @internal for storing the timezone of "begin" and "end" date
      */
-    #[ORM\Column(name: 'timezone', type: 'string', length: 64, nullable: false)]
+    #[ORM\Column(name: 'timezone', type: Types::STRING, length: 64, nullable: false)]
     #[Assert\Timezone]
     private ?string $timezone = null;
     /**
      * @internal for storing the localized state of dates (see $timezone)
      */
     private bool $localized = false;
-    #[ORM\Column(name: 'duration', type: 'integer', nullable: true)]
+    #[ORM\Column(name: 'duration', type: Types::INTEGER, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?int $duration = 0;
-    #[ORM\Column(name: 'break', type: 'integer', nullable: true)]
+    #[ORM\Column(name: 'break', type: Types::INTEGER, nullable: true)]
     private ?int $break = 0;
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: '`user`', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
@@ -154,36 +155,36 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     #[Serializer\Groups(['Subresource', 'Expanded'])]
     #[OA\Property(ref: '#/components/schemas/ProjectExpanded')]
     private ?Project $project = null;
-    #[ORM\Column(name: 'description', type: 'text', nullable: true)]
+    #[ORM\Column(name: 'description', type: Types::TEXT, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?string $description = null;
-    #[ORM\Column(name: 'rate', type: 'float', nullable: false)]
+    #[ORM\Column(name: 'rate', type: Types::FLOAT, nullable: false)]
     #[Assert\GreaterThanOrEqual(0)]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private float $rate = 0.00;
-    #[ORM\Column(name: 'internal_rate', type: 'float', nullable: true)]
+    #[ORM\Column(name: 'internal_rate', type: Types::FLOAT, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?float $internalRate = null;
-    #[ORM\Column(name: 'fixed_rate', type: 'float', nullable: true)]
+    #[ORM\Column(name: 'fixed_rate', type: Types::FLOAT, nullable: true)]
     #[Assert\GreaterThanOrEqual(0)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Entity'])]
     private ?float $fixedRate = null;
-    #[ORM\Column(name: 'hourly_rate', type: 'float', nullable: true)]
+    #[ORM\Column(name: 'hourly_rate', type: Types::FLOAT, nullable: true)]
     #[Assert\GreaterThanOrEqual(0)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Entity'])]
     private ?float $hourlyRate = null;
-    #[ORM\Column(name: 'exported', type: 'boolean', nullable: false, options: ['default' => false])]
+    #[ORM\Column(name: 'exported', type: Types::BOOLEAN, nullable: false, options: ['default' => false])]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private bool $exported = false;
-    #[ORM\Column(name: 'billable', type: 'boolean', nullable: false, options: ['default' => true])]
+    #[ORM\Column(name: 'billable', type: Types::BOOLEAN, nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -193,7 +194,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
      */
     #[Assert\NotNull]
     private ?string $billableMode = self::BILLABLE_DEFAULT;
-    #[ORM\Column(name: 'category', type: 'string', length: 10, nullable: false, options: ['default' => 'work'])]
+    #[ORM\Column(name: 'category', type: Types::STRING, length: 10, nullable: false, options: ['default' => 'work'])]
     #[Assert\NotNull]
     private ?string $category = self::WORK;
     /**

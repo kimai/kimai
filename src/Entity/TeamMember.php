@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use OpenApi\Attributes as OA;
@@ -21,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Serializer\ExclusionPolicy('all')]
 class TeamMember
 {
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private ?int $id = null;
@@ -39,7 +40,7 @@ class TeamMember
     #[Serializer\Groups(['Default', 'Entity', 'User_Entity'])]
     #[OA\Property(ref: '#/components/schemas/Team')]
     private ?Team $team = null;
-    #[ORM\Column(name: 'teamlead', type: 'boolean', nullable: false, options: ['default' => false])]
+    #[ORM\Column(name: 'teamlead', type: Types::BOOLEAN, nullable: false, options: ['default' => false])]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default', 'Entity', 'Team_Entity', 'User_Entity'])]

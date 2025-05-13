@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use App\Repository\WorkingTimeRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -23,25 +24,25 @@ class WorkingTime
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     private ?int $id = null;
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     private ?User $user = null;
-    #[ORM\Column(name: 'date', type: 'date', nullable: false)]
+    #[ORM\Column(name: 'date', type: Types::DATE_MUTABLE, nullable: false)]
     #[Assert\NotNull]
     private \DateTimeInterface $date;
-    #[ORM\Column(name: 'expected', type: 'integer', nullable: false)]
+    #[ORM\Column(name: 'expected', type: Types::INTEGER, nullable: false)]
     #[Assert\NotNull]
     private int $expectedTime = 0;
-    #[ORM\Column(name: 'actual', type: 'integer', nullable: false)]
+    #[ORM\Column(name: 'actual', type: Types::INTEGER, nullable: false)]
     #[Assert\NotNull]
     private int $actualTime = 0;
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: 'approved_by', nullable: true, onDelete: 'SET NULL')]
     private ?User $approvedBy = null;
-    #[ORM\Column(name: 'approved_at', type: 'datetime_immutable', nullable: true)]
+    #[ORM\Column(name: 'approved_at', type: Types::DATETIME_IMMUTABLE, nullable: true)]
     #[Assert\NotNull]
     private ?\DateTimeImmutable $approvedAt = null;
 

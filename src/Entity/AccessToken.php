@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use App\Repository\AccessTokenRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -21,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(fields: ['token'])]
 class AccessToken
 {
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private ?int $id = null;
@@ -29,17 +30,17 @@ class AccessToken
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     private User $user;
-    #[ORM\Column(name: 'token', type: 'string', length: 100, nullable: false)]
+    #[ORM\Column(name: 'token', type: Types::STRING, length: 100, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 100)]
     private string $token;
-    #[ORM\Column(name: 'name', type: 'string', length: 50, nullable: false)]
+    #[ORM\Column(name: 'name', type: Types::STRING, length: 50, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 50)]
     private ?string $name = null;
-    #[ORM\Column(name: 'last_usage', type: 'datetime_immutable', nullable: true)]
+    #[ORM\Column(name: 'last_usage', type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $lastUsage = null;
-    #[ORM\Column(name: 'expires_at', type: 'datetime_immutable', nullable: true)]
+    #[ORM\Column(name: 'expires_at', type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $expiresAt = null;
 
     public function __construct(User $user, string $token)

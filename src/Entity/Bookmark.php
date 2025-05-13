@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use App\Repository\BookmarkRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -25,7 +26,7 @@ class Bookmark
     public const COLUMN_VISIBILITY = 'columns';
     public const TIMESHEET = 'timesheet';
 
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private ?int $id = null;
@@ -33,15 +34,15 @@ class Bookmark
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     private ?User $user = null;
-    #[ORM\Column(name: 'type', type: 'string', length: 20, nullable: false)]
+    #[ORM\Column(name: 'type', type: Types::STRING, length: 20, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 20)]
     private ?string $type = null;
-    #[ORM\Column(name: 'name', type: 'string', length: 50, nullable: false)]
+    #[ORM\Column(name: 'name', type: Types::STRING, length: 50, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 50)]
     private ?string $name = null;
-    #[ORM\Column(name: 'content', type: 'text', nullable: false)]
+    #[ORM\Column(name: 'content', type: Types::TEXT, nullable: false)]
     private ?string $content = null;
 
     public function getId(): ?int

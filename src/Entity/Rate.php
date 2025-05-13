@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use OpenApi\Attributes as OA;
@@ -16,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 trait Rate
 {
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[Serializer\Expose]
@@ -28,16 +29,16 @@ trait Rate
     #[Serializer\Groups(['Default'])]
     #[OA\Property(ref: '#/components/schemas/User')]
     private ?User $user = null;
-    #[ORM\Column(name: 'rate', type: 'float', nullable: false)]
+    #[ORM\Column(name: 'rate', type: Types::FLOAT, nullable: false)]
     #[Assert\GreaterThanOrEqual(0)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private float $rate = 0.00;
-    #[ORM\Column(name: 'internal_rate', type: 'float', nullable: true)]
+    #[ORM\Column(name: 'internal_rate', type: Types::FLOAT, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?float $internalRate = null;
-    #[ORM\Column(name: 'fixed', type: 'boolean', nullable: false)]
+    #[ORM\Column(name: 'fixed', type: Types::BOOLEAN, nullable: false)]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]

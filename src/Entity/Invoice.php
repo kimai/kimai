@@ -14,6 +14,7 @@ use App\Invoice\InvoiceModel;
 use App\Repository\InvoiceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use OpenApi\Attributes as OA;
@@ -44,20 +45,20 @@ class Invoice implements EntityWithMetaFields
     /**
      * Unique invoice ID
      */
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'id', type: 'integer')]
     private ?int $id = null;
-    #[ORM\Column(name: 'invoice_number', type: 'string', length: 50, nullable: false)]
+    #[ORM\Column(name: 'invoice_number', type: Types::STRING, length: 50, nullable: false)]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'invoice.number', type: 'string')]
     private ?string $invoiceNumber = null;
-    #[ORM\Column(name: 'comment', type: 'text', nullable: true)]
+    #[ORM\Column(name: 'comment', type: Types::TEXT, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Invoice'])]
     #[Exporter\Expose(label: 'comment')]
@@ -76,53 +77,53 @@ class Invoice implements EntityWithMetaFields
     #[Serializer\Groups(['Default'])]
     #[OA\Property(ref: '#/components/schemas/User')]
     private ?User $user = null;
-    #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
+    #[ORM\Column(name: 'created_at', type: Types::DATETIME_MUTABLE, nullable: false)]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?\DateTime $createdAt = null;
-    #[ORM\Column(name: 'timezone', type: 'string', length: 64, nullable: false)]
+    #[ORM\Column(name: 'timezone', type: Types::STRING, length: 64, nullable: false)]
     private ?string $timezone = null;
-    #[ORM\Column(name: 'total', type: 'float', nullable: false)]
+    #[ORM\Column(name: 'total', type: Types::FLOAT, nullable: false)]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'total_rate', type: 'float')]
     private float $total = 0.00;
-    #[ORM\Column(name: 'tax', type: 'float', nullable: false)]
+    #[ORM\Column(name: 'tax', type: Types::FLOAT, nullable: false)]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'invoice.tax', type: 'float')]
     private float $tax = 0.00;
-    #[ORM\Column(name: 'currency', type: 'string', length: 3, nullable: false)]
+    #[ORM\Column(name: 'currency', type: Types::STRING, length: 3, nullable: false)]
     #[Assert\NotNull]
     #[Assert\Length(max: 3)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'currency', type: 'string')]
     private ?string $currency = null;
-    #[ORM\Column(name: 'due_days', type: 'integer', length: 3, nullable: false)]
+    #[ORM\Column(name: 'due_days', type: Types::INTEGER, length: 3, nullable: false)]
     #[Assert\NotNull]
     #[Assert\Range(min: 0, max: 999)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Invoice'])]
     #[Exporter\Expose(label: 'due_days', type: 'integer')]
     private int $dueDays = 30;
-    #[ORM\Column(name: 'vat', type: 'float', nullable: false)]
+    #[ORM\Column(name: 'vat', type: Types::FLOAT, nullable: false)]
     #[Assert\NotNull]
     #[Assert\Range(min: 0.0, max: 99.99)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'tax_rate', type: 'float')]
     private float $vat = 0.00;
-    #[ORM\Column(name: 'status', type: 'string', length: 20, nullable: false)]
+    #[ORM\Column(name: 'status', type: Types::STRING, length: 20, nullable: false)]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'status', type: 'string')]
     private string $status = self::STATUS_NEW;
-    #[ORM\Column(name: 'invoice_filename', type: 'string', length: 150, nullable: false)]
+    #[ORM\Column(name: 'invoice_filename', type: Types::STRING, length: 150, nullable: false)]
     #[Assert\NotNull]
     #[Assert\Length(min: 1, max: 150)]
     #[Exporter\Expose(label: 'file', type: 'string')]
