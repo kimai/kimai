@@ -13,7 +13,7 @@ use App\Repository\TimesheetRepository;
 use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 
-final class DurationWeek extends AbstractCounterDuration
+final class DurationPreviousWeek extends AbstractCounterDuration
 {
     public function __construct(private readonly TimesheetRepository $repository)
     {
@@ -35,12 +35,12 @@ final class DurationWeek extends AbstractCounterDuration
 
     public function getId(): string
     {
-        return 'DurationWeek';
+        return 'DurationPreviousWeek';
     }
 
     public function getTitle(): string
     {
-        return 'stats.durationWeek';
+        return 'stats.durationPreviousWeek';
     }
 
     /**
@@ -49,7 +49,7 @@ final class DurationWeek extends AbstractCounterDuration
     public function getData(array $options = []): int
     {
         try {
-            return $this->repository->getDurationForTimeRange($this->createWeekStartDate(), $this->createWeekEndDate(), null);
+            return $this->repository->getDurationForTimeRange($this->createPreviousWeekStartDate(), $this->createPreviousWeekEndDate(), null);
         } catch (\Exception $ex) {
             throw new WidgetException(
                 'Failed loading widget data: ' . $ex->getMessage()

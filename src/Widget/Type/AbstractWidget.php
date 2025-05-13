@@ -86,6 +86,26 @@ abstract class AbstractWidget implements WidgetInterface
         return new \DateTime($date, $this->getTimezone());
     }
 
+    protected function createYearStartDate(): \DateTime
+    {
+        return $this->createDate('01 january this year 00:00:00');
+    }
+
+    protected function createYearEndDate(): \DateTime
+    {
+        return $this->createDate('31 december this year 23:59:59');
+    }
+
+    protected function createPreviousYearStartDate(): \DateTime
+    {
+        return $this->createDate('01 january previous year 00:00:00');
+    }
+
+    protected function createPreviousYearEndDate(): \DateTime
+    {
+        return $this->createDate('31 december previous year 23:59:59');
+    }
+
     protected function createMonthStartDate(): \DateTime
     {
         return $this->createDate('first day of this month 00:00:00');
@@ -96,14 +116,34 @@ abstract class AbstractWidget implements WidgetInterface
         return $this->createDate('last day of this month 23:59:59');
     }
 
+    protected function createPreviousMonthStartDate(): \DateTime
+    {
+        return $this->createDate('first day of previous month 00:00:00');
+    }
+
+    protected function createPreviousMonthEndDate(): \DateTime
+    {
+        return $this->createDate('last day of previous month 23:59:59');
+    }
+
     protected function createWeekStartDate(): \DateTime
     {
         return $this->createDate('monday this week 00:00:00');
     }
 
+    protected function createPreviousWeekStartDate(): \DateTime
+    {
+        return $this->createDate('monday previous week 00:00:00');
+    }
+
     protected function createWeekEndDate(): \DateTime
     {
         return $this->createDate('sunday this week 23:59:59');
+    }
+
+    protected function createPreviousWeekEndDate(): \DateTime
+    {
+        return $this->createDate('sunday previous week 23:59:59');
     }
 
     protected function createTodayStartDate(): \DateTime
@@ -114,6 +154,16 @@ abstract class AbstractWidget implements WidgetInterface
     protected function createTodayEndDate(): \DateTime
     {
         return $this->createDate('23:59:59');
+    }
+
+    protected function createYesterdayStartDate(): \DateTime
+    {
+        return $this->createDate('yesterday 00:00:00');
+    }
+
+    protected function createYesterdayEndDate(): \DateTime
+    {
+        return $this->createDate('yesterday 23:59:59');
     }
 
     public function getTimezone(): \DateTimeZone

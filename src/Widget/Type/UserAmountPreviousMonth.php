@@ -11,7 +11,7 @@ namespace App\Widget\Type;
 
 use App\Widget\WidgetInterface;
 
-final class UserAmountMonth extends AbstractUserRevenuePeriod
+final class UserAmountPreviousMonth extends AbstractUserRevenuePeriod
 {
     /**
      * @param array<string, string|bool|int|null|array<string, mixed>> $options
@@ -24,7 +24,7 @@ final class UserAmountMonth extends AbstractUserRevenuePeriod
 
     public function getId(): string
     {
-        return 'UserAmountMonth';
+        return 'UserAmountPreviousMonth';
     }
 
     /**
@@ -33,6 +33,6 @@ final class UserAmountMonth extends AbstractUserRevenuePeriod
      */
     public function getData(array $options = []): array
     {
-        return $this->getRevenue($this->createMonthStartDate(), $this->createMonthEndDate(), $options);
+        return $this->getRevenue($this->createPreviousMonthStartDate(), $this->createPreviousMonthEndDate(), $options);
     }
 }
