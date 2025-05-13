@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+
+  sqldb:
+    image: mysql:8.3.0
+    restart: unless-stopped
+    volumes:
+      - mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    command: --default-storage-engine innodb
+    healthcheck:
+      test: mysqladmin -p$$MYSQL_ROOT_PASSWORD ping -h localhost
+      interval: 20s
+      start_period: 10s
+      timeout: 10s
+      retries: 3
+    networks:
+      - kimai_net
+
+  nginx:
+    image: tobybatch/nginx-fpm-reverse-proxy:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"  # Optional: If you're terminating SSL
+    volumes:
+      - public:/opt/kimai/public:ro
+    depends_on:
+      - kimai
+    healthcheck:
+      test: wget --spider http://nginx/health || exit 1
+      interval: 20s
+      start_period: 10s
+      timeout: 10s
+      retries: 3
+    networks:
+      - kimai_net
+
+  kimai:
+    image: kimai/kimai2:latest
+    restart: unless-stopped
+    environment:
+      - ADMINMAIL=${ADMINMAIL}
+      - ADMINPASS=${ADMINPASS}
+      - DATABASE_URL=mysql://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}?charset=utf8mb4&serverVersion=${DB_VERSION}
+      - APP_ENV=dev
+      - APP_DEBUG=1
+      - PHP_INI_OPCACHE__VALIDATE_TIMESTAMPS=1
+      - PHP_INI_OPCACHE__REVALIDATE_FREQ=0
+    volumes:
+      - public:/opt/kimai/public
+      - plugins:/opt/kimai/var/plugins
+      - ./src:/opt/kimai/src
+    networks:
+      - kimai_net
+
+volumes:
+  data:
+  public:
+  mysql:
+  plugins:
+
+networks:
+  kimai_net:
+    driver: bridge

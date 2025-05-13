@@ -29,6 +29,10 @@
                 {{ widgets.label_role(role) }}
             {% endif %}
         {% endfor %}
+    {% elseif column == 'billable' %}
+        {{ widgets.label_boolean(entry.billable) }}
+    {% elseif column == 'position' %}
+        {{ entry.position }}
     {% elseif column == 'team' %}
         {{ widgets.badge_team_access(entry.teams) }}
     {% elseif column == 'active' %}

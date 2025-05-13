@@ -66,6 +66,16 @@ class UserEditType extends AbstractType
             'required' => false,
         ]);
 
+        $builder->add('billable', YesNoType::class, [
+            'label' => 'Billable Status',
+            'required' => true,
+        ]);
+
+        $builder->add('position', TextType::class, [
+            'label' => 'Position',
+            'required' => false,
+        ]);
+
         if ($this->configuration->isThemeAllowAvatarUrls()) {
             $builder->add('avatar', AvatarType::class, [
                 'required' => false,

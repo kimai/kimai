@@ -40,6 +40,11 @@
     </fieldset>
 
     <fieldset class="form-fieldset form-fieldset-light">
+        {{ form_row(form.billable) }}
+        {{ form_row(form.position) }}
+    </fieldset>
+
+    <fieldset class="form-fieldset form-fieldset-light">
         {{- form_rest(form) -}}
     </fieldset>
 
