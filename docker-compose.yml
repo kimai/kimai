@@ -48,14 +48,24 @@ services:
       - ADMINMAIL=${ADMINMAIL}
       - ADMINPASS=${ADMINPASS}
       - DATABASE_URL=mysql://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}?charset=utf8mb4&serverVersion=${DB_VERSION}
-      - APP_ENV=dev
-      - APP_DEBUG=1
+      - APP_ENV=prod
+      - APP_DEBUG=0
       - PHP_INI_OPCACHE__VALIDATE_TIMESTAMPS=1
       - PHP_INI_OPCACHE__REVALIDATE_FREQ=0
+      # SAML Configuration
+      - SAML_ACTIVATE=true
+      - SAML_TITLE=Azure AD Login
+      - SAML_PROVIDER=azure
+      - SAML_CONNECTION_BASE_URL=https://timesheet.shorthills.ai
+      - SAML_IDP_ENTITY_ID=https://sts.windows.net/85a77b6c-a790-4bcf-8fd6-c1f891dd360b/
+      - SAML_IDP_SSO_URL=https://login.microsoftonline.com/85a77b6c-a790-4bcf-8fd6-c1f891dd360b/saml2
+      - SAML_IDP_SLO_URL=https://login.microsoftonline.com/85a77b6c-a790-4bcf-8fd6-c1f891dd360b/saml2
+      - SAML_CONNECTION_STRICT=true
     volumes:
       - public:/opt/kimai/public
       - plugins:/opt/kimai/var/plugins
       - ./src:/opt/kimai/src
+      - ./TimeTrack.cer:/opt/kimai/TimeTrack.cer:ro
     networks:
       - kimai_net
 

@@ -228,7 +228,9 @@ final class SystemConfiguration
      */
     public function getSamlConnection(): array
     {
-        return $this->findArray('saml.connection');
+        $config = $this->findArray('saml.connection');
+        error_log('SAML Connection Config: ' . print_r($config, true));
+        return $config;
     }
 
     /**

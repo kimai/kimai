@@ -1,0 +1,30 @@
+kimai:
+    saml:
+        activate: '%env(bool:SAML_ACTIVATE)%'
+        title: '%env(SAML_TITLE)%'
+        provider: '%env(SAML_PROVIDER)%'
+        connection:
+            # Allow http for development, should be https in production
+            base_url: '%env(SAML_CONNECTION_BASE_URL)%'
+            strict: '%env(bool:SAML_CONNECTION_STRICT)%'
+            debug: '%env(bool:APP_DEBUG)%'
+            idp:
+                entityId: '%env(SAML_IDP_ENTITY_ID)%'
+                singleSignOnService:
+                    url: '%env(SAML_IDP_SSO_URL)%'
+                singleLogoutService:
+                    url: '%env(SAML_IDP_SLO_URL)%'
+                x509cert: '%env(SAML_IDP_X509CERT)%'
+            sp:
+                entityId: '%env(SAML_CONNECTION_BASE_URL)%/auth/saml/metadata'
+                assertionConsumerService:
+                    url: '%env(SAML_CONNECTION_BASE_URL)%/auth/saml/acs'
+                singleLogoutService:
+                    url: '%env(SAML_CONNECTION_BASE_URL)%/auth/saml/logout'
+
+        roles:
+            attribute: '%env(SAML_ROLES_ATTRIBUTE)%'
+            resetOnLogin: '%env(bool:SAML_ROLES_RESET_ON_LOGIN)%'
+
+        mapping: '%env(json:SAML_MAPPING)%'
+        roles_mapping: '%env(json:SAML_ROLES)%' 

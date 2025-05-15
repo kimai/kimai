@@ -1,6 +1,7 @@
 security:
     password_hashers:
         App\Entity\User: auto
+    enable_authenticator_manager: true
 
     providers:
         chain_provider:
@@ -11,6 +12,10 @@ security:
                 class: App\Entity\User
         kimai_ldap:
             id: App\Ldap\LdapUserProvider
+        kimai_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
 
     firewalls:
         dev:
@@ -30,16 +35,26 @@ security:
             custom_authenticators:
                 - App\API\Authentication\TokenAuthenticator
 
+        saml:
+            pattern: ^/auth/saml
+            provider: kimai_user_provider
+            custom_authenticators:
+                - App\Security\SamlAuthenticator
+            entry_point: App\Security\SamlAuthenticator
+            user_checker: App\Security\UserChecker
+            logout:
+                path: saml_logout
+
         secured_area:
             kimai_ldap: ~
             pattern: ^/
             user_checker: App\Security\UserChecker
             stateless: false
 
-            entry_point: form_login
+            entry_point: App\Security\EntryPoint
 
             custom_authenticators:
-                - App\Saml\SamlAuthenticator
+                - App\Security\FormLoginAuthenticator
 
             remember_me:
                 secret: '%kernel.secret%'
@@ -48,22 +63,11 @@ security:
                 always_remember_me: true
 
             # activate all configured user provider
-            provider: chain_provider
-
-            form_login:
-                check_path: security_check
-                login_path: login
-                enable_csrf: true
-
-            two_factor:
-                auth_form_path: 2fa_login
-                check_path: 2fa_login_check
-                remember_me_sets_trusted: true
+            provider: kimai_user_provider
 
             logout:
                 path: logout
-                target: homepage
-                enable_csrf: false
+                target: /
 
             login_throttling:
                 max_attempts: 5
@@ -96,6 +100,12 @@ security:
         - { path: '^/{_locale}/resetting', role: PUBLIC_ACCESS }
         - { path: '^/{_locale}/', roles: ROLE_USER }
         - { path: '^/api', roles: IS_AUTHENTICATED }
+        - { path: ^/auth/saml/metadata, roles: PUBLIC_ACCESS }
+        - { path: ^/auth/saml/login, roles: PUBLIC_ACCESS }
+        - { path: ^/auth/saml/acs, roles: PUBLIC_ACCESS }
+        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/register, roles: PUBLIC_ACCESS }
+        - { path: ^/resetting, roles: PUBLIC_ACCESS }
 
 when@test:
     # this configuration simplifies testing URLs protected by the security mechanism
