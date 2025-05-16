@@ -126,21 +126,21 @@
         <source>Sunday</source>
         <target>Duminică</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target>Plafon: începutul, sfârșitul și durata vor fi rotunjite în sus</target>
+        <target state="needs-translation">Plafon: începutul, sfârșitul și durata vor fi rotunjite în sus</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target>Cel mai apropiat: rotunjirea matematică la cea mai apropiată valoare</target>
+        <target state="needs-translation">Cel mai apropiat: rotunjirea matematică la cea mai apropiată valoare</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target>Standard: începutul va fi rotunjit în jos, sfârșitul și durata vor fi rotunjite în sus</target>
+        <target state="needs-translation">Standard: începutul va fi rotunjit în jos, sfârșitul și durata vor fi rotunjite în sus</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target>Nivel: începutul, sfârșitul și durata vor fi rotunjite în jos</target>
+        <target state="needs-translation">Nivel: începutul, sfârșitul și durata vor fi rotunjite în jos</target>
       </trans-unit>
       <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
         <source>timesheet.default_begin</source>

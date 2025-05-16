@@ -166,21 +166,21 @@
         <source>Sunday</source>
         <target>Søndag</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target>Tak: Begynnelse, slutt og varighet vil bli rundet oppover</target>
+        <target state="needs-translation">Tak: Begynnelse, slutt og varighet vil bli rundet oppover</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target>Nærmest: Matematisk avrunding til nærmeste verdi</target>
+        <target state="needs-translation">Nærmest: Matematisk avrunding til nærmeste verdi</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target>Forvalg: Begynnelse og slutt rundes nedover, slutt og varighet oppover</target>
+        <target state="needs-translation">Forvalg: Begynnelse og slutt rundes nedover, slutt og varighet oppover</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target>Gulv: Begynnelse og slutt-varighet rundes nedover</target>
+        <target state="needs-translation">Gulv: Begynnelse og slutt-varighet rundes nedover</target>
       </trans-unit>
       <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
         <source>timesheet.default_begin</source>

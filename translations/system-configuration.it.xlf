@@ -126,21 +126,21 @@
         <source>Sunday</source>
         <target state="final">Domenica</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil" approved="yes">
+      <trans-unit id="jmsE4EY" resname="Ceil" approved="yes" xml:space="preserve">
         <source>Ceil</source>
-        <target state="final">Ceil: inizio, fine e durata verranno arrotondati per eccesso</target>
+        <target state="final">Inizio, fine e durata saranno arrotondati per eccesso</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest" approved="yes">
+      <trans-unit id="Y_qmsDz" resname="Closest" approved="yes" xml:space="preserve">
         <source>Closest</source>
-        <target state="final">Closest: arrotondamento matematico al valore più vicino</target>
+        <target state="final">Arrotondamento matematico al valore più vicino</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default" approved="yes">
+      <trans-unit id="IbERy.5" resname="Default" approved="yes" xml:space="preserve">
         <source>Default</source>
-        <target state="final">Standard: l'inizio verrà arrotondato per difetto, la fine e la durata per eccesso</target>
+        <target state="final">L'inizio sarà arrotondato per difetto, la fine e la durata per eccesso</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor" approved="yes">
+      <trans-unit id="0mjJxEk" resname="Floor" approved="yes" xml:space="preserve">
         <source>Floor</source>
-        <target state="final">Floor: inizio, fine e durata verranno arrotondati per difetto</target>
+        <target state="final">Inizio, fine e durata saranno arrotondati per difetto</target>
       </trans-unit>
       <trans-unit id="ZCg9UVM" resname="timesheet.rules.allow_overlapping_records" approved="yes">
         <source>timesheet.rules.allow_overlapping_records</source>

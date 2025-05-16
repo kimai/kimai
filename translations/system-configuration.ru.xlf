@@ -114,21 +114,21 @@
         <source>timesheet.default_begin</source>
         <target>Время запуска по умолчанию (не используется во всех режимах составления расписания)</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target>Округление к меньшему: начало, конец и продолжительность будут округлены к меньшему</target>
+        <target state="needs-translation">Округление к меньшему: начало, конец и продолжительность будут округлены к меньшему</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target>Округление к большему: начало, конец и продолжительность будут округлены к большему</target>
+        <target state="needs-translation">Округление к большему: начало, конец и продолжительность будут округлены к большему</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target>Стандартно: начало будет округлено к меньшему, конец и продолжительность к верхнему</target>
+        <target state="needs-translation">Стандартно: начало будет округлено к меньшему, конец и продолжительность к верхнему</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target>Ближайшее: математическое округление до ближайшего значения</target>
+        <target state="needs-translation">Ближайшее: математическое округление до ближайшего значения</target>
       </trans-unit>
       <trans-unit id="oL_eD_9" resname="timesheet.rounding.default.days">
         <source>timesheet.rounding.default.days</source>
