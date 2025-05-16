@@ -130,9 +130,9 @@
         <source>confirm</source>
         <target state="translated">ਪੁਸ਼ਟੀ ਕਰੋ</target>
       </trans-unit>
-      <trans-unit id="JBkykGe" resname="search">
+      <trans-unit id="JBkykGe" resname="search" xml:space="preserve">
         <source>search</source>
-        <target state="translated">ਲੱਭਣਾ</target>
+        <target state="translated">ਲੱਭੋ</target>
       </trans-unit>
       <trans-unit id="ACcM9j_" resname="logout">
         <source>logout</source>
@@ -296,7 +296,7 @@
       </trans-unit>
       <trans-unit id="DYHuW58" resname="confirm.delete" xml:space="preserve">
         <source>confirm.delete</source>
-        <target state="translated">ਕੀ ਤੁਸੀਂ ਸੱਚਮੁੱਚ ਇਸਨੂੰ ਮਿਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?</target>
+        <target state="translated">ਕੀ ਤੁਸੀਂ ਸੱਚਮੁੱਚ ਇਸ ਨੂੰ ਮਿਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?</target>
       </trans-unit>
       <trans-unit id="CiA4s9E" resname="set_as_default" xml:space="preserve">
         <source>set_as_default</source>

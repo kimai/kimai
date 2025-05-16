@@ -154,21 +154,21 @@
         <source>timesheet.default_begin</source>
         <target>Tiempo de inicio por defecto (no se usa en todos los modos de seguimiento de tiempo)</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target>Suelo: el inicio, final y la duración se redondearán hacia abajo</target>
+        <target state="translated">Inicio, final y la duración se redondearán hacia abajo</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target>Estándar: el inicio se redondeará hacia abajo, el final y la duración hacia arriba</target>
+        <target state="translated">Inicio se redondeará hacia abajo, el final y la duración hacia arriba</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target>Más próximo: redondeo matemático al valor más próximo</target>
+        <target state="translated">Redondeo matemático al valor más próximo</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target>Techo: El inicio, final y la duración se redondearán hacia arriba</target>
+        <target state="translated">Inicio, final y duración se redondearán hacia arriba</target>
       </trans-unit>
       <trans-unit id="AUc43eR" resname="timesheet.rounding.default.end">
         <source>timesheet.rounding.default.end</source>

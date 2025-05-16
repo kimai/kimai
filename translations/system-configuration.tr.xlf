@@ -70,21 +70,21 @@
         <source>timesheet.default_begin</source>
         <target>Öntanımlı başlangıç zamanı (tüm zaman izleme modlarında kullanılmaz)</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target>Taban: başlangıç, bitiş ve süre aşağı yuvarlanacak</target>
+        <target state="needs-translation">Taban: başlangıç, bitiş ve süre aşağı yuvarlanacak</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target>Standart: başlangıç aşağı, bitiş ve süre yukarı yuvarlanacak</target>
+        <target state="needs-translation">Standart: başlangıç aşağı, bitiş ve süre yukarı yuvarlanacak</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target>En yakın: en yakın değere matematiksel yuvarlama</target>
+        <target state="needs-translation">En yakın: en yakın değere matematiksel yuvarlama</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target>Tavan: başlangıç, bitiş ve süre yukarı yuvarlanacak</target>
+        <target state="needs-translation">Tavan: başlangıç, bitiş ve süre yukarı yuvarlanacak</target>
       </trans-unit>
       <trans-unit id="hz.vdg5" resname="Sunday">
         <source>Sunday</source>

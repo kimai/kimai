@@ -70,21 +70,21 @@
         <source>timesheet.default_begin</source>
         <target>Tempo de partida padrão (não usado em todos os modos de rastreamento de tempo)</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target>Piso: início, fim e duração serão arredondados para baixo</target>
+        <target state="needs-translation">Piso: início, fim e duração serão arredondados para baixo</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target>Padrão: o início será arredondado para baixo, fim e duração para cima</target>
+        <target state="needs-translation">Padrão: o início será arredondado para baixo, fim e duração para cima</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target>Mais próximo: arredondamento matemático ao valor mais próximo</target>
+        <target state="needs-translation">Mais próximo: arredondamento matemático ao valor mais próximo</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target>Ceil: início, fim e duração serão arredondados</target>
+        <target state="needs-translation">Ceil: início, fim e duração serão arredondados</target>
       </trans-unit>
       <trans-unit id="hz.vdg5" resname="Sunday">
         <source>Sunday</source>

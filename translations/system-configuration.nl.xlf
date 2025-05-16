@@ -142,21 +142,21 @@
         <source>Sunday</source>
         <target>Zondag</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target>Plafond: begin, einde en duur worden naar boven afgerond</target>
+        <target state="needs-translation">Plafond: begin, einde en duur worden naar boven afgerond</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target>Dichtstbijzijnde: wiskundige afronding op de dichtstbijzijnde waarde</target>
+        <target state="needs-translation">Dichtstbijzijnde: wiskundige afronding op de dichtstbijzijnde waarde</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target>Standaard: begin wordt naar beneden afgerond, einde en duur naar boven</target>
+        <target state="needs-translation">Standaard: begin wordt naar beneden afgerond, einde en duur naar boven</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target>Vloer: begin, einde en duur worden naar beneden afgerond</target>
+        <target state="needs-translation">Vloer: begin, einde en duur worden naar beneden afgerond</target>
       </trans-unit>
       <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
         <source>timesheet.default_begin</source>
