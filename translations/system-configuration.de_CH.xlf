@@ -38,9 +38,9 @@
         <source>Saturday</source>
         <target state="translated">Samstag</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target state="translated">Nächster: Mathematisches Runden auf den nächsten Wert</target>
+        <target state="needs-translation">Nächster: Mathematisches Runden auf den nächsten Wert</target>
       </trans-unit>
       <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
         <source>timesheet.default_begin</source>
@@ -142,13 +142,13 @@
         <source>Sunday</source>
         <target state="translated">Sonntag</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target state="translated">Standard: Beginn wird abgerundet, Ende und Dauer aufgerundet</target>
+        <target state="needs-translation">Standard: Beginn wird abgerundet, Ende und Dauer aufgerundet</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target state="translated">Abrunden: Beginn, Ende und Dauer werden abgerundet</target>
+        <target state="needs-translation">Abrunden: Beginn, Ende und Dauer werden abgerundet</target>
       </trans-unit>
       <trans-unit id="UTurPF1" resname="invoice.number_format">
         <source>invoice.number_format</source>
@@ -270,9 +270,9 @@
         <source>timesheet.rounding.default.duration</source>
         <target state="translated">Rundung der Dauer in Minuten (0 = deaktiviert)</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target state="translated">Obergrenze: Beginn, Ende und Dauer werden aufgerundet</target>
+        <target state="needs-translation">Obergrenze: Beginn, Ende und Dauer werden aufgerundet</target>
       </trans-unit>
       <trans-unit id=".CZiBi." resname="Thursday">
         <source>Thursday</source>

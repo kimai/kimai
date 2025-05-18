@@ -18,13 +18,13 @@
         <source>timesheet.active_entries.hard_limit</source>
         <target>Povolený počet súčasne prebiehajúcich časových záznamov</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target>Najbližšie: matematické zaokrúhľovanie k najbližšej hodnote</target>
+        <target state="needs-translation">Najbližšie: matematické zaokrúhľovanie k najbližšej hodnote</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target state="translated">Strop: začiatok, koniec a trvanie bude zaokrúhlené nahor</target>
+        <target state="needs-translation">Strop: začiatok, koniec a trvanie bude zaokrúhlené nahor</target>
       </trans-unit>
       <trans-unit id="hz.vdg5" resname="Sunday">
         <source>Sunday</source>
@@ -150,13 +150,13 @@
         <source>theme</source>
         <target>Vzhľad</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target state="translated">Dno: začiatok, koniec a trvanie sa zaokrúhlia nadol</target>
+        <target state="needs-translation">Dno: začiatok, koniec a trvanie sa zaokrúhlia nadol</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target>Štandardné: začiatok sa zaokrúhli nadol, koniec a trvanie nahor</target>
+        <target state="needs-translation">Štandardné: začiatok sa zaokrúhli nadol, koniec a trvanie nahor</target>
       </trans-unit>
       <trans-unit id="6CSB6iM" resname="first_weekday">
         <source>first_weekday</source>

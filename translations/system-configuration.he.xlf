@@ -126,29 +126,29 @@
         <source>Sunday</source>
         <target>ראשון</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target>עיגול מעלה: התחלה, סיום ומשך זמן העבודה יעוגלו כלפי מעלה</target>
+        <target state="needs-translation">עיגול מעלה: התחלה, סיום ומשך זמן העבודה יעוגלו כלפי מעלה</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve" approved="yes">
         <source>Closest</source>
-        <target>הכי קרוב: עיגול מתמטי לערך הכי קרוב</target>
+        <target state="final">עיגול מתמטי לערך הכי קרוב</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve" approved="yes">
         <source>Default</source>
-        <target>סטנדרטי: זמן התחלה יעוגל מטה, סיום ומשך זמן העבודה יעוגלו מעלה</target>
+        <target state="final">זמן התחלה יעוגל מטה, סיום ומשך זמן העבודה יעוגלו מעלה</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve" approved="yes">
         <source>Floor</source>
-        <target>עיגול מטה: התחלה, סיום ומשך זמן העבודה יעוגלו כלפי מטה</target>
+        <target state="final">התחלה, סיום ומשך זמן העבודה יעוגלו כלפי מטה</target>
       </trans-unit>
-      <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
+      <trans-unit id="_0OBfZf" resname="timesheet.default_begin" xml:space="preserve" approved="yes">
         <source>timesheet.default_begin</source>
-        <target>זמן התחלה ברירת מחדל (לא בשימוש בכל מצבי הפעולה)</target>
+        <target state="final">זמן התחלה ברירת מחדל (לא בשימוש בכל מצבי הפעולה)</target>
       </trans-unit>
-      <trans-unit id="UTurPF1" resname="invoice.number_format" xml:space="preserve">
+      <trans-unit id="UTurPF1" resname="invoice.number_format" xml:space="preserve" approved="yes">
         <source>invoice.number_format</source>
-        <target state="translated">תבנית מספר חשבונית</target>
+        <target state="final">תבנית מספר חשבונית</target>
       </trans-unit>
       <trans-unit id="6CSB6iM" resname="first_weekday">
         <source>first_weekday</source>
@@ -286,21 +286,21 @@
         <source>allowed_replacer</source>
         <target state="translated">מחליף מורשה: %replacer%</target>
       </trans-unit>
-      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve" approved="yes">
         <source>customer.number_format</source>
-        <target state="translated">תצורת מספר לקוח</target>
+        <target state="final">תצורת מספר לקוח</target>
       </trans-unit>
       <trans-unit id="12sQGSo" resname="activity.allow_inline_create">
         <source>activity.allow_inline_create</source>
         <target state="translated">לאפשר יצירת פעילויות בצורה של מעקב אחר שעות</target>
       </trans-unit>
-      <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number">
+      <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number" xml:space="preserve" approved="yes">
         <source>customer.allow_duplicate_number</source>
-        <target state="translated">לאפשר מספר חשבון כפול</target>
+        <target state="final">לאפשר מספר חשבון כפול</target>
       </trans-unit>
-      <trans-unit id="3xUU9V." resname="project.number_format" xml:space="preserve">
+      <trans-unit id="3xUU9V." resname="project.number_format" xml:space="preserve" approved="yes">
         <source>project.number_format</source>
-        <target state="translated">תצורת מספר מיזם</target>
+        <target state="final">תצורת מספר מיזם</target>
       </trans-unit>
       <trans-unit id="ifgrIHh" resname="activity.number_format" xml:space="preserve">
         <source>activity.number_format</source>

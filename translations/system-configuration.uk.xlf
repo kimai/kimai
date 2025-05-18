@@ -178,21 +178,21 @@
         <source>Sunday</source>
         <target state="translated">Неділя</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target state="translated">Вгору: початок, кінець і тривалість будуть округлені в більшу сторону</target>
+        <target state="translated">Початок, кінець та тривалість будуть округлені в більшу сторону</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target state="translated">Найближче: математичне округлення до найближчого значення</target>
+        <target state="translated">Математичне округлення до найближчого значення</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target state="translated">Стандарт: початок буде округлений вниз, а кінець і тривалість вгору</target>
+        <target state="translated">Початок буде округлено вниз, кінець та тривалість — вгору</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target state="translated">Вниз: початок, кінець і тривалість будуть округлені в меншу сторону</target>
+        <target state="translated">Початок, кінець та тривалість будуть округлені до меншого значення</target>
       </trans-unit>
       <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
         <source>timesheet.default_begin</source>
