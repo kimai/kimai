@@ -10,14 +10,15 @@
 namespace App\Widget\Type;
 
 use App\Configuration\SystemConfiguration;
-use App\Event\UserRevenueStatisticEvent;
+use App\Event\RevenueStatisticEvent;
 use App\Model\Revenue;
 use App\Repository\TimesheetRepository;
+use App\Timesheet\DateTimeFactory;
 use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
-final class UserAmountYear extends AbstractCounterYear
+final class AmountPreviousYear extends AbstractCounterYear
 {
     public function __construct(
         private readonly TimesheetRepository $repository,
@@ -25,26 +26,6 @@ final class UserAmountYear extends AbstractCounterYear
         private readonly EventDispatcherInterface $dispatcher
     ) {
         parent::__construct($systemConfiguration);
-    }
-
-    public function getTemplateName(): string
-    {
-        return 'widget/widget-counter-money.html.twig';
-    }
-
-    public function getPermissions(): array
-    {
-        return ['view_rate_own_timesheet'];
-    }
-
-    protected function getFinancialYearTitle(): string
-    {
-        return 'stats.amountFinancialYear';
-    }
-
-    public function getId(): string
-    {
-        return 'UserAmountYear';
     }
 
     /**
@@ -63,13 +44,32 @@ final class UserAmountYear extends AbstractCounterYear
      * @param array<string, string|bool|int|null|array<string, mixed>> $options
      * @return array<string, float>
      */
+    public function getData(array $options = []): array
+    {
+        $begin = $this->createPreviousYearStartDate();
+        $end = $this->createPreviousYearEndDate();
+
+        if (null !== ($financialYear = $this->systemConfiguration->getFinancialYearStart())) {
+            $factory = new DateTimeFactory($this->getTimezone());
+            $begin = $factory->createStartOfPreviousFinancialYear($financialYear);
+            $end = $factory->createEndOfPreviousFinancialYear($begin);
+            $this->isFinancialYear = true;
+        }
+
+        return $this->getYearData($begin, $end, $options);
+    }
+
+    /**
+     * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     * @return array<string, float>
+     */
     protected function getYearData(\DateTimeInterface $begin, \DateTimeInterface $end, array $options = []): array
     {
         try {
             /** @var array<Revenue> $data */
-            $data = $this->repository->getRevenue($begin, $end, $this->getUser());
+            $data = $this->repository->getRevenue($begin, $end, null);
 
-            $event = new UserRevenueStatisticEvent($this->getUser(), $begin, $end);
+            $event = new RevenueStatisticEvent($begin, $end);
             foreach ($data as $row) {
                 $event->addRevenue($row->getCurrency(), $row->getAmount());
             }
@@ -81,5 +81,25 @@ final class UserAmountYear extends AbstractCounterYear
                 'Failed loading widget data: ' . $ex->getMessage()
             );
         }
+    }
+
+    public function getId(): string
+    {
+        return 'AmountPreviousYear';
+    }
+
+    protected function getFinancialYearTitle(): string
+    {
+        return 'stats.amountPreviousFinancialYear';
+    }
+
+    public function getTemplateName(): string
+    {
+        return 'widget/widget-counter-money.html.twig';
+    }
+
+    public function getPermissions(): array
+    {
+        return ['view_all_data'];
     }
 }

@@ -11,10 +11,11 @@ namespace App\Widget\Type;
 
 use App\Configuration\SystemConfiguration;
 use App\Repository\TimesheetRepository;
+use App\Timesheet\DateTimeFactory;
 use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 
-final class DurationYear extends AbstractCounterYear
+final class DurationPreviousYear extends AbstractCounterYear
 {
     public function __construct(
         private readonly TimesheetRepository $repository,
@@ -38,6 +39,24 @@ final class DurationYear extends AbstractCounterYear
     /**
      * @param array<string, string|bool|int|null|array<string, mixed>> $options
      */
+    public function getData(array $options = []): int
+    {
+        $begin = $this->createPreviousYearStartDate();
+        $end = $this->createPreviousYearEndDate();
+
+        if (null !== ($financialYear = $this->systemConfiguration->getFinancialYearStart())) {
+            $factory = new DateTimeFactory($this->getTimezone());
+            $begin = $factory->createStartOfPreviousFinancialYear($financialYear);
+            $end = $factory->createEndOfPreviousFinancialYear($begin);
+            $this->isFinancialYear = true;
+        }
+
+        return $this->getYearData($begin, $end, $options);
+    }
+
+    /**
+     * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     */
     protected function getYearData(\DateTimeInterface $begin, \DateTimeInterface $end, array $options = []): int
     {
         try {
@@ -49,6 +68,11 @@ final class DurationYear extends AbstractCounterYear
         }
     }
 
+    public function getId(): string
+    {
+        return 'DurationPreviousYear';
+    }
+
     public function getPermissions(): array
     {
         return ['view_other_timesheet'];
@@ -56,16 +80,11 @@ final class DurationYear extends AbstractCounterYear
 
     protected function getFinancialYearTitle(): string
     {
-        return 'stats.durationFinancialYear';
+        return 'stats.durationPreviousFinancialYear';
     }
 
     public function getTemplateName(): string
     {
         return 'widget/widget-counter-duration.html.twig';
-    }
-
-    public function getId(): string
-    {
-        return 'DurationYear';
     }
 }

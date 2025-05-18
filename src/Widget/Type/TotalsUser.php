@@ -15,7 +15,7 @@ use App\Widget\WidgetInterface;
 
 final class TotalsUser extends AbstractWidget
 {
-    public function __construct(private UserRepository $repository)
+    public function __construct(private readonly UserRepository $repository)
     {
     }
 
@@ -35,7 +35,7 @@ final class TotalsUser extends AbstractWidget
     /**
      * @param array<string, string|bool|int|null|array<string, mixed>> $options
      */
-    public function getData(array $options = []): mixed
+    public function getData(array $options = []): int
     {
         $user = $this->getUser();
         $query = new UserQuery();

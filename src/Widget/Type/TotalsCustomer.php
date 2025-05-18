@@ -15,7 +15,7 @@ use App\Widget\WidgetInterface;
 
 final class TotalsCustomer extends AbstractWidget
 {
-    public function __construct(private CustomerRepository $customer)
+    public function __construct(private readonly CustomerRepository $customer)
     {
     }
 
@@ -40,7 +40,7 @@ final class TotalsCustomer extends AbstractWidget
     /**
      * @param array<string, string|bool|int|null|array<string, mixed>> $options
      */
-    public function getData(array $options = []): mixed
+    public function getData(array $options = []): int
     {
         $user = $this->getUser();
         $query = new CustomerQuery();

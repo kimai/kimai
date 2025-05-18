@@ -15,7 +15,7 @@ use App\Widget\WidgetInterface;
 
 final class UserDurationTotal extends AbstractCounterDuration
 {
-    public function __construct(private TimesheetRepository $repository)
+    public function __construct(private readonly TimesheetRepository $repository)
     {
     }
 
@@ -41,7 +41,7 @@ final class UserDurationTotal extends AbstractCounterDuration
     /**
      * @param array<string, string|bool|int|null|array<string, mixed>> $options
      */
-    public function getData(array $options = []): mixed
+    public function getData(array $options = []): int
     {
         try {
             return $this->repository->getDurationForTimeRange(null, null, $this->getUser());
