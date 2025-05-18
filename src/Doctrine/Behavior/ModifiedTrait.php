@@ -25,4 +25,9 @@ trait ModifiedTrait
     {
         $this->modifiedAt = $dateTime;
     }
+
+    public function markAsModified(): void
+    {
+        $this->setModifiedAt(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
+    }
 }

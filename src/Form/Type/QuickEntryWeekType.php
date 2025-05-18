@@ -92,6 +92,8 @@ final class QuickEntryWeekType extends AbstractType
         };
         $builder->addEventListener(FormEvents::PRE_SUBMIT, $activityPreSubmitFunction);
 
+        $builder->add('metaFields', MetaFieldsCollectionType::class);
+
         $builder->add('timesheets', CollectionType::class, [
             'entry_type' => QuickEntryTimesheetType::class,
             'label' => false,

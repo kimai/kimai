@@ -1908,44 +1908,14 @@ parameters:
             path: src/Form/Extension/SelectWithApiDataExtension.php
 
         -
-            message: "#^Parameter \\#1 \\$haystack of function stripos expects string, bool\\|float\\|int\\|string given\\.$#"
-            count: 2
-            path: src/Form/Helper/ActivityHelper.php
-
-        -
-            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, bool\\|float\\|int\\|string given\\.$#"
-            count: 1
-            path: src/Form/Helper/ActivityHelper.php
-
-        -
             message: "#^Property App\\\\Form\\\\Helper\\\\ActivityHelper\\:\\:\\$pattern \\(string\\|null\\) does not accept bool\\|float\\|int\\|string\\|null\\.$#"
             count: 1
             path: src/Form/Helper/ActivityHelper.php
 
         -
-            message: "#^Parameter \\#1 \\$haystack of function stripos expects string, bool\\|float\\|int\\|string given\\.$#"
-            count: 2
-            path: src/Form/Helper/CustomerHelper.php
-
-        -
-            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, bool\\|float\\|int\\|string given\\.$#"
-            count: 1
-            path: src/Form/Helper/CustomerHelper.php
-
-        -
             message: "#^Property App\\\\Form\\\\Helper\\\\CustomerHelper\\:\\:\\$pattern \\(string\\|null\\) does not accept bool\\|float\\|int\\|string\\|null\\.$#"
             count: 1
             path: src/Form/Helper/CustomerHelper.php
-
-        -
-            message: "#^Parameter \\#1 \\$haystack of function stripos expects string, bool\\|float\\|int\\|string given\\.$#"
-            count: 2
-            path: src/Form/Helper/ProjectHelper.php
-
-        -
-            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, bool\\|float\\|int\\|string given\\.$#"
-            count: 1
-            path: src/Form/Helper/ProjectHelper.php
 
         -
             message: "#^Property App\\\\Form\\\\Helper\\\\ProjectHelper\\:\\:\\$pattern \\(string\\|null\\) does not accept bool\\|float\\|int\\|string\\|null\\.$#"
@@ -3263,11 +3233,6 @@ parameters:
             path: src/Ldap/LdapAuthenticator.php
 
         -
-            message: "#^Instanceof between Symfony\\\\Component\\\\Security\\\\Http\\\\Authenticator\\\\Passport\\\\Passport and Symfony\\\\Component\\\\Security\\\\Http\\\\Authenticator\\\\Passport\\\\Passport will always evaluate to true\\.$#"
-            count: 1
-            path: src/Ldap/LdapCredentialsSubscriber.php
-
-        -
             message: "#^Method App\\\\Ldap\\\\LdapCredentialsSubscriber\\:\\:onCheckPassport\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Ldap/LdapCredentialsSubscriber.php
@@ -3911,26 +3876,6 @@ parameters:
             message: "#^Method App\\\\Timesheet\\\\TimesheetStatisticService\\:\\:getMonthlyStatisticsGrouped\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Timesheet/TimesheetStatisticService.php
-
-        -
-            message: "#^Method App\\\\Timesheet\\\\TrackingMode\\\\AbstractTrackingMode\\:\\:setBeginEndFromRequest\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Timesheet/TrackingMode/AbstractTrackingMode.php
-
-        -
-            message: "#^Method App\\\\Timesheet\\\\TrackingMode\\\\AbstractTrackingMode\\:\\:setFromToFromRequest\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Timesheet/TrackingMode/AbstractTrackingMode.php
-
-        -
-            message: "#^Parameter \\#1 \\$datetime of class DateTime constructor expects string, mixed given\\.$#"
-            count: 2
-            path: src/Timesheet/TrackingMode/AbstractTrackingMode.php
-
-        -
-            message: "#^Parameter \\#2 \\$datetime of static method DateTime\\:\\:createFromFormat\\(\\) expects string, mixed given\\.$#"
-            count: 2
-            path: src/Timesheet/TrackingMode/AbstractTrackingMode.php
 
         -
             message: "#^Method App\\\\Twig\\\\Configuration\\:\\:__call\\(\\) has no return type specified\\.$#"

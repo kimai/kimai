@@ -29,7 +29,7 @@
                         </td>
                         <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">
                             {{ plugin.metadata.description }}
-                            {% if bundles[plugin.id] is defined and bundles[plugin.id]['latest_release'] is defined and bundles[plugin.id]['latest_release'] != plugin.metadata.version %}
+                            {% if updates[plugin.id] is defined and updates[plugin.id] == true %}
                                 {{ widgets.alert('warning', 'update_available'|trans({'%version%': bundles[plugin.id]['latest_release']}, 'plugins')) }}
                             {% endif %}
                         </td>

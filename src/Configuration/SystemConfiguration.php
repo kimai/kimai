@@ -484,24 +484,16 @@ final class SystemConfiguration
     }
 
     /**
-     * @internal will be made private soon after 2.18.0 - do not access this method directly, but through getThemeColors()
-     */
-    public function getThemeColorChoices(): string
-    {
-        $config = $this->find('theme.color_choices');
-        if (\is_string($config) && $config !== '') {
-            return $config;
-        }
-
-        return 'Silver|#c0c0c0';
-    }
-
-    /**
      * @return array<string, string>
      */
     public function getThemeColors(): array
     {
-        $config = explode(',', $this->getThemeColorChoices());
+        $config = $this->find('theme.color_choices');
+        if (!\is_string($config) || $config === '') {
+            return ['Silver' => '#c0c0c0'];
+        }
+
+        $config = explode(',', $config);
 
         $colors = [];
         foreach ($config as $item) {

@@ -324,7 +324,6 @@ class BaseQuery
      * @template T of BaseQuery
      * @param T $query
      * @return T
-     * @internal
      */
     final public function copyTo(BaseQuery $query): BaseQuery
     {

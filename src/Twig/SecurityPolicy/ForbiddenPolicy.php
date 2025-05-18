@@ -34,11 +34,11 @@ final class ForbiddenPolicy implements SecurityPolicyInterface
      * @param array<string> $forbiddenFunctions
      */
     public function __construct(
-        private array $forbiddenTags = [],
-        private array $forbiddenFilters = [],
+        private readonly array $forbiddenTags = [],
+        private readonly array $forbiddenFilters = [],
         array $forbiddenMethods = [],
-        private array $forbiddenProperties = [],
-        private array $forbiddenFunctions = []
+        private readonly array $forbiddenProperties = [],
+        private readonly array $forbiddenFunctions = []
     )
     {
         $this->forbiddenMethods = [];
@@ -70,7 +70,7 @@ final class ForbiddenPolicy implements SecurityPolicyInterface
 
     public function checkMethodAllowed($obj, $method): void
     {
-        if ($obj instanceof Template || $obj instanceof Markup) {
+        if ($obj instanceof Template || $obj instanceof Markup) { // @phpstan-ignore instanceof.internalClass
             return;
         }
 

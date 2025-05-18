@@ -136,7 +136,6 @@ class SystemConfigurationTest extends TestCase
         self::assertEquals('GBP', $sut->find('defaults.customer.currency'));
         self::assertFalse($sut->find('timesheet.rules.allow_future_times'));
         self::assertEquals(99, $sut->find('timesheet.active_entries.hard_limit'));
-        self::assertEquals('Maroon|#800000,Brown|#a52a2a,Red|#ff0000,Orange|#ffa500,#ffffff,,|#000000', $sut->getThemeColorChoices());
         self::assertEquals(['Maroon' => '#800000', 'Brown' => '#a52a2a', 'Red' => '#ff0000', 'Orange' => '#ffa500', '#ffffff' => '#ffffff', '#000000' => '#000000'], $sut->getThemeColors());
     }
 
@@ -160,7 +159,6 @@ class SystemConfigurationTest extends TestCase
         ]);
         self::assertFalse($sut->find('timesheet.rules.allow_future_times'));
         self::assertTrue($sut->isSamlActive());
-        self::assertEquals('Silver|#c0c0c0', $sut->getThemeColorChoices());
         self::assertEquals(['Silver' => '#c0c0c0'], $sut->getThemeColors());
         self::assertEquals('2020-03-27', $sut->getFinancialYearStart());
     }

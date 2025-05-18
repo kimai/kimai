@@ -180,19 +180,19 @@
       </trans-unit>
       <trans-unit id="jmsE4EY" resname="Ceil">
         <source>Ceil</source>
-        <target>Ceil: begin, end and duration will be rounded up</target>
+        <target>Begin, end and duration will be rounded up</target>
       </trans-unit>
       <trans-unit id="Y_qmsDz" resname="Closest">
         <source>Closest</source>
-        <target>Closest: mathematical rounding to the nearest value</target>
+        <target>Mathematical rounding to the nearest value</target>
       </trans-unit>
       <trans-unit id="IbERy.5" resname="Default">
         <source>Default</source>
-        <target>Standard: begin will be rounded down, end and duration up</target>
+        <target>Begin will be rounded down, end and duration up</target>
       </trans-unit>
       <trans-unit id="0mjJxEk" resname="Floor">
         <source>Floor</source>
-        <target>Floor: begin, end and duration will be rounded down</target>
+        <target>Begin, end and duration will be rounded down</target>
       </trans-unit>
       <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
         <source>timesheet.default_begin</source>

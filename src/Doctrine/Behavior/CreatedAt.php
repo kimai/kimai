@@ -9,9 +9,6 @@
 
 namespace App\Doctrine\Behavior;
 
-/**
- * @internal
- */
 interface CreatedAt
 {
     public function getCreatedAt(): ?\DateTimeImmutable;
