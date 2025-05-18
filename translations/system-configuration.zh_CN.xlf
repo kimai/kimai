@@ -126,21 +126,21 @@
         <source>Sunday</source>
         <target>周日</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target>进一取整法: 开始时间, 结束时间以及持续时间都将取整处理</target>
+        <target state="needs-translation">进一取整法: 开始时间, 结束时间以及持续时间都将取整处理</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target>最近值: 数学取整至最近值</target>
+        <target state="needs-translation">最近值: 数学取整至最近值</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target>标准：开始时间会向下取整，结束时间和持续时间会向上取整</target>
+        <target state="needs-translation">标准：开始时间会向下取整，结束时间和持续时间会向上取整</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target>Floor: 开始时间，结束时间和持续时间会向下取整</target>
+        <target state="needs-translation">Floor: 开始时间，结束时间和持续时间会向下取整</target>
       </trans-unit>
       <trans-unit id="0noFWbL" resname="saml_activate">
         <source>saml_activate</source>

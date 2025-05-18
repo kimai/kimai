@@ -102,21 +102,21 @@
         <source>timesheet.default_begin</source>
         <target>Alapértelmezett kezdési idő (nem használja minden időmérő mód)</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target>Lefele: kezdés, befejezés és időtartam is lefele lesz kerekítve</target>
+        <target state="needs-translation">Lefele: kezdés, befejezés és időtartam is lefele lesz kerekítve</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target>Standard: kezdés lefele lesz kerekítve, befejezés és időtartam felfele</target>
+        <target state="needs-translation">Standard: kezdés lefele lesz kerekítve, befejezés és időtartam felfele</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target>Legközelebbi: matematikai kerekítés, a legközelebbi értékre</target>
+        <target state="needs-translation">Legközelebbi: matematikai kerekítés, a legközelebbi értékre</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target>Felfele: kezdés, befejezés és időtartam is felfele lesz kerekítve</target>
+        <target state="needs-translation">Felfele: kezdés, befejezés és időtartam is felfele lesz kerekítve</target>
       </trans-unit>
       <trans-unit id="hz.vdg5" resname="Sunday">
         <source>Sunday</source>
