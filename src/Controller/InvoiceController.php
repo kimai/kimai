@@ -60,10 +60,10 @@ use Twig\Environment;
 final class InvoiceController extends AbstractController
 {
     public function __construct(
-        private ServiceInvoice $service,
-        private InvoiceTemplateRepository $templateRepository,
-        private InvoiceRepository $invoiceRepository,
-        private EventDispatcherInterface $dispatcher
+        private readonly ServiceInvoice $service,
+        private readonly InvoiceTemplateRepository $templateRepository,
+        private readonly InvoiceRepository $invoiceRepository,
+        private readonly EventDispatcherInterface $dispatcher
     ) {
     }
 
@@ -333,7 +333,7 @@ final class InvoiceController extends AbstractController
     {
         $invoice = null;
 
-        if (null !== ($id = $request->get('id'))) {
+        if (null !== ($id = $request->query->get('id'))) {
             $invoice = $this->invoiceRepository->find($id);
         }
 

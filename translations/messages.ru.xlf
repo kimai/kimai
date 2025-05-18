@@ -232,7 +232,7 @@
       </trans-unit>
       <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target state="needs-translation">Первая запись</target>
+        <target state="translated">Первый рабочий день</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
@@ -602,9 +602,9 @@
         <source>stats.yourWorkingHours</source>
         <target>Мои отработанные часы</target>
       </trans-unit>
-      <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth">
+      <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth" xml:space="preserve">
         <source>stats.workingTimeMonth</source>
-        <target state="translated">Месяц (%month% %year%)</target>
+        <target state="translated">%month% %year%</target>
       </trans-unit>
       <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
@@ -826,9 +826,9 @@
         <source>stats.workingTimeYear</source>
         <target state="translated">Весь год (%year%)</target>
       </trans-unit>
-      <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek">
+      <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek" xml:space="preserve">
         <source>stats.workingTimeWeek</source>
-        <target state="translated">Неделя года (%week%)</target>
+        <target state="translated">Календарная неделя (%week%)</target>
       </trans-unit>
       <trans-unit id="EJDS9HY" resname="vat_id">
         <source>vat_id</source>
@@ -900,7 +900,7 @@
       </trans-unit>
       <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="translated">Часовая норма</target>
+        <target state="translated">Бюджет времени</target>
       </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">
         <source>menu.reporting</source>
@@ -1276,7 +1276,7 @@
       </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="needs-translation">Отработано</target>
+        <target state="translated">Отработано часов</target>
       </trans-unit>
       <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
         <source>work_times_should.none_configured</source>
@@ -1350,9 +1350,9 @@
         <source>Expected number of hours</source>
         <target state="translated">Предполагаемые часы</target>
       </trans-unit>
-      <trans-unit id="8yqaKzX" resname="confirmed_by_at">
+      <trans-unit id="8yqaKzX" resname="confirmed_by_at" xml:space="preserve">
         <source>confirmed_by_at</source>
-        <target state="needs-translation">Подтверждено %user% в %date%</target>
+        <target state="translated">%user% подтвердил в %date%</target>
       </trans-unit>
       <trans-unit id="wZRRqg0" resname="manual_bookings">
         <source>manual_bookings</source>
@@ -1532,7 +1532,7 @@
       </trans-unit>
       <trans-unit id="Fkrev.q" resname="help.globalActivities" xml:space="preserve">
         <source>help.globalActivities</source>
-        <target state="translated">Если функция выключена, время может быть записано только с помощью проектных действий</target>
+        <target state="translated">Если функция выключена, время может быть записано только с помощью проектных действий.</target>
       </trans-unit>
       <trans-unit id="XE01Ar1" resname="parental" xml:space="preserve">
         <source>parental</source>
@@ -1841,6 +1841,10 @@
       <trans-unit id="vN5pKOU" resname="costs" xml:space="preserve">
         <source>costs</source>
         <target state="translated">Расходы</target>
+      </trans-unit>
+      <trans-unit id="u4lbYD5" resname="public_holiday.group" xml:space="preserve">
+        <source>public_holiday.group</source>
+        <target state="translated">Группа государственных праздников</target>
       </trans-unit>
     </body>
   </file>

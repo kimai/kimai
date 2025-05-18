@@ -14,56 +14,92 @@ final class SearchTerm
     private string $originalTerm;
     private string $term;
     /**
-     * @var string[]
+     * @var SearchTermPart[]
      */
-    private array $fields;
+    private array $parts = [];
 
     public function __construct(string $searchTerm)
     {
         $this->originalTerm = $searchTerm;
         $terms = explode(' ', $searchTerm);
-        $fields = [];
         $finalTerm = [];
 
         foreach ($terms as $term) {
-            $tmp = explode(':', $term);
-            if (\count($tmp) === 2) {
-                $fields[$tmp[0]] = $tmp[1];
-            } else {
-                $finalTerm[] = $term;
+            $part = new SearchTermPart($term);
+            if ($part->getField() === null) {
+                $finalTerm[] = $part->getTerm();
             }
+            $this->parts[] = $part;
         }
 
         $this->term = implode(' ', $finalTerm);
-        $this->fields = $fields;
     }
 
+    /**
+     * @deprecated since 2.34.0
+     */
     public function hasSearchField(string $name): bool
     {
-        return \array_key_exists($name, $this->fields);
-    }
+        @trigger_error('The SearchTerm::hasSearchField() method is deprecated and will be removed with 3.0', E_USER_DEPRECATED);
 
-    public function getSearchField(string $name): ?string
-    {
-        if (!$this->hasSearchField($name)) {
-            return null;
+        foreach ($this->parts as $part) {
+            if ($part->getField() === $name) {
+                return true;
+            }
         }
 
-        return $this->fields[$name];
+        return false;
     }
 
+    /**
+     * @deprecated since 2.34.0
+     */
+    public function getSearchField(string $name): ?string
+    {
+        @trigger_error('The SearchTerm::getSearchField() method is deprecated and will be removed with 3.0', E_USER_DEPRECATED);
+
+        foreach ($this->parts as $part) {
+            if ($part->getField() === $name) {
+                return $part->getTerm();
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @return array<string, string>
+     */
     public function getSearchFields(): array
     {
-        return $this->fields;
+        // TODO deprecated 3.0 - all places that use this method should use the RepositorySearchTrait instead (soft deprecation for plugins)
+        $fields = [];
+        foreach ($this->parts as $part) {
+            if (($field = $part->getField()) !== null) {
+                $fields[$field] = $part->getTerm();
+            }
+        }
+
+        return $fields;
+    }
+
+    /**
+     * @return SearchTermPart[]
+     */
+    public function getParts(): array
+    {
+        return $this->parts;
     }
 
     public function getSearchTerm(): string
     {
+        // TODO deprecated 3.0 - all places that use this method should use the RepositorySearchTrait instead (soft deprecation for plugins)
         return $this->term;
     }
 
     public function hasSearchTerm(): bool
     {
+        // TODO refactor and use the parts and check if any part has an emoty field name
         return $this->term !== '';
     }
 

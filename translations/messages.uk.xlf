@@ -1938,6 +1938,22 @@
         <source>unlock_month.help</source>
         <target state="translated">Це розблокує всі дні року після вибраної дати.</target>
       </trans-unit>
+      <trans-unit id="y1XHR1Q" resname="address_deprecated" xml:space="preserve">
+        <source>address_deprecated</source>
+        <target state="translated">Це поле скоро буде видалено. Перенесіть адресу, щоб продовжувати генерувати дійсні рахунки-фактури (наприклад, для електронного виставлення рахунків).</target>
+      </trans-unit>
+      <trans-unit id="rD4oQRR" resname="postcode" xml:space="preserve">
+        <source>Postcode</source>
+        <target state="translated">ZIP / Поштовий індекс</target>
+      </trans-unit>
+      <trans-unit id="EaYsI0E" resname="city" xml:space="preserve">
+        <source>City</source>
+        <target state="translated">Місто</target>
+      </trans-unit>
+      <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
+        <source>sending_company</source>
+        <target state="translated">Відправник рахунку</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

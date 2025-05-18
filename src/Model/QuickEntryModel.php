@@ -10,9 +10,12 @@
 namespace App\Model;
 
 use App\Entity\Activity;
+use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @internal
@@ -24,9 +27,18 @@ class QuickEntryModel
      * @var Timesheet[]
      */
     private array $timesheets = [];
+    /**
+     * @var Collection<int, MetaTableTypeInterface>
+     */
+    private Collection $metaFields;
 
-    public function __construct(private User $user, private ?Project $project = null, private ?Activity $activity = null)
+    public function __construct(
+        private readonly User $user,
+        private ?Project $project = null,
+        private ?Activity $activity = null
+    )
     {
+        $this->metaFields = new ArrayCollection();
     }
 
     public function markAsPrototype(): void
@@ -183,5 +195,37 @@ class QuickEntryModel
         foreach ($records as $record) {
             $this->timesheets[] = clone $record;
         }
+    }
+
+    /**
+     * @return Collection<int, MetaTableTypeInterface>
+     */
+    public function getMetaFields(): Collection
+    {
+        return $this->metaFields;
+    }
+
+    public function setMetaFieldValue(MetaTableTypeInterface $metaField): void
+    {
+        // we only update the value for fields which were previously registered
+        // as we do NOT want new fields to show up by accident
+        foreach ($this->metaFields as $field) {
+            if ($field->getName() === $metaField->getName() && $metaField->getValue() !== null) {
+                $field->setValue($metaField->getValue());
+                break;
+            }
+        }
+    }
+
+    /**
+     * @param array<MetaTableTypeInterface> $metaFields
+     */
+    public function setMetaFields(array $metaFields): void
+    {
+        $collection = new ArrayCollection();
+        foreach($metaFields as $field) {
+            $collection->add(clone $field);
+        }
+        $this->metaFields = $collection;
     }
 }

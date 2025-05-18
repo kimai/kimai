@@ -35,6 +35,10 @@
     {{ form_row(form.duration, {row_attr: {class: 'p-0'}}) }}
 {%- endblock %}
 
+{% block _quick_entry_form_rows_entry_metaFields_entry_widget %}
+    {{ form_row(form, {row_attr: {class: 'p-0'}}) }}
+{%- endblock %}
+
 {% block quick_entry_week_row %}
     <tr{% with {attr: row_attr|merge({class: (row_attr.class|default('') ~ ' form-group qe-entry-week-row' ~ (not valid ? ' is-invalid'))|trim})} %}{{ block('attributes') }}{% endwith %}>
         <td>
@@ -43,6 +47,11 @@
         <td>
             {{ form_row(form.activity, {row_attr: {class: 'p-0'}}) }}
         </td>
+        {% for meta in form.metaFields|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
+            <td>
+                {{ form_row(meta.value, {label: false}) }}
+            </td>
+        {% endfor %}
         {% for timesheet in form.timesheets %}
             <td class="text-center{% if timesheet.vars.data.begin is weekend %} weekend{% endif %}{% if timesheet.vars.data.begin is today %} today{% endif %}">
                 {{ form_widget(timesheet) }}

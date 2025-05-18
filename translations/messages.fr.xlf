@@ -1938,6 +1938,14 @@
         <source>Sessions</source>
         <target state="translated">Sessions</target>
       </trans-unit>
+      <trans-unit id="EaYsI0E" resname="city" xml:space="preserve">
+        <source>City</source>
+        <target state="translated">Ville</target>
+      </trans-unit>
+      <trans-unit id="rD4oQRR" resname="postcode" xml:space="preserve">
+        <source>Postcode</source>
+        <target state="translated">Code postal</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

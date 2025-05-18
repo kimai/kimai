@@ -63,12 +63,12 @@ final class ThemeExtension implements RuntimeExtensionInterface
 
     public function getJavascriptTranslations(): array
     {
-        $event = new ThemeJavascriptTranslationsEvent(); // @phpstan-ignore new.deprecated
+        $event = new ThemeJavascriptTranslationsEvent(); // @phpstan-ignore new.deprecatedClass
 
         $this->eventDispatcher->dispatch($event);
 
         $all = [];
-        foreach ($event->getTranslations() as $key => $translation) {
+        foreach ($event->getTranslations() as $key => $translation) { // @phpstan-ignore method.deprecatedClass
             $all[$key] = $this->translator->trans($translation[0], [], $translation[1]);
         }
 

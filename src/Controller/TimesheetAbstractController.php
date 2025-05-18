@@ -147,9 +147,7 @@ abstract class TimesheetAbstractController extends AbstractController
         $event = new TimesheetMetaDefinitionEvent($entry);
         $this->dispatcher->dispatch($event);
 
-        $page = $request->get('page');
-        $page = is_numeric($page) ? (int) $page : 1;
-        $editForm = $this->getEditForm($entry, $page);
+        $editForm = $this->getEditForm($entry);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -157,7 +155,7 @@ abstract class TimesheetAbstractController extends AbstractController
                 $this->service->updateTimesheet($entry);
                 $this->flashSuccess('action.update.success');
 
-                return $this->redirectToRoute($this->getTimesheetRoute(), ['page' => $request->get('page', 1)]);
+                return $this->redirectToRoute($this->getTimesheetRoute());
             } catch (\Exception $ex) {
                 $this->flashUpdateException($ex);
             }
@@ -494,14 +492,13 @@ abstract class TimesheetAbstractController extends AbstractController
         ]);
     }
 
-    private function getEditForm(Timesheet $entry, int $page): FormInterface
+    private function getEditForm(Timesheet $entry): FormInterface
     {
         $mode = $this->getTrackingMode();
 
         return $this->createForm($this->getEditFormClassName(), $entry, [
             'action' => $this->generateUrl($this->getEditRoute(), [
                 'id' => $entry->getId(),
-                'page' => $page,
             ]),
             'include_rate' => $this->isGranted('edit_rate', $entry),
             'include_exported' => $this->isGranted('edit_export', $entry),
