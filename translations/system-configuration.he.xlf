@@ -126,9 +126,9 @@
         <source>Sunday</source>
         <target>ראשון</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve" approved="yes">
         <source>Ceil</source>
-        <target state="needs-translation">עיגול מעלה: התחלה, סיום ומשך זמן העבודה יעוגלו כלפי מעלה</target>
+        <target state="final">התחלה, סיום ומשך זמן העבודה יעוגלו כלפי מעלה</target>
       </trans-unit>
       <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve" approved="yes">
         <source>Closest</source>
