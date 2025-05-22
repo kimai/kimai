@@ -419,12 +419,12 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
             return trimmed;
         }
 
-        const twelveHour = this.parseCompact12HourTime(trimmed);
+        const twelveHour = this._parseCompact12HourTime(trimmed);
         if (twelveHour !== null) {
             return twelveHour;
         }
 
-        const twentyFourHour = this.parseCompact24HourTime(trimmed, format);
+        const twentyFourHour = this._parseCompact24HourTime(trimmed, format);
         if (twentyFourHour !== null) {
             return twentyFourHour;
         }
@@ -436,7 +436,7 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
      * Parses compact 12-hour input (e.g., "845am", "1245 pm") and returns it as "h:mm AM/PM".
      * @private
      */
-    parseCompact12HourTime(value) {
+    _parseCompact12HourTime(value) {
         const match = value.match(/^(\d{3,4})\s*(am|pm)$/i);
         if (!match) {
             return null;
@@ -459,7 +459,7 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
      * Parses numeric-only input (e.g., "545", "1645") and returns it as "h:mm AM/PM".
      * @private
      */
-    parseCompact24HourTime(value, format) {
+    _parseCompact24HourTime(value, format) {
         const digits = value.replace(/\D/g, '');
         if (!/^\d{3,4}$/.test(digits)) {
             return null;
