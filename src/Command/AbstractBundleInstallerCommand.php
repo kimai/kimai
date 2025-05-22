@@ -25,8 +25,6 @@ abstract class AbstractBundleInstallerCommand extends Command
 {
     /**
      * Returns the base directory to the Kimai installation.
-     *
-     * @return string
      */
     protected function getRootDirectory(): string
     {
@@ -59,16 +57,12 @@ abstract class AbstractBundleInstallerCommand extends Command
 
     /**
      * Returns the bundle short name for the installer command.
-     *
-     * @return string
      */
     abstract protected function getBundleCommandNamePart(): string;
 
     /**
      * Returns the full name fo this command.
      * Please stick to the standard and overwrite getBundleCommandNamePart() only.
-     *
-     * @return string
      */
     protected function getInstallerCommandName(): string
     {
@@ -77,8 +71,6 @@ abstract class AbstractBundleInstallerCommand extends Command
 
     /**
      * Returns the bundles real name (same as your namespace).
-     *
-     * @return string
      */
     protected function getBundleName(): string
     {
@@ -148,7 +140,7 @@ abstract class AbstractBundleInstallerCommand extends Command
         return Command::SUCCESS;
     }
 
-    protected function installAssets(SymfonyStyle $io, OutputInterface $output): void
+    private function installAssets(SymfonyStyle $io, OutputInterface $output): void
     {
         $command = $this->getApplication()->find('assets:install');
         $cmdInput = new ArrayInput([]);
@@ -160,7 +152,7 @@ abstract class AbstractBundleInstallerCommand extends Command
         $io->writeln('');
     }
 
-    protected function importMigrations(SymfonyStyle $io, OutputInterface $output): void
+    private function importMigrations(SymfonyStyle $io, OutputInterface $output): void
     {
         $config = $this->getMigrationConfigFilename();
 
