@@ -433,7 +433,7 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
     }
 
     /**
-     * Parses compact 12-hour input like "845am" into a formatted string like "8:45 AM".
+     * Parses compact 12-hour input (e.g., "845am", "1245 pm") and returns it as "h:mm AM/PM".
      * @private
      */
     parseCompact12HourTime(value) {
@@ -456,7 +456,7 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
     }
 
     /**
-     * Parses numeric-only time like "1645" into 12h or 24h format.
+     * Parses numeric-only input (e.g., "545", "1645") and returns it as "h:mm AM/PM".
      * @private
      */
     parseCompact24HourTime(value, format) {
