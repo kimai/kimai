@@ -115,7 +115,15 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
         this._beginTime.addEventListener('change', this._beginListener);
         this._endTime.addEventListener('change', this._endListener);
         this._duration.addEventListener('change', this._durationListener);
+        this._beginTime.addEventListener('blur', () => {
+            this._beginTime.value = this._formatTimeInput(this._beginTime.value, this._beginTime.dataset['format']);
+            this._changedBegin();
+        });
 
+        this._endTime.addEventListener('blur', () => {
+            this._endTime.value = this._formatTimeInput(this._endTime.value, this._endTime.dataset['format']);
+            this._changedEnd();
+        });
         if (this._duration !== null && this._durationToggle !== null) {
             this._durationToggleListener = () => {
                 this._durationToggle.classList.toggle('text-success');
@@ -390,4 +398,89 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
         timeField.value = this.getDateUtils().format(timeField.dataset['format'], dateTime);
     }
 
+    /**
+     * Formats raw user input into a time string matching the expected format.
+     *
+     * Ruleset:
+     * - if input already contains a colon and AM/PM, return unchanged
+     * - if input matches compact 12-hour format (e.g., "845am", "1245 pm"), convert to "h:mm AM/PM"
+     * - if input is numeric-only (e.g., "545", "1645"):
+     *   - if 12-hour format is expected, convert to "h:mm AM/PM"
+     *   - if 24-hour format is expected, convert to "HH:mm"
+     * - if input is invalid or cannot be parsed, return unchanged
+     *
+     * @param {string} input   Raw user-entered time string
+     * @param {string} format  Expected output format (e.g., "h:mm A" or "HH:mm")
+     * @returns {string}       Formatted time string or original input
+     */
+    _formatTimeInput(input, format)
+    {
+        const trimmed = input.trim();
+
+        if (/[ap]m/i.test(trimmed) && trimmed.includes(':')) {
+            return trimmed;
+        }
+
+        const twelveHour = this.parseCompact12HourTime(trimmed);
+        if (twelveHour !== null) {
+            return twelveHour;
+        }
+
+        const twentyFourHour = this.parseCompact24HourTime(trimmed, format);
+        if (twentyFourHour !== null) {
+            return twentyFourHour;
+        }
+
+        return trimmed;
+    }
+
+    /**
+     * Parses compact 12-hour input like "845am" into a formatted string like "8:45 AM".
+     * @private
+     */
+    parseCompact12HourTime(value) {
+        const match = value.match(/^(\d{3,4})\s*(am|pm)$/i);
+        if (!match) {
+            return null;
+        }
+
+        const digits = match[1];
+        const suffix = match[2].toUpperCase();
+
+        const hours = parseInt(digits.slice(0, -2), 10);
+        const minutes = parseInt(digits.slice(-2), 10);
+
+        if (isNaN(hours) || isNaN(minutes) || hours < 1 || hours > 12 || minutes > 59) {
+            return null;
+        }
+
+        return `${hours}:${String(minutes).padStart(2, '0')} ${suffix}`;
+    }
+
+    /**
+     * Parses numeric-only time like "1645" into 12h or 24h format.
+     * @private
+     */
+    parseCompact24HourTime(value, format) {
+        const digits = value.replace(/\D/g, '');
+        if (!/^\d{3,4}$/.test(digits)) {
+            return null;
+        }
+
+        let hours = parseInt(digits.slice(0, -2), 10);
+        const minutes = parseInt(digits.slice(-2), 10);
+
+        if (isNaN(hours) || isNaN(minutes) || hours > 23 || minutes > 59) {
+            return null;
+        }
+
+        const is12Hour = format.includes('a') || format.includes('A');
+        if (is12Hour) {
+            const suffix = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12 || 12;
+            return `${hours}:${String(minutes).padStart(2, '0')} ${suffix}`;
+        }
+
+        return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+    }
 }
