@@ -404,13 +404,11 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
      * Ruleset:
      * - if input already contains a colon and AM/PM, return unchanged
      * - if input matches compact 12-hour format (e.g., "845am", "1245 pm"), convert to "h:mm AM/PM"
-     * - if input is numeric-only (e.g., "545", "1645"):
-     *   - if 12-hour format is expected, convert to "h:mm AM/PM"
-     *   - if 24-hour format is expected, convert to "HH:mm"
+     * - if input is numeric-only (e.g., "545", "1645"), convert to "h:mm AM/PM"
      * - if input is invalid or cannot be parsed, return unchanged
      *
      * @param {string} input   Raw user-entered time string
-     * @param {string} format  Expected output format (e.g., "h:mm A" or "HH:mm")
+     * @param {string} format  Expected output format (should be a 12-hour format like "h:mm A")
      * @returns {string}       Formatted time string or original input
      */
     _formatTimeInput(input, format)
