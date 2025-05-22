@@ -117,8 +117,12 @@ final class ProjectService
         return $project;
     }
 
-    public function findProjectByName(string $name): ?Project
+    public function findProjectByName(string $name, ?Customer $customer): ?Project
     {
+        if ($customer !== null) {
+            return $this->repository->findOneBy(['name' => $name, 'customer' => $customer->getId()]);
+        }
+
         return $this->repository->findOneBy(['name' => $name]);
     }
 
