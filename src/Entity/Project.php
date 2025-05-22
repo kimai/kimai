@@ -188,6 +188,11 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
         return $this->id;
     }
 
+    public function isNew(): bool
+    {
+        return $this->id === null;
+    }
+
     public function getCustomer(): ?Customer
     {
         return $this->customer;

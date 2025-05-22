@@ -204,6 +204,11 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
         return $this->id;
     }
 
+    public function isNew(): bool
+    {
+        return $this->id === null;
+    }
+
     public function setName(?string $name): void
     {
         $this->name = $name;

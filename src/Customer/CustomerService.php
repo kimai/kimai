@@ -59,6 +59,15 @@ final class CustomerService
         return $customer;
     }
 
+    public function saveCustomer(Customer $customer): Customer
+    {
+        if ($customer->isNew()) {
+            return $this->saveNewCustomer($customer);
+        } else {
+            return $this->updateCustomer($customer);
+        }
+    }
+
     public function saveNewCustomer(Customer $customer): Customer
     {
         if (null !== $customer->getId()) {

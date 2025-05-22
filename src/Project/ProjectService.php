@@ -56,6 +56,15 @@ final class ProjectService
         return $project;
     }
 
+    public function saveProject(Project $project, ?Context $context = null): Project
+    {
+        if ($project->isNew()) {
+            return $this->saveNewProject($project, $context);
+        } else {
+            return $this->updateProject($project);
+        }
+    }
+
     public function saveNewProject(Project $project, ?Context $context = null): Project
     {
         if (null !== $project->getId()) {
