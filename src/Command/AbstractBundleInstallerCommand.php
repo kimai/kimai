@@ -47,8 +47,6 @@ abstract class AbstractBundleInstallerCommand extends Command
 
     /**
      * Returns an absolute filename to your doctrine migrations configuration, if you want to install database tables.
-     *
-     * @return string|null
      */
     protected function getMigrationConfigFilename(): ?string
     {
@@ -156,12 +154,8 @@ abstract class AbstractBundleInstallerCommand extends Command
     {
         $config = $this->getMigrationConfigFilename();
 
-        if (null === $config) {
+        if ($config === null) {
             return;
-        }
-
-        if (!file_exists($config)) {
-            throw new FileNotFoundException('Missing doctrine migrations config file: ' . $config);
         }
 
         // prevent windows from breaking
