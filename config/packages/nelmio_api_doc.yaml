@@ -1,4 +1,5 @@
 nelmio_api_doc:
+    operation_id_generation: conditionally_prepend
     models:
         use_jms: true
         names:
