@@ -52,10 +52,6 @@ abstract class AbstractBundleInstallerCommand extends Command
             return false;
         }
 
-        if (!file_exists($config)) {
-            throw new FileNotFoundException('Missing doctrine migrations config file: ' . $config);
-        }
-
         return true;
     }
 
@@ -184,6 +180,10 @@ abstract class AbstractBundleInstallerCommand extends Command
 
         if ($config === null) {
             return;
+        }
+
+        if (!file_exists($config)) {
+            throw new FileNotFoundException('Missing doctrine migrations config file: ' . $config);
         }
 
         // prevent windows from breaking
