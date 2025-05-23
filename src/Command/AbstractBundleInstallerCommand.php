@@ -14,6 +14,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
@@ -37,16 +38,30 @@ abstract class AbstractBundleInstallerCommand extends Command
     /**
      * If your bundle ships assets, that need to be available in the public/ directory,
      * then overwrite this method and return: <true>.
-     *
-     * @return bool
      */
     protected function hasAssets(): bool
     {
         return false;
     }
 
+    private function hasMigrations(SymfonyStyle $io): bool
+    {
+        $config = $this->getMigrationConfigFilename();
+
+        if ($config === null) {
+            return false;
+        }
+
+        if (!file_exists($config)) {
+            throw new FileNotFoundException('Missing doctrine migrations config file: ' . $config);
+        }
+
+        return true;
+    }
+
     /**
-     * Returns an absolute filename to your doctrine migrations configuration, if you want to install database tables.
+     * Returns an absolute filename to your doctrine migrations configuration
+     * if you want to run database migrations.
      */
     protected function getMigrationConfigFilename(): ?string
     {
@@ -90,12 +105,23 @@ abstract class AbstractBundleInstallerCommand extends Command
             ->setName($this->getInstallerCommandName())
             ->setDescription('Install the bundle: ' . $this->getBundleName())
             ->setHelp('This command will perform the basic installation steps to get the bundle up and running.')
+            ->addOption('database', null, InputOption::VALUE_NONE, 'Only run the database installation')
+            ->addOption('assets', null, InputOption::VALUE_NONE, 'Only run the asset installation')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
+
+        $noAssets = $input->getOption('database');
+        $onlyAssets = $input->getOption('assets');
+
+        if ($noAssets && $onlyAssets) {
+            $io->error('Options --assets and --database are mutually exclusive');
+
+            return Command::FAILURE;
+        }
 
         // many users execute the bin/console command from arbitrary locations
         // this will make sure that relative paths (like doctrine migrations) work as expected
@@ -107,17 +133,19 @@ abstract class AbstractBundleInstallerCommand extends Command
             \sprintf('Starting installation of plugin: %s ...', $bundleName)
         );
 
-        try {
-            $this->importMigrations($io, $output);
-        } catch (\Exception $ex) {
-            $io->error(
-                \sprintf('Failed to install database for bundle %s. %s', $bundleName, $ex->getMessage())
-            );
+        if (!$onlyAssets && $this->hasMigrations($io)) {
+            try {
+                $this->importMigrations($io, $output);
+            } catch (\Exception $ex) {
+                $io->error(
+                    \sprintf('Failed to install database for bundle %s. %s', $bundleName, $ex->getMessage())
+                );
 
-            return Command::FAILURE;
+                return Command::FAILURE;
+            }
         }
 
-        if ($this->hasAssets()) {
+        if (!$noAssets && $this->hasAssets()) {
             try {
                 $this->installAssets($io, $output);
             } catch (\Exception $ex) {
