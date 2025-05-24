@@ -47,10 +47,10 @@ final class TeamController extends BaseApiController
     }
 
     /**
-     * Fetch all existing teams (which are visible to the user)
+     * Fetch collection of teams
      */
     #[IsGranted('view_team')]
-    #[OA\Response(response: 200, description: 'Returns the collection of teams', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TeamCollection')))]
+    #[OA\Response(response: 200, description: 'Returns a collection of teams', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TeamCollection')))]
     #[Route(methods: ['GET'], path: '', name: 'get_teams')]
     public function cgetAction(): Response
     {
@@ -66,7 +66,7 @@ final class TeamController extends BaseApiController
     }
 
     /**
-     * Returns one team
+     * Fetch team
      */
     #[IsGranted('view_team')]
     #[OA\Response(response: 200, description: 'Returns one team entity', content: new OA\JsonContent(ref: '#/components/schemas/Team'))]
@@ -80,7 +80,7 @@ final class TeamController extends BaseApiController
     }
 
     /**
-     * Delete a team
+     * Delete team
      */
     #[IsGranted('delete_team')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Delete one team')])]
@@ -96,7 +96,7 @@ final class TeamController extends BaseApiController
     }
 
     /**
-     * Creates a new team
+     * Create team
      */
     #[IsGranted('create_team')]
     #[OA\Post(description: 'Creates a new team and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created team', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
@@ -125,7 +125,7 @@ final class TeamController extends BaseApiController
     }
 
     /**
-     * Update an existing team
+     * Update team
      */
     #[IsGranted('edit_team')]
     #[OA\Patch(description: 'Update an existing team, you can pass all or just a subset of all attributes (passing members will replace all existing ones)', responses: [new OA\Response(response: 200, description: 'Returns the updated team', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
@@ -163,7 +163,7 @@ final class TeamController extends BaseApiController
     }
 
     /**
-     * Add a new member to a team
+     * Add team member
      */
     #[IsGranted('edit_team')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Adds a new user to a team.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
@@ -187,7 +187,7 @@ final class TeamController extends BaseApiController
     }
 
     /**
-     * Removes a member from the team
+     * Remove team member
      */
     #[IsGranted('edit_team')]
     #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Removes a user from the team. The teamlead cannot be removed.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
@@ -215,7 +215,7 @@ final class TeamController extends BaseApiController
     }
 
     /**
-     * Grant the team access to a customer
+     * Grant team access to customer
      */
     #[IsGranted('edit_team')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Adds a new customer to a team.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
@@ -238,7 +238,7 @@ final class TeamController extends BaseApiController
     }
 
     /**
-     * Revokes access for a customer from a team
+     * Revoke customer access from team
      */
     #[IsGranted('edit_team')]
     #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Removes a customer from the team.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
@@ -261,7 +261,7 @@ final class TeamController extends BaseApiController
     }
 
     /**
-     * Grant the team access to a project
+     * Grant team access to project
      */
     #[IsGranted('edit_team')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Adds a new project to a team.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
@@ -284,7 +284,7 @@ final class TeamController extends BaseApiController
     }
 
     /**
-     * Revokes access for a project from a team
+     * Revoke project access from team
      */
     #[IsGranted('edit_team')]
     #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Removes a project from the team.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
@@ -307,7 +307,7 @@ final class TeamController extends BaseApiController
     }
 
     /**
-     * Grant the team access to an activity
+     * Grant team access to activity
      */
     #[IsGranted('edit_team')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Adds a new activity to a team.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
@@ -330,7 +330,7 @@ final class TeamController extends BaseApiController
     }
 
     /**
-     * Revokes access for an activity from a team
+     * Revoke activity access from team
      */
     #[IsGranted('edit_team')]
     #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Removes a activity from the team.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]

@@ -26,11 +26,21 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/doc');
-        self::assertStringContainsString('<title>Kimai', $client->getResponse()->getContent());
-        $result = $client->getCrawler()->filter('script#swagger-data');
-        $swaggerJson = json_decode($result->text(), true);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        self::assertStringContainsString('<title>Kimai', $content);
+        self::assertStringContainsString('docs.apiDescriptionDocument', $content);
+        self::assertStringContainsString('const config = {"basePath":"/api/doc","router":"memory","logo":"/touch-icon-192x192.png","hideInternal":true};', $content);
+        $results = preg_match('/docs\.apiDescriptionDocument\ \=\ (.*)\.spec;/', $content, $matches);
+        self::assertNotFalse($results);
+        $swaggerJson = json_decode($matches[1], true);
+        self::assertIsArray($swaggerJson);
+        self::assertArrayHasKey('spec', $swaggerJson);
+        $json = $swaggerJson['spec'];
+        self::assertArrayHasKey('paths', $json);
+
         $tags = [];
-        foreach ($swaggerJson['spec']['paths'] as $path) {
+        foreach ($json['paths'] as $path) {
             foreach ($path as $method) {
                 foreach ($method['tags'] as $tag) {
                     $tags[$tag] = $tag;

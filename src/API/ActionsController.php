@@ -38,8 +38,6 @@ final class ActionsController extends BaseApiController
     }
 
     /**
-     * @param PageActionsEvent $event
-     * @param string $locale
      * @return array<PageAction>
      */
     private function convertEvent(PageActionsEvent $event, string $locale): array
@@ -65,12 +63,13 @@ final class ActionsController extends BaseApiController
     }
 
     /**
-     * Get all item actions for the given Timesheet [for internal use]
+     * Fetch item actions for Timesheet
      */
     #[OA\Response(response: 200, description: 'Returns item actions for the timesheet', content: new OA\JsonContent(ref: new Model(type: PageAction::class)))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet ID to fetch', required: true)]
     #[OA\Parameter(name: 'view', in: 'path', description: 'View to display the actions at (e.g. index, custom)', required: true)]
     #[OA\Parameter(name: 'locale', in: 'path', description: 'Language to translate the action title to (e.g. de, en)', required: true)]
+    #[OA\Get(x: ['internal' => true])]
     #[Route(methods: ['GET'], path: '/timesheet/{id}/{view}/{locale}', name: 'get_timesheet_actions', requirements: ['id' => '\d+'])]
     public function getTimesheetActions(Timesheet $timesheet, string $view, string $locale): Response
     {
@@ -83,12 +82,13 @@ final class ActionsController extends BaseApiController
     }
 
     /**
-     * Get all item actions for the given Activity [for internal use]
+     * Fetch item actions for Activity
      */
     #[OA\Response(response: 200, description: 'Returns item actions for the activity', content: new OA\JsonContent(ref: new Model(type: PageAction::class)))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Activity ID to fetch', required: true)]
     #[OA\Parameter(name: 'view', in: 'path', description: 'View to display the actions at (e.g. index, custom)', required: true)]
     #[OA\Parameter(name: 'locale', in: 'path', description: 'Language to translate the action title to (e.g. de, en)', required: true)]
+    #[OA\Get(x: ['internal' => true])]
     #[Route(methods: ['GET'], path: '/activity/{id}/{view}/{locale}', name: 'get_activity_actions', requirements: ['id' => '\d+'])]
     public function getActivityActions(Activity $activity, string $view, string $locale): Response
     {
@@ -101,12 +101,13 @@ final class ActionsController extends BaseApiController
     }
 
     /**
-     * Get all item actions for the given Project [for internal use]
+     * Fetch item actions for Project
      */
     #[OA\Response(response: 200, description: 'Returns item actions for the project', content: new OA\JsonContent(ref: new Model(type: PageAction::class)))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Project ID to fetch', required: true)]
     #[OA\Parameter(name: 'view', in: 'path', description: 'View to display the actions at (e.g. index, custom)', required: true)]
     #[OA\Parameter(name: 'locale', in: 'path', description: 'Language to translate the action title to (e.g. de, en)', required: true)]
+    #[OA\Get(x: ['internal' => true])]
     #[Route(methods: ['GET'], path: '/project/{id}/{view}/{locale}', name: 'get_project_actions', requirements: ['id' => '\d+'])]
     public function getProjectActions(Project $project, string $view, string $locale): Response
     {
@@ -119,12 +120,13 @@ final class ActionsController extends BaseApiController
     }
 
     /**
-     * Get all item actions for the given Customer [for internal use]
+     * Fetch item actions for Customer
      */
     #[OA\Response(response: 200, description: 'Returns item actions for the customer', content: new OA\JsonContent(ref: new Model(type: PageAction::class)))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Customer ID to fetch', required: true)]
     #[OA\Parameter(name: 'view', in: 'path', description: 'View to display the actions at (e.g. index, custom)', required: true)]
     #[OA\Parameter(name: 'locale', in: 'path', description: 'Language to translate the action title to (e.g. de, en)', required: true)]
+    #[OA\Get(x: ['internal' => true])]
     #[Route(methods: ['GET'], path: '/customer/{id}/{view}/{locale}', name: 'get_customer_actions', requirements: ['id' => '\d+'])]
     public function getCustomerActions(Customer $customer, string $view, string $locale): Response
     {
