@@ -59,9 +59,9 @@ final class ProjectService
     public function saveProject(Project $project, ?Context $context = null): Project
     {
         if ($project->isNew()) {
-            return $this->saveNewProject($project, $context);
+            return $this->saveNewProject($project, $context); // @phpstan-ignore method.deprecated
         } else {
-            return $this->updateProject($project);
+            return $this->updateProject($project); // @phpstan-ignore method.deprecated
         }
     }
 

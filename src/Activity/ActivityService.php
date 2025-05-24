@@ -58,9 +58,9 @@ class ActivityService
     public function saveActivity(Activity $activity): Activity
     {
         if ($activity->isNew()) {
-            return $this->saveNewActivity($activity);
+            return $this->saveNewActivity($activity); // @phpstan-ignore method.deprecated
         } else {
-            return $this->updateActivity($activity);
+            return $this->updateActivity($activity); // @phpstan-ignore method.deprecated
         }
     }
 

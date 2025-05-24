@@ -62,9 +62,9 @@ final class CustomerService
     public function saveCustomer(Customer $customer): Customer
     {
         if ($customer->isNew()) {
-            return $this->saveNewCustomer($customer);
+            return $this->saveNewCustomer($customer); // @phpstan-ignore method.deprecated
         } else {
-            return $this->updateCustomer($customer);
+            return $this->updateCustomer($customer); // @phpstan-ignore method.deprecated
         }
     }
 
