@@ -3202,16 +3202,16 @@
         },
         {
             "name": "nelmio/api-doc-bundle",
-            "version": "v5.1.0",
+            "version": "v5.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "a36e86e8764e37078e9c0799756dfd454c3b423a"
+                "reference": "f48d9cb3930a34df209547ffd86db01254d5fce8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/a36e86e8764e37078e9c0799756dfd454c3b423a",
-                "reference": "a36e86e8764e37078e9c0799756dfd454c3b423a",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/f48d9cb3930a34df209547ffd86db01254d5fce8",
+                "reference": "f48d9cb3930a34df209547ffd86db01254d5fce8",
                 "shasum": ""
             },
             "require": {
@@ -3257,6 +3257,7 @@
                 "symfony/phpunit-bridge": "^6.4 || ^7.1",
                 "symfony/property-access": "^6.4 || ^7.1",
                 "symfony/security-csrf": "^6.4 || ^7.1",
+                "symfony/security-http": "^6.4 || ^7.1",
                 "symfony/serializer": "^6.4 || ^7.1",
                 "symfony/stopwatch": "^6.4 || ^7.1",
                 "symfony/templating": "^6.4 || ^7.1",
@@ -3311,7 +3312,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nelmio/NelmioApiDocBundle/issues",
-                "source": "https://github.com/nelmio/NelmioApiDocBundle/tree/v5.1.0"
+                "source": "https://github.com/nelmio/NelmioApiDocBundle/tree/v5.2.0"
             },
             "funding": [
                 {
@@ -3319,7 +3320,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-05-23T12:06:11+00:00"
+            "time": "2025-05-23T21:30:13+00:00"
         },
         {
             "name": "nelmio/cors-bundle",
