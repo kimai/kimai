@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use App\Form\Type\YesNoType;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -22,13 +23,13 @@ trait MetaTableTypeTrait
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[Serializer\Exclude]
     private ?int $id = null;
     /**
      * Name of the meta (custom) field
      */
-    #[ORM\Column(name: 'name', type: 'string', length: 50, nullable: false)]
+    #[ORM\Column(name: 'name', type: Types::STRING, length: 50, nullable: false)]
     #[Assert\NotNull]
     #[Assert\Length(min: 2, max: 50)]
     #[Serializer\Expose]
@@ -37,12 +38,12 @@ trait MetaTableTypeTrait
     /**
      * Value of the meta (custom) field
      */
-    #[ORM\Column(name: 'value', type: 'text', length: 65535, nullable: true)]
+    #[ORM\Column(name: 'value', type: Types::TEXT, length: 65535, nullable: true)]
     #[Assert\Length(max: 65535)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?string $value = null;
-    #[ORM\Column(name: 'visible', type: 'boolean', nullable: false, options: ['default' => false])]
+    #[ORM\Column(name: 'visible', type: Types::BOOLEAN, nullable: false, options: ['default' => false])]
     #[Assert\NotNull]
     private bool $visible = false;
     private ?string $label = null;

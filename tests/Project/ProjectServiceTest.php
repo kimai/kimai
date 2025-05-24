@@ -64,19 +64,6 @@ class ProjectServiceTest extends TestCase
         return new ProjectService($repository, $configuration, $dispatcher, $validator);
     }
 
-    public function testCannotSavePersistedProjectAsNew(): void
-    {
-        $project = $this->createMock(Project::class);
-        $project->expects($this->once())->method('getId')->willReturn(1);
-
-        $sut = $this->getSut();
-
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Cannot create project, already persisted');
-
-        $sut->saveNewProject($project, new Context(new User()));
-    }
-
     public function testSaveNewProjectHasValidationError(): void
     {
         $constraints = new ConstraintViolationList();
@@ -90,7 +77,7 @@ class ProjectServiceTest extends TestCase
         $this->expectException(ValidationFailedException::class);
         $this->expectExceptionMessage('Validation Failed');
 
-        $sut->saveNewProject(new Project(), new Context(new User()));
+        $sut->saveProject(new Project(), new Context(new User()));
     }
 
     public function testUpdateDispatchesEvents(): void
@@ -113,7 +100,7 @@ class ProjectServiceTest extends TestCase
 
         $sut = $this->getSut($dispatcher);
 
-        $sut->updateProject($project);
+        $sut->saveProject($project);
     }
 
     public function testCreateNewProjectDispatchesEvents(): void
@@ -149,7 +136,7 @@ class ProjectServiceTest extends TestCase
         $sut = $this->getSut($dispatcher);
 
         $project = new Project();
-        $sut->saveNewProject($project, new Context(new User()));
+        $sut->saveProject($project, new Context(new User()));
         self::assertCount(0, $project->getTeams());
     }
 
@@ -170,7 +157,7 @@ class ProjectServiceTest extends TestCase
         $user->addTeam($team2);
 
         $project = new Project();
-        $sut->saveNewProject($project, new Context($user));
+        $sut->saveProject($project, new Context($user));
         self::assertCount(2, $project->getTeams());
     }
 

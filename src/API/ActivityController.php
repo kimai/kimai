@@ -53,7 +53,7 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Returns a collection of activities (which are visible to the user)
+     * Fetch collection of activities
      */
     #[OA\Response(response: 200, description: 'Returns a collection of activities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ActivityCollection')))]
     #[Route(methods: ['GET'], path: '', name: 'get_activities')]
@@ -122,7 +122,7 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Returns one activity
+     * Fetch activity
      */
     #[OA\Response(response: 200, description: 'Returns one activity entity', content: new OA\JsonContent(ref: '#/components/schemas/ActivityEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Activity ID to fetch', required: true)]
@@ -137,7 +137,7 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Creates a new activity
+     * Create activity
      */
     #[OA\Post(description: 'Creates a new activity and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created activity', content: new OA\JsonContent(ref: '#/components/schemas/ActivityEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/ActivityEditForm'))]
@@ -231,7 +231,7 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Sets the value of a meta-field for an existing activity
+     * Update activity custom-field
      */
     #[IsGranted('edit', 'activity')]
     #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/ActivityEntity'))]
@@ -262,7 +262,7 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Returns a collection of all rates for one activity
+     * Fetch all rates for one activity
      */
     #[IsGranted('edit', 'activity')]
     #[OA\Response(response: 200, description: 'Returns a collection of activity rate entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ActivityRate')))]
@@ -279,7 +279,7 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Deletes one rate for an activity
+     * Delete rate for activity
      */
     #[IsGranted('edit', 'activity')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
@@ -300,7 +300,7 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Adds a new rate to an activity
+     * Add rate for one activity
      */
     #[IsGranted('edit', 'activity')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the new created rate', content: new OA\JsonContent(ref: '#/components/schemas/ActivityRate'))])]

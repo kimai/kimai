@@ -39,9 +39,10 @@ final class TagController extends BaseApiController
     }
 
     /**
-     * Deprecated: Fetch tags by filter as string collection
+     * Deprecated: Fetch tags as strings
      */
-    #[OA\Response(response: 200, description: 'Returns the collection of all existing tags as string array', content: new OA\JsonContent(type: 'array', items: new OA\Items(type: 'string')))]
+    #[OA\Response(response: 200, description: 'DEPRECATED: Returns existing tags as string array', content: new OA\JsonContent(type: 'array', items: new OA\Items(type: 'string')))]
+    #[OA\Get(x: ['internal' => true])]
     #[Route(methods: ['GET'], name: 'get_tags')]
     #[Rest\QueryParam(name: 'name', strict: true, nullable: true, description: 'Search term to filter tag list')]
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
@@ -58,7 +59,7 @@ final class TagController extends BaseApiController
     }
 
     /**
-     * Fetch tags by filter (as full entities)
+     * Fetch collection of tags
      */
     #[OA\Response(response: 200, description: 'Find the collection of all matching tags', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TagEntity')))]
     #[Route(path: '/find', name: 'get_tags_full', methods: ['GET'])]
@@ -79,7 +80,7 @@ final class TagController extends BaseApiController
     }
 
     /**
-     * Creates a new tag
+     * Create tag
      */
     #[OA\Post(description: 'Creates a new tag and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created tag', content: new OA\JsonContent(ref: '#/components/schemas/TagEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/TagEditForm'))]

@@ -29,7 +29,7 @@ final class StatusController extends BaseApiController
     }
 
     /**
-     * A testing route for the API
+     * Testing route for the API
      */
     #[OA\Response(response: 200, description: "A simple route that returns a 'pong', which you can use for testing the API", content: new OA\JsonContent(example: "{'message': 'pong'}"))]
     #[Route(methods: ['GET'], path: '/ping')]
@@ -41,7 +41,7 @@ final class StatusController extends BaseApiController
     }
 
     /**
-     * Returns information about the Kimai release
+     * Fetch Kimai release
      */
     #[OA\Response(response: 200, description: 'Returns version information about the current release', content: new OA\JsonContent(ref: new Model(type: Version::class)))]
     #[Route(methods: ['GET'], path: '/version')]
@@ -51,7 +51,7 @@ final class StatusController extends BaseApiController
     }
 
     /**
-     * Returns information about installed Plugins
+     * Fetch installed Plugins
      */
     #[OA\Response(response: 200, description: 'Returns a list of plugin names and versions', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: new Model(type: Plugin::class))))]
     #[Route(methods: ['GET'], path: '/plugins')]

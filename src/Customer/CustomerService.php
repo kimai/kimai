@@ -59,6 +59,18 @@ final class CustomerService
         return $customer;
     }
 
+    public function saveCustomer(Customer $customer): Customer
+    {
+        if ($customer->isNew()) {
+            return $this->saveNewCustomer($customer); // @phpstan-ignore method.deprecated
+        } else {
+            return $this->updateCustomer($customer); // @phpstan-ignore method.deprecated
+        }
+    }
+
+    /**
+     * @deprecated since 2.35 - use saveCustomer() instead
+     */
     public function saveNewCustomer(Customer $customer): Customer
     {
         if (null !== $customer->getId()) {
@@ -93,6 +105,9 @@ final class CustomerService
         }
     }
 
+    /**
+     * @deprecated since 2.35 - use saveCustomer() instead
+     */
     public function updateCustomer(Customer $customer): Customer
     {
         $this->validateCustomer($customer);

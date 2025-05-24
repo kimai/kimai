@@ -152,8 +152,6 @@ class ActivityRepository extends EntityRepository
 
     /**
      * Returns a query builder that is used for ActivityType and your own 'query_builder' option.
-     *
-     * @internal
      */
     public function getQueryBuilderForFormType(ActivityFormTypeQuery $query): QueryBuilder
     {

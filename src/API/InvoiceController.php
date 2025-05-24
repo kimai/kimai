@@ -38,9 +38,7 @@ final class InvoiceController extends BaseApiController
     }
 
     /**
-     * Returns a paginated collection of invoices.
-     *
-     * Needs permission: view_invoice
+     * Fetch collection of invoices
      */
     #[IsGranted('view_invoice')]
     #[OA\Response(response: 200, description: 'Returns a collection of invoices', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/InvoiceCollection')))]
@@ -89,9 +87,7 @@ final class InvoiceController extends BaseApiController
     }
 
     /**
-     * Returns one invoice.
-     *
-     * Needs permission: view_invoice
+     * Fetch invoice
      */
     #[IsGranted('view_invoice')]
     #[OA\Response(response: 200, description: 'Returns one invoice', content: new OA\JsonContent(ref: '#/components/schemas/Invoice'))]

@@ -54,7 +54,7 @@ final class ProjectController extends BaseApiController
     }
 
     /**
-     * Returns a collection of projects (which are visible to the user)
+     * Fetch collection of projects
      */
     #[OA\Response(response: 200, description: 'Returns a collection of projects', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ProjectCollection')))]
     #[Route(methods: ['GET'], path: '', name: 'get_projects')]
@@ -165,7 +165,7 @@ final class ProjectController extends BaseApiController
     }
 
     /**
-     * Creates a new project
+     * Create project
      */
     #[OA\Post(description: 'Creates a new project and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created project', content: new OA\JsonContent(ref: '#/components/schemas/ProjectEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/ProjectEditForm'))]
@@ -188,7 +188,7 @@ final class ProjectController extends BaseApiController
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
-            $this->projectService->saveNewProject($project);
+            $this->projectService->saveProject($project);
 
             $view = new View($project, 200);
             $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -232,7 +232,7 @@ final class ProjectController extends BaseApiController
             return $this->viewHandler->handle($view);
         }
 
-        $this->projectService->updateProject($project);
+        $this->projectService->saveProject($project);
 
         $view = new View($project, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -260,7 +260,7 @@ final class ProjectController extends BaseApiController
     }
 
     /**
-     * Sets the value of a meta-field for an existing project
+     * Update project custom-field
      */
     #[IsGranted('edit', 'project')]
     #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/ProjectEntity'))]
@@ -282,7 +282,7 @@ final class ProjectController extends BaseApiController
 
         $meta->setValue($value);
 
-        $this->projectService->updateProject($project);
+        $this->projectService->saveProject($project);
 
         $view = new View($project, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -291,7 +291,7 @@ final class ProjectController extends BaseApiController
     }
 
     /**
-     * Returns a collection of all rates for one project
+     * Fetch all rates for one project
      */
     #[IsGranted('edit', 'project')]
     #[OA\Response(response: 200, description: 'Returns a collection of project rate entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ProjectRate')))]
@@ -308,7 +308,7 @@ final class ProjectController extends BaseApiController
     }
 
     /**
-     * Deletes one rate for a project
+     * Delete rate for project
      */
     #[IsGranted('edit', 'project')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
@@ -329,7 +329,7 @@ final class ProjectController extends BaseApiController
     }
 
     /**
-     * Adds a new rate to a project
+     * Add rate for one project
      */
     #[IsGranted('edit', 'project')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the new created rate', content: new OA\JsonContent(ref: '#/components/schemas/ProjectRate'))])]

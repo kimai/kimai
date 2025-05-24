@@ -69,19 +69,6 @@ class CustomerServiceTest extends TestCase
         return new CustomerService($repository, $configuration, $validator, $dispatcher);
     }
 
-    public function testCannotSavePersistedCustomerAsNew(): void
-    {
-        $Customer = $this->createMock(Customer::class);
-        $Customer->expects($this->once())->method('getId')->willReturn(1);
-
-        $sut = $this->getSut();
-
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Cannot create customer, already persisted');
-
-        $sut->saveNewCustomer($Customer);
-    }
-
     public function testSaveNewCustomerHasValidationError(): void
     {
         $constraints = new ConstraintViolationList();
@@ -95,7 +82,7 @@ class CustomerServiceTest extends TestCase
         $this->expectException(ValidationFailedException::class);
         $this->expectExceptionMessage('Validation Failed');
 
-        $sut->saveNewCustomer(new Customer('foo'));
+        $sut->saveCustomer(new Customer('foo'));
     }
 
     public function testUpdateDispatchesEvents(): void
@@ -118,7 +105,7 @@ class CustomerServiceTest extends TestCase
 
         $sut = $this->getSut($dispatcher);
 
-        $sut->updateCustomer($Customer);
+        $sut->saveCustomer($Customer);
     }
 
     public function testCreateNewCustomerDispatchesEvents(): void
@@ -155,7 +142,7 @@ class CustomerServiceTest extends TestCase
         $sut = $this->getSut($dispatcher);
 
         $Customer = new Customer('foo');
-        $sut->saveNewCustomer($Customer);
+        $sut->saveCustomer($Customer);
     }
 
     /**
