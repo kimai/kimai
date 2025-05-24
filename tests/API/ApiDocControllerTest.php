@@ -108,7 +108,7 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
         self::assertEquals('3.0.0', $json['openapi']);
         self::assertArrayHasKey('info', $json);
         self::assertStringStartsWith('Kimai', $json['info']['title']);
-        self::assertEquals('1.0', $json['info']['version']);
+        self::assertEquals('1.1', $json['info']['version']);
 
         self::assertArrayHasKey('paths', $json);
         self::assertEquals($paths, array_keys($json['paths']));
