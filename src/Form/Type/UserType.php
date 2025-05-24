@@ -70,11 +70,20 @@ final class UserType extends AbstractType
             // includes the current user if it is a system-account, which is especially useful for forms pages,
             // which have a user switcher and display the logged-in user by default
             'include_current_user_if_system_account' => false,
-            'documentation' => [
+        ]);
+
+        $resolver->setDefault('documentation', function (Options $options) {
+            $example = 0;
+            if ($options['user'] instanceof User) {
+                $example = $options['user']->getId();
+            }
+
+            return [
                 'type' => 'integer',
                 'description' => 'User ID',
-            ],
-        ]);
+                'example' => $example
+            ];
+        });
 
         $resolver->setDefault('choices', function (Options $options) {
             $query = new UserFormTypeQuery();
