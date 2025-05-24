@@ -55,13 +55,6 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
         sort($expectedKeys);
 
         self::assertEquals($expectedKeys, $actual, \sprintf('Expected %s sections in API docs, but found %s.', \count($actual), \count($expectedKeys)));
-    }
-
-    public function testGetJsonDocs(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->assertAccessIsGranted($client, '/api/doc.json');
-        $json = json_decode($client->getResponse()->getContent(), true);
 
         $paths = [
             '/api/actions/timesheet/{id}/{view}/{locale}',
@@ -129,10 +122,6 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
         self::assertArrayHasKey('components', $json);
         self::assertArrayHasKey('schemas', $json['components']);
         self::assertArrayHasKey('securitySchemes', $json['components']);
-
-        $result = json_decode($client->getResponse()->getContent(), true);
-        self::assertIsArray($result);
-        self::assertNotEmpty($result);
     }
 
     protected function createUrl(string $url): string
