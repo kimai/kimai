@@ -188,7 +188,7 @@ final class ProjectController extends BaseApiController
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
-            $this->projectService->saveNewProject($project);
+            $this->projectService->saveProject($project);
 
             $view = new View($project, 200);
             $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -232,7 +232,7 @@ final class ProjectController extends BaseApiController
             return $this->viewHandler->handle($view);
         }
 
-        $this->projectService->updateProject($project);
+        $this->projectService->saveProject($project);
 
         $view = new View($project, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -282,7 +282,7 @@ final class ProjectController extends BaseApiController
 
         $meta->setValue($value);
 
-        $this->projectService->updateProject($project);
+        $this->projectService->saveProject($project);
 
         $view = new View($project, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);

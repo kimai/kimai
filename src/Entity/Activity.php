@@ -135,6 +135,11 @@ class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
         return $this->id;
     }
 
+    public function isNew(): bool
+    {
+        return $this->id === null;
+    }
+
     public function getProject(): ?Project
     {
         return $this->project;

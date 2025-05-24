@@ -68,6 +68,9 @@ final class CustomerService
         }
     }
 
+    /**
+     * @deprecated since 2.35 - use saveCustomer() instead
+     */
     public function saveNewCustomer(Customer $customer): Customer
     {
         if (null !== $customer->getId()) {
@@ -102,6 +105,9 @@ final class CustomerService
         }
     }
 
+    /**
+     * @deprecated since 2.35 - use saveCustomer() instead
+     */
     public function updateCustomer(Customer $customer): Customer
     {
         $this->validateCustomer($customer);

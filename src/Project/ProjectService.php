@@ -65,6 +65,9 @@ final class ProjectService
         }
     }
 
+    /**
+     * @deprecated since 2.35 - use saveProject() instead
+     */
     public function saveNewProject(Project $project, ?Context $context = null): Project
     {
         if (null !== $project->getId()) {
@@ -106,6 +109,9 @@ final class ProjectService
         }
     }
 
+    /**
+     * @deprecated since 2.35 - use saveProject() instead
+     */
     public function updateProject(Project $project): Project
     {
         $this->validateProject($project);
