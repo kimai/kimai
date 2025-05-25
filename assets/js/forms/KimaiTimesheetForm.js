@@ -448,13 +448,12 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
      * - ArrowDown key to decrease the duration (either 5 minutes or 1 hour, depending on the cursor position)
      * - PageUp key to increase the duration by 1 hour
      * - PageDown key to decrease the duration by 1 hour
-     * - Home key to set the duration to 00:00
-     * - End key to set the duration to 23:59
+     * - Home key to set the duration to 08:00
+     * - End key to set the duration to 00:00
      * - all other keys are ignored
      *
      * @param {KeyboardEvent} event
      * @param {HTMLElement} timeField
-     * @param {function} retriveCallback
      * @param {int} maxTime
      * @param {function} changeCallback
      * @private
