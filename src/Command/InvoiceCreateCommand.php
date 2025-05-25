@@ -70,6 +70,7 @@ final class InvoiceCreateCommand extends Command
             ->addOption('exported', null, InputOption::VALUE_OPTIONAL, 'Exported filter for invoice entries (possible values: exported, all), by default only "not exported" items are fetched', null)
             ->addOption('preview', null, InputOption::VALUE_OPTIONAL, 'Absolute path for a rendered preview of the invoice, which will neither be saved nor the items be marked as exported.', null)
             ->addOption('preview-unique', null, InputOption::VALUE_NONE, 'Adds a unique part to the filename of the generated invoice preview file, so there is no chance that they get overwritten on same project name.')
+            ->addOption('active-only', null, InputOption::VALUE_NONE, 'If this flag is set, only invoices for active customers and projects are created. Prevents empty invoices.')
         ;
     }
 
@@ -197,6 +198,8 @@ final class InvoiceCreateCommand extends Command
             @trigger_error('The "set-exported" option of kimai:invoice:create command has no meaning anymore, it will be removed soon', E_USER_DEPRECATED);
         }
 
+        $activeOnly = $input->getOption('active-only');
+
         // =============== VALIDATION END ===============
 
         $defaultQuery = new InvoiceQuery();
@@ -223,6 +226,17 @@ final class InvoiceCreateCommand extends Command
                 }
                 $customers[] = $tmp;
             }
+
+            // Filter to only include active customers.
+            if ($activeOnly) {
+                $activeCustomers = $this->getActiveCustomers($defaultQuery);
+                $customers = array_filter($customers,
+                    function (Customer $customer) use ($activeCustomers) {
+                        return \in_array($customer->getId(), array_keys($activeCustomers), true);
+                    }
+                );
+            }
+
             $invoices = $this->createInvoicesForCustomer($customers, $defaultQuery, $input, $output);
         } elseif (!empty($projectIDs)) {
             /** @var Project[] $projects */
@@ -238,6 +252,17 @@ final class InvoiceCreateCommand extends Command
                 }
                 $projects[] = $tmp;
             }
+
+            // Filter to only include active projects.
+            if ($activeOnly) {
+                $activeProjects = $this->getActiveProjects($defaultQuery);
+                $projects = array_filter($projects,
+                    function (Project $project) use ($activeProjects) {
+                        return \in_array($project->getId(), array_keys($activeProjects), true);
+                    }
+                );
+            }
+
             $invoices = $this->createInvoicesForProjects($projects, $defaultQuery, $input, $output);
         } elseif ($byActiveCustomer) {
             $customers = $this->getActiveCustomers($defaultQuery);
