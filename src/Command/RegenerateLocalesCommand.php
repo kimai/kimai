@@ -10,6 +10,7 @@
 namespace App\Command;
 
 use App\Configuration\LocaleService;
+use App\Utils\LocaleFormatter;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -128,8 +129,8 @@ final class RegenerateLocalesCommand extends Command
 
             // these are completely new since v2
             // calculate everything with IntlFormatter
-            $shortDate = new \IntlDateFormatter($locale, \IntlDateFormatter::SHORT, \IntlDateFormatter::NONE);
-            $shortTime = new \IntlDateFormatter($locale, \IntlDateFormatter::NONE, \IntlDateFormatter::SHORT);
+            $shortDate = new \IntlDateFormatter($locale, LocaleFormatter::DATE_PATTERN, \IntlDateFormatter::NONE);
+            $shortTime = new \IntlDateFormatter($locale, \IntlDateFormatter::NONE, LocaleFormatter::TIME_PATTERN);
 
             $settings['date'] = $shortDate->getPattern();
             if ($settings['date'] === false) {
