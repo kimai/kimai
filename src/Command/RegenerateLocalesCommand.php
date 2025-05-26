@@ -10,6 +10,7 @@
 namespace App\Command;
 
 use App\Configuration\LocaleService;
+use App\Utils\LocaleFormatter;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -41,7 +42,7 @@ final class RegenerateLocalesCommand extends Command
      */
     private array $noRegionCode = ['ar', 'id', 'pa', 'sl', 'ca', 'ta'];
     /**
-     * A list of locales that will be activated, no matter if translation files exist for them.
+     * A list of locales that will be activated no matter if translation files exist for them.
      *
      * @var string[]
      */
@@ -122,14 +123,17 @@ final class RegenerateLocalesCommand extends Command
             $appLocales[$locale] = LocaleService::DEFAULT_SETTINGS;
         }
 
+        $timeFormats = [];
+        $dateFormats = [];
+
         // make sure all keys are registered for every locale
         foreach ($appLocales as $locale => $settings) {
             $settings['translation'] = \in_array($locale, $firstLevelLocales, true);
 
             // these are completely new since v2
             // calculate everything with IntlFormatter
-            $shortDate = new \IntlDateFormatter($locale, \IntlDateFormatter::SHORT, \IntlDateFormatter::NONE);
-            $shortTime = new \IntlDateFormatter($locale, \IntlDateFormatter::NONE, \IntlDateFormatter::SHORT);
+            $shortDate = new \IntlDateFormatter($locale, LocaleFormatter::DATE_PATTERN, \IntlDateFormatter::NONE);
+            $shortTime = new \IntlDateFormatter($locale, \IntlDateFormatter::NONE, LocaleFormatter::TIME_PATTERN);
 
             $settings['date'] = $shortDate->getPattern();
             if ($settings['date'] === false) {
@@ -142,13 +146,27 @@ final class RegenerateLocalesCommand extends Command
                 continue;
             }
 
-            // see https://github.com/kimai/kimai/issues/4402 - Korean time format failed parsing
-            // special case when time pattern starts with A / a => this will lead to an error
+            // CHINESE: contains the format character B - see https://github.com/kimai/kimai/issues/5496
+            // It is an equivalent for "a" and acts like am/pm but will be prefixed instead of written after the time.
+            // This clashes with PHP Date format "B" (Swatch Internet time) and fails in other places, so we convert it into 24-hour format.
+            if (str_contains($settings['time'], 'Bh')) {
+                $settings['time'] = str_replace('Bh', 'H', $settings['time']);
+            }
+
+            // KOREAN: time format failed parsing - see https://github.com/kimai/kimai/issues/4402
+            // Special case where time-patterns start with A / a => this will lead to an error
             // \DateTimeImmutable::getLastErrors() => Meridian can only come after an hour has been found
             if (str_contains($settings['time'], 'a ')) {
                 $settings['time'] = str_replace('a ', '', $settings['time']) . ' a';
             }
             $settings['time'] = str_replace("\u{202f}", ' ', $settings['time']);
+
+            // keep it simple, we don't need to convert it during runtime
+            $settings['time'] = str_replace('HH', 'H', $settings['time']);
+            $settings['time'] = str_replace('H', 'HH', $settings['time']);
+
+            // format the year always with 4 letters - ISO-8601
+            $settings['date'] = str_replace('yy', 'y', $settings['date']);
 
             // make sure that sub-locales of a RTL language are also flagged as RTL
             $rtlLocale = $locale;
@@ -160,6 +178,9 @@ final class RegenerateLocalesCommand extends Command
 
             // pre-fill all formats with the default locale settings
             $appLocales[$locale] = $settings;
+
+            $timeFormats[$settings['time']] = $settings['time'];
+            $dateFormats[$settings['date']] = $settings['date'];
         }
 
         $removableDuplicates = [];
@@ -229,6 +250,12 @@ final class RegenerateLocalesCommand extends Command
         file_put_contents($targetFile, $content);
 
         $io->success('Created new locale definition at: ' . $filename);
+
+        $io->writeln(\sprintf('Found %s date formats:', \count($dateFormats)));
+        $io->listing(array_keys($dateFormats));
+
+        $io->writeln(\sprintf('Found %s time formats:', \count($timeFormats)));
+        $io->listing(array_keys($timeFormats));
 
         return Command::SUCCESS;
     }
