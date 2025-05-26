@@ -142,8 +142,15 @@ final class RegenerateLocalesCommand extends Command
                 continue;
             }
 
-            // see https://github.com/kimai/kimai/issues/4402 - Korean time format failed parsing
-            // special case when time pattern starts with A / a => this will lead to an error
+            // CHINESE: contains the format character B - see https://github.com/kimai/kimai/issues/5496
+            // It is an equivalent for "a" and acts like am/pm but will be prefixed instead of written after the time.
+            // This clashes with PHP Date format "B" (Swatch Internet time) and fails in other places, so we convert it into 24-hour format.
+            if (str_contains($settings['time'], 'Bh')) {
+                $settings['time'] = str_replace('Bh', 'H', $settings['time']);
+            }
+
+            // KOREAN: time format failed parsing - see https://github.com/kimai/kimai/issues/4402
+            // Special case where time-patterns start with A / a => this will lead to an error
             // \DateTimeImmutable::getLastErrors() => Meridian can only come after an hour has been found
             if (str_contains($settings['time'], 'a ')) {
                 $settings['time'] = str_replace('a ', '', $settings['time']) . ' a';

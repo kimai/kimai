@@ -1927,21 +1927,21 @@
   'zh_CN' => 
   [
     'date' => 'y/M/d',
-    'time' => 'HH:mm',
+    'time' => 'H:mm',
     'rtl' => false,
     'translation' => true,
   ],
   'zh_Hant' => 
   [
     'date' => 'y/M/d',
-    'time' => 'Bh:mm',
+    'time' => 'H:mm',
     'rtl' => false,
     'translation' => true,
   ],
   'zh_Hant_TW' => 
   [
     'date' => 'y/M/d',
-    'time' => 'Bh:mm',
+    'time' => 'H:mm',
     'rtl' => false,
     'translation' => true,
   ],
