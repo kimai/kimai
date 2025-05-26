@@ -163,6 +163,10 @@ final class RegenerateLocalesCommand extends Command
 
             // keep it simple, we don't need to convert it during runtime
             $settings['time'] = str_replace('HH', 'H', $settings['time']);
+            $settings['time'] = str_replace('H', 'HH', $settings['time']);
+
+            // format the year always with 4 letters - ISO-8601
+            $settings['date'] = str_replace('yy', 'y', $settings['date']);
 
             // make sure that sub-locales of a RTL language are also flagged as RTL
             $rtlLocale = $locale;
