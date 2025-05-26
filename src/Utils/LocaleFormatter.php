@@ -22,6 +22,18 @@ use Symfony\Component\Intl\Currencies;
  */
 final class LocaleFormatter
 {
+    /**
+     * Special locales to test:
+     *
+     * - el             h:mm a      9:41 π.μ.
+     * - fr_CA          HH 'h' mm   09 h 41
+     * - ko             h:mm a      10:18 오전
+     * - tr_CY          h:mm a      9:41 ÖÖ
+     * - pa             h:mm a      10:18 ਪੂ.ਦੁ.
+     * - pt_MO          h:mm a      9:41 da manhã
+     * - zh_Hant        Bh:mm       上午9:41
+     * - zh_Hant_TW     Bh:mm       上午9:41
+     */
     // IntlDateFormatter::RELATIVE_* - not usable for times
     // IntlDateFormatter::LONG - with seconds and timezone, and translation for h and min if locale supports it
     // IntlDateFormatter::MEDIUM - with seconds, and translation for h and min if locale supports it
