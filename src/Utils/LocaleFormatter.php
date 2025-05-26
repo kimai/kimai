@@ -18,7 +18,7 @@ use NumberFormatter;
 use Symfony\Component\Intl\Currencies;
 
 /**
- * Use this class to format values into locale specific representations.
+ * Use this class to format values into locale-specific representations.
  */
 final class LocaleFormatter
 {
@@ -55,10 +55,7 @@ final class LocaleFormatter
             return $this->durationDecimal($duration);
         }
 
-        return $this->formatDuration(
-            $this->getSecondsForDuration($duration),
-            $this->localeService->getDurationFormat($this->locale)
-        );
+        return $this->formatDuration($this->getSecondsForDuration($duration));
     }
 
     /**
@@ -95,13 +92,13 @@ final class LocaleFormatter
         return (int) $duration;
     }
 
-    private function formatDuration(int $seconds, string $format): string
+    private function formatDuration(int $seconds): string
     {
         if ($this->durationFormatter === null) {
             $this->durationFormatter = new Duration();
         }
 
-        return $this->durationFormatter->format($seconds, $format);
+        return $this->durationFormatter->format($seconds);
     }
 
     /**

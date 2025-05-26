@@ -10,6 +10,7 @@
 namespace App\Configuration;
 
 use App\Entity\User;
+use App\Utils\Duration;
 
 final class LocaleService
 {
@@ -95,7 +96,7 @@ final class LocaleService
      */
     public function getDurationFormat(string $locale): string
     {
-        return '%h:%m';
+        return Duration::FORMAT_DEFAULT;
     }
 
     public function isRightToLeft(string $locale): bool
