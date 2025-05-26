@@ -18,6 +18,10 @@
         {{ entry.decimal }}
     {% elseif column == 'money' %}
         {{ entry.money }}
+    {% elseif column == 'time_format' %}
+        {{ entry.time_format }}
+    {% elseif column == 'date_format' %}
+        {{ entry.date_format }}
     {% elseif column == 'hour_24' %}
         {{ widgets.label_boolean(entry.hour_24) }}
     {% elseif column == 'rtl' %}
