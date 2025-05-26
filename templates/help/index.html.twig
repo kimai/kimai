@@ -1,6 +1,10 @@
 {% extends 'datatable.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 
+{% block datatable_column_attr %}
+    {%- if entry.rtl %} dir="rtl"{% endif -%}
+{% endblock %}
+
 {% block datatable_column_value %}
     {% if column == 'name' %}
         {{ entry.name }}

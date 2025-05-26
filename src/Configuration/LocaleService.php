@@ -57,9 +57,6 @@ final class LocaleService
 
     /**
      * Returns the locale-specific date format, which should be used in combination with the twig filter "|date".
-     *
-     * @param string $locale
-     * @return string
      */
     public function getDateFormat(string $locale): string
     {
@@ -68,9 +65,6 @@ final class LocaleService
 
     /**
      * Returns the locale-specific time format, which should be used in combination with the twig filter "|time".
-     *
-     * @param string $locale
-     * @return string
      */
     public function getTimeFormat(string $locale): string
     {
@@ -79,9 +73,6 @@ final class LocaleService
 
     /**
      * Returns the locale-specific datetime format, which should be used in combination with the twig filter "|date".
-     *
-     * @param string $locale
-     * @return string
      */
     public function getDateTimeFormat(string $locale): string
     {
@@ -90,9 +81,6 @@ final class LocaleService
 
     /**
      * Returns the format used in the "|duration" twig filter to display a Timesheet duration.
-     *
-     * @param string $locale
-     * @return string
      */
     public function getDurationFormat(string $locale): string
     {
