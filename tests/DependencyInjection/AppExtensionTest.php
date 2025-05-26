@@ -75,7 +75,7 @@ class AppExtensionTest extends TestCase
                 ],
                 'de' => [
                     'date' => 'dd.MM.yy',
-                    'time' => 'HH:mm',
+                    'time' => 'H:mm',
                     'rtl' => false,
                     'translation' => true,
                 ],
@@ -87,13 +87,13 @@ class AppExtensionTest extends TestCase
                 ],
                 'tr' => [
                     'date' => 'd.MM.y',
-                    'time' => 'HH:mm',
+                    'time' => 'H:mm',
                     'rtl' => false,
                     'translation' => true,
                 ],
                 'zh_CN' => [
                     'date' => 'y/M/d',
-                    'time' => 'HH:mm',
+                    'time' => 'H:mm',
                     'rtl' => false,
                     'translation' => true,
                 ],
