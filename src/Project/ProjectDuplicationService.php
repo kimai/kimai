@@ -46,7 +46,7 @@ final class ProjectDuplicationService
             $newProject->setEnd(null);
         }
 
-        $this->projectService->saveNewProject($newProject);
+        $this->projectService->saveProject($newProject);
 
         foreach ($this->projectRateRepository->getRatesForProject($project) as $rate) {
             $newRate = clone $rate;

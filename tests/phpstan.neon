@@ -188,41 +188,6 @@ parameters:
             path: API/ActivityControllerTest.php
 
         -
-            message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
-            count: 3
-            path: API/ApiDocControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'paths' on mixed\\.$#"
-            count: 1
-            path: API/ApiDocControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'spec' on mixed\\.$#"
-            count: 1
-            path: API/ApiDocControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'tags' on mixed\\.$#"
-            count: 1
-            path: API/ApiDocControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
-            count: 2
-            path: API/ApiDocControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$array of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertArrayHasKey\\(\\) expects array\\|ArrayAccess, mixed given\\.$#"
-            count: 1
-            path: API/ApiDocControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
-            count: 1
-            path: API/ApiDocControllerTest.php
-
-        -
             message: "#^Cannot call method getValue\\(\\) on App\\\\Entity\\\\MetaTableTypeInterface\\|null\\.$#"
             count: 1
             path: API/CustomerControllerTest.php

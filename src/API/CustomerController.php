@@ -52,7 +52,7 @@ final class CustomerController extends BaseApiController
     }
 
     /**
-     * Returns a collection of customers (which are visible to the user)
+     * Fetch collection of customers
      */
     #[OA\Response(response: 200, description: 'Returns a collection of customers', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/CustomerCollection')))]
     #[Route(methods: ['GET'], path: '', name: 'get_customers')]
@@ -98,7 +98,7 @@ final class CustomerController extends BaseApiController
     }
 
     /**
-     * Returns one customer
+     * Fetch customer
      */
     #[OA\Response(response: 200, description: 'Returns one customer entity', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))]
     #[Route(methods: ['GET'], path: '/{id}', name: 'get_customer', requirements: ['id' => '\d+'])]
@@ -112,7 +112,7 @@ final class CustomerController extends BaseApiController
     }
 
     /**
-     * Creates a new customer
+     * Create customer
      */
     #[OA\Post(description: 'Creates a new customer and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created customer', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/CustomerEditForm'))]
@@ -206,7 +206,7 @@ final class CustomerController extends BaseApiController
     }
 
     /**
-     * Sets the value of a meta-field for an existing customer
+     * Update customer custom-field
      */
     #[IsGranted('edit', 'customer')]
     #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))]
@@ -237,7 +237,7 @@ final class CustomerController extends BaseApiController
     }
 
     /**
-     * Returns a collection of all rates for one customer
+     * Fetch all rates for one customer
      */
     #[IsGranted('edit', 'customer')]
     #[OA\Response(response: 200, description: 'Returns a collection of customer rate entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/CustomerRate')))]
@@ -254,7 +254,7 @@ final class CustomerController extends BaseApiController
     }
 
     /**
-     * Deletes one rate for a customer
+     * Delete rate for customer
      */
     #[IsGranted('edit', 'customer')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
@@ -275,7 +275,7 @@ final class CustomerController extends BaseApiController
     }
 
     /**
-     * Adds a new rate to a customer
+     * Add rate for one customer
      */
     #[IsGranted('edit', 'customer')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the new created rate', content: new OA\JsonContent(ref: '#/components/schemas/CustomerRate'))])]

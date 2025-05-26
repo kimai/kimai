@@ -47,10 +47,10 @@ final class UserController extends BaseApiController
     }
 
     /**
-     * Returns the collection of users (which are visible to the user)
+     * Fetch collection of users
      */
     #[IsGranted('view_user')]
-    #[OA\Response(response: 200, description: 'Returns the collection of users. Required permission: view_user', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/UserCollection')))]
+    #[OA\Response(response: 200, description: 'Returns a collection of users. Required permission: view_user', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/UserCollection')))]
     #[Route(methods: ['GET'], path: '', name: 'get_users')]
     #[Rest\QueryParam(name: 'visible', requirements: '1|2|3', default: 1, strict: true, nullable: true, description: 'Visibility status to filter users: 1=visible, 2=hidden, 3=all')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|username|alias|email', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, username, alias, email (default: username)')]
@@ -129,7 +129,7 @@ final class UserController extends BaseApiController
     }
 
     /**
-     * Creates a new user
+     * Create user
      */
     #[IsGranted('create_user')]
     #[OA\Post(description: 'Creates a new user and returns it afterwards')]
@@ -199,7 +199,7 @@ final class UserController extends BaseApiController
     }
 
     /**
-     * Delete an API token for the current user
+     * Delete API token for the current user
      */
     #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Success if the token could be deleted.')])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The API token ID to remove', required: true)]

@@ -39,7 +39,7 @@
         "kevinpapst/tabler-bundle": "^1.4",
         "league/csv": "^9.4",
         "mpdf/mpdf": "^8.0",
-        "nelmio/api-doc-bundle": "^4.0",
+        "nelmio/api-doc-bundle": "^5.0",
         "nelmio/cors-bundle": "^2.0",
         "onelogin/php-saml": "^4.0",
         "openspout/openspout": "^4.0",

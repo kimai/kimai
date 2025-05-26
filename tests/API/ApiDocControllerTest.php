@@ -26,11 +26,21 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/doc');
-        self::assertStringContainsString('<title>Kimai', $client->getResponse()->getContent());
-        $result = $client->getCrawler()->filter('script#swagger-data');
-        $swaggerJson = json_decode($result->text(), true);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        self::assertStringContainsString('<title>Kimai', $content);
+        self::assertStringContainsString('docs.apiDescriptionDocument', $content);
+        self::assertStringContainsString('const config = {"basePath":"/api/doc","router":"memory","logo":"/touch-icon-192x192.png","hideInternal":true};', $content);
+        $results = preg_match('/docs\.apiDescriptionDocument\ \=\ (.*)\.spec;/', $content, $matches);
+        self::assertNotFalse($results);
+        $swaggerJson = json_decode($matches[1], true);
+        self::assertIsArray($swaggerJson);
+        self::assertArrayHasKey('spec', $swaggerJson);
+        $json = $swaggerJson['spec'];
+        self::assertArrayHasKey('paths', $json);
+
         $tags = [];
-        foreach ($swaggerJson['spec']['paths'] as $path) {
+        foreach ($json['paths'] as $path) {
             foreach ($path as $method) {
                 foreach ($method['tags'] as $tag) {
                     $tags[$tag] = $tag;
@@ -45,13 +55,6 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
         sort($expectedKeys);
 
         self::assertEquals($expectedKeys, $actual, \sprintf('Expected %s sections in API docs, but found %s.', \count($actual), \count($expectedKeys)));
-    }
-
-    public function testGetJsonDocs(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->assertAccessIsGranted($client, '/api/doc.json');
-        $json = json_decode($client->getResponse()->getContent(), true);
 
         $paths = [
             '/api/actions/timesheet/{id}/{view}/{locale}',
@@ -108,7 +111,7 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
         self::assertEquals('3.0.0', $json['openapi']);
         self::assertArrayHasKey('info', $json);
         self::assertStringStartsWith('Kimai', $json['info']['title']);
-        self::assertEquals('1.0', $json['info']['version']);
+        self::assertEquals('1.1', $json['info']['version']);
 
         self::assertArrayHasKey('paths', $json);
         self::assertEquals($paths, array_keys($json['paths']));
@@ -119,10 +122,6 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
         self::assertArrayHasKey('components', $json);
         self::assertArrayHasKey('schemas', $json['components']);
         self::assertArrayHasKey('securitySchemes', $json['components']);
-
-        $result = json_decode($client->getResponse()->getContent(), true);
-        self::assertIsArray($result);
-        self::assertNotEmpty($result);
     }
 
     protected function createUrl(string $url): string

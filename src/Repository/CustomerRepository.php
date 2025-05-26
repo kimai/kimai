@@ -134,8 +134,6 @@ class CustomerRepository extends EntityRepository
 
     /**
      * Returns a query builder that is used for CustomerType and your own 'query_builder' option.
-     *
-     * @internal
      */
     public function getQueryBuilderForFormType(CustomerFormTypeQuery $query): QueryBuilder
     {

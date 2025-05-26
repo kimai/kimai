@@ -16,6 +16,7 @@ use App\Repository\CustomerRepository;
 use App\Validator\Constraints as Constraints;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use OpenApi\Attributes as OA;
@@ -36,50 +37,50 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     use ColorTrait;
     use CreatedTrait;
 
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'id', type: 'integer')]
     private ?int $id = null;
-    #[ORM\Column(name: 'name', type: 'string', length: 150, nullable: false)]
+    #[ORM\Column(name: 'name', type: Types::STRING, length: 150, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 150)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'name')]
     private ?string $name = null;
-    #[ORM\Column(name: 'number', type: 'string', length: 50, nullable: true)]
+    #[ORM\Column(name: 'number', type: Types::STRING, length: 50, nullable: true)]
     #[Assert\Length(max: 50)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'number')]
     private ?string $number = null;
-    #[ORM\Column(name: 'comment', type: 'text', nullable: true)]
+    #[ORM\Column(name: 'comment', type: Types::TEXT, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'comment')]
     private ?string $comment = null;
-    #[ORM\Column(name: 'visible', type: 'boolean', nullable: false)]
+    #[ORM\Column(name: 'visible', type: Types::BOOLEAN, nullable: false)]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'visible', type: 'boolean')]
     private bool $visible = true;
-    #[ORM\Column(name: 'billable', type: 'boolean', nullable: false, options: ['default' => true])]
+    #[ORM\Column(name: 'billable', type: Types::BOOLEAN, nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'billable', type: 'boolean')]
     private bool $billable = true;
-    #[ORM\Column(name: 'company', type: 'string', length: 100, nullable: true)]
+    #[ORM\Column(name: 'company', type: Types::STRING, length: 100, nullable: true)]
     #[Assert\Length(max: 100)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
     #[Exporter\Expose(label: 'company')]
     private ?string $company = null;
-    #[ORM\Column(name: 'vat_id', type: 'string', length: 50, nullable: true)]
+    #[ORM\Column(name: 'vat_id', type: Types::STRING, length: 50, nullable: true)]
     #[Assert\Length(max: 50)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
@@ -96,7 +97,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Groups(['Customer_Entity'])]
     #[Exporter\Expose(label: 'address')]
     private ?string $address = null;
-    #[ORM\Column(name: 'country', type: 'string', length: 2, nullable: false)]
+    #[ORM\Column(name: 'country', type: Types::STRING, length: 2, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Country]
     #[Assert\Length(max: 2)]
@@ -104,7 +105,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Groups(['Customer_Entity'])]
     #[Exporter\Expose(label: 'country')]
     private ?string $country = null;
-    #[ORM\Column(name: 'currency', type: 'string', length: 3, nullable: false)]
+    #[ORM\Column(name: 'currency', type: Types::STRING, length: 3, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Currency]
     #[Assert\Length(max: 3)]
@@ -112,19 +113,19 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Groups(['Customer'])]
     #[Exporter\Expose(label: 'currency')]
     private ?string $currency = self::DEFAULT_CURRENCY;
-    #[ORM\Column(name: 'phone', type: 'string', length: 30, nullable: true)]
+    #[ORM\Column(name: 'phone', type: Types::STRING, length: 30, nullable: true)]
     #[Assert\Length(max: 30)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
     #[Exporter\Expose(label: 'phone')]
     private ?string $phone = null;
-    #[ORM\Column(name: 'fax', type: 'string', length: 30, nullable: true)]
+    #[ORM\Column(name: 'fax', type: Types::STRING, length: 30, nullable: true)]
     #[Assert\Length(max: 30)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
     #[Exporter\Expose(label: 'fax')]
     private ?string $fax = null;
-    #[ORM\Column(name: 'mobile', type: 'string', length: 30, nullable: true)]
+    #[ORM\Column(name: 'mobile', type: Types::STRING, length: 30, nullable: true)]
     #[Assert\Length(max: 30)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
@@ -133,13 +134,13 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     /**
      * Customers contact email
      */
-    #[ORM\Column(name: 'email', type: 'string', length: 75, nullable: true)]
+    #[ORM\Column(name: 'email', type: Types::STRING, length: 75, nullable: true)]
     #[Assert\Length(max: 75)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
     #[Exporter\Expose(label: 'email')]
     private ?string $email = null;
-    #[ORM\Column(name: 'homepage', type: 'string', length: 100, nullable: true)]
+    #[ORM\Column(name: 'homepage', type: Types::STRING, length: 100, nullable: true)]
     #[Assert\Length(max: 100)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
@@ -148,7 +149,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     /**
      * Timezone of begin and end
      */
-    #[ORM\Column(name: 'timezone', type: 'string', length: 64, nullable: false)]
+    #[ORM\Column(name: 'timezone', type: Types::STRING, length: 64, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Timezone]
     #[Assert\Length(max: 64)]
@@ -187,7 +188,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[ORM\ManyToOne(targetEntity: InvoiceTemplate::class)]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?InvoiceTemplate $invoiceTemplate = null;
-    #[ORM\Column(name: 'invoice_text', type: 'text', nullable: true)]
+    #[ORM\Column(name: 'invoice_text', type: Types::TEXT, nullable: true)]
     private ?string $invoiceText = null;
 
     public function __construct(string $name)
@@ -201,6 +202,11 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function isNew(): bool
+    {
+        return $this->id === null;
     }
 
     public function setName(?string $name): void

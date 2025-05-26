@@ -14,6 +14,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
@@ -25,8 +26,6 @@ abstract class AbstractBundleInstallerCommand extends Command
 {
     /**
      * Returns the base directory to the Kimai installation.
-     *
-     * @return string
      */
     protected function getRootDirectory(): string
     {
@@ -39,18 +38,26 @@ abstract class AbstractBundleInstallerCommand extends Command
     /**
      * If your bundle ships assets, that need to be available in the public/ directory,
      * then overwrite this method and return: <true>.
-     *
-     * @return bool
      */
     protected function hasAssets(): bool
     {
         return false;
     }
 
+    private function hasMigrations(SymfonyStyle $io): bool
+    {
+        $config = $this->getMigrationConfigFilename();
+
+        if ($config === null) {
+            return false;
+        }
+
+        return true;
+    }
+
     /**
-     * Returns an absolute filename to your doctrine migrations configuration, if you want to install database tables.
-     *
-     * @return string|null
+     * Returns an absolute filename to your doctrine migrations configuration
+     * if you want to run database migrations.
      */
     protected function getMigrationConfigFilename(): ?string
     {
@@ -59,16 +66,12 @@ abstract class AbstractBundleInstallerCommand extends Command
 
     /**
      * Returns the bundle short name for the installer command.
-     *
-     * @return string
      */
     abstract protected function getBundleCommandNamePart(): string;
 
     /**
      * Returns the full name fo this command.
      * Please stick to the standard and overwrite getBundleCommandNamePart() only.
-     *
-     * @return string
      */
     protected function getInstallerCommandName(): string
     {
@@ -77,8 +80,6 @@ abstract class AbstractBundleInstallerCommand extends Command
 
     /**
      * Returns the bundles real name (same as your namespace).
-     *
-     * @return string
      */
     protected function getBundleName(): string
     {
@@ -100,12 +101,23 @@ abstract class AbstractBundleInstallerCommand extends Command
             ->setName($this->getInstallerCommandName())
             ->setDescription('Install the bundle: ' . $this->getBundleName())
             ->setHelp('This command will perform the basic installation steps to get the bundle up and running.')
+            ->addOption('database', null, InputOption::VALUE_NONE, 'Only run the database installation')
+            ->addOption('assets', null, InputOption::VALUE_NONE, 'Only run the asset installation')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
+
+        $noAssets = $input->getOption('database');
+        $onlyAssets = $input->getOption('assets');
+
+        if ($noAssets && $onlyAssets) {
+            $io->error('Options --assets and --database are mutually exclusive');
+
+            return Command::FAILURE;
+        }
 
         // many users execute the bin/console command from arbitrary locations
         // this will make sure that relative paths (like doctrine migrations) work as expected
@@ -117,17 +129,19 @@ abstract class AbstractBundleInstallerCommand extends Command
             \sprintf('Starting installation of plugin: %s ...', $bundleName)
         );
 
-        try {
-            $this->importMigrations($io, $output);
-        } catch (\Exception $ex) {
-            $io->error(
-                \sprintf('Failed to install database for bundle %s. %s', $bundleName, $ex->getMessage())
-            );
+        if (!$onlyAssets && $this->hasMigrations($io)) {
+            try {
+                $this->importMigrations($io, $output);
+            } catch (\Exception $ex) {
+                $io->error(
+                    \sprintf('Failed to install database for bundle %s. %s', $bundleName, $ex->getMessage())
+                );
 
-            return Command::FAILURE;
+                return Command::FAILURE;
+            }
         }
 
-        if ($this->hasAssets()) {
+        if (!$noAssets && $this->hasAssets()) {
             try {
                 $this->installAssets($io, $output);
             } catch (\Exception $ex) {
@@ -148,7 +162,7 @@ abstract class AbstractBundleInstallerCommand extends Command
         return Command::SUCCESS;
     }
 
-    protected function installAssets(SymfonyStyle $io, OutputInterface $output): void
+    private function installAssets(SymfonyStyle $io, OutputInterface $output): void
     {
         $command = $this->getApplication()->find('assets:install');
         $cmdInput = new ArrayInput([]);
@@ -160,11 +174,11 @@ abstract class AbstractBundleInstallerCommand extends Command
         $io->writeln('');
     }
 
-    protected function importMigrations(SymfonyStyle $io, OutputInterface $output): void
+    private function importMigrations(SymfonyStyle $io, OutputInterface $output): void
     {
         $config = $this->getMigrationConfigFilename();
 
-        if (null === $config) {
+        if ($config === null) {
             return;
         }
 
