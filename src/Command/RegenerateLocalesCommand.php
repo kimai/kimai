@@ -157,6 +157,9 @@ final class RegenerateLocalesCommand extends Command
             }
             $settings['time'] = str_replace("\u{202f}", ' ', $settings['time']);
 
+            // keep it simple, we don't need to convert it during runtime
+            $settings['time'] = str_replace('HH', 'H', $settings['time']);
+
             // make sure that sub-locales of a RTL language are also flagged as RTL
             $rtlLocale = $locale;
             if (substr_count($rtlLocale, '_') === 1) {

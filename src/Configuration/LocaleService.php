@@ -15,7 +15,7 @@ final class LocaleService
 {
     public const DEFAULT_SETTINGS = [
         'date' => 'dd.MM.y',
-        'time' => 'HH:mm',
+        'time' => 'H:mm',
         'rtl' => false,
         'translation' => false,
     ];
