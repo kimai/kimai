@@ -55,7 +55,7 @@ final class LocaleService
     }
 
     /**
-     * Returns the locale specific date format, which should be used in combination with the twig filter "|date".
+     * Returns the locale-specific date format, which should be used in combination with the twig filter "|date".
      *
      * @param string $locale
      * @return string
@@ -66,7 +66,7 @@ final class LocaleService
     }
 
     /**
-     * Returns the locale specific time format, which should be used in combination with the twig filter "|time".
+     * Returns the locale-specific time format, which should be used in combination with the twig filter "|time".
      *
      * @param string $locale
      * @return string
@@ -77,7 +77,7 @@ final class LocaleService
     }
 
     /**
-     * Returns the locale specific datetime format, which should be used in combination with the twig filter "|date".
+     * Returns the locale-specific datetime format, which should be used in combination with the twig filter "|date".
      *
      * @param string $locale
      * @return string
