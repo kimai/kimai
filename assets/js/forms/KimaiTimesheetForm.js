@@ -383,7 +383,7 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
     {
         // if the duration is longer than one day, the end field should be empty
         // so kimai can calculate it after submitting the data from start + duration
-        if (seconds < 86399) {
+        if (seconds < 86400) {
             this._applyDateToField(dateTime.plus({seconds: seconds}), null, this._endTime);
         } else {
             this._endTime.value = '';
