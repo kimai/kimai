@@ -68,32 +68,32 @@ class AppExtensionTest extends TestCase
             'kimai.data_dir' => '/tmp/',
             'kimai.languages' => [
                 'en' => [
-                    'date' => 'M/d/yy',
+                    'date' => 'M/d/y',
                     'time' => 'h:mm a',
                     'rtl' => false,
                     'translation' => true,
                 ],
                 'de' => [
-                    'date' => 'dd.MM.yy',
-                    'time' => 'H:mm',
+                    'date' => 'dd.MM.y',
+                    'time' => 'HH:mm',
                     'rtl' => false,
                     'translation' => true,
                 ],
                 'he' => [
                     'date' => 'd.M.y',
-                    'time' => 'H:mm',
+                    'time' => 'HH:mm',
                     'rtl' => true,
                     'translation' => true,
                 ],
                 'tr' => [
                     'date' => 'd.MM.y',
-                    'time' => 'H:mm',
+                    'time' => 'HH:mm',
                     'rtl' => false,
                     'translation' => true,
                 ],
                 'zh_CN' => [
                     'date' => 'y/M/d',
-                    'time' => 'H:mm',
+                    'time' => 'HH:mm',
                     'rtl' => false,
                     'translation' => true,
                 ],
