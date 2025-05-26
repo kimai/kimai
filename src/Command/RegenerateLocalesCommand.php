@@ -123,6 +123,9 @@ final class RegenerateLocalesCommand extends Command
             $appLocales[$locale] = LocaleService::DEFAULT_SETTINGS;
         }
 
+        $timeFormats = [];
+        $dateFormats = [];
+
         // make sure all keys are registered for every locale
         foreach ($appLocales as $locale => $settings) {
             $settings['translation'] = \in_array($locale, $firstLevelLocales, true);
@@ -171,6 +174,9 @@ final class RegenerateLocalesCommand extends Command
 
             // pre-fill all formats with the default locale settings
             $appLocales[$locale] = $settings;
+
+            $timeFormats[$settings['time']] = $settings['time'];
+            $dateFormats[$settings['date']] = $settings['date'];
         }
 
         $removableDuplicates = [];
@@ -240,6 +246,12 @@ final class RegenerateLocalesCommand extends Command
         file_put_contents($targetFile, $content);
 
         $io->success('Created new locale definition at: ' . $filename);
+
+        $io->writeln(\sprintf('Found %s date formats:', \count($dateFormats)));
+        $io->listing(array_keys($dateFormats));
+
+        $io->writeln(\sprintf('Found %s time formats:', \count($timeFormats)));
+        $io->listing(array_keys($timeFormats));
 
         return Command::SUCCESS;
     }
