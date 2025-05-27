@@ -53,7 +53,7 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Fetch collection of activities
+     * Fetch activities
      */
     #[OA\Response(response: 200, description: 'Returns a collection of activities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ActivityCollection')))]
     #[Route(methods: ['GET'], path: '', name: 'get_activities')]
@@ -176,7 +176,7 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Update an existing activity
+     * Update activity
      */
     #[IsGranted('edit', 'activity')]
     #[OA\Patch(description: 'Update an existing activity, you can pass all or just a subset of all attributes', responses: [new OA\Response(response: 200, description: 'Returns the updated activity', content: new OA\JsonContent(ref: '#/components/schemas/ActivityEntity'))])]
@@ -212,10 +212,10 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Delete an existing activity
+     * Delete activity
      *
      * [DANGER] This will also delete ALL linked timesheets.
-     * Maybe use `PATCH` instead and mark it as inactive with `visible=false`?
+     * Do you want to use `PATCH` instead and mark it as inactive with `{visible: false}` instead?
      */
     #[IsGranted('delete', 'activity')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Delete one activity')])]
@@ -262,7 +262,7 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Fetch all rates for one activity
+     * Fetch rates for activity
      */
     #[IsGranted('edit', 'activity')]
     #[OA\Response(response: 200, description: 'Returns a collection of activity rate entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ActivityRate')))]
@@ -300,7 +300,7 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Add rate for one activity
+     * Add rate for activity
      */
     #[IsGranted('edit', 'activity')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the new created rate', content: new OA\JsonContent(ref: '#/components/schemas/ActivityRate'))])]

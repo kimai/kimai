@@ -68,7 +68,7 @@ final class TimesheetController extends BaseApiController
     }
 
     /**
-     * Fetch collection of timesheets
+     * Fetch timesheets
      */
     #[IsGranted(new Expression("is_granted('view_own_timesheet') or is_granted('view_other_timesheet')"))]
     #[OA\Response(response: 200, description: 'Returns a collection of timesheets. The datetime fields are given in the users local time including the timezone offset (ISO-8601).', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TimesheetCollection')))]
@@ -270,7 +270,7 @@ final class TimesheetController extends BaseApiController
     }
 
     /**
-     * Return timesheet
+     * Fetch timesheet
      */
     #[IsGranted('view', 'timesheet')]
     #[OA\Response(response: 200, description: 'Returns one timesheet. Be aware that the datetime fields are given in the users local time including the timezone offset via ISO 8601.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
@@ -472,7 +472,9 @@ final class TimesheetController extends BaseApiController
     }
 
     /**
-     * Restart a timesheet for the current user
+     * Restart timesheet
+     *
+     * The restarted timesheet will be created for the current user
      */
     #[IsGranted('start', 'timesheet')]
     #[OA\Response(response: 200, description: 'Restart a timesheet for the same customer, project, activity combination. The current user will be the owner of the new record. Kimai tries to stop running records, which is expected to fail depending on the configured rules. Data will be copied from the original record if requested.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
@@ -534,7 +536,7 @@ final class TimesheetController extends BaseApiController
     }
 
     /**
-     * Duplicate a timesheet
+     * Duplicate timesheet
      */
     #[IsGranted('duplicate', 'timesheet')]
     #[OA\Response(response: 200, description: 'Duplicates a timesheet, resetting the export state only.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
