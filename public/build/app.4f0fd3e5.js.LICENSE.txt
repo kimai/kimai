@@ -1,0 +1,173 @@
+/*!
+  * Bootstrap v5.3.3 (https://getbootstrap.com/)
+  * Copyright 2011-2024 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+  */
+
+/*!
+ * 
+ * litepicker.umd.js
+ * Litepicker v2.0.12 (https://github.com/wakirin/Litepicker)
+ * Package: litepicker (https://www.npmjs.com/package/litepicker)
+ * License: MIT (https://github.com/wakirin/Litepicker/blob/master/LICENCE.md)
+ * Copyright 2019-2021 Rinat G.
+ *     
+ * Hash: 504eef9c08cb42543660
+ * 
+ */
+
+/*!
+ * 
+ * plugins/mobilefriendly.js
+ * Litepicker v2.0.12 (https://github.com/wakirin/Litepicker)
+ * Package: litepicker (https://www.npmjs.com/package/litepicker)
+ * License: MIT (https://github.com/wakirin/Litepicker/blob/master/LICENCE.md)
+ * Copyright 2019-2021 Rinat G.
+ *     
+ * Hash: b9a648207aabe31b2912
+ * 
+ */
+
+/*!
+ * [KIMAI] KimaiAPI: easy access to API methods
+ */
+
+/*!
+ * [KIMAI] KimaiActiveRecords: responsible to display the users active records
+ */
+
+/*!
+ * [KIMAI] KimaiAjaxModalForm
+ *
+ * allows to assign the given selector to any element, which then is used as click-handler:
+ * opening a modal with the content from the URL given in the elements 'data-href' or 'href' attribute
+ */
+
+/*!
+ * [KIMAI] KimaiAlert: notifications for Kimai
+ */
+
+/*!
+ * [KIMAI] KimaiAlternativeLinks
+ *
+ * allows to assign the given selector to any element, which then is used as click-handler
+ * redirecting to the URL given in the elements 'data-href' or 'href' attribute
+ */
+
+/*!
+ * [KIMAI] KimaiColor: handle colors
+ */
+
+/*!
+ * [KIMAI] KimaiConfiguration: handling all configuration and runtime settings
+ */
+
+/*!
+ * [KIMAI] KimaiContainer
+ *
+ * ServiceContainer for Kimai
+ */
+
+/*!
+ * [KIMAI] KimaiContextMenu: help to create, position and display context menus
+ */
+
+/*!
+ * [KIMAI] KimaiDatatable: handles functionality for the datatable
+ */
+
+/*!
+ * [KIMAI] KimaiDatatableColumnView: manages the visibility of data-table columns in cookies
+ */
+
+/*!
+ * [KIMAI] KimaiDatePicker: single date selects (currently unused)
+ */
+
+/*!
+ * [KIMAI] KimaiDateRangePicker: activate the (daterange picker) compound field in toolbar
+ */
+
+/*!
+ * [KIMAI] KimaiDateUtils: responsible for handling date specific tasks
+ */
+
+/*!
+ * [KIMAI] KimaiEditTimesheetForm: responsible for the most important form in the application
+ */
+
+/*!
+ * [KIMAI] KimaiEscape: sanitize strings
+ */
+
+/*!
+ * [KIMAI] KimaiEvent: helper to trigger events
+ */
+
+/*!
+ * [KIMAI] KimaiForm: basic functions for all forms
+ */
+
+/*!
+ * [KIMAI] KimaiFormPlugin: base class for all none ID plugin that handle forms
+ */
+
+/*!
+ * [KIMAI] KimaiFormSelect: enhanced functionality for HTMLSelectElement
+ */
+
+/*!
+ * [KIMAI] KimaiLoader: bootstrap the application and all plugins
+ */
+
+/*!
+ * [KIMAI] KimaiMultiUpdateForm: handle the multi update checkbox list and form
+ */
+
+/*!
+ * [KIMAI] KimaiPaginatedBoxWidget: handles box widgets that have a pagination
+ */
+
+/*!
+ * [KIMAI] KimaiPlugin: base class for all plugins
+ */
+
+/*!
+ * [KIMAI] KimaiRecentActivities: responsible to reload the users recent activities
+ */
+
+/*!
+ * [KIMAI] KimaiReducedClickHandler: abstract class
+ */
+
+/*!
+ * [KIMAI] KimaiReloadPageWidget: a simple helper to reload the page on events
+ */
+
+/*!
+ * [KIMAI] KimaiStorage: simple wrapper to handle localStorage access
+ */
+
+/*!
+ * [KIMAI] KimaiThemeInitializer: initialize theme functionality
+ */
+
+/*!
+ * [KIMAI] KimaiToolbar: some event listener to handle the toolbar/data-table filter, toolbar and navigation
+ */
+
+/*!
+ * [KIMAI] KimaiTranslation: handling translation strings
+ */
+
+/*!
+ * [KIMAI] KimaiUser: information about the current user
+ */
+
+/*!
+ * [KIMAI] Notification: notifications for Kimai
+ */
+
+/*!
+ * [KIMAI] Wrapper class for loading Kimai app in browser script scope
+ */
