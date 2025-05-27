@@ -51,6 +51,8 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
         if (this._duration !== undefined) {
             this._duration.removeEventListener('change', this._durationListener);
             delete this._durationListener;
+            this._duration.removeEventListener('keydown', this._durationKeyListener);
+            delete this._durationKeyListener;
             delete this._duration;
         }
 
@@ -110,11 +112,13 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
         this._beginListener = () => this._changedBegin();
         this._endListener = () => this._changedEnd();
         this._durationListener = () => this._changedDuration();
+        this._durationKeyListener = (event) => this._changeDurationOnKeypress(event);
 
         this._beginDate.addEventListener('change', this._beginListener);
         this._beginTime.addEventListener('change', this._beginListener);
         this._endTime.addEventListener('change', this._endListener);
         this._duration.addEventListener('change', this._durationListener);
+        this._duration.addEventListener('keydown', this._durationKeyListener);
 
         if (this._duration !== null && this._durationToggle !== null) {
             this._durationToggleListener = () => {
@@ -315,11 +319,11 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
         if (begin === null && end === null) {
             const newBegin = DateTime.now();
             this._applyDateToField(newBegin, this._beginDate, this._beginTime);
-            this._applyDateToField(newBegin.plus({seconds: seconds}), null, this._endTime);
+            this._addSecondsToEndDate(newBegin, seconds);
         } else if (begin === null && end !== null) {
             this._applyDateToField(end.minus({seconds: seconds}), this._beginDate, this._beginTime);
         } else if (begin !== null && seconds >= 0) {
-            this._applyDateToField(begin.plus({seconds: seconds}), null, this._endTime);
+            this._addSecondsToEndDate(begin, seconds);
         }
     }
 
@@ -367,7 +371,23 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
      */
     _getParsedDuration()
     {
-        return this.getDateUtils().parseDuration(this._duration.value.toUpperCase());
+        return this.getDateUtils().parseDuration(this._duration.value);
+    }
+
+    /**
+     * @param {DateTime} dateTime
+     * @param {int} seconds
+     * @private
+     */
+    _addSecondsToEndDate(dateTime, seconds)
+    {
+        // if the duration is longer than one day, the end field should be empty
+        // so kimai can calculate it after submitting the data from start + duration
+        if (seconds < 86400) {
+            this._applyDateToField(dateTime.plus({seconds: seconds}), null, this._endTime);
+        } else {
+            this._endTime.value = '';
+        }
     }
 
     /**
@@ -390,4 +410,122 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
         timeField.value = this.getDateUtils().format(timeField.dataset['format'], dateTime);
     }
 
+    /**
+     * @param {KeyboardEvent} event
+     * @private
+     */
+    _changeDurationOnKeypress(event)
+    {
+        switch (event.key) {
+            case 'ArrowUp':
+            case 'ArrowDown':
+            case 'PageUp':
+            case 'PageDown':
+            case 'Home':
+            case 'End':
+                this._setDurationAsString(this._getParsedDuration());
+                break;
+            default:
+                return; // Ignore other keys
+        }
+
+        this._changeTimeOnKeypress(event, this._duration, 99999, this._durationListener);
+    }
+
+    /**
+     * This method helps the user to change a duration field with simple keyboard interaction:
+     * - Read the current duration from the given timeField input in format HH:MM (no seconds)
+     * - Change the duration based on the rules below
+     * - Write the new duration back to the field
+     * - If the field is empty or invalid it uses 00:00 as start-time
+     * - Duration cannot exceed maxtime (which is given in minutes)
+     * - Duration cannot drop below 00:00
+     * - Read the position of the cursor and decide whether to increase minutes or hours: if the cursor is in the hour section (before the colon) change hours, if the cursor is in the minute section (after the colon) change minutes
+     * - It reads the pressed key from the given KeyboardEvent and changes the duration accordingly to the rules below
+     *
+     * Rules to apply when a key is pressed:
+     * - ArrowUp key to increase the duration (either 5 minutes or 1 hour, depending on the cursor position)
+     * - ArrowDown key to decrease the duration (either 5 minutes or 1 hour, depending on the cursor position)
+     * - PageUp key to increase the duration by 1 hour
+     * - PageDown key to decrease the duration by 1 hour
+     * - Home key to set the duration to 08:00
+     * - End key to set the duration to 00:00
+     * - all other keys are ignored
+     *
+     * @param {KeyboardEvent} event
+     * @param {HTMLElement} timeField
+     * @param {int} maxTime
+     * @param {function} changeCallback
+     * @private
+     */
+    _changeTimeOnKeypress(event, timeField, maxTime, changeCallback)
+    {
+        // Parse current value or default to 00:00
+        let value = timeField.value || '00:00';
+        let [hours, minutes] = value.split(':').map(Number);
+        if (isNaN(hours)) { hours = 0; }
+        if (isNaN(minutes)) { minutes = 0; }
+
+        // Cursor position: before or after colon
+        const cursorPos = timeField.selectionStart || 0;
+        const colonPos = value.indexOf(':');
+        const inHour = cursorPos <= colonPos;
+
+        // Helper to clamp values
+        const clamp = (h, m) => {
+            let total = h * 60 + m;
+            if (total < 0) { total = 0; }
+            if (total > maxTime) { total = maxTime; }
+            h = Math.floor(total / 60);
+            m = total % 60;
+            return [h, m];
+        };
+
+        switch (event.key) {
+            case 'ArrowUp':
+                if (inHour) {
+                    [hours, minutes] = clamp(hours + 1, minutes);
+                } else {
+                    [hours, minutes] = clamp(hours, minutes + 5);
+                }
+                break;
+            case 'ArrowDown':
+                if (inHour) {
+                    [hours, minutes] = clamp(hours - 1, minutes);
+                } else {
+                    [hours, minutes] = clamp(hours, minutes - 5);
+                }
+                break;
+            case 'PageUp':
+                [hours, minutes] = clamp(hours + 1, minutes);
+                event.preventDefault();
+                break;
+            case 'PageDown':
+                [hours, minutes] = clamp(hours - 1, minutes);
+                event.preventDefault();
+                break;
+            case 'Home':
+                // TODO this should use the configured working time for today
+                hours = 8;
+                minutes = 0;
+                event.preventDefault();
+                break;
+            case 'End':
+                hours = 0;
+                minutes = 0;
+                event.preventDefault();
+                break;
+            default:
+                return; // Ignore other keys
+        }
+
+        // Format and set value
+        timeField.value = `${hours}:${minutes.toString().padStart(2, '0')}`;
+        // trigger update of linked fields
+        changeCallback(timeField);
+        // Move cursor to original position if possible
+        setTimeout(() => {
+            timeField.setSelectionRange(cursorPos, cursorPos);
+        }, 0);
+    }
 }
