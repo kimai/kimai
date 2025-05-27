@@ -162,6 +162,7 @@ final class RegenerateLocalesCommand extends Command
             $settings['time'] = str_replace("\u{202f}", ' ', $settings['time']);
 
             // keep it simple, we don't need to convert it during runtime
+            // ISO-8601 defines that 24-hour format should always use a leading zero: use HH instead of H
             $settings['time'] = str_replace('HH', 'H', $settings['time']);
             $settings['time'] = str_replace('H', 'HH', $settings['time']);
 
