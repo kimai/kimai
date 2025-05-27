@@ -59,7 +59,7 @@ final class TimePickerType extends AbstractType
     {
         $view->vars['format'] = $options['format'];
         $view->vars['time_format'] = $options['time_format'];
-        $view->vars['js_format'] = (new JavascriptFormatConverter())->convert($options['time_format']);
+        $view->vars['js_format'] = (new JavascriptFormatConverter())->convert($options['time_format']); // @phpstan-ignore argument.type
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
