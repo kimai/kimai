@@ -41,11 +41,15 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
         if (this._beginTime !== undefined) {
             this._beginTime.removeEventListener('change', this._beginListener);
             delete this._beginTime;
+            this._beginTime.removeEventListener('blur', this._beginBlurListener);
+            delete this._beginBlurListener;
         }
 
         if (this._endTime !== undefined) {
             this._endTime.removeEventListener('change', this._endListener);
             delete this._endTime;
+            this._endTime.removeEventListener('blur', this._endBlurListener);
+            delete this._endBlurListener;
         }
 
         if (this._duration !== undefined) {
@@ -53,6 +57,8 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
             delete this._durationListener;
             this._duration.removeEventListener('keydown', this._durationKeyListener);
             delete this._durationKeyListener;
+            this._duration.removeEventListener('blur', this._durationBlurListener);
+            delete this._durationBlurListener;
             delete this._duration;
         }
 
@@ -110,15 +116,21 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
         }
 
         this._beginListener = () => this._changedBegin();
+        this._beginBlurListener = () => this._parseBeginTime();
         this._endListener = () => this._changedEnd();
+        this._endBlurListener = () => this._parseEndTime();
         this._durationListener = () => this._changedDuration();
         this._durationKeyListener = (event) => this._changeDurationOnKeypress(event);
+        this._durationBlurListener = () => this._parseDuration();
 
         this._beginDate.addEventListener('change', this._beginListener);
         this._beginTime.addEventListener('change', this._beginListener);
+        this._beginTime.addEventListener('blur', this._beginBlurListener);
         this._endTime.addEventListener('change', this._endListener);
+        this._endTime.addEventListener('blur', this._endBlurListener);
         this._duration.addEventListener('change', this._durationListener);
         this._duration.addEventListener('keydown', this._durationKeyListener);
+        this._duration.addEventListener('blur', this._durationBlurListener);
 
         if (this._duration !== null && this._durationToggle !== null) {
             this._durationToggleListener = () => {
@@ -126,6 +138,147 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
             };
             this._durationToggle.addEventListener('click', this._durationToggleListener);
         }
+    }
+
+    _parseBeginTime()
+    {
+        let newBeginTime = this._formatTimeForParsing(this._beginTime.value, this._beginTime.dataset['format']);
+        if (newBeginTime !== this._beginTime.value) {
+            this._beginTime.value = newBeginTime;
+            this._changedBegin();
+        }
+    }
+
+    _parseEndTime()
+    {
+        let newEndTime = this._formatTimeForParsing(this._endTime.value, this._endTime.dataset['format']);
+        if (newEndTime !== this._endTime.value) {
+            this._endTime.value = newEndTime;
+            this._changedEnd();
+        }
+    }
+
+    _parseDuration()
+    {
+        this._setDurationAsString(this._getParsedDuration());
+    }
+
+    /**
+     * Receives a time, written by a human, probably in an invalid format.
+     * This method supports 12-hour or 24-hour format, the format string contains an uppercase "A" in case of the 12-hour format.
+     * If it is 12-hour format, then always en-US locallized with AM/PM.
+     *
+     * Ruleset:
+     * - Some locales use a dot instead of a colon, always replace the dot in HH.mm with a colon as in HH:mm
+     * - If there is an "am" or "pm", always uppercase them
+     * - Split the string into time and prefix: if AM/PM is included remove it and remember for later
+     * - If the time is a 1 or 2 character long number: use as hours
+     * - If the time now is 3 character long: use the 1 char as hour and the 2 and 3 char as minute
+     * - If the time now is 4 character long: use the 1 and 2 char as hour and the 3 and 4 char as minutes
+     * - If the format is 12-hour: try to identify the correct time and suffix
+     * - If the format is 12-hour and misses the AM/PM: try to detect whether it
+     * - If the time contains AM or PM, make sure that it is always prefixed by a space character
+     *
+     * @param {string} time
+     * @param {string} format
+     * @returns {string}
+     * @private
+     */
+    _formatTimeForParsing(time, format)
+    {
+        let formatted = time.trim();
+
+        // replace dot with colon
+        formatted = formatted.replace(/\./g, ':');
+        // uppercase 12-hour format
+        formatted = formatted.replace(/am/i, 'AM');
+        formatted = formatted.replace(/pm/i, 'PM');
+
+        // Split time and AM/PM suffix if present
+        let suffix = '';
+        let hour = 0;
+        let minute = 0;
+
+        let timePart = formatted;
+        const ampmMatch = formatted.match(/\s*(AM|PM)$/i);
+        if (ampmMatch) {
+            suffix = ampmMatch[1].toUpperCase();
+            timePart = formatted.replace(/\s*(AM|PM)$/i, '').trim();
+        }
+
+        if (timePart.indexOf(':') !== -1) {
+            const match = timePart.match(/(?:(\d+):)?(\d+)/);
+            hour = parseInt(match?.[1] || 0, 10);
+            minute = parseInt(match?.[2] || 0, 10);
+        } else {
+            timePart = timePart.replace(/:/, '');
+
+            if (/^\d{1,2}$/.test(timePart)) {
+                hour = timePart;
+            }
+
+            if (/^\d{3}$/.test(timePart)) {
+                hour = timePart.slice(0, 1);
+                minute = timePart.slice(1);
+            }
+
+            if (/^\d{4}$/.test(timePart)) {
+                hour = timePart.slice(0, 2);
+                minute = timePart.slice(2);
+            }
+        }
+
+        hour = parseInt(hour);
+        minute = parseInt(minute);
+
+        // just in case a person entered a wrong time like 35 hours
+        hour = hour % 24;
+        minute = minute % 60;
+
+        // format is 12-hour
+        if (format.toUpperCase().indexOf('A') !== -1) {
+            // time entered in 24-hour: convert to 12-hour format
+            if (hour > 12 && hour < 24) {
+                hour = hour - 12;
+                suffix = 'PM';
+            }
+
+            // if the person forgot to add a suffix, calculate it and convert time
+            if (suffix === '') {
+                if (hour === 0) {
+                    hour = 12;
+                    suffix = 'AM';
+                } else if (hour === 12) {
+                    suffix = 'PM';
+                } else {
+                    suffix = 'AM';
+                }
+            }
+
+            if (suffix === 'PM' && hour === 0) {
+                hour = 12;
+            }
+
+        } else {
+            // this is the 34-hour format branch
+
+            // check if the person entered time in 12-hour format and convert it
+            if (suffix === 'AM' && hour === 12) {
+                hour = 0;
+            } else if (suffix === 'PM' && hour !== 12) {
+                hour = (hour + 12) % 24;
+            }
+
+            // make sure we have no suffix
+            suffix = '';
+        }
+
+        formatted = hour + ':' + minute.toString().padStart(2, '0');
+        if (suffix !== '') {
+            formatted = formatted + ' ' + suffix.trim();
+        }
+
+        return formatted;
     }
 
     _isDurationConnected()
