@@ -122,4 +122,36 @@ class SamlProviderTest extends TestCase
         $sut = $this->getSamlProvider(null, $user);
         $sut->findUser($token);
     }
+
+    public function testAuthenticateNotThrowsOnOptionalAttribute(): void
+    {
+        $mapping = [
+            'mapping' => [
+                ['saml' => '$Chicken', 'kimai' => 'alias'],
+                ['saml' => '$$Email', 'kimai' => 'title'],
+            ],
+            'roles' => [
+                'attribute' => '',
+                'mapping' => []
+            ]
+        ];
+
+        $user = new User();
+        $user->setAuth(User::AUTH_SAML);
+        $user->setUserIdentifier('foo1@example.com');
+        $user->setTitle('I will not be overwritten');
+
+        $token = new SamlLoginAttributes();
+        $token->setUserIdentifier($user->getUserIdentifier());
+        $token->setAttributes([
+            'Chicken' => ['foo@example.com'],
+        ]);
+
+        $sut = $this->getSamlProvider($mapping, $user);
+        $tokenUser = $sut->findUser($token);
+        self::assertSame($user, $tokenUser);
+        self::assertTrue($tokenUser->isSamlUser());
+        self::assertEquals('foo@example.com', $tokenUser->getAlias());
+        self::assertEquals('I will not be overwritten', $tokenUser->getTitle());
+    }
 }
