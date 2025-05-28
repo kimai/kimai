@@ -27,6 +27,8 @@ class SearchTermPartTest extends TestCase
             ['bar', 'bar', null, false],
             ['hello:world', 'world', 'hello', false],
             ['hello:!world', 'world', 'hello', true],
+            ['url:https://www.example.com', 'https://www.example.com', 'url', false],
+            ['url:!https://www.example.com:8080/test.html', 'https://www.example.com:8080/test.html', 'url', true],
         ];
     }
 

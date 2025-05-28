@@ -47,7 +47,7 @@ final class UserController extends BaseApiController
     }
 
     /**
-     * Fetch collection of users
+     * Fetch users
      */
     #[IsGranted('view_user')]
     #[OA\Response(response: 200, description: 'Returns a collection of users. Required permission: view_user', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/UserCollection')))]
@@ -97,7 +97,7 @@ final class UserController extends BaseApiController
     }
 
     /**
-     * Return one user entity
+     * Fetch user
      */
     #[IsGranted('view', 'profile')]
     #[OA\Response(response: 200, description: 'Return one user entity.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
@@ -116,7 +116,7 @@ final class UserController extends BaseApiController
     }
 
     /**
-     * Return the current user entity
+     * Fetch current user
      */
     #[OA\Response(response: 200, description: 'Return the current user entity.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
     #[Route(methods: ['GET'], path: '/me', name: 'me_user')]
@@ -199,7 +199,9 @@ final class UserController extends BaseApiController
     }
 
     /**
-     * Delete API token for the current user
+     * Delete API token
+     *
+     * This ONLY works if the given API token exists and belongs to the current user
      */
     #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Success if the token could be deleted.')])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The API token ID to remove', required: true)]

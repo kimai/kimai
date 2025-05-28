@@ -151,13 +151,10 @@
 {%- endblock date_widget %}
 
 {% block time_widget -%}
-    {%- set user_format = format -%}
-    {%- set format = locale_format('time') -%}
-    {%- set jsFormat = format|js_format -%}
-    {%- set attr = attr|merge({'pattern': format|pattern, 'autocomplete': 'off', 'data-timepicker': 'on', 'data-format': jsFormat, 'placeholder': jsFormat}) -%}
+    {%- set attr = attr|merge({'pattern': time_format|pattern, 'autocomplete': 'off', 'data-timepicker': 'on', 'data-format': js_format, 'placeholder': time_format}) -%}
     <div class="input-group">
         <div class="input-group-text">
-            <a href="#" data-form-widget="date-now" data-format="{{ jsFormat }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
+            <a href="#" data-form-widget="date-now" data-format="{{ js_format }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
         </div>
         {{ block('form_widget_simple') }}
         {% set time_presets = form_time_presets(app.user.timezone) %}
@@ -168,7 +165,7 @@
                 {% for index in [0, 1, 2, 3] %}
                     <div class="dropdown-menu-column" style="min-width: 4rem">
                         {% for value in time_presets %}
-                            {% set value = value|date_format(user_format) %}
+                            {% set value = value|date_format(format) %}
                             {% if loop.index0 % 4 == index %}
                                 <a class="dropdown-item justify-content-center" href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ value }}" data-event="change">{{ value }}</a>
                             {% endif %}

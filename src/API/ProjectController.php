@@ -54,7 +54,7 @@ final class ProjectController extends BaseApiController
     }
 
     /**
-     * Fetch collection of projects
+     * Fetch projects
      */
     #[OA\Response(response: 200, description: 'Returns a collection of projects', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ProjectCollection')))]
     #[Route(methods: ['GET'], path: '', name: 'get_projects')]
@@ -151,7 +151,7 @@ final class ProjectController extends BaseApiController
     }
 
     /**
-     * Returns one project
+     * Fetch project
      */
     #[OA\Response(response: 200, description: 'Returns one project entity', content: new OA\JsonContent(ref: '#/components/schemas/ProjectEntity'))]
     #[Route(methods: ['GET'], path: '/{id}', name: 'get_project', requirements: ['id' => '\d+'])]
@@ -203,7 +203,7 @@ final class ProjectController extends BaseApiController
     }
 
     /**
-     * Update an existing project
+     * Update project
      */
     #[IsGranted('edit', 'project')]
     #[OA\Patch(description: 'Update an existing project, you can pass all or just a subset of all attributes', responses: [new OA\Response(response: 200, description: 'Returns the updated project', content: new OA\JsonContent(ref: '#/components/schemas/ProjectEntity'))])]
@@ -241,10 +241,10 @@ final class ProjectController extends BaseApiController
     }
 
     /**
-     * Delete an existing project
+     * Delete project
      *
      * [DANGER] This will also delete ALL linked activities and timesheets.
-     * Maybe use `PATCH` instead and mark it as inactive with `visible=false`?
+     * Do you want to use `PATCH` instead and mark it as inactive with `{visible: false}` instead?
      */
     #[IsGranted('delete', 'project')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Delete one project')])]
@@ -291,7 +291,7 @@ final class ProjectController extends BaseApiController
     }
 
     /**
-     * Fetch all rates for one project
+     * Fetch rates for project
      */
     #[IsGranted('edit', 'project')]
     #[OA\Response(response: 200, description: 'Returns a collection of project rate entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ProjectRate')))]
@@ -329,7 +329,7 @@ final class ProjectController extends BaseApiController
     }
 
     /**
-     * Add rate for one project
+     * Add rate for project
      */
     #[IsGranted('edit', 'project')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the new created rate', content: new OA\JsonContent(ref: '#/components/schemas/ProjectRate'))])]

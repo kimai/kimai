@@ -18,7 +18,7 @@ final class SearchTermPart
     public function __construct(string $term)
     {
         if (str_contains($term, ':')) {
-            $tmp = explode(':', $term);
+            $tmp = explode(':', $term, 2);
             // search strings like 'name:' are NOT field searches, but simply terms with a colon
             if (\count($tmp) === 2 && $tmp[1] !== '') {
                 $this->field = $tmp[0];

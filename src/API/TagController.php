@@ -59,7 +59,7 @@ final class TagController extends BaseApiController
     }
 
     /**
-     * Fetch collection of tags
+     * Fetch tags
      */
     #[OA\Response(response: 200, description: 'Find the collection of all matching tags', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TagEntity')))]
     #[Route(path: '/find', name: 'get_tags_full', methods: ['GET'])]
@@ -113,7 +113,7 @@ final class TagController extends BaseApiController
     }
 
     /**
-     * Delete a tag
+     * Delete tag
      */
     #[IsGranted('delete_tag')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'HTTP code 204 for a successful delete')])]

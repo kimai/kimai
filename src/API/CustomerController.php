@@ -52,7 +52,7 @@ final class CustomerController extends BaseApiController
     }
 
     /**
-     * Fetch collection of customers
+     * Fetch customers
      */
     #[OA\Response(response: 200, description: 'Returns a collection of customers', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/CustomerCollection')))]
     #[Route(methods: ['GET'], path: '', name: 'get_customers')]
@@ -151,7 +151,7 @@ final class CustomerController extends BaseApiController
     }
 
     /**
-     * Update an existing customer
+     * Update customer
      */
     #[IsGranted('edit', 'customer')]
     #[OA\Patch(description: 'Update an existing customer, you can pass all or just a subset of all attributes', responses: [new OA\Response(response: 200, description: 'Returns the updated customer', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))])]
@@ -187,10 +187,10 @@ final class CustomerController extends BaseApiController
     }
 
     /**
-     * Delete an existing customer
+     * Delete customer
      *
      * [DANGER] This will also delete ALL linked projects, project activities and timesheets.
-     * Maybe use `PATCH` instead and mark it as inactive with `visible=false`?
+     * Do you want to use `PATCH` instead and mark it as inactive with `{visible: false}` instead?
      */
     #[IsGranted('delete', 'customer')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Delete one customer')])]
@@ -237,7 +237,7 @@ final class CustomerController extends BaseApiController
     }
 
     /**
-     * Fetch all rates for one customer
+     * Fetch rates for customer
      */
     #[IsGranted('edit', 'customer')]
     #[OA\Response(response: 200, description: 'Returns a collection of customer rate entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/CustomerRate')))]
@@ -275,7 +275,7 @@ final class CustomerController extends BaseApiController
     }
 
     /**
-     * Add rate for one customer
+     * Add rate for customer
      */
     #[IsGranted('edit', 'customer')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the new created rate', content: new OA\JsonContent(ref: '#/components/schemas/CustomerRate'))])]

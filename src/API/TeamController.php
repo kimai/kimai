@@ -47,7 +47,7 @@ final class TeamController extends BaseApiController
     }
 
     /**
-     * Fetch collection of teams
+     * Fetch teams
      */
     #[IsGranted('view_team')]
     #[OA\Response(response: 200, description: 'Returns a collection of teams', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TeamCollection')))]

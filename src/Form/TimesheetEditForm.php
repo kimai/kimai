@@ -43,7 +43,10 @@ class TimesheetEditForm extends AbstractType
 {
     use FormTrait;
 
-    public function __construct(private CustomerRepository $customers, private SystemConfiguration $systemConfiguration)
+    public function __construct(
+        private readonly CustomerRepository $customers,
+        private readonly SystemConfiguration $systemConfiguration
+    )
     {
     }
 
@@ -400,14 +403,17 @@ class TimesheetEditForm extends AbstractType
         }
 
         $builder->add('exported', YesNoType::class, [
-            'label' => 'exported'
+            'label' => 'exported',
+            'documentation' => [
+                'description' => 'If true, this timesheet will be flagged as being exported'
+            ]
         ]);
     }
 
     protected function addBillable(FormBuilderInterface $builder, array $options): void
     {
         if ($options['include_billable']) {
-            $builder->add('billableMode', TimesheetBillableType::class, []);
+            $builder->add('billableMode', TimesheetBillableType::class);
         }
 
         $builder->addModelTransformer(new CallbackTransformer(

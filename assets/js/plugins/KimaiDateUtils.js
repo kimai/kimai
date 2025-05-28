@@ -273,7 +273,10 @@ export default class KimaiDateUtils extends KimaiPlugin {
         let luxonDuration = null;
 
         if (duration.indexOf(':') !== -1) {
-            const [, hours, minutes, seconds] = duration.match(/(\d+):(\d+)(?::(\d+))*/);
+            const match = duration.match(/(?:(\d+):)?(\d+)(?::(\d+))?/);
+            const hours = parseInt(match?.[1] || 0, 10);
+            const minutes = parseInt(match?.[2] || 0, 10);
+            const seconds = parseInt(match?.[3] || 0, 10);
             luxonDuration = Duration.fromObject({hours: hours, minutes: minutes, seconds: seconds});
         } else if (duration.indexOf('.') !== -1 || duration.indexOf(',') !== -1) {
             duration = duration.replace(/,/, '.');

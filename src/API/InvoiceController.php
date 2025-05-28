@@ -38,7 +38,7 @@ final class InvoiceController extends BaseApiController
     }
 
     /**
-     * Fetch collection of invoices
+     * Fetch invoices
      */
     #[IsGranted('view_invoice')]
     #[OA\Response(response: 200, description: 'Returns a collection of invoices', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/InvoiceCollection')))]
