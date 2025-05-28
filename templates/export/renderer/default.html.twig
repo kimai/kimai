@@ -275,6 +275,10 @@
         {
             text-align: right;
         }
+        .items th.column-exported
+        {
+            text-align: center;
+        }
         .table>thead:first-child>tr:first-child>th {
             padding-right: 5px;
         }
@@ -668,12 +672,8 @@
                                 {{ entry.description|desc2html }}
                             {% endif %}
                         </td>
-                        <td class="column-exported" {% if not columns.exported %}style="display: none"{% endif %}>
-                            {% if entry.exported %}
-                                {{ 'entryState.exported'|trans }}
-                            {% else %}
-                                {{ 'entryState.not_exported'|trans }}
-                            {% endif %}
+                        <td class="column-exported text-center" {% if not columns.exported %}style="display: none"{% endif %}>
+                            {{ widgets.label_boolean(entry.exported) }}
                         </td>
                         <td class="column-tags" {% if not columns.tags %}style="display: none"{% endif %}>
                             {% if entry.tags is defined and entry.tags is not empty %}
