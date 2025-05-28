@@ -27,7 +27,11 @@ final class TimesheetApiEditForm extends TimesheetEditForm
             return;
         }
 
-        $builder->add('billable', BillableType::class);
+        $builder->add('billable', BillableType::class, [
+            'documentation' => [
+                'description' => 'If true, this timesheet will be flagged as billable'
+            ]
+        ]);
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
@@ -56,17 +60,13 @@ final class TimesheetApiEditForm extends TimesheetEditForm
             $builder->remove('metaFields');
         }
 
+        // TODO this is only a quick fix, see bugs reports
         if ($builder->has('duration')) {
             $builder->remove('duration');
         }
 
         if ($builder->has('user')) {
             $builder->get('user')->setRequired(false);
-        }
-
-        // TODO this is only a quick fix, see bugs reports
-        if ($builder->has('duration')) {
-            $builder->remove('duration');
         }
 
         if ($builder->has('tags')) {
@@ -82,6 +82,10 @@ final class TimesheetApiEditForm extends TimesheetEditForm
     {
         $builder->add('begin', DateTimeApiType::class, array_merge($dateTimeOptions, [
             'label' => 'begin',
+            'required' => false,
+            'documentation' => [
+                'description' => 'If no begin date-time is set, the users current timestamp will be used'
+            ]
         ]));
     }
 
@@ -90,6 +94,9 @@ final class TimesheetApiEditForm extends TimesheetEditForm
         $builder->add('end', DateTimeApiType::class, array_merge($dateTimeOptions, [
             'label' => 'end',
             'required' => false,
+            'documentation' => [
+                'description' => 'If no end date-time is set, the timesheet will be running'
+            ]
         ]));
     }
 
