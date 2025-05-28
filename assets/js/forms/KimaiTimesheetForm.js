@@ -40,16 +40,18 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
 
         if (this._beginTime !== undefined) {
             this._beginTime.removeEventListener('change', this._beginListener);
-            delete this._beginTime;
+            delete this._beginListener;
             this._beginTime.removeEventListener('blur', this._beginBlurListener);
             delete this._beginBlurListener;
+            delete this._beginTime;
         }
 
         if (this._endTime !== undefined) {
             this._endTime.removeEventListener('change', this._endListener);
-            delete this._endTime;
+            delete this._endListener;
             this._endTime.removeEventListener('blur', this._endBlurListener);
             delete this._endBlurListener;
+            delete this._endTime;
         }
 
         if (this._duration !== undefined) {
