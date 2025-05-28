@@ -26,7 +26,8 @@ final class PluginCommand extends Command
 {
     public function __construct(
         private readonly PluginManager $pluginManager,
-        private readonly PackageManager $packageManager
+        private readonly PackageManager $packageManager,
+        private readonly string $projectDirectory
     )
     {
         parent::__construct();
@@ -69,17 +70,16 @@ final class PluginCommand extends Command
                 }
             }
 
-            // using getApplication()->find('doctrine:migrations:migrate') does NOT work here
-            // because the Doctrine command can only be executed once
-            // if run more than once it fails with a "Container is frozen" exception
-
-            $process = new PhpSubprocess([
-                'bin/console',
-                'doctrine:migrations:migrate',
-                '--allow-no-migration',
-                '--no-interaction',
-                '--configuration=' . $config
-            ]);
+            $process = new PhpSubprocess(
+                [
+                    'bin/console',
+                    'doctrine:migrations:migrate',
+                    '--allow-no-migration',
+                    '--no-interaction',
+                    '--configuration=' . $config
+                ],
+                $this->projectDirectory
+            );
             $process->run();
 
             if (!$process->isSuccessful()) {
