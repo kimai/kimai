@@ -18,6 +18,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use Symfony\Component\Process\PhpSubprocess;
 
 /**
  * Extend this class if you have a plugin that requires installation steps.
@@ -36,8 +37,7 @@ abstract class AbstractBundleInstallerCommand extends Command
     }
 
     /**
-     * If your bundle ships assets, that need to be available in the public/ directory,
-     * then overwrite this method and return: <true>.
+     * Return <true> if your bundle ships assets for the public/ directory.
      */
     protected function hasAssets(): bool
     {
@@ -189,11 +189,26 @@ abstract class AbstractBundleInstallerCommand extends Command
         // prevent windows from breaking
         $config = str_replace('/', DIRECTORY_SEPARATOR, $config);
 
-        $command = $this->getApplication()->find('doctrine:migrations:migrate');
-        $cmdInput = new ArrayInput(['--allow-no-migration' => true, '--configuration' => $config]);
-        $cmdInput->setInteractive(false);
-        if (0 !== $command->run($cmdInput, $output)) {
+        $process = new PhpSubprocess(
+            [
+                'bin/console',
+                'doctrine:migrations:migrate',
+                '--allow-no-migration',
+                '--no-interaction',
+                '--configuration=' . $config
+            ],
+            $this->getRootDirectory()
+        );
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            $io->error('Failed to install bundle database: ' . PHP_EOL . $config);
+            $io->error($process->getErrorOutput());
             throw new \Exception('Problem occurred while executing migrations.');
+        }
+
+        if ($io->isVerbose()) {
+            $io->write($process->getOutput());
         }
 
         $io->writeln('');
