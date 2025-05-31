@@ -461,14 +461,14 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
 
     /**
      * Ruleset:
-     * - invalid duration => skip
+     * - invalid or empty duration => skip
      * - if begin and end are empty: set begin to now and end to duration
      * - if begin is empty and end is not empty: set begin to end minus duration
      * - if begin is not empty and end is empty and duration is > 0 (running records = 0): set end to begin plus duration
      */
     _changedDuration()
     {
-        if (!this._isDurationConnected()) {
+        if (!this._isDurationConnected() || this._duration.value === '' || this._duration.value === null) {
             return;
         }
 
