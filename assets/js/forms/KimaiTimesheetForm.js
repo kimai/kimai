@@ -144,6 +144,11 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
 
     _parseBeginTime()
     {
+        const beginTime = this._beginTime.value;
+        if (beginTime === undefined || beginTime === null || beginTime === '') {
+            return;
+        }
+
         let newBeginTime = this._formatTimeForParsing(this._beginTime.value, this._beginTime.dataset['format']);
         if (newBeginTime !== this._beginTime.value) {
             this._beginTime.value = newBeginTime;
@@ -153,6 +158,11 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
 
     _parseEndTime()
     {
+        const endTime = this._endTime.value;
+        if (endTime === undefined || endTime === null || endTime === '') {
+            return;
+        }
+
         let newEndTime = this._formatTimeForParsing(this._endTime.value, this._endTime.dataset['format']);
         if (newEndTime !== this._endTime.value) {
             this._endTime.value = newEndTime;
@@ -162,6 +172,11 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
 
     _parseDuration()
     {
+        const duration = this._duration.value;
+        if (duration === undefined || duration === null || duration === '') {
+            return;
+        }
+
         this._setDurationAsString(this._getParsedDuration());
     }
 
