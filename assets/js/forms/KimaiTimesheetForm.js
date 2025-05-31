@@ -144,8 +144,7 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
 
     _parseBeginTime()
     {
-        const beginTime = this._beginTime.value;
-        if (beginTime === undefined || beginTime === null || beginTime === '') {
+        if (this._beginTime.value === '') {
             return;
         }
 
@@ -158,8 +157,7 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
 
     _parseEndTime()
     {
-        const endTime = this._endTime.value;
-        if (endTime === undefined || endTime === null || endTime === '') {
+        if (this._endTime.value === '') {
             return;
         }
 
@@ -172,8 +170,7 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
 
     _parseDuration()
     {
-        const duration = this._duration.value;
-        if (duration === undefined || duration === null || duration === '') {
+        if (this._duration.value === '') {
             return;
         }
 
@@ -468,7 +465,7 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
      */
     _changedDuration()
     {
-        if (!this._isDurationConnected() || this._duration.value === '' || this._duration.value === null) {
+        if (!this._isDurationConnected() || this._duration.value === '') {
             return;
         }
 
