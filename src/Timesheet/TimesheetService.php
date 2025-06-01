@@ -253,7 +253,7 @@ final class TimesheetService
                     continue;
                 }
 
-                throw new ValidationFailedException($errors, 'Validation Failed');
+                throw new ValidationFailedException($errors);
             }
         }
     }
