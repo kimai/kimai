@@ -9,7 +9,6 @@
 
 namespace App\Validator\Constraints;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet as TimesheetEntity;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -17,10 +16,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetNegativeDurationValidator extends ConstraintValidator
 {
-    public function __construct(private readonly SystemConfiguration $configuration)
-    {
-    }
-
     public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetNegativeDuration)) {
