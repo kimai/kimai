@@ -126,7 +126,7 @@ final class TimesheetTeamController extends TimesheetAbstractController
                 }
 
                 foreach ($newTimesheets as $newTimesheet) {
-                    $this->service->saveNewTimesheet($newTimesheet);
+                    $this->service->saveTimesheet($newTimesheet);
                 }
 
                 $this->flashSuccess('action.update.success');
