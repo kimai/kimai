@@ -45,12 +45,12 @@ final class TimesheetService
     private array $doNotValidateCodes = [];
 
     public function __construct(
-        private SystemConfiguration $configuration,
-        private TimesheetRepository $repository,
-        private TrackingModeService $trackingModeService,
-        private EventDispatcherInterface $dispatcher,
-        private AuthorizationCheckerInterface $auth,
-        private ValidatorInterface $validator
+        private readonly SystemConfiguration $configuration,
+        private readonly TimesheetRepository $repository,
+        private readonly TrackingModeService $trackingModeService,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly AuthorizationCheckerInterface $auth,
+        private readonly ValidatorInterface $validator
     ) {
     }
 
@@ -101,7 +101,7 @@ final class TimesheetService
     public function restartTimesheet(Timesheet $timesheet, Timesheet $copyFrom): Timesheet
     {
         $this->dispatcher->dispatch(new TimesheetRestartPreEvent($timesheet, $copyFrom));
-        $this->saveNewTimesheet($timesheet);
+        $this->saveNewTimesheet($timesheet); // @phpstan-ignore method.deprecated
         $this->dispatcher->dispatch(new TimesheetRestartPostEvent($timesheet, $copyFrom));
 
         return $timesheet;

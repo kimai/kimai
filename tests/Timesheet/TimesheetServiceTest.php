@@ -78,7 +78,7 @@ class TimesheetServiceTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Cannot create timesheet, already persisted');
 
-        $sut->saveNewTimesheet($timesheet);
+        $sut->saveNewTimesheet($timesheet); // @phpstan-ignore method.deprecated
     }
 
     public function testCannotStartTimesheet(): void
@@ -182,7 +182,7 @@ class TimesheetServiceTest extends TestCase
 
         $sut = $this->getSut();
 
-        $sut->updateTimesheet($timesheet);
+        $sut->updateTimesheet($timesheet); // @phpstan-ignore method.deprecated
 
         self::assertEquals('Europe/Paris', $timesheet->getTimezone());
     }
