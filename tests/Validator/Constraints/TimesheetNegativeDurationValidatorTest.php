@@ -25,11 +25,6 @@ class TimesheetNegativeDurationValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): TimesheetNegativeDurationValidator
     {
-        return $this->createMyValidator();
-    }
-
-    protected function createMyValidator(): TimesheetNegativeDurationValidator
-    {
         return new TimesheetNegativeDurationValidator();
     }
 
@@ -70,7 +65,7 @@ class TimesheetNegativeDurationValidatorTest extends ConstraintValidatorTestCase
         $timesheet->setBegin(clone $begin);
         $timesheet->setEnd(clone $begin);
 
-        $this->validator = $this->createMyValidator(true);
+        $this->validator = $this->createValidator();
         $this->validator->initialize($this->context);
 
         $this->validator->validate($timesheet, new TimesheetNegativeDuration(['message' => 'Duration cannot be negative.']));
@@ -85,7 +80,7 @@ class TimesheetNegativeDurationValidatorTest extends ConstraintValidatorTestCase
         $timesheet->setBegin(clone $begin);
         $timesheet->setBreak(3600);
 
-        $this->validator = $this->createMyValidator(true);
+        $this->validator = $this->createValidator();
         $this->validator->initialize($this->context);
 
         $this->validator->validate($timesheet, new TimesheetNegativeDuration(['message' => 'Duration cannot be negative.']));
