@@ -32,7 +32,7 @@ final class TimesheetNegativeDurationValidator extends ConstraintValidator
 
         $duration = $value->getDuration();
 
-        if ($duration !== null && $duration <= 0) {
+        if ($duration !== null && $duration < 0) {
             $this->context->buildViolation($constraint->message)
                 ->atPath('duration')
                 ->setTranslationDomain('validators')
