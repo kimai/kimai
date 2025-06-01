@@ -65,6 +65,9 @@ class TimesheetServiceTest extends TestCase
         return $service;
     }
 
+    /**
+     * @group legacy
+     */
     public function testCannotSavePersistedTimesheetAsNew(): void
     {
         $timesheet = $this->createMock(Timesheet::class);
@@ -75,7 +78,7 @@ class TimesheetServiceTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Cannot create timesheet, already persisted');
 
-        $sut->saveTimesheet($timesheet);
+        $sut->saveNewTimesheet($timesheet);
     }
 
     public function testCannotStartTimesheet(): void
@@ -160,6 +163,9 @@ class TimesheetServiceTest extends TestCase
         self::assertEquals('Europe/Paris', $timesheet->getTimezone());
     }
 
+    /**
+     * @group legacy
+     */
     public function testUpdateTimesheetFixesTimezone(): void
     {
         $user = new User();
@@ -176,7 +182,7 @@ class TimesheetServiceTest extends TestCase
 
         $sut = $this->getSut();
 
-        $sut->saveTimesheet($timesheet);
+        $sut->updateTimesheet($timesheet);
 
         self::assertEquals('Europe/Paris', $timesheet->getTimezone());
     }

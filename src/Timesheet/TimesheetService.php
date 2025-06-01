@@ -101,7 +101,7 @@ final class TimesheetService
     public function restartTimesheet(Timesheet $timesheet, Timesheet $copyFrom): Timesheet
     {
         $this->dispatcher->dispatch(new TimesheetRestartPreEvent($timesheet, $copyFrom));
-        $this->saveTimesheet($timesheet);
+        $this->saveNewTimesheet($timesheet);
         $this->dispatcher->dispatch(new TimesheetRestartPostEvent($timesheet, $copyFrom));
 
         return $timesheet;
