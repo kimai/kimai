@@ -126,6 +126,8 @@ class Invoice implements EntityWithMetaFields
     #[ORM\Column(name: 'invoice_filename', type: Types::STRING, length: 150, nullable: false)]
     #[Assert\NotNull]
     #[Assert\Length(min: 1, max: 150)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'file', type: 'string')]
     private ?string $invoiceFilename = null;
     private bool $localized = false;
