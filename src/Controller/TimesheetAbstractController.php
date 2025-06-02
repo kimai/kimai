@@ -152,7 +152,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->service->updateTimesheet($entry);
+                $this->service->saveTimesheet($entry);
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute($this->getTimesheetRoute());
@@ -184,7 +184,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
         if ($createForm->isSubmitted() && $createForm->isValid()) {
             try {
-                $this->service->saveNewTimesheet($entry);
+                $this->service->saveTimesheet($entry);
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute($this->getTimesheetRoute());
@@ -216,7 +216,7 @@ abstract class TimesheetAbstractController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->dispatcher->dispatch(new TimesheetDuplicatePreEvent($copyTimesheet, $timesheet));
-                $this->service->saveNewTimesheet($copyTimesheet);
+                $this->service->saveTimesheet($copyTimesheet);
                 $this->dispatcher->dispatch(new TimesheetDuplicatePostEvent($copyTimesheet, $timesheet));
                 $this->flashSuccess('action.update.success');
 

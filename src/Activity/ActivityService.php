@@ -97,7 +97,7 @@ class ActivityService
         $errors = $this->validator->validate($activity, null, $groups);
 
         if ($errors->count() > 0) {
-            throw new ValidationFailedException($errors, 'Validation Failed');
+            throw new ValidationFailedException($errors);
         }
     }
 

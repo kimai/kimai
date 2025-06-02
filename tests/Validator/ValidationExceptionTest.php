@@ -21,7 +21,7 @@ class ValidationExceptionTest extends TestCase
     {
         $sut = new ValidationException();
         self::assertEquals(400, $sut->getCode());
-        self::assertEquals('Validation failed', $sut->getMessage());
+        self::assertEquals('Validation Failed', $sut->getMessage());
     }
 
     public function testConstruct(): void

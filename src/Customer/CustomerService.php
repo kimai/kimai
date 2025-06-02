@@ -101,7 +101,7 @@ final class CustomerService
         $errors = $this->validator->validate($customer, null, $groups);
 
         if ($errors->count() > 0) {
-            throw new ValidationFailedException($errors, 'Validation Failed');
+            throw new ValidationFailedException($errors);
         }
     }
 
