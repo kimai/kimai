@@ -238,7 +238,9 @@ final class QuickEntryController extends AbstractController
                         if ($timesheet->isRunning()) {
                             $saveTimesheets[] = $timesheet;
                         } elseif ($duration === null) {
-                            $deleteTimesheets[] = $timesheet;
+                            if ($this->isGranted('delete', $timesheet)) {
+                                $deleteTimesheets[] = $timesheet;
+                            }
                         } else {
                             $saveTimesheets[] = $timesheet;
                         }
@@ -252,7 +254,7 @@ final class QuickEntryController extends AbstractController
 
             try {
                 $saved = false;
-                if (\count($deleteTimesheets) > 0 && $this->isGranted('delete_own_timesheet')) {
+                if (\count($deleteTimesheets) > 0) {
                     $this->timesheetService->deleteMultipleTimesheets($deleteTimesheets);
                     $saved = true;
                 }
