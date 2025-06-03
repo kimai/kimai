@@ -206,6 +206,7 @@ final class QuickEntryController extends AbstractController
                     $this->timesheetService->prepareNewTimesheet($tmp);
                     $model->addTimesheet($tmp);
                 }
+                $model->setMetaFields($metaFields);
             }
         }
 
