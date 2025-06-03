@@ -11,6 +11,7 @@ namespace App\Invoice\Hydrator;
 
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
+use Symfony\Component\Intl\Countries;
 
 final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
 {
@@ -81,6 +82,18 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             // since 2.0.15
             'user.see_others' => ($model->getQuery()?->getUser() === null),
         ];
+
+        $customer = $template->getCustomer();
+        if ($customer !== null) {
+            $country = $customer->getCountry();
+            if ($country !== null) {
+                $values['template.country'] = $country; // since 2.33
+                $values['template.country_name'] = Countries::getName($country, $language); // since 2.33
+            } else {
+                $values['template.country'] = ''; // since 2.33
+                $values['template.country_name'] = ''; // since 2.33
+            }
+        }
 
         $query = $model->getQuery();
         if ($query !== null) {

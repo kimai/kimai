@@ -34,12 +34,14 @@ class CustomerEditForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $isNew = false;
+        $hasAddress = false;
 
         if (isset($options['data'])) {
             /** @var Customer $customer */
             $customer = $options['data'];
             $isNew = $customer->getId() === null;
             $options['currency'] = $customer->getCurrency();
+            $hasAddress = $customer->getAddress() !== null && $customer->getAddress() !== '';
         }
 
         $builder
@@ -69,8 +71,36 @@ class CustomerEditForm extends AbstractType
                 'label' => 'contact',
                 'required' => false,
             ])
-            ->add('address', TextareaType::class, [
+        ;
+
+        if ($hasAddress) {
+            $builder
+                ->add('address', TextareaType::class, [
+                    'label' => 'address',
+                    'help' => 'address_deprecated',
+                    'required' => false,
+                ]);
+        }
+
+        $builder
+            ->add('address_line1', TextType::class, [
                 'label' => 'address',
+                'required' => false,
+            ])
+            ->add('address_line2', TextType::class, [
+                'label' => false,
+                'required' => false,
+            ])
+            ->add('address_line3', TextType::class, [
+                'label' => false,
+                'required' => false,
+            ])
+            ->add('postcode', TextType::class, [
+                'label' => 'postcode',
+                'required' => false,
+            ])
+            ->add('city', TextType::class, [
+                'label' => 'city',
                 'required' => false,
             ])
             ->add('country', CountryType::class, [
