@@ -140,6 +140,10 @@ final class QuickEntryController extends AbstractController
                 if ($timesheet->getProject() !== null && (!$timesheet->getProject()->isVisibleAtDate($startWeek) && !$timesheet->getProject()->isVisibleAtDate($endWeek))) {
                     continue;
                 }
+                // make sure no invisible entries are included
+                if (!$this->isGranted('start', $timesheet)) {
+                    continue;
+                }
                 $rows[$id] = [
                     'days' => $week,
                     'project' => $timesheet->getProject(),
