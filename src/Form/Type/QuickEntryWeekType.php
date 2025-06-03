@@ -9,7 +9,6 @@
 
 namespace App\Form\Type;
 
-use App\Entity\User;
 use App\Model\QuickEntryModel;
 use App\Validator\Constraints\QuickEntryTimesheet;
 use DateTime;
@@ -118,7 +117,7 @@ final class QuickEntryWeekType extends AbstractType
         });
 
         $builder->addModelTransformer(new CallbackTransformer(
-            function ($transformValue) use ($options) {
+            function ($transformValue) {
                 /** @var QuickEntryModel|null $transformValue */
                 if ($transformValue === null || $transformValue->isPrototype()) {
                     return $transformValue;

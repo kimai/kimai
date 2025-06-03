@@ -135,8 +135,8 @@ final class QuickEntryController extends AbstractController
                 if (\array_key_exists($id, $rows)) {
                     continue;
                 }
-                // there is an edge case possible with a project that starts and ends between the start and end date
-                // user could still select it from the dropdown, but it is better to hide a row than displaying already ended projects
+                // edge case: a project that starts and ends between the start and end date allows to select it from the dropdown,
+                // but it is better to hide a row than displaying already ended projects
                 if ($timesheet->getProject() !== null && (!$timesheet->getProject()->isVisibleAtDate($startWeek) && !$timesheet->getProject()->isVisibleAtDate($endWeek))) {
                     continue;
                 }
