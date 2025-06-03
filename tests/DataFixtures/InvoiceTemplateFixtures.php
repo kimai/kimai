@@ -49,9 +49,35 @@ class InvoiceTemplateFixtures implements TestFixture
         $template->setRenderer('invoice');
 
         $manager->persist($template);
-        $manager->flush();
 
         $created[] = $template;
+
+        $template2 = new InvoiceTemplate();
+
+        $template2->setName('MyInvoice');
+        $template2->setTitle('Your company name');
+        $template2->setCompany($faker->company());
+        $template2->setVat(19);
+        $template2->setDueDays(14);
+        $template2->setPaymentTerms(
+            'I would like to thank you for your confidence and will gladly be there for you in the future.' .
+            PHP_EOL .
+            'Please transfer the total amount within 14 days to the given account and use the invoice number ' .
+            'as reference.'
+        );
+        $template2->setAddress(
+            $faker->streetAddress() . PHP_EOL .
+            $faker->city() . ' ' . $faker->postcode() . ', ' . $faker->country() . PHP_EOL .
+            'Phone: ' . $faker->phoneNumber() . PHP_EOL .
+            'Email: ' . $faker->safeEmail()
+        );
+        $template2->setLanguage('en');
+        $template2->setRenderer('default');
+
+        $manager->persist($template2);
+        $manager->flush();
+
+        $created[] = $template2;
 
         return $created;
     }
