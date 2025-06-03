@@ -165,6 +165,7 @@ final class QuickEntryController extends AbstractController
                 if (!\array_key_exists('entry', $day)) {
                     // fill all rows and columns to make sure we do not have missing records
                     $tmp = $this->timesheetService->createNewTimesheet($user);
+                    $tmp->setDuration(null);
                     $tmp->setProject($row['project']);
                     $tmp->setActivity($row['activity']);
                     $newTime = \DateTime::createFromInterface($day['day']);
@@ -185,6 +186,7 @@ final class QuickEntryController extends AbstractController
         $empty->markAsPrototype();
         foreach ($week as $dayId => $day) {
             $tmp = $this->timesheetService->createNewTimesheet($user);
+            $tmp->setDuration(null);
             $newTime = \DateTime::createFromInterface($day['day']);
             $newTime = $newTime->setTime($defaultHour, $defaultMinute, 0, 0);
             $tmp->setBegin($newTime);
@@ -200,6 +202,7 @@ final class QuickEntryController extends AbstractController
                 $model = $formModel->addRow($user);
                 foreach ($week as $dayId => $day) {
                     $tmp = $this->timesheetService->createNewTimesheet($user);
+                    $tmp->setDuration(null);
                     $newTime = \DateTime::createFromInterface($day['day']);
                     $newTime = $newTime->setTime($defaultHour, $defaultMinute, 0, 0);
                     $tmp->setBegin($newTime);
