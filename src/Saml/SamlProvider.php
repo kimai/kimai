@@ -11,6 +11,7 @@ namespace App\Saml;
 
 use App\Configuration\SamlConfigurationInterface;
 use App\Entity\User;
+use App\Repository\TeamRepository;
 use App\User\UserService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -25,6 +26,7 @@ final class SamlProvider
     public function __construct(
         private readonly UserService $userService,
         private readonly UserProviderInterface $userProvider,
+        private readonly TeamRepository $teamRepository,
         private readonly SamlConfigurationInterface $configuration,
         private readonly LoggerInterface $logger
     ) {
@@ -87,6 +89,71 @@ final class SamlProvider
             } else {
                 foreach ($roles as $role) {
                     $user->addRole($role);
+                }
+            }
+        }
+
+        $teamAttribute = $this->configuration->getTeamsAttribute();
+        $teamMapping = $this->configuration->getTeamsMapping();
+
+        // extract user teams from a special saml attribute
+        if (!empty($teamAttribute) && $token->hasAttribute($teamAttribute)) {
+            $teamMap = [];
+            foreach ($teamMapping as $mapping) {
+                $field = $mapping['kimai'];
+                $team = $this->teamRepository->findById($field)[0];
+                $attribute = $mapping['saml'];
+                $leader = $mapping['leader'];
+                $teamMap[$attribute] = ['team' => $team, 'isLeader' => $leader];
+            }
+
+            // Build list of teams from the SAMl list
+            $teams = [];
+            $samlTeams = $token->getAttribute($teamAttribute);
+            foreach ($samlTeams as $teamName) {
+                if (\array_key_exists($teamName, $teamMap)) {
+                    $teams[] = $teamMap[$teamName];
+                }
+            }
+
+            // If we need to reset teams on login, remove team that user should not have
+            if ($this->configuration->isTeamsResetOnLogin()) {
+                // For all teams of the user, we check that the user should be present
+                foreach ($user->getTeams() as $userTeam) {
+                    $shouldBeInTeam = false;
+
+                    foreach($teams as $targetTeamInfo) {
+                        $team = $targetTeamInfo['team'];
+
+                        if ($userTeam === $team) {
+                            $shouldBeInTeam = true;
+                            break;
+                        }
+                    }
+
+                    // If the team was not found in the list of computed teams from SAML's list, remove the user
+                    if (!$shouldBeInTeam) {
+                        $user->removeTeam($userTeam);
+                    }
+                }
+            }
+
+            foreach ($teams as $targetTeamInfo) {
+                $team = $targetTeamInfo['team'];
+                $shouldBeLeader = $targetTeamInfo['isLeader'];
+
+                // We add the user to each team he should be present
+                if (!$user->isInTeam($team)) {
+                    $user->addTeam($team);
+                }
+
+                // We set the leader flag for the team if not correct
+                if ($shouldBeLeader && !$user->isTeamleadOf($team)) {
+                    $team->addTeamlead($user);
+                }
+
+                if (!$shouldBeLeader && $user->isTeamleadOf($team)) {
+                    $team->demoteTeamlead($user);
                 }
             }
         }
