@@ -16,6 +16,8 @@ use App\Tests\Mocks\SystemConfigurationFactory;
 use Laminas\Ldap\Exception\LdapException;
 use Laminas\Ldap\Ldap;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * @covers \App\Ldap\LdapDriver
@@ -80,10 +82,12 @@ class LdapDriverTest extends TestCase
 class TestLdapDriver extends LdapDriver
 {
     private Ldap $testDriver;
+    public LoggerInterface $logger;
 
     public function __construct(LdapConfiguration $config, Ldap $ldap)
     {
-        parent::__construct($config);
+        $this->logger = new NullLogger();
+        parent::__construct($config, $this->logger);
         $this->testDriver = $ldap;
     }
 
