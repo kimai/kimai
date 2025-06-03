@@ -133,9 +133,6 @@ final class QuickEntryWeekType extends AbstractType
                 }
 
                 $user = $transformValue->getUser();
-                if ($user === null && $options['user'] instanceof User) {
-                    $user = $options['user'];
-                }
                 foreach ($transformValue->getTimesheets() as $timesheet) {
                     $timesheet->setUser($user);
                     $timesheet->setProject($project);
@@ -162,9 +159,7 @@ final class QuickEntryWeekType extends AbstractType
                 $activity = $data->getActivity();
 
                 foreach ($newRecords as $record) {
-                    if ($user !== null) {
-                        $record->setUser($user);
-                    }
+                    $record->setUser($user);
                     if ($project !== null) {
                         $record->setProject($project);
                     }

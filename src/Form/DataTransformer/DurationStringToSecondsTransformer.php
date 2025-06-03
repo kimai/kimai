@@ -26,6 +26,7 @@ final class DurationStringToSecondsTransformer implements DataTransformerInterfa
         }
 
         try {
+
             if (!\is_int($value) && is_numeric($value)) {
                 $value = (int) $value;
             }

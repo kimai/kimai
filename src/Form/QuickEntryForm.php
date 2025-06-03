@@ -92,9 +92,9 @@ final class QuickEntryForm extends AbstractType
             'entry_options' => [
                 'label' => false,
                 'duration_minutes' => $this->configuration->getTimesheetIncrementDuration(),
-                // this is NOT the start_date, because it would prevent projects from appearing
-                // in the first days of the week, if the projects ends at the end of the week
-                // the validation still triggers if the user selects days outside the project range
+                // this is NOT the start_date, because it would prevent projects from appearing in the
+                // first days of the week if the project ends at the end of the week.
+                // the validation still triggers if the user selects days outside the project range.
                 'start_date' => $options['end_date'],
                 'end_date' => $options['end_date'],
                 'empty_data' => function (FormInterface $form) use ($options) {
