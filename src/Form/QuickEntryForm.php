@@ -99,7 +99,10 @@ final class QuickEntryForm extends AbstractType
                 'start_date' => $options['end_date'],
                 'end_date' => $options['end_date'],
                 'empty_data' => function (FormInterface $form) use ($options) {
-                    return clone $options['prototype_data'];
+                    if ($options['prototype_data'] instanceof QuickEntryModel) {
+                        return clone $options['prototype_data'];
+                    }
+                    throw new \Exception('Invalid Prototype given');
                 },
                 'prototype_data' => clone $options['prototype_data'],
             ],

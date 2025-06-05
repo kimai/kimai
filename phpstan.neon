@@ -2839,21 +2839,6 @@ parameters:
             path: src/Form/Type/QuickEntryTimesheetType.php
 
         -
-            message: "#^Cannot access offset 'activity' on mixed\\.$#"
-            count: 1
-            path: src/Form/Type/QuickEntryWeekType.php
-
-        -
-            message: "#^Cannot access offset 'project' on mixed\\.$#"
-            count: 1
-            path: src/Form/Type/QuickEntryWeekType.php
-
-        -
-            message: "#^Cannot clone mixed\\.$#"
-            count: 1
-            path: src/Form/Type/QuickEntryWeekType.php
-
-        -
             message: "#^Method App\\\\Form\\\\Type\\\\SearchTermType\\:\\:buildForm\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Type/SearchTermType.php
