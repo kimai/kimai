@@ -271,8 +271,16 @@ final class QuickEntryController extends AbstractController
                 }
 
                 if (\count($saveTimesheets) > 0) {
-                    $this->timesheetService->updateMultipleTimesheets($saveTimesheets);
-                    $saved = true;
+                    $saveMe = [];
+                    foreach ($saveTimesheets as $timesheet) {
+                        if ($timesheet->getId() === null || $this->isGranted('edit', $timesheet)) {
+                            $saveMe[] = $timesheet;
+                        }
+                    }
+                    if (\count($saveMe) > 0) {
+                        $this->timesheetService->updateMultipleTimesheets($saveMe);
+                        $saved = true;
+                    }
                 }
 
                 if ($saved) {
