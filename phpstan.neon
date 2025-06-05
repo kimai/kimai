@@ -2010,7 +2010,7 @@ parameters:
 
         -
             message: "#^Cannot clone mixed\\.$#"
-            count: 2
+            count: 1
             path: src/Form/QuickEntryForm.php
 
         -

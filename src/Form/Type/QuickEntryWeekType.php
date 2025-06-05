@@ -96,7 +96,7 @@ final class QuickEntryWeekType extends AbstractType
         ]);
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
-            if ($event->getData() === null) {
+            if ($event->getData() === null && $options['prototype_data'] instanceof QuickEntryModel) {
                 $event->setData(clone $options['prototype_data']);
             }
         });
