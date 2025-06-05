@@ -20,6 +20,7 @@ use App\Repository\TimesheetRepository;
 use App\Timesheet\FavoriteRecordService;
 use App\Timesheet\TimesheetService;
 use App\Utils\PageSetup;
+use App\WorkingTime\WorkingTimeService;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,6 +39,7 @@ final class QuickEntryController extends AbstractController
         private readonly TimesheetRepository $repository,
         private readonly FavoriteRecordService $favoriteRecordService,
         private readonly EventDispatcherInterface $dispatcher,
+        private readonly WorkingTimeService $workingTimeService,
     )
     {
     }
@@ -114,41 +116,46 @@ final class QuickEntryController extends AbstractController
 
         ksort($rows);
 
-        // attach recent activities
-        $amount = $this->configuration->getQuickEntriesRecentAmount();
-        if ($amount > 0) {
-            $takeOverWeeks = $this->configuration->find('quick_entry.recent_activity_weeks');
-            $startFrom = null;
-            if ($takeOverWeeks !== null && \intval($takeOverWeeks) > 0) {
-                $startFrom = clone $startWeek;
-                $startFrom->modify(\sprintf('-%s weeks', $takeOverWeeks));
-            }
+        // this should also check via lock service
+        $locked = $this->workingTimeService->isApproved($user, $endWeek);
 
-            $favorites = $this->favoriteRecordService->favoriteEntries($user, $amount);
-            foreach ($favorites as $favorite) {
-                $timesheet = $favorite->getTimesheet();
-                if ($startFrom !== null && !$favorite->isFavorite() && $startFrom > $timesheet->getBegin()) {
-                    continue;
+        if (!$locked) {
+            // attach recent activities
+            $amount = $this->configuration->getQuickEntriesRecentAmount();
+            if ($amount > 0) {
+                $takeOverWeeks = $this->configuration->find('quick_entry.recent_activity_weeks');
+                $startFrom = null;
+                if ($takeOverWeeks !== null && \intval($takeOverWeeks) > 0) {
+                    $startFrom = clone $startWeek;
+                    $startFrom->modify(\sprintf('-%s weeks', $takeOverWeeks));
                 }
 
-                $id = $timesheet->getProject()->getId() . '_' . $timesheet->getActivity()->getId();
-                if (\array_key_exists($id, $rows)) {
-                    continue;
+                $favorites = $this->favoriteRecordService->favoriteEntries($user, $amount);
+                foreach ($favorites as $favorite) {
+                    $timesheet = $favorite->getTimesheet();
+                    if ($startFrom !== null && !$favorite->isFavorite() && $startFrom > $timesheet->getBegin()) {
+                        continue;
+                    }
+
+                    $id = $timesheet->getProject()->getId() . '_' . $timesheet->getActivity()->getId();
+                    if (\array_key_exists($id, $rows)) {
+                        continue;
+                    }
+                    // edge case: a project that starts and ends between the start and end date allows to select it from the dropdown,
+                    // but it is better to hide a row than displaying already ended projects
+                    if ($timesheet->getProject() !== null && (!$timesheet->getProject()->isVisibleAtDate($startWeek) && !$timesheet->getProject()->isVisibleAtDate($endWeek))) {
+                        continue;
+                    }
+                    // make sure no invisible entries are included
+                    if (!$this->isGranted('start', $timesheet)) {
+                        continue;
+                    }
+                    $rows[$id] = [
+                        'days' => $week,
+                        'project' => $timesheet->getProject(),
+                        'activity' => $timesheet->getActivity()
+                    ];
                 }
-                // edge case: a project that starts and ends between the start and end date allows to select it from the dropdown,
-                // but it is better to hide a row than displaying already ended projects
-                if ($timesheet->getProject() !== null && (!$timesheet->getProject()->isVisibleAtDate($startWeek) && !$timesheet->getProject()->isVisibleAtDate($endWeek))) {
-                    continue;
-                }
-                // make sure no invisible entries are included
-                if (!$this->isGranted('start', $timesheet)) {
-                    continue;
-                }
-                $rows[$id] = [
-                    'days' => $week,
-                    'project' => $timesheet->getProject(),
-                    'activity' => $timesheet->getActivity()
-                ];
             }
         }
 
@@ -200,7 +207,7 @@ final class QuickEntryController extends AbstractController
 
         // add empty rows for simpler starting
         $minRows = \intval($this->configuration->find('quick_entry.minimum_rows'));
-        if ($formModel->countRows() < $minRows) {
+        if (!$locked && $formModel->countRows() < $minRows) {
             $newRows = $minRows - $formModel->countRows();
             for ($a = 0; $a < $newRows; $a++) {
                 $model = $formModel->addRow($user);
@@ -288,6 +295,7 @@ final class QuickEntryController extends AbstractController
             'days' => $week,
             'form' => $form->createView(),
             'metaColumns' => $metaFields,
+            'locked' => $locked,
         ]);
     }
 }
