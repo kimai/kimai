@@ -112,7 +112,7 @@ final class QuickEntryForm extends AbstractType
         ]);
     }
 
-    public function finishView(FormView $view, FormInterface $form, array $options)
+    public function finishView(FormView $view, FormInterface $form, array $options): void
     {
         usort($view['rows']->children, function (FormView $a, FormView $b) {
             /** @var \App\Model\QuickEntryModel $objectA */
