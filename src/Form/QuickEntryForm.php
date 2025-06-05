@@ -18,6 +18,7 @@ use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\Valid;
@@ -109,6 +110,25 @@ final class QuickEntryForm extends AbstractType
                 new All(['constraints' => [new QuickEntryModel()]])
             ],
         ]);
+    }
+
+    public function finishView(FormView $view, FormInterface $form, array $options)
+    {
+        usort($view['rows']->children, function (FormView $a, FormView $b) {
+            /** @var \App\Model\QuickEntryModel $objectA */
+            $objectA = $a->vars['data'];
+            /** @var \App\Model\QuickEntryModel $objectB */
+            $objectB = $b->vars['data'];
+
+            $existingA = $objectA->hasExistingTimesheet();
+            $existingB = $objectB->hasExistingTimesheet();
+
+            if ($existingA === $existingB) {
+                return 0;
+            }
+
+            return ($existingA && !$existingB) ? -1 : 1;
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver): void
