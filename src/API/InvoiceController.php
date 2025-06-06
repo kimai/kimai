@@ -10,6 +10,7 @@
 namespace App\API;
 
 use App\Entity\Invoice;
+use App\Invoice\ServiceInvoice;
 use App\Repository\CustomerRepository;
 use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceArchiveQuery;
@@ -18,6 +19,7 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use OpenApi\Attributes as OA;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -25,6 +27,7 @@ use Symfony\Component\Validator\Constraints;
 
 #[Route(path: '/invoices')]
 #[IsGranted('API')]
+#[IsGranted('view_invoice')]
 #[OA\Tag(name: 'Invoice')]
 final class InvoiceController extends BaseApiController
 {
@@ -40,7 +43,6 @@ final class InvoiceController extends BaseApiController
     /**
      * Fetch invoices
      */
-    #[IsGranted('view_invoice')]
     #[OA\Response(response: 200, description: 'Returns a collection of invoices', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/InvoiceCollection')))]
     #[Route(methods: ['GET'], path: '', name: 'get_invoices')]
     #[Rest\QueryParam(name: 'begin', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records after this date will be included (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
@@ -89,7 +91,6 @@ final class InvoiceController extends BaseApiController
     /**
      * Fetch invoice
      */
-    #[IsGranted('view_invoice')]
     #[OA\Response(response: 200, description: 'Returns one invoice', content: new OA\JsonContent(ref: '#/components/schemas/Invoice'))]
     #[Route(methods: ['GET'], path: '/{id}', name: 'get_invoice', requirements: ['id' => '\d+'])]
     public function getAction(Invoice $invoice): Response
@@ -98,5 +99,29 @@ final class InvoiceController extends BaseApiController
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Download invoice
+     *
+     * The returned `content-type` depends on the type of invoice document.
+     * Could be anything from `application/pdf` to `application/vnd.openxmlformats-officedocument.wordprocessingml.document`.
+     *
+     * Use the response header to detect the filename, e.g. `content-disposition: attachment; filename=2025-001-acmme_company.pdf`.
+     */
+    #[OA\Response(response: 200, description: 'Returns the (binary) invoice document', content: new OA\MediaType(mediaType: 'application/octet-stream', schema: new OA\Schema(type: 'string', format: 'binary')))]
+    #[Route(path: '/{id}/download', requirements: ['id' => '\d+'], methods: ['GET'])]
+    #[IsGranted(new Expression("is_granted('access', subject.getCustomer())"), 'invoice')]
+    public function download(Invoice $invoice, ServiceInvoice $service): Response
+    {
+        $file = $service->getInvoiceFile($invoice);
+
+        if (null === $file) {
+            throw $this->createNotFoundException(
+                \sprintf('Invoice file "%s" could not be found for invoice ID "%s"', $invoice->getInvoiceFilename(), $invoice->getId())
+            );
+        }
+
+        return $this->file($file->getRealPath(), $file->getBasename());
     }
 }
