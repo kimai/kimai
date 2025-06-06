@@ -9,7 +9,6 @@
 
 namespace App\Form\Type;
 
-use App\Entity\User;
 use App\Model\QuickEntryModel;
 use App\Validator\Constraints\QuickEntryTimesheet;
 use DateTime;
@@ -77,21 +76,6 @@ final class QuickEntryWeekType extends AbstractType
         };
         $builder->addEventListener(FormEvents::PRE_SET_DATA, $activityFunction);
 
-        $activityPreSubmitFunction = function (FormEvent $event) use ($activityOptions) {
-            $data = $event->getData();
-
-            if (isset($data['project']) && !empty($data['project'])) {
-                $activityOptions['projects'] = [$data['project']];
-            }
-
-            if (isset($data['activity']) && !empty($data['activity'])) {
-                $activityOptions['activities'] = [$data['activity']];
-            }
-
-            $event->getForm()->add('activity', ActivityType::class, $activityOptions);
-        };
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, $activityPreSubmitFunction);
-
         $builder->add('metaFields', MetaFieldsCollectionType::class);
 
         $builder->add('timesheets', CollectionType::class, [
@@ -112,13 +96,13 @@ final class QuickEntryWeekType extends AbstractType
         ]);
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
-            if ($event->getData() === null) {
+            if ($event->getData() === null && $options['prototype_data'] instanceof QuickEntryModel) {
                 $event->setData(clone $options['prototype_data']);
             }
         });
 
         $builder->addModelTransformer(new CallbackTransformer(
-            function ($transformValue) use ($options) {
+            function ($transformValue) {
                 /** @var QuickEntryModel|null $transformValue */
                 if ($transformValue === null || $transformValue->isPrototype()) {
                     return $transformValue;
@@ -133,9 +117,6 @@ final class QuickEntryWeekType extends AbstractType
                 }
 
                 $user = $transformValue->getUser();
-                if ($user === null && $options['user'] instanceof User) {
-                    $user = $options['user'];
-                }
                 foreach ($transformValue->getTimesheets() as $timesheet) {
                     $timesheet->setUser($user);
                     $timesheet->setProject($project);
@@ -162,9 +143,7 @@ final class QuickEntryWeekType extends AbstractType
                 $activity = $data->getActivity();
 
                 foreach ($newRecords as $record) {
-                    if ($user !== null) {
-                        $record->setUser($user);
-                    }
+                    $record->setUser($user);
                     if ($project !== null) {
                         $record->setProject($project);
                     }
