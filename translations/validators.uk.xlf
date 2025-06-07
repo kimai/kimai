@@ -146,6 +146,10 @@
         <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
         <target state="translated">Вибраний період неможливо заблокувати: непідтверджені запити на відсутність очікують на розгляд.</target>
       </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve" approved="no">
+        <source>Duration cannot be negative.</source>
+        <target state="translated">Тривалість не може бути від'ємним числом.</target>
+      </trans-unit>
     </body>
   </file>
   <file original="validators.en.xlf" source-language="en" target-language="uk" datatype="plaintext">
