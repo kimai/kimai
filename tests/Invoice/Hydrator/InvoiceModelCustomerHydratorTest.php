@@ -37,6 +37,11 @@ class InvoiceModelCustomerHydratorTest extends TestCase
         self::assertEquals([
             'customer.id' => null,
             'customer.address' => "Foo\nStreet\n1111 City",
+            'customer.address_line1' => '',
+            'customer.address_line2' => '',
+            'customer.address_line3' => '',
+            'customer.city' => '',
+            'customer.postcode' => '',
             'customer.name' => 'customer,with/special#name',
             'customer.contact' => '',
             'customer.company' => '',
@@ -64,6 +69,11 @@ class InvoiceModelCustomerHydratorTest extends TestCase
         $keys = [
             'customer.id',
             'customer.address',
+            'customer.address_line1',
+            'customer.address_line2',
+            'customer.address_line3',
+            'customer.city',
+            'customer.postcode',
             'customer.name',
             'customer.contact',
             'customer.company',
