@@ -23,6 +23,8 @@ final class XlsxRenderer implements RendererInterface, TimesheetExportInterface
 {
     use ExportTrait;
 
+    private string $id = 'xlsx';
+
     public function __construct(
         private readonly SpreadsheetRenderer $spreadsheetRenderer,
         private readonly TranslatorInterface $translator,
@@ -30,9 +32,14 @@ final class XlsxRenderer implements RendererInterface, TimesheetExportInterface
     {
     }
 
+    public function setId(string $id): void
+    {
+        $this->id = $id;
+    }
+
     public function getId(): string
     {
-        return 'xlsx';
+        return $this->id;
     }
 
     public function getTitle(): string
@@ -55,7 +62,7 @@ final class XlsxRenderer implements RendererInterface, TimesheetExportInterface
     /**
      * @param ExportableItem[] $exportItems
      */
-    public function renderFile(array $exportItems, TimesheetQuery $query): \SplFileInfo
+    private function renderFile(array $exportItems, TimesheetQuery $query): \SplFileInfo
     {
         $filename = @tempnam(sys_get_temp_dir(), 'kimai-export-xlsx');
         if (false === $filename) {
