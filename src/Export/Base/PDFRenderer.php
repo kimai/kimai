@@ -29,6 +29,7 @@ class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
     use PDFRendererTrait;
 
     private string $id = 'pdf';
+    private string $title = 'pdf';
     private string $template = 'default.pdf.twig';
     private array $pdfOptions = [];
 
@@ -42,7 +43,7 @@ class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
 
     public function getTitle(): string
     {
-        return 'pdf';
+        return $this->title;
     }
 
     protected function getTemplate(): string
@@ -117,6 +118,11 @@ class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
     public function setId(string $id): void
     {
         $this->id = $id;
+    }
+
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
     }
 
     public function getId(): string

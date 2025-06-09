@@ -27,6 +27,7 @@ final class CsvRenderer implements RendererInterface, TimesheetExportInterface
     use ExportTrait;
 
     private string $id = 'csv';
+    private string $title = 'default';
 
     public function __construct(
         private readonly SpreadsheetRenderer $spreadsheetRenderer,
@@ -45,9 +46,14 @@ final class CsvRenderer implements RendererInterface, TimesheetExportInterface
         return $this->id;
     }
 
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+
     public function getTitle(): string
     {
-        return 'csv';
+        return $this->title;
     }
 
     /**

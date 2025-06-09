@@ -24,6 +24,7 @@ final class XlsxRenderer implements RendererInterface, TimesheetExportInterface
     use ExportTrait;
 
     private string $id = 'xlsx';
+    private string $title = 'default';
 
     public function __construct(
         private readonly SpreadsheetRenderer $spreadsheetRenderer,
@@ -42,9 +43,14 @@ final class XlsxRenderer implements RendererInterface, TimesheetExportInterface
         return $this->id;
     }
 
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+
     public function getTitle(): string
     {
-        return 'xlsx';
+        return $this->title;
     }
 
     /**
