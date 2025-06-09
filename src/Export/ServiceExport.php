@@ -132,7 +132,7 @@ final class ServiceExport
 
     public function getTimesheetExporterById(string $id): ?TimesheetExportInterface
     {
-        foreach ($this->timesheetExporter as $exporter) {
+        foreach ($this->getTimesheetExporter() as $exporter) {
             if ($exporter->getId() === $id) {
                 return $exporter;
             }
@@ -147,7 +147,6 @@ final class ServiceExport
     }
 
     /**
-     * @param ExportQuery $query
      * @return ExportableItem[]
      * @throws TooManyItemsExportException
      */

@@ -29,7 +29,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('create_export')]
 final class ExportController extends AbstractController
 {
-    public function __construct(private ServiceExport $export)
+    public function __construct(private readonly ServiceExport $export)
     {
     }
 
@@ -141,7 +141,6 @@ final class ExportController extends AbstractController
     }
 
     /**
-     * @param ExportQuery $query
      * @return ExportableItem[]
      * @throws TooManyItemsExportException
      */
@@ -158,8 +157,6 @@ final class ExportController extends AbstractController
     }
 
     /**
-     * @param ExportQuery $query
-     * @param string $method
      * @return FormInterface<ExportQuery>
      */
     private function getToolbarForm(ExportQuery $query, string $method): FormInterface
