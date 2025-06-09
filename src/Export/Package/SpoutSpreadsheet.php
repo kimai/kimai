@@ -120,8 +120,10 @@ class SpoutSpreadsheet implements SpreadsheetPackage
 
         if ($this->writer instanceof AbstractWriterMultiSheets) {
             $sheetView = new SheetView();
-            $sheetView->setFreezeColumn('D');
-            $sheetView->setFreezeRow(2);
+
+            // deactivated, because the column order is now configurable
+            //$sheetView->setFreezeColumn('D');
+            //$sheetView->setFreezeRow(2);
 
             $this->writer->getCurrentSheet()->setSheetView($sheetView);
         }
