@@ -14,6 +14,7 @@ use App\Export\Base\CsvRenderer;
 use App\Export\Base\SpreadsheetRenderer;
 use App\Tests\Export\Renderer\AbstractRendererTestCase;
 use App\Tests\Export\Renderer\MetaFieldColumnSubscriber;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -42,7 +43,7 @@ class CsvRendererTest extends AbstractRendererTestCase
         $dispatcher = new EventDispatcher();
         $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
 
-        return new CsvRenderer(new SpreadsheetRenderer($dispatcher, $security), $translator);
+        return new CsvRenderer(new SpreadsheetRenderer($dispatcher, $security, $this->createMock(LoggerInterface::class)), $translator);
     }
 
     public function testConfiguration(): void
@@ -50,7 +51,7 @@ class CsvRendererTest extends AbstractRendererTestCase
         $sut = $this->getAbstractRenderer();
 
         self::assertEquals('csv', $sut->getId());
-        self::assertEquals('csv', $sut->getTitle());
+        self::assertEquals('default', $sut->getTitle());
     }
 
     public static function getTestModel(): array

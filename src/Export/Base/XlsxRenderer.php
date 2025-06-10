@@ -25,6 +25,7 @@ final class XlsxRenderer implements RendererInterface, TimesheetExportInterface
 
     private string $id = 'xlsx';
     private string $title = 'default';
+    private ?string $locale = null;
 
     public function __construct(
         private readonly SpreadsheetRenderer $spreadsheetRenderer,
@@ -46,6 +47,11 @@ final class XlsxRenderer implements RendererInterface, TimesheetExportInterface
     public function setTitle(string $title): void
     {
         $this->title = $title;
+    }
+
+    public function setLocale(?string $locale): void
+    {
+        $this->locale = $locale;
     }
 
     public function getTitle(): string
@@ -75,7 +81,7 @@ final class XlsxRenderer implements RendererInterface, TimesheetExportInterface
             throw new \Exception('Could not open temporary file');
         }
 
-        $spreadsheet = new SpoutSpreadsheet(new Writer(), $this->translator);
+        $spreadsheet = new SpoutSpreadsheet(new Writer(), $this->translator, $this->locale);
         $spreadsheet->open($filename);
 
         $this->spreadsheetRenderer->writeSpreadsheet($spreadsheet, $exportItems, $query);

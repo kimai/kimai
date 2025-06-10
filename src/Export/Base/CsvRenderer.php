@@ -28,6 +28,7 @@ final class CsvRenderer implements RendererInterface, TimesheetExportInterface
 
     private string $id = 'csv';
     private string $title = 'default';
+    private ?string $locale = null;
 
     public function __construct(
         private readonly SpreadsheetRenderer $spreadsheetRenderer,
@@ -49,6 +50,11 @@ final class CsvRenderer implements RendererInterface, TimesheetExportInterface
     public function setTitle(string $title): void
     {
         $this->title = $title;
+    }
+
+    public function setLocale(?string $locale): void
+    {
+        $this->locale = $locale;
     }
 
     public function getTitle(): string
@@ -81,11 +87,12 @@ final class CsvRenderer implements RendererInterface, TimesheetExportInterface
         $options = new Options();
         $options->SHOULD_ADD_BOM = false;
 
-        $spreadsheet = new SpoutSpreadsheet(new Writer($options), $this->translator);
+        $spreadsheet = new SpoutSpreadsheet(new Writer($options), $this->translator, $this->locale);
         $spreadsheet->open($filename);
 
         $this->spreadsheetRenderer->registerFormatter('date', new DateStringFormatter());
-        $this->spreadsheetRenderer->registerFormatter('duration', new DurationPlainFormatter());
+        $this->spreadsheetRenderer->registerFormatter('duration', new DurationPlainFormatter(false));
+        $this->spreadsheetRenderer->registerFormatter('duration_seconds', new DurationPlainFormatter(true));
         $this->spreadsheetRenderer->writeSpreadsheet($spreadsheet, $exportItems, $query);
 
         return new \SplFileInfo($filename);
