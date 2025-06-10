@@ -57,4 +57,17 @@ class ExportTemplateTest extends AbstractEntityTestCase
         $sut->setOptions(null);
         self::assertEquals([], $sut->getOptions());
     }
+
+    public function testClone(): void
+    {
+        $sut = new ExportTemplate();
+        $r = new \ReflectionObject($sut);
+        $p = $r->getProperty('id');
+        $p->setAccessible(true);
+        $p->setValue($sut, 13);
+        self::assertEquals(13, $sut->getId());
+
+        $sut2 = clone $sut;
+        self::assertNull($sut2->getId());
+    }
 }

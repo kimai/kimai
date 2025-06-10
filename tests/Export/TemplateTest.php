@@ -27,7 +27,7 @@ class TemplateTest extends TestCase
         self::assertEquals([], $template->getOptions());
     }
 
-    public function setsAndGetsColumnsCorrectly(): void
+    public function testSetsAndGetsColumnsCorrectly(): void
     {
         $template = new Template('id', 'title');
         $columns = ['Column1', 'Column2'];
@@ -37,7 +37,7 @@ class TemplateTest extends TestCase
         self::assertEquals([], $template->getColumns());
     }
 
-    public function setsAndGetsOptionsCorrectly(): void
+    public function testSetsAndGetsOptionsCorrectly(): void
     {
         $template = new Template('id', 'title');
         $options = ['key1' => 'value1', 'key2' => 'value2'];
@@ -47,14 +47,14 @@ class TemplateTest extends TestCase
         self::assertEquals([], $template->getOptions());
     }
 
-    public function setsAndGetsLocaleCorrectly(): void
+    public function testSetsAndGetsLocaleCorrectly(): void
     {
         $template = new Template('id', 'title');
         $template->setLocale('en_US');
         self::assertEquals('en_US', $template->getLocale());
     }
 
-    public function handlesNullLocaleGracefully(): void
+    public function testHandlesNullLocaleGracefully(): void
     {
         $template = new Template('id', 'title');
         $template->setLocale(null);

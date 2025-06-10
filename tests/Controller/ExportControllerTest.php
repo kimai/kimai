@@ -25,7 +25,7 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         $this->assertUrlIsSecured('/export/');
     }
 
-    public function testIsSecureForrole(): void
+    public function testIsSecureForRole(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/export/');
     }
@@ -89,6 +89,16 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         $this->assertHasDataTable($client);
         // +1 row for summary
         $this->assertDataTableRowCount($client, 'datatable_export', 22);
+
+        $header = $client->getCrawler()->filter('section.content div.datatable_export table.dataTable thead th');
+        $titles = [];
+        /** @var \DOMElement $th */
+        foreach ($header as $th) {
+            $titles[] = trim($th->textContent);
+        }
+        self::assertEquals([
+            '', 'Date', 'User', 'Project', 'Activity', 'Description', 'Tags', 'Duration', 'Unit price', 'Internal price', 'Total price', '',
+        ], $titles);
 
         // assert export type buttons are available
         $expected = [
@@ -246,4 +256,6 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
             self::assertTrue($timesheet->isExported());
         }
     }
+
+    // FIXME add tests
 }

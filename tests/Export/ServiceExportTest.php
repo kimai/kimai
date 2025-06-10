@@ -35,10 +35,11 @@ use Twig\Environment;
  */
 class ServiceExportTest extends TestCase
 {
-    private function createSut(bool $withTemplates = false): ServiceExport
+    private function createSut(bool $withTemplates = false, int $failureCount = 1): ServiceExport
     {
         $repository = $this->createMock(ExportTemplateRepository::class);
         $templates = [];
+        $logger = $this->createMock(LoggerInterface::class);
 
         if ($withTemplates) {
             $template1 = $this->createMock(ExportTemplate::class);
@@ -55,7 +56,15 @@ class ServiceExportTest extends TestCase
             $template2->method('getRenderer')->willReturn('xlsx');
             $template2->method('getColumns')->willReturn(['date', 'begin', 'duration', 'rate', 'user.name']);
 
-            $templates = [$template1, $template2];
+            $template3 = $this->createMock(ExportTemplate::class);
+            $template3->method('getTitle')->willReturn('XLSX Test');
+            $template3->method('getLanguage')->willReturn('it');
+            $template3->method('getRenderer')->willReturn('foo'); // invalid renderer will be ignored
+            $template3->method('getColumns')->willReturn(['date', 'begin', 'duration', 'rate', 'user.name']);
+
+            $logger->expects($this->exactly($failureCount))->method('error')->with('Unknown export template type: ' . $template3->getRenderer());
+
+            $templates = [$template1, $template2, $template3];
         }
 
         $repository->method('findAll')->willReturn($templates);
@@ -67,7 +76,7 @@ class ServiceExportTest extends TestCase
             (new CsvRendererFactoryMock($this))->create(),
             (new XlsxRendererFactoryMock($this))->create(),
             $repository,
-            $this->createMock(LoggerInterface::class),
+            $logger,
         );
     }
 
@@ -125,13 +134,12 @@ class ServiceExportTest extends TestCase
 
     public function testWithTemplates(): void
     {
-        $sut = $this->createSut(true);
+        $sut = $this->createSut(true, 5);
 
         $renderer = $sut->getRenderer();
         self::assertCount(2, $renderer);
         self::assertInstanceOf(CsvRenderer::class, $renderer[0]);
         self::assertInstanceOf(XlsxRenderer::class, $renderer[1]);
-        self::assertInstanceOf(CsvRenderer::class, $sut->getRendererById('1'));
         self::assertInstanceOf(CsvRenderer::class, $sut->getRendererById('1'));
         self::assertNull($sut->getRendererById('default'));
         self::assertNull($sut->getRendererById('csv'));
