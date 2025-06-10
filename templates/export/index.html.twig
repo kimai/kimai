@@ -180,7 +180,7 @@
                                     {{ widgets.label_customer(row.customer) }}
                                 </td>
                                 <td class="w-min text-end d-none d-sm-table-cell">
-                                    {{ row.duration|duration(decimal) }}
+                                    {{ row.duration|duration }}
                                 </td>
                                 <td class="w-min text-end">
                                     {{ row.rate|money(currency) }}
@@ -239,7 +239,7 @@
                         {{ rate|money(currency) }}
                     </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}" data-duration="{{ entry.duration }}">
-                        {{ entry.duration|duration(decimal) }}
+                        {{ entry.duration|duration }}
                     </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'internalRate') }}">
                         {{ entry.internalRate|money(currency) }}

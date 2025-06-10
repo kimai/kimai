@@ -92,7 +92,6 @@ final class ExportController extends AbstractController
             'renderer' => $this->export->getRenderer(),
             'preview_limit' => $maxItemsPreview,
             'preview_show' => $showPreview,
-            'decimal' => $this->getUser()->isExportDecimal(),
         ]);
     }
 
