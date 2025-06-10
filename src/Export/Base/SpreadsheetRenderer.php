@@ -98,7 +98,12 @@ final class SpreadsheetRenderer
 
         if ($currentRow > 1) {
             $totalColumns = ['duration', 'rate', 'internalRate'];
-            $columnNames = range('A', 'Z');
+            // that should be enough for the near future: the number of array entries must cover the max number of columns
+            $columnNames = [
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+                'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ',
+                'BA', 'BB', 'BC', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BK', 'BL', 'BM', 'BN', 'BO', 'BP', 'BQ', 'BR', 'BS', 'BT', 'BU', 'BV', 'BW', 'BX', 'BY', 'BZ',
+            ];
             $totalRow = [];
             $totalColumn = 1;
             foreach ($columns as $column) {
