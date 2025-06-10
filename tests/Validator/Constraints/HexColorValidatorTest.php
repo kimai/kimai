@@ -27,7 +27,7 @@ class HexColorValidatorTest extends ConstraintValidatorTestCase
         return new HexColorValidator();
     }
 
-    public static function getValidColors()
+    public static function getValidColors(): iterable
     {
         yield ['#000'];
         yield ['#aaa'];
@@ -56,7 +56,7 @@ class HexColorValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public static function getInvalidColors()
+    public static function getInvalidColors(): iterable
     {
         yield ['string'];
         yield ['000'];

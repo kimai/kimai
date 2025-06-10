@@ -195,7 +195,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public static function getViolationTestData()
+    public static function getViolationTestData(): array
     {
         return [
             // activity: violations ----------------------------------------------------------------------
@@ -294,7 +294,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         string $duration,
         array $rawData = [],
         ?Rate $rate = null
-    ) {
+    ): void {
         $activityStatistic = new ActivityStatistic();
         if ($activityDuration !== null) {
             $activityStatistic->setDuration($activityDuration);
