@@ -30,15 +30,16 @@ class EnhancedChoiceTypeExtensionTest extends TestCase
         $resolver = new OptionsResolver();
         $sut = new EnhancedChoiceTypeExtension();
         $sut->configureOptions($resolver);
-        self::assertEquals(['selectpicker', 'width', 'search'], $resolver->getDefinedOptions());
+        self::assertEquals(['selectpicker', 'width', 'search', 'order'], $resolver->getDefinedOptions());
         self::assertTrue($resolver->hasDefault('selectpicker'));
         self::assertTrue($resolver->hasDefault('width'));
         self::assertTrue($resolver->hasDefault('search'));
+        self::assertTrue($resolver->hasDefault('order'));
         self::assertFalse($resolver->isRequired('selectpicker'));
         self::assertFalse($resolver->isRequired('width'));
         self::assertFalse($resolver->isRequired('search'));
 
         $result = $resolver->resolve([]);
-        self::assertEquals(['selectpicker' => true, 'width' => '100%', 'search' => true], $result);
+        self::assertEquals(['selectpicker' => true, 'width' => '100%', 'search' => true, 'order' => false], $result);
     }
 }
