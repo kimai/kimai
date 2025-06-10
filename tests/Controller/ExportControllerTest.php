@@ -9,7 +9,6 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\Activity;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
@@ -266,52 +265,5 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
     public function testCreateTemplateIsSecureForRole(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/export/template-create');
-    }
-
-
-
-    public function __testCreateTemplateAction(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/export/template-create');
-        $form = $client->getCrawler()->filter('form[name=export_template_spreadsheet_form]')->form();
-        $client->submit($form, [
-            'export_template_spreadsheet_form' => [
-                'title' => 'My temaplte name',
-                'renderer' => 'xlsx',
-                'language' => 'de',
-                'columns' => ['date', 'duration_seconds', 'user.name'],
-            ]
-        ]);
-
-        $location = $this->assertIsRedirect($client, '/export');
-        $this->requestPure($client, $location);
-
-        $this->assertDetailsPage($client);
-        $this->assertHasFlashSuccess($client);
-
-        $activities = $this->getEntityManager()->getRepository(Activity::class)->findAll();
-        $activity = array_pop($activities);
-        $id = $activity->getId();
-
-        $this->request($client, '/admin/activity/' . $id . '/edit');
-        $editForm = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
-        self::assertEquals('An AcTiVitY Name', $editForm->get('activity_edit_form[name]')->getValue());
-    }
-
-    public function __testEditTemplateAction(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/activity/1/edit');
-        $form = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
-        self::assertEquals('Test', $form->get('activity_edit_form[name]')->getValue());
-        $client->submit($form, [
-            'activity_edit_form' => ['name' => 'Test 2']
-        ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/1/details'));
-        $client->followRedirect();
-        $this->request($client, '/admin/activity/1/edit');
-        $editForm = $client->getCrawler()->filter('form[name=activity_edit_form]')->form();
-        self::assertEquals('Test 2', $editForm->get('activity_edit_form[name]')->getValue());
     }
 }
