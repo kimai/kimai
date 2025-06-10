@@ -16,7 +16,7 @@ use App\Export\Template;
 use App\Repository\Query\TimesheetQuery;
 use App\Tests\Export\Package\MemoryPackage;
 use App\Tests\Export\Renderer\AbstractRendererTestCase;
-use App\Tests\Export\Renderer\MetaFieldColumnSubscriber;
+use App\Tests\Mocks\MetaFieldColumnSubscriberMock;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -155,7 +155,7 @@ class SpreadsheetRendererTest extends AbstractRendererTestCase
     public function testWriteSpreadsheetCsv(?Template $template, array $expectedColumns): void
     {
         $dispatcher = new EventDispatcher();
-        $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
+        $dispatcher->addSubscriber(new MetaFieldColumnSubscriberMock());
 
         $security = $this->createMock(Security::class);
         $spreadsheetPackage = new MemoryPackage();

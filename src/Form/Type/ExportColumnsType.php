@@ -87,40 +87,35 @@ final class ExportColumnsType extends AbstractType
         ];
 
         foreach ($this->findMetaColumns(new TimesheetMetaDisplayEvent(new TimesheetQuery(), TimesheetMetaDisplayEvent::EXPORT)) as $metaField) {
-            if ($metaField->getName() === null) {
-                continue;
+            if ($metaField->getName() !== null) {
+                $columns['timesheet'][$metaField->getLabel()] = 'timesheet.meta.' . $metaField->getName();
             }
-            $columns['timesheet'][$metaField->getLabel()] = 'timesheet.meta.' . $metaField->getName();
         }
 
         foreach ($this->findMetaColumns(new CustomerMetaDisplayEvent(new CustomerQuery(), CustomerMetaDisplayEvent::EXPORT)) as $metaField) {
-            if ($metaField->getName() === null) {
-                continue;
+            if ($metaField->getName() !== null) {
+                $columns['customer'][$metaField->getLabel()] = 'customer.meta.' . $metaField->getName();
             }
-            $columns['customer'][$metaField->getLabel()] = 'customer.meta.' . $metaField->getName();
         }
 
         foreach ($this->findMetaColumns(new ProjectMetaDisplayEvent(new ProjectQuery(), ProjectMetaDisplayEvent::EXPORT)) as $metaField) {
-            if ($metaField->getName() === null) {
-                continue;
+            if ($metaField->getName() !== null) {
+                $columns['project'][$metaField->getLabel()] = 'project.meta.' . $metaField->getName();
             }
-            $columns['project'][$metaField->getLabel()] = 'project.meta.' . $metaField->getName();
         }
 
         foreach ($this->findMetaColumns(new ActivityMetaDisplayEvent(new ActivityQuery(), ActivityMetaDisplayEvent::EXPORT)) as $metaField) {
-            if ($metaField->getName() === null) {
-                continue;
+            if ($metaField->getName() !== null) {
+                $columns['activity'][$metaField->getLabel()] = 'activity.meta.' . $metaField->getName();
             }
-            $columns['activity'][$metaField->getLabel()] = 'activity.meta.' . $metaField->getName();
         }
 
         $event = new UserPreferenceDisplayEvent(UserPreferenceDisplayEvent::EXPORT);
         $this->dispatcher->dispatch($event);
         foreach ($event->getPreferences() as $metaField) {
-            if ($metaField->getName() === null) {
-                continue;
+            if ($metaField->getName() !== null) {
+                $columns['user'][$metaField->getLabel()] = 'user.meta.' . $metaField->getName();
             }
-            $columns['user'][$metaField->getLabel()] = 'user.meta.' . $metaField->getName();
         }
 
         $resolver->setDefaults([

@@ -10,7 +10,8 @@
 namespace App\Tests\Form\Type;
 
 use App\Form\Type\ExportColumnsType;
-use Psr\EventDispatcher\EventDispatcherInterface;
+use App\Tests\Mocks\MetaFieldColumnSubscriberMock;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -23,7 +24,11 @@ class ExportColumnsTypeTest extends TypeTestCase
     public static function getTestData(): iterable
     {
         yield [['foo', 'bar'], []];
-        yield [['user.name', 'duration'], ['user.name', 'duration']];
+
+        yield [
+            ['user.name', 'customer.meta.customer-foo', 'duration', 'hello', 'user.meta.mypref'],
+            ['user.name', 'customer.meta.customer-foo', 'duration', 'user.meta.mypref']
+        ];
     }
 
     /**
@@ -31,7 +36,9 @@ class ExportColumnsTypeTest extends TypeTestCase
      */
     protected function getTypes(): array
     {
-        $dispatcher = $this->createMock(EventDispatcherInterface::class);
+        $dispatcher = new EventDispatcher();
+        $dispatcher->addSubscriber(new MetaFieldColumnSubscriberMock());
+
         $translator = $this->createMock(TranslatorInterface::class);
 
         return [

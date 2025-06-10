@@ -13,7 +13,7 @@ use App\Entity\User;
 use App\Export\Base\CsvRenderer;
 use App\Export\Base\SpreadsheetRenderer;
 use App\Tests\Export\Renderer\AbstractRendererTestCase;
-use App\Tests\Export\Renderer\MetaFieldColumnSubscriber;
+use App\Tests\Mocks\MetaFieldColumnSubscriberMock;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -42,7 +42,7 @@ class CsvRendererTest extends AbstractRendererTestCase
         self::assertInstanceOf(TranslatorInterface::class, $translator);
 
         $dispatcher = new EventDispatcher();
-        $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
+        $dispatcher->addSubscriber(new MetaFieldColumnSubscriberMock());
 
         return new CsvRenderer(new SpreadsheetRenderer($dispatcher, $security, $this->createMock(LoggerInterface::class)), $translator);
     }

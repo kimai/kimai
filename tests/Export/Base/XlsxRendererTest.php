@@ -13,7 +13,7 @@ use App\Entity\User;
 use App\Export\Base\SpreadsheetRenderer;
 use App\Export\Base\XlsxRenderer;
 use App\Tests\Export\Renderer\AbstractRendererTestCase;
-use App\Tests\Export\Renderer\MetaFieldColumnSubscriber;
+use App\Tests\Mocks\MetaFieldColumnSubscriberMock;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -38,7 +38,7 @@ class XlsxRendererTest extends AbstractRendererTestCase
         $translator->method('trans')->willReturnArgument(0);
 
         $dispatcher = new EventDispatcher();
-        $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
+        $dispatcher->addSubscriber(new MetaFieldColumnSubscriberMock());
 
         return new XlsxRenderer(new SpreadsheetRenderer($dispatcher, $security), $translator);
     }
