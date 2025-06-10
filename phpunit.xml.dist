@@ -39,14 +39,15 @@
     -->
     <env name="BOOTSTRAP_RESET_DATABASE" value="true"/>
   </php>
-
   <testsuites>
     <testsuite name="Kimai">
       <directory>tests/</directory>
     </testsuite>
   </testsuites>
-
-  <coverage>
+  <extensions>
+    <bootstrap class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
+  </extensions>
+  <source>
     <include>
       <directory suffix=".php">src/</directory>
       <directory suffix=".php">templates/</directory>
@@ -63,10 +64,5 @@
       <directory suffix=".php">var/</directory>
       <directory suffix=".php">vendor/</directory>
     </exclude>
-  </coverage>
-
-  <extensions>
-    <bootstrap class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
-  </extensions>
-
+  </source>
 </phpunit>
