@@ -257,5 +257,13 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         }
     }
 
-    // FIXME add tests
+    public function testCreateTemplateIsSecure(): void
+    {
+        $this->assertUrlIsSecured('/export/template-create');
+    }
+
+    public function testCreateTemplateIsSecureForRole(): void
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/export/template-create');
+    }
 }

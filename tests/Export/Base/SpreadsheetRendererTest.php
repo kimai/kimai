@@ -16,9 +16,11 @@ use App\Export\Template;
 use App\Repository\Query\TimesheetQuery;
 use App\Tests\Export\Package\MemoryPackage;
 use App\Tests\Export\Renderer\AbstractRendererTestCase;
+use App\Tests\Export\Renderer\MetaFieldColumnSubscriber;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -124,11 +126,18 @@ class SpreadsheetRendererTest extends AbstractRendererTestCase
             'project_number' => 'project_number',
             'vat_id' => 'vat_id',
             'orderNumber' => 'orderNumber',
+            'timesheet.meta.foo' => 'Working place',
+            'timesheet.meta.foo2' => 'Working place',
+            'customer.meta.customer-foo' => 'Working place',
+            'project.meta.project-foo' => 'Working place',
+            'project.meta.project-foo2' => 'Working place',
+            'activity.meta.activity-foo' => 'Working place',
+            'user.meta.mypref' => 'mypref',
         ]];
 
         $template = new Template('test', 'Testing');
         $template->setLocale('de');
-        $template->setColumns(['date', 'user.name', 'duration_decimal', 'customer.name', 'exported']);
+        $template->setColumns(['date', 'user.name', 'duration_decimal', 'customer.name', 'exported', 'user.meta.mypref']);
 
         yield [$template, [
             'date' => 'date',
@@ -136,6 +145,7 @@ class SpreadsheetRendererTest extends AbstractRendererTestCase
             'username' => 'username',
             'customer' => 'customer',
             'exported' => 'exported',
+            'user.meta.mypref' => 'mypref',
         ]];
     }
 
@@ -144,7 +154,9 @@ class SpreadsheetRendererTest extends AbstractRendererTestCase
      */
     public function testWriteSpreadsheetCsv(?Template $template, array $expectedColumns): void
     {
-        $dispatcher = $this->createMock(EventDispatcherInterface::class);
+        $dispatcher = new EventDispatcher();
+        $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
+
         $security = $this->createMock(Security::class);
         $spreadsheetPackage = new MemoryPackage();
 

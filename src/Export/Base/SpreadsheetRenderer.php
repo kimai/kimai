@@ -175,64 +175,59 @@ final class SpreadsheetRenderer
 
         $timesheetMeta = [];
         foreach ($this->findMetaColumns(new TimesheetMetaDisplayEvent($query, TimesheetMetaDisplayEvent::EXPORT)) as $metaField) {
-            if ($metaField->getName() === null) {
-                continue;
+            if ($metaField->getName() !== null) {
+                $timesheetMeta['timesheet.meta.' . $metaField->getName()] = (new Column('timesheet.meta.' . $metaField->getName(), $this->getFormatter('default')))
+                    ->withHeader($metaField->getLabel())
+                    ->withExtractor(function (ExportableItem $exportableItem) use ($metaField) {
+                        return $exportableItem->getMetaField($metaField->getName())?->getValue();
+                    });
             }
-            $timesheetMeta['timesheet.meta.' . $metaField->getName()] = (new Column('timesheet.meta.' . $metaField->getName(), $this->getFormatter('default')))
-                ->withHeader($metaField->getLabel())
-                ->withExtractor(function (ExportableItem $exportableItem) use ($metaField) {
-                    return $exportableItem->getMetaField($metaField->getName())?->getValue();
-                });
         }
 
         $customerMeta = [];
         foreach ($this->findMetaColumns(new CustomerMetaDisplayEvent($query->copyTo(new CustomerQuery()), CustomerMetaDisplayEvent::EXPORT)) as $metaField) {
-            if ($metaField->getName() === null) {
-                continue;
+            if ($metaField->getName() !== null) {
+                $customerMeta['customer.meta.' . $metaField->getName()] = (new Column('customer.meta.' . $metaField->getName(), $this->getFormatter('default')))
+                    ->withHeader($metaField->getLabel())
+                    ->withExtractor(function (ExportableItem $exportableItem) use ($metaField) {
+                        return $exportableItem->getProject()?->getCustomer()?->getMetaField($metaField->getName())?->getValue();
+                    });
             }
-            $customerMeta['customer.meta.' . $metaField->getName()] = (new Column('customer.meta.' . $metaField->getName(), $this->getFormatter('default')))
-                ->withHeader($metaField->getLabel())
-                ->withExtractor(function (ExportableItem $exportableItem) use ($metaField) {
-                    return $exportableItem->getProject()?->getCustomer()?->getMetaField($metaField->getName())?->getValue();
-                });
         }
 
         $projectMeta = [];
         foreach ($this->findMetaColumns(new ProjectMetaDisplayEvent($query->copyTo(new ProjectQuery()), ProjectMetaDisplayEvent::EXPORT)) as $metaField) {
-            if ($metaField->getName() === null) {
-                continue;
+            if ($metaField->getName() !== null) {
+                $projectMeta['project.meta.' . $metaField->getName()] = (new Column('project.meta.' . $metaField->getName(), $this->getFormatter('default')))
+                    ->withHeader($metaField->getLabel())
+                    ->withExtractor(function (ExportableItem $exportableItem) use ($metaField) {
+                        return $exportableItem->getProject()?->getMetaField($metaField->getName())?->getValue();
+                    });
             }
-            $projectMeta['project.meta.' . $metaField->getName()] = (new Column('project.meta.' . $metaField->getName(), $this->getFormatter('default')))
-                ->withHeader($metaField->getLabel())
-                ->withExtractor(function (ExportableItem $exportableItem) use ($metaField) {
-                    return $exportableItem->getProject()?->getMetaField($metaField->getName())?->getValue();
-                });
         }
 
         $activityMeta = [];
         foreach ($this->findMetaColumns(new ActivityMetaDisplayEvent($query->copyTo(new ActivityQuery()), ActivityMetaDisplayEvent::EXPORT)) as $metaField) {
-            if ($metaField->getName() === null) {
-                continue;
+            if ($metaField->getName() !== null) {
+                $activityMeta['activity.meta.' . $metaField->getName()] = (new Column('activity.meta.' . $metaField->getName(), $this->getFormatter('default')))
+                    ->withHeader($metaField->getLabel())
+                    ->withExtractor(function (ExportableItem $exportableItem) use ($metaField) {
+                        return $exportableItem->getActivity()?->getMetaField($metaField->getName())?->getValue();
+                    });
             }
-            $activityMeta['activity.meta.' . $metaField->getName()] = (new Column('activity.meta.' . $metaField->getName(), $this->getFormatter('default')))
-                ->withHeader($metaField->getLabel())
-                ->withExtractor(function (ExportableItem $exportableItem) use ($metaField) {
-                    return $exportableItem->getActivity()?->getMetaField($metaField->getName())?->getValue();
-                });
         }
 
         $userMeta = [];
         $event = new UserPreferenceDisplayEvent(UserPreferenceDisplayEvent::EXPORT);
         $this->eventDispatcher->dispatch($event);
         foreach ($event->getPreferences() as $metaField) {
-            if ($metaField->getName() === null) {
-                continue;
+            if ($metaField->getName() !== null) {
+                $userMeta['user.meta.' . $metaField->getName()] = (new Column('user.meta.' . $metaField->getName(), $this->getFormatter('default')))
+                    ->withHeader($metaField->getLabel())
+                    ->withExtractor(function (ExportableItem $exportableItem) use ($metaField) {
+                        return $exportableItem->getUser()?->getPreference($metaField->getName())?->getValue();
+                    });
             }
-            $userMeta['user.meta.' . $metaField->getName()] = (new Column('user.meta.' . $metaField->getName(), $this->getFormatter('default')))
-                ->withHeader($metaField->getLabel())
-                ->withExtractor(function (ExportableItem $exportableItem) use ($metaField) {
-                    return $exportableItem->getUser()?->getPreference($metaField->getName())?->getValue();
-                });
         }
 
         $template = $this->getTemplate();

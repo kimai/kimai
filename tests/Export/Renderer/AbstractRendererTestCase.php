@@ -20,10 +20,12 @@ use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
+use App\Entity\UserPreference;
 use App\Event\ActivityMetaDisplayEvent;
 use App\Event\CustomerMetaDisplayEvent;
 use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
+use App\Event\UserPreferenceDisplayEvent;
 use App\Export\ExportRendererInterface;
 use App\Repository\Query\TimesheetQuery;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -155,6 +157,7 @@ class MetaFieldColumnSubscriber implements EventSubscriberInterface
             CustomerMetaDisplayEvent::class => ['loadCustomerField', 200],
             ProjectMetaDisplayEvent::class => ['loadProjectField', 200],
             ActivityMetaDisplayEvent::class => ['loadActivityField', 200],
+            UserPreferenceDisplayEvent::class => ['loadUserField', 200],
         ];
     }
 
@@ -178,6 +181,11 @@ class MetaFieldColumnSubscriber implements EventSubscriberInterface
     public function loadActivityField(ActivityMetaDisplayEvent $event): void
     {
         $event->addField($this->prepareEntity(new ActivityMeta(), 'activity-foo'));
+    }
+
+    public function loadUserField(UserPreferenceDisplayEvent $event): void
+    {
+        $event->addPreference(new UserPreference('mypref', 'hello world'));
     }
 
     private function prepareEntity(MetaTableTypeInterface $meta, string $name): MetaTableTypeInterface
