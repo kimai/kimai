@@ -40,19 +40,19 @@ final class EnhancedChoiceTypeExtension extends AbstractTypeExtension
 
         $extendedOptions = ['class' => 'selectpicker'];
 
-        if ($options['multiple']) {
+        if (\array_key_exists('multiple', $options) && $options['multiple']) {
             $extendedOptions['size'] = 1;
         }
 
-        if (false !== $options['width']) {
+        if (\array_key_exists('width', $options) && false !== $options['width']) {
             $extendedOptions['data-width'] = $options['width'];
         }
 
-        if (false === $options['search']) {
+        if (\array_key_exists('search', $options) && false === $options['search']) {
             $extendedOptions['data-disable-search'] = 1;
         }
 
-        if (true === $options['order']) {
+        if (\array_key_exists('order', $options) && true === $options['order']) {
             $extendedOptions['data-order'] = 1;
         }
 

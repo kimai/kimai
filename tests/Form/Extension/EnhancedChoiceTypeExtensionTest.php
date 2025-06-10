@@ -13,6 +13,8 @@ use App\Form\Extension\EnhancedChoiceTypeExtension;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -41,5 +43,41 @@ class EnhancedChoiceTypeExtensionTest extends TestCase
 
         $result = $resolver->resolve([]);
         self::assertEquals(['selectpicker' => true, 'width' => '100%', 'search' => true, 'order' => false], $result);
+    }
+
+    public static function getTestData(): iterable
+    {
+        yield [
+            ['expanded' => true],
+            ['value' => null, 'attr' => []]
+        ];
+
+        yield [
+            ['multiple' => false, 'width' => false, 'search' => true, 'selectpicker' => true, 'order', 'required' => false],
+            ['value' => null, 'attr' => ['class' => 'selectpicker']]
+        ];
+
+        yield [
+            ['multiple' => false, 'width' => '100%', 'search' => true, 'required' => false, 'order' => true],
+            ['value' => null, 'attr' => ['class' => 'selectpicker', 'data-width' => '100%', 'data-order' => 1]]
+        ];
+
+        yield [
+            ['multiple' => true, 'width' => '50%', 'search' => false, 'required' => true, 'attr' => []],
+            ['value' => null, 'attr' => ['size' => 1, 'class' => 'selectpicker', 'data-width' => '50%', 'data-disable-search' => 1, 'required' => 'required', 'placeholder' => '']]
+        ];
+    }
+
+    /**
+     * @dataProvider getTestData
+     */
+    public function testBuildView(array $options, array $expected): void
+    {
+        $sut = new EnhancedChoiceTypeExtension();
+        $view = new FormView();
+        $form = $this->createMock(FormInterface::class);
+
+        $sut->buildView($view, $form, $options);
+        self::assertEquals($expected, $view->vars);
     }
 }
