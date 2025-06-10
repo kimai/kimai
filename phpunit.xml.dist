@@ -4,7 +4,8 @@
          backupGlobals="false"
          colors="true"
          bootstrap="tests/bootstrap.php"
-         cacheDirectory="var/cache/phpunit/">
+         cacheDirectory="var/cache/phpunit/"
+         displayDetailsOnTestsThatTriggerWarnings="true">
   <php>
     <ini name="error_reporting" value="-1"/>
     <ini name="max_execution_time" value="-1"/>

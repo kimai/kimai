@@ -56,3 +56,18 @@ fieldset > .mb-3.row:last-child {
 .form-fieldset-light:last-child {
     border:none;
 }
+
+.dropdown-item {
+    .dropdown-action {
+        visibility: hidden;
+        opacity: 0.5;
+    }
+    &:hover {
+        .dropdown-action {
+            visibility: visible;
+            &:hover {
+                opacity: 1.0;
+            }
+        }
+    }
+}

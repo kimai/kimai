@@ -15,10 +15,14 @@ use App\Export\ExportRepositoryInterface;
 use App\Export\ServiceExport;
 use App\Export\Timesheet\HtmlRenderer as HtmlExporter;
 use App\Project\ProjectStatisticService;
+use App\Repository\ExportTemplateRepository;
 use App\Repository\Query\ExportQuery;
+use App\Tests\Mocks\Export\CsvRendererFactoryMock;
 use App\Tests\Mocks\Export\HtmlRendererFactoryMock;
 use App\Tests\Mocks\Export\PdfRendererFactoryMock;
+use App\Tests\Mocks\Export\XlsxRendererFactoryMock;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Twig\Environment;
@@ -30,10 +34,17 @@ class ServiceExportTest extends TestCase
 {
     private function createSut(): ServiceExport
     {
+        $repository = $this->createMock(ExportTemplateRepository::class);
+        $repository->method('findAll')->willReturn([]);
+
         return new ServiceExport(
             $this->createMock(EventDispatcherInterface::class),
             (new HtmlRendererFactoryMock($this))->create(),
             (new PdfRendererFactoryMock($this))->create(),
+            (new CsvRendererFactoryMock($this))->create(),
+            (new XlsxRendererFactoryMock($this))->create(),
+            $repository,
+            $this->createMock(LoggerInterface::class),
         );
     }
 

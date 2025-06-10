@@ -82,6 +82,17 @@ final class ExportController extends AbstractController
         $page = new PageSetup('export');
         $page->setHelp('export.html');
 
+        $buttons = [];
+        foreach ($this->export->getRenderer() as $renderer) {
+            $class = \get_class($renderer);
+            $pos = strrpos($class, '\\');
+            if ($pos !== false) {
+                $class = substr($class, $pos + 1);
+            }
+            $class = strtolower(str_replace('Renderer', '', $class));
+            $buttons[$class][$renderer->getId()] = $renderer->getTitle();
+        }
+
         return $this->render('export/index.html.twig', [
             'page_setup' => $page,
             'too_many' => $tooManyResults,
@@ -89,7 +100,7 @@ final class ExportController extends AbstractController
             'query' => $query,
             'entries' => $entries,
             'form' => $form->createView(),
-            'renderer' => $this->export->getRenderer(),
+            'buttons' => $buttons,
             'preview_limit' => $maxItemsPreview,
             'preview_show' => $showPreview,
         ]);
