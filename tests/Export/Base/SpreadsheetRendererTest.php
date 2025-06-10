@@ -15,6 +15,7 @@ use App\Export\Package\SpreadsheetPackage;
 use App\Repository\Query\TimesheetQuery;
 use App\Tests\Export\Renderer\AbstractRendererTestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -31,7 +32,7 @@ class SpreadsheetRendererTest extends AbstractRendererTestCase
         $spreadsheetPackage = $this->createMock(SpreadsheetPackage::class);
         $spreadsheetPackage->expects(self::once())->method('setColumns');
 
-        $renderer = new SpreadsheetRenderer($dispatcher, $security);
+        $renderer = new SpreadsheetRenderer($dispatcher, $security, $this->createMock(LoggerInterface::class));
         $renderer->writeSpreadsheet($spreadsheetPackage, [], new TimesheetQuery());
     }
 
@@ -60,7 +61,7 @@ class SpreadsheetRendererTest extends AbstractRendererTestCase
         $exportItem->method('getType')->willReturn('type');
         $exportItem->method('getCategory')->willReturn('category');
 
-        $renderer = new SpreadsheetRenderer($dispatcher, $security);
+        $renderer = new SpreadsheetRenderer($dispatcher, $security, $this->createMock(LoggerInterface::class));
         $renderer->writeSpreadsheet($spreadsheetPackage, [$exportItem], new TimesheetQuery());
     }
 
