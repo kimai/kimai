@@ -32,6 +32,7 @@ final class ExportRendererValidator extends ConstraintValidator
 
         if (!\is_string($value) || !\in_array($value, $ids, true)) {
             $this->context->buildViolation(ExportRenderer::getErrorName(ExportRenderer::UNKNOWN_TYPE))
+                ->setParameter('{{ value }}', $this->formatValue($value))
                 ->setTranslationDomain('validators')
                 ->setCode(ExportRenderer::UNKNOWN_TYPE)
                 ->addViolation();

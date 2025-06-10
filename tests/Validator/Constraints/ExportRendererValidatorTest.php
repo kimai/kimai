@@ -11,7 +11,6 @@ namespace App\Tests\Validator\Constraints;
 
 use App\Validator\Constraints\ExportRenderer;
 use App\Validator\Constraints\ExportRendererValidator;
-use App\Validator\Constraints\HexColor;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
@@ -54,10 +53,10 @@ class ExportRendererValidatorTest extends ConstraintValidatorTestCase
 
     public static function getInvalidColors(): iterable
     {
-        yield ['string'];
-        yield ['000'];
-        yield ['aaa'];
-        yield ['000000'];
+        yield ['CSV'];
+        yield ['XLSX'];
+        yield ['PDF'];
+        yield ['HTML'];
         yield ['fff000'];
         yield ['000aaa'];
         yield ['fffaaa'];
@@ -85,9 +84,9 @@ class ExportRendererValidatorTest extends ConstraintValidatorTestCase
             $expectedFormat = $parameterType ?? '';
         }
 
-        $this->buildViolation('The given value is not a valid hexadecimal color.')
+        $this->buildViolation('Unknown exporter type.')
             ->setParameter('{{ value }}', $expectedFormat)
-            ->setCode(HexColor::HEX_COLOR_ERROR)
+            ->setCode(ExportRenderer::UNKNOWN_TYPE)
             ->assertRaised();
     }
 }
