@@ -11,6 +11,7 @@ namespace App\Export\Base;
 
 use App\Entity\ExportableItem;
 use App\Entity\MetaTableTypeInterface;
+use App\Entity\User;
 use App\Event\ActivityMetaDisplayEvent;
 use App\Event\CustomerMetaDisplayEvent;
 use App\Event\MetaDisplayEventInterface;
@@ -323,11 +324,17 @@ final class SpreadsheetRenderer
      */
     private function getDefaultColumns(): array
     {
+        // @deprecated since 2.36 - will be removed with 3.0
+        $durationFormatter = 'duration';
+        if (($user = $this->voter->getUser()) instanceof User) {
+            $durationFormatter = $user->isExportDecimal() ? 'duration_decimal' : 'duration';
+        }
+
         $columns = [
             'date',
             'begin',
             'end',
-            'duration_seconds',
+            $durationFormatter,
             'currency',
             'rate',
             'internal_rate',
