@@ -93,6 +93,12 @@ final class ExportController extends AbstractController
             $buttons[$class][$renderer->getId()] = $renderer->getTitle();
         }
 
+        if ($this->isGranted('view_other_timesheet')) {
+            $showRates = $this->isGranted('view_rate_other_timesheet');
+        } else {
+            $showRates = $this->isGranted('view_rate_own_timesheet');
+        }
+
         return $this->render('export/index.html.twig', [
             'page_setup' => $page,
             'too_many' => $tooManyResults,
@@ -103,6 +109,7 @@ final class ExportController extends AbstractController
             'buttons' => $buttons,
             'preview_limit' => $maxItemsPreview,
             'preview_show' => $showPreview,
+            'show_rates' => $showRates,
         ]);
     }
 

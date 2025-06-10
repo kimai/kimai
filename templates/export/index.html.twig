@@ -24,12 +24,18 @@
     'activity': {'class': 'd-none', 'orderBy': false},
     'description': {'class': 'd-none d-xl-table-cell timesheet-description', 'orderBy': false},
     'tags': {'class': 'd-none d-xl-table-cell', 'orderBy': false},
-    'unit_price': {'class': 'd-none text-nowrap text-end', 'orderBy': false},
     'duration': {'class': 'text-end text-nowrap', 'orderBy': false},
-    'internalRate': {'class': 'text-end d-none text-nowrap', 'orderBy': false},
-    'total_rate': {'class': 'text-end text-nowrap', 'orderBy': false},
-    'actions': {'class': 'actions alwaysVisible', 'orderBy': false},
 } %}
+{% if show_rates %}
+    {% set columns = columns|merge({
+        'unit_price': {'class': 'd-none text-nowrap text-end', 'orderBy': false},
+        'internalRate': {'class': 'text-end d-none text-nowrap', 'orderBy': false},
+        'total_rate': {'class': 'text-end text-nowrap', 'orderBy': false},
+    }) %}
+{% endif %}
+{% set columns = columns|merge({
+    'actions': {'class': 'actions alwaysVisible', 'orderBy': false},
+}) %}
 
 {% set tableName = 'export' %}
 {% set editExported = is_granted('edit_exported_timesheet') %}
@@ -45,9 +51,11 @@
     {% if totalDuration > 0 %}
         {{ status_duration(totalDuration|duration) }}
     {% endif %}
-    {% for totalCurrency, totalRate in totalRates %}
-        {{ status_money(totalRate|money(totalCurrency)) }}
-    {% endfor %}
+    {% if show_rates %}
+        {% for totalCurrency, totalRate in totalRates %}
+            {{ status_money(totalRate|money(totalCurrency)) }}
+        {% endfor %}
+    {% endif %}
 {% endblock %}
 
 {% block main_before %}
@@ -177,7 +185,9 @@
                         <tr>
                             <th>{{ 'customer'|trans }}</th>
                             <th class="w-min text-end d-none d-sm-table-cell">{{ 'duration'|trans }}</th>
+                            {% if show_rates %}
                             <th class="w-min text-end">{{ 'total_rate'|trans }}</th>
+                            {% endif %}
                         </tr>
                         </thead>
                         <tbody>
@@ -190,9 +200,11 @@
                                 <td class="w-min text-end d-none d-sm-table-cell">
                                     {{ row.duration|duration }}
                                 </td>
+                                {% if show_rates %}
                                 <td class="w-min text-end">
                                     {{ row.rate|money(currency) }}
                                 </td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -243,11 +255,12 @@
                             {{ widgets.tag_list(entry.tags) }}
                         {% endif %}
                     </td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }}">
-                        {{ rate|money(currency) }}
-                    </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}" data-duration="{{ entry.duration }}">
                         {{ entry.duration|duration }}
+                    </td>
+                    {% if show_rates %}
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }}">
+                        {{ rate|money(currency) }}
                     </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'internalRate') }}">
                         {{ entry.internalRate|money(currency) }}
@@ -255,6 +268,7 @@
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'total_rate') }}">
                         {{ entry.rate|money(currency) }}
                     </td>
+                    {% endif %}
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
                     {% if is_granted('edit_export', entry) %}
                         {% if entry.exported %}
