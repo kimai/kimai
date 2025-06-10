@@ -60,7 +60,7 @@ class ExportTemplate
         return $this->id;
     }
 
-    public function setTitle(string $title): void
+    public function setTitle(?string $title): void
     {
         $this->title = $title;
     }
@@ -117,9 +117,9 @@ class ExportTemplate
     /**
      * @param array<string, mixed> $options
      */
-    public function setOptions(array $options): void
+    public function setOptions(?array $options): void
     {
-        $this->options = $options;
+        $this->options = $options ?? [];
     }
 
     public function __toString(): string
