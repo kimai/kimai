@@ -46,6 +46,7 @@ class XlsxRendererTest extends AbstractRendererTestCase
     public function testConfiguration(): void
     {
         $sut = $this->getAbstractRenderer();
+        $sut->setLocale('de');
 
         self::assertEquals('xlsx', $sut->getId());
         self::assertEquals('default', $sut->getTitle());
