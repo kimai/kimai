@@ -67,13 +67,13 @@ class CsvRendererTest extends AbstractRendererTestCase
             'Date', 'From', 'To', 'Duration', 'Currency', 'Price', 'Internal price', 'Hourly price', 'Fixed price', 'Name',
             'User', 'Staff number', 'Customer', 'Project', 'Activity', 'Description', 'Billable', 'Tags',
             'Type', 'category', 'Account', 'Project number', 'VAT-ID', 'Order number',
-            'Working place', 'Working place', 'Working place', 'Working place', 'Working place', 'Working place',
+            'Working place', 'Working place', 'Working place', 'Working place', 'Working place', 'Working place', 'mypref',
         ];
         $de = [
             'Datum', 'Von', 'Bis', 'Dauer', 'Währung', 'Preis', 'Interner Preis', 'Preis pro Stunde', 'Festpreis', 'Name',
             'Benutzer', 'Personalnummer', 'Kunde', 'Projekt', 'Tätigkeit', 'Beschreibung', 'Abrechenbar', 'Schlagworte',
             'Typ', 'category', 'Kundennummer', 'Projektnummer', 'Umsatzsteuer-ID', 'Bestellnummer',
-            'Working place', 'Working place', 'Working place', 'Working place', 'Working place', 'Working place',
+            'Working place', 'Working place', 'Working place', 'Working place', 'Working place', 'Working place', 'mypref',
         ];
 
         return [
@@ -158,6 +158,7 @@ class CsvRendererTest extends AbstractRendererTestCase
             '',
             'project-foo2',
             'activity-bar',
+            '',
         ];
 
         $expected2 = [
@@ -192,6 +193,7 @@ class CsvRendererTest extends AbstractRendererTestCase
             '',
             'project-foo2',
             'activity-bar',
+            '',
         ];
 
         self::assertEquals(7, \count($all));
