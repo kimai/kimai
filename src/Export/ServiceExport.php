@@ -82,9 +82,7 @@ final class ServiceExport
         $renderer = [];
 
         foreach ($this->exportTemplateRepository->findAll() as $template) {
-            $tpl = new Template();
-            $tpl->setId($template->getId()); // @phpstan-ignore argument.type
-            $tpl->setTitle($template->getTitle()); // @phpstan-ignore argument.type
+            $tpl = new Template($template->getId(), $template->getTitle()); // @phpstan-ignore argument.type,argument.type
             $tpl->setColumns($template->getColumns());
             $tpl->setLocale($template->getLanguage());
 

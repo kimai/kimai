@@ -68,8 +68,7 @@ final class SpreadsheetRenderer
     private function getTemplate(): TemplateInterface
     {
         if ($this->template === null) {
-            $template = new Template();
-            $template->setTitle('default');
+            $template = new Template('default', 'default');
             $template->setColumns($this->getDefaultColumns());
 
             return $template;

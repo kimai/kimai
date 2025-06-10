@@ -52,6 +52,12 @@ class CsvRendererTest extends AbstractRendererTestCase
 
         self::assertEquals('csv', $sut->getId());
         self::assertEquals('default', $sut->getTitle());
+
+        $sut->setTitle('foo-bar');
+        self::assertEquals('foo-bar', $sut->getTitle());
+
+        $sut->setId('bar-id');
+        self::assertEquals('bar-id', $sut->getId());
     }
 
     public static function getTestModel(): array

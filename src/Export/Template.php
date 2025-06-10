@@ -11,26 +11,18 @@ namespace App\Export;
 
 final class Template implements TemplateInterface
 {
-    private string $id;
-    private string $title;
+    private ?string $locale = null;
     /**
      * @var array<int, string>
      */
-    private array $columns;
+    private array $columns = [];
     /**
      * @var array<string, mixed>
      */
-    private array $options;
-    private ?string $locale;
+    private array $options = [];
 
-    public function setId(string $id): void
+    public function __construct(private readonly string $id, private readonly string $title)
     {
-        $this->id = $id;
-    }
-
-    public function setTitle(string $title): void
-    {
-        $this->title = $title;
     }
 
     /**
