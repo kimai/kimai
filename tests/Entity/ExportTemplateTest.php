@@ -30,11 +30,14 @@ class ExportTemplateTest extends AbstractEntityTestCase
     public function testSetter(): void
     {
         $sut = new ExportTemplate();
+        self::assertEquals('New', (string) $sut);
 
         $sut->setTitle('foo');
         self::assertEquals('foo', $sut->getTitle());
+        self::assertEquals('foo', (string) $sut);
         $sut->setTitle(null);
         self::assertNull($sut->getTitle());
+        self::assertEquals('New', (string) $sut);
 
         $sut->setRenderer('xlsx');
         self::assertEquals('xlsx', $sut->getRenderer());

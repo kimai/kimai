@@ -38,7 +38,8 @@ class CsvRendererTest extends AbstractRendererTestCase
         $security->expects($this->any())->method('getUser')->willReturn($user);
         $security->expects($this->any())->method('isGranted')->willReturn(true);
 
-        $translator = $this->createMock(TranslatorInterface::class);
+        $translator = $this->getContainer()->get(TranslatorInterface::class);
+        self::assertInstanceOf(TranslatorInterface::class, $translator);
 
         $dispatcher = new EventDispatcher();
         $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
@@ -62,18 +63,32 @@ class CsvRendererTest extends AbstractRendererTestCase
 
     public static function getTestModel(): array
     {
+        $en = [
+            'Date', 'From', 'To', 'Duration', 'Currency', 'Price', 'Internal price', 'Hourly price', 'Fixed price', 'Name',
+            'User', 'Staff number', 'Customer', 'Project', 'Activity', 'Description', 'Billable', 'Tags',
+            'Type', 'category', 'Account', 'Project number', 'VAT-ID', 'Order number',
+            'Working place', 'Working place', 'Working place', 'Working place', 'Working place', 'Working place',
+        ];
+        $de = [
+            'Datum', 'Von', 'Bis', 'Dauer', 'Währung', 'Preis', 'Interner Preis', 'Preis pro Stunde', 'Festpreis', 'Name',
+            'Benutzer', 'Personalnummer', 'Kunde', 'Projekt', 'Tätigkeit', 'Beschreibung', 'Abrechenbar', 'Schlagworte',
+            'Typ', 'category', 'Kundennummer', 'Projektnummer', 'Umsatzsteuer-ID', 'Bestellnummer',
+            'Working place', 'Working place', 'Working place', 'Working place', 'Working place', 'Working place',
+        ];
+
         return [
-            ['400', '2437.12', '1947.99', 7, 6, 1, 2, 2, false],
-            ['400', '2437.12', '1947.99', 7, 6, 1, 2, 2, true]
+            ['400', '2437.12', '1947.99', 7, 6, 1, 2, 2, false, null, $en],
+            ['400', '2437.12', '1947.99', 7, 6, 1, 2, 2, true, 'de', $de]
         ];
     }
 
     /**
      * @dataProvider getTestModel
      */
-    public function testRender(string $totalDuration, string $totalRate, string $expectedRate, int $expectedRows, int $expectedDescriptions, int $expectedUser1, int $expectedUser2, int $expectedUser3, bool $exportDecimal): void
+    public function testRender(string $totalDuration, string $totalRate, string $expectedRate, int $expectedRows, int $expectedDescriptions, int $expectedUser1, int $expectedUser2, int $expectedUser3, bool $exportDecimal, ?string $locale, array $header): void
     {
         $sut = $this->getAbstractRenderer($exportDecimal);
+        $sut->setLocale($locale);
 
         /** @var BinaryFileResponse $response */
         $response = $this->render($sut);
@@ -108,6 +123,8 @@ class CsvRendererTest extends AbstractRendererTestCase
             self::assertIsString($row);
             $all[] = str_getcsv($row);
         }
+
+        self::assertEquals($header, $all[0]);
 
         $expected = [
             '2019-06-16',
