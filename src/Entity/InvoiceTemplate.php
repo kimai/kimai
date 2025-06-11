@@ -34,9 +34,8 @@ class InvoiceTemplate
     #[Assert\Length(max: 255)]
     #[Assert\NotBlank]
     private ?string $title = null;
-    #[ORM\Column(name: 'company', type: 'string', length: 255, nullable: false)]
+    #[ORM\Column(name: 'company', type: Types::STRING, length: 255, nullable: true)]
     #[Assert\Length(max: 255)]
-    #[Assert\NotBlank]
     private ?string $company = null;
     #[ORM\Column(name: 'vat_id', type: Types::STRING, length: 50, nullable: true)]
     #[Assert\Length(max: 50)]
@@ -75,22 +74,37 @@ class InvoiceTemplate
     #[ORM\Column(name: 'language', type: Types::STRING, length: 6, nullable: false)]
     #[Assert\NotBlank]
     private ?string $language = 'en';
+    /**
+     * Customer for this invoice template
+     */
+    #[ORM\ManyToOne(targetEntity: Customer::class)]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
+    #[Assert\NotNull]
+    private ?Customer $customer = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setName(string $name): InvoiceTemplate
+    public function setName(string $name): void
     {
         $this->name = $name;
-
-        return $this;
     }
 
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    public function getCustomer(): ?Customer
+    {
+        return $this->customer;
+    }
+
+    public function setCustomer(?Customer $customer): void
+    {
+        $this->customer = $customer;
     }
 
     // ---- trait methods below ---
@@ -100,23 +114,23 @@ class InvoiceTemplate
         return $this->title;
     }
 
-    public function setTitle(?string $title): InvoiceTemplate
+    public function setTitle(?string $title): void
     {
         $this->title = $title;
-
-        return $this;
     }
 
     public function getAddress(): ?string
     {
+        if ($this->customer !== null) {
+            return $this->customer->getFormattedAddress();
+        }
+
         return $this->address;
     }
 
-    public function setAddress(?string $address): InvoiceTemplate
+    public function setAddress(?string $address): void
     {
         $this->address = $address;
-
-        return $this;
     }
 
     public function getNumberGenerator(): string
@@ -124,11 +138,9 @@ class InvoiceTemplate
         return $this->numberGenerator;
     }
 
-    public function setNumberGenerator(string $numberGenerator): InvoiceTemplate
+    public function setNumberGenerator(string $numberGenerator): void
     {
         $this->numberGenerator = $numberGenerator;
-
-        return $this;
     }
 
     public function getDueDays(): ?int
@@ -136,11 +148,9 @@ class InvoiceTemplate
         return $this->dueDays;
     }
 
-    public function setDueDays(?int $dueDays): InvoiceTemplate
+    public function setDueDays(?int $dueDays): void
     {
         $this->dueDays = $dueDays;
-
-        return $this;
     }
 
     public function getVat(): ?float
@@ -148,23 +158,23 @@ class InvoiceTemplate
         return $this->vat;
     }
 
-    public function setVat(?float $vat): InvoiceTemplate
+    public function setVat(?float $vat): void
     {
         $this->vat = $vat;
-
-        return $this;
     }
 
     public function getCompany(): ?string
     {
+        if ($this->customer !== null) {
+            return $this->customer->getCompany() ?? $this->customer->getName();
+        }
+
         return $this->company;
     }
 
-    public function setCompany(?string $company): InvoiceTemplate
+    public function setCompany(?string $company): void
     {
         $this->company = $company;
-
-        return $this;
     }
 
     public function getRenderer(): string
@@ -172,11 +182,9 @@ class InvoiceTemplate
         return $this->renderer;
     }
 
-    public function setRenderer(string $renderer): InvoiceTemplate
+    public function setRenderer(string $renderer): void
     {
         $this->renderer = $renderer;
-
-        return $this;
     }
 
     public function getCalculator(): string
@@ -184,11 +192,9 @@ class InvoiceTemplate
         return $this->calculator;
     }
 
-    public function setCalculator(string $calculator): InvoiceTemplate
+    public function setCalculator(string $calculator): void
     {
         $this->calculator = $calculator;
-
-        return $this;
     }
 
     public function getPaymentTerms(): ?string
@@ -196,23 +202,23 @@ class InvoiceTemplate
         return $this->paymentTerms;
     }
 
-    public function setPaymentTerms(?string $paymentTerms): InvoiceTemplate
+    public function setPaymentTerms(?string $paymentTerms): void
     {
         $this->paymentTerms = $paymentTerms;
-
-        return $this;
     }
 
     public function getVatId(): ?string
     {
+        if ($this->customer !== null) {
+            return $this->customer->getVatId();
+        }
+
         return $this->vatId;
     }
 
-    public function setVatId(?string $vatId): InvoiceTemplate
+    public function setVatId(?string $vatId): void
     {
         $this->vatId = $vatId;
-
-        return $this;
     }
 
     public function getContact(): ?string
@@ -220,11 +226,9 @@ class InvoiceTemplate
         return $this->contact;
     }
 
-    public function setContact(?string $contact): InvoiceTemplate
+    public function setContact(?string $contact): void
     {
         $this->contact = $contact;
-
-        return $this;
     }
 
     public function getPaymentDetails(): ?string
@@ -232,11 +236,9 @@ class InvoiceTemplate
         return $this->paymentDetails;
     }
 
-    public function setPaymentDetails(?string $paymentDetails): InvoiceTemplate
+    public function setPaymentDetails(?string $paymentDetails): void
     {
         $this->paymentDetails = $paymentDetails;
-
-        return $this;
     }
 
     /**
@@ -252,11 +254,9 @@ class InvoiceTemplate
         return $this->language;
     }
 
-    public function setLanguage(?string $language): InvoiceTemplate
+    public function setLanguage(?string $language): void
     {
         $this->language = $language;
-
-        return $this;
     }
 
     public function __toString(): string

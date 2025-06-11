@@ -38,10 +38,31 @@
                         </td>
                     </tr>
                 {% endif %}
+                {% if customer.addressLine1 is not empty %}
+                    <tr>
+                        <th>{{ 'address'|trans }}</th>
+                        <td>
+                            {{ customer.addressLine1 }}<br>
+                            {% if customer.addressLine2 is not empty %}
+                                {{ customer.addressLine2 }}<br>
+                            {% endif %}
+                            {% if customer.addressLine3 is not empty %}
+                                {{ customer.addressLine3 }}<br>
+                            {% endif %}
+                            {{ customer.postCode }} {{ customer.city }}
+                        </td>
+                    </tr>
+                {% endif %}
                 {% if customer.address is not empty %}
                     <tr>
                         <th>{{ 'address'|trans }}</th>
-                        <td>{{ customer.address|nl2br }}</td>
+                        <td>
+                            {{ widgets.alert('info', 'address_deprecated'|trans) }}
+                            <br>
+                            <i>
+                            {{ customer.address|nl2br }}
+                            </i>
+                        </td>
                     </tr>
                 {% endif %}
                 {% if customer.country is not empty %}

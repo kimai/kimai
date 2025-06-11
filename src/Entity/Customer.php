@@ -27,7 +27,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: CustomerRepository::class)]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[Serializer\ExclusionPolicy('all')]
-#[Exporter\Order(['id', 'name', 'company', 'number', 'vatId', 'address', 'contact', 'email', 'phone', 'mobile', 'fax', 'homepage', 'country', 'currency', 'timezone', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable'])]
+#[Exporter\Order(['id', 'name', 'company', 'number', 'vatId', 'address', 'contact', 'email', 'phone', 'mobile', 'fax', 'homepage', 'addressLine1', 'addressLine2', 'addressLine3', 'postCode', 'city', 'country', 'currency', 'timezone', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable'])]
 #[Constraints\Customer]
 class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
 {
@@ -86,13 +86,19 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Groups(['Customer_Entity'])]
     #[Exporter\Expose(label: 'vat_id')]
     private ?string $vatId = null;
-    #[ORM\Column(name: 'contact', type: 'string', length: 100, nullable: true)]
+    /**
+     * Contact person (name)
+     */
+    #[ORM\Column(name: 'contact', type: Types::STRING, length: 100, nullable: true)]
     #[Assert\Length(max: 100)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
     #[Exporter\Expose(label: 'contact')]
     private ?string $contact = null;
-    #[ORM\Column(name: 'address', type: 'text', nullable: true)]
+    /**
+     * Unstructured address, better use the fields: address_line1-3, postcode, city, country
+     */
+    #[ORM\Column(name: 'address', type: Types::TEXT, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
     #[Exporter\Expose(label: 'address')]
@@ -132,7 +138,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Exporter\Expose(label: 'mobile')]
     private ?string $mobile = null;
     /**
-     * Customers contact email
+     * Contact email
      */
     #[ORM\Column(name: 'email', type: Types::STRING, length: 75, nullable: true)]
     #[Assert\Length(max: 75)]
@@ -190,6 +196,37 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     private ?InvoiceTemplate $invoiceTemplate = null;
     #[ORM\Column(name: 'invoice_text', type: Types::TEXT, nullable: true)]
     private ?string $invoiceText = null;
+    #[ORM\Column(name: 'address_line1', type: Types::STRING, length: 150, nullable: true)]
+    #[Assert\Length(max: 150)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Customer_Entity'])]
+    #[Exporter\Expose(label: 'address_line1')]
+    private ?string $addressLine1 = null;
+    #[ORM\Column(name: 'address_line2', type: Types::STRING, length: 150, nullable: true)]
+    #[Assert\Length(max: 150)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Customer_Entity'])]
+    #[Exporter\Expose(label: 'address_line2')]
+    private ?string $addressLine2 = null;
+    #[ORM\Column(name: 'address_line3', type: Types::STRING, length: 150, nullable: true)]
+    #[Assert\Length(max: 150)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Customer_Entity'])]
+    #[Exporter\Expose(label: 'address_line3')]
+    private ?string $addressLine3 = null;
+    #[ORM\Column(name: 'postcode', type: Types::STRING, length: 20, nullable: true)]
+    #[Assert\Length(max: 20)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Customer_Entity'])]
+    #[Exporter\Expose(label: 'postcode')]
+    private ?string $postCode = null;
+    // this should be more than enough to cover 99.99% - https://en.wikipedia.org/wiki/List_of_long_place_names
+    #[ORM\Column(name: 'city', type: Types::STRING, length: 50, nullable: true)]
+    #[Assert\Length(max: 50)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Customer_Entity'])]
+    #[Exporter\Expose(label: 'city')]
+    private ?string $city = null;
 
     public function __construct(string $name)
     {
@@ -297,6 +334,35 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     public function getAddress(): ?string
     {
         return $this->address;
+    }
+
+    public function getFormattedAddress(): ?string
+    {
+        $address = $this->getAddressLine1();
+        if ($this->getAddressLine2() !== null) {
+            $address .= PHP_EOL;
+            $address .= $this->getAddressLine2();
+        }
+        if ($this->getAddressLine3() !== null) {
+            $address .= PHP_EOL;
+            $address .= $this->getAddressLine3();
+        }
+        if ($this->getPostCode() !== null || $this->getCity() !== null) {
+            $address .= PHP_EOL;
+            if ($this->getPostCode() !== null) {
+                $address .= $this->getPostCode();
+                if ($this->getCity() !== null) {
+                    $address .= ' ';
+                }
+            }
+            $address .= $this->getCity() ?? '';
+        }
+
+        if ($address !== null && $address !== '') {
+            return $address;
+        }
+
+        return $this->getAddress();
     }
 
     public function setCountry(?string $country): void
@@ -477,6 +543,56 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     public function getTeams(): Collection
     {
         return $this->teams;
+    }
+
+    public function getAddressLine1(): ?string
+    {
+        return $this->addressLine1;
+    }
+
+    public function setAddressLine1(?string $addressLine1): void
+    {
+        $this->addressLine1 = $addressLine1;
+    }
+
+    public function getAddressLine2(): ?string
+    {
+        return $this->addressLine2;
+    }
+
+    public function setAddressLine2(?string $addressLine2): void
+    {
+        $this->addressLine2 = $addressLine2;
+    }
+
+    public function getAddressLine3(): ?string
+    {
+        return $this->addressLine3;
+    }
+
+    public function setAddressLine3(?string $addressLine3): void
+    {
+        $this->addressLine3 = $addressLine3;
+    }
+
+    public function getPostCode(): ?string
+    {
+        return $this->postCode;
+    }
+
+    public function setPostCode(?string $postCode): void
+    {
+        $this->postCode = $postCode;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(?string $city): void
+    {
+        $this->city = $city;
     }
 
     public function __toString(): string
