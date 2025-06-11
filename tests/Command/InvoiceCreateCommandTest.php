@@ -183,6 +183,34 @@ class InvoiceCreateCommandTest extends KernelTestCase
         self::assertStringContainsString('/tests/_data/invoices/' . ((new \DateTime())->format('Y')) . '-001-Test.html |', $output);
     }
 
+    public function testCreateInvoiceActiveOnly(): void
+    {
+        $fixture = new InvoiceTemplateFixtures();
+        $this->importFixture($fixture);
+
+        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 1, '--template' => 'Invoice', '--start' => '2020-01-01', '--end' => '2020-03-01', '--active-only' => null]);
+
+        $output = $commandTester->getDisplay();
+        self::assertStringContainsString('Created 1 invoice(s)', $output);
+        self::assertStringContainsString('| ID', $output);
+        self::assertStringContainsString('| Customer', $output);
+        self::assertStringContainsString('| Total', $output);
+        self::assertStringContainsString('| Filename', $output);
+        self::assertStringContainsString('0 EUR', $output);
+        self::assertStringContainsString('/tests/_data/invoices/' . ((new \DateTime())->format('Y')) . '-001-Test.html |', $output);
+    }
+
+    public function testCreateInvoiceActiveOnlyInactive(): void
+    {
+        $fixture = new InvoiceTemplateFixtures();
+        $this->importFixture($fixture);
+
+        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 1, '--template' => 'Invoice', '--start' => '2013-01-01', '--end' => '2013-01-02', '--active-only' => null]);
+
+        $output = $commandTester->getDisplay();
+        self::assertStringContainsString('No invoice was generated', $output);
+    }
+
     /**
      * @param \DateTime $start
      * @return array<Customer>
