@@ -15,6 +15,7 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\DomCrawler\Field\FormField;
 
 /**
  * @group integration
@@ -292,6 +293,8 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         $this->request($client, $this->createUrl('/export/template-edit/' . $id));
         self::assertTrue($client->getResponse()->isSuccessful());
         $editForm = $client->getCrawler()->filter('form[name=export_template_spreadsheet_form]')->form();
-        self::assertEquals('My temaplte name', $editForm->get('export_template_spreadsheet_form[title]')->getValue());
+        $field = $editForm->get('export_template_spreadsheet_form[title]');
+        self::assertInstanceOf(FormField::class, $field);
+        self::assertEquals('My temaplte name', $field->getValue());
     }
 }
