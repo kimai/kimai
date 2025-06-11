@@ -238,6 +238,14 @@
         <source>user_auth_password_reset_token_ttl</source>
         <target>Elfelejtett jelszó – másodpercek a visszaállítási hivatkozás lejárta előtt</target>
       </trans-unit>
+      <trans-unit id="yBBvkfb" resname="timesheet.rules.allow_zero_duration" xml:space="preserve">
+        <source>timesheet.rules.allow_zero_duration</source>
+        <target state="translated">Üres időtartamú időbejegyzések engedélyezése</target>
+      </trans-unit>
+      <trans-unit id="KbAqHBa" resname="quick_entry.minimum_rows" xml:space="preserve">
+        <source>quick_entry.minimum_rows</source>
+        <target state="translated">Minimum sorok száma</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

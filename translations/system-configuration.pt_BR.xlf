@@ -72,19 +72,19 @@
       </trans-unit>
       <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target state="needs-translation">Piso: início, fim e duração serão arredondados para baixo</target>
+        <target state="translated">Início, fim e duração serão arredondados para baixo</target>
       </trans-unit>
       <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target state="needs-translation">Padrão: o início será arredondado para baixo, fim e duração para cima</target>
+        <target state="translated">O início será arredondado para baixo, o fim e duração serão arrendodados para cima</target>
       </trans-unit>
       <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target state="needs-translation">Mais próximo: arredondamento matemático ao valor mais próximo</target>
+        <target state="translated">Arredondamento matemático para o valor mais próximo</target>
       </trans-unit>
       <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target state="needs-translation">Ceil: início, fim e duração serão arredondados</target>
+        <target state="translated">Início, fim e duração serão arredondados</target>
       </trans-unit>
       <trans-unit id="hz.vdg5" resname="Sunday">
         <source>Sunday</source>
