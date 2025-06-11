@@ -11,6 +11,10 @@ namespace App\Export\Package\CellFormatter;
 
 final class DurationFormatter implements CellFormatterInterface, CellWithFormatInterface
 {
+    public function __construct(private readonly string $format)
+    {
+    }
+
     public function formatValue(mixed $value): mixed
     {
         if (!is_numeric($value) || (int) $value === 0) {
@@ -37,6 +41,6 @@ final class DurationFormatter implements CellFormatterInterface, CellWithFormatI
 
     public function getFormat(): string
     {
-        return '[hh]:mm:ss';
+        return $this->format;
     }
 }

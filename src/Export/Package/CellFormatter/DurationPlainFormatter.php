@@ -11,10 +11,18 @@ namespace App\Export\Package\CellFormatter;
 
 final class DurationPlainFormatter implements CellFormatterInterface
 {
+    public function __construct(private readonly bool $withSeconds = true)
+    {
+    }
+
     public function formatValue(mixed $value): mixed
     {
         if (!is_numeric($value) || (int) $value === 0) {
-            return '0:00:00';
+            if ($this->withSeconds) {
+                return '0:00:00';
+            }
+
+            return '0:00';
         }
 
         $value = (int) $value;
@@ -32,6 +40,10 @@ final class DurationPlainFormatter implements CellFormatterInterface
             $interval->invert = 1;
         }
 
-        return $interval->format('%r%h:%I:%S');
+        if ($this->withSeconds) {
+            return $interval->format('%r%h:%I:%S');
+        }
+
+        return $interval->format('%r%h:%I');
     }
 }

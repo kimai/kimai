@@ -2817,39 +2817,9 @@ parameters:
             path: Utils/StringHelperTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\ColorChoicesValidatorTest\\:\\:getInvalidColors\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/ColorChoicesValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\ColorChoicesValidatorTest\\:\\:getValidColors\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/ColorChoicesValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\DateTimeFormatValidatorTest\\:\\:getInvalidData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/DateTimeFormatValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\DateTimeFormatValidatorTest\\:\\:getValidData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/DateTimeFormatValidatorTest.php
-
-        -
             message: "#^Parameter \\#1 \\$string of function strtoupper expects string, int\\|string given\\.$#"
             count: 1
             path: Validator/Constraints/DurationValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\HexColorValidatorTest\\:\\:getInvalidColors\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/HexColorValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\HexColorValidatorTest\\:\\:getValidColors\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/HexColorValidatorTest.php
 
         -
             message: "#^Cannot cast mixed to string\\.$#"
@@ -2857,32 +2827,7 @@ parameters:
             path: Validator/Constraints/RoleValidatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\RoleValidatorTest\\:\\:getInvalidRoles\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/RoleValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\RoleValidatorTest\\:\\:getValidRoles\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/RoleValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimeFormatValidatorTest\\:\\:getInvalidTimes\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimeFormatValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimeFormatValidatorTest\\:\\:getValidTimes\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimeFormatValidatorTest.php
-
-        -
             message: "#^Cannot call method assertRaised\\(\\) on Symfony\\\\Component\\\\Validator\\\\Test\\\\ConstraintViolationAssertion\\|null\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetBasicValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetBasicValidatorTest\\:\\:getProjectStartEndTestData\\(\\) has no return type specified\\.$#"
             count: 1
             path: Validator/Constraints/TimesheetBasicValidatorTest.php
 
@@ -2892,39 +2837,9 @@ parameters:
             path: Validator/Constraints/TimesheetBasicValidatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidatorTest\\:\\:getViolationTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetBudgetUsedValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidatorTest\\:\\:testWithActivityTimeBudget\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetBudgetUsedValidatorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidatorTest\\:\\:testWithActivityTimeBudget\\(\\) has parameter \\$rawData with no value type specified in iterable type array\\.$#"
             count: 1
             path: Validator/Constraints/TimesheetBudgetUsedValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetLockdownValidatorTest\\:\\:getConfigTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetLockdownValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetLockdownValidatorTest\\:\\:getTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetLockdownValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetRestartValidatorTest\\:\\:getTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetRestartValidatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Validator\\\\Constraints\\\\TimesheetZeroDurationValidatorTest\\:\\:prepareTimesheet\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Validator/Constraints/TimesheetZeroDurationValidatorTest.php
 
         -
             message: "#^Parameter \\#1 \\$objectOrClass of class ReflectionClass constructor expects class\\-string\\<T of object\\>\\|T of object, string given\\.$#"

@@ -52,7 +52,7 @@ class TimeFormatValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public static function getValidTimes()
+    public static function getValidTimes(): array
     {
         return [
             [''],
@@ -79,7 +79,7 @@ class TimeFormatValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public static function getInvalidTimes()
+    public static function getInvalidTimes(): array
     {
         return [
             ['a'],

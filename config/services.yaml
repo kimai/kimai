@@ -206,6 +206,11 @@ services:
         factory:   ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\AccessToken']
 
+    App\Repository\ExportTemplateRepository:
+        class:     App\Repository\ExportTemplateRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['App\Entity\ExportTemplate']
+
     monolog.formatter.kimai:
         class: Monolog\Formatter\LineFormatter
         arguments:

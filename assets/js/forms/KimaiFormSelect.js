@@ -62,13 +62,10 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
             plugins.push('remove_button');
         }
 
-        /*
-        const isOrdering = false;
-        if (isOrdering) {
-            plugins.push('caret_position');
+        if (node.dataset['order'] !== undefined && node.dataset['order'] === '1') {
+            //plugins.push('caret_position');
             plugins.push('drag_drop');
         }
-        */
 
         let options = {
             // see https://github.com/orchidjs/tom-select/issues/543#issuecomment-1664342257
