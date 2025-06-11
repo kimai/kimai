@@ -35,12 +35,9 @@ class CustomerServiceTest extends TestCase
     private function getSut(
         ?EventDispatcherInterface $dispatcher = null,
         ?ValidatorInterface $validator = null,
-        ?CustomerRepository $repository = null,
         ?SystemConfiguration $configuration = null
     ): CustomerService {
-        if ($repository === null) {
-            $repository = $this->createMock(CustomerRepository::class);
-        }
+        $repository = $this->createMock(CustomerRepository::class);
 
         if ($dispatcher === null) {
             $dispatcher = $this->createMock(EventDispatcherInterface::class);
@@ -163,7 +160,7 @@ class CustomerServiceTest extends TestCase
             ]
         ]);
 
-        $sut = $this->getSut(null, null, null, $configuration);
+        $sut = $this->getSut(null, null, $configuration);
         $customer = $sut->createNewCustomer('Test');
 
         self::assertEquals((string) $expected, $customer->getNumber());
