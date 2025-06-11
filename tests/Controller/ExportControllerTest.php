@@ -13,6 +13,7 @@ use App\Entity\ExportTemplate;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Tests\DataFixtures\ExportTemplateFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DomCrawler\Field\FormField;
@@ -296,5 +297,33 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         $field = $editForm->get('export_template_spreadsheet_form[title]');
         self::assertInstanceOf(FormField::class, $field);
         self::assertEquals('My temaplte name', $field->getValue());
+    }
+
+    public function testEditTemplateAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var ExportTemplate[] $templates */
+        $templates = $this->importFixture(new ExportTemplateFixtures());
+
+        $id = $templates[0]->getId();
+
+        $this->request($client, $this->createUrl('/export/template-edit/' . $id));
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $form = $client->getCrawler()->filter('form[name=export_template_spreadsheet_form]')->form();
+        $field = $form->get('export_template_spreadsheet_form[title]');
+        self::assertInstanceOf(FormField::class, $field);
+        self::assertEquals('CSV Test', $field->getValue());
+
+        $client->submit($form, [
+            'export_template_spreadsheet_form' => [
+                'title' => 'My temaplte name',
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/export/'));
+
+        /** @var ExportTemplate $template */
+        $template = $this->getEntityManager()->getRepository(ExportTemplate::class)->find($id);
+        self::assertEquals('My temaplte name', $template->getTitle());
     }
 }

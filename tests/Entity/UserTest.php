@@ -268,10 +268,10 @@ class UserTest extends TestCase
         self::assertInstanceOf(UserPreference::class, $prefs[0]);
         self::assertEquals('test', $prefs[0]->getName());
 
-        self::assertInstanceOf(UserPreference::class, $prefs[0]);
+        self::assertInstanceOf(UserPreference::class, $prefs[1]);
         self::assertEquals('test2', $prefs[1]->getName());
 
-        self::assertInstanceOf(UserPreference::class, $prefs[0]);
+        self::assertInstanceOf(UserPreference::class, $prefs[2]);
         self::assertEquals('export_decimal', $prefs[2]->getName());
 
         $user->setPreferences(new ArrayCollection([]));
@@ -665,10 +665,14 @@ class UserTest extends TestCase
 
         $user = new User();
         $user->setTimezone('Europe/Berlin');
-        self::assertNull($user->getLastLogin());
+
+        $lastLogin = $user->getLastLogin();
+        self::assertNull($lastLogin);
         $user->setLastLogin($dateTime);
 
-        self::assertInstanceOf(\DateTime::class, $user->getLastLogin());
-        self::assertEquals('Europe/Berlin', $user->getLastLogin()?->getTimezone()?->getName());
+        $lastLogin = $user->getLastLogin();
+        self::assertNotNull($lastLogin);
+        self::assertInstanceOf(\DateTime::class, $lastLogin);
+        self::assertEquals('Europe/Berlin', $lastLogin->getTimezone()->getName());
     }
 }
