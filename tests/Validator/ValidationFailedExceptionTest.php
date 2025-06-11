@@ -23,7 +23,7 @@ class ValidationFailedExceptionTest extends TestCase
         $list = new ConstraintViolationList();
         $sut = new ValidationFailedException($list);
         self::assertEquals(400, $sut->getCode());
-        self::assertEquals('Validation failed', $sut->getMessage());
+        self::assertEquals('Validation Failed', $sut->getMessage());
         self::assertSame($list, $sut->getViolations());
     }
 

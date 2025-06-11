@@ -55,6 +55,18 @@ class ActivityService
         return $activity;
     }
 
+    public function saveActivity(Activity $activity): Activity
+    {
+        if ($activity->isNew()) {
+            return $this->saveNewActivity($activity); // @phpstan-ignore method.deprecated
+        } else {
+            return $this->updateActivity($activity); // @phpstan-ignore method.deprecated
+        }
+    }
+
+    /**
+     * @deprecated since 2.35 - use saveActivity() instead
+     */
     public function saveNewActivity(Activity $activity): Activity
     {
         if (null !== $activity->getId()) {
@@ -85,10 +97,13 @@ class ActivityService
         $errors = $this->validator->validate($activity, null, $groups);
 
         if ($errors->count() > 0) {
-            throw new ValidationFailedException($errors, 'Validation Failed');
+            throw new ValidationFailedException($errors);
         }
     }
 
+    /**
+     * @deprecated since 2.35 - use saveActivity() instead
+     */
     public function updateActivity(Activity $activity): Activity
     {
         $this->validateActivity($activity);

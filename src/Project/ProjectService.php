@@ -56,6 +56,18 @@ final class ProjectService
         return $project;
     }
 
+    public function saveProject(Project $project, ?Context $context = null): Project
+    {
+        if ($project->isNew()) {
+            return $this->saveNewProject($project, $context); // @phpstan-ignore method.deprecated
+        } else {
+            return $this->updateProject($project); // @phpstan-ignore method.deprecated
+        }
+    }
+
+    /**
+     * @deprecated since 2.35 - use saveProject() instead
+     */
     public function saveNewProject(Project $project, ?Context $context = null): Project
     {
         if (null !== $project->getId()) {
@@ -93,10 +105,13 @@ final class ProjectService
         $errors = $this->validator->validate($project, null, $groups);
 
         if ($errors->count() > 0) {
-            throw new ValidationFailedException($errors, 'Validation Failed');
+            throw new ValidationFailedException($errors);
         }
     }
 
+    /**
+     * @deprecated since 2.35 - use saveProject() instead
+     */
     public function updateProject(Project $project): Project
     {
         $this->validateProject($project);
@@ -108,8 +123,12 @@ final class ProjectService
         return $project;
     }
 
-    public function findProjectByName(string $name): ?Project
+    public function findProjectByName(string $name, ?Customer $customer): ?Project
     {
+        if ($customer !== null) {
+            return $this->repository->findOneBy(['name' => $name, 'customer' => $customer->getId()]);
+        }
+
         return $this->repository->findOneBy(['name' => $name]);
     }
 

@@ -31,7 +31,8 @@ class SpoutSpreadsheet implements SpreadsheetPackage
 
     public function __construct(
         private readonly WriterInterface $writer,
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator,
+        private readonly ?string $locale = null,
     )
     {
         $this->writer->setCreator(Constants::SOFTWARE);
@@ -50,11 +51,11 @@ class SpoutSpreadsheet implements SpreadsheetPackage
         $tmp = [];
         $i = 0;
         foreach ($columns as $column) {
-            $title = $this->translator->trans($column->getHeader());
+            $title = $this->translator->trans($column->getHeader(), [], null, $this->locale);
             $tmp[] = Cell::fromValue($title);
             $style = null;
-            if ($column->getFormat() !== null) {
-                $style = (new Style())->setFormat($column->getFormat());
+            if (($format = $column->getFormat()) !== null) {
+                $style = (new Style())->setFormat($format);
             }
             $this->styles[$i++] = $style;
         }
@@ -120,8 +121,10 @@ class SpoutSpreadsheet implements SpreadsheetPackage
 
         if ($this->writer instanceof AbstractWriterMultiSheets) {
             $sheetView = new SheetView();
-            $sheetView->setFreezeColumn('D');
-            $sheetView->setFreezeRow(2);
+
+            // deactivated, because the column order is now configurable
+            //$sheetView->setFreezeColumn('D');
+            //$sheetView->setFreezeRow(2);
 
             $this->writer->getCurrentSheet()->setSheetView($sheetView);
         }

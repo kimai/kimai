@@ -116,7 +116,7 @@ abstract class AbstractResetCommand extends Command
         }
 
         try {
-            $command = $this->getApplication()->find('doctrine:query:sql');
+            $command = $this->getApplication()->find('dbal:run-sql');
             $command->run(new ArrayInput(['sql' => 'DROP TABLE IF EXISTS migration_versions']), $output);
         } catch (Exception $ex) {
             $io->error('Failed to drop migration_versions table: ' . $ex->getMessage());
@@ -125,7 +125,7 @@ abstract class AbstractResetCommand extends Command
         }
 
         try {
-            $command = $this->getApplication()->find('doctrine:query:sql');
+            $command = $this->getApplication()->find('dbal:run-sql');
             $command->run(new ArrayInput(['sql' => 'DROP TABLE IF EXISTS kimai2_sessions']), $output);
         } catch (Exception $ex) {
             $io->error('Failed to drop kimai2_sessions table: ' . $ex->getMessage());

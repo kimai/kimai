@@ -29,6 +29,7 @@ class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
     use PDFRendererTrait;
 
     private string $id = 'pdf';
+    private string $title = 'pdf';
     private string $template = 'default.pdf.twig';
     private array $pdfOptions = [];
 
@@ -42,7 +43,7 @@ class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
 
     public function getTitle(): string
     {
-        return 'pdf';
+        return $this->title;
     }
 
     protected function getTemplate(): string
@@ -75,20 +76,18 @@ class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
     }
 
     /**
-     * @param ExportableItem[] $timesheets
-     * @param TimesheetQuery $query
-     * @return Response
+     * @param ExportableItem[] $exportItems
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function render(array $timesheets, TimesheetQuery $query): Response
+    public function render(array $exportItems, TimesheetQuery $query): Response
     {
         $filename = new ExportFilename($query);
         $context = new PdfContext();
         $context->setOption('filename', $filename->getFilename());
 
-        $summary = $this->calculateSummary($timesheets);
+        $summary = $this->calculateSummary($exportItems);
 
         // enable basic security measures
         $sandbox = new SandboxExtension(new ExportPolicy());
@@ -96,10 +95,10 @@ class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
         $this->twig->addExtension($sandbox);
 
         $content = $this->twig->render($this->getTemplate(), array_merge([
-            'entries' => $timesheets,
+            'entries' => $exportItems,
             'query' => $query,
             'summaries' => $summary,
-            'budgets' => $this->calculateProjectBudget($timesheets, $query, $this->projectStatisticService),
+            'budgets' => $this->calculateProjectBudget($exportItems, $query, $this->projectStatisticService),
             'decimal' => false,
             'pdfContext' => $context
         ], $this->getOptions($query)));
@@ -111,18 +110,19 @@ class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
         return $this->createPdfResponse($content, $context);
     }
 
-    public function setTemplate(string $filename): PDFRenderer
+    public function setTemplate(string $filename): void
     {
         $this->template = $filename;
-
-        return $this;
     }
 
-    public function setId(string $id): PDFRenderer
+    public function setId(string $id): void
     {
         $this->id = $id;
+    }
 
-        return $this;
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
     }
 
     public function getId(): string

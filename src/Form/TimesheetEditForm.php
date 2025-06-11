@@ -43,7 +43,10 @@ class TimesheetEditForm extends AbstractType
 {
     use FormTrait;
 
-    public function __construct(private CustomerRepository $customers, private SystemConfiguration $systemConfiguration)
+    public function __construct(
+        private readonly CustomerRepository $customers,
+        private readonly SystemConfiguration $systemConfiguration
+    )
     {
     }
 
@@ -56,8 +59,7 @@ class TimesheetEditForm extends AbstractType
         $timezone = $options['timezone'];
         $isNew = true;
 
-        if (isset($options['data'])) {
-            /** @var Timesheet $entry */
+        if (isset($options['data']) && $options['data'] instanceof Timesheet) {
             $entry = $options['data'];
 
             $activity = $entry->getActivity();
@@ -335,7 +337,7 @@ class TimesheetEditForm extends AbstractType
             function (FormEvent $event) {
                 /** @var Timesheet|null $timesheet */
                 $timesheet = $event->getData();
-                if (null === $timesheet || $timesheet->isRunning()) {
+                if (null === $timesheet || ($timesheet instanceof Timesheet && $timesheet->isRunning())) {
                     $event->getForm()->get('duration')->setData(null);
                 }
             }
@@ -400,14 +402,17 @@ class TimesheetEditForm extends AbstractType
         }
 
         $builder->add('exported', YesNoType::class, [
-            'label' => 'exported'
+            'label' => 'exported',
+            'documentation' => [
+                'description' => 'If true, this timesheet will be flagged as being exported'
+            ]
         ]);
     }
 
     protected function addBillable(FormBuilderInterface $builder, array $options): void
     {
         if ($options['include_billable']) {
-            $builder->add('billableMode', TimesheetBillableType::class, []);
+            $builder->add('billableMode', TimesheetBillableType::class);
         }
 
         $builder->addModelTransformer(new CallbackTransformer(

@@ -1302,6 +1302,10 @@
         <source>invisible</source>
         <target state="translated">láthatatlan</target>
       </trans-unit>
+      <trans-unit id="1MfS6X5" resname="remove_filter" xml:space="preserve">
+        <source>remove_filter</source>
+        <target state="translated">Keresési szűrő törlése</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -35,12 +35,9 @@ class CustomerServiceTest extends TestCase
     private function getSut(
         ?EventDispatcherInterface $dispatcher = null,
         ?ValidatorInterface $validator = null,
-        ?CustomerRepository $repository = null,
         ?SystemConfiguration $configuration = null
     ): CustomerService {
-        if ($repository === null) {
-            $repository = $this->createMock(CustomerRepository::class);
-        }
+        $repository = $this->createMock(CustomerRepository::class);
 
         if ($dispatcher === null) {
             $dispatcher = $this->createMock(EventDispatcherInterface::class);
@@ -69,19 +66,6 @@ class CustomerServiceTest extends TestCase
         return new CustomerService($repository, $configuration, $validator, $dispatcher);
     }
 
-    public function testCannotSavePersistedCustomerAsNew(): void
-    {
-        $Customer = $this->createMock(Customer::class);
-        $Customer->expects($this->once())->method('getId')->willReturn(1);
-
-        $sut = $this->getSut();
-
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Cannot create customer, already persisted');
-
-        $sut->saveNewCustomer($Customer);
-    }
-
     public function testSaveNewCustomerHasValidationError(): void
     {
         $constraints = new ConstraintViolationList();
@@ -95,7 +79,7 @@ class CustomerServiceTest extends TestCase
         $this->expectException(ValidationFailedException::class);
         $this->expectExceptionMessage('Validation Failed');
 
-        $sut->saveNewCustomer(new Customer('foo'));
+        $sut->saveCustomer(new Customer('foo'));
     }
 
     public function testUpdateDispatchesEvents(): void
@@ -118,7 +102,7 @@ class CustomerServiceTest extends TestCase
 
         $sut = $this->getSut($dispatcher);
 
-        $sut->updateCustomer($Customer);
+        $sut->saveCustomer($Customer);
     }
 
     public function testCreateNewCustomerDispatchesEvents(): void
@@ -155,7 +139,7 @@ class CustomerServiceTest extends TestCase
         $sut = $this->getSut($dispatcher);
 
         $Customer = new Customer('foo');
-        $sut->saveNewCustomer($Customer);
+        $sut->saveCustomer($Customer);
     }
 
     /**
@@ -176,7 +160,7 @@ class CustomerServiceTest extends TestCase
             ]
         ]);
 
-        $sut = $this->getSut(null, null, null, $configuration);
+        $sut = $this->getSut(null, null, $configuration);
         $customer = $sut->createNewCustomer('Test');
 
         self::assertEquals((string) $expected, $customer->getNumber());

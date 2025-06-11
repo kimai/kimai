@@ -97,6 +97,9 @@ final class SamlProvider
             $field = $mapping['kimai'];
             $attribute = $mapping['saml'];
             $value = $this->getPropertyValue($token, $attribute);
+            if ($value === null) {
+                continue;
+            }
             $setter = 'set' . ucfirst($field);
             if (method_exists($user, $setter)) {
                 $user->$setter($value);
@@ -117,7 +120,7 @@ final class SamlProvider
         $user->setAuth(User::AUTH_SAML);
     }
 
-    private function getPropertyValue(SamlLoginAttributes $token, $attribute): string
+    private function getPropertyValue(SamlLoginAttributes $token, $attribute): ?string
     {
         $results = [];
         $attributes = $token->getAttributes();
@@ -129,11 +132,16 @@ final class SamlProvider
             }
             if ($part[0] === '$') {
                 $key = substr($part, 1);
-                if (!\array_key_exists($key, $attributes)) {
+                $optional = false;
+                if ($key[0] === '$') {
+                    $key = substr($key, 1);
+                    $optional = true;
+                }
+                if (!$optional && !\array_key_exists($key, $attributes)) {
                     throw new \RuntimeException('Missing SAML attribute in response: ' . $key);
                 }
 
-                if (\is_array($attributes[$key]) && isset($attributes[$key][0])) {
+                if (\array_key_exists($key, $attributes) && \is_array($attributes[$key]) && isset($attributes[$key][0])) {
                     $results[] = $attributes[$key][0];
                 }
             } else {
@@ -145,6 +153,6 @@ final class SamlProvider
             return implode(' ', $results);
         }
 
-        return $attribute;
+        return null;
     }
 }

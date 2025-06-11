@@ -11,10 +11,14 @@ namespace App\Export;
 
 use App\Entity\ExportableItem;
 use App\Event\ExportItemsQueryEvent;
+use App\Export\Renderer\CsvRendererFactory;
 use App\Export\Renderer\HtmlRendererFactory;
 use App\Export\Renderer\PdfRendererFactory;
+use App\Export\Renderer\XlsxRendererFactory;
+use App\Repository\ExportTemplateRepository;
 use App\Repository\Query\ExportQuery;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\Log\LoggerInterface;
 
 final class ServiceExport
 {
@@ -36,9 +40,13 @@ final class ServiceExport
     private array $repositories = [];
 
     public function __construct(
-        private EventDispatcherInterface $eventDispatcher,
-        private HtmlRendererFactory $htmlRendererFactory,
-        private PdfRendererFactory $pdfRendererFactory
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly HtmlRendererFactory $htmlRendererFactory,
+        private readonly PdfRendererFactory $pdfRendererFactory,
+        private readonly CsvRendererFactory $csvRendererFactory,
+        private readonly XlsxRendererFactory $xlsxRendererFactory,
+        private readonly ExportTemplateRepository $exportTemplateRepository,
+        private readonly LoggerInterface $logger,
     )
     {
     }
@@ -72,6 +80,26 @@ final class ServiceExport
     public function getRenderer(): array
     {
         $renderer = [];
+
+        foreach ($this->exportTemplateRepository->findAll() as $template) {
+            $tpl = new Template((string) $template->getId(), $template->getTitle()); // @phpstan-ignore argument.type
+            $tpl->setColumns($template->getColumns());
+            $tpl->setLocale($template->getLanguage());
+
+            switch ($template->getRenderer()) {
+                case 'csv':
+                    $renderer[] = $this->csvRendererFactory->create($tpl);
+                    break;
+
+                case 'xlsx':
+                    $renderer[] = $this->xlsxRendererFactory->create($tpl);
+                    break;
+
+                default:
+                    $this->logger->error('Unknown export template type: ' . $template->getRenderer());
+                    break;
+            }
+        }
 
         foreach ($this->documentDirs as $exportPath) {
             if (!is_dir($exportPath)) {
@@ -132,7 +160,7 @@ final class ServiceExport
 
     public function getTimesheetExporterById(string $id): ?TimesheetExportInterface
     {
-        foreach ($this->timesheetExporter as $exporter) {
+        foreach ($this->getTimesheetExporter() as $exporter) {
             if ($exporter->getId() === $id) {
                 return $exporter;
             }
@@ -147,7 +175,6 @@ final class ServiceExport
     }
 
     /**
-     * @param ExportQuery $query
      * @return ExportableItem[]
      * @throws TooManyItemsExportException
      */

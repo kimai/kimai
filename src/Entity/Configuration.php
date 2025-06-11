@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use App\Repository\ConfigurationRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -23,13 +24,13 @@ class Configuration
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     private ?int $id = null;
-    #[ORM\Column(name: 'name', type: 'string', length: 100, nullable: false)]
+    #[ORM\Column(name: 'name', type: Types::STRING, length: 100, nullable: false)]
     #[Assert\NotNull]
     #[Assert\Length(min: 2, max: 100)]
     private ?string $name = null;
-    #[ORM\Column(name: 'value', type: 'text', length: 65535, nullable: true)]
+    #[ORM\Column(name: 'value', type: Types::TEXT, length: 65535, nullable: true)]
     #[Assert\Length(max: 65535)]
     private ?string $value = null;
 

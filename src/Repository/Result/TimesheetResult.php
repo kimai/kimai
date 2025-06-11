@@ -18,9 +18,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
-/**
- * @internal
- */
 final class TimesheetResult
 {
     private ?TimesheetResultStatistic $statisticCache = null;

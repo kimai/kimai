@@ -1,4 +1,5 @@
 nelmio_api_doc:
+    operation_id_generation: conditionally_prepend
     models:
         use_jms: true
         names:
@@ -43,20 +44,28 @@ nelmio_api_doc:
             - { alias: Invoice,                     type: App\Entity\Invoice,                       groups: [Default, Entity, Invoice, Invoice_Entity] }
             - { alias: InvoiceCollection,           type: App\Entity\Invoice,                       groups: [Default, Collection, Invoice] }
     areas:
-        path_patterns:
-            - ^/api(?!/doc)
+        default:
+            path_patterns:
+                - ^/api(?!/doc)
+            security:
+                bearer:
+                    type: 'http'
+                    description: 'API Token'
+                    bearerFormat: 'KIMAI'
+                    scheme: 'bearer'
     documentation:
         info:
             title: Kimai - API
             description: |
-                JSON API for the Kimai time-tracking software. Read our [API documentation](https://www.kimai.org/documentation/rest-api.html) and download the [Open API definition](doc.json) to import into your API client.
-            version: '1.0'
-        components:
-            securitySchemes:
-                bearer:
-                    type: http
-                    scheme: bearer
-                    bearerFormat: KIMAI
-                    description: API Token
+                JSON API for the Kimai time-tracking software. Find more infos in our [API documentation](https://www.kimai.org/documentation/rest-api.html).
+            version: '1.1'
         security:
             - bearer: []
+    html_config:
+#        assets_mode: cdn
+        # https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/
+        swagger_ui_config: []
+        # https://redocly.com/docs/redoc/config/
+        redocly_config: []
+        # https://docs.stoplight.io/docs/elements/b074dc47b2826-elements-configuration-options
+        stoplight_config: { basePath: '/api/doc', router: 'memory', logo: '/touch-icon-192x192.png', hideInternal: true }

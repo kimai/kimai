@@ -17,18 +17,10 @@ interface ExportRendererInterface
 {
     /**
      * @param ExportableItem[] $exportItems
-     * @param TimesheetQuery $query
-     * @return Response
      */
     public function render(array $exportItems, TimesheetQuery $query): Response;
 
-    /**
-     * @return string
-     */
     public function getId(): string;
 
-    /**
-     * @return string
-     */
     public function getTitle(): string;
 }

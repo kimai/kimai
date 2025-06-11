@@ -58,19 +58,6 @@ class ActivityServiceTest extends TestCase
         return $service;
     }
 
-    public function testCannotSavePersistedProjectAsNew(): void
-    {
-        $project = $this->createMock(Activity::class);
-        $project->expects($this->once())->method('getId')->willReturn(1);
-
-        $sut = $this->getSut();
-
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Cannot create activity, already persisted');
-
-        $sut->saveNewActivity($project);
-    }
-
     public function testsaveNewActivityHasValidationError(): void
     {
         $constraints = new ConstraintViolationList();
@@ -84,7 +71,7 @@ class ActivityServiceTest extends TestCase
         $this->expectException(ValidationFailedException::class);
         $this->expectExceptionMessage('Validation Failed');
 
-        $sut->saveNewActivity(new Activity());
+        $sut->saveActivity(new Activity());
     }
 
     public function testUpdateDispatchesEvents(): void
@@ -107,7 +94,7 @@ class ActivityServiceTest extends TestCase
 
         $sut = $this->getSut($dispatcher);
 
-        $sut->updateActivity($project);
+        $sut->saveActivity($project);
     }
 
     public function testcreateNewActivityDispatchesEvents(): void
@@ -143,7 +130,7 @@ class ActivityServiceTest extends TestCase
         $sut = $this->getSut($dispatcher);
 
         $activity = new Activity();
-        $sut->saveNewActivity($activity);
+        $sut->saveActivity($activity);
     }
 
     public function testcreateNewActivityWithoutCustomer(): void

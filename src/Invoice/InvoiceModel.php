@@ -218,9 +218,7 @@ final class InvoiceModel
     }
 
     /**
-     * Returns the user who is currently creating the invoice.
-     *
-     * @return User|null
+     * Returns the user currently creating the invoice.
      */
     public function getUser(): ?User
     {

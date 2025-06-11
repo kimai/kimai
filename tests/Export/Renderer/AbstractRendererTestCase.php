@@ -13,22 +13,15 @@ use App\Entity\Activity;
 use App\Entity\ActivityMeta;
 use App\Entity\Customer;
 use App\Entity\CustomerMeta;
-use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
 use App\Entity\ProjectMeta;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
-use App\Event\ActivityMetaDisplayEvent;
-use App\Event\CustomerMetaDisplayEvent;
-use App\Event\ProjectMetaDisplayEvent;
-use App\Event\TimesheetMetaDisplayEvent;
 use App\Export\ExportRendererInterface;
 use App\Repository\Query\TimesheetQuery;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractRendererTestCase extends KernelTestCase
@@ -143,49 +136,5 @@ abstract class AbstractRendererTestCase extends KernelTestCase
         $query->setProjects([$project]);
 
         return $renderer->render($entries, $query);
-    }
-}
-
-class MetaFieldColumnSubscriber implements EventSubscriberInterface
-{
-    public static function getSubscribedEvents(): array
-    {
-        return [
-            TimesheetMetaDisplayEvent::class => ['loadTimesheetField', 200],
-            CustomerMetaDisplayEvent::class => ['loadCustomerField', 200],
-            ProjectMetaDisplayEvent::class => ['loadProjectField', 200],
-            ActivityMetaDisplayEvent::class => ['loadActivityField', 200],
-        ];
-    }
-
-    public function loadTimesheetField(TimesheetMetaDisplayEvent $event): void
-    {
-        $event->addField($this->prepareEntity(new TimesheetMeta(), 'foo'));
-        $event->addField($this->prepareEntity(new TimesheetMeta(), 'foo2'));
-    }
-
-    public function loadCustomerField(CustomerMetaDisplayEvent $event): void
-    {
-        $event->addField($this->prepareEntity(new CustomerMeta(), 'customer-foo'));
-    }
-
-    public function loadProjectField(ProjectMetaDisplayEvent $event): void
-    {
-        $event->addField($this->prepareEntity(new ProjectMeta(), 'project-foo'));
-        $event->addField($this->prepareEntity(new ProjectMeta(), 'project-foo2')->setIsVisible(false));
-    }
-
-    public function loadActivityField(ActivityMetaDisplayEvent $event): void
-    {
-        $event->addField($this->prepareEntity(new ActivityMeta(), 'activity-foo'));
-    }
-
-    private function prepareEntity(MetaTableTypeInterface $meta, string $name): MetaTableTypeInterface
-    {
-        return $meta
-            ->setLabel('Working place')
-            ->setName($name)
-            ->setType(TextType::class)
-            ->setIsVisible(true);
     }
 }

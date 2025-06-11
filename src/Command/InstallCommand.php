@@ -25,7 +25,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  *
  * @codeCoverageIgnore
  */
-#[AsCommand(name: 'kimai:install', description: 'Kimai installation command', aliases: ['kimai:update'])]
+#[AsCommand(name: 'kimai:install', description: 'Install and update Kimai', aliases: ['kimai:update'])]
 final class InstallCommand extends Command
 {
     public function __construct(private readonly Connection $connection)

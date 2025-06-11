@@ -32,7 +32,7 @@ class RoleValidatorTest extends ConstraintValidatorTestCase
         return new RoleValidator($roleService);
     }
 
-    public static function getValidRoles()
+    public static function getValidRoles(): array
     {
         return [
             [User::ROLE_USER],
@@ -69,7 +69,7 @@ class RoleValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public static function getInvalidRoles()
+    public static function getInvalidRoles(): array
     {
         return [
             ['foo'],
