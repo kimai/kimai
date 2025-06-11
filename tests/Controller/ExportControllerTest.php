@@ -9,6 +9,7 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\ExportTemplate;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
@@ -265,5 +266,32 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
     public function testCreateTemplateIsSecureForRole(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/export/template-create');
+    }
+
+    public function testCreateTemplateAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/export/template-create');
+        $form = $client->getCrawler()->filter('form[name=export_template_spreadsheet_form]')->form();
+        $client->submit($form, [
+            'export_template_spreadsheet_form' => [
+                'title' => 'My temaplte name',
+                'renderer' => 'xlsx',
+                'language' => 'de',
+                'columns' => 'date',
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/export/'));
+
+        $templates = $this->getEntityManager()->getRepository(ExportTemplate::class)->findAll();
+        self::assertCount(1, $templates);
+        $template = array_pop($templates);
+        $id = $template->getId();
+
+        $this->request($client, $this->createUrl('/export/template-edit/' . $id));
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $editForm = $client->getCrawler()->filter('form[name=export_template_spreadsheet_form]')->form();
+        self::assertEquals('My temaplte name', $editForm->get('export_template_spreadsheet_form[title]')->getValue());
     }
 }
