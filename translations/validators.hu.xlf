@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
         <source>The end date must not be earlier than the start date.</source>
-        <target state="needs-translation">A befejezés dátuma nem lehet korábban mint a kezdés dátuma.</target>
+        <target state="translated">A befejezés dátuma nem lehet korábbi mint a kezdés dátuma.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
@@ -22,9 +22,9 @@
         <source>This invoice document cannot be used, please rename the file and upload it again.</source>
         <target>Ez a számla dokumentum nem használható, átnevezés után töltse fel újra.</target>
       </trans-unit>
-      <trans-unit id="1V6BsD_" resname="You must select at least one user or team.">
+      <trans-unit id="1V6BsD_" resname="You must select at least one user or team." xml:space="preserve">
         <source>You must select at least one user or team.</source>
-        <target>Legalább egy felhasználót vagy csoportot kell kiválasztani.</target>
+        <target state="translated">Legalább egy felhasználót vagy csoportot ki kell választani.</target>
       </trans-unit>
       <trans-unit id="VJSZSD0" resname="The given value is not a valid time.">
         <source>The given value is not a valid time.</source>
@@ -69,6 +69,86 @@
       <trans-unit id="mjlH0la" resname="This timesheet is already exported.">
         <source>This timesheet is already exported.</source>
         <target>Ez a munkaidő-nyilvántartás már exportálva van.</target>
+      </trans-unit>
+      <trans-unit id="Jz1y3yB" resname="Duration cannot be zero." xml:space="preserve">
+        <source>Duration cannot be zero.</source>
+        <target state="translated">Üres időszak nem engedélyezett.</target>
+      </trans-unit>
+      <trans-unit id="gSAwscA" resname="Validation Failed" xml:space="preserve">
+        <source>Validation Failed</source>
+        <target state="translated">Mentés közben hiba történt.</target>
+      </trans-unit>
+      <trans-unit id="0ULsHQA" resname="The chosen date is not a working day." xml:space="preserve">
+        <source>The chosen date is not a working day.</source>
+        <target state="translated">A kiválasztott dátum nem munkanap.</target>
+      </trans-unit>
+      <trans-unit id="ZObikpA" resname="This absence type is not known." xml:space="preserve">
+        <source>This absence type is not known.</source>
+        <target state="translated">Ez a távollét típus ismeretlen.</target>
+      </trans-unit>
+      <trans-unit id="IN37g5N" resname="Not enough holidays left." xml:space="preserve">
+        <source>Not enough holidays left.</source>
+        <target state="translated">Nincs elegendő maradék szabadság.</target>
+      </trans-unit>
+      <trans-unit id="7HYTefs" resname="Cannot stop running timesheet" xml:space="preserve">
+        <source>Cannot stop running timesheet</source>
+        <target state="translated">Van egy aktív időbejegyzése, amelyet nem lehet automatikusan leállítani.</target>
+      </trans-unit>
+      <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded." xml:space="preserve">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target state="translated">Maximum {{ value }} óra engedélyezett.</target>
+      </trans-unit>
+      <trans-unit id="1oKCOa5" resname="The budget is completely used." xml:space="preserve">
+        <source>The budget is completely used.</source>
+        <target state="translated">A költségkeret felhasználásra került. A rendelkezésre álló %budget% összegből eddig %used% került lefoglalásra, %free% még felhasználható.</target>
+      </trans-unit>
+      <trans-unit id="nLcihCc" resname="An absence must have a date." xml:space="preserve">
+        <source>An absence must have a date.</source>
+        <target state="translated">A távollétnek rendelkeznie kell dátummal.</target>
+      </trans-unit>
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
+        <source>An absence cannot be booked before your first working day.</source>
+        <target state="translated">Távollét nem foglalható az első munkanap előtti időpontra.</target>
+      </trans-unit>
+      <trans-unit id="DiaaRa1" resname="You cannot have two absences of this type at one day." xml:space="preserve">
+        <source>You cannot have two absences of this type at one day.</source>
+        <target state="translated">Egy napon nem lehet két azonos típusú távollét.</target>
+      </trans-unit>
+      <trans-unit id="kSBiyaF" resname="This is a public holiday, booking not allowed." xml:space="preserve">
+        <source>This is a public holiday, booking not allowed.</source>
+        <target state="translated">Ez munkaszüneti nap, foglalás nem engedélyezett.</target>
+      </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up." xml:space="preserve">
+        <source>Sorry, the budget is used up.</source>
+        <target state="translated">Sajnáljuk, a költségkeret kimerült.</target>
+      </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
+        <source>Duration cannot be negative.</source>
+        <target state="translated">Az időszak nem lehet negatív.</target>
+      </trans-unit>
+      <trans-unit id="BztgSSP" resname="The period of absence must not extend beyond the turn of the year." xml:space="preserve">
+        <source>The period of absence must not extend beyond the turn of the year.</source>
+        <target state="translated">A távollét időszaka nem nyúlhat át az évfordulón.</target>
+      </trans-unit>
+      <trans-unit id="N21br.P" resname="The chosen date is already locked." xml:space="preserve">
+        <source>The chosen date is already locked.</source>
+        <target state="translated">A kiválasztott dátum már zárolva van.</target>
+      </trans-unit>
+      <trans-unit id="7mqg3TC" resname="This value is not a valid role name." xml:space="preserve">
+        <source>This value is not a valid role name.</source>
+        <target state="translated">Ez egy nem érvényes név a felhasználói szerepkörhöz.</target>
+      </trans-unit>
+      <trans-unit id="6H84TMs" resname="An absence must be assigned to a user." xml:space="preserve">
+        <source>An absence must be assigned to a user.</source>
+        <target state="translated">A távollétet egy felhasználóhoz hozzá kell rendelni.</target>
+      </trans-unit>
+      <trans-unit id="ByeEMxW" resname="You do not have enough overtime, remaining are {{ value }}." xml:space="preserve">
+        <source>You do not have enough overtime, remaining are {{ value }}.</source>
+        <target state="translated">Nincs elég túlórád, a fennmaradó {{ value }}.</target>
+      </trans-unit>
+      <trans-unit id="c2B6.lW" resname="You can book a maximum of {{ value }} days at once." xml:space="preserve">
+        <source>You can book a maximum of {{ value }} days at once.</source>
+        <target state="translated">Egyszerre legfeljebb {{ value }} napot foglalhat, Ön jelenleg {{ selected }} napot választott.</target>
       </trans-unit>
     </body>
   </file>

@@ -162,6 +162,10 @@
         <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
         <target state="final">Il periodo selezionato non può essere bloccato: sono in sospeso richieste di congedo non confermate.</target>
       </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve" approved="yes">
+        <source>Duration cannot be negative.</source>
+        <target state="final">La durata non può essere negativa.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
