@@ -143,7 +143,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public static function getProjectStartEndTestData()
+    public static function getProjectStartEndTestData(): iterable
     {
         yield [new \DateTime(), new \DateTime(), [
             ['begin_date', TimesheetBasic::PROJECT_NOT_STARTED, 'The project has not started at that time.'],

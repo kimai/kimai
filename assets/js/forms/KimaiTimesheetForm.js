@@ -144,6 +144,10 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
 
     _parseBeginTime()
     {
+        if (this._beginTime.value === '') {
+            return;
+        }
+
         let newBeginTime = this._formatTimeForParsing(this._beginTime.value, this._beginTime.dataset['format']);
         if (newBeginTime !== this._beginTime.value) {
             this._beginTime.value = newBeginTime;
@@ -153,6 +157,10 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
 
     _parseEndTime()
     {
+        if (this._endTime.value === '') {
+            return;
+        }
+
         let newEndTime = this._formatTimeForParsing(this._endTime.value, this._endTime.dataset['format']);
         if (newEndTime !== this._endTime.value) {
             this._endTime.value = newEndTime;
@@ -162,6 +170,10 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
 
     _parseDuration()
     {
+        if (this._duration.value === '') {
+            return;
+        }
+
         this._setDurationAsString(this._getParsedDuration());
     }
 
@@ -446,14 +458,14 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
 
     /**
      * Ruleset:
-     * - invalid duration => skip
+     * - invalid or empty duration => skip
      * - if begin and end are empty: set begin to now and end to duration
      * - if begin is empty and end is not empty: set begin to end minus duration
      * - if begin is not empty and end is empty and duration is > 0 (running records = 0): set end to begin plus duration
      */
     _changedDuration()
     {
-        if (!this._isDurationConnected()) {
+        if (!this._isDurationConnected() || this._duration.value === '') {
             return;
         }
 

@@ -48,7 +48,7 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
             }
         }
 
-        $expectedKeys = ['Actions', 'Activity', 'Default', 'Customer', 'Project', 'Tag', 'Team', 'Timesheet', 'User', 'Invoice'];
+        $expectedKeys = ['Actions', 'Activity', 'Default', 'Customer', 'Project', 'Tag', 'Team', 'Timesheet', 'User', 'Invoice', 'Export'];
         $actual = array_keys($tags);
 
         sort($actual);
@@ -73,6 +73,7 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
             '/api/customers/{id}/meta',
             '/api/customers/{id}/rates',
             '/api/customers/{id}/rates/{rateId}',
+            '/api/export/{id}',
             '/api/invoices',
             '/api/invoices/{id}',
             '/api/projects',

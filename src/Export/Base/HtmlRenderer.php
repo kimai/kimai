@@ -68,9 +68,9 @@ class HtmlRenderer implements ExportRendererInterface
     }
 
     /**
-     * @param ExportableItem[] $timesheets
+     * @param ExportableItem[] $exportItems
      */
-    public function render(array $timesheets, TimesheetQuery $query): Response
+    public function render(array $exportItems, TimesheetQuery $query): Response
     {
         $timesheetMetaFields = $this->findMetaColumns(new TimesheetMetaDisplayEvent($query, TimesheetMetaDisplayEvent::EXPORT));
         $customerMetaFields = $this->findMetaColumns(new CustomerMetaDisplayEvent($query->copyTo(new CustomerQuery()), CustomerMetaDisplayEvent::EXPORT));
@@ -81,7 +81,7 @@ class HtmlRenderer implements ExportRendererInterface
         $this->dispatcher->dispatch($event);
         $userPreferences = $event->getPreferences();
 
-        $summary = $this->calculateSummary($timesheets);
+        $summary = $this->calculateSummary($exportItems);
 
         // enable basic security measures
         $sandbox = new SandboxExtension(new ExportPolicy());
@@ -89,11 +89,11 @@ class HtmlRenderer implements ExportRendererInterface
         $this->twig->addExtension($sandbox);
 
         $content = $this->twig->render($this->getTemplate(), array_merge([
-            'entries' => $timesheets,
+            'entries' => $exportItems,
             'query' => $query,
             'summaries' => $summary,
-            'budgets' => $this->calculateProjectBudget($timesheets, $query, $this->projectStatisticService),
-            'activity_budgets' => $this->calculateActivityBudget($timesheets, $query, $this->activityStatisticService),
+            'budgets' => $this->calculateProjectBudget($exportItems, $query, $this->projectStatisticService),
+            'activity_budgets' => $this->calculateActivityBudget($exportItems, $query, $this->activityStatisticService),
             'timesheetMetaFields' => $timesheetMetaFields,
             'customerMetaFields' => $customerMetaFields,
             'projectMetaFields' => $projectMetaFields,

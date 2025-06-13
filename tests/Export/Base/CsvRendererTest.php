@@ -13,7 +13,8 @@ use App\Entity\User;
 use App\Export\Base\CsvRenderer;
 use App\Export\Base\SpreadsheetRenderer;
 use App\Tests\Export\Renderer\AbstractRendererTestCase;
-use App\Tests\Export\Renderer\MetaFieldColumnSubscriber;
+use App\Tests\Mocks\MetaFieldColumnSubscriberMock;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -37,12 +38,13 @@ class CsvRendererTest extends AbstractRendererTestCase
         $security->expects($this->any())->method('getUser')->willReturn($user);
         $security->expects($this->any())->method('isGranted')->willReturn(true);
 
-        $translator = $this->createMock(TranslatorInterface::class);
+        $translator = $this->getContainer()->get(TranslatorInterface::class);
+        self::assertInstanceOf(TranslatorInterface::class, $translator);
 
         $dispatcher = new EventDispatcher();
-        $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
+        $dispatcher->addSubscriber(new MetaFieldColumnSubscriberMock());
 
-        return new CsvRenderer(new SpreadsheetRenderer($dispatcher, $security), $translator);
+        return new CsvRenderer(new SpreadsheetRenderer($dispatcher, $security, $this->createMock(LoggerInterface::class)), $translator);
     }
 
     public function testConfiguration(): void
@@ -50,23 +52,43 @@ class CsvRendererTest extends AbstractRendererTestCase
         $sut = $this->getAbstractRenderer();
 
         self::assertEquals('csv', $sut->getId());
-        self::assertEquals('csv', $sut->getTitle());
+        self::assertEquals('default', $sut->getTitle());
+
+        $sut->setTitle('foo-bar');
+        self::assertEquals('foo-bar', $sut->getTitle());
+
+        $sut->setId('bar-id');
+        self::assertEquals('bar-id', $sut->getId());
     }
 
     public static function getTestModel(): array
     {
+        $en = [
+            'Date', 'From', 'To', 'Duration', 'Currency', 'Price', 'Internal price', 'Hourly price', 'Fixed price', 'Name',
+            'User', 'Staff number', 'Customer', 'Project', 'Activity', 'Description', 'Billable', 'Tags',
+            'Type', 'category', 'Account', 'Project number', 'VAT-ID', 'Order number',
+            'Working place', 'Working place', 'Working place', 'Working place', 'Working place', 'Working place', 'mypref',
+        ];
+        $de = [
+            'Datum', 'Von', 'Bis', 'Dauer', 'Währung', 'Preis', 'Interner Preis', 'Preis pro Stunde', 'Festpreis', 'Name',
+            'Benutzer', 'Personalnummer', 'Kunde', 'Projekt', 'Tätigkeit', 'Beschreibung', 'Abrechenbar', 'Schlagworte',
+            'Typ', 'category', 'Kundennummer', 'Projektnummer', 'Umsatzsteuer-ID', 'Bestellnummer',
+            'Working place', 'Working place', 'Working place', 'Working place', 'Working place', 'Working place', 'mypref',
+        ];
+
         return [
-            ['400', '2437.12', '1947.99', 7, 6, 1, 2, 2, false],
-            ['400', '2437.12', '1947.99', 7, 6, 1, 2, 2, true]
+            ['400', '2437.12', '1947.99', 7, 6, 1, 2, 2, false, null, $en],
+            ['400', '2437.12', '1947.99', 7, 6, 1, 2, 2, true, 'de', $de]
         ];
     }
 
     /**
      * @dataProvider getTestModel
      */
-    public function testRender(string $totalDuration, string $totalRate, string $expectedRate, int $expectedRows, int $expectedDescriptions, int $expectedUser1, int $expectedUser2, int $expectedUser3, bool $exportDecimal): void
+    public function testRender(string $totalDuration, string $totalRate, string $expectedRate, int $expectedRows, int $expectedDescriptions, int $expectedUser1, int $expectedUser2, int $expectedUser3, bool $exportDecimal, ?string $locale, array $header): void
     {
         $sut = $this->getAbstractRenderer($exportDecimal);
+        $sut->setLocale($locale);
 
         /** @var BinaryFileResponse $response */
         $response = $this->render($sut);
@@ -102,11 +124,13 @@ class CsvRendererTest extends AbstractRendererTestCase
             $all[] = str_getcsv($row);
         }
 
+        self::assertEquals($header, $all[0]);
+
         $expected = [
             '2019-06-16',
             '12:00',
             '12:06',
-            ($exportDecimal ? '0.11' : '0:06:40'),
+            ($exportDecimal ? '0.11' : '0:06'),
             //'0.11',
             'EUR',
             '0',
@@ -134,13 +158,14 @@ class CsvRendererTest extends AbstractRendererTestCase
             '',
             'project-foo2',
             'activity-bar',
+            '',
         ];
 
         $expected2 = [
             '2019-06-16',
             '12:00',
             '12:06',
-            ($exportDecimal ? '0.11' : '0:06:40'),
+            ($exportDecimal ? '0.11' : '0:06'),
             //'0.11',
             'EUR',
             '0',
@@ -168,6 +193,7 @@ class CsvRendererTest extends AbstractRendererTestCase
             '',
             'project-foo2',
             'activity-bar',
+            '',
         ];
 
         self::assertEquals(7, \count($all));

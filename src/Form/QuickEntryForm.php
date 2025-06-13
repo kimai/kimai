@@ -18,6 +18,7 @@ use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\Valid;
@@ -92,13 +93,16 @@ final class QuickEntryForm extends AbstractType
             'entry_options' => [
                 'label' => false,
                 'duration_minutes' => $this->configuration->getTimesheetIncrementDuration(),
-                // this is NOT the start_date, because it would prevent projects from appearing
-                // in the first days of the week, if the projects ends at the end of the week
-                // the validation still triggers if the user selects days outside the project range
+                // this is NOT the start_date, because it would prevent projects from appearing in the
+                // first days of the week if the project ends at the end of the week.
+                // the validation still triggers if the user selects days outside the project range.
                 'start_date' => $options['end_date'],
                 'end_date' => $options['end_date'],
                 'empty_data' => function (FormInterface $form) use ($options) {
-                    return clone $options['prototype_data'];
+                    if ($options['prototype_data'] instanceof QuickEntryModel) {
+                        return clone $options['prototype_data'];
+                    }
+                    throw new \Exception('Invalid Prototype given');
                 },
                 'prototype_data' => clone $options['prototype_data'],
             ],
@@ -109,6 +113,25 @@ final class QuickEntryForm extends AbstractType
                 new All(['constraints' => [new QuickEntryModel()]])
             ],
         ]);
+    }
+
+    public function finishView(FormView $view, FormInterface $form, array $options): void
+    {
+        usort($view['rows']->children, function (FormView $a, FormView $b) {
+            /** @var \App\Model\QuickEntryModel $objectA */
+            $objectA = $a->vars['data'];
+            /** @var \App\Model\QuickEntryModel $objectB */
+            $objectB = $b->vars['data'];
+
+            $existingA = $objectA->hasExistingTimesheet();
+            $existingB = $objectB->hasExistingTimesheet();
+
+            if ($existingA === $existingB) {
+                return 0;
+            }
+
+            return ($existingA && !$existingB) ? -1 : 1;
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver): void

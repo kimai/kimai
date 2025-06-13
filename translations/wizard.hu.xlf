@@ -30,6 +30,10 @@
         <source>wizard.password.description</source>
         <target state="translated">Kérjük adja meg új jelszavát, amit ezentúl a bejelentkezéshez használunk.</target>
       </trans-unit>
+      <trans-unit id="k1SzMuI" resname="wizard.done.description" xml:space="preserve">
+        <source>wizard.done.description</source>
+        <target state="translated">A legfontosabb beállítások most már készen vannak. A további beállításokat később bármikor testre szabhatja a user profiljában.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

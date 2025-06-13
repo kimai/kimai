@@ -251,7 +251,7 @@ class TimesheetValidationTest extends KernelTestCase
         $entity->setBegin($begin);
         $entity->setEnd($end);
 
-        $this->assertHasViolationForField($entity, 'end_date');
+        $this->assertHasViolationForField($entity, ['end_date', 'duration']);
 
         // allow same begin and end
         $entity = $this->getEntity();

@@ -162,6 +162,10 @@
         <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
         <target>Ausgewählter Zeitraum kann nicht gesperrt werden: unbestätigte Abwesenheitsanträge stehen an.</target>
       </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative.">
+        <source>Duration cannot be negative.</source>
+        <target>Die Dauer kann nicht negativ sein.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

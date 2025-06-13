@@ -315,7 +315,7 @@ final class TimesheetController extends BaseApiController
 
         if ($form->isValid()) {
             try {
-                $this->service->saveNewTimesheet($timesheet);
+                $this->service->saveTimesheet($timesheet);
 
                 $view = new View($timesheet, 200);
 
@@ -372,7 +372,7 @@ final class TimesheetController extends BaseApiController
             return $this->viewHandler->handle($view);
         }
 
-        $this->service->updateTimesheet($timesheet);
+        $this->service->saveTimesheet($timesheet);
 
         $view = new View($timesheet, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -547,7 +547,7 @@ final class TimesheetController extends BaseApiController
         $copyTimesheet = clone $timesheet;
 
         $this->dispatcher->dispatch(new TimesheetDuplicatePreEvent($copyTimesheet, $timesheet));
-        $this->service->saveNewTimesheet($copyTimesheet);
+        $this->service->saveTimesheet($copyTimesheet);
         $this->dispatcher->dispatch(new TimesheetDuplicatePostEvent($copyTimesheet, $timesheet));
 
         $view = new View($copyTimesheet, 200);
@@ -571,7 +571,7 @@ final class TimesheetController extends BaseApiController
 
         $timesheet->setExported(!$timesheet->isExported());
 
-        $this->service->updateTimesheet($timesheet);
+        $this->service->saveTimesheet($timesheet);
 
         $view = new View($timesheet, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -601,7 +601,7 @@ final class TimesheetController extends BaseApiController
 
         $meta->setValue($paramFetcher->get('value'));
 
-        $this->service->updateTimesheet($timesheet);
+        $this->service->saveTimesheet($timesheet);
 
         $view = new View($timesheet, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);

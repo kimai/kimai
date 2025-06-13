@@ -24,12 +24,18 @@
     'activity': {'class': 'd-none', 'orderBy': false},
     'description': {'class': 'd-none d-xl-table-cell timesheet-description', 'orderBy': false},
     'tags': {'class': 'd-none d-xl-table-cell', 'orderBy': false},
-    'unit_price': {'class': 'd-none text-nowrap text-end', 'orderBy': false},
     'duration': {'class': 'text-end text-nowrap', 'orderBy': false},
-    'internalRate': {'class': 'text-end d-none text-nowrap', 'orderBy': false},
-    'total_rate': {'class': 'text-end text-nowrap', 'orderBy': false},
-    'actions': {'class': 'actions alwaysVisible', 'orderBy': false},
 } %}
+{% if show_rates %}
+    {% set columns = columns|merge({
+        'unit_price': {'class': 'd-none text-nowrap text-end', 'orderBy': false},
+        'internalRate': {'class': 'text-end d-none text-nowrap', 'orderBy': false},
+        'total_rate': {'class': 'text-end text-nowrap', 'orderBy': false},
+    }) %}
+{% endif %}
+{% set columns = columns|merge({
+    'actions': {'class': 'actions alwaysVisible', 'orderBy': false},
+}) %}
 
 {% set tableName = 'export' %}
 {% set editExported = is_granted('edit_exported_timesheet') %}
@@ -45,9 +51,11 @@
     {% if totalDuration > 0 %}
         {{ status_duration(totalDuration|duration) }}
     {% endif %}
-    {% for totalCurrency, totalRate in totalRates %}
-        {{ status_money(totalRate|money(totalCurrency)) }}
-    {% endfor %}
+    {% if show_rates %}
+        {% for totalCurrency, totalRate in totalRates %}
+            {{ status_money(totalRate|money(totalCurrency)) }}
+        {% endfor %}
+    {% endif %}
 {% endblock %}
 
 {% block main_before %}
@@ -102,16 +110,6 @@
                 {% block box_attributes %}id="preview_export"{% endblock %}
                 {% block box_body_class %}p-0{% endblock %}
                 {% block box_footer %}
-                    {% set buttons = {} %}
-                    {% for button in renderer %}
-                        {% set title = button.title %}
-                        {% set group = [] %}
-                        {% if buttons[(title)] is defined %}
-                            {% set group = buttons[(title)] %}
-                        {% endif %}
-                        {% set group = group|merge([button]) %}
-                        {% set buttons = buttons|merge({(title): group}) %}
-                    {% endfor %}
                     {% if showMarkAsExportedButton %}
                     <div class="d-flex">
                         <div class="form-check form-switch">
@@ -122,33 +120,51 @@
                     {% endif %}
                     <div class="d-flex">
                         <div class="btn-group me-auto" id="export-buttons" role="group">
-                            {% for group in buttons %}
-                                {% set button = group.0 %}
-                                {% set btnTitle = ('button.' ~ button.title)|trans %}
-                                {% if btnTitle == ('button.' ~ button.title) %}
-                                    {% set btnTitle = button.title  %}
+                            {% set allowCreate = is_granted('create_export_template') %}
+                            {% for type, group in buttons %}
+                                {% set btnTitle = ('button.' ~ type)|trans %}
+                                {% if btnTitle == ('button.' ~ type) %}
+                                    {% set btnTitle = type|trans  %}
                                 {% endif %}
                                 {% if group|length == 1 %}
-                                    <button type="button" id="export-{{ button.id }}-button" class="btn btn-success startExportBtn" data-type="{{ button.id }}">
-                                    {{ btnTitle }}
-                                    </button>
-                                {% elseif group|length > 1 %}
+                                    {% for id, title in group %}
+                                        {% set btnTitle2 = ('button.' ~ title)|trans %}
+                                        {% if btnTitle2 != ('button.' ~ title) %}
+                                            {% set btnTitle = btnTitle2 %}
+                                        {% endif %}
+                                        <button type="button" id="export-{{ id }}-button" class="btn btn-success startExportBtn" data-type="{{ id }}">
+                                            {{ btnTitle }}
+                                        </button>
+                                    {% endfor %}
+                                {% else %}
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             {{ btnTitle }}
                                         </button>
                                         <div class="dropdown-menu">
-                                            {% for button in group %}
-                                            {% set btnTitle = (button.id)|trans({}, 'export') %}
-                                            {% if btnTitle == button.id %}
-                                                {% set btnTitle = button.id|split('.')|first|replace({'-': ' ', '_': ' '})|split(' ')|map(t => t|capitalize)|join(' ') %}
-                                            {% endif %}
-                                            <a href="#" class="dropdown-item startExportBtn" data-type="{{ button.id }}">{{ btnTitle }}</a>
+                                            {% for id, title in group %}
+                                                {% set btnTitle = id|trans({}, 'export') %}
+                                                {% if btnTitle == id %}
+                                                    {% set btnTitle = title|trans %}
+                                                {% endif %}
+                                                {% if btnTitle == id%}
+                                                    {% set btnTitle = id|split('.')|first|replace({'-': ' ', '_': ' '})|split(' ')|map(t => t|capitalize)|join(' ') %}
+                                                {% endif %}
+                                                <a href="#" class="dropdown-item startExportBtn" data-type="{{ id }}">
+                                                    {{ btnTitle }}
+                                                    {% if allowCreate and loop.index0 != 0 and (type == 'csv' or type == 'xlsx') %}
+                                                        <span class="dropdown-action modal-ajax-form open-edit ps-2 ms-auto" data-href="{{ path('export_template_edit', {exportTemplate: id}) }}">{{ icon('edit') }}</span>
+                                                        <span class="dropdown-action api-link text-red dd-ts-trash text-danger ms-2" href="{{ path('delete_export_template', {id: id}) }}" data-event="kimai.exportTemplate" data-method="DELETE" data-question="confirm.delete" data-msg-error="action.delete.error" data-msg-success="action.delete.success">{{ icon('delete') }}</span>
+                                                    {% endif %}
+                                                </a>
                                             {% endfor %}
                                         </div>
                                     </div>
                                 {% endif %}
                             {% endfor %}
+                            {% if allowCreate %}
+                                {{ widgets.action_button('create', {'url': path('export_template_create'), 'class': 'btn modal-ajax-form open-edit', 'title': 'create'|trans}) }}
+                            {% endif %}
                         </div>
                         {% if showToggleButton %}
                             <button id="toggle-button" class="btn ms-auto d-none d-sm-inline-flex">
@@ -169,7 +185,9 @@
                         <tr>
                             <th>{{ 'customer'|trans }}</th>
                             <th class="w-min text-end d-none d-sm-table-cell">{{ 'duration'|trans }}</th>
+                            {% if show_rates %}
                             <th class="w-min text-end">{{ 'total_rate'|trans }}</th>
+                            {% endif %}
                         </tr>
                         </thead>
                         <tbody>
@@ -180,11 +198,13 @@
                                     {{ widgets.label_customer(row.customer) }}
                                 </td>
                                 <td class="w-min text-end d-none d-sm-table-cell">
-                                    {{ row.duration|duration(decimal) }}
+                                    {{ row.duration|duration }}
                                 </td>
+                                {% if show_rates %}
                                 <td class="w-min text-end">
                                     {{ row.rate|money(currency) }}
                                 </td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -235,11 +255,12 @@
                             {{ widgets.tag_list(entry.tags) }}
                         {% endif %}
                     </td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}" data-duration="{{ entry.duration }}">
+                        {{ entry.duration|duration }}
+                    </td>
+                    {% if show_rates %}
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'unit_price') }}">
                         {{ rate|money(currency) }}
-                    </td>
-                    <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}" data-duration="{{ entry.duration }}">
-                        {{ entry.duration|duration(decimal) }}
                     </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'internalRate') }}">
                         {{ entry.internalRate|money(currency) }}
@@ -247,6 +268,7 @@
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'total_rate') }}">
                         {{ entry.rate|money(currency) }}
                     </td>
+                    {% endif %}
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'actions') }}">
                     {% if is_granted('edit_export', entry) %}
                         {% if entry.exported %}
@@ -288,6 +310,8 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
+        KimaiReloadPageWidget.create('kimai.exportTemplate', true);
+
         function updateTimesheetExportState(node, id)
         {
             /** @type {KimaiAlert} */

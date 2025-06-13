@@ -23,6 +23,10 @@ final class XlsxRenderer implements RendererInterface, TimesheetExportInterface
 {
     use ExportTrait;
 
+    private string $id = 'xlsx';
+    private string $title = 'default';
+    private ?string $locale = null;
+
     public function __construct(
         private readonly SpreadsheetRenderer $spreadsheetRenderer,
         private readonly TranslatorInterface $translator,
@@ -30,14 +34,29 @@ final class XlsxRenderer implements RendererInterface, TimesheetExportInterface
     {
     }
 
+    public function setId(string $id): void
+    {
+        $this->id = $id;
+    }
+
     public function getId(): string
     {
-        return 'xlsx';
+        return $this->id;
+    }
+
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+
+    public function setLocale(?string $locale): void
+    {
+        $this->locale = $locale;
     }
 
     public function getTitle(): string
     {
-        return 'xlsx';
+        return $this->title;
     }
 
     /**
@@ -55,14 +74,14 @@ final class XlsxRenderer implements RendererInterface, TimesheetExportInterface
     /**
      * @param ExportableItem[] $exportItems
      */
-    public function renderFile(array $exportItems, TimesheetQuery $query): \SplFileInfo
+    private function renderFile(array $exportItems, TimesheetQuery $query): \SplFileInfo
     {
         $filename = @tempnam(sys_get_temp_dir(), 'kimai-export-xlsx');
         if (false === $filename) {
             throw new \Exception('Could not open temporary file');
         }
 
-        $spreadsheet = new SpoutSpreadsheet(new Writer(), $this->translator);
+        $spreadsheet = new SpoutSpreadsheet(new Writer(), $this->translator, $this->locale);
         $spreadsheet->open($filename);
 
         $this->spreadsheetRenderer->writeSpreadsheet($spreadsheet, $exportItems, $query);

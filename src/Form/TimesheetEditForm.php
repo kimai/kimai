@@ -59,8 +59,7 @@ class TimesheetEditForm extends AbstractType
         $timezone = $options['timezone'];
         $isNew = true;
 
-        if (isset($options['data'])) {
-            /** @var Timesheet $entry */
+        if (isset($options['data']) && $options['data'] instanceof Timesheet) {
             $entry = $options['data'];
 
             $activity = $entry->getActivity();
@@ -338,7 +337,7 @@ class TimesheetEditForm extends AbstractType
             function (FormEvent $event) {
                 /** @var Timesheet|null $timesheet */
                 $timesheet = $event->getData();
-                if (null === $timesheet || $timesheet->isRunning()) {
+                if (null === $timesheet || ($timesheet instanceof Timesheet && $timesheet->isRunning())) {
                     $event->getForm()->get('duration')->setData(null);
                 }
             }

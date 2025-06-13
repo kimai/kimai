@@ -20,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class QuickEntryTimesheetType extends AbstractType
 {
-    public function __construct(private Security $security)
+    public function __construct(private readonly Security $security)
     {
     }
 
@@ -60,8 +60,28 @@ final class QuickEntryTimesheetType extends AbstractType
                     $event->getForm()->get('duration')->setData(null);
                 }
 
-                if (null !== $data && !$this->security->isGranted('edit', $data)) {
+                if ($data instanceof Timesheet && !$this->security->isGranted('edit', $data)) {
+                    $event->getForm()->remove('duration');
                     $event->getForm()->add('duration', DurationType::class, array_merge(['disabled' => true], $durationOptions));
+
+                    $mainForm = $event->getForm()->getParent()?->getParent();
+                    if ($mainForm === null) {
+                        return;
+                    }
+
+                    $isNew = $data->getId() === null;
+
+                    foreach($mainForm->all() as $key => $child) {
+                        if ($key === 'timesheets') {
+                            continue;
+                        }
+                        if ($child->isDisabled() || $isNew) {
+                            continue;
+                        }
+                        $type = \get_class($child->getConfig()->getType()->getInnerType());
+                        $mainForm->remove($key);
+                        $mainForm->add($key, $type, array_merge($child->getConfig()->getOptions(), ['disabled' => true]));
+                    }
                 }
             }
         );

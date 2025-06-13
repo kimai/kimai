@@ -64,24 +64,6 @@ final class ValidationFailedExceptionErrorHandler implements SubscribingHandlerI
 
     public function serializeValidationExceptionToJson(JsonSerializationVisitor $visitor, ValidationFailedException $exception, array $type, Context $context)
     {
-        $errors = [];
-
-        /** @var ConstraintViolationInterface $error */
-        foreach (iterator_to_array($exception->getViolations()) as $error) {
-            $errors[$error->getPropertyPath()]['errors'][] = $this->getErrorMessage($error);
-        }
-
-        return [
-            'code' => '400',
-            'message' => $this->translator->trans($exception->getMessage(), [], 'validators'),
-            'errors' => [
-                'children' => $errors
-            ],
-        ];
-    }
-
-    private function getErrorMessage(ConstraintViolationInterface $error): string
-    {
         $locale = \Locale::getDefault();
         /** @var User $user */
         $user = $this->security->getUser();
@@ -90,6 +72,24 @@ final class ValidationFailedExceptionErrorHandler implements SubscribingHandlerI
             $locale = $user->getLanguage();
         }
 
+        $errors = [];
+
+        /** @var ConstraintViolationInterface $error */
+        foreach (iterator_to_array($exception->getViolations()) as $error) {
+            $errors[$error->getPropertyPath()]['errors'][] = $this->getErrorMessage($error, $locale);
+        }
+
+        return [
+            'code' => '400',
+            'message' => $this->translator->trans($exception->getMessage(), [], 'validators', $locale),
+            'errors' => [
+                'children' => $errors
+            ],
+        ];
+    }
+
+    private function getErrorMessage(ConstraintViolationInterface $error, string $locale): string
+    {
         if (null !== $error->getPlural()) {
             return $this->translator->trans($error->getMessageTemplate(), ['%count%' => $error->getPlural()] + $error->getParameters(), 'validators', $locale);
         }

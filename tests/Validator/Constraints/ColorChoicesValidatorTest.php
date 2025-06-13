@@ -27,7 +27,7 @@ class ColorChoicesValidatorTest extends ConstraintValidatorTestCase
         return new ColorChoicesValidator();
     }
 
-    public static function getValidColors()
+    public static function getValidColors(): iterable
     {
         yield ['#000000'];
         yield ['#fff000'];
@@ -57,7 +57,7 @@ class ColorChoicesValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public static function getInvalidColors()
+    public static function getInvalidColors(): iterable
     {
         yield ['sdf_sdf|#000000', null, 'sdf_sdf', '#000000'];
         yield ['sdfghjklöß.|#aaabbb', null, 'sdfghjklöß.', '#aaabbb'];

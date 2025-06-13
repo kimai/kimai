@@ -58,7 +58,7 @@ class TimesheetZeroDurationValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate(new NotBlank(), new TimesheetZeroDuration(['message' => 'Duration cannot be zero.']));
     }
 
-    private function prepareTimesheet()
+    private function prepareTimesheet(): Timesheet
     {
         // creates Timesheet with same begin and endtime
         $begin = new \DateTime();

@@ -131,7 +131,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @var Collection<UserPreference>|null
      */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserPreference::class, cascade: ['persist'])]
-    private ?Collection $preferences;
+    private ?Collection $preferences = null;
     /**
      * List of all team memberships.
      *
@@ -504,10 +504,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $allowNull ? $value : ($value ?? $default);
     }
 
-    /**
-     * @param UserPreference $preference
-     * @return User
-     */
     public function addPreference(UserPreference $preference): User
     {
         if (null === $this->preferences) {
@@ -586,9 +582,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     }
 
     /**
-     * Checks if the user is member of any team.
-     *
-     * @return bool
+     * Checks if the user is a member of any team.
      */
     public function hasTeamAssignment(): bool
     {
@@ -599,7 +593,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * Checks is the user is teamlead in any of the assigned teams.
      *
      * @see User::hasTeamleadRole()
-     * @return bool
      */
     public function isTeamlead(): bool
     {
@@ -614,9 +607,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     /**
      * Checks if the given user is a team member.
-     *
-     * @param User $user
-     * @return bool
      */
     public function hasTeamMember(User $user): bool
     {
@@ -680,8 +670,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     /**
      * Required in the User profile screen to edit his teams.
-     *
-     * @param Team $team
      */
     public function addTeam(Team $team): void
     {
@@ -700,8 +688,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     /**
      * Required in the User profile screen to edit his teams.
-     *
-     * @param Team $team
      */
     public function removeTeam(Team $team): void
     {
