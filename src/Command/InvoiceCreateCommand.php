@@ -47,6 +47,12 @@ final class InvoiceCreateCommand extends Command
         private InvoiceTemplateRepository $invoiceTemplateRepository,
         private UserRepository $userRepository,
         private EventDispatcherInterface $eventDispatcher
+        private readonly ServiceInvoice $serviceInvoice,
+        private readonly CustomerRepository $customerRepository,
+        private readonly ProjectRepository $projectRepository,
+        private readonly InvoiceTemplateRepository $invoiceTemplateRepository,
+        private readonly UserRepository $userRepository,
+        private readonly EventDispatcherInterface $eventDispatcher
     ) {
         parent::__construct();
     }
@@ -256,9 +262,6 @@ final class InvoiceCreateCommand extends Command
 
     /**
      * @param Project[] $projects
-     * @param InvoiceQuery $defaultQuery
-     * @param InputInterface $input
-     * @param OutputInterface $output
      * @return Invoice[]
      * @throws \Exception
      */
@@ -334,8 +337,6 @@ final class InvoiceCreateCommand extends Command
 
     /**
      * @param Customer[] $customers
-     * @param InvoiceQuery $defaultQuery
-     * @param InputInterface $input
      * @return Invoice[]
      * @throws \Exception
      */
@@ -372,10 +373,7 @@ final class InvoiceCreateCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
      * @param Invoice[] $invoices
-     * @return int
      */
     protected function renderInvoiceResult(InputInterface $input, OutputInterface $output, array $invoices): int
     {
@@ -449,7 +447,6 @@ final class InvoiceCreateCommand extends Command
     }
 
     /**
-     * @param InvoiceQuery $invoiceQuery
      * @return Customer[]
      */
     private function getActiveCustomers(InvoiceQuery $invoiceQuery): array
@@ -467,7 +464,6 @@ final class InvoiceCreateCommand extends Command
     }
 
     /**
-     * @param InvoiceQuery $invoiceQuery
      * @return Project[]
      */
     private function getActiveProjects(InvoiceQuery $invoiceQuery): array
