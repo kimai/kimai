@@ -80,7 +80,7 @@ final class QuickEntryWeekType extends AbstractType
         $activityPreSubmitFunction = function (FormEvent $event) use ($activityOptions) {
             $data = $event->getData();
 
-            if (is_array($data)) {
+            if (\is_array($data)) {
                 if (!empty($data['project'])) {
                     $activityOptions['projects'] = [$data['project']];
                 }
