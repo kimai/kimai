@@ -41,12 +41,12 @@ final class InvoiceCreateCommand extends Command
     private bool $previewUniqueFile = false;
 
     public function __construct(
-        private ServiceInvoice $serviceInvoice,
-        private CustomerRepository $customerRepository,
-        private ProjectRepository $projectRepository,
-        private InvoiceTemplateRepository $invoiceTemplateRepository,
-        private UserRepository $userRepository,
-        private EventDispatcherInterface $eventDispatcher
+        private readonly ServiceInvoice $serviceInvoice,
+        private readonly CustomerRepository $customerRepository,
+        private readonly ProjectRepository $projectRepository,
+        private readonly InvoiceTemplateRepository $invoiceTemplateRepository,
+        private readonly UserRepository $userRepository,
+        private readonly EventDispatcherInterface $eventDispatcher
     ) {
         parent::__construct();
     }
@@ -256,9 +256,6 @@ final class InvoiceCreateCommand extends Command
 
     /**
      * @param Project[] $projects
-     * @param InvoiceQuery $defaultQuery
-     * @param InputInterface $input
-     * @param OutputInterface $output
      * @return Invoice[]
      * @throws \Exception
      */
@@ -287,10 +284,16 @@ final class InvoiceCreateCommand extends Command
             $query->setTemplate($tpl);
 
             try {
+                $model = $this->serviceInvoice->createModel($query);
+                // this check makes sure to only fetch invoices with records
+                if (\count($model->getEntries()) === 0) {
+                    continue;
+                }
+
                 if (null !== $this->previewDirectory) {
-                    $invoices[] = $this->saveInvoicePreview($this->serviceInvoice->renderInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher));
+                    $invoices[] = $this->saveInvoicePreview($this->serviceInvoice->renderInvoice($model, $this->eventDispatcher));
                 } else {
-                    $invoices[] = $this->serviceInvoice->createInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher);
+                    $invoices[] = $this->serviceInvoice->createInvoice($model, $this->eventDispatcher);
                 }
             } catch (\Exception $ex) {
                 $io->error(\sprintf('Failed to create invoice for project "%s" with: %s', $project->getName(), $ex->getMessage()));
@@ -334,8 +337,6 @@ final class InvoiceCreateCommand extends Command
 
     /**
      * @param Customer[] $customers
-     * @param InvoiceQuery $defaultQuery
-     * @param InputInterface $input
      * @return Invoice[]
      * @throws \Exception
      */
@@ -358,10 +359,16 @@ final class InvoiceCreateCommand extends Command
             $query->setTemplate($tpl);
 
             try {
+                $model = $this->serviceInvoice->createModel($query);
+                // this check makes sure to only fetch invoices with records
+                if (\count($model->getEntries()) === 0) {
+                    continue;
+                }
+
                 if (null !== $this->previewDirectory) {
-                    $invoices[] = $this->saveInvoicePreview($this->serviceInvoice->renderInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher));
+                    $invoices[] = $this->saveInvoicePreview($this->serviceInvoice->renderInvoice($model, $this->eventDispatcher));
                 } else {
-                    $invoices[] = $this->serviceInvoice->createInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher);
+                    $invoices[] = $this->serviceInvoice->createInvoice($model, $this->eventDispatcher);
                 }
             } catch (\Exception $ex) {
                 $io->error(\sprintf('Failed to create invoice for customer "%s" with: %s', $customer->getName(), $ex->getMessage()));
@@ -372,10 +379,7 @@ final class InvoiceCreateCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
      * @param Invoice[] $invoices
-     * @return int
      */
     protected function renderInvoiceResult(InputInterface $input, OutputInterface $output, array $invoices): int
     {
@@ -449,7 +453,6 @@ final class InvoiceCreateCommand extends Command
     }
 
     /**
-     * @param InvoiceQuery $invoiceQuery
      * @return Customer[]
      */
     private function getActiveCustomers(InvoiceQuery $invoiceQuery): array
@@ -467,7 +470,6 @@ final class InvoiceCreateCommand extends Command
     }
 
     /**
-     * @param InvoiceQuery $invoiceQuery
      * @return Project[]
      */
     private function getActiveProjects(InvoiceQuery $invoiceQuery): array

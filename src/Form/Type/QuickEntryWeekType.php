@@ -76,6 +76,24 @@ final class QuickEntryWeekType extends AbstractType
         };
         $builder->addEventListener(FormEvents::PRE_SET_DATA, $activityFunction);
 
+        // make sure to pre-fill the form, so non-global activities can be loaded for the select project
+        $activityPreSubmitFunction = function (FormEvent $event) use ($activityOptions) {
+            $data = $event->getData();
+
+            if (\is_array($data)) {
+                if (!empty($data['project'])) {
+                    $activityOptions['projects'] = [$data['project']];
+                }
+
+                if (!empty($data['activity'])) {
+                    $activityOptions['activities'] = [$data['activity']];
+                }
+            }
+
+            $event->getForm()->add('activity', ActivityType::class, $activityOptions);
+        };
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, $activityPreSubmitFunction);
+
         $builder->add('metaFields', MetaFieldsCollectionType::class);
 
         $builder->add('timesheets', CollectionType::class, [
