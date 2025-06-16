@@ -284,10 +284,16 @@ final class InvoiceCreateCommand extends Command
             $query->setTemplate($tpl);
 
             try {
+                $model = $this->serviceInvoice->createModel($query);
+                // this check makes sure to only fetch invoices with records
+                if (\count($model->getEntries()) === 0) {
+                    continue;
+                }
+
                 if (null !== $this->previewDirectory) {
-                    $invoices[] = $this->saveInvoicePreview($this->serviceInvoice->renderInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher));
+                    $invoices[] = $this->saveInvoicePreview($this->serviceInvoice->renderInvoice($model, $this->eventDispatcher));
                 } else {
-                    $invoices[] = $this->serviceInvoice->createInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher);
+                    $invoices[] = $this->serviceInvoice->createInvoice($model, $this->eventDispatcher);
                 }
             } catch (\Exception $ex) {
                 $io->error(\sprintf('Failed to create invoice for project "%s" with: %s', $project->getName(), $ex->getMessage()));
@@ -353,10 +359,16 @@ final class InvoiceCreateCommand extends Command
             $query->setTemplate($tpl);
 
             try {
+                $model = $this->serviceInvoice->createModel($query);
+                // this check makes sure to only fetch invoices with records
+                if (\count($model->getEntries()) === 0) {
+                    continue;
+                }
+
                 if (null !== $this->previewDirectory) {
-                    $invoices[] = $this->saveInvoicePreview($this->serviceInvoice->renderInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher));
+                    $invoices[] = $this->saveInvoicePreview($this->serviceInvoice->renderInvoice($model, $this->eventDispatcher));
                 } else {
-                    $invoices[] = $this->serviceInvoice->createInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher);
+                    $invoices[] = $this->serviceInvoice->createInvoice($model, $this->eventDispatcher);
                 }
             } catch (\Exception $ex) {
                 $io->error(\sprintf('Failed to create invoice for customer "%s" with: %s', $customer->getName(), $ex->getMessage()));
