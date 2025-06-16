@@ -41,12 +41,6 @@ final class InvoiceCreateCommand extends Command
     private bool $previewUniqueFile = false;
 
     public function __construct(
-        private ServiceInvoice $serviceInvoice,
-        private CustomerRepository $customerRepository,
-        private ProjectRepository $projectRepository,
-        private InvoiceTemplateRepository $invoiceTemplateRepository,
-        private UserRepository $userRepository,
-        private EventDispatcherInterface $eventDispatcher
         private readonly ServiceInvoice $serviceInvoice,
         private readonly CustomerRepository $customerRepository,
         private readonly ProjectRepository $projectRepository,
