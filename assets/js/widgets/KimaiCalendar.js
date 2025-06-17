@@ -49,6 +49,7 @@ import enGbLocale from '@fullcalendar/core/locales/en-gb';
 import enUsLocale from '@fullcalendar/core/locales/en-gb';
 import KimaiColor from './KimaiColor';
 import KimaiContextMenu from "./KimaiContextMenu";
+import { DateTime } from 'luxon';
 
 export default class KimaiCalendar {
 
@@ -155,7 +156,7 @@ export default class KimaiCalendar {
             slotMaxTime: this.options['timeframeEnd'] === '23:59' ? '24:00:00' : (this.options['timeframeEnd'] + ':59'),
 
             // auto calculation seems to do the better job, therefor deactivated
-            //slotLabelInterval: this.options['slotDuration'],
+            slotLabelInterval: "01:00",
 
             // how long should entries look like when they don't have an end
             defaultTimedEventDuration: this.options['slotDuration'],
@@ -265,6 +266,23 @@ export default class KimaiCalendar {
                         }, (e) => { console.log('Failed to load actions for context menu', e); });
                     }
                 });
+
+                if (arg.el.querySelector('.fc-duration')) {
+                    arg.el.querySelector('.fc-duration').remove();
+                }
+                const start = DateTime.fromJSDate(arg.event.start);
+                const end = DateTime.fromJSDate(arg.event.end);
+                const durationMinutes = end.diff(start).as('minutes');
+                const formattedDuration = (durationMinutes / 60).toFixed(2) + "h"; // format duration as decimal hours
+
+                const timeEl = arg.el.querySelector('.fc-event-time'); // get the element containing the start time
+                const durationEl = document.createElement('span'); // create a new div element for the duration
+                durationEl.innerHTML = formattedDuration; // set the duration text
+                durationEl.classList.add('fc-duration'); // add a custom class to the duration element
+
+                timeEl.appendChild(durationEl);
+
+                this.eventAfterAllRender();
             },
         };
 
@@ -655,6 +673,25 @@ export default class KimaiCalendar {
      * @private
      */
     changeHandler(eventArg) {
+
+
+        if (eventArg.el.querySelector('.fc-duration')) {
+            eventArg.el.querySelector('.fc-duration').remove();
+        }
+        const start = DateTime.fromJSDate(eventArg.event.start);
+        const end = DateTime.fromJSDate(eventArg.event.end);
+        const durationMinutes = end.diff(start).as('minutes');
+        const formattedDuration = (durationMinutes / 60).toFixed(2) + "h"; // format duration as decimal hours
+
+        const timeEl = eventArg.el.querySelector('.fc-event-time'); // get the element containing the start time
+        const durationEl = document.createElement('span'); // create a new div element for the duration
+        durationEl.innerHTML = formattedDuration; // set the duration text
+        durationEl.classList.add('fc-duration'); // add a custom class to the duration element
+
+        timeEl.appendChild(durationEl);
+
+        this.eventAfterAllRender();
+
         /** @type {EventApi} event */
         const event = eventArg.event;
 
@@ -687,4 +724,68 @@ export default class KimaiCalendar {
         });
     }
 
+    wait(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    /*async waitForRenderingFinished() {
+        const cal = this.getCalendar();
+        let i = 0;
+        while (cal.isRendering) {
+            await this.wait(1000); // wait for 1 second
+            console.log(i++);
+        }
+    }*/
+
+    eventAfterAllRender() {
+        if (this.kwtimeout) {
+            clearTimeout(this.kwtimeout);
+        }
+        this.kwtimeout = setTimeout(() => {
+            this.renderDayAndWeekSum(this.getCalendar().getEvents());
+        }, 500);
+    }
+
+    renderDayAndWeekSum(events) {
+        //console.log(events);
+        const durations = {};
+
+        events.forEach(item => {
+            const start = DateTime.fromJSDate(item.start);
+            const end = DateTime.fromJSDate(item.end);
+            const duration = end.diff(start, 'hours').toObject().hours;
+
+            const dateStr = start.toISODate();
+            if (!durations[dateStr]) {
+                durations[dateStr] = duration;
+            } else {
+                durations[dateStr] += duration;
+            }
+        });
+
+        let totalSum = 0;
+        const dailyTotals = document.querySelectorAll('.fc-dailytotal');
+        dailyTotals.forEach(element => element.remove());
+        for (const dur in durations) {
+            const dateValue = dur;
+            const durationValue = durations[dur];
+            totalSum += durationValue;
+            const headerCells = document.querySelectorAll(`th.fc-col-header-cell[data-date="${dateValue}"]`);
+
+            headerCells.forEach(cell => {
+                const newElement = document.createElement('div');
+                newElement.classList.add('fc-dailytotal');
+                newElement.textContent = durationValue.toFixed(2) + 'h';
+                cell.appendChild(newElement);
+            });
+        }
+
+        const weekTotals = document.querySelectorAll('.fc-weektotal');
+        weekTotals.forEach(element => element.remove());
+
+        const newElement = document.createElement('div');
+        newElement.classList.add('fc-weektotal');
+        newElement.textContent = totalSum.toFixed(2) + 'h';
+        document.querySelector('.fc-timegrid-axis-frame').appendChild(newElement);
+    }
 }
