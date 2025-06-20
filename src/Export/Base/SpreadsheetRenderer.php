@@ -264,6 +264,8 @@ final class SpreadsheetRenderer
                 $columns[] = (new Column('alias', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getUser()?->getDisplayName())->withColumnWidth(ColumnWidth::MEDIUM);
             } elseif ($column === 'user.name') {
                 $columns[] = (new Column('username', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getUser()?->getUserIdentifier())->withColumnWidth(ColumnWidth::MEDIUM);
+            } elseif ($column === 'user.email') {
+                $columns[] = (new Column('email', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getUser()?->getEmail())->withColumnWidth(ColumnWidth::MEDIUM);
             } elseif ($column === 'user.account_number') {
                 $columns[] = (new Column('account_number', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getUser()?->getAccountNumber());
             } elseif ($column === 'customer.name') {
@@ -337,6 +339,7 @@ final class SpreadsheetRenderer
             'fixed_rate',
             'user.alias',
             'user.name',
+            'user.email',
             'user.account_number',
             'customer.name',
             'project.name',
