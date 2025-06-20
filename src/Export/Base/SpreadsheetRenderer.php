@@ -70,6 +70,7 @@ final class SpreadsheetRenderer
         if ($this->template === null) {
             $template = new Template('default', 'default');
             $template->setColumns($this->getDefaultColumns());
+            $template->setLocale('en');
 
             return $template;
         }
