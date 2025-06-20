@@ -10,7 +10,6 @@
 namespace App\Tests\Export\Base;
 
 use App\Entity\ExportableItem;
-use App\Entity\User;
 use App\Export\Base\SpreadsheetRenderer;
 use App\Export\Package\SpreadsheetPackage;
 use App\Export\Template;
