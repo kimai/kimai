@@ -65,13 +65,13 @@ class CsvRendererTest extends AbstractRendererTestCase
     {
         $en = [
             'Date', 'From', 'To', 'Duration', 'Currency', 'Price', 'Internal price', 'Hourly price', 'Fixed price', 'Name',
-            'User', 'Staff number', 'Customer', 'Project', 'Activity', 'Description', 'Billable', 'Tags',
+            'User', 'E-mail', 'Staff number', 'Customer', 'Project', 'Activity', 'Description', 'Billable', 'Tags',
             'Type', 'category', 'Account', 'Project number', 'VAT-ID', 'Order number',
             'Working place', 'Working place', 'Working place', 'Working place', 'Working place', 'Working place', 'mypref',
         ];
         $de = [
             'Datum', 'Von', 'Bis', 'Dauer', 'Währung', 'Preis', 'Interner Preis', 'Preis pro Stunde', 'Festpreis', 'Name',
-            'Benutzer', 'Personalnummer', 'Kunde', 'Projekt', 'Tätigkeit', 'Beschreibung', 'Abrechenbar', 'Schlagworte',
+            'Benutzer', 'E-Mail', 'Personalnummer', 'Kunde', 'Projekt', 'Tätigkeit', 'Beschreibung', 'Abrechenbar', 'Schlagworte',
             'Typ', 'category', 'Kundennummer', 'Projektnummer', 'Umsatzsteuer-ID', 'Bestellnummer',
             'Working place', 'Working place', 'Working place', 'Working place', 'Working place', 'Working place', 'mypref',
         ];
@@ -140,6 +140,7 @@ class CsvRendererTest extends AbstractRendererTestCase
             'Kevin',
             'kevin',
             '',
+            '',
             'Customer Name',
             'project name',
             'activity description',
@@ -175,6 +176,7 @@ class CsvRendererTest extends AbstractRendererTestCase
             'niveK',
             'nivek',
             '',
+            '',
             'Customer Name',
             'project name',
             'activity description',
@@ -200,6 +202,6 @@ class CsvRendererTest extends AbstractRendererTestCase
         self::assertEquals($expected, $all[5]);
         self::assertEquals($expected2, $all[6]);
         self::assertEquals(\count($expected), \count($all[0]));
-        self::assertEquals('foo', $all[4][17]);
+        self::assertEquals('foo', $all[4][18]);
     }
 }

@@ -65,14 +65,14 @@ final class SpreadsheetRenderer
         $this->template = $template;
     }
 
-    private function getTemplate(): TemplateInterface
+    public function getTemplate(): TemplateInterface
     {
         if ($this->template === null) {
             $template = new Template('default', 'default');
             $template->setColumns($this->getDefaultColumns());
             $template->setLocale('en');
 
-            return $template;
+            $this->template = $template;
         }
 
         return $this->template;
