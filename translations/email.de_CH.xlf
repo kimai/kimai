@@ -24,19 +24,35 @@
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target state="needs-translation">Passwort zurücksetzen</target>
+        <target state="translated">Anmelden bei Kimai</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="needs-translation">Das kann passieren…</target>
+        <target state="translated">Bei Ihrem Konto anmelden</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="needs-translation">Passwort zurücksetzen</target>
+        <target state="translated">Anmelden</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="needs-translation">... Sie haben also Ihr Passwort vergessen? Keine Sorge: Kimai hilft Ihnen, ein neues zu erstellen:</target>
+        <target state="translated">Dieser Link ist nur für die nächsten 15 Minuten gültig.</target>
+      </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
+        <source>absence_created_supervisor_subject</source>
+        <target state="translated">Neue Abwesenheit: %user% (%type%)</target>
+      </trans-unit>
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
+        <source>A new absence was created for %user%.
+
+%list%
+
+Please review them at: %url%</source>
+        <target state="translated">Für %user% wurde eine neue Abwesenheit angelegt.
+
+%list%
+
+Bitte überprüfen Sie diese unter: %url%</target>
       </trans-unit>
     </body>
   </file>
