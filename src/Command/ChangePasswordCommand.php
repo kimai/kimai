@@ -30,7 +30,7 @@ final class ChangePasswordCommand extends AbstractUserCommand
     {
         $this
             ->addArgument('username', InputArgument::REQUIRED, 'The username')
-            ->addArgument('password', InputArgument::REQUIRED, 'The password')
+            ->addArgument('password', InputArgument::OPTIONAL, 'The password')
             ->setHelp(
                 <<<'EOT'
                     The <info>kimai:user:password</info> command changes the password of a user:
