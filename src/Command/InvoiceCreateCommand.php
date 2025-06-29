@@ -34,7 +34,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-#[AsCommand(name: 'kimai:invoice:create')]
+#[AsCommand(name: 'kimai:invoice:create', description: 'Create invoices')]
 final class InvoiceCreateCommand extends Command
 {
     private ?string $previewDirectory = null;
@@ -54,7 +54,6 @@ final class InvoiceCreateCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Create invoices')
             ->setHelp('This command allows to create invoices by several different filters.')
             ->addOption('user', null, InputOption::VALUE_REQUIRED, 'The user to be used for generating the invoices')
             ->addOption('start', null, InputOption::VALUE_OPTIONAL, 'Start date (format: 2020-01-01, default: start of the month)', null)
