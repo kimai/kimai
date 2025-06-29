@@ -13,6 +13,7 @@ use App\Configuration\SamlConfigurationInterface;
 use App\Saml\SamlAuthFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
@@ -76,7 +77,7 @@ final class SamlController extends AbstractController
             throw new \RuntimeException('SAML login failed');
         }
 
-        return $this->redirect($url);
+        return new RedirectResponse($url);
     }
 
     #[Route(path: '/metadata', name: 'saml_metadata')]

@@ -71,7 +71,7 @@ tabler:
         duration: far fa-hourglass
         edit: far fa-edit
         end: fas fa-stopwatch
-        export: fas fa-file-export
+        export: fas fa-download
         failure: fas fa-times
         fax: fas fa-fax
         filter: fas fa-filter

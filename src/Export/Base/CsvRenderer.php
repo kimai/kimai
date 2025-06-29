@@ -87,7 +87,7 @@ final class CsvRenderer implements RendererInterface, TimesheetExportInterface
         $options = new Options();
         $options->SHOULD_ADD_BOM = false;
 
-        $spreadsheet = new SpoutSpreadsheet(new Writer($options), $this->translator, $this->locale);
+        $spreadsheet = new SpoutSpreadsheet(new Writer($options), $this->translator, $this->locale ?? $this->spreadsheetRenderer->getTemplate()->getLocale());
         $spreadsheet->open($filename);
 
         $this->spreadsheetRenderer->registerFormatter('date', new DateStringFormatter());

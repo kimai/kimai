@@ -1,7 +1,11 @@
 
-/* bootstrap thead.sticky-top has z-index 1020 and tomselect dropdowns often hide behind that */
+/*
+1. bootstrap thead.sticky-top has z-index 1020 and tomselect dropdowns often hide behind that: use 1021
+2. bootstrap modal uses 1055, tomselect with dropdownParent: 'body' (required for use in table.responsive, e.g quick.entry on small devices) needs 1056, so it works in modals
+*/
 .ts-dropdown {
-    z-index: 1021;
+    z-index: 1056;
+
 }
 
 /* Tabler defines a min-width of 7rem, what makes many input fields become a two-line field

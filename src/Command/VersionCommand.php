@@ -17,17 +17,14 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'kimai:version')]
+#[AsCommand(name: 'kimai:version', description: 'Show version information')]
 final class VersionCommand extends Command
 {
     protected function configure(): void
     {
-        $this
-            ->setDescription('Receive version information')
-            ->setHelp('This command allows you to fetch various version information about Kimai.')
-            ->addOption('short', null, InputOption::VALUE_NONE, 'Display the version only')
-            ->addOption('number', null, InputOption::VALUE_NONE, 'Display the version identifier only only')
-        ;
+        $this->setHelp('This command allows you to fetch various version information about Kimai.');
+        $this->addOption('short', null, InputOption::VALUE_NONE, 'Display the version only');
+        $this->addOption('number', null, InputOption::VALUE_NONE, 'Display the version identifier only only');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

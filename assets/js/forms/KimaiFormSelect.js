@@ -82,6 +82,8 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
             // see App\Form\Type\TagsType::MAX_AMOUNT_SELECT
             maxOptions: 500,
             sortField:[{field: '$order'}, {field: '$score'}],
+            // required so it works in table.responsive, but requires z-index 1056, because bootstrap modal would otherwise hide it
+            dropdownParent: 'body',
         };
 
         let render = {

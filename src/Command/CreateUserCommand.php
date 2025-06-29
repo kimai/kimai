@@ -20,7 +20,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'kimai:user:create')]
+#[AsCommand(name: 'kimai:user:create', description: 'Create a new user')]
 final class CreateUserCommand extends AbstractUserCommand
 {
     public function __construct(private UserService $userService)
@@ -33,7 +33,6 @@ final class CreateUserCommand extends AbstractUserCommand
         $roles = implode(',', [User::DEFAULT_ROLE, User::ROLE_ADMIN]);
 
         $this
-            ->setDescription('Create a new user')
             ->setHelp('This command allows you to create a new user.')
             ->addArgument('username', InputArgument::REQUIRED, 'A name for the new user (must be unique)')
             ->addArgument('email', InputArgument::REQUIRED, 'Email address of the new user (must be unique)')

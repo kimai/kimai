@@ -16,7 +16,6 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Mime\Email;
 
@@ -31,7 +30,6 @@ final class MailTestCommand extends Command
     protected function configure(): void
     {
         $this->addArgument('to', InputArgument::REQUIRED, 'The email address to send the email to');
-        $this->addOption('from', null, InputOption::VALUE_OPTIONAL, 'Deprecated: uses the MAILER_FROM env variable.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -39,10 +37,6 @@ final class MailTestCommand extends Command
         $to = $input->getArgument('to');
         if (!\is_string($to) || $to === '') {
             throw new \InvalidArgumentException('Need a non-empty "to" address');
-        }
-
-        if ($input->getOption('from') !== null) {
-            throw new \InvalidArgumentException('The "from" option is deprecated and will be ignored');
         }
 
         $message = new Email();

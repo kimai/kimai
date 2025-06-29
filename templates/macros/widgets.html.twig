@@ -338,7 +338,7 @@
         {% endif %}
     {% elseif 'DurationType' in type %}
         {{ value|duration }}
-    {% elseif 'YesNoType' in type or 'CheckBoxType' in type %}
+    {% elseif 'YesNoType' in type or 'CheckboxType' in type %}
         {{ _self.label_boolean(value) }}
     {% elseif 'DatePickerType' in type %}
         {{ value|date_short }}

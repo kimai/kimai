@@ -914,6 +914,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
+    /**
+     * Alias for setUserIdentifier()
+     *
+     * The visible username is setAlias())
+     */
     public function setUsername(string $username): void
     {
         $this->username = $username;
