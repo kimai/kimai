@@ -59,6 +59,11 @@ section.quick-entry-page {
             padding: .75rem 2px;
         }
     }
+
+    /* make sure dropdown never hides behind table responsive */
+    .dropdown-menu {
+        z-index: 1056;
+    }
 }
 
 @media (min-width: 900px) {
