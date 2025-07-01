@@ -1950,6 +1950,10 @@
         <source>Postcode</source>
         <target state="translated">ZIP / Código Postal</target>
       </trans-unit>
+      <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="no">
+        <source>Unlock month</source>
+        <target state="translated">Desbloquear mes</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
