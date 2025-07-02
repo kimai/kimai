@@ -319,6 +319,7 @@ class ConfigurationTest extends TestCase
                     0 => 'var/export/',
                     1 => 'templates/export/renderer/',
                 ],
+                'timeout' => 60,
             ],
             'calendar' => [
                 'week_numbers' => true,
