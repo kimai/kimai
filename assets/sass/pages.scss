@@ -23,7 +23,9 @@ section.quick-entry-page {
 
         .ts-control {
             white-space: nowrap;
-            overflow: hidden;
+            .item {
+                overflow: hidden;
+            }
         }
     }
 
