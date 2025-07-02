@@ -396,6 +396,10 @@ final class Configuration implements ConfigurationInterface
                     ->scalarPrototype()->end()
                     ->defaultValue([])
                 ->end()
+                ->integerNode('timeout')
+                    ->defaultValue(60)
+                ->end()
+
             ->end()
         ;
 

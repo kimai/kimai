@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\ExportableItem;
 use App\Entity\ExportTemplate;
 use App\Export\Base\DispositionInlineInterface;
@@ -114,7 +115,7 @@ final class ExportController extends AbstractController
     }
 
     #[Route(path: '/data', name: 'export_data', methods: ['POST'])]
-    public function export(Request $request): Response
+    public function export(Request $request, SystemConfiguration $systemConfiguration): Response
     {
         $query = $this->getDefaultQuery();
 
@@ -132,6 +133,9 @@ final class ExportController extends AbstractController
             throw $this->createNotFoundException('Unknown export renderer');
         }
 
+        $oldMaxExecTime = \ini_get('max_execution_time');
+        ini_set('max_execution_time', $systemConfiguration->getExportTimeout());
+
         // display file inline if supported and `markAsExported` is not set
         if ($renderer instanceof DispositionInlineInterface && !$query->isMarkAsExported()) {
             $renderer->setDispositionInline(true);
@@ -143,6 +147,8 @@ final class ExportController extends AbstractController
         if ($query->isMarkAsExported()) {
             $this->export->setExported($entries);
         }
+
+        ini_set('max_execution_time', $oldMaxExecTime);
 
         return $response;
     }
