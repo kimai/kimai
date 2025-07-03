@@ -14,6 +14,7 @@ use App\Form\Type\ExportColumnsType;
 use App\Form\Type\ExportRendererType;
 use App\Form\Type\LanguageType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,6 +27,7 @@ class ExportTemplateSpreadsheetForm extends AbstractType
         $builder->add('renderer', ExportRendererType::class, ['label' => 'type']);
         $builder->add('language', LanguageType::class, ['required' => false]);
         $builder->add('columns', ExportColumnsType::class, ['required' => true]);
+        $builder->add('separator', ChoiceType::class, ['choices' => ['Comma (,)' => ',', 'Semicolon (;)' => ';'], 'required' => true]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
