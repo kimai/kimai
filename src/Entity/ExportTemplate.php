@@ -117,11 +117,7 @@ class ExportTemplate
 
     public function setOption(string $key, int|string|null|bool $value): void
     {
-        if ($value === null && \array_key_exists($key, $this->options)) {
-            unset($this->options[$key]);
-        } else {
-            $this->options[$key] = $value;
-        }
+        $this->options[$key] = $value;
     }
 
     /**
