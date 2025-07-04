@@ -49,7 +49,7 @@ class ExportTemplate
     #[Assert\NotNull]
     private array $columns = [];
     /**
-     * @var array<string, int|string|null>
+     * @var array<string, int|string|null|bool>
      */
     #[ORM\Column(name: 'options', type: Types::JSON, nullable: false)]
     #[Assert\NotNull]
@@ -133,7 +133,7 @@ class ExportTemplate
     }
 
     /**
-     * @param array<string, int|string|null> $options
+     * @param array<string, int|string|null|bool> $options
      */
     public function setOptions(?array $options): void
     {
