@@ -147,7 +147,7 @@ final class DateRangeType extends AbstractType
     }
 
     /**
-     * @param array{'format': non-empty-string, 'separator': non-empty-string, 'allow_empty': true, 'timezone': non-empty-string} $options
+     * @param array{'format': non-empty-string, 'separator': non-empty-string, 'allow_empty': true, 'timezone': non-empty-string, 'user': User} $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void // @phpstan-ignore-line
     {

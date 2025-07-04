@@ -48,6 +48,10 @@ mpdf-->
                 <strong>{{ invoice['customer.company']|default(invoice['customer.name']) }}</strong>
                 <br>
                 {{ invoice['customer.address']|nl2br }}
+                {% set country = invoice['customer.country']|country_name(invoice['invoice.language']) %}
+                {% if country not in invoice['customer.address'] %}
+                    <br> {{ country }}
+                {% endif %}
                 {% if invoice['customer.vat_id'] is not empty %}
                     <br>
                     {{ 'vat_id'|trans }}: {{ invoice['customer.vat_id'] }}
@@ -59,6 +63,12 @@ mpdf-->
                 <strong>{{ invoice['template.company'] }}</strong>
                 <br>
                 {{ invoice['template.address']|trim|nl2br }}
+                {% if invoice['template.country'] is not null %}
+                    {% set country = invoice['template.country']|country_name(invoice['invoice.language']) %}
+                    {% if country not in invoice['template.address'] %}
+                        <br> {{ country }}
+                    {% endif %}
+                {% endif %}
                 {% if invoice['template.vat_id'] is not empty %}
                     <br>
                     {{ 'vat_id'|trans }}:
