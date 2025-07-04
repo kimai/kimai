@@ -49,7 +49,7 @@ class ExportTemplate
     #[Assert\NotNull]
     private array $columns = [];
     /**
-     * @var array<string, mixed>
+     * @var array<string, int|string|null|bool>
      */
     #[ORM\Column(name: 'options', type: Types::JSON, nullable: false)]
     #[Assert\NotNull]
@@ -106,8 +106,22 @@ class ExportTemplate
         $this->columns = $columns ?? [];
     }
 
+    public function getOption(string $key, int|string|bool $default): int|string|bool
+    {
+        if (\array_key_exists($key, $this->options)) {
+            return $this->options[$key] ?? $default;
+        }
+
+        return $default;
+    }
+
+    public function setOption(string $key, int|string|null|bool $value): void
+    {
+        $this->options[$key] = $value;
+    }
+
     /**
-     * @return array<string, mixed>
+     * @return array<string, int|string|null|bool>
      */
     public function getOptions(): array
     {
@@ -115,11 +129,28 @@ class ExportTemplate
     }
 
     /**
-     * @param array<string, mixed> $options
+     * @param array<string, int|string|null|bool> $options
      */
     public function setOptions(?array $options): void
     {
         $this->options = $options ?? [];
+    }
+
+    /**
+     * Only used for CSV export
+     */
+    public function setSeparator(string $separator): void
+    {
+        if (!\in_array($separator, [',', ';'], true)) {
+            throw new \InvalidArgumentException('Invalid separator, comma and semicolon are allowed.');
+        }
+
+        $this->setOption('separator', $separator);
+    }
+
+    public function getSeparator(): string
+    {
+        return (string) $this->getOption('separator', ',');
     }
 
     public function __toString(): string

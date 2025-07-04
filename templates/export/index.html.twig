@@ -147,7 +147,7 @@
                                                 {% if btnTitle == id %}
                                                     {% set btnTitle = title|trans %}
                                                 {% endif %}
-                                                {% if btnTitle == id%}
+                                                {% if btnTitle == id %}
                                                     {% set btnTitle = id|split('.')|first|replace({'-': ' ', '_': ' '})|split(' ')|map(t => t|capitalize)|join(' ') %}
                                                 {% endif %}
                                                 <a href="#" class="dropdown-item startExportBtn" data-type="{{ id }}">

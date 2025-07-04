@@ -85,6 +85,7 @@ final class ServiceExport
             $tpl = new Template((string) $template->getId(), $template->getTitle()); // @phpstan-ignore argument.type
             $tpl->setColumns($template->getColumns());
             $tpl->setLocale($template->getLanguage());
+            $tpl->setOptions($template->getOptions());
 
             switch ($template->getRenderer()) {
                 case 'csv':

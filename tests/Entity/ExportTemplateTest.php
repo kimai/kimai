@@ -54,8 +54,26 @@ class ExportTemplateTest extends AbstractEntityTestCase
 
         $sut->setOptions(['foo' => 1, 'bar' => true, 'WORLD' => 'HELLO']);
         self::assertEquals(['foo' => 1, 'bar' => true, 'WORLD' => 'HELLO'], $sut->getOptions());
+        $sut->setOption('foo', 4711);
+        $sut->setOption('empty', null);
+        $sut->setOption('bar', false);
+        $sut->setOption('hello', 'kimai');
+        self::assertEquals(['foo' => 4711, 'bar' => false, 'WORLD' => 'HELLO', 'empty' => null, 'hello' => 'kimai'], $sut->getOptions());
         $sut->setOptions(null);
         self::assertEquals([], $sut->getOptions());
+    }
+
+    public function testSeparator(): void
+    {
+        $sut = new ExportTemplate();
+        self::assertEquals(',', $sut->getSeparator());
+        $sut->setSeparator(';');
+        self::assertEquals(';', $sut->getSeparator());
+        $sut->setSeparator(',');
+        self::assertEquals(',', $sut->getSeparator());
+
+        $this->expectException(\InvalidArgumentException::class);
+        $sut->setSeparator('.');
     }
 
     public function testClone(): void

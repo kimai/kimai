@@ -14,11 +14,30 @@
                         {{ form_row(form.title) }}
                     </div>
                     <div class="col-md-3">
-                        {{ form_row(form.renderer) }}
+                        {{ form_row(form.renderer, {attr: {onchange: "changeExportTemplateType(this)"}}) }}
                     </div>
                 </div>
                 {{ form_row(form.language) }}
+                {{ form_row(form.separator, {row_attr: {class: 'mb-3 export-type csv'}}) }}
+                {{ form_row(form.columns) }}
                 {{ form_rest(form) }}
+            {% endblock %}
+            {% block form_after %}
+                <script>
+                    function changeExportTemplateType(typeElement)
+                    {
+                        typeElement.form.querySelectorAll('.export-type').forEach(
+                            element => {
+                                if (element.classList.contains(typeElement.value)) {
+                                    element.classList.remove('d-none');
+                                } else {
+                                    element.classList.add('d-none');
+                                }
+                            }
+                        );
+                    }
+                    changeExportTemplateType(document.getElementById('{{ form.renderer.vars.id }}'));
+                </script>
             {% endblock %}
         {% endembed %}
 {% endblock %}

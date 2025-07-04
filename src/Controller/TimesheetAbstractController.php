@@ -41,11 +41,11 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class TimesheetAbstractController extends AbstractController
 {
     public function __construct(
-        protected TimesheetRepository $repository,
-        protected EventDispatcherInterface $dispatcher,
-        protected TimesheetService $service,
-        protected SystemConfiguration $configuration,
-        protected TagRepository $tagRepository
+        protected readonly TimesheetRepository $repository,
+        protected readonly EventDispatcherInterface $dispatcher,
+        protected readonly TimesheetService $service,
+        protected readonly SystemConfiguration $configuration,
+        protected readonly TagRepository $tagRepository
     ) {
     }
 
@@ -263,7 +263,14 @@ abstract class TimesheetAbstractController extends AbstractController
 
         $entries = $this->repository->getTimesheetResult($query);
 
-        return $exporter->render($entries->getResults(), $query);
+        $oldMaxExecTime = \ini_get('max_execution_time');
+        ini_set('max_execution_time', $this->configuration->getExportTimeout());
+
+        $response = $exporter->render($entries->getResults(), $query);
+
+        ini_set('max_execution_time', $oldMaxExecTime);
+
+        return $response;
     }
 
     protected function multiUpdate(Request $request): Response

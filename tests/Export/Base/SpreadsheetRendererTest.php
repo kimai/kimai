@@ -133,6 +133,7 @@ class SpreadsheetRendererTest extends AbstractRendererTestCase
             'project.meta.project-foo2' => 'Working place',
             'activity.meta.activity-foo' => 'Working place',
             'user.meta.mypref' => 'mypref',
+            'email' => 'email'
         ]];
 
         $template = new Template('test', 'Testing');

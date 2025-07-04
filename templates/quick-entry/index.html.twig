@@ -54,9 +54,9 @@
                             <td></td>
                         {% endfor %}
                         {% for id, week in days %}
-                            <td class="text-center" id="qe-totals-day-{{ loop.index0 }}"></td>
+                            <td class="text-center total" id="qe-totals-day-{{ loop.index0 }}"></td>
                         {% endfor %}
-                        <td class="text-center" id="qe-totals-week"></td>
+                        <td class="text-center total" id="qe-totals-week"></td>
                     </tr>
                 </tfoot>
             </table>
@@ -66,25 +66,15 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript">
+    <script>
         document.addEventListener('kimai.initialized', function(event) {
             const kimai = event.detail.kimai;
             const DATES = kimai.getPlugin('date');
             /** @type {KimaiFormSelect} FORM_SELECT */
             const FORM_SELECT = kimai.getPlugin('form-select');
 
-            if (window.matchMedia("(max-width: 1000px)").matches) {
-                for (let dropdowns of document.querySelectorAll('tr.qe-entry-week-row .btn-duration-preset')) {
-                    dropdowns.style.display = 'none';
-                }
 
-                for (let tmp of document.querySelectorAll('tr.qe-entry-week-row .duration-widget .input-group')) {
-                    tmp.style.maxWidth = '50px';
-                    tmp.style.minWidth = '50px';
-                }
-                for (let input of document.querySelectorAll('tr.qe-entry-week-row input.duration-input')) {
-                    input.style.maxWidth = '50px';
-                }
+            if (window.matchMedia("(max-width: 1360px)").matches) {
                 document.querySelector('form[name=quick_entry_form] div.maybe-table-responsive').classList.replace('maybe-table-responsive', 'table-responsive');
             }
 
@@ -138,7 +128,6 @@
                 }
 
                 collectionHolder.appendChild(node);
-
 
                 [].slice.call(node.querySelectorAll('.selectpicker')).map((element) => {
                     FORM_SELECT.activateSelectPickerByElement(element);

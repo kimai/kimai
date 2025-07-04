@@ -24,7 +24,7 @@
     <div class="card-footer">
         {% if user.totpAuthenticationEnabled %}
             {{ form_start(deactivate, {'attr': {'id': 'user_two_factor_form'}}) }}
-                <input type="submit" value="{{ 'deactivate'|trans }}" class="btn btn-warning" id="user_two_factor_button" />
+                <input type="submit" value="{{ 'deactivate'|trans }}" class="btn btn-warning confirmation-link" id="user_two_factor_button" data-question="{{ 'deactivate'|trans }}?"  />
             {{ form_end(deactivate) }}
         {% else %}
             <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" id="user_two_factor_button" />
