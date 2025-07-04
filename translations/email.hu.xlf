@@ -24,15 +24,15 @@
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target state="needs-translation">Jelszó visszaállítása</target>
+        <target state="translated">Bejelentkezés a Kimaiba</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="needs-translation">Ez megtörténhet…</target>
+        <target state="translated">Jelentkezzen be fiókjába</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="needs-translation">Jelszó visszaállítása</target>
+        <target state="translated">Bejelentkezés</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>

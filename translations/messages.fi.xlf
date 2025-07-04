@@ -584,23 +584,23 @@
       </trans-unit>
       <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target state="needs-translation">Työaika tänään</target>
+        <target state="translated">Tänään</target>
       </trans-unit>
       <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target state="needs-translation">Työaika tällä viikolla</target>
+        <target state="translated">Tällä viikolla</target>
       </trans-unit>
       <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target state="needs-translation">Työaika tässä kuussa</target>
+        <target state="translated">Tässä kuussa</target>
       </trans-unit>
       <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target state="needs-translation">Työaika tänä vuonna</target>
+        <target state="translated">Tänä vuonna</target>
       </trans-unit>
       <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
-        <target state="needs-translation">Työtunteja yhteensä</target>
+        <target state="translated">Yhteensä</target>
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
@@ -972,7 +972,7 @@
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
         <source>stats.durationFinancialYear</source>
-        <target state="needs-translation">Työaika tällä tilikaudella</target>
+        <target state="translated">Tilikausi</target>
       </trans-unit>
       <trans-unit id="Nx9_QiO" resname="revenue">
         <source>revenue</source>
@@ -1404,7 +1404,7 @@
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
-        <target state="needs-translation">Olet käyttänyt %used% vapaata saatavilla olevista %days% päivästä.</target>
+        <target state="needs-translation">Olet ilmoittanut tähän mennessä %used% lomapäivää käytettävissä olevista %days% päivästä</target>
       </trans-unit>
       <trans-unit id="BjyLITj" resname="stats.userDurationYear">
         <source>stats.userDurationYear</source>
@@ -1796,7 +1796,7 @@
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target state="needs-translation">Työajanseuranta</target>
+        <target state="translated">Työajanseuranta</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
@@ -1904,7 +1904,7 @@
       </trans-unit>
       <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve">
         <source>Rejected</source>
-        <target state="needs-translation">Hylätty</target>
+        <target state="translated">Hylätty</target>
       </trans-unit>
       <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve">
         <source>reject</source>
