@@ -11,7 +11,9 @@ namespace App\Event;
 
 use App\Entity\Invoice;
 use App\Invoice\InvoiceModel;
+use App\Webhook\Attribute\AsWebhook;
 
+#[AsWebhook(name: 'invoice.created', description: 'Triggered after an invoice was created', payload: 'object.getInvoice()')]
 final class InvoiceCreatedEvent extends AbstractInvoiceEvent
 {
     public function __construct(Invoice $invoice, private readonly InvoiceModel $model)

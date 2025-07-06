@@ -9,6 +9,9 @@
 
 namespace App\Event;
 
+use App\Webhook\Attribute\AsWebhook;
+
+#[AsWebhook(name: 'invoice.deleted', description: 'Triggered after an invoice was deleted', payload: 'object.getInvoice()')]
 final class InvoiceDeleteEvent extends AbstractInvoiceEvent
 {
 }
