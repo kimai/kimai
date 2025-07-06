@@ -10,18 +10,16 @@
 namespace App\Event;
 
 use App\Entity\Invoice;
-use App\Invoice\InvoiceModel;
 use Symfony\Contracts\EventDispatcher\Event;
 
-final class InvoiceCreatedEvent extends AbstractInvoiceEvent
+class AbstractInvoiceEvent extends Event
 {
-    public function __construct(Invoice $invoice, private readonly InvoiceModel $model)
+    public function __construct(private readonly Invoice $invoice)
     {
-        parent::__construct($invoice);
     }
 
-    public function getInvoiceModel(): InvoiceModel
+    public function getInvoice(): Invoice
     {
-        return $this->model;
+        return $this->invoice;
     }
 }
