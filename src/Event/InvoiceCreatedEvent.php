@@ -11,7 +11,6 @@ namespace App\Event;
 
 use App\Entity\Invoice;
 use App\Invoice\InvoiceModel;
-use Symfony\Contracts\EventDispatcher\Event;
 
 final class InvoiceCreatedEvent extends AbstractInvoiceEvent
 {
