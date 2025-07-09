@@ -45,5 +45,11 @@ interface SamlConfigurationInterface
 
     public function isRolesResetOnLogin(): bool;
 
+    public function getTeamsAttribute(): ?string;
+
+    public function getTeamsMapping(): array;
+
+    public function isTeamsResetOnLogin(): bool;
+
     public function getConnection(): array;
 }

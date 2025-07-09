@@ -50,6 +50,21 @@ final class SamlConfiguration implements SamlConfigurationInterface
         return $this->configuration->isSamlRolesResetOnLogin();
     }
 
+    public function getTeamsAttribute(): ?string
+    {
+        return $this->configuration->getSamlTeamsAttribute();
+    }
+
+    public function getTeamsMapping(): array
+    {
+        return $this->configuration->getSamlTeamsMapping();
+    }
+
+    public function isTeamsResetOnLogin(): bool
+    {
+        return $this->configuration->isSamlTeamsResetOnLogin();
+    }
+
     public function getConnection(): array
     {
         return $this->configuration->getSamlConnection();
