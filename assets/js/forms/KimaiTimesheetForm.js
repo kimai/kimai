@@ -202,8 +202,8 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
     {
         let formatted = time.trim();
 
-        // replace dot with colon
-        formatted = formatted.replace(/\./g, ':');
+        // replace invalid separators with colon
+        formatted = formatted.replace(/\.|;|,/g, ':');
         // uppercase 12-hour format
         formatted = formatted.replace(/am/i, 'AM');
         formatted = formatted.replace(/pm/i, 'PM');
