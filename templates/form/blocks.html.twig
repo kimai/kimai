@@ -154,7 +154,7 @@
     {%- set attr = attr|merge({'pattern': time_format|pattern, 'autocomplete': 'off', 'data-timepicker': 'on', 'data-format': js_format, 'placeholder': time_format}) -%}
     <div class="input-group">
         <div class="input-group-text">
-            <a href="#" data-form-widget="date-now" data-format="{{ js_format }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
+            <a href="#" data-form-widget="date-now" data-format="{{ js_format }}" data-target="{{ id }}">{{ icon('clock') }}</a>
         </div>
         {{ block('form_widget_simple') }}
         {% set time_presets = form_time_presets(app.user.timezone) %}
