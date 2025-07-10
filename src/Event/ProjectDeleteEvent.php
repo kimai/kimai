@@ -9,9 +9,9 @@
 
 namespace App\Event;
 
-/**
- * Triggered right before a project will be deleted.
- */
+use App\Webhook\Attribute\AsWebhook;
+
+#[AsWebhook(name: 'project.deleted', description: 'Triggered right before a project will be deleted', payload: 'object.getProject()')]
 final class ProjectDeleteEvent extends AbstractProjectEvent
 {
 }

@@ -9,9 +9,9 @@
 
 namespace App\Event;
 
-/**
- * Triggered for project instances, which were just updated.
- */
+use App\Webhook\Attribute\AsWebhook;
+
+#[AsWebhook(name: 'project.updated', description: 'Triggered after a project was updated', payload: 'object.getProject()')]
 final class ProjectUpdatePostEvent extends AbstractProjectEvent
 {
 }

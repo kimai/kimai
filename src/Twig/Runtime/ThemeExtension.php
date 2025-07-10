@@ -17,7 +17,7 @@ use App\Event\ThemeEvent;
 use App\Event\ThemeJavascriptTranslationsEvent;
 use App\Utils\Color;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Extension\RuntimeExtensionInterface;
@@ -40,12 +40,8 @@ final class ThemeExtension implements RuntimeExtensionInterface
     {
         /** @var User $user */
         $user = $this->security->getUser();
-
         $themeEvent = new ThemeEvent($user, $payload);
-
-        if ($this->eventDispatcher->hasListeners($eventName)) {
-            $this->eventDispatcher->dispatch($themeEvent, $eventName);
-        }
+        $this->eventDispatcher->dispatch($themeEvent, $eventName);
 
         return $themeEvent;
     }
@@ -53,10 +49,7 @@ final class ThemeExtension implements RuntimeExtensionInterface
     public function actions(User $user, string $action, string $view, array $payload = []): ThemeEvent
     {
         $themeEvent = new PageActionsEvent($user, $payload, $action, $view);
-
-        if ($this->eventDispatcher->hasListeners($themeEvent->getEventName())) {
-            $this->eventDispatcher->dispatch($themeEvent, $themeEvent->getEventName());
-        }
+        $this->eventDispatcher->dispatch($themeEvent, $themeEvent->getEventName());
 
         return $themeEvent;
     }

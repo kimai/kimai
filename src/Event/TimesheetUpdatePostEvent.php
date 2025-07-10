@@ -9,6 +9,9 @@
 
 namespace App\Event;
 
+use App\Webhook\Attribute\AsWebhook;
+
+#[AsWebhook(name: 'timesheet.updated', description: 'Triggered after a timesheet was updated', payload: 'object.getTimesheet()')]
 final class TimesheetUpdatePostEvent extends AbstractTimesheetEvent
 {
 }

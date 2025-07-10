@@ -53,7 +53,6 @@ class ThemeEventExtensionTest extends TestCase
     protected function getSut(bool $hasListener = true): ThemeExtension
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
-        $dispatcher->method('hasListeners')->willReturn($hasListener);
         $dispatcher->expects($hasListener ? $this->once() : $this->never())->method('dispatch');
 
         $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
@@ -91,13 +90,6 @@ class ThemeEventExtensionTest extends TestCase
     public function testTrigger(): void
     {
         $sut = $this->getSut();
-        $event = $sut->trigger($this->getEnvironment(), 'foo', []);
-        self::assertInstanceOf(ThemeEvent::class, $event);
-    }
-
-    public function testTriggerWithoutListener(): void
-    {
-        $sut = $this->getSut(false);
         $event = $sut->trigger($this->getEnvironment(), 'foo', []);
         self::assertInstanceOf(ThemeEvent::class, $event);
     }

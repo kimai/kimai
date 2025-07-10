@@ -9,9 +9,9 @@
 
 namespace App\Event;
 
-/**
- * Triggered right before a customer will be deleted.
- */
+use App\Webhook\Attribute\AsWebhook;
+
+#[AsWebhook(name: 'customer.deleted', description: 'Triggered right before a customer will be deleted', payload: 'object.getCustomer()')]
 final class CustomerDeleteEvent extends AbstractCustomerEvent
 {
 }

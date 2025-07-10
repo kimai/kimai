@@ -65,11 +65,11 @@ final class SpreadsheetRenderer
         $this->template = $template;
     }
 
-    public function getTemplate(): TemplateInterface
+    public function getTemplate(?TimesheetQuery $query = null): TemplateInterface
     {
         if ($this->template === null) {
             $template = new Template('default', 'default');
-            $template->setColumns($this->getDefaultColumns());
+            $template->setColumns($this->getDefaultColumns($query));
             $template->setLocale('en');
 
             $this->template = $template;
@@ -231,7 +231,7 @@ final class SpreadsheetRenderer
             }
         }
 
-        $template = $this->getTemplate();
+        $template = $this->getTemplate($query);
 
         $columns = [];
 
@@ -319,9 +319,9 @@ final class SpreadsheetRenderer
     /**
      * @return array<int, string>
      */
-    private function getDefaultColumns(): array
+    private function getDefaultColumns(?TimesheetQuery $query = null): array
     {
-        // @deprecated since 2.36 - will be removed with 3.0
+        // @deprecated from 2.36 - will be removed with 3.0
         $durationFormatter = 'duration';
         if (($user = $this->voter->getUser()) instanceof User) {
             $durationFormatter = $user->isExportDecimal() ? 'duration_decimal' : 'duration';
@@ -355,7 +355,7 @@ final class SpreadsheetRenderer
             'project.order_number',
         ];
 
-        foreach ($this->findMetaColumns(new TimesheetMetaDisplayEvent(new TimesheetQuery(), TimesheetMetaDisplayEvent::EXPORT)) as $metaField) {
+        foreach ($this->findMetaColumns(new TimesheetMetaDisplayEvent($query ?? new TimesheetQuery(), TimesheetMetaDisplayEvent::EXPORT)) as $metaField) {
             if ($metaField->getName() !== null) {
                 $columns[] = 'timesheet.meta.' . $metaField->getName();
             }

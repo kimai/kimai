@@ -9,9 +9,9 @@
 
 namespace App\Event;
 
-/**
- * Triggered for project instances, which were just saved.
- */
+use App\Webhook\Attribute\AsWebhook;
+
+#[AsWebhook(name: 'project.created', description: 'Triggered after a project was created', payload: 'object.getProject()')]
 final class ProjectCreatePostEvent extends AbstractProjectEvent
 {
 }

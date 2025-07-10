@@ -1954,6 +1954,10 @@
         <source>sending_company</source>
         <target>Rechnungsabsender</target>
       </trans-unit>
+      <trans-unit id="Uzll0ps" resname="Customer portal">
+        <source>Customer portal</source>
+        <target>Kundenportal</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

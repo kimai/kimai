@@ -47,6 +47,7 @@ tabler:
         barcode: fas fa-barcode
         bookmark: far fa-star
         bookmarked: fas fa-star
+        break: fas fa-utensils
         calendar: far fa-calendar-alt
         cancel: fas fa-times
         clock: far fa-clock
@@ -68,9 +69,9 @@ tabler:
         documentation: fas fa-book
         dot: fas fa-circle
         download: fas fa-download
-        duration: far fa-hourglass
+        duration: fas fa-stopwatch
         edit: far fa-edit
-        end: fas fa-stopwatch
+        end: fas fa-hourglass-end
         export: fas fa-download
         failure: fas fa-times
         fax: fas fa-fax

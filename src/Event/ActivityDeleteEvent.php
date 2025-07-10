@@ -9,9 +9,9 @@
 
 namespace App\Event;
 
-/**
- * Triggered right before a activity will be deleted.
- */
+use App\Webhook\Attribute\AsWebhook;
+
+#[AsWebhook(name: 'activity.deleted', description: 'Triggered right before an activity will be deleted', payload: 'object.getActivity()')]
 final class ActivityDeleteEvent extends AbstractActivityEvent
 {
 }

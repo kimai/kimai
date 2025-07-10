@@ -9,9 +9,9 @@
 
 namespace App\Event;
 
-/**
- * Triggered for user instances, which were just updated.
- */
+use App\Webhook\Attribute\AsWebhook;
+
+#[AsWebhook(name: 'user.updated', description: 'Triggered after a user was updated', payload: 'object.getUser()')]
 final class UserUpdatePostEvent extends AbstractUserEvent
 {
 }
