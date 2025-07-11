@@ -86,6 +86,86 @@
         <source>Duration cannot be zero.</source>
         <target state="translated">Eine leere Dauer ist nicht erlaubt.</target>
       </trans-unit>
+      <trans-unit id="gSAwscA" resname="Validation Failed" xml:space="preserve">
+        <source>Validation Failed</source>
+        <target state="translated">Es gab ein Problem beim Speichern.</target>
+      </trans-unit>
+      <trans-unit id="7HYTefs" resname="Cannot stop running timesheet" xml:space="preserve">
+        <source>Cannot stop running timesheet</source>
+        <target state="translated">Sie haben eine aktive Zeitmessung, die nicht automatisch beendet werden kann.</target>
+      </trans-unit>
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token." xml:space="preserve">
+        <source>The given code is not the correct TOTP token.</source>
+        <target state="translated">Der übermittelte Code ist nicht der korrekte TOTP-Token.</target>
+      </trans-unit>
+      <trans-unit id="7mqg3TC" resname="This value is not a valid role name." xml:space="preserve">
+        <source>This value is not a valid role name.</source>
+        <target state="translated">Dies ist kein gültiger Name für eine Benutzer-Rolle.</target>
+      </trans-unit>
+      <trans-unit id="ZObikpA" resname="This absence type is not known." xml:space="preserve">
+        <source>This absence type is not known.</source>
+        <target state="translated">Dieser Abwesenheitstyp ist nicht bekannt.</target>
+      </trans-unit>
+      <trans-unit id="0ULsHQA" resname="The chosen date is not a working day." xml:space="preserve">
+        <source>The chosen date is not a working day.</source>
+        <target state="translated">Das ausgewählte Datum ist kein Arbeitstag.</target>
+      </trans-unit>
+      <trans-unit id="N21br.P" resname="The chosen date is already locked." xml:space="preserve">
+        <source>The chosen date is already locked.</source>
+        <target state="translated">Das ausgewählte Datum ist bereits gesperrt.</target>
+      </trans-unit>
+      <trans-unit id="6H84TMs" resname="An absence must be assigned to a user." xml:space="preserve">
+        <source>An absence must be assigned to a user.</source>
+        <target state="translated">Eine Abwesenheit muss einem Benutzer zugewiesen werden.</target>
+      </trans-unit>
+      <trans-unit id="nLcihCc" resname="An absence must have a date." xml:space="preserve">
+        <source>An absence must have a date.</source>
+        <target state="translated">Eine Abwesenheit muss ein Datum haben.</target>
+      </trans-unit>
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
+        <source>An absence cannot be booked before your first working day.</source>
+        <target state="translated">Eine Abwesenheit kann nicht vor dem ersten Arbeitstag gebucht werden.</target>
+      </trans-unit>
+      <trans-unit id="IN37g5N" resname="Not enough holidays left." xml:space="preserve">
+        <source>Not enough holidays left.</source>
+        <target state="translated">Nicht mehr genügend Ferientage übrig.</target>
+      </trans-unit>
+      <trans-unit id="ByeEMxW" resname="You do not have enough overtime, remaining are {{ value }}." xml:space="preserve">
+        <source>You do not have enough overtime, remaining are {{ value }}.</source>
+        <target state="translated">Sie haben nicht genug Überstunden, es verbleiben {{ value }}.</target>
+      </trans-unit>
+      <trans-unit id="DiaaRa1" resname="You cannot have two absences of this type at one day." xml:space="preserve">
+        <source>You cannot have two absences of this type at one day.</source>
+        <target state="translated">Sie können nicht zwei Abwesenheiten dieser Art an einem Tag buchen.</target>
+      </trans-unit>
+      <trans-unit id="kSBiyaF" resname="This is a public holiday, booking not allowed." xml:space="preserve">
+        <source>This is a public holiday, booking not allowed.</source>
+        <target state="translated">Dies ist ein Feiertag, Buchung ist nicht erlaubt.</target>
+      </trans-unit>
+      <trans-unit id="c2B6.lW" resname="You can book a maximum of {{ value }} days at once." xml:space="preserve">
+        <source>You can book a maximum of {{ value }} days at once.</source>
+        <target state="translated">Sie können maximal {{ value }} Tage auf einmal buchen, aktuell sind {{ selected }} ausgewählt.</target>
+      </trans-unit>
+      <trans-unit id="BztgSSP" resname="The period of absence must not extend beyond the turn of the year." xml:space="preserve">
+        <source>The period of absence must not extend beyond the turn of the year.</source>
+        <target state="translated">Der Zeitraum der Abwesenheit darf nicht über einen Jahreswechsel hinweg gehen.</target>
+      </trans-unit>
+      <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form." xml:space="preserve">
+        <source>The CSRF token is invalid. Please try to resubmit the form.</source>
+        <target state="translated">Bitte senden Sie das Formular erneut ab. Sollte das Problem weiterhin bestehen, laden Sie bitte die Seite neu.</target>
+      </trans-unit>
+      <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day." xml:space="preserve">
+        <source>An absence cannot be booked after the last working day.</source>
+        <target state="translated">Eine Abwesenheit kann nicht nach dem letzten Arbeitstag gebucht werden.</target>
+      </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target state="translated">Ausgewählter Zeitraum kann nicht gesperrt werden: unbestätigte Abwesenheitsanträge stehen an.</target>
+      </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
+        <source>Duration cannot be negative.</source>
+        <target state="translated">Die Dauer darf nicht negativ sein.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
