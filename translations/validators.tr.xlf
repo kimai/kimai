@@ -158,6 +158,14 @@
         <source>An absence cannot be booked after the last working day.</source>
         <target state="translated">İlk iş gününden sonra devamsızlık rezervasyonu yapılamaz.</target>
       </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target state="translated">Seçilen dönem kilitlenemez: onaylanmamış devamsızlık talepleri bulunmaktadır.</target>
+      </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
+        <source>Duration cannot be negative.</source>
+        <target state="translated">Süre negatif olamaz.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
