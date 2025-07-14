@@ -348,6 +348,10 @@ final class SystemConfigurationController extends AbstractController
                         ->setConstraints([
                             new GreaterThanOrEqual(['value' => 0])
                         ]),
+                    (new Configuration('timesheet.rules.break_time_active'))
+                        ->setLabel('break')
+                        ->setType(YesNoType::class)
+                        ->setOptions(['help' => 'Beta']),
                 ]),
             (new SystemConfigurationModel('quick_entry'))
                 ->setTranslation('quick_entry.title')

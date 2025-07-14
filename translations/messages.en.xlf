@@ -1958,6 +1958,10 @@
         <source>Customer portal</source>
         <target>Customer portal</target>
       </trans-unit>
+      <trans-unit id="cDOQMYv" resname="Beta">
+        <source>Beta</source>
+        <target>Enables a preview feature that is still in development.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
