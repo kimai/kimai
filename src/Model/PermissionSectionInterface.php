@@ -9,6 +9,9 @@
 
 namespace App\Model;
 
+/**
+ * @deprecated since 2.38 - use PermissionSection directly
+ */
 interface PermissionSectionInterface
 {
     /**
