@@ -12,13 +12,13 @@ namespace App\Utils;
 /**
  * This Class extends the default Parsedown Class for custom methods.
  */
-final class ParsedownExtension extends \Parsedown
+final class ParsedownExtension extends Parsedown
 {
     /** @var array<string> */
     private array $ids = [];
 
     /**
-     * Overwritten to prevent # to show up as headings for two reasons:
+     * Overwritten to prevent # and = to show up as headings for two reasons:
      * - Hashes are often used to cross-link issues in other systems
      * - Headings should not occur in time record listings
      */
