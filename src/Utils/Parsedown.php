@@ -14,7 +14,7 @@ namespace App\Utils;
  */
 class Parsedown extends \Parsedown
 {
-    protected function blockTable($Line, array $Block = null)
+    protected function blockTable($Line, array $Block = null) // @phpstan-ignore missingType.return,missingType.iterableValue,missingType.parameter
     {
         $Block = parent::blockTable($Line, $Block);
 
