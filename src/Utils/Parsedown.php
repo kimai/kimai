@@ -22,7 +22,7 @@ class Parsedown extends \Parsedown
             return null;
         }
 
-        $Block['element']['attributes']['class'] = 'table';
+        $Block['element']['attributes']['class'] = 'table table-striped table-vcenter';
 
         return $Block;
     }
