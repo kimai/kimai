@@ -1,7 +1,7 @@
 {
-  "build/app.css": "/build/app.6129073b.css",
+  "build/app.css": "/build/app.8b6629a6.css",
   "build/app.js": "/build/app.ed532734.js",
-  "build/app-rtl.css": "/build/app-rtl.f688d9f5.css",
+  "build/app-rtl.css": "/build/app-rtl.bf451276.css",
   "build/app-rtl.js": "/build/app-rtl.7a875ca7.js",
   "build/export-pdf.css": "/build/export-pdf.d8a6c23b.css",
   "build/export-pdf.js": "/build/export-pdf.395749ab.js",
@@ -14,6 +14,8 @@
   "build/calendar.js": "/build/calendar.7415ab21.js",
   "build/dashboard.css": "/build/dashboard.b7129fa1.css",
   "build/dashboard.js": "/build/dashboard.632f98fb.js",
+  "build/highlight.css": "/build/highlight.98bf3927.css",
+  "build/highlight.js": "/build/highlight.766d3929.js",
   "build/runtime.js": "/build/runtime.6c399d29.js",
   "build/fonts/fa-solid-900.ttf": "/build/fonts/fa-solid-900.ad1782c7.ttf",
   "build/fonts/fa-brands-400.ttf": "/build/fonts/fa-brands-400.26b80c88.ttf",

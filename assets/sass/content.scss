@@ -94,12 +94,18 @@ table.dataTable thead > tr > th.hw-min {
     }
 }
 
-.markdown blockquote {
-    p {
-        /* Parsedown wraps content in a <p> like <blockquote><p> */
-        margin: 0;
+.markdown {
+    blockquote {
+        p {
+            /* Parsedown wraps content in a <p> like <blockquote><p> */
+            margin: 0;
+        }
+        /* Tabler doesn't style blockquotes */
+        border-left: 15px var(--tblr-border-style) var(--tblr-border-color);
+        background-color: var(--tblr-bg-surface-secondary);
     }
-    /* Tabler doesn't style blockquotes */
-    border-left: 10px var(--tblr-border-style) var(--tblr-border-color);
-    background-color: var(--tblr-bg-surface-secondary);
+    pre code.hljs {
+        padding: 0;
+        background-color: var(--tblr-bg-surface-dark);
+    }
 }
