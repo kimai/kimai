@@ -38,4 +38,17 @@ class ParsedownTest extends TestCase
         ');
         self::assertEquals('<h1 id="foo">Foo</h1>', $html);
     }
+
+    public function testHeaderContainsIdDoesNotDuplicate(): void
+    {
+        $sut = new Parsedown();
+        $html = $sut->parse('
+# Foo
+# Foo
+# Foo
+        ');
+        self::assertEquals('<h1 id="foo">Foo</h1>
+<h1 id="foo-1">Foo</h1>
+<h1 id="foo-2">Foo</h1>', $html);
+    }
 }
