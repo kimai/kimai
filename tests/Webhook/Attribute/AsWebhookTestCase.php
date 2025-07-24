@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AsWebhookTestCase extends TestCase
 {
-    public function testDefault(): void
+    public function testConstruct(): void
     {
         $attribute = new AsWebhook('name', 'description', 'some payload');
 
