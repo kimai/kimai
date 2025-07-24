@@ -15,6 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Event\InvoiceDeleteEvent
+ * @covers \App\Event\AbstractInvoiceEvent
  */
 class InvoiceDeleteEventTest extends TestCase
 {

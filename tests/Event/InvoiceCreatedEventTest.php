@@ -20,6 +20,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \App\Event\InvoiceCreatedEvent
+ * @covers \App\Event\AbstractInvoiceEvent
  */
 class InvoiceCreatedEventTest extends TestCase
 {
