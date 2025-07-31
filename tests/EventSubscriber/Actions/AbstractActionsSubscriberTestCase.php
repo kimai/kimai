@@ -22,7 +22,7 @@ abstract class AbstractActionsSubscriberTestCase extends TestCase
     protected function createSubscriber(string $className, ...$grants): AbstractActionsSubscriber
     {
         $auth = $this->createMock(AuthorizationCheckerInterface::class);
-        $auth->method('isGranted')->willReturnOnConsecutiveCalls(...$grants);
+        $auth->method('isGranted')->willReturnOnConsecutiveCalls(...$grants); // @phpstan-ignore argument.named
         $router = $this->createMock(UrlGeneratorInterface::class);
         $router->method('generate')->willReturnArgument(0);
 

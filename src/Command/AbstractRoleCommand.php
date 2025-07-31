@@ -20,19 +20,16 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 abstract class AbstractRoleCommand extends Command
 {
-    public function __construct(private UserService $userService)
+    public function __construct(private readonly UserService $userService)
     {
         parent::__construct();
     }
 
     protected function configure(): void
     {
-        $this
-            ->setDefinition([
-                new InputArgument('username', InputArgument::REQUIRED, 'The username'),
-                new InputArgument('role', InputArgument::OPTIONAL, 'The role'),
-                new InputOption('super', null, InputOption::VALUE_NONE, 'Instead specifying role, use this to quickly add the super administrator role'),
-            ]);
+        $this->addArgument('username', InputArgument::REQUIRED, 'The username');
+        $this->addArgument('role', InputArgument::OPTIONAL, 'The role');
+        $this->addOption('super', null, InputOption::VALUE_NONE, 'Instead specifying role, use this to quickly add the super administrator role');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

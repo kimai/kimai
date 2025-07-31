@@ -82,6 +82,14 @@ Ověřte na tomto odkazu: %url%</target>
         <source>approval_approved_subject</source>
         <target state="translated">Vaše žádost byla schválena</target>
       </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">Vaše žádost o autorizaci byla zamítnuta uživatelem %created_by%.
+
+%list%
+
+Prosím, zkontrolujte své žádosti zde: %url%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

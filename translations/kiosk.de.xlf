@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="kiosk.en.xlf">
     <body>
-      <trans-unit id="3349h0x" resname="Kiosk">
+      <trans-unit id="3349h0x" resname="Kiosk" xml:space="preserve" approved="no">
         <source>Kiosk</source>
-        <target>Kiosk Modus</target>
+        <target state="translated">Kiosk-Modus</target>
       </trans-unit>
       <trans-unit id="TcGAXSA" resname="kiosk.login">
         <source>kiosk.login</source>

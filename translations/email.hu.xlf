@@ -24,15 +24,15 @@
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target state="needs-translation">Jelszó visszaállítása</target>
+        <target state="translated">Bejelentkezés a Kimaiba</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="needs-translation">Ez megtörténhet…</target>
+        <target state="translated">Jelentkezzen be fiókjába</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="needs-translation">Jelszó visszaállítása</target>
+        <target state="translated">Bejelentkezés</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
@@ -53,6 +53,42 @@ Kérjük, tekintse át a következő címen: %url%</target>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject">
         <source>absence_created_supervisor_subject</source>
         <target state="translated">Új távollét | %user% | %type%</target>
+      </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="translated">Jóváhagyás kérése: %user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="translated">Jóváhagyást kértek %user% számára.
+
+%list%
+
+Kérjük, tekintse át őket itt: %url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">A kérését elutasították</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="translated">Az Ön kérelmét %created_by% jóváhagyta.
+
+%list%
+
+Valamennyi kérelmét itt találja: %url%</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">Az Ön jogosultságkérelmét %created_by% elutasította.
+
+%list%
+
+Kérjük, tekintse át a kérelmeit itt: %url%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">A kérését jóváhagyták</target>
       </trans-unit>
     </body>
   </file>

@@ -70,21 +70,21 @@
         <source>timesheet.default_begin</source>
         <target>기본 시작 시간 (모든 시간 추적 모드에서 사용되지 않음)</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target>표준: 시작, 종료 및 지속시간이 올림</target>
+        <target state="needs-translation">표준: 시작, 종료 및 지속시간이 올림</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target>근접값: 가장 가까운 값으로 수학적 반올림</target>
+        <target state="needs-translation">근접값: 가장 가까운 값으로 수학적 반올림</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target>바닥 함수: 시작, 종료 및 지속시간은 내림</target>
+        <target state="needs-translation">바닥 함수: 시작, 종료 및 지속시간은 내림</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target>천장 함수: 시작, 종료 및 지속시간이 반올림됩니다</target>
+        <target state="needs-translation">천장 함수: 시작, 종료 및 지속시간이 반올림됩니다</target>
       </trans-unit>
       <trans-unit id="hz.vdg5" resname="Sunday">
         <source>Sunday</source>

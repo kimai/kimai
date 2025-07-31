@@ -146,21 +146,21 @@
         <source>Sunday</source>
         <target>Κυριακή</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target>Μέγιστο: έναρξη, τέλος και διάρκεια θα στρογγυλοποιηθούν</target>
+        <target state="needs-translation">Μέγιστο: έναρξη, τέλος και διάρκεια θα στρογγυλοποιηθούν</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target>Κοντινότερο: στρογγυλοποίηση μαθηματικά στην πλησιέστερη τιμή</target>
+        <target state="needs-translation">Κοντινότερο: στρογγυλοποίηση μαθηματικά στην πλησιέστερη τιμή</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target>Τυπικό: Η αρχή θα στρογγυλοποιηθεί προς τα κάτω, το τέλος και η διάρκεια προς τα πάνω</target>
+        <target state="needs-translation">Τυπικό: Η αρχή θα στρογγυλοποιηθεί προς τα κάτω, το τέλος και η διάρκεια προς τα πάνω</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target>Ελάχιστο: έναρξη, τέλος και διάρκεια θα στρογγυλοποιηθούν προς τα κάτω</target>
+        <target state="needs-translation">Ελάχιστο: έναρξη, τέλος και διάρκεια θα στρογγυλοποιηθούν προς τα κάτω</target>
       </trans-unit>
       <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
         <source>timesheet.default_begin</source>

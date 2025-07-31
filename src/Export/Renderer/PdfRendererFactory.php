@@ -27,6 +27,7 @@ final class PdfRendererFactory
     {
         $renderer = new PDFRenderer($this->twig, $this->converter, $this->projectStatisticService);
         $renderer->setId($id);
+        $renderer->setTitle($id);
         $renderer->setTemplate($template);
 
         return $renderer;

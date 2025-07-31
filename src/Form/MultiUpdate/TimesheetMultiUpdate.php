@@ -183,8 +183,8 @@ final class TimesheetMultiUpdate extends AbstractType
                 'label' => 'mark_as_exported',
                 'required' => false,
                 'choices' => [
-                    'entryState.exported' => true,
-                    'entryState.not_exported' => false
+                    'yes' => true,
+                    'no' => false
                 ]
             ]);
         }

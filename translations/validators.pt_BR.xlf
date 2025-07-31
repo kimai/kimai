@@ -158,6 +158,10 @@
         <source>An absence cannot be booked after the last working day.</source>
         <target state="translated">Uma ausência não pode ser marcada após o último dia útil.</target>
       </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
+        <source>Duration cannot be negative.</source>
+        <target state="translated">A duração não pode ser negativa.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

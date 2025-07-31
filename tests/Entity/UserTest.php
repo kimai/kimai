@@ -53,6 +53,7 @@ class UserTest extends TestCase
 
         $user->setUserIdentifier('foo');
         self::assertEquals('foo', $user->getUserIdentifier());
+        self::assertEquals('foo', $user->getIdentifier());
         self::assertEquals('foo', $user->getDisplayName());
         $user->setAlias('BAR');
         self::assertEquals('BAR', $user->getDisplayName());
@@ -89,6 +90,7 @@ class UserTest extends TestCase
     public function testWorkContract(): void
     {
         $user = new User();
+        self::assertFalse($user->hasContractSettings());
 
         self::assertEquals(0, $user->getWorkHoursMonday());
         self::assertEquals(0, $user->getWorkHoursTuesday());
@@ -127,6 +129,7 @@ class UserTest extends TestCase
         $user->setWorkHoursSunday(7800);
         $user->setHolidaysPerYear(10.7);
         self::assertTrue($user->hasWorkHourConfiguration());
+        self::assertTrue($user->hasContractSettings());
 
         self::assertEquals(7200, $user->getWorkHoursMonday());
         self::assertEquals(7300, $user->getWorkHoursTuesday());
@@ -158,6 +161,16 @@ class UserTest extends TestCase
 
         $user->setPublicHolidayGroup('DE-NRW');
         self::assertEquals('DE-NRW', $user->getPublicHolidayGroup());
+
+        self::assertNull($user->getWorkStartingDay());
+        $workStart = new \DateTimeImmutable('2018-07-23');
+        $user->setWorkStartingDay($workStart);
+        self::assertEquals($workStart, $user->getWorkStartingDay());
+
+        self::assertNull($user->getLastWorkingDay());
+        $workStart = new \DateTimeImmutable('2021-02-13');
+        $user->setLastWorkingDay($workStart);
+        self::assertEquals($workStart, $user->getLastWorkingDay());
     }
 
     public function testColor(): void
@@ -248,6 +261,21 @@ class UserTest extends TestCase
 
         $user->setPreferenceValue('export_decimal', true);
         self::assertTrue($user->isExportDecimal());
+
+        $prefs = $user->getPreferences();
+        self::assertCount(3, $prefs);
+
+        self::assertInstanceOf(UserPreference::class, $prefs[0]);
+        self::assertEquals('test', $prefs[0]->getName());
+
+        self::assertInstanceOf(UserPreference::class, $prefs[1]);
+        self::assertEquals('test2', $prefs[1]->getName());
+
+        self::assertInstanceOf(UserPreference::class, $prefs[2]);
+        self::assertEquals('export_decimal', $prefs[2]->getName());
+
+        $user->setPreferences(new ArrayCollection([]));
+        self::assertCount(0, $user->getPreferences());
     }
 
     public function testDisplayName(): void
@@ -331,6 +359,12 @@ class UserTest extends TestCase
         $team2->addTeamLead($sut);
         self::assertTrue($sut->isTeamleadOf($team2));
         self::assertTrue($sut->isInTeam($team2));
+
+        self::assertTrue($sut->isTeamleadOf($team2));
+        $user2 = new User();
+        self::assertFalse($sut->isTeamleadOfUser($user2));
+        $team2->addUser($user2);
+        self::assertTrue($sut->isTeamleadOfUser($user2));
 
         self::assertCount(2, $sut->getTeams());
         $sut->removeMembership(new TeamMember());
@@ -623,5 +657,22 @@ class UserTest extends TestCase
         self::assertTrue($user->hasSupervisor());
         self::assertNotNull($user->getSupervisor());
         self::assertSame($supervisor, $user->getSupervisor());
+    }
+
+    public function testLastLogin(): void
+    {
+        $dateTime = new \DateTime('now', new \DateTimeZone('UTC'));
+
+        $user = new User();
+        $user->setTimezone('Europe/Berlin');
+
+        $lastLogin = $user->getLastLogin();
+        self::assertNull($lastLogin);
+        $user->setLastLogin($dateTime);
+
+        $lastLogin = $user->getLastLogin();
+        self::assertNotNull($lastLogin);
+        self::assertInstanceOf(\DateTime::class, $lastLogin);
+        self::assertEquals('Europe/Berlin', $lastLogin->getTimezone()->getName());
     }
 }

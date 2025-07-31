@@ -21,18 +21,10 @@ class WorkingTimeRepository extends EntityRepository
 {
     private bool $pendingUpdate = false;
 
-    public function deleteWorkingTime(WorkingTime $workingTime): void
+    public function scheduleWorkingTimeDelete(WorkingTime $workingTime): void
     {
-        $entityManager = $this->getEntityManager();
-        $entityManager->remove($workingTime);
-        $entityManager->flush();
-    }
-
-    public function saveWorkingTime(WorkingTime $workingTime): void
-    {
-        $entityManager = $this->getEntityManager();
-        $entityManager->persist($workingTime);
-        $entityManager->flush();
+        $this->pendingUpdate = true;
+        $this->getEntityManager()->remove($workingTime);
     }
 
     public function scheduleWorkingTimeUpdate(WorkingTime $workingTime): void

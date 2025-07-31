@@ -12,6 +12,7 @@ namespace App\Export\Base;
 use App\Entity\ExportableItem;
 use App\Export\ExportFilename;
 use App\Export\Package\CellFormatter\DateStringFormatter;
+use App\Export\Package\CellFormatter\DurationPlainFormatter;
 use App\Export\Package\SpoutSpreadsheet;
 use App\Export\RendererInterface;
 use App\Export\TimesheetExportInterface;
@@ -25,6 +26,10 @@ final class CsvRenderer implements RendererInterface, TimesheetExportInterface
 {
     use ExportTrait;
 
+    private string $id = 'csv';
+    private string $title = 'default';
+    private ?string $locale = null;
+
     public function __construct(
         private readonly SpreadsheetRenderer $spreadsheetRenderer,
         private readonly TranslatorInterface $translator
@@ -32,14 +37,29 @@ final class CsvRenderer implements RendererInterface, TimesheetExportInterface
     {
     }
 
+    public function setId(string $id): void
+    {
+        $this->id = $id;
+    }
+
     public function getId(): string
     {
-        return 'csv';
+        return $this->id;
+    }
+
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+
+    public function setLocale(?string $locale): void
+    {
+        $this->locale = $locale;
     }
 
     public function getTitle(): string
     {
-        return 'csv';
+        return $this->title;
     }
 
     /**
@@ -57,7 +77,7 @@ final class CsvRenderer implements RendererInterface, TimesheetExportInterface
     /**
      * @param ExportableItem[] $exportItems
      */
-    public function renderFile(array $exportItems, TimesheetQuery $query): \SplFileInfo
+    private function renderFile(array $exportItems, TimesheetQuery $query): \SplFileInfo
     {
         $filename = @tempnam(sys_get_temp_dir(), 'kimai-export-csv');
         if (false === $filename) {
@@ -67,10 +87,17 @@ final class CsvRenderer implements RendererInterface, TimesheetExportInterface
         $options = new Options();
         $options->SHOULD_ADD_BOM = false;
 
-        $spreadsheet = new SpoutSpreadsheet(new Writer($options), $this->translator);
+        $opts = $this->spreadsheetRenderer->getTemplate()->getOptions();
+        if (\array_key_exists('separator', $opts) && $opts['separator'] === ';') {
+            $options->FIELD_DELIMITER = ';';
+        }
+
+        $spreadsheet = new SpoutSpreadsheet(new Writer($options), $this->translator, $this->locale ?? $this->spreadsheetRenderer->getTemplate()->getLocale());
         $spreadsheet->open($filename);
 
         $this->spreadsheetRenderer->registerFormatter('date', new DateStringFormatter());
+        $this->spreadsheetRenderer->registerFormatter('duration', new DurationPlainFormatter(false));
+        $this->spreadsheetRenderer->registerFormatter('duration_seconds', new DurationPlainFormatter(true));
         $this->spreadsheetRenderer->writeSpreadsheet($spreadsheet, $exportItems, $query);
 
         return new \SplFileInfo($filename);

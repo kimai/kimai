@@ -16,6 +16,7 @@ use App\Repository\ProjectRepository;
 use App\Validator\Constraints as Constraints;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use OpenApi\Attributes as OA;
@@ -41,7 +42,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     /**
      * Unique Project ID
      */
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[Serializer\Expose]
@@ -61,7 +62,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     /**
      * Project name
      */
-    #[ORM\Column(name: 'name', type: 'string', length: 150, nullable: false)]
+    #[ORM\Column(name: 'name', type: Types::STRING, length: 150, nullable: false)]
     #[Assert\NotNull]
     #[Assert\Length(min: 2, max: 150)]
     #[Serializer\Expose]
@@ -71,7 +72,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     /**
      * Project order number
      */
-    #[ORM\Column(name: 'order_number', type: 'text', length: 50, nullable: true)]
+    #[ORM\Column(name: 'order_number', type: Types::TEXT, length: 50, nullable: true)]
     #[Assert\Length(max: 50)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Project_Entity'])]
@@ -82,7 +83,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      */
-    #[ORM\Column(name: 'order_date', type: 'datetime', nullable: true)]
+    #[ORM\Column(name: 'order_date', type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Project_Entity'])]
     #[Serializer\Type(name: "DateTime<'Y-m-d'>")]
@@ -93,7 +94,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      */
-    #[ORM\Column(name: 'start', type: 'datetime', nullable: true)]
+    #[ORM\Column(name: 'start', type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Project'])]
     #[Serializer\Type(name: "DateTime<'Y-m-d'>")]
@@ -104,16 +105,16 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
      *
      * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
      */
-    #[ORM\Column(name: 'end', type: 'datetime', nullable: true)]
+    #[ORM\Column(name: 'end', type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Project'])]
     #[Serializer\Type(name: "DateTime<'Y-m-d'>")]
     #[Serializer\Accessor(getter: 'getEnd')]
     private ?\DateTime $end = null;
-    #[ORM\Column(name: 'timezone', type: 'string', length: 64, nullable: true)]
+    #[ORM\Column(name: 'timezone', type: Types::STRING, length: 64, nullable: true)]
     private ?string $timezone = null;
     private bool $localized = false;
-    #[ORM\Column(name: 'comment', type: 'text', nullable: true)]
+    #[ORM\Column(name: 'comment', type: Types::TEXT, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'comment')]
@@ -121,13 +122,13 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     /**
      * If the project is not visible, times cannot be recorded
      */
-    #[ORM\Column(name: 'visible', type: 'boolean', nullable: false)]
+    #[ORM\Column(name: 'visible', type: Types::BOOLEAN, nullable: false)]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'visible', type: 'boolean')]
     private bool $visible = true;
-    #[ORM\Column(name: 'billable', type: 'boolean', nullable: false, options: ['default' => true])]
+    #[ORM\Column(name: 'billable', type: Types::BOOLEAN, nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -158,17 +159,17 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Groups(['Project'])]
     #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Team'))]
     private Collection $teams;
-    #[ORM\Column(name: 'invoice_text', type: 'text', nullable: true)]
+    #[ORM\Column(name: 'invoice_text', type: Types::TEXT, nullable: true)]
     private ?string $invoiceText = null;
     /**
      * Whether this project allows booking of global activities
      */
-    #[ORM\Column(name: 'global_activities', type: 'boolean', nullable: false, options: ['default' => true])]
+    #[ORM\Column(name: 'global_activities', type: Types::BOOLEAN, nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private bool $globalActivities = true;
-    #[ORM\Column(name: 'number', type: 'string', length: 10, nullable: true)]
+    #[ORM\Column(name: 'number', type: Types::STRING, length: 10, nullable: true)]
     #[Assert\Length(max: 10)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -185,6 +186,11 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function isNew(): bool
+    {
+        return $this->id === null;
     }
 
     public function getCustomer(): ?Customer

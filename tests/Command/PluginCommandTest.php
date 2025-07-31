@@ -40,9 +40,10 @@ class PluginCommandTest extends KernelTestCase
 
     private function getCommandTester(array $plugins, array $options = []): CommandTester
     {
+        $projectDirectory = __DIR__ . '/../../';
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
-        $this->application->add(new PluginCommand(new PluginManager($plugins), new PackageManager(__DIR__ . '/../../')));
+        $this->application->add(new PluginCommand(new PluginManager($plugins), new PackageManager($projectDirectory), $projectDirectory));
 
         $command = $this->application->find('kimai:plugins');
         $commandTester = new CommandTester($command);

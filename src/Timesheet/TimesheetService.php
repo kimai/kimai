@@ -45,12 +45,12 @@ final class TimesheetService
     private array $doNotValidateCodes = [];
 
     public function __construct(
-        private SystemConfiguration $configuration,
-        private TimesheetRepository $repository,
-        private TrackingModeService $trackingModeService,
-        private EventDispatcherInterface $dispatcher,
-        private AuthorizationCheckerInterface $auth,
-        private ValidatorInterface $validator
+        private readonly SystemConfiguration $configuration,
+        private readonly TimesheetRepository $repository,
+        private readonly TrackingModeService $trackingModeService,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly AuthorizationCheckerInterface $auth,
+        private readonly ValidatorInterface $validator
     ) {
     }
 
@@ -101,7 +101,7 @@ final class TimesheetService
     public function restartTimesheet(Timesheet $timesheet, Timesheet $copyFrom): Timesheet
     {
         $this->dispatcher->dispatch(new TimesheetRestartPreEvent($timesheet, $copyFrom));
-        $this->saveNewTimesheet($timesheet);
+        $this->saveNewTimesheet($timesheet); // @phpstan-ignore method.deprecated
         $this->dispatcher->dispatch(new TimesheetRestartPostEvent($timesheet, $copyFrom));
 
         return $timesheet;
@@ -111,6 +111,7 @@ final class TimesheetService
      * @throws ValidationFailedException for invalid timesheets or running timesheets that should be stopped
      * @throws InvalidArgumentException for already persisted timesheets
      * @throws AccessDeniedException if user is not allowed to start timesheet
+     * @deprecated since 2.36.0 - use saveTimesheet() instead
      */
     public function saveNewTimesheet(Timesheet $timesheet): Timesheet
     {
@@ -150,12 +151,19 @@ final class TimesheetService
         return $timesheet;
     }
 
+    public function saveTimesheet(Timesheet $timesheet): Timesheet
+    {
+        if ($timesheet->getId() === null) {
+            return $this->saveNewTimesheet($timesheet); // @phpstan-ignore method.deprecated
+        } else {
+            return $this->updateTimesheet($timesheet); // @phpstan-ignore method.deprecated
+        }
+    }
+
     /**
-     * Does NOT validate the given timesheet!
+     * Does NOT validate the given timesheet.
      *
-     * @param Timesheet $timesheet
-     * @return Timesheet
-     * @throws \Exception
+     * @deprecated since 2.36.0 - use saveTimesheet() instead
      */
     public function updateTimesheet(Timesheet $timesheet): Timesheet
     {
@@ -245,7 +253,7 @@ final class TimesheetService
                     continue;
                 }
 
-                throw new ValidationFailedException($errors, 'Validation Failed');
+                throw new ValidationFailedException($errors);
             }
         }
     }

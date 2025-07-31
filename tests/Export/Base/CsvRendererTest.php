@@ -13,7 +13,8 @@ use App\Entity\User;
 use App\Export\Base\CsvRenderer;
 use App\Export\Base\SpreadsheetRenderer;
 use App\Tests\Export\Renderer\AbstractRendererTestCase;
-use App\Tests\Export\Renderer\MetaFieldColumnSubscriber;
+use App\Tests\Mocks\MetaFieldColumnSubscriberMock;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -28,18 +29,22 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class CsvRendererTest extends AbstractRendererTestCase
 {
-    protected function getAbstractRenderer(): CsvRenderer
+    protected function getAbstractRenderer(bool $exportDecimal = false): CsvRenderer
     {
+        $user = $this->createMock(User::class);
+        $user->expects($this->any())->method('isExportDecimal')->willReturn($exportDecimal);
+
         $security = $this->createMock(Security::class);
-        $security->expects($this->any())->method('getUser')->willReturn(new User());
+        $security->expects($this->any())->method('getUser')->willReturn($user);
         $security->expects($this->any())->method('isGranted')->willReturn(true);
 
-        $translator = $this->createMock(TranslatorInterface::class);
+        $translator = $this->getContainer()->get(TranslatorInterface::class);
+        self::assertInstanceOf(TranslatorInterface::class, $translator);
 
         $dispatcher = new EventDispatcher();
-        $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
+        $dispatcher->addSubscriber(new MetaFieldColumnSubscriberMock());
 
-        return new CsvRenderer(new SpreadsheetRenderer($dispatcher, $security), $translator);
+        return new CsvRenderer(new SpreadsheetRenderer($dispatcher, $security, $this->createMock(LoggerInterface::class)), $translator);
     }
 
     public function testConfiguration(): void
@@ -47,22 +52,43 @@ class CsvRendererTest extends AbstractRendererTestCase
         $sut = $this->getAbstractRenderer();
 
         self::assertEquals('csv', $sut->getId());
-        self::assertEquals('csv', $sut->getTitle());
+        self::assertEquals('default', $sut->getTitle());
+
+        $sut->setTitle('foo-bar');
+        self::assertEquals('foo-bar', $sut->getTitle());
+
+        $sut->setId('bar-id');
+        self::assertEquals('bar-id', $sut->getId());
     }
 
     public static function getTestModel(): array
     {
+        $en = [
+            'Date', 'From', 'To', 'Duration', 'Currency', 'Price', 'Internal price', 'Hourly price', 'Fixed price', 'Name',
+            'User', 'E-mail', 'Staff number', 'Customer', 'Project', 'Activity', 'Description', 'Billable', 'Tags',
+            'Type', 'category', 'Account', 'Project number', 'VAT-ID', 'Order number',
+            'Working place', 'Working place', 'Working place', 'Working place', 'Working place', 'Working place', 'mypref',
+        ];
+        $de = [
+            'Datum', 'Von', 'Bis', 'Dauer', 'Währung', 'Preis', 'Interner Preis', 'Preis pro Stunde', 'Festpreis', 'Name',
+            'Benutzer', 'E-Mail', 'Personalnummer', 'Kunde', 'Projekt', 'Tätigkeit', 'Beschreibung', 'Abrechenbar', 'Schlagworte',
+            'Typ', 'category', 'Kundennummer', 'Projektnummer', 'Umsatzsteuer-ID', 'Bestellnummer',
+            'Working place', 'Working place', 'Working place', 'Working place', 'Working place', 'Working place', 'mypref',
+        ];
+
         return [
-            ['400', '2437.12', '1947.99', 7, 6, 1, 2, 2]
+            ['400', '2437.12', '1947.99', 7, 6, 1, 2, 2, false, null, $en],
+            ['400', '2437.12', '1947.99', 7, 6, 1, 2, 2, true, 'de', $de]
         ];
     }
 
     /**
      * @dataProvider getTestModel
      */
-    public function testRender(string $totalDuration, string $totalRate, string $expectedRate, int $expectedRows, int $expectedDescriptions, int $expectedUser1, int $expectedUser2, int $expectedUser3): void
+    public function testRender(string $totalDuration, string $totalRate, string $expectedRate, int $expectedRows, int $expectedDescriptions, int $expectedUser1, int $expectedUser2, int $expectedUser3, bool $exportDecimal, ?string $locale, array $header): void
     {
-        $sut = $this->getAbstractRenderer();
+        $sut = $this->getAbstractRenderer($exportDecimal);
+        $sut->setLocale($locale);
 
         /** @var BinaryFileResponse $response */
         $response = $this->render($sut);
@@ -98,18 +124,22 @@ class CsvRendererTest extends AbstractRendererTestCase
             $all[] = str_getcsv($row);
         }
 
+        self::assertEquals($header, $all[0]);
+
         $expected = [
             '2019-06-16',
             '12:00',
             '12:06',
-            '0:06',
+            ($exportDecimal ? '0.11' : '0:06'),
             //'0.11',
             'EUR',
             '0',
             '0',
             '0',
             '84',
+            'Kevin',
             'kevin',
+            '',
             '',
             'Customer Name',
             'project name',
@@ -129,20 +159,23 @@ class CsvRendererTest extends AbstractRendererTestCase
             '',
             'project-foo2',
             'activity-bar',
+            '',
         ];
 
         $expected2 = [
             '2019-06-16',
             '12:00',
             '12:06',
-            '0:06',
+            ($exportDecimal ? '0.11' : '0:06'),
             //'0.11',
             'EUR',
             '0',
             '0',
             '0',
             '-100.92',
+            'niveK',
             'nivek',
+            '',
             '',
             'Customer Name',
             'project name',
@@ -162,12 +195,13 @@ class CsvRendererTest extends AbstractRendererTestCase
             '',
             'project-foo2',
             'activity-bar',
+            '',
         ];
 
         self::assertEquals(7, \count($all));
         self::assertEquals($expected, $all[5]);
         self::assertEquals($expected2, $all[6]);
         self::assertEquals(\count($expected), \count($all[0]));
-        self::assertEquals('foo', $all[4][16]);
+        self::assertEquals('foo', $all[4][18]);
     }
 }

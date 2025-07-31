@@ -98,10 +98,7 @@
             {% for month in year.months %}
                 {% set monthShould = month.expectedTime(now) %}
                 {% set monthIs = month.actualTime %}
-                {% set showStats = now > month.month or monthIs > 0 %}
-                {% if showStats %}
-                    {% set yearShould = yearShould + monthShould %}
-                {% endif %}
+                {% set yearShould = yearShould + monthShould %}
                 {% set yearIs = yearIs + monthIs %}
                 {% if month.locked %}
                     {% set approved = approved + 1 %}
@@ -137,7 +134,6 @@
                     {% for month in year.months %}
                         {% set monthShould = month.expectedTime(now) %}
                         {% set monthIs = month.actualTime %}
-                        {% set showStats = now > month.month or monthIs > 0 %}
                         <tr>
                             {% if withWorkHourConfiguration %}
                             <td class="w-min">
@@ -152,9 +148,7 @@
                                 {{ month.month|month_name }}
                             </td>
                             <td class="text-end total w-min">
-                                {% if showStats %}
-                                    {{ work_times_result(monthShould, monthIs, decimal) }}
-                                {% endif %}
+                                {{ work_times_result(monthShould, monthIs, decimal) }}
                             </td>
                             <td class="text-end w-min">
                                 {{ monthShould|duration(decimal) }}

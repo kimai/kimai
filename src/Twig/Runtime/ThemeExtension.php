@@ -24,15 +24,17 @@ use Twig\Extension\RuntimeExtensionInterface;
 
 final class ThemeExtension implements RuntimeExtensionInterface
 {
-    public function __construct(private EventDispatcherInterface $eventDispatcher, private TranslatorInterface $translator, private SystemConfiguration $configuration, private Security $security)
+    public function __construct(
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly TranslatorInterface $translator,
+        private readonly SystemConfiguration $configuration,
+        private readonly Security $security
+    )
     {
     }
 
     /**
-     * @param Environment $environment
-     * @param string $eventName
      * @param array<string, mixed> $payload
-     * @return ThemeEvent
      */
     public function trigger(Environment $environment, string $eventName, array $payload = []): ThemeEvent
     {
@@ -61,12 +63,12 @@ final class ThemeExtension implements RuntimeExtensionInterface
 
     public function getJavascriptTranslations(): array
     {
-        $event = new ThemeJavascriptTranslationsEvent();
+        $event = new ThemeJavascriptTranslationsEvent(); // @phpstan-ignore new.deprecatedClass
 
         $this->eventDispatcher->dispatch($event);
 
         $all = [];
-        foreach ($event->getTranslations() as $key => $translation) {
+        foreach ($event->getTranslations() as $key => $translation) { // @phpstan-ignore method.deprecatedClass
             $all[$key] = $this->translator->trans($translation[0], [], $translation[1]);
         }
 
@@ -95,9 +97,9 @@ final class ThemeExtension implements RuntimeExtensionInterface
         return $class;
     }
 
-    public function generateTitle(?string $prefix = null, string $delimiter = ' – '): string
+    public function generateTitle(): string
     {
-        return ($prefix ?? '') . Constants::SOFTWARE . $delimiter . $this->translator->trans('time_tracking', [], 'messages');
+        return Constants::SOFTWARE;
     }
 
     public function colorize(?string $color, ?string $identifier = null): string

@@ -14,6 +14,8 @@ use App\Entity\Timesheet;
 use App\Repository\Paginator\QueryPaginator;
 use App\Repository\Query\TagFormTypeQuery;
 use App\Repository\Query\TagQuery;
+use App\Repository\Search\SearchConfiguration;
+use App\Repository\Search\SearchHelper;
 use App\Utils\Pagination;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityRepository;
@@ -155,22 +157,9 @@ class TagRepository extends EntityRepository
 
         $qb->addOrderBy($orderBy, $query->getOrder());
 
-        $searchTerm = $query->getSearchTerm();
-        if ($searchTerm !== null) {
-            $searchAnd = $qb->expr()->andX();
-
-            if ($searchTerm->hasSearchTerm()) {
-                $searchAnd->add(
-                    $qb->expr()->orX(
-                        $qb->expr()->like('tag.name', ':searchTerm')
-                    )
-                );
-                $qb->setParameter('searchTerm', '%' . $searchTerm->getSearchTerm() . '%');
-            }
-
-            if ($searchAnd->count() > 0) {
-                $qb->andWhere($searchAnd);
-            }
+        if ($query->hasSearchTerm()) {
+            $helper = new SearchHelper(new SearchConfiguration(['tag.name']));
+            $helper->addSearchTerm($qb, $query);
         }
 
         return $qb;

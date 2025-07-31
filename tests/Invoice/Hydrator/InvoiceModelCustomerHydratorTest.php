@@ -43,7 +43,7 @@ class InvoiceModelCustomerHydratorTest extends TestCase
             'customer.vat' => '',
             'customer.vat_id' => '',
             'customer.number' => '',
-            'customer.country' => null,
+            'customer.country' => 'AT',
             'customer.homepage' => '',
             'customer.comment' => '',
             'customer.email' => '',

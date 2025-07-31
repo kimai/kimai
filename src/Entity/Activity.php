@@ -16,6 +16,7 @@ use App\Repository\ActivityRepository;
 use App\Validator\Constraints as Constraints;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use OpenApi\Attributes as OA;
@@ -42,7 +43,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     /**
      * Unique activity ID
      */
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[Serializer\Expose]
@@ -58,7 +59,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     /**
      * Name of this activity
      */
-    #[ORM\Column(name: 'name', type: 'string', length: 150, nullable: false)]
+    #[ORM\Column(name: 'name', type: Types::STRING, length: 150, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 150)]
     #[Serializer\Expose]
@@ -68,7 +69,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     /**
      * Description of this activity
      */
-    #[ORM\Column(name: 'comment', type: 'text', nullable: true)]
+    #[ORM\Column(name: 'comment', type: Types::TEXT, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'comment')]
@@ -76,13 +77,13 @@ class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     /**
      * Whether this activity is visible and can be selected
      */
-    #[ORM\Column(name: 'visible', type: 'boolean', nullable: false, options: ['default' => true])]
+    #[ORM\Column(name: 'visible', type: Types::BOOLEAN, nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'visible', type: 'boolean')]
     private bool $visible = true;
-    #[ORM\Column(name: 'billable', type: 'boolean', nullable: false, options: ['default' => true])]
+    #[ORM\Column(name: 'billable', type: Types::BOOLEAN, nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -113,9 +114,9 @@ class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Groups(['Activity'])]
     #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Team'))]
     private Collection $teams;
-    #[ORM\Column(name: 'invoice_text', type: 'text', nullable: true)]
+    #[ORM\Column(name: 'invoice_text', type: Types::TEXT, nullable: true)]
     private ?string $invoiceText = null;
-    #[ORM\Column(name: 'number', type: 'string', length: 10, nullable: true)]
+    #[ORM\Column(name: 'number', type: Types::STRING, length: 10, nullable: true)]
     #[Assert\Length(max: 10)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -132,6 +133,11 @@ class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function isNew(): bool
+    {
+        return $this->id === null;
     }
 
     public function getProject(): ?Project

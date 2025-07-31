@@ -9,11 +9,14 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\ExportTemplate;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Tests\DataFixtures\ExportTemplateFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\DomCrawler\Field\FormField;
 
 /**
  * @group integration
@@ -25,7 +28,7 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         $this->assertUrlIsSecured('/export/');
     }
 
-    public function testIsSecureForrole(): void
+    public function testIsSecureForRole(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/export/');
     }
@@ -89,6 +92,16 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         $this->assertHasDataTable($client);
         // +1 row for summary
         $this->assertDataTableRowCount($client, 'datatable_export', 22);
+
+        $header = $client->getCrawler()->filter('section.content div.datatable_export table.dataTable thead th');
+        $titles = [];
+        /** @var \DOMElement $th */
+        foreach ($header as $th) {
+            $titles[] = trim($th->textContent);
+        }
+        self::assertEquals([
+            '', 'Date', 'User', 'Project', 'Activity', 'Description', 'Tags', 'Duration', 'Unit price', 'Internal price', 'Total price', '',
+        ], $titles);
 
         // assert export type buttons are available
         $expected = [
@@ -245,5 +258,72 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         foreach ($timesheets as $timesheet) {
             self::assertTrue($timesheet->isExported());
         }
+    }
+
+    public function testCreateTemplateIsSecure(): void
+    {
+        $this->assertUrlIsSecured('/export/template-create');
+    }
+
+    public function testCreateTemplateIsSecureForRole(): void
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/export/template-create');
+    }
+
+    public function testCreateTemplateAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/export/template-create');
+        $form = $client->getCrawler()->filter('form[name=export_template_spreadsheet_form]')->form();
+        $client->submit($form, [
+            'export_template_spreadsheet_form' => [
+                'title' => 'My temaplte name',
+                'renderer' => 'xlsx',
+                'language' => 'de',
+                'columns' => 'date',
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/export/'));
+
+        $templates = $this->getEntityManager()->getRepository(ExportTemplate::class)->findAll();
+        self::assertCount(1, $templates);
+        $template = array_pop($templates);
+        $id = $template->getId();
+
+        $this->request($client, $this->createUrl('/export/template-edit/' . $id));
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $editForm = $client->getCrawler()->filter('form[name=export_template_spreadsheet_form]')->form();
+        $field = $editForm->get('export_template_spreadsheet_form[title]');
+        self::assertInstanceOf(FormField::class, $field);
+        self::assertEquals('My temaplte name', $field->getValue());
+    }
+
+    public function testEditTemplateAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var ExportTemplate[] $templates */
+        $templates = $this->importFixture(new ExportTemplateFixtures());
+
+        $id = $templates[0]->getId();
+
+        $this->request($client, $this->createUrl('/export/template-edit/' . $id));
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $form = $client->getCrawler()->filter('form[name=export_template_spreadsheet_form]')->form();
+        $field = $form->get('export_template_spreadsheet_form[title]');
+        self::assertInstanceOf(FormField::class, $field);
+        self::assertEquals('CSV Test', $field->getValue());
+
+        $client->submit($form, [
+            'export_template_spreadsheet_form' => [
+                'title' => 'My temaplte name',
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/export/'));
+
+        /** @var ExportTemplate $template */
+        $template = $this->getEntityManager()->getRepository(ExportTemplate::class)->find($id);
+        self::assertEquals('My temaplte name', $template->getTitle());
     }
 }

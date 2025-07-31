@@ -1930,6 +1930,30 @@
         <source>attendance_only_project</source>
         <target state="final">למנות רק רשומות של המיזמים הנבחרים כשעות עבודה</target>
       </trans-unit>
+      <trans-unit id="y1XHR1Q" resname="address_deprecated" xml:space="preserve" approved="yes">
+        <source>address_deprecated</source>
+        <target state="final">השדה הזה יוסר בקרוב. נא להעביר את הכתובת כדי להמשיך לייצר חשבוניות תקפות (למשל בשביל חשבוניות מקוונות).</target>
+      </trans-unit>
+      <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="yes">
+        <source>Unlock month</source>
+        <target state="final">שחרור חודש</target>
+      </trans-unit>
+      <trans-unit id="mhOe3Iy" resname="unlock_month.help" xml:space="preserve" approved="yes">
+        <source>unlock_month.help</source>
+        <target state="final">משחרר את כל ימי השנה אחרי התאריך הנבחר.</target>
+      </trans-unit>
+      <trans-unit id="rD4oQRR" resname="postcode" xml:space="preserve" approved="yes">
+        <source>Postcode</source>
+        <target state="final">מיקוד / זיפ</target>
+      </trans-unit>
+      <trans-unit id="EaYsI0E" resname="city" xml:space="preserve" approved="yes">
+        <source>City</source>
+        <target state="final">עיר</target>
+      </trans-unit>
+      <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve" approved="yes">
+        <source>sending_company</source>
+        <target state="final">משלח חשבוניות</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

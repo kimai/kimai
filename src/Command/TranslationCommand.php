@@ -25,7 +25,7 @@ use Symfony\Component\HttpClient\HttpClient;
  *
  * @codeCoverageIgnore
  */
-#[AsCommand(name: 'kimai:translations')]
+#[AsCommand(name: 'kimai:translations', description: 'Automated translation adjustments')]
 final class TranslationCommand extends Command
 {
     public function __construct(
@@ -40,7 +40,6 @@ final class TranslationCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Translation adjustments')
             ->addOption('resname', null, InputOption::VALUE_NONE, 'Fix the resname vs. id attribute')
             ->addOption('duplicates', null, InputOption::VALUE_NONE, 'Find duplicate translation keys')
             ->addOption('delete-resname', null, InputOption::VALUE_REQUIRED, 'Deletes the translation by resname')
@@ -454,10 +453,12 @@ final class TranslationCommand extends Command
 
         foreach ($xml->file->body->{'trans-unit'} as $unit) {
             $source = $unit->source;
-            if (!isset($unit['resname'])) {
+            if (!isset($unit['resname']) && $source !== null) {
                 $unit['resname'] = $source;
             }
-            $unit['id'] = $this->generateId($unit['resname']);
+            if ($unit['resname'] !== null) {
+                $unit['id'] = $this->generateId($unit['resname']); // @phpstan-ignore offsetAssign.valueType
+            }
         }
 
         $xmlDocument = new \DOMDocument('1.0');
@@ -491,7 +492,7 @@ final class TranslationCommand extends Command
                 );
             }
             $unit->target[0] = $translations[$key];
-            $unit->target['state'] = 'needs-translation';
+            $unit->target['state'] = 'needs-translation'; // @phpstan-ignore assign.propertyType
             $foundEmpty = true;
         }
 

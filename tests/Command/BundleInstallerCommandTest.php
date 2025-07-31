@@ -16,7 +16,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
@@ -59,17 +58,6 @@ class BundleInstallerCommandTest extends KernelTestCase
         $result = $commandTester->getDisplay();
 
         self::assertStringContainsString('[ERROR] Failed to install database for bundle TestBundle.', $result);
-        self::assertEquals(1, $commandTester->getStatusCode());
-    }
-
-    public function testAssetsInstallationFailure(): void
-    {
-        $command = $this->getCommand(AssetsInstallerFailureCommand::class);
-        $commandTester = new CommandTester($command);
-        $commandTester->execute(['command' => $command->getName()]);
-        $result = $commandTester->getDisplay();
-
-        self::assertStringContainsString('[ERROR] Failed to install assets for bundle TestBundle.', $result);
         self::assertEquals(1, $commandTester->getStatusCode());
     }
 
@@ -159,19 +147,6 @@ class InstallerWithMissingMigrationsCommand extends TestBundleInstallerCommand
     protected function getMigrationConfigFilename(): ?string
     {
         return __DIR__ . '/sdfsdfsdfsdf';
-    }
-}
-
-class AssetsInstallerFailureCommand extends TestBundleInstallerCommand
-{
-    protected function hasAssets(): bool
-    {
-        return true;
-    }
-
-    protected function installAssets(SymfonyStyle $io, OutputInterface $output): void
-    {
-        throw new \Exception('Problem occurred while installing assets.');
     }
 }
 

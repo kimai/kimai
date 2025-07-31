@@ -7,6 +7,7 @@ exclude-labels:
     - 'release'
 exclude-contributors:
     - 'dependabot'
+    - 'weblate'
 change-template: '- $TITLE (#$NUMBER)'
 change-title-escapes: '\<*_&`#@'
 version-resolver:
@@ -25,4 +26,4 @@ template: |
     
     $CHANGES
     
-    Involved in this release: $CONTRIBUTORS - thank you!
+    Involved in this release: $CONTRIBUTORS

@@ -9,11 +9,15 @@
 
 namespace App\Controller;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\ExportableItem;
+use App\Entity\ExportTemplate;
 use App\Export\Base\DispositionInlineInterface;
 use App\Export\ServiceExport;
 use App\Export\TooManyItemsExportException;
+use App\Form\ExportTemplateSpreadsheetForm;
 use App\Form\Toolbar\ExportToolbarForm;
+use App\Repository\ExportTemplateRepository;
 use App\Repository\Query\ExportQuery;
 use App\Utils\PageSetup;
 use Symfony\Component\Form\FormInterface;
@@ -29,7 +33,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('create_export')]
 final class ExportController extends AbstractController
 {
-    public function __construct(private ServiceExport $export)
+    public function __construct(private readonly ServiceExport $export)
     {
     }
 
@@ -79,6 +83,23 @@ final class ExportController extends AbstractController
         $page = new PageSetup('export');
         $page->setHelp('export.html');
 
+        $buttons = [];
+        foreach ($this->export->getRenderer() as $renderer) {
+            $class = \get_class($renderer);
+            $pos = strrpos($class, '\\');
+            if ($pos !== false) {
+                $class = substr($class, $pos + 1);
+            }
+            $class = strtolower(str_replace('Renderer', '', $class));
+            $buttons[$class][$renderer->getId()] = $renderer->getTitle();
+        }
+
+        if ($this->isGranted('view_other_timesheet')) {
+            $showRates = $this->isGranted('view_rate_other_timesheet');
+        } else {
+            $showRates = $this->isGranted('view_rate_own_timesheet');
+        }
+
         return $this->render('export/index.html.twig', [
             'page_setup' => $page,
             'too_many' => $tooManyResults,
@@ -86,15 +107,15 @@ final class ExportController extends AbstractController
             'query' => $query,
             'entries' => $entries,
             'form' => $form->createView(),
-            'renderer' => $this->export->getRenderer(),
+            'buttons' => $buttons,
             'preview_limit' => $maxItemsPreview,
             'preview_show' => $showPreview,
-            'decimal' => $this->getUser()->isExportDecimal(),
+            'show_rates' => $showRates,
         ]);
     }
 
     #[Route(path: '/data', name: 'export_data', methods: ['POST'])]
-    public function export(Request $request): Response
+    public function export(Request $request, SystemConfiguration $systemConfiguration): Response
     {
         $query = $this->getDefaultQuery();
 
@@ -112,6 +133,9 @@ final class ExportController extends AbstractController
             throw $this->createNotFoundException('Unknown export renderer');
         }
 
+        $oldMaxExecTime = \ini_get('max_execution_time');
+        ini_set('max_execution_time', $systemConfiguration->getExportTimeout());
+
         // display file inline if supported and `markAsExported` is not set
         if ($renderer instanceof DispositionInlineInterface && !$query->isMarkAsExported()) {
             $renderer->setDispositionInline(true);
@@ -123,6 +147,8 @@ final class ExportController extends AbstractController
         if ($query->isMarkAsExported()) {
             $this->export->setExported($entries);
         }
+
+        ini_set('max_execution_time', $oldMaxExecTime);
 
         return $response;
     }
@@ -141,7 +167,6 @@ final class ExportController extends AbstractController
     }
 
     /**
-     * @param ExportQuery $query
      * @return ExportableItem[]
      * @throws TooManyItemsExportException
      */
@@ -158,8 +183,6 @@ final class ExportController extends AbstractController
     }
 
     /**
-     * @param ExportQuery $query
-     * @param string $method
      * @return FormInterface<ExportQuery>
      */
     private function getToolbarForm(ExportQuery $query, string $method): FormInterface
@@ -173,6 +196,42 @@ final class ExportController extends AbstractController
             'attr' => [
                 'id' => 'export-form'
             ]
+        ]);
+    }
+
+    #[Route(path: '/template-create', name: 'export_template_create', methods: ['GET', 'POST'])]
+    public function createExportTemplate(Request $request, ExportTemplateRepository $repository): Response
+    {
+        return $this->editExportForm($this->generateUrl('export_template_create'), $request, $repository, new ExportTemplate());
+    }
+
+    #[Route(path: '/template-edit/{exportTemplate}', name: 'export_template_edit', methods: ['GET', 'POST'])]
+    public function editExportTemplate(ExportTemplate $exportTemplate, Request $request, ExportTemplateRepository $repository): Response
+    {
+        return $this->editExportForm($this->generateUrl('export_template_edit', ['exportTemplate' => $exportTemplate->getId()]), $request, $repository, $exportTemplate);
+    }
+
+    private function editExportForm(string $url, Request $request, ExportTemplateRepository $repository, ExportTemplate $exportTemplate): Response
+    {
+        $form = $this->createForm(ExportTemplateSpreadsheetForm::class, $exportTemplate, [
+            'action' => $url,
+            'method' => 'POST',
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $repository->saveExportTemplate($exportTemplate);
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRoute('export');
+            } catch (\Exception $ex) {
+                $this->handleFormUpdateException($ex, $form);
+            }
+        }
+
+        return $this->render('export/template.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 }

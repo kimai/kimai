@@ -271,7 +271,7 @@ final class ActivityController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->activityService->saveNewActivity($activity);
+                $this->activityService->saveActivity($activity);
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRouteAfterCreate('activity_details', ['id' => $activity->getId()]);
@@ -300,7 +300,7 @@ final class ActivityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->activityService->updateActivity($activity);
+                $this->activityService->saveActivity($activity);
                 $this->flashSuccess('action.update.success');
 
                 if ($this->isGranted('view', $activity)) {
@@ -355,7 +355,7 @@ final class ActivityController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->activityService->updateActivity($activity);
+                $this->activityService->saveActivity($activity);
                 $this->flashSuccess('action.update.success');
 
                 if ($this->isGranted('view', $activity)) {

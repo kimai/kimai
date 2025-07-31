@@ -21,7 +21,10 @@ class LdapDriver
 {
     private ?Ldap $driver = null;
 
-    public function __construct(private LdapConfiguration $config, private ?LoggerInterface $logger = null)
+    public function __construct(
+        private readonly LdapConfiguration $config,
+        private readonly LoggerInterface $logger
+    )
     {
     }
 
@@ -41,10 +44,8 @@ class LdapDriver
     }
 
     /**
-     * @param string $baseDn
-     * @param string $filter
-     * @param array $attributes
-     * @return array
+     * @param array<int, string> $attributes
+     * @return array{'count': int, array<string, string|array<int, string>>}
      * @throws LdapDriverException
      */
     public function search(string $baseDn, string $filter, array $attributes = []): array
@@ -53,7 +54,7 @@ class LdapDriver
 
         $attributes = array_unique(array_merge($attributes, ['+', '*']));
 
-        $this->logDebug('{action}({base_dn}, {filter}, {attributes})', [
+        $this->logger->debug('{action}({base_dn}, {filter}, {attributes})', [
             'action' => 'ldap_search',
             'base_dn' => $baseDn,
             'filter' => $filter,
@@ -67,7 +68,7 @@ class LdapDriver
             // searchEntries don't return 'count' key as specified by php native function ldap_get_entries()
             $entries['count'] = \count($entries);
         } catch (LdapException $exception) {
-            $this->ldapExceptionHandler($exception);
+            $this->logger->error(\sprintf('Failed to search LDAP: %s', $exception->getMessage()), ['exception' => $exception]);
 
             throw new LdapDriverException('An error occurred with the search operation.');
         }
@@ -80,7 +81,7 @@ class LdapDriver
         $driver = $this->getDriver();
 
         try {
-            $this->logDebug('{action}({bindDn}, ****)', [
+            $this->logger->debug('{action}({bindDn}, ****)', [
                 'action' => 'ldap_bind',
                 'bindDn' => $bindDn,
             ]);
@@ -88,36 +89,9 @@ class LdapDriver
 
             return $bind instanceof Ldap;
         } catch (LdapException $exception) {
-            $this->ldapExceptionHandler($exception, $password);
+            $this->logger->error(\sprintf('Failed binding to LDAP at %s: %s', $bindDn, $exception->getMessage()), ['exception' => new SanitizingException($exception, $password)]);
         }
 
         return false;
-    }
-
-    private function ldapExceptionHandler(LdapException $exception, string $password = null): void
-    {
-        $sanitizedException = null !== $password ? new SanitizingException($exception, $password) : $exception;
-
-        switch ($exception->getCode()) {
-            // Error level codes
-            case LdapException::LDAP_SERVER_DOWN:
-                if ($this->logger) {
-                    $this->logger->error('{exception}', ['exception' => $sanitizedException]);
-                }
-                break;
-
-                // Other level codes
-            default:
-                $this->logDebug('{exception}', ['exception' => $sanitizedException]);
-                break;
-        }
-    }
-
-    private function logDebug(string $message, array $context = []): void
-    {
-        if (null === $this->logger) {
-            return;
-        }
-        $this->logger->debug($message, $context);
     }
 }
