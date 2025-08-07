@@ -21,13 +21,6 @@ authentication via SAML/LDAP/Database, two-factor authentication (2FA) with TOTP
 user/customer/project specific rates, advanced search & filtering, money and time budgets, advanced reporting, support for [plugins](https://www.kimai.org/store/)
 and so much more.
 
-### Versions
-
-There are two [versions](https://www.kimai.org/documentation/versions.html) of Kimai existing:
-
-- [Version 2](https://github.com/kimai/kimai) — the current stable release (PHP 8.1+)
-- [Version 1](https://github.com/kimai/kimai/tree/1.x) — do **NOT** use, EOL since mid of 2023 (PHP 7.4) 
-
 ### Links
 
 - [Home](https://www.kimai.org) — Kimai project homepage
