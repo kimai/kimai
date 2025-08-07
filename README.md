@@ -36,7 +36,7 @@ There are two [versions](https://www.kimai.org/documentation/versions.html) of K
 
 ### Requirements
 
-- PHP 8.1.3 minimum (support for PHP 8.2 and 8.3)
+- PHP 8.1.3 minimum (support for PHP 8.2, 8.3, 8.4)
 - MariaDB or MySQL
 - A webserver and subdomain (subdirectory is not supported)
 - PHP extensions: `gd`, `intl`, `json`, `mbstring`, `pdo`, `tokenizer`, `xml`, `xsl`, `zip`
