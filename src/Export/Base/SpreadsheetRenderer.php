@@ -252,13 +252,13 @@ final class SpreadsheetRenderer
                 $columns[] = (new Column('duration', $this->getFormatter('duration_seconds')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getDuration())->withColumnWidth(ColumnWidth::SMALL);
             } elseif ($column === 'break') {
                 // TODO remove method_exists with 3.0
-                $columns[] = (new Column('break', $this->getFormatter('duration')))->withExtractor(fn (ExportableItem $exportableItem) => method_exists($exportableItem, 'getBreak') ? $exportableItem->getBreak() : 0)->withColumnWidth(ColumnWidth::SMALL);
+                $columns[] = (new Column('break', $this->getFormatter('duration')))->withExtractor(fn (ExportableItem $exportableItem) => method_exists($exportableItem, 'getBreak') ? $exportableItem->getBreak() : 0)->withColumnWidth(ColumnWidth::SMALL); // @phpstan-ignore function.alreadyNarrowedType
             } elseif ($column === 'break_decimal') {
                 // TODO remove method_exists with 3.0
-                $columns[] = (new Column('break', $this->getFormatter('duration_decimal')))->withExtractor(fn (ExportableItem $exportableItem) => method_exists($exportableItem, 'getBreak') ? $exportableItem->getBreak() : 0)->withColumnWidth(ColumnWidth::SMALL);
+                $columns[] = (new Column('break', $this->getFormatter('duration_decimal')))->withExtractor(fn (ExportableItem $exportableItem) => method_exists($exportableItem, 'getBreak') ? $exportableItem->getBreak() : 0)->withColumnWidth(ColumnWidth::SMALL); // @phpstan-ignore function.alreadyNarrowedType
             } elseif ($column === 'break_seconds') {
                 // TODO remove method_exists with 3.0
-                $columns[] = (new Column('break', $this->getFormatter('duration_seconds')))->withExtractor(fn (ExportableItem $exportableItem) => method_exists($exportableItem, 'getBreak') ? $exportableItem->getBreak() : 0)->withColumnWidth(ColumnWidth::SMALL);
+                $columns[] = (new Column('break', $this->getFormatter('duration_seconds')))->withExtractor(fn (ExportableItem $exportableItem) => method_exists($exportableItem, 'getBreak') ? $exportableItem->getBreak() : 0)->withColumnWidth(ColumnWidth::SMALL); // @phpstan-ignore function.alreadyNarrowedType
             } elseif ($column === 'currency' && $showRates) {
                 $columns[] = (new Column('currency', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getProject()?->getCustomer()?->getCurrency())->withColumnWidth(ColumnWidth::SMALL);
             } elseif ($column === 'rate' && $showRates) {
