@@ -49,7 +49,10 @@ class UserTest extends TestCase
         self::assertFalse($user->canSeeAllData());
         self::assertFalse($user->isExportDecimal());
         self::assertFalse($user->isSystemAccount());
+        self::assertFalse($user->isPasswordRequestNonExpired(-1));
+        self::assertFalse($user->isPasswordRequestNonExpired(0));
         self::assertFalse($user->isPasswordRequestNonExpired(3599));
+        self::assertFalse($user->isPasswordRequestNonExpired(PHP_INT_MAX));
 
         $user->setUserIdentifier('foo');
         self::assertEquals('foo', $user->getUserIdentifier());
@@ -674,5 +677,25 @@ class UserTest extends TestCase
         self::assertNotNull($lastLogin);
         self::assertInstanceOf(\DateTime::class, $lastLogin);
         self::assertEquals('Europe/Berlin', $lastLogin->getTimezone()->getName());
+    }
+
+    public function testIsPasswordRequestNonExpiredIsTimezoneIndependent(): void
+    {
+        $timezone = new \DateTimeZone('Europe/Vienna');
+        $dateTime = new \DateTime('now', $timezone);
+
+        $user = new User();
+        $user->setTimezone($timezone);
+        $user->markPasswordRequested();
+
+        self::assertTrue($user->isPasswordRequestNonExpired(3600));
+        self::assertTrue($user->isPasswordRequestNonExpired(7200));
+
+        $before = date_default_timezone_get();
+        date_default_timezone_set('America/Los_Angeles');
+        date_default_timezone_set($before);
+
+        self::assertTrue($user->isPasswordRequestNonExpired(3600));
+        self::assertTrue($user->isPasswordRequestNonExpired(7200));
     }
 }
