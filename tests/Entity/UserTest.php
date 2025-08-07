@@ -681,11 +681,8 @@ class UserTest extends TestCase
 
     public function testIsPasswordRequestNonExpiredIsTimezoneIndependent(): void
     {
-        $timezone = new \DateTimeZone('Europe/Vienna');
-        $dateTime = new \DateTime('now', $timezone);
-
         $user = new User();
-        $user->setTimezone($timezone);
+        $user->setTimezone('Europe/Vienna');
         $user->markPasswordRequested();
 
         self::assertTrue($user->isPasswordRequestNonExpired(3600));
