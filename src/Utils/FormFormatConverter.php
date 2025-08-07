@@ -66,7 +66,7 @@ final class FormFormatConverter
 
         // days
         $pattern = str_replace('dd', self::PATTERN_DAY_DOUBLE, $pattern);
-        $pattern = str_replace('d', self::PATTERN_DAY_SINGLE, $pattern); // @phpstan-ignore deadCode.unreachable
+        $pattern = str_replace('d', self::PATTERN_DAY_SINGLE, $pattern);
         // months
         $pattern = str_replace('MM', self::PATTERN_MONTH_DOUBLE, $pattern);
         $pattern = str_replace('M', self::PATTERN_MONTH_SINGLE, $pattern);
