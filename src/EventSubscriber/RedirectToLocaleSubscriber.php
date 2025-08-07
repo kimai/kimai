@@ -22,7 +22,10 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 final class RedirectToLocaleSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private UrlGeneratorInterface $urlGenerator, private LocaleService $localeService)
+    public function __construct(
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly LocaleService $localeService
+    )
     {
     }
 
