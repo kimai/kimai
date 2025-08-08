@@ -64,7 +64,7 @@ class IcalLinkValidator extends ConstraintValidator
             ]);
 
             // Get headers first to check content type and size
-            $headers = get_headers($value, 1, $context);
+            $headers = get_headers($value, true, $context);
             if ($headers === false) {
                 $this->context->buildViolation('Unable to access the URL')
                     ->setParameter('{{ value }}', $value)
@@ -94,7 +94,7 @@ class IcalLinkValidator extends ConstraintValidator
                 if ((int) $contentLength > $constraint->maxFileSize) {
                     $this->context->buildViolation('The file is too large (maximum {{ max_size }} bytes)')
                         ->setParameter('{{ value }}', $value)
-                        ->setParameter('{{ max_size }}', $constraint->maxFileSize)
+                        ->setParameter('{{ max_size }}', (string) $constraint->maxFileSize)
                         ->setCode(IcalLink::FILE_TOO_LARGE)
                         ->addViolation();
                     return;
@@ -115,7 +115,7 @@ class IcalLinkValidator extends ConstraintValidator
             if (strlen($content) > $constraint->maxFileSize) {
                 $this->context->buildViolation('The file is too large (maximum {{ max_size }} bytes)')
                     ->setParameter('{{ value }}', $value)
-                    ->setParameter('{{ max_size }}', $constraint->maxFileSize)
+                    ->setParameter('{{ max_size }}', (string) $constraint->maxFileSize)
                     ->setCode(IcalLink::FILE_TOO_LARGE)
                     ->addViolation();
                 return;
