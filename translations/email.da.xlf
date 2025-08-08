@@ -2,37 +2,37 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="da" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="pjr3FDv" resname="registration.subject">
+      <trans-unit id="pjr3FDv" resname="registration.subject" xml:space="preserve">
         <source>registration.subject</source>
-        <target>Aktiver din konto</target>
+        <target state="translated">Aktivér din konto</target>
       </trans-unit>
       <trans-unit id="QtcznHC" resname="registration.title">
         <source>registration.title</source>
         <target>Velkommen %username%</target>
       </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button">
+      <trans-unit id="YMLel3P" resname="registration.button" xml:space="preserve">
         <source>registration.button</source>
-        <target>Aktiver din konto</target>
+        <target state="translated">Aktivér din konto</target>
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target state="needs-translation">Nulstil dit kodeord</target>
+        <target state="translated">Log ind til Kimai</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="needs-translation">Det kan ske …</target>
+        <target state="translated">Log ind på din konto</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="needs-translation">Nulstil dit kodeord</target>
+        <target state="translated">Log ind</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="needs-translation">... så du har glemt dit kodeord? Intet problem: Kimai hjælper dig med at oprette et nyt:</target>
+        <target state="translated">Dette link vil kun være gyldigt de næste 15 minutter.</target>
       </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer" xml:space="preserve">
         <source>automated_email_dont_answer</source>
-        <target state="translated">Dette er en automatisk genereret e-mail. Svar venligst ikke på den, modtager postkassen bliver ikke læst.</target>
+        <target state="translated">Dette er en automatisk genereret e-mail. Svar venligst ikke på den, modtagerpostkassen bliver ikke læst.</target>
       </trans-unit>
       <trans-unit id="IkjnHoP" resname="registration.intro" xml:space="preserve">
         <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
@@ -53,6 +53,42 @@ Please review them at: %url%</source>
 %list%
 
 Gennemgå dem her: %url%</target>
+      </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="translated">Godkendelse forespurgt: %user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="translated">En godkendelse fra %user% ønskes.
+
+%list%
+
+Gennemgå dem venligst på: %url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">Din forespørgsel blev afvist</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">Din forespørgsel om autentificering blev afvist af %created_by%.
+
+%list%
+
+Gennemgå dem venligst på: %url%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Din forespørgsel er blevet godkendt</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="translated">Din forespørgsel er blevet godkendt af %created_by%.
+
+%list%
+
+Din finder alle dine forespørgsler under: %url%</target>
       </trans-unit>
     </body>
   </file>

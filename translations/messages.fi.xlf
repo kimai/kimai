@@ -1222,9 +1222,9 @@
         <source>help.invoiceTemplate</source>
         <target state="translated">Lasku luodaan tällä mallilla.</target>
       </trans-unit>
-      <trans-unit id="YDrWFFP" resname="sickness.intro">
-        <source>sickness.intro</source>
-        <target state="translated">Sairaus, lääkärikäynti, läheisen sairaus tms.</target>
+      <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="translated">Työkyvyttömyys, lääketieteellisesti välttämättömät käynnit, hoitovapaa jne.</target>
       </trans-unit>
       <trans-unit id="EI5gPkp" resname="stats.userDurationToday">
         <source>stats.userDurationToday</source>
@@ -1404,7 +1404,7 @@
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
-        <target state="needs-translation">Olet ilmoittanut tähän mennessä %used% lomapäivää käytettävissä olevista %days% päivästä</target>
+        <target state="translated">Olet ilmoittanut tähän mennessä %used% lomapäivää käytettävissä olevista %days% päivästäsi.</target>
       </trans-unit>
       <trans-unit id="BjyLITj" resname="stats.userDurationYear">
         <source>stats.userDurationYear</source>

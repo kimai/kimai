@@ -1486,9 +1486,9 @@
         <source>work_times_should.none_configured</source>
         <target state="translated">No se han configurado horas previstas para este usuario en la configuración del contrato de trabajo.</target>
       </trans-unit>
-      <trans-unit id="YDrWFFP" resname="sickness.intro">
-        <source>sickness.intro</source>
-        <target state="translated">Enfermedad, consulta médica, cuidados de parientes cercanos, etc.</target>
+      <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="translated">Incapacidad para el trabajo, citas médicamente necesarias, licencia de cuidado, etc.</target>
       </trans-unit>
       <trans-unit id="4PMHpIp" resname="time_off">
         <source>time_off</source>
@@ -1952,7 +1952,7 @@
       </trans-unit>
       <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="no">
         <source>Unlock month</source>
-        <target state="translated">Desbloquear mes</target>
+        <target state="translated">Mes incompleto</target>
       </trans-unit>
     </body>
   </file>

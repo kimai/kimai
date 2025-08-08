@@ -1623,8 +1623,8 @@
         <target state="translated">Import</target>
       </trans-unit>
       <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
-        <source>sickness.intro</source>
-        <target state="translated">Maladie, visite chez le médecin, soins aux proches, etc.</target>
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="translated">Maladie, visite chez le médecin, soins d'un parent proche, rendez-vous médicaux nécessaire, arrêts maladie, etc.</target>
       </trans-unit>
       <trans-unit id="Eml59KV" resname="day_half" xml:space="preserve">
         <source>day_half</source>
@@ -1945,6 +1945,14 @@
       <trans-unit id="rD4oQRR" resname="postcode" xml:space="preserve">
         <source>Postcode</source>
         <target state="translated">Code postal</target>
+      </trans-unit>
+      <trans-unit id="y1XHR1Q" resname="address_deprecated" xml:space="preserve">
+        <source>address_deprecated</source>
+        <target state="translated">Ce champ sera bientôt supprimé. Veuillez transférer l'adresse pour continuer à générer des factures valides (par exemple pour la facturation électronique).</target>
+      </trans-unit>
+      <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
+        <source>sending_company</source>
+        <target state="translated">Expéditeur de la facture</target>
       </trans-unit>
     </body>
   </file>

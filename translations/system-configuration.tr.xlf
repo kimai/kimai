@@ -72,19 +72,19 @@
       </trans-unit>
       <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target state="needs-translation">Taban: başlangıç, bitiş ve süre aşağı yuvarlanacak</target>
+        <target state="translated">Başlangıç, bitiş ve süre aşağıya yuvarlanacak.</target>
       </trans-unit>
       <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target state="needs-translation">Standart: başlangıç aşağı, bitiş ve süre yukarı yuvarlanacak</target>
+        <target state="translated">Başlangıç aşağıya yuvarlanacak, bitiş ve süre ise yukarıya yuvarlanacak.</target>
       </trans-unit>
       <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target state="needs-translation">En yakın: en yakın değere matematiksel yuvarlama</target>
+        <target state="translated">En yakın değere matematiksel yuvarlama</target>
       </trans-unit>
       <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target state="needs-translation">Tavan: başlangıç, bitiş ve süre yukarı yuvarlanacak</target>
+        <target state="translated">Başlangıç, bitiş ve süre yukarıya yuvarlanacaktır.</target>
       </trans-unit>
       <trans-unit id="hz.vdg5" resname="Sunday">
         <source>Sunday</source>

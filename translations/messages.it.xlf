@@ -1546,9 +1546,9 @@
         <source>sickness</source>
         <target state="final">Malattia</target>
       </trans-unit>
-      <trans-unit id="YDrWFFP" resname="sickness.intro" approved="yes">
-        <source>sickness.intro</source>
-        <target state="final">Malattia, visita medica, cura di parenti stretti, ecc.</target>
+      <trans-unit id="YDrWFFP" resname="sickness.intro" approved="yes" xml:space="preserve">
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="final">Incapacità lavorativa, appuntamenti medici necessari, congedo per assistenza.</target>
       </trans-unit>
       <trans-unit id="2SmKENG" resname="other" approved="yes">
         <source>other</source>

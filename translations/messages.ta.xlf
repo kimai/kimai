@@ -1675,8 +1675,8 @@
         <target state="translated">விடுமுறை நேரம்</target>
       </trans-unit>
       <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve" approved="no">
-        <source>sickness.intro</source>
-        <target state="translated">நோய், மருத்துவரின் வருகை, நெருங்கிய உறவினர்களின் கவனிப்பு போன்றவை.</target>
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="needs-translation">நோய், மருத்துவரின் வருகை, நெருங்கிய உறவினர்களின் கவனிப்பு போன்றவை.</target>
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve" approved="no">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
