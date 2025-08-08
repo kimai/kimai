@@ -20,8 +20,7 @@ final class TestCalendarCommand extends Command
 {
     public function __construct(
         private CalendarService $calendarService,
-        private UserRepository $userRepository,
-        private LoggerInterface $logger
+        private UserRepository $userRepository
     ) {
         parent::__construct();
     }
@@ -62,11 +61,16 @@ final class TestCalendarCommand extends Command
             foreach ($icalSources as $source) {
                 $io->text('Testing ICAL source: ' . $source->getId());
                 try {
-                    $events = $source->getEvents();
-                    $io->text(sprintf('  - Found %d events', count($events)));
-                    
-                    if (count($events) > 0) {
-                        $io->text('  - First event: ' . ($events[0]['title'] ?? 'No title'));
+                    // Check if the source has a getEvents method
+                    if (method_exists($source, 'getEvents')) {
+                        $events = $source->getEvents();
+                        $io->text(sprintf('  - Found %d events', count($events)));
+                        
+                        if (count($events) > 0) {
+                            $io->text('  - First event: ' . ($events[0]['title'] ?? 'No title'));
+                        }
+                    } else {
+                        $io->text('  - Source does not have getEvents method');
                     }
                 } catch (\Exception $e) {
                     $io->error('  - Error getting events: ' . $e->getMessage());

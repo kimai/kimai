@@ -17,6 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\User;
 
 /**
  * Controller for serving ICAL events as JSON
@@ -45,6 +46,11 @@ final class IcalController extends AbstractController
         }
 
         $user = $this->getUser();
+        
+        if (!$user instanceof User) {
+            $this->logger->error('IcalController: User is not of expected type');
+            return new JsonResponse(['error' => 'Invalid user type'], 400);
+        }
         
         try {
             $source = null;

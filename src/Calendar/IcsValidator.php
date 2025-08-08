@@ -46,14 +46,7 @@ final class IcsValidator
     /**
      * Parses ICS content and returns an array of events
      * 
-     * @return array<array{
-     *   summary: string,
-     *   description: ?string,
-     *   start: DateTime,
-     *   end: DateTime,
-     *   location: ?string,
-     *   uid: string
-     * }>
+     * @return array<array{id: string, title: string, start: string|null, end: string|null, allDay: bool, description?: string, location?: string}>
      */
     public function parseIcsEvents(string $content): array
     {
@@ -66,6 +59,7 @@ final class IcsValidator
 
         $events = [];
         $lines = explode("\n", $content);
+        /** @var array<string, mixed>|null $currentEvent */
         $currentEvent = null;
         $inEvent = false;
 
@@ -75,7 +69,12 @@ final class IcsValidator
             // Handle line folding
             if (preg_match('/^[ \t]/', $line) && $currentEvent !== null) {
                 $line = substr($line, 1);
-                $currentEvent['raw'] .= $line;
+                $raw = $currentEvent['raw'] ?? '';
+                if (is_string($raw)) {
+                    $currentEvent['raw'] = $raw . $line;
+                } else {
+                    $currentEvent['raw'] = $line;
+                }
                 continue;
             }
 
@@ -85,7 +84,12 @@ final class IcsValidator
                 $this->logger->debug('IcsValidator: Found BEGIN:VEVENT');
             } elseif (str_starts_with($line, 'END:VEVENT')) {
                 if ($currentEvent !== null) {
-                    $currentEvent['raw'] .= "\n" . $line;
+                    $raw = $currentEvent['raw'] ?? '';
+                    if (is_string($raw)) {
+                        $currentEvent['raw'] = $raw . "\n" . $line;
+                    } else {
+                        $currentEvent['raw'] = $line;
+                    }
                     if ($this->isValidEvent($currentEvent)) {
                         $formattedEvent = $this->formatEvent($currentEvent);
                         $events[] = $formattedEvent;
@@ -97,7 +101,12 @@ final class IcsValidator
                 $inEvent = false;
                 $currentEvent = null;
             } elseif ($inEvent && $currentEvent !== null) {
-                $currentEvent['raw'] .= "\n" . $line;
+                $raw = $currentEvent['raw'] ?? '';
+                if (is_string($raw)) {
+                    $currentEvent['raw'] = $raw . "\n" . $line;
+                } else {
+                    $currentEvent['raw'] = $line;
+                }
                 $this->parseEventLine($line, $currentEvent);
             }
         }
@@ -108,6 +117,8 @@ final class IcsValidator
 
     /**
      * Validates if an event has the required fields
+     * 
+     * @param array<string, mixed> $event
      */
     private function isValidEvent(array $event): bool
     {
@@ -125,6 +136,8 @@ final class IcsValidator
 
     /**
      * Parses a single line of an event
+     * 
+     * @param array<string, mixed> $event
      */
     private function parseEventLine(string $line, array &$event): void
     {
@@ -197,22 +210,47 @@ final class IcsValidator
 
     /**
      * Formats an event for the calendar
+     * 
+     * @param array<string, mixed> $event
+     * @return array{id: string, title: string, start: string|null, end: string|null, allDay: bool, description?: string, location?: string}
      */
     private function formatEvent(array $event): array
     {
         $formatted = [
-            'id' => $event['uid'] ?? uniqid(),
-            'title' => $event['summary'] ?? 'No Title',
-            'start' => $event['start']?->format('Y-m-d\TH:i:s') ?? null,
-            'end' => $event['end']?->format('Y-m-d\TH:i:s') ?? null,
+            'id' => '',
+            'title' => 'No Title',
+            'start' => null,
+            'end' => null,
             'allDay' => false,
         ];
 
-        if (!empty($event['description'])) {
+        // Handle ID
+        if (isset($event['uid']) && is_string($event['uid'])) {
+            $formatted['id'] = $event['uid'];
+        } else {
+            $formatted['id'] = uniqid();
+        }
+
+        // Handle title
+        if (isset($event['summary']) && is_string($event['summary'])) {
+            $formatted['title'] = $event['summary'];
+        }
+
+        // Handle start date
+        if (isset($event['start']) && $event['start'] instanceof \DateTime) {
+            $formatted['start'] = $event['start']->format('Y-m-d\TH:i:s');
+        }
+
+        // Handle end date
+        if (isset($event['end']) && $event['end'] instanceof \DateTime) {
+            $formatted['end'] = $event['end']->format('Y-m-d\TH:i:s');
+        }
+
+        if (isset($event['description']) && is_string($event['description']) && !empty($event['description'])) {
             $formatted['description'] = $event['description'];
         }
 
-        if (!empty($event['location'])) {
+        if (isset($event['location']) && is_string($event['location']) && !empty($event['location'])) {
             $formatted['location'] = $event['location'];
         }
 

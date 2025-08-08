@@ -17,17 +17,22 @@ final class IcalSource extends CalendarSource
 {
     public function __construct(
         private IcsValidator $icsValidator,
+        /** @phpstan-ignore property.onlyWritten */
         private SystemConfiguration $configuration,
+        /** @phpstan-ignore property.onlyWritten */
         private User $user,
         string $id,
         string $uri,
+        private LoggerInterface $logger,
         ?string $color = null,
-        private string $prefix = '',
-        private LoggerInterface $logger
+        private string $prefix = ''
     ) {
         parent::__construct(CalendarSourceType::ICAL, $id, $uri, $color);
     }
 
+    /**
+     * @return array<array{id: string, title: string, start: string|null, end: string|null, allDay: bool, description?: string, location?: string}>
+     */
     public function getEvents(): array
     {
         $this->logger->debug('IcalSource: Getting events for source', [
@@ -108,9 +113,9 @@ final class IcalSource extends CalendarSource
             $user,
             'global_ical',
             $globalIcalLink,
+            $logger,
             '#3788d8', // Default blue color
-            '[GLOBAL]',
-            $logger
+            ''
         );
     }
 
@@ -140,9 +145,9 @@ final class IcalSource extends CalendarSource
             $user,
             'user_ical',
             $userIcalLink,
+            $logger,
             '#28a745', // Default green color
-            '[USER]',
-            $logger
+            ''
         );
     }
 } 

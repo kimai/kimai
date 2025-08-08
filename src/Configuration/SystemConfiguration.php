@@ -319,12 +319,14 @@ final class SystemConfiguration
 
     public function getCalendarGlobalIcalLink(): ?string
     {
-        return $this->find('calendar.global_ical_link');
+        $value = $this->find('calendar.global_ical_link');
+        return $value === null ? null : (string) $value;
     }
 
     public function getCalendarUserIcalLink(User $user): ?string
     {
-        return $user->getPreferenceValue('user_ical_link');
+        $value = $user->getPreferenceValue('user_ical_link');
+        return $value === null ? null : (string) $value;
     }
 
     // ========== Customer configurations ==========
