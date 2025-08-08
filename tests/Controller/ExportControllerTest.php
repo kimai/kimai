@@ -100,7 +100,7 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
             $titles[] = trim($th->textContent);
         }
         self::assertEquals([
-            '', 'Date', 'User', 'Project', 'Activity', 'Description', 'Tags', 'Duration', 'Unit price', 'Internal price', 'Total price', '',
+            '', 'Date', 'From', 'To', 'User', 'Project', 'Activity', 'Description', 'Tags', 'Duration', 'Unit price', 'Internal price', 'Total price', '',
         ], $titles);
 
         // assert export type buttons are available

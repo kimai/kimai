@@ -9,6 +9,7 @@
 
 namespace App\Form\Type;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\MetaTableTypeInterface;
 use App\Event\ActivityMetaDisplayEvent;
 use App\Event\CustomerMetaDisplayEvent;
@@ -39,6 +40,7 @@ final class ExportColumnsType extends AbstractType
     public function __construct(
         private readonly EventDispatcherInterface $dispatcher,
         private readonly TranslatorInterface $translator,
+        private readonly SystemConfiguration $configuration,
     )
     {
     }
@@ -85,6 +87,17 @@ final class ExportColumnsType extends AbstractType
                 'activity_number' => 'activity.number',
             ],
         ];
+
+        if ($this->configuration->isBreakTimeEnabled()) {
+            $tmp = [
+                $this->translator->trans('break') . ' (0:30)' => 'break',
+                $this->translator->trans('break') . ' (0:30:00)' => 'break_seconds',
+                $this->translator->trans('break') . ' (0.5)' => 'break_decimal',
+            ];
+            foreach ($tmp as $k => $v) {
+                $columns['timesheet'][$k] = $v;
+            }
+        }
 
         foreach ($this->findMetaColumns(new TimesheetMetaDisplayEvent(new TimesheetQuery(), TimesheetMetaDisplayEvent::EXPORT)) as $metaField) {
             if ($metaField->getName() !== null) {

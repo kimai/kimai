@@ -16,6 +16,7 @@ Encore
     .addEntry('chart', './assets/chart.js')
     .addEntry('calendar', './assets/calendar.js')
     .addEntry('dashboard', './assets/dashboard.js')
+    .addEntry('highlight', './assets/highlight.js')
 
     .splitEntryChunks()
     .configureSplitChunks((splitChunks) => {

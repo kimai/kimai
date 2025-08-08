@@ -12,13 +12,10 @@ namespace App\Utils;
 /**
  * This Class extends the default Parsedown Class for custom methods.
  */
-final class ParsedownExtension extends \Parsedown
+final class ParsedownExtension extends Parsedown
 {
-    /** @var array<string> */
-    private array $ids = [];
-
     /**
-     * Overwritten to prevent # to show up as headings for two reasons:
+     * Overwritten to prevent # and = to show up as headings for two reasons:
      * - Hashes are often used to cross-link issues in other systems
      * - Headings should not occur in time record listings
      */
@@ -98,57 +95,7 @@ final class ParsedownExtension extends \Parsedown
         return null;
     }
 
-    protected function blockHeader($Line)
-    {
-        $block = parent::blockHeader($Line);
-
-        $text = $block['element']['text'];
-        $id = $this->getIDfromText($text);
-
-        // add id-attribute
-        $block['element']['attributes'] = [
-            'id' => $id
-        ];
-
-        return $block;
-    }
-
-    /**
-     * github-action for creating ids:
-     *
-     * - It downcases the header string
-     * - remove anything that is not a letter, number, space or hyphen
-     * - changes any space to a hyphen.
-     * - If that is not unique, add "-1", "-2", "-3",... to make it unique
-     *
-     * @param string $text
-     * @return string
-     */
-    private function getIDfromText($text): string
-    {
-        $text = strtolower($text);
-
-        $text = preg_replace('/[^A-Za-z0-9\-\ ]/', '', $text);
-        $text = strtr($text, [' ' => '-']);
-
-        if (isset($this->ids[$text])) {
-            $i = 0;
-            $numberedText = $text . '-1';
-
-            while (isset($this->ids[$numberedText])) {
-                $i++;
-                $numberedText = $text . '-' . $i;
-            }
-
-            $text = $numberedText;
-        }
-
-        $this->ids[$text] = '';
-
-        return $text;
-    }
-
-    protected function blockTable($Line, array $Block = null)
+    protected function blockTable($Line, array $Block = null) // @phpstan-ignore missingType.return,missingType.iterableValue,missingType.parameter
     {
         $Block = parent::blockTable($Line, $Block);
 

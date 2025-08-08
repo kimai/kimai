@@ -45,6 +45,7 @@
     "eslint": "^9",
     "globals": "^15",
     "gridstack": "^7",
+    "highlight.js": "^11.11.1",
     "litepicker": "^2",
     "luxon": "^3",
     "sass": "^1",

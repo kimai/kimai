@@ -81,7 +81,7 @@ final class XlsxRenderer implements RendererInterface, TimesheetExportInterface
             throw new \Exception('Could not open temporary file');
         }
 
-        $spreadsheet = new SpoutSpreadsheet(new Writer(), $this->translator, $this->locale ?? $this->spreadsheetRenderer->getTemplate()->getLocale());
+        $spreadsheet = new SpoutSpreadsheet(new Writer(), $this->translator, $this->locale ?? $this->spreadsheetRenderer->getTemplate($query)->getLocale());
         $spreadsheet->open($filename);
 
         $this->spreadsheetRenderer->writeSpreadsheet($spreadsheet, $exportItems, $query);

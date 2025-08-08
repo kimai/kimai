@@ -329,7 +329,7 @@ class TimesheetEditForm extends AbstractType
         $builder->add('duration', DurationType::class, $durationOptions);
 
         if ($this->systemConfiguration->isBreakTimeEnabled()) {
-            $builder->add('break', DurationType::class, ['label' => 'break', 'required' => false]);
+            $builder->add('break', DurationType::class, ['label' => 'break', 'required' => false, 'icon' => 'break']);
         }
 
         $builder->addEventListener(
@@ -392,7 +392,14 @@ class TimesheetEditForm extends AbstractType
             return;
         }
 
-        $builder->add('user', UserType::class);
+        $users = [];
+        if (isset($options['data']) && $options['data'] instanceof Timesheet) {
+            $users = [$options['data']->getUser()];
+        }
+
+        $builder->add('user', UserType::class, [
+            'include_users' => $users,
+        ]);
     }
 
     protected function addExported(FormBuilderInterface $builder, array $options): void

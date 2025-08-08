@@ -79,7 +79,6 @@ class RuntimeExtensionsTest extends TestCase
         foreach ($filters as $filter) {
             switch ($filter->getName()) {
                 case 'md2html':
-                    self::assertEquals('html', $filters[0]->getPreEscape());
                     self::assertEquals(['html'], $filters[0]->getSafe(new TextNode('', 10)));
                     $found_md2html = true;
                     break;

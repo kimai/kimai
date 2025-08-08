@@ -11,17 +11,14 @@ namespace App\Event;
 
 use App\Entity\Invoice;
 use App\Invoice\InvoiceModel;
-use Symfony\Contracts\EventDispatcher\Event;
+use App\Webhook\Attribute\AsWebhook;
 
-final class InvoiceCreatedEvent extends Event
+#[AsWebhook(name: 'invoice.created', description: 'Triggered after an invoice was created', payload: 'object.getInvoice()')]
+final class InvoiceCreatedEvent extends AbstractInvoiceEvent
 {
-    public function __construct(private readonly Invoice $invoice, private readonly InvoiceModel $model)
+    public function __construct(Invoice $invoice, private readonly InvoiceModel $model)
     {
-    }
-
-    public function getInvoice(): Invoice
-    {
-        return $this->invoice;
+        parent::__construct($invoice);
     }
 
     public function getInvoiceModel(): InvoiceModel

@@ -19,6 +19,8 @@
 {% set columns = {
     'avatar': {'class': 'text-nowrap w-avatar d-none d-md-table-cell', 'title': false, 'orderBy': false},
     'date': {'class': 'alwaysVisible text-nowrap', 'orderBy': false},
+    'begin': {'class': 'd-none', 'orderBy': false},
+    'end': {'class': 'd-none', 'orderBy': false},
     'user': {'class': 'd-none', 'orderBy': false},
     'project': {'class': 'd-none d-sm-table-cell', 'orderBy': false},
     'activity': {'class': 'd-none', 'orderBy': false},
@@ -233,6 +235,16 @@
                     </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'date') }}">
                         {{ entry.begin|date_short }}
+                    </td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'begin') }}">
+                        {{ entry.begin|time }}
+                    </td>
+                    <td class="{{ tables.data_table_column_class(tableName, columns, 'begin') }}">
+                        {% if entry.end %}
+                            {{ entry.end|time }}
+                        {% else %}
+                            &dash;
+                        {% endif %}
                     </td>
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'user') }}">
                         {{ widgets.label_user(entry.user) }}

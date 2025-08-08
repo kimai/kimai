@@ -49,6 +49,7 @@ import enGbLocale from '@fullcalendar/core/locales/en-gb';
 import enUsLocale from '@fullcalendar/core/locales/en-gb';
 import KimaiColor from './KimaiColor';
 import KimaiContextMenu from "./KimaiContextMenu";
+import { DateTime } from 'luxon';
 
 export default class KimaiCalendar {
 
@@ -266,6 +267,12 @@ export default class KimaiCalendar {
                     }
                 });
             },
+
+            // called after all events of one source were set, so this can
+            // and will be called multiple times before the calendar is initialized
+            eventsSet: (events) => {
+                this._renderDayAndWeekSum(this.getCalendar().getCurrentData().viewSpec.type, events);
+            }
         };
 
         // ============= DRAG & DROP =============
@@ -687,4 +694,73 @@ export default class KimaiCalendar {
         });
     }
 
+    /**
+     * @param {string} view
+     * @param {EventApi[]} events
+     * @private
+     */
+    _renderDayAndWeekSum(view, events) {
+        if (view === 'dayGridMonth') {
+            // currently we do not display totals in month view
+            return;
+        }
+
+        /** @type {KimaiDateUtils} DATES */
+        const DATES = this.kimai.getPlugin('date');
+
+        const durations = {};
+
+        if (view === 'timeGridWeek') {
+            // make sure we have an entry for every day of the week, even days without timesheets
+            document.querySelectorAll(`th.fc-col-header-cell[data-date]`).forEach(cell => {
+                durations[cell.dataset.date] = 0;
+            });
+        }
+
+        events.forEach(item => {
+            const start = DateTime.fromJSDate(item.start);
+
+            const dateStr = start.toISODate();
+            if (!durations[dateStr]) {
+                durations[dateStr] = 0;
+            }
+
+            // absences or public holidays are all day
+            if (item.end !== null) {
+                const end = DateTime.fromJSDate(item.end);
+                const duration = end.diff(start, 'hours').as('seconds');
+                durations[dateStr] += duration;
+            }
+        });
+
+        const dailyTotals = document.querySelectorAll('.fc-dailytotal');
+        dailyTotals.forEach(element => element.remove());
+        for (const dateValue in durations) {
+            const durationValue = durations[dateValue];
+
+            if (view === 'timeGridWeek') { // this is the week view
+                const headerCells = document.querySelectorAll(`th.fc-col-header-cell[data-date="${dateValue}"]`);
+
+                headerCells.forEach(cell => {
+                    const newElement = document.createElement('div');
+                    newElement.classList.add('fc-dailytotal');
+                    newElement.textContent = DATES.formatSeconds(durationValue);
+                    cell.appendChild(newElement);
+                });
+            }
+        }
+
+        // this is the day view
+        if (view === 'timeGridDay') {
+            const dayEl = document.querySelector('th.fc-day');
+            const dayDate = dayEl.dataset.date;
+            const dayTotal = document.querySelectorAll('.fc-dailytotal');
+            dayTotal.forEach(element => element.remove());
+
+            const newElement = document.createElement('div');
+            newElement.classList.add('fc-dailytotal');
+            newElement.textContent = DATES.formatSeconds(durations[dayDate]);
+            dayEl.appendChild(newElement);
+        }
+    }
 }
