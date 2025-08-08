@@ -31,6 +31,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Range;
+use App\Validator\Constraints\IcalLink;
 
 final class UserPreferenceSubscriber implements EventSubscriberInterface
 {
@@ -143,7 +144,8 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setSection('calendar')
                 ->setType(TextType::class)
                 ->setOptions(['required' => false, 'label' => 'user_ical_link'])
-                ->addConstraint(new Length(['max' => 255])),
+                ->addConstraint(new Length(['max' => 255]))
+                ->addConstraint(new IcalLink()),
         ];
     }
 

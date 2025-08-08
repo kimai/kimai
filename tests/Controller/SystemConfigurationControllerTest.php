@@ -407,6 +407,7 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
                         ['name' => 'calendar.businessHours.end', 'value' => null],
                         ['name' => 'calendar.visibleHours.begin', 'value' => 'aa:bb'],
                         ['name' => 'calendar.visibleHours.end', 'value' => ''],
+                        ['name' => 'calendar.global_ical_link', 'value' => 'not-a-valid-url'],
                     ]
                 ]
             ],
@@ -415,6 +416,7 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
                 '#system_configuration_form_calendar_configuration_3_value',
                 '#system_configuration_form_calendar_configuration_4_value',
                 '#system_configuration_form_calendar_configuration_5_value',
+                '#system_configuration_form_calendar_configuration_6_value',
             ]
         );
     }

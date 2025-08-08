@@ -166,6 +166,14 @@
         <source>Duration cannot be negative.</source>
         <target>Duration cannot be negative.</target>
       </trans-unit>
+      <trans-unit id="ical_link_invalid_url" resname="This value is not a valid URL.">
+        <source>This value is not a valid URL.</source>
+        <target>This value is not a valid URL.</target>
+      </trans-unit>
+      <trans-unit id="ical_link_invalid_extension" resname="The URL must end with .ics">
+        <source>The URL must end with .ics</source>
+        <target>The URL must end with .ics</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
