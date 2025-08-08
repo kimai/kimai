@@ -62,5 +62,11 @@ yarn-error.log
 /nbproject/*
 
 .dockerhub.secrets
-/public/build
-public/build/app-rtl.4f157a57.css
+# Exclude all subfolders and files in /public/build/
+public/build/
+
+# Exclude Yarn Plug'n'Play files
+.pnp.*
+
+# Exclude yarn.lock
+yarn.lock
