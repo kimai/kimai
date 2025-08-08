@@ -3,7 +3,7 @@
 
 {% block main %}
     <div class="row">
-        {% set hasTwoColumns = (config.dragDropAmount > 0 and dragAndDrop is not empty and (dragAndDrop|filter(s => s.entries|length > 0)|length > 0)) or form is not null or icsCalendars is not empty %}
+        {% set hasTwoColumns = (config.dragDropAmount > 0 and dragAndDrop is not empty and (dragAndDrop|filter(s => s.entries|length > 0)|length > 0)) or form is not null %}
         {% if hasTwoColumns %}
         <div class="col-md-4 col-lg-3 d-none d-md-block order-last">
             {% if form is not null %}
@@ -41,78 +41,11 @@
                     {% endblock %}
                 {% endembed %}
             {% endfor %}
-            
-            {# ICS Calendar Management #}
-            {% if icsCalendars is not empty %}
-                {% embed '@theme/embeds/card.html.twig' %}
-                    {% block box_title %}
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span>{{ 'calendar.ics.external_calendars'|trans }}</span>
-                            <div class="card-actions">
-                                <button class="btn btn-sm btn-outline-secondary" onclick="refreshAllICSCalendars()" title="{{ 'calendar.ics.refresh_all'|trans }}">
-                                    <i class="fas fa-sync"></i>
-                                </button>
-                            </div>
-                        </div>
-                    {% endblock %}
-                    {% block box_body_class %}p-0{% endblock %}
-                    {% block box_body %}
-                        <div class="list-group list-group-flush">
-                            {% for icsCalendar in icsCalendars %}
-                                <div class="list-group-item d-flex justify-content-between align-items-center" id="ics-calendar-{{ icsCalendar.id }}">
-                                                                       <div class="d-flex align-items-center flex-grow-1">
-                                       <div class="form-check me-2" style="display: none;">
-                                           <input
-                                               class="form-check-input ics-calendar-toggle"
-                                               type="checkbox"
-                                               id="ics-toggle-{{ icsCalendar.id }}"
-                                               data-ics-id="{{ icsCalendar.id }}"
-                                               {{ icsCalendar.enabled ? 'checked' : '' }}
-                                           >
-                                       </div>
-                                        <div class="flex-grow-1 min-width-0">
-                                            <div class="d-flex align-items-center">
-                                                {% if icsCalendar.color %}
-                                                    <span class="badge me-2" style="background-color: {{ icsCalendar.color }}; color: {{ icsCalendar.color|font_contrast }};">&nbsp;</span>
-                                                {% endif %}
-                                                <span class="text-truncate fw-medium">{{ icsCalendar.name }}</span>
-                                            </div>
-                                            {% if icsCalendar.lastSync %}
-                                                <small class="text-muted">{{ 'calendar.ics.last_sync'|trans }}: {{ icsCalendar.lastSync|date_short }}</small>
-                                            {% else %}
-                                                <small class="text-warning">{{ 'calendar.ics.never_synced'|trans }}</small>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    <div class="btn-group btn-group-sm ms-2">
-                                        <button class="btn btn-outline-secondary" onclick="refreshICSCalendar({{ icsCalendar.id }})" title="{{ 'calendar.ics.refresh'|trans }}">
-                                            <i class="fas fa-sync"></i>
-                                        </button>
-                                        <a href="{{ path('calendar_ics_edit', {id: icsCalendar.id}) }}" class="btn btn-outline-secondary" title="{{ 'action.edit'|trans }}">
-                                            <i class="far fa-edit"></i>
-                                        </a>
-                                        <a href="{{ path('calendar_ics_delete', {id: icsCalendar.id}) }}" class="btn btn-outline-danger" title="{{ 'action.delete'|trans }}">
-                                            <i class="far fa-trash-alt"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    {% endblock %}
-                {% endembed %}
-            {% endif %}
         </div>
         {% endif %}
 
         <div class="col-xs-12 {% if hasTwoColumns %}col-md-8 col-lg-9 col-print-12{% endif %}">
             {% embed '@theme/embeds/card.html.twig' %}
-                {% block box_title %}
-                    <div class="card-actions">
-                        <a href="{{ path('calendar_ics_create') }}" class="btn btn-primary btn-sm" title="{{ 'calendar.ics.add'|trans }}">
-                            {{ 'calendar.ics.add'|trans }}
-                        </a>
-                    </div>
-                {% endblock %}
                 {% block box_body_class %}p-0{% endblock %}
                 {% block box_body %}
                     <div id="timesheet_calendar"></div>
@@ -281,168 +214,6 @@
             toolbar[2].classList.add('col-md-4', 'col-6', 'mb-1', 'text-end', 'order-md-4', 'order-xs-2');
 
             KimaiReloadPageWidget.create('kimai.systemConfigUpdate', true);
-
-            // Store calendar instance globally for ICS functions
-            console.log('Storing calendar instance:', calendar);
-            console.log('Calendar methods:', Object.getOwnPropertyNames(calendar));
-            console.log('Has getEventSources:', typeof calendar.getEventSources);
-            window.kimaiCalendar = calendar;
-
-            // ICS Calendar Management Functions - make them globally accessible
-            window.refreshICSCalendar = function(icsId) {
-                if (!window.kimaiCalendar) {
-                    console.error('Calendar not initialized');
-                    return;
-                }
-                
-                // Use KimaiCalendar's reloadEvents method for specific ICS source
-                const fullCalendar = window.kimaiCalendar.getCalendar();
-                let sourceFound = false;
-                
-                fullCalendar.getEventSources().forEach(source => {
-                    if (source.id === 'ical-ics_' + icsId) {
-                        sourceFound = true;
-                        // Remove all events from this source first
-                        fullCalendar.getEvents().forEach(event => {
-                            if (event.source && event.source.id === 'ical-ics_' + icsId) {
-                                event.remove();
-                            }
-                        });
-                        // Then refetch fresh data
-                        source.refetch();
-                    }
-                });
-                
-                if (!sourceFound) {
-                    // If source not found, reload all events
-                    window.kimaiCalendar.reloadEvents();
-                }
-                
-                // Update the last sync time display
-                const now = new Date().toLocaleString();
-                const syncElement = document.querySelector(`#ics-calendar-${icsId} small`);
-                if (syncElement) {
-                    syncElement.textContent = `{{ 'calendar.ics.last_sync'|trans }}: ${now}`;
-                    syncElement.className = 'text-muted';
-                }
-                
-                kimai.getPlugin('alert').success('{{ 'calendar.ics.refresh_success'|trans }}');
-            };
-
-            window.refreshAllICSCalendars = function() {
-                const icsCalendars = document.querySelectorAll('.ics-calendar-toggle');
-                icsCalendars.forEach(toggle => {
-                    if (toggle.checked) {
-                        const icsId = toggle.getAttribute('data-ics-id');
-                        window.refreshICSCalendar(icsId);
-                    }
-                });
-            };
-        
-        }); // End of kimai.initialized event listener
-
-        // Global toggle function that can access the stored calendar instance
-        window.toggleICSCalendar = function(icsId, enabled) {
-            console.log('Toggle called with:', icsId, enabled);
-            console.log('kimaiCalendar exists:', !!window.kimaiCalendar);
-            console.log('kimaiCalendar type:', typeof window.kimaiCalendar);
-            console.log('getEventSources method:', typeof (window.kimaiCalendar && window.kimaiCalendar.getEventSources));
-            
-            if (!window.kimaiCalendar) {
-                console.error('Calendar not initialized');
-                kimai.getPlugin('alert').error('{{ 'calendar.ics.toggle_error'|trans }} - Calendar not ready');
-                return;
-            }
-            
-            if (typeof window.kimaiCalendar.getCalendar !== 'function') {
-                console.error('Calendar getCalendar method not available');
-                kimai.getPlugin('alert').error('{{ 'calendar.ics.toggle_error'|trans }} - Calendar methods not available');
-                return;
-            }
-
-            fetch(`{{ path('calendar_ics_toggle', {id: '__ID__'}) }}`.replace('__ID__', icsId), {
-                method: 'POST',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    enabled: enabled
-                })
-            })
-            .then(response => {
-                console.log('Toggle response status:', response.status);
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Toggle response data:', data);
-                if (data.success) {
-                    // Get the FullCalendar instance
-                    const fullCalendar = window.kimaiCalendar.getCalendar();
-                    
-                    const sourceId = 'ical-ics_' + icsId;
-                    
-                    if (enabled) {
-                        // When enabling, check if source exists, if not add it
-                        let sourceExists = false;
-                        fullCalendar.getEventSources().forEach(source => {
-                            if (source.id === sourceId) {
-                                sourceExists = true;
-                                source.refetch();
-                            }
-                        });
-                        
-                        if (!sourceExists) {
-                            // Add the event source with proper ICS format and styling
-                            const sourceUrl = `{{ path('api_calendar_ics_events', {id: '__ID__'}) }}`.replace('__ID__', icsId);
-                            fullCalendar.addEventSource({
-                                id: sourceId,
-                                url: sourceUrl,
-                                format: 'ics',
-                                // Add styling to match how ICS sources are initially created
-                                borderColor: '#ff6b6b',
-                                textColor: 'white',
-                                display: 'block',
-                                className: 'external-calendar-event'
-                            });
-                        }
-                    } else {
-                        // When disabling, remove the event source entirely
-                        fullCalendar.getEventSources().forEach(source => {
-                            if (source.id === sourceId) {
-                                source.remove();
-                            }
-                        });
-                    }
-                    
-                    const message = enabled ? '{{ 'calendar.ics.enabled'|trans }}' : '{{ 'calendar.ics.disabled'|trans }}';
-                    kimai.getPlugin('alert').success(message);
-                } else {
-                    throw new Error(data.error || 'Toggle failed');
-                }
-            })
-            .catch(error => {
-                console.error('Error toggling ICS calendar:', error);
-                kimai.getPlugin('alert').error('{{ 'calendar.ics.toggle_error'|trans }} - ' + error.message);
-                
-                // Revert the checkbox
-                const checkbox = document.querySelector(`#ics-toggle-${icsId}`);
-                if (checkbox) {
-                    checkbox.checked = !enabled;
-                }
-            });
-        };
-
-        // Single global event listener for toggle checkboxes
-        document.addEventListener('change', function(e) {
-            if (e.target.classList.contains('ics-calendar-toggle')) {
-                const icsId = e.target.getAttribute('data-ics-id');
-                const enabled = e.target.checked;
-                window.toggleICSCalendar(icsId, enabled);
-            }
         });
     </script>
 {% endblock %}

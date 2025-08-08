@@ -11,7 +11,6 @@ namespace App\Calendar;
 
 use App\Configuration\SystemConfiguration;
 use App\Entity\User;
-use App\Calendar\ICSSource;
 use App\Event\CalendarConfigurationEvent;
 use App\Event\CalendarDragAndDropSourceEvent;
 use App\Event\CalendarGoogleSourceEvent;
@@ -23,12 +22,8 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 
 final class CalendarService
 {
-    public function __construct(
-        private SystemConfiguration $configuration, 
-        private TimesheetRepository $repository, 
-        private EventDispatcherInterface $dispatcher,
-        private ICSSource $icsSource
-    ) {
+    public function __construct(private SystemConfiguration $configuration, private TimesheetRepository $repository, private EventDispatcherInterface $dispatcher)
+    {
     }
 
     /**
@@ -93,12 +88,6 @@ final class CalendarService
     public function getSources(User $user): array
     {
         $sources = [];
-
-        // Add ICS calendar sources
-        $icsSources = $this->icsSource->getSourcesForUser($user);
-        foreach ($icsSources as $source) {
-            $sources[] = $source;
-        }
 
         $event = new CalendarSourceEvent($user);
         $this->dispatcher->dispatch($event);

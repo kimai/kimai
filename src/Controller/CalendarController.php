@@ -13,7 +13,6 @@ use App\Calendar\CalendarService;
 use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Form\CalendarForm;
-use App\Repository\ICSCalendarSourceRepository;
 use App\Timesheet\TrackingModeService;
 use App\Utils\PageSetup;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,12 +27,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
 final class CalendarController extends AbstractController
 {
-    public function __construct(
-        private CalendarService $calendarService, 
-        private SystemConfiguration $configuration, 
-        private TrackingModeService $service,
-        private ICSCalendarSourceRepository $icsRepository
-    ) {
+    public function __construct(private CalendarService $calendarService, private SystemConfiguration $configuration, private TrackingModeService $service)
+    {
     }
 
     #[Route(path: '/', name: 'calendar', methods: ['GET'])]
@@ -92,9 +87,6 @@ final class CalendarController extends AbstractController
         $page = new PageSetup('calendar');
         $page->setHelp('calendar.html');
 
-        // Get ICS calendar sources for the sidebar
-        $icsCalendars = $this->icsRepository->findByUser($profile);
-
         return $this->render('calendar/user.html.twig', [
             'page_setup' => $page,
             'form' => $form,
@@ -103,7 +95,6 @@ final class CalendarController extends AbstractController
             'dragAndDrop' => $dragAndDrop,
             'google' => $this->calendarService->getGoogleSources($profile),
             'sources' => $this->calendarService->getSources($profile),
-            'icsCalendars' => $icsCalendars,
             'now' => $factory->createDateTime(),
             'defaultStartTime' => $defaultStart,
             'is_punch_mode' => $isPunchMode,
