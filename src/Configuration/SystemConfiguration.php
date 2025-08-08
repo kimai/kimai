@@ -10,6 +10,7 @@
 namespace App\Configuration;
 
 use App\Constants;
+use App\Entity\User;
 
 final class SystemConfiguration
 {
@@ -319,6 +320,11 @@ final class SystemConfiguration
     public function getCalendarGlobalIcalLink(): ?string
     {
         return $this->find('calendar.global_ical_link');
+    }
+
+    public function getCalendarUserIcalLink(User $user): ?string
+    {
+        return $user->getPreferenceValue('user_ical_link');
     }
 
     // ========== Customer configurations ==========

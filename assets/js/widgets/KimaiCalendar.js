@@ -489,9 +489,16 @@ export default class KimaiCalendar {
             } else if (source.type === 'ical') {
                 calendarSource = {...calendarSource, ...{
                     id: 'ical-' + source.id,
-                    url: source.url,
-                    format: 'ics',
                     editable: false,
+                    events: (fetchInfo, successCallback, failureCallback) => {
+                        API.get(source.url, {}, result => {
+                            let apiEvents = [];
+                            for (const record of result) {
+                                apiEvents.push(record);
+                            }
+                            successCallback(apiEvents);
+                        }, failureCallback);
+                    },
                 }};
             } else {
                 console.log('Unknown source type given, skipping to load events from: ' + source.id);

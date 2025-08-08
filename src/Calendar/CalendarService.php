@@ -9,6 +9,8 @@
 
 namespace App\Calendar;
 
+use App\Calendar\IcalSource;
+use App\Calendar\IcsValidator;
 use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Event\CalendarConfigurationEvent;
@@ -19,11 +21,17 @@ use App\Event\RecentActivityEvent;
 use App\Repository\TimesheetRepository;
 use App\Utils\Color;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\Log\LoggerInterface;
 
 final class CalendarService
 {
-    public function __construct(private SystemConfiguration $configuration, private TimesheetRepository $repository, private EventDispatcherInterface $dispatcher)
-    {
+    public function __construct(
+        private SystemConfiguration $configuration,
+        private TimesheetRepository $repository,
+        private EventDispatcherInterface $dispatcher,
+        private IcsValidator $icsValidator,
+        private LoggerInterface $logger
+    ) {
     }
 
     /**
@@ -87,14 +95,52 @@ final class CalendarService
      */
     public function getSources(User $user): array
     {
+        $this->logger->debug('CalendarService: Getting calendar sources for user', [
+            'user' => $user->getUserIdentifier()
+        ]);
+
         $sources = [];
+
+        // Add ICAL sources
+        $this->logger->debug('CalendarService: Creating ICAL sources');
+        
+        $globalIcalSource = IcalSource::createGlobalSource($this->icsValidator, $this->configuration, $user, $this->logger);
+        if ($globalIcalSource !== null) {
+            $sources[] = $globalIcalSource;
+            $this->logger->info('CalendarService: Added global ICAL source', [
+                'source_id' => $globalIcalSource->getId(),
+                'uri' => $globalIcalSource->getUri()
+            ]);
+        } else {
+            $this->logger->debug('CalendarService: No global ICAL source available');
+        }
+
+        $userIcalSource = IcalSource::createUserSource($this->icsValidator, $this->configuration, $user, $this->logger);
+        if ($userIcalSource !== null) {
+            $sources[] = $userIcalSource;
+            $this->logger->info('CalendarService: Added user ICAL source', [
+                'source_id' => $userIcalSource->getId(),
+                'uri' => $userIcalSource->getUri()
+            ]);
+        } else {
+            $this->logger->debug('CalendarService: No user ICAL source available');
+        }
 
         $event = new CalendarSourceEvent($user);
         $this->dispatcher->dispatch($event);
-
+        
         foreach ($event->getSources() as $source) {
             $sources[] = $source;
+            $this->logger->debug('CalendarService: Added event-dispatched source', [
+                'source_id' => $source->getId(),
+                'source_type' => $source->getTypeName()
+            ]);
         }
+
+        $this->logger->info('CalendarService: Total sources available', [
+            'user' => $user->getUserIdentifier(),
+            'total_sources' => count($sources)
+        ]);
 
         return $sources;
     }

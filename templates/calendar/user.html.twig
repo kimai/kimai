@@ -160,7 +160,11 @@
                     {
                         id: '{{ source.id }}{{ loop.index }}',
                         type: '{{ source.typeName }}',
+                        {% if source.typeName == 'ical' %}
+                        url: '{{ path('ical_events', {'type': source.id == 'global_ical' ? 'global' : 'user'})|raw }}',
+                        {% else %}
                         url: '{{ source.uri|raw }}',
+                        {% endif %}
                         options: {...{{ source.options|json_encode|raw }}, ...{
                             color: '{{ source.color }}',
                             textColor: '{{ source.color|font_contrast }}',

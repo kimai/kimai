@@ -1,0 +1,148 @@
+<?php
+
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace App\Calendar;
+
+use App\Configuration\SystemConfiguration;
+use App\Entity\User;
+use Psr\Log\LoggerInterface;
+
+final class IcalSource extends CalendarSource
+{
+    public function __construct(
+        private IcsValidator $icsValidator,
+        private SystemConfiguration $configuration,
+        private User $user,
+        string $id,
+        string $uri,
+        ?string $color = null,
+        private string $prefix = '',
+        private LoggerInterface $logger
+    ) {
+        parent::__construct(CalendarSourceType::ICAL, $id, $uri, $color);
+    }
+
+    public function getEvents(): array
+    {
+        $this->logger->debug('IcalSource: Getting events for source', [
+            'source_id' => $this->getId(),
+            'uri' => $this->getUri(),
+            'prefix' => $this->prefix
+        ]);
+
+        if (empty($this->getUri())) {
+            $this->logger->warning('IcalSource: No URI configured for source', ['source_id' => $this->getId()]);
+            return [];
+        }
+
+        try {
+            $icsContent = $this->icsValidator->fetchAndValidateIcs($this->getUri());
+            
+            if ($icsContent === null) {
+                $this->logger->error('IcalSource: Failed to fetch or validate ICS content', [
+                    'source_id' => $this->getId(),
+                    'uri' => $this->getUri()
+                ]);
+                return [];
+            }
+
+            $events = $this->icsValidator->parseIcsEvents($icsContent);
+            
+            $this->logger->info('IcalSource: Parsed events from ICS', [
+                'source_id' => $this->getId(),
+                'event_count' => count($events)
+            ]);
+
+            // Apply prefix to event titles
+            $prefixedEvents = [];
+            foreach ($events as $event) {
+                if (!empty($this->prefix) && !empty($event['title'])) {
+                    $event['title'] = $this->prefix . ' ' . $event['title'];
+                }
+                $prefixedEvents[] = $event;
+            }
+
+            $this->logger->debug('IcalSource: Returning events with prefix applied', [
+                'source_id' => $this->getId(),
+                'prefix' => $this->prefix,
+                'final_count' => count($prefixedEvents)
+            ]);
+
+            return $prefixedEvents;
+
+        } catch (\Exception $e) {
+            $this->logger->error('IcalSource: Exception while getting events', [
+                'source_id' => $this->getId(),
+                'uri' => $this->getUri(),
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return [];
+        }
+    }
+
+    public static function createGlobalSource(IcsValidator $icsValidator, SystemConfiguration $configuration, User $user, LoggerInterface $logger): ?self
+    {
+        $logger->debug('IcalSource: Creating global source for user', [
+            'user' => $user->getUserIdentifier()
+        ]);
+
+        $globalIcalLink = $configuration->getCalendarGlobalIcalLink();
+        
+        if (empty($globalIcalLink)) {
+            $logger->info('IcalSource: No global ICAL link configured');
+            return null;
+        }
+
+        $logger->debug('IcalSource: Global ICAL link found', ['link' => $globalIcalLink]);
+
+        return new self(
+            $icsValidator,
+            $configuration,
+            $user,
+            'global_ical',
+            $globalIcalLink,
+            '#3788d8', // Default blue color
+            '[GLOBAL]',
+            $logger
+        );
+    }
+
+    public static function createUserSource(IcsValidator $icsValidator, SystemConfiguration $configuration, User $user, LoggerInterface $logger): ?self
+    {
+        $logger->debug('IcalSource: Creating user source for user', [
+            'user' => $user->getUserIdentifier()
+        ]);
+
+        $userIcalLink = $configuration->getCalendarUserIcalLink($user);
+        
+        if (empty($userIcalLink)) {
+            $logger->info('IcalSource: No user ICAL link configured', [
+                'user' => $user->getUserIdentifier()
+            ]);
+            return null;
+        }
+
+        $logger->debug('IcalSource: User ICAL link found', [
+            'user' => $user->getUserIdentifier(),
+            'link' => $userIcalLink
+        ]);
+
+        return new self(
+            $icsValidator,
+            $configuration,
+            $user,
+            'user_ical',
+            $userIcalLink,
+            '#28a745', // Default green color
+            '[USER]',
+            $logger
+        );
+    }
+} 

@@ -14,12 +14,10 @@ use Symfony\Component\Validator\Constraint;
 #[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
 class IcalLink extends Constraint
 {
-    public const INVALID_URL = 'invalid_url';
-    public const INVALID_EXTENSION = 'invalid_extension';
+    public const INVALID_URL = 'ical_link.invalid_url';
+    public const INVALID_ICS = 'ical_link.invalid_ics';
 
-    public string $message = 'This value is not a valid ICal link.';
-    public string $invalidUrlMessage = 'This value is not a valid URL.';
-    public string $invalidExtensionMessage = 'The URL must end with .ics';
+    public string $message = 'This value is not a valid ICAL link.';
 
     public function getTargets(): string
     {
