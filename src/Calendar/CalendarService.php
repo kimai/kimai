@@ -95,15 +95,9 @@ final class CalendarService
      */
     public function getSources(User $user): array
     {
-        $this->logger->debug('CalendarService: Getting calendar sources for user', [
-            'user' => $user->getUserIdentifier()
-        ]);
-
         $sources = [];
 
         // Add ICAL sources
-        $this->logger->debug('CalendarService: Creating ICAL sources');
-        
         $globalIcalSource = IcalSource::createGlobalSource($this->icsValidator, $this->configuration, $user, $this->logger);
         if ($globalIcalSource !== null) {
             $sources[] = $globalIcalSource;
@@ -111,8 +105,6 @@ final class CalendarService
                 'source_id' => $globalIcalSource->getId(),
                 'uri' => $globalIcalSource->getUri()
             ]);
-        } else {
-            $this->logger->debug('CalendarService: No global ICAL source available');
         }
 
         $userIcalSource = IcalSource::createUserSource($this->icsValidator, $this->configuration, $user, $this->logger);
@@ -122,8 +114,6 @@ final class CalendarService
                 'source_id' => $userIcalSource->getId(),
                 'uri' => $userIcalSource->getUri()
             ]);
-        } else {
-            $this->logger->debug('CalendarService: No user ICAL source available');
         }
 
         $event = new CalendarSourceEvent($user);
@@ -131,10 +121,6 @@ final class CalendarService
         
         foreach ($event->getSources() as $source) {
             $sources[] = $source;
-            $this->logger->debug('CalendarService: Added event-dispatched source', [
-                'source_id' => $source->getId(),
-                'source_type' => $source->getTypeName()
-            ]);
         }
 
         $this->logger->info('CalendarService: Total sources available', [

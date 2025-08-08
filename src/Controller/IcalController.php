@@ -56,10 +56,8 @@ final class IcalController extends AbstractController
             $source = null;
             
             if ($type === 'global') {
-                $this->logger->debug('IcalController: Creating global ICAL source');
                 $source = IcalSource::createGlobalSource($this->icsValidator, $this->configuration, $user, $this->logger);
             } elseif ($type === 'user') {
-                $this->logger->debug('IcalController: Creating user ICAL source');
                 $source = IcalSource::createUserSource($this->icsValidator, $this->configuration, $user, $this->logger);
             } else {
                 $this->logger->warning('IcalController: Invalid event type requested', ['type' => $type]);
@@ -70,11 +68,6 @@ final class IcalController extends AbstractController
                 $this->logger->info('IcalController: No ICAL source available for type', ['type' => $type]);
                 return new JsonResponse([]);
             }
-
-            $this->logger->debug('IcalController: Fetching events from source', [
-                'source_id' => $source->getId(),
-                'source_uri' => $source->getUri()
-            ]);
 
             $events = $source->getEvents();
             
@@ -108,11 +101,6 @@ final class IcalController extends AbstractController
 
                 $formattedEvents[] = $formattedEvent;
             }
-
-            $this->logger->debug('IcalController: Returning formatted events', [
-                'type' => $type,
-                'formatted_count' => count($formattedEvents)
-            ]);
 
             return new JsonResponse($formattedEvents);
 

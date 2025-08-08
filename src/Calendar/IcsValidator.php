@@ -25,8 +25,6 @@ final class IcsValidator
      */
     public function isValidIcs(string $content): bool
     {
-        $this->logger->debug('IcsValidator: Validating ICS content', ['content_length' => strlen($content)]);
-        
         // Check for basic ICS structure
         if (empty($content)) {
             $this->logger->warning('IcsValidator: Empty content provided');
@@ -39,7 +37,6 @@ final class IcsValidator
             return false;
         }
 
-        $this->logger->debug('IcsValidator: ICS content appears valid');
         return true;
     }
 
@@ -50,8 +47,6 @@ final class IcsValidator
      */
     public function parseIcsEvents(string $content): array
     {
-        $this->logger->debug('IcsValidator: Starting to parse ICS events');
-        
         if (!$this->isValidIcs($content)) {
             $this->logger->error('IcsValidator: Cannot parse invalid ICS content');
             return [];
@@ -81,7 +76,6 @@ final class IcsValidator
             if (str_starts_with($line, 'BEGIN:VEVENT')) {
                 $inEvent = true;
                 $currentEvent = ['raw' => $line];
-                $this->logger->debug('IcsValidator: Found BEGIN:VEVENT');
             } elseif (str_starts_with($line, 'END:VEVENT')) {
                 if ($currentEvent !== null) {
                     $raw = $currentEvent['raw'] ?? '';
@@ -93,7 +87,6 @@ final class IcsValidator
                     if ($this->isValidEvent($currentEvent)) {
                         $formattedEvent = $this->formatEvent($currentEvent);
                         $events[] = $formattedEvent;
-                        $this->logger->debug('IcsValidator: Added valid event', ['summary' => $formattedEvent['title'] ?? 'No title']);
                     } else {
                         $this->logger->warning('IcsValidator: Skipping invalid event');
                     }
@@ -126,7 +119,6 @@ final class IcsValidator
         $requiredFields = ['uid', 'dtstart'];
         foreach ($requiredFields as $field) {
             if (empty($event[$field])) {
-                $this->logger->debug('IcsValidator: Event missing required field', ['field' => $field]);
                 return false;
             }
         }
@@ -262,8 +254,6 @@ final class IcsValidator
      */
     public function fetchAndValidateIcs(string $url): ?string
     {
-        $this->logger->debug('IcsValidator: Fetching ICS from URL', ['url' => $url]);
-        
         try {
             $context = stream_context_create([
                 'http' => [
@@ -278,11 +268,6 @@ final class IcsValidator
                 $this->logger->error('IcsValidator: Failed to fetch content from URL', ['url' => $url]);
                 return null;
             }
-
-            $this->logger->debug('IcsValidator: Successfully fetched content', [
-                'url' => $url,
-                'content_length' => strlen($content)
-            ]);
 
             if ($this->isValidIcs($content)) {
                 return $content;

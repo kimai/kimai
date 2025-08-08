@@ -35,12 +35,6 @@ final class IcalSource extends CalendarSource
      */
     public function getEvents(): array
     {
-        $this->logger->debug('IcalSource: Getting events for source', [
-            'source_id' => $this->getId(),
-            'uri' => $this->getUri(),
-            'prefix' => $this->prefix
-        ]);
-
         if (empty($this->getUri())) {
             $this->logger->warning('IcalSource: No URI configured for source', ['source_id' => $this->getId()]);
             return [];
@@ -73,12 +67,6 @@ final class IcalSource extends CalendarSource
                 $prefixedEvents[] = $event;
             }
 
-            $this->logger->debug('IcalSource: Returning events with prefix applied', [
-                'source_id' => $this->getId(),
-                'prefix' => $this->prefix,
-                'final_count' => count($prefixedEvents)
-            ]);
-
             return $prefixedEvents;
 
         } catch (\Exception $e) {
@@ -94,18 +82,12 @@ final class IcalSource extends CalendarSource
 
     public static function createGlobalSource(IcsValidator $icsValidator, SystemConfiguration $configuration, User $user, LoggerInterface $logger): ?self
     {
-        $logger->debug('IcalSource: Creating global source for user', [
-            'user' => $user->getUserIdentifier()
-        ]);
-
         $globalIcalLink = $configuration->getCalendarGlobalIcalLink();
         
         if (empty($globalIcalLink)) {
             $logger->info('IcalSource: No global ICAL link configured');
             return null;
         }
-
-        $logger->debug('IcalSource: Global ICAL link found', ['link' => $globalIcalLink]);
 
         return new self(
             $icsValidator,
@@ -121,10 +103,6 @@ final class IcalSource extends CalendarSource
 
     public static function createUserSource(IcsValidator $icsValidator, SystemConfiguration $configuration, User $user, LoggerInterface $logger): ?self
     {
-        $logger->debug('IcalSource: Creating user source for user', [
-            'user' => $user->getUserIdentifier()
-        ]);
-
         $userIcalLink = $configuration->getCalendarUserIcalLink($user);
         
         if (empty($userIcalLink)) {
@@ -133,11 +111,6 @@ final class IcalSource extends CalendarSource
             ]);
             return null;
         }
-
-        $logger->debug('IcalSource: User ICAL link found', [
-            'user' => $user->getUserIdentifier(),
-            'link' => $userIcalLink
-        ]);
 
         return new self(
             $icsValidator,
