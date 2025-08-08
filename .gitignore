@@ -62,5 +62,3 @@ yarn-error.log
 /nbproject/*
 
 .dockerhub.secrets
-/public/build
-public/build/app-rtl.4f157a57.css

@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-xs-12">
+            {% embed '@theme/embeds/card.html.twig' %}
+                {% block box_title %}
+                    {{ 'calendar.ics.title'|trans }}
+                    <div class="card-actions">
+                        <a href="{{ path('calendar_ics_create') }}" class="btn btn-primary btn-sm">
+                            {{ 'calendar.ics.add'|trans }}
+                        </a>
+                    </div>
+                {% endblock %}
+                {% block box_body %}
+                    {% if sources is empty %}
+                        <div class="text-center p-4">
+                            <p class="text-muted">{{ 'calendar.ics.empty'|trans }}</p>
+                            <a href="{{ path('calendar_ics_create') }}" class="btn btn-primary">
+                                {{ 'calendar.ics.add_first'|trans }}
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>{{ 'label.name'|trans }}</th>
+                                        <th>{{ 'calendar.ics.url'|trans }}</th>
+                                        <th>{{ 'label.color'|trans }}</th>
+                                        <th>{{ 'label.status'|trans }}</th>
+                                        <th>{{ 'calendar.ics.last_sync'|trans }}</th>
+                                        <th class="text-end">{{ 'label.actions'|trans }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for source in sources %}
+                                        <tr>
+                                            <td>
+                                                <strong>{{ source.name }}</strong>
+                                            </td>
+                                            <td>
+                                                <code class="text-truncate d-inline-block" style="max-width: 200px;" title="{{ source.url }}">
+                                                    {{ source.url }}
+                                                </code>
+                                            </td>
+                                            <td>
+                                                {% if source.color %}
+                                                    <span class="badge" style="background-color: {{ source.color }}; color: {{ source.color|font_contrast }};">
+                                                        {{ source.color }}
+                                                    </span>
+                                                {% else %}
+                                                    <span class="text-muted">{{ 'label.none'|trans }}</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if source.enabled %}
+                                                    <span class="badge bg-success">{{ 'label.enabled'|trans }}</span>
+                                                {% else %}
+                                                    <span class="badge bg-secondary">{{ 'label.disabled'|trans }}</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if source.lastSync %}
+                                                    {{ source.lastSync|date_format }}
+                                                {% else %}
+                                                    <span class="text-muted">{{ 'calendar.ics.never_synced'|trans }}</span>
+                                                {% endif %}
+                                            </td>
+                                            <td class="text-end">
+                                                <div class="btn-group">
+                                                    <form method="post" action="{{ path('calendar_ics_refresh', {'id': source.id}) }}" style="display: inline;">
+                                                        <button type="submit" class="btn btn-sm btn-outline-secondary" title="{{ 'calendar.ics.refresh'|trans }}">
+                                                            {{ 'refresh'|icon }}
+                                                        </button>
+                                                    </form>
+                                                    <a href="{{ path('calendar_ics_edit', {'id': source.id}) }}" class="btn btn-sm btn-outline-primary" title="{{ 'action.edit'|trans }}">
+                                                        {{ 'edit'|icon }}
+                                                    </a>
+                                                    <form method="post" action="{{ path('calendar_ics_delete', {'id': source.id}) }}" style="display: inline;" onsubmit="return confirm('{{ 'calendar.ics.delete_confirm'|trans }}')">
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="{{ 'action.delete'|trans }}">
+                                                            {{ 'delete'|icon }}
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                {% endblock %}
+            {% endembed %}
+        </div>
+    </div>
+{% endblock %} 

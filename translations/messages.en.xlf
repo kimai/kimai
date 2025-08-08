@@ -1954,6 +1954,126 @@
         <source>sending_company</source>
         <target>Invoice Sender</target>
       </trans-unit>
+      <trans-unit id="ics_calendar_title" resname="calendar.ics.title">
+        <source>calendar.ics.title</source>
+        <target>ICS Calendars</target>
+      </trans-unit>
+      <trans-unit id="ics_calendar_add" resname="calendar.ics.add">
+        <source>calendar.ics.add</source>
+        <target>Add Calendar</target>
+      </trans-unit>
+      <trans-unit id="ics_calendar_add_first" resname="calendar.ics.add_first">
+        <source>calendar.ics.add_first</source>
+        <target>Add your first ICS calendar</target>
+      </trans-unit>
+      <trans-unit id="ics_calendar_manage" resname="calendar.ics.manage">
+        <source>calendar.ics.manage</source>
+        <target>Manage ICS Calendars</target>
+      </trans-unit>
+      <trans-unit id="ics_calendar_url" resname="calendar.ics.url">
+        <source>calendar.ics.url</source>
+        <target>Calendar URL</target>
+      </trans-unit>
+      <trans-unit id="ics_calendar_name_placeholder" resname="calendar.ics.name_placeholder">
+        <source>calendar.ics.name_placeholder</source>
+        <target>Enter calendar name</target>
+      </trans-unit>
+      <trans-unit id="ics_calendar_url_placeholder" resname="calendar.ics.url_placeholder">
+        <source>calendar.ics.url_placeholder</source>
+        <target>https://example.com/calendar.ics</target>
+      </trans-unit>
+      <trans-unit id="ics_calendar_empty" resname="calendar.ics.empty">
+        <source>calendar.ics.empty</source>
+        <target>No ICS calendars configured yet.</target>
+      </trans-unit>
+      <trans-unit id="ics_calendar_last_sync" resname="calendar.ics.last_sync">
+        <source>calendar.ics.last_sync</source>
+        <target>Last Sync</target>
+      </trans-unit>
+      <trans-unit id="ics_calendar_never_synced" resname="calendar.ics.never_synced">
+        <source>calendar.ics.never_synced</source>
+        <target>Never</target>
+      </trans-unit>
+      <trans-unit id="ics_calendar_refresh" resname="calendar.ics.refresh">
+        <source>calendar.ics.refresh</source>
+        <target>Refresh</target>
+      </trans-unit>
+      <trans-unit id="ics_calendar_refresh_success" resname="calendar.ics.refresh.success">
+        <source>calendar.ics.refresh.success</source>
+        <target>Calendar refreshed successfully</target>
+      </trans-unit>
+      <trans-unit id="ics_calendar_delete_confirm" resname="calendar.ics.delete_confirm">
+        <source>calendar.ics.delete_confirm</source>
+        <target>Are you sure you want to delete this calendar?</target>
+      </trans-unit>
+      <trans-unit id="ics_calendar_create" resname="calendar.ics.create">
+        <source>calendar.ics.create</source>
+        <target>Add ICS Calendar</target>
+      </trans-unit>
+      <trans-unit id="ics_calendar_edit" resname="calendar.ics.edit">
+        <source>calendar.ics.edit</source>
+        <target>Edit ICS Calendar</target>
+      </trans-unit>
+      <trans-unit id="label_name" resname="label.name">
+        <source>label.name</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="label_color" resname="label.color">
+        <source>label.color</source>
+        <target>Color</target>
+      </trans-unit>
+      <trans-unit id="label_enabled" resname="label.enabled">
+        <source>label.enabled</source>
+        <target>Enabled</target>
+      </trans-unit>
+      <trans-unit id="action_save" resname="action.save">
+        <source>action.save</source>
+        <target>Save</target>
+      </trans-unit>
+              <trans-unit id="action_cancel" resname="action.cancel">
+            <source>action.cancel</source>
+            <target>Cancel</target>
+        </trans-unit>
+        <trans-unit id="calendar_ics_external_calendars" resname="calendar.ics.external_calendars">
+            <source>calendar.ics.external_calendars</source>
+            <target>External Calendars</target>
+        </trans-unit>
+        <trans-unit id="calendar_ics_refresh_all" resname="calendar.ics.refresh_all">
+            <source>calendar.ics.refresh_all</source>
+            <target>Refresh All</target>
+        </trans-unit>
+        <trans-unit id="calendar_ics_last_sync" resname="calendar.ics.last_sync">
+            <source>calendar.ics.last_sync</source>
+            <target>Last sync</target>
+        </trans-unit>
+        <trans-unit id="calendar_ics_never_synced" resname="calendar.ics.never_synced">
+            <source>calendar.ics.never_synced</source>
+            <target>Never synced</target>
+        </trans-unit>
+        <trans-unit id="calendar_ics_refresh" resname="calendar.ics.refresh">
+            <source>calendar.ics.refresh</source>
+            <target>Refresh</target>
+        </trans-unit>
+        <trans-unit id="calendar_ics_refresh_success" resname="calendar.ics.refresh_success">
+            <source>calendar.ics.refresh_success</source>
+            <target>Calendar refreshed successfully</target>
+        </trans-unit>
+        <trans-unit id="calendar_ics_refresh_error" resname="calendar.ics.refresh_error">
+            <source>calendar.ics.refresh_error</source>
+            <target>Failed to refresh calendar</target>
+        </trans-unit>
+        <trans-unit id="calendar_ics_enabled" resname="calendar.ics.enabled">
+            <source>calendar.ics.enabled</source>
+            <target>Calendar enabled</target>
+        </trans-unit>
+        <trans-unit id="calendar_ics_disabled" resname="calendar.ics.disabled">
+            <source>calendar.ics.disabled</source>
+            <target>Calendar disabled</target>
+        </trans-unit>
+        <trans-unit id="calendar_ics_toggle_error" resname="calendar.ics.toggle_error">
+            <source>calendar.ics.toggle_error</source>
+            <target>Failed to toggle calendar</target>
+        </trans-unit>
     </body>
-  </file>
+</file>
 </xliff>

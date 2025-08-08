@@ -145,6 +145,15 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/TeamMembership'))]
     private Collection $memberships;
     /**
+     * List of all ICS calendar sources.
+     *
+     * @var Collection<int, ICSCalendarSource>
+     */
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ICSCalendarSource::class, cascade: ['persist'], fetch: 'LAZY', orphanRemoval: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['User_Entity'])]
+    private Collection $icsCalendarSources;
+    /**
      * The type of authentication used by the user (e.g. "kimai", "ldap", "saml")
      *
      * @internal for internal usage only
@@ -234,6 +243,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         $this->registeredAt = new DateTime();
         $this->preferences = new ArrayCollection();
         $this->memberships = new ArrayCollection();
+        $this->icsCalendarSources = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -1455,5 +1465,35 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function setWorkContractMode(string $mode): void
     {
         $this->setPreferenceValue(UserPreference::WORK_CONTRACT_TYPE, $mode);
+    }
+
+    /**
+     * @return Collection<int, ICSCalendarSource>
+     */
+    public function getIcsCalendarSources(): Collection
+    {
+        return $this->icsCalendarSources;
+    }
+
+    public function addIcsCalendarSource(ICSCalendarSource $icsCalendarSource): User
+    {
+        if (!$this->icsCalendarSources->contains($icsCalendarSource)) {
+            $this->icsCalendarSources->add($icsCalendarSource);
+            $icsCalendarSource->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIcsCalendarSource(ICSCalendarSource $icsCalendarSource): User
+    {
+        if ($this->icsCalendarSources->removeElement($icsCalendarSource)) {
+            // set the owning side to null (unless already changed)
+            if ($icsCalendarSource->getUser() === $this) {
+                $icsCalendarSource->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }
