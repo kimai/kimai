@@ -209,18 +209,24 @@ export default class KimaiCalendar {
                 }
             },
 
-            // SHOW POPOVER FOR TIMESHEETS
+            // SHOW POPOVER FOR TIMESHEETS AND ICAL EVENTS
             eventMouseEnter: (mouseEnterInfo) => {
                 const event = mouseEnterInfo.event;
 
-                if (!this.isKimaiSource(event)) {
+                if (!this.isKimaiSource(event) && !this.isIcalSource(event)) {
                     // TODO allow to copy into kimai
                     return;
                 }
 
                 const element = mouseEnterInfo.el;
                 const popoverTitle = DATES.getFormattedDate(event.start) + ' | ' + DATES.formatTime(event.start) + ' - ' + (event.end ? DATES.formatTime(event.end) : '');
-                const popoverContent = this.renderEventPopoverContent(event);
+                
+                let popoverContent;
+                if (this.isKimaiSource(event)) {
+                    popoverContent = this.renderEventPopoverContent(event);
+                } else if (this.isIcalSource(event)) {
+                    popoverContent = this.renderIcalEventPopoverContent(event);
+                }
 
                 let popover = Popover.getInstance(element);
                 if (popover !== null) {
@@ -245,7 +251,7 @@ export default class KimaiCalendar {
 
             // HIDE POPOVER
             eventMouseLeave: (mouseLeaveInfo) => {
-                if (!this.isKimaiSource(mouseLeaveInfo.event)) {
+                if (!this.isKimaiSource(mouseLeaveInfo.event) && !this.isIcalSource(mouseLeaveInfo.event)) {
                     return;
                 }
 
@@ -536,6 +542,21 @@ export default class KimaiCalendar {
     }
 
     /**
+     * @param {EventApi} event
+     * @return {boolean}
+     * @private
+     */
+    isIcalSource(event) {
+        if (event === null) {
+            return false;
+        }
+        if (event.source === null) {
+            return false;
+        }
+        return (event.source.id.indexOf('ical-') === 0);
+    }
+
+    /**
      * @param {string} name
      * @return {boolean}
      * @private
@@ -643,6 +664,31 @@ export default class KimaiCalendar {
                 (eventObj.description !== null || eventObj.tags.length > 0 ? '<hr>' : '') +
                 (eventObj.description ? '<div>' + escaper.escapeForHtml(eventObj.description) + '</div>' : '') + tags + `
             </div>`;
+    }
+
+    /**
+     * @param {EventApi} event
+     * @return {string}
+     * @private
+     */
+    renderIcalEventPopoverContent(event) {
+        const eventObj = event.extendedProps;
+        /** @type {KimaiEscape} escaper */
+        const escaper = this.kimai.getPlugin('escape');
+
+        let content = '<div class="calendar-entry">';
+        
+        if (eventObj.description) {
+            content += '<div class="mb-2">' + escaper.escapeForHtml(eventObj.description) + '</div>';
+        }
+        
+        if (eventObj.location) {
+            content += '<div class="text-muted"><i class="fas fa-map-marker-alt me-1"></i>' + escaper.escapeForHtml(eventObj.location) + '</div>';
+        }
+        
+        content += '</div>';
+        
+        return content;
     }
 
     /**
