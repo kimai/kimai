@@ -530,9 +530,9 @@
         <source>modal.columns.title</source>
         <target>Darstellung anpassen</target>
       </trans-unit>
-      <trans-unit id="LDsHBXd" resname="modal.columns.label">
+      <trans-unit id="LDsHBXd" resname="modal.columns.label" xml:space="preserve">
         <source>modal.columns.label</source>
-        <target>Tabellen Spalten</target>
+        <target state="translated">Tabellenspalten</target>
       </trans-unit>
       <trans-unit id="WOAx9yz" resname="modal.columns.profile">
         <source>modal.columns.profile</source>
@@ -622,9 +622,9 @@
         <source>unlock_month.help</source>
         <target>Dadurch werden alle Tage des Jahres nach dem ausgewählten Datum entsperrt.</target>
       </trans-unit>
-      <trans-unit id="eWmotjb" resname="completed_month_pdf">
+      <trans-unit id="eWmotjb" resname="completed_month_pdf" xml:space="preserve">
         <source>completed_month_pdf</source>
-        <target>Monats-Abschluss PDF</target>
+        <target state="translated">Monatsabschluss PDF</target>
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
         <source>completed_month_pdf_note</source>
@@ -826,9 +826,9 @@
         <source>active</source>
         <target>Aktiv</target>
       </trans-unit>
-      <trans-unit id="52lzpZE" resname="active.help">
+      <trans-unit id="52lzpZE" resname="active.help" xml:space="preserve">
         <source>active.help</source>
-        <target>Deaktivierte Benutzer können sich nicht mehr anmelden und werden ausgeblendet in Berichten und Auswahlboxen</target>
+        <target state="translated">Deaktivierte Benutzer können sich nicht mehr anmelden und werden in Berichten und Auswahlboxen ausgeblendet</target>
       </trans-unit>
       <trans-unit id="PLLl1E0" resname="system_account">
         <source>system_account</source>
@@ -1392,7 +1392,7 @@
       </trans-unit>
       <trans-unit id="FxwWVFI" resname="help.globalActivity" xml:space="preserve">
         <source>help.globalActivity</source>
-        <target state="translated">Wenn Sie kein Projekt auswählen, wird diese Tätigkeit global und kann mit jedem Projekt kombinierbar werden. Wenn Sie ein Projekt auswählen, kann die Tätigkeit nur mit diesem verwendet werden. Die Einstellung kann nachträglich nicht mehr geändert werden.</target>
+        <target state="translated">Wenn Sie kein Projekt auswählen, wird diese Tätigkeit global und kann mit jedem Projekt kombiniert werden. Wenn Sie ein Projekt auswählen, kann die Tätigkeit nur mit diesem verwendet werden. Die Einstellung kann nachträglich nicht mehr geändert werden.</target>
       </trans-unit>
       <trans-unit id="8BPmHPa" resname="batch_meta_fields">
         <source>batch_meta_fields</source>
@@ -1630,9 +1630,9 @@
         <source>button.report</source>
         <target>Melden</target>
       </trans-unit>
-      <trans-unit id="YDrWFFP" resname="sickness.intro">
-        <source>sickness.intro</source>
-        <target>Krankheit, Arztbesuch, Pflege naher Angehöriger etc.</target>
+      <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="translated">Arbeitsunfähigkeit, medizinisch notwendige Termine, Pflegezeit etc.</target>
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve" approved="yes">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
@@ -1642,9 +1642,9 @@
         <source>time_off.intro</source>
         <target>Ihr Stundenkonto weist einen Stand von %hours% Stunden auf.</target>
       </trans-unit>
-      <trans-unit id="YPO294a" resname="absence_other.intro">
+      <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target>Familiäre Ereignisse, Umzug, Wetterchaos etc.</target>
+        <target state="translated">Aus- und Weiterbildung, sonstige betriebliche oder private Verhinderungen (z. B. Umzug, familiäre Anlässe) etc.</target>
       </trans-unit>
       <trans-unit id="TTnaBm4" resname="day_full">
         <source>day_full</source>
@@ -1914,9 +1914,9 @@
         <source>Remove widget</source>
         <target>Widget entfernen</target>
       </trans-unit>
-      <trans-unit id="5vJvarK" resname="syncronisation">
-        <source>syncronisation</source>
-        <target>Syncronisierung</target>
+      <trans-unit id="5vJvarK" resname="syncronisation" xml:space="preserve">
+        <source>Synchronization</source>
+        <target state="translated">Synchronisierung</target>
       </trans-unit>
       <trans-unit id="2UL2SIZ" resname="import">
         <source>import</source>

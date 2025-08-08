@@ -72,15 +72,15 @@
       </trans-unit>
       <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target state="needs-translation">Standard : l'heure de début sera arrondie à l'inférieur, l'heure de fin et la durée au supérieur</target>
+        <target state="translated">L'heure de début sera arrondie à l'inférieur, l'heure de fin et la durée au supérieur</target>
       </trans-unit>
       <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target state="needs-translation">Supérieur : l'heure de début, de fin et la durée seront arrondies au supérieur</target>
+        <target state="translated">Le début, la fin et la durée seront arrondies au supérieur</target>
       </trans-unit>
       <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target state="needs-translation">Au plus proche : arrondi mathématique à la valeur la plus proche</target>
+        <target state="translated">Arrondi mathématique à la valeur la plus proche</target>
       </trans-unit>
       <trans-unit id="hz.vdg5" resname="Sunday">
         <source>Sunday</source>

@@ -1538,9 +1538,9 @@
         <source>other</source>
         <target state="final">אחר</target>
       </trans-unit>
-      <trans-unit id="YDrWFFP" resname="sickness.intro">
-        <source>sickness.intro</source>
-        <target state="translated">חולי, ביקור אצל הרופא, טיפול בקרובי משפחה ועוד.</target>
+      <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve" approved="yes">
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="final">חוסר יכולת לעבוד, פגישות רפואיות הכרחיות, טיפול בבני משפחה וכו׳.</target>
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro">
         <source>absence_other.intro</source>

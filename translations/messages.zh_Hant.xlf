@@ -922,9 +922,9 @@
         <source>invoices</source>
         <target state="final">收支單</target>
       </trans-unit>
-      <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve" approved="yes">
-        <source>sickness.intro</source>
-        <target state="final">生病、看病、照顧近親、等。</target>
+      <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve" approved="no">
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="needs-translation">生病、看病、照顧近親、等。</target>
       </trans-unit>
       <trans-unit id="EI5gPkp" resname="stats.userDurationToday" xml:space="preserve" approved="yes">
         <source>stats.userDurationToday</source>
