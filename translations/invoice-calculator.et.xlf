@@ -18,6 +18,18 @@
         <source>project</source>
         <target state="translated">Projekt</target>
       </trans-unit>
+      <trans-unit id="MviRJeB" resname="invoice_calculator" xml:space="preserve">
+        <source>invoice_calculator</source>
+        <target state="translated">Arveridade grupeerimine</target>
+      </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help" xml:space="preserve">
+        <source>invoice_calculator.help</source>
+        <target state="translated">Vali, milliste väljade järgi peaks arve read olema grupeeritud</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
+        <source>default</source>
+        <target state="translated">Vaikevalik (Üks rida sissekande kohta)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

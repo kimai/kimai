@@ -1374,9 +1374,9 @@
         <source>Holidays per year</source>
         <target state="translated">أيام العطلة في السنة</target>
       </trans-unit>
-      <trans-unit id="YDrWFFP" resname="sickness.intro">
-        <source>sickness.intro</source>
-        <target state="translated">مرض، زيارة الطبيب، رعاية الأقارب المقربين، إلخ.</target>
+      <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="needs-translation">مرض، زيارة الطبيب، رعاية الأقارب المقربين، إلخ.</target>
       </trans-unit>
       <trans-unit id="Zngu6M9" resname="status.planned">
         <source>status.planned</source>

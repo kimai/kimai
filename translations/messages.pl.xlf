@@ -1527,8 +1527,8 @@
         <target state="translated">Na Twoim koncie czasu pracy znajduje się %hours% godzin.</target>
       </trans-unit>
       <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
-        <source>sickness.intro</source>
-        <target state="translated">Choroba, wizyta u lekarza, opieka nad bliskimi itp.</target>
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="needs-translation">Choroba, wizyta u lekarza, opieka nad bliskimi itp.</target>
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
@@ -1884,7 +1884,7 @@
       </trans-unit>
       <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve">
         <source>Rejected</source>
-        <target state="needs-translation">Odrzucone</target>
+        <target state="translated">Odrzucone</target>
       </trans-unit>
       <trans-unit id="0jvo0RQ" resname="profit" xml:space="preserve">
         <source>profit</source>

@@ -4,11 +4,15 @@
     <body>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer" xml:space="preserve">
         <source>automated_email_dont_answer</source>
-        <target state="needs-translation">This is an auto generated e-mail. Please do not reply, the address will not be read.</target>
+        <target state="translated">See on automaatselt genereeritud e-mail. Palume sellele mitte vastata, sest vastuseid ei toimetata edasi.</target>
       </trans-unit>
       <trans-unit id="QtcznHC" resname="registration.title" xml:space="preserve">
         <source>registration.title</source>
         <target state="translated">Welcome %username%</target>
+      </trans-unit>
+      <trans-unit id="pjr3FDv" resname="registration.subject" xml:space="preserve">
+        <source>registration.subject</source>
+        <target state="translated">Aktiveeri oma konto</target>
       </trans-unit>
     </body>
   </file>

@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
         <source>The end date must not be earlier than the start date.</source>
-        <target state="needs-translation">La date de fin ne doit pas être antérieure à la date de début.</target>
+        <target state="translated">La date de fin ne doit pas être antérieure à la date de début.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
@@ -120,7 +120,7 @@
       </trans-unit>
       <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="needs-translation">Une absence ne peut être programmée avant votre première journée de travail.</target>
+        <target state="translated">Une absence ne peut être programmée avant votre première journée de travail.</target>
       </trans-unit>
       <trans-unit id="kSBiyaF" resname="This is a public holiday, booking not allowed.">
         <source>This is a public holiday, booking not allowed.</source>
@@ -153,6 +153,18 @@
       <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form." xml:space="preserve">
         <source>The CSRF token is invalid. Please try to resubmit the form.</source>
         <target state="translated">Essayez de soumettre à nouveau le formulaire. Si le problème persiste, actualisez la page via le navigateur.</target>
+      </trans-unit>
+      <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day." xml:space="preserve">
+        <source>An absence cannot be booked after the last working day.</source>
+        <target state="needs-translation">Une absence ne peut pas être réservée après le dernier jour travaillé.</target>
+      </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target state="translated">La période sélectionnée ne peut pas être verrouillée : des demandes d’absence non confirmées sont en attente.</target>
+      </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
+        <source>Duration cannot be negative.</source>
+        <target state="translated">La durée ne peut pas être négative.</target>
       </trans-unit>
     </body>
   </file>

@@ -1579,8 +1579,8 @@
         <target state="translated">Λήψη από %name%</target>
       </trans-unit>
       <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
-        <source>sickness.intro</source>
-        <target state="translated">Ασθένεια, επίσκεψη σε γιατρό, φροντίδα στενών συγγενών κ.λπ.</target>
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="needs-translation">Ασθένεια, επίσκεψη σε γιατρό, φροντίδα στενών συγγενών κ.λπ.</target>
       </trans-unit>
       <trans-unit id="q59lI2y" resname="user_identifier" xml:space="preserve">
         <source>user_identifier</source>

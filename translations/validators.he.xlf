@@ -162,6 +162,10 @@
         <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
         <target state="final">לא ניתן לנעול את התקופה הנבחרת: יש בקשות העדרות ממתינות.</target>
       </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve" approved="yes">
+        <source>Duration cannot be negative.</source>
+        <target state="final">משך הזמן לא יכול להיות שלילי.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
