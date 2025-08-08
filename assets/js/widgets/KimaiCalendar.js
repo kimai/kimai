@@ -466,10 +466,10 @@ export default class KimaiCalendar {
                 }};
             } else if (source.type === 'google') {
                 calendarSource = {...calendarSource, ...{
-                        id: 'google-' + source.id,
-                        name: 'google',
-                        editable: false,
-                    }};
+                    id: 'google-' + source.id,
+                    name: 'google',
+                    editable: false,
+                }};
             } else if (source.type === 'json') {
                 calendarSource = {...calendarSource, ...{
                     id: 'json-' + source.id,
@@ -512,8 +512,8 @@ export default class KimaiCalendar {
 
         if (eventSources.length > 0) {
             calendarOptions = {...calendarOptions, ...{
-                    eventSources: eventSources,
-                }};
+                eventSources: eventSources,
+            }};
         }
 
         // INITIALIZE CALENDAR
@@ -640,8 +640,8 @@ export default class KimaiCalendar {
                     <li>` + this.options['translations']['project'] + `: ` + escaper.escapeForHtml(eventObj.project) + `</li>
                     <li>` + this.options['translations']['activity'] + `: ` + escaper.escapeForHtml(eventObj.activity) + `</li>
                 </ul>` +
-            (eventObj.description !== null || eventObj.tags.length > 0 ? '<hr>' : '') +
-            (eventObj.description ? '<div>' + escaper.escapeForHtml(eventObj.description) + '</div>' : '') + tags + `
+                (eventObj.description !== null || eventObj.tags.length > 0 ? '<hr>' : '') +
+                (eventObj.description ? '<div>' + escaper.escapeForHtml(eventObj.description) + '</div>' : '') + tags + `
             </div>`;
     }
 
