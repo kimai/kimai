@@ -392,7 +392,14 @@ class TimesheetEditForm extends AbstractType
             return;
         }
 
-        $builder->add('user', UserType::class);
+        $users = [];
+        if (isset($options['data']) && $options['data'] instanceof Timesheet) {
+            $users = [$options['data']->getUser()];
+        }
+
+        $builder->add('user', UserType::class, [
+            'include_users' => $users,
+        ]);
     }
 
     protected function addExported(FormBuilderInterface $builder, array $options): void
