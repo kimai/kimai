@@ -487,6 +487,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'color' => '@string',
                     'customer' => 'int',
                     'number' => '@int',
+                    'orderNumber' => '@string',
                     'globalActivities' => 'bool',
                     'comment' => '@string',
                 ];
@@ -501,6 +502,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'color' => '@string',
                     'customer' => ['result' => 'object', 'type' => 'Customer'],
                     'number' => '@int',
+                    'orderNumber' => '@string',
                     'globalActivities' => 'bool',
                     'comment' => '@string',
                 ];
@@ -514,6 +516,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'billable' => 'bool',
                     'customer' => 'int',
                     'number' => '@int',
+                    'orderNumber' => '@string',
                     'color' => '@string',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'parentTitle' => 'string',
