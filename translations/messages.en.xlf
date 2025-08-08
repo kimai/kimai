@@ -255,8 +255,8 @@
         <target>The request could not be processed. Too many results were found.</target>
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
-        <source>The directory “%dir%” does not exist and could not be created.</source>
-        <target>The directory “%dir%” does not exist and could not be created.</target>
+        <source>The directory "%dir%" does not exist and could not be created.</source>
+        <target>The directory "%dir%" does not exist and could not be created.</target>
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
@@ -1953,6 +1953,10 @@
       <trans-unit id="nsbR30p" resname="sending_company">
         <source>sending_company</source>
         <target>Invoice Sender</target>
+      </trans-unit>
+      <trans-unit id="user_ical_link" resname="user_ical_link">
+        <source>user_ical_link</source>
+        <target>User ICal Link</target>
       </trans-unit>
     </body>
   </file>

@@ -51,6 +51,7 @@ class UserPreference
     public const PUBLIC_HOLIDAY_GROUP = 'public_holiday_group';
     public const HOLIDAYS_PER_YEAR = 'holidays';
     public const WORK_CONTRACT_TYPE = 'work_contract_type';
+    public const USER_ICAL_LINK = 'user_ical_link';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

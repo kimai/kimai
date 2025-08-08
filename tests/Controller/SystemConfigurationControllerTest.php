@@ -372,6 +372,7 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
                     ['name' => 'calendar.businessHours.end', 'value' => '16:00'],
                     ['name' => 'calendar.visibleHours.begin', 'value' => '05:17'],
                     ['name' => 'calendar.visibleHours.end', 'value' => '21:43'],
+                    ['name' => 'calendar.global_ical_link', 'value' => 'https://example.com/calendar.ics'],
                 ]
             ]
         ]);
@@ -388,6 +389,7 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
         self::assertEquals('16:00', $configService->find('calendar.businessHours.end'));
         self::assertEquals('05:17', $configService->find('calendar.visibleHours.begin'));
         self::assertEquals('21:43', $configService->find('calendar.visibleHours.end'));
+        self::assertEquals('https://example.com/calendar.ics', $configService->find('calendar.global_ical_link'));
     }
 
     public function testUpdateCalendarConfigValidation(): void

@@ -316,6 +316,11 @@ final class SystemConfiguration
         return (bool) $this->find('calendar.dragdrop_data');
     }
 
+    public function getCalendarGlobalIcalLink(): ?string
+    {
+        return $this->find('calendar.global_ical_link');
+    }
+
     // ========== Customer configurations ==========
 
     public function getCustomerDefaultTimezone(): ?string

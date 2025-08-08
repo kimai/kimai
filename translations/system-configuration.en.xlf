@@ -302,6 +302,14 @@
         <source>calendar.title_pattern</source>
         <target>Display of the titles of calendar entries</target>
       </trans-unit>
+      <trans-unit id="calendar_global_ical_link" resname="calendar.global_ical_link">
+        <source>calendar.global_ical_link</source>
+        <target>Global ICal Link</target>
+      </trans-unit>
+      <trans-unit id="help_calendar_global_ical_link" resname="help.calendar.global_ical_link">
+        <source>help.calendar.global_ical_link</source>
+        <target>Global ICal feed URL that will be available to all users</target>
+      </trans-unit>
       <trans-unit id="12sQGSo" resname="activity.allow_inline_create">
         <source>activity.allow_inline_create</source>
         <target>Allow creation of activities in time-tracking form</target>

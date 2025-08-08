@@ -595,6 +595,11 @@ final class SystemConfigurationController extends AbstractController
                     (new Configuration('calendar.title_pattern'))
                         ->setTranslationDomain('system-configuration')
                         ->setType(CalendarTitlePatternType::class),
+                    (new Configuration('calendar.global_ical_link'))
+                        ->setTranslationDomain('system-configuration')
+                        ->setType(TextType::class)
+                        ->setRequired(false)
+                        ->setOptions(['help' => 'help.calendar.global_ical_link']),
                 ]),
             (new SystemConfigurationModel('branding'))
                 ->setConfiguration([

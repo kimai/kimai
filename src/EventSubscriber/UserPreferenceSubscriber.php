@@ -27,6 +27,7 @@ use App\Form\Type\YesNoType;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Range;
@@ -136,6 +137,13 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setOrder(900)
                 ->setSection('behaviour')
                 ->setType(YesNoType::class),
+
+            (new UserPreference(UserPreference::USER_ICAL_LINK, ''))
+                ->setOrder(950)
+                ->setSection('calendar')
+                ->setType(TextType::class)
+                ->setOptions(['required' => false, 'label' => 'user_ical_link'])
+                ->addConstraint(new Length(['max' => 255])),
         ];
     }
 
