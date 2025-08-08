@@ -75,7 +75,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[ORM\Column(name: 'order_number', type: Types::TEXT, length: 50, nullable: true)]
     #[Assert\Length(max: 50)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Project_Entity'])]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'orderNumber')]
     private ?string $orderNumber = null;
     /**
