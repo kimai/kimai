@@ -70,3 +70,5 @@ public/build/
 
 # Exclude yarn.lock
 yarn.lock
+yarn.lock
+/public/build
