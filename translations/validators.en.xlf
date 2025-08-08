@@ -172,7 +172,19 @@
       </trans-unit>
       <trans-unit id="ical_link_invalid_extension" resname="The URL must end with .ics">
         <source>The URL must end with .ics</source>
-        <target>The URL must end with .ics</target>
+        <target>The URL should end with .ics</target>
+      </trans-unit>
+      <trans-unit id="ical_link_download_failed" resname="Unable to access the URL">
+        <source>Unable to access the URL</source>
+        <target>Unable to access the URL</target>
+      </trans-unit>
+      <trans-unit id="ical_link_file_too_large" resname="The file is too large (maximum {{ max_size }} bytes)">
+        <source>The file is too large (maximum {{ max_size }} bytes)</source>
+        <target>The file is too large (maximum {{ max_size }} bytes)</target>
+      </trans-unit>
+      <trans-unit id="ical_link_invalid_ics_content" resname="The file does not contain valid ICS calendar data">
+        <source>The file does not contain valid ICS calendar data</source>
+        <target>The file does not contain valid ICS calendar data</target>
       </trans-unit>
     </body>
   </file>
