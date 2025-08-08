@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
         <source>The end date must not be earlier than the start date.</source>
-        <target state="needs-translation">Slutdato må ikke være før startdato.</target>
+        <target state="translated">Slutdato må ikke være før startdato.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
@@ -88,7 +88,7 @@
       </trans-unit>
       <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="needs-translation">Et fravær kan ikke bookes før din første arbejdsdag.</target>
+        <target state="translated">Et fravær kan ikke bookes før den første arbejdsdag.</target>
       </trans-unit>
       <trans-unit id="c2B6.lW" resname="You can book a maximum of {{ value }} days at once." xml:space="preserve">
         <source>You can book a maximum of {{ value }} days at once.</source>
@@ -149,6 +149,22 @@
       <trans-unit id="7HYTefs" resname="Cannot stop running timesheet" xml:space="preserve">
         <source>Cannot stop running timesheet</source>
         <target state="translated">Du har en aktiv tidsregistrering der ikke kan stoppes automatisk.</target>
+      </trans-unit>
+      <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form." xml:space="preserve">
+        <source>The CSRF token is invalid. Please try to resubmit the form.</source>
+        <target state="translated">Forsøg at sende formularen igen. Hvis problemet fortsætter kan du genindlæse siden i din browser.</target>
+      </trans-unit>
+      <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day." xml:space="preserve">
+        <source>An absence cannot be booked after the last working day.</source>
+        <target state="translated">Et fravær kan ikke reserveres efter den sidste arbejdsdag.</target>
+      </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target state="translated">Valgte periode kan ikke låses: Ubekræftet fraværsforespørgsel afventer.</target>
+      </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
+        <source>Duration cannot be negative.</source>
+        <target state="translated">Varighed kan ikke være negativ.</target>
       </trans-unit>
     </body>
   </file>

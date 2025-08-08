@@ -1406,9 +1406,9 @@
         <source>public_holidays</source>
         <target state="translated">Праздничные дни</target>
       </trans-unit>
-      <trans-unit id="YDrWFFP" resname="sickness.intro">
-        <source>sickness.intro</source>
-        <target state="translated">Болезнь, визит к врачу, уход за близкими родственниками и т.д.</target>
+      <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="translated">Неработоспособность, визит к врачу, уход за близкими родственниками и т.д.</target>
       </trans-unit>
       <trans-unit id="4PMHpIp" resname="time_off">
         <source>time_off</source>

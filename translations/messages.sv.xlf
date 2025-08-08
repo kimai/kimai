@@ -1478,9 +1478,9 @@
         <source>button.report</source>
         <target state="translated">Rapportera</target>
       </trans-unit>
-      <trans-unit id="YDrWFFP" resname="sickness.intro">
-        <source>sickness.intro</source>
-        <target state="translated">Sjukdom, läkarbesök, ta hand om familjemedlemmar, etc.</target>
+      <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="translated">Oförmåga för arbete, medicinskt nödvändiga möten, vårdledighet, etc.</target>
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>

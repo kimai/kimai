@@ -1155,8 +1155,8 @@
         <target state="translated">Teraktivasi</target>
       </trans-unit>
       <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
-        <source>sickness.intro</source>
-        <target state="translated">Penyakit, Kunjungan dokter, merawat kerabat dekat, dll.</target>
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="needs-translation">Penyakit, Kunjungan dokter, merawat kerabat dekat, dll.</target>
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>

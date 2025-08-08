@@ -846,9 +846,9 @@
         <source>lastLogin</source>
         <target state="translated">Останній вхід</target>
       </trans-unit>
-      <trans-unit id="MQKiG33" resname="profile.preferences">
+      <trans-unit id="MQKiG33" resname="profile.preferences" xml:space="preserve">
         <source>profile.preferences</source>
-        <target state="translated">Налаштування</target>
+        <target state="translated">Налаштуваннях</target>
       </trans-unit>
       <trans-unit id="j4Kd9N1" resname="calendar_initial_view">
         <source>calendar_initial_view</source>
@@ -1514,9 +1514,9 @@
         <source>time_off</source>
         <target state="translated">Відгул</target>
       </trans-unit>
-      <trans-unit id="YDrWFFP" resname="sickness.intro">
-        <source>sickness.intro</source>
-        <target state="translated">Хвороба, відвідування лікаря, догляд за близькими родичами тощо.</target>
+      <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="translated">Непрацездатність, необхідні медичні огляди, відпустка для догляду тощо.</target>
       </trans-unit>
       <trans-unit id="opDmYAa" resname="status.approved">
         <source>status.approved</source>

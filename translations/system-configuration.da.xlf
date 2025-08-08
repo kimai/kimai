@@ -128,19 +128,19 @@
       </trans-unit>
       <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target state="needs-translation">Ceil: start, slut, og varighed rundes op</target>
+        <target state="translated">Start, slut, og varighed rundes op</target>
       </trans-unit>
       <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target state="needs-translation">Tætteste: matematisk afrunding til nærmeste værdi</target>
+        <target state="translated">Matematisk afrunding til nærmeste værdi</target>
       </trans-unit>
       <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target state="needs-translation">Standard: start rundes ned, og slut rundes op</target>
+        <target state="translated">Start rundes ned, slut og varighed rundes op</target>
       </trans-unit>
       <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target state="needs-translation">Floor: start, slut, og varighed rundes ned</target>
+        <target state="translated">Start, slut og varighed rundes ned</target>
       </trans-unit>
       <trans-unit id="SnkW0Pk" resname="theme.avatar_url">
         <source>theme.avatar_url</source>
@@ -269,6 +269,46 @@
       <trans-unit id="55s60b4" resname="user_auth_password_reset_token_ttl" xml:space="preserve">
         <source>user_auth_password_reset_token_ttl</source>
         <target state="translated">Glemt password - sekunder før et reset link udløber</target>
+      </trans-unit>
+      <trans-unit id="_0OBfZf" resname="timesheet.default_begin" xml:space="preserve">
+        <source>timesheet.default_begin</source>
+        <target state="translated">Standard starttid (bruges ikke i alle tidsregistreringstilstande)</target>
+      </trans-unit>
+      <trans-unit id="UTurPF1" resname="invoice.number_format" xml:space="preserve">
+        <source>invoice.number_format</source>
+        <target state="translated">Fakturanummer-format</target>
+      </trans-unit>
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
+        <source>customer.number_format</source>
+        <target state="translated">Kundenummerformat</target>
+      </trans-unit>
+      <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number" xml:space="preserve">
+        <source>customer.allow_duplicate_number</source>
+        <target state="translated">Tillad dubletter af kontonummer</target>
+      </trans-unit>
+      <trans-unit id="3xUU9V." resname="project.number_format" xml:space="preserve">
+        <source>project.number_format</source>
+        <target state="translated">Projektnummerformat</target>
+      </trans-unit>
+      <trans-unit id="ifgrIHh" resname="activity.number_format" xml:space="preserve">
+        <source>activity.number_format</source>
+        <target state="translated">Aktivitetsreferenceformat</target>
+      </trans-unit>
+      <trans-unit id="jj1NmKW" resname="allow_duplicate_number" xml:space="preserve">
+        <source>allow_duplicate_number</source>
+        <target state="translated">Tillad flere forekomster af samme referense</target>
+      </trans-unit>
+      <trans-unit id="IZY5kqL" resname="allowed_replacer" xml:space="preserve">
+        <source>allowed_replacer</source>
+        <target state="translated">Tillad erstatter: %replacer%</target>
+      </trans-unit>
+      <trans-unit id="Rf_fb9x" resname="timesheet.rules.break_warning_duration" xml:space="preserve">
+        <source>timesheet.rules.break_warning_duration</source>
+        <target state="translated">Maksimum varighed for en timeseddel i minutter, før en "pauseadvarsel" vil blive vist (0 = deaktiveret)</target>
+      </trans-unit>
+      <trans-unit id="vg5G_9i" resname="timesheet.rules.long_running_duration" xml:space="preserve">
+        <source>timesheet.rules.long_running_duration</source>
+        <target state="translated">Maksumim varighed for en timeseddel i minutter, før en lagring vil blive afvist (0 = deaktiveret)</target>
       </trans-unit>
     </body>
   </file>

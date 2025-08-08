@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target state="needs-translation">Nächster: Mathematisches Runden auf den nächsten Wert</target>
+        <target state="translated">Mathematische Rundung zum nächsten Wert</target>
       </trans-unit>
       <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
         <source>timesheet.default_begin</source>
@@ -48,7 +48,7 @@
       </trans-unit>
       <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
         <source>customer.number_format</source>
-        <target state="needs-translation">Format der Kundennummern</target>
+        <target state="translated">Kundennummer-Format</target>
       </trans-unit>
       <trans-unit id="mPRUBFX" resname="theme.markdown_content">
         <source>theme.markdown_content</source>
@@ -144,11 +144,11 @@
       </trans-unit>
       <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target state="needs-translation">Standard: Beginn wird abgerundet, Ende und Dauer aufgerundet</target>
+        <target state="translated">Start wird nach unten, Ende und Dauer nach oben gerundet</target>
       </trans-unit>
       <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target state="needs-translation">Abrunden: Beginn, Ende und Dauer werden abgerundet</target>
+        <target state="translated">Start, Ende und Dauer werden nach unten gerundet</target>
       </trans-unit>
       <trans-unit id="UTurPF1" resname="invoice.number_format">
         <source>invoice.number_format</source>
@@ -272,7 +272,7 @@
       </trans-unit>
       <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target state="needs-translation">Obergrenze: Beginn, Ende und Dauer werden aufgerundet</target>
+        <target state="translated">Start, Ende und Dauer werden nach oben gerundet</target>
       </trans-unit>
       <trans-unit id=".CZiBi." resname="Thursday">
         <source>Thursday</source>
@@ -297,6 +297,18 @@
       <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no">
         <source>copy_teams_on_create</source>
         <target state="translated">Beim Erstellen neuer Einträge Teams vom eingeloggten Benutzer übernehmen</target>
+      </trans-unit>
+      <trans-unit id="3xUU9V." resname="project.number_format" xml:space="preserve">
+        <source>project.number_format</source>
+        <target state="translated">Projektnummer-Format</target>
+      </trans-unit>
+      <trans-unit id="ifgrIHh" resname="activity.number_format" xml:space="preserve">
+        <source>activity.number_format</source>
+        <target state="translated">Tätigkeitsnummer-Format</target>
+      </trans-unit>
+      <trans-unit id="jj1NmKW" resname="allow_duplicate_number" xml:space="preserve">
+        <source>allow_duplicate_number</source>
+        <target state="translated">Erlaube Mehrfach-Nutzung derselben Nummer</target>
       </trans-unit>
     </body>
   </file>

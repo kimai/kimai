@@ -1311,8 +1311,8 @@
         <target state="needs-translation">Până acum ați luat %used% din %days% zile de vacanță disponibile.</target>
       </trans-unit>
       <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
-        <source>sickness.intro</source>
-        <target state="translated">Boală, vizita la medic, îngrijirea rudelor apropiate etc.</target>
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="needs-translation">Boală, vizita la medic, îngrijirea rudelor apropiate etc.</target>
       </trans-unit>
       <trans-unit id=".wmq_rT" resname="force_password_change" xml:space="preserve">
         <source>force_password_change</source>
