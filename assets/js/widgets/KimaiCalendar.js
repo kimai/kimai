@@ -155,8 +155,9 @@ export default class KimaiCalendar {
             slotMinTime: this.options['timeframeBegin'] + ':00',
             slotMaxTime: this.options['timeframeEnd'] === '23:59' ? '24:00:00' : (this.options['timeframeEnd'] + ':59'),
 
-            // auto calculation seems to do the better job, therefor deactivated
-            //slotLabelInterval: this.options['slotDuration'],
+            // deactivate for auto calculation, which does a good job.
+            // but 1h seems to be a "normal distance" for calendar apps (like Google and Apple)
+            slotLabelInterval: '1:00',
 
             // how long should entries look like when they don't have an end
             defaultTimedEventDuration: this.options['slotDuration'],
@@ -172,8 +173,6 @@ export default class KimaiCalendar {
             // once we can configure working days
             // hiddenDays: [ 2, 4 ]
 
-            // when we support holidays and other full day events
-            // allDaySlot: false,
             // dropAccept
 
             dayMaxEventRows: true,

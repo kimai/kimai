@@ -176,7 +176,7 @@
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
         <source>calendar.slot_duration</source>
-        <target>Unidad mínima de tiempo para las vistas semanal y diaria (formato: hh:mm:ss)</target>
+        <target>Unidad mínima de tiempo para las vistas semanal y diaria</target>
       </trans-unit>
       <trans-unit id="yBBvkfb" resname="timesheet.rules.allow_zero_duration">
         <source>timesheet.rules.allow_zero_duration</source>

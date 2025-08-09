@@ -76,7 +76,7 @@
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
         <source>calendar.slot_duration</source>
-        <target state="translated">Paikan kesto viikko- ja päivänäkymälle (muoto: hh:mm:ss)</target>
+        <target state="translated">Paikan kesto viikko- ja päivänäkymälle</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>

@@ -108,7 +108,7 @@
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
         <source>calendar.slot_duration</source>
-        <target>Slot duration for week- and day view (format: hh:mm:ss)</target>
+        <target>Slot duration for week- and day view</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>

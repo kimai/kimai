@@ -96,7 +96,7 @@
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
         <source>calendar.slot_duration</source>
-        <target>Bejegyzés hossza heti és napi nézetben (formátum: hh:mm:ss)</target>
+        <target>Bejegyzés hossza heti és napi nézetben</target>
       </trans-unit>
       <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
         <source>timesheet.default_begin</source>

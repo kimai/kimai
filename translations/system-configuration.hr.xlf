@@ -92,7 +92,7 @@
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
         <source>calendar.slot_duration</source>
-        <target state="translated">Trajanje vremenskog razdoblja za prikaz tjedna i dana (format: hh:mm:ss)</target>
+        <target state="translated">Trajanje vremenskog razdoblja za prikaz tjedna i dana</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>
