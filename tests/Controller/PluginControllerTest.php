@@ -9,10 +9,10 @@
 
 namespace App\Tests\Controller;
 
-use PHPUnit\Framework\Attributes\Group;
 use App\Entity\User;
 use App\Plugin\PluginManager;
 use App\Tests\Plugin\Fixtures\TestPlugin\TestPlugin;
+use PHPUnit\Framework\Attributes\Group;
 
 #[Group('integration')]
 class PluginControllerTest extends AbstractControllerBaseTestCase

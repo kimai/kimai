@@ -9,8 +9,8 @@
 
 namespace App\Tests\API\Model;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\API\Model\TimesheetConfig;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(TimesheetConfig::class)]

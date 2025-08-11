@@ -9,7 +9,6 @@
 
 namespace App\Tests\Entity;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -19,6 +18,7 @@ use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Timesheet::class)]

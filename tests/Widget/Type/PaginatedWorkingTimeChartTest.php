@@ -9,14 +9,14 @@
 
 namespace App\Tests\Widget\Type;
 
-use App\Widget\Type\AbstractWidgetType;
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
+use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\PaginatedWorkingTimeChart;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(PaginatedWorkingTimeChart::class)]

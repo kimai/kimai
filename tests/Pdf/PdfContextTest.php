@@ -9,8 +9,8 @@
 
 namespace App\Tests\Pdf;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Pdf\PdfContext;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(PdfContext::class)]

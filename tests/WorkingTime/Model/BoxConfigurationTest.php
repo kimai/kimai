@@ -9,8 +9,8 @@
 
 namespace App\Tests\WorkingTime\Model;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\WorkingTime\Model\BoxConfiguration;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(BoxConfiguration::class)]

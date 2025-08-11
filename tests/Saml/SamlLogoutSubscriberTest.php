@@ -9,13 +9,13 @@
 
 namespace App\Tests\Saml;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Saml\SamlAuthFactory;
 use App\Saml\SamlLogoutSubscriber;
 use App\Saml\SamlToken;
 use OneLogin\Saml2\Auth;
 use OneLogin\Saml2\Error;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;

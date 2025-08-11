@@ -9,8 +9,8 @@
 
 namespace App\Tests\DependencyInjection;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\DependencyInjection\Configuration;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 

@@ -9,8 +9,6 @@
 
 namespace App\Tests\Customer;
 
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Configuration\SystemConfiguration;
 use App\Customer\CustomerService;
 use App\Entity\Customer;
@@ -23,6 +21,8 @@ use App\Event\CustomerUpdatePreEvent;
 use App\Repository\CustomerRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\ValidationFailedException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Validator\ConstraintViolation;

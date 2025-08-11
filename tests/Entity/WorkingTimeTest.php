@@ -9,9 +9,9 @@
 
 namespace App\Tests\Entity;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Entity\WorkingTime;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(WorkingTime::class)]

@@ -9,8 +9,6 @@
 
 namespace App\Tests\Project;
 
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Configuration\SystemConfiguration;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -27,6 +25,8 @@ use App\Repository\ProjectRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Utils\Context;
 use App\Validator\ValidationFailedException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Validator\ConstraintViolation;

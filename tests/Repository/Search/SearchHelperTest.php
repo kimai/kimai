@@ -9,7 +9,6 @@
 
 namespace App\Tests\Repository\Search;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Timesheet;
 use App\Repository\Query\BaseQuery;
 use App\Repository\RepositoryException;
@@ -23,6 +22,7 @@ use Doctrine\ORM\Query\Expr\Comparison;
 use Doctrine\ORM\Query\Expr\Orx;
 use Doctrine\ORM\Query\Parameter;
 use Doctrine\ORM\QueryBuilder;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(SearchHelper::class)]

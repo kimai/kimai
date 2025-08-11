@@ -9,11 +9,11 @@
 
 namespace App\Tests\Voter;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Customer;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Voter\CustomerVoter;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 

@@ -9,12 +9,12 @@
 
 namespace App\Tests\Entity;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\EntityWithMetaFields;
 use App\Entity\MetaTableTypeInterface;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(TimesheetMeta::class)]
 class TimesheetMetaTest extends AbstractMetaEntityTestCase

@@ -9,9 +9,9 @@
 
 namespace App\Tests\Repository\Query;
 
+use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\BaseQuery;
 use PHPUnit\Framework\Attributes\CoversClass;
-use App\Repository\Query\ActivityQuery;
 
 #[CoversClass(ActivityQuery::class)]
 #[CoversClass(BaseQuery::class)]

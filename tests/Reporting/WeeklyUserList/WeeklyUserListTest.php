@@ -9,10 +9,10 @@
 
 namespace App\Tests\Reporting\WeeklyUserList;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Reporting\AbstractUserList;
 use App\Reporting\WeeklyUserList\WeeklyUserList;
 use App\Tests\Reporting\AbstractUserListTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(WeeklyUserList::class)]
 #[CoversClass(AbstractUserList::class)]

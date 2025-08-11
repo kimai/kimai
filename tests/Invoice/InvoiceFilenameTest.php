@@ -9,7 +9,6 @@
 
 namespace App\Tests\Invoice;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use App\Entity\Project;
@@ -19,6 +18,7 @@ use App\Invoice\NumberGeneratorInterface;
 use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(InvoiceFilename::class)]

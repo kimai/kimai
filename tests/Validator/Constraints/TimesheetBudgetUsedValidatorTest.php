@@ -9,8 +9,6 @@
 
 namespace App\Tests\Validator\Constraints;
 
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Activity\ActivityStatisticService;
 use App\Configuration\LocaleService;
 use App\Customer\CustomerStatisticService;
@@ -34,6 +32,8 @@ use App\Timesheet\RateServiceInterface;
 use App\Validator\Constraints\TimesheetBudgetUsed;
 use App\Validator\Constraints\TimesheetBudgetUsedValidator;
 use DateTime;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;

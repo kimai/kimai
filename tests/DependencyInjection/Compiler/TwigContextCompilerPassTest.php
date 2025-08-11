@@ -9,11 +9,11 @@
 
 namespace App\Tests\DependencyInjection\Compiler;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\DependencyInjection\Compiler\TwigContextCompilerPass;
 use App\Export\ServiceExport;
 use App\Twig\Configuration;
 use App\Twig\Context;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;

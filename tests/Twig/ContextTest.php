@@ -10,10 +10,10 @@
 namespace App\Tests\Twig;
 
 use App\Configuration\SystemConfiguration;
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Twig\Context;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;

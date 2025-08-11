@@ -9,8 +9,8 @@
 
 namespace App\Tests\Utils;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Utils\MenuItemModel;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(MenuItemModel::class)]

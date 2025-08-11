@@ -9,9 +9,9 @@
 
 namespace App\Tests\Utils;
 
+use App\Utils\SearchTerm;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
-use App\Utils\SearchTerm;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(SearchTerm::class)]

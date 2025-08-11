@@ -9,12 +9,12 @@
 
 namespace App\Tests\Export\Spreadsheet\CellFormatter;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Export\Spreadsheet\CellFormatter\CellFormatterInterface;
 use App\Export\Spreadsheet\CellFormatter\DurationFormatter;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Style;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(DurationFormatter::class)]
 class DurationFormatterTest extends AbstractFormatterTestCase

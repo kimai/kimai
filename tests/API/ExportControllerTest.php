@@ -9,10 +9,10 @@
 
 namespace App\Tests\API;
 
-use PHPUnit\Framework\Attributes\Group;
 use App\Entity\ExportTemplate;
 use App\Entity\User;
 use App\Repository\ExportTemplateRepository;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

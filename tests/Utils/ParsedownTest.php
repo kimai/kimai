@@ -9,8 +9,8 @@
 
 namespace App\Tests\Utils;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Utils\Parsedown;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Parsedown::class)]

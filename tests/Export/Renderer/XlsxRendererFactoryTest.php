@@ -9,10 +9,10 @@
 
 namespace App\Tests\Export\Renderer;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Export\Base\XlsxRenderer;
 use App\Export\Renderer\XlsxRendererFactory;
 use App\Export\Template;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;

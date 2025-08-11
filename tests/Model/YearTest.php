@@ -9,8 +9,8 @@
 
 namespace App\Tests\Model;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Model\Year;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Year::class)]

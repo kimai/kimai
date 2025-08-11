@@ -9,9 +9,9 @@
 
 namespace App\Tests\Reporting;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Reporting\Report;
 use App\Reporting\ReportInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Report::class)]

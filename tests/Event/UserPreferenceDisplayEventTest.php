@@ -9,9 +9,9 @@
 
 namespace App\Tests\Event;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\UserPreference;
 use App\Event\UserPreferenceDisplayEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(UserPreferenceDisplayEvent::class)]

@@ -9,10 +9,10 @@
 
 namespace App\Tests\Mail;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\MailConfiguration;
 use App\Entity\User;
 use App\Mail\KimaiMailer;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;

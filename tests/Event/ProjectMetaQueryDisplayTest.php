@@ -9,11 +9,11 @@
 
 namespace App\Tests\Event;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\ProjectMeta;
 use App\Event\MetaDisplayEventInterface;
 use App\Event\ProjectMetaDisplayEvent;
 use App\Repository\Query\ProjectQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(ProjectMetaDisplayEvent::class)]

@@ -9,9 +9,9 @@
 
 namespace App\Tests\Utils;
 
+use App\Utils\Markdown;
 use App\Utils\ParsedownExtension;
 use PHPUnit\Framework\Attributes\CoversClass;
-use App\Utils\Markdown;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Markdown::class)]

@@ -9,9 +9,9 @@
 
 namespace App\Tests\Entity;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\AccessToken;
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(AccessToken::class)]
 class AccessTokenTest extends AbstractEntityTestCase

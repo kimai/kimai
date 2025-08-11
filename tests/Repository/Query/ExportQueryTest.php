@@ -9,9 +9,9 @@
 
 namespace App\Tests\Repository\Query;
 
+use App\Repository\Query\ExportQuery;
 use App\Repository\Query\TimesheetQuery;
 use PHPUnit\Framework\Attributes\CoversClass;
-use App\Repository\Query\ExportQuery;
 
 #[CoversClass(ExportQuery::class)]
 #[CoversClass(TimesheetQuery::class)]

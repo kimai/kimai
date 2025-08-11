@@ -9,9 +9,9 @@
 
 namespace App\Tests\Form\DataTransformer;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Form\DataTransformer\SearchTermTransformer;
 use App\Utils\SearchTerm;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(SearchTermTransformer::class)]

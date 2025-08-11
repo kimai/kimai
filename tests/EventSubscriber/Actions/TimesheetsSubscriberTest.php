@@ -10,8 +10,8 @@
 namespace App\Tests\EventSubscriber\Actions;
 
 use App\EventSubscriber\Actions\AbstractActionsSubscriber;
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\EventSubscriber\Actions\TimesheetsSubscriber;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(AbstractActionsSubscriber::class)]
 #[CoversClass(TimesheetsSubscriber::class)]

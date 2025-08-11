@@ -9,8 +9,8 @@
 
 namespace App\Tests\Repository\Search;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Repository\Search\SearchConfiguration;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(SearchConfiguration::class)]

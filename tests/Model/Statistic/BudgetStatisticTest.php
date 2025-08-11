@@ -9,9 +9,9 @@
 
 namespace App\Tests\Model\Statistic;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Model\Statistic\BudgetStatistic;
 use App\Tests\Model\AbstractTimesheetCountedStatisticTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(BudgetStatistic::class)]
 class BudgetStatisticTest extends AbstractTimesheetCountedStatisticTestCase

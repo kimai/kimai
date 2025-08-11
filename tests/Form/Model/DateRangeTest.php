@@ -9,8 +9,8 @@
 
 namespace App\Tests\Form\Model;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Form\Model\DateRange;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(DateRange::class)]

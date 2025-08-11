@@ -9,9 +9,6 @@
 
 namespace App\Tests\Invoice\Calculator;
 
-use App\Invoice\Calculator\AbstractMergedCalculator;
-use App\Invoice\Calculator\AbstractCalculator;
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
@@ -19,12 +16,15 @@ use App\Entity\Project;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Invoice\Calculator\AbstractCalculator;
+use App\Invoice\Calculator\AbstractMergedCalculator;
 use App\Invoice\Calculator\ShortInvoiceCalculator;
 use App\Invoice\CalculatorInterface;
 use App\Invoice\InvoiceItem;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(ShortInvoiceCalculator::class)]
 #[CoversClass(AbstractMergedCalculator::class)]

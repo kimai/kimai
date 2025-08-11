@@ -9,9 +9,9 @@
 
 namespace App\Tests\Reporting\ProjectInactive;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Reporting\ProjectInactive\ProjectInactiveQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(ProjectInactiveQuery::class)]

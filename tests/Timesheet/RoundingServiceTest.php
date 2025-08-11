@@ -9,11 +9,11 @@
 
 namespace App\Tests\Timesheet;
 
+use App\Entity\Timesheet;
+use App\Tests\Mocks\RoundingServiceFactory;
 use App\Timesheet\RoundingService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
-use App\Entity\Timesheet;
-use App\Tests\Mocks\RoundingServiceFactory;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(RoundingService::class)]

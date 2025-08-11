@@ -9,8 +9,8 @@
 
 namespace App\Tests\Repository\Query;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Repository\Query\CustomerQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(CustomerQuery::class)]
 class CustomerQueryTest extends BaseQueryTest

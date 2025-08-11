@@ -9,9 +9,9 @@
 
 namespace App\Tests\Utils;
 
+use App\Utils\Duration;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
-use App\Utils\Duration;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Duration::class)]

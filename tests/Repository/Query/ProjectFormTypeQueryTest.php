@@ -9,10 +9,10 @@
 
 namespace App\Tests\Repository\Query;
 
-use App\Repository\Query\BaseFormTypeQuery;
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Project;
+use App\Repository\Query\BaseFormTypeQuery;
 use App\Repository\Query\ProjectFormTypeQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(ProjectFormTypeQuery::class)]
 #[CoversClass(BaseFormTypeQuery::class)]

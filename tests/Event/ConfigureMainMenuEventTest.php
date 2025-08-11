@@ -9,10 +9,10 @@
 
 namespace App\Tests\Event;
 
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\Group;
 use App\Event\ConfigureMainMenuEvent;
 use App\Utils\MenuItemModel;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(ConfigureMainMenuEvent::class)]

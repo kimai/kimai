@@ -9,7 +9,6 @@
 
 namespace App\Tests\Export\Spreadsheet\Extractor;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Project;
 use App\Entity\ProjectMeta;
 use App\Event\ProjectMetaDisplayEvent;
@@ -17,6 +16,7 @@ use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\ExtractorException;
 use App\Export\Spreadsheet\Extractor\MetaFieldExtractor;
 use App\Repository\Query\ProjectQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 

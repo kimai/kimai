@@ -9,12 +9,12 @@
 
 namespace App\Tests\Timesheet;
 
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Configuration\ConfigLoaderInterface;
 use App\Entity\Timesheet;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\LockdownService;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(LockdownService::class)]

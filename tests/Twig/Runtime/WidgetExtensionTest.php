@@ -9,11 +9,11 @@
 
 namespace App\Tests\Twig\Runtime;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Tests\Widget\Type\More;
 use App\Twig\Runtime\WidgetExtension;
 use App\Widget\WidgetService;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\ContainerInterface;

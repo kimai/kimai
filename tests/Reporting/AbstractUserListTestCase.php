@@ -9,8 +9,8 @@
 
 namespace App\Tests\Reporting;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Reporting\AbstractUserList;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(AbstractUserList::class)]

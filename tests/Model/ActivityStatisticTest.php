@@ -9,9 +9,9 @@
 
 namespace App\Tests\Model;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Model\ActivityStatistic;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(ActivityStatistic::class)]
 class ActivityStatisticTest extends AbstractTimesheetCountedStatisticTestCase

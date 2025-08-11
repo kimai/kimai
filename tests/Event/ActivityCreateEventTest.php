@@ -9,10 +9,10 @@
 
 namespace App\Tests\Event;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Event\AbstractActivityEvent;
 use App\Event\ActivityCreateEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(AbstractActivityEvent::class)]
 #[CoversClass(ActivityCreateEvent::class)]

@@ -10,13 +10,13 @@
 namespace App\Tests\Command;
 
 use App\Command\AbstractRoleCommand;
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\Group;
 use App\Command\PromoteUserCommand;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\User\UserService;
 use Doctrine\Bundle\DoctrineBundle\Registry;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Exception\RuntimeException;

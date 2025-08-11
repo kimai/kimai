@@ -9,9 +9,9 @@
 
 namespace App\Tests\Event;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Timesheet;
 use App\Event\TimesheetMetaDefinitionEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(TimesheetMetaDefinitionEvent::class)]

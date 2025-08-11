@@ -9,8 +9,8 @@
 
 namespace App\Tests\Export\Package\CellFormatter;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Export\Package\CellFormatter\DateStringFormatter;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(DateStringFormatter::class)]

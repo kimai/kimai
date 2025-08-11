@@ -9,12 +9,12 @@
 
 namespace App\Tests\Validator\Constraints;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Entity\Timesheet;
 use App\Validator\Constraints\QuickEntryTimesheet;
 use App\Validator\Constraints\QuickEntryTimesheetValidator;
 use App\Validator\Constraints\TimesheetBasic;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\ConstraintValidatorInterface;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;

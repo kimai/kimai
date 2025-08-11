@@ -9,10 +9,10 @@
 
 namespace App\Tests\Validator\Constraints;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Timesheet;
 use App\Validator\Constraints\Timesheet as TimesheetConstraint;
 use App\Validator\Constraints\TimesheetValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;

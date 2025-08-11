@@ -9,12 +9,12 @@
 
 namespace App\Tests\Entity;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\CustomerMeta;
 use App\Entity\EntityWithMetaFields;
 use App\Entity\MetaTableTypeInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(CustomerMeta::class)]
 class CustomerMetaTest extends AbstractMetaEntityTestCase

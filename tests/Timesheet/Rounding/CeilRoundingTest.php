@@ -9,10 +9,10 @@
 
 namespace App\Tests\Timesheet\Rounding;
 
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Entity\Timesheet;
 use App\Timesheet\Rounding\CeilRounding;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(CeilRounding::class)]

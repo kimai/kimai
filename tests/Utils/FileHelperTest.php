@@ -9,9 +9,9 @@
 
 namespace App\Tests\Utils;
 
+use App\Utils\FileHelper;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
-use App\Utils\FileHelper;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(FileHelper::class)]

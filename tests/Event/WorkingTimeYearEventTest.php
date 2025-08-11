@@ -9,10 +9,10 @@
 
 namespace App\Tests\Event;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Event\WorkingTimeYearEvent;
 use App\WorkingTime\Model\Year;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(WorkingTimeYearEvent::class)]

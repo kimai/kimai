@@ -9,9 +9,9 @@
 
 namespace App\Tests\Saml;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Saml\SamlToken;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(SamlToken::class)]

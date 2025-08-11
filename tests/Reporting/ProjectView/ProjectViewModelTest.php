@@ -9,11 +9,11 @@
 
 namespace App\Tests\Reporting\ProjectView;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Project;
 use App\Model\ProjectBudgetStatisticModel;
 use App\Model\Statistic\BudgetStatistic;
 use App\Reporting\ProjectView\ProjectViewModel;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(ProjectViewModel::class)]

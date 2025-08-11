@@ -9,13 +9,13 @@
 
 namespace App\Tests\Controller;
 
-use PHPUnit\Framework\Attributes\Group;
 use App\Entity\Invoice;
 use App\Entity\InvoiceTemplate;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\InvoiceTemplateFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 #[Group('integration')]

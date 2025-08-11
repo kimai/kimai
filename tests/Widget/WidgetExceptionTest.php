@@ -9,8 +9,8 @@
 
 namespace App\Tests\Widget;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Widget\WidgetException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(WidgetException::class)]

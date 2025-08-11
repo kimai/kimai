@@ -9,8 +9,6 @@
 
 namespace App\Tests\Validator\Constraints;
 
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Configuration\ConfigLoaderInterface;
 use App\Entity\Timesheet;
 use App\Entity\User;
@@ -18,6 +16,8 @@ use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\LockdownService;
 use App\Validator\Constraints\TimesheetLockdown;
 use App\Validator\Constraints\TimesheetLockdownValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;

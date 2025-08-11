@@ -9,14 +9,14 @@
 
 namespace App\Tests\Twig\Runtime;
 
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Entity\User;
 use App\Event\ThemeEvent;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Event\ThemeJavascriptTranslationsEventTest;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Twig\Runtime\ThemeExtension;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\Twig\AppVariable;

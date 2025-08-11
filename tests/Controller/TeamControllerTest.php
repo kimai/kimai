@@ -9,10 +9,10 @@
 
 namespace App\Tests\Controller;
 
-use PHPUnit\Framework\Attributes\Group;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Tests\DataFixtures\TeamFixtures;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 #[Group('integration')]

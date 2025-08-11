@@ -9,12 +9,12 @@
 
 namespace App\Tests\Twig;
 
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Constants;
 use App\Entity\Activity;
 use App\Entity\User;
 use App\Twig\Extensions;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Twig\Node\TextNode;
 use Twig\TwigFilter;

@@ -9,9 +9,9 @@
 
 namespace App\Tests\Export\Spreadsheet\Writer;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Export\Spreadsheet\Writer\XlsxWriter;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(XlsxWriter::class)]

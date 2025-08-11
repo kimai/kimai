@@ -9,8 +9,6 @@
 
 namespace App\Tests\Controller;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
 use App\Entity\ActivityRate;
@@ -26,6 +24,8 @@ use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\ProjectTestMetaFieldSubscriberMock;
 use Doctrine\ORM\EntityManager;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;

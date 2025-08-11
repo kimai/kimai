@@ -9,14 +9,14 @@
 
 namespace App\Tests\Repository\Query;
 
-use App\Repository\Query\BaseQuery;
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Repository\Query\BaseFormTypeQuery;
+use App\Repository\Query\BaseQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(BaseQuery::class)]

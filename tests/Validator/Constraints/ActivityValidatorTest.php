@@ -9,12 +9,12 @@
 
 namespace App\Tests\Validator\Constraints;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\ConfigLoaderInterface;
 use App\Repository\ActivityRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\Constraints\Activity as ActivityConstraint;
 use App\Validator\Constraints\ActivityValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;

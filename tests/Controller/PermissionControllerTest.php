@@ -9,11 +9,11 @@
 
 namespace App\Tests\Controller;
 
-use PHPUnit\Framework\Attributes\Group;
 use App\DataFixtures\UserFixtures;
 use App\Entity\Role;
 use App\Entity\RolePermission;
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\Group;
 
 #[Group('integration')]
 class PermissionControllerTest extends AbstractControllerBaseTestCase

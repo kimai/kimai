@@ -9,8 +9,6 @@
 
 namespace App\Tests\Controller;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Entity\Activity;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
@@ -22,6 +20,8 @@ use App\Tests\DataFixtures\TagFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\TimesheetTestMetaFieldSubscriberMock;
 use App\Timesheet\DateTimeFactory;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 #[Group('integration')]

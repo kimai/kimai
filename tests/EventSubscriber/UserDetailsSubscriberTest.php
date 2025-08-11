@@ -9,9 +9,9 @@
 
 namespace App\Tests\EventSubscriber;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\EventSubscriber\UserDetailsSubscriber;
 use KevinPapst\TablerBundle\Event\UserDetailsEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(UserDetailsSubscriber::class)]

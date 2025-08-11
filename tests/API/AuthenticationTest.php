@@ -9,9 +9,9 @@
 
 namespace App\Tests\API;
 
-use PHPUnit\Framework\Attributes\Group;
 use App\DataFixtures\UserFixtures;
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

@@ -9,13 +9,13 @@
 
 namespace App\Tests\Twig;
 
-use App\Utils\LocaleFormatter;
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Configuration\LocaleService;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Twig\LocaleFormatExtensions;
+use App\Utils\LocaleFormatter;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Intl\Util\IntlTestHelper;
 use Twig\TwigFilter;

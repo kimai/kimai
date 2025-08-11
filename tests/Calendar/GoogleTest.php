@@ -9,9 +9,9 @@
 
 namespace App\Tests\Calendar;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Calendar\Google;
 use App\Calendar\GoogleSource;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Google::class)]

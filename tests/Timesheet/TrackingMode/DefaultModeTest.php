@@ -9,10 +9,10 @@
 
 namespace App\Tests\Timesheet\TrackingMode;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Timesheet;
 use App\Tests\Mocks\RoundingServiceFactory;
 use App\Timesheet\TrackingMode\DefaultMode;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(DefaultMode::class)]
 class DefaultModeTest extends AbstractTrackingModeTestCase

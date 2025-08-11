@@ -9,7 +9,6 @@
 
 namespace App\Tests\Controller;
 
-use PHPUnit\Framework\Attributes\Group;
 use App\Entity\ExportTemplate;
 use App\Entity\Team;
 use App\Entity\Timesheet;
@@ -17,6 +16,7 @@ use App\Entity\User;
 use App\Tests\DataFixtures\ExportTemplateFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use Doctrine\ORM\EntityManager;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DomCrawler\Field\FormField;
 
 #[Group('integration')]

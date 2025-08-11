@@ -9,10 +9,10 @@
 
 namespace App\Tests\Reporting\ProjectView;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Customer;
 use App\Entity\User;
 use App\Reporting\ProjectView\ProjectViewQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(ProjectViewQuery::class)]

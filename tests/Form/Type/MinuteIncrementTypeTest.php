@@ -9,8 +9,8 @@
 
 namespace App\Tests\Form\Type;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Form\Type\MinuteIncrementType;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Test\TypeTestCase;
 

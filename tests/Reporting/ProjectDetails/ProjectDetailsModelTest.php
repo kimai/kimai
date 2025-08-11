@@ -9,11 +9,11 @@
 
 namespace App\Tests\Reporting\ProjectDetails;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Model\Statistic\Year;
 use App\Reporting\ProjectDetails\ProjectDetailsModel;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(ProjectDetailsModel::class)]

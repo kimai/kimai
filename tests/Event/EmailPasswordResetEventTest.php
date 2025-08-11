@@ -9,11 +9,11 @@
 
 namespace App\Tests\Event;
 
+use App\Entity\User;
 use App\Event\EmailEvent;
+use App\Event\EmailPasswordResetEvent;
 use App\Event\UserEmailEvent;
 use PHPUnit\Framework\Attributes\CoversClass;
-use App\Entity\User;
-use App\Event\EmailPasswordResetEvent;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Mime\Email;
 

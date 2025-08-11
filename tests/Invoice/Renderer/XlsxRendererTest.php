@@ -9,14 +9,14 @@
 
 namespace App\Tests\Invoice\Renderer;
 
+use App\Invoice\InvoiceModel;
 use App\Invoice\Renderer\AbstractRenderer;
 use App\Invoice\Renderer\AbstractSpreadsheetRenderer;
 use App\Invoice\Renderer\AdvancedValueBinder;
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\DataProvider;
-use App\Invoice\InvoiceModel;
 use App\Invoice\Renderer\XlsxRenderer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 

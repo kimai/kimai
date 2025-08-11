@@ -9,12 +9,12 @@
 
 namespace App\Tests\DependencyInjection\Compiler;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\DependencyInjection\Compiler\WidgetCompilerPass;
 use App\Widget\Type\ActiveTimesheets;
 use App\Widget\Type\ActiveUsersMonth;
 use App\Widget\WidgetInterface;
 use App\Widget\WidgetService;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;

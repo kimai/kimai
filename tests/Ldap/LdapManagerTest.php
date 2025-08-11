@@ -9,9 +9,6 @@
 
 namespace App\Tests\Ldap;
 
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\Group;
 use App\Configuration\LdapConfiguration;
 use App\Entity\User;
 use App\Ldap\LdapDriver;
@@ -20,6 +17,9 @@ use App\Ldap\LdapManager;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\Security\RoleServiceFactory;
 use App\Tests\Mocks\SystemConfigurationFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(LdapManager::class)]

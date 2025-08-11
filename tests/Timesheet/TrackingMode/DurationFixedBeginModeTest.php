@@ -9,12 +9,12 @@
 
 namespace App\Tests\Timesheet\TrackingMode;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\TrackingMode\DurationFixedBeginMode;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;

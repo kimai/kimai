@@ -9,8 +9,8 @@
 
 namespace App\Tests\Repository\Result;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Repository\Result\TimesheetResultStatistic;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(TimesheetResultStatistic::class)]

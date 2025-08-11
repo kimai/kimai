@@ -9,9 +9,9 @@
 
 namespace App\Tests\Utils;
 
+use App\Utils\NumberGenerator;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
-use App\Utils\NumberGenerator;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(NumberGenerator::class)]

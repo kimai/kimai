@@ -9,10 +9,10 @@
 
 namespace App\Tests\Repository\Loader;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Repository\Loader\ProjectLoader;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(ProjectLoader::class)]
 class ProjectLoaderTest extends AbstractLoaderTestCase

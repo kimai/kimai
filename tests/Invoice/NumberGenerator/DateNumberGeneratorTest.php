@@ -9,7 +9,6 @@
 
 namespace App\Tests\Invoice\NumberGenerator;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
@@ -17,6 +16,7 @@ use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(DateNumberGenerator::class)]

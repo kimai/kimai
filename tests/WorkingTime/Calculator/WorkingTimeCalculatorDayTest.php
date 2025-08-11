@@ -9,9 +9,9 @@
 
 namespace App\Tests\WorkingTime\Calculator;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\WorkingTime\Calculator\WorkingTimeCalculatorDay;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(WorkingTimeCalculatorDay::class)]

@@ -9,7 +9,6 @@
 
 namespace App\Tests\Validator\Constraints;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\Timesheet;
@@ -17,6 +16,7 @@ use App\Entity\User;
 use App\Model\QuickEntryModel as QuickEntryModelEntity;
 use App\Validator\Constraints\QuickEntryModel;
 use App\Validator\Constraints\QuickEntryModelValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;

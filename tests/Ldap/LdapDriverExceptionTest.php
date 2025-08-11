@@ -9,8 +9,8 @@
 
 namespace App\Tests\Ldap;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Ldap\LdapDriverException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(LdapDriverException::class)]

@@ -9,10 +9,10 @@
 
 namespace App\Tests\Reporting;
 
-use App\Reporting\AbstractUserList;
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
+use App\Reporting\AbstractUserList;
 use App\Reporting\DateByUser;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(AbstractUserList::class)]

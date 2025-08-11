@@ -9,12 +9,12 @@
 
 namespace App\Tests\Export\Spreadsheet\CellFormatter;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Export\Spreadsheet\CellFormatter\CellFormatterInterface;
 use App\Export\Spreadsheet\CellFormatter\DateTimeFormatter;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Style;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(DateTimeFormatter::class)]
 class DateTimeFormatterTest extends AbstractFormatterTestCase

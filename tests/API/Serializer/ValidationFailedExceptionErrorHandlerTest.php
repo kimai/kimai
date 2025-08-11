@@ -9,13 +9,13 @@
 
 namespace App\Tests\API\Serializer;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\API\Serializer\ValidationFailedExceptionErrorHandler;
 use App\Validator\ValidationFailedException;
 use FOS\RestBundle\Serializer\Normalizer\FlattenExceptionHandler;
 use JMS\Serializer\GraphNavigatorInterface;
 use JMS\Serializer\JsonSerializationVisitor;
 use JMS\Serializer\SerializationContext;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\ErrorHandler\Exception\FlattenException;

@@ -9,8 +9,8 @@
 
 namespace App\Tests\Configuration;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\MailConfiguration;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(MailConfiguration::class)]

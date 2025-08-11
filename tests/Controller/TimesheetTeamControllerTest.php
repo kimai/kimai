@@ -9,7 +9,6 @@
 
 namespace App\Tests\Controller;
 
-use PHPUnit\Framework\Attributes\Group;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
@@ -18,6 +17,7 @@ use App\Tests\DataFixtures\TagFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Timesheet\DateTimeFactory;
 use App\Timesheet\Util;
+use PHPUnit\Framework\Attributes\Group;
 
 #[Group('integration')]
 class TimesheetTeamControllerTest extends AbstractControllerBaseTestCase

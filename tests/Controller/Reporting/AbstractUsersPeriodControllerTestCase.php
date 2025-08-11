@@ -9,11 +9,11 @@
 
 namespace App\Tests\Controller\Reporting;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Entity\User;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 #[Group('integration')]

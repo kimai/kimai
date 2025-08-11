@@ -9,9 +9,9 @@
 
 namespace App\Tests\Form\Type;
 
+use App\Form\Type\DurationType;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
-use App\Form\Type\DurationType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Test\TypeTestCase;
 

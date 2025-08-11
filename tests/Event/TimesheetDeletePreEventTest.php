@@ -9,10 +9,10 @@
 
 namespace App\Tests\Event;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Timesheet;
 use App\Event\AbstractTimesheetEvent;
 use App\Event\TimesheetDeletePreEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(AbstractTimesheetEvent::class)]
 #[CoversClass(TimesheetDeletePreEvent::class)]

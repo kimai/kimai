@@ -9,10 +9,10 @@
 
 namespace App\Tests\Repository\Query;
 
-use App\Repository\Query\BaseQuery;
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
+use App\Repository\Query\BaseQuery;
 use App\Repository\Query\TimesheetQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(TimesheetQuery::class)]
 #[CoversClass(BaseQuery::class)]

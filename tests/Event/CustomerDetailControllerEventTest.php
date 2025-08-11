@@ -9,10 +9,10 @@
 
 namespace App\Tests\Event;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Customer;
 use App\Event\AbstractCustomerEvent;
 use App\Event\CustomerDetailControllerEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(AbstractCustomerEvent::class)]
 #[CoversClass(CustomerDetailControllerEvent::class)]

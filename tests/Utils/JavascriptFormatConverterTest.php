@@ -9,8 +9,8 @@
 
 namespace App\Tests\Utils;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Utils\JavascriptFormatConverter;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(JavascriptFormatConverter::class)]

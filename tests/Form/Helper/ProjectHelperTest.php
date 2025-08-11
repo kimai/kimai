@@ -9,12 +9,12 @@
 
 namespace App\Tests\Form\Helper;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\LocaleService;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Form\Helper\ProjectHelper;
 use App\Tests\Mocks\SystemConfigurationFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
 

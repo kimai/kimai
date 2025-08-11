@@ -9,11 +9,11 @@
 
 namespace App\Tests\Twig\Runtime;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\ConfigLoaderInterface;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Twig\Runtime\MarkdownExtension;
 use App\Utils\Markdown;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(MarkdownExtension::class)]

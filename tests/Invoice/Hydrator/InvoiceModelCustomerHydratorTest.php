@@ -9,10 +9,10 @@
 
 namespace App\Tests\Invoice\Hydrator;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Customer\CustomerStatisticService;
 use App\Invoice\Hydrator\InvoiceModelCustomerHydrator;
 use App\Tests\Invoice\Renderer\RendererTestTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(InvoiceModelCustomerHydrator::class)]

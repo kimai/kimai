@@ -9,12 +9,12 @@
 
 namespace App\Tests\Validator\Constraints;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User as UserEntity;
 use App\Tests\Security\TestUserEntity;
 use App\User\UserService;
 use App\Validator\Constraints\User;
 use App\Validator\Constraints\UserValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;

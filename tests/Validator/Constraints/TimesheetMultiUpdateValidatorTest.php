@@ -9,13 +9,13 @@
 
 namespace App\Tests\Validator\Constraints;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Form\MultiUpdate\TimesheetMultiUpdateDTO;
 use App\Validator\Constraints\TimesheetMultiUpdate as TimesheetMultiUpdateConstraint;
 use App\Validator\Constraints\TimesheetMultiUpdateValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;

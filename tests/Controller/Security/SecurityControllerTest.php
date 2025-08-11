@@ -9,7 +9,6 @@
 
 namespace App\Tests\Controller\Security;
 
-use PHPUnit\Framework\Attributes\Group;
 use App\Configuration\SamlConfiguration;
 use App\Configuration\SystemConfiguration;
 use App\Controller\Security\SecurityController;
@@ -17,6 +16,7 @@ use App\DataFixtures\UserFixtures;
 use App\Entity\User;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**

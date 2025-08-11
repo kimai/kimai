@@ -9,8 +9,6 @@
 
 namespace App\Tests\Entity;
 
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\Group;
 use App\Constants;
 use App\Entity\Team;
 use App\Entity\TeamMember;
@@ -21,6 +19,8 @@ use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use App\Tests\Security\TestUserEntity;
 use App\WorkingTime\Mode\WorkingTimeModeDay;
 use Doctrine\Common\Collections\ArrayCollection;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;

@@ -9,15 +9,15 @@
 
 namespace App\Tests\Event;
 
-use App\Event\AbstractInvoiceEvent;
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Customer;
 use App\Entity\Invoice;
 use App\Entity\InvoiceTemplate;
+use App\Event\AbstractInvoiceEvent;
 use App\Event\InvoiceCreatedEvent;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(InvoiceCreatedEvent::class)]

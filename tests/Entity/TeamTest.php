@@ -9,7 +9,6 @@
 
 namespace App\Tests\Entity;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Constants;
 use App\Entity\Activity;
 use App\Entity\Customer;
@@ -18,6 +17,7 @@ use App\Entity\Team;
 use App\Entity\TeamMember;
 use App\Entity\User;
 use Doctrine\Common\Collections\Collection;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Team::class)]

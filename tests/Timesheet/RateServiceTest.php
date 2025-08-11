@@ -9,8 +9,6 @@
 
 namespace App\Tests\Timesheet;
 
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Entity\Activity;
 use App\Entity\ActivityRate;
 use App\Entity\Customer;
@@ -22,6 +20,8 @@ use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\RateService;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(RateService::class)]

@@ -9,13 +9,13 @@
 
 namespace App\Tests\Validator\Constraints;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\ConfigLoaderInterface;
 use App\Entity\Timesheet;
 use App\Repository\TimesheetRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\Constraints\TimesheetOverlapping;
 use App\Validator\Constraints\TimesheetOverlappingValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;

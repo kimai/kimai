@@ -9,8 +9,8 @@
 
 namespace App\Tests\Security;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Security\AclDecisionManager;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;

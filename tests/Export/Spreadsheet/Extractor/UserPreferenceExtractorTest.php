@@ -9,13 +9,13 @@
 
 namespace App\Tests\Export\Spreadsheet\Extractor;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\UserPreferenceDisplayEvent;
 use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\ExtractorException;
 use App\Export\Spreadsheet\Extractor\UserPreferenceExtractor;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 

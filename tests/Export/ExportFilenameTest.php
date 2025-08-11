@@ -9,12 +9,12 @@
 
 namespace App\Tests\Export;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Export\ExportFilename;
 use App\Repository\Query\TimesheetQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(ExportFilename::class)]

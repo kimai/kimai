@@ -9,9 +9,9 @@
 
 namespace App\Tests\Plugin;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Plugin\Plugin;
 use App\Plugin\PluginInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Plugin::class)]

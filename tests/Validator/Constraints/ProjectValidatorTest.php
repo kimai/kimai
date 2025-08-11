@@ -9,13 +9,13 @@
 
 namespace App\Tests\Validator\Constraints;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\ConfigLoaderInterface;
 use App\Entity\Project;
 use App\Repository\ProjectRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\Constraints\Project as ProjectConstraint;
 use App\Validator\Constraints\ProjectValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;

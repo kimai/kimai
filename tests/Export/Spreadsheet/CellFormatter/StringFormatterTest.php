@@ -9,12 +9,12 @@
 
 namespace App\Tests\Export\Spreadsheet\CellFormatter;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Export\Spreadsheet\CellFormatter\CellFormatterInterface;
 use App\Export\Spreadsheet\CellFormatter\StringFormatter;
 use App\Tests\Utils\StringHelperTest;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(StringFormatter::class)]
 class StringFormatterTest extends AbstractFormatterTestCase

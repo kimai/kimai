@@ -9,12 +9,12 @@
 
 namespace App\Tests\Entity;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
 use App\Entity\EntityWithMetaFields;
 use App\Entity\MetaTableTypeInterface;
 use App\Entity\Timesheet;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(ActivityMeta::class)]
 class ActivityMetaTest extends AbstractMetaEntityTestCase

@@ -9,11 +9,11 @@
 
 namespace App\Tests\Controller;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 #[Group('integration')]
 class UserControllerTest extends AbstractControllerBaseTestCase

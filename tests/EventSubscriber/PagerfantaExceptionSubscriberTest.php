@@ -9,10 +9,10 @@
 
 namespace App\Tests\EventSubscriber;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\EventSubscriber\PagerfantaExceptionSubscriber;
 use Pagerfanta\Exception\NotValidMaxPerPageException;
 use Pagerfanta\Exception\OutOfRangeCurrentPageException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;

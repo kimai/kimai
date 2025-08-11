@@ -9,9 +9,9 @@
 
 namespace App\Tests\Timesheet;
 
+use App\Timesheet\Util;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
-use App\Timesheet\Util;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Util::class)]

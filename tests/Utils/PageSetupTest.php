@@ -9,10 +9,10 @@
 
 namespace App\Tests\Utils;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Repository\Query\BaseQuery;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(PageSetup::class)]

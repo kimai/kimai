@@ -9,8 +9,6 @@
 
 namespace App\Tests\Voter;
 
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Configuration\ConfigLoaderInterface;
 use App\Entity\Activity;
 use App\Entity\Customer;
@@ -20,6 +18,8 @@ use App\Entity\User;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\LockdownService;
 use App\Voter\TimesheetVoter;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 

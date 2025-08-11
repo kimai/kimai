@@ -9,10 +9,10 @@
 
 namespace App\Tests\Reporting\WeekByUser;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Reporting\DateByUser;
 use App\Reporting\WeekByUser\WeekByUser;
 use App\Tests\Reporting\AbstractDateByUserTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(WeekByUser::class)]
 #[CoversClass(DateByUser::class)]

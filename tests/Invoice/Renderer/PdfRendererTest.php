@@ -10,13 +10,13 @@
 namespace App\Tests\Invoice\Renderer;
 
 use App\Invoice\Renderer\AbstractTwigRenderer;
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\Group;
 use App\Invoice\Renderer\PdfRenderer;
 use App\Model\InvoiceDocument;
 use App\Pdf\HtmlToPdfConverter;
 use App\Pdf\MPdfConverter;
 use App\Tests\Mocks\FileHelperFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;

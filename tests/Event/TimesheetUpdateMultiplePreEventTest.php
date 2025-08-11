@@ -9,9 +9,9 @@
 
 namespace App\Tests\Event;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Event\AbstractTimesheetMultipleEvent;
 use App\Event\TimesheetUpdateMultiplePreEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(AbstractTimesheetMultipleEvent::class)]
 #[CoversClass(TimesheetUpdateMultiplePreEvent::class)]

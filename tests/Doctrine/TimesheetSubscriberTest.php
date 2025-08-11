@@ -9,9 +9,9 @@
 
 namespace App\Tests\Doctrine;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Doctrine\TimesheetSubscriber;
 use Doctrine\ORM\Events;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(TimesheetSubscriber::class)]

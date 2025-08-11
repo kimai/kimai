@@ -9,10 +9,10 @@
 
 namespace App\Tests\Twig;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Twig\PaginationExtension;
 use App\Utils\Pagination;
 use Pagerfanta\Adapter\ArrayAdapter;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\TwigFunction;

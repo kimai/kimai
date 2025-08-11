@@ -9,8 +9,8 @@
 
 namespace App\Tests;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Constants;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Constants::class)]

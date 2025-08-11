@@ -9,9 +9,6 @@
 
 namespace App\Tests\Invoice\NumberGenerator;
 
-use App\Utils\NumberGenerator;
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use App\Entity\User;
@@ -21,6 +18,9 @@ use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use App\Tests\Mocks\SystemConfigurationFactory;
+use App\Utils\NumberGenerator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(ConfigurableNumberGenerator::class)]

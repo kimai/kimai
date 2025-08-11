@@ -10,8 +10,8 @@
 namespace App\Tests\Repository\Query;
 
 use App\Repository\Query\BaseFormTypeQuery;
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Repository\Query\TagFormTypeQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(TagFormTypeQuery::class)]
 #[CoversClass(BaseFormTypeQuery::class)]

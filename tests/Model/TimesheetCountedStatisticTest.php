@@ -9,8 +9,8 @@
 
 namespace App\Tests\Model;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Model\TimesheetCountedStatistic;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(TimesheetCountedStatistic::class)]
 class TimesheetCountedStatisticTest extends AbstractTimesheetCountedStatisticTestCase

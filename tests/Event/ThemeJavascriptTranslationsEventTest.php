@@ -9,9 +9,9 @@
 
 namespace App\Tests\Event;
 
+use App\Event\ThemeJavascriptTranslationsEvent;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
-use App\Event\ThemeJavascriptTranslationsEvent;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(ThemeJavascriptTranslationsEvent::class)]

@@ -9,7 +9,6 @@
 
 namespace App\Tests\API;
 
-use PHPUnit\Framework\Attributes\Group;
 use App\DataFixtures\UserFixtures;
 use App\Entity\Activity;
 use App\Entity\Customer;
@@ -22,6 +21,7 @@ use App\Entity\User;
 use App\Repository\CustomerRateRepository;
 use App\Repository\CustomerRepository;
 use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

@@ -10,8 +10,8 @@
 namespace App\Tests\Repository\Query;
 
 use App\Repository\Query\BaseQuery;
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Repository\Query\ProjectQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(ProjectQuery::class)]
 #[CoversClass(BaseQuery::class)]

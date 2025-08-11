@@ -9,10 +9,10 @@
 
 namespace App\Tests\Event;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Project;
 use App\Event\AbstractProjectEvent;
 use App\Event\ProjectUpdatePostEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(AbstractProjectEvent::class)]
 #[CoversClass(ProjectUpdatePostEvent::class)]

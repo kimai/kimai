@@ -9,8 +9,8 @@
 
 namespace App\Tests\Repository;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Repository\InvoiceDocumentRepository;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(InvoiceDocumentRepository::class)]

@@ -9,12 +9,12 @@
 
 namespace App\Tests\EventSubscriber;
 
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Entity\User;
 use App\EventSubscriber\LastLoginSubscriber;
 use App\EventSubscriber\ProfileSubscriber;
 use App\Utils\ProfileManager;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;

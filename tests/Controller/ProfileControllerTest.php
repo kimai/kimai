@@ -9,8 +9,6 @@
 
 namespace App\Tests\Controller;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\DataFixtures\UserFixtures;
 use App\Entity\User;
 use App\Entity\UserPreference;
@@ -18,6 +16,8 @@ use App\Repository\AccessTokenRepository;
 use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\WorkingTime\Mode\WorkingTimeModeDay;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;

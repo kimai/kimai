@@ -9,12 +9,12 @@
 
 namespace App\Tests\Command;
 
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\Group;
 use App\Command\PluginCommand;
 use App\Plugin\PackageManager;
 use App\Plugin\PluginInterface;
 use App\Plugin\PluginManager;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;

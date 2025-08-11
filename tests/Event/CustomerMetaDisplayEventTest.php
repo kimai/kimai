@@ -9,12 +9,12 @@
 
 namespace App\Tests\Event;
 
-use App\Event\AbstractMetaDisplayEvent;
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\CustomerMeta;
+use App\Event\AbstractMetaDisplayEvent;
 use App\Event\CustomerMetaDisplayEvent;
 use App\Event\MetaDisplayEventInterface;
 use App\Repository\Query\CustomerQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(AbstractMetaDisplayEvent::class)]

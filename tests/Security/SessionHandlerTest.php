@@ -9,9 +9,9 @@
 
 namespace App\Tests\Security;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Security\SessionHandler;
 use Doctrine\DBAL\Connection;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\RateLimiter\RateLimiterFactory;

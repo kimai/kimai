@@ -9,8 +9,8 @@
 
 namespace App\Tests\Export\Annotation;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Export\Annotation\Order;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Order::class)]

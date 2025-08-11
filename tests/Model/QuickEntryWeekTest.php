@@ -9,10 +9,10 @@
 
 namespace App\Tests\Model;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Model\QuickEntryModel;
 use App\Model\QuickEntryWeek;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(QuickEntryWeek::class)]

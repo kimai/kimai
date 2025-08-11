@@ -9,7 +9,6 @@
 
 namespace App\Tests\Controller\Reporting;
 
-use PHPUnit\Framework\Attributes\Group;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
@@ -18,6 +17,7 @@ use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Timesheet\DateTimeFactory;
+use PHPUnit\Framework\Attributes\Group;
 
 #[Group('integration')]
 class ProjectDateRangeControllerTest extends AbstractControllerBaseTestCase

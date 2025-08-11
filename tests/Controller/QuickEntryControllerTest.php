@@ -9,8 +9,8 @@
 
 namespace App\Tests\Controller;
 
-use PHPUnit\Framework\Attributes\Group;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use PHPUnit\Framework\Attributes\Group;
 
 #[Group('integration')]
 class QuickEntryControllerTest extends AbstractControllerBaseTestCase

@@ -9,10 +9,10 @@
 
 namespace App\Tests\Twig;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Repository\BookmarkRepository;
 use App\Twig\DatatableExtensions;
 use App\Utils\ProfileManager;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Twig\TwigFunction;
 

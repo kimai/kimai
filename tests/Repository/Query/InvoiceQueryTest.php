@@ -9,9 +9,9 @@
 
 namespace App\Tests\Repository\Query;
 
+use App\Repository\Query\InvoiceQuery;
 use App\Repository\Query\TimesheetQuery;
 use PHPUnit\Framework\Attributes\CoversClass;
-use App\Repository\Query\InvoiceQuery;
 
 #[CoversClass(InvoiceQuery::class)]
 #[CoversClass(TimesheetQuery::class)]

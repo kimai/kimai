@@ -9,12 +9,12 @@
 
 namespace App\Tests\Model;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Model\QuickEntryModel;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(QuickEntryModel::class)]

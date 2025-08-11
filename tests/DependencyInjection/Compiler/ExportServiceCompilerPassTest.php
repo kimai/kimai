@@ -9,7 +9,6 @@
 
 namespace App\Tests\DependencyInjection\Compiler;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\DependencyInjection\Compiler\ExportServiceCompilerPass;
 use App\Export\Base\CsvRenderer;
 use App\Export\Base\HtmlRenderer;
@@ -20,6 +19,7 @@ use App\Export\RendererInterface;
 use App\Export\ServiceExport;
 use App\Export\TimesheetExportInterface;
 use App\Export\TimesheetExportRepository;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;

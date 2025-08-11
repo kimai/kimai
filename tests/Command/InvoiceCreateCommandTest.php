@@ -9,8 +9,6 @@
 
 namespace App\Tests\Command;
 
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\Group;
 use App\Command\InvoiceCreateCommand;
 use App\DataFixtures\UserFixtures;
 use App\Entity\Customer;
@@ -25,6 +23,8 @@ use App\Tests\DataFixtures\InvoiceTemplateFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\KernelTestTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;

@@ -9,8 +9,8 @@
 
 namespace App\Tests\Validator;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Validator\ValidationFailedException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\ConstraintViolationList;
 

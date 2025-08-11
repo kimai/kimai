@@ -9,7 +9,6 @@
 
 namespace App\Tests\Widget\Type;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
@@ -17,6 +16,7 @@ use App\Widget\Type\AbstractCounterYear;
 use App\Widget\Type\AbstractWidget;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\ActiveUsersYear;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(ActiveUsersYear::class)]
 #[CoversClass(AbstractCounterYear::class)]

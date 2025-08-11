@@ -9,10 +9,10 @@
 
 namespace App\Tests\Configuration;
 
-use App\Configuration\SystemConfiguration;
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\LdapConfiguration;
+use App\Configuration\SystemConfiguration;
 use App\Tests\Mocks\SystemConfigurationFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(LdapConfiguration::class)]

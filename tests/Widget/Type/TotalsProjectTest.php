@@ -9,11 +9,11 @@
 
 namespace App\Tests\Widget\Type;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Repository\ProjectRepository;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\TotalsProject;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(TotalsProject::class)]
 class TotalsProjectTest extends AbstractWidgetTestCase

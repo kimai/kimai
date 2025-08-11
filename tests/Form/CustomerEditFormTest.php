@@ -9,9 +9,9 @@
 
 namespace App\Tests\Form;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Customer;
 use App\Form\CustomerEditForm;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 #[CoversClass(CustomerEditForm::class)]

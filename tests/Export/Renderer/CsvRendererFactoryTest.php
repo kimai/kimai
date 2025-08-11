@@ -9,10 +9,10 @@
 
 namespace App\Tests\Export\Renderer;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Export\Base\CsvRenderer;
 use App\Export\Renderer\CsvRendererFactory;
 use App\Export\Template;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;

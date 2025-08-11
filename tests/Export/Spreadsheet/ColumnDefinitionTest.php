@@ -9,8 +9,8 @@
 
 namespace App\Tests\Export\Spreadsheet;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Export\Spreadsheet\ColumnDefinition;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(ColumnDefinition::class)]

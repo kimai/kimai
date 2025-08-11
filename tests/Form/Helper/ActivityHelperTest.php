@@ -9,10 +9,10 @@
 
 namespace App\Tests\Form\Helper;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Form\Helper\ActivityHelper;
 use App\Tests\Mocks\SystemConfigurationFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(ActivityHelper::class)]

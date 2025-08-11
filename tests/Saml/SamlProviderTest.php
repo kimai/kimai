@@ -9,7 +9,6 @@
 
 namespace App\Tests\Saml;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\SamlConfiguration;
 use App\Entity\User;
 use App\Saml\SamlLoginAttributes;
@@ -17,6 +16,7 @@ use App\Saml\SamlProvider;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\User\UserService;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;

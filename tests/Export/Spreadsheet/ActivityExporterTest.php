@@ -9,7 +9,6 @@
 
 namespace App\Tests\Export\Spreadsheet;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
 use App\Event\ActivityMetaDisplayEvent;
@@ -18,6 +17,7 @@ use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use App\Export\Spreadsheet\Extractor\MetaFieldExtractor;
 use App\Export\Spreadsheet\SpreadsheetExporter;
 use App\Repository\Query\ActivityQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;

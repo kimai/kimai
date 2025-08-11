@@ -9,11 +9,11 @@
 
 namespace App\Tests\Event;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Calendar\CalendarSource;
 use App\Calendar\CalendarSourceType;
 use App\Entity\User;
 use App\Event\CalendarSourceEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(CalendarSourceEvent::class)]

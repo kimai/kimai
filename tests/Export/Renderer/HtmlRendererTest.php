@@ -9,12 +9,12 @@
 
 namespace App\Tests\Export\Renderer;
 
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\Group;
 use App\Activity\ActivityStatisticService;
 use App\Entity\User;
 use App\Export\Base\HtmlRenderer;
 use App\Project\ProjectStatisticService;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;

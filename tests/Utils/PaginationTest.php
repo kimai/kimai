@@ -9,10 +9,10 @@
 
 namespace App\Tests\Utils;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Repository\Query\TimesheetQuery;
 use App\Utils\Pagination;
 use Pagerfanta\Adapter\ArrayAdapter;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Pagination::class)]

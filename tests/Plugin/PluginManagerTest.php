@@ -9,13 +9,13 @@
 
 namespace App\Tests\Plugin;
 
-use App\Plugin\PluginMetadata;
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Plugin\Plugin;
 use App\Plugin\PluginInterface;
 use App\Plugin\PluginManager;
+use App\Plugin\PluginMetadata;
 use App\Tests\Plugin\Fixtures\TestPlugin\TestPlugin;
 use App\Tests\Plugin\Fixtures\TestPlugin2\TestPlugin2;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(PluginManager::class)]

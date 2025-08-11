@@ -9,11 +9,11 @@
 
 namespace App\Tests\EventSubscriber;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\MailConfiguration;
 use App\Event\EmailEvent;
 use App\EventSubscriber\EmailSubscriber;
 use App\Mail\KimaiMailer;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;

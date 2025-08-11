@@ -9,7 +9,6 @@
 
 namespace App\Tests\DependencyInjection\Compiler;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\DependencyInjection\Compiler\InvoiceServiceCompilerPass;
 use App\Invoice\Calculator\DefaultCalculator;
 use App\Invoice\Calculator\ShortInvoiceCalculator;
@@ -23,6 +22,7 @@ use App\Invoice\Renderer\DocxRenderer;
 use App\Invoice\RendererInterface;
 use App\Invoice\ServiceInvoice;
 use App\Repository\TimesheetInvoiceItemRepository;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;

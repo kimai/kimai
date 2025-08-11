@@ -9,7 +9,6 @@
 
 namespace App\Tests\Export;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Activity\ActivityStatisticService;
 use App\Entity\ExportTemplate;
 use App\Export\Base\CsvRenderer;
@@ -25,6 +24,7 @@ use App\Tests\Mocks\Export\CsvRendererFactoryMock;
 use App\Tests\Mocks\Export\HtmlRendererFactoryMock;
 use App\Tests\Mocks\Export\PdfRendererFactoryMock;
 use App\Tests\Mocks\Export\XlsxRendererFactoryMock;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;

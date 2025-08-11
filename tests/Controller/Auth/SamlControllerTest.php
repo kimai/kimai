@@ -9,7 +9,6 @@
 
 namespace App\Tests\Controller\Auth;
 
-use PHPUnit\Framework\Attributes\Group;
 use App\Configuration\SamlConfiguration;
 use App\Configuration\SamlConfigurationInterface;
 use App\Configuration\SystemConfiguration;
@@ -20,6 +19,7 @@ use App\Tests\Mocks\Saml\SamlAuthFactoryFactory;
 use App\Tests\Mocks\SecurityFactory;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use OneLogin\Saml2\Auth;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;

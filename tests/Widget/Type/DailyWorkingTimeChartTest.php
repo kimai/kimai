@@ -9,11 +9,11 @@
 
 namespace App\Tests\Widget\Type;
 
-use App\Widget\Type\AbstractWidgetType;
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
+use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\DailyWorkingTimeChart;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(DailyWorkingTimeChart::class)]

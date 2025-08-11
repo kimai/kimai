@@ -9,10 +9,10 @@
 
 namespace App\Tests\API;
 
-use PHPUnit\Framework\Attributes\Group;
 use App\Entity\Tag;
 use App\Entity\User;
 use App\Tests\DataFixtures\TagFixtures;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\Response;
 
 #[Group('integration')]

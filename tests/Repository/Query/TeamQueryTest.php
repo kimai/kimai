@@ -9,9 +9,9 @@
 
 namespace App\Tests\Repository\Query;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Repository\Query\TeamQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(TeamQuery::class)]
 class TeamQueryTest extends BaseQueryTest

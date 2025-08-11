@@ -9,9 +9,9 @@
 
 namespace App\Tests\Model\Statistic;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Model\Statistic\Month;
 use App\Model\Statistic\Year;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Year::class)]

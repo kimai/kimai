@@ -9,8 +9,8 @@
 
 namespace App\Tests\Twig\Runtime;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Twig\Runtime\EncoreExtension;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;

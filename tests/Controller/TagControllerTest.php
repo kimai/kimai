@@ -9,10 +9,10 @@
 
 namespace App\Tests\Controller;
 
-use PHPUnit\Framework\Attributes\Group;
 use App\Entity\Tag;
 use App\Entity\User;
 use App\Tests\DataFixtures\TagFixtures;
+use PHPUnit\Framework\Attributes\Group;
 
 #[Group('integration')]
 class TagControllerTest extends AbstractControllerBaseTestCase

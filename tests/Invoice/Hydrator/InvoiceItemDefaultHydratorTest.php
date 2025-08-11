@@ -9,9 +9,9 @@
 
 namespace App\Tests\Invoice\Hydrator;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Invoice\Hydrator\InvoiceItemDefaultHydrator;
 use App\Tests\Invoice\Renderer\RendererTestTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(InvoiceItemDefaultHydrator::class)]

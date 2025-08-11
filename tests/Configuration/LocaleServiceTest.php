@@ -9,9 +9,9 @@
 
 namespace App\Tests\Configuration;
 
+use App\Configuration\LocaleService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
-use App\Configuration\LocaleService;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(LocaleService::class)]

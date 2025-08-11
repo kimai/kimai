@@ -9,9 +9,9 @@
 
 namespace App\Tests\Form\Extension;
 
+use App\Form\Extension\EnhancedChoiceTypeExtension;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
-use App\Form\Extension\EnhancedChoiceTypeExtension;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

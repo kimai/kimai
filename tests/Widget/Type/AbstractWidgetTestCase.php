@@ -9,8 +9,8 @@
 
 namespace App\Tests\Widget\Type;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Widget\Type\AbstractWidget;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(AbstractWidget::class)]

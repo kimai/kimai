@@ -9,9 +9,9 @@
 
 namespace App\Tests\Command;
 
+use App\Command\ResetDevelopmentCommand;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
-use App\Command\ResetDevelopmentCommand;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 

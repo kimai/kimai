@@ -9,8 +9,8 @@
 
 namespace App\Tests\API\Model;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\API\Model\PageAction;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(PageAction::class)]

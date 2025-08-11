@@ -9,8 +9,8 @@
 
 namespace App\Tests\Plugin;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Plugin\PluginMetadata;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(PluginMetadata::class)]

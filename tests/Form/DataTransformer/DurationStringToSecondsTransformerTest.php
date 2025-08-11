@@ -9,9 +9,9 @@
 
 namespace App\Tests\Form\DataTransformer;
 
+use App\Form\DataTransformer\DurationStringToSecondsTransformer;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
-use App\Form\DataTransformer\DurationStringToSecondsTransformer;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 

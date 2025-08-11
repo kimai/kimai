@@ -9,8 +9,6 @@
 
 namespace App\Tests\Repository;
 
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\Group;
 use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\Tag;
@@ -22,6 +20,8 @@ use App\Repository\Query\TimesheetQuery;
 use App\Repository\Query\TimesheetQueryHint;
 use App\Repository\TimesheetRepository;
 use App\Utils\Pagination;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 #[CoversClass(TimesheetRepository::class)]
 #[Group('integration')]

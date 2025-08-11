@@ -9,12 +9,12 @@
 
 namespace App\Tests\Controller;
 
-use PHPUnit\Framework\Attributes\Group;
 use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\SystemConfigurationFactory;
+use PHPUnit\Framework\Attributes\Group;
 
 #[Group('integration')]
 class CalendarControllerTest extends AbstractControllerBaseTestCase

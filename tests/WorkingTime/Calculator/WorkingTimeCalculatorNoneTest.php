@@ -9,8 +9,8 @@
 
 namespace App\Tests\WorkingTime\Calculator;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\WorkingTime\Calculator\WorkingTimeCalculatorNone;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(WorkingTimeCalculatorNone::class)]

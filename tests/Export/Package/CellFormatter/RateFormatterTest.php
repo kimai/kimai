@@ -9,8 +9,8 @@
 
 namespace App\Tests\Export\Package\CellFormatter;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Export\Package\CellFormatter\RateFormatter;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(RateFormatter::class)]

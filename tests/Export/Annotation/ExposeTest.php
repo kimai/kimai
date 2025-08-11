@@ -9,8 +9,8 @@
 
 namespace App\Tests\Export\Annotation;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Export\Annotation\Expose;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Expose::class)]

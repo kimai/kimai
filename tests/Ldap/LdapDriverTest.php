@@ -9,7 +9,6 @@
 
 namespace App\Tests\Ldap;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\LdapConfiguration;
 use App\Entity\User;
 use App\Ldap\LdapDriver;
@@ -18,6 +17,7 @@ use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Tests\Mocks\TestLogger;
 use Laminas\Ldap\Exception\LdapException;
 use Laminas\Ldap\Ldap;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
 

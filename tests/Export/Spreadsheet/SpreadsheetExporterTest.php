@@ -9,12 +9,12 @@
 
 namespace App\Tests\Export\Spreadsheet;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Project;
 use App\Export\Spreadsheet\CellFormatter\CellFormatterInterface;
 use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\SpreadsheetExporter;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
 

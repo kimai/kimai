@@ -9,8 +9,8 @@
 
 namespace App\Tests\Controller;
 
-use PHPUnit\Framework\Attributes\Group;
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 #[Group('integration')]

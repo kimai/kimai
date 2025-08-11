@@ -9,11 +9,11 @@
 
 namespace App\Tests\Repository\Query;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Customer;
 use App\Entity\Invoice;
 use App\Repository\Query\BaseQuery;
 use App\Repository\Query\InvoiceArchiveQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(InvoiceArchiveQuery::class)]
 class InvoiceArchiveQueryTest extends BaseQueryTest

@@ -9,11 +9,11 @@
 
 namespace App\Tests\Timesheet;
 
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Timesheet\DateTimeFactory;
 use DateTime;
 use DateTimeZone;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(DateTimeFactory::class)]

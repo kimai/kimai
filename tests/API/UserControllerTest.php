@@ -9,9 +9,9 @@
 
 namespace App\Tests\API;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 #[Group('integration')]
 class UserControllerTest extends APIControllerBaseTestCase

@@ -9,8 +9,6 @@
 
 namespace App\Tests\Activity;
 
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Activity\ActivityService;
 use App\Entity\Activity;
 use App\Entity\Project;
@@ -23,6 +21,8 @@ use App\Event\ActivityUpdatePreEvent;
 use App\Repository\ActivityRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\ValidationFailedException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Validator\ConstraintViolation;

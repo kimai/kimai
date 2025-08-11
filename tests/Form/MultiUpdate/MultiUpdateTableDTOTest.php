@@ -9,13 +9,13 @@
 
 namespace App\Tests\Form\MultiUpdate;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Form\MultiUpdate\MultiUpdateTableDTO;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(MultiUpdateTableDTO::class)]

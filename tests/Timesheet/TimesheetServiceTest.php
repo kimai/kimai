@@ -9,8 +9,6 @@
 
 namespace App\Tests\Timesheet;
 
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\Group;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Event\TimesheetCreatePostEvent;
@@ -24,6 +22,8 @@ use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingModeService;
 use App\Validator\ValidationFailedException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;

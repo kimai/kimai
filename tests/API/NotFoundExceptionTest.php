@@ -9,8 +9,8 @@
 
 namespace App\Tests\API;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\API\NotFoundException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(NotFoundException::class)]

@@ -9,10 +9,10 @@
 
 namespace App\Tests\WorkingTime\Mode;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\WorkingTime\Calculator\WorkingTimeCalculatorDay;
 use App\WorkingTime\Mode\WorkingTimeModeDay;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(WorkingTimeModeDay::class)]

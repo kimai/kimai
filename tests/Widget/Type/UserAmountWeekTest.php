@@ -9,13 +9,13 @@
 
 namespace App\Tests\Widget\Type;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
 use App\Widget\Type\AbstractUserRevenuePeriod;
 use App\Widget\Type\AbstractWidget;
 use App\Widget\Type\UserAmountWeek;
 use App\Widget\WidgetInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[CoversClass(UserAmountWeek::class)]

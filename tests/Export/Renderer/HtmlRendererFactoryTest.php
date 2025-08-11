@@ -9,11 +9,11 @@
 
 namespace App\Tests\Export\Renderer;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Activity\ActivityStatisticService;
 use App\Export\Base\HtmlRenderer;
 use App\Export\Renderer\HtmlRendererFactory;
 use App\Project\ProjectStatisticService;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Twig\Environment;

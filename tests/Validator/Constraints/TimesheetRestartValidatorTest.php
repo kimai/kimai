@@ -9,8 +9,6 @@
 
 namespace App\Tests\Validator\Constraints;
 
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -20,6 +18,8 @@ use App\Tests\Mocks\TrackingModeServiceFactory;
 use App\Validator\Constraints\TimesheetOverlapping;
 use App\Validator\Constraints\TimesheetRestart;
 use App\Validator\Constraints\TimesheetRestartValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;

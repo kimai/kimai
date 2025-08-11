@@ -9,9 +9,9 @@
 
 namespace App\Tests\Validator\Constraints;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Validator\Constraints\TimesheetBudgetUsed;
 use App\Validator\Constraints\TimesheetConstraint;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(TimesheetBudgetUsed::class)]

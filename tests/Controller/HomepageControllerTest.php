@@ -9,10 +9,10 @@
 
 namespace App\Tests\Controller;
 
-use PHPUnit\Framework\Attributes\Group;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Form\Type\InitialViewType;
+use PHPUnit\Framework\Attributes\Group;
 
 #[Group('integration')]
 class HomepageControllerTest extends AbstractControllerBaseTestCase

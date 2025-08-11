@@ -9,10 +9,10 @@
 
 namespace App\Tests\Webhook\Attribute;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Invoice;
 use App\Event\InvoiceDeleteEvent;
 use App\Webhook\Attribute\AsWebhook;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(AsWebhook::class)]

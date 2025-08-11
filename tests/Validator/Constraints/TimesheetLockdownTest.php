@@ -9,9 +9,9 @@
 
 namespace App\Tests\Validator\Constraints;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Validator\Constraints\TimesheetConstraint;
 use App\Validator\Constraints\TimesheetLockdown;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(TimesheetLockdown::class)]

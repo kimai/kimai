@@ -9,9 +9,9 @@
 
 namespace App\Tests\Form;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Project;
 use App\Form\ProjectEditForm;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 #[CoversClass(ProjectEditForm::class)]

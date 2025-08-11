@@ -9,9 +9,9 @@
 
 namespace App\Tests\Controller;
 
-use PHPUnit\Framework\Attributes\Group;
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use PHPUnit\Framework\Attributes\Group;
 
 #[Group('integration')]
 class FavoriteControllerTest extends AbstractControllerBaseTestCase

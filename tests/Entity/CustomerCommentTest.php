@@ -9,9 +9,9 @@
 
 namespace App\Tests\Entity;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
  * @covers \App\Entity\CommentTableTypeTrait

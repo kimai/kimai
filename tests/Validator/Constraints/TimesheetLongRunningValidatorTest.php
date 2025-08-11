@@ -9,12 +9,12 @@
 
 namespace App\Tests\Validator\Constraints;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\ConfigLoaderInterface;
 use App\Entity\Timesheet;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\Constraints\TimesheetLongRunning;
 use App\Validator\Constraints\TimesheetLongRunningValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;

@@ -9,9 +9,9 @@
 
 namespace App\Tests\Utils;
 
+use App\Utils\StringHelper;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
-use App\Utils\StringHelper;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(StringHelper::class)]

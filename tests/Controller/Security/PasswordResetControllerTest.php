@@ -9,8 +9,8 @@
 
 namespace App\Tests\Controller\Security;
 
-use PHPUnit\Framework\Attributes\Group;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 #[Group('integration')]
 class PasswordResetControllerTest extends AbstractControllerBaseTestCase

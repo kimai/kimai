@@ -9,8 +9,8 @@
 
 namespace App\Tests\Entity;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\ExportTemplate;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(ExportTemplate::class)]
 class ExportTemplateTest extends AbstractEntityTestCase

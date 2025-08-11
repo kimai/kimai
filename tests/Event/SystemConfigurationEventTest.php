@@ -9,10 +9,10 @@
 
 namespace App\Tests\Event;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Event\SystemConfigurationEvent;
 use App\Form\Model\Configuration;
 use App\Form\Model\SystemConfiguration;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(SystemConfigurationEvent::class)]

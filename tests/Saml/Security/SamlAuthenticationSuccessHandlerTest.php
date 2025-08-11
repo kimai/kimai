@@ -9,10 +9,10 @@
 
 namespace App\Tests\Saml\Security;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Saml\SamlToken;
 use App\Saml\Security\SamlAuthenticationSuccessHandler;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

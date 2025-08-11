@@ -9,8 +9,8 @@
 
 namespace App\Tests\Form\Extension;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Form\Extension\DocumentationLinkExtension;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormInterface;

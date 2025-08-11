@@ -9,8 +9,8 @@
 
 namespace App\Tests\EventSubscriber\Actions;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\EventSubscriber\Actions\ProjectSubscriber;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(ProjectSubscriber::class)]
 class ProjectSubscriberTest extends AbstractActionsSubscriberTestCase

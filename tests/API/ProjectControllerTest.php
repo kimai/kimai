@@ -9,8 +9,6 @@
 
 namespace App\Tests\API;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\DataFixtures\UserFixtures;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -23,6 +21,8 @@ use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\VisibilityInterface;
 use App\Tests\Mocks\ProjectTestMetaFieldSubscriberMock;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

@@ -9,10 +9,10 @@
 
 namespace App\Tests\Calendar;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Calendar\RecentActivitiesSource;
 use App\Calendar\TimesheetEntry;
 use App\Entity\Timesheet;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(RecentActivitiesSource::class)]

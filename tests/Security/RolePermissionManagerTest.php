@@ -9,11 +9,11 @@
 
 namespace App\Tests\Security;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Repository\RolePermissionRepository;
 use App\Security\RolePermissionManager;
 use App\User\PermissionService;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 

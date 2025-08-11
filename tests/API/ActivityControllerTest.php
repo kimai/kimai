@@ -9,8 +9,6 @@
 
 namespace App\Tests\API;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\DataFixtures\UserFixtures;
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
@@ -23,6 +21,8 @@ use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
 use App\Repository\Query\VisibilityInterface;
 use App\Tests\Mocks\ActivityTestMetaFieldSubscriberMock;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

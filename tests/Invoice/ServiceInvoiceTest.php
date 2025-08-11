@@ -9,7 +9,6 @@
 
 namespace App\Tests\Invoice;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\LocaleService;
 use App\Entity\Customer;
 use App\Entity\Invoice;
@@ -28,6 +27,7 @@ use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use App\Utils\FileHelper;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 

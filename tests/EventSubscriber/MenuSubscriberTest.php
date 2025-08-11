@@ -9,9 +9,9 @@
 
 namespace App\Tests\EventSubscriber;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Event\ConfigureMainMenuEvent;
 use App\EventSubscriber\MenuSubscriber;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(MenuSubscriber::class)]

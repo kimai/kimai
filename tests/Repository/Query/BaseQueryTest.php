@@ -9,7 +9,6 @@
 
 namespace App\Tests\Repository\Query;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Entity\Bookmark;
 use App\Entity\Customer;
@@ -21,6 +20,7 @@ use App\Repository\Query\BaseQuery;
 use App\Repository\Query\DateRangeInterface;
 use App\Repository\Query\TimesheetQuery;
 use App\Utils\SearchTerm;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\DataMapperInterface;

@@ -9,10 +9,10 @@
 
 namespace App\Tests\Controller\Security;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\DataProvider;
 use App\Entity\User;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
 #[Group('integration')]

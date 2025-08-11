@@ -9,11 +9,11 @@
 
 namespace App\Tests\Repository;
 
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\Group;
 use App\Entity\Tag;
 use App\Repository\TagRepository;
 use App\Tests\DataFixtures\TagFixtures;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 #[CoversClass(TagRepository::class)]
 #[Group('integration')]

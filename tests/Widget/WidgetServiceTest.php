@@ -9,9 +9,9 @@
 
 namespace App\Tests\Widget;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Tests\Widget\Type\More;
 use App\Widget\WidgetService;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(WidgetService::class)]

@@ -9,9 +9,9 @@
 
 namespace App\Tests\Saml;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Saml\SamlBadge;
 use App\Saml\SamlLoginAttributes;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(SamlBadge::class)]

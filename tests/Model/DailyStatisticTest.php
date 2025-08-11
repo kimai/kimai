@@ -9,10 +9,10 @@
 
 namespace App\Tests\Model;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Model\DailyStatistic;
 use App\Model\Statistic\StatisticDate;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(DailyStatistic::class)]

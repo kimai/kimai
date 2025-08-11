@@ -9,9 +9,9 @@
 
 namespace App\Tests\Form\Model;
 
-use PHPUnit\Framework\Attributes\CoversClass;
 use App\Form\Model\Configuration;
 use App\Form\Model\SystemConfiguration;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Configuration::class)]
