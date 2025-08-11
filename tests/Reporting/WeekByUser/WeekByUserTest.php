@@ -9,14 +9,13 @@
 
 namespace App\Tests\Reporting\WeekByUser;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Reporting\DateByUser;
 use App\Reporting\WeekByUser\WeekByUser;
 use App\Tests\Reporting\AbstractDateByUserTestCase;
 
-/**
- * @covers \App\Reporting\WeekByUser\WeekByUser
- * @covers \App\Reporting\DateByUser
- */
+#[CoversClass(WeekByUser::class)]
+#[CoversClass(DateByUser::class)]
 class WeekByUserTest extends AbstractDateByUserTestCase
 {
     protected function createSut(): DateByUser

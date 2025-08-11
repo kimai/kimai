@@ -9,6 +9,8 @@
 
 namespace App\Tests\Repository\Query;
 
+use App\Repository\Query\BaseQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -17,9 +19,7 @@ use App\Entity\User;
 use App\Repository\Query\BaseFormTypeQuery;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Repository\Query\BaseQuery
- */
+#[CoversClass(BaseQuery::class)]
 abstract class AbstractBaseFormTypeQueryTestCase extends TestCase
 {
     public function assertBaseQuery(BaseFormTypeQuery $sut): void

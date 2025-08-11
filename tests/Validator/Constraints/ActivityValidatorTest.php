@@ -9,6 +9,7 @@
 
 namespace App\Tests\Validator\Constraints;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\ConfigLoaderInterface;
 use App\Repository\ActivityRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
@@ -19,10 +20,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\Activity
- * @covers \App\Validator\Constraints\ActivityValidator
  * @extends ConstraintValidatorTestCase<ActivityValidator>
  */
+#[CoversClass(ActivityConstraint::class)]
+#[CoversClass(ActivityValidator::class)]
 class ActivityValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): ActivityValidator

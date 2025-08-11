@@ -9,6 +9,7 @@
 
 namespace App\Tests\Repository\Query;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Entity\Bookmark;
 use App\Entity\Customer;
@@ -27,9 +28,7 @@ use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormFactoryInterface;
 
-/**
- * @covers \App\Repository\Query\BaseQuery
- */
+#[CoversClass(BaseQuery::class)]
 class BaseQueryTest extends TestCase
 {
     public function testQuery(): void

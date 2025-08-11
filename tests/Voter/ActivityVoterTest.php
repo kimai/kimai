@@ -9,6 +9,8 @@
 
 namespace App\Tests\Voter;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -18,14 +20,10 @@ use App\Voter\ActivityVoter;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
-/**
- * @covers \App\Voter\ActivityVoter
- */
+#[CoversClass(ActivityVoter::class)]
 class ActivityVoterTest extends AbstractVoterTestCase
 {
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testVote(User $user, $subject, $attribute, $result): void
     {
         $this->assertVote($user, $subject, $attribute, $result);

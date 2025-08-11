@@ -9,6 +9,7 @@
 
 namespace App\Tests\Export\Renderer;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Export\Base\CsvRenderer;
 use App\Export\Renderer\CsvRendererFactory;
 use App\Export\Template;
@@ -18,9 +19,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\Export\Renderer\CsvRendererFactory
- */
+#[CoversClass(CsvRendererFactory::class)]
 class CsvRendererFactoryTest extends TestCase
 {
     public function testCreate(): void

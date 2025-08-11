@@ -9,6 +9,9 @@
 
 namespace App\Tests\Export\Base;
 
+use App\Export\Package\SpoutSpreadsheet;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use App\Entity\User;
 use App\Export\Base\SpreadsheetRenderer;
 use App\Export\Base\XlsxRenderer;
@@ -20,12 +23,12 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @covers \App\Export\Base\XlsxRenderer
- * @covers \App\Export\Base\SpreadsheetRenderer
  * @covers \App\Export\Base\RendererTrait
- * @covers \App\Export\Package\SpoutSpreadsheet
- * @group integration
  */
+#[CoversClass(XlsxRenderer::class)]
+#[CoversClass(SpreadsheetRenderer::class)]
+#[CoversClass(SpoutSpreadsheet::class)]
+#[Group('integration')]
 class XlsxRendererTest extends AbstractRendererTestCase
 {
     protected function getAbstractRenderer(): XlsxRenderer

@@ -9,6 +9,8 @@
 
 namespace App\Tests\API;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use App\DataFixtures\UserFixtures;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -25,9 +27,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class ProjectControllerTest extends APIControllerBaseTestCase
 {
     use RateControllerTestTrait;
@@ -191,9 +191,7 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider getCollectionTestData
-     */
+    #[DataProvider('getCollectionTestData')]
     public function testGetCollectionWithParams(string $url, ?int $project, array $parameters, array $expected): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);

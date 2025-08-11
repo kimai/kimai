@@ -9,6 +9,8 @@
 
 namespace App\Tests\Command;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use App\Command\InvoiceCreateCommand;
 use App\DataFixtures\UserFixtures;
 use App\Entity\Customer;
@@ -27,10 +29,8 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
-/**
- * @covers \App\Command\InvoiceCreateCommand
- * @group integration
- */
+#[CoversClass(InvoiceCreateCommand::class)]
+#[Group('integration')]
 class InvoiceCreateCommandTest extends KernelTestCase
 {
     use KernelTestTrait;

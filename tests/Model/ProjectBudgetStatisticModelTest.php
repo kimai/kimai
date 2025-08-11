@@ -9,15 +9,14 @@
 
 namespace App\Tests\Model;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\EntityWithBudget;
 use App\Entity\Project;
 use App\Model\BudgetStatisticModel;
 use App\Model\ProjectBudgetStatisticModel;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Model\ProjectBudgetStatisticModel
- */
+#[CoversClass(ProjectBudgetStatisticModel::class)]
 class ProjectBudgetStatisticModelTest extends TestCase
 {
     /**

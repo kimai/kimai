@@ -9,13 +9,12 @@
 
 namespace App\Tests\Form;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Customer;
 use App\Form\CustomerEditForm;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-/**
- * @covers \App\Form\CustomerEditForm
- */
+#[CoversClass(CustomerEditForm::class)]
 class CustomerEditFormTest extends TypeTestCase
 {
     public function testWithNewProject(): void

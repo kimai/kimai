@@ -9,6 +9,8 @@
 
 namespace App\Tests\API\Authentication;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use App\API\Authentication\TokenAuthenticator;
 use App\Entity\User;
 use App\Repository\ApiUserRepository;
@@ -21,10 +23,8 @@ use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationExc
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\CustomCredentials;
 
-/**
- * @covers \App\API\Authentication\TokenAuthenticator
- * @group legacy
- */
+#[CoversClass(TokenAuthenticator::class)]
+#[Group('legacy')]
 class TokenAuthenticatorTest extends TestCase
 {
     private function getSut(bool $verify = true): TokenAuthenticator

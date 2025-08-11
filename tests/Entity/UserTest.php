@@ -9,6 +9,8 @@
 
 namespace App\Tests\Entity;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use App\Constants;
 use App\Entity\Team;
 use App\Entity\TeamMember;
@@ -23,9 +25,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * @covers \App\Entity\User
- */
+#[CoversClass(User::class)]
 class UserTest extends TestCase
 {
     public function testDefaultValues(): void
@@ -88,8 +88,8 @@ class UserTest extends TestCase
 
     /**
      * @deprecated
-     * @group legacy
      */
+    #[Group('legacy')]
     public function testWorkContract(): void
     {
         $user = new User();

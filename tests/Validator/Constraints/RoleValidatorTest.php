@@ -9,6 +9,8 @@
 
 namespace App\Tests\Validator\Constraints;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use App\Entity\User;
 use App\Tests\Mocks\Security\RoleServiceFactory;
 use App\Validator\Constraints\Role;
@@ -18,10 +20,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\Role
- * @covers \App\Validator\Constraints\RoleValidator
  * @extends ConstraintValidatorTestCase<RoleValidator>
  */
+#[CoversClass(Role::class)]
+#[CoversClass(RoleValidator::class)]
 class RoleValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): RoleValidator
@@ -49,9 +51,7 @@ class RoleValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate('foo', new NotBlank());
     }
 
-    /**
-     * @dataProvider getValidRoles
-     */
+    #[DataProvider('getValidRoles')]
     public function testConstraintWithValidRole(string $role): void
     {
         $constraint = new Role();
@@ -81,9 +81,7 @@ class RoleValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @dataProvider getInvalidRoles
-     */
+    #[DataProvider('getInvalidRoles')]
     public function testValidationError(mixed $role): void
     {
         $constraint = new Role([

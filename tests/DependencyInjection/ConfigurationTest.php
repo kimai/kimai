@@ -9,13 +9,12 @@
 
 namespace App\Tests\DependencyInjection;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\DependencyInjection\Configuration;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
-/**
- * @covers \App\DependencyInjection\Configuration
- */
+#[CoversClass(Configuration::class)]
 class ConfigurationTest extends TestCase
 {
     protected function getMinConfig($dataDir = '/tmp/')

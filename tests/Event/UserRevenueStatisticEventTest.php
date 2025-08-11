@@ -9,13 +9,12 @@
 
 namespace App\Tests\Event;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Event\UserRevenueStatisticEvent;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\UserRevenueStatisticEvent
- */
+#[CoversClass(UserRevenueStatisticEvent::class)]
 class UserRevenueStatisticEventTest extends TestCase
 {
     public function testDefaultValues(): void

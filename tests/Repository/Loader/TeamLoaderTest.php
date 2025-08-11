@@ -9,12 +9,11 @@
 
 namespace App\Tests\Repository\Loader;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Team;
 use App\Repository\Loader\TeamLoader;
 
-/**
- * @covers \App\Repository\Loader\TeamLoader
- */
+#[CoversClass(TeamLoader::class)]
 class TeamLoaderTest extends AbstractLoaderTestCase
 {
     public function testLoadResults(): void

@@ -9,6 +9,8 @@
 
 namespace App\Tests\Activity;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use App\Activity\ActivityService;
 use App\Entity\Activity;
 use App\Entity\Project;
@@ -27,9 +29,7 @@ use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-/**
- * @covers \App\Activity\ActivityService
- */
+#[CoversClass(ActivityService::class)]
 class ActivityServiceTest extends TestCase
 {
     private function getSut(
@@ -144,9 +144,7 @@ class ActivityServiceTest extends TestCase
         self::assertNull($project->getProject());
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testActivityNumber(string $format, int|string $expected): void
     {
         $sut = $this->getSut(null, null, null, ['number_format' => $format]);

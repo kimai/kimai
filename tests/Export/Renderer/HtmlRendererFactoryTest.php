@@ -9,6 +9,7 @@
 
 namespace App\Tests\Export\Renderer;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Activity\ActivityStatisticService;
 use App\Export\Base\HtmlRenderer;
 use App\Export\Renderer\HtmlRendererFactory;
@@ -17,9 +18,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Twig\Environment;
 
-/**
- * @covers \App\Export\Renderer\HtmlRendererFactory
- */
+#[CoversClass(HtmlRendererFactory::class)]
 class HtmlRendererFactoryTest extends TestCase
 {
     public function testCreate(): void

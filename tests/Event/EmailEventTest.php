@@ -9,13 +9,12 @@
 
 namespace App\Tests\Event;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Event\EmailEvent;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Mime\Email;
 
-/**
- * @covers \App\Event\EmailEvent
- */
+#[CoversClass(EmailEvent::class)]
 class EmailEventTest extends TestCase
 {
     public function testGetter(): void

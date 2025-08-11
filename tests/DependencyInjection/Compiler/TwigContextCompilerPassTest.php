@@ -9,6 +9,7 @@
 
 namespace App\Tests\DependencyInjection\Compiler;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\DependencyInjection\Compiler\TwigContextCompilerPass;
 use App\Export\ServiceExport;
 use App\Twig\Configuration;
@@ -17,9 +18,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
-/**
- * @covers \App\DependencyInjection\Compiler\TwigContextCompilerPass
- */
+#[CoversClass(TwigContextCompilerPass::class)]
 class TwigContextCompilerPassTest extends TestCase
 {
     private function getContainer(): ContainerBuilder

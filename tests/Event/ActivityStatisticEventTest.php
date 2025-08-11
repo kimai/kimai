@@ -9,15 +9,14 @@
 
 namespace App\Tests\Event;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Event\AbstractActivityEvent;
 use App\Event\ActivityStatisticEvent;
 use App\Model\ActivityStatistic;
 
-/**
- * @covers \App\Event\AbstractActivityEvent
- * @covers \App\Event\ActivityStatisticEvent
- */
+#[CoversClass(AbstractActivityEvent::class)]
+#[CoversClass(ActivityStatisticEvent::class)]
 class ActivityStatisticEventTest extends AbstractActivityEventTestCase
 {
     protected function createActivityEvent(Activity $activity): AbstractActivityEvent

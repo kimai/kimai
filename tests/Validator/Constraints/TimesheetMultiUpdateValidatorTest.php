@@ -9,6 +9,7 @@
 
 namespace App\Tests\Validator\Constraints;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -20,10 +21,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\TimesheetMultiUpdate
- * @covers \App\Validator\Constraints\TimesheetMultiUpdateValidator
  * @extends ConstraintValidatorTestCase<TimesheetMultiUpdateValidator>
  */
+#[CoversClass(TimesheetMultiUpdateConstraint::class)]
+#[CoversClass(TimesheetMultiUpdateValidator::class)]
 class TimesheetMultiUpdateValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): TimesheetMultiUpdateValidator

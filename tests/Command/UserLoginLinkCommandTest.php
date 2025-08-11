@@ -9,6 +9,8 @@
 
 namespace App\Tests\Command;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use App\Command\UserLoginLinkCommand;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -16,10 +18,8 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 
-/**
- * @covers \App\Command\UserLoginLinkCommand
- * @group integration
- */
+#[CoversClass(UserLoginLinkCommand::class)]
+#[Group('integration')]
 class UserLoginLinkCommandTest extends KernelTestCase
 {
     private Application $application;

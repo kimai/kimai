@@ -9,15 +9,14 @@
 
 namespace App\Tests\Entity;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Customer;
 use App\Entity\EntityWithMetaFields;
 use App\Entity\Invoice;
 use App\Entity\InvoiceMeta;
 use App\Entity\MetaTableTypeInterface;
 
-/**
- * @covers \App\Entity\InvoiceMeta
- */
+#[CoversClass(InvoiceMeta::class)]
 class InvoiceMetaTest extends AbstractMetaEntityTestCase
 {
     protected function getEntity(): EntityWithMetaFields

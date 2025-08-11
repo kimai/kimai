@@ -9,12 +9,11 @@
 
 namespace App\Tests\Validator;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Validator\ValidationException;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Validator\ValidationException
- */
+#[CoversClass(ValidationException::class)]
 class ValidationExceptionTest extends TestCase
 {
     public function testException(): void

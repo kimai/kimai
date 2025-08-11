@@ -9,12 +9,11 @@
 
 namespace App\Tests\Export\Package\CellFormatter;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Export\Package\CellFormatter\BooleanFormatter;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Export\Package\CellFormatter\BooleanFormatter
- */
+#[CoversClass(BooleanFormatter::class)]
 class BooleanFormatterTest extends TestCase
 {
     public function testFormatValueReturnsFalseForNull(): void

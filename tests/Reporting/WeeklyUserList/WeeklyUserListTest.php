@@ -9,14 +9,13 @@
 
 namespace App\Tests\Reporting\WeeklyUserList;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Reporting\AbstractUserList;
 use App\Reporting\WeeklyUserList\WeeklyUserList;
 use App\Tests\Reporting\AbstractUserListTestCase;
 
-/**
- * @covers \App\Reporting\WeeklyUserList\WeeklyUserList
- * @covers \App\Reporting\AbstractUserList
- */
+#[CoversClass(WeeklyUserList::class)]
+#[CoversClass(AbstractUserList::class)]
 class WeeklyUserListTest extends AbstractUserListTestCase
 {
     protected function createSut(): AbstractUserList

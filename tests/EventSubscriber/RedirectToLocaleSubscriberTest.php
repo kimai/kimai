@@ -9,6 +9,7 @@
 
 namespace App\Tests\EventSubscriber;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\LocaleService;
 use App\EventSubscriber\RedirectToLocaleSubscriber;
 use PHPUnit\Framework\TestCase;
@@ -17,9 +18,7 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-/**
- * @covers \App\EventSubscriber\RedirectToLocaleSubscriber
- */
+#[CoversClass(RedirectToLocaleSubscriber::class)]
 class RedirectToLocaleSubscriberTest extends TestCase
 {
     public function testConstruct(): void

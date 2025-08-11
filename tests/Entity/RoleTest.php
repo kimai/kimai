@@ -9,12 +9,11 @@
 
 namespace App\Tests\Entity;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Role;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Entity\Role
- */
+#[CoversClass(Role::class)]
 class RoleTest extends TestCase
 {
     public function testDefaultValues(): void

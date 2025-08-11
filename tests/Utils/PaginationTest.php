@@ -9,14 +9,13 @@
 
 namespace App\Tests\Utils;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Repository\Query\TimesheetQuery;
 use App\Utils\Pagination;
 use Pagerfanta\Adapter\ArrayAdapter;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Utils\Pagination
- */
+#[CoversClass(Pagination::class)]
 class PaginationTest extends TestCase
 {
     public function testDefaults(): void

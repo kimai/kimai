@@ -9,6 +9,7 @@
 
 namespace App\Tests\Saml;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\SamlConfiguration;
 use App\Entity\User;
 use App\Saml\SamlLoginAttributes;
@@ -21,9 +22,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-/**
- * @covers \App\Saml\SamlProvider
- */
+#[CoversClass(SamlProvider::class)]
 class SamlProviderTest extends TestCase
 {
     protected function getSamlProvider(array $mapping = null, ?User $user = null): SamlProvider

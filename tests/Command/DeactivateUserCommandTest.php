@@ -9,6 +9,8 @@
 
 namespace App\Tests\Command;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use App\Command\DeactivateUserCommand;
 use App\Entity\User;
 use App\Repository\UserRepository;
@@ -19,10 +21,8 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Tester\CommandTester;
 
-/**
- * @covers \App\Command\DeactivateUserCommand
- * @group integration
- */
+#[CoversClass(DeactivateUserCommand::class)]
+#[Group('integration')]
 class DeactivateUserCommandTest extends KernelTestCase
 {
     private Application $application;

@@ -9,14 +9,13 @@
 
 namespace App\Tests\Invoice\Hydrator;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Invoice\Hydrator\InvoiceModelProjectHydrator;
 use App\Project\ProjectStatisticService;
 use App\Tests\Invoice\Renderer\RendererTestTrait;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Invoice\Hydrator\InvoiceModelProjectHydrator
- */
+#[CoversClass(InvoiceModelProjectHydrator::class)]
 class InvoiceModelProjectHydratorTest extends TestCase
 {
     use RendererTestTrait;

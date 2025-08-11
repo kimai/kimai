@@ -9,13 +9,13 @@
 
 namespace App\Tests\Repository\Query;
 
+use App\Repository\Query\BaseFormTypeQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Project;
 use App\Repository\Query\ProjectFormTypeQuery;
 
-/**
- * @covers \App\Repository\Query\ProjectFormTypeQuery
- * @covers \App\Repository\Query\BaseFormTypeQuery
- */
+#[CoversClass(ProjectFormTypeQuery::class)]
+#[CoversClass(BaseFormTypeQuery::class)]
 class ProjectFormTypeQueryTest extends AbstractBaseFormTypeQueryTestCase
 {
     public function testQuery(): void

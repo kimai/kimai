@@ -9,13 +9,12 @@
 
 namespace App\Tests\EventSubscriber;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\EventSubscriber\UserDetailsSubscriber;
 use KevinPapst\TablerBundle\Event\UserDetailsEvent;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\EventSubscriber\UserDetailsSubscriber
- */
+#[CoversClass(UserDetailsSubscriber::class)]
 class UserDetailsSubscriberTest extends TestCase
 {
     public function testGetSubscribedEvents(): void

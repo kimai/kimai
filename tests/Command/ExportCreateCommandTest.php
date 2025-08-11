@@ -9,6 +9,8 @@
 
 namespace App\Tests\Command;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use App\Command\ExportCreateCommand;
 use App\DataFixtures\UserFixtures;
 use App\Entity\Customer;
@@ -29,10 +31,8 @@ use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\Command\ExportCreateCommand
- * @group integration
- */
+#[CoversClass(ExportCreateCommand::class)]
+#[Group('integration')]
 class ExportCreateCommandTest extends KernelTestCase
 {
     use KernelTestTrait;

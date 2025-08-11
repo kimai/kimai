@@ -9,13 +9,12 @@
 
 namespace App\Tests\Form;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Project;
 use App\Form\ProjectEditForm;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-/**
- * @covers \App\Form\ProjectEditForm
- */
+#[CoversClass(ProjectEditForm::class)]
 class ProjectEditFormTest extends TypeTestCase
 {
     public function testWithNewProject(): void

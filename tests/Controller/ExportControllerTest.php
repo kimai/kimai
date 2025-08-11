@@ -9,6 +9,7 @@
 
 namespace App\Tests\Controller;
 
+use PHPUnit\Framework\Attributes\Group;
 use App\Entity\ExportTemplate;
 use App\Entity\Team;
 use App\Entity\Timesheet;
@@ -18,9 +19,7 @@ use App\Tests\DataFixtures\TimesheetFixtures;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DomCrawler\Field\FormField;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class ExportControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void

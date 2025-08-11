@@ -9,13 +9,12 @@
 
 namespace App\Tests\API\Model;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\API\Model\Version;
 use App\Constants;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\API\Model\Version
- */
+#[CoversClass(Version::class)]
 class VersionTest extends TestCase
 {
     public function testValues(): void

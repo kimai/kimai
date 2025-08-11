@@ -9,6 +9,7 @@
 
 namespace App\Tests\Export\Package;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Export\Package\CellFormatter\DefaultFormatter;
 use App\Export\Package\Column;
 use App\Export\Package\PhpOfficeSpreadsheet;
@@ -16,9 +17,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\Export\Package\PhpOfficeSpreadsheet
- */
+#[CoversClass(PhpOfficeSpreadsheet::class)]
 class PhpOfficeSpreadsheetTest extends TestCase
 {
     private string $filename;

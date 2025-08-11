@@ -9,6 +9,7 @@
 
 namespace App\Tests\Widget\Type;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
@@ -18,10 +19,8 @@ use App\Widget\Type\UserAmountYear;
 use App\Widget\WidgetInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-/**
- * @covers \App\Widget\Type\UserAmountYear
- * @covers \App\Widget\Type\AbstractCounterYear
- */
+#[CoversClass(UserAmountYear::class)]
+#[CoversClass(AbstractCounterYear::class)]
 class UserAmountYearTest extends AbstractWidgetTypeTestCase
 {
     protected function assertDefaultData(AbstractWidgetType $sut): void

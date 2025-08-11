@@ -9,6 +9,7 @@
 
 namespace App\Tests\Event;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use App\Event\InvoicePostRenderEvent;
@@ -20,9 +21,7 @@ use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @covers \App\Event\InvoicePostRenderEvent
- */
+#[CoversClass(InvoicePostRenderEvent::class)]
 class InvoicePostRenderEventTest extends TestCase
 {
     public function testDefaultValues(): void

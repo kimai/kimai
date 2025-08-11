@@ -9,16 +9,16 @@
 
 namespace App\Tests\Command;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use App\Command\ListUserCommand;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
-/**
- * @covers \App\Command\ListUserCommand
- * @group integration
- */
+#[CoversClass(ListUserCommand::class)]
+#[Group('integration')]
 class ListUserCommandTest extends KernelTestCase
 {
     public function testWithPlugins(): void

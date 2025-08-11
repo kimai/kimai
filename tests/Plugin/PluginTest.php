@@ -9,13 +9,12 @@
 
 namespace App\Tests\Plugin;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Plugin\Plugin;
 use App\Plugin\PluginInterface;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Plugin\Plugin
- */
+#[CoversClass(Plugin::class)]
 class PluginTest extends TestCase
 {
     public function testEmptyObject(): void

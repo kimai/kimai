@@ -9,6 +9,8 @@
 
 namespace App\Tests\Voter;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -17,14 +19,10 @@ use App\Voter\EntityMultiRoleVoter;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
-/**
- * @covers \App\Voter\EntityMultiRoleVoter
- */
+#[CoversClass(EntityMultiRoleVoter::class)]
 class EntityMultiRoleVoterTest extends AbstractVoterTestCase
 {
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testVote(User $user, $subject, $attribute, $result): void
     {
         $token = new UsernamePasswordToken($user, 'foo', $user->getRoles());

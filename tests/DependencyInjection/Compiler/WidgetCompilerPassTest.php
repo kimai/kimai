@@ -9,6 +9,7 @@
 
 namespace App\Tests\DependencyInjection\Compiler;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\DependencyInjection\Compiler\WidgetCompilerPass;
 use App\Widget\Type\ActiveTimesheets;
 use App\Widget\Type\ActiveUsersMonth;
@@ -18,9 +19,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
-/**
- * @covers \App\DependencyInjection\Compiler\WidgetCompilerPass
- */
+#[CoversClass(WidgetCompilerPass::class)]
 class WidgetCompilerPassTest extends TestCase
 {
     private function getContainer(): ContainerBuilder

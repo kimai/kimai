@@ -9,18 +9,16 @@
 
 namespace App\Tests\Timesheet\Rounding;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use App\Entity\Timesheet;
 use App\Timesheet\Rounding\DefaultRounding;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Timesheet\Rounding\DefaultRounding
- */
+#[CoversClass(DefaultRounding::class)]
 class DefaultRoundingTest extends TestCase
 {
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testCalculate($roundBegin, $roundEnd, $roundDuration, \DateTime $start, \DateTime $end, \DateTime $expectedStart, \DateTime $expectedEnd, $expectedDuration): void
     {
         $record = new Timesheet();

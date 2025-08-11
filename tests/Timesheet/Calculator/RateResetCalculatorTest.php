@@ -9,6 +9,7 @@
 
 namespace App\Tests\Timesheet\Calculator;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
@@ -16,9 +17,7 @@ use App\Entity\UserPreference;
 use App\Timesheet\Calculator\RateResetCalculator;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Timesheet\Calculator\RateResetCalculator
- */
+#[CoversClass(RateResetCalculator::class)]
 class RateResetCalculatorTest extends TestCase
 {
     public function testWithReset(): void

@@ -9,6 +9,7 @@
 
 namespace App\Tests\Reporting;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Event\ReportingEvent;
 use App\Reporting\ReportingService;
@@ -16,9 +17,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-/**
- * @covers \App\Reporting\ReportingService
- */
+#[CoversClass(ReportingService::class)]
 class ReportingServiceTest extends TestCase
 {
     protected function getSut(bool $isGranted = false): ReportingService

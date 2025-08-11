@@ -9,11 +9,10 @@
 
 namespace App\Tests\API;
 
+use PHPUnit\Framework\Attributes\Group;
 use App\Entity\User;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class ConfigurationControllerTest extends APIControllerBaseTestCase
 {
     public function testIsTimesheetSecure(): void

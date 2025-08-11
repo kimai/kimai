@@ -9,6 +9,7 @@
 
 namespace App\Tests\Ldap;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Ldap\LdapManager;
 use App\Ldap\LdapUserProvider;
@@ -16,9 +17,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 
-/**
- * @covers \App\Ldap\LdapUserProvider
- */
+#[CoversClass(LdapUserProvider::class)]
 class LdapUserProviderTest extends TestCase
 {
     public function testLoadUserByIdentifierReturnsNull(): void

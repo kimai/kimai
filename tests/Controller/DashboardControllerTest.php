@@ -9,9 +9,9 @@
 
 namespace App\Tests\Controller;
 
-/**
- * @group integration
- */
+use PHPUnit\Framework\Attributes\Group;
+
+#[Group('integration')]
 class DashboardControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void

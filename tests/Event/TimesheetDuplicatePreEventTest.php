@@ -9,13 +9,12 @@
 
 namespace App\Tests\Event;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Timesheet;
 use App\Event\AbstractTimesheetEvent;
 use App\Event\TimesheetDuplicatePreEvent;
 
-/**
- * @covers \App\Event\TimesheetDuplicatePreEvent
- */
+#[CoversClass(TimesheetDuplicatePreEvent::class)]
 class TimesheetDuplicatePreEventTest extends AbstractTimesheetEventTestCase
 {
     protected function createTimesheetEvent(Timesheet $timesheet): AbstractTimesheetEvent

@@ -9,6 +9,7 @@
 
 namespace App\Tests\Validator\Constraints;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Entity\Timesheet;
 use App\Validator\Constraints\QuickEntryTimesheet;
@@ -20,10 +21,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\QuickEntryTimesheet
- * @covers \App\Validator\Constraints\QuickEntryTimesheetValidator
  * @extends ConstraintValidatorTestCase<QuickEntryTimesheetValidator>
  */
+#[CoversClass(QuickEntryTimesheet::class)]
+#[CoversClass(QuickEntryTimesheetValidator::class)]
 class QuickEntryTimesheetValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createConstraint(): QuickEntryTimesheet

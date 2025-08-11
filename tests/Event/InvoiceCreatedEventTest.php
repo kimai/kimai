@@ -9,6 +9,8 @@
 
 namespace App\Tests\Event;
 
+use App\Event\AbstractInvoiceEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Customer;
 use App\Entity\Invoice;
 use App\Entity\InvoiceTemplate;
@@ -18,10 +20,8 @@ use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\InvoiceCreatedEvent
- * @covers \App\Event\AbstractInvoiceEvent
- */
+#[CoversClass(InvoiceCreatedEvent::class)]
+#[CoversClass(AbstractInvoiceEvent::class)]
 class InvoiceCreatedEventTest extends TestCase
 {
     public function testDefaultValues(): void

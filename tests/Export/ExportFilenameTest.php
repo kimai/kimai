@@ -9,6 +9,7 @@
 
 namespace App\Tests\Export;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\User;
@@ -16,9 +17,7 @@ use App\Export\ExportFilename;
 use App\Repository\Query\TimesheetQuery;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Export\ExportFilename
- */
+#[CoversClass(ExportFilename::class)]
 class ExportFilenameTest extends TestCase
 {
     public function testExportFilename(): void

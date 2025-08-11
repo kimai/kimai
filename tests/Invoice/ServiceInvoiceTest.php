@@ -9,6 +9,7 @@
 
 namespace App\Tests\Invoice;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\LocaleService;
 use App\Entity\Customer;
 use App\Entity\Invoice;
@@ -30,9 +31,7 @@ use App\Utils\FileHelper;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 
-/**
- * @covers \App\Invoice\ServiceInvoice
- */
+#[CoversClass(ServiceInvoice::class)]
 class ServiceInvoiceTest extends TestCase
 {
     private function getSut(array $paths): ServiceInvoice

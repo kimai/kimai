@@ -9,15 +9,14 @@
 
 namespace App\Tests\Twig\Runtime;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Twig\Runtime\EncoreExtension;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\WebpackEncoreBundle\Asset\EntrypointLookupInterface;
 
-/**
- * @covers \App\Twig\Runtime\EncoreExtension
- */
+#[CoversClass(EncoreExtension::class)]
 class EncoreExtensionTest extends TestCase
 {
     protected function getSut(array $files = []): EncoreExtension

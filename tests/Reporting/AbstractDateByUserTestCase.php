@@ -9,14 +9,14 @@
 
 namespace App\Tests\Reporting;
 
+use App\Reporting\AbstractUserList;
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Reporting\DateByUser;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Reporting\AbstractUserList
- * @covers \App\Reporting\DateByUser
- */
+#[CoversClass(AbstractUserList::class)]
+#[CoversClass(DateByUser::class)]
 abstract class AbstractDateByUserTestCase extends TestCase
 {
     abstract protected function createSut(): DateByUser;

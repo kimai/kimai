@@ -9,14 +9,13 @@
 
 namespace App\Tests\Event;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Calendar\DragAndDropSource;
 use App\Entity\User;
 use App\Event\CalendarDragAndDropSourceEvent;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\CalendarDragAndDropSourceEvent
- */
+#[CoversClass(CalendarDragAndDropSourceEvent::class)]
 class CalendarDragAndDropSourceEventTest extends TestCase
 {
     public function testGetterAndSetter(): void

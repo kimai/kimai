@@ -9,11 +9,11 @@
 
 namespace App\Tests\Model;
 
+use App\Model\ProjectStatistic;
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Model\CustomerStatistic;
 
-/**
- * @covers \App\Model\ProjectStatistic
- */
+#[CoversClass(ProjectStatistic::class)]
 class ProjectStatisticTest extends AbstractTimesheetCountedStatisticTestCase
 {
     public function testDefaultValues(): void

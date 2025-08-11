@@ -9,14 +9,13 @@
 
 namespace App\Tests\Event;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\UserPreferenceEvent;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\UserPreferenceEvent
- */
+#[CoversClass(UserPreferenceEvent::class)]
 class UserPreferenceEventTest extends TestCase
 {
     public function testGetterAndSetter(): void

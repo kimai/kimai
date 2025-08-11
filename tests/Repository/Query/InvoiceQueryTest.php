@@ -9,12 +9,12 @@
 
 namespace App\Tests\Repository\Query;
 
+use App\Repository\Query\TimesheetQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Repository\Query\InvoiceQuery;
 
-/**
- * @covers \App\Repository\Query\InvoiceQuery
- * @covers \App\Repository\Query\TimesheetQuery
- */
+#[CoversClass(InvoiceQuery::class)]
+#[CoversClass(TimesheetQuery::class)]
 class InvoiceQueryTest extends TimesheetQueryTest
 {
     public function testQuery(): void

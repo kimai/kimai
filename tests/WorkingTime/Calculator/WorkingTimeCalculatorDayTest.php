@@ -9,13 +9,12 @@
 
 namespace App\Tests\WorkingTime\Calculator;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\WorkingTime\Calculator\WorkingTimeCalculatorDay;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\WorkingTime\Calculator\WorkingTimeCalculatorDay
- */
+#[CoversClass(WorkingTimeCalculatorDay::class)]
 class WorkingTimeCalculatorDayTest extends TestCase
 {
     public function testDefaults(): void

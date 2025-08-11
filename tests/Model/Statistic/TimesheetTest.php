@@ -9,11 +9,10 @@
 
 namespace App\Tests\Model\Statistic;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Model\Statistic\Timesheet;
 
-/**
- * @covers \App\Model\Statistic\Timesheet
- */
+#[CoversClass(Timesheet::class)]
 class TimesheetTest extends AbstractTimesheetTestCase
 {
     public function testDefaultValues(): void

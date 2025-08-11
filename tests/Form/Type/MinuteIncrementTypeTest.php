@@ -9,13 +9,12 @@
 
 namespace App\Tests\Form\Type;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Form\Type\MinuteIncrementType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-/**
- * @covers \App\Form\Type\MinuteIncrementType
- */
+#[CoversClass(MinuteIncrementType::class)]
 class MinuteIncrementTypeTest extends TypeTestCase
 {
     public function testSubmitValidData(): void

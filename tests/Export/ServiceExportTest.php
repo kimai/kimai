@@ -9,6 +9,7 @@
 
 namespace App\Tests\Export;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Activity\ActivityStatisticService;
 use App\Entity\ExportTemplate;
 use App\Export\Base\CsvRenderer;
@@ -30,9 +31,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Twig\Environment;
 
-/**
- * @covers \App\Export\ServiceExport
- */
+#[CoversClass(ServiceExport::class)]
 class ServiceExportTest extends TestCase
 {
     private function createSut(bool $withTemplates = false, int $failureCount = 1): ServiceExport

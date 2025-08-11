@@ -9,12 +9,11 @@
 
 namespace App\Tests\Model;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Model\Day;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Model\Day
- */
+#[CoversClass(Day::class)]
 class DayTest extends TestCase
 {
     public function testDefaults(): void

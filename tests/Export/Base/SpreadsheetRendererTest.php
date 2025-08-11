@@ -9,6 +9,9 @@
 
 namespace App\Tests\Export\Base;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use App\Entity\ExportableItem;
 use App\Export\Base\SpreadsheetRenderer;
 use App\Export\Package\SpreadsheetPackage;
@@ -23,10 +26,8 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\Export\Base\SpreadsheetRenderer
- * @group integration
- */
+#[CoversClass(SpreadsheetRenderer::class)]
+#[Group('integration')]
 class SpreadsheetRendererTest extends AbstractRendererTestCase
 {
     public function testWriteSpreadsheetCreatesSpreadsheetWithCorrectHeaders(): void
@@ -150,9 +151,7 @@ class SpreadsheetRendererTest extends AbstractRendererTestCase
         ]];
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testWriteSpreadsheetCsv(?Template $template, array $expectedColumns): void
     {
         $dispatcher = new EventDispatcher();

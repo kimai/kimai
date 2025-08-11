@@ -9,13 +9,12 @@
 
 namespace App\Tests\EventSubscriber;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Event\ConfigureMainMenuEvent;
 use App\EventSubscriber\MenuSubscriber;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\EventSubscriber\MenuSubscriber
- */
+#[CoversClass(MenuSubscriber::class)]
 class MenuSubscriberTest extends TestCase
 {
     public function testGetSubscribedEvents(): void

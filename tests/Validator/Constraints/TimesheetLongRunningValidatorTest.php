@@ -9,6 +9,7 @@
 
 namespace App\Tests\Validator\Constraints;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\ConfigLoaderInterface;
 use App\Entity\Timesheet;
 use App\Tests\Mocks\SystemConfigurationFactory;
@@ -19,10 +20,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\TimesheetLongRunning
- * @covers \App\Validator\Constraints\TimesheetLongRunningValidator
  * @extends ConstraintValidatorTestCase<TimesheetLongRunningValidator>
  */
+#[CoversClass(TimesheetLongRunning::class)]
+#[CoversClass(TimesheetLongRunningValidator::class)]
 class TimesheetLongRunningValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): TimesheetLongRunningValidator

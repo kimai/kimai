@@ -9,14 +9,13 @@
 
 namespace App\Tests\Controller;
 
+use PHPUnit\Framework\Attributes\Group;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Tests\DataFixtures\TeamFixtures;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class TeamControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void

@@ -9,15 +9,16 @@
 
 namespace App\Tests\Entity;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Customer;
 use App\Entity\CustomerRate;
 use App\Entity\User;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Entity\CustomerRate
  * @covers \App\Entity\Rate
  */
+#[CoversClass(CustomerRate::class)]
 class CustomerRateTest extends TestCase
 {
     public function testDefaultValues(): void

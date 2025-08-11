@@ -9,6 +9,7 @@
 
 namespace App\Tests\Export\Spreadsheet\Extractor;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\UserPreferenceDisplayEvent;
@@ -18,10 +19,8 @@ use App\Export\Spreadsheet\Extractor\UserPreferenceExtractor;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-/**
- * @covers \App\Export\Spreadsheet\Extractor\UserPreferenceExtractor
- * @covers \App\Export\Spreadsheet\Extractor\ExtractorException
- */
+#[CoversClass(UserPreferenceExtractor::class)]
+#[CoversClass(ExtractorException::class)]
 class UserPreferenceExtractorTest extends TestCase
 {
     public function testExtract(): void

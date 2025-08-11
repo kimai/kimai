@@ -9,12 +9,11 @@
 
 namespace App\Tests\Export\Annotation;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Export\Annotation\Order;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Export\Annotation\Order
- */
+#[CoversClass(Order::class)]
 class OrderTest extends TestCase
 {
     public function testConstruct(): void

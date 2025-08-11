@@ -9,6 +9,7 @@
 
 namespace App\Tests\Entity;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Constants;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -18,9 +19,7 @@ use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use Doctrine\Common\Collections\Collection;
 
-/**
- * @covers \App\Entity\Project
- */
+#[CoversClass(Project::class)]
 class ProjectTest extends AbstractEntityTestCase
 {
     public function testDefaultValues(): void

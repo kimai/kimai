@@ -9,6 +9,7 @@
 
 namespace App\Tests\Invoice\Renderer;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use App\Invoice\InvoiceItem;
 use App\Invoice\InvoiceItemHydrator;
 use App\Invoice\InvoiceModel;
@@ -27,9 +28,7 @@ class DebugRendererTest extends TestCase
         yield [static fn (self $testCase) => $testCase->getInvoiceModelOneEntry(), '293.27', 1, 1, 0, 1, 0, false, []];
     }
 
-    /**
-     * @dataProvider getTestModel
-     */
+    #[DataProvider('getTestModel')]
     public function testRender(callable $invoiceModel, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3, $hasProject, $metaFields = []): void
     {
         /** @var InvoiceModel $model */

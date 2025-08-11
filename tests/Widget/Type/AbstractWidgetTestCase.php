@@ -9,12 +9,11 @@
 
 namespace App\Tests\Widget\Type;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Widget\Type\AbstractWidget;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Widget\Type\AbstractWidget
- */
+#[CoversClass(AbstractWidget::class)]
 abstract class AbstractWidgetTestCase extends TestCase
 {
     abstract public function createSut(): AbstractWidget;

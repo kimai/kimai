@@ -9,15 +9,14 @@
 
 namespace App\Tests\API;
 
+use PHPUnit\Framework\Attributes\Group;
 use App\Entity\ExportTemplate;
 use App\Entity\User;
 use App\Repository\ExportTemplateRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class ExportControllerTest extends APIControllerBaseTestCase
 {
     private function importExportTemplate(): ExportTemplate

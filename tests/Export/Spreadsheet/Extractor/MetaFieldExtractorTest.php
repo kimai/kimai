@@ -9,6 +9,7 @@
 
 namespace App\Tests\Export\Spreadsheet\Extractor;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Project;
 use App\Entity\ProjectMeta;
 use App\Event\ProjectMetaDisplayEvent;
@@ -19,10 +20,8 @@ use App\Repository\Query\ProjectQuery;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-/**
- * @covers \App\Export\Spreadsheet\Extractor\MetaFieldExtractor
- * @covers \App\Export\Spreadsheet\Extractor\ExtractorException
- */
+#[CoversClass(MetaFieldExtractor::class)]
+#[CoversClass(ExtractorException::class)]
 class MetaFieldExtractorTest extends TestCase
 {
     public function testExtract(): void

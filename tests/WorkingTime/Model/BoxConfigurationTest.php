@@ -9,12 +9,11 @@
 
 namespace App\Tests\WorkingTime\Model;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\WorkingTime\Model\BoxConfiguration;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\WorkingTime\Model\BoxConfiguration
- */
+#[CoversClass(BoxConfiguration::class)]
 class BoxConfigurationTest extends TestCase
 {
     public function testDefaults(): void

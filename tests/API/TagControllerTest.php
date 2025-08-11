@@ -9,14 +9,13 @@
 
 namespace App\Tests\API;
 
+use PHPUnit\Framework\Attributes\Group;
 use App\Entity\Tag;
 use App\Entity\User;
 use App\Tests\DataFixtures\TagFixtures;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class TagControllerTest extends APIControllerBaseTestCase
 {
     /**

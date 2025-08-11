@@ -9,13 +9,12 @@
 
 namespace App\Tests\API;
 
+use PHPUnit\Framework\Attributes\Group;
 use App\Entity\Invoice;
 use App\Entity\User;
 use App\Tests\DataFixtures\InvoiceFixtures;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class InvoiceControllerTest extends APIControllerBaseTestCase
 {
     /**

@@ -9,14 +9,13 @@
 
 namespace App\Tests\Event;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Event\RecentActivityEvent;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\RecentActivityEvent
- */
+#[CoversClass(RecentActivityEvent::class)]
 class RecentActivityEventTest extends TestCase
 {
     public function testGetterAndSetter(): void

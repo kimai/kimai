@@ -9,13 +9,12 @@
 
 namespace App\Tests\Export\Spreadsheet\CellFormatter;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Export\Spreadsheet\CellFormatter\BooleanFormatter;
 use App\Export\Spreadsheet\CellFormatter\CellFormatterInterface;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
-/**
- * @covers \App\Export\Spreadsheet\CellFormatter\BooleanFormatter
- */
+#[CoversClass(BooleanFormatter::class)]
 class BooleanFormatterTest extends AbstractFormatterTestCase
 {
     protected function getFormatter(): CellFormatterInterface

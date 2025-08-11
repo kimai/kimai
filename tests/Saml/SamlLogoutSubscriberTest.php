@@ -9,6 +9,7 @@
 
 namespace App\Tests\Saml;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Saml\SamlAuthFactory;
 use App\Saml\SamlLogoutSubscriber;
@@ -20,9 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\LogoutEvent;
 
-/**
- * @covers \App\Saml\SamlLogoutSubscriber
- */
+#[CoversClass(SamlLogoutSubscriber::class)]
 class SamlLogoutSubscriberTest extends TestCase
 {
     public function testLogout(): void

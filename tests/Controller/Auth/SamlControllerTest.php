@@ -9,6 +9,7 @@
 
 namespace App\Tests\Controller\Auth;
 
+use PHPUnit\Framework\Attributes\Group;
 use App\Configuration\SamlConfiguration;
 use App\Configuration\SamlConfigurationInterface;
 use App\Configuration\SystemConfiguration;
@@ -25,9 +26,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class SamlControllerTest extends TestCase
 {
     protected function getSystemConfigurationMock(array $settings, array $loaderSettings = []): SystemConfiguration

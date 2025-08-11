@@ -9,6 +9,7 @@
 
 namespace App\Tests\Validator\Constraints;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\ConfigLoaderInterface;
 use App\Repository\CustomerRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
@@ -19,10 +20,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\Customer
- * @covers \App\Validator\Constraints\CustomerValidator
  * @extends ConstraintValidatorTestCase<CustomerValidator>
  */
+#[CoversClass(CustomerConstraint::class)]
+#[CoversClass(CustomerValidator::class)]
 class CustomerValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): CustomerValidator

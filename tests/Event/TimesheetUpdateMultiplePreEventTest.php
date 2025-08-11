@@ -9,13 +9,12 @@
 
 namespace App\Tests\Event;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Event\AbstractTimesheetMultipleEvent;
 use App\Event\TimesheetUpdateMultiplePreEvent;
 
-/**
- * @covers \App\Event\AbstractTimesheetMultipleEvent
- * @covers \App\Event\TimesheetUpdateMultiplePreEvent
- */
+#[CoversClass(AbstractTimesheetMultipleEvent::class)]
+#[CoversClass(TimesheetUpdateMultiplePreEvent::class)]
 class TimesheetUpdateMultiplePreEventTest extends AbstractTimesheetMultipleEventTestCase
 {
     protected function createTimesheetMultipleEvent(array $timesheets): AbstractTimesheetMultipleEvent

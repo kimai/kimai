@@ -9,6 +9,7 @@
 
 namespace App\Tests\Timesheet\TrackingMode;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Timesheet\TrackingMode\PunchInOutMode;
@@ -16,9 +17,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-/**
- * @covers \App\Timesheet\TrackingMode\PunchInOutMode
- */
+#[CoversClass(PunchInOutMode::class)]
 class PunchInOutModeTest extends TestCase
 {
     private function createSut(bool $allowApiTimes = false): PunchInOutMode

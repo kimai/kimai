@@ -9,15 +9,14 @@
 
 namespace App\Tests\API;
 
+use PHPUnit\Framework\Attributes\Group;
 use App\Entity\User;
 use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class ActionsControllerTest extends APIControllerBaseTestCase
 {
     public function testIsSecure(): void

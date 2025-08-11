@@ -9,6 +9,8 @@
 
 namespace App\Tests\Export\Timesheet;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use App\Export\Base\PDFRenderer;
 use App\Pdf\HtmlToPdfConverter;
 use App\Pdf\MPdfConverter;
@@ -19,10 +21,10 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment;
 
 /**
- * @covers \App\Export\Base\PDFRenderer
  * @covers \App\Export\Base\RendererTrait
- * @group integration
  */
+#[CoversClass(PDFRenderer::class)]
+#[Group('integration')]
 class PdfRendererTest extends AbstractRendererTestCase
 {
     public function testConfiguration(): void

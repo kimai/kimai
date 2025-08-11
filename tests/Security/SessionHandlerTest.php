@@ -9,6 +9,7 @@
 
 namespace App\Tests\Security;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Security\SessionHandler;
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\TestCase;
@@ -16,9 +17,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\RateLimiter\Storage\InMemoryStorage;
 
-/**
- * @covers \App\Security\SessionHandler
- */
+#[CoversClass(SessionHandler::class)]
 class SessionHandlerTest extends TestCase
 {
     public function testConstruct(): void

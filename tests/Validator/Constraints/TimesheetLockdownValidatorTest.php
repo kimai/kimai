@@ -9,6 +9,8 @@
 
 namespace App\Tests\Validator\Constraints;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use App\Configuration\ConfigLoaderInterface;
 use App\Entity\Timesheet;
 use App\Entity\User;
@@ -22,10 +24,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\TimesheetLockdown
- * @covers \App\Validator\Constraints\TimesheetLockdownValidator
  * @extends ConstraintValidatorTestCase<TimesheetLockdownValidator>
  */
+#[CoversClass(TimesheetLockdown::class)]
+#[CoversClass(TimesheetLockdownValidator::class)]
 class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): TimesheetLockdownValidator
@@ -141,9 +143,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         self::assertEmpty($this->context->getViolations());
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testLockdown(bool $allowOverwriteFull, bool $allowOverwriteGrace, string $beginModifier, string $nowModifier, bool $isViolation): void
     {
         $this->validator = $this->createMyValidator($allowOverwriteFull, $allowOverwriteGrace, 'first day of last month', 'last day of last month', '+10 days');
@@ -190,9 +190,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         yield [true, true, '+5 days', '+11 days', false];
     }
 
-    /**
-     * @dataProvider getConfigTestData
-     */
+    #[DataProvider('getConfigTestData')]
     public function testLockdownConfig(bool $allowOverwriteFull, bool $allowOverwriteGrace, ?string $lockdownBegin, ?string $lockdownEnd, ?string $grace, bool $isViolation): void
     {
         $this->validator = $this->createMyValidator($allowOverwriteFull, $allowOverwriteGrace, $lockdownBegin, $lockdownEnd, $grace);

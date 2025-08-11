@@ -9,14 +9,13 @@
 
 namespace App\Tests\Export\Spreadsheet\Writer;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
 use App\Export\Spreadsheet\Writer\XlsxWriter;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Export\Spreadsheet\Writer\BinaryFileResponseWriter
- */
+#[CoversClass(BinaryFileResponseWriter::class)]
 class BinaryFileResponseWriterTest extends TestCase
 {
     public function testSave(): void

@@ -9,15 +9,14 @@
 
 namespace App\Tests\Form\Extension;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Form\Extension\IconExtension;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * @covers \App\Form\Extension\IconExtension
- */
+#[CoversClass(IconExtension::class)]
 class IconExtensionTest extends TestCase
 {
     public function testExtendedTypes(): void

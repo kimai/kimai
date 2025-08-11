@@ -9,6 +9,7 @@
 
 namespace App\Tests\Entity;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Constants;
 use App\Entity\Activity;
 use App\Entity\Customer;
@@ -19,9 +20,7 @@ use App\Entity\User;
 use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Entity\Team
- */
+#[CoversClass(Team::class)]
 class TeamTest extends TestCase
 {
     public function testDefaultValues(): void

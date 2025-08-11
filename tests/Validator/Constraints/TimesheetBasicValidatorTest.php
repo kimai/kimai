@@ -9,6 +9,8 @@
 
 namespace App\Tests\Validator\Constraints;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -21,10 +23,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\TimesheetBasic
- * @covers \App\Validator\Constraints\TimesheetBasicValidator
  * @extends ConstraintValidatorTestCase<TimesheetBasicValidator>
  */
+#[CoversClass(TimesheetBasic::class)]
+#[CoversClass(TimesheetBasicValidator::class)]
 class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): TimesheetBasicValidator
@@ -169,9 +171,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
         ]];
     }
 
-    /**
-     * @dataProvider getProjectStartEndTestData
-     */
+    #[DataProvider('getProjectStartEndTestData')]
     public function testEndBeforeWithProjectStartAndEnd(\DateTime $start, \DateTime $end, array $violations): void
     {
         $timesheet = new Timesheet();

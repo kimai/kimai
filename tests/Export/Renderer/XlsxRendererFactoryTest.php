@@ -9,6 +9,7 @@
 
 namespace App\Tests\Export\Renderer;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Export\Base\XlsxRenderer;
 use App\Export\Renderer\XlsxRendererFactory;
 use App\Export\Template;
@@ -18,9 +19,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\Export\Renderer\XlsxRendererFactory
- */
+#[CoversClass(XlsxRendererFactory::class)]
 class XlsxRendererFactoryTest extends TestCase
 {
     public function testCreate(): void

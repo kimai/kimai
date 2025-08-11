@@ -9,6 +9,7 @@
 
 namespace App\Tests\Repository\Search;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Timesheet;
 use App\Repository\Query\BaseQuery;
 use App\Repository\RepositoryException;
@@ -24,9 +25,7 @@ use Doctrine\ORM\Query\Parameter;
 use Doctrine\ORM\QueryBuilder;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Repository\Search\SearchHelper
- */
+#[CoversClass(SearchHelper::class)]
 class SearchHelperTest extends TestCase
 {
     public function testSearchTermIsNullDoesNotModifyQueryBuilder(): void

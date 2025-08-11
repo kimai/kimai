@@ -9,14 +9,14 @@
 
 namespace App\Tests\Pdf;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use App\Pdf\MPdfConverter;
 use App\Tests\Mocks\FileHelperFactory;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-/**
- * @covers \App\Pdf\MPdfConverter
- * @group integration
- */
+#[CoversClass(MPdfConverter::class)]
+#[Group('integration')]
 class MPdfConverterTest extends KernelTestCase
 {
     public function test()

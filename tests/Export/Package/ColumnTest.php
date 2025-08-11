@@ -9,15 +9,14 @@
 
 namespace App\Tests\Export\Package;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\ExportableItem;
 use App\Export\Package\CellFormatter\CellFormatterInterface;
 use App\Export\Package\CellFormatter\DateFormatter;
 use App\Export\Package\Column;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Export\Package\Column
- */
+#[CoversClass(Column::class)]
 class ColumnTest extends TestCase
 {
     public function testGetNameReturnsColumnName(): void

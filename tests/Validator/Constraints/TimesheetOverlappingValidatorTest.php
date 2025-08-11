@@ -9,6 +9,7 @@
 
 namespace App\Tests\Validator\Constraints;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\ConfigLoaderInterface;
 use App\Entity\Timesheet;
 use App\Repository\TimesheetRepository;
@@ -20,10 +21,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\TimesheetOverlapping
- * @covers \App\Validator\Constraints\TimesheetOverlappingValidator
  * @extends ConstraintValidatorTestCase<TimesheetOverlappingValidator>
  */
+#[CoversClass(TimesheetOverlapping::class)]
+#[CoversClass(TimesheetOverlappingValidator::class)]
 class TimesheetOverlappingValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): TimesheetOverlappingValidator

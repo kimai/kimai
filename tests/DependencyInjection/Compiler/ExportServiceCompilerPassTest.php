@@ -9,6 +9,7 @@
 
 namespace App\Tests\DependencyInjection\Compiler;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\DependencyInjection\Compiler\ExportServiceCompilerPass;
 use App\Export\Base\CsvRenderer;
 use App\Export\Base\HtmlRenderer;
@@ -23,9 +24,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
-/**
- * @covers \App\DependencyInjection\Compiler\ExportServiceCompilerPass
- */
+#[CoversClass(ExportServiceCompilerPass::class)]
 class ExportServiceCompilerPassTest extends TestCase
 {
     private function getContainer(): ContainerBuilder

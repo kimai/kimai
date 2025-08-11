@@ -9,13 +9,12 @@
 
 namespace App\Tests\Calendar;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Calendar\CalendarSource;
 use App\Calendar\CalendarSourceType;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Calendar\CalendarSource
- */
+#[CoversClass(CalendarSource::class)]
 class CalendarSourceTest extends TestCase
 {
     public function testSource(): void

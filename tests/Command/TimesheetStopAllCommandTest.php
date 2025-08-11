@@ -9,16 +9,16 @@
 
 namespace App\Tests\Command;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use App\Command\TimesheetStopAllCommand;
 use App\Tests\Mocks\TimesheetServiceFactory;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
-/**
- * @covers \App\Command\TimesheetStopAllCommand
- * @group integration
- */
+#[CoversClass(TimesheetStopAllCommand::class)]
+#[Group('integration')]
 class TimesheetStopAllCommandTest extends KernelTestCase
 {
     private Application $application;

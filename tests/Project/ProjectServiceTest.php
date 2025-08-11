@@ -9,6 +9,8 @@
 
 namespace App\Tests\Project;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use App\Configuration\SystemConfiguration;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -31,9 +33,7 @@ use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-/**
- * @covers \App\Project\ProjectService
- */
+#[CoversClass(ProjectService::class)]
 class ProjectServiceTest extends TestCase
 {
     private function getSut(
@@ -172,9 +172,7 @@ class ProjectServiceTest extends TestCase
         self::assertNull($project->getCustomer());
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testProjectNumber(string $format, int|string $expected): void
     {
         $configuration = SystemConfigurationFactory::createStub([

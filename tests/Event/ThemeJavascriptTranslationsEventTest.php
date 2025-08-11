@@ -9,13 +9,13 @@
 
 namespace App\Tests\Event;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use App\Event\ThemeJavascriptTranslationsEvent;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\ThemeJavascriptTranslationsEvent
- * @group legacy
- */
+#[CoversClass(ThemeJavascriptTranslationsEvent::class)]
+#[Group('legacy')]
 class ThemeJavascriptTranslationsEventTest extends TestCase
 {
     public const COUNTER = 17;

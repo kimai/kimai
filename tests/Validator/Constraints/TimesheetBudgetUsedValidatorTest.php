@@ -9,6 +9,8 @@
 
 namespace App\Tests\Validator\Constraints;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use App\Activity\ActivityStatisticService;
 use App\Configuration\LocaleService;
 use App\Customer\CustomerStatisticService;
@@ -38,10 +40,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\TimesheetBudgetUsed
- * @covers \App\Validator\Constraints\TimesheetBudgetUsedValidator
  * @extends ConstraintValidatorTestCase<TimesheetBudgetUsedValidator>
  */
+#[CoversClass(TimesheetBudgetUsed::class)]
+#[CoversClass(TimesheetBudgetUsedValidator::class)]
 class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
 {
     /**
@@ -268,9 +270,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @dataProvider getViolationTestData
-     */
+    #[DataProvider('getViolationTestData')]
     public function testWithActivityTimeBudget(
         ?int $activityDuration,
         ?float $activityRate,

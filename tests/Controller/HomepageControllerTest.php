@@ -9,13 +9,12 @@
 
 namespace App\Tests\Controller;
 
+use PHPUnit\Framework\Attributes\Group;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Form\Type\InitialViewType;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class HomepageControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void

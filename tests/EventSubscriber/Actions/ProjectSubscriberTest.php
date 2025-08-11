@@ -9,11 +9,10 @@
 
 namespace App\Tests\EventSubscriber\Actions;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\EventSubscriber\Actions\ProjectSubscriber;
 
-/**
- * @covers \App\EventSubscriber\Actions\ProjectSubscriber
- */
+#[CoversClass(ProjectSubscriber::class)]
 class ProjectSubscriberTest extends AbstractActionsSubscriberTestCase
 {
     public function testEventName(): void

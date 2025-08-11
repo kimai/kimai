@@ -9,6 +9,8 @@
 
 namespace App\Tests\Repository;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\Tag;
@@ -21,10 +23,8 @@ use App\Repository\Query\TimesheetQueryHint;
 use App\Repository\TimesheetRepository;
 use App\Utils\Pagination;
 
-/**
- * @covers \App\Repository\TimesheetRepository
- * @group integration
- */
+#[CoversClass(TimesheetRepository::class)]
+#[Group('integration')]
 class TimesheetRepositoryTest extends AbstractRepositoryTestCase
 {
     public function testResultTypeForQueryState(): void

@@ -9,14 +9,13 @@
 
 namespace App\Tests\Event;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Calendar\GoogleSource;
 use App\Entity\User;
 use App\Event\CalendarGoogleSourceEvent;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\CalendarGoogleSourceEvent
- */
+#[CoversClass(CalendarGoogleSourceEvent::class)]
 class CalendarGoogleSourceEventTest extends TestCase
 {
     public function testGetterAndSetter(): void

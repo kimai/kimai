@@ -9,12 +9,11 @@
 
 namespace App\Tests\Ldap;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Ldap\FormLoginLdapFactory;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Ldap\FormLoginLdapFactory
- */
+#[CoversClass(FormLoginLdapFactory::class)]
 class FormLoginLdapFactoryTest extends TestCase
 {
     public function testConstruct(): void

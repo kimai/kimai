@@ -9,15 +9,14 @@
 
 namespace App\Tests\WorkingTime\Model;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\WorkingTime\Model\Year;
 use App\WorkingTime\Model\YearPerUserSummary;
 use App\WorkingTime\Model\YearSummary;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\WorkingTime\Model\YearPerUserSummary
- */
+#[CoversClass(YearPerUserSummary::class)]
 class YearPerUserSummaryTest extends TestCase
 {
     public function testDefaults(): void

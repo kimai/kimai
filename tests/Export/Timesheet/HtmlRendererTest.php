@@ -9,6 +9,8 @@
 
 namespace App\Tests\Export\Timesheet;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use App\Activity\ActivityStatisticService;
 use App\Export\Timesheet\HtmlRenderer;
 use App\Project\ProjectStatisticService;
@@ -17,10 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment;
 
-/**
- * @covers \App\Export\Timesheet\HtmlRenderer
- * @group integration
- */
+#[CoversClass(HtmlRenderer::class)]
+#[Group('integration')]
 class HtmlRendererTest extends AbstractRendererTestCase
 {
     public function testConfiguration(): void

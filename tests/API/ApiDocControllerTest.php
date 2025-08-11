@@ -9,12 +9,11 @@
 
 namespace App\Tests\API;
 
+use PHPUnit\Framework\Attributes\Group;
 use App\Entity\User;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class ApiDocControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void

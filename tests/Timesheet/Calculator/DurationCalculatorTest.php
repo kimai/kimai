@@ -9,15 +9,16 @@
 
 namespace App\Tests\Timesheet\Calculator;
 
+use App\Timesheet\RoundingService;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use App\Entity\Timesheet;
 use App\Tests\Mocks\RoundingServiceFactory;
 use App\Timesheet\Calculator\DurationCalculator;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Timesheet\Calculator\DurationCalculator
- * @covers \App\Timesheet\RoundingService
- */
+#[CoversClass(DurationCalculator::class)]
+#[CoversClass(RoundingService::class)]
 class DurationCalculatorTest extends TestCase
 {
     public function testCalculateWithEmptyEnd(): void
@@ -31,9 +32,7 @@ class DurationCalculatorTest extends TestCase
         self::assertEquals(0, $record->getDuration());
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testCalculate($rules, $start, $end, $expectedDuration): void
     {
         $record = new Timesheet();

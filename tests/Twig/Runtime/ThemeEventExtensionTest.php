@@ -9,6 +9,8 @@
 
 namespace App\Tests\Twig\Runtime;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use App\Entity\User;
 use App\Event\ThemeEvent;
 use App\Tests\Configuration\TestConfigLoader;
@@ -26,9 +28,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-/**
- * @covers \App\Twig\Runtime\ThemeExtension
- */
+#[CoversClass(ThemeExtension::class)]
 class ThemeEventExtensionTest extends TestCase
 {
     private function getDefaultSettings(): array
@@ -135,9 +135,7 @@ class ThemeEventExtensionTest extends TestCase
         yield ['', 0, true];
     }
 
-    /**
-     * @dataProvider getProgressbarColors
-     */
+    #[DataProvider('getProgressbarColors')]
     public function testProgressbarClass(string $expected, int $percent, ?bool $reverseColors = false): void
     {
         $sut = $this->getSut(false);

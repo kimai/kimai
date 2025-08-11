@@ -9,6 +9,7 @@
 
 namespace App\Tests\Export\Renderer;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Export\Base\PDFRenderer;
 use App\Export\Renderer\PdfRendererFactory;
 use App\Pdf\HtmlToPdfConverter;
@@ -16,9 +17,7 @@ use App\Project\ProjectStatisticService;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 
-/**
- * @covers \App\Export\Renderer\PdfRendererFactory
- */
+#[CoversClass(PdfRendererFactory::class)]
 class PdfRendererFactoryTest extends TestCase
 {
     public function testCreate(): void

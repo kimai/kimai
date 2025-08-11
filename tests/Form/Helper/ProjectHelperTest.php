@@ -9,6 +9,7 @@
 
 namespace App\Tests\Form\Helper;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\LocaleService;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -17,9 +18,7 @@ use App\Tests\Mocks\SystemConfigurationFactory;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\Form\Helper\ProjectHelper
- */
+#[CoversClass(ProjectHelper::class)]
 class ProjectHelperTest extends TestCase
 {
     private function createSut(string $format): ProjectHelper

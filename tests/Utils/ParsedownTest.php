@@ -9,12 +9,11 @@
 
 namespace App\Tests\Utils;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Utils\Parsedown;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Utils\Parsedown
- */
+#[CoversClass(Parsedown::class)]
 class ParsedownTest extends TestCase
 {
     public function testTableContainsCssClasses(): void

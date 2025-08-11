@@ -9,6 +9,7 @@
 
 namespace App\Tests\Form\Extension;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Form\Extension\DocumentationLinkExtension;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -17,9 +18,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * @covers \App\Form\Extension\DocumentationLinkExtension
- */
+#[CoversClass(DocumentationLinkExtension::class)]
 class DocumentationLinkExtensionTest extends TestCase
 {
     public function testExtendedTypes(): void

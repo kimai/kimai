@@ -9,14 +9,14 @@
 
 namespace App\Tests\Configuration;
 
+use App\Configuration\SystemConfiguration;
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\SamlConfiguration;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Configuration\SamlConfiguration
- * @covers \App\Configuration\SystemConfiguration
- */
+#[CoversClass(SamlConfiguration::class)]
+#[CoversClass(SystemConfiguration::class)]
 class SamlConfigurationTest extends TestCase
 {
     protected function getSut(array $settings)

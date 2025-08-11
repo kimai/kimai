@@ -9,6 +9,7 @@
 
 namespace App\Tests\Invoice;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use App\Entity\Project;
@@ -20,9 +21,7 @@ use App\Repository\Query\InvoiceQuery;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Invoice\InvoiceFilename
- */
+#[CoversClass(InvoiceFilename::class)]
 class InvoiceFilenameTest extends TestCase
 {
     public function testInvoiceFilename(): void

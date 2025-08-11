@@ -9,6 +9,7 @@
 
 namespace App\Tests\Entity;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Constants;
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
@@ -18,9 +19,7 @@ use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use Doctrine\Common\Collections\Collection;
 
-/**
- * @covers \App\Entity\Activity
- */
+#[CoversClass(Activity::class)]
 class ActivityTest extends AbstractEntityTestCase
 {
     public function testDefaultValues(): void

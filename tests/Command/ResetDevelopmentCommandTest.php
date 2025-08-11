@@ -9,14 +9,14 @@
 
 namespace App\Tests\Command;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use App\Command\ResetDevelopmentCommand;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-/**
- * @covers \App\Command\ResetDevelopmentCommand
- * @group integration
- */
+#[CoversClass(ResetDevelopmentCommand::class)]
+#[Group('integration')]
 class ResetDevelopmentCommandTest extends KernelTestCase
 {
     public function testCommandName(): void

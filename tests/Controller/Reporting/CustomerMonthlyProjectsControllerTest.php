@@ -9,6 +9,7 @@
 
 namespace App\Tests\Controller\Reporting;
 
+use PHPUnit\Framework\Attributes\Group;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
@@ -19,9 +20,7 @@ use App\Tests\DataFixtures\TimesheetFixtures;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class CustomerMonthlyProjectsControllerTest extends AbstractControllerBaseTestCase
 {
     public function testReportIsSecure(): void

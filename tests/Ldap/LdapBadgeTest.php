@@ -9,12 +9,11 @@
 
 namespace App\Tests\Ldap;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Ldap\LdapBadge;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Ldap\LdapBadge
- */
+#[CoversClass(LdapBadge::class)]
 class LdapBadgeTest extends TestCase
 {
     public function testMarkResolvedSetsResolvedToTrue(): void

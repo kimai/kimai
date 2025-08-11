@@ -9,11 +9,10 @@
 
 namespace App\Tests\Controller;
 
+use PHPUnit\Framework\Attributes\Group;
 use App\Entity\User;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class WizardControllerTest extends AbstractControllerBaseTestCase
 {
     public function testUnknownWizard(): void

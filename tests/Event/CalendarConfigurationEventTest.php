@@ -9,12 +9,11 @@
 
 namespace App\Tests\Event;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Event\CalendarConfigurationEvent;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\CalendarConfigurationEvent
- */
+#[CoversClass(CalendarConfigurationEvent::class)]
 class CalendarConfigurationEventTest extends TestCase
 {
     public function testGetterAndSetter(): void

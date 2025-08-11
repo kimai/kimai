@@ -9,11 +9,10 @@
 
 namespace App\Tests\Entity;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\ExportTemplate;
 
-/**
- * @covers \App\Entity\ExportTemplate
- */
+#[CoversClass(ExportTemplate::class)]
 class ExportTemplateTest extends AbstractEntityTestCase
 {
     public function testDefaultValues(): void

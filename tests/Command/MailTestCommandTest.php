@@ -9,15 +9,15 @@
 
 namespace App\Tests\Command;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use App\Command\MailTestCommand;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-/**
- * @covers \App\Command\MailTestCommand
- * @group integration
- */
+#[CoversClass(MailTestCommand::class)]
+#[Group('integration')]
 class MailTestCommandTest extends KernelTestCase
 {
     protected Application $application;

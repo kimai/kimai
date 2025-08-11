@@ -9,6 +9,8 @@
 
 namespace App\Tests\Customer;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use App\Configuration\SystemConfiguration;
 use App\Customer\CustomerService;
 use App\Entity\Customer;
@@ -27,9 +29,7 @@ use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-/**
- * @covers \App\Customer\CustomerService
- */
+#[CoversClass(CustomerService::class)]
 class CustomerServiceTest extends TestCase
 {
     private function getSut(
@@ -142,9 +142,7 @@ class CustomerServiceTest extends TestCase
         $sut->saveCustomer($Customer);
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testCustomerNumber(string $format, int|string $expected): void
     {
         $configuration = SystemConfigurationFactory::createStub([

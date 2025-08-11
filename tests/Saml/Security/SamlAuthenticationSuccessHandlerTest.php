@@ -9,6 +9,7 @@
 
 namespace App\Tests\Saml\Security;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Saml\SamlToken;
 use App\Saml\Security\SamlAuthenticationSuccessHandler;
@@ -18,9 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\HttpUtils;
 
-/**
- * @covers \App\Saml\Security\SamlAuthenticationSuccessHandler
- */
+#[CoversClass(SamlAuthenticationSuccessHandler::class)]
 class SamlAuthenticationSuccessHandlerTest extends TestCase
 {
     public function testRelayState(): void

@@ -9,6 +9,7 @@
 
 namespace App\Tests\Twig;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Twig\PaginationExtension;
 use App\Utils\Pagination;
 use Pagerfanta\Adapter\ArrayAdapter;
@@ -16,9 +17,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\TwigFunction;
 
-/**
- * @covers \App\Twig\PaginationExtension
- */
+#[CoversClass(PaginationExtension::class)]
 class PaginationExtensionTest extends TestCase
 {
     private function getUrlGenerator(): UrlGeneratorInterface

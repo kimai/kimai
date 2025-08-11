@@ -9,6 +9,7 @@
 
 namespace App\Tests\Validator\Constraints;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -20,10 +21,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\TimesheetDeactivated
- * @covers \App\Validator\Constraints\TimesheetDeactivatedValidator
  * @extends ConstraintValidatorTestCase<TimesheetDeactivatedValidator>
  */
+#[CoversClass(TimesheetDeactivated::class)]
+#[CoversClass(TimesheetDeactivatedValidator::class)]
 class TimesheetDeactivatedValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): TimesheetDeactivatedValidator

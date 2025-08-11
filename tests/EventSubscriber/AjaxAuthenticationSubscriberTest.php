@@ -9,6 +9,8 @@
 
 namespace App\Tests\EventSubscriber;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use App\Entity\User;
 use App\EventSubscriber\AjaxAuthenticationSubscriber;
 use PHPUnit\Framework\TestCase;
@@ -21,9 +23,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\AuthenticationExpiredException;
 
-/**
- * @covers \App\EventSubscriber\AjaxAuthenticationSubscriber
- */
+#[CoversClass(AjaxAuthenticationSubscriber::class)]
 class AjaxAuthenticationSubscriberTest extends TestCase
 {
     public function testGetSubscribedEvents(): void
@@ -60,9 +60,7 @@ class AjaxAuthenticationSubscriberTest extends TestCase
         return $sut;
     }
 
-    /**
-     * @dataProvider getTestHeader
-     */
+    #[DataProvider('getTestHeader')]
     public function testAuthenticationExpiredException(string $requestedWith): void
     {
         $sut = $this->getSut();
@@ -84,9 +82,7 @@ class AjaxAuthenticationSubscriberTest extends TestCase
         self::assertEquals('1', $response->headers->get('Login-Required'));
     }
 
-    /**
-     * @dataProvider getTestHeader
-     */
+    #[DataProvider('getTestHeader')]
     public function testAuthenticationException(string $requestedWith): void
     {
         $sut = $this->getSut();
@@ -108,9 +104,7 @@ class AjaxAuthenticationSubscriberTest extends TestCase
         self::assertEquals('1', $response->headers->get('Login-Required'));
     }
 
-    /**
-     * @dataProvider getTestHeader
-     */
+    #[DataProvider('getTestHeader')]
     public function testAccessDeniedException(string $requestedWith): void
     {
         $sut = $this->getSut();
@@ -132,9 +126,7 @@ class AjaxAuthenticationSubscriberTest extends TestCase
         self::assertEquals('1', $response->headers->get('Login-Required'));
     }
 
-    /**
-     * @dataProvider getTestHeader
-     */
+    #[DataProvider('getTestHeader')]
     public function testAccessDeniedExceptionWithLoggedInUser(string $requestedWith): void
     {
         $sut = $this->getSut(true);

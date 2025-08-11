@@ -9,6 +9,7 @@
 
 namespace App\Tests\Validator\Constraints;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Team;
 use App\Entity\TeamMember;
 use App\Entity\User;
@@ -19,10 +20,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\Team
- * @covers \App\Validator\Constraints\TeamValidator
  * @extends ConstraintValidatorTestCase<TeamValidator>
  */
+#[CoversClass(\App\Validator\Constraints\Team::class)]
+#[CoversClass(TeamValidator::class)]
 class TeamValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): TeamValidator

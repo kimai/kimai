@@ -9,16 +9,16 @@
 
 namespace App\Tests\Event;
 
+use App\Event\AbstractMetaDisplayEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\ActivityMeta;
 use App\Event\ActivityMetaDisplayEvent;
 use App\Event\MetaDisplayEventInterface;
 use App\Repository\Query\ActivityQuery;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\AbstractMetaDisplayEvent
- * @covers \App\Event\ActivityMetaDisplayEvent
- */
+#[CoversClass(AbstractMetaDisplayEvent::class)]
+#[CoversClass(ActivityMetaDisplayEvent::class)]
 class ActivityMetaDisplayEventTest extends TestCase
 {
     public function testGetterAndSetter(): void

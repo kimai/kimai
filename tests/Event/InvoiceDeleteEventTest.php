@@ -9,14 +9,14 @@
 
 namespace App\Tests\Event;
 
+use App\Event\AbstractInvoiceEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Invoice;
 use App\Event\InvoiceDeleteEvent;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\InvoiceDeleteEvent
- * @covers \App\Event\AbstractInvoiceEvent
- */
+#[CoversClass(InvoiceDeleteEvent::class)]
+#[CoversClass(AbstractInvoiceEvent::class)]
 class InvoiceDeleteEventTest extends TestCase
 {
     public function testDefaultValues(): void

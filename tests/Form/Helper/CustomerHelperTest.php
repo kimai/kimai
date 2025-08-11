@@ -9,14 +9,13 @@
 
 namespace App\Tests\Form\Helper;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Customer;
 use App\Form\Helper\CustomerHelper;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Form\Helper\CustomerHelper
- */
+#[CoversClass(CustomerHelper::class)]
 class CustomerHelperTest extends TestCase
 {
     private function createSut(string $format): CustomerHelper

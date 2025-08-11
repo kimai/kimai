@@ -9,6 +9,7 @@
 
 namespace App\Tests\DependencyInjection\Compiler;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\DependencyInjection\Compiler\InvoiceServiceCompilerPass;
 use App\Invoice\Calculator\DefaultCalculator;
 use App\Invoice\Calculator\ShortInvoiceCalculator;
@@ -26,9 +27,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
-/**
- * @covers \App\DependencyInjection\Compiler\InvoiceServiceCompilerPass
- */
+#[CoversClass(InvoiceServiceCompilerPass::class)]
 class InvoiceServiceCompilerPassTest extends TestCase
 {
     private function getContainer(): ContainerBuilder

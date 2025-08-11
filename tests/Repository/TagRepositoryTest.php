@@ -9,14 +9,14 @@
 
 namespace App\Tests\Repository;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use App\Entity\Tag;
 use App\Repository\TagRepository;
 use App\Tests\DataFixtures\TagFixtures;
 
-/**
- * @covers \App\Repository\TagRepository
- * @group integration
- */
+#[CoversClass(TagRepository::class)]
+#[Group('integration')]
 class TagRepositoryTest extends AbstractRepositoryTestCase
 {
     protected function setUp(): void

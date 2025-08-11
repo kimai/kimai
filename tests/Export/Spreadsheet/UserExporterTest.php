@@ -9,6 +9,7 @@
 
 namespace App\Tests\Export\Spreadsheet;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Event\UserPreferenceDisplayEvent;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
@@ -19,9 +20,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\Export\Spreadsheet\UserExporter
- */
+#[CoversClass(UserExporter::class)]
 class UserExporterTest extends TestCase
 {
     public function testExport(): void

@@ -9,14 +9,13 @@
 
 namespace App\Tests\Event;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Customer;
 use App\Event\AbstractCustomerEvent;
 use App\Event\CustomerCreatePreEvent;
 
-/**
- * @covers \App\Event\AbstractCustomerEvent
- * @covers \App\Event\CustomerCreatePreEvent
- */
+#[CoversClass(AbstractCustomerEvent::class)]
+#[CoversClass(CustomerCreatePreEvent::class)]
 class CustomerCreatePreEventTest extends AbstractCustomerEventTestCase
 {
     protected function createCustomerEvent(Customer $customer): AbstractCustomerEvent

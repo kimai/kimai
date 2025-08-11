@@ -9,14 +9,13 @@
 
 namespace App\Tests\WorkingTime\Mode;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\WorkingTime\Calculator\WorkingTimeCalculatorNone;
 use App\WorkingTime\Mode\WorkingTimeModeNone;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\WorkingTime\Mode\WorkingTimeModeNone
- */
+#[CoversClass(WorkingTimeModeNone::class)]
 class WorkingTimeModeNoneTest extends TestCase
 {
     public function testDefaults(): void

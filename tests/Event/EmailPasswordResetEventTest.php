@@ -9,16 +9,17 @@
 
 namespace App\Tests\Event;
 
+use App\Event\EmailEvent;
+use App\Event\UserEmailEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Event\EmailPasswordResetEvent;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Mime\Email;
 
-/**
- * @covers \App\Event\EmailEvent
- * @covers \App\Event\UserEmailEvent
- * @covers \App\Event\EmailPasswordResetEvent
- */
+#[CoversClass(EmailEvent::class)]
+#[CoversClass(UserEmailEvent::class)]
+#[CoversClass(EmailPasswordResetEvent::class)]
 class EmailPasswordResetEventTest extends TestCase
 {
     public function testGetter(): void

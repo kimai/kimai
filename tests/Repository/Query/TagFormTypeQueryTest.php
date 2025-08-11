@@ -9,12 +9,12 @@
 
 namespace App\Tests\Repository\Query;
 
+use App\Repository\Query\BaseFormTypeQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Repository\Query\TagFormTypeQuery;
 
-/**
- * @covers \App\Repository\Query\TagFormTypeQuery
- * @covers \App\Repository\Query\BaseFormTypeQuery
- */
+#[CoversClass(TagFormTypeQuery::class)]
+#[CoversClass(BaseFormTypeQuery::class)]
 class TagFormTypeQueryTest extends AbstractBaseFormTypeQueryTestCase
 {
     public function testQuery(): void

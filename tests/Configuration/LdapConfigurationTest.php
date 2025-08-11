@@ -9,14 +9,14 @@
 
 namespace App\Tests\Configuration;
 
+use App\Configuration\SystemConfiguration;
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\LdapConfiguration;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Configuration\LdapConfiguration
- * @covers \App\Configuration\SystemConfiguration
- */
+#[CoversClass(LdapConfiguration::class)]
+#[CoversClass(SystemConfiguration::class)]
 class LdapConfigurationTest extends TestCase
 {
     protected function getSut(array $settings)

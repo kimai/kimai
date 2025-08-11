@@ -9,13 +9,13 @@
 
 namespace App\Tests\Repository\Query;
 
+use App\Repository\Query\BaseQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Repository\Query\TimesheetQuery;
 
-/**
- * @covers \App\Repository\Query\TimesheetQuery
- * @covers \App\Repository\Query\BaseQuery
- */
+#[CoversClass(TimesheetQuery::class)]
+#[CoversClass(BaseQuery::class)]
 class TimesheetQueryTest extends BaseQueryTest
 {
     public function testQuery(): void

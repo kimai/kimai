@@ -9,6 +9,9 @@
 
 namespace App\Tests\Command;
 
+use App\Command\AbstractRoleCommand;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use App\Command\DemoteUserCommand;
 use App\Entity\User;
 use App\Repository\UserRepository;
@@ -19,11 +22,9 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Tester\CommandTester;
 
-/**
- * @covers \App\Command\AbstractRoleCommand
- * @covers \App\Command\DemoteUserCommand
- * @group integration
- */
+#[CoversClass(AbstractRoleCommand::class)]
+#[CoversClass(DemoteUserCommand::class)]
+#[Group('integration')]
 class DemoteUserCommandTest extends KernelTestCase
 {
     private Application $application;

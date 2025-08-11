@@ -9,12 +9,11 @@
 
 namespace App\Tests\Export\Package\CellFormatter;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Export\Package\CellFormatter\TextFormatter;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Export\Package\CellFormatter\TextFormatter
- */
+#[CoversClass(TextFormatter::class)]
 class TextFormatterTest extends TestCase
 {
     public function testFormatValueReturnsSanitizedStringWhenSanitizeDdeIsTrue(): void

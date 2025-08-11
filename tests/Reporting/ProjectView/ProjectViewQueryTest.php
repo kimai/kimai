@@ -9,14 +9,13 @@
 
 namespace App\Tests\Reporting\ProjectView;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Customer;
 use App\Entity\User;
 use App\Reporting\ProjectView\ProjectViewQuery;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Reporting\ProjectView\ProjectViewQuery
- */
+#[CoversClass(ProjectViewQuery::class)]
 class ProjectViewQueryTest extends TestCase
 {
     public function testDefaults(): void

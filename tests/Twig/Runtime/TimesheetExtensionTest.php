@@ -9,6 +9,7 @@
 
 namespace App\Tests\Twig\Runtime;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Repository\BookmarkRepository;
@@ -17,9 +18,7 @@ use App\Timesheet\FavoriteRecordService;
 use App\Twig\Runtime\TimesheetExtension;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Twig\Runtime\TimesheetExtension
- */
+#[CoversClass(TimesheetExtension::class)]
 class TimesheetExtensionTest extends TestCase
 {
     public function testActiveEntries(): void

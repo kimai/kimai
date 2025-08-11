@@ -9,6 +9,9 @@
 
 namespace App\Tests\Invoice\Renderer;
 
+use App\Invoice\Renderer\AbstractTwigRenderer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use App\Invoice\Renderer\PdfRenderer;
 use App\Model\InvoiceDocument;
 use App\Pdf\HtmlToPdfConverter;
@@ -21,11 +24,9 @@ use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 use Twig\Loader\FilesystemLoader;
 
-/**
- * @covers \App\Invoice\Renderer\AbstractTwigRenderer
- * @covers \App\Invoice\Renderer\PdfRenderer
- * @group integration
- */
+#[CoversClass(AbstractTwigRenderer::class)]
+#[CoversClass(PdfRenderer::class)]
+#[Group('integration')]
 class PdfRendererTest extends KernelTestCase
 {
     use RendererTestTrait;

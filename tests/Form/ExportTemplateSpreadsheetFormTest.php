@@ -9,6 +9,7 @@
 
 namespace App\Tests\Form;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\LocaleService;
 use App\Entity\ExportTemplate;
 use App\Form\ExportTemplateSpreadsheetForm;
@@ -20,9 +21,7 @@ use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\Form\ExportTemplateSpreadsheetForm
- */
+#[CoversClass(ExportTemplateSpreadsheetForm::class)]
 class ExportTemplateSpreadsheetFormTest extends TypeTestCase
 {
     /**

@@ -9,14 +9,13 @@
 
 namespace App\Tests\WorkingTime\Model;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Entity\WorkingTime;
 use App\WorkingTime\Model\Day;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\WorkingTime\Model\Day
- */
+#[CoversClass(Day::class)]
 class DayTest extends TestCase
 {
     public function testDefaults(): void

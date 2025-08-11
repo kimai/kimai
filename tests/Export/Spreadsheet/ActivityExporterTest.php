@@ -9,6 +9,7 @@
 
 namespace App\Tests\Export\Spreadsheet;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
 use App\Event\ActivityMetaDisplayEvent;
@@ -21,9 +22,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\Export\Spreadsheet\EntityWithMetaFieldsExporter
- */
+#[CoversClass(EntityWithMetaFieldsExporter::class)]
 class ActivityExporterTest extends TestCase
 {
     public function testExport(): void

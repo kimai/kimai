@@ -9,14 +9,13 @@
 
 namespace App\Tests\Event;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Event\WorkContractDetailControllerEvent;
 use App\WorkingTime\Model\Year;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\WorkContractDetailControllerEvent
- */
+#[CoversClass(WorkContractDetailControllerEvent::class)]
 class WorkContractDetailControllerEventTest extends TestCase
 {
     public function testGetter(): void

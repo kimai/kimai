@@ -9,6 +9,8 @@
 
 namespace App\Tests\Export\Renderer;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use App\Activity\ActivityStatisticService;
 use App\Entity\User;
 use App\Export\Base\HtmlRenderer;
@@ -22,10 +24,10 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Twig\Environment;
 
 /**
- * @covers \App\Export\Base\HtmlRenderer
  * @covers \App\Export\Base\RendererTrait
- * @group integration
  */
+#[CoversClass(HtmlRenderer::class)]
+#[Group('integration')]
 class HtmlRendererTest extends AbstractRendererTestCase
 {
     public function testConfiguration(): void

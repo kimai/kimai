@@ -9,6 +9,7 @@
 
 namespace App\Tests\Validator\Constraints;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\ConfigLoaderInterface;
 use App\Entity\Project;
 use App\Repository\ProjectRepository;
@@ -20,10 +21,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\Project
- * @covers \App\Validator\Constraints\ProjectValidator
  * @extends ConstraintValidatorTestCase<ProjectValidator>
  */
+#[CoversClass(\App\Validator\Constraints\Project::class)]
+#[CoversClass(ProjectValidator::class)]
 class ProjectValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): ProjectValidator

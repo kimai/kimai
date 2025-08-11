@@ -9,12 +9,11 @@
 
 namespace App\Tests\Repository\Result;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Repository\Result\TimesheetResultStatistic;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Repository\Result\TimesheetResultStatistic
- */
+#[CoversClass(TimesheetResultStatistic::class)]
 class TimesheetResultStatisticTest extends TestCase
 {
     public function testConstruct(): void

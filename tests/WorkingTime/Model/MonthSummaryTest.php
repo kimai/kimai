@@ -9,12 +9,11 @@
 
 namespace App\Tests\WorkingTime\Model;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\WorkingTime\Model\MonthSummary;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\WorkingTime\Model\MonthSummary
- */
+#[CoversClass(MonthSummary::class)]
 class MonthSummaryTest extends TestCase
 {
     public function testDefaults(): void

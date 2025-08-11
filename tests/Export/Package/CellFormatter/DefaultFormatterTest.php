@@ -9,12 +9,11 @@
 
 namespace App\Tests\Export\Package\CellFormatter;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Export\Package\CellFormatter\DefaultFormatter;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Export\Package\CellFormatter\DefaultFormatter
- */
+#[CoversClass(DefaultFormatter::class)]
 class DefaultFormatterTest extends TestCase
 {
     public function testFormatValueReturnsSameValueForScalar(): void

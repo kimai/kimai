@@ -9,14 +9,13 @@
 
 namespace App\Tests\Webhook\Attribute;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Invoice;
 use App\Event\InvoiceDeleteEvent;
 use App\Webhook\Attribute\AsWebhook;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Webhook\Attribute\AsWebhook
- */
+#[CoversClass(AsWebhook::class)]
 class AsWebhookTestCase extends TestCase
 {
     public function testConstruct(): void

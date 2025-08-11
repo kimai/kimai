@@ -9,11 +9,10 @@
 
 namespace App\Tests\Controller;
 
+use PHPUnit\Framework\Attributes\Group;
 use App\Tests\DataFixtures\TimesheetFixtures;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class QuickEntryControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void

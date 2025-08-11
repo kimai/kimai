@@ -9,12 +9,12 @@
 
 namespace App\Tests\Configuration;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use App\Configuration\LocaleService;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Configuration\LocaleService
- */
+#[CoversClass(LocaleService::class)]
 class LocaleServiceTest extends TestCase
 {
     protected function getSut(array $settings): LocaleService
@@ -146,9 +146,7 @@ class LocaleServiceTest extends TestCase
         self::assertEquals('H:i:s', $sut->getTimeFormat('en'));
     }
 
-    /**
-     * @dataProvider getNearestTranslationLocaleData
-     */
+    #[DataProvider('getNearestTranslationLocaleData')]
     public function testGetNearestTranslationLocale(string $locale, string $expected): void
     {
         $sut = $this->getSut($this->getDefaultSettings());

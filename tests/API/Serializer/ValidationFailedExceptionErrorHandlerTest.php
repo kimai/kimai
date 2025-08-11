@@ -9,6 +9,7 @@
 
 namespace App\Tests\API\Serializer;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\API\Serializer\ValidationFailedExceptionErrorHandler;
 use App\Validator\ValidationFailedException;
 use FOS\RestBundle\Serializer\Normalizer\FlattenExceptionHandler;
@@ -22,9 +23,7 @@ use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\API\Serializer\ValidationFailedExceptionErrorHandler
- */
+#[CoversClass(ValidationFailedExceptionErrorHandler::class)]
 class ValidationFailedExceptionErrorHandlerTest extends TestCase
 {
     public function testSubscribingMethods(): void

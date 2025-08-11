@@ -9,6 +9,7 @@
 
 namespace App\Tests\Widget\Type;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Repository\TimesheetRepository;
 use App\Widget\Type\AbstractAmountPeriod;
 use App\Widget\Type\AbstractWidget;
@@ -16,10 +17,8 @@ use App\Widget\Type\AmountMonth;
 use App\Widget\WidgetInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-/**
- * @covers \App\Widget\Type\AmountMonth
- * @covers \App\Widget\Type\AbstractAmountPeriod
- */
+#[CoversClass(AmountMonth::class)]
+#[CoversClass(AbstractAmountPeriod::class)]
 class AmountMonthTest extends AbstractWidgetTestCase
 {
     protected function assertDefaultData(AbstractWidget $sut): void

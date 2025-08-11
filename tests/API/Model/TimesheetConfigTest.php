@@ -9,12 +9,11 @@
 
 namespace App\Tests\API\Model;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\API\Model\TimesheetConfig;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\API\Model\TimesheetConfig
- */
+#[CoversClass(TimesheetConfig::class)]
 class TimesheetConfigTest extends TestCase
 {
     public function testSetter(): void

@@ -9,6 +9,7 @@
 
 namespace App\Tests\Ldap;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\LdapConfiguration;
 use App\Entity\User;
 use App\Ldap\LdapDriver;
@@ -20,9 +21,7 @@ use Laminas\Ldap\Ldap;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
 
-/**
- * @covers \App\Ldap\LdapDriver
- */
+#[CoversClass(LdapDriver::class)]
 class LdapDriverTest extends TestCase
 {
     protected function setUp(): void

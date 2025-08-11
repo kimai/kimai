@@ -9,13 +9,13 @@
 
 namespace App\Tests\Utils;
 
+use App\Utils\ParsedownExtension;
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Utils\Markdown;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Utils\Markdown
- * @covers \App\Utils\ParsedownExtension
- */
+#[CoversClass(Markdown::class)]
+#[CoversClass(ParsedownExtension::class)]
 class MarkdownTest extends TestCase
 {
     public function testMarkdownToHtml(): void

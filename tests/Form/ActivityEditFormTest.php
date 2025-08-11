@@ -9,15 +9,14 @@
 
 namespace App\Tests\Form;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Form\ActivityEditForm;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-/**
- * @covers \App\Form\ActivityEditForm
- */
+#[CoversClass(ActivityEditForm::class)]
 class ActivityEditFormTest extends TypeTestCase
 {
     public function testWithGlobalNewActivity(): void

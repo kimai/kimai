@@ -9,15 +9,14 @@
 
 namespace App\Tests\Event;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Project;
 use App\Event\AbstractProjectEvent;
 use App\Event\ProjectStatisticEvent;
 use App\Model\ProjectStatistic;
 
-/**
- * @covers \App\Event\AbstractProjectEvent
- * @covers \App\Event\ProjectStatisticEvent
- */
+#[CoversClass(AbstractProjectEvent::class)]
+#[CoversClass(ProjectStatisticEvent::class)]
 class ProjectStatisticEventTest extends AbstractProjectEventTestCase
 {
     protected function createProjectEvent(Project $project): AbstractProjectEvent

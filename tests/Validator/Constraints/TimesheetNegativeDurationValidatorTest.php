@@ -9,6 +9,7 @@
 
 namespace App\Tests\Validator\Constraints;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Timesheet;
 use App\Validator\Constraints\TimesheetNegativeDuration;
 use App\Validator\Constraints\TimesheetNegativeDurationValidator;
@@ -17,10 +18,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\TimesheetNegativeDuration
- * @covers \App\Validator\Constraints\TimesheetNegativeDurationValidator
  * @extends ConstraintValidatorTestCase<TimesheetNegativeDurationValidator>
  */
+#[CoversClass(TimesheetNegativeDuration::class)]
+#[CoversClass(TimesheetNegativeDurationValidator::class)]
 class TimesheetNegativeDurationValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): TimesheetNegativeDurationValidator

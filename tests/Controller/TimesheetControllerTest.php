@@ -9,6 +9,8 @@
 
 namespace App\Tests\Controller;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use App\Entity\Activity;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
@@ -22,9 +24,7 @@ use App\Tests\Mocks\TimesheetTestMetaFieldSubscriberMock;
 use App\Timesheet\DateTimeFactory;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class TimesheetControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
@@ -225,9 +225,7 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         self::assertNull($timesheet->getFixedRate());
     }
 
-    /**
-     * @dataProvider getTestDataForDurationValues
-     */
+    #[DataProvider('getTestDataForDurationValues')]
     public function testCreateActionWithDurationValues($beginDate, $beginTime, $end, $duration, $expectedDuration, $expectedEnd): void
     {
         $client = $this->getClientForAuthenticatedUser();
@@ -322,9 +320,7 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider getTrackingModeTestData
-     */
+    #[DataProvider('getTrackingModeTestData')]
     public function testCreateActionWithTrackingModeHasFieldsForUser(string $trackingMode, string $user, bool $showBeginTime, bool $showEndTime): void
     {
         $client = $this->getClientForAuthenticatedUser($user);

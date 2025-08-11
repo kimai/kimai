@@ -9,12 +9,11 @@
 
 namespace App\Tests\Entity;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Configuration;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Entity\Configuration
- */
+#[CoversClass(Configuration::class)]
 class ConfigurationTest extends TestCase
 {
     public function testDefaultValues(): void

@@ -9,14 +9,13 @@
 
 namespace App\Tests\Event;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Event\AbstractActivityEvent;
 use App\Event\ActivityUpdatePostEvent;
 
-/**
- * @covers \App\Event\AbstractActivityEvent
- * @covers \App\Event\ActivityUpdatePostEvent
- */
+#[CoversClass(AbstractActivityEvent::class)]
+#[CoversClass(ActivityUpdatePostEvent::class)]
 class ActivityUpdatePostEventTest extends AbstractActivityEventTestCase
 {
     protected function createActivityEvent(Activity $activity): AbstractActivityEvent

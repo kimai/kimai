@@ -9,13 +9,12 @@
 
 namespace App\Tests\Event;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Event\DashboardEvent;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\DashboardEvent
- */
+#[CoversClass(DashboardEvent::class)]
 class DashboardEventTest extends TestCase
 {
     public function testGetterAndSetter(): void

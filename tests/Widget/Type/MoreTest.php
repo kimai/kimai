@@ -9,9 +9,9 @@
 
 namespace App\Tests\Widget\Type;
 
-/**
- * @covers \App\Tests\Widget\Type\More
- */
+use PHPUnit\Framework\Attributes\CoversClass;
+
+#[CoversClass(More::class)]
 class MoreTest extends AbstractWidgetTypeTestCase
 {
     public function createSut(): More

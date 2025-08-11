@@ -9,6 +9,7 @@
 
 namespace App\Tests\Event;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use App\Event\InvoicePreRenderEvent;
@@ -19,9 +20,7 @@ use App\Tests\Invoice\Renderer\DebugRenderer;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\InvoicePreRenderEvent
- */
+#[CoversClass(InvoicePreRenderEvent::class)]
 class InvoicePreRenderEventTest extends TestCase
 {
     public function testDefaultValues(): void

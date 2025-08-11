@@ -9,6 +9,10 @@
 
 namespace App\Tests\Invoice\Calculator;
 
+use App\Invoice\Calculator\AbstractSumInvoiceCalculator;
+use App\Invoice\Calculator\AbstractMergedCalculator;
+use App\Invoice\Calculator\AbstractCalculator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
@@ -22,12 +26,10 @@ use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use DateTime;
 
-/**
- * @covers \App\Invoice\Calculator\DateUserInvoiceCalculator
- * @covers \App\Invoice\Calculator\AbstractSumInvoiceCalculator
- * @covers \App\Invoice\Calculator\AbstractMergedCalculator
- * @covers \App\Invoice\Calculator\AbstractCalculator
- */
+#[CoversClass(DateUserInvoiceCalculator::class)]
+#[CoversClass(AbstractSumInvoiceCalculator::class)]
+#[CoversClass(AbstractMergedCalculator::class)]
+#[CoversClass(AbstractCalculator::class)]
 class DateUserInvoiceCalculatorTest extends AbstractCalculatorTestCase
 {
     protected function getCalculator(): CalculatorInterface

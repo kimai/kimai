@@ -9,14 +9,13 @@
 
 namespace App\Tests\Reporting\YearlyUserList;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Reporting\AbstractUserList;
 use App\Reporting\YearlyUserList\YearlyUserList;
 use App\Tests\Reporting\AbstractUserListTestCase;
 
-/**
- * @covers \App\Reporting\YearlyUserList\YearlyUserList
- * @covers \App\Reporting\AbstractUserList
- */
+#[CoversClass(YearlyUserList::class)]
+#[CoversClass(AbstractUserList::class)]
 class YearlyUserListTest extends AbstractUserListTestCase
 {
     protected function createSut(): AbstractUserList

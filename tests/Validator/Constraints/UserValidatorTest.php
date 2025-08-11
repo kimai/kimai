@@ -9,6 +9,7 @@
 
 namespace App\Tests\Validator\Constraints;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User as UserEntity;
 use App\Tests\Security\TestUserEntity;
 use App\User\UserService;
@@ -19,10 +20,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\User
- * @covers \App\Validator\Constraints\UserValidator
  * @extends ConstraintValidatorTestCase<UserValidator>
  */
+#[CoversClass(\App\Validator\Constraints\User::class)]
+#[CoversClass(UserValidator::class)]
 class UserValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): UserValidator

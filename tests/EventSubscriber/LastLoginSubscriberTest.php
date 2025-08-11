@@ -9,6 +9,7 @@
 
 namespace App\Tests\EventSubscriber;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Event\UserInteractiveLoginEvent;
 use App\EventSubscriber\LastLoginSubscriber;
@@ -20,9 +21,7 @@ use Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
-/**
- * @covers \App\EventSubscriber\LastLoginSubscriber
- */
+#[CoversClass(LastLoginSubscriber::class)]
 class LastLoginSubscriberTest extends TestCase
 {
     public function testGetSubscribedEvents(): void

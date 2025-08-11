@@ -9,14 +9,13 @@
 
 namespace App\Tests\Controller;
 
+use PHPUnit\Framework\Attributes\Group;
 use App\DataFixtures\UserFixtures;
 use App\Entity\Role;
 use App\Entity\RolePermission;
 use App\Entity\User;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class PermissionControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void

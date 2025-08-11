@@ -9,13 +9,12 @@
 
 namespace App\Tests\Event;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Project;
 use App\Event\ProjectMetaDefinitionEvent;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\ProjectMetaDefinitionEvent
- */
+#[CoversClass(ProjectMetaDefinitionEvent::class)]
 class ProjectMetaDefinitionEventTest extends TestCase
 {
     public function testGetterAndSetter(): void

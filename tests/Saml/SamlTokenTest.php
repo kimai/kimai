@@ -9,13 +9,12 @@
 
 namespace App\Tests\Saml;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Saml\SamlToken;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Saml\SamlToken
- */
+#[CoversClass(SamlToken::class)]
 class SamlTokenTest extends TestCase
 {
     public function testConstruct(): void

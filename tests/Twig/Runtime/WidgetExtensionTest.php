@@ -9,6 +9,7 @@
 
 namespace App\Tests\Twig\Runtime;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Tests\Widget\Type\More;
 use App\Twig\Runtime\WidgetExtension;
@@ -20,9 +21,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Twig\Environment;
 
-/**
- * @covers \App\Twig\Runtime\WidgetExtension
- */
+#[CoversClass(WidgetExtension::class)]
 class WidgetExtensionTest extends TestCase
 {
     protected function getSut($hasWidget = null, $getWidget = null): WidgetExtension

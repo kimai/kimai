@@ -9,13 +9,12 @@
 
 namespace App\Tests\Doctrine;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Doctrine\TimesheetSubscriber;
 use Doctrine\ORM\Events;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Doctrine\TimesheetSubscriber
- */
+#[CoversClass(TimesheetSubscriber::class)]
 class TimesheetSubscriberTest extends TestCase
 {
     public function testGetSubscribedEvents(): void

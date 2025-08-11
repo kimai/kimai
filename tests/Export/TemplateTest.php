@@ -9,12 +9,11 @@
 
 namespace App\Tests\Export;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Export\Template;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Export\Template
- */
+#[CoversClass(Template::class)]
 class TemplateTest extends TestCase
 {
     public function testDefaultValues(): void

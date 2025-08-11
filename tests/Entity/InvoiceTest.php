@@ -9,6 +9,7 @@
 
 namespace App\Tests\Entity;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
 use App\Entity\Customer;
@@ -30,9 +31,7 @@ use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Entity\Invoice
- */
+#[CoversClass(Invoice::class)]
 class InvoiceTest extends TestCase
 {
     public function testDefaultValues(): void

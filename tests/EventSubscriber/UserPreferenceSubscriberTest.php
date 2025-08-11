@@ -9,6 +9,7 @@
 
 namespace App\Tests\EventSubscriber;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
@@ -18,9 +19,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-/**
- * @covers \App\EventSubscriber\UserPreferenceSubscriber
- */
+#[CoversClass(UserPreferenceSubscriber::class)]
 class UserPreferenceSubscriberTest extends TestCase
 {
     public const EXPECTED_PREFERENCES = [

@@ -9,12 +9,11 @@
 
 namespace App\Tests\Invoice;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Invoice\InvoiceItem;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Invoice\InvoiceItem
- */
+#[CoversClass(InvoiceItem::class)]
 class InvoiceItemTest extends TestCase
 {
     public function testEmptyObject(): void

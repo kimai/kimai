@@ -9,12 +9,11 @@
 
 namespace App\Tests\WorkingTime\Model;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\WorkingTime\Model\DayAddon;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\WorkingTime\Model\DayAddon
- */
+#[CoversClass(DayAddon::class)]
 class DayAddonTest extends TestCase
 {
     public function testDefaults(): void

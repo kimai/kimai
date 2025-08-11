@@ -9,12 +9,11 @@
 
 namespace App\Tests\Configuration;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Configuration\MailConfiguration;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Configuration\MailConfiguration
- */
+#[CoversClass(MailConfiguration::class)]
 class MailConfigurationTest extends TestCase
 {
     public function testGetFromAddress(): void

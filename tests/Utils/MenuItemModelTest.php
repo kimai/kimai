@@ -9,12 +9,11 @@
 
 namespace App\Tests\Utils;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Utils\MenuItemModel;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Utils\MenuItemModel
- */
+#[CoversClass(MenuItemModel::class)]
 class MenuItemModelTest extends TestCase
 {
     public function testChildRoutes(): void

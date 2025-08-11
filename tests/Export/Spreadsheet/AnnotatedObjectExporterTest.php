@@ -9,6 +9,7 @@
 
 namespace App\Tests\Export\Spreadsheet;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Export\Spreadsheet\AnnotatedObjectExporter;
@@ -17,9 +18,7 @@ use App\Export\Spreadsheet\SpreadsheetExporter;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\Export\Spreadsheet\AnnotatedObjectExporter
- */
+#[CoversClass(AnnotatedObjectExporter::class)]
 class AnnotatedObjectExporterTest extends TestCase
 {
     public function testExport(): void

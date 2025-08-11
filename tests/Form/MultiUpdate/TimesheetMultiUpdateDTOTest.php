@@ -9,6 +9,7 @@
 
 namespace App\Tests\Form\MultiUpdate;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -19,9 +20,7 @@ use App\Form\MultiUpdate\TimesheetMultiUpdateDTO;
 use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Form\MultiUpdate\TimesheetMultiUpdateDTO
- */
+#[CoversClass(TimesheetMultiUpdateDTO::class)]
 class TimesheetMultiUpdateDTOTest extends TestCase
 {
     public function testDefaultValues(): void

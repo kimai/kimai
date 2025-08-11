@@ -9,12 +9,11 @@
 
 namespace App\Tests;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Kernel;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Kernel
- */
+#[CoversClass(Kernel::class)]
 class KernelTest extends TestCase
 {
     public function testBuild(): void

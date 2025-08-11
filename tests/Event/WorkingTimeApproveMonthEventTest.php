@@ -9,14 +9,13 @@
 
 namespace App\Tests\Event;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Entity\User;
 use App\Event\WorkingTimeApproveMonthEvent;
 use App\WorkingTime\Model\Month;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\WorkingTimeApproveMonthEvent
- */
+#[CoversClass(WorkingTimeApproveMonthEvent::class)]
 class WorkingTimeApproveMonthEventTest extends TestCase
 {
     public function testGetter(): void

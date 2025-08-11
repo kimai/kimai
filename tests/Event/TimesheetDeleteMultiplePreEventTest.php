@@ -9,13 +9,12 @@
 
 namespace App\Tests\Event;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Event\AbstractTimesheetMultipleEvent;
 use App\Event\TimesheetDeleteMultiplePreEvent;
 
-/**
- * @covers \App\Event\AbstractTimesheetMultipleEvent
- * @covers \App\Event\TimesheetDeleteMultiplePreEvent
- */
+#[CoversClass(AbstractTimesheetMultipleEvent::class)]
+#[CoversClass(TimesheetDeleteMultiplePreEvent::class)]
 class TimesheetDeleteMultiplePreEventTest extends AbstractTimesheetMultipleEventTestCase
 {
     protected function createTimesheetMultipleEvent(array $timesheets): AbstractTimesheetMultipleEvent

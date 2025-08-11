@@ -9,12 +9,11 @@
 
 namespace App\Tests\Export\Spreadsheet;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Export\Spreadsheet\ColumnDefinition;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Export\Spreadsheet\ColumnDefinition
- */
+#[CoversClass(ColumnDefinition::class)]
 class ColumnDefinitionTest extends TestCase
 {
     public function testConstruct(): void

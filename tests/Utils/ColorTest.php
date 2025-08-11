@@ -9,6 +9,7 @@
 
 namespace App\Tests\Utils;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use App\Constants;
 use App\Entity\Activity;
 use App\Entity\Customer;
@@ -17,9 +18,7 @@ use App\Entity\Timesheet;
 use App\Utils\Color;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Utils\Color
- */
+#[CoversClass(Color::class)]
 class ColorTest extends TestCase
 {
     public function testGetColorAndGetTimesheetColor(): void

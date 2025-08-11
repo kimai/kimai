@@ -9,13 +9,12 @@
 
 namespace App\Tests\Controller;
 
+use PHPUnit\Framework\Attributes\Group;
 use App\Entity\User;
 use App\Plugin\PluginManager;
 use App\Tests\Plugin\Fixtures\TestPlugin\TestPlugin;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class PluginControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
