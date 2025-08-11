@@ -12,11 +12,11 @@ namespace App\Tests\Controller\Reporting;
 use App\Entity\User;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 abstract class AbstractUserPeriodControllerTestCase extends AbstractControllerBaseTestCase
 {
     protected function importReportingFixture(string $role): void
@@ -49,9 +49,7 @@ abstract class AbstractUserPeriodControllerTestCase extends AbstractControllerBa
         ];
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testUserPeriodReport(int $user, string $dataType, string $title): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
@@ -64,9 +62,7 @@ abstract class AbstractUserPeriodControllerTestCase extends AbstractControllerBa
         self::assertEquals($title, $cell->text());
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testUserPeriodReportExport(int $user, string $dataType, string $title): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);

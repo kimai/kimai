@@ -13,12 +13,11 @@ use App\Export\Package\CellFormatter\DefaultFormatter;
 use App\Export\Package\Column;
 use App\Export\Package\SpoutSpreadsheet;
 use OpenSpout\Writer\CSV\Writer;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\Export\Package\SpoutSpreadsheet
- */
+#[CoversClass(SpoutSpreadsheet::class)]
 class SpoutSpreadsheetTest extends TestCase
 {
     private string $filename;

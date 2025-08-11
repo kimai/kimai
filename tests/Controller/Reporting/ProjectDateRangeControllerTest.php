@@ -17,10 +17,9 @@ use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Timesheet\DateTimeFactory;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class ProjectDateRangeControllerTest extends AbstractControllerBaseTestCase
 {
     public function testReportIsSecure(): void

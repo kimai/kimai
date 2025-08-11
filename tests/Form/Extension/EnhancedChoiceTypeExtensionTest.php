@@ -10,6 +10,8 @@
 namespace App\Tests\Form\Extension;
 
 use App\Form\Extension\EnhancedChoiceTypeExtension;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -17,9 +19,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * @covers \App\Form\Extension\EnhancedChoiceTypeExtension
- */
+#[CoversClass(EnhancedChoiceTypeExtension::class)]
 class EnhancedChoiceTypeExtensionTest extends TestCase
 {
     public function testExtendedTypes(): void
@@ -68,9 +68,7 @@ class EnhancedChoiceTypeExtensionTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testBuildView(array $options, array $expected): void
     {
         $sut = new EnhancedChoiceTypeExtension();

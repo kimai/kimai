@@ -13,6 +13,8 @@ use App\Activity\ActivityStatisticService;
 use App\Entity\User;
 use App\Export\Base\HtmlRenderer;
 use App\Project\ProjectStatisticService;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,10 +24,10 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Twig\Environment;
 
 /**
- * @covers \App\Export\Base\HtmlRenderer
  * @covers \App\Export\Base\RendererTrait
- * @group integration
  */
+#[CoversClass(HtmlRenderer::class)]
+#[Group('integration')]
 class HtmlRendererTest extends AbstractRendererTestCase
 {
     public function testConfiguration(): void

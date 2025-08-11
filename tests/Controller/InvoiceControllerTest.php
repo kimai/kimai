@@ -15,11 +15,10 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\InvoiceTemplateFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class InvoiceControllerTest extends AbstractControllerBaseTestCase
 {
     protected function setUp(): void

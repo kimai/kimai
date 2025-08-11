@@ -10,11 +10,11 @@
 namespace App\Tests\Utils;
 
 use App\Utils\SearchTerm;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Utils\SearchTerm
- */
+#[CoversClass(SearchTerm::class)]
 class SearchTermTest extends TestCase
 {
     public function testNormalSearchTerm(): void
@@ -61,9 +61,7 @@ class SearchTermTest extends TestCase
         }
     }
 
-    /**
-     * @group legacy
-     */
+    #[Group('legacy')]
     public function testWithMultipleMetaFields(): void
     {
         $sut = new SearchTerm('foo:bar bar:foo');

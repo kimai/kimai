@@ -15,14 +15,13 @@ use App\Form\ExportTemplateSpreadsheetForm;
 use App\Form\Type\ExportColumnsType;
 use App\Form\Type\LanguageType;
 use App\Tests\Mocks\SystemConfigurationFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\Form\ExportTemplateSpreadsheetForm
- */
+#[CoversClass(ExportTemplateSpreadsheetForm::class)]
 class ExportTemplateSpreadsheetFormTest extends TypeTestCase
 {
     /**

@@ -10,12 +10,13 @@
 namespace App\Tests\Entity;
 
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-/**
- * @covers \App\Entity\User
- * @group integration
- */
+#[CoversClass(User::class)]
+#[Group('integration')]
 class UserValidationTest extends KernelTestCase
 {
     use EntityValidationTestTrait;
@@ -29,9 +30,7 @@ class UserValidationTest extends KernelTestCase
         ];
     }
 
-    /**
-     * @dataProvider getInvalidTestData
-     */
+    #[DataProvider('getInvalidTestData')]
     public function testInvalidValues($username, $email, $roles = []): void
     {
         $defaultFields = [
@@ -77,9 +76,7 @@ class UserValidationTest extends KernelTestCase
         ];
     }
 
-    /**
-     * @dataProvider getValidTestData
-     */
+    #[DataProvider('getValidTestData')]
     public function testValidValues($username, $email, $roles = []): void
     {
         $user = new User();

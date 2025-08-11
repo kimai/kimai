@@ -14,15 +14,16 @@ use App\Entity\Timesheet;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\Constraints\TimesheetLongRunning;
 use App\Validator\Constraints\TimesheetLongRunningValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\TimesheetLongRunning
- * @covers \App\Validator\Constraints\TimesheetLongRunningValidator
  * @extends ConstraintValidatorTestCase<TimesheetLongRunningValidator>
  */
+#[CoversClass(TimesheetLongRunning::class)]
+#[CoversClass(TimesheetLongRunningValidator::class)]
 class TimesheetLongRunningValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): TimesheetLongRunningValidator

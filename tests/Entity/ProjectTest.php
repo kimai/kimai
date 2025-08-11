@@ -17,10 +17,9 @@ use App\Entity\Team;
 use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use Doctrine\Common\Collections\Collection;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Entity\Project
- */
+#[CoversClass(Project::class)]
 class ProjectTest extends AbstractEntityTestCase
 {
     public function testDefaultValues(): void

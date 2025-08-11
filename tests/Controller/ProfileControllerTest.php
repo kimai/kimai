@@ -16,13 +16,13 @@ use App\Repository\AccessTokenRepository;
 use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\WorkingTime\Mode\WorkingTimeModeDay;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class ProfileControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
@@ -107,9 +107,7 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider getTabTestData
-     */
+    #[DataProvider('getTabTestData')]
     public function testEditActionTabs($role, $username): void
     {
         $client = $this->getClientForAuthenticatedUser($role);
@@ -285,9 +283,7 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         self::assertEquals($code->innerText(), $tokens[1]->getToken());
     }
 
-    /**
-     * @group legacy
-     */
+    #[Group('legacy')]
     public function testCreateApiPassword(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
@@ -323,9 +319,7 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         self::assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), 'test1234'));
     }
 
-    /**
-     * @group legacy
-     */
+    #[Group('legacy')]
     public function testCreateApiPasswordFailsIfPasswordLengthToShort(): void
     {
         $this->assertFormHasValidationError(
@@ -444,9 +438,7 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider getPreferencesTestData
-     */
+    #[DataProvider('getPreferencesTestData')]
     public function testPreferencesAction($role, $username, $hourlyRateOriginal, $hourlyRate, string $expectedLocale, float|null $expectedInternalRate, bool $withRateSettings): void
     {
         $client = $this->getClientForAuthenticatedUser($role);

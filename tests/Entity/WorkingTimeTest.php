@@ -11,11 +11,10 @@ namespace App\Tests\Entity;
 
 use App\Entity\User;
 use App\Entity\WorkingTime;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Entity\WorkingTime
- */
+#[CoversClass(WorkingTime::class)]
 class WorkingTimeTest extends TestCase
 {
     public function testDefaultValues(): void

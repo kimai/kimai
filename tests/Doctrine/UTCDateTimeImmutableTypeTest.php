@@ -15,11 +15,11 @@ use Doctrine\DBAL\Platforms\MySQLPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Doctrine\UTCDateTimeImmutableType
- */
+#[CoversClass(UTCDateTimeImmutableType::class)]
 class UTCDateTimeImmutableTypeTest extends TestCase
 {
     public function testGetUtc(): void
@@ -33,9 +33,7 @@ class UTCDateTimeImmutableTypeTest extends TestCase
         self::assertEquals('UTC', $type::getUtc()->getName());
     }
 
-    /**
-     * @dataProvider getPlatforms
-     */
+    #[DataProvider('getPlatforms')]
     public function testConvertToDatabaseValue(AbstractPlatform $platform): void
     {
         Type::overrideType(Types::DATETIME_MUTABLE, UTCDateTimeImmutableType::class);
@@ -61,9 +59,7 @@ class UTCDateTimeImmutableTypeTest extends TestCase
         self::assertEquals($bla, $result);
     }
 
-    /**
-     * @dataProvider getPlatforms
-     */
+    #[DataProvider('getPlatforms')]
     public function testConvertToPHPValue(AbstractPlatform $platform): void
     {
         Type::overrideType(Types::DATETIME_MUTABLE, UTCDateTimeImmutableType::class);
@@ -81,9 +77,7 @@ class UTCDateTimeImmutableTypeTest extends TestCase
         self::assertEquals('2019-01-17 13:30:00', $result);
     }
 
-    /**
-     * @dataProvider getPlatforms
-     */
+    #[DataProvider('getPlatforms')]
     public function testConvertToPHPValueWithInvalidValue(AbstractPlatform $platform): void
     {
         $this->expectException(ConversionException::class);
@@ -96,7 +90,7 @@ class UTCDateTimeImmutableTypeTest extends TestCase
     }
 
     /**
-     * @return \Doctrine\DBAL\Platforms\MySQLPlatform[][]
+     * @return MySQLPlatform[][]
      */
     public static function getPlatforms(): array
     {

@@ -11,11 +11,11 @@ namespace App\Tests\Controller\Security;
 
 use App\Entity\User;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class SelfRegistrationControllerTest extends AbstractControllerBaseTestCase
 {
     private function assertRegisterActionWithDeactivatedFeature(string $route): void
@@ -163,9 +163,7 @@ class SelfRegistrationControllerTest extends AbstractControllerBaseTestCase
         self::assertTrue($client->getResponse()->isSuccessful());
     }
 
-    /**
-     * @dataProvider getValidationTestData
-     */
+    #[DataProvider('getValidationTestData')]
     public function testRegisterActionWithValidationProblems(array $formData, array $validationFields): void
     {
         $client = self::createClient();

@@ -13,11 +13,10 @@ use App\Configuration\ConfigLoaderInterface;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Twig\Runtime\MarkdownExtension;
 use App\Utils\Markdown;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Twig\Runtime\MarkdownExtension
- */
+#[CoversClass(MarkdownExtension::class)]
 class MarkdownExtensionTest extends TestCase
 {
     public function testMarkdownToHtml(): void

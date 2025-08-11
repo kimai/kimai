@@ -10,12 +10,12 @@
 namespace App\Tests\Security;
 
 use App\Entity\Role;
+use App\Security\RoleService;
 use App\Tests\Mocks\Security\RoleServiceFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Security\RoleService
- */
+#[CoversClass(RoleService::class)]
 class RoleServiceTest extends TestCase
 {
     public function testWithEmptyRepository(): void

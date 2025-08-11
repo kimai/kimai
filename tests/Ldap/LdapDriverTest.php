@@ -17,12 +17,11 @@ use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Tests\Mocks\TestLogger;
 use Laminas\Ldap\Exception\LdapException;
 use Laminas\Ldap\Ldap;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
 
-/**
- * @covers \App\Ldap\LdapDriver
- */
+#[CoversClass(LdapDriver::class)]
 class LdapDriverTest extends TestCase
 {
     protected function setUp(): void

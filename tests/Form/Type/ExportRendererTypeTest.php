@@ -10,12 +10,12 @@
 namespace App\Tests\Form\Type;
 
 use App\Form\Type\ExportRendererType;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-/**
- * @covers \App\Form\Type\ExportRendererType
- */
+#[CoversClass(ExportRendererType::class)]
 class ExportRendererTypeTest extends TypeTestCase
 {
     public static function getTestData(): iterable
@@ -27,9 +27,7 @@ class ExportRendererTypeTest extends TypeTestCase
         yield ['XLSX', null];
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testSubmitValidData(string $value, string|null $expected): void
     {
         $data = ['renderer' => $value];

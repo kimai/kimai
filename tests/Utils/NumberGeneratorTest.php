@@ -10,21 +10,21 @@
 namespace App\Tests\Utils;
 
 use App\Utils\NumberGenerator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Utils\NumberGenerator
- */
+#[CoversClass(NumberGenerator::class)]
 class NumberGeneratorTest extends TestCase
 {
     /**
-     * @dataProvider getTestData
      * @param string $format
      * @param array<mixed> $options
      * @param string $expected
      * @param int $startWith
      * @return void
      */
+    #[DataProvider('getTestData')]
     public function testGenerateNumber(string $format, array $options, string $expected, int $startWith): void
     {
         $sut = new NumberGenerator($format, function (string $originalFormat, string $format, int $increaseBy) use ($options) {

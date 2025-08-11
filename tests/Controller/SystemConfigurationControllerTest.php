@@ -11,10 +11,9 @@ namespace App\Tests\Controller;
 
 use App\Configuration\SystemConfiguration;
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void

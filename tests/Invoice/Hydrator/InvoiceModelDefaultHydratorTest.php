@@ -11,12 +11,11 @@ namespace App\Tests\Invoice\Hydrator;
 
 use App\Invoice\Hydrator\InvoiceModelDefaultHydrator;
 use App\Tests\Invoice\Renderer\RendererTestTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use ReflectionObject;
 
-/**
- * @covers \App\Invoice\Hydrator\InvoiceModelDefaultHydrator
- */
+#[CoversClass(InvoiceModelDefaultHydrator::class)]
 class InvoiceModelDefaultHydratorTest extends TestCase
 {
     use RendererTestTrait;

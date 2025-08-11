@@ -15,11 +15,10 @@ use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Repository\TimesheetInvoiceItemRepository;
 use App\Repository\TimesheetRepository;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Repository\TimesheetInvoiceItemRepository
- */
+#[CoversClass(TimesheetInvoiceItemRepository::class)]
 class TimesheetInvoiceItemRepositoryTest extends TestCase
 {
     public function testSetExported(): void

@@ -18,12 +18,12 @@ use App\Entity\User;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\LockdownService;
 use App\Voter\TimesheetVoter;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
-/**
- * @covers \App\Voter\TimesheetVoter
- */
+#[CoversClass(TimesheetVoter::class)]
 class TimesheetVoterTest extends AbstractVoterTestCase
 {
     protected function getVoter(string $voterClass): TimesheetVoter
@@ -94,9 +94,7 @@ class TimesheetVoterTest extends AbstractVoterTestCase
         }
     }
 
-    /**
-     * @dataProvider getLockDownTestData
-     */
+    #[DataProvider('getLockDownTestData')]
     public function testWithLockdown(string $permission, int $expected, string $beginModifier, string $lockdownBegin, string $lockdownEnd, ?string $lockdownGrace): void
     {
         $user = $this->getTestUser(1, User::ROLE_USER);

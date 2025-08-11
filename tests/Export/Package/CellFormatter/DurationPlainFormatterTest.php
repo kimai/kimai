@@ -10,11 +10,10 @@
 namespace App\Tests\Export\Package\CellFormatter;
 
 use App\Export\Package\CellFormatter\DurationPlainFormatter;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Export\Package\CellFormatter\DurationPlainFormatter
- */
+#[CoversClass(DurationPlainFormatter::class)]
 class DurationPlainFormatterTest extends TestCase
 {
     public function testFormatValueReturnsFormattedDurationQuiteLong(): void

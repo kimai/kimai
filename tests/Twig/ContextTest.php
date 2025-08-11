@@ -9,17 +9,17 @@
 
 namespace App\Tests\Twig;
 
+use App\Configuration\SystemConfiguration;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Twig\Context;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-/**
- * @covers \App\Twig\Context
- * @covers \App\Configuration\SystemConfiguration
- */
+#[CoversClass(Context::class)]
+#[CoversClass(SystemConfiguration::class)]
 class ContextTest extends TestCase
 {
     protected function getSut(array $settings, array $headers = []): Context

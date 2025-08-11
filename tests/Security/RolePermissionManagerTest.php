@@ -13,12 +13,11 @@ use App\Entity\User;
 use App\Repository\RolePermissionRepository;
 use App\Security\RolePermissionManager;
 use App\User\PermissionService;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
-/**
- * @covers \App\Security\RolePermissionManager
- */
+#[CoversClass(RolePermissionManager::class)]
 class RolePermissionManagerTest extends TestCase
 {
     public function testWithEmptyRepository(): void

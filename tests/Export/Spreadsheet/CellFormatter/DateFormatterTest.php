@@ -15,10 +15,9 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Style\Style;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Export\Spreadsheet\CellFormatter\DateFormatter
- */
+#[CoversClass(DateFormatter::class)]
 class DateFormatterTest extends AbstractFormatterTestCase
 {
     private $date;

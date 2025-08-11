@@ -12,12 +12,13 @@ namespace App\Tests\Entity;
 use App\Entity\Activity;
 use App\Entity\ActivityRate;
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Entity\ActivityRate
  * @covers \App\Entity\Rate
  */
+#[CoversClass(ActivityRate::class)]
 class ActivityRateTest extends TestCase
 {
     public function testDefaultValues(): void

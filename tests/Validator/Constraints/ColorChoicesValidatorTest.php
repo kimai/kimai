@@ -11,15 +11,17 @@ namespace App\Tests\Validator\Constraints;
 
 use App\Validator\Constraints\ColorChoices;
 use App\Validator\Constraints\ColorChoicesValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\ColorChoices
- * @covers \App\Validator\Constraints\ColorChoicesValidator
  * @extends ConstraintValidatorTestCase<ColorChoicesValidator>
  */
+#[CoversClass(ColorChoices::class)]
+#[CoversClass(ColorChoicesValidator::class)]
 class ColorChoicesValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): ColorChoicesValidator
@@ -47,9 +49,7 @@ class ColorChoicesValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate('#000', new NotBlank());
     }
 
-    /**
-     * @dataProvider getValidColors
-     */
+    #[DataProvider('getValidColors')]
     public function testConstraintWithValidColor(?string $color): void
     {
         $constraint = new ColorChoices();
@@ -77,12 +77,12 @@ class ColorChoicesValidatorTest extends ConstraintValidatorTestCase
     }
 
     /**
-     * @dataProvider getInvalidColors
      * @param string $color
      * @param string|null $invalidColor
      * @param string|null $invalidName
      * @param string|null $invalidNameCode
      */
+    #[DataProvider('getInvalidColors')]
     public function testValidationError(string $color, $invalidColor = null, $invalidName = null, $invalidNameCode = null): void
     {
         $constraint = new ColorChoices();

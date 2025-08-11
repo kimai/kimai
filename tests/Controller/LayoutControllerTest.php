@@ -10,11 +10,10 @@
 namespace App\Tests\Controller;
 
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class LayoutControllerTest extends AbstractControllerBaseTestCase
 {
     public function testNavigationMenus(): void

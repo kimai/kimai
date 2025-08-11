@@ -13,10 +13,9 @@ use App\Entity\Customer;
 use App\Entity\Invoice;
 use App\Repository\Query\BaseQuery;
 use App\Repository\Query\InvoiceArchiveQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Repository\Query\InvoiceArchiveQuery
- */
+#[CoversClass(InvoiceArchiveQuery::class)]
 class InvoiceArchiveQueryTest extends BaseQueryTest
 {
     public function testQuery(): void

@@ -12,14 +12,13 @@ namespace App\Tests\Mail;
 use App\Configuration\MailConfiguration;
 use App\Entity\User;
 use App\Mail\KimaiMailer;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 
-/**
- * @covers \App\Mail\KimaiMailer
- */
+#[CoversClass(KimaiMailer::class)]
 class KimaiMailerTest extends TestCase
 {
     public function getSut(?MailerInterface $mailer = null): KimaiMailer

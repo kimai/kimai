@@ -10,10 +10,10 @@
 namespace App\Tests\API;
 
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class UserControllerTest extends APIControllerBaseTestCase
 {
     public function testIsSecure(): void
@@ -33,9 +33,7 @@ class UserControllerTest extends APIControllerBaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider getRoleTestData
-     */
+    #[DataProvider('getRoleTestData')]
     public function testIsSecureForRole(string $role): void
     {
         $this->assertUrlIsSecuredForRole($role, '/api/users');

@@ -14,10 +14,9 @@ use App\Entity\Customer;
 use App\Entity\CustomerMeta;
 use App\Entity\EntityWithMetaFields;
 use App\Entity\MetaTableTypeInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Entity\CustomerMeta
- */
+#[CoversClass(CustomerMeta::class)]
 class CustomerMetaTest extends AbstractMetaEntityTestCase
 {
     protected function getEntity(): EntityWithMetaFields

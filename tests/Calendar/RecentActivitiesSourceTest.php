@@ -12,11 +12,10 @@ namespace App\Tests\Calendar;
 use App\Calendar\RecentActivitiesSource;
 use App\Calendar\TimesheetEntry;
 use App\Entity\Timesheet;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Calendar\RecentActivitiesSource
- */
+#[CoversClass(RecentActivitiesSource::class)]
 class RecentActivitiesSourceTest extends TestCase
 {
     public function testConstruct(): void

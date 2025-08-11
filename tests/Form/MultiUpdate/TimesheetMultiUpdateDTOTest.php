@@ -17,11 +17,10 @@ use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Form\MultiUpdate\TimesheetMultiUpdateDTO;
 use Doctrine\Common\Collections\Collection;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Form\MultiUpdate\TimesheetMultiUpdateDTO
- */
+#[CoversClass(TimesheetMultiUpdateDTO::class)]
 class TimesheetMultiUpdateDTOTest extends TestCase
 {
     public function testDefaultValues(): void

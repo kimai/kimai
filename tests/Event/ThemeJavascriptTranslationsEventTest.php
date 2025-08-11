@@ -10,12 +10,12 @@
 namespace App\Tests\Event;
 
 use App\Event\ThemeJavascriptTranslationsEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\ThemeJavascriptTranslationsEvent
- * @group legacy
- */
+#[CoversClass(ThemeJavascriptTranslationsEvent::class)] // @phpstan-ignore classConstant.deprecatedClass
+#[Group('legacy')]
 class ThemeJavascriptTranslationsEventTest extends TestCase
 {
     public const COUNTER = 17;

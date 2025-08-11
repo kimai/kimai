@@ -10,6 +10,8 @@
 namespace App\Tests\Command;
 
 use App\Command\AbstractBundleInstallerCommand;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Command\Command;
@@ -18,10 +20,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Tester\CommandTester;
 
-/**
- * @covers \App\Command\AbstractBundleInstallerCommand
- * @group integration
- */
+#[CoversClass(AbstractBundleInstallerCommand::class)]
+#[Group('integration')]
 class BundleInstallerCommandTest extends KernelTestCase
 {
     private Application $application;

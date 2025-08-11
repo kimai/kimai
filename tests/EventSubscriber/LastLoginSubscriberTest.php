@@ -13,6 +13,7 @@ use App\Entity\User;
 use App\Event\UserInteractiveLoginEvent;
 use App\EventSubscriber\LastLoginSubscriber;
 use App\Repository\UserRepository;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -20,9 +21,7 @@ use Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
-/**
- * @covers \App\EventSubscriber\LastLoginSubscriber
- */
+#[CoversClass(LastLoginSubscriber::class)]
 class LastLoginSubscriberTest extends TestCase
 {
     public function testGetSubscribedEvents(): void

@@ -11,10 +11,9 @@ namespace App\Tests\Controller;
 
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class FavoriteControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void

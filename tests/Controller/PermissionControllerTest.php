@@ -13,10 +13,9 @@ use App\DataFixtures\UserFixtures;
 use App\Entity\Role;
 use App\Entity\RolePermission;
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class PermissionControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void

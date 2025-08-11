@@ -11,15 +11,17 @@ namespace App\Tests\Validator\Constraints;
 
 use App\Validator\Constraints\DateTimeFormat;
 use App\Validator\Constraints\DateTimeFormatValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\DateTimeFormat
- * @covers \App\Validator\Constraints\DateTimeFormatValidator
  * @extends ConstraintValidatorTestCase<DateTimeFormatValidator>
  */
+#[CoversClass(DateTimeFormat::class)]
+#[CoversClass(DateTimeFormatValidator::class)]
 class DateTimeFormatValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): DateTimeFormatValidator
@@ -46,9 +48,7 @@ class DateTimeFormatValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate('foo', new NotBlank());
     }
 
-    /**
-     * @dataProvider getValidData
-     */
+    #[DataProvider('getValidData')]
     public function testConstraintWithValidData(?string $input): void
     {
         $constraint = new DateTimeFormat();
@@ -67,9 +67,7 @@ class DateTimeFormatValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @dataProvider getInvalidData
-     */
+    #[DataProvider('getInvalidData')]
     public function testValidationError(?string $input): void
     {
         $constraint = new DateTimeFormat();

@@ -15,13 +15,12 @@ use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use App\Export\Spreadsheet\Extractor\UserPreferenceExtractor;
 use App\Export\Spreadsheet\SpreadsheetExporter;
 use App\Export\Spreadsheet\UserExporter;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\Export\Spreadsheet\UserExporter
- */
+#[CoversClass(UserExporter::class)]
 class UserExporterTest extends TestCase
 {
     public function testExport(): void

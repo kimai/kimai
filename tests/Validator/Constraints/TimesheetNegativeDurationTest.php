@@ -11,11 +11,10 @@ namespace App\Tests\Validator\Constraints;
 
 use App\Validator\Constraints\TimesheetConstraint;
 use App\Validator\Constraints\TimesheetNegativeDuration;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Validator\Constraints\TimesheetNegativeDuration
- */
+#[CoversClass(TimesheetNegativeDuration::class)]
 class TimesheetNegativeDurationTest extends TestCase
 {
     public function testIsTimesheetConstraint(): void

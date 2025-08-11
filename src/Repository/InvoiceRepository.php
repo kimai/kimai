@@ -26,7 +26,7 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * @extends \Doctrine\ORM\EntityRepository<Invoice>
+ * @extends EntityRepository<Invoice>
  */
 class InvoiceRepository extends EntityRepository
 {

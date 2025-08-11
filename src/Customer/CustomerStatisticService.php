@@ -19,7 +19,7 @@ use App\Timesheet\DateTimeFactory;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Query;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
@@ -112,7 +112,7 @@ class CustomerStatisticService
         $qb = $this->timesheetRepository->createQueryBuilder('t');
         $qb
             ->select('IDENTITY(p.customer) AS id')
-            ->join(Project::class, 'p', Query\Expr\Join::WITH, 't.project = p.id')
+            ->join(Project::class, 'p', Join::WITH, 't.project = p.id')
             ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
             ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
             ->addSelect('COALESCE(SUM(t.internalRate), 0) as internalRate')

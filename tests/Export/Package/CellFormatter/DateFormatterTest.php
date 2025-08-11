@@ -10,11 +10,10 @@
 namespace App\Tests\Export\Package\CellFormatter;
 
 use App\Export\Package\CellFormatter\DateFormatter;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Export\Package\CellFormatter\DateFormatter
- */
+#[CoversClass(DateFormatter::class)]
 class DateFormatterTest extends TestCase
 {
     public function testGetFormat(): void

@@ -10,12 +10,11 @@
 namespace App\Tests\Validator;
 
 use App\Validator\ValidationFailedException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\ConstraintViolationList;
 
-/**
- * @covers \App\Validator\ValidationFailedException
- */
+#[CoversClass(ValidationFailedException::class)]
 class ValidationFailedExceptionTest extends TestCase
 {
     public function testException(): void

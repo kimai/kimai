@@ -17,16 +17,17 @@ use App\Repository\Query\TimesheetQuery;
 use App\Tests\Export\Package\MemoryPackage;
 use App\Tests\Export\Renderer\AbstractRendererTestCase;
 use App\Tests\Mocks\MetaFieldColumnSubscriberMock;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\Export\Base\SpreadsheetRenderer
- * @group integration
- */
+#[CoversClass(SpreadsheetRenderer::class)]
+#[Group('integration')]
 class SpreadsheetRendererTest extends AbstractRendererTestCase
 {
     public function testWriteSpreadsheetCreatesSpreadsheetWithCorrectHeaders(): void
@@ -150,9 +151,7 @@ class SpreadsheetRendererTest extends AbstractRendererTestCase
         ]];
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testWriteSpreadsheetCsv(?Template $template, array $expectedColumns): void
     {
         $dispatcher = new EventDispatcher();

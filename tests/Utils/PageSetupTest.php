@@ -12,11 +12,10 @@ namespace App\Tests\Utils;
 use App\Repository\Query\BaseQuery;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Utils\PageSetup
- */
+#[CoversClass(PageSetup::class)]
 class PageSetupTest extends TestCase
 {
     public function testDefaults(): void

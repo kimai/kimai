@@ -16,15 +16,17 @@ use App\Entity\Timesheet;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\Constraints\TimesheetBasic;
 use App\Validator\Constraints\TimesheetBasicValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\TimesheetBasic
- * @covers \App\Validator\Constraints\TimesheetBasicValidator
  * @extends ConstraintValidatorTestCase<TimesheetBasicValidator>
  */
+#[CoversClass(TimesheetBasic::class)]
+#[CoversClass(TimesheetBasicValidator::class)]
 class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): TimesheetBasicValidator
@@ -169,9 +171,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
         ]];
     }
 
-    /**
-     * @dataProvider getProjectStartEndTestData
-     */
+    #[DataProvider('getProjectStartEndTestData')]
     public function testEndBeforeWithProjectStartAndEnd(\DateTime $start, \DateTime $end, array $violations): void
     {
         $timesheet = new Timesheet();

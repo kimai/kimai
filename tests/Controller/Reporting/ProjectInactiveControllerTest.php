@@ -15,10 +15,9 @@ use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class ProjectInactiveControllerTest extends AbstractControllerBaseTestCase
 {
     public function testReportIsSecure(): void

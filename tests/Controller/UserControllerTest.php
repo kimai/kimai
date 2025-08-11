@@ -12,10 +12,10 @@ namespace App\Tests\Controller;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class UserControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
@@ -219,9 +219,7 @@ class UserControllerTest extends AbstractControllerBaseTestCase
         self::assertFalse($client->getResponse()->isSuccessful());
     }
 
-    /**
-     * @dataProvider getValidationTestData
-     */
+    #[DataProvider('getValidationTestData')]
     public function testValidationForCreateAction(array $formData, array $validationFields): void
     {
         $this->assertFormHasValidationError(

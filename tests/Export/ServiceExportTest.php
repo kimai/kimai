@@ -24,15 +24,14 @@ use App\Tests\Mocks\Export\CsvRendererFactoryMock;
 use App\Tests\Mocks\Export\HtmlRendererFactoryMock;
 use App\Tests\Mocks\Export\PdfRendererFactoryMock;
 use App\Tests\Mocks\Export\XlsxRendererFactoryMock;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Twig\Environment;
 
-/**
- * @covers \App\Export\ServiceExport
- */
+#[CoversClass(ServiceExport::class)]
 class ServiceExportTest extends TestCase
 {
     private function createSut(bool $withTemplates = false, int $failureCount = 1): ServiceExport

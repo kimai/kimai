@@ -15,12 +15,11 @@ use App\Widget\Type\AbstractUserRevenuePeriod;
 use App\Widget\Type\AbstractWidget;
 use App\Widget\Type\UserAmountTotal;
 use App\Widget\WidgetInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-/**
- * @covers \App\Widget\Type\UserAmountTotal
- * @covers \App\Widget\Type\AbstractUserRevenuePeriod
- */
+#[CoversClass(UserAmountTotal::class)]
+#[CoversClass(AbstractUserRevenuePeriod::class)]
 class UserAmountTotalTest extends AbstractWidgetTestCase
 {
     protected function assertDefaultData(AbstractWidget $sut): void

@@ -9,11 +9,10 @@
 
 namespace App\Tests;
 
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class TranslationsTest extends TestCase
 {
     public function testForWrongFileExtension(): void

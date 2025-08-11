@@ -20,12 +20,12 @@ use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\TimesheetTestMetaFieldSubscriberMock;
 use App\Timesheet\DateTimeFactory;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class TimesheetControllerTest extends APIControllerBaseTestCase
 {
     public const DATE_FORMAT = 'Y-m-d H:i:s';
@@ -779,9 +779,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider getTrackingModeTestData
-     */
+    #[DataProvider('getTrackingModeTestData')]
     public function testCreateActionWithTrackingModeHasFieldsForUser(string $trackingMode, string $user, bool $showTimes): void
     {
         $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));

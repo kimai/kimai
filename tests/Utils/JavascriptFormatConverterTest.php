@@ -10,11 +10,10 @@
 namespace App\Tests\Utils;
 
 use App\Utils\JavascriptFormatConverter;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Utils\JavascriptFormatConverter
- */
+#[CoversClass(JavascriptFormatConverter::class)]
 class JavascriptFormatConverterTest extends TestCase
 {
     public function test()
