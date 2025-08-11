@@ -28,12 +28,12 @@ class DateFormatterTest extends AbstractFormatterTestCase
         return new DateFormatter();
     }
 
-    protected function getActualValue()
+    protected function getActualValue(): \DateTimeInterface
     {
         return $this->date = new \DateTime();
     }
 
-    protected function getExpectedValue()
+    protected function getExpectedValue(): bool|float
     {
         return Date::PHPToExcel($this->date);
     }
