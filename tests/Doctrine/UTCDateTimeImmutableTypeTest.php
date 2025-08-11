@@ -96,7 +96,7 @@ class UTCDateTimeImmutableTypeTest extends TestCase
     }
 
     /**
-     * @return \Doctrine\DBAL\Platforms\MySQLPlatform[][]
+     * @return MySQLPlatform[][]
      */
     public static function getPlatforms(): array
     {

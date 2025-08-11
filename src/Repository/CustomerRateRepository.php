@@ -14,7 +14,7 @@ use App\Entity\CustomerRate;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * @extends \Doctrine\ORM\EntityRepository<CustomerRate>
+ * @extends EntityRepository<CustomerRate>
  */
 class CustomerRateRepository extends EntityRepository
 {

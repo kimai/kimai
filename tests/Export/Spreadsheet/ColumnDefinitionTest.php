@@ -9,6 +9,7 @@
 
 namespace App\Tests\Export\Spreadsheet;
 
+use App\Export\Spreadsheet\ColumnDefinition;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -18,7 +19,7 @@ class ColumnDefinitionTest extends TestCase
 {
     public function testConstruct(): void
     {
-        $sut = new \App\Export\Spreadsheet\ColumnDefinition('foo', 'bar', function () {
+        $sut = new ColumnDefinition('foo', 'bar', function () {
             return 'hello world';
         });
 

@@ -13,7 +13,7 @@ use App\Entity\ExportTemplate;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * @extends \Doctrine\ORM\EntityRepository<ExportTemplate>
+ * @extends EntityRepository<ExportTemplate>
  */
 class ExportTemplateRepository extends EntityRepository
 {
