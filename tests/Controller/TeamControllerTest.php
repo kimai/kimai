@@ -50,7 +50,7 @@ class TeamControllerTest extends AbstractControllerBaseTestCase
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $fixture = new TeamFixtures();
         $fixture->setAmount(5);
-        $fixture->setCallback(function (Team $team) {
+        $fixture->setCallback(function (Team $team): void {
             $team->setName($team->getName() . '- fantastic team with foooo bar magic');
         });
         $this->importFixture($fixture);

@@ -193,7 +193,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
 
         $fixture = new CustomerFixtures();
         $fixture->setAmount(1);
-        $fixture->setCallback(function (Customer $customer) use ($invoiceTemplate) {
+        $fixture->setCallback(function (Customer $customer) use ($invoiceTemplate): void {
             $customer->setInvoiceTemplate($invoiceTemplate[0]);
         });
         $customer = $this->importFixture($fixture)[0];

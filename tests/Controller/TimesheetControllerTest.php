@@ -108,7 +108,7 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         $fixture->setAmount(5);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setStartDate($start);
-        $fixture->setCallback(function (Timesheet $timesheet) use ($tags) {
+        $fixture->setCallback(function (Timesheet $timesheet) use ($tags): void {
             $timesheet->setDescription('I am a foobar with tralalalala some more content');
             $timesheet->setMetaField((new TimesheetMeta())->setName('location')->setValue('homeoffice'));
             $timesheet->setMetaField((new TimesheetMeta())->setName('feature')->setValue('timetracking'));
@@ -142,7 +142,7 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         $fixture = new TimesheetFixtures();
         $fixture->setAmount(15);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
-        $fixture->setCallback(function (Timesheet $timesheet) {
+        $fixture->setCallback(function (Timesheet $timesheet): void {
             $duration = rand(3600, 36000);
             $begin = new \DateTime('-15 days');
             $end = clone $begin;
@@ -446,7 +446,7 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         $end = new \DateTime('2018-08-02T20:30:00');
 
         $fixture = new TimesheetFixtures();
-        $fixture->setCallback(function (Timesheet $timesheet) use ($begin, $end) {
+        $fixture->setCallback(function (Timesheet $timesheet) use ($begin, $end): void {
             $timesheet->setBegin($begin);
             $timesheet->setEnd($end);
         });
@@ -478,7 +478,7 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         $fixture->setAmount(1);
         $fixture->setIsGlobal(true);
         $fixture->setIsVisible(true);
-        $fixture->setCallback(function (Activity $activity) {
+        $fixture->setCallback(function (Activity $activity): void {
             $activity->setBudget(1000);
             $activity->setTimeBudget(3600);
         });
@@ -527,7 +527,7 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         $fixture->setAmount(1);
         $fixture->setIsGlobal(true);
         $fixture->setIsVisible(true);
-        $fixture->setCallback(function (Activity $activity) {
+        $fixture->setCallback(function (Activity $activity): void {
             $activity->setBudget(1000);
             $activity->setTimeBudget(3600);
         });
@@ -817,7 +817,7 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         $fixture->setAmountRunning(0);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setStartDate($dateTime->createDateTime());
-        $fixture->setCallback(function (Timesheet $timesheet) {
+        $fixture->setCallback(function (Timesheet $timesheet): void {
             $timesheet->setDescription('Testing is fun!');
             $begin = clone $timesheet->getBegin();
             $begin->setTime(0, 0, 0);
