@@ -1954,6 +1954,18 @@
         <source>Unlock month</source>
         <target state="translated">Mes incompleto</target>
       </trans-unit>
+      <trans-unit id="Uzll0ps" resname="Customer portal" xml:space="preserve">
+        <source>Customer portal</source>
+        <target state="translated">Portal del cliente</target>
+      </trans-unit>
+      <trans-unit id="cDOQMYv" resname="Beta" xml:space="preserve">
+        <source>Beta</source>
+        <target state="translated">Permite una función de vista previa que todavía está en desarrollo.</target>
+      </trans-unit>
+      <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve">
+        <source>Code</source>
+        <target state="translated">Codigo</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
