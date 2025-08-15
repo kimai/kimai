@@ -22,12 +22,15 @@ class ArrayFormatterTest extends AbstractFormatterTestCase
         return new ArrayFormatter();
     }
 
-    protected function getActualValue()
+    /**
+     * @return string[]
+     */
+    protected function getActualValue(): array
     {
         return ['test', 'foo', 'bar'];
     }
 
-    protected function getExpectedValue()
+    protected function getExpectedValue(): string
     {
         return 'test;foo;bar';
     }

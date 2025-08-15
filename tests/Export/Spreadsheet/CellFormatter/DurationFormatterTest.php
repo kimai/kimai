@@ -24,12 +24,12 @@ class DurationFormatterTest extends AbstractFormatterTestCase
         return new DurationFormatter();
     }
 
-    protected function getActualValue()
+    protected function getActualValue(): int
     {
         return 3600;
     }
 
-    protected function getExpectedValue()
+    protected function getExpectedValue(): string
     {
         return '=3600/86400';
     }

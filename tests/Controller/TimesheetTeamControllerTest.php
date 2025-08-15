@@ -97,7 +97,7 @@ class TimesheetTeamControllerTest extends AbstractControllerBaseTestCase
         $fixture->setAmount(5);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setStartDate($start);
-        $fixture->setCallback(function (Timesheet $timesheet) {
+        $fixture->setCallback(function (Timesheet $timesheet): void {
             $timesheet->setDescription('I am a foobar with tralalalala some more content');
             $timesheet->setMetaField((new TimesheetMeta())->setName('location')->setValue('homeoffice'));
             $timesheet->setMetaField((new TimesheetMeta())->setName('feature')->setValue('timetracking'));
@@ -428,7 +428,7 @@ class TimesheetTeamControllerTest extends AbstractControllerBaseTestCase
         $fixture->setAmountRunning(0);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setStartDate($dateTime->createDateTime());
-        $fixture->setCallback(function (Timesheet $timesheet) {
+        $fixture->setCallback(function (Timesheet $timesheet): void {
             $timesheet->setDescription('Testing is fun!');
             $begin = clone $timesheet->getBegin();
             $begin->setTime(0, 0, 0);

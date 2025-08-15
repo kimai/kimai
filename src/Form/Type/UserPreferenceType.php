@@ -37,7 +37,7 @@ final class UserPreferenceType extends AbstractType
     {
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) {
+            function (FormEvent $event): void {
                 /** @var UserPreference $preference */
                 $preference = $event->getData();
 

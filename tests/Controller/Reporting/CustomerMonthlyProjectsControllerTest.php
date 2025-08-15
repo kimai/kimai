@@ -46,7 +46,7 @@ class CustomerMonthlyProjectsControllerTest extends AbstractControllerBaseTestCa
         $projects->setCustomers($customers);
         $projects->setAmount(2);
         $projects->setIsVisible(true);
-        $projects->setCallback(function (Project $project) {
+        $projects->setCallback(function (Project $project): void {
             $project->setIsMonthlyBudget();
         });
         $this->importFixture($projects);

@@ -24,7 +24,7 @@ class TimesheetExportRepositoryTest extends TestCase
     public function testSetExported(): void
     {
         $repository = $this->createMock(TimesheetRepository::class);
-        $repository->expects($this->once())->method('setExported')->willReturnCallback(function (array $items) {
+        $repository->expects($this->once())->method('setExported')->willReturnCallback(function (array $items): void {
             self::assertCount(2, $items);
         });
 

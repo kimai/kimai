@@ -147,7 +147,7 @@ final class ExportColumnsType extends AbstractType
     {
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) {
+            function (FormEvent $event): void {
                 $data = $event->getData();
                 if (\is_array($data)) {
                     $this->ordered = $data; // @phpstan-ignore assign.propertyType
@@ -156,7 +156,7 @@ final class ExportColumnsType extends AbstractType
         );
         $builder->addEventListener(
             FormEvents::SUBMIT,
-            function (FormEvent $event) {
+            function (FormEvent $event): void {
                 $event->setData($this->ordered);
             }
         );

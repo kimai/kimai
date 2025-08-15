@@ -61,7 +61,7 @@ class SamlLogoutSubscriberTest extends TestCase
         $auth = $this->getMockBuilder(Auth::class)->disableOriginalConstructor()->getMock();
         $auth->expects($this->once())->method('processSLO')->willThrowException(new Error('blub'));
         $auth->expects($this->once())->method('getSLOurl')->willReturn('/logout');
-        $auth->expects($this->once())->method('logout')->willReturnCallback(function () {
+        $auth->expects($this->once())->method('logout')->willReturnCallback(function (): void {
             $args = \func_get_args();
             self::assertNull($args[0]);
             self::assertEquals([], $args[1]);

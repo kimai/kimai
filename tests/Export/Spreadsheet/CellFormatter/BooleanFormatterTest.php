@@ -22,12 +22,12 @@ class BooleanFormatterTest extends AbstractFormatterTestCase
         return new BooleanFormatter();
     }
 
-    protected function getActualValue()
+    protected function getActualValue(): bool
     {
         return false;
     }
 
-    protected function getExpectedValue()
+    protected function getExpectedValue(): bool
     {
         return false;
     }

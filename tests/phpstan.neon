@@ -1302,36 +1302,6 @@ parameters:
             path: Export/Spreadsheet/CellFormatter/AbstractFormatterTestCase.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\ArrayFormatterTest\\:\\:getActualValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Spreadsheet/CellFormatter/ArrayFormatterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\ArrayFormatterTest\\:\\:getExpectedValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Spreadsheet/CellFormatter/ArrayFormatterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\BooleanFormatterTest\\:\\:getActualValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Spreadsheet/CellFormatter/BooleanFormatterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\BooleanFormatterTest\\:\\:getExpectedValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Spreadsheet/CellFormatter/BooleanFormatterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\DateFormatterTest\\:\\:getActualValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Spreadsheet/CellFormatter/DateFormatterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\DateFormatterTest\\:\\:getExpectedValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Spreadsheet/CellFormatter/DateFormatterTest.php
-
-        -
             message: "#^Property App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\DateFormatterTest\\:\\:\\$date has no type specified\\.$#"
             count: 1
             path: Export/Spreadsheet/CellFormatter/DateFormatterTest.php
@@ -1350,16 +1320,6 @@ parameters:
             message: "#^Property App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\DateTimeFormatterTest\\:\\:\\$date has no type specified\\.$#"
             count: 1
             path: Export/Spreadsheet/CellFormatter/DateTimeFormatterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\DurationFormatterTest\\:\\:getActualValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Spreadsheet/CellFormatter/DurationFormatterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\DurationFormatterTest\\:\\:getExpectedValue\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Export/Spreadsheet/CellFormatter/DurationFormatterTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Export\\\\Spreadsheet\\\\CellFormatter\\\\TimeFormatterTest\\:\\:getActualValue\\(\\) has no return type specified\\.$#"

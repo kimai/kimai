@@ -120,7 +120,7 @@
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
         <source>calendar.slot_duration</source>
-        <target state="translated">Slotdauer für Wochen- und Tagesansicht (Format: hh:mm:ss)</target>
+        <target state="translated">Slotdauer für Wochen- und Tagesansicht</target>
       </trans-unit>
       <trans-unit id="o9mON14" resname="theme.branding.logo">
         <source>theme.branding.logo</source>

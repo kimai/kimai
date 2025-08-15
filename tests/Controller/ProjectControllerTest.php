@@ -73,7 +73,7 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
         $fixture = new ProjectFixtures();
         $fixture->setAmount(5);
         $i = 0;
-        $fixture->setCallback(function (Project $project) use (&$i) {
+        $fixture->setCallback(function (Project $project) use (&$i): void {
             $project->setVisible(true);
             switch ($i++) {
                 case 0:
@@ -137,7 +137,7 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
 
         $fixture = new ProjectFixtures();
         $fixture->setAmount(5);
-        $fixture->setCallback(function (Project $project) {
+        $fixture->setCallback(function (Project $project): void {
             $project->setVisible(true);
             $project->setComment('I am a foobar with tralalalala some more content');
             $project->setMetaField((new ProjectMeta())->setName('location')->setValue('homeoffice'));

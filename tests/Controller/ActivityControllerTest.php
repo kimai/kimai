@@ -68,7 +68,7 @@ class ActivityControllerTest extends AbstractControllerBaseTestCase
 
         $fixture = new ActivityFixtures();
         $fixture->setAmount(5);
-        $fixture->setCallback(function (Activity $activity) {
+        $fixture->setCallback(function (Activity $activity): void {
             $activity->setVisible(true);
             $activity->setComment('I am a foobar with tralalalala some more content');
             $activity->setMetaField((new ActivityMeta())->setName('location')->setValue('homeoffice'));
@@ -111,7 +111,7 @@ class ActivityControllerTest extends AbstractControllerBaseTestCase
 
         $fixture = new ActivityFixtures();
         $fixture->setAmount(5);
-        $fixture->setCallback(function (Activity $activity) {
+        $fixture->setCallback(function (Activity $activity): void {
             $activity->setVisible(true);
             $activity->setComment('I am a foobar with tralalalala some more content');
             $activity->setMetaField((new ActivityMeta())->setName('location')->setValue('homeoffice'));
