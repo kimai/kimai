@@ -15,14 +15,13 @@ use App\Saml\SamlLogoutSubscriber;
 use App\Saml\SamlToken;
 use OneLogin\Saml2\Auth;
 use OneLogin\Saml2\Error;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\LogoutEvent;
 
-/**
- * @covers \App\Saml\SamlLogoutSubscriber
- */
+#[CoversClass(SamlLogoutSubscriber::class)]
 class SamlLogoutSubscriberTest extends TestCase
 {
     public function testLogout(): void

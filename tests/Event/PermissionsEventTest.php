@@ -10,11 +10,10 @@
 namespace App\Tests\Event;
 
 use App\Event\PermissionsEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\PermissionsEvent
- */
+#[CoversClass(PermissionsEvent::class)]
 class PermissionsEventTest extends TestCase
 {
     public function testGetterAndSetter(): void

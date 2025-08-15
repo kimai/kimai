@@ -12,11 +12,10 @@ namespace App\Tests\Form\Helper;
 use App\Entity\Activity;
 use App\Form\Helper\ActivityHelper;
 use App\Tests\Mocks\SystemConfigurationFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Form\Helper\ActivityHelper
- */
+#[CoversClass(ActivityHelper::class)]
 class ActivityHelperTest extends TestCase
 {
     private function createSut(string $format): ActivityHelper

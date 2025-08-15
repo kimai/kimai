@@ -32,16 +32,18 @@ use App\Timesheet\RateServiceInterface;
 use App\Validator\Constraints\TimesheetBudgetUsed;
 use App\Validator\Constraints\TimesheetBudgetUsedValidator;
 use DateTime;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\TimesheetBudgetUsed
- * @covers \App\Validator\Constraints\TimesheetBudgetUsedValidator
  * @extends ConstraintValidatorTestCase<TimesheetBudgetUsedValidator>
  */
+#[CoversClass(TimesheetBudgetUsed::class)]
+#[CoversClass(TimesheetBudgetUsedValidator::class)]
 class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
 {
     /**
@@ -268,9 +270,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @dataProvider getViolationTestData
-     */
+    #[DataProvider('getViolationTestData')]
     public function testWithActivityTimeBudget(
         ?int $activityDuration,
         ?float $activityRate,

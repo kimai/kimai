@@ -9,12 +9,12 @@
 
 namespace App\Tests\EventSubscriber\Actions;
 
+use App\EventSubscriber\Actions\AbstractActionsSubscriber;
 use App\EventSubscriber\Actions\TimesheetsTeamSubscriber;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\EventSubscriber\Actions\AbstractActionsSubscriber
- * @covers \App\EventSubscriber\Actions\TimesheetsTeamSubscriber
- */
+#[CoversClass(AbstractActionsSubscriber::class)]
+#[CoversClass(TimesheetsTeamSubscriber::class)]
 class TimesheetsTeamSubscriberTest extends AbstractActionsSubscriberTestCase
 {
     public function testEventName(): void

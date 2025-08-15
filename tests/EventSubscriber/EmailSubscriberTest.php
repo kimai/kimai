@@ -13,13 +13,12 @@ use App\Configuration\MailConfiguration;
 use App\Event\EmailEvent;
 use App\EventSubscriber\EmailSubscriber;
 use App\Mail\KimaiMailer;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
-/**
- * @covers \App\EventSubscriber\EmailSubscriber
- */
+#[CoversClass(EmailSubscriber::class)]
 class EmailSubscriberTest extends TestCase
 {
     public function testGetSubscribedEvents(): void

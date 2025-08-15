@@ -14,13 +14,12 @@ use App\Entity\User;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\TrackingMode\DurationFixedBeginMode;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-/**
- * @covers \App\Timesheet\TrackingMode\DurationFixedBeginMode
- */
+#[CoversClass(DurationFixedBeginMode::class)]
 class DurationFixedBeginModeTest extends TestCase
 {
     private function createSut(string $default = '13:47', bool $allowApiTimes = false): DurationFixedBeginMode

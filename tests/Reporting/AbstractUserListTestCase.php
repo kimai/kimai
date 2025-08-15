@@ -10,11 +10,10 @@
 namespace App\Tests\Reporting;
 
 use App\Reporting\AbstractUserList;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Reporting\AbstractUserList
- */
+#[CoversClass(AbstractUserList::class)]
 abstract class AbstractUserListTestCase extends TestCase
 {
     abstract protected function createSut(): AbstractUserList;

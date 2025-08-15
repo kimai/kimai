@@ -14,10 +14,9 @@ use App\Export\Spreadsheet\CellFormatter\StringFormatter;
 use App\Tests\Utils\StringHelperTest;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Export\Spreadsheet\CellFormatter\StringFormatter
- */
+#[CoversClass(StringFormatter::class)]
 class StringFormatterTest extends AbstractFormatterTestCase
 {
     protected function getFormatter(): CellFormatterInterface

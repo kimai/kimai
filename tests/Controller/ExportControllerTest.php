@@ -16,11 +16,10 @@ use App\Entity\User;
 use App\Tests\DataFixtures\ExportTemplateFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use Doctrine\ORM\EntityManager;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DomCrawler\Field\FormField;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class ExportControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void

@@ -14,15 +14,16 @@ use App\Entity\Timesheet;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\Constraints\TimesheetFutureTimes;
 use App\Validator\Constraints\TimesheetFutureTimesValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\TimesheetFutureTimes
- * @covers \App\Validator\Constraints\TimesheetFutureTimesValidator
  * @extends ConstraintValidatorTestCase<TimesheetFutureTimesValidator>
  */
+#[CoversClass(TimesheetFutureTimes::class)]
+#[CoversClass(TimesheetFutureTimesValidator::class)]
 class TimesheetFutureTimesValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): TimesheetFutureTimesValidator

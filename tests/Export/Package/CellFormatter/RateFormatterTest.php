@@ -10,11 +10,10 @@
 namespace App\Tests\Export\Package\CellFormatter;
 
 use App\Export\Package\CellFormatter\RateFormatter;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Export\Package\CellFormatter\RateFormatter
- */
+#[CoversClass(RateFormatter::class)]
 class RateFormatterTest extends TestCase
 {
     public function testFormatValueReturnsFormattedFloatForNumericValue(): void

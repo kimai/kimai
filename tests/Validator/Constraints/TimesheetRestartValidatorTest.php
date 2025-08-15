@@ -18,16 +18,18 @@ use App\Tests\Mocks\TrackingModeServiceFactory;
 use App\Validator\Constraints\TimesheetOverlapping;
 use App\Validator\Constraints\TimesheetRestart;
 use App\Validator\Constraints\TimesheetRestartValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\TimesheetRestart
- * @covers \App\Validator\Constraints\TimesheetRestartValidator
  * @extends ConstraintValidatorTestCase<TimesheetRestartValidator>
  */
+#[CoversClass(TimesheetRestart::class)]
+#[CoversClass(TimesheetRestartValidator::class)]
 class TimesheetRestartValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): TimesheetRestartValidator
@@ -60,9 +62,7 @@ class TimesheetRestartValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate(new NotBlank(), new TimesheetOverlapping(['message' => 'myMessage']));
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testRestartDisallowed(bool $allowed, ?string $property, string $trackingMode): void
     {
         $this->validator = $this->createMyValidator($allowed, $trackingMode);

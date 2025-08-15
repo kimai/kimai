@@ -12,10 +12,9 @@ namespace App\Tests\Repository\Loader;
 use App\Entity\Customer;
 use App\Repository\Loader\CustomerLoader;
 use App\Repository\Query\CustomerQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Repository\Loader\CustomerLoader
- */
+#[CoversClass(CustomerLoader::class)]
 class CustomerLoaderTest extends AbstractLoaderTestCase
 {
     public function testLoadResults(): void

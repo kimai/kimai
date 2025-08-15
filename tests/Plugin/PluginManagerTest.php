@@ -12,15 +12,15 @@ namespace App\Tests\Plugin;
 use App\Plugin\Plugin;
 use App\Plugin\PluginInterface;
 use App\Plugin\PluginManager;
+use App\Plugin\PluginMetadata;
 use App\Tests\Plugin\Fixtures\TestPlugin\TestPlugin;
 use App\Tests\Plugin\Fixtures\TestPlugin2\TestPlugin2;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Plugin\PluginManager
- * @covers \App\Plugin\Plugin
- * @covers \App\Plugin\PluginMetadata
- */
+#[CoversClass(PluginManager::class)]
+#[CoversClass(Plugin::class)]
+#[CoversClass(PluginMetadata::class)]
 class PluginManagerTest extends TestCase
 {
     public function testEmptyObject(): void

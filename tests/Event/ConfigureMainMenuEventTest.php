@@ -11,17 +11,17 @@ namespace App\Tests\Event;
 
 use App\Event\ConfigureMainMenuEvent;
 use App\Utils\MenuItemModel;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\ConfigureMainMenuEvent
- */
+#[CoversClass(ConfigureMainMenuEvent::class)]
 class ConfigureMainMenuEventTest extends TestCase
 {
     /**
      * @deprecated
-     * @group legacy
      */
+    #[Group('legacy')]
     public function testLegacy(): void
     {
         $sut = new ConfigureMainMenuEvent();

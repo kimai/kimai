@@ -17,10 +17,9 @@ use App\Tests\DataFixtures\TagFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Timesheet\DateTimeFactory;
 use App\Timesheet\Util;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class TimesheetTeamControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void

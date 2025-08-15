@@ -10,11 +10,10 @@
 namespace App\Tests\Calendar;
 
 use App\Calendar\GoogleSource;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Calendar\GoogleSource
- */
+#[CoversClass(GoogleSource::class)]
 class GoogleSourceTest extends TestCase
 {
     public function testConstruct(): void

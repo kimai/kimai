@@ -11,10 +11,9 @@ namespace App\Tests\Repository\Query;
 
 use App\Entity\Team;
 use App\Repository\Query\UserQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Repository\Query\UserQuery
- */
+#[CoversClass(UserQuery::class)]
 class UserQueryTest extends BaseQueryTest
 {
     public function testQuery(): void

@@ -14,12 +14,11 @@ use App\Export\Spreadsheet\CellFormatter\CellFormatterInterface;
 use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\SpreadsheetExporter;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\Export\Spreadsheet\SpreadsheetExporter
- */
+#[CoversClass(SpreadsheetExporter::class)]
 class SpreadsheetExporterTest extends TestCase
 {
     public function testExport(): void

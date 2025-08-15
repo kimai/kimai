@@ -10,17 +10,21 @@
 namespace App\Tests\Invoice\Renderer;
 
 use App\Invoice\InvoiceModel;
+use App\Invoice\Renderer\AbstractRenderer;
+use App\Invoice\Renderer\AbstractSpreadsheetRenderer;
+use App\Invoice\Renderer\AdvancedValueBinder;
 use App\Invoice\Renderer\XlsxRenderer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-/**
- * @covers \App\Invoice\Renderer\XlsxRenderer
- * @covers \App\Invoice\Renderer\AbstractRenderer
- * @covers \App\Invoice\Renderer\AbstractSpreadsheetRenderer
- * @covers \App\Invoice\Renderer\AdvancedValueBinder
- * @group integration
- */
+#[CoversClass(XlsxRenderer::class)]
+#[CoversClass(AbstractRenderer::class)]
+#[CoversClass(AbstractSpreadsheetRenderer::class)]
+#[CoversClass(AdvancedValueBinder::class)]
+#[Group('integration')]
 class XlsxRendererTest extends TestCase
 {
     use RendererTestTrait;
@@ -43,9 +47,7 @@ class XlsxRendererTest extends TestCase
         yield [static fn (self $testCase) => $testCase->getInvoiceModelOneEntry(), '293.27', 2, 1, 0, 1, 0];
     }
 
-    /**
-     * @dataProvider getTestModel
-     */
+    #[DataProvider('getTestModel')]
     public function testRender(callable $invoiceModel, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3): void
     {
         /** @var InvoiceModel $model */

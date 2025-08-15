@@ -11,10 +11,9 @@ namespace App\Tests\Model\Statistic;
 
 use App\Model\Statistic\Day;
 use DateTime;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Model\Statistic\Day
- */
+#[CoversClass(Day::class)]
 class DayTest extends AbstractTimesheetTestCase
 {
     public function testDefaultValues(): void

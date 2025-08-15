@@ -11,12 +11,11 @@ namespace App\Tests\DependencyInjection;
 
 use App\DependencyInjection\AppExtension;
 use App\Tests\Mocks\SystemConfigurationFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-/**
- * @covers \App\DependencyInjection\AppExtension
- */
+#[CoversClass(AppExtension::class)]
 class AppExtensionTest extends TestCase
 {
     private ?AppExtension $extension = null;

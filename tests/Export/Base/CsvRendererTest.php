@@ -12,8 +12,12 @@ namespace App\Tests\Export\Base;
 use App\Entity\User;
 use App\Export\Base\CsvRenderer;
 use App\Export\Base\SpreadsheetRenderer;
+use App\Export\Package\SpoutSpreadsheet;
 use App\Tests\Export\Renderer\AbstractRendererTestCase;
 use App\Tests\Mocks\MetaFieldColumnSubscriberMock;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -21,12 +25,12 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @covers \App\Export\Base\CsvRenderer
- * @covers \App\Export\Base\SpreadsheetRenderer
  * @covers \App\Export\Base\RendererTrait
- * @covers \App\Export\Package\SpoutSpreadsheet
- * @group integration
  */
+#[CoversClass(CsvRenderer::class)]
+#[CoversClass(SpreadsheetRenderer::class)]
+#[CoversClass(SpoutSpreadsheet::class)]
+#[Group('integration')]
 class CsvRendererTest extends AbstractRendererTestCase
 {
     protected function getAbstractRenderer(bool $exportDecimal = false): CsvRenderer
@@ -82,9 +86,7 @@ class CsvRendererTest extends AbstractRendererTestCase
         ];
     }
 
-    /**
-     * @dataProvider getTestModel
-     */
+    #[DataProvider('getTestModel')]
     public function testRender(string $totalDuration, string $totalRate, string $expectedRate, int $expectedRows, int $expectedDescriptions, int $expectedUser1, int $expectedUser2, int $expectedUser3, bool $exportDecimal, ?string $locale, array $header): void
     {
         $sut = $this->getAbstractRenderer($exportDecimal);

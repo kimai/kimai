@@ -10,11 +10,10 @@
 namespace App\Tests\Ldap;
 
 use App\Ldap\SanitizingException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Ldap\SanitizingException
- */
+#[CoversClass(SanitizingException::class)]
 class SanitizingExceptionTest extends TestCase
 {
     public function testMessagesAreSanitized(): void

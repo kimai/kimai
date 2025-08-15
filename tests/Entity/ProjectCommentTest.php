@@ -11,11 +11,12 @@ namespace App\Tests\Entity;
 
 use App\Entity\Project;
 use App\Entity\ProjectComment;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * @covers \App\Entity\ProjectComment
  * @covers \App\Entity\CommentTableTypeTrait
  */
+#[CoversClass(ProjectComment::class)]
 class ProjectCommentTest extends AbstractCommentEntityTestCase
 {
     protected function getEntity(): ProjectComment

@@ -11,16 +11,18 @@ namespace App\Tests\Validator\Constraints;
 
 use App\Validator\Constraints\TimeFormat;
 use App\Validator\Constraints\TimeFormatValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Exception\UnexpectedValueException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\TimeFormat
- * @covers \App\Validator\Constraints\TimeFormatValidator
  * @extends ConstraintValidatorTestCase<TimeFormatValidator>
  */
+#[CoversClass(TimeFormat::class)]
+#[CoversClass(TimeFormatValidator::class)]
 class TimeFormatValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): TimeFormatValidator
@@ -43,9 +45,7 @@ class TimeFormatValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate(new \stdClass(), new TimeFormat());
     }
 
-    /**
-     * @dataProvider getValidTimes
-     */
+    #[DataProvider('getValidTimes')]
     public function testValidationSucceeds(?string $value): void
     {
         $this->validator->validate($value, new TimeFormat());
@@ -66,9 +66,7 @@ class TimeFormatValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @dataProvider getInvalidTimes
-     */
+    #[DataProvider('getInvalidTimes')]
     public function testValidationProblem(?string $value): void
     {
         $this->validator->validate($value, new TimeFormat());

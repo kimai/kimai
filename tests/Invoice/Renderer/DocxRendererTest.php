@@ -9,15 +9,16 @@
 
 namespace App\Tests\Invoice\Renderer;
 
+use App\Invoice\Renderer\AbstractRenderer;
 use App\Invoice\Renderer\DocxRenderer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-/**
- * @covers \App\Invoice\Renderer\DocxRenderer
- * @covers \App\Invoice\Renderer\AbstractRenderer
- * @group integration
- */
+#[CoversClass(DocxRenderer::class)]
+#[CoversClass(AbstractRenderer::class)]
+#[Group('integration')]
 class DocxRendererTest extends TestCase
 {
     use RendererTestTrait;

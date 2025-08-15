@@ -10,11 +10,10 @@
 namespace App\Tests\Ldap;
 
 use App\Ldap\LdapDriverException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Ldap\LdapDriverException
- */
+#[CoversClass(LdapDriverException::class)]
 class LdapDriverExceptionTest extends TestCase
 {
     public function testConstruct(): void

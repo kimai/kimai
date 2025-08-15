@@ -14,13 +14,12 @@ use App\Widget\Type\ActiveTimesheets;
 use App\Widget\Type\ActiveUsersMonth;
 use App\Widget\WidgetInterface;
 use App\Widget\WidgetService;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
-/**
- * @covers \App\DependencyInjection\Compiler\WidgetCompilerPass
- */
+#[CoversClass(WidgetCompilerPass::class)]
 class WidgetCompilerPassTest extends TestCase
 {
     private function getContainer(): ContainerBuilder

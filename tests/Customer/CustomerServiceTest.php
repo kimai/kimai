@@ -21,15 +21,15 @@ use App\Event\CustomerUpdatePreEvent;
 use App\Repository\CustomerRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\ValidationFailedException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-/**
- * @covers \App\Customer\CustomerService
- */
+#[CoversClass(CustomerService::class)]
 class CustomerServiceTest extends TestCase
 {
     private function getSut(
@@ -142,9 +142,7 @@ class CustomerServiceTest extends TestCase
         $sut->saveCustomer($Customer);
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testCustomerNumber(string $format, int|string $expected): void
     {
         $configuration = SystemConfigurationFactory::createStub([

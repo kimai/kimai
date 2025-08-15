@@ -19,13 +19,12 @@ use App\Export\RendererInterface;
 use App\Export\ServiceExport;
 use App\Export\TimesheetExportInterface;
 use App\Export\TimesheetExportRepository;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
-/**
- * @covers \App\DependencyInjection\Compiler\ExportServiceCompilerPass
- */
+#[CoversClass(ExportServiceCompilerPass::class)]
 class ExportServiceCompilerPassTest extends TestCase
 {
     private function getContainer(): ContainerBuilder

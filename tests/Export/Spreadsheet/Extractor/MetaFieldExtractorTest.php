@@ -16,13 +16,12 @@ use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\ExtractorException;
 use App\Export\Spreadsheet\Extractor\MetaFieldExtractor;
 use App\Repository\Query\ProjectQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-/**
- * @covers \App\Export\Spreadsheet\Extractor\MetaFieldExtractor
- * @covers \App\Export\Spreadsheet\Extractor\ExtractorException
- */
+#[CoversClass(MetaFieldExtractor::class)]
+#[CoversClass(ExtractorException::class)]
 class MetaFieldExtractorTest extends TestCase
 {
     public function testExtract(): void

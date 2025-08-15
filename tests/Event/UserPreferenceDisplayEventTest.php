@@ -11,11 +11,10 @@ namespace App\Tests\Event;
 
 use App\Entity\UserPreference;
 use App\Event\UserPreferenceDisplayEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\UserPreferenceDisplayEvent
- */
+#[CoversClass(UserPreferenceDisplayEvent::class)]
 class UserPreferenceDisplayEventTest extends TestCase
 {
     public function testGetterAndSetter(): void

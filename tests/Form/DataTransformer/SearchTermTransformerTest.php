@@ -11,11 +11,10 @@ namespace App\Tests\Form\DataTransformer;
 
 use App\Form\DataTransformer\SearchTermTransformer;
 use App\Utils\SearchTerm;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Form\DataTransformer\SearchTermTransformer
- */
+#[CoversClass(SearchTermTransformer::class)]
 class SearchTermTransformerTest extends TestCase
 {
     public function testTransform(): void

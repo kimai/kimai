@@ -10,11 +10,10 @@
 namespace App\Tests\Repository;
 
 use App\Repository\InvoiceDocumentRepository;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Repository\InvoiceDocumentRepository
- */
+#[CoversClass(InvoiceDocumentRepository::class)]
 class InvoiceDocumentRepositoryTest extends TestCase
 {
     /**

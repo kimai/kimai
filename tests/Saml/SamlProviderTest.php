@@ -16,14 +16,13 @@ use App\Saml\SamlProvider;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\User\UserService;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-/**
- * @covers \App\Saml\SamlProvider
- */
+#[CoversClass(SamlProvider::class)]
 class SamlProviderTest extends TestCase
 {
     protected function getSamlProvider(array $mapping = null, ?User $user = null): SamlProvider

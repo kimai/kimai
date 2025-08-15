@@ -10,11 +10,10 @@
 namespace App\Tests\Repository\Search;
 
 use App\Repository\Search\SearchConfiguration;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Repository\Search\SearchConfiguration
- */
+#[CoversClass(SearchConfiguration::class)]
 class SearchConfigurationTest extends TestCase
 {
     public function testDefaultConstruct(): void

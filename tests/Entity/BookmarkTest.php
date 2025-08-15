@@ -11,11 +11,10 @@ namespace App\Tests\Entity;
 
 use App\Entity\Bookmark;
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Entity\Bookmark
- */
+#[CoversClass(Bookmark::class)]
 class BookmarkTest extends TestCase
 {
     public function testDefaultValues(): void

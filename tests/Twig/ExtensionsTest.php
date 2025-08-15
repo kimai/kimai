@@ -13,15 +13,15 @@ use App\Constants;
 use App\Entity\Activity;
 use App\Entity\User;
 use App\Twig\Extensions;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Twig\Node\TextNode;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 use Twig\TwigTest;
 
-/**
- * @covers \App\Twig\Extensions
- */
+#[CoversClass(Extensions::class)]
 class ExtensionsTest extends TestCase
 {
     protected function getSut(): Extensions
@@ -149,9 +149,7 @@ sdfsdf' . PHP_EOL . "\n" .
         ];
     }
 
-    /**
-     * @dataProvider getMultilineTestData
-     */
+    #[DataProvider('getMultilineTestData')]
     public function testMultilineIndent($indent, $string, $expected): void
     {
         $sut = $this->getSut();
@@ -211,9 +209,7 @@ sdfsdf' . PHP_EOL . "\n" .
         yield [' &ndash; ', "foo\r\nbar\rtest\nhello", 'foo &ndash; bar &ndash; test &ndash; hello'];
     }
 
-    /**
-     * @dataProvider getTestDataReplaceNewline
-     */
+    #[DataProvider('getTestDataReplaceNewline')]
     public function testReplaceNewline(string $replacer, $input, $expected): void
     {
         $sut = $this->getSut();

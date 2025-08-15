@@ -12,10 +12,9 @@ namespace App\Tests\Export\Spreadsheet\CellFormatter;
 use App\Export\Spreadsheet\CellFormatter\ArrayFormatter;
 use App\Export\Spreadsheet\CellFormatter\CellFormatterInterface;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Export\Spreadsheet\CellFormatter\ArrayFormatter
- */
+#[CoversClass(ArrayFormatter::class)]
 class ArrayFormatterTest extends AbstractFormatterTestCase
 {
     protected function getFormatter(): CellFormatterInterface

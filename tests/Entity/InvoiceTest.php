@@ -28,11 +28,10 @@ use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Entity\Invoice
- */
+#[CoversClass(Invoice::class)]
 class InvoiceTest extends TestCase
 {
     public function testDefaultValues(): void

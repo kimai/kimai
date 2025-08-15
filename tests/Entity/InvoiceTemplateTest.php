@@ -10,11 +10,10 @@
 namespace App\Tests\Entity;
 
 use App\Entity\InvoiceTemplate;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Entity\InvoiceTemplate
- */
+#[CoversClass(InvoiceTemplate::class)]
 class InvoiceTemplateTest extends TestCase
 {
     public function testDefaultValues(): void

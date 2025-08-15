@@ -9,9 +9,9 @@
 
 namespace App\Tests\Controller\Reporting;
 
-/**
- * @group integration
- */
+use PHPUnit\Framework\Attributes\Group;
+
+#[Group('integration')]
 class UserMonthControllerTest extends AbstractUserPeriodControllerTestCase
 {
     protected function getReportUrl(): string

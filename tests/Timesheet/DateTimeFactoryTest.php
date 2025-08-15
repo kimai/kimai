@@ -12,11 +12,11 @@ namespace App\Tests\Timesheet;
 use App\Timesheet\DateTimeFactory;
 use DateTime;
 use DateTimeZone;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Timesheet\DateTimeFactory
- */
+#[CoversClass(DateTimeFactory::class)]
 class DateTimeFactoryTest extends TestCase
 {
     public const TEST_TIMEZONE = 'Europe/London';
@@ -116,9 +116,7 @@ class DateTimeFactoryTest extends TestCase
         yield [self::createDateTimeFactory(self::TEST_TIMEZONE, true), 'Sunday', 22, 7];
     }
 
-    /**
-     * @dataProvider getStartOfWeekData
-     */
+    #[DataProvider('getStartOfWeekData')]
     public function testGetStartOfWeek(DateTimeFactory $sut, string $dayName, int $dayNum, int $day): void
     {
         $expected = new DateTime('2018-07-26 16:47:31', new DateTimeZone(self::TEST_TIMEZONE));
@@ -153,9 +151,7 @@ class DateTimeFactoryTest extends TestCase
         yield [self::createDateTimeFactory(self::TEST_TIMEZONE, true), 'Saturday', 28, 6];
     }
 
-    /**
-     * @dataProvider getEndOfWeekData
-     */
+    #[DataProvider('getEndOfWeekData')]
     public function testGetEndOfWeek(DateTimeFactory $sut, string $dayName, int $dayNum, int $day): void
     {
         $expected = new DateTime('2018-07-26 16:47:31', new DateTimeZone(self::TEST_TIMEZONE));

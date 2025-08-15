@@ -15,11 +15,10 @@ use App\Entity\Project;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Form\MultiUpdate\MultiUpdateTableDTO;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Form\MultiUpdate\MultiUpdateTableDTO
- */
+#[CoversClass(MultiUpdateTableDTO::class)]
 class MultiUpdateTableDTOTest extends TestCase
 {
     public function testDefaultValues(): void

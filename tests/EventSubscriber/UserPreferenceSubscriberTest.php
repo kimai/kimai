@@ -14,13 +14,12 @@ use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
 use App\EventSubscriber\UserPreferenceSubscriber;
 use App\Tests\Mocks\SystemConfigurationFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-/**
- * @covers \App\EventSubscriber\UserPreferenceSubscriber
- */
+#[CoversClass(UserPreferenceSubscriber::class)]
 class UserPreferenceSubscriberTest extends TestCase
 {
     public const EXPECTED_PREFERENCES = [

@@ -22,13 +22,12 @@ use App\Invoice\Renderer\DocxRenderer;
 use App\Invoice\RendererInterface;
 use App\Invoice\ServiceInvoice;
 use App\Repository\TimesheetInvoiceItemRepository;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
-/**
- * @covers \App\DependencyInjection\Compiler\InvoiceServiceCompilerPass
- */
+#[CoversClass(InvoiceServiceCompilerPass::class)]
 class InvoiceServiceCompilerPassTest extends TestCase
 {
     private function getContainer(): ContainerBuilder

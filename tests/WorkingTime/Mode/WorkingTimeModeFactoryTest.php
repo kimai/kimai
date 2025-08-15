@@ -13,13 +13,12 @@ use App\Entity\User;
 use App\WorkingTime\Mode\WorkingTimeModeDay;
 use App\WorkingTime\Mode\WorkingTimeModeFactory;
 use App\WorkingTime\Mode\WorkingTimeModeNone;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
-/**
- * @covers \App\WorkingTime\Mode\WorkingTimeModeFactory
- */
+#[CoversClass(WorkingTimeModeFactory::class)]
 class WorkingTimeModeFactoryTest extends TestCase
 {
     public function testDefaults(): void

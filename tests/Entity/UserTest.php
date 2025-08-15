@@ -19,13 +19,13 @@ use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use App\Tests\Security\TestUserEntity;
 use App\WorkingTime\Mode\WorkingTimeModeDay;
 use Doctrine\Common\Collections\ArrayCollection;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * @covers \App\Entity\User
- */
+#[CoversClass(User::class)]
 class UserTest extends TestCase
 {
     public function testDefaultValues(): void
@@ -88,8 +88,8 @@ class UserTest extends TestCase
 
     /**
      * @deprecated
-     * @group legacy
      */
+    #[Group('legacy')]
     public function testWorkContract(): void
     {
         $user = new User();

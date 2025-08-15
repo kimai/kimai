@@ -18,11 +18,10 @@ use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Entity\Timesheet
- */
+#[CoversClass(Timesheet::class)]
 class TimesheetTest extends TestCase
 {
     public function testDefaultValues(): void

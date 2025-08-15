@@ -10,11 +10,11 @@
 namespace App\Tests\Utils;
 
 use App\Utils\FormFormatConverter;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Utils\FormFormatConverter
- */
+#[CoversClass(FormFormatConverter::class)]
 class FormFormatConverterTest extends TestCase
 {
     public function testConvert(): void
@@ -30,9 +30,7 @@ class FormFormatConverterTest extends TestCase
         self::assertEquals('H \h i', $sut->convert('HH \'h\' mm'));
     }
 
-    /**
-     * @dataProvider getProblemPattern
-     */
+    #[DataProvider('getProblemPattern')]
     public function testProblemPattern($format, $example): void
     {
         $sut = new FormFormatConverter();

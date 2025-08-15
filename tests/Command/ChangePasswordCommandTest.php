@@ -9,22 +9,23 @@
 
 namespace App\Tests\Command;
 
+use App\Command\AbstractUserCommand;
 use App\Command\ChangePasswordCommand;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\User\UserService;
 use Doctrine\Bundle\DoctrineBundle\Registry;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 
-/**
- * @covers \App\Command\ChangePasswordCommand
- * @covers \App\Command\AbstractUserCommand
- * @group integration
- */
+#[CoversClass(ChangePasswordCommand::class)]
+#[CoversClass(AbstractUserCommand::class)]
+#[Group('integration')]
 class ChangePasswordCommandTest extends KernelTestCase
 {
     private Application $application;

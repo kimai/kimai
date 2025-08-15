@@ -33,7 +33,7 @@ use Doctrine\ORM\Query\Expr\Andx;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * @extends \Doctrine\ORM\EntityRepository<Activity>
+ * @extends EntityRepository<Activity>
  */
 class ActivityRepository extends EntityRepository
 {

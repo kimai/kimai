@@ -10,11 +10,10 @@
 namespace App\Tests\Export\Package\CellFormatter;
 
 use App\Export\Package\CellFormatter\DurationDecimalFormatter;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Export\Package\CellFormatter\DurationDecimalFormatter
- */
+#[CoversClass(DurationDecimalFormatter::class)]
 class DurationDecimalFormatterTest extends TestCase
 {
     public function testFormatValueReturnsFormattedDurationForNumericValue(): void

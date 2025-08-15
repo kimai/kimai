@@ -11,15 +11,17 @@ namespace App\Tests\Validator\Constraints;
 
 use App\Validator\Constraints\ExportRenderer;
 use App\Validator\Constraints\ExportRendererValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\ExportRenderer
- * @covers \App\Validator\Constraints\ExportRendererValidator
  * @extends ConstraintValidatorTestCase<ExportRendererValidator>
  */
+#[CoversClass(ExportRenderer::class)]
+#[CoversClass(ExportRendererValidator::class)]
 class ExportRendererValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): ExportRendererValidator
@@ -41,9 +43,7 @@ class ExportRendererValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate('#000', new NotBlank());
     }
 
-    /**
-     * @dataProvider getValidColors
-     */
+    #[DataProvider('getValidColors')]
     public function testConstraintWithValidColor(?string $color): void
     {
         $constraint = new ExportRenderer();
@@ -69,9 +69,7 @@ class ExportRendererValidatorTest extends ConstraintValidatorTestCase
         yield [[], 'array'];
     }
 
-    /**
-     * @dataProvider getInvalidColors
-     */
+    #[DataProvider('getInvalidColors')]
     public function testValidationError(mixed $color, ?string $parameterType = null): void
     {
         $constraint = new ExportRenderer();

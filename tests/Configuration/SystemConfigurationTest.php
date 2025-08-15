@@ -12,11 +12,10 @@ namespace App\Tests\Configuration;
 use App\Configuration\SystemConfiguration;
 use App\Entity\Configuration;
 use App\Tests\Mocks\SystemConfigurationFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Configuration\SystemConfiguration
- */
+#[CoversClass(SystemConfiguration::class)]
 class SystemConfigurationTest extends TestCase
 {
     /**
