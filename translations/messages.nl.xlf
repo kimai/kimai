@@ -464,23 +464,23 @@
       </trans-unit>
       <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target state="needs-translation">Werkuren vandaag</target>
+        <target state="translated">Vandaag</target>
       </trans-unit>
       <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target state="needs-translation">Werkuren deze week</target>
+        <target state="translated">Deze week</target>
       </trans-unit>
       <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target state="needs-translation">Werkuren deze maand</target>
+        <target state="translated">Deze maand</target>
       </trans-unit>
       <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target state="needs-translation">Werkuren dit jaar</target>
+        <target state="translated">Dit jaar</target>
       </trans-unit>
       <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
-        <target state="needs-translation">Totaal van werkuren</target>
+        <target state="translated">Totaal</target>
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
@@ -1028,7 +1028,7 @@
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
         <source>stats.durationFinancialYear</source>
-        <target state="needs-translation">Werkuren dit boekjaar</target>
+        <target state="translated">Dit boekjaar</target>
       </trans-unit>
       <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
         <source>stats.activeUsersFinancialYear</source>
@@ -1500,7 +1500,7 @@
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
-        <target state="needs-translation">Je hebt %used% van je beschikbare %days% vakantiedagen tot nu toe opgenomen.</target>
+        <target state="translated">Je hebt %used% van je %days% beschikbare vakantiedagen tot nu toe ingediend.</target>
       </trans-unit>
       <trans-unit id="DA1.Ln_" resname="time_off.intro" xml:space="preserve">
         <source>time_off.intro</source>
@@ -1524,7 +1524,7 @@
       </trans-unit>
       <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
         <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
-        <target state="needs-translation">Ziekte, doktersbezoek, zorg voor naaste familieleden, enz.</target>
+        <target state="translated">Werkonbekwaamheid, medische afspraken, zorgverlof, enz.</target>
       </trans-unit>
       <trans-unit id="zlmddHB" resname="public_holidays" xml:space="preserve">
         <source>public_holidays</source>
@@ -1824,7 +1824,7 @@
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target state="needs-translation">Tijden</target>
+        <target state="translated">Urenstaat</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
@@ -1953,6 +1953,18 @@
       <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
         <source>sending_company</source>
         <target state="translated">Factuurafzender</target>
+      </trans-unit>
+      <trans-unit id="Uzll0ps" resname="Customer portal" xml:space="preserve">
+        <source>Customer portal</source>
+        <target state="translated">Klantenportaal</target>
+      </trans-unit>
+      <trans-unit id="cDOQMYv" resname="Beta" xml:space="preserve">
+        <source>Beta</source>
+        <target state="translated">Schakelt een preview-functie in die nog in ontwikkeling is.</target>
+      </trans-unit>
+      <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve">
+        <source>Code</source>
+        <target state="translated">Code</target>
       </trans-unit>
     </body>
   </file>
