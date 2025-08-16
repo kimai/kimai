@@ -10,6 +10,7 @@
 namespace App\Form;
 
 use App\Entity\InvoiceTemplate;
+use App\Form\Type\CustomerType;
 use App\Form\Type\InvoiceCalculatorType;
 use App\Form\Type\InvoiceNumberGeneratorType;
 use App\Form\Type\InvoiceRendererType;
@@ -36,17 +37,6 @@ final class InvoiceTemplateForm extends AbstractType
             ->add('title', TextType::class, [
                 'label' => 'title',
             ])
-            ->add('company', TextType::class, [
-                'label' => 'company',
-            ])
-            ->add('vatId', TextType::class, [
-                'label' => 'vat_id',
-                'required' => false,
-            ])
-            ->add('address', TextareaType::class, [
-                'label' => 'address',
-                'required' => false,
-            ])
             ->add('contact', TextareaType::class, [
                 'label' => 'contact',
                 'required' => false,
@@ -70,6 +60,11 @@ final class InvoiceTemplateForm extends AbstractType
             ->add('calculator', InvoiceCalculatorType::class)
             ->add('numberGenerator', InvoiceNumberGeneratorType::class)
             ->add('language', LanguageType::class)
+            ->add('customer', CustomerType::class, [
+                'required' => true,
+                'label' => 'sending_company',
+                'placeholder' => '',
+            ])
         ;
     }
 

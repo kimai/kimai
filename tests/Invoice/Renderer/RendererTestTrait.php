@@ -95,6 +95,7 @@ trait RendererTestTrait
         $template->setTitle('a very *long* test invoice / template title with [ßpecial] chäracter');
         $template->setVat(19);
         $template->setLanguage('en');
+        $template->setCustomer($customer);
 
         $pMeta = new ProjectMeta();
         $pMeta->setName('foo-project')->setValue('bar-project')->setIsVisible(true);
@@ -279,6 +280,7 @@ trait RendererTestTrait
         $template->setTitle('a test invoice template title');
         $template->setVat(19);
         $template->setLanguage('it');
+        $template->setCustomer($customer);
 
         $project = new Project();
         $project->setName('project name');

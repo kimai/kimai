@@ -33,7 +33,12 @@ final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
 
         $values = [
             $prefix . 'id' => $customer->getId(),
-            $prefix . 'address' => $customer->getAddress() ?? '',
+            $prefix . 'address' => $customer->getFormattedAddress() ?? '',
+            $prefix . 'address_line1' => $customer->getAddressLine1() ?? '',
+            $prefix . 'address_line2' => $customer->getAddressLine2() ?? '',
+            $prefix . 'address_line3' => $customer->getAddressLine3() ?? '',
+            $prefix . 'postcode' => $customer->getPostCode() ?? '',
+            $prefix . 'city' => $customer->getCity() ?? '',
             $prefix . 'name' => $customer->getName() ?? '',
             $prefix . 'contact' => $customer->getContact() ?? '',
             $prefix . 'company' => $customer->getCompany() ?? '',
