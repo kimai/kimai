@@ -248,6 +248,27 @@ final class ProfileController extends AbstractController
             }
         }
 
+        $qrCode = null;
+
+        if ($createdToken !== null) {
+            $payload = [
+                'serverURL' => $request->getSchemeAndHttpHost(),
+                'userEmail' => $profile->getEmail(),
+                'apiToken' => $createdToken->getToken(),
+            ];
+
+            $qrCode = Builder::create()
+                ->writer(new PngWriter())
+                ->writerOptions([])
+                ->data(json_encode($payload))
+                ->encoding(new Encoding('UTF-8'))
+                ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
+                ->size(200)
+                ->margin(0)
+                ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
+                ->build();
+        }
+
         return $this->render('user/api-token.html.twig', [
             'tab' => 'api-token',
             'created_token' => $createdToken,
@@ -255,6 +276,7 @@ final class ProfileController extends AbstractController
             'page_setup' => $this->getPageSetup($profile, 'api-token'),
             'user' => $profile,
             'form' => $form->createView(),
+            'qr_code' => $qrCode,
         ]);
     }
 

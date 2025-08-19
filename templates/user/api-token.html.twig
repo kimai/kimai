@@ -27,6 +27,17 @@
                 <div class="card-body">
                     <h3 class="card-title">{{ created_token.name }}</h3>
                     <p class="text-secondary"></p>
+                    {% if qr_code is not null %}
+                    <p>
+                        <img style="max-width: 200px; max-height: 200px;" src="{{ qr_code.dataUri }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Use this QR Code to easily configure the workspace in your Kimai Mobile app." />
+                    </p>
+                    <p>
+                        <span data-bs-toggle="tooltip" data-bs-placement="top" title="Use this QR Code to easily configure the workspace in your Kimai Mobile app.">
+                            <i class="{{ 'info'|icon(false) }}"></i>
+                            <em>What is this QR Code for?</em>
+                        </span>
+                    </p>
+                    {% endif %}
                     <p>{{ 'api_token_hidden'|trans }}</p>
                     <div class="codeblock">
                         <div class="codeblock-copy" style="position: absolute; right: 30px; padding-top: 5px">
