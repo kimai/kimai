@@ -253,7 +253,6 @@ final class ProfileController extends AbstractController
         if ($createdToken !== null) {
             $payload = [
                 'serverURL' => $request->getSchemeAndHttpHost(),
-                'userEmail' => $profile->getEmail(),
                 'apiToken' => $createdToken->getToken(),
             ];
 
