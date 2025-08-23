@@ -165,6 +165,14 @@ export default class KimaiCalendar {
             eventMaxStack: this.options['dayLimit'],
             dayMaxEvents: this.options['dayLimit'],
 
+            // the callbacks "viewDidMount" and "viewWillUnmount" are only called when switching between month and others, not between week and day
+            datesSet: (dateInfo) => {
+                document.dispatchEvent(new CustomEvent('kimai.calendar.changeDate', {detail: {
+                    view: this.toExternalViewName(dateInfo.view.type),
+                    date: dateInfo.start.toISOString().split('T')[0],
+                }}));
+            },
+
             views: {
                 dayGrid: {
                     dayMaxEventRows: this.options['dayLimit']
