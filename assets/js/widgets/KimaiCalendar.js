@@ -73,21 +73,6 @@ export default class KimaiCalendar {
         /** @type {KimaiAlert} ALERT */
         const ALERT = this.kimai.getPlugin('alert');
 
-        let initialView = 'dayGridMonth';
-        switch (options['initialView']) {
-            case 'month':
-                initialView = 'dayGridMonth';
-                break;
-            case 'agendaWeek':
-            case 'week':
-                initialView = 'timeGridWeek';
-                break;
-            case 'agendaDay':
-            case 'day':
-                initialView = 'timeGridDay';
-                break;
-        }
-
         // Instead of using "buttonIcons" the theme needs to be adjusted directly
         // https://fullcalendar.io/docs/buttonIcons
         BootstrapTheme.prototype.classes = {
@@ -120,7 +105,7 @@ export default class KimaiCalendar {
                 esLocale, euLocale, faLocale, fiLocale, frLocale, heLocale, hrLocale, huLocale, itLocale, jaLocale, koLocale,
                 nbLocale, nlLocale, plLocale, ptLocale, ptBrLocale, roLocale, ruLocale, skLocale, svLocale, trLocale, zhLocale, viLocale ],
             plugins: [ bootstrap5Plugin, dayGridPlugin, timeGridPlugin, googlePlugin, iCalendarPlugin, interactionPlugin ],
-            initialView: initialView,
+            initialView: this.toInternalViewName(this.options['initialView']),
             // https://fullcalendar.io/docs/theming
             themeSystem: 'bootstrap5',
             // https://fullcalendar.io/docs/headerToolbar
@@ -532,6 +517,36 @@ export default class KimaiCalendar {
             return false;
         }
         return (event.source.id.indexOf('kimai-') === 0);
+    }
+
+    toExternalViewName(viewName) {
+        switch(viewName) {
+            case 'timeGridDay':
+                return 'day';
+            case 'timeGridWeek':
+                return 'week';
+            case 'dayGridMonth':
+            default:
+                return 'month';
+        }
+    }
+
+    toInternalViewName(viewName) {
+        switch(viewName) {
+            case 'day':
+            case 'agendaDay':
+            case 'timeGridDay':
+                return 'timeGridDay';
+            case 'week':
+            case 'agendaWeek':
+            case 'timeGridWeek':
+                return 'timeGridWeek';
+            case 'month':
+            case 'agendaMonth':
+            case 'dayGridMonth':
+            default:
+                return 'dayGridMonth';
+        }
     }
 
     /**
