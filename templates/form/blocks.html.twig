@@ -150,6 +150,25 @@
     </div>
 {%- endblock date_widget %}
 
+{% block day_widget -%}
+    {% set format = 'y-MM-D' %}
+    {% set jsFormat = format|js_format %}
+    {% set attr = attr|merge({'pattern': format|pattern, 'autocomplete': 'off', 'data-format': jsFormat}) -%}
+    <div class="input-group">
+        <div class="input-group-text">
+            <a href="#" data-form-widget="date-now" data-format="{{ jsFormat }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
+        </div>
+        {{- block('form_widget_simple') -}}
+        {% if not required %}
+        <span class="input-group-text">
+            <a href="javascript: void(0)" class="link-secondary fs-5" onclick="document.getElementById('{{ id }}').value = ''">
+                {{ icon('cancel') }}
+            </a>
+        </span>
+        {% endif %}
+    </div>
+{%- endblock day_widget %}
+
 {% block time_widget -%}
     {%- set attr = attr|merge({'pattern': time_format|pattern, 'autocomplete': 'off', 'data-timepicker': 'on', 'data-format': js_format, 'placeholder': time_format}) -%}
     <div class="input-group">
