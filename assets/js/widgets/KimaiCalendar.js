@@ -106,6 +106,7 @@ export default class KimaiCalendar {
                 nbLocale, nlLocale, plLocale, ptLocale, ptBrLocale, roLocale, ruLocale, skLocale, svLocale, trLocale, zhLocale, viLocale ],
             plugins: [ bootstrap5Plugin, dayGridPlugin, timeGridPlugin, googlePlugin, iCalendarPlugin, interactionPlugin ],
             initialView: this.toInternalViewName(this.options['initialView']),
+            initialDate: this.options['initialDate'],
             // https://fullcalendar.io/docs/theming
             themeSystem: 'bootstrap5',
             // https://fullcalendar.io/docs/headerToolbar
