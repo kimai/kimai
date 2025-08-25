@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Calendar\CalendarQuery;
 use App\Calendar\CalendarService;
 use App\Configuration\SystemConfiguration;
+use App\Entity\User;
 use App\Form\Toolbar\CalendarToolbarForm;
 use App\Form\Type\CalendarViewType;
 use App\Timesheet\TrackingModeService;
@@ -44,7 +45,13 @@ final class CalendarController extends AbstractController
         $query = new CalendarQuery();
         $query->setUser($profile);
         $query->setDate($this->getDateTimeFactory($profile)->create());
-        $query->setView($profile->getPreference('calendar_initial_view')?->getValue() ?? CalendarViewType::DEFAULT_VIEW);
+
+        $defaultView = CalendarViewType::DEFAULT_VIEW;
+        $userView = $profile->getPreference('calendar_initial_view')?->getValue();
+        if ($userView !== null) {
+            $defaultView = (string) $userView;
+        }
+        $query->setView($defaultView);
 
         $form = $this->createFormForGetRequest(CalendarToolbarForm::class, $query, [
             'action' => $this->generateUrl('calendar'),
@@ -57,11 +64,12 @@ final class CalendarController extends AbstractController
             $query->setUser($currentUser);
         }
 
-        if ($currentUser !== $query->getUser() && !$canChangeUser) {
+        /** @var User $profile */
+        $profile = $query->getUser();
+
+        if ($currentUser !== $profile && !$canChangeUser) {
             throw new AccessDeniedException('User is not allowed to see other users calendar');
         }
-
-        $profile = $query->getUser();
 
         $mode = $this->service->getActiveMode();
         $factory = $this->getDateTimeFactory($profile);

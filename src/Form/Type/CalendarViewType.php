@@ -32,7 +32,7 @@ final class CalendarViewType extends AbstractType
                     default => self::DEFAULT_VIEW,
                 };
             },
-            function ($reverseTransform) use ($options) {
+            function ($reverseTransform) {
                 return $reverseTransform;
             }
         ));
