@@ -528,6 +528,10 @@ export default class KimaiCalendar {
         return (event.source.id.indexOf('kimai-') === 0);
     }
 
+    /**
+     * @param {string} viewName
+     * @returns {string}
+     */
     toExternalViewName(viewName) {
         switch(viewName) {
             case 'timeGridDay':
@@ -540,6 +544,10 @@ export default class KimaiCalendar {
         }
     }
 
+    /**
+     * @param {string} viewName
+     * @returns {string}
+     */
     toInternalViewName(viewName) {
         switch(viewName) {
             case 'day':
@@ -741,16 +749,16 @@ export default class KimaiCalendar {
         }
 
         events.forEach(item => {
-            const start = DateTime.fromJSDate(item.start);
+            const start = DateTime.fromJSDate(item.start).toUTC();
+            const dateStr = start.toFormat('yyyy-MM-dd');
 
-            const dateStr = start.toISODate();
             if (!durations[dateStr]) {
                 durations[dateStr] = 0;
             }
 
             // absences or public holidays are all day
             if (item.end !== null) {
-                const end = DateTime.fromJSDate(item.end);
+                const end = DateTime.fromJSDate(item.end).toUTC();
                 const duration = end.diff(start, 'hours').as('seconds');
                 durations[dateStr] += duration;
             }
