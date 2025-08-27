@@ -365,9 +365,7 @@ abstract class TimesheetAbstractController extends AbstractController
                 }
 
                 if ($dto->isRecalculateRates()) {
-                    $timesheet->setFixedRate(null);
-                    $timesheet->setHourlyRate(null);
-                    $timesheet->setInternalRate(null);
+                    $timesheet->resetRates();
                     $execute = true;
                 } elseif (null !== $dto->getFixedRate()) {
                     $timesheet->setFixedRate($dto->getFixedRate());
