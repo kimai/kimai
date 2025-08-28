@@ -154,7 +154,7 @@ final class RegenerateLocalesCommand extends Command
             }
 
             // BULGARIAN: postfix of  d.MM.y \'г\'. causes problems in several areas
-            $settings['date'] = str_replace("\u{202f}'г'.", '', $settings['date']); // @phpstan-ignore non_printable_character
+            $settings['date'] = str_replace("\u{202f}'г'.", '', $settings['date']);
 
             // KOREAN: time format failed parsing - see https://github.com/kimai/kimai/issues/4402
             // Special case where time-patterns start with A / a => this will lead to an error
