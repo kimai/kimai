@@ -68,7 +68,7 @@
       </trans-unit>
       <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target state="needs-translation">Inférieur : l'heure de début, de fin et la durée seront arrondies à l'inférieur</target>
+        <target state="translated">Le début, la fin et la durée seront arrondis à l'unité inférieure</target>
       </trans-unit>
       <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
@@ -305,6 +305,10 @@
       <trans-unit id="jj1NmKW" resname="allow_duplicate_number" xml:space="preserve">
         <source>allow_duplicate_number</source>
         <target state="translated">Autoriser plusieurs utilisations du même nombre</target>
+      </trans-unit>
+      <trans-unit id="IZY5kqL" resname="allowed_replacer" xml:space="preserve">
+        <source>allowed_replacer</source>
+        <target state="translated">Remplacement autorisé : %replacer%</target>
       </trans-unit>
     </body>
   </file>

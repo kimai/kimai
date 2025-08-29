@@ -280,7 +280,7 @@
       </trans-unit>
       <trans-unit id="FveKfWM" resname="username" xml:space="preserve">
         <source>username</source>
-        <target state="translated">Потребителско име</target>
+        <target state="translated">Потребител</target>
       </trans-unit>
       <trans-unit id="yQRveje" resname="description" approved="no" xml:space="preserve">
         <source>Description</source>

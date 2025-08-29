@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="TcGAXSA" resname="kiosk.login" xml:space="preserve" approved="no">
         <source>kiosk.login</source>
-        <target state="translated">Login screen</target>
+        <target state="translated">Екран за вписване</target>
       </trans-unit>
     </body>
   </file>

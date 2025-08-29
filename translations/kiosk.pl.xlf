@@ -6,6 +6,10 @@
         <source>kiosk.login</source>
         <target state="translated">Ekran logowania</target>
       </trans-unit>
+      <trans-unit id="3349h0x" resname="Kiosk" xml:space="preserve" approved="no">
+        <source>Kiosk</source>
+        <target state="translated">Tryb kiosku</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

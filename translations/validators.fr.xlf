@@ -156,7 +156,7 @@
       </trans-unit>
       <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day." xml:space="preserve">
         <source>An absence cannot be booked after the last working day.</source>
-        <target state="needs-translation">Une absence ne peut pas être réservée après le dernier jour travaillé.</target>
+        <target state="translated">Une absence ne peut pas être enregistrée après le dernier jour ouvrable.</target>
       </trans-unit>
       <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve">
         <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>

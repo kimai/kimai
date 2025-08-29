@@ -54,6 +54,40 @@ Please review them at: %url%</source>
 
 请在以下位置查看：%url%</target>
       </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="needs-translation">请求审批%用户%user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="needs-translation">已请求对%user%的批准。
+待审批请求：
+%list%
+- 项目提案
+- 费用报告
+请在%url%
+处查看它们。</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="needs-translation">你的请求被拒绝了</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="needs-translation">您的授权请求已被拒绝
+%created_by%.
+%list%
+请再次查看您的请求
+%url%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="needs-translation">你的请求已被批准</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="needs-translation">%created_by%已批准您的请求。%list%您可以在%url%下找到您的所有查询</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

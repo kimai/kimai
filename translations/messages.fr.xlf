@@ -178,9 +178,9 @@
         <source>timeBudget</source>
         <target state="translated">Quota horaire</target>
       </trans-unit>
-      <trans-unit id="BlGGO.X" resname="activity">
+      <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve">
         <source>activity</source>
-        <target>Activité</target>
+        <target state="translated">Activité</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>Projet</source>
@@ -1953,6 +1953,18 @@
       <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
         <source>sending_company</source>
         <target state="translated">Expéditeur de la facture</target>
+      </trans-unit>
+      <trans-unit id="Uzll0ps" resname="Customer portal" xml:space="preserve">
+        <source>Customer portal</source>
+        <target state="translated">Portail client</target>
+      </trans-unit>
+      <trans-unit id="cDOQMYv" resname="Beta" xml:space="preserve">
+        <source>Beta</source>
+        <target state="translated">Active une fonctionnalité de prévisualisation qui est encore en cours de développement.</target>
+      </trans-unit>
+      <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve">
+        <source>Code</source>
+        <target state="translated">Code</target>
       </trans-unit>
     </body>
   </file>
