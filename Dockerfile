@@ -27,7 +27,7 @@
 ARG KIMAI="main"
 ARG PHP_VERSION=83
 
-FROM alpine:3.20 AS base
+FROM alpine:3.22.1 AS base
 
 ARG PHP_VERSION
 ARG KIMAI
@@ -70,7 +70,7 @@ RUN --mount=type=cache,target=/var/cache/apk \
     php${PHP_VERSION}-session \
     php${PHP_VERSION}-ctype
 
-RUN addgroup -S docker && adduser -S docker -G docker --uid 1000
+RUN addgroup -S docker && adduser -S docker -G docker --uid 82
 
 ENV KIMAI=${KIMAI} \
     APP_ENV=prod \
