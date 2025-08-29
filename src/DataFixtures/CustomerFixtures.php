@@ -92,6 +92,9 @@ final class CustomerFixtures extends Fixture
         $entry->setTimezone($faker->timezone());
         $entry->setVisible($visible);
         $entry->setVatId($faker->creditCardNumber());
+        $entry->setPostCode($faker->postcode());
+        $entry->setCity($faker->city());
+        $entry->setAddressLine1($faker->streetAddress());
 
         if (rand(0, 3) % 3) {
             $entry->setBudget(rand(self::MIN_BUDGET, self::MAX_BUDGET));

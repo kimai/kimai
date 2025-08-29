@@ -52,6 +52,12 @@ class CustomerExporterTest extends TestCase
         $customer->setMetaField((new CustomerMeta())->setName('foo meta')->setValue('some magic')->setIsVisible(true));
         $customer->setMetaField((new CustomerMeta())->setName('hidden meta')->setValue('will not be seen')->setIsVisible(false));
         $customer->setMetaField((new CustomerMeta())->setName('bar meta')->setValue('is happening')->setIsVisible(true));
+        $customer->setCountry('AT');
+        $customer->setAddressLine1('1234 Main Road');
+        $customer->setAddressLine2('Third Floor');
+        $customer->setAddressLine3('Golden Office Tower');
+        $customer->setCity('Acme City');
+        $customer->setPostCode('MT 543.6');
 
         $sut = new EntityWithMetaFieldsExporter($spreadsheetExporter, $annotationExtractor, $metaFieldExtractor);
         $spreadsheet = $sut->export(Customer::class, [$customer], new CustomerMetaDisplayEvent(new CustomerQuery(), CustomerMetaDisplayEvent::EXPORT));
@@ -71,7 +77,12 @@ class CustomerExporterTest extends TestCase
         self::assertEquals(null, $worksheet->getCell([++$i, 2])->getValue()); // mobile
         self::assertEquals(null, $worksheet->getCell([++$i, 2])->getValue()); // fax
         self::assertEquals(null, $worksheet->getCell([++$i, 2])->getValue()); // homepage
-        self::assertEquals(null, $worksheet->getCell([++$i, 2])->getValue()); // country
+        self::assertEquals('1234 Main Road', $worksheet->getCell([++$i, 2])->getValue()); // address_line1
+        self::assertEquals('Third Floor', $worksheet->getCell([++$i, 2])->getValue()); // address_line2
+        self::assertEquals('Golden Office Tower', $worksheet->getCell([++$i, 2])->getValue()); // address_line3
+        self::assertEquals('MT 543.6', $worksheet->getCell([++$i, 2])->getValue()); // postcode
+        self::assertEquals('Acme City', $worksheet->getCell([++$i, 2])->getValue()); // city
+        self::assertEquals('AT', $worksheet->getCell([++$i, 2])->getValue()); // country
         self::assertEquals('EUR', $worksheet->getCell([++$i, 2])->getValue()); // currency
         self::assertEquals(null, $worksheet->getCell([++$i, 2])->getValue()); // timezone
         self::assertEquals('123456.789', $worksheet->getCell([++$i, 2])->getValue()); // budget

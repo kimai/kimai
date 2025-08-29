@@ -425,7 +425,7 @@ final class InvoiceController extends AbstractController
 
         $table->addColumn('name', ['class' => 'alwaysVisible', 'orderBy' => false]);
         $table->addColumn('title', ['class' => 'd-none text-nowrap', 'orderBy' => false]);
-        $table->addColumn('company', ['class' => 'd-none', 'orderBy' => false]);
+        $table->addColumn('company', ['class' => 'd-none', 'orderBy' => false, 'title' => 'sending_company']);
         $table->addColumn('vat_id', ['class' => 'd-none text-nowrap', 'orderBy' => false]);
         $table->addColumn('tax_rate', ['class' => 'd-none text-nowrap', 'orderBy' => false]);
         $table->addColumn('due_days', ['class' => 'd-none text-nowrap', 'orderBy' => false]);

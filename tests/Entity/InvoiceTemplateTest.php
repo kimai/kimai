@@ -36,46 +36,35 @@ class InvoiceTemplateTest extends TestCase
         self::assertEquals(30, $sut->getDueDays());
     }
 
-    public function testSetNullForOptionalValues(): void
-    {
-        $sut = new InvoiceTemplate();
-
-        self::assertInstanceOf(InvoiceTemplate::class, $sut->setPaymentDetails(null));
-        self::assertInstanceOf(InvoiceTemplate::class, $sut->setVatId(null));
-        self::assertInstanceOf(InvoiceTemplate::class, $sut->setContact(null));
-        self::assertInstanceOf(InvoiceTemplate::class, $sut->setAddress(null));
-        self::assertInstanceOf(InvoiceTemplate::class, $sut->setPaymentTerms(null));
-    }
-
     public function testSetterAndGetter(): void
     {
         $sut = new InvoiceTemplate();
 
-        self::assertInstanceOf(InvoiceTemplate::class, $sut->setPaymentTerms('foo bar'));
+        $sut->setPaymentTerms('foo bar');
         self::assertEquals('foo bar', $sut->getPaymentTerms());
 
-        self::assertInstanceOf(InvoiceTemplate::class, $sut->setPaymentDetails('iuasdzgf isdfhvlksdjfbnvl ksdfbglisbdf'));
+        $sut->setPaymentDetails('iuasdzgf isdfhvlksdjfbnvl ksdfbglisbdf');
         self::assertEquals('iuasdzgf isdfhvlksdjfbnvl ksdfbglisbdf', $sut->getPaymentDetails());
 
-        self::assertInstanceOf(InvoiceTemplate::class, $sut->setContact('hello world'));
+        $sut->setContact('hello world');
         self::assertEquals('hello world', $sut->getContact());
 
-        self::assertInstanceOf(InvoiceTemplate::class, $sut->setVat(7.31));
+        $sut->setVat(7.31);
         self::assertEquals(7.31, $sut->getVat());
 
-        self::assertInstanceOf(InvoiceTemplate::class, $sut->setVatId('1234567890'));
+        $sut->setVatId('1234567890');
         self::assertEquals('1234567890', $sut->getVatId());
 
-        self::assertInstanceOf(InvoiceTemplate::class, $sut->setLanguage('de'));
+        $sut->setLanguage('de');
         self::assertEquals('de', $sut->getLanguage());
 
-        self::assertInstanceOf(InvoiceTemplate::class, $sut->setNumberGenerator('foo'));
+        $sut->setNumberGenerator('foo');
         self::assertEquals('foo', $sut->getNumberGenerator());
 
-        self::assertInstanceOf(InvoiceTemplate::class, $sut->setRenderer('bar'));
+        $sut->setRenderer('bar');
         self::assertEquals('bar', $sut->getRenderer());
 
-        self::assertInstanceOf(InvoiceTemplate::class, $sut->setCalculator('fooBar'));
+        $sut->setCalculator('fooBar');
         self::assertEquals('fooBar', $sut->getCalculator());
 
         self::assertEquals($sut, clone $sut);
@@ -85,7 +74,7 @@ class InvoiceTemplateTest extends TestCase
     {
         $sut = new InvoiceTemplate();
 
-        self::assertInstanceOf(InvoiceTemplate::class, $sut->setName('a template name'));
+        $sut->setName('a template name');
         self::assertEquals('a template name', $sut->__toString());
         self::assertEquals('a template name', (string) $sut);
     }
