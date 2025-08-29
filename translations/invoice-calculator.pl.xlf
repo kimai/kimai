@@ -14,9 +14,9 @@
         <source>short</source>
         <target state="translated">Godzinowy: wpisy cząstkowe sumowane, pojedyncza pozycja dla całości</target>
       </trans-unit>
-      <trans-unit id="BPiZbad" resname="user">
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
         <source>user</source>
-        <target state="translated">Użytkownik: jedna pozycja na użytkownika</target>
+        <target state="translated">Użytkownik</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve">
         <source>activity</source>
