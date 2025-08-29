@@ -28,7 +28,6 @@ class DayPickerType extends AbstractType
             'model_timezone' => date_default_timezone_get(),
             'view_timezone' => date_default_timezone_get(),
             'datepicker' => false,
-            ''
         ]);
     }
 

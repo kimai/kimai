@@ -36,7 +36,11 @@ class CalendarQuery
 
     public function setView(string $view): void
     {
-        $this->view = $view;
+        $this->view = match($view){
+            'agendaDay', 'day' => 'day',
+            'agendaWeek', 'week' => 'week',
+            default => 'month',
+        };
     }
 
     public function getUser(): ?User
