@@ -66,7 +66,7 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
             ->setUser($user)
             ->setAmount(20)
             ->setStartDate($begin)
-            ->setCallback(function (Timesheet $timesheet) use ($team, $em) {
+            ->setCallback(function (Timesheet $timesheet) use ($team, $em): void {
                 $team->addProject($timesheet->getProject());
                 $em->persist($team);
             })

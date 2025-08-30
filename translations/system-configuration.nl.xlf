@@ -76,7 +76,7 @@
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
         <source>calendar.slot_duration</source>
-        <target>Slotduur voor week- en dagweergave (formaat: hh:mm:ss)</target>
+        <target>Slotduur voor week- en dagweergave</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>

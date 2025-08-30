@@ -9,15 +9,18 @@
 
 namespace App\Controller;
 
+use App\Calendar\CalendarQuery;
 use App\Calendar\CalendarService;
 use App\Configuration\SystemConfiguration;
 use App\Entity\User;
-use App\Form\CalendarForm;
+use App\Form\Toolbar\CalendarToolbarForm;
+use App\Form\Type\CalendarViewType;
 use App\Timesheet\TrackingModeService;
 use App\Utils\PageSetup;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
@@ -35,34 +38,41 @@ final class CalendarController extends AbstractController
     #[Route(path: '/{profile}', name: 'calendar_user', methods: ['GET'])]
     public function userCalendar(Request $request): Response
     {
-        $form = null;
-        $profile = $this->getUser();
+        $currentUser = $this->getUser();
+        $profile = $currentUser;
+        $canChangeUser = $this->isGranted('view_other_timesheet');
 
-        if ($this->isGranted('view_other_timesheet')) {
-            $form = $this->createFormForGetRequest(CalendarForm::class, ['user' => $profile], [
-                'action' => $this->generateUrl('calendar'),
-            ]);
+        $query = new CalendarQuery();
+        $query->setUser($profile);
+        $query->setDate($this->getDateTimeFactory($profile)->create());
 
-            $form->handleRequest($request);
+        $defaultView = CalendarViewType::DEFAULT_VIEW;
+        $userView = $profile->getPreference('calendar_initial_view')?->getValue();
+        if ($userView !== null) {
+            $defaultView = (string) $userView;
+        }
+        $query->setView($defaultView);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $values = $form->getData();
-                if ($values['user'] instanceof User) {
-                    $profile = $values['user'];
-                }
-            }
+        $form = $this->createFormForGetRequest(CalendarToolbarForm::class, $query, [
+            'action' => $this->generateUrl('calendar'),
+            'change_user' => $canChangeUser,
+        ]);
 
-            $form = $form->createView();
+        $form->submit($request->query->all(), false);
 
-            // hide if the current user is the only available one
-            if (\count($form->offsetGet('user')->vars['choices']) < 2) {
-                $form = null;
-                $profile = $this->getUser();
-            }
+        if ($query->getUser() === null) {
+            $query->setUser($currentUser);
+        }
+
+        /** @var User $profile */
+        $profile = $query->getUser();
+
+        if ($currentUser !== $profile && !$canChangeUser) {
+            throw new AccessDeniedException('User is not allowed to see other users calendar');
         }
 
         $mode = $this->service->getActiveMode();
-        $factory = $this->getDateTimeFactory();
+        $factory = $this->getDateTimeFactory($profile);
 
         // if now is default time, we do not pass it on, so it can be re-calculated for each new entry
         $defaultStart = null;
@@ -89,7 +99,9 @@ final class CalendarController extends AbstractController
 
         return $this->render('calendar/user.html.twig', [
             'page_setup' => $page,
-            'form' => $form,
+            'initial_view' => $query->getView(),
+            'initial_date' => $query->getDate(),
+            'form' => $form->createView(),
             'user' => $profile,
             'config' => $config,
             'dragAndDrop' => $dragAndDrop,

@@ -22,6 +22,7 @@ function update_kimai() {
         exit 1
     fi
 
+    rm -rf var/sessions/ 2>&1
     rm -rf var/cache/* 2>&1
     git fetch --tags
     git checkout "$VERSION"

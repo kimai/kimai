@@ -152,7 +152,7 @@
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
         <source>calendar.slot_duration</source>
-        <target>Duração da célula para a visualização da semana e do dia (formato: hh:mm:ss)</target>
+        <target>Duração da célula para a visualização da semana e do dia</target>
       </trans-unit>
       <trans-unit id="RLgv62J" resname="timesheet.rules.lockdown_grace_period">
         <source>timesheet.rules.lockdown_grace_period</source>

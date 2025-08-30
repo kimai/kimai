@@ -9,9 +9,19 @@
             {% if form is not null %}
                 {% embed '@theme/embeds/card.html.twig' %}
                     {% block box_body %}
-                        {{ form_start(form) }}
+                        {{ form_start(form, {attr: {id: 'calendar-form'}}) }}
                         {% if form.user is defined %}
-                            {{ form_row(form.user) }}
+                            {% set user_class = '' %}
+                            {% if form.user.vars.choices|length < 2 %}
+                                {% set user_class = 'd-none' %}
+                            {% endif %}
+                            {{ form_row(form.user, {row_attr: {class: user_class}}) }}
+                        {% endif %}
+                        {% if form.date is defined %}
+                            {{ form_row(form.date, {row_attr: {class: 'd-none'}}) }}
+                        {% endif %}
+                        {% if form.view is defined %}
+                            {{ form_row(form.view, {row_attr: {class: 'd-none'}}) }}
                         {% endif %}
                         {{ form_rest(form) }}
                         {{ form_end(form) }}
@@ -92,15 +102,33 @@
         document.addEventListener('kimai.timesheetUpdate', reloader);
         document.addEventListener('kimai.timesheetDelete', reloader);
 
+        document.addEventListener('kimai.calendar.changeDate', function(event) {
+            var queryParams = new URLSearchParams(window.location.search);
+
+            const dateSelect = document.getElementById('date');
+            if (dateSelect !== null) {
+                dateSelect.value = event.detail.date;
+                queryParams.set('date', event.detail.date);
+            }
+            const viewSelect = document.getElementById('view');
+            if (viewSelect !== null) {
+                viewSelect.value = event.detail.view;
+                queryParams.set('view', event.detail.view);
+            }
+
+            history.replaceState(null, null, "?" + queryParams.toString());
+        });
+
         document.addEventListener('kimai.initialized', function(event) {
             const kimai = event.detail.kimai;
 
             let calendarOptions = {
+                initialDate: '{{ initial_date|report_date }}',
                 dragdrop: {
                     container: '.external-events',
                     items: '.external-event',
                 },
-                initialView: '{{ app.user.getPreferenceValue('calendar_initial_view') }}',
+                initialView: '{{ initial_view }}',
                 translations: {
                     customer: '{{ 'customer'|trans }}',
                     project: '{{ 'project'|trans }}',

@@ -664,11 +664,6 @@ parameters:
             path: src/Controller/ActivityController.php
 
         -
-            message: "#^Cannot access offset 'user' on mixed\\.$#"
-            count: 1
-            path: src/Controller/CalendarController.php
-
-        -
             message: "#^Parameter \\#1 \\$name of class App\\\\Entity\\\\Team constructor expects string, string\\|null given\\.$#"
             count: 1
             path: src/Controller/CustomerController.php

@@ -68,7 +68,7 @@ class CustomerControllerTest extends AbstractControllerBaseTestCase
 
         $fixture = new CustomerFixtures();
         $fixture->setAmount(5);
-        $fixture->setCallback(function (Customer $customer) {
+        $fixture->setCallback(function (Customer $customer): void {
             $customer->setVisible(true);
             $customer->setComment('I am a foobar with tralalalala some more content');
             $customer->setMetaField((new CustomerMeta())->setName('location')->setValue('homeoffice'));
