@@ -123,14 +123,9 @@ final class TimesheetService
             throw new AccessDeniedException('You are not allowed to start this timesheet record');
         }
 
-        $this->repository->begin();
         try {
             $this->validateTimesheet($timesheet);
             $this->fixTimezone($timesheet);
-
-            $this->dispatcher->dispatch(new TimesheetCreatePreEvent($timesheet));
-            $this->repository->save($timesheet);
-            $this->dispatcher->dispatch(new TimesheetCreatePostEvent($timesheet));
 
             if ($timesheet->isRunning()) {
                 try {
@@ -142,9 +137,10 @@ final class TimesheetService
                 }
             }
 
-            $this->repository->commit();
+            $this->dispatcher->dispatch(new TimesheetCreatePreEvent($timesheet));
+            $this->repository->save($timesheet);
+            $this->dispatcher->dispatch(new TimesheetCreatePostEvent($timesheet));
         } catch (\Exception $ex) {
-            $this->repository->rollback();
             throw $ex;
         }
 

@@ -114,22 +114,6 @@ class TimesheetRepository extends EntityRepository
         }
     }
 
-    public function begin(): void
-    {
-        $this->getEntityManager()->beginTransaction();
-    }
-
-    public function commit(): void
-    {
-        $this->getEntityManager()->flush();
-        $this->getEntityManager()->commit();
-    }
-
-    public function rollback(): void
-    {
-        $this->getEntityManager()->rollback();
-    }
-
     public function save(Timesheet $timesheet): void
     {
         $entityManager = $this->getEntityManager();
