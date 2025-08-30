@@ -204,7 +204,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     /**
      * List of all role names
      */
-    #[ORM\Column(name: 'roles', type: Types::ARRAY, nullable: false)] // @phpstan-ignore classConstant.deprecated
+    #[ORM\Column(name: 'roles', type: Types::JSON, nullable: false)]
     #[Serializer\Expose]
     #[Serializer\Groups(['User_Entity'])]
     #[Serializer\Type('array<string>')]
