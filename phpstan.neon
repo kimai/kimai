@@ -3741,26 +3741,6 @@ parameters:
         -
             message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"
             count: 2
-            path: src/Timesheet/Rounding/DefaultRounding.php
-
-        -
-            message: "#^Cannot call method setTimestamp\\(\\) on DateTime\\|null\\.$#"
-            count: 2
-            path: src/Timesheet/Rounding/DefaultRounding.php
-
-        -
-            message: "#^Cannot clone DateTime\\|null\\.$#"
-            count: 2
-            path: src/Timesheet/Rounding/DefaultRounding.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Entity\\\\Timesheet\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Timesheet/Rounding/DefaultRounding.php
-
-        -
-            message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"
-            count: 2
             path: src/Timesheet/Rounding/FloorRounding.php
 
         -
