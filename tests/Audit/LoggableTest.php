@@ -10,12 +10,19 @@
 namespace App\Tests\Audit;
 
 use App\Audit\Loggable;
+use App\Entity\CustomerMeta;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 #[CoversClass(Loggable::class)]
 class LoggableTest extends TypeTestCase
 {
+    public function testConstruct(): void
+    {
+        $sut = new Loggable(CustomerMeta::class);
+        self::assertEquals(CustomerMeta::class, $sut->customFieldClass);
+    }
+
     public function testHasAttributeAttributeOnLoggable(): void
     {
         $reflection = new \ReflectionClass(Loggable::class);

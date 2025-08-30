@@ -16,6 +16,12 @@ use Symfony\Component\Form\Test\TypeTestCase;
 #[CoversClass(Versioned::class)]
 class VersionedTest extends TypeTestCase
 {
+    public function testConstruct(): void
+    {
+        $sut = new Versioned();
+        self::assertInstanceOf(Versioned::class, $sut);
+    }
+
     public function testHasAttributeAttributeOnLoggable(): void
     {
         $reflection = new \ReflectionClass(Versioned::class);
