@@ -12,12 +12,11 @@ namespace App\Tests\Event;
 use App\Entity\Activity;
 use App\Event\AbstractActivityEvent;
 use App\Event\ActivityCreatePreEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Event\AbstractActivityEvent
- * @covers \App\Event\ActivityCreatePreEvent
- */
-class ActivityCreatePreEventTest extends AbstractActivityEventTest
+#[CoversClass(AbstractActivityEvent::class)]
+#[CoversClass(ActivityCreatePreEvent::class)]
+class ActivityCreatePreEventTest extends AbstractActivityEventTestCase
 {
     protected function createActivityEvent(Activity $activity): AbstractActivityEvent
     {

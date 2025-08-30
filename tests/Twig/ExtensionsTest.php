@@ -13,15 +13,15 @@ use App\Constants;
 use App\Entity\Activity;
 use App\Entity\User;
 use App\Twig\Extensions;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Twig\Node\Node;
+use Twig\Node\TextNode;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 use Twig\TwigTest;
 
-/**
- * @covers \App\Twig\Extensions
- */
+#[CoversClass(Extensions::class)]
 class ExtensionsTest extends TestCase
 {
     protected function getSut(): Extensions
@@ -46,12 +46,12 @@ class ExtensionsTest extends TestCase
         $filters = ['month_picker', 'report_date', 'docu_link', 'multiline_indent', 'color', 'font_contrast', 'default_color', 'nl2str'];
         $sut = $this->getSut();
         $twigFilters = $sut->getFilters();
-        $this->assertCount(\count($filters), $twigFilters);
+        self::assertCount(\count($filters), $twigFilters);
         $i = 0;
 
         foreach ($twigFilters as $filter) {
-            $this->assertInstanceOf(TwigFilter::class, $filter);
-            $this->assertEquals($filters[$i++], $filter->getName());
+            self::assertInstanceOf(TwigFilter::class, $filter);
+            self::assertEquals($filters[$i++], $filter->getName());
         }
 
         $id = array_search('nl2str', $filters);
@@ -59,20 +59,20 @@ class ExtensionsTest extends TestCase
         // make sure that the nl2str filters does proper escaping
         self::assertEquals('nl2str', $twigFilters[$id]->getName());
         self::assertEquals('html', $twigFilters[$id]->getPreEscape());
-        self::assertEquals(['html'], $twigFilters[$id]->getSafe(new Node()));
+        self::assertEquals(['html'], $twigFilters[$id]->getSafe(new TextNode('', 10)));
     }
 
     public function testGetFunctions(): void
     {
-        $functions = ['report_date', 'class_name', 'iso_day_by_name', 'random_color'];
+        $functions = ['date_range', 'report_date', 'class_name', 'iso_day_by_name', 'random_color'];
         $sut = $this->getSut();
         $twigFunctions = $sut->getFunctions();
-        $this->assertCount(\count($functions), $twigFunctions);
+        self::assertCount(\count($functions), $twigFunctions);
         $i = 0;
         /** @var TwigFunction $filter */
         foreach ($twigFunctions as $filter) {
-            $this->assertInstanceOf(TwigFunction::class, $filter);
-            $this->assertEquals($functions[$i++], $filter->getName());
+            self::assertInstanceOf(TwigFunction::class, $filter);
+            self::assertEquals($functions[$i++], $filter->getName());
         }
     }
 
@@ -83,12 +83,12 @@ class ExtensionsTest extends TestCase
 
         $sut = $this->getSut();
         $twigTests = $sut->getTests();
-        $this->assertCount(\count($tests), $twigTests);
+        self::assertCount(\count($tests), $twigTests);
 
         /** @var TwigTest $test */
         foreach ($twigTests as $test) {
-            $this->assertInstanceOf(TwigTest::class, $test);
-            $this->assertEquals($tests[$i++], $test->getName());
+            self::assertInstanceOf(TwigTest::class, $test);
+            self::assertEquals($tests[$i++], $test->getName());
         }
     }
 
@@ -104,23 +104,23 @@ class ExtensionsTest extends TestCase
         $sut = $this->getSut();
         foreach ($data as $input => $expected) {
             $result = $sut->documentationLink($input);
-            $this->assertEquals($expected, $result);
+            self::assertEquals($expected, $result);
         }
     }
 
     public function testGetClassName(): void
     {
         $sut = $this->getSut();
-        $this->assertEquals('DateTime', $sut->getClassName(new \DateTime()));
-        $this->assertEquals('stdClass', $sut->getClassName(new \stdClass()));
-        /* @phpstan-ignore-next-line */
-        $this->assertNull($sut->getClassName(''));
-        /* @phpstan-ignore-next-line */
-        $this->assertNull($sut->getClassName(null));
-        $this->assertEquals('App\Entity\User', $sut->getClassName(new User()));
+        self::assertEquals('DateTime', $sut->getClassName(new \DateTime()));
+        self::assertEquals('stdClass', $sut->getClassName(new \stdClass()));
+        /* @phpstan-ignore argument.type */
+        self::assertNull($sut->getClassName(''));
+        /* @phpstan-ignore argument.type */
+        self::assertNull($sut->getClassName(null));
+        self::assertEquals('App\Entity\User', $sut->getClassName(new User()));
     }
 
-    public function getMultilineTestData()
+    public static function getMultilineTestData()
     {
         return [
             ['    ', null, ['']],
@@ -149,9 +149,7 @@ sdfsdf' . PHP_EOL . "\n" .
         ];
     }
 
-    /**
-     * @dataProvider getMultilineTestData
-     */
+    #[DataProvider('getMultilineTestData')]
     public function testMultilineIndent($indent, $string, $expected): void
     {
         $sut = $this->getSut();
@@ -200,7 +198,7 @@ sdfsdf' . PHP_EOL . "\n" .
         self::assertEquals(1, $sut->getIsoDayByName('sdfgsdf'));
     }
 
-    public function getTestDataReplaceNewline()
+    public static function getTestDataReplaceNewline()
     {
         yield [',', new \stdClass(), new \stdClass()];
         yield [',', null, null];
@@ -211,14 +209,31 @@ sdfsdf' . PHP_EOL . "\n" .
         yield [' &ndash; ', "foo\r\nbar\rtest\nhello", 'foo &ndash; bar &ndash; test &ndash; hello'];
     }
 
-    /**
-     * @dataProvider getTestDataReplaceNewline
-     */
+    #[DataProvider('getTestDataReplaceNewline')]
     public function testReplaceNewline(string $replacer, $input, $expected): void
     {
         $sut = $this->getSut();
 
         self::assertEquals($expected, $sut->replaceNewline($input, $replacer));
+    }
+
+    public function testReportDate(): void
+    {
+        $sut = $this->getSut();
+
+        $begin = new \DateTimeImmutable('2025-02-01 17:13:45');
+        $end = new \DateTimeImmutable('2025-02-25 06:10:00');
+
+        self::assertEquals('2025-02-01 - 2025-02-25', $sut->buildDateRange($begin, $end));
+    }
+
+    public function testFormatReportDate(): void
+    {
+        $sut = $this->getSut();
+
+        $date = new \DateTimeImmutable('2024-07-23 17:13:45');
+
+        self::assertEquals('2024-07-23', $sut->formatReportDate($date));
     }
 
     public function testGetRandomColor(): void

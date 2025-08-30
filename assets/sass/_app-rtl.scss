@@ -26,17 +26,17 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts/";
 /**
  * We need that, to compile the rest of the file
  */
-@import "bootstrap/scss/functions";
+@import "~bootstrap/scss/functions";
 
-@import "@tabler/core/src/scss/variables";
-@import "@tabler/core/src/scss/variables-dark";
-@import "@tabler/core/src/scss/mixins";
+@import "~@tabler/core/src/scss/variables";
+@import "~@tabler/core/src/scss/variables-dark";
+@import "~@tabler/core/src/scss/mixins";
 
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/variables-dark";
-@import "bootstrap/scss/maps";
-@import "bootstrap/scss/mixins";
-@import "bootstrap/scss/utilities";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/variables-dark";
+@import "~bootstrap/scss/maps";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/utilities";
 
 /**
  * Kimai related stuff

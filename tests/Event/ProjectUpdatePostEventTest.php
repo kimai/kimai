@@ -12,12 +12,11 @@ namespace App\Tests\Event;
 use App\Entity\Project;
 use App\Event\AbstractProjectEvent;
 use App\Event\ProjectUpdatePostEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Event\AbstractProjectEvent
- * @covers \App\Event\ProjectUpdatePostEvent
- */
-class ProjectUpdatePostEventTest extends AbstractProjectEventTest
+#[CoversClass(AbstractProjectEvent::class)]
+#[CoversClass(ProjectUpdatePostEvent::class)]
+class ProjectUpdatePostEventTest extends AbstractProjectEventTestCase
 {
     protected function createProjectEvent(Project $project): AbstractProjectEvent
     {

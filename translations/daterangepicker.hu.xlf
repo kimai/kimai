@@ -18,14 +18,6 @@
         <source>daterangepicker.thisWeek</source>
         <target>Jelenlegi hét</target>
       </trans-unit>
-      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth">
-        <source>daterangepicker.lastMonth</source>
-        <target>Előző hónap</target>
-      </trans-unit>
-      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth">
-        <source>daterangepicker.thisMonth</source>
-        <target>Jelenlegi hónap</target>
-      </trans-unit>
       <trans-unit id="_9rEFED" resname="daterangepicker.lastYear">
         <source>daterangepicker.lastYear</source>
         <target>Előző év</target>
@@ -41,6 +33,18 @@
       <trans-unit id="AY_E9UR" resname="daterangepicker.thisYearUntilNow">
         <source>This year — until today</source>
         <target state="translated">Idén – a mai napig</target>
+      </trans-unit>
+      <trans-unit id="mgJ2Z7M" resname="daterangepicker.thisFinancialYear" xml:space="preserve">
+        <source>daterangepicker.thisFinancialYear</source>
+        <target state="translated">Ez a pénzügyi év</target>
+      </trans-unit>
+      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth" xml:space="preserve">
+        <source>daterangepicker.thisMonth</source>
+        <target state="translated">Ez a hónap</target>
+      </trans-unit>
+      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth" xml:space="preserve">
+        <source>daterangepicker.lastMonth</source>
+        <target state="translated">Előző hónap</target>
       </trans-unit>
     </body>
   </file>

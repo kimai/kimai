@@ -10,11 +10,11 @@
 namespace App\Tests\Repository\Query;
 
 use App\Repository\Query\InvoiceQuery;
+use App\Repository\Query\TimesheetQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Repository\Query\InvoiceQuery
- * @covers \App\Repository\Query\TimesheetQuery
- */
+#[CoversClass(InvoiceQuery::class)]
+#[CoversClass(TimesheetQuery::class)]
 class InvoiceQueryTest extends TimesheetQueryTest
 {
     public function testQuery(): void
@@ -24,7 +24,7 @@ class InvoiceQueryTest extends TimesheetQueryTest
         $this->assertPage($sut);
         $this->assertPageSize($sut);
         $this->assertOrderBy($sut, 'begin');
-        $this->assertOrder($sut, InvoiceQuery::ORDER_ASC);
+        $this->assertOrder($sut);
 
         $this->assertUser($sut);
         $this->assertCustomer($sut);

@@ -11,22 +11,22 @@ namespace App\Tests\Command;
 
 use App\Command\ListUserCommand;
 use App\Repository\UserRepository;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
-/**
- * @covers \App\Command\ListUserCommand
- * @group integration
- */
+#[CoversClass(ListUserCommand::class)]
+#[Group('integration')]
 class ListUserCommandTest extends KernelTestCase
 {
     public function testWithPlugins(): void
     {
         $commandTester = $this->getCommandTester();
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('Username   Email   Roles   Active   PW Reset', $output);
-        $this->assertStringContainsString('---------- ------- ------- -------- ----------', $output);
+        self::assertStringContainsString('Username   Email   Roles   Active   Authenticator', $output);
+        self::assertStringContainsString('---------- ------- ------- -------- -------------', $output);
     }
 
     protected function getCommandTester(): CommandTester

@@ -11,11 +11,10 @@ namespace App\Tests\Entity;
 
 use App\Entity\Role;
 use App\Entity\RolePermission;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Entity\RolePermission
- */
+#[CoversClass(RolePermission::class)]
 class RolePermissionTest extends TestCase
 {
     public function testDefaultValues(): void

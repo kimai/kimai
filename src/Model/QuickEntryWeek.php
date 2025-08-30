@@ -23,7 +23,7 @@ class QuickEntryWeek
      */
     private array $rows = [];
 
-    public function __construct(private \DateTime $startDate)
+    public function __construct(private readonly \DateTime $startDate)
     {
     }
 
@@ -79,7 +79,7 @@ class QuickEntryWeek
             $result = strcmp((string) $aName, (string) $bName);
         }
 
-        return  $result < 0 ? -1 : 1;
+        return $result < 0 ? -1 : 1;
     }
 
     /**

@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="tr" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>Time tracking</source>
-        <target state="translated">Zaman izleme</target>
-      </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
         <target state="translated">Tema</target>
@@ -74,21 +70,21 @@
         <source>timesheet.default_begin</source>
         <target>Öntanımlı başlangıç zamanı (tüm zaman izleme modlarında kullanılmaz)</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target>Taban: başlangıç, bitiş ve süre aşağı yuvarlanacak</target>
+        <target state="translated">Başlangıç, bitiş ve süre aşağıya yuvarlanacak.</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target>Standart: başlangıç aşağı, bitiş ve süre yukarı yuvarlanacak</target>
+        <target state="translated">Başlangıç aşağıya yuvarlanacak, bitiş ve süre ise yukarıya yuvarlanacak.</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target>En yakın: en yakın değere matematiksel yuvarlama</target>
+        <target state="translated">En yakın değere matematiksel yuvarlama</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target>Tavan: başlangıç, bitiş ve süre yukarı yuvarlanacak</target>
+        <target state="translated">Başlangıç, bitiş ve süre yukarıya yuvarlanacaktır.</target>
       </trans-unit>
       <trans-unit id="hz.vdg5" resname="Sunday">
         <source>Sunday</source>

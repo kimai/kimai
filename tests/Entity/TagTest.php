@@ -10,36 +10,35 @@
 namespace App\Tests\Entity;
 
 use App\Entity\Tag;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Entity\Tag
- */
+#[CoversClass(Tag::class)]
 class TagTest extends TestCase
 {
     public function testDefaultValues(): void
     {
         $sut = new Tag();
-        $this->assertNull($sut->getId());
-        $this->assertNull($sut->getName());
-        $this->assertNull($sut->getColor());
+        self::assertNull($sut->getId());
+        self::assertNull($sut->getName());
+        self::assertNull($sut->getColor());
     }
 
     public function testSetterAndGetter(): void
     {
         $sut = new Tag();
 
-        $this->assertInstanceOf(Tag::class, $sut->setName('foo'));
-        $this->assertEquals('foo', $sut->getName());
-        $this->assertEquals('foo', (string) $sut);
+        self::assertInstanceOf(Tag::class, $sut->setName('foo'));
+        self::assertEquals('foo', $sut->getName());
+        self::assertEquals('foo', (string) $sut);
 
         $sut->setName(null);
-        $this->assertNull($sut->getName());
-        $this->assertNull($sut->getColor());
-        $this->assertIsString($sut->getColorSafe());
+        self::assertNull($sut->getName());
+        self::assertNull($sut->getColor());
+        self::assertIsString($sut->getColorSafe());
 
         $sut->setColor('#fffccc');
-        $this->assertEquals('#fffccc', $sut->getColor());
-        $this->assertEquals('#fffccc', $sut->getColorSafe());
+        self::assertEquals('#fffccc', $sut->getColor());
+        self::assertEquals('#fffccc', $sut->getColorSafe());
     }
 }

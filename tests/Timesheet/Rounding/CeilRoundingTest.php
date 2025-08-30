@@ -11,22 +11,20 @@ namespace App\Tests\Timesheet\Rounding;
 
 use App\Entity\Timesheet;
 use App\Timesheet\Rounding\CeilRounding;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Timesheet\Rounding\CeilRounding
- */
+#[CoversClass(CeilRounding::class)]
 class CeilRoundingTest extends TestCase
 {
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testCalculate($roundBegin, $roundEnd, $roundDuration, \DateTime $start, \DateTime $end, \DateTime $expectedStart, \DateTime $expectedEnd, $expectedDuration): void
     {
         $record = new Timesheet();
         $record->setBegin($start);
         $record->setEnd($end);
-        $this->assertEquals(0, $record->getDuration());
+        self::assertEquals(0, $record->getDuration());
 
         $record->setDuration($record->getEnd()->getTimestamp() - $record->getBegin()->getTimestamp());
 
@@ -37,12 +35,12 @@ class CeilRoundingTest extends TestCase
         $record->setDuration($record->getEnd()->getTimestamp() - $record->getBegin()->getTimestamp());
         $sut->roundDuration($record, $roundDuration);
 
-        $this->assertEquals($expectedStart->getTimestamp(), $record->getBegin()->getTimestamp());
-        $this->assertEquals($expectedEnd->getTimestamp(), $record->getEnd()->getTimestamp());
-        $this->assertEquals($expectedDuration, $record->getDuration());
+        self::assertEquals($expectedStart->getTimestamp(), $record->getBegin()->getTimestamp());
+        self::assertEquals($expectedEnd->getTimestamp(), $record->getEnd()->getTimestamp());
+        self::assertEquals($expectedDuration, $record->getDuration());
     }
 
-    public function getTestData()
+    public static function getTestData()
     {
         $start = new \DateTime();
         $start->setTime(12, 0, 0);

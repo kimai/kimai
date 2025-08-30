@@ -13,20 +13,25 @@ use App\Entity\ExportableItem;
 use App\Entity\Timesheet;
 use App\Invoice\InvoiceItemRepositoryInterface;
 use App\Repository\Query\InvoiceQuery;
+use App\Repository\Query\TimesheetQueryHint;
 
 final class TimesheetInvoiceItemRepository implements InvoiceItemRepositoryInterface
 {
-    public function __construct(private TimesheetRepository $repository)
+    public function __construct(private readonly TimesheetRepository $repository)
     {
     }
 
     /**
-     * @param InvoiceQuery $query
      * @return ExportableItem[]
      */
     public function getInvoiceItemsForQuery(InvoiceQuery $query): iterable
     {
-        return $this->repository->getTimesheetsForQuery($query, true);
+        $query->addQueryHint(TimesheetQueryHint::CUSTOMER_META_FIELDS);
+        $query->addQueryHint(TimesheetQueryHint::PROJECT_META_FIELDS);
+        $query->addQueryHint(TimesheetQueryHint::ACTIVITY_META_FIELDS);
+        $query->addQueryHint(TimesheetQueryHint::USER_PREFERENCES);
+
+        return $this->repository->getTimesheetResult($query)->getResults();
     }
 
     /**

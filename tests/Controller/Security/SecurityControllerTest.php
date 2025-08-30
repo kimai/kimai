@@ -12,18 +12,19 @@ namespace App\Tests\Controller\Security;
 use App\Configuration\SamlConfiguration;
 use App\Configuration\SystemConfiguration;
 use App\Controller\Security\SecurityController;
+use App\DataFixtures\UserFixtures;
 use App\Entity\User;
 use App\Tests\Configuration\TestConfigLoader;
-use App\Tests\Controller\ControllerBaseTest;
+use App\Tests\Controller\AbstractControllerBaseTestCase;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * This test makes sure the login and registration work as expected.
  * The logic is located in the FOSUserBundle and already tested, but we use a different layout.
- *
- * @group integration
  */
-class SecurityControllerTest extends ControllerBaseTest
+#[Group('integration')]
+class SecurityControllerTest extends AbstractControllerBaseTestCase
 {
     public function testRootUrlIsRedirectedToLogin(): void
     {
@@ -41,17 +42,17 @@ class SecurityControllerTest extends ControllerBaseTest
         $this->request($client, '/login');
 
         $response = $client->getResponse();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $response->getContent();
-        $this->assertStringContainsString('<title>Kimai – Time Tracking</title>', $content);
-        $this->assertStringContainsString('<form action="/en/login_check" method="post"', $content);
-        $this->assertStringContainsString('<input type="text" id="username" name="_username"', $content);
-        $this->assertStringContainsString('<input id="password" name="_password" type="password"', $content);
-        $this->assertStringContainsString('">Log in</button>', $content);
-        $this->assertStringContainsString('<input type="hidden" name="_csrf_token" value="', $content);
-        $this->assertStringNotContainsString('<a href="/en/register/"', $content);
-        $this->assertStringNotContainsString('Register a new account', $content);
+        self::assertStringContainsString('<title>Kimai</title>', $content);
+        self::assertStringContainsString('<form action="/en/login_check" method="post"', $content);
+        self::assertStringContainsString('<input autocomplete="username" type="text" id="username" name="_username"', $content);
+        self::assertStringContainsString('<input autocomplete="new-password" id="password" name="_password" type="password"', $content);
+        self::assertStringContainsString('">Log in</button>', $content);
+        self::assertStringContainsString('<input type="hidden" name="_csrf_token" value="', $content);
+        self::assertStringNotContainsString('<a href="/en/register/"', $content);
+        self::assertStringNotContainsString('Register a new account', $content);
     }
 
     public function testLoginPositive(): void
@@ -59,12 +60,12 @@ class SecurityControllerTest extends ControllerBaseTest
         $client = self::createClient();
         $this->request($client, '/login');
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('body form')->form();
         $client->submit($form, [
-            '_username' => 'susan_super',
-            '_password' => 'kitten'
+            '_username' => UserFixtures::USERNAME_SUPER_ADMIN,
+            '_password' => UserFixtures::DEFAULT_PASSWORD
         ]);
 
         $this->assertIsRedirect($client); // redirect to root URL
@@ -76,7 +77,7 @@ class SecurityControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, '/timesheet/'); // redirect to configured start page
         $client->followRedirect();
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
     }
 
     public function testLoginAlreadyLoggedIn(): void
@@ -91,7 +92,7 @@ class SecurityControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client, '/timesheet/'); // redirect to configured start page
         $client->followRedirect();
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
     }
 
     public function testLoginNegative(): void
@@ -99,7 +100,7 @@ class SecurityControllerTest extends ControllerBaseTest
         $client = self::createClient();
         $this->request($client, '/login');
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('body form')->form();
         $client->submit($form, [
@@ -110,7 +111,7 @@ class SecurityControllerTest extends ControllerBaseTest
         $this->assertIsRedirect($client); // redirect to root URL
         $client->followRedirect();
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         self::assertStringContainsString('<div class="alert alert-important alert-danger">Invalid credentials.</div>', $client->getResponse()->getContent());
     }
 

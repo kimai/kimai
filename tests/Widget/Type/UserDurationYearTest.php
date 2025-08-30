@@ -16,12 +16,11 @@ use App\Widget\Type\AbstractCounterYear;
 use App\Widget\Type\AbstractWidget;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\UserDurationYear;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Widget\Type\UserDurationYear
- * @covers \App\Widget\Type\AbstractCounterYear
- */
-class UserDurationYearTest extends AbstractWidgetTypeTest
+#[CoversClass(UserDurationYear::class)]
+#[CoversClass(AbstractCounterYear::class)]
+class UserDurationYearTest extends AbstractWidgetTypeTestCase
 {
     /**
      * @return AbstractCounterYear

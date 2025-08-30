@@ -9,10 +9,14 @@
 
 namespace App\Entity;
 
+use App\Doctrine\Behavior\CreatedAt;
+use App\Doctrine\Behavior\CreatedTrait;
 use App\Export\Annotation as Exporter;
+use App\Repository\ActivityRepository;
 use App\Validator\Constraints as Constraints;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use OpenApi\Attributes as OA;
@@ -22,7 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Index(columns: ['visible', 'project_id'])]
 #[ORM\Index(columns: ['visible', 'project_id', 'name'])]
 #[ORM\Index(columns: ['visible', 'name'])]
-#[ORM\Entity(repositoryClass: 'App\Repository\ActivityRepository')]
+#[ORM\Entity(repositoryClass: ActivityRepository::class)]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[Serializer\ExclusionPolicy('all')]
 #[Serializer\VirtualProperty('ProjectName', exp: 'object.getProject() === null ? null : object.getProject().getName()', options: [new Serializer\SerializedName('parentTitle'), new Serializer\Type(name: 'string'), new Serializer\Groups(['Activity'])])]
@@ -30,15 +34,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Exporter\Order(['id', 'name', 'project', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable', 'number'])]
 #[Exporter\Expose(name: 'project', label: 'project', exp: 'object.getProject() === null ? null : object.getProject().getName()')]
 #[Constraints\Activity]
-class Activity implements EntityWithMetaFields, EntityWithBudget
+class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
 {
     use BudgetTrait;
     use ColorTrait;
+    use CreatedTrait;
 
     /**
      * Unique activity ID
      */
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[Serializer\Expose]
@@ -54,7 +59,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     /**
      * Name of this activity
      */
-    #[ORM\Column(name: 'name', type: 'string', length: 150, nullable: false)]
+    #[ORM\Column(name: 'name', type: Types::STRING, length: 150, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 150)]
     #[Serializer\Expose]
@@ -64,7 +69,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     /**
      * Description of this activity
      */
-    #[ORM\Column(name: 'comment', type: 'text', nullable: true)]
+    #[ORM\Column(name: 'comment', type: Types::TEXT, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'comment')]
@@ -72,13 +77,13 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     /**
      * Whether this activity is visible and can be selected
      */
-    #[ORM\Column(name: 'visible', type: 'boolean', nullable: false, options: ['default' => true])]
+    #[ORM\Column(name: 'visible', type: Types::BOOLEAN, nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'visible', type: 'boolean')]
     private bool $visible = true;
-    #[ORM\Column(name: 'billable', type: 'boolean', nullable: false, options: ['default' => true])]
+    #[ORM\Column(name: 'billable', type: Types::BOOLEAN, nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -109,9 +114,9 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     #[Serializer\Groups(['Activity'])]
     #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Team'))]
     private Collection $teams;
-    #[ORM\Column(name: 'invoice_text', type: 'text', nullable: true)]
+    #[ORM\Column(name: 'invoice_text', type: Types::TEXT, nullable: true)]
     private ?string $invoiceText = null;
-    #[ORM\Column(name: 'number', type: 'string', length: 10, nullable: true)]
+    #[ORM\Column(name: 'number', type: Types::STRING, length: 10, nullable: true)]
     #[Assert\Length(max: 10)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -122,11 +127,17 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
     {
         $this->meta = new ArrayCollection();
         $this->teams = new ArrayCollection();
+        $this->setCreatedAt(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function isNew(): bool
+    {
+        return $this->id === null;
     }
 
     public function getProject(): ?Project
@@ -298,6 +309,8 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
             $this->id = null;
         }
 
+        $this->setCreatedAt(new \DateTimeImmutable('now', new \DateTimeZone('UTC')));
+
         $currentTeams = $this->teams;
         $this->teams = new ArrayCollection();
         /** @var Team $team */
@@ -305,6 +318,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget
             $this->addTeam($team);
         }
 
+        $this->number = null;
         $currentMeta = $this->meta;
         $this->meta = new ArrayCollection();
         /** @var ActivityMeta $meta */

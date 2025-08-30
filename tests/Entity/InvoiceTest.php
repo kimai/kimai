@@ -28,11 +28,10 @@ use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Entity\Invoice
- */
+#[CoversClass(Invoice::class)]
 class InvoiceTest extends TestCase
 {
     public function testDefaultValues(): void
@@ -173,15 +172,13 @@ class InvoiceTest extends TestCase
         $user1->method('getUsername')->willReturn('foo-bar');
 
         $timesheet = new Timesheet();
-        $timesheet
-            ->setDuration(3600)
-            ->setRate(293.27)
-            ->setUser($user1)
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setBegin(new \DateTime())
-            ->setEnd(new \DateTime())
-        ;
+        $timesheet->setDuration(3600);
+        $timesheet->setRate(293.27);
+        $timesheet->setUser($user1);
+        $timesheet->setActivity($activity);
+        $timesheet->setProject($project);
+        $timesheet->setBegin(new \DateTime());
+        $timesheet->setEnd(new \DateTime());
 
         $entries = [$timesheet];
 

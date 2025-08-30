@@ -14,18 +14,17 @@ use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
-class ActionsControllerTest extends APIControllerBaseTest
+#[Group('integration')]
+class ActionsControllerTest extends APIControllerBaseTestCase
 {
     public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/api/actions/timesheet/1/index/en');
     }
 
-    public function test_getTimesheetActions(): void
+    public function testGetTimesheetActions(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
@@ -58,20 +57,22 @@ class ActionsControllerTest extends APIControllerBaseTest
             $this->assertAccessIsGranted($client, \sprintf('/api/actions/timesheet/%s/%s/en', $items[0]->getId(), $view));
             $result = json_decode($client->getResponse()->getContent(), true);
 
-            $this->assertIsArray($result);
+            self::assertIsArray($result);
             foreach ($result as $item) {
+                self::assertIsArray($item);
                 self::assertApiResponseTypeStructure('PageActionItem', $item);
             }
 
             $i = 0;
             foreach ($entries as $id) {
+                self::assertIsArray($result[$i]);
                 self::assertEquals($id, $result[$i]['id'], \sprintf('Failed action "%s" with name "%s" in view "%s"', $i, $id, $view));
                 $i++;
             }
         }
     }
 
-    public function test_getActivityActions(): void
+    public function testGetActivityActions(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
@@ -108,20 +109,22 @@ class ActionsControllerTest extends APIControllerBaseTest
             $this->assertAccessIsGranted($client, \sprintf('/api/actions/activity/%s/%s/en', $activities[0]->getId(), $view));
             $result = json_decode($client->getResponse()->getContent(), true);
 
-            $this->assertIsArray($result);
+            self::assertIsArray($result);
             foreach ($result as $item) {
+                self::assertIsArray($item);
                 self::assertApiResponseTypeStructure('PageActionItem', $item);
             }
 
             $i = 0;
             foreach ($entries as $id) {
+                self::assertIsArray($result[$i]);
                 self::assertEquals($id, $result[$i]['id'], \sprintf('Failed action "%s" with name "%s" in view "%s"', $i, $id, $view));
                 $i++;
             }
         }
     }
 
-    public function test_getProjectActions(): void
+    public function testGetProjectActions(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
@@ -157,20 +160,22 @@ class ActionsControllerTest extends APIControllerBaseTest
             $this->assertAccessIsGranted($client, \sprintf('/api/actions/project/%s/%s/en', $projects[0]->getId(), $view));
             $result = json_decode($client->getResponse()->getContent(), true);
 
-            $this->assertIsArray($result);
+            self::assertIsArray($result);
             foreach ($result as $item) {
+                self::assertIsArray($item);
                 self::assertApiResponseTypeStructure('PageActionItem', $item);
             }
 
             $i = 0;
             foreach ($entries as $id) {
+                self::assertIsArray($result[$i]);
                 self::assertEquals($id, $result[$i]['id'], \sprintf('Failed action "%s" with name "%s" in view "%s"', $i, $id, $view));
                 $i++;
             }
         }
     }
 
-    public function test_getCustomerActions(): void
+    public function testGetCustomerActions(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
 
@@ -202,13 +207,15 @@ class ActionsControllerTest extends APIControllerBaseTest
             $this->assertAccessIsGranted($client, \sprintf('/api/actions/customer/%s/%s/en', $customers[0]->getId(), $view));
             $result = json_decode($client->getResponse()->getContent(), true);
 
-            $this->assertIsArray($result);
+            self::assertIsArray($result);
             foreach ($result as $item) {
+                self::assertIsArray($item);
                 self::assertApiResponseTypeStructure('PageActionItem', $item);
             }
 
             $i = 0;
             foreach ($entries as $id) {
+                self::assertIsArray($result[$i]);
                 self::assertEquals($id, $result[$i]['id'], \sprintf('Failed action "%s" with name "%s" in view "%s"', $i, $id, $view));
                 $i++;
             }

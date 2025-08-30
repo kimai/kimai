@@ -26,7 +26,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class ActivityType extends AbstractType
 {
-    public function __construct(private ActivityHelper $activityHelper, private ProjectHelper $projectHelper)
+    public function __construct(private readonly ActivityHelper $activityHelper, private readonly ProjectHelper $projectHelper)
     {
     }
 
@@ -35,10 +35,12 @@ final class ActivityType extends AbstractType
         return $this->activityHelper->getChoiceLabel($activity);
     }
 
-    public function groupBy(Activity $activity, $key, $index): ?string
+    public function groupBy(Activity $activity, $key, $index): string
     {
         if (null === $activity->getProject()) {
-            return null;
+            // this creates a optgroup with an empty title. previously this was null, which resulted in options without optgroup
+            // and those are ordered by Tomselect at the top - so globals always came first, see #4674
+            return '';
         }
 
         return $this->projectHelper->getChoiceLabel($activity->getProject());

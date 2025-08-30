@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="uk" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
-        <source>button_copy_url_to_browser</source>
-        <target state="translated">Якщо кнопка не працює, будь ласка, скопіюйте та вставте цю адресу у свій браузер: %url%</target>
-      </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
         <target state="translated">Це автоматично згенерований лист. Будь ласка, не відповідайте, тому що це адреса не читається.</target>
@@ -26,21 +22,73 @@
         <source>registration.intro</source>
         <target state="translated">Ви зареєструвалися у реєстраторі часу Kimai з електронною поштою %email%. Будь ласка, активуйте свій обліковий запис у найближчі кілька годин, доки не сплив термін дії посилання.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target state="translated">Скинути пароль</target>
+        <target state="translated">Увійти в Kimai</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="needs-translation">Таке може статися …</target>
+        <target state="translated">Увійдіть у свій обліковий запис</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="translated">Скинути пароль</target>
+        <target state="translated">Увійти</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="needs-translation">... що Ви забули свій пароль? Не хвилюйтеся: Kimai допоможе вам створити новий:</target>
+        <target state="translated">Це посилання буде дійсне лише 15 наступних хвилин.</target>
+      </trans-unit>
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
+        <source>A new absence was created for %user%.
+
+%list%
+
+Please review them at: %url%</source>
+        <target state="translated">Для користувача %user% створена нова відсутність.
+
+%list%
+
+Перевірте, будь ласка, тут: %url%</target>
+      </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
+        <source>absence_created_supervisor_subject</source>
+        <target state="translated">Нова відсутність | %user% | %type%</target>
+      </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="translated">Запит на схвалення: %user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="translated">Для користувача %user% отриманий запит на схвалення.
+
+%list%
+
+Перегляньте, будь ласка: %url%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Ваш запит схвалений</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">Ваш запит на авторизацію %created_by% скасовує.
+
+%list%
+
+Перегляньте свій запит: %url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">Ваш запит відхилений</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="translated">%created_by% схвалює Ваш запит.
+
+%list%
+
+Ви можете знайти усі свої запити за адресою: %url%</target>
       </trans-unit>
     </body>
   </file>

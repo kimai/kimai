@@ -10,16 +10,15 @@
 namespace App\Tests\Controller\Reporting;
 
 use App\Entity\User;
-use App\Tests\Controller\ControllerBaseTest;
+use App\Tests\Controller\AbstractControllerBaseTestCase;
 use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
-class ProjectDetailsControllerTest extends ControllerBaseTest
+#[Group('integration')]
+class ProjectDetailsControllerTest extends AbstractControllerBaseTestCase
 {
     public function testReportIsSecure(): void
     {

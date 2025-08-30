@@ -18,7 +18,7 @@ use App\Timesheet\RoundingService;
  */
 final class DurationCalculator implements CalculatorInterface
 {
-    public function __construct(private RoundingService $roundings)
+    public function __construct(private readonly RoundingService $roundings)
     {
     }
 

@@ -12,11 +12,10 @@ namespace App\Tests\Event;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\UserPreferenceEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\UserPreferenceEvent
- */
+#[CoversClass(UserPreferenceEvent::class)]
 class UserPreferenceEventTest extends TestCase
 {
     public function testGetterAndSetter(): void
@@ -27,16 +26,16 @@ class UserPreferenceEventTest extends TestCase
 
         $sut = new UserPreferenceEvent($user, []);
 
-        $this->assertEquals($user, $sut->getUser());
-        $this->assertTrue($sut->isBooting());
-        $this->assertEquals([], $sut->getPreferences());
+        self::assertEquals($user, $sut->getUser());
+        self::assertTrue($sut->isBooting());
+        self::assertEquals([], $sut->getPreferences());
 
         $sut->addPreference($pref);
 
-        $this->assertEquals([$pref], $sut->getPreferences());
+        self::assertEquals([$pref], $sut->getPreferences());
 
         $sut = new UserPreferenceEvent($user, [], false);
-        $this->assertFalse($sut->isBooting());
+        self::assertFalse($sut->isBooting());
     }
 
     public function testDuplicatePreferenceThrowsException(): void

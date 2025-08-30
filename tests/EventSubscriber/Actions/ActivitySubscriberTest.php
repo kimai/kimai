@@ -10,11 +10,10 @@
 namespace App\Tests\EventSubscriber\Actions;
 
 use App\EventSubscriber\Actions\ActivitySubscriber;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\EventSubscriber\Actions\ActivitySubscriber
- */
-class ActivitySubscriberTest extends AbstractActionsSubscriberTest
+#[CoversClass(ActivitySubscriber::class)]
+class ActivitySubscriberTest extends AbstractActionsSubscriberTestCase
 {
     public function testEventName(): void
     {

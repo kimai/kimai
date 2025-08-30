@@ -14,7 +14,7 @@ use App\Entity\ProjectRate;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * @extends \Doctrine\ORM\EntityRepository<ProjectRate>
+ * @extends EntityRepository<ProjectRate>
  */
 class ProjectRateRepository extends EntityRepository
 {

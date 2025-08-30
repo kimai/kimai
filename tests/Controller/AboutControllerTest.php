@@ -10,11 +10,10 @@
 namespace App\Tests\Controller;
 
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
-class AboutControllerTest extends ControllerBaseTest
+#[Group('integration')]
+class AboutControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIndexAction(): void
     {

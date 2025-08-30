@@ -13,11 +13,12 @@ use App\Entity\User;
 use App\WorkingTime\Mode\WorkingTimeModeDay;
 use App\WorkingTime\Mode\WorkingTimeModeFactory;
 use App\WorkingTime\Mode\WorkingTimeModeNone;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
-/**
- * @covers \App\WorkingTime\Mode\WorkingTimeModeFactory
- */
+#[CoversClass(WorkingTimeModeFactory::class)]
 class WorkingTimeModeFactoryTest extends TestCase
 {
     public function testDefaults(): void
@@ -25,14 +26,26 @@ class WorkingTimeModeFactoryTest extends TestCase
         $none = new WorkingTimeModeNone();
         $day = new WorkingTimeModeDay();
         $modes = [$none, $day];
-        $sut = new WorkingTimeModeFactory($modes);
-        $this->assertEquals($modes, $sut->getAll());
-        $this->assertSame($none, $sut->getMode('none'));
-        $this->assertSame($day, $sut->getMode('day'));
+        $sut = new WorkingTimeModeFactory($modes, new NullLogger());
+        self::assertEquals($modes, $sut->getAll());
+        self::assertSame($none, $sut->getMode('none'));
+        self::assertSame($day, $sut->getMode('day'));
 
         $user = new User();
         $user->setWorkContractMode('day');
-        $this->assertSame($day, $sut->getModeForUser($user));
+        self::assertSame($day, $sut->getModeForUser($user));
+    }
+
+    public function testFallbackMode(): void
+    {
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects(self::once())->method('error');
+        $modes = [new WorkingTimeModeNone(), new WorkingTimeModeDay()];
+        $sut = new WorkingTimeModeFactory($modes, $logger);
+
+        $user = new User();
+        $user->setWorkContractMode('foo');
+        self::assertInstanceOf(WorkingTimeModeNone::class, $sut->getModeForUser($user));
     }
 
     public function testException(): void
@@ -40,7 +53,7 @@ class WorkingTimeModeFactoryTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Unknown working contract mode: foo');
 
-        $sut = new WorkingTimeModeFactory([]);
+        $sut = new WorkingTimeModeFactory([], new NullLogger());
         $sut->getMode('foo');
     }
 }

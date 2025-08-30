@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fr" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>Time tracking</source>
-        <target state="translated">Suivi du temps</target>
-      </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
         <target>Thème</target>
@@ -70,21 +66,21 @@
         <source>timesheet.default_begin</source>
         <target>Heure de début par défaut (non utilisé dans tous les modes de suivi du temps)</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target>Inférieur : l'heure de début, de fin et la durée seront arrondies à l'inférieur</target>
+        <target state="translated">Le début, la fin et la durée seront arrondis à l'unité inférieure</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target>Standard : l'heure de début sera arrondie à l'inférieur, l'heure de fin et la durée au supérieur</target>
+        <target state="translated">L'heure de début sera arrondie à l'inférieur, l'heure de fin et la durée au supérieur</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target>Supérieur : l'heure de début, de fin et la durée seront arrondies au supérieur</target>
+        <target state="translated">Le début, la fin et la durée seront arrondies au supérieur</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target>Au plus proche : arrondi mathématique à la valeur la plus proche</target>
+        <target state="translated">Arrondi mathématique à la valeur la plus proche</target>
       </trans-unit>
       <trans-unit id="hz.vdg5" resname="Sunday">
         <source>Sunday</source>
@@ -152,7 +148,7 @@
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
         <source>calendar.slot_duration</source>
-        <target>Durée de a vue en semaine et en jour (format : hh:mm:ss)</target>
+        <target>Durée de a vue en semaine et en jour</target>
       </trans-unit>
       <trans-unit id="RLgv62J" resname="timesheet.rules.lockdown_grace_period">
         <source>timesheet.rules.lockdown_grace_period</source>
@@ -309,6 +305,10 @@
       <trans-unit id="jj1NmKW" resname="allow_duplicate_number" xml:space="preserve">
         <source>allow_duplicate_number</source>
         <target state="translated">Autoriser plusieurs utilisations du même nombre</target>
+      </trans-unit>
+      <trans-unit id="IZY5kqL" resname="allowed_replacer" xml:space="preserve">
+        <source>allowed_replacer</source>
+        <target state="translated">Remplacement autorisé : %replacer%</target>
       </trans-unit>
     </body>
   </file>

@@ -11,11 +11,10 @@ namespace App\Tests\Calendar;
 
 use App\Calendar\Google;
 use App\Calendar\GoogleSource;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Calendar\Google
- */
+#[CoversClass(Google::class)]
 class GoogleTest extends TestCase
 {
     public function testConstruct(): void
@@ -27,12 +26,12 @@ class GoogleTest extends TestCase
 
         $sut = new Google('qwertzuiop1234567890');
 
-        $this->assertEquals([], $sut->getSources());
-        $this->assertEquals('qwertzuiop1234567890', $sut->getApiKey());
+        self::assertEquals([], $sut->getSources());
+        self::assertEquals('qwertzuiop1234567890', $sut->getApiKey());
 
         $sut = new Google('ewa6347865fg908ouhpoihui7f56', $sources);
 
-        $this->assertEquals($sources, $sut->getSources());
-        $this->assertEquals('ewa6347865fg908ouhpoihui7f56', $sut->getApiKey());
+        self::assertEquals($sources, $sut->getSources());
+        self::assertEquals('ewa6347865fg908ouhpoihui7f56', $sut->getApiKey());
     }
 }

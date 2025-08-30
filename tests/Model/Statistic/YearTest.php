@@ -11,11 +11,10 @@ namespace App\Tests\Model\Statistic;
 
 use App\Model\Statistic\Month;
 use App\Model\Statistic\Year;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Model\Statistic\Year
- */
+#[CoversClass(Year::class)]
 class YearTest extends TestCase
 {
     public function testDefaultValues(): void

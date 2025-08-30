@@ -15,28 +15,25 @@ use Doctrine\DBAL\Platforms\MySQLPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Doctrine\UTCDateTimeType
- */
+#[CoversClass(UTCDateTimeType::class)]
 class UTCDateTimeTypeTest extends TestCase
 {
     public function testGetUtc(): void
     {
         Type::overrideType(Types::DATETIME_MUTABLE, UTCDateTimeType::class);
-        /** @var UTCDateTimeType $type */
         $type = Type::getType(Types::DATETIME_MUTABLE);
 
-        $this->assertInstanceOf(UTCDateTimeType::class, $type);
+        self::assertInstanceOf(UTCDateTimeType::class, $type);
         $utc = $type::getUtc();
-        $this->assertSame($utc, $type::getUtc());
-        $this->assertEquals('UTC', $type::getUtc()->getName());
+        self::assertSame($utc, $type::getUtc());
+        self::assertEquals('UTC', $type::getUtc()->getName());
     }
 
-    /**
-     * @dataProvider getPlatforms
-     */
+    #[DataProvider('getPlatforms')]
     public function testConvertToDatabaseValue(AbstractPlatform $platform): void
     {
         Type::overrideType(Types::DATETIME_MUTABLE, UTCDateTimeType::class);
@@ -44,13 +41,13 @@ class UTCDateTimeTypeTest extends TestCase
         $type = Type::getType(Types::DATETIME_MUTABLE);
 
         $result = $type->convertToDatabaseValue(null, $platform);
-        $this->assertNull($result);
+        self::assertNull($result);
 
         $berlinTz = new \DateTimeZone('Europe/Berlin');
         $date = new \DateTime('2019-01-17 13:30:00');
         $date->setTimezone($berlinTz);
 
-        $this->assertEquals('Europe/Berlin', $date->getTimezone()->getName());
+        self::assertEquals('Europe/Berlin', $date->getTimezone()->getName());
 
         $expected = clone $date;
         $expected->setTimezone($type::getUtc());
@@ -59,12 +56,10 @@ class UTCDateTimeTypeTest extends TestCase
         /** @var \DateTime $result */
         $result = $type->convertToDatabaseValue($date, $platform);
 
-        $this->assertEquals($bla, $result);
+        self::assertEquals($bla, $result);
     }
 
-    /**
-     * @dataProvider getPlatforms
-     */
+    #[DataProvider('getPlatforms')]
     public function testConvertToPHPValue(AbstractPlatform $platform): void
     {
         Type::overrideType(Types::DATETIME_MUTABLE, UTCDateTimeType::class);
@@ -72,19 +67,17 @@ class UTCDateTimeTypeTest extends TestCase
         $type = Type::getType(Types::DATETIME_MUTABLE);
 
         $result = $type->convertToPHPValue(null, $platform);
-        $this->assertNull($result);
+        self::assertNull($result);
 
         $result = $type->convertToPHPValue('2019-01-17 13:30:00', $platform);
-        $this->assertInstanceOf(\DateTime::class, $result);
-        $this->assertEquals('UTC', $result->getTimezone()->getName());
+        self::assertInstanceOf(\DateTime::class, $result);
+        self::assertEquals('UTC', $result->getTimezone()->getName());
 
         $result = $result->format($platform->getDateTimeFormatString());
-        $this->assertEquals('2019-01-17 13:30:00', $result);
+        self::assertEquals('2019-01-17 13:30:00', $result);
     }
 
-    /**
-     * @dataProvider getPlatforms
-     */
+    #[DataProvider('getPlatforms')]
     public function testConvertToPHPValueWithInvalidValue(AbstractPlatform $platform): void
     {
         $this->expectException(ConversionException::class);
@@ -97,9 +90,9 @@ class UTCDateTimeTypeTest extends TestCase
     }
 
     /**
-     * @return \Doctrine\DBAL\Platforms\MySQLPlatform[][]
+     * @return MySQLPlatform[][]
      */
-    public function getPlatforms(): array
+    public static function getPlatforms(): array
     {
         return [
             [new MySQLPlatform()],

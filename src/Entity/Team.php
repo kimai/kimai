@@ -13,6 +13,7 @@ use App\Repository\TeamRepository;
 use App\Validator\Constraints as Constraints;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use OpenApi\Attributes as OA;
@@ -28,7 +29,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Constraints\Team]
 class Team
 {
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[Serializer\Expose]
@@ -37,7 +38,7 @@ class Team
     /**
      * Team name
      */
-    #[ORM\Column(name: 'name', type: 'string', length: 100, nullable: false)]
+    #[ORM\Column(name: 'name', type: Types::STRING, length: 100, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 100)]
     #[Serializer\Expose]
@@ -178,13 +179,13 @@ class Team
     }
 
     /**
-     * @return User[]
+     * @return list<User>
      */
     public function getTeamleads(): array
     {
         $leads = [];
         foreach ($this->members as $member) {
-            if ($member->isTeamlead()) {
+            if ($member->isTeamlead() && $member->getUser() !== null) {
                 $leads[] = $member->getUser();
             }
         }
@@ -273,13 +274,15 @@ class Team
     /**
      * Returns all users in the team, both teamlead and normal member.
      *
-     * @return User[]
+     * @return list<User>
      */
     public function getUsers(): array
     {
         $users = [];
         foreach ($this->members as $member) {
-            $users[] = $member->getUser();
+            if ($member->getUser() !== null) {
+                $users[] = $member->getUser();
+            }
         }
 
         return $users;

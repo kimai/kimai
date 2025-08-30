@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="et" datatype="plaintext" original="messages.en.xlf">
+    <body>
+      <trans-unit id="XohImNo" resname="password" approved="no" xml:space="preserve">
+        <source>Password</source>
+        <target state="translated">Parool</target>
+      </trans-unit>
+      <trans-unit id="yQRveje" resname="description" approved="no" xml:space="preserve">
+        <source>Description</source>
+        <target state="translated">Kirjeldus</target>
+      </trans-unit>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+        <source>Time Tracking</source>
+        <target state="translated">Tööaja jälgija</target>
+      </trans-unit>
+      <trans-unit id="k5Apjz_" resname="no" xml:space="preserve">
+        <source>no</source>
+        <target state="translated">Ei</target>
+      </trans-unit>
+      <trans-unit id="inmIkP6" resname="yes" xml:space="preserve">
+        <source>yes</source>
+        <target state="translated">Jah</target>
+      </trans-unit>
+      <trans-unit id="CT59X9u" resname="contact" approved="no" xml:space="preserve">
+        <source>Contact</source>
+        <target state="needs-translation">Contact</target>
+      </trans-unit>
+      <trans-unit id="GzWKgBk" resname="error.directory_missing" xml:space="preserve">
+        <source>The directory “%dir%” does not exist and could not be created.</source>
+        <target state="translated">Kataloogi “%dir%” pole olemas ja seda ei saanud luua.</target>
+      </trans-unit>
+      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve">
+        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
+        <target state="translated">E-kiri on saadetud aadressile %email%. See sisaldab linki, millel peate oma konto aktiveerimiseks klõpsama.</target>
+      </trans-unit>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="no" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="translated">Teie parooli lähtestamiseks on saadetud link e-meilile. Märkus: Uut parooli saate taotleda ainult üks kord iga %tokenLifetime% tunni järel. Kui te meili ei saa, kontrollige oma rämpsposti kausta või proovige uuesti.</target>
+      </trans-unit>
+      <trans-unit id="nqEYrfk" resname="security.unlock.intro" xml:space="preserve">
+        <source>security.unlock.intro</source>
+        <target state="translated">Täieliku juurdepääsu saamiseks sisestage oma parool</target>
+      </trans-unit>
+      <trans-unit id="VSo_gmO" resname="orderBy" xml:space="preserve">
+        <source>orderBy</source>
+        <target state="translated">Tellimustejärgi</target>
+      </trans-unit>
+      <trans-unit id=".3dyBTq" resname="both" approved="no" xml:space="preserve">
+        <source>Both</source>
+        <target state="translated">Mõlemad</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic" xml:space="preserve">
+        <source>automatic</source>
+        <target state="translated">Automaatne</target>
+      </trans-unit>
+      <trans-unit id="KLIuHvt" resname="This is a mandatory field" xml:space="preserve">
+        <source>This is a mandatory field</source>
+        <target state="translated">Kohustuslik</target>
+      </trans-unit>
+      <trans-unit id="_ohHsMM" resname="create" xml:space="preserve">
+        <source>create</source>
+        <target state="translated">Loo</target>
+      </trans-unit>
+      <trans-unit id="DYHuW58" resname="confirm.delete" xml:space="preserve">
+        <source>confirm.delete</source>
+        <target state="translated">Kas oled kindel, et soovid selle kustutada?</target>
+      </trans-unit>
+      <trans-unit id="COyxNde" resname="delete.not_in_use" xml:space="preserve">
+        <source>delete.not_in_use</source>
+        <target state="translated">Selle üksuse saab kustutada ohutult.</target>
+      </trans-unit>
+      <trans-unit id="I3TZF5S" resname="cancel" xml:space="preserve">
+        <source>cancel</source>
+        <target state="translated">Tühista</target>
+      </trans-unit>
+      <trans-unit id="PyZ8KrQ" resname="confirm" xml:space="preserve">
+        <source>confirm</source>
+        <target state="translated">Kinnita</target>
+      </trans-unit>
+      <trans-unit id=".0CFrRV" resname="upload" xml:space="preserve">
+        <source>upload</source>
+        <target state="translated">Lae üles</target>
+      </trans-unit>
+      <trans-unit id="JBkykGe" resname="search" xml:space="preserve">
+        <source>search</source>
+        <target state="translated">Jaga</target>
+      </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter" xml:space="preserve">
+        <source>Search filter</source>
+        <target state="translated">Otsingu filter</target>
+      </trans-unit>
+      <trans-unit id="8W_TZI0" resname="searchTerm" xml:space="preserve">
+        <source>searchTerm</source>
+        <target state="translated">Otsinug termin (sõna)</target>
+      </trans-unit>
+      <trans-unit id="CiA4s9E" resname="set_as_default" xml:space="preserve">
+        <source>set_as_default</source>
+        <target state="translated">Salvestage seade otsingu lemmikuna</target>
+      </trans-unit>
+      <trans-unit id="DUDrvjk" resname="remove_default" xml:space="preserve">
+        <source>remove_default</source>
+        <target state="translated">Kustuta otsingu ajalugu</target>
+      </trans-unit>
+      <trans-unit id="1MfS6X5" resname="remove_filter" xml:space="preserve">
+        <source>remove_filter</source>
+        <target state="translated">Uuenda otsingu filtrit</target>
+      </trans-unit>
+      <trans-unit id="1o0.9vf" resname="asc" xml:space="preserve">
+        <source>asc</source>
+        <target state="translated">Kasvav</target>
+      </trans-unit>
+      <trans-unit id="l4ZOh4." resname="desc" xml:space="preserve">
+        <source>desc</source>
+        <target state="translated">Kahanev</target>
+      </trans-unit>
+      <trans-unit id="OTDmccn" resname="attachments" xml:space="preserve">
+        <source>attachments</source>
+        <target state="translated">Fail</target>
+      </trans-unit>
+      <trans-unit id="O5w1jzb" resname="file" xml:space="preserve">
+        <source>file</source>
+        <target state="translated">Fail</target>
+      </trans-unit>
+      <trans-unit id="0M_Gylq" resname="rates.empty" xml:space="preserve">
+        <source>rates.empty</source>
+        <target state="translated">Hindu pole konfigeeritud.</target>
+      </trans-unit>
+      <trans-unit id="mflwMcX" resname="rates.title" xml:space="preserve">
+        <source>rates.title</source>
+        <target state="translated">Hind</target>
+      </trans-unit>
+      <trans-unit id="zFfl7jw" resname="sum.total" xml:space="preserve">
+        <source>sum.total</source>
+        <target state="translated">Kokku</target>
+      </trans-unit>
+      <trans-unit id="fVA3M2x" resname="choice_pattern" xml:space="preserve">
+        <source>Display of entries in selection lists</source>
+        <target state="translated">Kirjete kuvamine valikloendites</target>
+      </trans-unit>
+      <trans-unit id="hLEZkoC" resname="password_repeat" xml:space="preserve">
+        <source>password_repeat</source>
+        <target state="translated">Korda parooli</target>
+      </trans-unit>
+      <trans-unit id="ACcM9j_" resname="logout" xml:space="preserve">
+        <source>logout</source>
+        <target state="translated">Logi välja</target>
+      </trans-unit>
+      <trans-unit id="_x2He8M" resname="user_profile" xml:space="preserve">
+        <source>user_profile</source>
+        <target state="translated">Minu profiil</target>
+      </trans-unit>
+      <trans-unit id="T4nAM7X" resname="api_token" xml:space="preserve">
+        <source>api_token</source>
+        <target state="translated">API salasõna</target>
+      </trans-unit>
+      <trans-unit id="aq59Sk8" resname="api_token_repeat" xml:space="preserve">
+        <source>api_token_repeat</source>
+        <target state="translated">Korda API salasõna</target>
+      </trans-unit>
+      <trans-unit id=".372.o7" resname="login_required" xml:space="preserve">
+        <source>login_required</source>
+        <target state="translated">Puudub luba. Suunan ümber sisselogimisele?</target>
+      </trans-unit>
+      <trans-unit id="853W5Iu" resname="security.unlock.button" xml:space="preserve">
+        <source>security.unlock.button</source>
+        <target state="translated">Ava</target>
+      </trans-unit>
+      <trans-unit id="UoOv6mx" resname="menu.homepage" xml:space="preserve">
+        <source>menu.homepage</source>
+        <target state="translated">Armatuurlaud</target>
+      </trans-unit>
+      <trans-unit id="Eq2E_Rd" resname="menu.apps" xml:space="preserve">
+        <source>Apps</source>
+        <target state="translated">Rakendused</target>
+      </trans-unit>
+      <trans-unit id="wvvYSw_" resname="menu.admin" xml:space="preserve">
+        <source>menu.admin</source>
+        <target state="translated">Administraator</target>
+      </trans-unit>
+      <trans-unit id="6OKwCUB" resname="menu.system" xml:space="preserve">
+        <source>menu.system</source>
+        <target state="translated">Süsteem</target>
+      </trans-unit>
+      <trans-unit id="wBTFKFR" resname="menu.logout" xml:space="preserve">
+        <source>menu.logout</source>
+        <target state="translated">Logi välja</target>
+      </trans-unit>
+      <trans-unit id="ebTjBb9" resname="my_times" xml:space="preserve">
+        <source>my_times</source>
+        <target state="translated">Minu tunnid</target>
+      </trans-unit>
+      <trans-unit id="ypVQO7o" resname="menu.reporting" xml:space="preserve">
+        <source>menu.reporting</source>
+        <target state="translated">Aruandlus</target>
+      </trans-unit>
+      <trans-unit id="yxQop43" resname="all_times" xml:space="preserve">
+        <source>all_times</source>
+        <target state="translated">Kõik tunnid</target>
+      </trans-unit>
+      <trans-unit id="IeshU90" resname="customers" xml:space="preserve">
+        <source>customers</source>
+        <target state="translated">Kliendid</target>
+      </trans-unit>
+      <trans-unit id="JXfA9Ve" resname="projects" xml:space="preserve">
+        <source>projects</source>
+        <target state="translated">Projekt</target>
+      </trans-unit>
+      <trans-unit id="YkyVVAY" resname="activities" xml:space="preserve">
+        <source>activities</source>
+        <target state="translated">Tegevused</target>
+      </trans-unit>
+      <trans-unit id="fftM9nd" resname="users" xml:space="preserve">
+        <source>users</source>
+        <target state="translated">Kasutaja</target>
+      </trans-unit>
+      <trans-unit id="3rJ5QDP" resname="help.teams" xml:space="preserve">
+        <source>help.teams</source>
+        <target state="translated">Piira nähtavust teatud meeskondadele.</target>
+      </trans-unit>
+      <trans-unit id="hOZxcaK" resname="menu.plugin" xml:space="preserve">
+        <source>menu.plugin</source>
+        <target state="translated">Pluginad</target>
+      </trans-unit>
+      <trans-unit id="JGaf9IK" resname="Doctor" xml:space="preserve">
+        <source>Doctor</source>
+        <target state="translated">Tervis</target>
+      </trans-unit>
+      <trans-unit id="Vz3Igj3" resname="error.no_entries_found" xml:space="preserve">
+        <source>error.no_entries_found</source>
+        <target state="translated">Teie otsitud filtritepõhjale ei leitud ühtegi kirjet.</target>
+      </trans-unit>
+      <trans-unit id="hlu4iX5" resname="error.no_comments_found" xml:space="preserve">
+        <source>error.no_comments_found</source>
+        <target state="translated">Ühtegi komentaari ei ole.</target>
+      </trans-unit>
+      <trans-unit id="XQ2.pq2" resname="error.too_many_entries" xml:space="preserve">
+        <source>error.too_many_entries</source>
+        <target state="translated">Taotlus ei saanud töödelda. Leiti liiga palju tulemusi.</target>
+      </trans-unit>
+      <trans-unit id="C2TGff0" resname="error.directory_protected" xml:space="preserve">
+        <source>error.directory_protected</source>
+        <target state="translated">Kataloog "%dir%" on kirjutuskaitsega.</target>
+      </trans-unit>
+      <trans-unit id="EYXzfTO" resname="deleted" xml:space="preserve">
+        <source>deleted</source>
+        <target state="translated">Kustuta</target>
+      </trans-unit>
+      <trans-unit id="6Hip2aF" resname="created_at" xml:space="preserve">
+        <source>created_at</source>
+        <target state="translated">Loodud kell</target>
+      </trans-unit>
+      <trans-unit id="QG7.sen" resname="created" xml:space="preserve">
+        <source>Created</source>
+        <target state="translated">Loodud</target>
+      </trans-unit>
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
+        <source>date</source>
+        <target state="translated">Kuupöev</target>
+      </trans-unit>
+      <trans-unit id="BHk4pZ3" resname="starttime" xml:space="preserve">
+        <source>starttime</source>
+        <target state="translated">Alusta</target>
+      </trans-unit>
+      <trans-unit id="eI_tMbq" resname="endtime" xml:space="preserve">
+        <source>endtime</source>
+        <target state="translated">Lõpp</target>
+      </trans-unit>
+      <trans-unit id="yqea9Nt" resname="duration" xml:space="preserve">
+        <source>duration</source>
+        <target state="translated">Kestvus</target>
+      </trans-unit>
+      <trans-unit id="IXtkHRw" resname="menu.system_configuration" xml:space="preserve">
+        <source>menu.system_configuration</source>
+        <target state="translated">Seaded</target>
+      </trans-unit>
+      <trans-unit id="_t.2z4V" resname="teams" xml:space="preserve">
+        <source>teams</source>
+        <target state="translated">Meeskond</target>
+      </trans-unit>
+      <trans-unit id="XP5zkiN" resname="modal.dirty" xml:space="preserve">
+        <source>modal.dirty</source>
+        <target state="translated">Vorm on muutunud. Muudatuste salvestamiseks klõpsake "Salvesta" või tühistamiseks "Sule".</target>
+      </trans-unit>
+      <trans-unit id="fQ3Prt4" resname="security.unlock.title" xml:space="preserve">
+        <source>security.unlock.title</source>
+        <target state="translated">Ava konto</target>
+      </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate" xml:space="preserve">
+        <source>donate</source>
+        <target state="needs-translation">Donate</target>
+      </trans-unit>
+      <trans-unit id="FveKfWM" resname="username" xml:space="preserve">
+        <source>username</source>
+        <target state="translated">Kasutaja</target>
+      </trans-unit>
+      <trans-unit id="OJ.wI1U" resname="invoiceText" xml:space="preserve">
+        <source>invoiceText</source>
+        <target state="translated">Arveldusinfo</target>
+      </trans-unit>
+      <trans-unit id="aOJITgv" resname="help.invoiceText" xml:space="preserve">
+        <source>help.invoiceText</source>
+        <target state="translated">Seda teksti kasutatakse arvedokumentides ja seda saab kasutada nt. edasiste tarnetingimuste märkimiseks.</target>
+      </trans-unit>
+      <trans-unit id="gqNTf.D" resname="name" xml:space="preserve">
+        <source>name</source>
+        <target state="translated">Nimi</target>
+      </trans-unit>
+      <trans-unit id="xEuy.VF" resname="comment" xml:space="preserve">
+        <source>comment</source>
+        <target state="translated">Komentaar</target>
+      </trans-unit>
+      <trans-unit id="pWFFJwz" resname="id" xml:space="preserve">
+        <source>id</source>
+        <target state="translated">ID</target>
+      </trans-unit>
+      <trans-unit id="1C7xSXk" resname="visible" xml:space="preserve">
+        <source>Visible</source>
+        <target state="translated">Nähtav</target>
+      </trans-unit>
+      <trans-unit id="AeMGtJO" resname="help.visible" xml:space="preserve">
+        <source>help.visible</source>
+        <target state="translated">Kui säte on välja lülitatud, ei kuvata objekti rippmenüüdes ega loendivaadetes.</target>
+      </trans-unit>
+      <trans-unit id="t1r372x" resname="invisible" xml:space="preserve">
+        <source>invisible</source>
+        <target state="translated">Nähtamatu</target>
+      </trans-unit>
+      <trans-unit id="CvlqjtY" resname="budget" xml:space="preserve">
+        <source>budget</source>
+        <target state="translated">Eelarve</target>
+      </trans-unit>
+      <trans-unit id="IDDfzoR" resname="invoiceLabel" xml:space="preserve">
+        <source>invoiceLabel</source>
+        <target state="translated">Arve tekst</target>
+      </trans-unit>
+      <trans-unit id="jLzX0Ae" resname="help.invoiceLabel" xml:space="preserve">
+        <source>help.invoiceLabel</source>
+        <target state="translated">See tekst asendab objekti nime, võimaldades arve artiklite jaoks üksikasjalikumaid silte.</target>
+      </trans-unit>
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
+        <source>User</source>
+        <target state="translated">Kasutaja</target>
+      </trans-unit>
+      <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve">
+        <source>activity</source>
+        <target state="translated">Tegevus</target>
+      </trans-unit>
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
+        <source>Project</source>
+        <target state="translated">Projekt</target>
+      </trans-unit>
+      <trans-unit id="KhBzpuZ" resname="tag" xml:space="preserve">
+        <source>tag</source>
+        <target state="translated">Sildid</target>
+      </trans-unit>
+      <trans-unit id="E_bHhGR" resname="hourlyRate" xml:space="preserve">
+        <source>hourlyRate</source>
+        <target state="translated">Tunni hind</target>
+      </trans-unit>
+      <trans-unit id="HcWuW2g" resname="layout" xml:space="preserve">
+        <source>layout</source>
+        <target state="translated">Ekraani: paigutus</target>
+      </trans-unit>
+      <trans-unit id="QEMUsfS" resname="hours" xml:space="preserve">
+        <source>hours</source>
+        <target state="translated">Tunnid</target>
+      </trans-unit>
+      <trans-unit id="xUl3nXn" resname="rate" xml:space="preserve">
+        <source>rate</source>
+        <target state="translated">Hind</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

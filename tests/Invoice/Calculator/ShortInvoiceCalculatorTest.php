@@ -16,19 +16,20 @@ use App\Entity\Project;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Invoice\Calculator\AbstractCalculator;
+use App\Invoice\Calculator\AbstractMergedCalculator;
 use App\Invoice\Calculator\ShortInvoiceCalculator;
 use App\Invoice\CalculatorInterface;
 use App\Invoice\InvoiceItem;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Invoice\Calculator\ShortInvoiceCalculator
- * @covers \App\Invoice\Calculator\AbstractMergedCalculator
- * @covers \App\Invoice\Calculator\AbstractCalculator
- */
-class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
+#[CoversClass(ShortInvoiceCalculator::class)]
+#[CoversClass(AbstractMergedCalculator::class)]
+#[CoversClass(AbstractCalculator::class)]
+class ShortInvoiceCalculatorTest extends AbstractCalculatorTestCase
 {
     protected function getCalculator(): CalculatorInterface
     {
@@ -49,43 +50,37 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $activity->setProject($project);
 
         $timesheet = new Timesheet();
-        $timesheet
-            ->setDuration(3600)
-            ->setRate(293.27)
-            ->setHourlyRate(293.27)
-            ->setUser(new User())
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setBegin(new \DateTime('2018-11-29'))
-            ->setEnd(new \DateTime())
-            ->addTag((new Tag())->setName('foo'))
-            ->addTag((new Tag())->setName('bar'))
-        ;
+        $timesheet->setDuration(3600);
+        $timesheet->setRate(293.27);
+        $timesheet->setHourlyRate(293.27);
+        $timesheet->setUser(new User());
+        $timesheet->setActivity($activity);
+        $timesheet->setProject($project);
+        $timesheet->setBegin(new \DateTime('2018-11-29'));
+        $timesheet->setEnd(new \DateTime());
+        $timesheet->addTag((new Tag())->setName('foo'));
+        $timesheet->addTag((new Tag())->setName('bar'));
 
         $timesheet2 = new Timesheet();
-        $timesheet2
-            ->setDuration(400)
-            ->setRate(32.59)
-            ->setHourlyRate(293.27)
-            ->setUser(new User())
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setBegin(new \DateTime('2018-11-28'))
-            ->setEnd(new \DateTime())
-            ->addTag((new Tag())->setName('bar1'))
-        ;
+        $timesheet2->setDuration(400);
+        $timesheet2->setRate(32.59);
+        $timesheet2->setHourlyRate(293.27);
+        $timesheet2->setUser(new User());
+        $timesheet2->setActivity($activity);
+        $timesheet2->setProject($project);
+        $timesheet2->setBegin(new \DateTime('2018-11-28'));
+        $timesheet2->setEnd(new \DateTime());
+        $timesheet2->addTag((new Tag())->setName('bar1'));
 
         $timesheet3 = new Timesheet();
-        $timesheet3
-            ->setDuration(1800)
-            ->setRate(146.64)
-            ->setHourlyRate(293.27)
-            ->setUser(new User())
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setBegin(new \DateTime('2018-11-29'))
-            ->setEnd(new \DateTime())
-        ;
+        $timesheet3->setDuration(1800);
+        $timesheet3->setRate(146.64);
+        $timesheet3->setHourlyRate(293.27);
+        $timesheet3->setUser(new User());
+        $timesheet3->setActivity($activity);
+        $timesheet3->setProject($project);
+        $timesheet3->setBegin(new \DateTime('2018-11-29'));
+        $timesheet3->setEnd(new \DateTime());
 
         $entries = [$timesheet, $timesheet2, $timesheet3];
 
@@ -98,26 +93,26 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $sut = $this->getCalculator();
         $sut->setModel($model);
 
-        $this->assertEquals('short', $sut->getId());
-        $this->assertEquals(562.28, $sut->getTotal());
-        $this->assertEquals(19, $sut->getVat());
-        $this->assertEquals('EUR', $model->getCurrency());
-        $this->assertEquals(472.5, $sut->getSubtotal());
-        $this->assertEquals(5800, $sut->getTimeWorked());
-        $this->assertEquals(1, \count($sut->getEntries()));
+        self::assertEquals('short', $sut->getId());
+        self::assertEquals(562.28, $sut->getTotal());
+        self::assertEquals(19, $sut->getVat());
+        self::assertEquals('EUR', $model->getCurrency());
+        self::assertEquals(472.5, $sut->getSubtotal());
+        self::assertEquals(5800, $sut->getTimeWorked());
+        self::assertEquals(1, \count($sut->getEntries()));
 
         $entries = $sut->getEntries();
         self::assertCount(1, $entries);
         $result = $entries[0];
 
-        $this->assertEquals('2018-11-28', $result->getBegin()?->format('Y-m-d'));
-        $this->assertEquals('', $result->getDescription());
-        $this->assertEquals(293.27, $result->getHourlyRate());
-        $this->assertNull($result->getFixedRate());
-        $this->assertEquals(472.5, $result->getRate());
-        $this->assertEquals(5800, $result->getDuration());
-        $this->assertEquals(3, $result->getAmount());
-        $this->assertEquals(['foo', 'bar', 'bar1'], $result->getTags());
+        self::assertEquals('2018-11-28', $result->getBegin()?->format('Y-m-d'));
+        self::assertEquals('', $result->getDescription());
+        self::assertEquals(293.27, $result->getHourlyRate());
+        self::assertNull($result->getFixedRate());
+        self::assertEquals(472.5, $result->getRate());
+        self::assertEquals(5800, $result->getDuration());
+        self::assertEquals(3, $result->getAmount());
+        self::assertEquals(['foo', 'bar', 'bar1'], $result->getTags());
     }
 
     public function testWithMultipleEntriesDifferentRates(): void
@@ -134,40 +129,34 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $activity->setProject($project);
 
         $timesheet = new Timesheet();
-        $timesheet
-            ->setDuration(3600)
-            ->setRate(293.27)
-            ->setHourlyRate(293.27)
-            ->setUser(new User())
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setBegin(new \DateTime())
-            ->setEnd(new \DateTime())
-        ;
+        $timesheet->setDuration(3600);
+        $timesheet->setRate(293.27);
+        $timesheet->setHourlyRate(293.27);
+        $timesheet->setUser(new User());
+        $timesheet->setActivity($activity);
+        $timesheet->setProject($project);
+        $timesheet->setBegin(new \DateTime());
+        $timesheet->setEnd(new \DateTime());
 
         $timesheet2 = new Timesheet();
-        $timesheet2
-            ->setDuration(400)
-            ->setRate(84)
-            ->setHourlyRate(756.00)
-            ->setUser(new User())
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setBegin(new \DateTime())
-            ->setEnd(new \DateTime())
-        ;
+        $timesheet2->setDuration(400);
+        $timesheet2->setRate(84);
+        $timesheet2->setHourlyRate(756.00);
+        $timesheet2->setUser(new User());
+        $timesheet2->setActivity($activity);
+        $timesheet2->setProject($project);
+        $timesheet2->setBegin(new \DateTime());
+        $timesheet2->setEnd(new \DateTime());
 
         $timesheet3 = new Timesheet();
-        $timesheet3
-            ->setDuration(1800)
-            ->setRate(111.11)
-            ->setHourlyRate(222.22)
-            ->setUser(new User())
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setBegin(new \DateTime())
-            ->setEnd(new \DateTime())
-        ;
+        $timesheet3->setDuration(1800);
+        $timesheet3->setRate(111.11);
+        $timesheet3->setHourlyRate(222.22);
+        $timesheet3->setUser(new User());
+        $timesheet3->setActivity($activity);
+        $timesheet3->setProject($project);
+        $timesheet3->setBegin(new \DateTime());
+        $timesheet3->setEnd(new \DateTime());
 
         $entries = [$timesheet, $timesheet2, $timesheet3];
 
@@ -180,22 +169,22 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $sut = $this->getCalculator();
         $sut->setModel($model);
 
-        $this->assertEquals('short', $sut->getId());
-        $this->assertEquals(581.17, $sut->getTotal());
-        $this->assertEquals(19, $sut->getVat());
-        $this->assertEquals('EUR', $model->getCurrency());
-        $this->assertEquals(488.38, $sut->getSubtotal());
-        $this->assertEquals(5800, $sut->getTimeWorked());
-        $this->assertEquals(1, \count($sut->getEntries()));
+        self::assertEquals('short', $sut->getId());
+        self::assertEquals(581.17, $sut->getTotal());
+        self::assertEquals(19, $sut->getVat());
+        self::assertEquals('EUR', $model->getCurrency());
+        self::assertEquals(488.38, $sut->getSubtotal());
+        self::assertEquals(5800, $sut->getTimeWorked());
+        self::assertEquals(1, \count($sut->getEntries()));
 
         /** @var InvoiceItem $result */
         $result = $sut->getEntries()[0];
-        $this->assertNull($result->getDescription());
-        $this->assertEquals(488.38, $result->getHourlyRate());
-        $this->assertEquals(488.38, $result->getFixedRate());
-        $this->assertEquals(488.38, $result->getRate());
-        $this->assertEquals(5800, $result->getDuration());
-        $this->assertEquals(1, $result->getAmount());
+        self::assertNull($result->getDescription());
+        self::assertEquals(488.38, $result->getHourlyRate());
+        self::assertEquals(488.38, $result->getFixedRate());
+        self::assertEquals(488.38, $result->getRate());
+        self::assertEquals(5800, $result->getDuration());
+        self::assertEquals(1, $result->getAmount());
     }
 
     public function testWithMixedRateTypes(): void
@@ -212,38 +201,32 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $activity->setProject($project);
 
         $timesheet = new Timesheet();
-        $timesheet
-            ->setDuration(3600)
-            ->setRate(293.27)
-            ->setUser(new User())
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setBegin(new \DateTime())
-            ->setEnd(new \DateTime())
-        ;
+        $timesheet->setDuration(3600);
+        $timesheet->setRate(293.27);
+        $timesheet->setUser(new User());
+        $timesheet->setActivity($activity);
+        $timesheet->setProject($project);
+        $timesheet->setBegin(new \DateTime());
+        $timesheet->setEnd(new \DateTime());
 
         $timesheet2 = new Timesheet();
-        $timesheet2
-            ->setDuration(400)
-            ->setFixedRate(84)
-            ->setRate(84)
-            ->setUser(new User())
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setBegin(new \DateTime())
-            ->setEnd(new \DateTime())
-        ;
+        $timesheet2->setDuration(400);
+        $timesheet2->setFixedRate(84);
+        $timesheet2->setRate(84);
+        $timesheet2->setUser(new User());
+        $timesheet2->setActivity($activity);
+        $timesheet2->setProject($project);
+        $timesheet2->setBegin(new \DateTime());
+        $timesheet2->setEnd(new \DateTime());
 
         $timesheet3 = new Timesheet();
-        $timesheet3
-            ->setDuration(1800)
-            ->setRate(111.11)
-            ->setUser(new User())
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setBegin(new \DateTime())
-            ->setEnd(new \DateTime())
-        ;
+        $timesheet3->setDuration(1800);
+        $timesheet3->setRate(111.11);
+        $timesheet3->setUser(new User());
+        $timesheet3->setActivity($activity);
+        $timesheet3->setProject($project);
+        $timesheet3->setBegin(new \DateTime());
+        $timesheet3->setEnd(new \DateTime());
 
         $entries = [$timesheet, $timesheet2, $timesheet3];
 
@@ -256,22 +239,22 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTest
         $sut = $this->getCalculator();
         $sut->setModel($model);
 
-        $this->assertEquals('short', $sut->getId());
-        $this->assertEquals(581.17, $sut->getTotal());
-        $this->assertEquals(19, $sut->getVat());
-        $this->assertEquals('EUR', $model->getCurrency());
-        $this->assertEquals(488.38, $sut->getSubtotal());
-        $this->assertEquals(5800, $sut->getTimeWorked());
-        $this->assertEquals(1, \count($sut->getEntries()));
+        self::assertEquals('short', $sut->getId());
+        self::assertEquals(581.17, $sut->getTotal());
+        self::assertEquals(19, $sut->getVat());
+        self::assertEquals('EUR', $model->getCurrency());
+        self::assertEquals(488.38, $sut->getSubtotal());
+        self::assertEquals(5800, $sut->getTimeWorked());
+        self::assertEquals(1, \count($sut->getEntries()));
 
         /** @var InvoiceItem $result */
         $result = $sut->getEntries()[0];
-        $this->assertNull($result->getDescription());
-        $this->assertEquals(488.38, $result->getHourlyRate());
-        $this->assertEquals(488.38, $result->getRate());
-        $this->assertEquals(5800, $result->getDuration());
-        $this->assertEquals(488.38, $result->getFixedRate());
-        $this->assertEquals(1, $result->getAmount());
+        self::assertNull($result->getDescription());
+        self::assertEquals(488.38, $result->getHourlyRate());
+        self::assertEquals(488.38, $result->getRate());
+        self::assertEquals(5800, $result->getDuration());
+        self::assertEquals(488.38, $result->getFixedRate());
+        self::assertEquals(1, $result->getAmount());
     }
 
     public function testDescriptionByTimesheet(): void

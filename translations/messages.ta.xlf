@@ -1,0 +1,1947 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ta" datatype="plaintext" original="messages.en.xlf">
+    <body>
+      <trans-unit id="KLIuHvt" resname="This is a mandatory field" xml:space="preserve" approved="yes">
+        <source>This is a mandatory field</source>
+        <target state="final">கட்டாயம்</target>
+      </trans-unit>
+      <trans-unit id="_ohHsMM" resname="create" xml:space="preserve" approved="yes">
+        <source>create</source>
+        <target state="final">உருவாக்கு</target>
+      </trans-unit>
+      <trans-unit id="1_wnK76" resname="profile.title" xml:space="preserve" approved="no">
+        <source>profile.title</source>
+        <target state="translated">பயனர் தன்விவரம்</target>
+      </trans-unit>
+      <trans-unit id="HWKJZ0T" resname="profile.about_me" xml:space="preserve" approved="no">
+        <source>profile.about_me</source>
+        <target state="translated">என்னைப் பற்றி</target>
+      </trans-unit>
+      <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve" approved="no">
+        <source>profile.first_entry</source>
+        <target state="translated">முதல் வேலை நாள்</target>
+      </trans-unit>
+      <trans-unit id="1c0EQaz" resname="profile.registration_date" xml:space="preserve" approved="no">
+        <source>profile.registration_date</source>
+        <target state="translated">பதிவுசெய்யப்பட்டது நாள்</target>
+      </trans-unit>
+      <trans-unit id="xEYQXPy" resname="profile.settings" xml:space="preserve" approved="no">
+        <source>profile.settings</source>
+        <target state="translated">தன்விவரம்</target>
+      </trans-unit>
+      <trans-unit id="A6TLLQa" resname="profile.password" xml:space="preserve" approved="no">
+        <source>profile.password</source>
+        <target state="translated">கடவுச்சொல்</target>
+      </trans-unit>
+      <trans-unit id="FeFBn_3" resname="profile.2fa" xml:space="preserve" approved="no">
+        <source>profile.2fa</source>
+        <target state="translated">இரண்டு காரணி (2fa)</target>
+      </trans-unit>
+      <trans-unit id="hPY2VcD" resname="profile.2fa_intro" xml:space="preserve" approved="no">
+        <source>profile.2fa_intro</source>
+        <target state="translated">உங்கள் பயன்பாட்டில் படத்தை ச்கேன் செய்வதன் மூலம் புதிய சாதனத்தைச் செயல்படுத்தலாம்.</target>
+      </trans-unit>
+      <trans-unit id="Y0PRG9Z" resname="profile.2fa_confirmation" xml:space="preserve" approved="no">
+        <source>profile.2fa_confirmation</source>
+        <target state="translated">இந்தக் கணக்கிற்கான இரண்டு காரணி அங்கீகாரத்தை செயல்படுத்தும் குறியீட்டை உறுதிப்படுத்தவும்.</target>
+      </trans-unit>
+      <trans-unit id="lfSTZGe" resname="stats.workingTimeToday" xml:space="preserve" approved="no">
+        <source>stats.workingTimeToday</source>
+        <target state="translated">இன்று, %day%</target>
+      </trans-unit>
+      <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek" xml:space="preserve" approved="no">
+        <source>stats.workingTimeWeek</source>
+        <target state="translated">காலிகை வாரம் %week%</target>
+      </trans-unit>
+      <trans-unit id="JnUFsNi" resname="stats.workingTimeYear" xml:space="preserve" approved="no">
+        <source>stats.workingTimeYear</source>
+        <target state="translated">முழு ஆண்டு %year%</target>
+      </trans-unit>
+      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear" xml:space="preserve" approved="no">
+        <source>stats.workingTimeFinancialYear</source>
+        <target state="translated">நிதியாண்டு</target>
+      </trans-unit>
+      <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve" approved="no">
+        <source>Working hours</source>
+        <target state="translated">வேலை நேரம்</target>
+      </trans-unit>
+      <trans-unit id="Nx9_QiO" resname="revenue" xml:space="preserve" approved="no">
+        <source>revenue</source>
+        <target state="translated">வருவாய்</target>
+      </trans-unit>
+      <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve" approved="no">
+        <source>stats.durationToday</source>
+        <target state="translated">இன்று</target>
+      </trans-unit>
+      <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve" approved="no">
+        <source>stats.durationWeek</source>
+        <target state="translated">இந்த வாரம்</target>
+      </trans-unit>
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve" approved="no">
+        <source>stats.durationMonth</source>
+        <target state="translated">இந்த மாதம்</target>
+      </trans-unit>
+      <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve" approved="no">
+        <source>stats.durationYear</source>
+        <target state="translated">இந்த ஆண்டு</target>
+      </trans-unit>
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve" approved="no">
+        <source>stats.durationFinancialYear</source>
+        <target state="needs-translation">இந்தப் பொருள் ஆண்டு வேலை நேரம்</target>
+      </trans-unit>
+      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek" xml:space="preserve" approved="no">
+        <source>stats.userDurationWeek</source>
+        <target state="translated">இந்த வார எனது வேலை நேரம்</target>
+      </trans-unit>
+      <trans-unit id="0WpgaGa" resname="stats.userDurationMonth" xml:space="preserve" approved="no">
+        <source>stats.userDurationMonth</source>
+        <target state="translated">இந்த மாதத்தில் எனது வேலை நேரம்</target>
+      </trans-unit>
+      <trans-unit id="BjyLITj" resname="stats.userDurationYear" xml:space="preserve" approved="no">
+        <source>stats.userDurationYear</source>
+        <target state="translated">இந்த ஆண்டு எனது வேலை நேரம்</target>
+      </trans-unit>
+      <trans-unit id="EedlgkM" resname="stats.userDurationTotal" xml:space="preserve" approved="no">
+        <source>stats.userDurationTotal</source>
+        <target state="translated">எனது வேலை நேரம் மொத்தம்</target>
+      </trans-unit>
+      <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours" xml:space="preserve" approved="no">
+        <source>stats.yourWorkingHours</source>
+        <target state="translated">எனது வேலை நேரம்</target>
+      </trans-unit>
+      <trans-unit id="023M9Ta" resname="stats.amountToday" xml:space="preserve" approved="no">
+        <source>stats.amountToday</source>
+        <target state="translated">இன்றைய வருவாய்</target>
+      </trans-unit>
+      <trans-unit id="xnJvYAE" resname="stats.amountWeek" xml:space="preserve" approved="no">
+        <source>stats.amountWeek</source>
+        <target state="translated">இந்த வார வருவாய்</target>
+      </trans-unit>
+      <trans-unit id="ulr3reE" resname="stats.amountMonth" xml:space="preserve" approved="no">
+        <source>stats.amountMonth</source>
+        <target state="translated">இந்த மாத வருவாய்</target>
+      </trans-unit>
+      <trans-unit id="bQZyZaO" resname="stats.amountYear" xml:space="preserve" approved="no">
+        <source>stats.amountYear</source>
+        <target state="translated">இந்த ஆண்டு வருவாய்</target>
+      </trans-unit>
+      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear" xml:space="preserve" approved="no">
+        <source>stats.amountFinancialYear</source>
+        <target state="translated">இந்தப் பொருள் ஆண்டு வருவாய்</target>
+      </trans-unit>
+      <trans-unit id="mQMcndl" resname="stats.userAmountToday" xml:space="preserve" approved="no">
+        <source>stats.userAmountToday</source>
+        <target state="translated">இன்று எனது வருவாய்</target>
+      </trans-unit>
+      <trans-unit id="E3Kj9lt" resname="stats.userAmountMonth" xml:space="preserve" approved="no">
+        <source>stats.userAmountMonth</source>
+        <target state="translated">இந்த மாதம் எனது வருவாய்</target>
+      </trans-unit>
+      <trans-unit id="9jlbhkf" resname="stats.userAmountTotal" xml:space="preserve" approved="no">
+        <source>stats.userAmountTotal</source>
+        <target state="translated">எனது மொத்த வருவாய்</target>
+      </trans-unit>
+      <trans-unit id="HzICegM" resname="stats.activeUsersToday" xml:space="preserve" approved="no">
+        <source>stats.activeUsersToday</source>
+        <target state="translated">இன்று செயலில் உள்ள பயனர்கள்</target>
+      </trans-unit>
+      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek" xml:space="preserve" approved="no">
+        <source>stats.activeUsersWeek</source>
+        <target state="translated">இந்த வாரம் செயலில் உள்ள பயனர்கள்</target>
+      </trans-unit>
+      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth" xml:space="preserve" approved="no">
+        <source>stats.activeUsersMonth</source>
+        <target state="translated">இந்த மாதம் செயலில் உள்ள பயனர்கள்</target>
+      </trans-unit>
+      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear" xml:space="preserve" approved="no">
+        <source>stats.activeUsersYear</source>
+        <target state="translated">இந்த ஆண்டு செயலில் உள்ள பயனர்கள்</target>
+      </trans-unit>
+      <trans-unit id="t5eIWp8" resname="stats.userTotal" xml:space="preserve" approved="no">
+        <source>stats.userTotal</source>
+        <target state="translated">பயனர்கள்</target>
+      </trans-unit>
+      <trans-unit id="Bor.76M" resname="stats.activityTotal" xml:space="preserve" approved="no">
+        <source>stats.activityTotal</source>
+        <target state="translated">நடவடிக்கைகள்</target>
+      </trans-unit>
+      <trans-unit id="67uSaR3" resname="stats.projectTotal" xml:space="preserve" approved="no">
+        <source>stats.projectTotal</source>
+        <target state="translated">திட்டங்கள்</target>
+      </trans-unit>
+      <trans-unit id="unC5MXv" resname="stats.percentUsed" xml:space="preserve" approved="no">
+        <source>stats.percentUsed</source>
+        <target state="translated">%percent%% பயன்படுத்தப்படுகிறது</target>
+      </trans-unit>
+      <trans-unit id="F7xeAn4" resname="invoice_date" xml:space="preserve" approved="no">
+        <source>invoice_date</source>
+        <target state="translated">விலைப்பட்டியல் தேதி</target>
+      </trans-unit>
+      <trans-unit id="zzjZXJx" resname="amount" xml:space="preserve" approved="no">
+        <source>amount</source>
+        <target state="translated">அளவு</target>
+      </trans-unit>
+      <trans-unit id="BAkWQqr" resname="total_rate" xml:space="preserve" approved="no">
+        <source>total_rate</source>
+        <target state="translated">மொத்த விலை</target>
+      </trans-unit>
+      <trans-unit id="IoKfYkz" resname="unit_price" xml:space="preserve" approved="no">
+        <source>unit_price</source>
+        <target state="translated">அலகு விலை</target>
+      </trans-unit>
+      <trans-unit id="033t0aO" resname="payment_terms" xml:space="preserve" approved="no">
+        <source>payment_terms</source>
+        <target state="translated">கட்டண விதிமுறைகள்</target>
+      </trans-unit>
+      <trans-unit id="9p2KQag" resname="invoice.signature_user" xml:space="preserve" approved="no">
+        <source>invoice.signature_user</source>
+        <target state="translated">உறுதிப்படுத்தல்: தேதி / ஆலோசகரின் பெயர் / கையொப்பம்</target>
+      </trans-unit>
+      <trans-unit id="Q9ykNhO" resname="invoice.signature_customer" xml:space="preserve" approved="no">
+        <source>invoice.signature_customer</source>
+        <target state="translated">உறுதிப்படுத்தல்: தேதி / வாடிக்கையாளரின் பெயர் / கையொப்பம்</target>
+      </trans-unit>
+      <trans-unit id="c3d6p33" resname="invoice.total_working_time" xml:space="preserve" approved="yes">
+        <source>invoice.total_working_time</source>
+        <target state="final">மொத்த காலம்</target>
+      </trans-unit>
+      <trans-unit id="3tegKgk" resname="orderNumber" xml:space="preserve" approved="no">
+        <source>orderNumber</source>
+        <target state="translated">ஆணை எண்</target>
+      </trans-unit>
+      <trans-unit id="tCNBGKG" resname="orderDate" xml:space="preserve" approved="no">
+        <source>orderDate</source>
+        <target state="translated">ஆணை தேதி</target>
+      </trans-unit>
+      <trans-unit id="WMJwy8r" resname="invoice_tax_number" xml:space="preserve" approved="no">
+        <source>invoice_tax_number</source>
+        <target state="translated">மகூவரி எண்.:</target>
+      </trans-unit>
+      <trans-unit id="lswYe8s" resname="invoice_bank_account" xml:space="preserve" approved="no">
+        <source>invoice_bank_account</source>
+        <target state="translated">வங்கி கணக்கு</target>
+      </trans-unit>
+      <trans-unit id="BzwWNMS" resname="status" xml:space="preserve" approved="no">
+        <source>status</source>
+        <target state="translated">நிலை</target>
+      </trans-unit>
+      <trans-unit id="X_NRsed" resname="status.new" xml:space="preserve" approved="no">
+        <source>status.new</source>
+        <target state="translated">புதிய</target>
+      </trans-unit>
+      <trans-unit id="Uvo1CbP" resname="status.pending" xml:space="preserve" approved="no">
+        <source>status.pending</source>
+        <target state="translated">நிலுவையில் உள்ளது</target>
+      </trans-unit>
+      <trans-unit id="PHJwR4w" resname="status.paid" xml:space="preserve" approved="no">
+        <source>status.paid</source>
+        <target state="translated">செலுத்தப்பட்டது</target>
+      </trans-unit>
+      <trans-unit id="gT9W2pZ" resname="status.canceled" xml:space="preserve" approved="no">
+        <source>status.canceled</source>
+        <target state="translated">கைவிடப்பட்டது</target>
+      </trans-unit>
+      <trans-unit id="Zngu6M9" resname="status.planned" xml:space="preserve" approved="no">
+        <source>status.planned</source>
+        <target state="translated">திட்டமிடப்பட்டது</target>
+      </trans-unit>
+      <trans-unit id="m8V2yFG" resname="status.progress" xml:space="preserve" approved="no">
+        <source>status.progress</source>
+        <target state="translated">முன்னேற்றத்தில் உள்ளது</target>
+      </trans-unit>
+      <trans-unit id="HF70hZq" resname="status.closed" xml:space="preserve" approved="no">
+        <source>status.closed</source>
+        <target state="translated">முடிந்தது</target>
+      </trans-unit>
+      <trans-unit id="opDmYAa" resname="status.approved" xml:space="preserve" approved="no">
+        <source>status.approved</source>
+        <target state="translated">ஒப்புதல்வழங்கப்பட்டது</target>
+      </trans-unit>
+      <trans-unit id="dOIWgOr" resname="approve" xml:space="preserve" approved="no">
+        <source>approve</source>
+        <target state="translated">ஒப்புதல்</target>
+      </trans-unit>
+      <trans-unit id="Na24cyT" resname="status.requested" xml:space="preserve" approved="no">
+        <source>status.requested</source>
+        <target state="translated">கோரப்பட்டது</target>
+      </trans-unit>
+      <trans-unit id="H1i5FFs" resname="request" xml:space="preserve" approved="no">
+        <source>request</source>
+        <target state="translated">கோரிக்கை</target>
+      </trans-unit>
+      <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve" approved="no">
+        <source>Rejected</source>
+        <target state="translated">நிராகரிக்கப்பட்டது</target>
+      </trans-unit>
+      <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve" approved="no">
+        <source>reject</source>
+        <target state="translated">நிராகரி</target>
+      </trans-unit>
+      <trans-unit id="J_teUVB" resname="updated" xml:space="preserve" approved="no">
+        <source>Updated</source>
+        <target state="translated">புதுப்பிக்கப்பட்டது</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve" approved="yes">
+        <source>default</source>
+        <target state="final">இயல்புநிலை</target>
+      </trans-unit>
+      <trans-unit id="_WlU8Fp" resname="sickness" xml:space="preserve" approved="no">
+        <source>sickness</source>
+        <target state="translated">நோய்</target>
+      </trans-unit>
+      <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve" approved="no">
+        <source>Sickness of a relative</source>
+        <target state="translated">உறவினரின் நோய்</target>
+      </trans-unit>
+      <trans-unit id="2SmKENG" resname="other" xml:space="preserve" approved="no">
+        <source>other</source>
+        <target state="translated">மற்றொன்று</target>
+      </trans-unit>
+      <trans-unit id="Od3xvQK" resname="button.report" xml:space="preserve" approved="no">
+        <source>button.report</source>
+        <target state="translated">அறிக்கை</target>
+      </trans-unit>
+      <trans-unit id="f0kKHXR" resname="sessions_logout" xml:space="preserve" approved="no">
+        <source>Log out of all devices</source>
+        <target state="translated">எல்லா சாதனங்களிலிருந்தும் வெளியேறு</target>
+      </trans-unit>
+      <trans-unit id="9qIU96X" resname="result" xml:space="preserve" approved="no">
+        <source>result</source>
+        <target state="translated">விளைவு</target>
+      </trans-unit>
+      <trans-unit id="wvt4jH3" resname="training" xml:space="preserve" approved="no">
+        <source>training</source>
+        <target state="translated">பயிற்சி</target>
+      </trans-unit>
+      <trans-unit id="EGpYQvx" resname="help" xml:space="preserve" approved="no">
+        <source>help</source>
+        <target state="translated">ஆவணப்படுத்துதல்</target>
+      </trans-unit>
+      <trans-unit id="OTDmccn" resname="attachments" xml:space="preserve" approved="yes">
+        <source>attachments</source>
+        <target state="final">கோப்புகள்</target>
+      </trans-unit>
+      <trans-unit id="yqea9Nt" resname="duration" xml:space="preserve" approved="no">
+        <source>duration</source>
+        <target state="translated">காலம்</target>
+      </trans-unit>
+      <trans-unit id="KH2hgil" resname="account_number" xml:space="preserve" approved="no">
+        <source>account_number</source>
+        <target state="translated">ஊழியரின் எண்</target>
+      </trans-unit>
+      <trans-unit id="dnQEYoJ" resname="budgetType_full" xml:space="preserve" approved="no">
+        <source>budgetType_full</source>
+        <target state="translated">வாழ்க்கை சுழற்சி</target>
+      </trans-unit>
+      <trans-unit id="Zif614Q" resname="add_user.label" xml:space="preserve" approved="no">
+        <source>add_user.label</source>
+        <target state="translated">பயனரைச் சேர்</target>
+      </trans-unit>
+      <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve" approved="no">
+        <source>Expiry date</source>
+        <target state="translated">காலாவதி தேதி</target>
+      </trans-unit>
+      <trans-unit id="j4Kd9N1" resname="calendar_initial_view" xml:space="preserve" approved="no">
+        <source>calendar_initial_view</source>
+        <target state="translated">ஆரம்ப காலிகை பார்வை</target>
+      </trans-unit>
+      <trans-unit id="Xyjr.V." resname="project_start" xml:space="preserve" approved="no">
+        <source>project_start</source>
+        <target state="translated">திட்டத் தொடக்கம்</target>
+      </trans-unit>
+      <trans-unit id="fFErSLq" resname="vat" xml:space="preserve" approved="no">
+        <source>vat</source>
+        <target state="translated">வரி</target>
+      </trans-unit>
+      <trans-unit id="RVadpX9" resname="phone" xml:space="preserve" approved="no">
+        <source>phone</source>
+        <target state="translated">தொலைபேசி</target>
+      </trans-unit>
+      <trans-unit id="PLLl1E0" resname="system_account" xml:space="preserve" approved="no">
+        <source>system_account</source>
+        <target state="translated">கணினி-கணக்கீடு</target>
+      </trans-unit>
+      <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN" xml:space="preserve" approved="no">
+        <source>ROLE_SUPER_ADMIN</source>
+        <target state="translated">கணினி-நிர்வாகி</target>
+      </trans-unit>
+      <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort" xml:space="preserve" approved="no">
+        <source>stats.workingTimeWeekShort</source>
+        <target state="translated">வாரம் %week%</target>
+      </trans-unit>
+      <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth" xml:space="preserve" approved="no">
+        <source>stats.workingTimeMonth</source>
+        <target state="translated">%year% %month%</target>
+      </trans-unit>
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve" approved="no">
+        <source>stats.durationTotal</source>
+        <target state="translated">மொத்தம்</target>
+      </trans-unit>
+      <trans-unit id="EI5gPkp" resname="stats.userDurationToday" xml:space="preserve" approved="no">
+        <source>stats.userDurationToday</source>
+        <target state="translated">இன்று எனது வேலை நேரம்</target>
+      </trans-unit>
+      <trans-unit id="Z0fz23v" resname="stats.amountTotal" xml:space="preserve" approved="no">
+        <source>stats.amountTotal</source>
+        <target state="translated">மொத்த வருவாய்</target>
+      </trans-unit>
+      <trans-unit id="LDS9o5X" resname="stats.userAmountWeek" xml:space="preserve" approved="no">
+        <source>stats.userAmountWeek</source>
+        <target state="translated">இந்த வாரம் எனது வருவாய்</target>
+      </trans-unit>
+      <trans-unit id="xvdsZsS" resname="stats.userAmountYear" xml:space="preserve" approved="no">
+        <source>stats.userAmountYear</source>
+        <target state="translated">இந்த ஆண்டு எனது வருவாய்</target>
+      </trans-unit>
+      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear" xml:space="preserve" approved="no">
+        <source>stats.activeUsersFinancialYear</source>
+        <target state="translated">இந்தப் பொருள் ஆண்டு செயலில் உள்ள பயனர்கள்</target>
+      </trans-unit>
+      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal" xml:space="preserve" approved="no">
+        <source>stats.activeUsersTotal</source>
+        <target state="translated">செயலில் உள்ள பயனர்கள் எப்போதும்</target>
+      </trans-unit>
+      <trans-unit id="lEW82ex" resname="stats.activeRecordings" xml:space="preserve" approved="no">
+        <source>stats.activeRecordings</source>
+        <target state="translated">செயலில் பதிவுகள்</target>
+      </trans-unit>
+      <trans-unit id="tnD6aPj" resname="stats.customerTotal" xml:space="preserve" approved="no">
+        <source>stats.customerTotal</source>
+        <target state="translated">வாடிக்கையாளர்கள்</target>
+      </trans-unit>
+      <trans-unit id="SR2r1Cs" resname="invoices" xml:space="preserve" approved="no">
+        <source>invoices</source>
+        <target state="translated">விலைப்பட்டியல்</target>
+      </trans-unit>
+      <trans-unit id="t.jgy7A" resname="all_invoices" xml:space="preserve" approved="no">
+        <source>all_invoices</source>
+        <target state="translated">விலைப்பட்டியல் வரலாறு</target>
+      </trans-unit>
+      <trans-unit id="3Clo55j" resname="about.title" xml:space="preserve" approved="no">
+        <source>about.title</source>
+        <target state="translated">கிம்மாய் பற்றி</target>
+      </trans-unit>
+      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve" approved="no">
+        <source>Time, date and currency format</source>
+        <target state="translated">நேரம், தேதி மற்றும் நாணய வடிவம்</target>
+      </trans-unit>
+      <trans-unit id="u4lbYD5" resname="public_holiday.group" xml:space="preserve" approved="no">
+        <source>public_holiday.group</source>
+        <target state="translated">விடுமுறை குழு</target>
+      </trans-unit>
+      <trans-unit id="hF6RgxM" resname="report" xml:space="preserve" approved="no">
+        <source>report</source>
+        <target state="translated">அறிக்கை</target>
+      </trans-unit>
+      <trans-unit id="PBlIO2x" resname="create-project" xml:space="preserve" approved="no">
+        <source>create-project</source>
+        <target state="translated">திட்டத்தை உருவாக்கு</target>
+      </trans-unit>
+      <trans-unit id="UbouFOs" resname="create-activity" xml:space="preserve" approved="no">
+        <source>create-activity</source>
+        <target state="translated">செயல்பாட்டை உருவாக்கு</target>
+      </trans-unit>
+      <trans-unit id="Qf.Yt2r" resname="details" xml:space="preserve" approved="no">
+        <source>details</source>
+        <target state="translated">காட்டு</target>
+      </trans-unit>
+      <trans-unit id="aP9j_4L" resname="download" xml:space="preserve" approved="no">
+        <source>download</source>
+        <target state="translated">பதிவிறக்கம்</target>
+      </trans-unit>
+      <trans-unit id="9M4b2ZN" resname="invoice.paid" xml:space="preserve" approved="no">
+        <source>invoice.paid</source>
+        <target state="translated">விலைப்பட்டியல் செலுத்தப்பட்டது</target>
+      </trans-unit>
+      <trans-unit id="38M3a4J" resname="filter" xml:space="preserve" approved="no">
+        <source>filter</source>
+        <target state="translated">தரவை வடிகட்டு</target>
+      </trans-unit>
+      <trans-unit id="CT59X9u" resname="contact" approved="yes" xml:space="preserve">
+        <source>Contact</source>
+        <target state="final">தொடர்பு</target>
+      </trans-unit>
+      <trans-unit id="mz4ieCN" resname="donate" xml:space="preserve" approved="yes">
+        <source>donate</source>
+        <target state="final">நன்கொடை</target>
+      </trans-unit>
+      <trans-unit id="XohImNo" resname="password" approved="yes" xml:space="preserve">
+        <source>Password</source>
+        <target state="final">கடவுச்சொல்</target>
+      </trans-unit>
+      <trans-unit id="yQRveje" resname="description" approved="yes" xml:space="preserve">
+        <source>Description</source>
+        <target state="final">விவரம்</target>
+      </trans-unit>
+      <trans-unit id="k5Apjz_" resname="no" xml:space="preserve" approved="yes">
+        <source>no</source>
+        <target state="final">இல்லை</target>
+      </trans-unit>
+      <trans-unit id=".3dyBTq" resname="both" approved="yes" xml:space="preserve">
+        <source>Both</source>
+        <target state="final">இரண்டும்</target>
+      </trans-unit>
+      <trans-unit id="U_D.NIy" resname="automatic" xml:space="preserve" approved="yes">
+        <source>automatic</source>
+        <target state="final">தானியங்கி</target>
+      </trans-unit>
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve" approved="yes">
+        <source>Time Tracking</source>
+        <target state="final">நேர கண்காணிப்பு</target>
+      </trans-unit>
+      <trans-unit id="inmIkP6" resname="yes" xml:space="preserve" approved="yes">
+        <source>yes</source>
+        <target state="final">ஆம்</target>
+      </trans-unit>
+      <trans-unit id="DYHuW58" resname="confirm.delete" xml:space="preserve" approved="yes">
+        <source>confirm.delete</source>
+        <target state="final">நீங்கள் உண்மையில் அதை நீக்க விரும்புகிறீர்களா?</target>
+      </trans-unit>
+      <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm" xml:space="preserve" approved="yes">
+        <source>admin_entity.delete_confirm</source>
+        <target state="final">இந்தத் தரவுகளும் நீக்கப்படும்! மாற்றாக, எல்லா தரவுகளும் மாற்றப்படும் ஒரு உள்ளீட்டை நீங்கள் தேர்ந்தெடுக்கலாம்:</target>
+      </trans-unit>
+      <trans-unit id="COyxNde" resname="delete.not_in_use" xml:space="preserve" approved="yes">
+        <source>delete.not_in_use</source>
+        <target state="final">இந்த உருப்படியைப் பாதுகாப்பாக நீக்க முடியும்.</target>
+      </trans-unit>
+      <trans-unit id="I3TZF5S" resname="cancel" xml:space="preserve" approved="yes">
+        <source>cancel</source>
+        <target state="final">எதிராணை</target>
+      </trans-unit>
+      <trans-unit id="PyZ8KrQ" resname="confirm" xml:space="preserve" approved="yes">
+        <source>confirm</source>
+        <target state="final">உறுதிப்படுத்து</target>
+      </trans-unit>
+      <trans-unit id=".0CFrRV" resname="upload" xml:space="preserve" approved="yes">
+        <source>upload</source>
+        <target state="final">பதிவேற்றும்</target>
+      </trans-unit>
+      <trans-unit id="JBkykGe" resname="search" xml:space="preserve" approved="yes">
+        <source>search</source>
+        <target state="final">தேடல்</target>
+      </trans-unit>
+      <trans-unit id="op76XPd" resname="search_filter" xml:space="preserve" approved="yes">
+        <source>Search filter</source>
+        <target state="final">தேடல் வடிகட்டி</target>
+      </trans-unit>
+      <trans-unit id="8W_TZI0" resname="searchTerm" xml:space="preserve" approved="yes">
+        <source>searchTerm</source>
+        <target state="final">தேடல் சொல்</target>
+      </trans-unit>
+      <trans-unit id="CiA4s9E" resname="set_as_default" xml:space="preserve" approved="yes">
+        <source>set_as_default</source>
+        <target state="final">தேடல் பிடித்ததாக அமைப்பைச் சேமி</target>
+      </trans-unit>
+      <trans-unit id="DUDrvjk" resname="remove_default" xml:space="preserve" approved="yes">
+        <source>remove_default</source>
+        <target state="final">தேடல் பிடித்ததை நீக்கு</target>
+      </trans-unit>
+      <trans-unit id="1MfS6X5" resname="remove_filter" xml:space="preserve" approved="yes">
+        <source>remove_filter</source>
+        <target state="final">தேடல் வடிப்பானை மீட்டமை</target>
+      </trans-unit>
+      <trans-unit id="1o0.9vf" resname="asc" xml:space="preserve" approved="yes">
+        <source>asc</source>
+        <target state="final">ஏறுதல்</target>
+      </trans-unit>
+      <trans-unit id="l4ZOh4." resname="desc" xml:space="preserve" approved="yes">
+        <source>desc</source>
+        <target state="final">இறங்குதல்</target>
+      </trans-unit>
+      <trans-unit id="VSo_gmO" resname="orderBy" xml:space="preserve" approved="yes">
+        <source>orderBy</source>
+        <target state="final">இதால் அடுக்கு</target>
+      </trans-unit>
+      <trans-unit id="J258iS6" resname="update_multiple" xml:space="preserve" approved="yes">
+        <source>update_multiple</source>
+        <target state="final">%action%%count% உள்ளீடுகள்</target>
+      </trans-unit>
+      <trans-unit id="O5w1jzb" resname="file" xml:space="preserve" approved="yes">
+        <source>file</source>
+        <target state="final">கோப்பு</target>
+      </trans-unit>
+      <trans-unit id="0M_Gylq" resname="rates.empty" xml:space="preserve" approved="yes">
+        <source>rates.empty</source>
+        <target state="final">விலைகள் எதுவும் கட்டமைக்கப்படவில்லை.</target>
+      </trans-unit>
+      <trans-unit id="mflwMcX" resname="rates.title" xml:space="preserve" approved="yes">
+        <source>rates.title</source>
+        <target state="final">விலைகள்</target>
+      </trans-unit>
+      <trans-unit id="zFfl7jw" resname="sum.total" xml:space="preserve" approved="yes">
+        <source>sum.total</source>
+        <target state="final">மொத்தம்</target>
+      </trans-unit>
+      <trans-unit id="XP5zkiN" resname="modal.dirty" xml:space="preserve" approved="yes">
+        <source>modal.dirty</source>
+        <target state="final">வடிவம் மாறிவிட்டது. மாற்றங்களைச் சேமிக்க "சேமி" அல்லது எதிராணை செய்ய "மூடு" என்பதைக் சொடுக்கு செய்க.</target>
+      </trans-unit>
+      <trans-unit id="fVA3M2x" resname="choice_pattern" xml:space="preserve" approved="yes">
+        <source>Display of entries in selection lists</source>
+        <target state="final">தேர்வு பட்டியல்களில் உள்ளீடுகளின் காட்சி</target>
+      </trans-unit>
+      <trans-unit id="hLEZkoC" resname="password_repeat" xml:space="preserve" approved="yes">
+        <source>password_repeat</source>
+        <target state="final">கடவுச்சொல்லை மீண்டும் இடு</target>
+      </trans-unit>
+      <trans-unit id="ACcM9j_" resname="logout" xml:space="preserve" approved="yes">
+        <source>logout</source>
+        <target state="final">வெளியேறு</target>
+      </trans-unit>
+      <trans-unit id="_x2He8M" resname="user_profile" xml:space="preserve" approved="yes">
+        <source>user_profile</source>
+        <target state="final">தன்விவரக்குறிப்பு</target>
+      </trans-unit>
+      <trans-unit id="T4nAM7X" resname="api_token" xml:space="preserve" approved="yes">
+        <source>api_token</source>
+        <target state="final">பநிஇ கடவுச்சொல்</target>
+      </trans-unit>
+      <trans-unit id="aq59Sk8" resname="api_token_repeat" xml:space="preserve" approved="yes">
+        <source>api_token_repeat</source>
+        <target state="final">பநிஇ கடவுச்சொல்லை மீண்டும் இடு</target>
+      </trans-unit>
+      <trans-unit id=".372.o7" resname="login_required" xml:space="preserve" approved="yes">
+        <source>login_required</source>
+        <target state="final">இசைவு இல்லை. திருப்பி உள்நுழை?</target>
+      </trans-unit>
+      <trans-unit id="XQ2.pq2" resname="error.too_many_entries" xml:space="preserve" approved="no">
+        <source>error.too_many_entries</source>
+        <target state="translated">கோரிக்கையைச் செயலாக்க முடியவில்லை. பல முடிவுகள் காணப்பட்டன.</target>
+      </trans-unit>
+      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve" approved="yes">
+        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
+        <target state="final">ஒரு %email%க்கு மின்னஞ்சல் அனுப்பப்பட்டுள்ளது. உங்கள் கணக்கைச் செயல்படுத்த நீங்கள் சொடுக்கு செய்ய வேண்டிய இணைப்பு இதில் உள்ளது.</target>
+      </trans-unit>
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="yes" xml:space="preserve">
+        <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
+        <target state="final">உங்கள் கடவுச்சொல்லை மீட்டமைக்க இணைப்புடன் மின்னஞ்சல் அனுப்பப்பட்டுள்ளது. குறிப்பு: ஒவ்வொரு %tokenLifetime% மணிநேரங்களுக்கும் ஒரு முறை மட்டுமே புதிய கடவுச்சொல்லை கோர முடியும். நீங்கள் மின்னஞ்சலைப் பெறவில்லை என்றால், தயவுசெய்து உங்கள் பழுதான கோப்புறையைச் சரிபார்க்கவும் அல்லது மீண்டும் முயற்சிக்கவும்.</target>
+      </trans-unit>
+      <trans-unit id="fQ3Prt4" resname="security.unlock.title" xml:space="preserve" approved="yes">
+        <source>security.unlock.title</source>
+        <target state="final">கணக்கைத் திற</target>
+      </trans-unit>
+      <trans-unit id="nqEYrfk" resname="security.unlock.intro" xml:space="preserve" approved="yes">
+        <source>security.unlock.intro</source>
+        <target state="final">முழு அணுகலுக்காக உங்கள் கடவுச்சொல்லை உள்ளிடவும்</target>
+      </trans-unit>
+      <trans-unit id="853W5Iu" resname="security.unlock.button" xml:space="preserve" approved="yes">
+        <source>security.unlock.button</source>
+        <target state="final">திறக்க</target>
+      </trans-unit>
+      <trans-unit id="UoOv6mx" resname="menu.homepage" xml:space="preserve" approved="yes">
+        <source>menu.homepage</source>
+        <target state="final">முகப்பலகம்</target>
+      </trans-unit>
+      <trans-unit id="Eq2E_Rd" resname="menu.apps" xml:space="preserve" approved="yes">
+        <source>Apps</source>
+        <target state="final">பயன்பாடுகள்</target>
+      </trans-unit>
+      <trans-unit id="wvvYSw_" resname="menu.admin" xml:space="preserve" approved="no">
+        <source>menu.admin</source>
+        <target state="translated">நிர்வாகம்</target>
+      </trans-unit>
+      <trans-unit id="6OKwCUB" resname="menu.system" xml:space="preserve" approved="no">
+        <source>menu.system</source>
+        <target state="translated">முறைமை</target>
+      </trans-unit>
+      <trans-unit id="wBTFKFR" resname="menu.logout" xml:space="preserve" approved="no">
+        <source>menu.logout</source>
+        <target state="translated">வெளியேற்றம்</target>
+      </trans-unit>
+      <trans-unit id="ebTjBb9" resname="my_times" xml:space="preserve" approved="no">
+        <source>my_times</source>
+        <target state="translated">என் நேரங்கள்</target>
+      </trans-unit>
+      <trans-unit id="ypVQO7o" resname="menu.reporting" xml:space="preserve" approved="no">
+        <source>menu.reporting</source>
+        <target state="translated">அறிக்கையளித்தல்</target>
+      </trans-unit>
+      <trans-unit id="yxQop43" resname="all_times" xml:space="preserve" approved="no">
+        <source>all_times</source>
+        <target state="translated">எல்லா நேரங்களும்</target>
+      </trans-unit>
+      <trans-unit id="IeshU90" resname="customers" xml:space="preserve" approved="no">
+        <source>customers</source>
+        <target state="translated">வாடிக்கையாளர்கள்</target>
+      </trans-unit>
+      <trans-unit id="JXfA9Ve" resname="projects" xml:space="preserve" approved="no">
+        <source>projects</source>
+        <target state="translated">திட்டங்கள்</target>
+      </trans-unit>
+      <trans-unit id="YkyVVAY" resname="activities" xml:space="preserve" approved="no">
+        <source>activities</source>
+        <target state="translated">நடவடிக்கைகள்</target>
+      </trans-unit>
+      <trans-unit id="fftM9nd" resname="users" xml:space="preserve" approved="no">
+        <source>users</source>
+        <target state="translated">பயனர்கள்</target>
+      </trans-unit>
+      <trans-unit id="_t.2z4V" resname="teams" xml:space="preserve" approved="no">
+        <source>teams</source>
+        <target state="translated">அணிகள்</target>
+      </trans-unit>
+      <trans-unit id="3rJ5QDP" resname="help.teams" xml:space="preserve" approved="no">
+        <source>help.teams</source>
+        <target state="translated">தேர்ந்தெடுக்கப்பட்ட அணிகளுக்குத் தெரிவுநிலையை கட்டுப்படுத்துகிறது.</target>
+      </trans-unit>
+      <trans-unit id="hOZxcaK" resname="menu.plugin" xml:space="preserve" approved="no">
+        <source>menu.plugin</source>
+        <target state="translated">செருகுநிரல்கள்</target>
+      </trans-unit>
+      <trans-unit id="IXtkHRw" resname="menu.system_configuration" xml:space="preserve" approved="no">
+        <source>menu.system_configuration</source>
+        <target state="translated">அமைப்புகள்</target>
+      </trans-unit>
+      <trans-unit id="l4wviUE" resname="tags" xml:space="preserve" approved="no">
+        <source>tags</source>
+        <target state="translated">குறிச்சொற்கள்</target>
+      </trans-unit>
+      <trans-unit id="JGaf9IK" resname="Doctor" xml:space="preserve" approved="no">
+        <source>Doctor</source>
+        <target state="translated">மருத்துவர்</target>
+      </trans-unit>
+      <trans-unit id="Vz3Igj3" resname="error.no_entries_found" xml:space="preserve" approved="no">
+        <source>error.no_entries_found</source>
+        <target state="translated">நீங்கள் தேர்ந்தெடுத்த வடிப்பான்களின் அடிப்படையில் உள்ளீடுகள் எதுவும் காணப்படவில்லை.</target>
+      </trans-unit>
+      <trans-unit id="hlu4iX5" resname="error.no_comments_found" xml:space="preserve" approved="no">
+        <source>error.no_comments_found</source>
+        <target state="translated">இதுவரை எந்தக் கருத்துகளும் வெளியிடப்படவில்லை.</target>
+      </trans-unit>
+      <trans-unit id="GzWKgBk" resname="error.directory_missing" xml:space="preserve" approved="no">
+        <source>The directory “%dir%” does not exist and could not be created.</source>
+        <target state="translated">“%dir%” அடைவு இல்லை, உருவாக்க முடியவில்லை.</target>
+      </trans-unit>
+      <trans-unit id="C2TGff0" resname="error.directory_protected" xml:space="preserve" approved="no">
+        <source>error.directory_protected</source>
+        <target state="translated">அடைவு "%dir%" என்பது எழுதத் தடுக்கப்பட்டதாகும்.</target>
+      </trans-unit>
+      <trans-unit id="EYXzfTO" resname="deleted" xml:space="preserve" approved="no">
+        <source>deleted</source>
+        <target state="translated">நீக்கப்பட்டது</target>
+      </trans-unit>
+      <trans-unit id="EX27Gdt" resname="created_by" xml:space="preserve" approved="no">
+        <source>created_by</source>
+        <target state="translated">உருவாக்கியவர்</target>
+      </trans-unit>
+      <trans-unit id="6Hip2aF" resname="created_at" xml:space="preserve" approved="yes">
+        <source>created_at</source>
+        <target state="final">இல் உருவாக்கப்பட்டது</target>
+      </trans-unit>
+      <trans-unit id="QG7.sen" resname="created" xml:space="preserve" approved="no">
+        <source>Created</source>
+        <target state="translated">உருவாக்கப்பட்டது</target>
+      </trans-unit>
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve" approved="yes">
+        <source>date</source>
+        <target state="final">திகதி</target>
+      </trans-unit>
+      <trans-unit id="BHk4pZ3" resname="starttime" xml:space="preserve" approved="no">
+        <source>starttime</source>
+        <target state="translated">தொடங்கு</target>
+      </trans-unit>
+      <trans-unit id="eI_tMbq" resname="endtime" xml:space="preserve" approved="no">
+        <source>endtime</source>
+        <target state="translated">முடிவு</target>
+      </trans-unit>
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve" approved="yes">
+        <source>User</source>
+        <target state="final">பயனர்</target>
+      </trans-unit>
+      <trans-unit id="FveKfWM" resname="username" xml:space="preserve" approved="yes">
+        <source>username</source>
+        <target state="final">பயனர்</target>
+      </trans-unit>
+      <trans-unit id="OJ.wI1U" resname="invoiceText" xml:space="preserve" approved="no">
+        <source>invoiceText</source>
+        <target state="translated">பட்டியலிடல் செய்தி</target>
+      </trans-unit>
+      <trans-unit id="aOJITgv" resname="help.invoiceText" xml:space="preserve" approved="no">
+        <source>help.invoiceText</source>
+        <target state="translated">இந்த உரை விலைப்பட்டியல் ஆவணங்களில் பயன்படுத்தப்படுகிறது மற்றும் பயன்படுத்தலாம் எ.கா. மேலும் விநியோக நிலைமைகளைக் கவனிக்க.</target>
+      </trans-unit>
+      <trans-unit id="IDDfzoR" resname="invoiceLabel" xml:space="preserve" approved="no">
+        <source>invoiceLabel</source>
+        <target state="translated">விலைப்பட்டியல் உரை</target>
+      </trans-unit>
+      <trans-unit id="jLzX0Ae" resname="help.invoiceLabel" xml:space="preserve" approved="no">
+        <source>help.invoiceLabel</source>
+        <target state="translated">இந்த உரை பொருளின் பெயரை மாற்றுகிறது, இது விலைப்பட்டியல் உருப்படிகளுக்கு மேலும் விரிவான சிட்டைகளை அனுமதிக்கிறது.</target>
+      </trans-unit>
+      <trans-unit id="gqNTf.D" resname="name" xml:space="preserve" approved="no">
+        <source>name</source>
+        <target state="translated">பெயர்</target>
+      </trans-unit>
+      <trans-unit id="xEuy.VF" resname="comment" xml:space="preserve" approved="no">
+        <source>comment</source>
+        <target state="translated">கருத்து</target>
+      </trans-unit>
+      <trans-unit id="pWFFJwz" resname="id" xml:space="preserve" approved="no">
+        <source>id</source>
+        <target state="translated">அடையாளம்</target>
+      </trans-unit>
+      <trans-unit id="1C7xSXk" resname="visible" xml:space="preserve" approved="no">
+        <source>Visible</source>
+        <target state="translated">தெரியும்</target>
+      </trans-unit>
+      <trans-unit id="AeMGtJO" resname="help.visible" xml:space="preserve" approved="no">
+        <source>help.visible</source>
+        <target state="translated">அமைப்பு முடக்கப்பட்டிருந்தால், பொருள் கீழ்தோன்றும்-பெட்டிகள் மற்றும் பட்டியல் பார்வைகளில் காட்டப்படாது.</target>
+      </trans-unit>
+      <trans-unit id="t1r372x" resname="invisible" xml:space="preserve" approved="no">
+        <source>invisible</source>
+        <target state="translated">தெரியாத</target>
+      </trans-unit>
+      <trans-unit id="CvlqjtY" resname="budget" xml:space="preserve" approved="no">
+        <source>budget</source>
+        <target state="translated">நிதித்திட்டம்</target>
+      </trans-unit>
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve" approved="no">
+        <source>timeBudget</source>
+        <target state="translated">மணிநேர ஒதுக்கீடு</target>
+      </trans-unit>
+      <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve" approved="yes">
+        <source>activity</source>
+        <target state="final">செய்கைப்பாடு</target>
+      </trans-unit>
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve" approved="yes">
+        <source>Project</source>
+        <target state="final">திட்டம்</target>
+      </trans-unit>
+      <trans-unit id="KhBzpuZ" resname="tag" xml:space="preserve" approved="no">
+        <source>tag</source>
+        <target state="translated">குறிச்சொற்கள்</target>
+      </trans-unit>
+      <trans-unit id="E_bHhGR" resname="hourlyRate" xml:space="preserve" approved="no">
+        <source>hourlyRate</source>
+        <target state="translated">மணிநேர விலை</target>
+      </trans-unit>
+      <trans-unit id="KgBw0BS" resname="skin" xml:space="preserve" approved="no">
+        <source>skin</source>
+        <target state="translated">வடிவமைப்பு</target>
+      </trans-unit>
+      <trans-unit id="HcWuW2g" resname="layout" xml:space="preserve" approved="no">
+        <source>layout</source>
+        <target state="translated">காட்சி: தளவமைப்பு</target>
+      </trans-unit>
+      <trans-unit id="QEMUsfS" resname="hours" xml:space="preserve" approved="no">
+        <source>hours</source>
+        <target state="translated">மணிகள்</target>
+      </trans-unit>
+      <trans-unit id="xUl3nXn" resname="rate" xml:space="preserve" approved="yes">
+        <source>rate</source>
+        <target state="final">விலை</target>
+      </trans-unit>
+      <trans-unit id="djL6LMC" resname="help.rate" xml:space="preserve" approved="no">
+        <source>help.rate</source>
+        <target state="translated">வசூலிக்கப்பட வேண்டிய மணிநேர விலை</target>
+      </trans-unit>
+      <trans-unit id="5ofAsOs" resname="internalRate" xml:space="preserve" approved="no">
+        <source>internalRate</source>
+        <target state="translated">உள் விலை</target>
+      </trans-unit>
+      <trans-unit id="1STBoIE" resname="mobile" xml:space="preserve" approved="no">
+        <source>mobile</source>
+        <target state="translated">கைபேசி</target>
+      </trans-unit>
+      <trans-unit id="Cxv_0wG" resname="help.internalRate" xml:space="preserve" approved="no">
+        <source>help.internalRate</source>
+        <target state="translated">இது குறிப்பிடப்படவில்லை என்றால், சாதாரண விலை பயன்படுத்தப்படுகிறது</target>
+      </trans-unit>
+      <trans-unit id="Qc5nsFn" resname="recalculate_rates" xml:space="preserve" approved="no">
+        <source>recalculate_rates</source>
+        <target state="translated">விலைகளை மீண்டும் கணக்கிடுங்கள்</target>
+      </trans-unit>
+      <trans-unit id="pO8wS6Q" resname="language" xml:space="preserve" approved="no">
+        <source>language</source>
+        <target state="translated">மொழி</target>
+      </trans-unit>
+      <trans-unit id="tsRYY4d" resname="customer" xml:space="preserve" approved="no">
+        <source>customer</source>
+        <target state="translated">வாடிக்கையாளர்</target>
+      </trans-unit>
+      <trans-unit id="giREF.l" resname="email" xml:space="preserve" approved="no">
+        <source>E-mail</source>
+        <target state="translated">மின்னஞ்சல்</target>
+      </trans-unit>
+      <trans-unit id="yosi0Nu" resname="team" xml:space="preserve" approved="no">
+        <source>team</source>
+        <target state="translated">அணி</target>
+      </trans-unit>
+      <trans-unit id="evFI7nW" resname="teamlead" xml:space="preserve" approved="no">
+        <source>teamlead</source>
+        <target state="translated">குழுத் தலை</target>
+      </trans-unit>
+      <trans-unit id="LIOnolg" resname="placeholder.type_message" xml:space="preserve" approved="no">
+        <source>placeholder.type_message</source>
+        <target state="translated">உங்கள் செய்தியைத் தட்டச்சு செய்க…</target>
+      </trans-unit>
+      <trans-unit id="aVwNQcX" resname="billable" xml:space="preserve" approved="no">
+        <source>billable</source>
+        <target state="translated">வரவுச் சீட்டுசெய்யக்கூடியது</target>
+      </trans-unit>
+      <trans-unit id="oq1jcSQ" resname="help.billable" xml:space="preserve" approved="no">
+        <source>help.billable</source>
+        <target state="translated">அமைப்பு முடக்கப்பட்டால், எதிர்காலத்தில் பதிவுசெய்யப்பட்ட அனைத்து நேர உள்ளீடுகளும் "வரவுச் சீட்டுசெய்யக்கூடியவை அல்ல" என்று குறிக்கப்படும்.</target>
+      </trans-unit>
+      <trans-unit id="Kw3N1AA" resname="actions" xml:space="preserve" approved="no">
+        <source>actions</source>
+        <target state="translated">செயல்கள்</target>
+      </trans-unit>
+      <trans-unit id="ovKkXwU" resname="action.edit" xml:space="preserve" approved="no">
+        <source>action.edit</source>
+        <target state="translated">தொகு</target>
+      </trans-unit>
+      <trans-unit id="jdbtx6z" resname="action.add" xml:space="preserve" approved="no">
+        <source>action.add</source>
+        <target state="translated">கூட்டு</target>
+      </trans-unit>
+      <trans-unit id="YZdZVQP" resname="delete" xml:space="preserve" approved="no">
+        <source>action.delete</source>
+        <target state="translated">நீக்கு</target>
+      </trans-unit>
+      <trans-unit id="HLtdhYw" resname="action.save" xml:space="preserve" approved="no">
+        <source>action.save</source>
+        <target state="translated">சேமி</target>
+      </trans-unit>
+      <trans-unit id="tKZKI2Z" resname="action.reset" xml:space="preserve" approved="no">
+        <source>action.reset</source>
+        <target state="translated">மீட்டமை</target>
+      </trans-unit>
+      <trans-unit id="wCazS.X" resname="action.close" xml:space="preserve" approved="no">
+        <source>action.close</source>
+        <target state="translated">மூடு</target>
+      </trans-unit>
+      <trans-unit id="3bqLM8Q" resname="dashboard.title" xml:space="preserve" approved="no">
+        <source>dashboard.title</source>
+        <target state="translated">முகப்புப்பெட்டி</target>
+      </trans-unit>
+      <trans-unit id="wv3n.FT" resname="dashboard.edit_mode" xml:space="preserve" approved="no">
+        <source>dashboard.edit_mode</source>
+        <target state="translated">இழுவை பயன்படுத்தி உங்கள் நிரல்பலகங்களை மறுசீரமைக்கலாம் &amp; துளி. நிரல்பலகங்களைச் சேர்ப்பது நிலுவையில் உள்ள மாற்றங்களைச் சேமிக்கிறது.</target>
+      </trans-unit>
+      <trans-unit id="muzkQpM" resname="toggle_dropdown" xml:space="preserve" approved="no">
+        <source>toggle_dropdown</source>
+        <target state="translated">பட்டியலைக் காட்டு</target>
+      </trans-unit>
+      <trans-unit id="L05Qw2x" resname="my_teams" xml:space="preserve" approved="no">
+        <source>my_teams</source>
+        <target state="translated">எனது அணிகள்</target>
+      </trans-unit>
+      <trans-unit id="Ia0kvPi" resname="my_team_projects" xml:space="preserve" approved="no">
+        <source>my_team_projects</source>
+        <target state="translated">எனது திட்டங்கள்</target>
+      </trans-unit>
+      <trans-unit id="tfkKlua" resname="progress" xml:space="preserve" approved="no">
+        <source>progress</source>
+        <target state="translated">முன்னேற்றம்</target>
+      </trans-unit>
+      <trans-unit id="VXj0Y3h" resname="timesheet.title" xml:space="preserve" approved="no">
+        <source>timesheet.title</source>
+        <target state="translated">என் நேரங்கள்</target>
+      </trans-unit>
+      <trans-unit id="dwEVXUR" resname="timesheet.edit" xml:space="preserve" approved="no">
+        <source>timesheet.edit</source>
+        <target state="translated">பதிவைத் திருத்து</target>
+      </trans-unit>
+      <trans-unit id="5vB9Q7X" resname="begin" xml:space="preserve" approved="no">
+        <source>begin</source>
+        <target state="translated">இருந்து</target>
+      </trans-unit>
+      <trans-unit id="Nh5I0DC" resname="end" xml:space="preserve" approved="no">
+        <source>end</source>
+        <target state="translated">பெறுநர்</target>
+      </trans-unit>
+      <trans-unit id="iNOVZRh" resname="daterange" xml:space="preserve" approved="no">
+        <source>daterange</source>
+        <target state="translated">நேர வரம்பு</target>
+      </trans-unit>
+      <trans-unit id="_0tuMNE" resname="fixedRate" xml:space="preserve" approved="no">
+        <source>fixedRate</source>
+        <target state="translated">நிலையான விலை</target>
+      </trans-unit>
+      <trans-unit id="b43sCwO" resname="help.fixedRate" xml:space="preserve" approved="no">
+        <source>help.fixedRate</source>
+        <target state="translated">ஒவ்வொரு பதிவும் அதன் காலத்தைப் பொருட்படுத்தாமல் ஒரே விலையைப் பெறுகிறது</target>
+      </trans-unit>
+      <trans-unit id="dChNncv" resname="color" xml:space="preserve" approved="no">
+        <source>color</source>
+        <target state="translated">நிறம்</target>
+      </trans-unit>
+      <trans-unit id="erN3h3b" resname="replace" xml:space="preserve" approved="no">
+        <source>replace</source>
+        <target state="translated">மாற்று</target>
+      </trans-unit>
+      <trans-unit id="rlJLVNm" resname="append" xml:space="preserve" approved="no">
+        <source>append</source>
+        <target state="translated">பிற்சேர்</target>
+      </trans-unit>
+      <trans-unit id="UbnqJLn" resname="modal.columns.title" xml:space="preserve" approved="no">
+        <source>modal.columns.title</source>
+        <target state="translated">காட்சியைத் தனிப்பயனாக்குங்கள்</target>
+      </trans-unit>
+      <trans-unit id="LDsHBXd" resname="modal.columns.label" xml:space="preserve" approved="no">
+        <source>modal.columns.label</source>
+        <target state="translated">அட்டவணை நெடுவரிசைகள்</target>
+      </trans-unit>
+      <trans-unit id="WOAx9yz" resname="modal.columns.profile" xml:space="preserve" approved="no">
+        <source>modal.columns.profile</source>
+        <target state="translated">தன்விவரக்குறிப்பு</target>
+      </trans-unit>
+      <trans-unit id="aGk9Aqt" resname="desktop" xml:space="preserve" approved="no">
+        <source>desktop</source>
+        <target state="translated">பணிமேடை</target>
+      </trans-unit>
+      <trans-unit id="IRzPWmL" resname="login.2fa_intro" xml:space="preserve" approved="no">
+        <source>login.2fa_intro</source>
+        <target state="translated">உள்நுழைவு செயல்முறையை முடிக்க உறுதிப்படுத்தல் குறியீட்டை உள்ளிடவும்.</target>
+      </trans-unit>
+      <trans-unit id="FgKTw5v" resname="login.2fa_label" xml:space="preserve" approved="no">
+        <source>login.2fa_label</source>
+        <target state="translated">உறுதிப்படுத்தல் குறியீடு</target>
+      </trans-unit>
+      <trans-unit id="Z34ZpjK" resname="profile.api-token" xml:space="preserve" approved="no">
+        <source>profile.api-token</source>
+        <target state="translated">பநிஇ அணுகல்</target>
+      </trans-unit>
+      <trans-unit id="ygtTz8." resname="profile.roles" xml:space="preserve" approved="no">
+        <source>profile.roles</source>
+        <target state="translated">பாத்திரங்கள்</target>
+      </trans-unit>
+      <trans-unit id="eCEGRzN" resname="work_contract" xml:space="preserve" approved="no">
+        <source>work_contract</source>
+        <target state="translated">வேலைவாய்ப்பு ஒப்பந்தம்</target>
+      </trans-unit>
+      <trans-unit id="7_d7IB3" resname="evaluation" xml:space="preserve" approved="no">
+        <source>evaluation</source>
+        <target state="translated">மதிப்பீடு</target>
+      </trans-unit>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve" approved="no">
+        <source>Complete month</source>
+        <target state="translated">பூட்டு மாதம்</target>
+      </trans-unit>
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve" approved="no">
+        <source>complete_month.help</source>
+        <target state="translated">இது தேர்ந்தெடுக்கப்பட்ட தேதிக்கு முந்தைய ஆண்டின் அனைத்து நாட்களையும் பூட்டும். பூட்டப்பட்ட காலத்திற்கான நேரங்களைப் பயனர் இனி உருவாக்கவோ திருத்தவோ முடியாது.</target>
+      </trans-unit>
+      <trans-unit id="eWmotjb" resname="completed_month_pdf" xml:space="preserve" approved="no">
+        <source>completed_month_pdf</source>
+        <target state="translated">முடிக்கப்பட்ட மாத பிடிஎஃப்</target>
+      </trans-unit>
+      <trans-unit id="AXr_aHI" resname="completed_month_pdf_note" xml:space="preserve" approved="no">
+        <source>completed_month_pdf_note</source>
+        <target state="translated">இந்த ஆவணம் வேலை செய்த நேரங்களுக்குச் சான்றாகச் செயல்படுகிறது.</target>
+      </trans-unit>
+      <trans-unit id="yXrOTI." resname="review" xml:space="preserve" approved="no">
+        <source>Review</source>
+        <target state="translated">சீராய்வு</target>
+      </trans-unit>
+      <trans-unit id="mS4SSmt" resname="work_times" xml:space="preserve" approved="no">
+        <source>Working times</source>
+        <target state="translated">வேலை நேரங்கள்</target>
+      </trans-unit>
+      <trans-unit id="iaJj4va" resname="work_times_account" xml:space="preserve" approved="no">
+        <source>Account working times</source>
+        <target state="translated">கணக்கு வேலை நேரங்கள்</target>
+      </trans-unit>
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve" approved="no">
+        <source>Expected number of hours</source>
+        <target state="translated">எதிர்பார்க்கப்படும் நேரங்கள்</target>
+      </trans-unit>
+      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured" xml:space="preserve" approved="no">
+        <source>work_times_should.none_configured</source>
+        <target state="translated">வேலைவாய்ப்பு ஒப்பந்த அமைப்புகளில் இந்தப் பயனருக்கு இலக்கு நேரங்கள் எதுவும் கட்டமைக்கப்படவில்லை.</target>
+      </trans-unit>
+      <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve" approved="no">
+        <source>work_times_is</source>
+        <target state="translated">வேலை செய்த நேரங்கள்</target>
+      </trans-unit>
+      <trans-unit id="8yqaKzX" resname="confirmed_by_at" xml:space="preserve" approved="no">
+        <source>confirmed_by_at</source>
+        <target state="translated">%user%ஆல் %date%இல் உறுதிப்படுத்தப்பட்டுள்ளது</target>
+      </trans-unit>
+      <trans-unit id="wZRRqg0" resname="manual_bookings" xml:space="preserve" approved="no">
+        <source>manual_bookings</source>
+        <target state="translated">கையேடு முன்பதிவுகள்</target>
+      </trans-unit>
+      <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro" xml:space="preserve" approved="no">
+        <source>manual_bookings.work_contract_intro</source>
+        <target state="translated">கையேடு முன்பதிவுகளை பின்னர் மாற்றவோ நீக்கவோ முடியாது!</target>
+      </trans-unit>
+      <trans-unit id="znIJiOw" resname="manual_bookings.duration_help" xml:space="preserve" approved="no">
+        <source>manual_bookings.duration_help</source>
+        <target state="translated">காலம் நேர்மறையானது(இருக்கு-நேரத்தின் அதிகரிப்பு) மற்றும் எதிர்மறை (இருக்கு-நேரத்தைக் குறைத்தல்) இரண்டுமே இருக்கலாம்.</target>
+      </trans-unit>
+      <trans-unit id="M.zFjwe" resname="pto_year_holiday" approved="no" xml:space="preserve">
+        <source>Holidays per year</source>
+        <target state="translated">வருடத்திற்கு விடுமுறைகள்</target>
+      </trans-unit>
+      <trans-unit id="gcFtM3o" resname="holiday" xml:space="preserve" approved="no">
+        <source>holiday</source>
+        <target state="translated">விடுமுறை</target>
+      </trans-unit>
+      <trans-unit id="XE01Ar1" resname="parental" xml:space="preserve" approved="no">
+        <source>parental</source>
+        <target state="translated">பெற்றோர் விடுப்பு</target>
+      </trans-unit>
+      <trans-unit id="MQKiG33" resname="profile.preferences" xml:space="preserve" approved="no">
+        <source>profile.preferences</source>
+        <target state="translated">விருப்பத்தேர்வுகள்</target>
+      </trans-unit>
+      <trans-unit id="H.IqJTQ" resname="login_initial_view" xml:space="preserve" approved="no">
+        <source>login_initial_view</source>
+        <target state="translated">உள்நுழைந்த பிறகு ஆரம்ப பார்வை</target>
+      </trans-unit>
+      <trans-unit id="SdLZTel" resname="favorite_routes" xml:space="preserve" approved="no">
+        <source>favorite_routes</source>
+        <target state="translated">பிடித்தவைகள்</target>
+      </trans-unit>
+      <trans-unit id="gRIArHS" resname="lastLogin" xml:space="preserve" approved="no">
+        <source>lastLogin</source>
+        <target state="translated">கடைசி உள்நுழைவு</target>
+      </trans-unit>
+      <trans-unit id="i7aSJ1i" resname="notifications" xml:space="preserve" approved="no">
+        <source>notifications</source>
+        <target state="translated">அறிவிப்புகள்</target>
+      </trans-unit>
+      <trans-unit id="0ZWvn12" resname="notifications.welcome" xml:space="preserve" approved="no">
+        <source>notifications.welcome</source>
+        <target state="translated">அறிவிப்புகளுக்கு ஒப்புக்கொண்டதற்கு நன்றி!</target>
+      </trans-unit>
+      <trans-unit id="BrOQ92O" resname="notifications.denied" xml:space="preserve" approved="no">
+        <source>You have rejected notifications. Please refer to your web-browser documentation to find out how to turn them on.</source>
+        <target state="translated">நீங்கள் அறிவிப்புகளை நிராகரித்தீர்கள். அவற்றை எவ்வாறு இயக்குவது என்பதை அறிய உங்கள் வலை உலாவி ஆவணங்களைப் பார்க்கவும்.</target>
+      </trans-unit>
+      <trans-unit id="pcfRcZ4" resname="month" xml:space="preserve" approved="no">
+        <source>month</source>
+        <target state="translated">மாதம்</target>
+      </trans-unit>
+      <trans-unit id="Irm6dfx" resname="agendaWeek" xml:space="preserve" approved="no">
+        <source>agendaWeek</source>
+        <target state="translated">வாரம்</target>
+      </trans-unit>
+      <trans-unit id="Q0Zip02" resname="agendaDay" xml:space="preserve" approved="no">
+        <source>agendaDay</source>
+        <target state="translated">நாள்</target>
+      </trans-unit>
+      <trans-unit id="r49TNAg" resname="daily_stats" xml:space="preserve" approved="no">
+        <source>daily_stats</source>
+        <target state="translated">நேரஅட்டவணையில் நாள்தோறும் புள்ளிவிவரங்களைக் காட்டு</target>
+      </trans-unit>
+      <trans-unit id="dherSTU" resname="export_decimal" xml:space="preserve" approved="no">
+        <source>export_decimal</source>
+        <target state="translated">ஏற்றுமதியில் தசம காலத்தைப் பயன்படுத்தவும்</target>
+      </trans-unit>
+      <trans-unit id="7zptTeh" resname="update_browser_title" xml:space="preserve" approved="no">
+        <source>update_browser_title</source>
+        <target state="translated">உலாவித் தலைப்பைப் புதுப்பி</target>
+      </trans-unit>
+      <trans-unit id="UVJ5Die" resname="calendar" xml:space="preserve" approved="no">
+        <source>calendar</source>
+        <target state="translated">காலிகை</target>
+      </trans-unit>
+      <trans-unit id="TBWoUYf" resname="project_end" xml:space="preserve" approved="no">
+        <source>project_end</source>
+        <target state="translated">திட்ட முடிவு</target>
+      </trans-unit>
+      <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve" approved="no">
+        <source>Project number</source>
+        <target state="translated">திட்ட எண்</target>
+      </trans-unit>
+      <trans-unit id="8JEDuyx" resname="activity_number" xml:space="preserve" approved="no">
+        <source>Activity number</source>
+        <target state="translated">செயல்பாட்டு எண்</target>
+      </trans-unit>
+      <trans-unit id="EohvnQA" resname="number" xml:space="preserve" approved="no">
+        <source>number</source>
+        <target state="translated">கணக்கு</target>
+      </trans-unit>
+      <trans-unit id="8WjM3ZF" resname="company" xml:space="preserve" approved="no">
+        <source>company</source>
+        <target state="translated">நிறுவனத்தின் பெயர்</target>
+      </trans-unit>
+      <trans-unit id="EJDS9HY" resname="vat_id" xml:space="preserve" approved="no">
+        <source>vat_id</source>
+        <target state="translated">மகூவரி-அடையாளம்</target>
+      </trans-unit>
+      <trans-unit id="qX_CKtU" resname="tax_rate" xml:space="preserve" approved="no">
+        <source>tax_rate</source>
+        <target state="translated">வரி விகிதம்</target>
+      </trans-unit>
+      <trans-unit id="2Ayb_RD" resname="address" xml:space="preserve" approved="no">
+        <source>address</source>
+        <target state="translated">முகவரி</target>
+      </trans-unit>
+      <trans-unit id="r.ZOT9U" resname="country" xml:space="preserve" approved="no">
+        <source>country</source>
+        <target state="translated">நாடு</target>
+      </trans-unit>
+      <trans-unit id="SvTiF8B" resname="fax" xml:space="preserve" approved="no">
+        <source>fax</source>
+        <target state="translated">தொலைநகல்</target>
+      </trans-unit>
+      <trans-unit id="pcWhXux" resname="homepage" xml:space="preserve" approved="no">
+        <source>homepage</source>
+        <target state="translated">முகப்புப்பக்கம்</target>
+      </trans-unit>
+      <trans-unit id="OWLt7pw" resname="timezone" xml:space="preserve" approved="no">
+        <source>timezone</source>
+        <target state="translated">நேர மண்டலம்</target>
+      </trans-unit>
+      <trans-unit id="Rm5bnNV" resname="currency" xml:space="preserve" approved="no">
+        <source>currency</source>
+        <target state="translated">நாணயம்</target>
+      </trans-unit>
+      <trans-unit id="GgpqNso" resname="alias" xml:space="preserve" approved="no">
+        <source>alias</source>
+        <target state="translated">பெயர்</target>
+      </trans-unit>
+      <trans-unit id="qvIyBkY" resname="title" xml:space="preserve" approved="no">
+        <source>title</source>
+        <target state="translated">தலைப்பு</target>
+      </trans-unit>
+      <trans-unit id="h7voece" resname="avatar" xml:space="preserve" approved="no">
+        <source>avatar</source>
+        <target state="translated">தன்விவர படம் (முகவரி)</target>
+      </trans-unit>
+      <trans-unit id="loeWEWU" resname="active" xml:space="preserve" approved="no">
+        <source>active</source>
+        <target state="translated">செயலில்</target>
+      </trans-unit>
+      <trans-unit id="52lzpZE" resname="active.help" xml:space="preserve" approved="no">
+        <source>active.help</source>
+        <target state="translated">செயலிழக்கச் செய்த பயனர்கள் இனி உள்நுழைய முடியாது மற்றும் அறிக்கைகள் மற்றும் தேர்வு பெட்டிகளில் மறைக்கப்படுவார்கள்</target>
+      </trans-unit>
+      <trans-unit id="0Hhg4zQ" resname="system_account.help" xml:space="preserve" approved="no">
+        <source>system_account.help</source>
+        <target state="translated">அறிக்கைகள் மற்றும் கீழ்தோன்றல்களில் மறைக்கப்படும்</target>
+      </trans-unit>
+      <trans-unit id="Zs9VE7N" resname="roles" xml:space="preserve" approved="no">
+        <source>roles</source>
+        <target state="translated">பங்கு</target>
+      </trans-unit>
+      <trans-unit id="ZlZ20pG" resname="user_permissions.title" xml:space="preserve" approved="no">
+        <source>user_permissions.title</source>
+        <target state="translated">பயனர் இசைவுகள்</target>
+      </trans-unit>
+      <trans-unit id="G.GEdlk" resname="user_role.title" xml:space="preserve" approved="no">
+        <source>user_role.title</source>
+        <target state="translated">பயனர் பங்கு</target>
+      </trans-unit>
+      <trans-unit id="E7G60OF" resname="Allowed character: A-Z and _" xml:space="preserve" approved="no">
+        <source>Allowed character: A-Z and _ (min. 5 uppercase characters)</source>
+        <target state="translated">அனுமதிக்கப்பட்ட எழுத்து: A-Z மற்றும் _ (குறைந்தது 5 பெரிய எழுத்துக்கள்)</target>
+      </trans-unit>
+      <trans-unit id="XKTzhQz" resname="version" xml:space="preserve" approved="no">
+        <source>version</source>
+        <target state="translated">பதிப்பு</target>
+      </trans-unit>
+      <trans-unit id="On18MKP" resname="plugin.installed" xml:space="preserve" approved="no">
+        <source>plugin.installed</source>
+        <target state="translated">நிறுவப்பட்ட செருகுநிரல்கள்</target>
+      </trans-unit>
+      <trans-unit id="718iPw6" resname="ROLE_ADMIN" xml:space="preserve" approved="no">
+        <source>ROLE_ADMIN</source>
+        <target state="translated">நிர்வாகி</target>
+      </trans-unit>
+      <trans-unit id="yttGLAB" resname="ROLE_TEAMLEAD" xml:space="preserve" approved="no">
+        <source>ROLE_TEAMLEAD</source>
+        <target state="translated">குழுதலை</target>
+      </trans-unit>
+      <trans-unit id="rvO5ZXf" resname="ROLE_USER" xml:space="preserve" approved="no">
+        <source>ROLE_USER</source>
+        <target state="translated">பயனர்</target>
+      </trans-unit>
+      <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft" xml:space="preserve" approved="no">
+        <source>stats.percentUsedLeft</source>
+        <target state="translated">%percent%% பயன்படுத்தப்படுகிறது (%left%இன்னும் திறந்திருக்கும்)</target>
+      </trans-unit>
+      <trans-unit id="xN7MfSA" resname="stats.percentUsed_month" xml:space="preserve" approved="no">
+        <source>stats.percentUsed_month</source>
+        <target state="translated">%percent%% இந்த மாதத்தில் பயன்படுத்தப்படுகிறது</target>
+      </trans-unit>
+      <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month" xml:space="preserve" approved="no">
+        <source>stats.percentUsedLeft_month</source>
+        <target state="translated">%percent%% பயன்படுத்தப்படுகிறது (%left%இந்த மாதத்தில் இன்னும் திறந்திருக்கும்)</target>
+      </trans-unit>
+      <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title" xml:space="preserve" approved="no">
+        <source>admin_invoice_template.title</source>
+        <target state="translated">விலைப்பட்டியல் வார்ப்புரு</target>
+      </trans-unit>
+      <trans-unit id="ojfv7Jl" resname="invoice_form.title" xml:space="preserve" approved="no">
+        <source>invoice_form.title</source>
+        <target state="translated">விலைப்பட்டியல் உருவாக்கு</target>
+      </trans-unit>
+      <trans-unit id="ov4OQOh" resname="invoice.filter" xml:space="preserve" approved="no">
+        <source>invoice.filter</source>
+        <target state="translated">விலைப்பட்டியல் தரவை வடிகட்டவும்</target>
+      </trans-unit>
+      <trans-unit id="WXXPG7p" resname="preview" xml:space="preserve" approved="no">
+        <source>preview</source>
+        <target state="translated">முன்னோட்டம்</target>
+      </trans-unit>
+      <trans-unit id="X70dwP8" resname="button.print" xml:space="preserve" approved="no">
+        <source>button.print</source>
+        <target state="translated">அச்சிடுக</target>
+      </trans-unit>
+      <trans-unit id="W_TXvSi" resname="button.csv" xml:space="preserve" approved="no">
+        <source>button.csv</source>
+        <target state="translated">கபிம</target>
+      </trans-unit>
+      <trans-unit id="vC2IsaP" resname="button.xlsx" xml:space="preserve" approved="no">
+        <source>button.xlsx</source>
+        <target state="translated">எக்செல்</target>
+      </trans-unit>
+      <trans-unit id="aAa5uRR" resname="button.pdf" xml:space="preserve" approved="no">
+        <source>button.pdf</source>
+        <target state="translated">பிடிஎஃப்</target>
+      </trans-unit>
+      <trans-unit id="ulYFDIo" resname="button.ods" xml:space="preserve" approved="no">
+        <source>button.ods</source>
+        <target state="translated">ஓடிஎச்</target>
+      </trans-unit>
+      <trans-unit id="zPcx3O_" resname="invoice_print" xml:space="preserve" approved="yes">
+        <source>invoice_print</source>
+        <target state="final">விலைப்பட்டியல்</target>
+      </trans-unit>
+      <trans-unit id="dicW36D" resname="mark_as_exported" xml:space="preserve" approved="no">
+        <source>mark_as_exported</source>
+        <target state="translated">ஏற்றுமதி செய்யப்பட்டது எனக் குறி</target>
+      </trans-unit>
+      <trans-unit id="o0hsx2H" resname="mark_as_open" xml:space="preserve" approved="no">
+        <source>mark_as_open</source>
+        <target state="translated">திறந்த எனக் குறி</target>
+      </trans-unit>
+      <trans-unit id="XN4PEpj" resname="template" xml:space="preserve" approved="no">
+        <source>template</source>
+        <target state="translated">விலைப்பட்டியல் வார்ப்புரு</target>
+      </trans-unit>
+      <trans-unit id="2lL9ACs" resname="help.invoiceTemplate" xml:space="preserve" approved="no">
+        <source>help.invoiceTemplate</source>
+        <target state="translated">இந்த வார்ப்புருவுடன் விலைப்பட்டியல் உருவாக்கப்படுகிறது.</target>
+      </trans-unit>
+      <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer" xml:space="preserve" approved="no">
+        <source>help.invoiceTemplate_customer</source>
+        <target state="translated">இந்தக் வாடிக்கையாளருகான விலைப்பட்டியல் இயல்புநிலையாக இந்த வார்ப்புருவுடன் உருவாக்கப்படுகிறது. தேவைப்பட்டால் விலைப்பட்டியல் தலைமுறையின்போது இதை மாற்றலாம்.</target>
+      </trans-unit>
+      <trans-unit id="ohNu8DK" resname="due_days" xml:space="preserve" approved="no">
+        <source>due_days</source>
+        <target state="translated">நாட்களில் கட்டண காலம்</target>
+      </trans-unit>
+      <trans-unit id="rAJrxSK" resname="invoice.due_days" xml:space="preserve" approved="no">
+        <source>invoice.due_days</source>
+        <target state="translated">கட்டண இலக்கு</target>
+      </trans-unit>
+      <trans-unit id="Xij3oQl" resname="invoice.payment_date" xml:space="preserve" approved="no">
+        <source>invoice.payment_date</source>
+        <target state="translated">கட்டண தேதி</target>
+      </trans-unit>
+      <trans-unit id="4XKFnWh" resname="invoice.from" xml:space="preserve" approved="no">
+        <source>invoice.from</source>
+        <target state="translated">இருந்து</target>
+      </trans-unit>
+      <trans-unit id="hx7vsMA" resname="invoice.to" xml:space="preserve" approved="no">
+        <source>invoice.to</source>
+        <target state="translated">பெறுநர்</target>
+      </trans-unit>
+      <trans-unit id="x_W5sV4" resname="invoice.number" xml:space="preserve" approved="no">
+        <source>invoice.number</source>
+        <target state="translated">விலைப்பட்டியல் எண்</target>
+      </trans-unit>
+      <trans-unit id="86KyrKO" resname="invoice.subtotal" xml:space="preserve" approved="no">
+        <source>invoice.subtotal</source>
+        <target state="translated">துணைகூட்டல்</target>
+      </trans-unit>
+      <trans-unit id="EO57yXg" resname="invoice.tax" xml:space="preserve" approved="no">
+        <source>invoice.tax</source>
+        <target state="translated">வரி</target>
+      </trans-unit>
+      <trans-unit id="N68vyvo" resname="invoice.total" xml:space="preserve" approved="no">
+        <source>invoice.total</source>
+        <target state="translated">மொத்தம்</target>
+      </trans-unit>
+      <trans-unit id="TPzFWUs" resname="invoice.service_date" xml:space="preserve" approved="no">
+        <source>invoice.service_date</source>
+        <target state="translated">பணி தேதி</target>
+      </trans-unit>
+      <trans-unit id="NOEx3FF" resname="invoice_date.help" xml:space="preserve" approved="no">
+        <source>invoice_date.help</source>
+        <target state="translated">விலைப்பட்டியல் தேதியை இங்கே மாற்றலாம்</target>
+      </trans-unit>
+      <trans-unit id="crrlEUA" resname="preview.skipped_rows" xml:space="preserve" approved="no">
+        <source>Skipped preview of %rows% more rows …</source>
+        <target state="translated">%rows% அதிக வரிசைகளின் முன்னோட்டத்தைத் தவிர்க்கப்பட்டது…</target>
+      </trans-unit>
+      <trans-unit id="1GruCMx" resname="export" xml:space="preserve" approved="no">
+        <source>export</source>
+        <target state="translated">ஏற்றுமதி</target>
+      </trans-unit>
+      <trans-unit id="iwWaUoa" resname="export.filter" xml:space="preserve" approved="no">
+        <source>export.filter</source>
+        <target state="translated">ஏற்றுமதிக்கான தரவை வடிகட்டு</target>
+      </trans-unit>
+      <trans-unit id="vjmoQGo" resname="export.period" xml:space="preserve" approved="no">
+        <source>export.period</source>
+        <target state="translated">காலசுழற்சி</target>
+      </trans-unit>
+      <trans-unit id="3CQ7A2m" resname="export.document_title" xml:space="preserve" approved="no">
+        <source>export.document_title</source>
+        <target state="translated">நேரஅட்டவணைகளின் ஏற்றுமதி</target>
+      </trans-unit>
+      <trans-unit id="d5wyWRD" resname="export.full_list" xml:space="preserve" approved="no">
+        <source>export.full_list</source>
+        <target state="translated">முழு பட்டியல்</target>
+      </trans-unit>
+      <trans-unit id="N778uJ6" resname="export.summary" xml:space="preserve" approved="no">
+        <source>export.summary</source>
+        <target state="translated">சுருக்கம்</target>
+      </trans-unit>
+      <trans-unit id="ElDyzrx" resname="export.page_of" xml:space="preserve" approved="no">
+        <source>export.page_of</source>
+        <target state="translated">%page% ஆம் பக்கம் %pages% பக்கங்களில்</target>
+      </trans-unit>
+      <trans-unit id="vKY0tof" resname="export.date_copyright" xml:space="preserve" approved="no">
+        <source>export.date_copyright</source>
+        <target state="translated">%kimai% உடன் %date% உருவாக்கப்பட்டது</target>
+      </trans-unit>
+      <trans-unit id="W92QGbY" resname="export.warn_result_amount" xml:space="preserve" approved="no">
+        <source>export.warn_result_amount</source>
+        <target state="translated">உங்கள் தேடல் %count% முடிவுகளுக்கு வழிவகுக்கிறது. ஏற்றுமதி தோல்வியுற்றால், உங்கள் தேடலை மேலும் குறைக்க வேண்டும்.</target>
+      </trans-unit>
+      <trans-unit id="EwPAaws" resname="type" xml:space="preserve" approved="no">
+        <source>type</source>
+        <target state="translated">வகை</target>
+      </trans-unit>
+      <trans-unit id="OxdYMR3" resname="active.entries" xml:space="preserve" approved="no">
+        <source>active.entries</source>
+        <target state="translated">உங்கள் செயலில் உள்ள நேர அளவீடுகள்</target>
+      </trans-unit>
+      <trans-unit id="WVU_S.A" resname="recent.activities" xml:space="preserve" approved="no">
+        <source>recent.activities</source>
+        <target state="translated">உங்கள் கடைசி நடவடிக்கைகளில் ஒன்றை மறுதொடக்கம் செய்</target>
+      </trans-unit>
+      <trans-unit id="dTHY7Mw" resname="timesheet.start" xml:space="preserve" approved="no">
+        <source>timesheet.start</source>
+        <target state="translated">நேரத்தைக் கண்காணிப்பதைத் தொடங்கு</target>
+      </trans-unit>
+      <trans-unit id="mR_Y5Mv" resname="timesheet.stop" xml:space="preserve" approved="no">
+        <source>timesheet.stop</source>
+        <target state="translated">நேரத்தைக் கண்காணிப்பதை நிறுத்து</target>
+      </trans-unit>
+      <trans-unit id="igCkqAP" resname="pageSize" xml:space="preserve" approved="no">
+        <source>pageSize</source>
+        <target state="translated">பக்க அளவு</target>
+      </trans-unit>
+      <trans-unit id="cjgNYUB" resname="entryState" xml:space="preserve" approved="no">
+        <source>entryState</source>
+        <target state="translated">பதிவுகள்</target>
+      </trans-unit>
+      <trans-unit id="Qn2ouiL" resname="exported" xml:space="preserve" approved="no">
+        <source>exported</source>
+        <target state="translated">ஏற்றுமதிக்கப்பட்டது</target>
+      </trans-unit>
+      <trans-unit id="_DDecAV" resname="entryState.exported" xml:space="preserve" approved="no">
+        <source>entryState.exported</source>
+        <target state="translated">அழிக்கப்பட்டது</target>
+      </trans-unit>
+      <trans-unit id="ccCiXyR" resname="entryState.not_exported" xml:space="preserve" approved="no">
+        <source>entryState.not_exported</source>
+        <target state="translated">திற</target>
+      </trans-unit>
+      <trans-unit id="XvXvA2S" resname="all" xml:space="preserve" approved="no">
+        <source>all</source>
+        <target state="translated">அனைத்தும்</target>
+      </trans-unit>
+      <trans-unit id="xm7mqoK" resname="entryState.running" xml:space="preserve" approved="no">
+        <source>entryState.running</source>
+        <target state="translated">செயலில்</target>
+      </trans-unit>
+      <trans-unit id="spHpd_I" resname="entryState.stopped" xml:space="preserve" approved="no">
+        <source>entryState.stopped</source>
+        <target state="translated">நிறுத்தப்பட்டது</target>
+      </trans-unit>
+      <trans-unit id="BhsaLxX" resname="export.clear_all" xml:space="preserve" approved="no">
+        <source>export.clear_all</source>
+        <target state="translated">காட்டப்பட்ட அனைத்து பதிவுகளையும் திறந்ததாகக் குறிக்கிறீர்களா?</target>
+      </trans-unit>
+      <trans-unit id="qtjPKUT" resname="export.mark_all" xml:space="preserve" approved="no">
+        <source>export.mark_all</source>
+        <target state="translated">காட்டப்பட்ட அனைத்து பதிவுகளையும் அழித்துவிட்டதா?</target>
+      </trans-unit>
+      <trans-unit id="NNsA8i2" resname="globalsOnly" xml:space="preserve" approved="no">
+        <source>globalsOnly</source>
+        <target state="translated">உலகளாவிய மட்டும்</target>
+      </trans-unit>
+      <trans-unit id="HNFpvnH" resname="globalActivities" xml:space="preserve" approved="no">
+        <source>globalActivities</source>
+        <target state="translated">உலகளாவிய நடவடிக்கைகளை அனுமதிக்கவும்</target>
+      </trans-unit>
+      <trans-unit id="f8oNzSP" resname="quick_entry.title" xml:space="preserve" approved="no">
+        <source>quick_entry.title</source>
+        <target state="translated">வாராந்திர நேரம்</target>
+      </trans-unit>
+      <trans-unit id="IPHM4iP" resname="updated_at" xml:space="preserve" approved="no">
+        <source>Updated at</source>
+        <target state="translated">இல் புதுப்பிக்கப்பட்டது</target>
+      </trans-unit>
+      <trans-unit id="Fkrev.q" resname="help.globalActivities" xml:space="preserve" approved="no">
+        <source>help.globalActivities</source>
+        <target state="translated">அமைப்பு முடக்கப்பட்டால், திட்டங்கள் சார்ந்த செயல்பாடுகளுடன் மட்டுமே நேரங்களைப் பதிவு செய்ய முடியும்.</target>
+      </trans-unit>
+      <trans-unit id="FxwWVFI" resname="help.globalActivity" xml:space="preserve" approved="no">
+        <source>help.globalActivity</source>
+        <target state="translated">நீங்கள் ஒரு திட்டத்தைத் தேர்ந்தெடுக்கவில்லை என்றால், இந்தச் செயல்பாடு உலகளாவியதாக மாறும், மேலும் இது எந்தவொரு திட்டத்துடனும் இணைக்கப்படலாம். நீங்கள் ஒரு திட்டத்தைத் தேர்ந்தெடுத்தால், செயல்பாட்டை அந்தத் திட்டத்துடன் மட்டுமே பயன்படுத்த முடியும். அமைப்பைப் பின்னர் மாற்ற முடியாது.</target>
+      </trans-unit>
+      <trans-unit id="8BPmHPa" resname="batch_meta_fields" xml:space="preserve" approved="no">
+        <source>batch_meta_fields</source>
+        <target state="translated">கூடுதல் புலங்கள்</target>
+      </trans-unit>
+      <trans-unit id="9Wt8Pp_" resname="help.batch_meta_fields" xml:space="preserve" approved="no">
+        <source>help.batch_meta_fields</source>
+        <target state="translated">புதுப்பிக்கப்பட வேண்டிய புலங்கள் முதலில் தொடர்புடைய தேர்வுப்பெட்டியைக் சொடுக்கு செய்வதன் மூலம் செயல்படுத்தப்பட வேண்டும்.</target>
+      </trans-unit>
+      <trans-unit id="f1Cgptu" resname="batch_table_checkbox" xml:space="preserve" approved="no">
+        <source>batch_table_checkbox</source>
+        <target state="translated">தொகுதி புதுப்பிப்பு பட்டியலுக்கு உள்ளீட்டைச் சேர்க்கவும்</target>
+      </trans-unit>
+      <trans-unit id="ekN4GLW" resname="batch_table_checkbox_all" xml:space="preserve" approved="no">
+        <source>batch_table_checkbox_all</source>
+        <target state="translated">தொகுதி புதுப்பிப்பு பட்டியலுக்கான அனைத்து உள்ளீடுகளையும் தேர்ந்தெடுக்கவும்</target>
+      </trans-unit>
+      <trans-unit id="L27KvC9" resname="includeNoWork" xml:space="preserve" approved="no">
+        <source>includeNoWork</source>
+        <target state="translated">முன்பதிவு இல்லாமல் உள்ளீடுகளைக் காட்டு</target>
+      </trans-unit>
+      <trans-unit id="L0hRlcf" resname="includeNoBudget" xml:space="preserve" approved="no">
+        <source>includeNoBudget</source>
+        <target state="translated">நிதித்திட்டம் இல்லாமல் உள்ளீடுகளைக் காட்டு</target>
+      </trans-unit>
+      <trans-unit id="5NugIxO" resname="includeWithBudget" xml:space="preserve" approved="no">
+        <source>includeWithBudget</source>
+        <target state="translated">நிதித்திட்டத்துடன் உள்ளீடுகளைக் காட்டு</target>
+      </trans-unit>
+      <trans-unit id="ViUuILv" resname="includeBudgetType_month" xml:space="preserve" approved="no">
+        <source>includeBudgetType_month</source>
+        <target state="translated">"திங்கள்தேறும்" நிதித்திட்டத்துடன் உள்ளீடுகளைக் காட்டு</target>
+      </trans-unit>
+      <trans-unit id="KukrzcT" resname="includeBudgetType_full" xml:space="preserve" approved="no">
+        <source>includeBudgetType_full</source>
+        <target state="translated">"வாழ்க்கை சுழற்சி" நிதித்திட்டத்துடன் உள்ளீடுகளைக் காட்டு</target>
+      </trans-unit>
+      <trans-unit id="2dm.ZWM" resname="not_exported" xml:space="preserve" approved="no">
+        <source>not_exported</source>
+        <target state="translated">ஏற்றுமதி செய்யப்படவில்லை</target>
+      </trans-unit>
+      <trans-unit id="o0yOFHL" resname="not_invoiced" xml:space="preserve" approved="no">
+        <source>not_invoiced</source>
+        <target state="translated">கட்டணம் வசூலிக்கப்படவில்லை</target>
+      </trans-unit>
+      <trans-unit id="vpqPF8v" resname="last_record_before" xml:space="preserve" approved="no">
+        <source>last_record_before</source>
+        <target state="translated">பின்னர் நேர முன்பதிவு இல்லை</target>
+      </trans-unit>
+      <trans-unit id="_YiKaOT" resname="last_record" xml:space="preserve" approved="no">
+        <source>last_record</source>
+        <target state="translated">கடைசி நுழைவு</target>
+      </trans-unit>
+      <trans-unit id="4Ndj7Xo" resname="budgetType" xml:space="preserve" approved="no">
+        <source>budgetType</source>
+        <target state="translated">நிதித்திட்டம் வகை</target>
+      </trans-unit>
+      <trans-unit id="wYqyL6A" resname="budgetType_month" xml:space="preserve" approved="no">
+        <source>budgetType_month</source>
+        <target state="translated">மாதாந்திர</target>
+      </trans-unit>
+      <trans-unit id="tvV0NhL" resname="delete_warning.short_stats" xml:space="preserve" approved="no">
+        <source>delete_warning.short_stats</source>
+        <target state="translated">தற்போது %records%நேர-பதிவு உள்ளது, இது மொத்தம் %duration% கால வரை தொகுக்கப்படுகிறது.</target>
+      </trans-unit>
+      <trans-unit id="tp.gIrE" resname="team.add_user.help" xml:space="preserve" approved="no">
+        <source>team.add_user.help</source>
+        <target state="translated">ஒரு புதிய பயனரைப் பட்டியலிலிருந்து தேர்ந்தெடுப்பதன் மூலம் குழுவில் சேர்க்கவும். பயனர் ஒரு அணியாக மாற வேண்டுமா என்பதை நீங்கள் தீர்மானிக்கலாம்.</target>
+      </trans-unit>
+      <trans-unit id="5kFod8o" resname="team.configure_teamlead.help" xml:space="preserve" approved="no">
+        <source>team.configure_teamlead.help</source>
+        <target state="translated">தேர்ந்தெடுக்கப்பட்ட / சிறப்பிக்கப்பட்ட பயனர்கள் குழுத் தலைவர்கள்.</target>
+      </trans-unit>
+      <trans-unit id="yNWIi5U" resname="default_value_new" xml:space="preserve" approved="no">
+        <source>default_value_new</source>
+        <target state="translated">புதிய உள்ளீடுகளுக்கான இயல்புநிலை மதிப்புகள்</target>
+      </trans-unit>
+      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached" xml:space="preserve" approved="no">
+        <source>invoice_document.max_reached</source>
+        <target state="translated">அதிகபட்சம் %max% விலைப்பட்டியல் ஆவணங்களை எட்டியது. ஒன்றை அகற்றிய பின் நீங்கள் மேலும் சேர்க்கலாம்.</target>
+      </trans-unit>
+      <trans-unit id="wwrREDg" resname="pagination" xml:space="preserve" approved="no">
+        <source>pagination</source>
+        <target state="translated">%start% முதல் %end% வரை %total% இருந்து உள்ளீடுகளைக் காட்டு.</target>
+      </trans-unit>
+      <trans-unit id="mjKOAgQ" resname="skin.light" xml:space="preserve" approved="no">
+        <source>skin.light</source>
+        <target state="translated">வெளிச்சமான</target>
+      </trans-unit>
+      <trans-unit id="WOFPb2i" resname="skin.dark" xml:space="preserve" approved="no">
+        <source>skin.dark</source>
+        <target state="translated">இருண்ட</target>
+      </trans-unit>
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve" approved="no">
+        <source>api_password.intro</source>
+        <target state="translated">உங்கள் பயன்பாட்டைக் கிமாய்க்கு அங்கீகரிக்கப் பயன்படும் உங்கள் பநிஇ கிள்ளாக்குகளை இங்கே நிர்வகிக்கலாம்.</target>
+      </trans-unit>
+      <trans-unit id="QT8.BCN" resname="api_password.missing_title" xml:space="preserve" approved="no">
+        <source>api_password.missing_title</source>
+        <target state="translated">பநிஇ ஐப் பயன்படுத்த முடியாது</target>
+      </trans-unit>
+      <trans-unit id="wYcx0So" resname="search.no_results" xml:space="preserve" approved="no">
+        <source>search.no_results</source>
+        <target state="translated">"%input%" க்கு முடிவுகள் எதுவும் கிடைக்கவில்லை</target>
+      </trans-unit>
+      <trans-unit id="biHjm0h" resname="select.add_new" xml:space="preserve" approved="no">
+        <source>select.add_new</source>
+        <target state="translated">"%input%" என்ற பெயருடன் புதியதை உருவாக்கு</target>
+      </trans-unit>
+      <trans-unit id="dru_Thv" resname="please_choose" xml:space="preserve" approved="no">
+        <source>please_choose</source>
+        <target state="translated">தயவுசெய்து தேர்வு செய்</target>
+      </trans-unit>
+      <trans-unit id="WbT2QLP" resname="extended_settings" xml:space="preserve" approved="no">
+        <source>extended_settings</source>
+        <target state="translated">நீட்டிக்கப்பட்ட அமைப்புகள்</target>
+      </trans-unit>
+      <trans-unit id="ZZaqTEr" resname="no_activity" xml:space="preserve" approved="no">
+        <source>no_activity</source>
+        <target state="translated">செயல்பாடு இல்லாமல்</target>
+      </trans-unit>
+      <trans-unit id="Uu8YvYV" resname="deactivated" xml:space="preserve" approved="no">
+        <source>Deactivated</source>
+        <target state="translated">செயலிழக்கச் செய்தது</target>
+      </trans-unit>
+      <trans-unit id="WwesQPU" resname="deactivate" xml:space="preserve" approved="no">
+        <source>Deactivate</source>
+        <target state="translated">செயலிழக்கச் செய்</target>
+      </trans-unit>
+      <trans-unit id="3WHV.yf" resname="activated" xml:space="preserve" approved="no">
+        <source>Activated</source>
+        <target state="translated">செயல்படுத்தப்பட்ட</target>
+      </trans-unit>
+      <trans-unit id="IAx_YiA" resname="activate" xml:space="preserve" approved="no">
+        <source>Activate</source>
+        <target state="translated">செயல்படுத்து</target>
+      </trans-unit>
+      <trans-unit id="i_XOmN4" resname="help_locales" xml:space="preserve" approved="no">
+        <source>help_locales</source>
+        <target state="translated">ஆதரிக்கப்படும் மொழிகளுக்கான விதிகளை வடிவமைப்பதற்கான எடுத்துக்காட்டுகள் இங்கே</target>
+      </trans-unit>
+      <trans-unit id="JmkKf48" resname="user.language.help" xml:space="preserve" approved="no">
+        <source>user.language.help</source>
+        <target state="translated">மென்பொருளின் மொழிபெயர்ப்புக்கு இந்த அமைப்புப் பொறுப்பு</target>
+      </trans-unit>
+      <trans-unit id="ulgdXdi" resname="hour_24" xml:space="preserve" approved="no">
+        <source>hour_24</source>
+        <target state="translated">24 மணி நேரம்</target>
+      </trans-unit>
+      <trans-unit id="M2B0gF." resname="time" xml:space="preserve" approved="no">
+        <source>time</source>
+        <target state="translated">நேரம்</target>
+      </trans-unit>
+      <trans-unit id="95DUED0" resname="send_to" xml:space="preserve" approved="no">
+        <source>send_to</source>
+        <target state="translated">%name%க்கு அனுப்பவும்</target>
+      </trans-unit>
+      <trans-unit id="5buBUCm" resname="receive_from" xml:space="preserve" approved="no">
+        <source>receive_from</source>
+        <target state="translated">%name% இருந்து பெறவும்</target>
+      </trans-unit>
+      <trans-unit id="fWuGTog" resname="public_holiday" xml:space="preserve" approved="no">
+        <source>public_holiday</source>
+        <target state="translated">பொது விடுமுறை</target>
+      </trans-unit>
+      <trans-unit id="zlmddHB" resname="public_holidays" xml:space="preserve" approved="no">
+        <source>public_holidays</source>
+        <target state="translated">பொது விடுமுறைகள்</target>
+      </trans-unit>
+      <trans-unit id="GIgQHa4" resname="absence" xml:space="preserve" approved="yes">
+        <source>absence</source>
+        <target state="final">இல்லாதது</target>
+      </trans-unit>
+      <trans-unit id="YTzKpcP" resname="Absence calendar" xml:space="preserve" approved="no">
+        <source>Absence calendar</source>
+        <target state="translated">இல்லாத காலிகை</target>
+      </trans-unit>
+      <trans-unit id="4PMHpIp" resname="time_off" xml:space="preserve" approved="no">
+        <source>time_off</source>
+        <target state="translated">விடுமுறை நேரம்</target>
+      </trans-unit>
+      <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve" approved="no">
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="needs-translation">நோய், மருத்துவரின் வருகை, நெருங்கிய உறவினர்களின் கவனிப்பு போன்றவை.</target>
+      </trans-unit>
+      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve" approved="no">
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="translated">உங்களுடைய கிடைக்கக்கூடிய %days% விடுமுறை நாட்களில் %used% ஐ சமர்ப்பித்துள்ளீர்கள்.</target>
+      </trans-unit>
+      <trans-unit id="DA1.Ln_" resname="time_off.intro" xml:space="preserve" approved="no">
+        <source>time_off.intro</source>
+        <target state="translated">உங்கள் பணி நேரக் கணக்கில் %hours% மணிநேரம் உள்ளது.</target>
+      </trans-unit>
+      <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve" approved="no">
+        <source>absence_other.intro</source>
+        <target state="translated">குடும்ப நிகழ்வுகள், வீடு மாற்றம், வானிலை குழப்பம் போன்றவை.</target>
+      </trans-unit>
+      <trans-unit id="TTnaBm4" resname="day_full" xml:space="preserve" approved="no">
+        <source>day_full</source>
+        <target state="translated">முழு நாள்</target>
+      </trans-unit>
+      <trans-unit id="Eml59KV" resname="day_half" xml:space="preserve" approved="no">
+        <source>day_half</source>
+        <target state="translated">அரை நாள்</target>
+      </trans-unit>
+      <trans-unit id="CDTC1gc" resname="supervisor" xml:space="preserve" approved="no">
+        <source>supervisor</source>
+        <target state="translated">மேற்பார்வையாளர்</target>
+      </trans-unit>
+      <trans-unit id=".wmq_rT" resname="force_password_change" xml:space="preserve" approved="no">
+        <source>force_password_change</source>
+        <target state="translated">புதிய கடவுச்சொல்லைக் கோருங்கள்</target>
+      </trans-unit>
+      <trans-unit id="0bKwA0k" resname="force_password_change_help" xml:space="preserve" approved="no">
+        <source>force_password_change_help</source>
+        <target state="translated">அடுத்த முறை பயனர் உள்நுழையும்போது, அவர்கள் புதிய கடவுச்சொல்லை உள்ளிட வேண்டும்.</target>
+      </trans-unit>
+      <trans-unit id="vURcRit" resname="overview" xml:space="preserve" approved="no">
+        <source>Overview</source>
+        <target state="translated">கண்ணோட்டம்</target>
+      </trans-unit>
+      <trans-unit id="0xFBb6O" resname="Expenses" xml:space="preserve" approved="no">
+        <source>Expenses</source>
+        <target state="translated">செலவுகள்</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category" xml:space="preserve" approved="no">
+        <source>Category</source>
+        <target state="translated">பகுப்பு</target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories" xml:space="preserve" approved="no">
+        <source>Categories</source>
+        <target state="translated">பகுப்புகள்</target>
+      </trans-unit>
+      <trans-unit id="7Sycs4M" resname="Importer" xml:space="preserve" approved="no">
+        <source>Importer</source>
+        <target state="translated">இறக்குமதியாளர்</target>
+      </trans-unit>
+      <trans-unit id="J6EJUj9" resname="Meta fields" xml:space="preserve" approved="no">
+        <source>Meta fields</source>
+        <target state="translated">தனிப்பயன் புலங்கள்</target>
+      </trans-unit>
+      <trans-unit id="JmpBuQ1" resname="Translations" xml:space="preserve" approved="no">
+        <source>Translations</source>
+        <target state="translated">மொழிபெயர்ப்புகள்</target>
+      </trans-unit>
+      <trans-unit id="b712axp" resname="Translation" xml:space="preserve" approved="no">
+        <source>Translation</source>
+        <target state="translated">மொழிபெயர்ப்பு</target>
+      </trans-unit>
+      <trans-unit id="Vp7xjKh" resname="Audit logs" xml:space="preserve" approved="no">
+        <source>Audit logs</source>
+        <target state="translated">தணிக்கை பதிவுகள்</target>
+      </trans-unit>
+      <trans-unit id="YRRgZCe" resname="Custom content" xml:space="preserve" approved="no">
+        <source>Custom content</source>
+        <target state="translated">தனிப்பயன் உள்ளடக்கம்</target>
+      </trans-unit>
+      <trans-unit id="q1EATp1" resname="days" xml:space="preserve" approved="no">
+        <source>days</source>
+        <target state="translated">நாட்கள்</target>
+      </trans-unit>
+      <trans-unit id="Ga4bvUX" resname="unpaid_vacation" xml:space="preserve" approved="no">
+        <source>unpaid_vacation</source>
+        <target state="translated">ஊதியம் பெறாத விடுமுறைகள்</target>
+      </trans-unit>
+      <trans-unit id="q59lI2y" resname="user_identifier" xml:space="preserve" approved="no">
+        <source>user_identifier</source>
+        <target state="translated">பயனர் அடையாளம்</target>
+      </trans-unit>
+      <trans-unit id="uqv2Lrv" resname="user_identifier.help" xml:space="preserve" approved="no">
+        <source>user_identifier.help</source>
+        <target state="translated">தனித்துவமான பயனர் அடையாளங்காட்டி ஏற்பு மற்றும் ஏற்றுமதியில் பயன்படுத்தப்படுகிறது</target>
+      </trans-unit>
+      <trans-unit id="oYYDCG5" resname="support" xml:space="preserve" approved="no">
+        <source>Support</source>
+        <target state="translated">உதவி</target>
+      </trans-unit>
+      <trans-unit id="cR5DD88" resname="invoice_number_generator.date" xml:space="preserve" approved="no">
+        <source>invoice_number_generator.date</source>
+        <target state="translated">திகதி</target>
+      </trans-unit>
+      <trans-unit id="Qh1X4Vu" resname="invoice_number_generator.default" xml:space="preserve" approved="no">
+        <source>invoice_number_generator.default</source>
+        <target state="translated">கட்டமைக்கப்பட்ட வடிவம்</target>
+      </trans-unit>
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator" xml:space="preserve" approved="no">
+        <source>invoice_number_generator</source>
+        <target state="translated">விலைப்பட்டியல்எண்-உருவாக்கி</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve" approved="no">
+        <source>absence_comment_mandatory</source>
+        <target state="translated">இல்லாதது: கருத்து ஒரு கட்டாய புலம்</target>
+      </trans-unit>
+      <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve" approved="no">
+        <source>booking_allow_only_work_days</source>
+        <target state="translated">வேலைவாய்ப்பு ஒப்பந்தத்தில் எதிர்பார்க்கப்படும் மணிநேரங்கள் வரையறுக்கப்பட்ட நாட்களுக்கு மட்டுமே நேர உள்ளீடுகளை அனுமதி</target>
+      </trans-unit>
+      <trans-unit id="rkCw7Ml" resname="last_usage" xml:space="preserve" approved="no">
+        <source>Last usage</source>
+        <target state="translated">கடைசி பயன்பாடு</target>
+      </trans-unit>
+      <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve" approved="no">
+        <source>api_token_hidden</source>
+        <target state="translated">இந்த விசை காண்பிக்கப்படும் ஒரே நேரம் இதுதான்! எனவே அதைப் பாதுகாப்பாக வைத்திருங்கள், இந்தச் சாளரத்தை மூடுவதற்கு முன்பு நீங்கள் அதை நகலெடுத்துள்ளீர்கள் என்பதை உறுதிப்படுத்திக் கொள்.</target>
+      </trans-unit>
+      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve" approved="no">
+        <source>api_password_deprecated</source>
+        <target state="translated">பநிஇ கடவுச்சொற்கள் காலாவதியானவை: அதற்குப் பதிலாக பநிஇ கிள்ளாக்குகளைப் பயன்படுத்து.</target>
+      </trans-unit>
+      <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve" approved="no">
+        <source>hours_per_day</source>
+        <target state="translated">நாளைக்கு மணிநேரம்</target>
+      </trans-unit>
+      <trans-unit id="y7KtuSS" resname="hours_per_week" xml:space="preserve" approved="no">
+        <source>hours_per_week</source>
+        <target state="translated">வாரத்திற்கு மணிநேரம்</target>
+      </trans-unit>
+      <trans-unit id="07e8ywS" resname="hours_per_month" xml:space="preserve" approved="no">
+        <source>hours_per_month</source>
+        <target state="translated">திங்களுக்கு மணிநேரம்</target>
+      </trans-unit>
+      <trans-unit id="7p_pFHl" resname="work_days" xml:space="preserve" approved="no">
+        <source>work_days</source>
+        <target state="translated">வேலை நாட்கள்</target>
+      </trans-unit>
+      <trans-unit id="2pbkbn_" resname="work_hours_mode" xml:space="preserve" approved="no">
+        <source>work_hours_mode</source>
+        <target state="translated">வேலை நேர கணக்கீடு</target>
+      </trans-unit>
+      <trans-unit id="IFT9pou" resname="last_working_day" xml:space="preserve" approved="no">
+        <source>last_working_day</source>
+        <target state="translated">கடைசி வேலை நாள்</target>
+      </trans-unit>
+      <trans-unit id="0jvo0RQ" resname="profit" xml:space="preserve" approved="no">
+        <source>profit</source>
+        <target state="translated">ஊதியம்</target>
+      </trans-unit>
+      <trans-unit id="vN5pKOU" resname="costs" xml:space="preserve" approved="no">
+        <source>costs</source>
+        <target state="translated">மதிப்புகள்</target>
+      </trans-unit>
+      <trans-unit id="FOvlalA" resname="break" xml:space="preserve" approved="no">
+        <source>break</source>
+        <target state="translated">இடைவேளை</target>
+      </trans-unit>
+      <trans-unit id="bEXLcqN" resname="stop" xml:space="preserve" approved="no">
+        <source>stop</source>
+        <target state="translated">நிறுத்து</target>
+      </trans-unit>
+      <trans-unit id="QCf1FUG" resname="reload" xml:space="preserve" approved="no">
+        <source>reload</source>
+        <target state="translated">மறுஏற்றம்</target>
+      </trans-unit>
+      <trans-unit id="PEgjRvN" resname="back" xml:space="preserve" approved="no">
+        <source>back</source>
+        <target state="translated">பின்</target>
+      </trans-unit>
+      <trans-unit id="JiEhxTc" resname="edit" xml:space="preserve" approved="no">
+        <source>Edit</source>
+        <target state="translated">தொகு</target>
+      </trans-unit>
+      <trans-unit id="4G2jBDS" resname="trash" xml:space="preserve" approved="no">
+        <source>trash</source>
+        <target state="translated">நீக்கு</target>
+      </trans-unit>
+      <trans-unit id="JeK2sQZ" resname="repeat" xml:space="preserve" approved="no">
+        <source>repeat</source>
+        <target state="translated">மீண்டும் தொடங்கு</target>
+      </trans-unit>
+      <trans-unit id="J0sRBY_" resname="profile-stats" xml:space="preserve" approved="no">
+        <source>profile-stats</source>
+        <target state="translated">தன்விவரம்</target>
+      </trans-unit>
+      <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve" approved="no">
+        <source>settings</source>
+        <target state="translated">விருப்பத்தேர்வுகள்</target>
+      </trans-unit>
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve" approved="no">
+        <source>Filter timesheets</source>
+        <target state="translated">நேர அட்டவணைகள்</target>
+      </trans-unit>
+      <trans-unit id="b1pgNOd" resname="copy" xml:space="preserve" approved="no">
+        <source>copy</source>
+        <target state="translated">நகலை உருவாக்கு</target>
+      </trans-unit>
+      <trans-unit id="TqFAWIF" resname="home" xml:space="preserve" approved="no">
+        <source>home</source>
+        <target state="translated">முகப்புப்பக்கம்</target>
+      </trans-unit>
+      <trans-unit id="QR1nvcR" resname="create-timesheet" xml:space="preserve" approved="no">
+        <source>create-timesheet</source>
+        <target state="translated">நேரத்தாள் உருவாக்கு</target>
+      </trans-unit>
+      <trans-unit id="Qh5mV5Q" resname="create-timesheet-multiuser" xml:space="preserve" approved="no">
+        <source>create-timesheet-multiuser</source>
+        <target state="translated">பல பயனர்களுக்கு</target>
+      </trans-unit>
+      <trans-unit id="T_PN1AT" resname="permissions" xml:space="preserve" approved="no">
+        <source>permissions</source>
+        <target state="translated">இசைவுகள்</target>
+      </trans-unit>
+      <trans-unit id="hHIeqOW" resname="invoice.pending" xml:space="preserve" approved="no">
+        <source>invoice.pending</source>
+        <target state="translated">கட்டணத்திற்காகக் காத்திருக்கிறது</target>
+      </trans-unit>
+      <trans-unit id="SEyZupT" resname="invoice.cancel" xml:space="preserve" approved="no">
+        <source>invoice.cancel</source>
+        <target state="translated">விலைப்பட்டியல் நீக்கறல்</target>
+      </trans-unit>
+      <trans-unit id="pJzNT.n" resname="vcard" xml:space="preserve" approved="no">
+        <source>vcard</source>
+        <target state="translated">வணிக அட்டை</target>
+      </trans-unit>
+      <trans-unit id="2cMESs." resname="widget_add" xml:space="preserve" approved="no">
+        <source>Add widget</source>
+        <target state="translated">நிரல்பலகையைச் சேர்</target>
+      </trans-unit>
+      <trans-unit id="YCc5UoO" resname="widget_remove" xml:space="preserve" approved="no">
+        <source>Remove widget</source>
+        <target state="translated">நிரல்பலகையை அகற்று</target>
+      </trans-unit>
+      <trans-unit id="5vJvarK" resname="syncronisation" xml:space="preserve" approved="no">
+        <source>Synchronization</source>
+        <target state="translated">ஒத்தியக்கம்</target>
+      </trans-unit>
+      <trans-unit id="2UL2SIZ" resname="import" xml:space="preserve" approved="no">
+        <source>import</source>
+        <target state="translated">இறக்குமதி</target>
+      </trans-unit>
+      <trans-unit id="EiWubBr" resname="sessions" xml:space="preserve" approved="no">
+        <source>Sessions</source>
+        <target state="translated">அமர்வுகள்</target>
+      </trans-unit>
+      <trans-unit id="HQ2YM1b" resname="attendance_only_project" xml:space="preserve" approved="yes">
+        <source>attendance_only_project</source>
+        <target state="final">தேர்ந்தெடுக்கப்பட்ட திட்டத்தின் உள்ளீடுகளை மட்டுமே வேலை நேரமாக எண்ணுங்கள்</target>
+      </trans-unit>
+      <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve">
+        <source>Code</source>
+        <target state="translated">குறியீடு</target>
+      </trans-unit>
+      <trans-unit id="rD4oQRR" resname="postcode" xml:space="preserve">
+        <source>Postcode</source>
+        <target state="translated">அஞ்சல் குறியீடு</target>
+      </trans-unit>
+      <trans-unit id="EaYsI0E" resname="city" xml:space="preserve">
+        <source>City</source>
+        <target state="translated">நகரம்</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

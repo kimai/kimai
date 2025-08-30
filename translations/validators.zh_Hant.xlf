@@ -22,9 +22,9 @@
         <source>An absence must have a date.</source>
         <target state="final">缺勤必須指定日期。</target>
       </trans-unit>
-      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve" approved="yes">
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve" approved="no">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="final">不能在您的第一個工作日之前預定缺勤時間。</target>
+        <target state="needs-translation">不能在您的第一個工作日之前預定缺勤時間。</target>
       </trans-unit>
       <trans-unit id="IN37g5N" resname="Not enough holidays left." xml:space="preserve" approved="yes">
         <source>Not enough holidays left.</source>
@@ -110,9 +110,9 @@
         <source>This e-mail address is already in use.</source>
         <target state="final">此電子郵件地址已被使用。</target>
       </trans-unit>
-      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve" approved="yes">
-        <source>End date must not be earlier then start date.</source>
-        <target state="final">結束日期不能早於開始日期。</target>
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve" approved="no">
+        <source>The end date must not be earlier than the start date.</source>
+        <target state="needs-translation">結束日期不能早於開始日期。</target>
       </trans-unit>
       <trans-unit id="Jz1y3yB" resname="Duration cannot be zero." xml:space="preserve" approved="yes">
         <source>Duration cannot be zero.</source>

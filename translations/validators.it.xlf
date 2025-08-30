@@ -6,9 +6,9 @@
         <source>This value is not a valid role.</source>
         <target state="final">Questo valore non è un ruolo valido.</target>
       </trans-unit>
-      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." approved="yes">
-        <source>End date must not be earlier then start date.</source>
-        <target state="final">La data di fine non deve essere precedente alla data di inizio.</target>
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." approved="yes" xml:space="preserve">
+        <source>The end date must not be earlier than the start date.</source>
+        <target state="final">La data di fine non deve essere anteriore alla data di inizio.</target>
       </trans-unit>
       <trans-unit id="1V6BsD_" resname="You must select at least one user or team." approved="yes">
         <source>You must select at least one user or team.</source>
@@ -110,7 +110,7 @@
         <source>You do not have enough overtime, remaining are {{ value }}.</source>
         <target state="final">Non hai abbastanza straordinari, ti restano {{ value }}.</target>
       </trans-unit>
-      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." approved="yes">
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." approved="yes" xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
         <target state="final">Un congedo non può essere prenotato prima del primo giorno lavorativo.</target>
       </trans-unit>
@@ -153,6 +153,18 @@
       <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form." xml:space="preserve" approved="yes">
         <source>The CSRF token is invalid. Please try to resubmit the form.</source>
         <target state="final">Prova a inviare nuovamente il modulo. Se il problema persiste, aggiorna il browser.</target>
+      </trans-unit>
+      <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day." xml:space="preserve" approved="yes">
+        <source>An absence cannot be booked after the last working day.</source>
+        <target state="final">Un congedo non può essere prenotato dopo l'ultimo giorno lavorativo.</target>
+      </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve" approved="yes">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target state="final">Il periodo selezionato non può essere bloccato: sono in sospeso richieste di congedo non confermate.</target>
+      </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve" approved="yes">
+        <source>Duration cannot be negative.</source>
+        <target state="final">La durata non può essere negativa.</target>
       </trans-unit>
     </body>
   </file>

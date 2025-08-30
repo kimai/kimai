@@ -18,11 +18,10 @@ use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Entity\Timesheet
- */
+#[CoversClass(Timesheet::class)]
 class TimesheetTest extends TestCase
 {
     public function testDefaultValues(): void
@@ -103,7 +102,7 @@ class TimesheetTest extends TestCase
         $tag1 = new Tag();
         $tag1->setName('foo');
 
-        $this->assertEmpty($sut->getTags());
+        self::assertEmpty($sut->getTags());
 
         $sut->addTag($tag);
         $sut->addTag($tag1);
@@ -115,7 +114,7 @@ class TimesheetTest extends TestCase
         self::assertEquals([1 => 'foo'], $sut->getTagsAsArray());
 
         $sut->removeTag($tag1);
-        $this->assertEmpty($sut->getTags());
+        self::assertEmpty($sut->getTags());
     }
 
     public function testMetaFields(): void

@@ -144,6 +144,7 @@ final class PaginatedWorkingTimeChart extends AbstractWidget
         return [
             'begin' => clone $weekBegin,
             'end' => clone $weekEnd,
+            'dateYear' => $year,
             'thisMonth' => $thisMonth,
             'lastWeekInYear' => $lastWeekInYear,
             'lastWeekInLastYear' => $lastWeekInLastYear,

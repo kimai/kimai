@@ -17,11 +17,10 @@ use App\Tests\DataFixtures\TagFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Timesheet\DateTimeFactory;
 use App\Timesheet\Util;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
-class TimesheetTeamControllerTest extends ControllerBaseTest
+#[Group('integration')]
+class TimesheetTeamControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {
@@ -37,15 +36,18 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->assertAccessIsGranted($client, '/team/timesheet/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         // there are no records by default in the test database
         $this->assertHasNoEntriesWithFilter($client);
 
         $this->assertPageActions($client, [
-            'download modal-ajax-form' => $this->createUrl('/team/timesheet/export/'),
             'create create-ts modal-ajax-form' => $this->createUrl('/team/timesheet/create'),
             'multi-user create-ts-mu modal-ajax-form' => $this->createUrl('/team/timesheet/create_mu'),
+            'dropdown-item action-csv toolbar-action' => $this->createUrl('/team/timesheet/export/csv'),
+            'dropdown-item action-print toolbar-action' => $this->createUrl('/team/timesheet/export/print'),
+            'dropdown-item action-pdf toolbar-action' => $this->createUrl('/team/timesheet/export/pdf'),
+            'dropdown-item action-xlsx toolbar-action' => $this->createUrl('/team/timesheet/export/xlsx'),
         ]);
     }
 
@@ -64,7 +66,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->request($client, '/team/timesheet/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $dateRange = $this->formatDateRange($start, new \DateTime('last day of this month'));
 
@@ -77,7 +79,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
             'customers' => [],
         ]);
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasDataTable($client);
         $this->assertDataTableRowCount($client, 'datatable_timesheet_admin', 13);
 
@@ -95,7 +97,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $fixture->setAmount(5);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setStartDate($start);
-        $fixture->setCallback(function (Timesheet $timesheet) {
+        $fixture->setCallback(function (Timesheet $timesheet): void {
             $timesheet->setDescription('I am a foobar with tralalalala some more content');
             $timesheet->setMetaField((new TimesheetMeta())->setName('location')->setValue('homeoffice'));
             $timesheet->setMetaField((new TimesheetMeta())->setName('feature')->setValue('timetracking'));
@@ -109,14 +111,14 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->request($client, '/team/timesheet/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
             'searchTerm' => 'location:homeoffice foobar',
         ]);
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasDataTable($client);
         $this->assertDataTableRowCount($client, 'datatable_timesheet_admin', 5);
     }
@@ -136,33 +138,42 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $fixture->setStartDate(new \DateTime('-10 days'));
         $this->importFixture($fixture);
 
-        $this->request($client, '/team/timesheet/export/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->request($client, '/team/timesheet/');
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $dateRange = $this->formatDateRange(new \DateTime('-10 days'), new \DateTime());
 
-        $client->submitForm('export-btn-print', [
+        $form = $client->getCrawler()->filter('form.searchform')->form();
+        $form->getNode()->setAttribute('action', $this->createUrl('/team/timesheet/export/print'));
+        $client->submit($form, [
             'state' => 1,
             'daterange' => $dateRange,
             'customers' => [],
         ]);
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $node = $client->getCrawler()->filter('body');
         /** @var \DOMElement $body */
         $body = $node->getNode(0);
-        $this->assertEquals('invoice_print', $body->getAttribute('class'));
+        self::assertEquals('invoice_print', $body->getAttribute('class'));
 
         $result = $node->filter('section.invoice table.table tbody tr');
-        $this->assertEquals(10, \count($result));
+        self::assertEquals(10, \count($result));
+    }
+
+    public function testExporterNotFoundAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/team/timesheet/export/notfound');
+        $this->assertRouteNotFound($client);
     }
 
     public function testCreateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/team/timesheet/create');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=timesheet_admin_edit_form]')->form();
         $client->submit($form, [
@@ -175,18 +186,18 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/team/timesheet/'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSuccess($client);
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
         $timesheet = $em->getRepository(Timesheet::class)->findAll()[0];
-        $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
-        $this->assertNull($timesheet->getEnd());
-        $this->assertEquals('Testing is fun!', $timesheet->getDescription());
-        $this->assertEquals(0, $timesheet->getRate());
-        $this->assertNull($timesheet->getHourlyRate());
-        $this->assertNull($timesheet->getFixedRate());
+        self::assertInstanceOf(\DateTime::class, $timesheet->getBegin());
+        self::assertNull($timesheet->getEnd());
+        self::assertEquals('Testing is fun!', $timesheet->getDescription());
+        self::assertEquals(0, $timesheet->getRate());
+        self::assertNull($timesheet->getHourlyRate());
+        self::assertNull($timesheet->getFixedRate());
     }
 
     public function testCreateForMultipleUsersAction(): void
@@ -198,7 +209,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->request($client, '/team/timesheet/create_mu');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=timesheet_multi_user_edit_form]')->form();
         $client->submit($form, [
@@ -213,21 +224,21 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/team/timesheet/'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSuccess($client);
 
         $em = $this->getEntityManager();
         /** @var Timesheet[] $timesheets */
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertCount(2, $timesheets);
+        self::assertCount(2, $timesheets);
         foreach ($timesheets as $timesheet) {
-            $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
-            $this->assertNull($timesheet->getEnd());
-            $this->assertEquals('Testing is more fun!', $timesheet->getDescription());
-            $this->assertEquals(0, $timesheet->getRate());
-            $this->assertNull($timesheet->getHourlyRate());
-            $this->assertNull($timesheet->getFixedRate());
-            $this->assertEquals(['test', '1234', 'foo-bar'], $timesheet->getTagsAsArray());
+            self::assertInstanceOf(\DateTime::class, $timesheet->getBegin());
+            self::assertNull($timesheet->getEnd());
+            self::assertEquals('Testing is more fun!', $timesheet->getDescription());
+            self::assertEquals(0, $timesheet->getRate());
+            self::assertNull($timesheet->getHourlyRate());
+            self::assertNull($timesheet->getFixedRate());
+            self::assertEquals(['test', '1234', 'foo-bar'], $timesheet->getTagsAsArray());
         }
     }
 
@@ -278,9 +289,9 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $this->request($client, '/team/timesheet/' . $id . '/edit');
 
         $response = $client->getResponse();
-        $this->assertTrue($response->isSuccessful());
+        self::assertTrue($response->isSuccessful());
 
-        $this->assertStringContainsString(
+        self::assertStringContainsString(
             'href="https://www.kimai.org/documentation/timesheet.html"',
             $response->getContent(),
             'Could not find link to documentation'
@@ -297,14 +308,14 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
 
         $this->assertIsRedirect($client, $this->createUrl('/team/timesheet/'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSaveSuccess($client);
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
         $timesheet = $em->getRepository(Timesheet::class)->find($id);
-        $this->assertEquals('foo-bar', $timesheet->getDescription());
-        $this->assertEquals($teamlead->getId(), $timesheet->getUser()->getId());
+        self::assertEquals('foo-bar', $timesheet->getDescription());
+        self::assertEquals($teamlead->getId(), $timesheet->getUser()->getId());
     }
 
     public function testMultiDeleteAction(): void
@@ -380,7 +391,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
                 'entities' => implode(',', $ids)
             ]
         ]);
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $newUser = $this->getUserByRole(User::ROLE_USER);
         $form = $client->getCrawler()->filter('form[name=timesheet_multi_update]')->form();
@@ -417,7 +428,7 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $fixture->setAmountRunning(0);
         $fixture->setUser($this->getUserByRole(User::ROLE_USER));
         $fixture->setStartDate($dateTime->createDateTime());
-        $fixture->setCallback(function (Timesheet $timesheet) {
+        $fixture->setCallback(function (Timesheet $timesheet): void {
             $timesheet->setDescription('Testing is fun!');
             $begin = clone $timesheet->getBegin();
             $begin->setTime(0, 0, 0);
@@ -434,25 +445,25 @@ class TimesheetTeamControllerTest extends ControllerBaseTest
         $newId = $ids[0]->getId();
 
         $this->request($client, '/team/timesheet/' . $newId . '/duplicate');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=timesheet_admin_edit_form]')->form();
         $client->submit($form, $form->getPhpValues());
 
         $this->assertIsRedirect($client, $this->createUrl('/team/timesheet/'));
         $client->followRedirect();
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSuccess($client);
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
         $timesheet = $em->getRepository(Timesheet::class)->find($newId++);
-        $this->assertInstanceOf(\DateTime::class, $timesheet->getBegin());
-        $this->assertEquals('Europe/London', $timesheet->getBegin()->getTimezone()->getName());
-        $this->assertEquals('Testing is fun!', $timesheet->getDescription());
-        $this->assertEquals(2016, $timesheet->getRate());
-        $this->assertEquals(127, $timesheet->getHourlyRate());
-        $this->assertEquals(2016, $timesheet->getFixedRate());
-        $this->assertEquals(2016, $timesheet->getRate());
+        self::assertInstanceOf(\DateTime::class, $timesheet->getBegin());
+        self::assertEquals('Europe/London', $timesheet->getBegin()->getTimezone()->getName());
+        self::assertEquals('Testing is fun!', $timesheet->getDescription());
+        self::assertEquals(2016, $timesheet->getRate());
+        self::assertEquals(127, $timesheet->getHourlyRate());
+        self::assertEquals(2016, $timesheet->getFixedRate());
+        self::assertEquals(2016, $timesheet->getRate());
     }
 }

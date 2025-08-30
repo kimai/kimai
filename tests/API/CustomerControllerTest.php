@@ -21,21 +21,22 @@ use App\Entity\User;
 use App\Repository\CustomerRateRepository;
 use App\Repository\CustomerRepository;
 use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
+use PHPUnit\Framework\Attributes\Group;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @group integration
- */
-class CustomerControllerTest extends APIControllerBaseTest
+#[Group('integration')]
+class CustomerControllerTest extends APIControllerBaseTestCase
 {
     use RateControllerTestTrait;
 
-    /**
-     * @param CustomerRate $rate
-     * @param bool $isCollection
-     * @return string
-     */
     protected function getRateUrlByRate(RateInterface $rate, bool $isCollection): string
     {
+        self::assertInstanceOf(CustomerRate::class, $rate);
+        self::assertNotNull($rate->getCustomer());
+        self::assertNotNull($rate->getCustomer()->getId());
+
         if ($isCollection) {
             return $this->getRateUrl($rate->getCustomer()->getId());
         }
@@ -43,7 +44,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         return $this->getRateUrl($rate->getCustomer()->getId(), $rate->getId());
     }
 
-    protected function getRateUrl($id = '1', $rateId = null): string
+    protected function getRateUrl(?int $id = 1, ?int $rateId = null): string
     {
         if (null !== $rateId) {
             return \sprintf('/api/customers/%s/rates/%s', $id, $rateId);
@@ -87,6 +88,45 @@ class CustomerControllerTest extends APIControllerBaseTest
         return [$rate1, $rate2];
     }
 
+    /**
+     * @return array{0: Customer, 1: Customer}
+     */
+    private function loadCustomerData(): array
+    {
+        /** @var CustomerRateRepository $rateRepository */
+        $rateRepository = $this->getEntityManager()->getRepository(CustomerRate::class);
+        /** @var CustomerRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Customer::class);
+
+        $customer1 = new Customer('foooo');
+        $customer1->setCountry('DE');
+        $customer1->setTimezone('Europe/Paris');
+        $repository->saveCustomer($customer1);
+
+        $customer2 = new Customer('baaaaar');
+        $customer2->setCountry('RU');
+        $customer2->setTimezone('Europe/Moscow');
+        $repository->saveCustomer($customer2);
+
+        $rate1 = new CustomerRate();
+        $rate1->setCustomer($customer1);
+        $rate1->setRate(17.45);
+        $rate1->setIsFixed(false);
+
+        $rateRepository->saveRate($rate1);
+
+        $rate2 = new CustomerRate();
+        $rate2->setCustomer($customer1);
+        $rate2->setRate(99);
+        $rate2->setInternalRate(9);
+        $rate2->setIsFixed(true);
+        $rate2->setUser($this->getUserByName(UserFixtures::USERNAME_USER));
+
+        $rateRepository->saveRate($rate2);
+
+        return [$customer1, $customer2];
+    }
+
     public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/api/customers');
@@ -98,12 +138,13 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/customers');
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
-        $this->assertNotEmpty($result);
-        $this->assertEquals(1, \count($result));
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+        self::assertEquals(1, \count($result));
+        self::assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('CustomerCollection', $result[0]);
     }
 
@@ -114,12 +155,13 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/customers', 'GET', $query);
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
-        $this->assertNotEmpty($result);
-        $this->assertEquals(1, \count($result));
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+        self::assertEquals(1, \count($result));
+        self::assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('CustomerCollection', $result[0]);
     }
 
@@ -134,10 +176,10 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/customers/1');
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
     }
 
@@ -181,10 +223,10 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/customers/1');
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
     }
 
@@ -206,15 +248,15 @@ class CustomerControllerTest extends APIControllerBaseTest
             'timeBudget' => '7200',
         ];
         $this->request($client, '/api/customers', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
     }
 
     public function testPostActionWithLeastFields(): void
@@ -227,15 +269,15 @@ class CustomerControllerTest extends APIControllerBaseTest
             'timezone' => 'Europe/Berlin',
         ];
         $this->request($client, '/api/customers', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
     }
 
     public function testPostActionWithInvalidUser(): void
@@ -283,15 +325,15 @@ class CustomerControllerTest extends APIControllerBaseTest
             'timeBudget' => '7200',
         ];
         $this->request($client, '/api/customers/1', 'PATCH', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
     }
 
     public function testPatchActionWithInvalidUser(): void
@@ -329,7 +371,7 @@ class CustomerControllerTest extends APIControllerBaseTest
         $this->request($client, '/api/customers/1', 'PATCH', [], json_encode($data));
 
         $response = $client->getResponse();
-        $this->assertEquals(400, $response->getStatusCode());
+        self::assertEquals(400, $response->getStatusCode());
         $this->assertApiCallValidationError($response, ['currency']);
     }
 
@@ -372,7 +414,9 @@ class CustomerControllerTest extends APIControllerBaseTest
     public function testMetaAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        self::getContainer()->get('event_dispatcher')->addSubscriber(new CustomerTestMetaFieldSubscriberMock());
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new CustomerTestMetaFieldSubscriberMock());
 
         $data = [
             'name' => 'metatestmock',
@@ -380,11 +424,69 @@ class CustomerControllerTest extends APIControllerBaseTest
         ];
         $this->request($client, '/api/customers/1/meta', 'PATCH', [], json_encode($data));
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $em = $this->getEntityManager();
         /** @var Customer $customer */
         $customer = $em->getRepository(Customer::class)->find(1);
-        $this->assertEquals('another,testing,bar', $customer->getMetaField('metatestmock')->getValue());
+        self::assertEquals('another,testing,bar', $customer->getMetaField('metatestmock')->getValue());
+    }
+
+    // ------------------------------- [DELETE] -------------------------------
+
+    public function testDeleteIsSecure(): void
+    {
+        $this->assertUrlIsSecured('/api/customers/1', Request::METHOD_DELETE);
+    }
+
+    public function testDeleteActionWithUnknownTimesheet(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertNotFoundForDelete($client, '/api/customers/' . PHP_INT_MAX);
+    }
+
+    public function testDeleteEntityIsSecure(): void
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/api/customers/1', Request::METHOD_DELETE);
+    }
+
+    public function testDeleteActionWithoutAuthorization(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $imports = $this->loadCustomerData();
+
+        $this->request($client, '/api/customers/' . $imports[1]->getId(), Request::METHOD_DELETE);
+
+        $response = $client->getResponse();
+        $this->assertApiResponseAccessDenied($response);
+    }
+
+    public function testDeleteAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $imports = $this->loadCustomerData();
+        $getUrl = '/api/customers/' . $imports[0]->getId();
+        $this->assertAccessIsGranted($client, $getUrl);
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('CustomerEntity', $result);
+        self::assertNotEmpty($result['id']);
+        self::assertIsNumeric($result['id']);
+        $id = $result['id'];
+
+        $this->request($client, '/api/customers/' . $id, Request::METHOD_DELETE);
+        self::assertTrue($client->getResponse()->isSuccessful());
+        self::assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
+        self::assertEmpty($client->getResponse()->getContent());
+
+        $this->request($client, $getUrl);
+        $this->assertApiException($client->getResponse(), [
+            'code' => Response::HTTP_NOT_FOUND,
+            'message' => 'Not Found'
+        ]);
     }
 }

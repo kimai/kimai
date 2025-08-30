@@ -13,10 +13,9 @@ use App\Entity\Customer;
 use App\Entity\Invoice;
 use App\Repository\Query\BaseQuery;
 use App\Repository\Query\InvoiceArchiveQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Repository\Query\InvoiceArchiveQuery
- */
+#[CoversClass(InvoiceArchiveQuery::class)]
 class InvoiceArchiveQueryTest extends BaseQueryTest
 {
     public function testQuery(): void
@@ -26,8 +25,8 @@ class InvoiceArchiveQueryTest extends BaseQueryTest
         $this->assertBaseQuery($sut, 'date', BaseQuery::ORDER_DESC);
         $this->assertDateRangeTrait($sut);
 
-        $this->assertIsArray($sut->getCustomers());
-        $this->assertEmpty($sut->getCustomers());
+        self::assertIsArray($sut->getCustomers());
+        self::assertEmpty($sut->getCustomers());
         self::assertFalse($sut->hasCustomers());
 
         $sut->addCustomer(new Customer('foo'));

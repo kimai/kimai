@@ -10,19 +10,19 @@
 namespace App\Tests\EventSubscriber;
 
 use App\EventSubscriber\WizardSubscriber;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-/**
- * @covers \App\EventSubscriber\WizardSubscriber
- */
+#[CoversClass(WizardSubscriber::class)]
 class WizardSubscriberTest extends TestCase
 {
     public function testGetSubscribedEvents(): void
     {
         $events = WizardSubscriber::getSubscribedEvents();
-        $this->assertArrayHasKey(KernelEvents::REQUEST, $events);
+        self::assertArrayHasKey(KernelEvents::REQUEST, $events);
         $methodName = $events[KernelEvents::REQUEST][0];
-        $this->assertTrue(method_exists(WizardSubscriber::class, $methodName));
+        self::assertIsString($methodName);
+        self::assertTrue(method_exists(WizardSubscriber::class, $methodName));
     }
 }

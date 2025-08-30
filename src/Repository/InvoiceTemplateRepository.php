@@ -19,7 +19,7 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * @extends \Doctrine\ORM\EntityRepository<InvoiceTemplate>
+ * @extends EntityRepository<InvoiceTemplate>
  */
 class InvoiceTemplateRepository extends EntityRepository
 {

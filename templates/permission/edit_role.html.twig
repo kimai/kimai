@@ -2,7 +2,7 @@
 
 {% block main %}
     {{ include(kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig', {
-        'title': (role.id ? 'action.edit'|trans : 'create'|trans) ~ ': ' ~ 'user_role.title'|trans,
+        'title': (role.id ? 'edit'|trans : 'create'|trans) ~ ': ' ~ 'user_role.title'|trans,
         'form': form,
         'back': path('admin_user_permissions')
     }) }}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ru" datatype="plaintext" original="kiosk.en.xlf">
+    <body>
+      <trans-unit id="3349h0x" resname="Kiosk" xml:space="preserve" approved="no">
+        <source>Kiosk</source>
+        <target state="translated">Режим киоска</target>
+      </trans-unit>
+      <trans-unit id="TcGAXSA" resname="kiosk.login" xml:space="preserve" approved="no">
+        <source>kiosk.login</source>
+        <target state="translated">Экран авторизации</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

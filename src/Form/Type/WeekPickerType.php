@@ -34,6 +34,10 @@ final class WeekPickerType extends AbstractType
 
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
+        if (!$options['start_date'] instanceof \DateTimeInterface) {
+            throw new \InvalidArgumentException('Start date needs to be a DateTime object');
+        }
+
         /** @var \DateTimeInterface|null $date */
         $date = $form->getData();
 
@@ -42,11 +46,31 @@ final class WeekPickerType extends AbstractType
             $date = $options['start_date'];
         }
 
-        $date = \DateTime::createFromInterface($date);
+        $date = \DateTimeImmutable::createFromInterface($date);
+        $start = \DateTimeImmutable::createFromInterface($options['start_date']);
 
-        $view->vars['week'] = $date;
-        $view->vars['previousWeek'] = (clone $date)->modify('-1 week');
-        $view->vars['nextWeek'] = (clone $date)->modify('+1 week');
+        $week = $date;
+        if ($date->format('N') === '7') {
+            $week = $date->modify('+1 day');
+        }
+        if ($start->format('N') === '7') {
+            $start = $start->modify('+1 day');
+        }
+
+        $range = [];
+        $end = $start->modify('-1 year');
+        $end = $end->setDate((int) $end->format('Y'), 1, 1);
+        $i = 1;
+        while ($i++ < 106 && $end <= $start) {
+            $range[] = $start;
+            $start = $start->modify('- 1 week');
+        }
+
+        $view->vars['range'] = $range;
+        $view->vars['weekNumber'] = $week->format('W');
+        $view->vars['week'] = $week;
+        $view->vars['previousWeek'] = $week->modify('-1 week');
+        $view->vars['nextWeek'] = $week->modify('+1 week');
     }
 
     public function getParent(): string

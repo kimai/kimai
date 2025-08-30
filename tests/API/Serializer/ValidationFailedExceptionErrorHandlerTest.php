@@ -15,6 +15,7 @@ use FOS\RestBundle\Serializer\Normalizer\FlattenExceptionHandler;
 use JMS\Serializer\GraphNavigatorInterface;
 use JMS\Serializer\JsonSerializationVisitor;
 use JMS\Serializer\SerializationContext;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\ErrorHandler\Exception\FlattenException;
@@ -22,9 +23,7 @@ use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\API\Serializer\ValidationFailedExceptionErrorHandler
- */
+#[CoversClass(ValidationFailedExceptionErrorHandler::class)]
 class ValidationFailedExceptionErrorHandlerTest extends TestCase
 {
     public function testSubscribingMethods(): void

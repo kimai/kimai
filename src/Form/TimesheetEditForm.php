@@ -18,6 +18,7 @@ use App\Form\Type\DescriptionType;
 use App\Form\Type\DurationType;
 use App\Form\Type\FixedRateType;
 use App\Form\Type\HourlyRateType;
+use App\Form\Type\InternalRateType;
 use App\Form\Type\MetaFieldsCollectionType;
 use App\Form\Type\TagsType;
 use App\Form\Type\TimePickerType;
@@ -42,7 +43,10 @@ class TimesheetEditForm extends AbstractType
 {
     use FormTrait;
 
-    public function __construct(private CustomerRepository $customers, private SystemConfiguration $systemConfiguration)
+    public function __construct(
+        private readonly CustomerRepository $customers,
+        private readonly SystemConfiguration $systemConfiguration
+    )
     {
     }
 
@@ -55,8 +59,7 @@ class TimesheetEditForm extends AbstractType
         $timezone = $options['timezone'];
         $isNew = true;
 
-        if (isset($options['data'])) {
-            /** @var Timesheet $entry */
+        if (isset($options['data']) && $options['data'] instanceof Timesheet) {
             $entry = $options['data'];
 
             $activity = $entry->getActivity();
@@ -185,7 +188,7 @@ class TimesheetEditForm extends AbstractType
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
-            function (FormEvent $event) {
+            function (FormEvent $event): void {
                 /** @var Timesheet $timesheet */
                 $timesheet = $event->getData();
                 $begin = $timesheet->getBegin();
@@ -200,21 +203,28 @@ class TimesheetEditForm extends AbstractType
         // map single fields to original datetime object
         $builder->addEventListener(
             FormEvents::SUBMIT,
-            function (FormEvent $event) {
+            function (FormEvent $event): void {
                 /** @var Timesheet $data */
                 $data = $event->getData();
 
                 /** @var \DateTime|null $date */
                 $date = $event->getForm()->get('begin_date')->getData();
+                /** @var \DateTime|null $time */
                 $time = $event->getForm()->get('begin_time')->getData();
 
                 if ($date === null || $time === null) {
                     return;
                 }
 
+                $seconds = 0;
+                // if the user did not change the time, make sure to keep the seconds (ONLY if the timesheet is already existing)
+                if ($data->getBegin()?->format('H:i') === $time->format('H:i') && $data->getId() !== null) {
+                    $seconds = $data->getBegin()->format('s') ?? 0;
+                }
+
                 // mutable datetime are a problem for doctrine
                 $newDate = clone $date;
-                $newDate->setTime($time->format('H'), $time->format('i'));
+                $newDate->setTime((int) $time->format('H'), (int) $time->format('i'), (int) $seconds);
 
                 if ($data->getBegin() === null || $data->getBegin()->getTimestamp() !== $newDate->getTimestamp()) {
                     $data->setBegin($newDate);
@@ -233,7 +243,7 @@ class TimesheetEditForm extends AbstractType
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
-            function (FormEvent $event) {
+            function (FormEvent $event): void {
                 /** @var Timesheet|null $data */
                 $data = $event->getData();
                 if (null !== $data->getEnd()) {
@@ -245,11 +255,12 @@ class TimesheetEditForm extends AbstractType
         // make sure that date & time fields are mapped back to begin & end fields
         $builder->addEventListener(
             FormEvents::SUBMIT,
-            function (FormEvent $event) {
+            function (FormEvent $event): void {
                 /** @var Timesheet $timesheet */
                 $timesheet = $event->getData();
                 $oldEnd = $timesheet->getEnd();
 
+                /** @var \DateTime|null $end */
                 $end = $event->getForm()->get('end_time')->getData();
                 if ($end === null || $end === false) {
                     $timesheet->setEnd(null);
@@ -266,8 +277,15 @@ class TimesheetEditForm extends AbstractType
                 if ($time === null) {
                     throw new \Exception('Cannot work with timesheets without start time');
                 }
+
+                $seconds = 0;
+                // if the user did not change the time, make sure to keep the seconds (ONLY if the timesheet is already existing)
+                if ($oldEnd !== null && $oldEnd->format('H:i') === $end->format('H:i') && $timesheet->getId() !== null) {
+                    $seconds = $oldEnd->format('s') ?? 0;
+                }
+
                 $newEnd = clone $time;
-                $newEnd->setTime($end->format('H'), $end->format('i'));
+                $newEnd->setTime((int) $end->format('H'), (int) $end->format('i'), (int) $seconds);
 
                 if ($newEnd < $time) {
                     $newEnd->modify('+ 1 day');
@@ -310,12 +328,16 @@ class TimesheetEditForm extends AbstractType
 
         $builder->add('duration', DurationType::class, $durationOptions);
 
+        if ($this->systemConfiguration->isBreakTimeEnabled()) {
+            $builder->add('break', DurationType::class, ['label' => 'break', 'required' => false, 'icon' => 'break']);
+        }
+
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
-            function (FormEvent $event) {
+            function (FormEvent $event): void {
                 /** @var Timesheet|null $timesheet */
                 $timesheet = $event->getData();
-                if (null === $timesheet || $timesheet->isRunning()) {
+                if (null === $timesheet || ($timesheet instanceof Timesheet && $timesheet->isRunning())) {
                     $event->getForm()->get('duration')->setData(null);
                 }
             }
@@ -324,7 +346,7 @@ class TimesheetEditForm extends AbstractType
         // make sure that duration is mapped back to end field
         $builder->addEventListener(
             FormEvents::SUBMIT,
-            function (FormEvent $event) use ($forceApply) {
+            function (FormEvent $event) use ($forceApply): void {
                 /** @var Timesheet $timesheet */
                 $timesheet = $event->getData();
 
@@ -338,7 +360,7 @@ class TimesheetEditForm extends AbstractType
 
                 $duration = $timesheet->getDuration() ?? 0;
 
-                // only apply the duration, if the end is not yet set
+                // only apply the duration, if the end is not yet set.
                 // without that check, the end would be overwritten and the real end time would be lost
                 if (($forceApply && $duration > 0) || ($duration > 0 && $timesheet->isRunning())) {
                     $end = clone $timesheet->getBegin();
@@ -355,13 +377,13 @@ class TimesheetEditForm extends AbstractType
             return;
         }
 
+        $moneyOptions = ['currency' => $currency];
+
         $builder
-            ->add('fixedRate', FixedRateType::class, [
-                'currency' => $currency,
-            ])
-            ->add('hourlyRate', HourlyRateType::class, [
-                'currency' => $currency,
-            ]);
+            ->add('fixedRate', FixedRateType::class, $moneyOptions)
+            ->add('hourlyRate', HourlyRateType::class, $moneyOptions)
+            //->add('internalRate', InternalRateType::class, $moneyOptions)
+        ;
     }
 
     protected function addUser(FormBuilderInterface $builder, array $options): void
@@ -370,7 +392,14 @@ class TimesheetEditForm extends AbstractType
             return;
         }
 
-        $builder->add('user', UserType::class);
+        $users = [];
+        if (isset($options['data']) && $options['data'] instanceof Timesheet) {
+            $users = [$options['data']->getUser()];
+        }
+
+        $builder->add('user', UserType::class, [
+            'include_users' => $users,
+        ]);
     }
 
     protected function addExported(FormBuilderInterface $builder, array $options): void
@@ -380,14 +409,17 @@ class TimesheetEditForm extends AbstractType
         }
 
         $builder->add('exported', YesNoType::class, [
-            'label' => 'exported'
+            'label' => 'exported',
+            'documentation' => [
+                'description' => 'If true, this timesheet will be flagged as being exported'
+            ]
         ]);
     }
 
     protected function addBillable(FormBuilderInterface $builder, array $options): void
     {
         if ($options['include_billable']) {
-            $builder->add('billableMode', TimesheetBillableType::class, []);
+            $builder->add('billableMode', TimesheetBillableType::class);
         }
 
         $builder->addModelTransformer(new CallbackTransformer(

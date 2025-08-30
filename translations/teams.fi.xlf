@@ -30,6 +30,10 @@
         <source>team.create_default</source>
         <target state="translated">Luo uusi tiimi käytön rajoittamiseksi</target>
       </trans-unit>
+      <trans-unit id="6g81kYY" approved="no" resname="team.member" xml:space="preserve">
+        <source>team.member</source>
+        <target state="translated">Jäsen</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

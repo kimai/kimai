@@ -24,13 +24,14 @@ use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\ProjectTestMetaFieldSubscriberMock;
 use Doctrine\ORM\EntityManager;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
-/**
- * @group integration
- */
-class ProjectControllerTest extends ControllerBaseTest
+#[Group('integration')]
+class ProjectControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {
@@ -71,9 +72,27 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $fixture = new ProjectFixtures();
         $fixture->setAmount(5);
-        $fixture->setCallback(function (Project $project) {
+        $i = 0;
+        $fixture->setCallback(function (Project $project) use (&$i): void {
             $project->setVisible(true);
-            $project->setComment('I am a foobar with tralalalala some more content');
+            switch ($i++) {
+                case 0:
+                    $project->setComment('I am a foo');
+                    break;
+                case 1:
+                    $project->setComment('I am a foo with tralalalala some more content');
+                    break;
+                case 2:
+                    $project->setComment('I am a barfoo with tralalalala some more content');
+                    break;
+                case 3:
+                    $project->setName($project->getName() . ' with');
+                    $project->setComment('I am a foobar tralalalala some more content');
+                    break;
+                default:
+                    $project->setComment('I am a foobar with tralalalala some more content');
+                    break;
+            }
             $project->setMetaField((new ProjectMeta())->setName('location')->setValue('homeoffice'));
             $project->setMetaField((new ProjectMeta())->setName('feature')->setValue('timetracking'));
         });
@@ -88,16 +107,16 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $form = $client->getCrawler()->filter('form.searchform')->form();
         $client->submit($form, [
-            'searchTerm' => 'feature:timetracking foo',
+            'searchTerm' => 'feature:timetracking foo with',
             'visibility' => 1,
             'customers' => [1],
             'size' => 50,
             'page' => 1,
         ]);
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasDataTable($client);
-        $this->assertDataTableRowCount($client, 'datatable_project_admin', 5);
+        $this->assertDataTableRowCount($client, 'datatable_project_admin', 4);
     }
 
     public function testExportIsSecureForRole(): void
@@ -118,7 +137,7 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $fixture = new ProjectFixtures();
         $fixture->setAmount(5);
-        $fixture->setCallback(function (Project $project) {
+        $fixture->setCallback(function (Project $project): void {
             $project->setVisible(true);
             $project->setComment('I am a foobar with tralalalala some more content');
             $project->setMetaField((new ProjectMeta())->setName('location')->setValue('homeoffice'));
@@ -406,14 +425,16 @@ class ProjectControllerTest extends ControllerBaseTest
     public function testCreateActionShowsMetaFields(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        self::getContainer()->get('event_dispatcher')->addSubscriber(new ProjectTestMetaFieldSubscriberMock());
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = self::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new ProjectTestMetaFieldSubscriberMock());
         $this->assertAccessIsGranted($client, '/admin/project/create');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
-        $this->assertTrue($form->has('project_edit_form[metaFields][metatestmock][value]'));
-        $this->assertTrue($form->has('project_edit_form[metaFields][foobar][value]'));
-        $this->assertFalse($form->has('project_edit_form[metaFields][0][value]'));
+        self::assertTrue($form->has('project_edit_form[metaFields][metatestmock][value]'));
+        self::assertTrue($form->has('project_edit_form[metaFields][foobar][value]'));
+        self::assertFalse($form->has('project_edit_form[metaFields][0][value]'));
     }
 
     public function testEditAction(): void
@@ -421,7 +442,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/project/1/edit');
         $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
-        $this->assertEquals('Test', $form->get('project_edit_form[name]')->getValue());
+        self::assertEquals('Test', $form->get('project_edit_form[name]')->getValue());
         $client->submit($form, [
             'project_edit_form' => ['name' => 'Test 2']
         ]);
@@ -429,7 +450,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->request($client, '/admin/project/1/edit');
         $editForm = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
-        $this->assertEquals('Test 2', $editForm->get('project_edit_form[name]')->getValue());
+        self::assertEquals('Test 2', $editForm->get('project_edit_form[name]')->getValue());
     }
 
     public function testTeamPermissionAction(): void
@@ -474,12 +495,12 @@ class ProjectControllerTest extends ControllerBaseTest
         $id = $projects[0]->getId();
 
         $this->request($client, '/admin/project/' . $id . '/edit');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->request($client, '/admin/project/' . $id . '/delete');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=form]')->form();
-        $this->assertStringEndsWith($this->createUrl('/admin/project/' . $id . '/delete'), $form->getUri());
+        self::assertStringEndsWith($this->createUrl('/admin/project/' . $id . '/delete'), $form->getUri());
         $client->submit($form);
 
         $client->followRedirect();
@@ -487,7 +508,7 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
 
         $this->request($client, '/admin/project/' . $id . '/edit');
-        $this->assertFalse($client->getResponse()->isSuccessful());
+        self::assertFalse($client->getResponse()->isSuccessful());
     }
 
     public function testDeleteActionWithTimesheetEntries(): void
@@ -501,18 +522,18 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, \count($timesheets));
+        self::assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {
-            $this->assertEquals(1, $entry->getActivity()->getId());
+            self::assertEquals(1, $entry->getActivity()->getId());
         }
 
         $this->request($client, '/admin/project/1/delete');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=form]')->form();
-        $this->assertStringEndsWith($this->createUrl('/admin/project/1/delete'), $form->getUri());
+        self::assertStringEndsWith($this->createUrl('/admin/project/1/delete'), $form->getUri());
         $client->submit($form);
 
         $this->assertIsRedirect($client, $this->createUrl('/admin/project/'));
@@ -522,10 +543,10 @@ class ProjectControllerTest extends ControllerBaseTest
 
         $em->clear();
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(0, \count($timesheets));
+        self::assertEquals(0, \count($timesheets));
 
         $this->request($client, '/admin/project/1/edit');
-        $this->assertFalse($client->getResponse()->isSuccessful());
+        self::assertFalse($client->getResponse()->isSuccessful());
     }
 
     public function testDeleteActionWithTimesheetEntriesAndReplacement(): void
@@ -543,18 +564,18 @@ class ProjectControllerTest extends ControllerBaseTest
         $id = $projects[0]->getId();
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, \count($timesheets));
+        self::assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {
-            $this->assertEquals(1, $entry->getProject()->getId());
+            self::assertEquals(1, $entry->getProject()->getId());
         }
 
         $this->request($client, '/admin/project/1/delete');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=form]')->form();
-        $this->assertStringEndsWith($this->createUrl('/admin/project/1/delete'), $form->getUri());
+        self::assertStringEndsWith($this->createUrl('/admin/project/1/delete'), $form->getUri());
         $client->submit($form, [
             'form' => [
                 'project' => $id
@@ -567,20 +588,18 @@ class ProjectControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, \count($timesheets));
+        self::assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {
-            $this->assertEquals($id, $entry->getProject()->getId());
+            self::assertEquals($id, $entry->getProject()->getId());
         }
 
         $this->request($client, '/admin/project/1/edit');
-        $this->assertFalse($client->getResponse()->isSuccessful());
+        self::assertFalse($client->getResponse()->isSuccessful());
     }
 
-    /**
-     * @dataProvider getValidationTestData
-     */
+    #[DataProvider('getValidationTestData')]
     public function testValidationForCreateAction(array $formData, array $validationFields): void
     {
         $this->assertFormHasValidationError(
@@ -592,7 +611,7 @@ class ProjectControllerTest extends ControllerBaseTest
         );
     }
 
-    public function getValidationTestData()
+    public static function getValidationTestData()
     {
         return [
             [

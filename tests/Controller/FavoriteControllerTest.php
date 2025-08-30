@@ -11,11 +11,10 @@ namespace App\Tests\Controller;
 
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
-class FavoriteControllerTest extends ControllerBaseTest
+#[Group('integration')]
+class FavoriteControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {
@@ -35,7 +34,7 @@ class FavoriteControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->request($client, '/favorite/timesheet/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
         self::assertNotFalse($content);

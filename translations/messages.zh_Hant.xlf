@@ -82,13 +82,9 @@
         <source>orderBy</source>
         <target state="final">排序依據</target>
       </trans-unit>
-      <trans-unit id="hBNESu6" resname="my.profile" xml:space="preserve" approved="yes">
-        <source>my.profile</source>
-        <target state="final">我的帳號</target>
-      </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple" xml:space="preserve" approved="yes">
         <source>update_multiple</source>
-        <target state="final">是否要%action% %count% 條項目？</target>
+        <target state="final">是否要%action% %count% 條項目</target>
       </trans-unit>
       <trans-unit id="OTDmccn" resname="attachments" xml:space="preserve" approved="yes">
         <source>attachments</source>
@@ -290,9 +286,9 @@
         <source>budget</source>
         <target state="final">預算</target>
       </trans-unit>
-      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve" approved="yes">
+      <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve" approved="no">
         <source>timeBudget</source>
-        <target state="final">時間預算</target>
+        <target state="needs-translation">時間預算</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve" approved="yes">
         <source>activity</source>
@@ -570,33 +566,33 @@
         <source>Working hours</source>
         <target state="final">工作時數</target>
       </trans-unit>
-      <trans-unit id="pX_3dNm" resname="stats.revenue" xml:space="preserve" approved="yes">
-        <source>stats.revenue</source>
+      <trans-unit id="Nx9_QiO" resname="revenue" xml:space="preserve" approved="yes">
+        <source>revenue</source>
         <target state="final">營收</target>
       </trans-unit>
-      <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve" approved="yes">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve" approved="no">
         <source>stats.durationToday</source>
-        <target state="final">本日工時</target>
+        <target state="needs-translation">本日工時</target>
       </trans-unit>
-      <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve" approved="yes">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve" approved="no">
         <source>stats.durationWeek</source>
-        <target state="final">本週工時</target>
+        <target state="needs-translation">本週工時</target>
       </trans-unit>
-      <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve" approved="yes">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve" approved="no">
         <source>stats.durationMonth</source>
-        <target state="final">本月工時</target>
+        <target state="needs-translation">本月工時</target>
       </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve" approved="yes">
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve" approved="no">
         <source>stats.durationFinancialYear</source>
-        <target state="final">本會計年度工時</target>
+        <target state="needs-translation">本會計年度工時</target>
       </trans-unit>
-      <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve" approved="yes">
+      <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve" approved="no">
         <source>stats.durationYear</source>
-        <target state="final">本年度工時</target>
+        <target state="needs-translation">本年度工時</target>
       </trans-unit>
-      <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve" approved="yes">
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve" approved="no">
         <source>stats.durationTotal</source>
-        <target state="final">總工時</target>
+        <target state="needs-translation">總工時</target>
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours" xml:space="preserve" approved="yes">
         <source>stats.yourWorkingHours</source>
@@ -926,9 +922,9 @@
         <source>invoices</source>
         <target state="final">收支單</target>
       </trans-unit>
-      <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve" approved="yes">
-        <source>sickness.intro</source>
-        <target state="final">生病、看病、照顧近親、等。</target>
+      <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve" approved="no">
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="needs-translation">生病、看病、照顧近親、等。</target>
       </trans-unit>
       <trans-unit id="EI5gPkp" resname="stats.userDurationToday" xml:space="preserve" approved="yes">
         <source>stats.userDurationToday</source>
@@ -1076,7 +1072,7 @@
       </trans-unit>
       <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve" approved="no">
         <source>profile.first_entry</source>
-        <target state="needs-translation">工作開始於</target>
+        <target state="translated">第一個工作日</target>
       </trans-unit>
       <trans-unit id="EwPAaws" resname="type" xml:space="preserve" approved="yes">
         <source>type</source>
@@ -1229,10 +1225,6 @@
       <trans-unit id="BhsaLxX" resname="export.clear_all" xml:space="preserve" approved="yes">
         <source>export.clear_all</source>
         <target state="final">是否要將所有紀錄標示為未處理？</target>
-      </trans-unit>
-      <trans-unit id="csAXaBa" resname="button.request" xml:space="preserve" approved="yes">
-        <source>button.request</source>
-        <target state="final">送出</target>
       </trans-unit>
       <trans-unit id="eCEGRzN" resname="work_contract" xml:space="preserve" approved="yes">
         <source>work_contract</source>
@@ -1414,10 +1406,6 @@
         <source>unit_price</source>
         <target state="final">單價</target>
       </trans-unit>
-      <trans-unit id="uHrZlbq" resname="work_times_result" xml:space="preserve" approved="yes">
-        <source>work_times_result</source>
-        <target state="final">工作時數</target>
-      </trans-unit>
       <trans-unit id="XE01Ar1" resname="parental" xml:space="preserve" approved="yes">
         <source>parental</source>
         <target state="final">育嬰假</target>
@@ -1430,9 +1418,9 @@
         <source>Overview</source>
         <target state="final">總覽</target>
       </trans-unit>
-      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve" approved="yes">
-        <source>holiday.intro</source>
-        <target state="final">您共有 %days% 天的可用假日，已使用 %used% 天。</target>
+      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve" approved="no">
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="needs-translation">您共有 %days% 天的可用假日，已使用 %used% 天。</target>
       </trans-unit>
       <trans-unit id="dherSTU" resname="export_decimal" xml:space="preserve" approved="yes">
         <source>export_decimal</source>
@@ -1761,6 +1749,154 @@
       <trans-unit id="H1i5FFs" resname="request" xml:space="preserve">
         <source>request</source>
         <target state="translated">請求</target>
+      </trans-unit>
+      <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
+        <source>hours_per_day</source>
+        <target state="translated">每日工時</target>
+      </trans-unit>
+      <trans-unit id="07e8ywS" resname="hours_per_month" xml:space="preserve">
+        <source>hours_per_month</source>
+        <target state="translated">每月工時</target>
+      </trans-unit>
+      <trans-unit id="7p_pFHl" resname="work_days" xml:space="preserve">
+        <source>work_days</source>
+        <target state="translated">工作天</target>
+      </trans-unit>
+      <trans-unit id="2pbkbn_" resname="work_hours_mode" xml:space="preserve">
+        <source>work_hours_mode</source>
+        <target state="translated">工時計算</target>
+      </trans-unit>
+      <trans-unit id="IFT9pou" resname="last_working_day" xml:space="preserve">
+        <source>last_working_day</source>
+        <target state="translated">最後工作日</target>
+      </trans-unit>
+      <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve">
+        <source>booking_allow_only_work_days</source>
+        <target state="translated">僅允許在勞動契約中定義有預期工時的日子進行時間記錄</target>
+      </trans-unit>
+      <trans-unit id="y7KtuSS" resname="hours_per_week" xml:space="preserve">
+        <source>hours_per_week</source>
+        <target state="translated">每週工時</target>
+      </trans-unit>
+      <trans-unit id="FOvlalA" resname="break" xml:space="preserve" approved="no">
+        <source>break</source>
+        <target state="translated">休息</target>
+      </trans-unit>
+      <trans-unit id="0jvo0RQ" resname="profit" xml:space="preserve">
+        <source>profit</source>
+        <target state="translated">利潤</target>
+      </trans-unit>
+      <trans-unit id="38M3a4J" resname="filter" xml:space="preserve" approved="yes">
+        <source>filter</source>
+        <target state="final">篩選資料</target>
+      </trans-unit>
+      <trans-unit id="4G2jBDS" resname="trash" xml:space="preserve" approved="yes">
+        <source>trash</source>
+        <target state="final">刪除</target>
+      </trans-unit>
+      <trans-unit id="T_PN1AT" resname="permissions" xml:space="preserve" approved="yes">
+        <source>permissions</source>
+        <target state="final">團隊權限</target>
+      </trans-unit>
+      <trans-unit id="2UL2SIZ" resname="import" xml:space="preserve" approved="yes">
+        <source>import</source>
+        <target state="final">匯入</target>
+      </trans-unit>
+      <trans-unit id="JiEhxTc" resname="edit" xml:space="preserve" approved="yes">
+        <source>Edit</source>
+        <target state="final">編輯</target>
+      </trans-unit>
+      <trans-unit id="J0sRBY_" resname="profile-stats" xml:space="preserve" approved="yes">
+        <source>profile-stats</source>
+        <target state="final">資料</target>
+      </trans-unit>
+      <trans-unit id="b1pgNOd" resname="copy" xml:space="preserve" approved="yes">
+        <source>copy</source>
+        <target state="final">建立複本</target>
+      </trans-unit>
+      <trans-unit id="QR1nvcR" resname="create-timesheet" xml:space="preserve" approved="yes">
+        <source>create-timesheet</source>
+        <target state="final">建立工時單</target>
+      </trans-unit>
+      <trans-unit id="9M4b2ZN" resname="invoice.paid" xml:space="preserve" approved="yes">
+        <source>invoice.paid</source>
+        <target state="final">收支單已付款</target>
+      </trans-unit>
+      <trans-unit id="SEyZupT" resname="invoice.cancel" xml:space="preserve" approved="yes">
+        <source>invoice.cancel</source>
+        <target state="final">取消收支單</target>
+      </trans-unit>
+      <trans-unit id="UbouFOs" resname="create-activity" xml:space="preserve" approved="yes">
+        <source>create-activity</source>
+        <target state="final">建立活動</target>
+      </trans-unit>
+      <trans-unit id="JeK2sQZ" resname="repeat" xml:space="preserve" approved="yes">
+        <source>repeat</source>
+        <target state="final">再次開始</target>
+      </trans-unit>
+      <trans-unit id="2cMESs." resname="widget_add" xml:space="preserve" approved="yes">
+        <source>Add widget</source>
+        <target state="final">新增小工具</target>
+      </trans-unit>
+      <trans-unit id="PEgjRvN" resname="back" xml:space="preserve" approved="yes">
+        <source>back</source>
+        <target state="final">返回</target>
+      </trans-unit>
+      <trans-unit id="bEXLcqN" resname="stop" xml:space="preserve" approved="yes">
+        <source>stop</source>
+        <target state="final">停止</target>
+      </trans-unit>
+      <trans-unit id="pJzNT.n" resname="vcard" xml:space="preserve" approved="yes">
+        <source>vcard</source>
+        <target state="final">名片</target>
+      </trans-unit>
+      <trans-unit id="YCc5UoO" resname="widget_remove" xml:space="preserve" approved="yes">
+        <source>Remove widget</source>
+        <target state="final">移除小工具</target>
+      </trans-unit>
+      <trans-unit id="aP9j_4L" resname="download" xml:space="preserve" approved="yes">
+        <source>download</source>
+        <target state="final">下載</target>
+      </trans-unit>
+      <trans-unit id="hF6RgxM" resname="report" xml:space="preserve" approved="yes">
+        <source>report</source>
+        <target state="final">報表</target>
+      </trans-unit>
+      <trans-unit id="Qf.Yt2r" resname="details" xml:space="preserve" approved="yes">
+        <source>details</source>
+        <target state="final">顯示</target>
+      </trans-unit>
+      <trans-unit id="QCf1FUG" resname="reload" xml:space="preserve" approved="yes">
+        <source>reload</source>
+        <target state="final">重新載入</target>
+      </trans-unit>
+      <trans-unit id="hHIeqOW" resname="invoice.pending" xml:space="preserve" approved="yes">
+        <source>invoice.pending</source>
+        <target state="final">等候付款</target>
+      </trans-unit>
+      <trans-unit id="PBlIO2x" resname="create-project" xml:space="preserve" approved="yes">
+        <source>create-project</source>
+        <target state="final">建立專案</target>
+      </trans-unit>
+      <trans-unit id="TqFAWIF" resname="home" xml:space="preserve" approved="yes">
+        <source>home</source>
+        <target state="final">首頁</target>
+      </trans-unit>
+      <trans-unit id="5vJvarK" resname="syncronisation" xml:space="preserve" approved="yes">
+        <source>Synchronization</source>
+        <target state="final">同步</target>
+      </trans-unit>
+      <trans-unit id="Qh5mV5Q" resname="create-timesheet-multiuser" xml:space="preserve" approved="yes">
+        <source>create-timesheet-multiuser</source>
+        <target state="final">用於多位使用者</target>
+      </trans-unit>
+      <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve" approved="yes">
+        <source>settings</source>
+        <target state="final">偏好設定</target>
+      </trans-unit>
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve" approved="no">
+        <source>Filter timesheets</source>
+        <target state="needs-translation">篩選工時單</target>
       </trans-unit>
     </body>
   </file>

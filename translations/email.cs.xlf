@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="cs" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
-        <source>button_copy_url_to_browser</source>
-        <target>V případě, že nefunguje tlačítko, zkopírujte prosím &amp; následující adresu URL do vašeho prohlížeče: %url%</target>
-      </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
         <target>Toto je automaticky generovaný e-mail. Prosím neodpovídejte, e-mail příjemce není sledován.</target>
@@ -26,21 +22,73 @@
         <source>registration.intro</source>
         <target>Zaregistrovali jste se do Kimai time-tracker s e-mailovou adresou %email%. Nyní je potřeba váš účet aktivovat v několika nejbližších hodinách, jinak odkaz expiruje.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target>Reset hesla</target>
+        <target state="translated">Přihlaste se ke službě Kimai</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="needs-translation">Tohle se může stát…</target>
+        <target state="translated">Přihlaste se ke svému účtu</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target>Reset hesla</target>
+        <target state="translated">Přihlásit se</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="needs-translation">… takže jste zapomněli heslo? Nevadí, Kimai vám pomůže s vytvořením nového:</target>
+        <target state="translated">Tento odkaz bude platný pouze po dobu následujících 15 minut.</target>
+      </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
+        <source>absence_created_supervisor_subject</source>
+        <target state="translated">Nová nepřítomnost | %user% | %type%</target>
+      </trans-unit>
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
+        <source>A new absence was created for %user%.
+
+%list%
+
+Please review them at: %url%</source>
+        <target state="translated">Pro uživatele %user% byla vytvořena nová nepřítomnost.
+
+%list%
+
+Prohlédněte si ji prosím na adrese: %url%</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="translated">Vaše žádost byla schválena uživatelem %created_by%.
+
+%list%
+
+Všechny žádosti naleznete zde: %url%</target>
+      </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="translated">Žádost o schválení: %user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="translated">Žádost o schválení pro %user% bylo zadáno.
+
+%list%
+
+Ověřte na tomto odkazu: %url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">Vaše žádost byla zamítnuta</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Vaše žádost byla schválena</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">Vaše žádost o autorizaci byla zamítnuta uživatelem %created_by%.
+
+%list%
+
+Prosím, zkontrolujte své žádosti zde: %url%</target>
       </trans-unit>
     </body>
   </file>

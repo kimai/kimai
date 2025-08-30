@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="sk" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>Time tracking</source>
-        <target>Pracovný výkaz</target>
-      </trans-unit>
       <trans-unit id="FaGqoTT" resname="timesheet.mode">
         <source>timesheet.mode</source>
         <target state="translated">Režim sledovania času</target>
@@ -22,13 +18,13 @@
         <source>timesheet.active_entries.hard_limit</source>
         <target>Povolený počet súčasne prebiehajúcich časových záznamov</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target>Najbližšie: matematické zaokrúhľovanie k najbližšej hodnote</target>
+        <target state="needs-translation">Najbližšie: matematické zaokrúhľovanie k najbližšej hodnote</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target state="translated">Strop: začiatok, koniec a trvanie bude zaokrúhlené nahor</target>
+        <target state="needs-translation">Strop: začiatok, koniec a trvanie bude zaokrúhlené nahor</target>
       </trans-unit>
       <trans-unit id="hz.vdg5" resname="Sunday">
         <source>Sunday</source>
@@ -96,7 +92,7 @@
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
         <source>calendar.slot_duration</source>
-        <target>Trvanie slotu pre týždňové- a denné zobrazenie (formát: hh:mm:ss)</target>
+        <target>Trvanie slotu pre týždňové- a denné zobrazenie</target>
       </trans-unit>
       <trans-unit id="6nayLDB" resname="calendar.visibleHours.end">
         <source>calendar.visibleHours.end</source>
@@ -154,13 +150,13 @@
         <source>theme</source>
         <target>Vzhľad</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target state="translated">Dno: začiatok, koniec a trvanie sa zaokrúhlia nadol</target>
+        <target state="needs-translation">Dno: začiatok, koniec a trvanie sa zaokrúhlia nadol</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target>Štandardné: začiatok sa zaokrúhli nadol, koniec a trvanie nahor</target>
+        <target state="needs-translation">Štandardné: začiatok sa zaokrúhli nadol, koniec a trvanie nahor</target>
       </trans-unit>
       <trans-unit id="6CSB6iM" resname="first_weekday">
         <source>first_weekday</source>

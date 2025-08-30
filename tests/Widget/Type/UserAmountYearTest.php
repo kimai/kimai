@@ -16,13 +16,12 @@ use App\Widget\Type\AbstractCounterYear;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\UserAmountYear;
 use App\Widget\WidgetInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-/**
- * @covers \App\Widget\Type\UserAmountYear
- * @covers \App\Widget\Type\AbstractCounterYear
- */
-class UserAmountYearTest extends AbstractWidgetTypeTest
+#[CoversClass(UserAmountYear::class)]
+#[CoversClass(AbstractCounterYear::class)]
+class UserAmountYearTest extends AbstractWidgetTypeTestCase
 {
     protected function assertDefaultData(AbstractWidgetType $sut): void
     {

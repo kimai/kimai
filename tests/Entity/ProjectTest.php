@@ -17,11 +17,10 @@ use App\Entity\Team;
 use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use Doctrine\Common\Collections\Collection;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Entity\Project
- */
-class ProjectTest extends AbstractEntityTest
+#[CoversClass(Project::class)]
+class ProjectTest extends AbstractEntityTestCase
 {
     public function testDefaultValues(): void
     {
@@ -174,9 +173,9 @@ class ProjectTest extends AbstractEntityTest
             ['name', 'string'],
             ['customer', 'string'],
             ['orderNumber', 'string'],
-            ['orderDate', 'datetime'],
-            ['project_start', 'datetime'],
-            ['project_end', 'datetime'],
+            ['orderDate', 'date'],
+            ['project_start', 'date'],
+            ['project_end', 'date'],
             ['budget', 'float'],
             ['timeBudget', 'duration'],
             ['budgetType', 'string'],

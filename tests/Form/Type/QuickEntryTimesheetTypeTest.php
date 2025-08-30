@@ -12,13 +12,13 @@ namespace App\Tests\Form\Type;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Form\Type\QuickEntryTimesheetType;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-/**
- * @covers \App\Form\Type\QuickEntryTimesheetType
- */
+#[CoversClass(QuickEntryTimesheetType::class)]
 class QuickEntryTimesheetTypeTest extends TypeTestCase
 {
     protected function getExtensions()
@@ -34,7 +34,7 @@ class QuickEntryTimesheetTypeTest extends TypeTestCase
         ];
     }
 
-    public function getTestData()
+    public static function getTestData()
     {
         yield [4.5, 16200];
         yield ['4,5', 16200];
@@ -42,9 +42,7 @@ class QuickEntryTimesheetTypeTest extends TypeTestCase
         yield ['4h30m', 16200];
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testSubmitValidData($value, $expectedDuration): void
     {
         $data = ['duration' => $value];
@@ -55,9 +53,9 @@ class QuickEntryTimesheetTypeTest extends TypeTestCase
 
         $form->submit($data);
 
-        $this->assertTrue($form->isSynchronized());
-        $this->assertEquals($expectedDuration, $model->getDuration());
-        $this->assertEquals($expectedDuration, $model->getDuration(true));
+        self::assertTrue($form->isSynchronized());
+        self::assertEquals($expectedDuration, $model->getDuration());
+        self::assertEquals($expectedDuration, $model->getDuration(true));
     }
 
     private function createDefaultModel(): Timesheet

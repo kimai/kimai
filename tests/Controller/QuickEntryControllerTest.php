@@ -10,11 +10,10 @@
 namespace App\Tests\Controller;
 
 use App\Tests\DataFixtures\TimesheetFixtures;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
-class QuickEntryControllerTest extends ControllerBaseTest
+#[Group('integration')]
+class QuickEntryControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {
@@ -25,7 +24,7 @@ class QuickEntryControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser();
         $this->request($client, '/quick_entry/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $node = $client->getCrawler()->filter('form[name=quick_entry_weekrange_form]');
         self::assertEquals(1, $node->filter('div.btn-group.week-picker-btn-group')->count());
@@ -65,7 +64,7 @@ class QuickEntryControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $this->request($client, '/quick_entry/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $node = $client->getCrawler()->filter('form[name=quick_entry_form]');
         self::assertEquals(1, $node->filter('input.btn-primary[type=submit]')->count());

@@ -11,11 +11,10 @@ namespace App\Tests\Reporting;
 
 use App\Reporting\Report;
 use App\Reporting\ReportInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Reporting\Report
- */
+#[CoversClass(Report::class)]
 class ReportTest extends TestCase
 {
     public function testEmptyObject(): void

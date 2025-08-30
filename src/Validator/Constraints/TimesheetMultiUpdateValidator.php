@@ -20,12 +20,11 @@ final class TimesheetMultiUpdateValidator extends ConstraintValidator
 {
     /**
      * @param TimesheetMultiUpdateDTO|mixed $value
-     * @param Constraint $constraint
      */
     public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof TimesheetMultiUpdateConstraint)) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\TimesheetMultiUpdate');
+            throw new UnexpectedTypeException($constraint, TimesheetMultiUpdateConstraint::class);
         }
 
         if (!\is_object($value) || !($value instanceof TimesheetMultiUpdateDTO)) {
@@ -49,10 +48,6 @@ final class TimesheetMultiUpdateValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @param TimesheetMultiUpdateDTO $dto
-     * @param ExecutionContextInterface $context
-     */
     protected function validateActivityAndProject(TimesheetMultiUpdateDTO $dto, ExecutionContextInterface $context): void
     {
         $activity = $dto->getActivity();

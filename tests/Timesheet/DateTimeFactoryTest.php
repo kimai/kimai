@@ -12,16 +12,16 @@ namespace App\Tests\Timesheet;
 use App\Timesheet\DateTimeFactory;
 use DateTime;
 use DateTimeZone;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Timesheet\DateTimeFactory
- */
+#[CoversClass(DateTimeFactory::class)]
 class DateTimeFactoryTest extends TestCase
 {
     public const TEST_TIMEZONE = 'Europe/London';
 
-    protected function createDateTimeFactory(?string $timezone = null, bool $sunday = false): DateTimeFactory
+    protected static function createDateTimeFactory(?string $timezone = null, bool $sunday = false): DateTimeFactory
     {
         if (null === $timezone) {
             return new DateTimeFactory(null, $sunday);
@@ -33,130 +33,163 @@ class DateTimeFactoryTest extends TestCase
     public function testGetTimezone(): void
     {
         $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
-        $this->assertEquals(self::TEST_TIMEZONE, $sut->getTimezone()->getName());
+        self::assertEquals(self::TEST_TIMEZONE, $sut->getTimezone()->getName());
     }
 
     public function testGetTimezoneWithFallbackTimezone(): void
     {
         $sut = $this->createDateTimeFactory();
-        $this->assertEquals(date_default_timezone_get(), $sut->getTimezone()->getName());
+        self::assertEquals(date_default_timezone_get(), $sut->getTimezone()->getName());
     }
 
     public function testGetStartOfMonth(): void
     {
         $expected = new DateTime('now', new DateTimeZone(self::TEST_TIMEZONE));
-
         $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
         $dateTime = $sut->getStartOfMonth();
-        $this->assertEquals(0, $dateTime->format('H'));
-        $this->assertEquals(0, $dateTime->format('i'));
-        $this->assertEquals(0, $dateTime->format('s'));
-        $this->assertEquals(1, $dateTime->format('d'));
-        $this->assertEquals($expected->format('m'), $dateTime->format('m'));
-        $this->assertEquals($expected->format('Y'), $dateTime->format('Y'));
-        $this->assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
+        self::assertEquals(0, $dateTime->format('H'));
+        self::assertEquals(0, $dateTime->format('i'));
+        self::assertEquals(0, $dateTime->format('s'));
+        self::assertEquals(1, $dateTime->format('d'));
+        self::assertEquals($expected->format('m'), $dateTime->format('m'));
+        self::assertEquals($expected->format('Y'), $dateTime->format('Y'));
+        self::assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
+
+        $dateTime = $sut->getStartOfMonth('now');
+        self::assertEquals(0, $dateTime->format('H'));
+        self::assertEquals(0, $dateTime->format('i'));
+        self::assertEquals(0, $dateTime->format('s'));
+        self::assertEquals(1, $dateTime->format('d'));
+        self::assertEquals($expected->format('m'), $dateTime->format('m'));
+        self::assertEquals($expected->format('Y'), $dateTime->format('Y'));
+        self::assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
+
+        $expected = new DateTime('now', new DateTimeZone('Atlantic/Canary'));
+        $dateTime = $sut->getStartOfMonth($expected);
+        self::assertEquals(0, $dateTime->format('H'));
+        self::assertEquals(0, $dateTime->format('i'));
+        self::assertEquals(0, $dateTime->format('s'));
+        self::assertEquals(1, $dateTime->format('d'));
+        self::assertEquals($expected->format('m'), $dateTime->format('m'));
+        self::assertEquals($expected->format('Y'), $dateTime->format('Y'));
+        self::assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
     }
 
     public function testGetEndOfMonth(): void
     {
         $expected = new DateTime('last day of this month', new DateTimeZone(self::TEST_TIMEZONE));
-
         $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
         $dateTime = $sut->getEndOfMonth();
-        $this->assertEquals(23, $dateTime->format('H'));
-        $this->assertEquals(59, $dateTime->format('i'));
-        $this->assertEquals(59, $dateTime->format('s'));
-        $this->assertEquals($expected->format('d'), $dateTime->format('d'));
-        $this->assertEquals($expected->format('m'), $dateTime->format('m'));
-        $this->assertEquals($expected->format('Y'), $dateTime->format('Y'));
-        $this->assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
+        self::assertEquals(23, $dateTime->format('H'));
+        self::assertEquals(59, $dateTime->format('i'));
+        self::assertEquals(59, $dateTime->format('s'));
+        self::assertEquals($expected->format('d'), $dateTime->format('d'));
+        self::assertEquals($expected->format('m'), $dateTime->format('m'));
+        self::assertEquals($expected->format('Y'), $dateTime->format('Y'));
+        self::assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
+
+        $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
+        $dateTime = $sut->getEndOfMonth('last day of this month');
+        self::assertEquals(23, $dateTime->format('H'));
+        self::assertEquals(59, $dateTime->format('i'));
+        self::assertEquals(59, $dateTime->format('s'));
+        self::assertEquals($expected->format('d'), $dateTime->format('d'));
+        self::assertEquals($expected->format('m'), $dateTime->format('m'));
+        self::assertEquals($expected->format('Y'), $dateTime->format('Y'));
+        self::assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
+
+        $expected = new DateTime('last day of this month', new DateTimeZone('Atlantic/Canary'));
+        $dateTime = $sut->getEndOfMonth($expected);
+        self::assertEquals(23, $dateTime->format('H'));
+        self::assertEquals(59, $dateTime->format('i'));
+        self::assertEquals(59, $dateTime->format('s'));
+        self::assertEquals($expected->format('d'), $dateTime->format('d'));
+        self::assertEquals($expected->format('m'), $dateTime->format('m'));
+        self::assertEquals($expected->format('Y'), $dateTime->format('Y'));
+        self::assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
     }
 
-    public function getStartOfWeekData()
+    public static function getStartOfWeekData()
     {
-        yield [$this->createDateTimeFactory(self::TEST_TIMEZONE), 'Monday', 23, 1];
-        yield [$this->createDateTimeFactory(self::TEST_TIMEZONE, false), 'Monday', 23, 1];
-        yield [$this->createDateTimeFactory(self::TEST_TIMEZONE, true), 'Sunday', 22, 7];
+        yield [self::createDateTimeFactory(self::TEST_TIMEZONE), 'Monday', 23, 1];
+        yield [self::createDateTimeFactory(self::TEST_TIMEZONE, false), 'Monday', 23, 1];
+        yield [self::createDateTimeFactory(self::TEST_TIMEZONE, true), 'Sunday', 22, 7];
     }
 
-    /**
-     * @dataProvider getStartOfWeekData
-     */
+    #[DataProvider('getStartOfWeekData')]
     public function testGetStartOfWeek(DateTimeFactory $sut, string $dayName, int $dayNum, int $day): void
     {
         $expected = new DateTime('2018-07-26 16:47:31', new DateTimeZone(self::TEST_TIMEZONE));
 
         $dateTime = $sut->getStartOfWeek($expected);
 
-        $this->assertEquals(0, $dateTime->format('H'));
-        $this->assertEquals(0, $dateTime->format('i'));
-        $this->assertEquals(0, $dateTime->format('s'));
-        $this->assertEquals($dayNum, $dateTime->format('d'));
-        $this->assertEquals($day, $dateTime->format('N'));
-        $this->assertEquals($dayName, $dateTime->format('l'));
-        $this->assertEquals($expected->format('m'), $dateTime->format('m'));
-        $this->assertEquals($expected->format('Y'), $dateTime->format('Y'));
-        $this->assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
+        self::assertEquals(0, $dateTime->format('H'));
+        self::assertEquals(0, $dateTime->format('i'));
+        self::assertEquals(0, $dateTime->format('s'));
+        self::assertEquals($dayNum, $dateTime->format('d'));
+        self::assertEquals($day, $dateTime->format('N'));
+        self::assertEquals($dayName, $dateTime->format('l'));
+        self::assertEquals($expected->format('m'), $dateTime->format('m'));
+        self::assertEquals($expected->format('Y'), $dateTime->format('Y'));
+        self::assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
 
         $dateTime = $sut->getStartOfWeek();
 
-        $this->assertEquals(0, $dateTime->format('H'));
-        $this->assertEquals(0, $dateTime->format('i'));
-        $this->assertEquals(0, $dateTime->format('s'));
-        $this->assertEquals($day, $dateTime->format('N'));
-        $this->assertEquals($dayName, $dateTime->format('l'));
+        self::assertEquals(0, $dateTime->format('H'));
+        self::assertEquals(0, $dateTime->format('i'));
+        self::assertEquals(0, $dateTime->format('s'));
+        self::assertEquals($day, $dateTime->format('N'));
+        self::assertEquals($dayName, $dateTime->format('l'));
         // month and year can be different when the week started at the end of the month
-        $this->assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
+        self::assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
     }
 
-    public function getEndOfWeekData()
+    public static function getEndOfWeekData()
     {
-        yield [$this->createDateTimeFactory(self::TEST_TIMEZONE), 'Sunday', 29, 7];
-        yield [$this->createDateTimeFactory(self::TEST_TIMEZONE, false), 'Sunday', 29, 7];
-        yield [$this->createDateTimeFactory(self::TEST_TIMEZONE, true), 'Saturday', 28, 6];
+        yield [self::createDateTimeFactory(self::TEST_TIMEZONE), 'Sunday', 29, 7];
+        yield [self::createDateTimeFactory(self::TEST_TIMEZONE, false), 'Sunday', 29, 7];
+        yield [self::createDateTimeFactory(self::TEST_TIMEZONE, true), 'Saturday', 28, 6];
     }
 
-    /**
-     * @dataProvider getEndOfWeekData
-     */
+    #[DataProvider('getEndOfWeekData')]
     public function testGetEndOfWeek(DateTimeFactory $sut, string $dayName, int $dayNum, int $day): void
     {
         $expected = new DateTime('2018-07-26 16:47:31', new DateTimeZone(self::TEST_TIMEZONE));
 
         $dateTime = $sut->getEndOfWeek($expected);
 
-        $this->assertEquals(23, $dateTime->format('H'));
-        $this->assertEquals(59, $dateTime->format('i'));
-        $this->assertEquals(59, $dateTime->format('s'));
-        $this->assertEquals($dayNum, $dateTime->format('d'));
-        $this->assertEquals($day, $dateTime->format('N'));
-        $this->assertEquals($dayName, $dateTime->format('l'));
-        $this->assertEquals('07', $dateTime->format('m'));
-        $this->assertEquals('2018', $dateTime->format('Y'));
-        $this->assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
+        self::assertEquals(23, $dateTime->format('H'));
+        self::assertEquals(59, $dateTime->format('i'));
+        self::assertEquals(59, $dateTime->format('s'));
+        self::assertEquals($dayNum, $dateTime->format('d'));
+        self::assertEquals($day, $dateTime->format('N'));
+        self::assertEquals($dayName, $dateTime->format('l'));
+        self::assertEquals('07', $dateTime->format('m'));
+        self::assertEquals('2018', $dateTime->format('Y'));
+        self::assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
 
         $dateTime = $sut->getEndOfWeek();
 
-        $this->assertEquals(23, $dateTime->format('H'));
-        $this->assertEquals(59, $dateTime->format('i'));
-        $this->assertEquals(59, $dateTime->format('s'));
-        $this->assertEquals($day, $dateTime->format('N'));
-        $this->assertEquals($dayName, $dateTime->format('l'));
+        self::assertEquals(23, $dateTime->format('H'));
+        self::assertEquals(59, $dateTime->format('i'));
+        self::assertEquals(59, $dateTime->format('s'));
+        self::assertEquals($day, $dateTime->format('N'));
+        self::assertEquals($dayName, $dateTime->format('l'));
         // month and year can be different when the week started at the end of the month
-        $this->assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
+        self::assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
     }
 
     public function testCreateDateTime(): void
     {
         $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
         $dateTime = $sut->createDateTime('2015-07-24 13:45:21');
-        $this->assertEquals(13, $dateTime->format('H'));
-        $this->assertEquals(45, $dateTime->format('i'));
-        $this->assertEquals(21, $dateTime->format('s'));
-        $this->assertEquals('24', $dateTime->format('d'));
-        $this->assertEquals('07', $dateTime->format('m'));
-        $this->assertEquals('2015', $dateTime->format('Y'));
-        $this->assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
+        self::assertEquals(13, $dateTime->format('H'));
+        self::assertEquals(45, $dateTime->format('i'));
+        self::assertEquals(21, $dateTime->format('s'));
+        self::assertEquals('24', $dateTime->format('d'));
+        self::assertEquals('07', $dateTime->format('m'));
+        self::assertEquals('2015', $dateTime->format('Y'));
+        self::assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
     }
 
     public function testCreateDateTimeWithDefaultValue(): void
@@ -167,7 +200,7 @@ class DateTimeFactoryTest extends TestCase
         $dateTime = $sut->createDateTime();
         $difference = $expected->getTimestamp() - $dateTime->getTimestamp();
         // poor test, but there shouldn't be more than 2 seconds between the creation of two DateTime objects
-        $this->assertTrue(2 >= $difference);
+        self::assertTrue(2 >= $difference);
     }
 
     public function testCreateStartOfFinancialYearWithoutConfig(): void
@@ -175,6 +208,8 @@ class DateTimeFactoryTest extends TestCase
         $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
         $dateTime = $sut->createStartOfFinancialYear();
         $expected = $sut->createDateTime('01 january this year 00:00:00');
+
+        self::assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
         self::assertInstanceOf(DateTime::class, $dateTime);
         self::assertEquals($expected, $dateTime);
     }
@@ -224,6 +259,7 @@ class DateTimeFactoryTest extends TestCase
 
         $now = $sut->createDateTime();
         $year = $sut->createStartOfYear();
+        self::assertEquals(self::TEST_TIMEZONE, $year->getTimezone()->getName());
         self::assertEquals($now->format('Y'), $year->format('Y'));
         self::assertEquals('01', $year->format('m'));
         self::assertEquals('01', $year->format('d'));
@@ -233,6 +269,15 @@ class DateTimeFactoryTest extends TestCase
 
         $begin = $sut->createDateTime('2017-12-31 23:59:59');
         $year = $sut->createStartOfYear($begin);
+        self::assertEquals(self::TEST_TIMEZONE, $year->getTimezone()->getName());
+        self::assertEquals('2017', $year->format('Y'));
+        self::assertEquals('01', $year->format('m'));
+        self::assertEquals('01', $year->format('d'));
+        self::assertEquals('00:00:00', $year->format('H:i:s'));
+
+        $begin = new \DateTime('2017-12-01 23:59:59', new DateTimeZone('Atlantic/Canary'));
+        $year = $sut->createStartOfYear($begin);
+        self::assertEquals(self::TEST_TIMEZONE, $year->getTimezone()->getName());
         self::assertEquals('2017', $year->format('Y'));
         self::assertEquals('01', $year->format('m'));
         self::assertEquals('01', $year->format('d'));
@@ -245,6 +290,7 @@ class DateTimeFactoryTest extends TestCase
 
         $now = $sut->createDateTime();
         $year = $sut->createEndOfYear();
+        self::assertEquals(self::TEST_TIMEZONE, $year->getTimezone()->getName());
         self::assertEquals($now->format('Y'), $year->format('Y'));
         self::assertEquals('12', $year->format('m'));
         self::assertEquals('31', $year->format('d'));
@@ -254,9 +300,45 @@ class DateTimeFactoryTest extends TestCase
 
         $begin = $sut->createDateTime('2017-12-31 23:59:59');
         $year = $sut->createEndOfYear($begin);
+        self::assertEquals(self::TEST_TIMEZONE, $year->getTimezone()->getName());
         self::assertEquals('2017', $year->format('Y'));
         self::assertEquals('12', $year->format('m'));
         self::assertEquals('31', $year->format('d'));
         self::assertEquals('23:59:59', $year->format('H:i:s'));
+
+        $begin = new \DateTime('2017-12-01 23:59:59', new DateTimeZone('Atlantic/Canary'));
+        $year = $sut->createEndOfYear($begin);
+        self::assertEquals(self::TEST_TIMEZONE, $year->getTimezone()->getName());
+        self::assertEquals('2017', $year->format('Y'));
+        self::assertEquals('12', $year->format('m'));
+        self::assertEquals('31', $year->format('d'));
+        self::assertEquals('23:59:59', $year->format('H:i:s'));
+    }
+
+    public function testCreate(): void
+    {
+        $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
+        $dateTime = $sut->create('2025-04-22 17:29:30');
+        self::assertEquals(17, $dateTime->format('H'));
+        self::assertEquals(29, $dateTime->format('i'));
+        self::assertEquals(30, $dateTime->format('s'));
+        self::assertEquals('22', $dateTime->format('d'));
+        self::assertEquals('04', $dateTime->format('m'));
+        self::assertEquals('2025', $dateTime->format('Y'));
+        self::assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
+    }
+
+    public function testCreateFromFormat(): void
+    {
+        $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
+        $dateTime = $sut->createDateTimeFromFormat('H:i:s m.d-Y', '17:29:30 04.22-2025');
+        self::assertInstanceOf(DateTime::class, $dateTime);
+        self::assertEquals(17, $dateTime->format('H'));
+        self::assertEquals(29, $dateTime->format('i'));
+        self::assertEquals(30, $dateTime->format('s'));
+        self::assertEquals('22', $dateTime->format('d'));
+        self::assertEquals('04', $dateTime->format('m'));
+        self::assertEquals('2025', $dateTime->format('Y'));
+        self::assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
     }
 }

@@ -29,7 +29,7 @@ export default class KimaiCopyDataForm extends KimaiFormPlugin {
     /**
      * @param {HTMLFormElement} form
      */
-    activateForm(form) // eslint-disable-line no-unused-vars
+    activateForm(form)
     {
         if (this._eventHandler === undefined) {
             this._eventHandler = (event) => {
@@ -48,10 +48,10 @@ export default class KimaiCopyDataForm extends KimaiFormPlugin {
                 if (element.dataset.event !== undefined) {
                     for (const event of element.dataset.event.split(' ')) {
                         target.dispatchEvent(new Event(event));
-                    }
-                } else if (element.dataset.eventBubbles !== undefined) {
-                    for (const event of element.dataset.eventBubbles.split(' ')) {
-                        target.dispatchEvent(new Event(event, {bubbles: true}));
+                        const form = target.closest('form');
+                        if (form !== null) {
+                            form.dispatchEvent(new Event(event));
+                        }
                     }
                 }
                 event.preventDefault();
@@ -63,7 +63,7 @@ export default class KimaiCopyDataForm extends KimaiFormPlugin {
     /**
      * @param {HTMLFormElement} form
      */
-    destroyForm(form) // eslint-disable-line no-unused-vars
+    destroyForm(form)
     {
         form.removeEventListener('click', this._eventHandler);
     }

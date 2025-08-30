@@ -62,13 +62,10 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
             plugins.push('remove_button');
         }
 
-        /*
-        const isOrdering = false;
-        if (isOrdering) {
-            plugins.push('caret_position');
+        if (node.dataset['order'] !== undefined && node.dataset['order'] === '1') {
+            //plugins.push('caret_position');
             plugins.push('drag_drop');
         }
-        */
 
         let options = {
             // see https://github.com/orchidjs/tom-select/issues/543#issuecomment-1664342257
@@ -85,6 +82,8 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
             // see App\Form\Type\TagsType::MAX_AMOUNT_SELECT
             maxOptions: 500,
             sortField:[{field: '$order'}, {field: '$score'}],
+            // required so it works in table.responsive, but requires z-index 1056, because bootstrap modal would otherwise hide it
+            dropdownParent: 'body',
         };
 
         let render = {
@@ -236,8 +235,13 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
             options.push(optGroup);
         }
 
+        // log the one with a group name first (e.g. non-global activities)
         options.forEach(child => node.appendChild(child));
-        emptyOpts.forEach(child => node.appendChild(child));
+
+        // append the ones with no parent at the end (e.g. global activities)
+        const optGroupEmpty = this._createOptgroup('');
+        emptyOpts.forEach(child => optGroupEmpty.appendChild(child));
+        node.appendChild(optGroupEmpty);
 
         // if available, re-select the previous selected option (mostly usable for global activities)
         node.value = selectedValue;
@@ -435,7 +439,7 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
                     targetSelect.dataset['reloading'] = '0';
                     targetSelect.disabled = false;
                 });
-            }
+            };
 
             document.addEventListener('change', this._eventHandlerApiSelects);
         }
@@ -471,14 +475,14 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
                             newValue = [...targetField.selectedOptions].map(o => o.value);
                         } else if (newValue !== '') {
                             if (targetField.type === 'date') {
-                                const timeId = targetField.id.replace('_date', '_time')
+                                const timeId = targetField.id.replace('_date', '_time');
                                 const timeElement = document.getElementById(timeId);
                                 const time = timeElement === null ? '12:00:00' : timeElement.value;
                                 // using 12:00 as fallback, because timezone handling might change the date if we use 00:00
                                 const newDate = this.getDateUtils().fromHtml5Input(newValue, time);
                                 newValue = this.getDateUtils().formatForAPI(newDate, false);
                             } else if (targetField.type === 'text' && targetField.name.includes('date')) {
-                                const timeId = targetField.id.replace('_date', '_time')
+                                const timeId = targetField.id.replace('_date', '_time');
                                 const timeElement = document.getElementById(timeId);
                                 // using 12:00 as fallback, because timezone handling might change the date if we use 00:00
                                 let time = '12:00:00';

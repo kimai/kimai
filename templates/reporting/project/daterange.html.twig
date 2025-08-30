@@ -1,0 +1,114 @@
+{% extends 'reporting/layout.html.twig' %}
+{% import "macros/datatables.html.twig" as tables %}
+
+{% set columns = {
+    'name': {'class': 'alwaysVisible'},
+} %}
+{% if is_granted('budget_time', 'project') %}
+    {% set columns = columns|merge({
+        'timeBudget': {'class': 'd-none d-md-table-cell', 'title': 'timeBudget'|trans},
+    }) %}
+{% endif %}
+{% if is_granted('budget_money', 'project') %}
+    {% set columns = columns|merge({
+        'budget': {'class': 'd-none d-md-table-cell', 'title': 'budget'|trans},
+    }) %}
+{% endif %}
+{% set columns = columns|merge({
+    'duration': {'class': 'text-center hw-min', 'title': 'duration'|trans, 'columnClass': 'w-min'},
+}) %}
+{% if is_granted('view_rate_other_timesheet') %}
+    {% set columns = columns|merge({
+        'revenue': {'class': 'text-center hw-min', 'columnClass': 'w-min'},
+        'costs': {'class': 'text-center hw-min', 'columnClass': 'w-min'},
+        'profit': {'class': 'text-center hw-min', 'columnClass': 'w-min'},
+    }) %}
+{% endif %}
+{% set columns = columns|merge({
+    'actions':       {'class': 'actions alwaysVisible'},
+}) %}
+{% set tableName = 'project_daterange_reporting' %}
+
+{% block main_before %}
+    {{ tables.data_table_column_modal(tableName, columns) }}
+{% endblock %}
+
+{% block report_form_layout %}
+    {{ form_widget(form.month, {'label': false}) }}
+    {{ form_widget(form.customer, {'label': false, 'placeholder': 'customer'}) }}
+    <div class="dropdown">
+        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ icon('filter', true) }}
+        </button>
+        <ul class="dropdown-menu checkbox-menu">
+            {% for option in form.budgetType.children %}
+                <li class="dropdown-item">
+                    {{ form_widget(option) }}
+                </li>
+            {% endfor %}
+            <li class="dropdown-divider"></li>
+            <li class="dropdown-item">
+                {{ form_widget(form.includeNoWork) }}
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block report %}
+
+    {% set hasData = entries|length > 0 %}
+
+    {% embed '@theme/embeds/card.html.twig' %}
+        {% import "macros/progressbar.html.twig" as progress %}
+        {% import "macros/widgets.html.twig" as widgets %}
+        {% import "macros/datatables.html.twig" as tables %}
+        {% import "project/actions.html.twig" as projectActions %}
+        {% block box_body_class %}{{ tableName }}-box {% if hasData %}p-0{% endif %}{% endblock %}
+        {% block box_body %}
+            {% if not hasData %}
+                {{ widgets.nothing_found() }}
+            {% else %}
+                {{ tables.datatable_header(tableName, columns, null, {'boxClass': ''}) }}
+
+                {% for id, mapping in entries|sort((a, b) => a.customer.name <=> b.customer.name) %}
+                    <tr class="summary">
+                        <td colspan="{{ columns|length }}">{{ widgets.label_customer(mapping.customer) }}</td>
+                    </tr>
+                    {% for entry in mapping.projects|sort((a, b) => a.entity.name <=> b.entity.name) %}
+                        {% set project = entry.entity %}
+                        {% set currency = project.customer.currency %}
+                        <tr {{ widgets.project_row_attr(project, queryEnd) }}>
+                        {% for name, column_config in columns %}
+                            <td class="{{ tables.data_table_column_class(tableName, columns, name) }}">
+                            {% if name == 'name' %}
+                                {{ widgets.label_project(project) }}
+                            {% elseif name == 'duration' %}
+                                {{ entry.statistic.duration|duration }}
+                            {% elseif name == 'revenue' %}
+                                {{ entry.statistic.rateBillable|money(currency) }}
+                            {% elseif name == 'costs' %}
+                                {{ entry.statistic.internalRate|money(currency) }}
+                            {% elseif name == 'profit' %}
+                                {{ (entry.statistic.rateBillable - entry.statistic.internalRate)|money(currency) }}
+                            {% elseif name == 'timeBudget' %}
+                                {% if is_granted('time', project) %}
+                                    {{ progress.progressbar_timebudget(entry) }}
+                                {% endif %}
+                            {% elseif name == 'budget' %}
+                                {% if is_granted('budget', project) %}
+                                    {{ progress.progressbar_budget(entry, currency) }}
+                                {% endif %}
+                            {% elseif name == 'actions' %}
+                                {{ projectActions.project(project, 'custom', true, {'daterange': date_range(queryBegin, queryEnd)}) }}
+                            {% endif %}
+                            </td>
+                        {% endfor %}
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+                {{ tables.data_table_footer(entries) }}
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}

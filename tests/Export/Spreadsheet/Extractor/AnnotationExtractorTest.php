@@ -9,6 +9,8 @@
 
 namespace App\Tests\Export\Spreadsheet\Extractor;
 
+use App\Export\Annotation\Expose;
+use App\Export\Annotation\Order;
 use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use App\Export\Spreadsheet\Extractor\ExtractorException;
@@ -18,14 +20,13 @@ use App\Tests\Export\Spreadsheet\Entities\ExpressionOnProperty;
 use App\Tests\Export\Spreadsheet\Entities\MethodRequiresParams;
 use App\Tests\Export\Spreadsheet\Entities\MissingExpressionOnClass;
 use App\Tests\Export\Spreadsheet\Entities\MissingNameOnClass;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Export\Spreadsheet\Extractor\AnnotationExtractor
- * @covers \App\Export\Annotation\Expose
- * @covers \App\Export\Annotation\Order
- * @covers \App\Export\Spreadsheet\Extractor\ExtractorException
- */
+#[CoversClass(AnnotationExtractor::class)]
+#[CoversClass(Expose::class)]
+#[CoversClass(Order::class)]
+#[CoversClass(ExtractorException::class)]
 class AnnotationExtractorTest extends TestCase
 {
     public function testExtract(): void
@@ -77,7 +78,7 @@ class AnnotationExtractorTest extends TestCase
         $this->expectException(ExtractorException::class);
         $this->expectExceptionMessage('AnnotationExtractor needs a non-empty class name for work');
 
-        /* @phpstan-ignore-next-line */
+        /* @phpstan-ignore argument.type */
         $sut->extract(new \stdClass());
     }
 

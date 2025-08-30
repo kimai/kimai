@@ -14,11 +14,10 @@ use App\Entity\EntityWithMetaFields;
 use App\Entity\Invoice;
 use App\Entity\InvoiceMeta;
 use App\Entity\MetaTableTypeInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Entity\InvoiceMeta
- */
-class InvoiceMetaTest extends AbstractMetaEntityTest
+#[CoversClass(InvoiceMeta::class)]
+class InvoiceMetaTest extends AbstractMetaEntityTestCase
 {
     protected function getEntity(): EntityWithMetaFields
     {

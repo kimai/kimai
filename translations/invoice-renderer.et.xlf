@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="et" datatype="plaintext" original="invoice-renderer.en.xlf">
+    <body>
+      <trans-unit id="hOcTt2G" resname="invoice_renderer" xml:space="preserve">
+        <source>invoice_renderer</source>
+        <target state="translated">Arve mall</target>
+      </trans-unit>
+      <trans-unit id="7mEUv6C" resname="help.upload" xml:space="preserve">
+        <source>help.upload</source>
+        <target state="translated">Tähelepanu: olemasolevad failid kirjutatakse üle. Lubatud failitüübid on: %extensions%</target>
+      </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer" xml:space="preserve">
+        <source>download_invoice_renderer</source>
+        <target state="translated">Siit saate rohkem malle alla laadida</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

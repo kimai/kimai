@@ -17,7 +17,7 @@ final class LockdownService
 {
     private ?bool $isActive = null;
 
-    public function __construct(private SystemConfiguration $configuration)
+    public function __construct(private readonly SystemConfiguration $configuration)
     {
     }
 
@@ -225,7 +225,7 @@ final class LockdownService
             return true;
         }
 
-        // further validate entries inside of the most recent lockdown
+        // further validate entries inside the most recent lockdown
         if ($timesheetStart >= $lockdownStart) {
             // if grace period is still in effect, validation succeeds
             if ($now <= $lockdownGrace) {

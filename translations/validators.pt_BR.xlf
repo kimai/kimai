@@ -6,9 +6,9 @@
         <source>This value is not a valid role.</source>
         <target>Este valor não é um papel válido.</target>
       </trans-unit>
-      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
-        <source>End date must not be earlier then start date.</source>
-        <target>A data de conclusão não pode ser anterior à data de início.</target>
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
+        <source>The end date must not be earlier than the start date.</source>
+        <target state="translated">A data de conclusão não pode ser anterior à data de início.</target>
       </trans-unit>
       <trans-unit id="VJSZSD0" resname="The given value is not a valid time.">
         <source>The given value is not a valid time.</source>
@@ -110,9 +110,9 @@
         <source>You do not have enough overtime, remaining are {{ value }}.</source>
         <target state="translated">Você não tem horas extras suficientes, o restante é {{ value }}.</target>
       </trans-unit>
-      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day.">
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="translated">Uma ausência não pode ser marcada antes de seu primeiro dia útil.</target>
+        <target state="translated">Uma ausência não pode ser marcada antes do primeiro dia útil.</target>
       </trans-unit>
       <trans-unit id="IN37g5N" resname="Not enough holidays left.">
         <source>Not enough holidays left.</source>
@@ -153,6 +153,14 @@
       <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form." xml:space="preserve" approved="no">
         <source>The CSRF token is invalid. Please try to resubmit the form.</source>
         <target state="translated">Por favor, tente reenviar o formulário. Se o problema persistir, atualize seu navegador.</target>
+      </trans-unit>
+      <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day." xml:space="preserve" approved="no">
+        <source>An absence cannot be booked after the last working day.</source>
+        <target state="translated">Uma ausência não pode ser marcada após o último dia útil.</target>
+      </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
+        <source>Duration cannot be negative.</source>
+        <target state="translated">A duração não pode ser negativa.</target>
       </trans-unit>
     </body>
   </file>

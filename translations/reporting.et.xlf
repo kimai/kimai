@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="et" datatype="plaintext" original="reporting.en.xlf">
+    <body>
+      <trans-unit id="XV3FBpu" resname="report_user_week" xml:space="preserve">
+        <source>report_user_week</source>
+        <target state="translated">Nädalane vaade ühe kasutaja jaoks</target>
+      </trans-unit>
+      <trans-unit id="Ng47B75" resname="report_user_month" xml:space="preserve">
+        <source>report_user_month</source>
+        <target state="translated">Kuuvaade ühe kasutaja kohta</target>
+      </trans-unit>
+      <trans-unit id="3JLmvfB" resname="report_user_year" xml:space="preserve">
+        <source>report_user_year</source>
+        <target state="translated">Aastane vaade ühe kasutaja kohta</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

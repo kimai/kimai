@@ -30,9 +30,9 @@
         <source>This value is not a valid role.</source>
         <target>This value is not a valid role.</target>
       </trans-unit>
-      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
-        <source>End date must not be earlier then start date.</source>
-        <target state="translated">End date must not be earlier then start date.</target>
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
+        <source>The end date must not be earlier than the start date.</source>
+        <target state="translated">The end date must not be earlier than the start date.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
@@ -124,7 +124,7 @@
       </trans-unit>
       <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day.">
         <source>An absence cannot be booked before your first working day.</source>
-        <target>An absence cannot be booked before your first working day.</target>
+        <target>An absence cannot be booked before the first working day.</target>
       </trans-unit>
       <trans-unit id="IN37g5N" resname="Not enough holidays left.">
         <source>Not enough holidays left.</source>
@@ -153,6 +153,18 @@
       <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form.">
         <source>The CSRF token is invalid. Please try to resubmit the form.</source>
         <target>Please try to resubmit the form. If the problem persists, refresh your browser.</target>
+      </trans-unit>
+      <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day.">
+        <source>An absence cannot be booked after the last working day.</source>
+        <target>An absence cannot be booked after the last working day.</target>
+      </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending.">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target>Selected period cannot be locked: unconfirmed absence requests are pending.</target>
+      </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative.">
+        <source>Duration cannot be negative.</source>
+        <target>Duration cannot be negative.</target>
       </trans-unit>
     </body>
   </file>

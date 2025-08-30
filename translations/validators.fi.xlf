@@ -6,9 +6,9 @@
         <source>This value is not a valid role.</source>
         <target state="translated">Tämä arvo ei ole kelvollinen rooli.</target>
       </trans-unit>
-      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
-        <source>End date must not be earlier then start date.</source>
-        <target state="translated">Lopetus päivämäärä ei voi olla aiemmin kuin aloitus päivämäärä.</target>
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
+        <source>The end date must not be earlier than the start date.</source>
+        <target state="needs-translation">Lopetus päivämäärä ei voi olla aiemmin kuin aloitus päivämäärä.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>

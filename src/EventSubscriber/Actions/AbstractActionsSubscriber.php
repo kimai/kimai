@@ -21,7 +21,7 @@ abstract class AbstractActionsSubscriber implements EventSubscriberInterface
 {
     private ?string $locale = null;
 
-    public function __construct(private AuthorizationCheckerInterface $auth, private UrlGeneratorInterface $urlGenerator)
+    public function __construct(private readonly AuthorizationCheckerInterface $auth, private readonly UrlGeneratorInterface $urlGenerator)
     {
     }
 

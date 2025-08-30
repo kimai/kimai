@@ -10,9 +10,17 @@
 namespace App\EventSubscriber\Actions;
 
 use App\Event\PageActionsEvent;
+use App\Export\ServiceExport;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class TimesheetsSubscriber extends AbstractActionsSubscriber
 {
+    public function __construct(AuthorizationCheckerInterface $auth, UrlGeneratorInterface $urlGenerator, private readonly ServiceExport $serviceExport)
+    {
+        parent::__construct($auth, $urlGenerator);
+    }
+
     public static function getActionName(): string
     {
         return 'timesheets';
@@ -25,7 +33,9 @@ final class TimesheetsSubscriber extends AbstractActionsSubscriber
         }
 
         if ($this->isGranted('export_own_timesheet')) {
-            $event->addAction('download', ['url' => $this->path('timesheet_export'), 'class' => 'modal-ajax-form', 'title' => 'export']);
+            foreach ($this->serviceExport->getTimesheetExporter() as $exporter) {
+                $event->addActionToSubmenu('export', $exporter->getId(), ['url' => $this->path('timesheet_export', ['exporter' => $exporter->getId()]), 'class' => 'toolbar-action', 'title' => 'button.' . $exporter->getId(), 'translation_domain' => 'messages']);
+            }
         }
     }
 }

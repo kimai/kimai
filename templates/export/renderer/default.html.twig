@@ -269,9 +269,15 @@
         .items td.cost,
         .items th.column-rate,
         .items th.column-internalRate,
+        .items th.column-hourlyRate,
+        .items th.column-fixedRate,
         .items th.column-duration
         {
             text-align: right;
+        }
+        .items th.column-exported
+        {
+            text-align: center;
         }
         .table>thead:first-child>tr:first-child>th {
             padding-right: 5px;
@@ -284,7 +290,7 @@
     <form class="w-100 d-print-none row row-cards p-3">
         <div class="card mb-1 p-0">
             <div class="card-header">
-                {{ 'settings'|trans({}, 'actions') }}
+                {{ 'settings'|trans }}
             </div>
             <div class="card-body">
                 <label for="duration-decimal">
@@ -294,7 +300,7 @@
                 |
                 <label for="date-format">
                     {{ 'date'|trans }}:
-                    {% set demo_date = create_date('2020-01-01 20:00:00') %}
+                    {% set demo_date = create_date('2024-01-01 11:00:00') %}
                     <select id="date-format" name="date-format">
                         <option value="short">{{ demo_date|date_short }}</option>
                         <option value="time">{{ demo_date|date_time }}</option>
@@ -303,7 +309,7 @@
                 |
                 <label for="begin-format">
                     {{ 'begin'|trans }}:
-                    {% set demo_date = create_date('2020-01-01 11:00:00') %}
+                    {% set demo_date = create_date('2024-01-01 11:00:00') %}
                     <select id="begin-format" name="begin-format">
                         <option value="plain">{{ demo_date|date_format('H:i') }}</option>
                         <option value="short">{{ demo_date|date_short }}</option>
@@ -313,7 +319,7 @@
                 |
                 <label for="end-format">
                     {{ 'end'|trans }}:
-                    {% set demo_date = create_date('2020-01-01 18:00:00') %}
+                    {% set demo_date = create_date('2024-01-01 18:00:00') %}
                     <select id="end-format" name="end-format">
                         <option value="plain">{{ demo_date|date_format('H:i') }}</option>
                         <option value="short">{{ demo_date|date_short }}</option>
@@ -635,7 +641,7 @@
                     <tr>
                         <td class="column-date text-nowrap" {% if not columns.date %}style="display: none"{% endif %}>
                             <span class="dateformat" data-short="{{ entry.begin|date_short }}" data-full="{{ entry.begin|date_time }}" data-time="{{ entry.begin|date_time }}">
-                            {{ entry.begin|date_time }}
+                            {{ entry.begin|date_short }}
                             </span>
                         </td>
                         <td class="column-begin text-nowrap" {% if not columns.begin %}style="display: none"{% endif %}>
@@ -666,12 +672,8 @@
                                 {{ entry.description|desc2html }}
                             {% endif %}
                         </td>
-                        <td class="column-exported" {% if not columns.exported %}style="display: none"{% endif %}>
-                            {% if entry.exported %}
-                                {{ 'entryState.exported'|trans }}
-                            {% else %}
-                                {{ 'entryState.not_exported'|trans }}
-                            {% endif %}
+                        <td class="column-exported text-center" {% if not columns.exported %}style="display: none"{% endif %}>
+                            {{ widgets.label_boolean(entry.exported) }}
                         </td>
                         <td class="column-tags" {% if not columns.tags %}style="display: none"{% endif %}>
                             {% if entry.tags is defined and entry.tags is not empty %}
@@ -708,10 +710,10 @@
                                 {% endif %}
                             </td>
                         {% endfor %}
-                        <td class="column-hourlyRate text-nowrap" {% if not columns.hourlyRate %}style="display: none"{% endif %}>
+                        <td class="cost column-hourlyRate text-nowrap" {% if not columns.hourlyRate %}style="display: none"{% endif %}>
                             {{ entry.hourlyRate|money(entry.project.customer.currency) }}
                         </td>
-                        <td class="column-fixedRate text-nowrap" {% if not columns.fixedRate %}style="display: none"{% endif %}>
+                        <td class="cost column-fixedRate text-nowrap" {% if not columns.fixedRate %}style="display: none"{% endif %}>
                             {{ entry.fixedRate|money(entry.project.customer.currency) }}
                         </td>
                         <td class="duration column-duration text-nowrap" {% if not columns.duration %}style="display: none"{% endif %}>

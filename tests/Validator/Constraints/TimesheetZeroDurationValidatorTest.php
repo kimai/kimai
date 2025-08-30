@@ -14,15 +14,16 @@ use App\Entity\Timesheet;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\Constraints\TimesheetZeroDuration;
 use App\Validator\Constraints\TimesheetZeroDurationValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\TimesheetZeroDuration
- * @covers \App\Validator\Constraints\TimesheetZeroDurationValidator
  * @extends ConstraintValidatorTestCase<TimesheetZeroDurationValidator>
  */
+#[CoversClass(TimesheetZeroDuration::class)]
+#[CoversClass(TimesheetZeroDurationValidator::class)]
 class TimesheetZeroDurationValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): TimesheetZeroDurationValidator
@@ -58,7 +59,7 @@ class TimesheetZeroDurationValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate(new NotBlank(), new TimesheetZeroDuration(['message' => 'Duration cannot be zero.']));
     }
 
-    private function prepareTimesheet()
+    private function prepareTimesheet(): Timesheet
     {
         // creates Timesheet with same begin and endtime
         $begin = new \DateTime();

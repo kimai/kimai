@@ -12,33 +12,31 @@ namespace App\Tests\Voter;
 use App\Entity\Activity;
 use App\Entity\User;
 use App\Voter\RolePermissionVoter;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
-/**
- * @covers \App\Voter\RolePermissionVoter
- */
-class RolePermissionVoterTest extends AbstractVoterTest
+#[CoversClass(RolePermissionVoter::class)]
+class RolePermissionVoterTest extends AbstractVoterTestCase
 {
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testVote(User $user, $subject, $attribute, $result): void
     {
         $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(RolePermissionVoter::class);
 
         $actual = $sut->vote($token, $subject, [$attribute]);
-        $this->assertEquals($result, $actual, \sprintf('Failed voting "%s" for User with roles %s.', $attribute, implode(', ', $user->getRoles())));
+        self::assertEquals($result, $actual, \sprintf('Failed voting "%s" for User with roles %s.', $attribute, implode(', ', $user->getRoles())));
     }
 
-    public function getTestData()
+    public static function getTestData()
     {
-        $userNoRole = $this->getUser(0, 'foo');
-        $userStandard = $this->getUser(1, User::ROLE_USER);
-        $userTeamlead = $this->getUser(2, User::ROLE_TEAMLEAD);
-        $userAdmin = $this->getUser(3, User::ROLE_ADMIN);
-        $userSuperAdmin = $this->getUser(4, User::ROLE_SUPER_ADMIN);
+        $userNoRole = self::getUser(0, 'foo');
+        $userStandard = self::getUser(1, User::ROLE_USER);
+        $userTeamlead = self::getUser(2, User::ROLE_TEAMLEAD);
+        $userAdmin = self::getUser(3, User::ROLE_ADMIN);
+        $userSuperAdmin = self::getUser(4, User::ROLE_SUPER_ADMIN);
 
         $invoice = [
             'manage_invoice_template' => null,

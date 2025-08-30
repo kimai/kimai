@@ -11,12 +11,11 @@ namespace App\Tests\DependencyInjection;
 
 use App\DependencyInjection\AppExtension;
 use App\Tests\Mocks\SystemConfigurationFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-/**
- * @covers \App\DependencyInjection\AppExtension
- */
+#[CoversClass(AppExtension::class)]
 class AppExtensionTest extends TestCase
 {
     private ?AppExtension $extension = null;
@@ -68,20 +67,20 @@ class AppExtensionTest extends TestCase
             'kimai.data_dir' => '/tmp/',
             'kimai.languages' => [
                 'en' => [
-                    'date' => 'M/d/yy',
+                    'date' => 'M/d/y',
                     'time' => 'h:mm a',
                     'rtl' => false,
                     'translation' => true,
                 ],
                 'de' => [
-                    'date' => 'dd.MM.yy',
+                    'date' => 'dd.MM.y',
                     'time' => 'HH:mm',
                     'rtl' => false,
                     'translation' => true,
                 ],
                 'he' => [
                     'date' => 'd.M.y',
-                    'time' => 'H:mm',
+                    'time' => 'HH:mm',
                     'rtl' => true,
                     'translation' => true,
                 ],
@@ -149,19 +148,19 @@ class AppExtensionTest extends TestCase
             ],
         ];
 
-        $this->assertTrue($container->hasParameter('kimai.config'));
+        self::assertTrue($container->hasParameter('kimai.config'));
 
         /** @var array<string, mixed> $config */
         $config = $container->getParameter('kimai.config');
 
         foreach (SystemConfigurationFactory::flatten($kimaiLdap) as $key => $value) {
-            $this->assertArrayHasKey($key, $config);
-            $this->assertEquals($value, $config[$key]);
+            self::assertArrayHasKey($key, $config);
+            self::assertEquals($value, $config[$key]);
         }
 
         foreach ($expected as $key => $value) {
-            $this->assertTrue($container->hasParameter($key), 'Could not find config: ' . $key);
-            $this->assertEquals($value, $container->getParameter($key), 'Invalid config: ' . $key);
+            self::assertTrue($container->hasParameter($key), 'Could not find config: ' . $key);
+            self::assertEquals($value, $container->getParameter($key), 'Invalid config: ' . $key);
         }
     }
 
@@ -185,11 +184,17 @@ class AppExtensionTest extends TestCase
 
         $config = $container->getParameter('kimai.config');
 
-        $this->assertEquals('123123123', $config['ldap.user.baseDn']);
-        $this->assertEquals('(..........)', $config['ldap.user.filter']);
-        $this->assertEquals('xxx', $config['ldap.user.usernameAttribute']);
-        $this->assertEquals('lkhiuzhkj', $config['ldap.connection.baseDn']);
-        $this->assertEquals('(uid=%s)', $config['ldap.connection.accountFilterFormat']);
+        self::assertIsArray($config);
+        self::assertArrayHasKey('ldap.user.baseDn', $config);
+        self::assertArrayHasKey('ldap.user.filter', $config);
+        self::assertArrayHasKey('ldap.user.usernameAttribute', $config);
+        self::assertArrayHasKey('ldap.connection.baseDn', $config);
+        self::assertArrayHasKey('ldap.connection.accountFilterFormat', $config);
+        self::assertEquals('123123123', $config['ldap.user.baseDn']);
+        self::assertEquals('(..........)', $config['ldap.user.filter']);
+        self::assertEquals('xxx', $config['ldap.user.usernameAttribute']);
+        self::assertEquals('lkhiuzhkj', $config['ldap.connection.baseDn']);
+        self::assertEquals('(uid=%s)', $config['ldap.connection.accountFilterFormat']);
     }
 
     public function testLdapFallbackValue(): void
@@ -209,11 +214,12 @@ class AppExtensionTest extends TestCase
 
         $config = $container->getParameter('kimai.config');
 
-        $this->assertEquals('123123123', $config['ldap.user.baseDn']);
-        $this->assertEquals('xxx', $config['ldap.user.usernameAttribute']);
-        $this->assertEquals('123123123', $config['ldap.connection.baseDn']);
-        $this->assertEquals('(&(xxx=%s))', $config['ldap.connection.accountFilterFormat']);
-        $this->assertEquals('', $config['ldap.user.filter']);
+        self::assertIsArray($config);
+        self::assertEquals('123123123', $config['ldap.user.baseDn']);
+        self::assertEquals('xxx', $config['ldap.user.usernameAttribute']);
+        self::assertEquals('123123123', $config['ldap.connection.baseDn']);
+        self::assertEquals('(&(xxx=%s))', $config['ldap.connection.accountFilterFormat']);
+        self::assertEquals('', $config['ldap.user.filter']);
     }
 
     public function testLdapMoreFallbackValue(): void
@@ -234,12 +240,13 @@ class AppExtensionTest extends TestCase
         $this->extension->load($minConfig, $container = $this->getContainer());
 
         $config = $container->getParameter('kimai.config');
+        self::assertIsArray($config);
 
-        $this->assertEquals('123123123', $config['ldap.user.baseDn']);
-        $this->assertEquals('zzzz', $config['ldap.user.usernameAttribute']);
-        $this->assertEquals('7658765', $config['ldap.connection.baseDn']);
-        $this->assertEquals('(&(&(objectClass=inetOrgPerson))(zzzz=%s))', $config['ldap.connection.accountFilterFormat']);
-        $this->assertEquals('(&(objectClass=inetOrgPerson))', $config['ldap.user.filter']);
+        self::assertEquals('123123123', $config['ldap.user.baseDn']);
+        self::assertEquals('zzzz', $config['ldap.user.usernameAttribute']);
+        self::assertEquals('7658765', $config['ldap.connection.baseDn']);
+        self::assertEquals('(&(&(objectClass=inetOrgPerson))(zzzz=%s))', $config['ldap.connection.accountFilterFormat']);
+        self::assertEquals('(&(objectClass=inetOrgPerson))', $config['ldap.user.filter']);
     }
 
     public function testWithBundleConfiguration(): void

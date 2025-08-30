@@ -66,6 +66,7 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
             'entry.rate_internal' => $formatter->getFormattedMoney($internalRate, $currency),
             'entry.rate_internal_nc' => $formatter->getFormattedMoney($internalRate, $currency, false),
             'entry.rate_internal_plain' => $internalRate,
+            'entry.rate_fixed' => ($item->isFixedRate() ? $item->getFixedRate() : null),
             'entry.total' => $formatter->getFormattedMoney($rate, $currency),
             'entry.total_nc' => $formatter->getFormattedMoney($rate, $currency, false),
             'entry.total_plain' => $rate,

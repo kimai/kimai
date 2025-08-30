@@ -13,12 +13,16 @@ use App\Configuration\SystemConfiguration;
 use App\Entity\Timesheet;
 use DateTime;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class DurationFixedBeginMode implements TrackingModeInterface
 {
     use TrackingModeTrait;
 
-    public function __construct(private SystemConfiguration $configuration)
+    public function __construct(
+        private readonly SystemConfiguration $configuration,
+        private readonly AuthorizationCheckerInterface $authorizationChecker
+    )
     {
     }
 
@@ -39,7 +43,7 @@ final class DurationFixedBeginMode implements TrackingModeInterface
 
     public function canUpdateTimesWithAPI(): bool
     {
-        return false;
+        return $this->authorizationChecker->isGranted('view_other_timesheet');
     }
 
     public function create(Timesheet $timesheet, ?Request $request = null): void

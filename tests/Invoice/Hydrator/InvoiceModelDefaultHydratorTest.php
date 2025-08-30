@@ -11,11 +11,11 @@ namespace App\Tests\Invoice\Hydrator;
 
 use App\Invoice\Hydrator\InvoiceModelDefaultHydrator;
 use App\Tests\Invoice\Renderer\RendererTestTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use ReflectionObject;
 
-/**
- * @covers \App\Invoice\Hydrator\InvoiceModelDefaultHydrator
- */
+#[CoversClass(InvoiceModelDefaultHydrator::class)]
 class InvoiceModelDefaultHydratorTest extends TestCase
 {
     use RendererTestTrait;
@@ -28,6 +28,23 @@ class InvoiceModelDefaultHydratorTest extends TestCase
 
         $result = $sut->hydrate($model);
         $this->assertModelStructure($result);
+    }
+
+    public function testHydrateThrowsOnMissing(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('InvoiceModel needs a template');
+
+        $model = $this->getInvoiceModel();
+
+        $obj = new ReflectionObject($model);
+        $prop = $obj->getProperty('template');
+        $prop->setAccessible(true);
+        $prop->setValue($model, null);
+
+        $sut = new InvoiceModelDefaultHydrator();
+
+        $sut->hydrate($model);
     }
 
     protected function assertModelStructure(array $model, bool $hasProject = true): void
@@ -60,6 +77,8 @@ class InvoiceModelDefaultHydratorTest extends TestCase
             'invoice.subtotal_plain',
             'template.name',
             'template.company',
+            'template.country',
+            'template.country_name',
             'template.address',
             'template.title',
             'template.payment_terms',
@@ -90,6 +109,6 @@ class InvoiceModelDefaultHydratorTest extends TestCase
         sort($keys);
         sort($givenKeys);
 
-        $this->assertEquals($keys, $givenKeys);
+        self::assertEquals($keys, $givenKeys);
     }
 }

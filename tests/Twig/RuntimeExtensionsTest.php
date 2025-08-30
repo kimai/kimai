@@ -10,14 +10,13 @@
 namespace App\Tests\Twig;
 
 use App\Twig\RuntimeExtensions;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
-use Twig\Node\Node;
+use Twig\Node\TextNode;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
-/**
- * @covers \App\Twig\RuntimeExtensions
- */
+#[CoversClass(RuntimeExtensions::class)]
 class RuntimeExtensionsTest extends TestCase
 {
     public function testGetFilters(): void
@@ -27,11 +26,11 @@ class RuntimeExtensionsTest extends TestCase
 
         $sut = new RuntimeExtensions();
         $twigFilters = $sut->getFilters();
-        $this->assertCount(\count($expected), $twigFilters);
+        self::assertCount(\count($expected), $twigFilters);
 
         foreach ($twigFilters as $filter) {
-            $this->assertInstanceOf(TwigFilter::class, $filter);
-            $this->assertEquals($expected[$i++], $filter->getName());
+            self::assertInstanceOf(TwigFilter::class, $filter);
+            self::assertEquals($expected[$i++], $filter->getName());
         }
     }
 
@@ -57,12 +56,12 @@ class RuntimeExtensionsTest extends TestCase
 
         $sut = new RuntimeExtensions();
         $twigFunctions = $sut->getFunctions();
-        $this->assertCount(\count($expected), $twigFunctions);
+        self::assertCount(\count($expected), $twigFunctions);
 
         /** @var TwigFunction $filter */
         foreach ($twigFunctions as $filter) {
-            $this->assertInstanceOf(TwigFunction::class, $filter);
-            $this->assertEquals($expected[$i++], $filter->getName());
+            self::assertInstanceOf(TwigFunction::class, $filter);
+            self::assertEquals($expected[$i++], $filter->getName());
         }
     }
 
@@ -79,21 +78,20 @@ class RuntimeExtensionsTest extends TestCase
         foreach ($filters as $filter) {
             switch ($filter->getName()) {
                 case 'md2html':
-                    self::assertEquals('html', $filters[0]->getPreEscape());
-                    self::assertEquals(['html'], $filters[0]->getSafe(new Node()));
+                    self::assertEquals(['html'], $filters[0]->getSafe(new TextNode('', 10)));
                     $found_md2html = true;
                     break;
                 case 'desc2html':
-                    self::assertEquals(['html'], $filters[1]->getSafe(new Node()));
+                    self::assertEquals(['html'], $filters[1]->getSafe(new TextNode('', 10)));
                     $found_desc2html = true;
                     break;
                 case 'comment2html':
-                    self::assertEquals(['html'], $filters[2]->getSafe(new Node()));
+                    self::assertEquals(['html'], $filters[2]->getSafe(new TextNode('', 10)));
                     $found_comment2html = true;
                     break;
                 case 'comment1line':
                     self::assertEquals('html', $filters[3]->getPreEscape());
-                    self::assertEquals(['html'], $filters[3]->getSafe(new Node()));
+                    self::assertEquals(['html'], $filters[3]->getSafe(new TextNode('', 10)));
                     $found_comment1line = true;
                     break;
             }

@@ -14,13 +14,12 @@ use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
 use App\EventSubscriber\UserPreferenceSubscriber;
 use App\Tests\Mocks\SystemConfigurationFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-/**
- * @covers \App\EventSubscriber\UserPreferenceSubscriber
- */
+#[CoversClass(UserPreferenceSubscriber::class)]
 class UserPreferenceSubscriberTest extends TestCase
 {
     public const EXPECTED_PREFERENCES = [
@@ -42,9 +41,10 @@ class UserPreferenceSubscriberTest extends TestCase
     public function testGetSubscribedEvents(): void
     {
         $events = UserPreferenceSubscriber::getSubscribedEvents();
-        $this->assertArrayHasKey(PrepareUserEvent::class, $events);
+        self::assertArrayHasKey(PrepareUserEvent::class, $events);
         $methodName = $events[PrepareUserEvent::class][0];
-        $this->assertTrue(method_exists(UserPreferenceSubscriber::class, $methodName));
+        self::assertIsString($methodName);
+        self::assertTrue(method_exists(UserPreferenceSubscriber::class, $methodName));
     }
 
     public function testWithHourlyRateAllowed(): void
@@ -57,7 +57,7 @@ class UserPreferenceSubscriberTest extends TestCase
 
         $prefs = $sut->getDefaultPreferences($user);
         foreach ($prefs as $pref) {
-            $this->assertTrue(\in_array($pref->getName(), self::EXPECTED_PREFERENCES), 'Unknown user preference: ' . $pref->getName());
+            self::assertTrue(\in_array($pref->getName(), self::EXPECTED_PREFERENCES), 'Unknown user preference: ' . $pref->getName());
         }
 
         self::assertCount(\count(self::EXPECTED_PREFERENCES), $prefs);

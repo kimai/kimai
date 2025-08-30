@@ -11,15 +11,17 @@ namespace App\Tests\Validator\Constraints;
 
 use App\Validator\Constraints\DateTimeFormat;
 use App\Validator\Constraints\DateTimeFormatValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\DateTimeFormat
- * @covers \App\Validator\Constraints\DateTimeFormatValidator
  * @extends ConstraintValidatorTestCase<DateTimeFormatValidator>
  */
+#[CoversClass(DateTimeFormat::class)]
+#[CoversClass(DateTimeFormatValidator::class)]
 class DateTimeFormatValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): DateTimeFormatValidator
@@ -27,7 +29,7 @@ class DateTimeFormatValidatorTest extends ConstraintValidatorTestCase
         return new DateTimeFormatValidator();
     }
 
-    public function getValidData()
+    public static function getValidData(): array
     {
         return [
             ['10:00'],
@@ -46,18 +48,15 @@ class DateTimeFormatValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate('foo', new NotBlank());
     }
 
-    /**
-     * @dataProvider getValidData
-     * @param string $input
-     */
-    public function testConstraintWithValidData($input): void
+    #[DataProvider('getValidData')]
+    public function testConstraintWithValidData(?string $input): void
     {
         $constraint = new DateTimeFormat();
         $this->validator->validate($input, $constraint);
         $this->assertNoViolation();
     }
 
-    public function getInvalidData()
+    public static function getInvalidData(): array
     {
         return [
             ['13-13'],
@@ -68,11 +67,8 @@ class DateTimeFormatValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @dataProvider getInvalidData
-     * @param mixed $input
-     */
-    public function testValidationError($input): void
+    #[DataProvider('getInvalidData')]
+    public function testValidationError(?string $input): void
     {
         $constraint = new DateTimeFormat();
 

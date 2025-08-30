@@ -20,7 +20,7 @@ use App\Entity\User;
  */
 trait RateControllerTestTrait
 {
-    abstract protected function getRateUrl(string|int $id = '1', string|int|null $rateId = null): string;
+    abstract protected function getRateUrl(?int $id = 1, ?int $rateId = null): string;
 
     abstract protected function getRateUrlByRate(RateInterface $rate, bool $isCollection): string;
 
@@ -53,7 +53,7 @@ trait RateControllerTestTrait
         $this->request($client, $this->getRateUrl(), 'POST', [], json_encode($data));
 
         $response = $client->getResponse();
-        $this->assertEquals(400, $response->getStatusCode());
+        self::assertEquals(400, $response->getStatusCode());
         $this->assertApiCallValidationError($response, ['user']);
     }
 
@@ -81,18 +81,18 @@ trait RateControllerTestTrait
             'is_fixed' => false
         ];
         $this->request($client, $this->getRateUrl(), 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         $this->assertRateStructure($result, null);
-        $this->assertNotEmpty($result['id']);
-        $this->assertEquals(12.34, $result['rate']);
-        $this->assertEquals(6.66, $result['internalRate']);
-        $this->assertFalse($result['isFixed']);
+        self::assertNotEmpty($result['id']);
+        self::assertEquals(12.34, $result['rate']);
+        self::assertEquals(6.66, $result['internalRate']);
+        self::assertFalse($result['isFixed']);
     }
 
     public function testAddFixedRateAction(): void
@@ -105,32 +105,32 @@ trait RateControllerTestTrait
             'is_fixed' => true
         ];
         $this->request($client, $this->getRateUrl(), 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         $this->assertRateStructure($result, 1);
-        $this->assertNotEmpty($result['id']);
-        $this->assertEquals(12.34, $result['rate']);
-        $this->assertEquals(6.66, $result['internalRate']);
-        $this->assertTrue($result['isFixed']);
+        self::assertNotEmpty($result['id']);
+        self::assertEquals(12.34, $result['rate']);
+        self::assertEquals(6.66, $result['internalRate']);
+        self::assertTrue($result['isFixed']);
     }
 
     public function testGetRatesEmptyResult(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, $this->getRateUrl(1));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
-        $this->assertEmpty($result);
+        self::assertIsArray($result);
+        self::assertEmpty($result);
     }
 
     public function testGetRates(): void
@@ -139,18 +139,24 @@ trait RateControllerTestTrait
         $expectedRates = $this->importTestRates(1);
 
         $this->request($client, $this->getRateUrl(1));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
-        $this->assertNotEmpty($result);
-        $this->assertEquals(\count($expectedRates), \count($result));
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+        self::assertEquals(\count($expectedRates), \count($result));
 
         foreach ($result as $rate) {
-            $this->assertRateStructure($rate, ($rate['user'] === null ? null : $rate['user']['id']));
+            self::assertIsArray($rate);
+            if ($rate['user'] === null) {
+                $this->assertRateStructure($rate);
+            } else {
+                self::assertIsArray($rate['user']);
+                $this->assertRateStructure($rate, $rate['user']['id']);
+            }
         }
     }
 
@@ -170,19 +176,19 @@ trait RateControllerTestTrait
         $expectedRates = $this->importTestRates(1);
 
         $this->request($client, $this->getRateUrlByRate($expectedRates[0], false), 'DELETE');
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertEmpty($client->getResponse()->getContent());
+        self::assertTrue($client->getResponse()->isSuccessful());
+        self::assertEmpty($client->getResponse()->getContent());
 
         // fetch rates to validate that one was removed
         $this->request($client, $this->getRateUrlByRate($expectedRates[0], true));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
-        $this->assertEquals(\count($expectedRates) - 1, \count($result));
+        self::assertIsArray($result);
+        self::assertEquals(\count($expectedRates) - 1, \count($result));
     }
 
     public function testDeleteRateEntityNotFound(): void
@@ -228,7 +234,7 @@ trait RateControllerTestTrait
         sort($actual);
         sort($expectedKeys);
 
-        $this->assertEquals($expectedKeys, $actual, 'Rate structure does not match');
+        self::assertEquals($expectedKeys, $actual, 'Rate structure does not match');
 
         if (null !== $user) {
             self::assertIsArray($result['user'], 'Rate user is not an array');

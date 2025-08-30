@@ -18,16 +18,15 @@ use App\Entity\User;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\LockdownService;
 use App\Voter\TimesheetVoter;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
-/**
- * @covers \App\Voter\TimesheetVoter
- */
-class TimesheetVoterTest extends AbstractVoterTest
+#[CoversClass(TimesheetVoter::class)]
+class TimesheetVoterTest extends AbstractVoterTestCase
 {
-    protected function getVoter(string $voterClass): Voter
+    protected function getVoter(string $voterClass): TimesheetVoter
     {
         return $this->getLockdownVoter();
     }
@@ -37,15 +36,14 @@ class TimesheetVoterTest extends AbstractVoterTest
         $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(TimesheetVoter::class);
 
-        $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]));
+        self::assertEquals($result, $sut->vote($token, $subject, [$attribute]));
     }
 
-    /**
-     * @dataProvider getTestData
-     */
-    public function testVote(User $user, $subject, $attribute, $result): void
+    public function testVote(): void
     {
-        $this->assertVote($user, $subject, $attribute, $result);
+        foreach ($this->getTestData() as $row) {
+            $this->assertVote($row[0], $row[1], $row[2], $row[3]);
+        }
     }
 
     public function getTestData()
@@ -96,9 +94,7 @@ class TimesheetVoterTest extends AbstractVoterTest
         }
     }
 
-    /**
-     * @dataProvider getLockDownTestData
-     */
+    #[DataProvider('getLockDownTestData')]
     public function testWithLockdown(string $permission, int $expected, string $beginModifier, string $lockdownBegin, string $lockdownEnd, ?string $lockdownGrace): void
     {
         $user = $this->getTestUser(1, User::ROLE_USER);
@@ -116,7 +112,7 @@ class TimesheetVoterTest extends AbstractVoterTest
         self::assertEquals($expected, $sut->vote($token, $timesheet, [$permission]));
     }
 
-    public function getLockDownTestData()
+    public static function getLockDownTestData()
     {
         yield ['view', VoterInterface::ACCESS_GRANTED, '+1 days', 'first day of this month', 'last day of this month', '+10 days'];
         yield ['start', VoterInterface::ACCESS_DENIED, '+1 days', 'first day of this month', 'last day of this month', '+10 days'];
@@ -204,7 +200,7 @@ class TimesheetVoterTest extends AbstractVoterTest
         return $user;
     }
 
-    protected function getLockdownVoter(?string $lockdownBegin = null, ?string $lockdownEnd = null, ?string $lockdownGrace = null): Voter
+    protected function getLockdownVoter(?string $lockdownBegin = null, ?string $lockdownEnd = null, ?string $lockdownGrace = null): TimesheetVoter
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
         $config = SystemConfigurationFactory::create($loader, [
@@ -217,9 +213,6 @@ class TimesheetVoterTest extends AbstractVoterTest
             ]
         ]);
 
-        $voter = new TimesheetVoter($this->getRolePermissionManager(), new LockdownService($config));
-        self::assertInstanceOf(Voter::class, $voter);
-
-        return $voter;
+        return new TimesheetVoter($this->getRolePermissionManager(), new LockdownService($config));
     }
 }

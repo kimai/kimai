@@ -18,14 +18,6 @@
         <source>daterangepicker.thisWeek</source>
         <target>שבוע נוכחי</target>
       </trans-unit>
-      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth">
-        <source>daterangepicker.lastMonth</source>
-        <target>חודש שעבר</target>
-      </trans-unit>
-      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth">
-        <source>daterangepicker.thisMonth</source>
-        <target>חודש נוכחי</target>
-      </trans-unit>
       <trans-unit id="_9rEFED" resname="daterangepicker.lastYear">
         <source>daterangepicker.lastYear</source>
         <target>שנה שעברה</target>
@@ -41,6 +33,18 @@
       <trans-unit id="AY_E9UR" resname="daterangepicker.thisYearUntilNow">
         <source>This year — until today</source>
         <target state="translated">השנה הנוכחית — עד היום</target>
+      </trans-unit>
+      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth" xml:space="preserve" approved="yes">
+        <source>daterangepicker.thisMonth</source>
+        <target state="final">החודש</target>
+      </trans-unit>
+      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth" xml:space="preserve" approved="yes">
+        <source>daterangepicker.lastMonth</source>
+        <target state="final">החודש שעבר</target>
+      </trans-unit>
+      <trans-unit id="mgJ2Z7M" resname="daterangepicker.thisFinancialYear" xml:space="preserve" approved="yes">
+        <source>daterangepicker.thisFinancialYear</source>
+        <target state="final">השנה הפיסקלית הזאת</target>
       </trans-unit>
     </body>
   </file>

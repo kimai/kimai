@@ -12,16 +12,16 @@ namespace App;
 /**
  * Some "very" global constants for Kimai.
  */
-class Constants
+final class Constants
 {
     /**
      * The current release version
      */
-    public const VERSION = '2.22.0';
+    public const VERSION = '2.39.0';
     /**
      * The current release: major * 10000 + minor * 100 + patch
      */
-    public const VERSION_ID = 22200;
+    public const VERSION_ID = 23900;
     /**
      * The software name
      */

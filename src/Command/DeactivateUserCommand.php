@@ -17,7 +17,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'kimai:user:deactivate')]
+#[AsCommand(name: 'kimai:user:deactivate', description: 'Deactivate a user')]
 final class DeactivateUserCommand extends Command
 {
     public function __construct(private UserService $userService)
@@ -28,10 +28,7 @@ final class DeactivateUserCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Deactivate a user')
-            ->setDefinition([
-                new InputArgument('username', InputArgument::REQUIRED, 'The username'),
-            ])
+            ->addArgument('username', InputArgument::REQUIRED, 'The username')
             ->setHelp(
                 <<<'EOT'
                     The <info>kimai:user:deactivate</info> command deactivates a user (will not be able to log in)

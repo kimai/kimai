@@ -6,9 +6,9 @@
         <source>This value is not a valid role.</source>
         <target>Ta wartość nie jest poprawną rolą.</target>
       </trans-unit>
-      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
-        <source>End date must not be earlier then start date.</source>
-        <target>Data końcowa nie może być wcześniejsza od daty początkowej.</target>
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
+        <source>The end date must not be earlier than the start date.</source>
+        <target state="needs-translation">Data końcowa nie może być wcześniejsza od daty początkowej.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
@@ -124,7 +124,7 @@
       </trans-unit>
       <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="translated">Nieobecność nie może być zaksięgowana przed Twoim pierwszym dniem roboczym.</target>
+        <target state="needs-translation">Nieobecność nie może być zaksięgowana przed Twoim pierwszym dniem roboczym.</target>
       </trans-unit>
       <trans-unit id="IN37g5N" resname="Not enough holidays left." xml:space="preserve">
         <source>Not enough holidays left.</source>

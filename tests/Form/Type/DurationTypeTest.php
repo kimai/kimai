@@ -10,15 +10,15 @@
 namespace App\Tests\Form\Type;
 
 use App\Form\Type\DurationType;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-/**
- * @covers \App\Form\Type\DurationType
- */
+#[CoversClass(DurationType::class)]
 class DurationTypeTest extends TypeTestCase
 {
-    public function getTestData()
+    public static function getTestData()
     {
         yield [4.5, 16200];
         yield ['4,5', 16200];
@@ -26,9 +26,7 @@ class DurationTypeTest extends TypeTestCase
         yield ['4h30m', 16200];
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testSubmitValidData($value, $expected): void
     {
         $data = ['duration' => $value];
@@ -44,8 +42,8 @@ class DurationTypeTest extends TypeTestCase
 
         $form->submit($data);
 
-        $this->assertTrue($form->isSynchronized());
-        $this->assertEquals($expected, $model);
+        self::assertTrue($form->isSynchronized());
+        self::assertEquals($expected, $model);
     }
 
     public function testPresetPopulatesView(): void

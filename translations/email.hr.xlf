@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="hr" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser">
-        <source>button_copy_url_to_browser</source>
-        <target>Ako gumb ne radi, kopiraj i umetni sljedeći URL u preglednik: %url%</target>
-      </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
         <target>Ovo je automatski generirani e-mail. Nemoj odgovarati, adresa se neće čitati.</target>
@@ -26,41 +22,73 @@
         <source>registration.intro</source>
         <target state="translated">Prijavio/prijavila si se na Kimaijevo evidentiranje vremena s e-mail adresom %email%. Aktiviraj svoj račun u idućih par sati prije nego što poveznica istekne.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target>Obnovi lozinku</target>
+        <target state="translated">Prijavi se na Kimai</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="translated">Ne sjećaš se više kako glasi lozinka?</target>
+        <target state="translated">Prijavi se na tvoj račun</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target>Obnovi lozinku</target>
+        <target state="translated">Prijavi se</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="translated">Ne brini, Kimai će ti pomoći stvoriti novu!</target>
+        <target state="translated">Ova će poveznica vrijediti samo sljedećih 15 minuta.</target>
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject">
         <source>absence_created_supervisor_subject</source>
-        <target state="translated">Nova odsutnost | %absence_user% | %absence_type%</target>
+        <target state="translated">Nova odsutnost | %user% | %type%</target>
       </trans-unit>
       <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
-        <source>A new absence was created for %absence_user%.
+        <source>A new absence was created for %user%.
 
-%absence_type% - %absence_comment%
+%list%
 
-%absence_list%
+Please review them at: %url%</source>
+        <target state="translated">Stvorena je nova odsutnost za %user%.
 
-Please review them at: %approval_url%</source>
-        <target state="translated">Stvorena je nova odsutnost za %absence_user%.
+%list%
 
-%absence_type% – %absence_comment%
+Pregledaj ih na: %url%</target>
+      </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="translated">Zatraženo odobrenje: %user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="translated">Zatraženo je odobrenje za %user%.
 
-%absence_list%
+%list%
 
-Pregledaj ih na: %approval_url%</target>
+Pregledaj ih na: %url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">Tvoj je zahtjev odbijen</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">%created_by% je odbio/la tvoj zahtjev za autorizaciju.
+
+%list%
+
+Pregledaj tvoje zahtjeve na: %url%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Tvoj je zahtjev odobren</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="translated">%created_by% je odobrio/la tvoj zahtjev.
+
+%list%
+
+Sve tvoje upite možeš pronaći na: %url%</target>
       </trans-unit>
     </body>
   </file>

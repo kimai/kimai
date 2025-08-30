@@ -10,11 +10,10 @@
 namespace App\Tests\Model;
 
 use App\Model\TimesheetCountedStatistic;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Model\TimesheetCountedStatistic
- */
-class TimesheetCountedStatisticTest extends AbstractTimesheetCountedStatisticTest
+#[CoversClass(TimesheetCountedStatistic::class)]
+class TimesheetCountedStatisticTest extends AbstractTimesheetCountedStatisticTestCase
 {
     public function testDefaultValues(): void
     {

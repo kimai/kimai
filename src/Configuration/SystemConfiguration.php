@@ -33,10 +33,7 @@ final class SystemConfiguration
     }
 
     /**
-     * Set an array item to a given value using "dot" notation.
-     * If no key is given to the method, the entire array will be replaced.
-     *
-     * @internal
+     * Set a new or replace an existing system configuration.
      */
     public function set(string $key, mixed $value): void
     {
@@ -456,6 +453,16 @@ final class SystemConfiguration
         return $this->getIncrement('quick_entry.recent_activities', 5, 0);
     }
 
+    public function isBreakTimeEnabled(): bool
+    {
+        return (bool) $this->find('timesheet.rules.break_time_active');
+    }
+
+    public function getExportTimeout(): int
+    {
+        return (int) $this->find('export.timeout');
+    }
+
     // ========== Company configurations ==========
 
     public function getFinancialYearStart(): ?string
@@ -482,24 +489,16 @@ final class SystemConfiguration
     }
 
     /**
-     * @internal will be made private soon after 2.18.0 - do not access this method directly, but through getThemeColors()
-     */
-    public function getThemeColorChoices(): string
-    {
-        $config = $this->find('theme.color_choices');
-        if (\is_string($config) && $config !== '') {
-            return $config;
-        }
-
-        return 'Silver|#c0c0c0';
-    }
-
-    /**
      * @return array<string, string>
      */
     public function getThemeColors(): array
     {
-        $config = explode(',', $this->getThemeColorChoices());
+        $config = $this->find('theme.color_choices');
+        if (!\is_string($config) || $config === '') {
+            return ['Silver' => '#c0c0c0'];
+        }
+
+        $config = explode(',', $config);
 
         $colors = [];
         foreach ($config as $item) {

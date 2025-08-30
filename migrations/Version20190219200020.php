@@ -23,9 +23,9 @@ final class Version20190219200020 extends AbstractMigration
 {
     public function up(Schema $schema): void
     {
-        $this->addSql('DELETE FROM kimai2_user_preferences WHERE name = "theme.fixed_layout"');
-        $this->addSql('DELETE FROM kimai2_user_preferences WHERE name = "theme.boxed_layout"');
-        $this->addSql('DELETE FROM kimai2_user_preferences WHERE name = "theme.mini_sidebar"');
+        $this->addSql("DELETE FROM kimai2_user_preferences WHERE name = 'theme.fixed_layout'");
+        $this->addSql("DELETE FROM kimai2_user_preferences WHERE name = 'theme.boxed_layout'");
+        $this->addSql("DELETE FROM kimai2_user_preferences WHERE name = 'theme.mini_sidebar'");
     }
 
     public function down(Schema $schema): void

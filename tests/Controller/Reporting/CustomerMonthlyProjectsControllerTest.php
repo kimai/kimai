@@ -11,18 +11,17 @@ namespace App\Tests\Controller\Reporting;
 
 use App\Entity\Project;
 use App\Entity\User;
-use App\Tests\Controller\ControllerBaseTest;
+use App\Tests\Controller\AbstractControllerBaseTestCase;
 use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
-/**
- * @group integration
- */
-class CustomerMonthlyProjectsControllerTest extends ControllerBaseTest
+#[Group('integration')]
+class CustomerMonthlyProjectsControllerTest extends AbstractControllerBaseTestCase
 {
     public function testReportIsSecure(): void
     {
@@ -47,7 +46,7 @@ class CustomerMonthlyProjectsControllerTest extends ControllerBaseTest
         $projects->setCustomers($customers);
         $projects->setAmount(2);
         $projects->setIsVisible(true);
-        $projects->setCallback(function (Project $project) {
+        $projects->setCallback(function (Project $project): void {
             $project->setIsMonthlyBudget();
         });
         $this->importFixture($projects);
@@ -90,14 +89,14 @@ class CustomerMonthlyProjectsControllerTest extends ControllerBaseTest
         $this->assertAccessIsGranted($client, '/reporting/customer/monthly_projects/export');
 
         $response = $client->getResponse();
-        $this->assertTrue($response->isSuccessful());
+        self::assertTrue($response->isSuccessful());
         self::assertInstanceOf(BinaryFileResponse::class, $response);
 
         // temporary file!
         $file = $response->getFile();
         self::assertFileDoesNotExist($response->getFile());
 
-        $this->assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));
-        $this->assertStringContainsString('attachment; filename=kimai-export-users-', $response->headers->get('Content-Disposition'));
+        self::assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));
+        self::assertStringContainsString('attachment; filename=kimai-export-users-', $response->headers->get('Content-Disposition'));
     }
 }

@@ -12,9 +12,12 @@ namespace App\WorkingTime;
 use App\Entity\User;
 use App\Entity\WorkingTime;
 use App\Event\WorkingTimeApproveMonthEvent;
+use App\Event\WorkingTimeQueryStatsEvent;
+use App\Event\WorkingTimeUnlockMonthEvent;
 use App\Event\WorkingTimeYearEvent;
 use App\Event\WorkingTimeYearSummaryEvent;
 use App\Repository\TimesheetRepository;
+use App\Repository\UserRepository;
 use App\Repository\WorkingTimeRepository;
 use App\Timesheet\DateTimeFactory;
 use App\WorkingTime\Mode\WorkingTimeMode;
@@ -24,11 +27,10 @@ use App\WorkingTime\Model\Year;
 use App\WorkingTime\Model\YearPerUserSummary;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
-/**
- * @internal this API and the entire namespace is experimental: expect changes!
- */
 final class WorkingTimeService
 {
+    private const LATEST_APPROVAL_PREF = '_latest_approval';
+    private const LATEST_APPROVAL_FORMAT = 'Y-m-d H:i:s';
     /** @var array<string, WorkingTime|null> */
     private array $latestApprovals = [];
 
@@ -36,7 +38,8 @@ final class WorkingTimeService
         private readonly TimesheetRepository $timesheetRepository,
         private readonly WorkingTimeRepository $workingTimeRepository,
         private readonly EventDispatcherInterface $eventDispatcher,
-        private readonly WorkingTimeModeFactory $contractModeService
+        private readonly WorkingTimeModeFactory $contractModeService,
+        private readonly UserRepository $userRepository,
     )
     {
     }
@@ -56,6 +59,9 @@ final class WorkingTimeService
         return $yearPerUserSummary;
     }
 
+    /**
+     * @deprecated since 2.25.0 - kept for BC with old plugin versions
+     */
     public function getLatestApproval(User $user): ?WorkingTime
     {
         if ($user->getId() === null) {
@@ -71,14 +77,41 @@ final class WorkingTimeService
         return $this->latestApprovals[$key];
     }
 
-    public function isApproved(User $user, \DateTimeInterface $dateTime): bool
+    public function getLatestApprovalDate(User $user): ?\DateTimeInterface
     {
-        $latestApproval = $this->getLatestApproval($user);
-        if ($latestApproval === null) {
-            return false;
+        if ($user->getId() === null) {
+            return null;
         }
 
-        $latestApprovalDate = $latestApproval->getDate();
+        $date = $user->getPreferenceValue(self::LATEST_APPROVAL_PREF, false);
+
+        // false means = there is no setting existing: let's calculate it
+        // null means = there is no approval existing yet
+        if ($date === false) {
+            $date = $this->workingTimeRepository->getLatestApprovalDate($user);
+
+            // let's store the approval always: we can later detect if an approval exists
+            // or not based on the existence of the preference, which saves DB queries
+            $value = ($date !== null) ? $date->format(self::LATEST_APPROVAL_FORMAT) : null;
+            $user->setPreferenceValue(self::LATEST_APPROVAL_PREF, $value);
+            $this->userRepository->saveUser($user);
+
+            return $date;
+        }
+
+        if (\is_string($date)) {
+            return new \DateTimeImmutable($date, new \DateTimeZone($user->getTimezone()));
+        }
+
+        return null;
+    }
+
+    public function isApproved(User $user, \DateTimeInterface $dateTime): bool
+    {
+        $latestApprovalDate = $this->getLatestApprovalDate($user);
+        if ($latestApprovalDate === null) {
+            return false;
+        }
 
         $begin = \DateTimeImmutable::createFromInterface($dateTime);
         $begin = $begin->setTime(0, 0, 0);
@@ -102,6 +135,7 @@ final class WorkingTimeService
 
         $stats = null;
         $firstDay = $user->getWorkStartingDay();
+        $lastDay = $user->getLastWorkingDay();
         $calculator = $this->getContractMode($user)->getCalculator($user);
 
         foreach ($year->getMonths() as $month) {
@@ -119,12 +153,14 @@ final class WorkingTimeService
                 $dayDate = $day->getDay();
                 $result = new WorkingTime($user, $dayDate);
 
-                if ($firstDay === null || $firstDay <= $dayDate) {
-                    $result->setExpectedTime($calculator->getWorkHoursForDay($dayDate));
-                }
+                if ($dayDate <= $until) {
+                    if (($firstDay === null || $firstDay <= $dayDate) && ($lastDay === null || $lastDay >= $dayDate)) {
+                        $result->setExpectedTime($calculator->getWorkHoursForDay($dayDate));
+                    }
 
-                if (\array_key_exists($key, $stats)) {
-                    $result->setActualTime($stats[$key]);
+                    if (\array_key_exists($key, $stats)) {
+                        $result->setActualTime($stats[$key]);
+                    }
                 }
 
                 $day->setWorkingTime($result);
@@ -145,15 +181,12 @@ final class WorkingTimeService
         return $year->getMonth($monthDate);
     }
 
+    // deprecated 3.0 remove $user, fetch from $month->getUser() instead
     public function approveMonth(User $user, Month $month, \DateTimeInterface $approvalDate, User $approvedBy): void
     {
         foreach ($month->getDays() as $day) {
             $workingTime = $day->getWorkingTime();
             if ($workingTime === null) {
-                continue;
-            }
-
-            if ($workingTime->getId() !== null) {
                 continue;
             }
 
@@ -169,17 +202,38 @@ final class WorkingTimeService
 
         $this->workingTimeRepository->persistScheduledWorkingTimes();
 
-        $key = 'u_' . $user->getId();
-        if (\array_key_exists($key, $this->latestApprovals)) {
-            unset($this->latestApprovals[$key]);
+        // $user = $month->getUser();
+        $user->setPreferenceValue(self::LATEST_APPROVAL_PREF, $this->workingTimeRepository->getLatestApprovalDate($user)?->format(self::LATEST_APPROVAL_FORMAT));
+        $this->userRepository->saveUser($user);
+
+        $this->eventDispatcher->dispatch(new WorkingTimeApproveMonthEvent($month, $approvedBy));
+    }
+
+    public function unlockMonth(Month $month, User $unlockedBy): void
+    {
+        foreach ($month->getDays() as $day) {
+            $workingTime = $day->getWorkingTime();
+            if ($workingTime === null || $workingTime->getId() === null) {
+                continue;
+            }
+
+            if (!$workingTime->isApproved()) {
+                continue;
+            }
+
+            $this->workingTimeRepository->scheduleWorkingTimeDelete($workingTime);
         }
 
-        $this->eventDispatcher->dispatch(new WorkingTimeApproveMonthEvent($user, $month, $approvalDate, $approvedBy));
+        $this->workingTimeRepository->persistScheduledWorkingTimes();
+
+        $user = $month->getUser();
+        $user->setPreferenceValue(self::LATEST_APPROVAL_PREF, $this->workingTimeRepository->getLatestApprovalDate($user)?->format(self::LATEST_APPROVAL_FORMAT));
+        $this->userRepository->saveUser($user);
+
+        $this->eventDispatcher->dispatch(new WorkingTimeUnlockMonthEvent($month, $unlockedBy));
     }
 
     /**
-     * @param \DateTimeInterface $year
-     * @param User $user
      * @return array<string, int>
      */
     private function getYearStatistics(\DateTimeInterface $year, User $user): array
@@ -202,6 +256,9 @@ final class WorkingTimeService
             ->addGroupBy('day')
         ;
 
+        $event = new WorkingTimeQueryStatsEvent($qb, $user, $begin, $end);
+        $this->eventDispatcher->dispatch($event);
+
         $results = $qb->getQuery()->getResult();
 
         $durations = [];
@@ -209,6 +266,6 @@ final class WorkingTimeService
             $durations[$row['day']] = (int) $row['duration'];
         }
 
-        return $durations; // @phpstan-ignore-line
+        return $durations;
     }
 }

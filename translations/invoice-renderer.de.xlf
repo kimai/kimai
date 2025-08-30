@@ -30,9 +30,9 @@
         <source>text</source>
         <target>Text</target>
       </trans-unit>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve" approved="yes">
         <source>timesheet</source>
-        <target>Stundenzettel</target>
+        <target state="final">Stundenzettel</target>
       </trans-unit>
       <trans-unit id="m1UyfD9" resname="service-date">
         <source>service-date</source>

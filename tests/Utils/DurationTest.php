@@ -10,40 +10,36 @@
 namespace App\Tests\Utils;
 
 use App\Utils\Duration;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Utils\Duration
- */
+#[CoversClass(Duration::class)]
 class DurationTest extends TestCase
 {
     public function testFormat(): void
     {
         $sut = new Duration();
 
-        $this->assertNull($sut->format(null));
-        $this->assertEquals('2:38', $sut->format(9494));
+        self::assertNull($sut->format(null));
+        self::assertEquals('2:38', $sut->format(9494));
     }
 
-    /**
-     * @dataProvider getParseDurationTestData
-     */
+    #[DataProvider('getParseDurationTestData')]
     public function testParseDurationString($expected, $duration, $mode): void
     {
         $sut = new Duration();
-        $this->assertEquals($expected, $sut->parseDurationString($duration));
+        self::assertEquals($expected, $sut->parseDurationString($duration));
     }
 
-    /**
-     * @dataProvider getParseDurationTestData
-     */
+    #[DataProvider('getParseDurationTestData')]
     public function testParseDuration($expected, $duration, $mode): void
     {
         $sut = new Duration();
-        $this->assertEquals($expected, $sut->parseDuration($duration, $mode));
+        self::assertEquals($expected, $sut->parseDuration($duration, $mode));
     }
 
-    public function getParseDurationTestData()
+    public static function getParseDurationTestData()
     {
         return [
             [3600, 1, Duration::FORMAT_DECIMAL],
@@ -80,7 +76,7 @@ class DurationTest extends TestCase
         ];
     }
 
-    public function getParseDurationInvalidData()
+    public static function getParseDurationInvalidData()
     {
         return [
             // invalid input
@@ -102,9 +98,7 @@ class DurationTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getParseDurationInvalidData
-     */
+    #[DataProvider('getParseDurationInvalidData')]
     public function testParseDurationThrowsInvalidArgumentException($duration, $mode): void
     {
         $this->expectException(\InvalidArgumentException::class);

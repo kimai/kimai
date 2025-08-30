@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="pt-BR" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="d0XfN_m" resname="button_copy_url_to_browser" xml:space="preserve">
-        <source>button_copy_url_to_browser</source>
-        <target state="translated">Se o botão não funcionar, copie &amp; cole a seguinte URL no seu navegador: %url%</target>
-      </trans-unit>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
         <target>Este é um e-mail gerado automaticamente. Não responda, o endereço não será lido.</target>
@@ -26,41 +22,73 @@
         <source>registration.intro</source>
         <target>Você se inscreveu no rastreador de tempo Kimai com o e-mail %email%. ative a sua conta nas próximas horas, antes que o link expire.</target>
       </trans-unit>
-      <trans-unit id="1ZLD_Y0" resname="reset.subject">
+      <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target>Redefina a sua senha</target>
+        <target state="translated">Faça login no Kimai</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="translated">Esqueceu a sua senha?</target>
+        <target state="translated">Faça login em sua conta</target>
       </trans-unit>
-      <trans-unit id="qbt.84Y" resname="reset.button">
+      <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target>Redefina a sua senha</target>
+        <target state="translated">Entrar</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="translated">Não se preocupe, o Kimai vai ajudá-lo a criar uma nova!</target>
+        <target state="translated">Esse link tem validade para os próximos 15 minutos.</target>
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject">
         <source>absence_created_supervisor_subject</source>
-        <target state="translated">Nova ausência | %absence_user% | %absence_type%</target>
+        <target state="translated">Nova ausência | %user% | %type%</target>
       </trans-unit>
       <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
-        <source>A new absence was created for %absence_user%.
+        <source>A new absence was created for %user%.
 
-%absence_type% - %absence_comment%
+%list%
 
-%absence_list%
+Please review them at: %url%</source>
+        <target state="translated">Foi criada uma nova ausência para %user%.
 
-Please review them at: %approval_url%</source>
-        <target state="translated">Foi criada uma nova ausência para %absence_user%.
+%list%
 
-%absence_type% - %absence_comment%
+Revise-os em: %url%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve" approved="no">
+        <source>approval_requested_message</source>
+        <target state="translated">Foi solicitada uma aprovação pelo %user%.
 
-%absence_list%
+%list%
 
-Revise-os em: %approval_url%</target>
+Favor revisá-los em: %url%</target>
+      </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve" approved="no">
+        <source>approval_requested_subject</source>
+        <target state="translated">Aprovação solicitada: %user%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve" approved="no">
+        <source>approval_approved_subject</source>
+        <target state="translated">Sua solicitação foi aprovada</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve" approved="no">
+        <source>approval_approved_message</source>
+        <target state="translated">Sua solicitação foi aprovada pelo %created_by%.
+
+%list%
+
+Você pode encontrar todas as suas solicitações em: %url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve" approved="no">
+        <source>approval_rejected_subject</source>
+        <target state="translated">A sua solicitação foi recusada</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve" approved="no">
+        <source>approval_rejected_message</source>
+        <target state="translated">Sua solicitação de autorização foi recusada pelo %created_by%.
+
+%list%
+
+Por favor, revise suas solicitações em: %url%</target>
       </trans-unit>
     </body>
   </file>

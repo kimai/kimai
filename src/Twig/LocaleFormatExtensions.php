@@ -19,6 +19,7 @@ use App\Utils\LocaleFormatter;
 use DateTime;
 use DateTimeInterface;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
+use Twig\DeprecatedCallableInfo;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -41,7 +42,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
             new TwigFilter('date_short', [$this, 'dateShort']),
             new TwigFilter('date_time', [$this, 'dateTime']),
             // cannot be deleted right now, needs to be kept for invoice and export templates
-            new TwigFilter('date_full', [$this, 'dateTime'], ['deprecated' => true, 'alternative' => 'date_time']),
+            new TwigFilter('date_full', [$this, 'dateTime'], ['deprecation_info' => new DeprecatedCallableInfo('Kimai', '2.0', 'date_time')]),
             new TwigFilter('date_format', [$this, 'dateFormat']),
             new TwigFilter('date_weekday', [$this, 'dateWeekday']),
             new TwigFilter('time', [$this, 'time']),
@@ -182,25 +183,28 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         return $this->getFormatter()->dayName($dateTime, $short);
     }
 
-    public function getJavascriptConfiguration(?User $user = null): array
+    public function getJavascriptConfiguration(?User $user = null, ?string $language = null): array
     {
-        $language = User::DEFAULT_LANGUAGE;
         $browserTitle = false;
         $id = null;
         $name = 'anonymous';
         $admin = false;
         $superAdmin = false;
         $timezone = date_default_timezone_get();
+        $roles = [];
 
         if ($user !== null) {
             $browserTitle = (bool) $user->getPreferenceValue('update_browser_title');
-            $language = $user->getLanguage();
+            $language ??= $user->getLanguage();
             $id = $user->getId();
             $name = $user->getDisplayName();
             $admin = $user->isAdmin();
             $superAdmin = $user->isSuperAdmin();
             $timezone = $user->getTimezone();
+            $roles = $user->getRoles();
         }
+
+        $language ??= $this->locale ?? User::DEFAULT_LANGUAGE;
 
         return [
             'locale' => $this->locale,
@@ -211,7 +215,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
             'twentyFourHours' => $this->localeService->is24Hour($this->locale),
             'updateBrowserTitle' => $browserTitle,
             'timezone' => $timezone,
-            'user' => ['id' => $id, 'name' => $name, 'admin' => $admin, 'superAdmin' => $superAdmin],
+            'user' => ['id' => $id, 'name' => $name, 'admin' => $admin, 'superAdmin' => $superAdmin, 'roles' => $roles],
         ];
     }
 

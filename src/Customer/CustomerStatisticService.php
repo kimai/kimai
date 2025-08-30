@@ -16,13 +16,12 @@ use App\Model\CustomerBudgetStatisticModel;
 use App\Model\CustomerStatistic;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\DateTimeFactory;
-use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Query;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @final
@@ -36,7 +35,7 @@ class CustomerStatisticService
     /**
      * WARNING: this method does not respect the budget type. Your results will always be with the "full lifetime data" or the "selected date-range".
      */
-    public function getCustomerStatistics(Customer $customer, ?DateTime $begin = null, ?DateTime $end = null): CustomerStatistic
+    public function getCustomerStatistics(Customer $customer, ?DateTimeInterface $begin = null, ?DateTimeInterface $end = null): CustomerStatistic
     {
         $statistics = $this->getBudgetStatistic([$customer], $begin, $end);
         $event = new CustomerStatisticEvent($customer, array_pop($statistics), $begin, $end);
@@ -51,7 +50,7 @@ class CustomerStatisticService
         $stats->setStatisticTotal($this->getCustomerStatistics($customer));
 
         $begin = null;
-        $end = DateTime::createFromInterface($today);
+        $end = DateTimeImmutable::createFromInterface($today);
 
         if ($customer->isMonthlyBudget()) {
             $dateFactory = new DateTimeFactory($today->getTimezone());
@@ -113,7 +112,7 @@ class CustomerStatisticService
         $qb = $this->timesheetRepository->createQueryBuilder('t');
         $qb
             ->select('IDENTITY(p.customer) AS id')
-            ->join(Project::class, 'p', Query\Expr\Join::WITH, 't.project = p.id')
+            ->join(Project::class, 'p', Join::WITH, 't.project = p.id')
             ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
             ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
             ->addSelect('COALESCE(SUM(t.internalRate), 0) as internalRate')

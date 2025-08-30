@@ -12,22 +12,20 @@ namespace App\Tests\Timesheet\TrackingMode;
 use App\Entity\Timesheet;
 use App\Tests\Mocks\RoundingServiceFactory;
 use App\Timesheet\TrackingMode\DefaultMode;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Timesheet\TrackingMode\DefaultMode
- */
-class DefaultModeTest extends AbstractTrackingModeTest
+#[CoversClass(DefaultMode::class)]
+class DefaultModeTest extends AbstractTrackingModeTestCase
 {
     public function assertDefaultBegin(Timesheet $timesheet): void
     {
         self::assertNotNull($timesheet->getBegin());
-        self::assertInstanceOf(\DateTime::class, $timesheet->getBegin());
     }
 
     /**
      * @return DefaultMode
      */
-    protected function createSut()
+    protected function createSut(string $default = '13:47', bool $allowApiTimes = false): DefaultMode
     {
         return new DefaultMode((new RoundingServiceFactory($this))->create());
     }

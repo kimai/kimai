@@ -11,11 +11,10 @@ namespace App\Tests\WorkingTime\Calculator;
 
 use App\Entity\User;
 use App\WorkingTime\Calculator\WorkingTimeCalculatorDay;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\WorkingTime\Calculator\WorkingTimeCalculatorDay
- */
+#[CoversClass(WorkingTimeCalculatorDay::class)]
 class WorkingTimeCalculatorDayTest extends TestCase
 {
     public function testDefaults(): void
@@ -27,6 +26,24 @@ class WorkingTimeCalculatorDayTest extends TestCase
         $friday = $thursday->modify('+1 day');
         $saturday = $friday->modify('+1 day');
         $sunday = $saturday->modify('+1 day');
+
+        // verify not nullable
+        $sut = new WorkingTimeCalculatorDay(new User());
+        self::assertFalse($sut->isWorkDay($monday));
+        self::assertFalse($sut->isWorkDay($tuesday));
+        self::assertFalse($sut->isWorkDay($wednesday));
+        self::assertFalse($sut->isWorkDay($thursday));
+        self::assertFalse($sut->isWorkDay($friday));
+        self::assertFalse($sut->isWorkDay($saturday));
+        self::assertFalse($sut->isWorkDay($sunday));
+
+        self::assertEquals(0, $sut->getWorkHoursForDay($monday));
+        self::assertEquals(0, $sut->getWorkHoursForDay($tuesday));
+        self::assertEquals(0, $sut->getWorkHoursForDay($wednesday));
+        self::assertEquals(0, $sut->getWorkHoursForDay($thursday));
+        self::assertEquals(0, $sut->getWorkHoursForDay($friday));
+        self::assertEquals(0, $sut->getWorkHoursForDay($saturday));
+        self::assertEquals(0, $sut->getWorkHoursForDay($sunday));
 
         $user = new User();
         $user->setPreferenceValue(WorkingTimeCalculatorDay::WORK_HOURS_MONDAY, 0);

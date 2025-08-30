@@ -18,14 +18,6 @@
         <source>daterangepicker.thisWeek</source>
         <target>本周</target>
       </trans-unit>
-      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth">
-        <source>daterangepicker.lastMonth</source>
-        <target>上月</target>
-      </trans-unit>
-      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth">
-        <source>daterangepicker.thisMonth</source>
-        <target>本月</target>
-      </trans-unit>
       <trans-unit id="_9rEFED" resname="daterangepicker.lastYear">
         <source>daterangepicker.lastYear</source>
         <target>去年</target>
@@ -41,6 +33,18 @@
       <trans-unit id="m0lJOke" resname="daterangepicker.allTime">
         <source>daterangepicker.allTime</source>
         <target state="translated">期间共计</target>
+      </trans-unit>
+      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth" xml:space="preserve">
+        <source>daterangepicker.thisMonth</source>
+        <target state="needs-translation">这个月</target>
+      </trans-unit>
+      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth" xml:space="preserve">
+        <source>daterangepicker.lastMonth</source>
+        <target state="needs-translation">上个月</target>
+      </trans-unit>
+      <trans-unit id="mgJ2Z7M" resname="daterangepicker.thisFinancialYear" xml:space="preserve">
+        <source>daterangepicker.thisFinancialYear</source>
+        <target state="needs-translation">本财政年度</target>
       </trans-unit>
     </body>
   </file>

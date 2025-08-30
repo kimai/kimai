@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="et" datatype="plaintext" original="email.en.xlf">
+    <body>
+      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer" xml:space="preserve">
+        <source>automated_email_dont_answer</source>
+        <target state="translated">See on automaatselt genereeritud e-mail. Palume sellele mitte vastata, sest vastuseid ei toimetata edasi.</target>
+      </trans-unit>
+      <trans-unit id="QtcznHC" resname="registration.title" xml:space="preserve">
+        <source>registration.title</source>
+        <target state="translated">Welcome %username%</target>
+      </trans-unit>
+      <trans-unit id="pjr3FDv" resname="registration.subject" xml:space="preserve">
+        <source>registration.subject</source>
+        <target state="translated">Aktiveeri oma konto</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

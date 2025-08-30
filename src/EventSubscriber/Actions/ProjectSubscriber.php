@@ -34,7 +34,7 @@ final class ProjectSubscriber extends AbstractActionsSubscriber
         $isListingView = $event->isIndexView() || $event->isCustomView();
 
         if (!$event->isView('project_details') && $this->isGranted('view', $project)) {
-            $event->addAction('details', ['title' => 'details', 'translation_domain' => 'actions', 'url' => $this->path('project_details', ['id' => $project->getId()])]);
+            $event->addAction('details', ['title' => 'details', 'url' => $this->path('project_details', ['id' => $project->getId()])]);
         }
 
         if ($this->isGranted('edit', $project)) {
@@ -43,23 +43,28 @@ final class ProjectSubscriber extends AbstractActionsSubscriber
 
         if ($this->isGranted('permissions', $project)) {
             $class = $event->isView('permissions') ? '' : 'modal-ajax-form';
-            $event->addAction('permissions', ['title' => 'permissions', 'translation_domain' => 'actions', 'url' => $this->path('admin_project_permissions', ['id' => $project->getId()]), 'class' => $class]);
+            $event->addAction('permissions', ['title' => 'permissions', 'url' => $this->path('admin_project_permissions', ['id' => $project->getId()]), 'class' => $class]);
         }
 
         if ($event->countActions() > 0) {
             $event->addDivider();
         }
 
+        $dateRange = '';
+        if (isset($payload['daterange']) && \is_string($payload['daterange'])) {
+            $dateRange = $payload['daterange'];
+        }
+
         if ($this->isGranted('view_activity')) {
-            $event->addActionToSubmenu('filter', 'activity', ['title' => 'activity.filter', 'translation_domain' => 'actions', 'url' => $this->path('admin_activity', ['customers[]' => $customer->getId(), 'projects[]' => $project->getId()])]);
+            $event->addActionToSubmenu('filter', 'activity', ['title' => 'activities', 'url' => $this->path('admin_activity', ['customers[]' => $customer->getId(), 'projects[]' => $project->getId()])]);
         }
 
         if ($this->isGranted('view_other_timesheet')) {
-            $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet.filter', 'translation_domain' => 'actions', 'url' => $this->path('admin_timesheet', ['customers[]' => $customer->getId(), 'projects[]' => $project->getId()])]);
+            $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet.filter', 'url' => $this->path('admin_timesheet', ['customers[]' => $customer->getId(), 'projects[]' => $project->getId(), 'daterange' => $dateRange])]);
         }
 
         if ($this->isGranted('create_export')) {
-            $event->addActionToSubmenu('filter', 'export', ['title' => 'export', 'url' => $this->path('export', ['customers[]' => $customer->getId(), 'projects[]' => $project->getId(), 'exported' => 1, 'daterange' => ''])]);
+            $event->addActionToSubmenu('filter', 'export', ['title' => 'export', 'url' => $this->path('export', ['customers[]' => $customer->getId(), 'projects[]' => $project->getId(), 'exported' => 1, 'daterange' => $dateRange])]);
         }
 
         if ($event->hasSubmenu('filter')) {
@@ -79,7 +84,7 @@ final class ProjectSubscriber extends AbstractActionsSubscriber
         if (\array_key_exists('token', $payload) && $this->isGranted('edit', $project) && $this->isGranted('create_project')) {
             $event->addAction(
                 'copy',
-                ['title' => 'copy', 'translation_domain' => 'actions', 'url' => $this->path('admin_project_duplicate', ['id' => $project->getId(), 'token' => $payload['token']])]
+                ['title' => 'copy', 'url' => $this->path('admin_project_duplicate', ['id' => $project->getId(), 'token' => $payload['token']])]
             );
         }
 

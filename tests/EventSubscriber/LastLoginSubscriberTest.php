@@ -13,6 +13,7 @@ use App\Entity\User;
 use App\Event\UserInteractiveLoginEvent;
 use App\EventSubscriber\LastLoginSubscriber;
 use App\Repository\UserRepository;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -20,22 +21,22 @@ use Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
-/**
- * @covers \App\EventSubscriber\LastLoginSubscriber
- */
+#[CoversClass(LastLoginSubscriber::class)]
 class LastLoginSubscriberTest extends TestCase
 {
     public function testGetSubscribedEvents(): void
     {
         $events = LastLoginSubscriber::getSubscribedEvents();
 
-        $this->assertArrayHasKey(UserInteractiveLoginEvent::class, $events);
+        self::assertArrayHasKey(UserInteractiveLoginEvent::class, $events);
         $methodName = $events[UserInteractiveLoginEvent::class];
-        $this->assertTrue(method_exists(LastLoginSubscriber::class, $methodName));
+        self::assertIsString($methodName);
+        self::assertTrue(method_exists(LastLoginSubscriber::class, $methodName));
 
-        $this->assertArrayHasKey(LoginSuccessEvent::class, $events);
+        self::assertArrayHasKey(LoginSuccessEvent::class, $events);
         $methodName = $events[LoginSuccessEvent::class];
-        $this->assertTrue(method_exists(LastLoginSubscriber::class, $methodName));
+        self::assertIsString($methodName);
+        self::assertTrue(method_exists(LastLoginSubscriber::class, $methodName));
     }
 
     public function testOnImplicitLogin(): void

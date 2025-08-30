@@ -10,12 +10,11 @@
 namespace App\Tests\Repository\Query;
 
 use App\Repository\Query\ActivityQuery;
-use App\Repository\Query\VisibilityInterface;
+use App\Repository\Query\BaseQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Repository\Query\ActivityQuery
- * @covers \App\Repository\Query\BaseQuery
- */
+#[CoversClass(ActivityQuery::class)]
+#[CoversClass(BaseQuery::class)]
 class ActivityQueryTest extends BaseQueryTest
 {
     public function testQuery(): void
@@ -23,11 +22,8 @@ class ActivityQueryTest extends BaseQueryTest
         $sut = new ActivityQuery();
 
         $this->assertBaseQuery($sut, 'name');
-        $this->assertInstanceOf(VisibilityInterface::class, $sut);
-
         $this->assertCustomer($sut);
         $this->assertProject($sut);
-
         $this->assertResetByFormError(new ActivityQuery(), 'name');
     }
 }

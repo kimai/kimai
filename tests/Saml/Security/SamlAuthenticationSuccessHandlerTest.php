@@ -12,69 +12,59 @@ namespace App\Tests\Saml\Security;
 use App\Entity\User;
 use App\Saml\SamlToken;
 use App\Saml\Security\SamlAuthenticationSuccessHandler;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\HttpUtils;
 
-/**
- * @covers \App\Saml\Security\SamlAuthenticationSuccessHandler
- */
+#[CoversClass(SamlAuthenticationSuccessHandler::class)]
 class SamlAuthenticationSuccessHandlerTest extends TestCase
 {
-    public function testWithAlwaysUseDefaultTargetPath(): void
-    {
-        $httpUtils = new HttpUtils($this->getUrlGenerator());
-        $handler = new SamlAuthenticationSuccessHandler($httpUtils, ['always_use_default_target_path' => true]);
-        $defaultTargetPath = $httpUtils->generateUri($this->getRequest('/sso/login'), $this->getOption($handler, 'default_target_path', '/'));
-        $response = $handler->onAuthenticationSuccess($this->getRequest('/login', 'http://localhost/relayed'), $this->getSamlToken());
-        $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertTrue($response->isRedirect($defaultTargetPath));
-    }
-
     public function testRelayState(): void
     {
-        $handler = new SamlAuthenticationSuccessHandler(new HttpUtils($this->getUrlGenerator()), ['always_use_default_target_path' => false]);
+        $handler = new SamlAuthenticationSuccessHandler(new HttpUtils($this->getUrlGenerator()));
         $response = $handler->onAuthenticationSuccess($this->getRequest('/sso/login', 'http://localhost/relayed'), $this->getSamlToken());
-        $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertTrue($response->isRedirect('http://localhost/relayed'));
+        self::assertInstanceOf(RedirectResponse::class, $response);
+        self::assertTrue($response->isRedirect('http://localhost/relayed'));
     }
 
     public function testWithoutRelayState(): void
     {
         $httpUtils = new HttpUtils($this->getUrlGenerator());
-        $handler = new SamlAuthenticationSuccessHandler($httpUtils, ['always_use_default_target_path' => false]);
-        $defaultTargetPath = $httpUtils->generateUri($this->getRequest('/sso/login'), $this->getOption($handler, 'default_target_path', '/'));
+        $handler = new SamlAuthenticationSuccessHandler($httpUtils);
+        $defaultTargetPath = $httpUtils->generateUri($this->getRequest('/sso/login'), '/');
         $response = $handler->onAuthenticationSuccess($this->getRequest(), $this->getSamlToken());
-        $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertTrue($response->isRedirect($defaultTargetPath));
+        self::assertInstanceOf(RedirectResponse::class, $response);
+        self::assertTrue($response->isRedirect($defaultTargetPath));
     }
 
     public function testRelayStateLoop(): void
     {
         $httpUtils = new HttpUtils($this->getUrlGenerator());
-        $handler = new SamlAuthenticationSuccessHandler($httpUtils, ['always_use_default_target_path' => false]);
-        $loginPath = $httpUtils->generateUri($this->getRequest('/sso/login'), $this->getOption($handler, 'login_path', '/login'));
+        $handler = new SamlAuthenticationSuccessHandler($httpUtils);
+        $loginPath = $httpUtils->generateUri($this->getRequest('/sso/login'), '/login');
         $response = $handler->onAuthenticationSuccess($this->getRequest($loginPath), $this->getSamlToken());
-        $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertTrue(!$response->isRedirect($loginPath));
+        self::assertInstanceOf(RedirectResponse::class, $response);
+        self::assertTrue(!$response->isRedirect($loginPath));
     }
 
-    private function getUrlGenerator()
+    private function getUrlGenerator(): UrlGeneratorInterface
     {
-        $urlGenerator = $this->getMockBuilder('Symfony\Component\Routing\Generator\UrlGeneratorInterface')->getMock();
+        $urlGenerator = $this->getMockBuilder(UrlGeneratorInterface::class)->getMock();
         $urlGenerator
             ->expects($this->any())
             ->method('generate')
-            ->will($this->returnCallback(function ($name) {
+            ->willReturnCallback(function ($name) {
                 return (string) $name;
-            }))
+            })
         ;
 
         return $urlGenerator;
     }
 
-    private function getRequest($path = '/', $relayState = null)
+    private function getRequest(string $path = '/', ?string $relayState = null): Request
     {
         $params = [];
         if (null !== $relayState) {
@@ -84,7 +74,7 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
         return Request::create($path, 'get', $params);
     }
 
-    private function getSamlToken()
+    private function getSamlToken(): SamlToken
     {
         $user = new User();
         $user->setUserIdentifier('admin');
@@ -93,18 +83,5 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
         $token->setAttributes(['foo' => 'bar']);
 
         return $token;
-    }
-
-    private function getOption($handler, $name, $default = null)
-    {
-        $reflection = new \ReflectionObject($handler);
-        $options = $reflection->getProperty('options');
-        $options->setAccessible(true);
-        $arr = $options->getValue($handler);
-        if (!\is_array($arr) || !isset($arr[$name])) {
-            return $default;
-        }
-
-        return $arr[$name];
     }
 }

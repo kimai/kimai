@@ -53,12 +53,11 @@ body:
         attributes:
             label: Which PHP version are you using?
             options:
+                - "8.4"
+                - "8.2"
+                - "8.3"
                 - "8.1"
                 - Unknown
-                - "8.2"
-                - "8.0"
-                - "7.4"
-                - "7.3"
                 - Other (please mention below)
         validations:
             required: true

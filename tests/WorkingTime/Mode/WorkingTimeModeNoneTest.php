@@ -12,19 +12,18 @@ namespace App\Tests\WorkingTime\Mode;
 use App\Entity\User;
 use App\WorkingTime\Calculator\WorkingTimeCalculatorNone;
 use App\WorkingTime\Mode\WorkingTimeModeNone;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\WorkingTime\Mode\WorkingTimeModeNone
- */
+#[CoversClass(WorkingTimeModeNone::class)]
 class WorkingTimeModeNoneTest extends TestCase
 {
     public function testDefaults(): void
     {
         $sut = new WorkingTimeModeNone();
-        $this->assertEquals('none', $sut->getId());
-        $this->assertEquals(0, $sut->getOrder());
-        $this->assertEquals('', $sut->getName());
-        $this->assertInstanceOf(WorkingTimeCalculatorNone::class, $sut->getCalculator(new User()));
+        self::assertEquals('none', $sut->getId());
+        self::assertEquals(0, $sut->getOrder());
+        self::assertEquals('', $sut->getName());
+        self::assertInstanceOf(WorkingTimeCalculatorNone::class, $sut->getCalculator(new User()));
     }
 }

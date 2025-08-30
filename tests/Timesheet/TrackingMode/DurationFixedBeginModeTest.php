@@ -14,20 +14,23 @@ use App\Entity\User;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\TrackingMode\DurationFixedBeginMode;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-/**
- * @covers \App\Timesheet\TrackingMode\DurationFixedBeginMode
- */
+#[CoversClass(DurationFixedBeginMode::class)]
 class DurationFixedBeginModeTest extends TestCase
 {
-    protected function createSut($default = '13:47')
+    private function createSut(string $default = '13:47', bool $allowApiTimes = false): DurationFixedBeginMode
     {
         $loader = new TestConfigLoader([]);
         $configuration = SystemConfigurationFactory::create($loader, ['timesheet' => ['default_begin' => $default]]);
 
-        return new DurationFixedBeginMode($configuration);
+        $auth = $this->createMock(AuthorizationCheckerInterface::class);
+        $auth->method('isGranted')->willReturn($allowApiTimes);
+
+        return new DurationFixedBeginMode($configuration, $auth);
     }
 
     public function testDefaultValues(): void
@@ -38,6 +41,18 @@ class DurationFixedBeginModeTest extends TestCase
         self::assertFalse($sut->canEditEnd());
         self::assertTrue($sut->canEditDuration());
         self::assertFalse($sut->canUpdateTimesWithAPI());
+        self::assertFalse($sut->canSeeBeginAndEndTimes());
+        self::assertEquals('duration_fixed_begin', $sut->getId());
+    }
+
+    public function testValuesForAdmin(): void
+    {
+        $sut = $this->createSut('now', true);
+
+        self::assertFalse($sut->canEditBegin());
+        self::assertFalse($sut->canEditEnd());
+        self::assertTrue($sut->canEditDuration());
+        self::assertTrue($sut->canUpdateTimesWithAPI());
         self::assertFalse($sut->canSeeBeginAndEndTimes());
         self::assertEquals('duration_fixed_begin', $sut->getId());
     }

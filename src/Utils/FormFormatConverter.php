@@ -56,6 +56,9 @@ final class FormFormatConverter
 
         $pattern = $format;
 
+        // special case for Chinese
+        $pattern = str_replace('B', '', $pattern);
+
         // special case fr_CA
         $pattern = str_replace('\\\\h', '*****', $pattern);
         $pattern = str_replace('\\h', '*****', $pattern);

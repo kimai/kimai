@@ -9,63 +9,97 @@
 
 namespace App\Export\Base;
 
-use PhpOffice\PhpSpreadsheet\Cell\CellAddress;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use App\Entity\ExportableItem;
+use App\Export\ExportFilename;
+use App\Export\Package\CellFormatter\DateStringFormatter;
+use App\Export\Package\CellFormatter\DurationPlainFormatter;
+use App\Export\Package\SpoutSpreadsheet;
+use App\Export\RendererInterface;
+use App\Export\TimesheetExportInterface;
+use App\Repository\Query\TimesheetQuery;
+use OpenSpout\Writer\CSV\Options;
+use OpenSpout\Writer\CSV\Writer;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-class CsvRenderer extends AbstractSpreadsheetRenderer
+final class CsvRenderer implements RendererInterface, TimesheetExportInterface
 {
-    /**
-     * @return string
-     */
-    public function getFileExtension(): string
+    use ExportTrait;
+
+    private string $id = 'csv';
+    private string $title = 'default';
+    private ?string $locale = null;
+
+    public function __construct(
+        private readonly SpreadsheetRenderer $spreadsheetRenderer,
+        private readonly TranslatorInterface $translator
+    )
     {
-        return '.csv';
+    }
+
+    public function setId(string $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+
+    public function setLocale(?string $locale): void
+    {
+        $this->locale = $locale;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
     }
 
     /**
-     * @return string
+     * @param ExportableItem[] $exportItems
      */
-    protected function getContentType(): string
+    public function render(array $exportItems, TimesheetQuery $query): Response
     {
-        return 'text/csv';
+        return $this->getFileResponse(
+            $this->renderFile($exportItems, $query),
+            (new ExportFilename($query))->getFilename() . '.csv',
+            'text/csv'
+        );
     }
 
     /**
-     * @param Spreadsheet $spreadsheet
-     * @return string
-     * @throws \Exception
+     * @param ExportableItem[] $exportItems
      */
-    protected function saveSpreadsheet(Spreadsheet $spreadsheet): string
+    private function renderFile(array $exportItems, TimesheetQuery $query): \SplFileInfo
     {
         $filename = @tempnam(sys_get_temp_dir(), 'kimai-export-csv');
         if (false === $filename) {
             throw new \Exception('Could not open temporary file');
         }
 
-        $writer = IOFactory::createWriter($spreadsheet, 'Csv');
-        $writer->save($filename);
+        $options = new Options();
+        $options->SHOULD_ADD_BOM = false;
 
-        return $filename;
-    }
-
-    public function getId(): string
-    {
-        return 'csv';
-    }
-
-    protected function setDuration(Worksheet $sheet, int $column, int $row, ?int $duration): void
-    {
-        $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), \sprintf('=%s', $duration ?? 0));
-    }
-
-    protected function setRate(Worksheet $sheet, int $column, int $row, ?float $rate, ?string $currency): void
-    {
-        $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), $rate);
-        if ($rate === 0.00) {
-            return;
+        $opts = $this->spreadsheetRenderer->getTemplate($query)->getOptions();
+        if (\array_key_exists('separator', $opts) && $opts['separator'] === ';') {
+            $options->FIELD_DELIMITER = ';';
         }
-        $this->setRateStyle($sheet, $column, $row, $currency);
+
+        $spreadsheet = new SpoutSpreadsheet(new Writer($options), $this->translator, $this->locale ?? $this->spreadsheetRenderer->getTemplate($query)->getLocale());
+        $spreadsheet->open($filename);
+
+        $this->spreadsheetRenderer->registerFormatter('date', new DateStringFormatter());
+        $this->spreadsheetRenderer->registerFormatter('duration', new DurationPlainFormatter(false));
+        $this->spreadsheetRenderer->registerFormatter('duration_seconds', new DurationPlainFormatter(true));
+        $this->spreadsheetRenderer->writeSpreadsheet($spreadsheet, $exportItems, $query);
+
+        return new \SplFileInfo($filename);
     }
 }

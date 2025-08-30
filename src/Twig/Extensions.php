@@ -11,6 +11,7 @@ namespace App\Twig;
 
 use App\Constants;
 use App\Entity\EntityWithMetaFields;
+use App\Form\Type\DateRangeType;
 use App\Utils\Color;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -38,6 +39,7 @@ final class Extensions extends AbstractExtension
     public function getFunctions(): array
     {
         return [
+            new TwigFunction('date_range', [$this, 'buildDateRange']),
             new TwigFunction('report_date', [$this, 'buildReportDate']),
             new TwigFunction('class_name', [$this, 'getClassName']),
             new TwigFunction('iso_day_by_name', [$this, 'getIsoDayByName']),
@@ -94,6 +96,11 @@ final class Extensions extends AbstractExtension
     public function formatMonthPicker(\DateTimeInterface $dateTime): string
     {
         return $dateTime->format('Y-m');
+    }
+
+    public function buildDateRange(\DateTimeInterface $begin, \DateTimeInterface $end): string
+    {
+        return $begin->format(self::REPORT_DATE) . DateRangeType::DATE_SPACER . $end->format(self::REPORT_DATE);
     }
 
     public function getIsoDayByName(string $weekDay): int

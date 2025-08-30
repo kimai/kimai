@@ -52,6 +52,13 @@ table.dataTable thead > tr > th.hw-min {
     width: 1%;
     white-space: normal;
 }
+@include media-breakpoint-up(sm) {
+    th.w-sm-min,
+    td.w-sm-min {
+        width: 1%;
+        white-space: nowrap;
+    }
+}
 /* If a table column contains ONLY avatar <img> it will collapse, so make it a defined width */
 .w-avatar {
     width: 40px;
@@ -84,5 +91,21 @@ table.dataTable thead > tr > th.hw-min {
 #activity_details_box {
     th {
         width: 30%;
+    }
+}
+
+.markdown {
+    blockquote {
+        p {
+            /* Parsedown wraps content in a <p> like <blockquote><p> */
+            margin: 0;
+        }
+        /* Tabler doesn't style blockquotes */
+        border-left: 15px var(--tblr-border-style) var(--tblr-border-color);
+        background-color: var(--tblr-bg-surface-secondary);
+    }
+    pre code.hljs {
+        padding: 0;
+        background-color: var(--tblr-bg-surface-dark);
     }
 }

@@ -15,20 +15,22 @@ use App\Entity\InvoiceTemplate;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Invoice\Calculator\AbstractCalculator;
+use App\Invoice\Calculator\AbstractMergedCalculator;
+use App\Invoice\Calculator\AbstractSumInvoiceCalculator;
 use App\Invoice\Calculator\ProjectUserInvoiceCalculator;
 use App\Invoice\CalculatorInterface;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use DateTime;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Invoice\Calculator\ProjectUserInvoiceCalculator
- * @covers \App\Invoice\Calculator\AbstractSumInvoiceCalculator
- * @covers \App\Invoice\Calculator\AbstractMergedCalculator
- * @covers \App\Invoice\Calculator\AbstractCalculator
- */
-class ProjectUserInvoiceCalculatorTest extends AbstractCalculatorTest
+#[CoversClass(ProjectUserInvoiceCalculator::class)]
+#[CoversClass(AbstractSumInvoiceCalculator::class)]
+#[CoversClass(AbstractMergedCalculator::class)]
+#[CoversClass(AbstractCalculator::class)]
+class ProjectUserInvoiceCalculatorTest extends AbstractCalculatorTestCase
 {
     protected function getCalculator(): CalculatorInterface
     {
@@ -57,54 +59,49 @@ class ProjectUserInvoiceCalculatorTest extends AbstractCalculatorTest
         $project3->method('getId')->willReturn(3);
 
         $timesheet = new Timesheet();
-        $timesheet
-            ->setBegin(new DateTime('2018-11-29'))
-            ->setEnd(new DateTime())
-            ->setDuration(3600)
-            ->setRate(293.27)
-            ->setUser($user1)
-            ->setActivity((new Activity())->setName('sdsd'))
-            ->setProject($project1);
+        $timesheet->setBegin(new DateTime('2018-11-29'));
+        $timesheet->setEnd(new DateTime());
+        $timesheet->setDuration(3600);
+        $timesheet->setRate(293.27);
+        $timesheet->setUser($user1);
+        $timesheet->setActivity((new Activity())->setName('sdsd'));
+        $timesheet->setProject($project1);
 
         $timesheet2 = new Timesheet();
-        $timesheet2
-            ->setBegin(new DateTime('2018-11-28'))
-            ->setEnd(new DateTime())
-            ->setDuration(400)
-            ->setRate(84.75)
-            ->setUser($user1)
-            ->setActivity((new Activity())->setName('bar'))
-            ->setProject($project2);
+        $timesheet2->setBegin(new DateTime('2018-11-28'));
+        $timesheet2->setEnd(new DateTime());
+        $timesheet2->setDuration(400);
+        $timesheet2->setRate(84.75);
+        $timesheet2->setUser($user1);
+        $timesheet2->setActivity((new Activity())->setName('bar'));
+        $timesheet2->setProject($project2);
 
         $timesheet3 = new Timesheet();
-        $timesheet3
-            ->setBegin(new DateTime('2018-11-29'))
-            ->setEnd(new DateTime())
-            ->setDuration(1800)
-            ->setRate(111.11)
-            ->setUser($user1)
-            ->setActivity((new Activity())->setName('foo'))
-            ->setProject($project1);
+        $timesheet3->setBegin(new DateTime('2018-11-29'));
+        $timesheet3->setEnd(new DateTime());
+        $timesheet3->setDuration(1800);
+        $timesheet3->setRate(111.11);
+        $timesheet3->setUser($user1);
+        $timesheet3->setActivity((new Activity())->setName('foo'));
+        $timesheet3->setProject($project1);
 
         $timesheet4 = new Timesheet();
-        $timesheet4
-            ->setBegin(new DateTime('2018-11-08'))
-            ->setEnd(new DateTime())
-            ->setDuration(400)
-            ->setRate(1947.99)
-            ->setUser($user1)
-            ->setActivity((new Activity())->setName('blub'))
-            ->setProject($project2);
+        $timesheet4->setBegin(new DateTime('2018-11-08'));
+        $timesheet4->setEnd(new DateTime());
+        $timesheet4->setDuration(400);
+        $timesheet4->setRate(1947.99);
+        $timesheet4->setUser($user1);
+        $timesheet4->setActivity((new Activity())->setName('blub'));
+        $timesheet4->setProject($project2);
 
         $timesheet5 = new Timesheet();
-        $timesheet5
-            ->setBegin(new DateTime('2018-11-28'))
-            ->setEnd(new DateTime())
-            ->setDuration(400)
-            ->setRate(84)
-            ->setUser($user2)
-            ->setActivity(new Activity())
-            ->setProject($project3);
+        $timesheet5->setBegin(new DateTime('2018-11-28'));
+        $timesheet5->setEnd(new DateTime());
+        $timesheet5->setDuration(400);
+        $timesheet5->setRate(84);
+        $timesheet5->setUser($user2);
+        $timesheet5->setActivity(new Activity());
+        $timesheet5->setProject($project3);
 
         $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5];
 
@@ -117,23 +114,23 @@ class ProjectUserInvoiceCalculatorTest extends AbstractCalculatorTest
         $sut = $this->getCalculator();
         $sut->setModel($model);
 
-        $this->assertEquals('project_user', $sut->getId());
-        $this->assertEquals(3000.13, $sut->getTotal());
-        $this->assertEquals(19, $sut->getVat());
-        $this->assertEquals('EUR', $model->getCurrency());
-        $this->assertEquals(2521.12, $sut->getSubtotal());
-        $this->assertEquals(6600, $sut->getTimeWorked());
+        self::assertEquals('project_user', $sut->getId());
+        self::assertEquals(3000.13, $sut->getTotal());
+        self::assertEquals(19, $sut->getVat());
+        self::assertEquals('EUR', $model->getCurrency());
+        self::assertEquals(2521.12, $sut->getSubtotal());
+        self::assertEquals(6600, $sut->getTimeWorked());
 
         $entries = $sut->getEntries();
         self::assertCount(3, $entries);
 
-        $this->assertEquals('2018-11-08', $entries[0]->getBegin()?->format('Y-m-d'));
-        $this->assertEquals('2018-11-28', $entries[1]->getBegin()?->format('Y-m-d'));
-        $this->assertEquals('2018-11-29', $entries[2]->getBegin()?->format('Y-m-d'));
+        self::assertEquals('2018-11-08', $entries[0]->getBegin()?->format('Y-m-d'));
+        self::assertEquals('2018-11-28', $entries[1]->getBegin()?->format('Y-m-d'));
+        self::assertEquals('2018-11-29', $entries[2]->getBegin()?->format('Y-m-d'));
 
-        $this->assertEquals(404.38, $entries[2]->getRate());
-        $this->assertEquals(2032.74, $entries[0]->getRate());
-        $this->assertEquals(84, $entries[1]->getRate());
+        self::assertEquals(404.38, $entries[2]->getRate());
+        self::assertEquals(2032.74, $entries[0]->getRate());
+        self::assertEquals(84, $entries[1]->getRate());
     }
 
     public function testDescriptionByProject(): void

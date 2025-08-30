@@ -10,14 +10,6 @@
         <source>daterangepicker.lastYear</source>
         <target state="final">去年</target>
       </trans-unit>
-      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth" xml:space="preserve" approved="yes">
-        <source>daterangepicker.lastMonth</source>
-        <target state="final">上個月</target>
-      </trans-unit>
-      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth" xml:space="preserve" approved="yes">
-        <source>daterangepicker.thisMonth</source>
-        <target state="final">本月</target>
-      </trans-unit>
       <trans-unit id="XgIrZS3" resname="daterangepicker.thisYear" xml:space="preserve" approved="yes">
         <source>daterangepicker.thisYear</source>
         <target state="final">今年</target>

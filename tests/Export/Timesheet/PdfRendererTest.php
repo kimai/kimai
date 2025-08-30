@@ -9,22 +9,23 @@
 
 namespace App\Tests\Export\Timesheet;
 
-use App\Export\Timesheet\PDFRenderer;
+use App\Export\Base\PDFRenderer;
 use App\Pdf\HtmlToPdfConverter;
 use App\Pdf\MPdfConverter;
 use App\Project\ProjectStatisticService;
 use App\Tests\Mocks\FileHelperFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment;
 
 /**
- * @covers \App\Export\Base\PDFRenderer
  * @covers \App\Export\Base\RendererTrait
- * @covers \App\Export\Timesheet\PDFRenderer
- * @group integration
  */
-class PdfRendererTest extends AbstractRendererTest
+#[CoversClass(PDFRenderer::class)]
+#[Group('integration')]
+class PdfRendererTest extends AbstractRendererTestCase
 {
     public function testConfiguration(): void
     {
@@ -34,7 +35,8 @@ class PdfRendererTest extends AbstractRendererTest
             $this->createMock(ProjectStatisticService::class)
         );
 
-        $this->assertEquals('pdf', $sut->getId());
+        self::assertEquals('pdf', $sut->getId());
+        self::assertEquals('pdf', $sut->getTitle());
     }
 
     public function testRender(): void
@@ -56,9 +58,9 @@ class PdfRendererTest extends AbstractRendererTest
         $response = $this->render($sut);
 
         $prefix = date('Ymd');
-        $this->assertEquals('application/pdf', $response->headers->get('Content-Type'));
-        $this->assertEquals('attachment; filename=' . $prefix . '-Customer_Name-project_name.pdf', $response->headers->get('Content-Disposition'));
+        self::assertEquals('application/pdf', $response->headers->get('Content-Type'));
+        self::assertEquals('attachment; filename=' . $prefix . '-Customer_Name-project_name.pdf', $response->headers->get('Content-Disposition'));
 
-        $this->assertNotEmpty($response->getContent());
+        self::assertNotEmpty($response->getContent());
     }
 }

@@ -13,7 +13,7 @@ use App\API\Model\TimesheetConfig;
 use App\Configuration\SystemConfiguration;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -28,7 +28,7 @@ final class ConfigurationController extends BaseApiController
     }
 
     /**
-     * Returns the timesheet configuration
+     * Fetch timesheet configuration
      */
     #[OA\Response(response: 200, description: 'Returns the instance specific timesheet configuration', content: new OA\JsonContent(ref: new Model(type: TimesheetConfig::class)))]
     #[Route(path: '/config/timesheet', methods: ['GET'])]
@@ -48,7 +48,7 @@ final class ConfigurationController extends BaseApiController
     }
 
     /**
-     * Returns the configured color codes and names
+     * Fetch configured color codes
      */
     #[OA\Response(response: 200, description: 'Returns the configured color codes and names', content: new OA\JsonContent(type: 'object', example: ['Red' => '#ff0000'], additionalProperties: new OA\AdditionalProperties(type: 'string')))]
     #[Route(path: '/config/colors', methods: ['GET'])]

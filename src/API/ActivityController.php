@@ -9,6 +9,7 @@
 
 namespace App\API;
 
+use App\Activity\ActivityService;
 use App\Entity\Activity;
 use App\Entity\ActivityRate;
 use App\Entity\User;
@@ -46,19 +47,20 @@ final class ActivityController extends BaseApiController
         private readonly ViewHandlerInterface $viewHandler,
         private readonly ActivityRepository $repository,
         private readonly EventDispatcherInterface $dispatcher,
-        private readonly ActivityRateRepository $activityRateRepository
+        private readonly ActivityRateRepository $activityRateRepository,
+        private readonly ActivityService $activityService
     ) {
     }
 
     /**
-     * Returns a collection of activities (which are visible to the user)
+     * Fetch activities
      */
     #[OA\Response(response: 200, description: 'Returns a collection of activities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ActivityCollection')))]
     #[Route(methods: ['GET'], path: '', name: 'get_activities')]
     #[Rest\QueryParam(name: 'project', requirements: '\d+', strict: true, nullable: true, description: 'Project ID to filter activities')]
     #[Rest\QueryParam(name: 'projects', map: true, requirements: '\d+', strict: true, nullable: true, default: [], description: 'List of project IDs to filter activities, e.g.: projects[]=1&projects[]=2')]
     #[Rest\QueryParam(name: 'visible', requirements: '1|2|3', default: 1, strict: true, nullable: true, description: 'Visibility status to filter activities: 1=visible, 2=hidden, 3=all')]
-    #[Rest\QueryParam(name: 'globals', strict: true, nullable: true, description: 'Use if you want to fetch only global activities. Allowed values: true (default: false)')]
+    #[Rest\QueryParam(name: 'globals', requirements: '0|1|true|false', strict: true, nullable: true, description: 'Use if you want to fetch only global activities. Allowed values: 0|1 (default: 0 for false)')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name|project', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name, project (default: name)')]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
     #[Rest\QueryParam(name: 'term', description: 'Free search term')]
@@ -81,7 +83,8 @@ final class ActivityController extends BaseApiController
             $query->setOrderBy($orderBy);
         }
 
-        if (null !== $paramFetcher->get('globals')) {
+        $globals = $paramFetcher->get('globals');
+        if (\is_string($globals) && ($globals === 'true' || $globals === '1')) {
             $query->setGlobalsOnly(true);
         }
 
@@ -119,7 +122,7 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Returns one activity
+     * Fetch activity
      */
     #[OA\Response(response: 200, description: 'Returns one activity entity', content: new OA\JsonContent(ref: '#/components/schemas/ActivityEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Activity ID to fetch', required: true)]
@@ -134,7 +137,7 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Creates a new activity
+     * Create activity
      */
     #[OA\Post(description: 'Creates a new activity and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created activity', content: new OA\JsonContent(ref: '#/components/schemas/ActivityEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/ActivityEditForm'))]
@@ -173,7 +176,7 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Update an existing activity
+     * Update activity
      */
     #[IsGranted('edit', 'activity')]
     #[OA\Patch(description: 'Update an existing activity, you can pass all or just a subset of all attributes', responses: [new OA\Response(response: 200, description: 'Returns the updated activity', content: new OA\JsonContent(ref: '#/components/schemas/ActivityEntity'))])]
@@ -209,7 +212,26 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Sets the value of a meta-field for an existing activity
+     * Delete activity
+     *
+     * [DANGER] This will also delete ALL linked timesheets.
+     * Do you want to use `PATCH` instead and mark it as inactive with `{visible: false}` instead?
+     */
+    #[IsGranted('delete', 'activity')]
+    #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Delete one activity')])]
+    #[OA\Parameter(name: 'id', description: 'Activity ID to delete', in: 'path', required: true)]
+    #[Route(path: '/{id}', name: 'delete_activity', requirements: ['id' => '\d+'], methods: ['DELETE'])]
+    public function deleteAction(Activity $activity): Response
+    {
+        $this->activityService->deleteActivity($activity);
+
+        $view = new View(null, Response::HTTP_NO_CONTENT);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Update activity custom-field
      */
     #[IsGranted('edit', 'activity')]
     #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/ActivityEntity'))]
@@ -240,7 +262,7 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Returns a collection of all rates for one activity
+     * Fetch rates for activity
      */
     #[IsGranted('edit', 'activity')]
     #[OA\Response(response: 200, description: 'Returns a collection of activity rate entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ActivityRate')))]
@@ -257,7 +279,7 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Deletes one rate for an activity
+     * Delete rate for activity
      */
     #[IsGranted('edit', 'activity')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
@@ -278,7 +300,7 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Adds a new rate to an activity
+     * Add rate for activity
      */
     #[IsGranted('edit', 'activity')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the new created rate', content: new OA\JsonContent(ref: '#/components/schemas/ActivityRate'))])]

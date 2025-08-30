@@ -14,19 +14,16 @@ use App\Entity\Project;
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
+use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\PaginatedWorkingTimeChart;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Widget\Type\PaginatedWorkingTimeChart
- * @covers \App\Widget\Type\AbstractWidgetType
- * @covers \App\Repository\TimesheetRepository
- */
+#[CoversClass(PaginatedWorkingTimeChart::class)]
+#[CoversClass(AbstractWidgetType::class)]
+#[CoversClass(TimesheetRepository::class)]
 class PaginatedWorkingTimeChartTest extends TestCase
 {
-    /**
-     * @return PaginatedWorkingTimeChart
-     */
     public function createSut(): PaginatedWorkingTimeChart
     {
         $repository = $this->createMock(TimesheetRepository::class);
@@ -73,7 +70,7 @@ class PaginatedWorkingTimeChartTest extends TestCase
         $repository = $this->createMock(TimesheetRepository::class);
 
         $expectedKeys = [
-            'begin', 'end', 'thisMonth', 'lastWeekInYear', 'lastWeekInLastYear', 'day', 'week', 'month', 'year', 'financial', 'financialBegin'
+            'begin', 'end', 'dateYear', 'thisMonth', 'lastWeekInYear', 'lastWeekInLastYear', 'day', 'week', 'month', 'year', 'financial', 'financialBegin'
         ];
 
         $configuration = SystemConfigurationFactory::createStub(['company' => ['financial_year' => null]]);
@@ -101,7 +98,7 @@ class PaginatedWorkingTimeChartTest extends TestCase
         $repository = $this->createMock(TimesheetRepository::class);
 
         $expectedKeys = [
-            'begin', 'end', 'thisMonth', 'lastWeekInYear', 'lastWeekInLastYear', 'day', 'week', 'month', 'year', 'financial', 'financialBegin'
+            'begin', 'end', 'dateYear', 'thisMonth', 'lastWeekInYear', 'lastWeekInLastYear', 'day', 'week', 'month', 'year', 'financial', 'financialBegin'
         ];
 
         $configuration = SystemConfigurationFactory::createStub(['company' => ['financial_year' => '2020-01-01']]);

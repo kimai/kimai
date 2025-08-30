@@ -18,6 +18,7 @@ use App\Event\MetaDisplayEventInterface;
 use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Event\UserPreferenceDisplayEvent;
+use App\Export\ExportRendererInterface;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\CustomerQuery;
@@ -29,29 +30,22 @@ use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use Twig\Extension\SandboxExtension;
 
-class HtmlRenderer
+class HtmlRenderer implements ExportRendererInterface
 {
     use RendererTrait;
 
-    /**
-     * @var string
-     */
-    private $id = 'html';
-    /**
-     * @var string
-     */
-    private $template = 'default.html.twig';
+    private string $id = 'html';
+    private string $template = 'default.html.twig';
 
     public function __construct(
-        protected Environment $twig,
-        protected EventDispatcherInterface $dispatcher,
-        private ProjectStatisticService $projectStatisticService,
-        private ActivityStatisticService $activityStatisticService
+        protected readonly Environment $twig,
+        protected readonly EventDispatcherInterface $dispatcher,
+        private readonly ProjectStatisticService $projectStatisticService,
+        private readonly ActivityStatisticService $activityStatisticService
     ) {
     }
 
     /**
-     * @param MetaDisplayEventInterface $event
      * @return MetaTableTypeInterface[]
      */
     protected function findMetaColumns(MetaDisplayEventInterface $event): array
@@ -74,14 +68,9 @@ class HtmlRenderer
     }
 
     /**
-     * @param ExportableItem[] $timesheets
-     * @param TimesheetQuery $query
-     * @return Response
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @param ExportableItem[] $exportItems
      */
-    public function render(array $timesheets, TimesheetQuery $query): Response
+    public function render(array $exportItems, TimesheetQuery $query): Response
     {
         $timesheetMetaFields = $this->findMetaColumns(new TimesheetMetaDisplayEvent($query, TimesheetMetaDisplayEvent::EXPORT));
         $customerMetaFields = $this->findMetaColumns(new CustomerMetaDisplayEvent($query->copyTo(new CustomerQuery()), CustomerMetaDisplayEvent::EXPORT));
@@ -92,7 +81,7 @@ class HtmlRenderer
         $this->dispatcher->dispatch($event);
         $userPreferences = $event->getPreferences();
 
-        $summary = $this->calculateSummary($timesheets);
+        $summary = $this->calculateSummary($exportItems);
 
         // enable basic security measures
         $sandbox = new SandboxExtension(new ExportPolicy());
@@ -100,11 +89,11 @@ class HtmlRenderer
         $this->twig->addExtension($sandbox);
 
         $content = $this->twig->render($this->getTemplate(), array_merge([
-            'entries' => $timesheets,
+            'entries' => $exportItems,
             'query' => $query,
             'summaries' => $summary,
-            'budgets' => $this->calculateProjectBudget($timesheets, $query, $this->projectStatisticService),
-            'activity_budgets' => $this->calculateActivityBudget($timesheets, $query, $this->activityStatisticService),
+            'budgets' => $this->calculateProjectBudget($exportItems, $query, $this->projectStatisticService),
+            'activity_budgets' => $this->calculateActivityBudget($exportItems, $query, $this->activityStatisticService),
             'timesheetMetaFields' => $timesheetMetaFields,
             'customerMetaFields' => $customerMetaFields,
             'projectMetaFields' => $projectMetaFields,
@@ -123,22 +112,23 @@ class HtmlRenderer
         return '@export/' . $this->template;
     }
 
-    public function setTemplate(string $filename): HtmlRenderer
+    public function setTemplate(string $filename): void
     {
         $this->template = $filename;
-
-        return $this;
     }
 
-    public function setId(string $id): HtmlRenderer
+    public function setId(string $id): void
     {
         $this->id = $id;
-
-        return $this;
     }
 
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function getTitle(): string
+    {
+        return 'print';
     }
 }

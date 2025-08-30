@@ -11,15 +11,15 @@ namespace App\Tests\API;
 
 use App\DataFixtures\UserFixtures;
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * These tests make sure, that the deprecated API login with X-AUTH-USER and X-AUTH-TOKEN still works.
- *
- * @group legacy
- * @group integration
+ * Make sure that the deprecated API login with X-AUTH-USER and X-AUTH-TOKEN still works.
  */
-class AuthenticationTest extends APIControllerBaseTest
+#[Group('legacy')]
+#[Group('integration')]
+class AuthenticationTest extends APIControllerBaseTestCase
 {
     public function testPinIsSecure(): void
     {
@@ -31,11 +31,11 @@ class AuthenticationTest extends APIControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/ping');
         $response = $client->getResponse()->getContent();
-        $this->assertIsString($response);
+        self::assertIsString($response);
         $result = json_decode($response, true);
 
-        $this->assertIsArray($result);
-        $this->assertEquals(['message' => 'pong'], $result);
+        self::assertIsArray($result);
+        self::assertEquals(['message' => 'pong'], $result);
     }
 
     public function testPingWithAuthTokenAndUsername(): void
@@ -44,11 +44,11 @@ class AuthenticationTest extends APIControllerBaseTest
 
         $this->assertAccessIsGranted($client, '/api/ping');
         $response = $client->getResponse()->getContent();
-        $this->assertIsString($response);
+        self::assertIsString($response);
         $result = json_decode($response, true);
 
-        $this->assertIsArray($result);
-        $this->assertEquals(['message' => 'pong'], $result);
+        self::assertIsArray($result);
+        self::assertEquals(['message' => 'pong'], $result);
     }
 
     public function testPingWithInvalidAuthTokenAndUsername(): void
@@ -64,15 +64,15 @@ class AuthenticationTest extends APIControllerBaseTest
             'message' => 'Invalid credentials',
         ];
 
-        $this->assertIsString($response->getContent());
+        self::assertIsString($response->getContent());
 
-        $this->assertEquals(
+        self::assertEquals(
             $data,
             json_decode($response->getContent(), true),
             \sprintf('The secure URL %s is not protected.', $url)
         );
 
-        $this->assertEquals(
+        self::assertEquals(
             Response::HTTP_FORBIDDEN,
             $response->getStatusCode(),
             \sprintf('The secure URL %s has the wrong status code %s.', $url, $response->getStatusCode())

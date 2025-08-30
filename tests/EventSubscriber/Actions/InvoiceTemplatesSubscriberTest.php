@@ -10,11 +10,10 @@
 namespace App\Tests\EventSubscriber\Actions;
 
 use App\EventSubscriber\Actions\InvoiceTemplatesSubscriber;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\EventSubscriber\Actions\InvoiceTemplatesSubscriber
- */
-class InvoiceTemplatesSubscriberTest extends AbstractActionsSubscriberTest
+#[CoversClass(InvoiceTemplatesSubscriber::class)]
+class InvoiceTemplatesSubscriberTest extends AbstractActionsSubscriberTestCase
 {
     public function testEventName(): void
     {

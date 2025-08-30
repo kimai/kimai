@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ta" datatype="plaintext" original="daterangepicker.en.xlf">
+    <body>
+      <trans-unit id="s9Hdo7E" resname="daterangepicker.today" xml:space="preserve" approved="yes">
+        <source>daterangepicker.today</source>
+        <target state="final">இன்று</target>
+      </trans-unit>
+      <trans-unit id="gkQA1YG" resname="daterangepicker.yesterday" xml:space="preserve" approved="yes">
+        <source>daterangepicker.yesterday</source>
+        <target state="final">நேற்று</target>
+      </trans-unit>
+      <trans-unit id="CAvVEbc" resname="daterangepicker.lastWeek" xml:space="preserve" approved="yes">
+        <source>daterangepicker.lastWeek</source>
+        <target state="final">கடந்த வாரம்</target>
+      </trans-unit>
+      <trans-unit id="HfcD1_y" resname="daterangepicker.thisWeek" xml:space="preserve" approved="yes">
+        <source>daterangepicker.thisWeek</source>
+        <target state="final">இந்த வாரம்</target>
+      </trans-unit>
+      <trans-unit id="_9rEFED" resname="daterangepicker.lastYear" xml:space="preserve" approved="yes">
+        <source>daterangepicker.lastYear</source>
+        <target state="final">கடந்த ஆண்டு</target>
+      </trans-unit>
+      <trans-unit id="XgIrZS3" resname="daterangepicker.thisYear" xml:space="preserve" approved="yes">
+        <source>daterangepicker.thisYear</source>
+        <target state="final">இந்த ஆண்டு</target>
+      </trans-unit>
+      <trans-unit id="AY_E9UR" resname="daterangepicker.thisYearUntilNow" xml:space="preserve" approved="yes">
+        <source>This year — until today</source>
+        <target state="final">இந்த ஆண்டு - இன்று வரை</target>
+      </trans-unit>
+      <trans-unit id="m0lJOke" resname="daterangepicker.allTime" xml:space="preserve" approved="yes">
+        <source>daterangepicker.allTime</source>
+        <target state="final">முழு காலம்</target>
+      </trans-unit>
+      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth" xml:space="preserve" approved="yes">
+        <source>daterangepicker.thisMonth</source>
+        <target state="final">இந்தத் திங்கள்</target>
+      </trans-unit>
+      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth" xml:space="preserve" approved="yes">
+        <source>daterangepicker.lastMonth</source>
+        <target state="final">போன திங்கள்</target>
+      </trans-unit>
+      <trans-unit id="mgJ2Z7M" resname="daterangepicker.thisFinancialYear" xml:space="preserve" approved="yes">
+        <source>daterangepicker.thisFinancialYear</source>
+        <target state="final">இந்த நிதி ஆண்டு</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -12,20 +12,19 @@ namespace App\Tests\Reporting;
 use App\Entity\User;
 use App\Event\ReportingEvent;
 use App\Reporting\ReportingService;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-/**
- * @covers \App\Reporting\ReportingService
- */
+#[CoversClass(ReportingService::class)]
 class ReportingServiceTest extends TestCase
 {
     protected function getSut(bool $isGranted = false): ReportingService
     {
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->expects($this->exactly($isGranted ? 1 : 0))->method('dispatch')->willReturnCallback(function ($event) {
-            $this->assertInstanceOf(ReportingEvent::class, $event);
+            self::assertInstanceOf(ReportingEvent::class, $event);
 
             return $event;
         });

@@ -28,7 +28,7 @@ final class AnnotationExtractor implements ExtractorInterface
 
     /**
      * @param string $value
-     * @return ColumnDefinition[]
+     * @return list<ColumnDefinition>
      * @throws ExtractorException
      */
     public function extract($value): array
@@ -154,11 +154,7 @@ final class AnnotationExtractor implements ExtractorInterface
             }
         }
 
-        foreach ($columns as $name => $definition) {
-            if (null === $definition) {
-                unset($columns[$name]);
-            }
-        }
+        $columns = array_filter($columns, function ($value) { return $value !== null; });
 
         return array_values($columns);
     }

@@ -11,48 +11,47 @@ namespace App\Tests\Timesheet;
 
 use App\Entity\Timesheet;
 use App\Tests\Mocks\RoundingServiceFactory;
+use App\Timesheet\RoundingService;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Timesheet\RoundingService
- */
+#[CoversClass(RoundingService::class)]
 class RoundingServiceTest extends TestCase
 {
     public function testCalculateWithEmptyEnd(): void
     {
         $record = new Timesheet();
         $record->setBegin(new \DateTime());
-        $this->assertEquals(0, $record->getDuration());
+        self::assertEquals(0, $record->getDuration());
 
         $sut = (new RoundingServiceFactory($this))->create();
         $sut->applyRoundings($record);
-        $this->assertEquals(0, $record->getDuration());
+        self::assertEquals(0, $record->getDuration());
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testCalculate($rules, $start, $end, $expectedStart, $expectedEnd, $expectedDuration): void
     {
         $record = new Timesheet();
         $record->setBegin($start);
         $record->setEnd($end);
-        $this->assertEquals(0, $record->getDuration());
+        self::assertEquals(0, $record->getDuration());
 
         $sut = (new RoundingServiceFactory($this))->create($rules);
         $sut->roundBegin($record);
-        $this->assertEquals($expectedStart, $record->getBegin());
+        self::assertEquals($expectedStart, $record->getBegin());
         $sut->roundEnd($record);
-        $this->assertEquals($expectedEnd, $record->getEnd());
+        self::assertEquals($expectedEnd, $record->getEnd());
 
         // set the proper duration
         $record->setDuration($record->getEnd()->getTimestamp() - $record->getBegin()->getTimestamp());
 
         $sut->roundDuration($record);
-        $this->assertEquals($expectedDuration, $record->getDuration());
+        self::assertEquals($expectedDuration, $record->getDuration());
     }
 
-    public function getTestData()
+    public static function getTestData()
     {
         $start = new \DateTime();
         $start->setTime(12, 0, 0);

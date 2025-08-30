@@ -13,11 +13,10 @@ use App\Entity\User;
 use App\Event\PageActionsEvent;
 use App\EventSubscriber\Actions\InvoiceDocumentSubscriber;
 use App\Model\InvoiceDocument;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\EventSubscriber\Actions\InvoiceDocumentSubscriber
- */
-class InvoiceDocumentSubscriberTest extends AbstractActionsSubscriberTest
+#[CoversClass(InvoiceDocumentSubscriber::class)]
+class InvoiceDocumentSubscriberTest extends AbstractActionsSubscriberTestCase
 {
     public function testEventName(): void
     {

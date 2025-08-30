@@ -12,12 +12,11 @@ namespace App\Tests\Twig;
 use App\Repository\BookmarkRepository;
 use App\Twig\DatatableExtensions;
 use App\Utils\ProfileManager;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Twig\TwigFunction;
 
-/**
- * @covers \App\Twig\DatatableExtensions
- */
+#[CoversClass(DatatableExtensions::class)]
 class DatatableExtensionsTest extends TestCase
 {
     protected function getSut(string $locale): DatatableExtensions
@@ -32,11 +31,11 @@ class DatatableExtensionsTest extends TestCase
         $functions = ['initialize_datatable', 'datatable_column_class'];
         $sut = $this->getSut('de');
         $twigFunctions = $sut->getFunctions();
-        $this->assertCount(\count($functions), $twigFunctions);
+        self::assertCount(\count($functions), $twigFunctions);
         $i = 0;
         foreach ($twigFunctions as $function) {
-            $this->assertInstanceOf(TwigFunction::class, $function);
-            $this->assertEquals($functions[$i++], $function->getName());
+            self::assertInstanceOf(TwigFunction::class, $function);
+            self::assertEquals($functions[$i++], $function->getName());
         }
     }
 }

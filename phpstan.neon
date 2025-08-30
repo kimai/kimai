@@ -21,12 +21,10 @@ parameters:
         booleansInConditions: false
         uselessCast: true
         requireParentConstructorCall: true
-        disallowedConstructs: false
         overwriteVariablesWithLoop: true
         closureUsesThis: true
         matchingInheritedMethodNames: true
         numericOperandsInArithmeticOperators: true
-        strictCalls: false
         switchConditionsMatchingType: true
         noVariableVariables: false
     paths:
@@ -44,10 +42,6 @@ parameters:
         containerXmlPath: %rootDir%/../../../var/cache/dev/App_KernelDevDebugContainer.xml
     ignoreErrors:
         - '#^Method .*\(\) has parameter \$builder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'
-        -
-            message: "#^Parameter \\#1 \\$user of class App\\\\Event\\\\PageActionsEvent constructor expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 4
-            path: src/API/ActionsController.php
 
         -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Activity\\:\\:getMetaField\\(\\) expects string, mixed given\\.$#"
@@ -63,11 +57,6 @@ parameters:
             message: "#^Parameter \\#2 \\$plainPassword of method Symfony\\\\Component\\\\PasswordHasher\\\\PasswordHasherInterface\\:\\:verify\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/API/Authentication/TokenAuthenticator.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of static method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createByUser\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/API/BaseApiController.php
 
         -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Customer\\:\\:getMetaField\\(\\) expects string, mixed given\\.$#"
@@ -140,21 +129,6 @@ parameters:
             path: src/API/TimesheetController.php
 
         -
-            message: "#^Parameter \\#1 \\$user of class App\\\\Event\\\\RecentActivityEvent constructor expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/API/TimesheetController.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\TimesheetRepository\\:\\:getRecentActivities\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 1
-            path: src/API/TimesheetController.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
-            count: 1
-            path: src/API/UserController.php
-
-        -
             message: "#^Parameter \\#2 \\$statistic of class App\\\\Event\\\\ActivityStatisticEvent constructor expects App\\\\Model\\\\ActivityStatistic, App\\\\Model\\\\ActivityStatistic\\|null given\\.$#"
             count: 1
             path: src/Activity/ActivityStatisticService.php
@@ -171,7 +145,7 @@ parameters:
 
         -
             message: "#^Cannot call method find\\(\\) on Symfony\\\\Component\\\\Console\\\\Application\\|null\\.$#"
-            count: 2
+            count: 1
             path: src/Command/AbstractBundleInstallerCommand.php
 
         -
@@ -290,7 +264,7 @@ parameters:
             path: src/Command/ExportCreateCommand.php
 
         -
-            message: "#^Parameter \\#1 \\$locale of static method Symfony\\\\Polyfill\\\\Intl\\\\Icu\\\\Locale\\:\\:setDefault\\(\\) expects string, mixed given\\.$#"
+            message: "#^Parameter \\#1 \\$locale of static method Locale\\:\\:setDefault\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/Command/ExportCreateCommand.php
 
@@ -315,7 +289,7 @@ parameters:
             path: src/Command/ExportCreateCommand.php
 
         -
-            message: "#^Parameter \\#2 \\$name of method Symfony\\\\Component\\\\HttpFoundation\\\\File\\\\File\\:\\:move\\(\\) expects string\\|null, array\\<int, string\\>\\|string given\\.$#"
+            message: "#^Parameter \\#2 \\$name of method Symfony\\\\Component\\\\HttpFoundation\\\\File\\\\File\\:\\:move\\(\\) expects string\\|null, list\\<string\\>\\|string given\\.$#"
             count: 1
             path: src/Command/ExportCreateCommand.php
 
@@ -327,16 +301,6 @@ parameters:
         -
             message: "#^Cannot call method find\\(\\) on Symfony\\\\Component\\\\Console\\\\Application\\|null\\.$#"
             count: 4
-            path: src/Command/InstallCommand.php
-
-        -
-            message: "#^Cannot call method get\\(\\) on Symfony\\\\Component\\\\Console\\\\Helper\\\\HelperSet\\|null\\.$#"
-            count: 1
-            path: src/Command/InstallCommand.php
-
-        -
-            message: "#^Method App\\\\Command\\\\InstallCommand\\:\\:askConfirmation\\(\\) should return bool but returns mixed\\.$#"
-            count: 1
             path: src/Command/InstallCommand.php
 
         -
@@ -460,52 +424,12 @@ parameters:
             path: src/Command/ReloadCommand.php
 
         -
-            message: "#^Cannot call method find\\(\\) on Symfony\\\\Component\\\\Console\\\\Application\\|null\\.$#"
-            count: 1
-            path: src/Command/ResetDevelopmentCommand.php
-
-        -
-            message: "#^Cannot call method find\\(\\) on Symfony\\\\Component\\\\Console\\\\Application\\|null\\.$#"
-            count: 1
-            path: src/Command/ResetTestCommand.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between '\\$2y\\$13\\$X8…' and null will always evaluate to true\\.$#"
-            count: 1
-            path: src/Command/ResetTestCommand.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between 'Administrator'\\|'CFO'\\|'Developer'\\|'Developer \\(left…'\\|'Head of Development'\\|'Quality Tester 1'\\|'Quality Tester 2'\\|'Super Administrator' and null will always evaluate to true\\.$#"
-            count: 1
-            path: src/Command/ResetTestCommand.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between 'anna_admin'\\|'chris_user'\\|'clara_customer'\\|'john_user'\\|'susan_super'\\|'test_user_1'\\|'test_user_2'\\|'tony_teamlead' and null will always evaluate to true\\.$#"
-            count: 1
-            path: src/Command/ResetTestCommand.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between 'anna_admin@example…'\\|'chris_user@example…'\\|'clara_customer…'\\|'john_user@example…'\\|'susan_super@example…'\\|'test_user_1@example…'\\|'test_user_2@example…'\\|'tony_teamlead…' and null will always evaluate to true\\.$#"
-            count: 2
-            path: src/Command/ResetTestCommand.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between 0\\|1 and null will always evaluate to true\\.$#"
-            count: 1
-            path: src/Command/ResetTestCommand.php
-
-        -
-            message: "#^Strict comparison using \\!\\=\\= between array\\{\\}\\|array\\{'ROLE_ADMIN'\\}\\|array\\{'ROLE_CUSTOMER'\\}\\|array\\{'ROLE_SUPER_ADMIN'\\}\\|array\\{'ROLE_TEAMLEAD'\\} and null will always evaluate to true\\.$#"
-            count: 1
-            path: src/Command/ResetTestCommand.php
-
-        -
             message: "#^Access to an undefined property SimpleXMLElement\\|false\\:\\:\\$file\\.$#"
             count: 1
             path: src/Command/TranslationCommand.php
 
         -
-            message: "#^Argument of an invalid type array\\<int, string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
+            message: "#^Argument of an invalid type list\\<string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
             count: 4
             path: src/Command/TranslationCommand.php
 
@@ -583,11 +507,6 @@ parameters:
             message: "#^Parameter \\#2 \\$namespace of method DOMXPath\\:\\:registerNamespace\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Command/TranslationCommand.php
-
-        -
-            message: "#^Cannot call method find\\(\\) on Symfony\\\\Component\\\\Console\\\\Application\\|null\\.$#"
-            count: 3
-            path: src/Command/UpdateCommand.php
 
         -
             message: "#^Method App\\\\Configuration\\\\LdapConfiguration\\:\\:getConnectionParameters\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -725,16 +644,6 @@ parameters:
             path: src/Configuration/SystemConfiguration.php
 
         -
-            message: "#^Method App\\\\Controller\\\\AbstractController\\:\\:getLastSearch\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Controller/AbstractController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\AbstractController\\:\\:getLastSearch\\(\\) should return array\\|null but returns mixed\\.$#"
-            count: 1
-            path: src/Controller/AbstractController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\AbstractController\\:\\:redirectToRouteAfterCreate\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Controller/AbstractController.php
@@ -753,41 +662,6 @@ parameters:
             message: "#^Parameter \\#2 \\$replace of method App\\\\Repository\\\\ActivityRepository\\:\\:deleteActivity\\(\\) expects App\\\\Entity\\\\Activity\\|null, mixed given\\.$#"
             count: 1
             path: src/Controller/ActivityController.php
-
-        -
-            message: "#^Parameter \\#1 \\$returnTo of method OneLogin\\\\Saml2\\\\Auth\\:\\:login\\(\\) expects string\\|null, mixed given\\.$#"
-            count: 1
-            path: src/Controller/Auth/SamlController.php
-
-        -
-            message: "#^Parameter \\#1 \\$dataTable of method App\\\\Utils\\\\ProfileManager\\:\\:getDatatableName\\(\\) expects string, bool\\|float\\|int\\|string given\\.$#"
-            count: 2
-            path: src/Controller/BookmarkController.php
-
-        -
-            message: "#^Parameter \\#1 \\$profile of method App\\\\Utils\\\\ProfileManager\\:\\:isValidProfile\\(\\) expects string, bool\\|float\\|int\\|string given\\.$#"
-            count: 3
-            path: src/Controller/BookmarkController.php
-
-        -
-            message: "#^Parameter \\#2 \\$profile of method App\\\\Utils\\\\ProfileManager\\:\\:getDatatableName\\(\\) expects string\\|null, bool\\|float\\|int\\|string given\\.$#"
-            count: 2
-            path: src/Controller/BookmarkController.php
-
-        -
-            message: "#^Parameter \\#2 \\$profile of method App\\\\Utils\\\\ProfileManager\\:\\:setProfile\\(\\) expects string, bool\\|float\\|int\\|string given\\.$#"
-            count: 2
-            path: src/Controller/BookmarkController.php
-
-        -
-            message: "#^Parameter \\#2 \\$value of class Symfony\\\\Component\\\\Security\\\\Csrf\\\\CsrfToken constructor expects string\\|null, bool\\|float\\|int\\|string given\\.$#"
-            count: 3
-            path: src/Controller/BookmarkController.php
-
-        -
-            message: "#^Cannot access offset 'user' on mixed\\.$#"
-            count: 1
-            path: src/Controller/CalendarController.php
 
         -
             message: "#^Parameter \\#1 \\$name of class App\\\\Entity\\\\Team constructor expects string, string\\|null given\\.$#"
@@ -1045,11 +919,6 @@ parameters:
             path: src/Controller/Security/PasswordResetController.php
 
         -
-            message: "#^Parameter \\#1 \\$token of method App\\\\User\\\\UserService\\:\\:findUserByConfirmationToken\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/Security/PasswordResetController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\Security\\\\SelfRegistrationController\\:\\:getTargetUrlFromSession\\(\\) should return string\\|null but returns mixed\\.$#"
             count: 1
             path: src/Controller/Security/SelfRegistrationController.php
@@ -1076,11 +945,6 @@ parameters:
 
         -
             message: "#^Cannot call method setEntities\\(\\) on mixed\\.$#"
-            count: 1
-            path: src/Controller/TimesheetAbstractController.php
-
-        -
-            message: "#^Parameter \\#1 \\$id of method App\\\\Export\\\\ServiceExport\\:\\:getTimesheetExporterById\\(\\) expects string, bool\\|float\\|int\\|string given\\.$#"
             count: 1
             path: src/Controller/TimesheetAbstractController.php
 
@@ -1153,16 +1017,6 @@ parameters:
             message: "#^Parameter \\#1 \\$user of method App\\\\DataFixtures\\\\TimesheetFixtures\\:\\:createTimesheetEntry\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
             count: 2
             path: src/DataFixtures/TimesheetFixtures.php
-
-        -
-            message: "#^Method App\\\\DataFixtures\\\\UserFixtures\\:\\:getUserDefinition\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/DataFixtures/UserFixtures.php
-
-        -
-            message: "#^Method App\\\\DataFixtures\\\\UserFixtures\\:\\:getUserPreferences\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/DataFixtures/UserFixtures.php
 
         -
             message: "#^Method App\\\\DependencyInjection\\\\AppExtension\\:\\:createPermissionParameter\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
@@ -1390,16 +1244,6 @@ parameters:
             path: src/Entity/Team.php
 
         -
-            message: "#^Method App\\\\Entity\\\\Team\\:\\:getTeamleads\\(\\) should return array\\<App\\\\Entity\\\\User\\> but returns array\\<int, App\\\\Entity\\\\User\\|null\\>\\.$#"
-            count: 1
-            path: src/Entity/Team.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Team\\:\\:getUsers\\(\\) should return array\\<App\\\\Entity\\\\User\\> but returns array\\<int, App\\\\Entity\\\\User\\|null\\>\\.$#"
-            count: 1
-            path: src/Entity/Team.php
-
-        -
             message: "#^Property App\\\\Entity\\\\Team\\:\\:\\$activities with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/Team.php
@@ -1560,7 +1404,7 @@ parameters:
             path: src/Entity/UserPreference.php
 
         -
-            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, string\\|null given\\.$#"
+            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, string\\|null given\\.$#"
             count: 1
             path: src/Entity/UserPreference.php
 
@@ -1571,11 +1415,6 @@ parameters:
 
         -
             message: "#^Property App\\\\Entity\\\\UserPreference\\:\\:\\$value \\(string\\|null\\) does not accept bool\\|float\\|int\\|string\\|null\\.$#"
-            count: 1
-            path: src/Entity/UserPreference.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\UserPreference\\:\\:\\$value \\(string\\|null\\) does not accept mixed\\.$#"
             count: 1
             path: src/Entity/UserPreference.php
 
@@ -1678,61 +1517,6 @@ parameters:
             message: "#^Method App\\\\Export\\\\Annotation\\\\Order\\:\\:__construct\\(\\) has parameter \\$order with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Export/Annotation/Order.php
-
-        -
-            message: "#^Cannot call method getCurrency\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 4
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Cannot call method getMetaField\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Cannot call method getName\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Cannot call method getNumber\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Cannot call method getVatId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Parameter \\#1 \\$id of method Symfony\\\\Contracts\\\\Translation\\\\TranslatorInterface\\:\\:trans\\(\\) expects string, string\\|null given\\.$#"
-            count: 5
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Activity\\:\\:getMetaField\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\ExportableItem\\:\\:getMetaField\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Project\\:\\:getMetaField\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\User\\:\\:getPreference\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
-
-        -
-            message: "#^Property App\\\\Export\\\\Base\\\\AbstractSpreadsheetRenderer\\:\\:\\$columns type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Base/AbstractSpreadsheetRenderer.php
 
         -
             message: "#^Cannot call method getBudget\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
@@ -1903,11 +1687,6 @@ parameters:
             message: "#^Method App\\\\Export\\\\Spreadsheet\\\\EntityWithMetaFieldsExporter\\:\\:export\\(\\) has parameter \\$entries with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Export/Spreadsheet/EntityWithMetaFieldsExporter.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Spreadsheet\\\\Extractor\\\\AnnotationExtractor\\:\\:extract\\(\\) should return array\\<App\\\\Export\\\\Spreadsheet\\\\ColumnDefinition\\> but returns array\\<int, App\\\\Export\\\\Spreadsheet\\\\ColumnDefinition\\|null\\>\\.$#"
-            count: 1
-            path: src/Export/Spreadsheet/Extractor/AnnotationExtractor.php
 
         -
             message: "#^Parameter \\#1 \\$objectOrClass of class ReflectionClass constructor expects class\\-string\\<T of object\\>\\|T of object, string given\\.$#"
@@ -2095,44 +1874,14 @@ parameters:
             path: src/Form/Extension/SelectWithApiDataExtension.php
 
         -
-            message: "#^Parameter \\#1 \\$haystack of function stripos expects string, bool\\|float\\|int\\|string given\\.$#"
-            count: 2
-            path: src/Form/Helper/ActivityHelper.php
-
-        -
-            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, bool\\|float\\|int\\|string given\\.$#"
-            count: 1
-            path: src/Form/Helper/ActivityHelper.php
-
-        -
             message: "#^Property App\\\\Form\\\\Helper\\\\ActivityHelper\\:\\:\\$pattern \\(string\\|null\\) does not accept bool\\|float\\|int\\|string\\|null\\.$#"
             count: 1
             path: src/Form/Helper/ActivityHelper.php
 
         -
-            message: "#^Parameter \\#1 \\$haystack of function stripos expects string, bool\\|float\\|int\\|string given\\.$#"
-            count: 2
-            path: src/Form/Helper/CustomerHelper.php
-
-        -
-            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, bool\\|float\\|int\\|string given\\.$#"
-            count: 1
-            path: src/Form/Helper/CustomerHelper.php
-
-        -
             message: "#^Property App\\\\Form\\\\Helper\\\\CustomerHelper\\:\\:\\$pattern \\(string\\|null\\) does not accept bool\\|float\\|int\\|string\\|null\\.$#"
             count: 1
             path: src/Form/Helper/CustomerHelper.php
-
-        -
-            message: "#^Parameter \\#1 \\$haystack of function stripos expects string, bool\\|float\\|int\\|string given\\.$#"
-            count: 2
-            path: src/Form/Helper/ProjectHelper.php
-
-        -
-            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, bool\\|float\\|int\\|string given\\.$#"
-            count: 1
-            path: src/Form/Helper/ProjectHelper.php
 
         -
             message: "#^Property App\\\\Form\\\\Helper\\\\ProjectHelper\\:\\:\\$pattern \\(string\\|null\\) does not accept bool\\|float\\|int\\|string\\|null\\.$#"
@@ -2256,7 +2005,7 @@ parameters:
 
         -
             message: "#^Cannot clone mixed\\.$#"
-            count: 2
+            count: 1
             path: src/Form/QuickEntryForm.php
 
         -
@@ -2285,11 +2034,6 @@ parameters:
             path: src/Form/TimesheetAdminEditForm.php
 
         -
-            message: "#^Cannot call method format\\(\\) on mixed\\.$#"
-            count: 4
-            path: src/Form/TimesheetEditForm.php
-
-        -
             message: "#^Cannot call method getEnd\\(\\) on App\\\\Entity\\\\Timesheet\\|null\\.$#"
             count: 2
             path: src/Form/TimesheetEditForm.php
@@ -2306,11 +2050,6 @@ parameters:
 
         -
             message: "#^Cannot clone DateTime\\|null\\.$#"
-            count: 1
-            path: src/Form/TimesheetEditForm.php
-
-        -
-            message: "#^Cannot clone non\\-object variable \\$end of type mixed\\.$#"
             count: 1
             path: src/Form/TimesheetEditForm.php
 
@@ -2905,61 +2644,6 @@ parameters:
             path: src/Form/Toolbar/TeamToolbarForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addProjectSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetExportToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/TimesheetExportToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Form/Toolbar/TimesheetToolbarForm.php
@@ -3135,16 +2819,6 @@ parameters:
             path: src/Form/Type/MetaFieldsCollectionType.php
 
         -
-            message: "#^Cannot call method modify\\(\\) on mixed\\.$#"
-            count: 2
-            path: src/Form/Type/MonthPickerType.php
-
-        -
-            message: "#^Cannot clone non\\-object variable \\$date of type mixed\\.$#"
-            count: 2
-            path: src/Form/Type/MonthPickerType.php
-
-        -
             message: "#^Cannot call method modify\\(\\) on DateTime\\|null\\.$#"
             count: 1
             path: src/Form/Type/QuickEntryTimesheetType.php
@@ -3158,21 +2832,6 @@ parameters:
             message: "#^Cannot clone DateTime\\|null\\.$#"
             count: 1
             path: src/Form/Type/QuickEntryTimesheetType.php
-
-        -
-            message: "#^Cannot access offset 'activity' on mixed\\.$#"
-            count: 1
-            path: src/Form/Type/QuickEntryWeekType.php
-
-        -
-            message: "#^Cannot access offset 'project' on mixed\\.$#"
-            count: 1
-            path: src/Form/Type/QuickEntryWeekType.php
-
-        -
-            message: "#^Cannot clone mixed\\.$#"
-            count: 1
-            path: src/Form/Type/QuickEntryWeekType.php
 
         -
             message: "#^Method App\\\\Form\\\\Type\\\\SearchTermType\\:\\:buildForm\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
@@ -3270,11 +2929,6 @@ parameters:
             path: src/Invoice/Hydrator/InvoiceModelActivityHydrator.php
 
         -
-            message: "#^Cannot call method getEnd\\(\\) on App\\\\Repository\\\\Query\\\\InvoiceQuery\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelCustomerHydrator.php
-
-        -
             message: "#^Method App\\\\Invoice\\\\Hydrator\\\\InvoiceModelCustomerHydrator\\:\\:getBudgetValues\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelCustomerHydrator.php
@@ -3283,46 +2937,6 @@ parameters:
             message: "#^Method App\\\\Invoice\\\\Hydrator\\\\InvoiceModelCustomerHydrator\\:\\:hydrate\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelCustomerHydrator.php
-
-        -
-            message: "#^Cannot call method getAddress\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getCompany\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getContact\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getDueDays\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getLanguage\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getName\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getPaymentDetails\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getPaymentTerms\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
 
         -
             message: "#^Cannot call method getSubtotal\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
@@ -3340,22 +2954,12 @@ parameters:
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
 
         -
-            message: "#^Cannot call method getTitle\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
             message: "#^Cannot call method getTotal\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
 
         -
             message: "#^Cannot call method getVat\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getVatId\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
 
@@ -3460,7 +3064,7 @@ parameters:
             path: src/Invoice/Renderer/AbstractSpreadsheetRenderer.php
 
         -
-            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, mixed given\\.$#"
+            message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#"
             count: 1
             path: src/Invoice/Renderer/AbstractSpreadsheetRenderer.php
 
@@ -3490,7 +3094,7 @@ parameters:
             path: src/Invoice/Renderer/DocxRenderer.php
 
         -
-            message: "#^Parameter \\#3 \\$subject of function preg_replace expects array\\|string, mixed given\\.$#"
+            message: "#^Parameter \\#3 \\$subject of function preg_replace expects array\\<float\\|int\\|string\\>\\|string, mixed given\\.$#"
             count: 2
             path: src/Invoice/Renderer/DocxRenderer.php
 
@@ -3580,11 +3184,6 @@ parameters:
             path: src/Ldap/LdapAuthenticator.php
 
         -
-            message: "#^Instanceof between Symfony\\\\Component\\\\Security\\\\Http\\\\Authenticator\\\\Passport\\\\Passport and Symfony\\\\Component\\\\Security\\\\Http\\\\Authenticator\\\\Passport\\\\Passport will always evaluate to true\\.$#"
-            count: 1
-            path: src/Ldap/LdapCredentialsSubscriber.php
-
-        -
             message: "#^Method App\\\\Ldap\\\\LdapCredentialsSubscriber\\:\\:onCheckPassport\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/Ldap/LdapCredentialsSubscriber.php
@@ -3655,11 +3254,6 @@ parameters:
             path: src/Ldap/LdapUserProvider.php
 
         -
-            message: "#^Parameter \\#1 \\.\\.\\.\\$addresses of method Symfony\\\\Component\\\\Mime\\\\Email\\:\\:from\\(\\) expects string\\|Symfony\\\\Component\\\\Mime\\\\Address, string\\|null given\\.$#"
-            count: 1
-            path: src/Mail/KimaiMailer.php
-
-        -
             message: "#^Parameter \\#1 \\.\\.\\.\\$arrays of function array_merge expects array, mixed given\\.$#"
             count: 1
             path: src/Model/ActivityStatistic.php
@@ -3671,11 +3265,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Model\\\\MonthlyStatistic\\:\\:getYear\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Model/MonthlyStatistic.php
-
-        -
-            message: "#^Method App\\\\Model\\\\MonthlyStatistic\\:\\:getYears\\(\\) should return array\\<string\\> but returns array\\<int, int\\|string\\>\\.$#"
             count: 1
             path: src/Model/MonthlyStatistic.php
 
@@ -3698,26 +3287,6 @@ parameters:
             message: "#^Parameter \\#1 \\$string of function str_pad expects string, int\\|string given\\.$#"
             count: 1
             path: src/Model/Statistic/Month.php
-
-        -
-            message: "#^Method App\\\\Pdf\\\\HtmlToPdfConverter\\:\\:convertToPdf\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Pdf/HtmlToPdfConverter.php
-
-        -
-            message: "#^Method App\\\\Pdf\\\\MPdfConverter\\:\\:convertToPdf\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Pdf/MPdfConverter.php
-
-        -
-            message: "#^Method App\\\\Pdf\\\\MPdfConverter\\:\\:sanitizeOptions\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Pdf/MPdfConverter.php
-
-        -
-            message: "#^Method App\\\\Pdf\\\\MPdfConverter\\:\\:sanitizeOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Pdf/MPdfConverter.php
 
         -
             message: "#^Method App\\\\Pdf\\\\PdfContext\\:\\:getOption\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -3746,11 +3315,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
-            count: 1
-            path: src/Plugin/PluginMetadata.php
-
-        -
-            message: "#^Parameter \\#2 \\$array of function array_key_exists expects array, mixed given\\.$#"
             count: 1
             path: src/Plugin/PluginMetadata.php
 
@@ -3852,11 +3416,6 @@ parameters:
         -
             message: "#^Parameter \\#1 \\$totalDuration of method App\\\\Model\\\\Statistic\\\\Timesheet\\:\\:setTotalDuration\\(\\) expects int, float\\|int given\\.$#"
             count: 2
-            path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Parameter \\#1 \\$year of method App\\\\Reporting\\\\ProjectDetails\\\\ProjectDetailsModel\\:\\:addYearActivity\\(\\) expects string, int\\|string given\\.$#"
-            count: 1
             path: src/Project/ProjectStatisticService.php
 
         -
@@ -4005,11 +3564,6 @@ parameters:
             path: src/Repository/TimesheetRepository.php
 
         -
-            message: "#^Method App\\\\Repository\\\\TimesheetRepository\\:\\:getRawData\\(\\) should return array but returns mixed\\.$#"
-            count: 1
-            path: src/Repository/TimesheetRepository.php
-
-        -
             message: "#^Parameter \\#1 \\$amountThisMonth of method App\\\\Model\\\\TimesheetStatistic\\:\\:setAmountThisMonth\\(\\) expects float\\|int, mixed given\\.$#"
             count: 1
             path: src/Repository/TimesheetRepository.php
@@ -4103,11 +3657,6 @@ parameters:
             message: "#^Property App\\\\Saml\\\\Security\\\\SamlAuthenticationFailureHandler\\:\\:\\$defaultOptions has no type specified\\.$#"
             count: 1
             path: src/Saml/Security/SamlAuthenticationFailureHandler.php
-
-        -
-            message: "#^Method App\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandler\\:\\:determineTargetUrl\\(\\) should return string but returns mixed\\.$#"
-            count: 1
-            path: src/Saml/Security/SamlAuthenticationSuccessHandler.php
 
         -
             message: "#^Property App\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandler\\:\\:\\$defaultOptions has no type specified\\.$#"
@@ -4278,26 +3827,6 @@ parameters:
             message: "#^Method App\\\\Timesheet\\\\TimesheetStatisticService\\:\\:getMonthlyStatisticsGrouped\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Timesheet/TimesheetStatisticService.php
-
-        -
-            message: "#^Method App\\\\Timesheet\\\\TrackingMode\\\\AbstractTrackingMode\\:\\:setBeginEndFromRequest\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Timesheet/TrackingMode/AbstractTrackingMode.php
-
-        -
-            message: "#^Method App\\\\Timesheet\\\\TrackingMode\\\\AbstractTrackingMode\\:\\:setFromToFromRequest\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Timesheet/TrackingMode/AbstractTrackingMode.php
-
-        -
-            message: "#^Parameter \\#1 \\$datetime of class DateTime constructor expects string, mixed given\\.$#"
-            count: 2
-            path: src/Timesheet/TrackingMode/AbstractTrackingMode.php
-
-        -
-            message: "#^Parameter \\#2 \\$datetime of static method DateTime\\:\\:createFromFormat\\(\\) expects string, mixed given\\.$#"
-            count: 2
-            path: src/Timesheet/TrackingMode/AbstractTrackingMode.php
 
         -
             message: "#^Method App\\\\Twig\\\\Configuration\\:\\:__call\\(\\) has no return type specified\\.$#"
@@ -4550,7 +4079,7 @@ parameters:
             path: src/Utils/LocaleFormatter.php
 
         -
-            message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:durationDecimal\\(\\) should return string but returns bool\\|string\\.$#"
+            message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:durationDecimal\\(\\) should return string but returns string\\|false\\.$#"
             count: 1
             path: src/Utils/LocaleFormatter.php
 
@@ -4560,17 +4089,17 @@ parameters:
             path: src/Utils/LocaleFormatter.php
 
         -
-            message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:money\\(\\) should return string but returns bool\\|string\\.$#"
+            message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:money\\(\\) should return string but returns string\\|false\\.$#"
+            count: 2
+            path: src/Utils/LocaleFormatter.php
+
+        -
+            message: "#^Parameter \\#1 \\$num of method NumberFormatter\\:\\:format\\(\\) expects float\\|int, float\\|int\\|string given\\.$#"
             count: 1
             path: src/Utils/LocaleFormatter.php
 
         -
-            message: "#^Parameter \\#1 \\$num of method Symfony\\\\Polyfill\\\\Intl\\\\Icu\\\\NumberFormatter\\:\\:format\\(\\) expects float\\|int, float\\|int\\|string given\\.$#"
-            count: 1
-            path: src/Utils/LocaleFormatter.php
-
-        -
-            message: "#^Parameter \\#2 \\$currency of method Symfony\\\\Polyfill\\\\Intl\\\\Icu\\\\NumberFormatter\\:\\:formatCurrency\\(\\) expects string, string\\|null given\\.$#"
+            message: "#^Parameter \\#2 \\$currency of method NumberFormatter\\:\\:formatCurrency\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Utils/LocaleFormatter.php
 
@@ -4630,29 +4159,14 @@ parameters:
             path: src/Utils/PaginationTemplate.php
 
         -
-            message: "#^Method App\\\\Utils\\\\ParsedownExtension\\:\\:blockHeader\\(\\) has no return type specified\\.$#"
+            message: "#^Method App\\\\Utils\\\\Parsedown\\:\\:blockHeader\\(\\) has no return type specified\\.$#"
             count: 1
-            path: src/Utils/ParsedownExtension.php
+            path: src/Utils/Parsedown.php
 
         -
-            message: "#^Method App\\\\Utils\\\\ParsedownExtension\\:\\:blockHeader\\(\\) has parameter \\$Line with no type specified\\.$#"
+            message: "#^Method App\\\\Utils\\\\Parsedown\\:\\:blockHeader\\(\\) has parameter \\$Line with no type specified\\.$#"
             count: 1
-            path: src/Utils/ParsedownExtension.php
-
-        -
-            message: "#^Method App\\\\Utils\\\\ParsedownExtension\\:\\:blockTable\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Utils/ParsedownExtension.php
-
-        -
-            message: "#^Method App\\\\Utils\\\\ParsedownExtension\\:\\:blockTable\\(\\) has parameter \\$Block with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Utils/ParsedownExtension.php
-
-        -
-            message: "#^Method App\\\\Utils\\\\ParsedownExtension\\:\\:blockTable\\(\\) has parameter \\$Line with no type specified\\.$#"
-            count: 1
-            path: src/Utils/ParsedownExtension.php
+            path: src/Utils/Parsedown.php
 
         -
             message: "#^Method App\\\\Utils\\\\ParsedownExtension\\:\\:inlineUrl\\(\\) has parameter \\$Excerpt with no type specified\\.$#"
@@ -4667,7 +4181,7 @@ parameters:
         -
             message: "#^Parameter \\#1 \\$str of function strtr expects string, string\\|null given\\.$#"
             count: 1
-            path: src/Utils/ParsedownExtension.php
+            path: src/Utils/Parsedown.php
 
         -
             message: "#^Property App\\\\Utils\\\\ParsedownExtension\\:\\:\\$BlockTypes has no type specified\\.$#"
@@ -4738,11 +4252,6 @@ parameters:
             message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
             count: 1
             path: src/Utils/ReleaseVersion.php
-
-        -
-            message: "#^Method App\\\\Utils\\\\SearchTerm\\:\\:getSearchFields\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Utils/SearchTerm.php
 
         -
             message: "#^Cannot access offset 'pattern' on mixed\\.$#"

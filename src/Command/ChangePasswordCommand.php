@@ -18,7 +18,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'kimai:user:password')]
+#[AsCommand(name: 'kimai:user:password', description: 'Change the password of a user')]
 final class ChangePasswordCommand extends AbstractUserCommand
 {
     public function __construct(private UserService $userService)
@@ -29,11 +29,8 @@ final class ChangePasswordCommand extends AbstractUserCommand
     protected function configure(): void
     {
         $this
-            ->setDescription('Change the password of a user.')
-            ->setDefinition([
-                new InputArgument('username', InputArgument::REQUIRED, 'The username'),
-                new InputArgument('password', InputArgument::OPTIONAL, 'The password'),
-            ])
+            ->addArgument('username', InputArgument::REQUIRED, 'The username')
+            ->addArgument('password', InputArgument::OPTIONAL, 'The password')
             ->setHelp(
                 <<<'EOT'
                     The <info>kimai:user:password</info> command changes the password of a user:

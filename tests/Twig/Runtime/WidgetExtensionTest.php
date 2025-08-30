@@ -13,6 +13,7 @@ use App\Entity\User;
 use App\Tests\Widget\Type\More;
 use App\Twig\Runtime\WidgetExtension;
 use App\Widget\WidgetService;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -20,9 +21,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Twig\Environment;
 
-/**
- * @covers \App\Twig\Runtime\WidgetExtension
- */
+#[CoversClass(WidgetExtension::class)]
 class WidgetExtensionTest extends TestCase
 {
     protected function getSut($hasWidget = null, $getWidget = null): WidgetExtension
@@ -68,7 +67,7 @@ class WidgetExtensionTest extends TestCase
         $this->expectExceptionMessage('Widget must be either a WidgetInterface or a string');
 
         $sut = $this->getSut();
-        /* @phpstan-ignore-next-line */
+        /* @phpstan-ignore argument.type */
         $sut->renderWidget($this->getEnvironment(), true);
     }
 
@@ -89,7 +88,7 @@ class WidgetExtensionTest extends TestCase
         $options = ['foo' => 'bar', 'dataType' => 'blub'];
         $result = $sut->renderWidget($this->getEnvironment(), 'test', $options);
         $data = json_decode($result, true);
-        $this->assertEquals($options, $data);
+        self::assertEquals($options, $data);
     }
 
     public function testRenderWidgetObject(): void
@@ -99,6 +98,6 @@ class WidgetExtensionTest extends TestCase
         $options = ['foo' => 'bar', 'dataType' => 'blub'];
         $result = $sut->renderWidget($this->getEnvironment(), $widget, $options);
         $data = json_decode($result, true);
-        $this->assertEquals($options, $data);
+        self::assertEquals($options, $data);
     }
 }

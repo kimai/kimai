@@ -16,7 +16,7 @@
             {% if stats is empty %}
                 {{ nothing_found() }}
             {% else %}
-                {% embed 'reporting/customer/monthly_projects_data.html.twig' with {'dataTypeFormat': null, 'stats': stats, 'dataType': dataType, 'decimal': decimal} only %}
+                {% embed 'reporting/customer/monthly_projects_data.html.twig' with {'stats': stats, 'dataType': dataType, 'decimal': decimal} only %}
                     {% set rowspanStyle = 'vertical-align: middle' %}
                 {% endembed %}
             {% endif %}

@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ro" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>Time tracking</source>
-        <target state="translated">Timpul de urmărire</target>
-      </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
         <target>Tema</target>
@@ -64,7 +60,7 @@
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
         <source>calendar.slot_duration</source>
-        <target>Durata slotului pentru vizualizarea săptămânii și a zilei (format: hh:mm:ss)</target>
+        <target>Durata slotului pentru vizualizarea săptămânii și a zilei</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>
@@ -130,21 +126,21 @@
         <source>Sunday</source>
         <target>Duminică</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target>Plafon: începutul, sfârșitul și durata vor fi rotunjite în sus</target>
+        <target state="needs-translation">Plafon: începutul, sfârșitul și durata vor fi rotunjite în sus</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target>Cel mai apropiat: rotunjirea matematică la cea mai apropiată valoare</target>
+        <target state="needs-translation">Cel mai apropiat: rotunjirea matematică la cea mai apropiată valoare</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target>Standard: începutul va fi rotunjit în jos, sfârșitul și durata vor fi rotunjite în sus</target>
+        <target state="needs-translation">Standard: începutul va fi rotunjit în jos, sfârșitul și durata vor fi rotunjite în sus</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target>Nivel: începutul, sfârșitul și durata vor fi rotunjite în jos</target>
+        <target state="needs-translation">Nivel: începutul, sfârșitul și durata vor fi rotunjite în jos</target>
       </trans-unit>
       <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
         <source>timesheet.default_begin</source>
@@ -158,17 +154,17 @@
         <source>invoice.number_format</source>
         <target>Formatul numărului facturii</target>
       </trans-unit>
-      <trans-unit id="RLgv62J" resname="timesheet.rules.lockdown_grace_period">
+      <trans-unit id="RLgv62J" resname="timesheet.rules.lockdown_grace_period" xml:space="preserve">
         <source>timesheet.rules.lockdown_grace_period</source>
-        <target>Perioadă de blocare (Perioadă PHP relativă)</target>
+        <target state="needs-translation">Perioadă de blocare (Perioadă PHP relativă)</target>
       </trans-unit>
-      <trans-unit id="M1iVHeQ" resname="timesheet.rules.lockdown_period_end">
+      <trans-unit id="M1iVHeQ" resname="timesheet.rules.lockdown_period_end" xml:space="preserve">
         <source>timesheet.rules.lockdown_period_end</source>
-        <target>Perioadă de blocare (Perioadă PHP relativă)</target>
+        <target state="needs-translation">Perioadă de blocare (Perioadă PHP relativă)</target>
       </trans-unit>
-      <trans-unit id="_PvFlQ9" resname="timesheet.rules.lockdown_period_start">
+      <trans-unit id="_PvFlQ9" resname="timesheet.rules.lockdown_period_start" xml:space="preserve">
         <source>timesheet.rules.lockdown_period_start</source>
-        <target>Perioadă de blocare (Perioadă PHP relativă)</target>
+        <target state="needs-translation">Perioadă de blocare (Perioadă PHP relativă)</target>
       </trans-unit>
       <trans-unit id="ZCg9UVM" resname="timesheet.rules.allow_overlapping_records">
         <source>timesheet.rules.allow_overlapping_records</source>

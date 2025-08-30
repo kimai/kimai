@@ -13,12 +13,11 @@ use App\API\Authentication\AccessTokenHandler;
 use App\Entity\AccessToken;
 use App\Entity\User;
 use App\Repository\AccessTokenRepository;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
-/**
- * @covers \App\API\Authentication\AccessTokenHandler
- */
+#[CoversClass(AccessTokenHandler::class)]
 class AccessTokenHandlerTest extends TestCase
 {
     private function getSut(?AccessToken $accessToken = null): AccessTokenHandler
@@ -55,11 +54,11 @@ class AccessTokenHandlerTest extends TestCase
         $user = new User();
         $user->setUserIdentifier('foo-bar');
         $accessToken = new AccessToken($user, 'Test');
-        $this->assertNull($accessToken->getLastUsage());
+        self::assertNull($accessToken->getLastUsage());
         $sut = $this->getSut($accessToken);
 
         $badge = $sut->getUserBadgeFrom('foo');
-        $this->assertNotNull($accessToken->getLastUsage());
-        $this->assertSame('foo-bar', $badge->getUserIdentifier());
+        self::assertNotNull($accessToken->getLastUsage());
+        self::assertSame('foo-bar', $badge->getUserIdentifier());
     }
 }

@@ -23,14 +23,14 @@ use App\Tests\DataFixtures\InvoiceTemplateFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\KernelTestTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
-/**
- * @covers \App\Command\InvoiceCreateCommand
- * @group integration
- */
+#[CoversClass(InvoiceCreateCommand::class)]
+#[Group('integration')]
 class InvoiceCreateCommandTest extends KernelTestCase
 {
     use KernelTestTrait;
@@ -43,6 +43,9 @@ class InvoiceCreateCommandTest extends KernelTestCase
 
         if (is_dir($path)) {
             $files = glob($path . '*');
+            if ($files === false) {
+                return;
+            }
             foreach ($files as $file) {
                 unlink($file);
             }
@@ -64,12 +67,12 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $container = self::getContainer();
 
         $this->application->add(new InvoiceCreateCommand(
-            $container->get(ServiceInvoice::class),
-            $container->get(CustomerRepository::class),
-            $container->get(ProjectRepository::class),
-            $container->get(InvoiceTemplateRepository::class),
-            $container->get(UserRepository::class),
-            $container->get('event_dispatcher')
+            $container->get(ServiceInvoice::class), // @phpstan-ignore argument.type
+            $container->get(CustomerRepository::class), // @phpstan-ignore argument.type
+            $container->get(ProjectRepository::class), // @phpstan-ignore argument.type
+            $container->get(InvoiceTemplateRepository::class), // @phpstan-ignore argument.type
+            $container->get(UserRepository::class), // @phpstan-ignore argument.type
+            $container->get('event_dispatcher') // @phpstan-ignore argument.type
         ));
     }
 
@@ -105,7 +108,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $commandTester = $this->createInvoice($options);
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[ERROR] ' . $errorMessage, $output);
+        self::assertStringContainsString('[ERROR] ' . $errorMessage, $output);
     }
 
     public function testCreateWithUnknownExportFilter(): void
@@ -155,43 +158,42 @@ class InvoiceCreateCommandTest extends KernelTestCase
 
     public function testCreateWithInvalidCustomer(): void
     {
-        $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 3, '--template' => 'x'], 'Unknown customer ID: 3');
+        $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => PHP_INT_MAX, '--template' => 'x'], 'Unknown customer ID: ' . PHP_INT_MAX);
     }
 
     public function testCreateWithInvalidProject(): void
     {
-        $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--project' => 3, '--template' => 'x'], 'Unknown project ID: 3');
+        $this->assertCommandErrors(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--project' => PHP_INT_MAX, '--template' => 'x'], 'Unknown project ID: ' . PHP_INT_MAX);
     }
 
     public function testCreateInvoice(): void
     {
-        $fixture = new InvoiceTemplateFixtures();
-        $this->importFixture($fixture);
+        $start = new \DateTime('2020-01-01');
 
-        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => 1, '--template' => 'Invoice', '--start' => '2020-01-01', '--end' => '2020-03-01']);
+        $customer = $this->prepareFixtures($start)[0];
+
+        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => $customer->getId(), '--template' => 'Invoice', '--start' => '2020-01-01', '--end' => '2020-03-01']);
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('Created 1 invoice(s)', $output);
-        $this->assertStringContainsString('| ID', $output);
-        $this->assertStringContainsString('| Customer', $output);
-        $this->assertStringContainsString('| Total', $output);
-        $this->assertStringContainsString('| Filename', $output);
-        $this->assertStringContainsString('0 EUR', $output);
-        $this->assertStringContainsString('/tests/_data/invoices/' . ((new \DateTime())->format('Y')) . '-001-Test.html |', $output);
+        self::assertStringContainsString('Created 1 invoice(s)', $output);
+        self::assertStringContainsString('| ID', $output);
+        self::assertStringContainsString('| Customer', $output);
+        self::assertStringContainsString('| Total', $output);
+        self::assertStringContainsString('| Filename', $output);
+        self::assertStringContainsString('/tests/_data/invoices/' . ((new \DateTime())->format('Y')) . '-001', $output);
     }
 
     /**
-     * @param \DateTime $start
-     * @return array<Customer>
+     * @return array{0: Customer, 1: Project}
      */
-    protected function prepareFixtures(\DateTime $start): array
+    protected function prepareFixtures(\DateTime $start, bool $withTimesheets = true): array
     {
         $fixture = new InvoiceTemplateFixtures();
         $invoiceTemplate = $this->importFixture($fixture);
 
         $fixture = new CustomerFixtures();
         $fixture->setAmount(1);
-        $fixture->setCallback(function (Customer $customer) use ($invoiceTemplate) {
+        $fixture->setCallback(function (Customer $customer) use ($invoiceTemplate): void {
             $customer->setInvoiceTemplate($invoiceTemplate[0]);
         });
         $customer = $this->importFixture($fixture)[0];
@@ -201,14 +203,16 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $fixture->setAmount(1);
         $projects = $this->importFixture($fixture);
 
-        $fixture = new TimesheetFixtures();
-        $fixture->setUser($this->getUserByName(UserFixtures::USERNAME_SUPER_ADMIN));
-        $fixture->setAmount(20);
-        $fixture->setStartDate($start);
-        $fixture->setProjects($projects);
-        $this->importFixture($fixture);
+        if ($withTimesheets) {
+            $fixture = new TimesheetFixtures();
+            $fixture->setUser($this->getUserByName(UserFixtures::USERNAME_SUPER_ADMIN));
+            $fixture->setAmount(20);
+            $fixture->setStartDate($start);
+            $fixture->setProjects($projects);
+            $this->importFixture($fixture);
+        }
 
-        return [$customer];
+        return [$customer, $projects[0]];
     }
 
     public function testCreateInvoiceByCustomer(): void
@@ -221,7 +225,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--by-customer' => null, '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('Created 1 invoice(s) ', $output);
+        self::assertStringContainsString('Created 1 invoice(s) ', $output);
     }
 
     public function testCreateInvoiceByCustomerId(): void
@@ -229,13 +233,25 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $start = new \DateTime('-2 months');
         $end = new \DateTime();
 
-        $imports = $this->prepareFixtures($start);
-        $customer = $imports[0]->getId();
+        $customer = $this->prepareFixtures($start)[0];
 
-        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => $customer . ',1', '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
+        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => $customer->getId(), '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('Created 1 invoice(s) ', $output);
+        self::assertStringContainsString('Created 1 invoice(s) ', $output);
+    }
+
+    public function testCreateInvoiceByCustomerIdWithoutTimesheets(): void
+    {
+        $start = new \DateTime('-2 months');
+        $end = new \DateTime();
+
+        $customer = $this->prepareFixtures($start, false)[0];
+
+        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--customer' => $customer->getId(), '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
+
+        $output = $commandTester->getDisplay();
+        self::assertStringContainsString('No invoice was generated', $output);
     }
 
     public function testCreateInvoiceByProject(): void
@@ -248,7 +264,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--exported' => 'all', '--by-project' => null, '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('Created 1 invoice(s) ', $output);
+        self::assertStringContainsString('Created 1 invoice(s) ', $output);
     }
 
     public function testCreateInvoiceByProjectId(): void
@@ -256,12 +272,25 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $start = new \DateTime('-2 months');
         $end = new \DateTime();
 
-        $this->prepareFixtures($start);
+        $project = $this->prepareFixtures($start)[1];
 
-        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--exported' => 'all', '--project' => '1', '--template' => 'Invoice', '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
+        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--exported' => 'all', '--project' => $project->getId(), '--template' => 'Invoice', '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('Created 1 invoice(s) ', $output);
+        self::assertStringContainsString('Created 1 invoice(s) ', $output);
+    }
+
+    public function testCreateInvoiceByProjectIdWithoutTimesheets(): void
+    {
+        $start = new \DateTime('-2 months');
+        $end = new \DateTime();
+
+        $project = $this->prepareFixtures($start, false)[1];
+
+        $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--exported' => 'all', '--project' => $project->getId(), '--template' => 'Invoice', '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
+
+        $output = $commandTester->getDisplay();
+        self::assertStringContainsString('No invoice was generated', $output);
     }
 
     public function testCreateInvoiceByProjectWithPreview(): void
@@ -274,6 +303,6 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $commandTester = $this->createInvoice(['--user' => UserFixtures::USERNAME_SUPER_ADMIN, '--exported' => 'all', '--preview' => sys_get_temp_dir(), '--by-project' => null, '--start' => $start->format('Y-m-d'), '--end' => $end->format('Y-m-d')]);
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('Created 1 invoice(s) ', $output);
+        self::assertStringContainsString('Created 1 invoice(s) ', $output);
     }
 }

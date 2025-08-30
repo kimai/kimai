@@ -12,6 +12,7 @@ namespace App\Tests\EventSubscriber;
 use App\EventSubscriber\PagerfantaExceptionSubscriber;
 use Pagerfanta\Exception\NotValidMaxPerPageException;
 use Pagerfanta\Exception\OutOfRangeCurrentPageException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
@@ -19,17 +20,16 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-/**
- * @covers \App\EventSubscriber\PagerfantaExceptionSubscriber
- */
+#[CoversClass(PagerfantaExceptionSubscriber::class)]
 class PagerfantaExceptionSubscriberTest extends TestCase
 {
     public function testGetSubscribedEvents(): void
     {
         $events = PagerfantaExceptionSubscriber::getSubscribedEvents();
-        $this->assertArrayHasKey(KernelEvents::EXCEPTION, $events);
+        self::assertArrayHasKey(KernelEvents::EXCEPTION, $events);
         $methodName = $events[KernelEvents::EXCEPTION][0];
-        $this->assertTrue(method_exists(PagerfantaExceptionSubscriber::class, $methodName));
+        self::assertIsString($methodName);
+        self::assertTrue(method_exists(PagerfantaExceptionSubscriber::class, $methodName));
     }
 
     public function testWithExceptions(): void

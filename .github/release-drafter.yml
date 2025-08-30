@@ -7,6 +7,7 @@ exclude-labels:
     - 'release'
 exclude-contributors:
     - 'dependabot'
+    - 'weblate'
 change-template: '- $TITLE (#$NUMBER)'
 change-title-escapes: '\<*_&`#@'
 version-resolver:
@@ -21,8 +22,8 @@ version-resolver:
             - 'translation'
     default: patch
 template: |
-    **Compatible with PHP 8.1 to 8.3**
+    **Compatible with PHP 8.1 to 8.4**
     
     $CHANGES
     
-    Involved in this release: $CONTRIBUTORS - thank you!
+    Involved in this release: $CONTRIBUTORS

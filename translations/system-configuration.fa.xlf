@@ -2,10 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="fa" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
-        <source>Time tracking</source>
-        <target state="translated">پیگیری زمان</target>
-      </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
         <target state="translated">تم</target>
@@ -100,7 +96,7 @@
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
         <source>calendar.slot_duration</source>
-        <target state="translated">مدت زمان اسلات برای نمای هفته و روز (قالب: hh:mm:ss)</target>
+        <target state="translated">مدت زمان اسلات برای نمای هفته و روز</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>
@@ -170,21 +166,21 @@
         <source>Sunday</source>
         <target state="translated">یکشنبه</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target state="translated">سقف: شروع، پایان و مدت زمان گرد می شود</target>
+        <target state="needs-translation">سقف: شروع، پایان و مدت زمان گرد می شود</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target state="translated">نزدیکترین: گرد کردن اعداد به نزدیکترین مقدار</target>
+        <target state="needs-translation">نزدیکترین: گرد کردن اعداد به نزدیکترین مقدار</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target state="translated">استاندارد: شروع به پایین، پایان و مدت به بالا گرد می شود</target>
+        <target state="needs-translation">استاندارد: شروع به پایین، پایان و مدت به بالا گرد می شود</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target state="translated">کف: شروع، پایان و مدت زمان به پایین گرد می شود</target>
+        <target state="needs-translation">کف: شروع، پایان و مدت زمان به پایین گرد می شود</target>
       </trans-unit>
       <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
         <source>timesheet.default_begin</source>

@@ -15,9 +15,15 @@
         </h3>
     </div>
     <div class="card-body">
-        {{ form_errors(form) }}
-        {% block form_body %}
-            {{ form_rest(form) }}
+        {% block form_body_outer %}
+            {% block form_body_pre %}
+                {{ form_errors(form) }}
+            {% endblock %}
+            {% block form_body %}
+                {{ form_rest(form) }}
+            {% endblock %}
+            {% block form_body_post %}
+            {% endblock %}
         {% endblock %}
     </div>
     <div class="card-footer">
@@ -25,7 +31,7 @@
             <input type="submit" data-loading-text="{{ (submit_button|default('action.save'))|trans }}…" value="{{ (submit_button|default('action.save'))|trans }}" class="btn btn-primary" />
         {% endblock %}
         {% if _back is not same as (false) %}
-            <a href="{{ _back }}" class="btn btn-link">{{ 'back'|trans({}, 'actions') }}</a>
+            <a href="{{ _back }}" class="btn btn-link">{{ 'back'|trans }}</a>
         {% endif %}
         {% if _reset is not same as (false) %}
             <input type="reset" value="{{ 'action.reset'|trans }}" class="btn btn-link pull-right" />

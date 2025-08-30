@@ -28,12 +28,12 @@ export default class KimaiFormTomselectPlugin extends KimaiFormPlugin {
                     return null;
                 }
                 const tpl = this.translate('select.search.create');
-                const tplReplaced = tpl.replace('%input%', '<strong>' + name + '</strong>')
+                const tplReplaced = tpl.replace('%input%', '<strong>' + name + '</strong>');
                 return '<div class="create">' + tplReplaced + '</div>';
             },
             no_results: (data, escape) => {
                 const tpl = this.translate('select.search.notfound');
-                const tplReplaced = tpl.replace('%input%', '<strong>' + escape(data.input) + '</strong>')
+                const tplReplaced = tpl.replace('%input%', '<strong>' + escape(data.input) + '</strong>');
                 return '<div class="no-results">' + tplReplaced + '</div>';
             },
         };
@@ -44,7 +44,7 @@ export default class KimaiFormTomselectPlugin extends KimaiFormPlugin {
                     let item = '<div class="list-group-item border-0 p-1 ps-2 text-nowrap">';
                     // if no color is set, do NOT add an empty placeholder
                     if (data.color !== undefined) {
-                        item += '<span style="background-color:' + data.color + '" class="color-choice-item">&nbsp;</span>';
+                        item += '<span style="background-color:' + data.color + '" class="color-choice-item me-2">&nbsp;</span>';
                     }
                     item += escape(data.text) + '</div>';
                     return item;
@@ -53,7 +53,7 @@ export default class KimaiFormTomselectPlugin extends KimaiFormPlugin {
                     let item = '<div class="text-nowrap">';
                     // if no color is set, do NOT add an empty placeholder
                     if (data.color !== undefined) {
-                        item += '<span style="background-color:' + data.color + '" class="color-choice-item">&nbsp;</span>';
+                        item += '<span style="background-color:' + data.color + '" class="color-choice-item me-2">&nbsp;</span>';
                     }
                     item += escape(data.text) + '</div>';
                     return item;

@@ -9,7 +9,9 @@
 
 namespace App\Entity;
 
+use App\Repository\TagRepository;
 use App\Utils\Color;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -17,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'kimai2_tags')]
 #[ORM\UniqueConstraint(columns: ['name'])]
-#[ORM\Entity(repositoryClass: 'App\Repository\TagRepository')]
+#[ORM\Entity(repositoryClass: TagRepository::class)]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[UniqueEntity('name')]
 #[Serializer\ExclusionPolicy('all')]
@@ -27,7 +29,7 @@ class Tag
     /**
      * Internal Tag ID
      */
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[Serializer\Expose]
@@ -36,14 +38,14 @@ class Tag
     /**
      * The tag name
      */
-    #[ORM\Column(name: 'name', type: 'string', length: 100, nullable: false)]
+    #[ORM\Column(name: 'name', type: Types::STRING, length: 100, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 100, normalizer: 'trim')]
     #[Assert\Regex(pattern: '/,/', message: 'Tag name cannot contain comma', match: false)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?string $name = null;
-    #[ORM\Column(name: 'visible', type: 'boolean', nullable: false, options: ['default' => true])]
+    #[ORM\Column(name: 'visible', type: Types::BOOLEAN, nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]

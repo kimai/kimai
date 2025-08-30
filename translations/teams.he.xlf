@@ -2,37 +2,37 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="he" datatype="plaintext" original="teams.en.xlf">
     <body>
-      <trans-unit id="A_4Fc7c" resname="teams.project_access">
+      <trans-unit id="A_4Fc7c" resname="teams.project_access" xml:space="preserve" approved="yes">
         <source>teams.project_access</source>
-        <target>הענק גישה לפרויקטים</target>
+        <target state="final">הענקת גישה למיזמים</target>
       </trans-unit>
-      <trans-unit id="QchGnbx" resname="teams.customer_access">
+      <trans-unit id="QchGnbx" resname="teams.customer_access" xml:space="preserve" approved="yes">
         <source>teams.customer_access</source>
-        <target>הענק גישה ללקוחות</target>
+        <target state="final">הענקת גישה ללקוחות</target>
       </trans-unit>
-      <trans-unit id=".yIcFDx" resname="team.visibility_global">
+      <trans-unit id=".yIcFDx" resname="team.visibility_global" xml:space="preserve" approved="yes">
         <source>team.visibility_global</source>
-        <target>ניתן לצפיה עבור כולם מכיוון שאף צוות לא הוקצה עדין.</target>
+        <target state="final">זמין לצפייה לכולם מכיוון שאף צוות לא הוקצה עדין.</target>
       </trans-unit>
-      <trans-unit id="hlIIRjb" resname="team.visibility_restricted">
+      <trans-unit id="hlIIRjb" resname="team.visibility_restricted" xml:space="preserve" approved="yes">
         <source>team.visibility_restricted</source>
-        <target>ניתן לצפיה עבור הצוותים הבאים ומנהלי מערכת.</target>
+        <target state="final">זמין לצפיית הצוותים הבאים ומנהלי מערכת.</target>
       </trans-unit>
-      <trans-unit id="sx7AVYH" resname="team.project_visibility_inherited">
+      <trans-unit id="sx7AVYH" resname="team.project_visibility_inherited" xml:space="preserve" approved="yes">
         <source>team.project_visibility_inherited</source>
-        <target>לפרויקט יש גישה מוגבלת מכיוון שמוגדרות הרשאות צוות עבור הלקוח.</target>
+        <target state="final">למיזם יש גישה מוגבלת מכיוון שמוגדרות הרשאות צוות עבור הלקוח.</target>
       </trans-unit>
-      <trans-unit id="cZEIdcu" resname="team.create_default">
+      <trans-unit id="cZEIdcu" resname="team.create_default" xml:space="preserve" approved="yes">
         <source>team.create_default</source>
-        <target>צור צוות חדש להגבלת הגישה</target>
+        <target state="final">יצירת צוות חדש להגבלת הגישה</target>
       </trans-unit>
-      <trans-unit id="FC4DW27" resname="team.activity_visibility_inherited">
+      <trans-unit id="FC4DW27" resname="team.activity_visibility_inherited" xml:space="preserve" approved="yes">
         <source>team.activity_visibility_inherited</source>
-        <target>לפעילות יש גישה מוגבלת, כיוון שמוגדרות הרשאות קבוצתיות למיזם ו/או ללקוח.</target>
+        <target state="final">לפעילות יש גישה מוגבלת, כיוון שמוגדרות הרשאות קבוצתיות למיזם ו/או ללקוח.</target>
       </trans-unit>
-      <trans-unit id="6g81kYY" approved="no" resname="team.member">
+      <trans-unit id="6g81kYY" approved="yes" resname="team.member" xml:space="preserve">
         <source>team.member</source>
-        <target state="translated">חבר</target>
+        <target state="final">חבר</target>
       </trans-unit>
     </body>
   </file>

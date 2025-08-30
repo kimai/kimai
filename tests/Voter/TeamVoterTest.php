@@ -12,32 +12,30 @@ namespace App\Tests\Voter;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Voter\TeamVoter;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
-/**
- * @covers \App\Voter\TeamVoter
- */
-class TeamVoterTest extends AbstractVoterTest
+#[CoversClass(TeamVoter::class)]
+class TeamVoterTest extends AbstractVoterTestCase
 {
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testVote(User $user, $subject, $attribute, $result): void
     {
         $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(TeamVoter::class);
 
-        $this->assertEquals($result, $sut->vote($token, $subject, [$attribute]));
+        self::assertEquals($result, $sut->vote($token, $subject, [$attribute]));
     }
 
-    public function getTestData()
+    public static function getTestData()
     {
-        $user0 = $this->getUser(0, null);
-        $user1 = $this->getUser(1, User::ROLE_USER);
-        $user2 = $this->getUser(2, User::ROLE_TEAMLEAD);
-        $user3 = $this->getUser(3, User::ROLE_ADMIN);
-        $user4 = $this->getUser(4, User::ROLE_SUPER_ADMIN);
+        $user0 = self::getUser(0, null);
+        $user1 = self::getUser(1, User::ROLE_USER);
+        $user2 = self::getUser(2, User::ROLE_TEAMLEAD);
+        $user3 = self::getUser(3, User::ROLE_ADMIN);
+        $user4 = self::getUser(4, User::ROLE_SUPER_ADMIN);
 
         $team = new Team('foo');
 

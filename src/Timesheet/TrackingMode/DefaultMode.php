@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 final class DefaultMode extends AbstractTrackingMode
 {
-    public function __construct(private RoundingService $rounding)
+    public function __construct(private readonly RoundingService $rounding)
     {
     }
 

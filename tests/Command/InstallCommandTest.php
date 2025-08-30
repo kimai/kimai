@@ -10,13 +10,14 @@
 namespace App\Tests\Command;
 
 use App\Command\InstallCommand;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-/**
- * @covers \App\Command\InstallCommand
- * @group integration
- */
+#[CoversClass(InstallCommand::class)]
+#[Group('integration')]
 class InstallCommandTest extends KernelTestCase
 {
     private Application $application;
@@ -27,10 +28,11 @@ class InstallCommandTest extends KernelTestCase
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
         $container = self::$kernel->getContainer();
+        /** @var Registry $doctrine */
+        $doctrine = $container->get('doctrine');
 
         $this->application->add(new InstallCommand(
-            $container->get('doctrine')->getConnection(),
-            $this->application->getKernel()->getEnvironment()
+            $doctrine->getConnection() // @phpstan-ignore argument.type
         ));
     }
 

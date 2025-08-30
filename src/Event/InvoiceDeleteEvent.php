@@ -9,17 +9,9 @@
 
 namespace App\Event;
 
-use App\Entity\Invoice;
-use Symfony\Contracts\EventDispatcher\Event;
+use App\Webhook\Attribute\AsWebhook;
 
-final class InvoiceDeleteEvent extends Event
+#[AsWebhook(name: 'invoice.deleted', description: 'Triggered after an invoice was deleted', payload: 'object.getInvoice()')]
+final class InvoiceDeleteEvent extends AbstractInvoiceEvent
 {
-    public function __construct(private Invoice $invoice)
-    {
-    }
-
-    public function getInvoice(): Invoice
-    {
-        return $this->invoice;
-    }
 }

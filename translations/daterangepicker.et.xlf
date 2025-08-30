@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="et" datatype="plaintext" original="daterangepicker.en.xlf">
+    <body>
+      <trans-unit id="s9Hdo7E" resname="daterangepicker.today" xml:space="preserve">
+        <source>daterangepicker.today</source>
+        <target state="translated">Täna</target>
+      </trans-unit>
+      <trans-unit id="gkQA1YG" resname="daterangepicker.yesterday" xml:space="preserve">
+        <source>daterangepicker.yesterday</source>
+        <target state="translated">Eile</target>
+      </trans-unit>
+      <trans-unit id="CAvVEbc" resname="daterangepicker.lastWeek" xml:space="preserve">
+        <source>daterangepicker.lastWeek</source>
+        <target state="translated">Eelmine nädal</target>
+      </trans-unit>
+      <trans-unit id="HfcD1_y" resname="daterangepicker.thisWeek" xml:space="preserve">
+        <source>daterangepicker.thisWeek</source>
+        <target state="translated">See nädal</target>
+      </trans-unit>
+      <trans-unit id="_9rEFED" resname="daterangepicker.lastYear" xml:space="preserve">
+        <source>daterangepicker.lastYear</source>
+        <target state="translated">Eelmine aasta</target>
+      </trans-unit>
+      <trans-unit id="XgIrZS3" resname="daterangepicker.thisYear" xml:space="preserve">
+        <source>daterangepicker.thisYear</source>
+        <target state="translated">Käesolev aasta</target>
+      </trans-unit>
+      <trans-unit id="AY_E9UR" resname="daterangepicker.thisYearUntilNow" xml:space="preserve">
+        <source>This year — until today</source>
+        <target state="translated">Käesolev aasta - kuni tänaseni</target>
+      </trans-unit>
+      <trans-unit id="m0lJOke" resname="daterangepicker.allTime" xml:space="preserve">
+        <source>daterangepicker.allTime</source>
+        <target state="translated">Kogu periood</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

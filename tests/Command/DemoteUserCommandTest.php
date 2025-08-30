@@ -9,20 +9,22 @@
 
 namespace App\Tests\Command;
 
+use App\Command\AbstractRoleCommand;
 use App\Command\DemoteUserCommand;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\User\UserService;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Tester\CommandTester;
 
-/**
- * @covers \App\Command\AbstractRoleCommand
- * @covers \App\Command\DemoteUserCommand
- * @group integration
- */
+#[CoversClass(AbstractRoleCommand::class)]
+#[CoversClass(DemoteUserCommand::class)]
+#[Group('integration')]
 class DemoteUserCommandTest extends KernelTestCase
 {
     private Application $application;
@@ -34,6 +36,7 @@ class DemoteUserCommandTest extends KernelTestCase
         $this->application = new Application($kernel);
         $container = self::$kernel->getContainer();
 
+        /** @var UserService $userService */
         $userService = $container->get(UserService::class);
 
         $this->application->add(new DemoteUserCommand($userService));
@@ -77,11 +80,13 @@ class DemoteUserCommandTest extends KernelTestCase
         $commandTester = $this->callCommand('tony_teamlead', 'ROLE_TEAMLEAD');
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[OK] Role "ROLE_TEAMLEAD" has been removed from user "tony_teamlead".', $output);
+        self::assertStringContainsString('[OK] Role "ROLE_TEAMLEAD" has been removed from user "tony_teamlead".', $output);
 
         $container = self::$kernel->getContainer();
+        /** @var Registry $doctrine */
+        $doctrine = $container->get('doctrine');
         /** @var UserRepository $userRepository */
-        $userRepository = $container->get('doctrine')->getRepository(User::class);
+        $userRepository = $doctrine->getRepository(User::class);
         $user = $userRepository->loadUserByIdentifier('tony_teamlead');
         self::assertInstanceOf(User::class, $user);
         self::assertFalse($user->hasTeamleadRole());
@@ -92,11 +97,13 @@ class DemoteUserCommandTest extends KernelTestCase
         $commandTester = $this->callCommand('susan_super', null, true);
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[OK] Super administrator role has been removed from the user "susan_super".', $output);
+        self::assertStringContainsString('[OK] Super administrator role has been removed from the user "susan_super".', $output);
 
         $container = self::$kernel->getContainer();
+        /** @var Registry $doctrine */
+        $doctrine = $container->get('doctrine');
         /** @var UserRepository $userRepository */
-        $userRepository = $container->get('doctrine')->getRepository(User::class);
+        $userRepository = $doctrine->getRepository(User::class);
         $user = $userRepository->loadUserByIdentifier('susan_super');
         self::assertInstanceOf(User::class, $user);
         self::assertFalse($user->isSuperAdmin());
@@ -107,7 +114,7 @@ class DemoteUserCommandTest extends KernelTestCase
         $commandTester = $this->callCommand('tony_teamlead', null, true);
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[WARNING] User "tony_teamlead" doesn\'t have the super administrator role.', $output);
+        self::assertStringContainsString('[WARNING] User "tony_teamlead" doesn\'t have the super administrator role.', $output);
     }
 
     public function testDemoteAdminFailsOnTeamlead(): void
@@ -115,7 +122,7 @@ class DemoteUserCommandTest extends KernelTestCase
         $commandTester = $this->callCommand('tony_teamlead', 'ROLE_ADMIN', false);
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[WARNING] User "tony_teamlead" didn\'t have "ROLE_ADMIN" role.', $output);
+        self::assertStringContainsString('[WARNING] User "tony_teamlead" didn\'t have "ROLE_ADMIN" role.', $output);
     }
 
     public function testDemoteRoleAndSuperFails(): void

@@ -35,6 +35,10 @@
     {{ form_row(form.duration, {row_attr: {class: 'p-0'}}) }}
 {%- endblock %}
 
+{% block _quick_entry_form_rows_entry_metaFields_entry_widget %}
+    {{ form_row(form, {row_attr: {class: 'p-0'}}) }}
+{%- endblock %}
+
 {% block quick_entry_week_row %}
     <tr{% with {attr: row_attr|merge({class: (row_attr.class|default('') ~ ' form-group qe-entry-week-row' ~ (not valid ? ' is-invalid'))|trim})} %}{{ block('attributes') }}{% endwith %}>
         <td>
@@ -43,6 +47,11 @@
         <td>
             {{ form_row(form.activity, {row_attr: {class: 'p-0'}}) }}
         </td>
+        {% for meta in form.metaFields|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
+            <td>
+                {{ form_row(meta.value, {label: false}) }}
+            </td>
+        {% endfor %}
         {% for timesheet in form.timesheets %}
             <td class="text-center{% if timesheet.vars.data.begin is weekend %} weekend{% endif %}{% if timesheet.vars.data.begin is today %} today{% endif %}">
                 {{ form_widget(timesheet) }}
@@ -141,14 +150,30 @@
     </div>
 {%- endblock date_widget %}
 
-{% block time_widget -%}
-    {%- set user_format = format -%}
-    {%- set format = locale_format('time') -%}
-    {%- set jsFormat = format|js_format -%}
-    {%- set attr = attr|merge({'pattern': format|pattern, 'autocomplete': 'off', 'data-timepicker': 'on', 'data-format': jsFormat, 'placeholder': jsFormat}) -%}
+{% block day_widget -%}
+    {% set format = 'y-MM-D' %}
+    {% set jsFormat = format|js_format %}
+    {% set attr = attr|merge({'pattern': format|pattern, 'autocomplete': 'off', 'data-format': jsFormat}) -%}
     <div class="input-group">
         <div class="input-group-text">
             <a href="#" data-form-widget="date-now" data-format="{{ jsFormat }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
+        </div>
+        {{- block('form_widget_simple') -}}
+        {% if not required %}
+        <span class="input-group-text">
+            <a href="javascript: void(0)" class="link-secondary fs-5" onclick="document.getElementById('{{ id }}').value = ''">
+                {{ icon('cancel') }}
+            </a>
+        </span>
+        {% endif %}
+    </div>
+{%- endblock day_widget %}
+
+{% block time_widget -%}
+    {%- set attr = attr|merge({'pattern': time_format|pattern, 'autocomplete': 'off', 'data-timepicker': 'on', 'data-format': js_format, 'placeholder': time_format}) -%}
+    <div class="input-group">
+        <div class="input-group-text">
+            <a href="#" data-form-widget="date-now" data-format="{{ js_format }}" data-target="{{ id }}">{{ icon('clock') }}</a>
         </div>
         {{ block('form_widget_simple') }}
         {% set time_presets = form_time_presets(app.user.timezone) %}
@@ -159,7 +184,7 @@
                 {% for index in [0, 1, 2, 3] %}
                     <div class="dropdown-menu-column" style="min-width: 4rem">
                         {% for value in time_presets %}
-                            {% set value = value|date_format(user_format) %}
+                            {% set value = value|date_format(format) %}
                             {% if loop.index0 % 4 == index %}
                                 <a class="dropdown-item justify-content-center" href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ value }}" data-event="change">{{ value }}</a>
                             {% endif %}
@@ -180,7 +205,11 @@
         <button type="button" class="input-group-text dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
         <div class="dropdown-menu dropdown-menu-start pre-scrollable">
             {% for title, range in ranges %}
-                <a class="dropdown-item" href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{% if range[0] is not null %}{{ range[0]|format_date('short', rangeFormat) }}{{ attr['data-separator'] }}{{ range[1]|format_date('short', rangeFormat) }}{% endif %}" data-event="change keyup">{{ title|trans({}, 'daterangepicker') }}</a>
+                {% if range|length == 0 %}
+                    <hr class="dropdown-divider">
+                {% else %}
+                    <a class="dropdown-item" href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{% if range[0] is not null %}{{ range[0]|format_date('short', rangeFormat) }}{{ attr['data-separator'] }}{{ range[1]|format_date('short', rangeFormat) }}{% endif %}" data-event="change keyup">{{ title|trans({}, 'daterangepicker') }}</a>
+                {% endif %}
             {% endfor %}
         </div>
         {% endif %}
@@ -284,10 +313,10 @@
     {% set yearInt = year|date_format('Y') %}
     <div class="btn-group">
         <a class="btn btn-left btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ previousYear|date_short }}"
-           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ previousYear|report_date }}" data-event-bubbles="change">
+           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ previousYear|report_date }}" data-event="change">
             {{ icon('left') }}
         </a>
-        {% if show_range %}
+        {% if range is not defined or range is not iterable or range is empty %}
             <a class="btn" href="#" onclick="return false;">
                 <span id="{{ form.vars.id }}_month_name">{{ year|date_short }} &ndash; {{ nextYear|date_short }}</span>
             </a>
@@ -295,15 +324,14 @@
             <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ yearInt }}
             </button>
-            <ul class="dropdown-menu dropdown-menu-start pre-scrollable">
-                {% for i in (yearInt - 5)..(yearInt + 5) %}
-                    {% set tmpYear = report_date(i) %}
-                    <li><a href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ tmpYear|report_date }}" data-event-bubbles="change" class="dropdown-item">{{ tmpYear|date_format('Y') }}</a></li>
+            <ul class="dropdown-menu dropdown-menu-start pre-scrollable" style="z-index: 1021">
+                {% for rangeDate in range %}
+                    <li><a href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ rangeDate|report_date }}" data-event="change" class="dropdown-item {% if rangeDate|date_format('Y') == yearInt %}active{% endif %}" title="{{ rangeDate|date_short }}">{{ rangeDate|date_format('Y') }}</a></li>
                 {% endfor %}
             </ul>
         {% endif %}
         <a class="btn btn-right btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ nextYear|date_short }}"
-           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ nextYear|report_date }}" data-event-bubbles="change">
+           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ nextYear|report_date }}" data-event="change">
             {{ icon('right') }}
         </a>
     </div>
@@ -312,38 +340,66 @@
 {%- endblock yearpicker_widget %}
 
 {% block monthpicker_widget -%}
-    <div class="input-group">
+    <div class="btn-group">
         <a class="btn btn-left btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ previousMonth|month_name(true) }}"
-           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ previousMonth|month_picker }}" data-event-bubbles="change">
+           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ previousMonth|report_date }}" data-event="change">
             {{ icon('left') }}
         </a>
-        <a class="btn d-none input-month-polyfill" href="#" onclick="return false;">
-            <span id="{{ form.vars.id }}_month_name">{{ month|month_name(true) }}</span>
-        </a>
-        {%- set required = false -%}
-        <input {{ block('widget_attributes') }} type="month" id="{{ form.vars.id }}_month_name" class="form-control" value="{{ month|month_picker }}" />
+        {% if range is not defined or range is not iterable or range is empty %}
+            <a class="btn" href="#" onclick="return false;">
+                <span id="{{ form.vars.id }}_month_name">{{ month|month_name(true) }}</span>
+            </a>
+        {% else %}
+            <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ month|month_name(true) }}
+            </button>
+            <ul class="dropdown-menu dropdown-menu-start pre-scrollable" style="z-index: 1021">
+                {% for rangeDate in range %}
+                    <li><a href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ rangeDate|report_date }}" data-event="change" class="dropdown-item {% if rangeDate|date_format('Y-m') == month|date_format('Y-m') %}active{% endif %}" title="{{ rangeDate|date_short }}">{{ rangeDate|month_name(true) }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <a class="btn btn-right btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ nextMonth|month_name(true) }}"
-           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ nextMonth|month_picker }}" data-event-bubbles="change">
+           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ nextMonth|report_date }}" data-event="change">
             {{ icon('right') }}
         </a>
     </div>
+    {%- set required = false -%}
+    <input type="hidden" {{ block('widget_attributes') }} value="{{ value }}" />
 {%- endblock monthpicker_widget %}
 
 {% block weekpicker_widget -%}
     <div class="btn-group week-picker-btn-group {{ attr.class ?? '' }}">
         <a class="btn btn-left btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': previousWeek|date_format('W')}) }}"
-           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ previousWeek|report_date }}" data-event-bubbles="change">
+           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ previousWeek|report_date }}" data-event="change">
             {{ icon('left') }}
         </a>
-        <a class="btn btn-default" href="#" onclick="return false;">
-            <span id="{{ form.vars.id }}_week_number" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': week|date_format('W')}) }}">
+        {% if range is not defined or range is not iterable or range is empty %}
+            <a class="btn btn-default" href="#" onclick="return false;">
+            <span id="{{ form.vars.id }}_week_number" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': weekNumber}) }}">
                 {{ week|month_name(true) }}
                 &ndash;
-                {{ 'stats.workingTimeWeekShort'|trans({'%week%': week|date_format('W')}) }}
+                {{ 'stats.workingTimeWeekShort'|trans({'%week%': weekNumber}) }}
             </span>
-        </a>
+            </a>
+        {% else %}
+            <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ week|month_name(true) }}
+                &ndash;
+                {{ 'stats.workingTimeWeekShort'|trans({'%week%': weekNumber}) }}
+            </button>
+            <ul class="dropdown-menu dropdown-menu-start pre-scrollable" style="z-index: 1021">
+                {% for rangeDate in range %}
+                    <li><a href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ rangeDate|report_date }}" data-event="change" class="dropdown-item {% if rangeDate|date_format('Y-m-W') == week|date_format('Y-m-W') %}active{% endif %}">
+                        {{ rangeDate|month_name(true) }}
+                        &ndash;
+                        {{ 'stats.workingTimeWeekShort'|trans({'%week%': rangeDate|date_format('W')}) }}
+                    </a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <a class="btn btn-right btn-icon" href="#" data-toggle="tooltip" data-placement="top" title="{{ 'stats.workingTimeWeek'|trans({'%week%': nextWeek|date_format('W')}) }}"
-           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ nextWeek|report_date }}" data-event-bubbles="change">
+           data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ nextWeek|report_date }}" data-event="change">
             {{ icon('right') }}
         </a>
     </div>

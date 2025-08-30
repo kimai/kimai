@@ -21,22 +21,23 @@ use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\VisibilityInterface;
 use App\Tests\Mocks\ProjectTestMetaFieldSubscriberMock;
-use Symfony\Component\HttpKernel\HttpKernelBrowser;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @group integration
- */
-class ProjectControllerTest extends APIControllerBaseTest
+#[Group('integration')]
+class ProjectControllerTest extends APIControllerBaseTestCase
 {
     use RateControllerTestTrait;
 
-    /**
-     * @param ProjectRate $rate
-     * @param bool $isCollection
-     * @return string
-     */
     protected function getRateUrlByRate(RateInterface $rate, bool $isCollection): string
     {
+        self::assertInstanceOf(ProjectRate::class, $rate);
+        self::assertNotNull($rate->getProject());
+        self::assertNotNull($rate->getProject()->getId());
+
         if ($isCollection) {
             return $this->getRateUrl($rate->getProject()->getId());
         }
@@ -44,7 +45,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         return $this->getRateUrl($rate->getProject()->getId(), $rate->getId());
     }
 
-    protected function getRateUrl($id = '1', $rateId = null): string
+    protected function getRateUrl(?int $id = 1, ?int $rateId = null): string
     {
         if (null !== $rateId) {
             return \sprintf('/api/projects/%s/rates/%s', $id, $rateId);
@@ -99,19 +100,24 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/projects');
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
-        $this->assertNotEmpty($result);
-        $this->assertEquals(1, \count($result));
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+        self::assertEquals(1, \count($result));
+        self::assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('ProjectCollection', $result[0]);
     }
 
-    protected function loadProjectTestData(HttpKernelBrowser $client)
+    /**
+     * @return array{0: Project, 1: Project, 2: Project, 3: Project, 4: Project}
+     */
+    protected function loadProjectTestData(): array
     {
         $em = $this->getEntityManager();
 
+        /** @var Customer $customer */
         $customer = $em->getRepository(Customer::class)->find(1);
 
         $customer2 = new Customer('first one');
@@ -125,49 +131,49 @@ class ProjectControllerTest extends APIControllerBaseTest
         $customer3->setTimezone('Europe/Vienna');
         $em->persist($customer3);
 
-        $project = new Project();
-        $project->setName('first');
-        $project->setVisible(false);
-        $project->setCustomer($customer2);
-        $em->persist($project);
+        $project1 = new Project();
+        $project1->setName('first');
+        $project1->setVisible(false);
+        $project1->setCustomer($customer2);
+        $em->persist($project1);
 
-        $project = new Project();
-        $project->setName('second');
-        $project->setVisible(false);
-        $project->setCustomer($customer);
-        $em->persist($project);
+        $project2 = new Project();
+        $project2->setName('second');
+        $project2->setVisible(false);
+        $project2->setCustomer($customer);
+        $em->persist($project2);
 
-        $project = new Project();
-        $project->setName('third');
-        $project->setVisible(true);
-        $project->setCustomer($customer2);
-        $em->persist($project);
+        $project3 = new Project();
+        $project3->setName('third');
+        $project3->setVisible(true);
+        $project3->setCustomer($customer2);
+        $em->persist($project3);
 
-        $project = new Project();
-        $project->setName('fourth');
-        $project->setVisible(true);
-        $project->setCustomer($customer3);
-        $em->persist($project);
+        $project4 = new Project();
+        $project4->setName('fourth');
+        $project4->setVisible(true);
+        $project4->setCustomer($customer3);
+        $em->persist($project4);
 
-        $project = new Project();
-        $project->setName('fifth');
-        $project->setVisible(true);
-        $project->setCustomer($customer);
+        $project5 = new Project();
+        $project5->setName('fifth');
+        $project5->setVisible(true);
+        $project5->setCustomer($customer);
 
         // add meta fields
         $meta = new ProjectMeta();
         $meta->setName('bar')->setValue('foo')->setIsVisible(false);
-        $project->setMetaField($meta);
+        $project5->setMetaField($meta);
         $meta = new ProjectMeta();
         $meta->setName('foo')->setValue('bar')->setIsVisible(true);
-        $project->setMetaField($meta);
-        $em->persist($project);
+        $project5->setMetaField($meta);
+        $em->persist($project5);
 
         // and a team
         $team = new Team('Testing project team');
         $team->addTeamlead($this->getUserByRole(User::ROLE_USER));
         $team->addCustomer($customer);
-        $team->addProject($project);
+        $team->addProject($project5);
         $team->addUser($this->getUserByRole(User::ROLE_TEAMLEAD));
         $em->persist($team);
 
@@ -176,18 +182,22 @@ class ProjectControllerTest extends APIControllerBaseTest
 
         $em->flush();
 
-        return [$customer, $customer2, $customer3];
+        return [
+            $project1,
+            $project2,
+            $project3,
+            $project4,
+            $project5,
+        ];
     }
 
-    /**
-     * @dataProvider getCollectionTestData
-     */
-    public function testGetCollectionWithParams($url, $customer, $parameters, $expected): void
+    #[DataProvider('getCollectionTestData')]
+    public function testGetCollectionWithParams(string $url, ?int $project, array $parameters, array $expected): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $imports = $this->loadProjectTestData($client);
+        $imports = $this->loadProjectTestData();
 
-        $customerId = $customer !== null ? $imports[$customer]->getId() : null;
+        $customerId = $project !== null ? $imports[$project]->getCustomer()?->getId() : null;
 
         if ($customerId !== null) {
             if (\array_key_exists('customer', $parameters)) {
@@ -211,17 +221,18 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, $url, 'GET', $parameters);
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
-        $this->assertEquals(\count($expected), \count($result), 'Found wrong amount of projects');
+        self::assertIsArray($result);
+        self::assertEquals(\count($expected), \count($result), 'Found wrong amount of projects');
 
         for ($i = 0; $i < \count($expected); $i++) {
             $project = $result[$i];
+            self::assertIsArray($project);
             self::assertApiResponseTypeStructure('ProjectCollection', $project);
             if ($customerId !== null) {
-                $this->assertEquals($customerId, $project['customer']);
+                self::assertEquals($customerId, $project['customer']);
             }
         }
     }
@@ -229,23 +240,23 @@ class ProjectControllerTest extends APIControllerBaseTest
     /**
      * @return \Generator<array<mixed>>
      */
-    public function getCollectionTestData(): iterable
+    public static function getCollectionTestData(): iterable
     {
         // if you wonder why: case-sensitive ordering feels strange ... "Title" > "fifth”
         yield ['/api/projects', null, [], [[true, 1], [false, 1], [false, 3]]];
-        yield ['/api/projects', 0, ['customer' => '1'], [[true, 1], [false, 1]]];
-        yield ['/api/projects', 0, ['customer' => '1', 'visible' => VisibilityInterface::SHOW_VISIBLE], [[true, 1], [false, 1]]];
-        yield ['/api/projects', 0, ['customer' => '1', 'visible' => VisibilityInterface::SHOW_BOTH], [[true, 1], [false, 1], [false, 1]]];
-        yield ['/api/projects', 0, ['customer' => '1', 'visible' => VisibilityInterface::SHOW_HIDDEN], [[false, 1]]];
+        yield ['/api/projects', 1, ['customer' => '1'], [[true, 1], [false, 1]]];
+        yield ['/api/projects', 1, ['customer' => '1', 'visible' => VisibilityInterface::SHOW_VISIBLE], [[true, 1], [false, 1]]];
+        yield ['/api/projects', 1, ['customer' => '1', 'visible' => VisibilityInterface::SHOW_BOTH], [[true, 1], [false, 1], [false, 1]]];
+        yield ['/api/projects', 1, ['customer' => '1', 'visible' => VisibilityInterface::SHOW_HIDDEN], [[false, 1]]];
         // customer is invisible => query only returns results for VisibilityInterface::SHOW_BOTH
-        yield ['/api/projects', 1, ['customer' => '2', 'visible' => VisibilityInterface::SHOW_VISIBLE], []];
-        yield ['/api/projects', 1, ['customer' => '2', 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
-        yield ['/api/projects', 1, ['customer' => '2', 'customers' => ['2'], 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
-        yield ['/api/projects', 1, ['customers' => ['2', '2'], 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
-        yield ['/api/projects', 1, ['customer' => '2', 'visible' => VisibilityInterface::SHOW_HIDDEN], []];
-        yield ['/api/projects', 1, ['customer' => '2', 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11', 'end' => '2030-12-11'], []];
-        yield ['/api/projects', 1, ['customers' => ['2'], 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11', 'end' => '2030-12-11'], []];
-        yield ['/api/projects', 1, ['customers' => ['2', '2'], 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11', 'end' => '2030-12-11'], []];
+        yield ['/api/projects', 0, ['customer' => '2', 'visible' => VisibilityInterface::SHOW_VISIBLE], []];
+        yield ['/api/projects', 0, ['customer' => '2', 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
+        yield ['/api/projects', 0, ['customer' => '2', 'customers' => ['2'], 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
+        yield ['/api/projects', 0, ['customers' => ['2', '2'], 'visible' => VisibilityInterface::SHOW_BOTH], [[false, 2], [false, 2]]];
+        yield ['/api/projects', 0, ['customer' => '2', 'visible' => VisibilityInterface::SHOW_HIDDEN], []];
+        yield ['/api/projects', 0, ['customer' => '2', 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11', 'end' => '2030-12-11'], []];
+        yield ['/api/projects', 0, ['customers' => ['2'], 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11', 'end' => '2030-12-11'], []];
+        yield ['/api/projects', 0, ['customers' => ['2', '2'], 'visible' => VisibilityInterface::SHOW_HIDDEN, 'start' => '2010-12-11', 'end' => '2030-12-11'], []];
     }
 
     public function testGetEntityIsSecure(): void
@@ -259,10 +270,10 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/projects/1');
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
     }
 
@@ -294,10 +305,10 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->assertAccessIsGranted($client, '/api/projects/' . $project->getId());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
 
         $expected = [
@@ -343,15 +354,15 @@ class ProjectControllerTest extends APIControllerBaseTest
             'orderNumber' => '1234567890/WXYZ/SUBPROJECT/1234/CONTRACT/EMPLOYEE1',
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
         self::assertEquals('2018-04-17', $result['orderDate']);
         self::assertEquals('2019-02-01', $result['start']);
         self::assertEquals('2020-02-08', $result['end']);
@@ -372,15 +383,15 @@ class ProjectControllerTest extends APIControllerBaseTest
             'visible' => '',
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
         self::assertEquals('foo', $result['name']);
         self::assertTrue($result['globalActivities']);
         self::assertTrue($result['billable']);
@@ -398,15 +409,15 @@ class ProjectControllerTest extends APIControllerBaseTest
             'visible' => false,
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
         self::assertEquals('foo', $result['name']);
         self::assertFalse($result['globalActivities']);
         self::assertFalse($result['billable']);
@@ -424,15 +435,15 @@ class ProjectControllerTest extends APIControllerBaseTest
             'visible' => true,
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
         self::assertEquals('foo', $result['name']);
         self::assertTrue($result['globalActivities']);
         self::assertTrue($result['billable']);
@@ -447,15 +458,15 @@ class ProjectControllerTest extends APIControllerBaseTest
             'customer' => 1
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
         self::assertEquals('foo', $result['name']);
         self::assertFalse($result['globalActivities']);
         self::assertFalse($result['billable']);
@@ -501,15 +512,15 @@ class ProjectControllerTest extends APIControllerBaseTest
             'timeBudget' => '7200',
         ];
         $this->request($client, '/api/projects/1', 'PATCH', [], json_encode($data));
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
-        $this->assertIsString($content);
+        self::assertIsString($content);
         $result = json_decode($content, true);
 
-        $this->assertIsArray($result);
+        self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
-        $this->assertNotEmpty($result['id']);
+        self::assertNotEmpty($result['id']);
     }
 
     public function testPatchActionWithInvalidUser(): void
@@ -543,7 +554,7 @@ class ProjectControllerTest extends APIControllerBaseTest
         $this->request($client, '/api/projects/1', 'PATCH', [], json_encode($data));
 
         $response = $client->getResponse();
-        $this->assertEquals(400, $response->getStatusCode());
+        self::assertEquals(400, $response->getStatusCode());
         $this->assertApiCallValidationError($response, ['customer']);
     }
 
@@ -579,7 +590,9 @@ class ProjectControllerTest extends APIControllerBaseTest
     public function testMetaAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        self::getContainer()->get('event_dispatcher')->addSubscriber(new ProjectTestMetaFieldSubscriberMock());
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new ProjectTestMetaFieldSubscriberMock());
 
         $data = [
             'name' => 'metatestmock',
@@ -587,11 +600,69 @@ class ProjectControllerTest extends APIControllerBaseTest
         ];
         $this->request($client, '/api/projects/1/meta', 'PATCH', [], json_encode($data));
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $em = $this->getEntityManager();
         /** @var Project $project */
         $project = $em->getRepository(Project::class)->find(1);
-        $this->assertEquals('another,testing,bar', $project->getMetaField('metatestmock')->getValue());
+        self::assertEquals('another,testing,bar', $project->getMetaField('metatestmock')->getValue());
+    }
+
+    // ------------------------------- [DELETE] -------------------------------
+
+    public function testDeleteIsSecure(): void
+    {
+        $this->assertUrlIsSecured('/api/projects/1', Request::METHOD_DELETE);
+    }
+
+    public function testDeleteActionWithUnknownTimesheet(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertNotFoundForDelete($client, '/api/projects/' . PHP_INT_MAX);
+    }
+
+    public function testDeleteEntityIsSecure(): void
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/api/projects/1', Request::METHOD_DELETE);
+    }
+
+    public function testDeleteActionWithoutAuthorization(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $imports = $this->loadProjectTestData();
+
+        $this->request($client, '/api/projects/' . $imports[2]->getId(), Request::METHOD_DELETE);
+
+        $response = $client->getResponse();
+        $this->assertApiResponseAccessDenied($response);
+    }
+
+    public function testDeleteAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $imports = $this->loadProjectTestData();
+        $getUrl = '/api/projects/' . $imports[2]->getId();
+        $this->assertAccessIsGranted($client, $getUrl);
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('ProjectEntity', $result);
+        self::assertNotEmpty($result['id']);
+        self::assertIsNumeric($result['id']);
+        $id = $result['id'];
+
+        $this->request($client, '/api/projects/' . $id, Request::METHOD_DELETE);
+        self::assertTrue($client->getResponse()->isSuccessful());
+        self::assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
+        self::assertEmpty($client->getResponse()->getContent());
+
+        $this->request($client, $getUrl);
+        $this->assertApiException($client->getResponse(), [
+            'code' => Response::HTTP_NOT_FOUND,
+            'message' => 'Not Found'
+        ]);
     }
 }

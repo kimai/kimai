@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="et" datatype="plaintext" original="invoice-calculator.en.xlf">
+    <body>
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
+        <source>date</source>
+        <target state="translated">Kuupöev</target>
+      </trans-unit>
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
+        <source>user</source>
+        <target state="translated">Kasutaja</target>
+      </trans-unit>
+      <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve">
+        <source>activity</source>
+        <target state="translated">Tegevus</target>
+      </trans-unit>
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
+        <source>project</source>
+        <target state="translated">Projekt</target>
+      </trans-unit>
+      <trans-unit id="MviRJeB" resname="invoice_calculator" xml:space="preserve">
+        <source>invoice_calculator</source>
+        <target state="translated">Arveridade grupeerimine</target>
+      </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help" xml:space="preserve">
+        <source>invoice_calculator.help</source>
+        <target state="translated">Vali, milliste väljade järgi peaks arve read olema grupeeritud</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
+        <source>default</source>
+        <target state="translated">Vaikevalik (Üks rida sissekande kohta)</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

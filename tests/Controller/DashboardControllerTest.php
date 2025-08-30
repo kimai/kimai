@@ -9,10 +9,10 @@
 
 namespace App\Tests\Controller;
 
-/**
- * @group integration
- */
-class DashboardControllerTest extends ControllerBaseTest
+use PHPUnit\Framework\Attributes\Group;
+
+#[Group('integration')]
+class DashboardControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {
@@ -23,7 +23,7 @@ class DashboardControllerTest extends ControllerBaseTest
     {
         $client = $this->getClientForAuthenticatedUser();
         $this->request($client, '/dashboard/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertMainContentClass($client, 'dashboard');
         self::assertEquals(1, $client->getCrawler()->filter('div#PaginatedWorkingTimeChartBox canvas')->count());
     }

@@ -10,29 +10,27 @@
 namespace App\Tests\Utils;
 
 use App\Utils\FormFormatConverter;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Utils\FormFormatConverter
- */
+#[CoversClass(FormFormatConverter::class)]
 class FormFormatConverterTest extends TestCase
 {
     public function testConvert(): void
     {
         $sut = new FormFormatConverter();
 
-        $this->assertEquals('dd.MM.yyyy', $sut->convert('dd.MM.yy'));
-        $this->assertEquals('d.M.yyyy', $sut->convert('d.M.y'));
-        $this->assertEquals('g:i A', $sut->convert('h:mm a'));
-        $this->assertEquals('G:i', $sut->convert('H:mm'));
-        $this->assertEquals('H.i', $sut->convert('HH.mm'));
-        $this->assertEquals('A g:i', $sut->convert('a h:mm'));
-        $this->assertEquals('H \h i', $sut->convert('HH \'h\' mm'));
+        self::assertEquals('dd.MM.yyyy', $sut->convert('dd.MM.yy'));
+        self::assertEquals('d.M.yyyy', $sut->convert('d.M.y'));
+        self::assertEquals('g:i A', $sut->convert('h:mm a'));
+        self::assertEquals('G:i', $sut->convert('H:mm'));
+        self::assertEquals('H.i', $sut->convert('HH.mm'));
+        self::assertEquals('A g:i', $sut->convert('a h:mm'));
+        self::assertEquals('H \h i', $sut->convert('HH \'h\' mm'));
     }
 
-    /**
-     * @dataProvider getProblemPattern
-     */
+    #[DataProvider('getProblemPattern')]
     public function testProblemPattern($format, $example): void
     {
         $sut = new FormFormatConverter();
@@ -88,7 +86,7 @@ class FormFormatConverterTest extends TestCase
         }
     }
 
-    public function getProblemPattern()
+    public static function getProblemPattern()
     {
         yield ["yy-MM-dd HH 'h' mm", '2009-08-06 17 h 45'];
     }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ta" datatype="plaintext" original="invoice-calculator.en.xlf">
+    <body>
+      <trans-unit id="MviRJeB" resname="invoice_calculator" xml:space="preserve" approved="yes">
+        <source>invoice_calculator</source>
+        <target state="final">விலைப்பட்டியல் கோடுகளின் தொகுத்தல்</target>
+      </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help" xml:space="preserve" approved="yes">
+        <source>invoice_calculator.help</source>
+        <target state="final">விலைப்பட்டியல் உருப்படிகளை எந்தப் புலங்கள் தொகுக்க வேண்டும் என்பதைத் தேர்ந்தெடு</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve" approved="yes">
+        <source>default</source>
+        <target state="final">இயல்புநிலை (ஒரு பதிவுக்கு ஒரு வரிசை)</target>
+      </trans-unit>
+      <trans-unit id="_bAHi13" resname="short" xml:space="preserve" approved="yes">
+        <source>short</source>
+        <target state="final">அனைத்தும் (ஒரு பதிவு மொத்தம்)</target>
+      </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user" xml:space="preserve" approved="yes">
+        <source>activity_user</source>
+        <target state="final">செயல்பாடு மற்றும் பயனர்</target>
+      </trans-unit>
+      <trans-unit id="AJm1952" resname="project_user" xml:space="preserve" approved="yes">
+        <source>project_user</source>
+        <target state="final">திட்டம் மற்றும் பயனர்</target>
+      </trans-unit>
+      <trans-unit id="0l1P9cz" resname="date_user" xml:space="preserve" approved="yes">
+        <source>date_user</source>
+        <target state="final">தேதி மற்றும் பயனர்</target>
+      </trans-unit>
+      <trans-unit id="iFDs7Zh" resname="weekly" xml:space="preserve" approved="yes">
+        <source>weekly</source>
+        <target state="final">காலிகை வாரம்</target>
+      </trans-unit>
+      <trans-unit id="aDtTH0H" resname="price" xml:space="preserve" approved="yes">
+        <source>price</source>
+        <target state="final">விலை</target>
+      </trans-unit>
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve" approved="yes">
+        <source>date</source>
+        <target state="final">திகதி</target>
+      </trans-unit>
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve" approved="yes">
+        <source>user</source>
+        <target state="final">பயனர்</target>
+      </trans-unit>
+      <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve" approved="yes">
+        <source>activity</source>
+        <target state="final">செய்கைப்பாடு</target>
+      </trans-unit>
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve" approved="yes">
+        <source>project</source>
+        <target state="final">திட்டம்</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

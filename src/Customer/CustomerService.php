@@ -14,6 +14,7 @@ use App\Entity\Customer;
 use App\Event\CustomerCreateEvent;
 use App\Event\CustomerCreatePostEvent;
 use App\Event\CustomerCreatePreEvent;
+use App\Event\CustomerDeleteEvent;
 use App\Event\CustomerMetaDefinitionEvent;
 use App\Event\CustomerUpdatePostEvent;
 use App\Event\CustomerUpdatePreEvent;
@@ -58,6 +59,18 @@ final class CustomerService
         return $customer;
     }
 
+    public function saveCustomer(Customer $customer): Customer
+    {
+        if ($customer->isNew()) {
+            return $this->saveNewCustomer($customer); // @phpstan-ignore method.deprecated
+        } else {
+            return $this->updateCustomer($customer); // @phpstan-ignore method.deprecated
+        }
+    }
+
+    /**
+     * @deprecated since 2.35 - use saveCustomer() instead
+     */
     public function saveNewCustomer(Customer $customer): Customer
     {
         if (null !== $customer->getId()) {
@@ -73,6 +86,12 @@ final class CustomerService
         return $customer;
     }
 
+    public function deleteCustomer(Customer $customer): void
+    {
+        $this->dispatcher->dispatch(new CustomerDeleteEvent($customer));
+        $this->repository->deleteCustomer($customer);
+    }
+
     /**
      * @param string[] $groups
      * @throws ValidationFailedException
@@ -82,10 +101,13 @@ final class CustomerService
         $errors = $this->validator->validate($customer, null, $groups);
 
         if ($errors->count() > 0) {
-            throw new ValidationFailedException($errors, 'Validation Failed');
+            throw new ValidationFailedException($errors);
         }
     }
 
+    /**
+     * @deprecated since 2.35 - use saveCustomer() instead
+     */
     public function updateCustomer(Customer $customer): Customer
     {
         $this->validateCustomer($customer);
@@ -130,12 +152,23 @@ final class CustomerService
         // we cannot use max(number) because a varchar column returns unexpected results
         $start = $this->repository->countCustomer();
         $i = 0;
+        $createDate = new \DateTimeImmutable();
 
         do {
             $start++;
 
-            $numberGenerator = new NumberGenerator($format, function (string $originalFormat, string $format, int $increaseBy) use ($start): string|int {
+            $numberGenerator = new NumberGenerator($format, function (string $originalFormat, string $format, int $increaseBy) use ($start, $createDate): string|int {
                 return match ($format) {
+                    'Y' => $createDate->format('Y'),
+                    'y' => $createDate->format('y'),
+                    'M' => $createDate->format('m'),
+                    'm' => $createDate->format('n'),
+                    'D' => $createDate->format('d'),
+                    'd' => $createDate->format('j'),
+                    'YY' => (int) $createDate->format('Y') + $increaseBy,
+                    'yy' => (int) $createDate->format('y') + $increaseBy,
+                    'MM' => (int) $createDate->format('m') + $increaseBy,
+                    'DD' => (int) $createDate->format('d') + $increaseBy,
                     'cc' => $start + $increaseBy,
                     default => $originalFormat,
                 };

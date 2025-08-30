@@ -25,7 +25,10 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
     public const STATE_EXPORTED = 4;
     public const STATE_NOT_EXPORTED = 5;
 
-    public const TIMESHEET_ORDER_ALLOWED = ['begin', 'end', 'duration', 'rate', 'hourlyRate', 'customer', 'project', 'activity', 'description'];
+    /**
+     * @deprecated since 2.31.0
+     */
+    public const TIMESHEET_ORDER_ALLOWED = ['begin', 'end', 'duration', 'rate', 'hourlyRate', 'customer', 'project', 'activity', 'description', 'billable', 'exported'];
 
     private ?User $timesheetUser = null;
     /** @var array<Activity> */
@@ -42,6 +45,10 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
      * @var array<User>
      */
     private array $users = [];
+    /**
+     * @var array<TimesheetQueryHint>
+     */
+    private array $queryHints = [];
 
     public function __construct(bool $resetTimes = true)
     {
@@ -57,6 +64,17 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
             'users' => [],
             'activities' => [],
         ]);
+        $this->setAllowedOrderColumns(self::TIMESHEET_ORDER_ALLOWED); // @phpstan-ignore-line
+    }
+
+    public function addQueryHint(TimesheetQueryHint $hint): void
+    {
+        $this->queryHints[] = $hint;
+    }
+
+    public function hasQueryHint(TimesheetQueryHint $hint): bool
+    {
+        return \in_array($hint, $this->queryHints, true);
     }
 
     protected function copyFrom(BaseQuery $query): void
@@ -126,18 +144,6 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
     public function setUser(?User $user): void
     {
         $this->timesheetUser = $user;
-    }
-
-    /**
-     * @return array<int>
-     */
-    public function getActivityIds(): array
-    {
-        return array_values(array_filter(array_unique(array_map(function (Activity $activity) {
-            return $activity->getId();
-        }, $this->activities)), function ($id) {
-            return $id !== null;
-        }));
     }
 
     /**

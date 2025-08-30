@@ -9,13 +9,12 @@
 
 namespace App\Tests\Repository\Query;
 
+use App\Repository\Query\BaseQuery;
 use App\Repository\Query\ProjectQuery;
-use App\Repository\Query\VisibilityInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Repository\Query\ProjectQuery
- * @covers \App\Repository\Query\BaseQuery
- */
+#[CoversClass(ProjectQuery::class)]
+#[CoversClass(BaseQuery::class)]
 class ProjectQueryTest extends BaseQueryTest
 {
     public function testQuery(): void
@@ -23,10 +22,7 @@ class ProjectQueryTest extends BaseQueryTest
         $sut = new ProjectQuery();
 
         $this->assertBaseQuery($sut, 'name');
-        $this->assertInstanceOf(VisibilityInterface::class, $sut);
-
         $this->assertCustomer($sut);
-
         $this->assertResetByFormError(new ProjectQuery(), 'name');
 
         self::assertNull($sut->getProjectStart());

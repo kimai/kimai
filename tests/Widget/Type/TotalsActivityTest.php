@@ -13,11 +13,10 @@ use App\Entity\User;
 use App\Repository\ActivityRepository;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\TotalsActivity;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Widget\Type\TotalsActivity
- */
-class TotalsActivityTest extends AbstractWidgetTest
+#[CoversClass(TotalsActivity::class)]
+class TotalsActivityTest extends AbstractWidgetTestCase
 {
     /** @var User */
     private $user;

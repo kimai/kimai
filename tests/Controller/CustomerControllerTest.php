@@ -20,13 +20,14 @@ use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
 use Doctrine\ORM\EntityManager;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
-/**
- * @group integration
- */
-class CustomerControllerTest extends ControllerBaseTest
+#[Group('integration')]
+class CustomerControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
     {
@@ -67,7 +68,7 @@ class CustomerControllerTest extends ControllerBaseTest
 
         $fixture = new CustomerFixtures();
         $fixture->setAmount(5);
-        $fixture->setCallback(function (Customer $customer) {
+        $fixture->setCallback(function (Customer $customer): void {
             $customer->setVisible(true);
             $customer->setComment('I am a foobar with tralalalala some more content');
             $customer->setMetaField((new CustomerMeta())->setName('location')->setValue('homeoffice'));
@@ -90,7 +91,7 @@ class CustomerControllerTest extends ControllerBaseTest
             'page' => 1,
         ]);
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasDataTable($client);
         $this->assertDataTableRowCount($client, 'datatable_customer_admin', 5);
     }
@@ -112,7 +113,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
         $this->request($client, '/admin/customer/');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form.searchform')->form();
         $form->getFormNode()->setAttribute('action', $this->createUrl('/admin/customer/export'));
@@ -317,7 +318,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $form = $client->getCrawler()->filter('form[name=customer_edit_form]')->form();
 
         $editForm = $client->getCrawler()->filter('form[name=customer_edit_form]')->form();
-        $this->assertEquals(date_default_timezone_get(), $editForm->get('customer_edit_form[timezone]')->getValue());
+        self::assertEquals(date_default_timezone_get(), $editForm->get('customer_edit_form[timezone]')->getValue());
 
         $client->submit($form, [
             'customer_edit_form' => [
@@ -335,14 +336,16 @@ class CustomerControllerTest extends ControllerBaseTest
     public function testCreateActionShowsMetaFields(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        self::getContainer()->get('event_dispatcher')->addSubscriber(new CustomerTestMetaFieldSubscriberMock());
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = self::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new CustomerTestMetaFieldSubscriberMock());
         $this->assertAccessIsGranted($client, '/admin/customer/create');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=customer_edit_form]')->form();
-        $this->assertTrue($form->has('customer_edit_form[metaFields][metatestmock][value]'));
-        $this->assertTrue($form->has('customer_edit_form[metaFields][foobar][value]'));
-        $this->assertFalse($form->has('customer_edit_form[metaFields][0][value]'));
+        self::assertTrue($form->has('customer_edit_form[metaFields][metatestmock][value]'));
+        self::assertTrue($form->has('customer_edit_form[metaFields][foobar][value]'));
+        self::assertFalse($form->has('customer_edit_form[metaFields][0][value]'));
     }
 
     public function testEditAction(): void
@@ -350,7 +353,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/customer/1/edit');
         $form = $client->getCrawler()->filter('form[name=customer_edit_form]')->form();
-        $this->assertEquals('Test', $form->get('customer_edit_form[name]')->getValue());
+        self::assertEquals('Test', $form->get('customer_edit_form[name]')->getValue());
         $client->submit($form, [
             'customer_edit_form' => [
                 'name' => 'Test Customer 2'
@@ -360,7 +363,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $client->followRedirect();
         $this->request($client, '/admin/customer/1/edit');
         $editForm = $client->getCrawler()->filter('form[name=customer_edit_form]')->form();
-        $this->assertEquals('Test Customer 2', $editForm->get('customer_edit_form[name]')->getValue());
+        self::assertEquals('Test Customer 2', $editForm->get('customer_edit_form[name]')->getValue());
     }
 
     public function testTeamPermissionAction(): void
@@ -405,12 +408,12 @@ class CustomerControllerTest extends ControllerBaseTest
         $id = $customer->getId();
 
         $this->request($client, '/admin/customer/' . $id . '/edit');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
         $this->request($client, '/admin/customer/' . $id . '/delete');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=form]')->form();
-        $this->assertStringEndsWith($this->createUrl('/admin/customer/' . $id . '/delete'), $form->getUri());
+        self::assertStringEndsWith($this->createUrl('/admin/customer/' . $id . '/delete'), $form->getUri());
         $client->submit($form);
 
         $client->followRedirect();
@@ -418,7 +421,7 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
 
         $this->request($client, '/admin/customer/' . $id . '/edit');
-        $this->assertFalse($client->getResponse()->isSuccessful());
+        self::assertFalse($client->getResponse()->isSuccessful());
     }
 
     public function testDeleteActionWithTimesheetEntries(): void
@@ -432,18 +435,18 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->importFixture($fixture);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, \count($timesheets));
+        self::assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {
-            $this->assertEquals(1, $entry->getActivity()->getId());
+            self::assertEquals(1, $entry->getActivity()->getId());
         }
 
         $this->request($client, '/admin/customer/1/delete');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=form]')->form();
-        $this->assertStringEndsWith($this->createUrl('/admin/customer/1/delete'), $form->getUri());
+        self::assertStringEndsWith($this->createUrl('/admin/customer/1/delete'), $form->getUri());
         $client->submit($form);
 
         $this->assertIsRedirect($client, $this->createUrl('/admin/customer/'));
@@ -453,10 +456,10 @@ class CustomerControllerTest extends ControllerBaseTest
 
         $em->clear();
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(0, \count($timesheets));
+        self::assertEquals(0, \count($timesheets));
 
         $this->request($client, '/admin/customer/1/edit');
-        $this->assertFalse($client->getResponse()->isSuccessful());
+        self::assertFalse($client->getResponse()->isSuccessful());
     }
 
     public function testDeleteActionWithTimesheetEntriesAndReplacement(): void
@@ -475,18 +478,18 @@ class CustomerControllerTest extends ControllerBaseTest
         $id = $customer->getId();
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, \count($timesheets));
+        self::assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {
-            $this->assertEquals(1, $entry->getProject()->getCustomer()->getId());
+            self::assertEquals(1, $entry->getProject()->getCustomer()->getId());
         }
 
         $this->request($client, '/admin/customer/1/delete');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertTrue($client->getResponse()->isSuccessful());
 
         $form = $client->getCrawler()->filter('form[name=form]')->form();
-        $this->assertStringEndsWith($this->createUrl('/admin/customer/1/delete'), $form->getUri());
+        self::assertStringEndsWith($this->createUrl('/admin/customer/1/delete'), $form->getUri());
         $client->submit($form, [
             'form' => [
                 'customer' => $id
@@ -499,20 +502,18 @@ class CustomerControllerTest extends ControllerBaseTest
         $this->assertHasFlashSuccess($client);
 
         $timesheets = $em->getRepository(Timesheet::class)->findAll();
-        $this->assertEquals(10, \count($timesheets));
+        self::assertEquals(10, \count($timesheets));
 
         /** @var Timesheet $entry */
         foreach ($timesheets as $entry) {
-            $this->assertEquals($id, $entry->getProject()->getCustomer()->getId());
+            self::assertEquals($id, $entry->getProject()->getCustomer()->getId());
         }
 
         $this->request($client, '/admin/customer/1/edit');
-        $this->assertFalse($client->getResponse()->isSuccessful());
+        self::assertFalse($client->getResponse()->isSuccessful());
     }
 
-    /**
-     * @dataProvider getValidationTestData
-     */
+    #[DataProvider('getValidationTestData')]
     public function testValidationForCreateAction(array $formData, array $validationFields): void
     {
         $this->assertFormHasValidationError(
@@ -524,7 +525,7 @@ class CustomerControllerTest extends ControllerBaseTest
         );
     }
 
-    public function getValidationTestData()
+    public static function getValidationTestData()
     {
         return [
             [

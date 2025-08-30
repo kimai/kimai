@@ -334,9 +334,6 @@
     "sebastian/recursion-context": {
         "version": "3.0.0"
     },
-    "sebastian/resource-operations": {
-        "version": "1.0.0"
-    },
     "sebastian/type": {
         "version": "1.1.3"
     },
@@ -502,18 +499,6 @@
             "version": "3.3",
             "ref": "179470cb6492db92dffee208cfdb436f175c93b4"
         }
-    },
-    "symfony/polyfill-intl-grapheme": {
-        "version": "v1.13.1"
-    },
-    "symfony/polyfill-intl-icu": {
-        "version": "v1.6.0"
-    },
-    "symfony/polyfill-intl-idn": {
-        "version": "v1.11.0"
-    },
-    "symfony/polyfill-intl-normalizer": {
-        "version": "v1.13.1"
     },
     "symfony/process": {
         "version": "v4.0.3"

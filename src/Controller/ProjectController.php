@@ -154,7 +154,7 @@ final class ProjectController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->projectService->updateProject($project);
+                $this->projectService->saveProject($project);
                 $this->flashSuccess('action.update.success');
 
                 if ($this->isGranted('view', $project)) {
@@ -197,7 +197,7 @@ final class ProjectController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->projectService->saveNewProject($project, new Context($this->getUser()));
+                $this->projectService->saveProject($project, new Context($this->getUser()));
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRouteAfterCreate('project_details', ['id' => $project->getId()]);
@@ -454,7 +454,7 @@ final class ProjectController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->projectService->updateProject($project);
+                $this->projectService->saveProject($project);
                 $this->flashSuccess('action.update.success');
 
                 if ($this->isGranted('view', $project)) {

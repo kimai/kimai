@@ -61,9 +61,9 @@
             {# what to do here ? #}
         {% else %}
             {% if values.children is defined and values.children|length > 0 %}
-                <div class="dropdown">
+                <div class="dropdown{% if values.class is defined %} {{ values.class }}{% endif %}">
                     <button type="button" class="btn {{ btnClasses }} dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ icon(icon, true) }}{% if large %} {{ values.title is defined ? values.title|trans : icon|trans({}, 'actions') }}{% endif %}
+                        {{ icon(icon, true) }}{% if large %} {{ values.title is defined ? values.title|trans : icon|trans }}{% endif %}
                     </button>
                     <div class="dropdown-menu">
                         {%- for icon, values in values.children %}
@@ -338,7 +338,7 @@
         {% endif %}
     {% elseif 'DurationType' in type %}
         {{ value|duration }}
-    {% elseif 'YesNoType' in type or 'CheckBoxType' in type %}
+    {% elseif 'YesNoType' in type or 'CheckboxType' in type %}
         {{ _self.label_boolean(value) }}
     {% elseif 'DatePickerType' in type %}
         {{ value|date_short }}
@@ -540,14 +540,6 @@
         </div>
         {% endfor %}
     </div>
-{% endmacro %}
-
-{% macro percent(maximum, current) %}
-    {% if maximum > 0 %}
-        {{ (current / (maximum / 100))|number_format(2) }} %
-    {% else %}
-        {{ 0|number_format(2) }} %
-    {% endif %}
 {% endmacro %}
 
 {% macro page_reloader(events, full_reload) %}

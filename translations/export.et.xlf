@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="et" datatype="plaintext" original="export.en.xlf">
+    <body>
+      <trans-unit id="oRRnhwf" resname="default.pdf.twig" xml:space="preserve">
+        <source>Default</source>
+        <target state="translated">Vaikevalik</target>
+      </trans-unit>
+      <trans-unit id="YjWg9hr" resname="default-budget.pdf.twig" xml:space="preserve">
+        <source>With remaining budget</source>
+        <target state="translated">Allesjäänud eelarvega</target>
+      </trans-unit>
+      <trans-unit id="AuhL8Sb" resname="default-internal.pdf.twig" xml:space="preserve">
+        <source>With internal rates</source>
+        <target state="translated">Sisemiste hindadega</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

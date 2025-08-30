@@ -331,6 +331,9 @@ final class Configuration implements ConfigurationInterface
                         ->booleanNode('require_activity')
                             ->defaultTrue()
                         ->end()
+                        ->booleanNode('break_time_active')
+                            ->defaultFalse()
+                        ->end()
                     ->end()
                 ->end()
             ->end()
@@ -393,6 +396,10 @@ final class Configuration implements ConfigurationInterface
                     ->scalarPrototype()->end()
                     ->defaultValue([])
                 ->end()
+                ->integerNode('timeout')
+                    ->defaultValue(60)
+                ->end()
+
             ->end()
         ;
 
@@ -552,7 +559,7 @@ final class Configuration implements ConfigurationInterface
                     ->defaultTrue()
                 ->end()
                 ->integerNode('password_reset_retry_ttl')
-                    ->defaultValue(7200)
+                    ->defaultValue(3600)
                 ->end()
                 ->integerNode('password_reset_token_ttl')
                     ->defaultValue(86400)

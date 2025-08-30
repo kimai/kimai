@@ -11,13 +11,11 @@ namespace App\Tests\Entity;
 
 use App\Entity\UserPreference;
 use App\Form\Type\YesNoType;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
-/**
- * @covers \App\Entity\UserPreference
- */
+#[CoversClass(UserPreference::class)]
 class UserPreferenceTest extends TestCase
 {
     public function testDefaultValues(): void
@@ -47,8 +45,7 @@ class UserPreferenceTest extends TestCase
         self::assertSame(1, $sut->getValue());
         $sut->setType(YesNoType::class);
         self::assertTrue($sut->getValue());
-        $sut->setValue('0');
-        $sut->setType(CheckboxType::class);
+        $sut->setValue('');
         self::assertFalse($sut->getValue());
     }
 

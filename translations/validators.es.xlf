@@ -6,9 +6,9 @@
         <source>This value is not a valid role.</source>
         <target>El valor indicado no es un tipo de rol válido.</target>
       </trans-unit>
-      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date.">
-        <source>End date must not be earlier then start date.</source>
-        <target state="translated">La fecha de finalización no debe ser anterior a la de inicio.</target>
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
+        <source>The end date must not be earlier than the start date.</source>
+        <target state="translated">La fecha final no debe ser anterior a la de inicio.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
@@ -110,9 +110,9 @@
         <source>You do not have enough overtime, remaining are {{ value }}.</source>
         <target state="translated">No tiene suficientes horas extra, las restantes son {{ value }}.</target>
       </trans-unit>
-      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day.">
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="translated">No se puede reservar una ausencia antes del primer día laborable.</target>
+        <target state="translated">No se podrá reservar una ausencia antes del primer día laborable.</target>
       </trans-unit>
       <trans-unit id="IN37g5N" resname="Not enough holidays left.">
         <source>Not enough holidays left.</source>
@@ -153,6 +153,18 @@
       <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form." xml:space="preserve">
         <source>The CSRF token is invalid. Please try to resubmit the form.</source>
         <target state="translated">Por favor, intenta volver a enviar el formulario. Si el problema persiste, actualiza tu navegador.</target>
+      </trans-unit>
+      <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day." xml:space="preserve">
+        <source>An absence cannot be booked after the last working day.</source>
+        <target state="translated">No se podrá reservar ninguna ausencia después del último día laborable.</target>
+      </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target state="translated">El período seleccionado no puede ser bloqueado: las solicitudes de ausencia no confirmadas están pendientes.</target>
+      </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
+        <source>Duration cannot be negative.</source>
+        <target state="translated">La duración no puede ser negativa.</target>
       </trans-unit>
     </body>
   </file>

@@ -12,16 +12,16 @@ namespace App\Tests\Export\Timesheet;
 use App\Activity\ActivityStatisticService;
 use App\Export\Timesheet\HtmlRenderer;
 use App\Project\ProjectStatisticService;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment;
 
-/**
- * @covers \App\Export\Timesheet\HtmlRenderer
- * @group integration
- */
-class HtmlRendererTest extends AbstractRendererTest
+#[CoversClass(HtmlRenderer::class)]
+#[Group('integration')]
+class HtmlRendererTest extends AbstractRendererTestCase
 {
     public function testConfiguration(): void
     {
@@ -32,7 +32,8 @@ class HtmlRendererTest extends AbstractRendererTest
             $this->createMock(ActivityStatisticService::class)
         );
 
-        $this->assertEquals('print', $sut->getId());
+        self::assertEquals('print', $sut->getId());
+        self::assertEquals('print', $sut->getTitle());
     }
 
     public function testRender(): void
@@ -57,6 +58,6 @@ class HtmlRendererTest extends AbstractRendererTest
 
         $content = $response->getContent();
 
-        $this->assertStringContainsString('>1:50<', $content);
+        self::assertStringContainsString('>1:50<', $content);
     }
 }

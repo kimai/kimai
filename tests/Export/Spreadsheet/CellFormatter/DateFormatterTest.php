@@ -15,11 +15,10 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Style\Style;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Export\Spreadsheet\CellFormatter\DateFormatter
- */
-class DateFormatterTest extends AbstractFormatterTest
+#[CoversClass(DateFormatter::class)]
+class DateFormatterTest extends AbstractFormatterTestCase
 {
     private $date;
 
@@ -28,12 +27,12 @@ class DateFormatterTest extends AbstractFormatterTest
         return new DateFormatter();
     }
 
-    protected function getActualValue()
+    protected function getActualValue(): \DateTimeInterface
     {
         return $this->date = new \DateTime();
     }
 
-    protected function getExpectedValue()
+    protected function getExpectedValue(): bool|float
     {
         return Date::PHPToExcel($this->date);
     }

@@ -10,11 +10,10 @@
 namespace App\Tests\Pdf;
 
 use App\Pdf\PdfContext;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Pdf\PdfContext
- */
+#[CoversClass(PdfContext::class)]
 class PdfContextTest extends TestCase
 {
     public function testEmptyObject(): void

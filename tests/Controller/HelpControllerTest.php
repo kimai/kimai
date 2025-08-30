@@ -10,11 +10,10 @@
 namespace App\Tests\Controller;
 
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
-class HelpControllerTest extends ControllerBaseTest
+#[Group('integration')]
+class HelpControllerTest extends AbstractControllerBaseTestCase
 {
     public function testHelpLocalesAction(): void
     {

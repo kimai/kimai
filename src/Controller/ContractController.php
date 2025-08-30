@@ -63,6 +63,8 @@ final class ContractController extends AbstractController
 
         /** @var \DateTime $yearDate */
         $yearDate = $values->getDate();
+        // make sure we use the correct datetime for the selected user
+        $yearDate = $this->getDateTimeFactory($profile)->createStartOfYear($yearDate);
         $year = $workingTimeService->getYear($profile, $yearDate, $now);
 
         $page = new PageSetup('work_times');
@@ -81,8 +83,25 @@ final class ContractController extends AbstractController
         $boxConfiguration->setDecimal(false);
         $boxConfiguration->setCollapsed($summary->count() > 0);
 
+        $hasConfiguration = $profile->hasWorkHourConfiguration();
+        $days = [];
+        if ($hasConfiguration) {
+            $calculator = $workingTimeService->getContractMode($profile)->getCalculator($profile);
+            $start = $dateTimeFactory->getStartOfWeek();
+            $end = $dateTimeFactory->getEndOfWeek();
+            while ($start < $end) {
+                $tmp = clone $start;
+                $days[] = [
+                    'date' => $tmp,
+                    'duration' => $calculator->isWorkDay($tmp) ? $calculator->getWorkHoursForDay($tmp) : null
+                ];
+                $start = $start->add(new \DateInterval('P1D'));
+            }
+        }
+
         return $this->render('contract/status.html.twig', [
-            'withWorkHourConfiguration' => $profile->hasWorkHourConfiguration(),
+            'days' => $days,
+            'withWorkHourConfiguration' => $hasConfiguration,
             'box_configuration' => $boxConfiguration,
             'page_setup' => $page,
             'decimal' => $boxConfiguration->isDecimal(),

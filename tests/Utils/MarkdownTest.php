@@ -10,19 +10,19 @@
 namespace App\Tests\Utils;
 
 use App\Utils\Markdown;
+use App\Utils\ParsedownExtension;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Utils\Markdown
- * @covers \App\Utils\ParsedownExtension
- */
+#[CoversClass(Markdown::class)]
+#[CoversClass(ParsedownExtension::class)]
 class MarkdownTest extends TestCase
 {
     public function testMarkdownToHtml(): void
     {
         $sut = new Markdown();
-        $this->assertEquals('<p><em>test</em></p>', $sut->toHtml('*test*'));
-        $this->assertEquals('<p># foobar</p>', $sut->toHtml('# foobar'));
+        self::assertEquals('<p><em>test</em></p>', $sut->toHtml('*test*'));
+        self::assertEquals('<p># foobar</p>', $sut->toHtml('# foobar'));
         $html = <<<'EOT'
             <p>foo bar</p>
             <ul>
@@ -62,7 +62,7 @@ class MarkdownTest extends TestCase
             1111
             222
             EOT;
-        $this->assertEquals($html, $sut->toHtml($markdown));
+        self::assertEquals($html, $sut->toHtml($markdown));
     }
 
     public function testDuplicateIds(): void
@@ -82,7 +82,7 @@ class MarkdownTest extends TestCase
             ### test
             # test
             EOT;
-        $this->assertEquals($html, $sut->toHtml($markdown));
+        self::assertEquals($html, $sut->toHtml($markdown));
     }
 
     public function testLinksAreSanitized(): void
@@ -100,6 +100,6 @@ class MarkdownTest extends TestCase
             [XSS](javascript:alert("XSS"))
             [XSS](javascript:alert('XSS'))
             EOT;
-        $this->assertEquals($html, $sut->toHtml($markdown));
+        self::assertEquals($html, $sut->toHtml($markdown));
     }
 }

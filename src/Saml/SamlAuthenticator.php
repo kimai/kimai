@@ -12,6 +12,7 @@ namespace App\Saml;
 use App\Configuration\SamlConfigurationInterface;
 use App\Saml\Security\SamlAuthenticationFailureHandler;
 use App\Saml\Security\SamlAuthenticationSuccessHandler;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -40,13 +41,18 @@ class SamlAuthenticator extends AbstractAuthenticator
         private readonly SamlAuthenticationFailureHandler $failureHandler,
         private readonly SamlAuthFactory $samlAuthFactory,
         private readonly SamlProvider $samlProvider,
-        private readonly SamlConfigurationInterface $configuration
+        private readonly SamlConfigurationInterface $configuration,
+        private readonly LoggerInterface $logger
     ) {
     }
 
     public function supports(Request $request): bool
     {
         if (!$this->configuration->isActivated()) {
+            return false;
+        }
+
+        if (!$request->isMethod(Request::METHOD_POST)) {
             return false;
         }
 
@@ -81,7 +87,8 @@ class SamlAuthenticator extends AbstractAuthenticator
 
         // file_put_contents(__DIR__ . '/../../var/log/saml.xml', $oneLoginAuth->getLastResponseXML());
 
-        if ($oneLoginAuth->getErrors()) {
+        if (\count($oneLoginAuth->getErrors()) > 0) {
+            $this->logger->critical('SAML login failed: ' . $oneLoginAuth->getLastErrorReason());
             throw new AuthenticationException($oneLoginAuth->getLastErrorReason());
         }
 
@@ -98,7 +105,9 @@ class SamlAuthenticator extends AbstractAuthenticator
 
         if (isset($this->options['username_attribute'])) {
             if (!\array_key_exists($this->options['username_attribute'], $attributes)) {
-                throw new \Exception(\sprintf("Attribute '%s' not found in SAML data", $this->options['username_attribute']));
+                $errorMessage = \sprintf("Attribute '%s' not found in SAML data", $this->options['username_attribute']);
+                $this->logger->critical($errorMessage);
+                throw new \Exception($errorMessage);
             }
 
             $username = $attributes[$this->options['username_attribute']][0];

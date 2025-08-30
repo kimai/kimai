@@ -10,12 +10,12 @@
 namespace App\Tests\Form\DataTransformer;
 
 use App\Form\DataTransformer\DurationStringToSecondsTransformer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
-/**
- * @covers \App\Form\DataTransformer\DurationStringToSecondsTransformer
- */
+#[CoversClass(DurationStringToSecondsTransformer::class)]
 class DurationStringToSecondsTransformerTest extends TestCase
 {
     private DurationStringToSecondsTransformer $sut;
@@ -25,7 +25,7 @@ class DurationStringToSecondsTransformerTest extends TestCase
         $this->sut = new DurationStringToSecondsTransformer();
     }
 
-    public function getValidTestDataTransform(): array
+    public static function getValidTestDataTransform(): array
     {
         return [
             ['0:00', '0'],
@@ -37,7 +37,7 @@ class DurationStringToSecondsTransformerTest extends TestCase
         ];
     }
 
-    public function getInvalidTestDataTransform(): array
+    public static function getInvalidTestDataTransform(): array
     {
         return [
             [''],
@@ -45,27 +45,23 @@ class DurationStringToSecondsTransformerTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getValidTestDataTransform
-     */
+    #[DataProvider('getValidTestDataTransform')]
     public function testTransform($expected, $transform): void
     {
-        $this->assertEquals($expected, $this->sut->transform($transform));
+        self::assertEquals($expected, $this->sut->transform($transform));
     }
 
-    /**
-     * @dataProvider getInvalidTestDataTransform
-     */
+    #[DataProvider('getInvalidTestDataTransform')]
     public function testInvalidTransformThrowsException($transform): void
     {
         $value = $this->sut->transform($transform);
-        $this->assertNull($value);
+        self::assertNull($value);
     }
 
     /**
      * @return array<int, array<int, string|int|float|null>>
      */
-    public function getValidTestDataReverseTransform(): array
+    public static function getValidTestDataReverseTransform(): array
     {
         return [
             ['2h3s', 7203],
@@ -81,7 +77,7 @@ class DurationStringToSecondsTransformerTest extends TestCase
     /**
      * @return array<int, array<int, string|int>>
      */
-    public function getInvalidTestDataReverseTransform(): array
+    public static function getInvalidTestDataReverseTransform(): array
     {
         return [
             ['xxx'],
@@ -94,17 +90,13 @@ class DurationStringToSecondsTransformerTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getValidTestDataReverseTransform
-     */
+    #[DataProvider('getValidTestDataReverseTransform')]
     public function testReverseTransform($transform, $expected): void
     {
-        $this->assertEquals($expected, $this->sut->reverseTransform($transform));
+        self::assertEquals($expected, $this->sut->reverseTransform($transform));
     }
 
-    /**
-     * @dataProvider getInvalidTestDataReverseTransform
-     */
+    #[DataProvider('getInvalidTestDataReverseTransform')]
     public function testInvalidReverseTransformThrowsException($transform): void
     {
         $this->expectException(TransformationFailedException::class);

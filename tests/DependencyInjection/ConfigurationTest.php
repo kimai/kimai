@@ -10,12 +10,11 @@
 namespace App\Tests\DependencyInjection;
 
 use App\DependencyInjection\Configuration;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
-/**
- * @covers \App\DependencyInjection\Configuration
- */
+#[CoversClass(Configuration::class)]
 class ConfigurationTest extends TestCase
 {
     protected function getMinConfig($dataDir = '/tmp/')
@@ -290,6 +289,7 @@ class ConfigurationTest extends TestCase
                     'break_warning_duration' => 0,
                     'long_running_duration' => 0,
                     'require_activity' => true,
+                    'break_time_active' => false,
                 ],
                 'duration_increment' => 15,
                 'time_increment' => 15,
@@ -298,7 +298,7 @@ class ConfigurationTest extends TestCase
                 'registration' => false,
                 'password_reset' => true,
                 'login' => true,
-                'password_reset_retry_ttl' => 7200,
+                'password_reset_retry_ttl' => 3600,
                 'password_reset_token_ttl' => 86400,
             ],
             'invoice' => [
@@ -318,6 +318,7 @@ class ConfigurationTest extends TestCase
                     0 => 'var/export/',
                     1 => 'templates/export/renderer/',
                 ],
+                'timeout' => 60,
             ],
             'calendar' => [
                 'week_numbers' => true,

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ta" datatype="plaintext" original="tasks.en.xlf">
+    <body>
+      <trans-unit id="tLV1hoP" resname="report_tasks_assigned" xml:space="preserve" approved="yes">
+        <source>report_tasks_assigned</source>
+        <target state="final">ஒரு பயனருக்குப் பணிகள்</target>
+      </trans-unit>
+      <trans-unit id="8c0YWZm" resname="report_tasks_teams" xml:space="preserve" approved="yes">
+        <source>report_tasks_teams</source>
+        <target state="final">குழுப் பணிகள்</target>
+      </trans-unit>
+      <trans-unit id="XjAwhoV" resname="task.start" xml:space="preserve" approved="yes">
+        <source>task.start</source>
+        <target state="final">செயலாக்கத்தைத் தொடங்குங்கள்</target>
+      </trans-unit>
+      <trans-unit id="XD7TZh7" resname="task.stop" xml:space="preserve" approved="yes">
+        <source>task.stop</source>
+        <target state="final">இடைநிறுத்தச் செயலாக்கம்</target>
+      </trans-unit>
+      <trans-unit id="sG_9DvK" resname="task.assign" xml:space="preserve" approved="yes">
+        <source>task.assign</source>
+        <target state="final">எனக்கு நியமிக்கவும்</target>
+      </trans-unit>
+      <trans-unit id="qLewfPg" resname="task.unassign" xml:space="preserve" approved="yes">
+        <source>task.unassign</source>
+        <target state="final">வெளியீட்டு பணி</target>
+      </trans-unit>
+      <trans-unit id="F1_rg1R" resname="task.reopen" xml:space="preserve" approved="yes">
+        <source>task.reopen</source>
+        <target state="final">பணி மீண்டும் திற</target>
+      </trans-unit>
+      <trans-unit id="duBK63z" resname="task.close" xml:space="preserve" approved="yes">
+        <source>task.close</source>
+        <target state="final">முழுமையான பணி</target>
+      </trans-unit>
+      <trans-unit id="t.y642H" resname="task.create" xml:space="preserve" approved="yes">
+        <source>task.create</source>
+        <target state="final">பணியை உருவாக்கவும்</target>
+      </trans-unit>
+      <trans-unit id="s6YOYaU" resname="Tasks" xml:space="preserve" approved="yes">
+        <source>Tasks</source>
+        <target state="final">பணிகள்</target>
+      </trans-unit>
+      <trans-unit id="7f4C38O" resname="tasks.pending" xml:space="preserve" approved="yes">
+        <source>tasks.pending</source>
+        <target state="final">நிலுவையில் உள்ள பணிகள்</target>
+      </trans-unit>
+      <trans-unit id="rLKr7Zu" resname="tasks.my" xml:space="preserve" approved="yes">
+        <source>tasks.my</source>
+        <target state="final">என் பணிகள்</target>
+      </trans-unit>
+      <trans-unit id="FhEb.Hn" resname="task.help.title" xml:space="preserve" approved="yes">
+        <source>task.help.title</source>
+        <target state="final">பணியின் குறுகிய விளக்கம்</target>
+      </trans-unit>
+      <trans-unit id="WCaBimL" resname="task.help.end" xml:space="preserve" approved="yes">
+        <source>task.help.end</source>
+        <target state="final">இந்தத் தேதிவரை பணி முடிக்கப்பட வேண்டும்</target>
+      </trans-unit>
+      <trans-unit id="taZkyYV" resname="task.help.user" xml:space="preserve" approved="yes">
+        <source>task.help.user</source>
+        <target state="final">இந்தப் பணியை ஒரு பயனருக்கு ஒதுக்குங்கள்</target>
+      </trans-unit>
+      <trans-unit id="QF_bQPv" resname="task.help.team" xml:space="preserve" approved="yes">
+        <source>task.help.team</source>
+        <target state="final">இந்தப் பணியை ஒரு குழுவுக்கு ஒதுக்குங்கள்</target>
+      </trans-unit>
+      <trans-unit id="kMOottI" resname="task.widget_rows" xml:space="preserve" approved="yes">
+        <source>task.widget_rows</source>
+        <target state="final">முகப்பலக நிரல் பலகையில் ஒரு பக்கத்திற்கு பணிகளின் அளவு</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="yes">
+        <source>estimation</source>
+        <target state="final">நேர மதிப்பீடு</target>
+      </trans-unit>
+      <trans-unit id="ZCSPtzc" resname="task.help.estimation" xml:space="preserve" approved="yes">
+        <source>task.help.estimation</source>
+        <target state="final">பணியை முடிக்க மதிப்பிடப்பட்ட தேவை நேரம் மம: நிநி இல்</target>
+      </trans-unit>
+      <trans-unit id="SzbkpWy" resname="task.help.description" xml:space="preserve" approved="yes">
+        <source>task.help.description</source>
+        <target state="final">இந்த விளக்கம் ஒவ்வொரு நேரதாள் பதிவிலும் நகலெடுக்கப்படும்</target>
+      </trans-unit>
+      <trans-unit id="zJvuPBv" resname="task.help.tags" xml:space="preserve" approved="yes">
+        <source>task.help.tags</source>
+        <target state="final">இந்தக் குறிச்சொற்கள் ஒவ்வொரு நேரதாள் பதிவிலும் நகலெடுக்கப்படும்</target>
+      </trans-unit>
+      <trans-unit id="agwwK.J" resname="task_no_estimation" xml:space="preserve" approved="yes">
+        <source>task_no_estimation</source>
+        <target state="final">மதிப்பீடு இல்லாமல்</target>
+      </trans-unit>
+      <trans-unit id="kgA8TVH" resname="task_with_estimation" xml:space="preserve" approved="yes">
+        <source>task_with_estimation</source>
+        <target state="final">மதிப்பீட்டோடு</target>
+      </trans-unit>
+      <trans-unit id="H.zMNfb" resname="task_started" xml:space="preserve" approved="yes">
+        <source>task_started</source>
+        <target state="final">வேலை தொடங்கியது</target>
+      </trans-unit>
+      <trans-unit id="cu1.2JS" resname="task_not_started" xml:space="preserve" approved="yes">
+        <source>task_not_started</source>
+        <target state="final">தொடங்கப்படவில்லை</target>
+      </trans-unit>
+      <trans-unit id="ZwdUYYa" resname="task_overdue" xml:space="preserve" approved="yes">
+        <source>task_overdue</source>
+        <target state="final">தாமதமானது</target>
+      </trans-unit>
+      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="yes">
+        <source>task_todo</source>
+        <target state="final">பணி</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

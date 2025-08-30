@@ -13,15 +13,16 @@ use App\Command\ActivateUserCommand;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\User\UserService;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Tester\CommandTester;
 
-/**
- * @covers \App\Command\ActivateUserCommand
- * @group integration
- */
+#[CoversClass(ActivateUserCommand::class)]
+#[Group('integration')]
 class ActivateUserCommandTest extends KernelTestCase
 {
     private Application $application;
@@ -33,6 +34,7 @@ class ActivateUserCommandTest extends KernelTestCase
         $this->application = new Application($kernel);
         $container = self::$kernel->getContainer();
 
+        /** @var UserService $userService */
         $userService = $container->get(UserService::class);
 
         $this->application->add(new ActivateUserCommand($userService));
@@ -68,11 +70,13 @@ class ActivateUserCommandTest extends KernelTestCase
         $commandTester = $this->callCommand('chris_user');
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[OK] User "chris_user" has been activated.', $output);
+        self::assertStringContainsString('[OK] User "chris_user" has been activated.', $output);
 
         $container = self::$kernel->getContainer();
+        /** @var Registry $doctrine */
+        $doctrine = $container->get('doctrine');
         /** @var UserRepository $userRepository */
-        $userRepository = $container->get('doctrine')->getRepository(User::class);
+        $userRepository = $doctrine->getRepository(User::class);
         $user = $userRepository->loadUserByIdentifier('chris_user');
         self::assertInstanceOf(User::class, $user);
         self::assertTrue($user->isEnabled());
@@ -83,7 +87,7 @@ class ActivateUserCommandTest extends KernelTestCase
         $commandTester = $this->callCommand('susan_super');
 
         $output = $commandTester->getDisplay();
-        $this->assertStringContainsString('[WARNING] User "susan_super" is already active.', $output);
+        self::assertStringContainsString('[WARNING] User "susan_super" is already active.', $output);
     }
 
     public function testWithMissingUsername(): void

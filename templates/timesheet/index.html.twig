@@ -91,9 +91,9 @@
 {% block datatable_column %}
     <td class="{{ tables.class(dataTable, column) }}{% if column == 'description' %} timesheet-description{% endif %}">
     {% if column == 'id' %}
-            {% if is_granted('edit', entry) or is_granted('delete', entry) %}
-                {{ tables.datatable_multiupdate_row(entry.id) }}
-            {% endif %}
+        {% if is_granted('edit', entry) or is_granted('delete', entry) %}
+            {{ tables.datatable_multiupdate_row(entry.id) }}
+        {% endif %}
     {% elseif column == 'date' %}
         {{ entry.begin|date_short }}
     {% elseif column == 'starttime' %}
@@ -110,6 +110,8 @@
         {% else %}
             <i data-since="{{ entry.begin.format(constant('DATE_ISO8601')) }}">{{ entry|duration }}</i>
         {% endif %}
+    {% elseif column == 'break' %}
+        {{ entry.break|duration }}
     {% elseif column == 'hourlyRate' %}
         {{ entryHourlyRate }}
     {% elseif column == 'rate' %}
