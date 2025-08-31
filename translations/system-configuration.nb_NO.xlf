@@ -94,9 +94,9 @@
         <source>calendar.visibleHours.end</source>
         <target>Slutt for synlig tidsrom</target>
       </trans-unit>
-      <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
+      <trans-unit id="BYy.c1V" resname="calendar.slot_duration" xml:space="preserve">
         <source>calendar.slot_duration</source>
-        <target>Tidsbolksvariget for uke, og dagvisning (format: tt:mm:ss)</target>
+        <target state="translated">Tidsbolksvariget for uke, og dagvisning</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>

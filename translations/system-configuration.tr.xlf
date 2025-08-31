@@ -150,9 +150,9 @@
         <source>branding</source>
         <target>Şirketim</target>
       </trans-unit>
-      <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
+      <trans-unit id="BYy.c1V" resname="calendar.slot_duration" xml:space="preserve">
         <source>calendar.slot_duration</source>
-        <target>Hafta ve gün görünümü için dilim süresi (biçim: ss:dd:ss)</target>
+        <target state="translated">Hafta ve gün görünümü için dilim süresi</target>
       </trans-unit>
       <trans-unit id="M1iVHeQ" resname="timesheet.rules.lockdown_period_end">
         <source>timesheet.rules.lockdown_period_end</source>
