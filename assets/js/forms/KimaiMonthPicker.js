@@ -27,11 +27,10 @@ export default class KimaiMonthPicker extends KimaiFormPlugin {
      */
     activateForm(form)
     {
-        console.log(form);
-        let input = document.createElement('input');
+        const input = document.createElement('input');
         input.setAttribute('type','month');
 
-        let notADateValue = 'not-a-month';
+        const notADateValue = 'not-a-month';
         input.setAttribute('value', notADateValue);
 
         if (input.value === notADateValue) {
