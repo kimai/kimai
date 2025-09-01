@@ -475,6 +475,11 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'timeBudget' => 'int',
                     'vatId' => '@string', // since 1.10
                     'budgetType' => '@string', // since 1.15
+                    'addressLine1' => '@string', // since 2.32
+                    'addressLine2' => '@string', // since 2.32
+                    'addressLine3' => '@string', // since 2.32
+                    'city' => '@string', // since 2.32
+                    'postCode' => '@string', // since 2.32
                 ];
 
                 // if a project is embedded
