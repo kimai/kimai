@@ -119,6 +119,11 @@ class InvoiceControllerTest extends APIControllerBaseTestCase
         self::assertApiResponseTypeStructure('Invoice', $result);
     }
 
+    public function testDownloadInvoice(): void
+    {
+        $this->fail('Missing test');
+    }
+
     public function testNotFound(): void
     {
         $this->assertEntityNotFound(User::ROLE_USER, '/api/invoices/' . PHP_INT_MAX);
