@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c4132b27874219d53c81faf0ac124fe9",
+    "content-hash": "6de518cfb326aa934d51b251e6de6e6c",
     "packages": [
         {
             "name": "azuyalabs/yasumi",
@@ -2998,16 +2998,16 @@
         },
         {
             "name": "nelmio/api-doc-bundle",
-            "version": "v5.5.0",
+            "version": "v5.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "ce6434107ccb57d0686e25ae6c7767c75a3c6e4e"
+                "reference": "c7797a9615ba7fea21a9043d1537d84782a00039"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/ce6434107ccb57d0686e25ae6c7767c75a3c6e4e",
-                "reference": "ce6434107ccb57d0686e25ae6c7767c75a3c6e4e",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/c7797a9615ba7fea21a9043d1537d84782a00039",
+                "reference": "c7797a9615ba7fea21a9043d1537d84782a00039",
                 "shasum": ""
             },
             "require": {
@@ -3109,7 +3109,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nelmio/NelmioApiDocBundle/issues",
-                "source": "https://github.com/nelmio/NelmioApiDocBundle/tree/v5.5.0"
+                "source": "https://github.com/nelmio/NelmioApiDocBundle/tree/v5.5.1"
             },
             "funding": [
                 {
@@ -3117,7 +3117,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-08-04T14:41:29+00:00"
+            "time": "2025-09-01T08:17:34+00:00"
         },
         {
             "name": "nelmio/cors-bundle",
@@ -13866,7 +13866,7 @@
         "ext-simplexml": "*"
     },
     "platform-overrides": {
-        "php": "8.4.0"
+        "php": "8.4.4"
     },
     "plugin-api-version": "2.6.0"
 }
