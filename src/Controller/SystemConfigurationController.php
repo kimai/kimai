@@ -270,12 +270,12 @@ final class SystemConfigurationController extends AbstractController
                 (new Configuration('user.password_reset_retry_ttl'))
                     ->setTranslationDomain('system-configuration')
                     ->setLabel('user_auth_password_reset_retry_ttl')
-                    ->setConstraints([new NotNull(), new GreaterThanOrEqual(['value' => 60])])
+                    ->setConstraints([new NotNull(), new GreaterThanOrEqual(value: 60)])
                     ->setType(IntegerType::class),
                 (new Configuration('user.password_reset_token_ttl'))
                     ->setTranslationDomain('system-configuration')
                     ->setLabel('user_auth_password_reset_token_ttl')
-                    ->setConstraints([new NotNull(), new GreaterThanOrEqual(['value' => 60])])
+                    ->setConstraints([new NotNull(), new GreaterThanOrEqual(value: 60)])
                     ->setType(IntegerType::class),
             ]);
 
@@ -321,33 +321,33 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(IntegerType::class)
                         ->setTranslationDomain('system-configuration')
                         ->setConstraints([
-                            new GreaterThanOrEqual(['value' => 1])
+                            new GreaterThanOrEqual(value: 1)
                         ]),
                     (new Configuration('timesheet.time_increment'))
                         ->setType(MinuteIncrementType::class)
                         ->setTranslationDomain('system-configuration')
                         ->setConstraints([
-                            new Range(['min' => 0, 'max' => 60])
+                            new Range(min: 0, max: 60)
                         ]),
                     (new Configuration('timesheet.duration_increment'))
                         ->setType(MinuteIncrementType::class)
                         ->setTranslationDomain('system-configuration')
                         ->setConstraints([
-                            new GreaterThanOrEqual(['value' => 0])
+                            new GreaterThanOrEqual(value: 0)
                         ]),
                     /*
                     (new Configuration('timesheet.rules.break_warning_duration'))
                         ->setType(IntegerType::class)
                         ->setTranslationDomain('system-configuration')
                         ->setConstraints([
-                            new GreaterThanOrEqual(['value' => 0])
+                            new GreaterThanOrEqual(value: 0)
                         ]),
                     */
                     (new Configuration('timesheet.rules.long_running_duration'))
                         ->setType(IntegerType::class)
                         ->setTranslationDomain('system-configuration')
                         ->setConstraints([
-                            new GreaterThanOrEqual(['value' => 0])
+                            new GreaterThanOrEqual(value: 0)
                         ]),
                     (new Configuration('timesheet.rules.break_time_active'))
                         ->setLabel('break')
@@ -363,20 +363,20 @@ final class SystemConfigurationController extends AbstractController
                         ->setTranslationDomain('system-configuration')
                         ->setRequired(false)
                         ->setConstraints([
-                            new Range(['min' => 0, 'max' => 20]),
+                            new Range(min: 0, max: 20),
                         ]),
                     (new Configuration('quick_entry.recent_activity_weeks'))
                         ->setType(IntegerType::class)
                         ->setTranslationDomain('system-configuration')
                         ->setRequired(false)
                         ->setConstraints([
-                            new Range(['min' => 0, 'max' => 20]),
+                            new Range(min: 0, max: 20),
                         ]),
                     (new Configuration('quick_entry.minimum_rows'))
                         ->setType(IntegerType::class)
                         ->setTranslationDomain('system-configuration')
                         ->setConstraints([
-                            new Range(['min' => 1, 'max' => 5]),
+                            new Range(min: 1, max: 5),
                         ]),
                 ]),
             (new SystemConfigurationModel('lockdown_period'))
@@ -413,19 +413,19 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(IntegerType::class)
                         ->setTranslationDomain('system-configuration')
                         ->setConstraints([
-                            new GreaterThanOrEqual(['value' => 0])
+                            new GreaterThanOrEqual(value: 0)
                         ]),
                     (new Configuration('timesheet.rounding.default.end'))
                         ->setType(IntegerType::class)
                         ->setTranslationDomain('system-configuration')
                         ->setConstraints([
-                            new GreaterThanOrEqual(['value' => 0])
+                            new GreaterThanOrEqual(value: 0)
                         ]),
                     (new Configuration('timesheet.rounding.default.duration'))
                         ->setType(IntegerType::class)
                         ->setTranslationDomain('system-configuration')
                         ->setConstraints([
-                            new GreaterThanOrEqual(['value' => 0])
+                            new GreaterThanOrEqual(value: 0)
                         ]),
                     (new Configuration('timesheet.rounding.default.days'))
                         ->setType(WeekDaysType::class)
@@ -594,7 +594,7 @@ final class SystemConfigurationController extends AbstractController
                     (new Configuration('calendar.dragdrop_amount'))
                         ->setTranslationDomain('system-configuration')
                         ->setType(IntegerType::class)
-                        ->setConstraints([new Range(['min' => 0, 'max' => 20]), new NotNull()]),
+                        ->setConstraints([new Range(min: 0, max: 20), new NotNull()]),
                     (new Configuration('calendar.dragdrop_data'))
                         ->setTranslationDomain('system-configuration')
                         ->setType(YesNoType::class),

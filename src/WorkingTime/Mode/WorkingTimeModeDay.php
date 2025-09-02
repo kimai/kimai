@@ -60,7 +60,7 @@ class WorkingTimeModeDay implements WorkingTimeMode
             'required' => false,
             'translation_domain' => 'system-configuration',
             'constraints' => [
-                new GreaterThanOrEqual(0),
+                new GreaterThanOrEqual(value: 0),
                 new LessThanOrEqual(86400),
             ],
         ];
