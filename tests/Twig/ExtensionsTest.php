@@ -43,7 +43,7 @@ class ExtensionsTest extends TestCase
 
     public function testGetFilters(): void
     {
-        $filters = ['report_date', 'docu_link', 'multiline_indent', 'color', 'font_contrast', 'default_color', 'nl2str'];
+        $filters = ['month_picker', 'report_date', 'docu_link', 'multiline_indent', 'color', 'font_contrast', 'default_color', 'nl2str'];
         $sut = $this->getSut();
         $twigFilters = $sut->getFilters();
         self::assertCount(\count($filters), $twigFilters);

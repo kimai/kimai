@@ -25,10 +25,8 @@ doctrine:
             datetime_immutable: App\Doctrine\UTCDateTimeImmutableType
     orm:
         controller_resolver:
-            # FIXME this is causing a deprecation and needs to be changed
-            # auto_mapping: false
-            auto_mapping: true
-        auto_generate_proxy_classes: '%kernel.debug%'
+            auto_mapping: false
+        auto_generate_proxy_classes: false
         default_entity_manager: default
         enable_lazy_ghost_objects: true
         entity_managers:
@@ -37,6 +35,7 @@ doctrine:
                 connection: default
                 naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
                 auto_mapping: true
+                enable_native_lazy_objects: true
                 mappings:
                     App:
                         type: attribute
