@@ -204,7 +204,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     /**
      * List of all role names
      */
-    #[ORM\Column(name: 'roles', type: Types::ARRAY, nullable: false)] // @phpstan-ignore classConstant.deprecated
+    #[ORM\Column(name: 'roles', type: Types::JSON, nullable: false)]
     #[Serializer\Expose]
     #[Serializer\Groups(['User_Entity'])]
     #[Serializer\Type('array<string>')]
@@ -811,10 +811,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         }
     }
 
+    #[\Deprecated]
     public function eraseCredentials(): void
     {
-        $this->plainPassword = null;
-        $this->plainApiToken = null;
     }
 
     public function hasUsername(): bool
@@ -962,7 +961,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
-    public function setLastLogin(\DateTime $time = null): User
+    public function setLastLogin(?\DateTime $time = null): User
     {
         $this->lastLogin = $time;
 
@@ -1028,6 +1027,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function __serialize(): array
     {
+        $this->plainPassword = null;
+        $this->plainApiToken = null;
+
         return [
             'id' => $this->id,
             'username' => $this->username,
