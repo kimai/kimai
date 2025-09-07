@@ -108,7 +108,7 @@
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration" xml:space="preserve">
         <source>calendar.slot_duration</source>
-        <target state="translated">வாரம் மற்றும் நாள் பார்வைக்கான ச்லாட் காலம் (வடிவம்: HH: MM: SS)</target>
+        <target state="translated">வாரம் மற்றும் நாள் பார்வைக்கான ச்லாட் காலம்</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding" xml:space="preserve">
         <source>branding</source>
