@@ -52,8 +52,11 @@ final class Version20250830182140 extends AbstractMigration
     {
         $connection = $this->connection;
 
+        $connection->executeStatement('ALTER TABLE kimai2_users CHANGE roles roles LONGTEXT NOT NULL COMMENT \'(DC2Type:array)\'');
+        $connection->executeStatement('ALTER TABLE kimai2_users DROP CONSTRAINT IF EXISTS roles');
+
         // Fetch the existing rows from the table
-        $rows = $connection->fetchAssociative('SELECT id, roles FROM kimai2_users');
+        $rows = $connection->fetchAllAssociative('SELECT id, roles FROM kimai2_users');
 
         // Iterate over each row
         foreach ($rows as $row) {
@@ -69,7 +72,6 @@ final class Version20250830182140 extends AbstractMigration
             ]);
         }
 
-        $this->addSql('ALTER TABLE kimai2_users CHANGE roles roles LONGTEXT NOT NULL COMMENT \'(DC2Type:array)\'');
     }
 
     public function isTransactional(): bool
