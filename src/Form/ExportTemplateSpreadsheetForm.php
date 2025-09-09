@@ -23,7 +23,7 @@ class ExportTemplateSpreadsheetForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('title', TextType::class);
+        $builder->add('title', TextType::class, ['label' => 'name']);
         $builder->add('renderer', ExportRendererType::class, ['label' => 'type']);
         $builder->add('language', LanguageType::class, ['required' => false]);
         $builder->add('columns', ExportColumnsType::class, ['required' => true]);
