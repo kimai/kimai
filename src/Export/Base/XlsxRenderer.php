@@ -36,6 +36,11 @@ final class XlsxRenderer implements RendererInterface, TimesheetExportInterface
     {
     }
 
+    public function getType(): string
+    {
+        return 'xlsx';
+    }
+
     public function setId(string $id): void
     {
         $this->id = $id;

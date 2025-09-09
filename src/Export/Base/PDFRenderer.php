@@ -43,6 +43,11 @@ class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
     {
     }
 
+    public function getType(): string
+    {
+        return 'pdf';
+    }
+
     public function getTitle(): string
     {
         return $this->title;

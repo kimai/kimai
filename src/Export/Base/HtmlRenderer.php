@@ -47,6 +47,11 @@ class HtmlRenderer implements ExportRendererInterface
     ) {
     }
 
+    public function getType(): string
+    {
+        return 'html';
+    }
+
     /**
      * @return MetaTableTypeInterface[]
      */

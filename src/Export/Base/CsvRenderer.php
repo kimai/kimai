@@ -39,6 +39,11 @@ final class CsvRenderer implements RendererInterface, TimesheetExportInterface
     {
     }
 
+    public function getType(): string
+    {
+        return 'csv';
+    }
+
     public function setId(string $id): void
     {
         $this->id = $id;
