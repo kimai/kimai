@@ -26,10 +26,12 @@ use App\Repository\Query\ProjectQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\SecurityPolicy\ExportPolicy;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\DependencyInjection\Attribute\Exclude;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use Twig\Extension\SandboxExtension;
 
+#[Exclude]
 class HtmlRenderer implements ExportRendererInterface
 {
     use RendererTrait;

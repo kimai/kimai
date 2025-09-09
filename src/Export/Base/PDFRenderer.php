@@ -19,10 +19,12 @@ use App\Pdf\PdfRendererTrait;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\SecurityPolicy\ExportPolicy;
+use Symfony\Component\DependencyInjection\Attribute\Exclude;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use Twig\Extension\SandboxExtension;
 
+#[Exclude]
 class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface, TimesheetExportInterface
 {
     use RendererTrait;
