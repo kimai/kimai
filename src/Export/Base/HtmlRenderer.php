@@ -47,6 +47,11 @@ class HtmlRenderer implements ExportRendererInterface
     ) {
     }
 
+    public function isInternal(): bool
+    {
+        return false;
+    }
+
     public function getType(): string
     {
         return 'html';

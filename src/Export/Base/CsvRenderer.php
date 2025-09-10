@@ -31,12 +31,23 @@ final class CsvRenderer implements RendererInterface, TimesheetExportInterface
     private string $id = 'csv';
     private string $title = 'default';
     private ?string $locale = null;
+    private bool $internal = false;
 
     public function __construct(
         private readonly SpreadsheetRenderer $spreadsheetRenderer,
         private readonly TranslatorInterface $translator
     )
     {
+    }
+
+    public function isInternal(): bool
+    {
+        return $this->internal;
+    }
+
+    public function setInternal(bool $internal): void
+    {
+        $this->internal = $internal;
     }
 
     public function getType(): string

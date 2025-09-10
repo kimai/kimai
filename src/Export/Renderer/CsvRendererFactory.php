@@ -29,13 +29,14 @@ final class CsvRendererFactory
 
     public function create(TemplateInterface $template): CsvRenderer
     {
-        $renderer = new SpreadsheetRenderer($this->dispatcher, $this->voter, $this->logger);
-        $renderer->setTemplate($template);
+        $spreadsheet = new SpreadsheetRenderer($this->dispatcher, $this->voter, $this->logger);
+        $spreadsheet->setTemplate($template);
 
-        $renderer = new CsvRenderer($renderer, $this->translator);
+        $renderer = new CsvRenderer($spreadsheet, $this->translator);
         $renderer->setId($template->getId());
         $renderer->setTitle($template->getTitle());
         $renderer->setLocale($template->getLocale());
+        $renderer->setInternal(true);
 
         return $renderer;
     }

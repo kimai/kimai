@@ -29,13 +29,14 @@ final class XlsxRendererFactory
 
     public function create(TemplateInterface $template): XlsxRenderer
     {
-        $renderer = new SpreadsheetRenderer($this->dispatcher, $this->voter, $this->logger);
-        $renderer->setTemplate($template);
+        $spreadhsheet = new SpreadsheetRenderer($this->dispatcher, $this->voter, $this->logger);
+        $spreadhsheet->setTemplate($template);
 
-        $renderer = new XlsxRenderer($renderer, $this->translator);
+        $renderer = new XlsxRenderer($spreadhsheet, $this->translator);
         $renderer->setId($template->getId());
         $renderer->setTitle($template->getTitle());
         $renderer->setLocale($template->getLocale());
+        $renderer->setInternal(true);
 
         return $renderer;
     }

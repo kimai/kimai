@@ -39,5 +39,6 @@ class XlsxRendererFactoryTest extends TestCase
         self::assertInstanceOf(XlsxRenderer::class, $renderer);
         self::assertEquals('foo-id', $renderer->getId());
         self::assertEquals('bar-title', $renderer->getTitle());
+        self::assertTrue($renderer->isInternal());
     }
 }

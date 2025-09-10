@@ -43,6 +43,11 @@ class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
     {
     }
 
+    public function isInternal(): bool
+    {
+        return false;
+    }
+
     public function getType(): string
     {
         return 'pdf';

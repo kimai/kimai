@@ -28,12 +28,23 @@ final class XlsxRenderer implements RendererInterface, TimesheetExportInterface
     private string $id = 'xlsx';
     private string $title = 'default';
     private ?string $locale = null;
+    private bool $internal = false;
 
     public function __construct(
         private readonly SpreadsheetRenderer $spreadsheetRenderer,
         private readonly TranslatorInterface $translator,
     )
     {
+    }
+
+    public function isInternal(): bool
+    {
+        return $this->internal;
+    }
+
+    public function setInternal(bool $internal): void
+    {
+        $this->internal = $internal;
     }
 
     public function getType(): string

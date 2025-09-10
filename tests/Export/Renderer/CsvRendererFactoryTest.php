@@ -39,5 +39,6 @@ class CsvRendererFactoryTest extends TestCase
         self::assertInstanceOf(CsvRenderer::class, $renderer);
         self::assertEquals('foo-id', $renderer->getId());
         self::assertEquals('bar-title', $renderer->getTitle());
+        self::assertTrue($renderer->isInternal());
     }
 }
