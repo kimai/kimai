@@ -16,11 +16,9 @@ use App\Export\RendererInterface;
 use App\Export\TimesheetExportInterface;
 use App\Repository\Query\TimesheetQuery;
 use OpenSpout\Writer\XLSX\Writer;
-use Symfony\Component\DependencyInjection\Attribute\Exclude;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Exclude]
 final class XlsxRenderer implements RendererInterface, TimesheetExportInterface
 {
     use ExportTrait;
