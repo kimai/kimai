@@ -106,7 +106,7 @@ class ExportTemplate
         $this->columns = $columns ?? [];
     }
 
-    public function getOption(string $key, int|string|bool $default): int|string|bool
+    public function getOption(string $key, int|string|bool|null $default): int|string|bool|null
     {
         if (\array_key_exists($key, $this->options)) {
             return $this->options[$key] ?? $default;
@@ -115,7 +115,7 @@ class ExportTemplate
         return $default;
     }
 
-    public function setOption(string $key, int|string|null|bool $value): void
+    public function setOption(string $key, int|string|bool|null $value): void
     {
         if ($value === null) {
             if (\array_key_exists($key, $this->options)) {
