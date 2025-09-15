@@ -6,14 +6,6 @@
         <source>Default</source>
         <target>Default</target>
       </trans-unit>
-      <trans-unit id="YjWg9hr" resname="default-budget.pdf.twig">
-        <source>With remaining budget</source>
-        <target>With remaining budget</target>
-      </trans-unit>
-      <trans-unit id="AuhL8Sb" resname="default-internal.pdf.twig">
-        <source>With internal rates</source>
-        <target>With internal rates</target>
-      </trans-unit>
       <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig">
         <source>Timesheet</source>
         <target>Timesheet</target>

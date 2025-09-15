@@ -6,14 +6,6 @@
         <source>Default</source>
         <target state="translated">Standard</target>
       </trans-unit>
-      <trans-unit id="YjWg9hr" resname="default-budget.pdf.twig">
-        <source>With remaining budget</source>
-        <target state="translated">Mit Restbudget</target>
-      </trans-unit>
-      <trans-unit id="AuhL8Sb" resname="default-internal.pdf.twig">
-        <source>With internal rates</source>
-        <target state="translated">Mit internen Tarifen</target>
-      </trans-unit>
       <trans-unit id="dzZWfU1" resname="timesheet.pdf.twig">
         <source>Timesheet</source>
         <target state="translated">Stundenzettel</target>
