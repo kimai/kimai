@@ -2,6 +2,18 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ja" datatype="plaintext" original="reporting.en.xlf">
     <body>
+      <trans-unit id="XV3FBpu" resname="report_user_week" xml:space="preserve">
+        <source>report_user_week</source>
+        <target state="translated">1人のユーザーが1週間に閲覧する回数。</target>
+      </trans-unit>
+      <trans-unit id="Ng47B75" resname="report_user_month" xml:space="preserve">
+        <source>report_user_month</source>
+        <target state="translated">1人のユーザーが1ヶ月に閲覧する回数。</target>
+      </trans-unit>
+      <trans-unit id="3JLmvfB" resname="report_user_year" xml:space="preserve">
+        <source>report_user_year</source>
+        <target state="translated">1人のユーザーが1年に閲覧する回数。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

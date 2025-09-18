@@ -6,6 +6,14 @@
         <source>plugin.none_installed</source>
         <target>インストールされたプラグインは存在しません。</target>
       </trans-unit>
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace" xml:space="preserve">
+        <source>Available plugins</source>
+        <target state="translated">利用可能なプラグイン</target>
+      </trans-unit>
+      <trans-unit id="6Bl7IPj" resname="buy" xml:space="preserve">
+        <source>Buy now</source>
+        <target state="translated">今すぐ購入</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
