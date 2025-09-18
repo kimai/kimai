@@ -106,8 +106,6 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         $expected = [
             'csv' => 'csv',
             'default.html.twig' => 'default.html.twig',
-            'default-budget.pdf.twig' => 'default-budget.pdf.twig',
-            'default-internal.pdf.twig' => 'default-internal.pdf.twig',
             'default.pdf.twig' => 'default.pdf.twig',
             'xlsx' => 'xlsx'
         ];
@@ -165,8 +163,6 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         $expected = [
             'csv' => 'csv',
             'default.html.twig' => 'default.html.twig',
-            'default-budget.pdf.twig' => 'default-budget.pdf.twig',
-            'default-internal.pdf.twig' => 'default-internal.pdf.twig',
             'default.pdf.twig' => 'default.pdf.twig',
             'xlsx' => 'xlsx'
         ];

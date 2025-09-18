@@ -9,35 +9,19 @@
 
 namespace App\Tests\Export\Renderer;
 
-use App\Export\Base\ColumnConverter;
 use App\Export\Base\PDFRenderer;
 use App\Export\Renderer\PdfRendererFactory;
-use App\Pdf\HtmlToPdfConverter;
-use App\Project\ProjectStatisticService;
+use App\Tests\Mocks\Export\PdfRendererFactoryMock;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
-use Psr\EventDispatcher\EventDispatcherInterface;
-use Psr\Log\LoggerInterface;
-use Symfony\Bundle\SecurityBundle\Security;
-use Twig\Environment;
 
 #[CoversClass(PdfRendererFactory::class)]
 class PdfRendererFactoryTest extends TestCase
 {
     public function testCreate(): void
     {
-        $converter = new ColumnConverter(
-            $this->createMock(EventDispatcherInterface::class),
-            $this->createMock(Security::class),
-            $this->createMock(LoggerInterface::class),
-        );
-
-        $sut = new PdfRendererFactory(
-            $this->createMock(Environment::class),
-            $this->createMock(HtmlToPdfConverter::class),
-            $this->createMock(ProjectStatisticService::class),
-            $converter
-        );
+        $mock = new PdfRendererFactoryMock($this);
+        $sut = $mock->create();
 
         $renderer = $sut->create('foo', 'bar.pdf.twig');
 
