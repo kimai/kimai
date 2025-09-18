@@ -96,7 +96,7 @@
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
-        <target state="translated">تاريخ</target>
+        <target state="translated">التاريخ</target>
       </trans-unit>
       <trans-unit id="BHk4pZ3" resname="starttime">
         <source>starttime</source>
@@ -112,7 +112,7 @@
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
         <source>User</source>
-        <target state="translated">مستخدم</target>
+        <target state="translated">المستخدم</target>
       </trans-unit>
       <trans-unit id="FveKfWM" resname="username">
         <source>username</source>
@@ -144,11 +144,11 @@
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve">
         <source>activity</source>
-        <target state="translated">نشاط</target>
+        <target state="translated">النشاط</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
         <source>Project</source>
-        <target state="translated">مشروع</target>
+        <target state="translated">المشروع</target>
       </trans-unit>
       <trans-unit id="E_bHhGR" resname="hourlyRate">
         <source>hourlyRate</source>
@@ -344,23 +344,23 @@
       </trans-unit>
       <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target state="needs-translation">ساعات العمل اليوم</target>
+        <target state="translated">ساعات العمل اليوم</target>
       </trans-unit>
       <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target state="needs-translation">ساعات العمل هذا الأسبوع</target>
+        <target state="translated">ساعات العمل هذا الأسبوع</target>
       </trans-unit>
       <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target state="needs-translation">ساعات العمل هذا الشهر</target>
+        <target state="translated">ساعات العمل هذا الشهر</target>
       </trans-unit>
       <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target state="needs-translation">ساعات العمل هذا العام</target>
+        <target state="translated">ساعات العمل هذا العام</target>
       </trans-unit>
       <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
-        <target state="needs-translation">مجموع ساعات العمل</target>
+        <target state="translated">مجموع ساعات العمل</target>
       </trans-unit>
       <trans-unit id="023M9Ta" resname="stats.amountToday">
         <source>stats.amountToday</source>
@@ -744,7 +744,7 @@
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
         <source>stats.durationFinancialYear</source>
-        <target state="needs-translation">ساعات العمل هذه السنة المالية</target>
+        <target state="translated">ساعات عمل هذه السنة المالية</target>
       </trans-unit>
       <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
         <source>stats.activeUsersFinancialYear</source>
@@ -1376,7 +1376,7 @@
       </trans-unit>
       <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
         <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
-        <target state="needs-translation">مرض، زيارة الطبيب، رعاية الأقارب المقربين، إلخ.</target>
+        <target state="translated">مرض، زيارة الطبيب، رعاية الأقارب المقربين، إلخ.</target>
       </trans-unit>
       <trans-unit id="Zngu6M9" resname="status.planned">
         <source>status.planned</source>
@@ -1680,7 +1680,7 @@
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target state="needs-translation">الجداول الزمنية</target>
+        <target state="translated">الجداول الزمنية</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
@@ -1925,6 +1925,46 @@
       <trans-unit id="2UL2SIZ" resname="import" xml:space="preserve">
         <source>import</source>
         <target state="translated">استيراد</target>
+      </trans-unit>
+      <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="no">
+        <source>Unlock month</source>
+        <target state="translated">فك القفل عن الشهر</target>
+      </trans-unit>
+      <trans-unit id="mhOe3Iy" resname="unlock_month.help" xml:space="preserve">
+        <source>unlock_month.help</source>
+        <target state="translated">هذا الخيار يفك القفل عن جميع الايام في السنة بعد اختيار التاريخ المحدد</target>
+      </trans-unit>
+      <trans-unit id="HQ2YM1b" resname="attendance_only_project" xml:space="preserve">
+        <source>attendance_only_project</source>
+        <target state="translated">احتساب مدخلات المشروع المختار كوقت عمل فقط</target>
+      </trans-unit>
+      <trans-unit id="rD4oQRR" resname="postcode" xml:space="preserve">
+        <source>Postcode</source>
+        <target state="translated">الرمز البريدي</target>
+      </trans-unit>
+      <trans-unit id="EaYsI0E" resname="city" xml:space="preserve">
+        <source>City</source>
+        <target state="translated">المدينة</target>
+      </trans-unit>
+      <trans-unit id="y1XHR1Q" resname="address_deprecated" xml:space="preserve">
+        <source>address_deprecated</source>
+        <target state="translated">سيتم ازالة هذا الحقل قريبا, يرجى نقل العنوان لانشاء فواتير صالحة (مثل, الفواتير الالكترونية)</target>
+      </trans-unit>
+      <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
+        <source>sending_company</source>
+        <target state="translated">مُرسل الفاتورة</target>
+      </trans-unit>
+      <trans-unit id="Uzll0ps" resname="Customer portal" xml:space="preserve">
+        <source>Customer portal</source>
+        <target state="translated">بوابة العميل</target>
+      </trans-unit>
+      <trans-unit id="cDOQMYv" resname="Beta" xml:space="preserve">
+        <source>Beta</source>
+        <target state="translated">تفعيل ميزة المعاينة لرؤية المميزات التي لا تزال قيد التطوير.</target>
+      </trans-unit>
+      <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve">
+        <source>Code</source>
+        <target state="translated">الرمز</target>
       </trans-unit>
     </body>
   </file>
