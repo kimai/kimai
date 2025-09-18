@@ -96,6 +96,10 @@ final class ServiceExport
                     $renderer[] = $this->xlsxRendererFactory->create($tpl);
                     break;
 
+                case 'pdf':
+                    $renderer[] = $this->pdfRendererFactory->createFromTemplate($tpl);
+                    break;
+
                 default:
                     $this->logger->error('Unknown export template type: ' . $template->getRenderer());
                     break;
