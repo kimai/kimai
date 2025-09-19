@@ -24,12 +24,9 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\Export\Base\RendererTrait
- */
 #[CoversClass(AbstractSpreadsheetRenderer::class)]
-#[CoversClass(XlsxRenderer::class)]
 #[CoversClass(SpoutSpreadsheet::class)]
+#[CoversClass(XlsxRenderer::class)]
 #[Group('integration')]
 class XlsxRendererTest extends AbstractRendererTestCase
 {

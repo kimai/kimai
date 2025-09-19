@@ -24,12 +24,9 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\Export\Base\RendererTrait
- */
 #[CoversClass(AbstractSpreadsheetRenderer::class)]
-#[CoversClass(CsvRenderer::class)]
 #[CoversClass(SpoutSpreadsheet::class)]
+#[CoversClass(CsvRenderer::class)]
 #[Group('integration')]
 class CsvRendererTest extends AbstractRendererTestCase
 {

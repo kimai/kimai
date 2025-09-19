@@ -9,10 +9,10 @@
 
 namespace App\Tests\Export\Base;
 
+use App\Export\Base\HtmlRenderer;
 use App\Export\Base\PDFRenderer;
 use App\Export\Base\RendererTrait;
 use App\Pdf\HtmlToPdfConverter;
-use App\Pdf\PdfRendererTrait;
 use App\Project\ProjectStatisticService;
 use App\Tests\Export\Renderer\AbstractRendererTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -20,10 +20,9 @@ use PHPUnit\Framework\Attributes\Group;
 use Twig\Environment;
 
 #[CoversClass(RendererTrait::class)]
-#[CoversClass(PdfRendererTrait::class)]
-#[CoversClass(PDFRenderer::class)]
+#[CoversClass(HtmlRenderer::class)]
 #[Group('integration')]
-class PdfRendererTest extends AbstractRendererTestCase
+class HtmlRendererTest extends AbstractRendererTestCase
 {
     protected function getAbstractRenderer(bool $exportDecimal = false): PDFRenderer
     {

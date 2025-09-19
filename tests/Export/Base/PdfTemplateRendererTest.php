@@ -11,9 +11,11 @@ namespace App\Tests\Export\Base;
 
 use App\Entity\User;
 use App\Export\Base\PdfTemplateRenderer;
+use App\Export\Base\RendererTrait;
 use App\Export\ColumnConverter;
 use App\Export\DefaultTemplate;
 use App\Pdf\HtmlToPdfConverter;
+use App\Pdf\PdfRendererTrait;
 use App\Project\ProjectStatisticService;
 use App\Tests\Export\Renderer\AbstractRendererTestCase;
 use App\Tests\Mocks\MetaFieldColumnSubscriberMock;
@@ -24,10 +26,8 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Translation\LocaleSwitcher;
 use Twig\Environment;
 
-/**
- * @covers \App\Export\Base\RendererTrait
- * @covers \App\Pdf\PdfRendererTrait
- */
+#[CoversClass(PdfRendererTrait::class)]
+#[CoversClass(RendererTrait::class)]
 #[CoversClass(PdfTemplateRenderer::class)]
 #[Group('integration')]
 class PdfTemplateRendererTest extends AbstractRendererTestCase
