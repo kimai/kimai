@@ -25,18 +25,18 @@ final class CsvRendererFactory
     ) {
     }
 
-    public function createDefault(): CsvRenderer
-    {
-        $template = new DefaultTemplate($this->eventDispatcher, 'csv');
-
-        return new CsvRenderer($this->converter, $this->translator, $template);
-    }
-
     public function create(TemplateInterface $template): CsvRenderer
     {
         $renderer = new CsvRenderer($this->converter, $this->translator, $template);
         $renderer->setInternal(true);
 
         return $renderer;
+    }
+
+    public function createDefault(): CsvRenderer
+    {
+        $template = new DefaultTemplate($this->eventDispatcher, 'csv');
+
+        return new CsvRenderer($this->converter, $this->translator, $template);
     }
 }

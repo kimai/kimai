@@ -128,16 +128,6 @@ class HtmlRenderer implements ExportRendererInterface
         return $this->template;
     }
 
-    public function getId(): string
-    {
-        return $this->id;
-    }
-
-    public function getTitle(): string
-    {
-        return $this->title;
-    }
-
     /**
      * @deprecated since 2.40.0
      */
@@ -152,5 +142,15 @@ class HtmlRenderer implements ExportRendererInterface
     public function setId(string $id): void
     {
         $this->id = $id;
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
     }
 }
