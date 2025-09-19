@@ -2,10 +2,7 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="et" datatype="plaintext" original="export.en.xlf">
     <body>
-      <trans-unit id="oRRnhwf" resname="default.pdf.twig" xml:space="preserve">
-        <source>Default</source>
-        <target state="translated">Vaikevalik</target>
-      </trans-unit>
+      
     </body>
   </file>
 </xliff>
