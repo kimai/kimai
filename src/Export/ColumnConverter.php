@@ -49,23 +49,23 @@ final class ColumnConverter
 
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,
-        private readonly Security $voter,
+        private readonly Security $security,
         private readonly ?LoggerInterface $logger = null,
     ) {
     }
 
     private function isRenderRate(TimesheetQuery $query): bool
     {
-        if ($this->voter->getUser() === null) {
+        if ($this->security->getUser() === null) {
             // for command line export
             return true;
         }
 
         if (null !== $query->getUser()) {
-            return $this->voter->isGranted('view_rate_own_timesheet');
+            return $this->security->isGranted('view_rate_own_timesheet');
         }
 
-        return $this->voter->isGranted('view_rate_other_timesheet');
+        return $this->security->isGranted('view_rate_other_timesheet');
     }
 
     /**

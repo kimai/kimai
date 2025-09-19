@@ -13,7 +13,7 @@ use App\Entity\ExportableItem;
 use App\Export\ColumnConverter;
 use App\Export\ExportFilename;
 use App\Export\ExportRendererInterface;
-use App\Export\Template;
+use App\Export\TemplateInterface;
 use App\Form\Type\PdfFontType;
 use App\Pdf\HtmlToPdfConverter;
 use App\Pdf\PdfContext;
@@ -37,7 +37,7 @@ final class PdfTemplateRenderer implements DispositionInlineInterface, ExportRen
         private readonly ProjectStatisticService $projectStatisticService,
         private readonly ColumnConverter $columnConverter,
         private readonly LocaleSwitcher $localeSwitcher,
-        private readonly Template $template
+        private readonly TemplateInterface $template
     )
     {
     }

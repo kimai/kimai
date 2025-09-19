@@ -55,8 +55,12 @@ class XlsxRendererTest extends AbstractRendererTestCase
     {
         $sut = $this->getAbstractRenderer();
 
+        self::assertEquals('xlsx', $sut->getType());
         self::assertEquals('xlsx', $sut->getId());
         self::assertEquals('default', $sut->getTitle());
+        self::assertFalse($sut->isInternal());
+        $sut->setInternal(true);
+        self::assertTrue($sut->isInternal());
     }
 
     public function testRender(): void

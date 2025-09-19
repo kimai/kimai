@@ -56,8 +56,12 @@ class CsvRendererTest extends AbstractRendererTestCase
     {
         $sut = $this->getAbstractRenderer('en');
 
+        self::assertEquals('csv', $sut->getType());
         self::assertEquals('csv', $sut->getId());
         self::assertEquals('default', $sut->getTitle());
+        self::assertFalse($sut->isInternal());
+        $sut->setInternal(true);
+        self::assertTrue($sut->isInternal());
     }
 
     public static function getTestModel(): array
@@ -114,10 +118,10 @@ class CsvRendererTest extends AbstractRendererTestCase
         self::assertFalse(file_exists($file->getRealPath()));
 
         $all = [];
-        $rows = str_getcsv($content2, PHP_EOL);
+        $rows = array_filter(explode(PHP_EOL, $content2), function (string $line) { return $line !== ''; });
         foreach ($rows as $row) {
             self::assertIsString($row);
-            $all[] = str_getcsv($row);
+            $all[] = str_getcsv($row, ',', '"', '\\');
         }
 
         self::assertEquals($header, $all[0]);
