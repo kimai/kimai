@@ -64,8 +64,8 @@ class XlsxRendererTest extends AbstractRendererTestCase
     {
         $sut = $this->getAbstractRenderer();
 
-        /** @var BinaryFileResponse $response */
         $response = $this->render($sut);
+        self::assertInstanceOf(BinaryFileResponse::class, $response);
 
         $file = $response->getFile();
         $prefix = date('Ymd');

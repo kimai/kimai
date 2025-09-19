@@ -87,8 +87,8 @@ class CsvRendererTest extends AbstractRendererTestCase
     {
         $sut = $this->getAbstractRenderer($locale);
 
-        /** @var BinaryFileResponse $response */
         $response = $this->render($sut, $exportDecimal);
+        self::assertInstanceOf(BinaryFileResponse::class, $response);
 
         $file = $response->getFile();
         $prefix = date('Ymd');

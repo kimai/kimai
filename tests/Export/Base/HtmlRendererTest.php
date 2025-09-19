@@ -9,14 +9,15 @@
 
 namespace App\Tests\Export\Base;
 
+use App\Activity\ActivityStatisticService;
 use App\Export\Base\HtmlRenderer;
-use App\Export\Base\PDFRenderer;
 use App\Export\Base\RendererTrait;
-use App\Pdf\HtmlToPdfConverter;
 use App\Project\ProjectStatisticService;
 use App\Tests\Export\Renderer\AbstractRendererTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
 #[CoversClass(RendererTrait::class)]
@@ -24,16 +25,13 @@ use Twig\Environment;
 #[Group('integration')]
 class HtmlRendererTest extends AbstractRendererTestCase
 {
-    protected function getAbstractRenderer(bool $exportDecimal = false): PDFRenderer
+    protected function getAbstractRenderer(): HtmlRenderer
     {
-        $twig = $this->createMock(Environment::class);
-        $converter = $this->createMock(HtmlToPdfConverter::class);
-        $projectStatisticService = $this->createMock(ProjectStatisticService::class);
-
-        return new PDFRenderer(
-            $twig,
-            $converter,
-            $projectStatisticService,
+        return new HtmlRenderer(
+            $this->createMock(Environment::class),
+            $this->createMock(EventDispatcherInterface::class),
+            $this->createMock(ProjectStatisticService::class),
+            $this->createMock(ActivityStatisticService::class),
             'foo',
             'bar',
             'export/print.html.twig'
@@ -46,13 +44,30 @@ class HtmlRendererTest extends AbstractRendererTestCase
 
         self::assertEquals('foo', $sut->getId());
         self::assertEquals('bar', $sut->getTitle());
-        self::assertEquals([], $sut->getPdfOptions());
-        $sut->setPdfOption('foo', 'bar');
-        self::assertEquals(['foo' => 'bar'], $sut->getPdfOptions());
-        $sut->setPdfOption('foo', 'bar2');
-        self::assertEquals(['foo' => 'bar2'], $sut->getPdfOptions());
-        $sut->setPdfOption('hello', 'world');
-        self::assertEquals(['foo' => 'bar2', 'hello' => 'world'], $sut->getPdfOptions());
+        self::assertEquals('html', $sut->getType());
         self::assertFalse($sut->isInternal());
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testLegacy(): void
+    {
+        $sut = $this->getAbstractRenderer();
+
+        $sut->setTemplate('some'); // @phpstan-ignore method.deprecated
+        $sut->setId('xxxxxx'); // @phpstan-ignore method.deprecated
+        self::assertEquals('xxxxxx', $sut->getId());
+    }
+
+    public function testRender(): void
+    {
+        $sut = $this->getAbstractRenderer();
+
+        $response = $this->render($sut);
+        self::assertInstanceOf(Response::class, $response);
+
+        $content = $response->getContent();
+        self::assertIsString($content);
     }
 }

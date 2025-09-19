@@ -17,6 +17,7 @@ use App\Project\ProjectStatisticService;
 use App\Tests\Export\Renderer\AbstractRendererTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
 #[CoversClass(RendererTrait::class)]
@@ -55,5 +56,32 @@ class PdfRendererTest extends AbstractRendererTestCase
         $sut->setPdfOption('hello', 'world');
         self::assertEquals(['foo' => 'bar2', 'hello' => 'world'], $sut->getPdfOptions());
         self::assertFalse($sut->isInternal());
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testLegacy(): void
+    {
+        $sut = $this->getAbstractRenderer();
+
+        $sut->setTemplate('some'); // @phpstan-ignore method.deprecated
+        $sut->setTitle('xxxxxx'); // @phpstan-ignore method.deprecated
+        self::assertEquals('xxxxxx', $sut->getTitle());
+    }
+
+    public function testRender(): void
+    {
+        $sut = $this->getAbstractRenderer();
+
+        $response = $this->render($sut);
+        self::assertInstanceOf(Response::class, $response);
+
+        $prefix = date('Ymd');
+        self::assertEquals('application/pdf', $response->headers->get('Content-Type'));
+        self::assertEquals('attachment; filename=' . $prefix . '-Customer_Name-project_name.pdf', $response->headers->get('Content-Disposition'));
+
+        $content = $response->getContent();
+        self::assertIsString($content);
     }
 }

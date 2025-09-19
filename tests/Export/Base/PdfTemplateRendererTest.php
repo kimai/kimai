@@ -23,6 +23,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Translation\LocaleSwitcher;
 use Twig\Environment;
 
@@ -68,5 +69,20 @@ class PdfTemplateRendererTest extends AbstractRendererTestCase
         self::assertEquals('bar', $sut->getTitle());
         self::assertEquals('pdf', $sut->getType());
         self::assertTrue($sut->isInternal());
+    }
+
+    public function testRender(): void
+    {
+        $sut = $this->getAbstractRenderer();
+
+        $response = $this->render($sut);
+        self::assertInstanceOf(Response::class, $response);
+
+        $prefix = date('Ymd');
+        self::assertEquals('application/pdf', $response->headers->get('Content-Type'));
+        self::assertEquals('attachment; filename=' . $prefix . '-Customer_Name-project_name.pdf', $response->headers->get('Content-Disposition'));
+
+        $content = $response->getContent();
+        self::assertIsString($content);
     }
 }
