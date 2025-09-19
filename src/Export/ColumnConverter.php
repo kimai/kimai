@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Export\Base;
+namespace App\Export;
 
 use App\Entity\ExportableItem;
 use App\Entity\MetaTableTypeInterface;
@@ -29,7 +29,6 @@ use App\Export\Package\CellFormatter\TextFormatter;
 use App\Export\Package\CellFormatter\TimeFormatter;
 use App\Export\Package\Column;
 use App\Export\Package\ColumnWidth;
-use App\Export\TemplateInterface;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\ProjectQuery;
@@ -169,7 +168,7 @@ final class ColumnConverter
 
         $rateColumns = ['currency', 'rate', 'internal_rate', 'hourly_rate', 'fixed_rate'];
 
-        foreach ($template->getColumns() as $column) {
+        foreach ($template->getColumns($query) as $column) {
             if ($column === 'date') {
                 $columns[$column] = (new Column('date', $this->getFormatter('date')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getBegin());
             } elseif ($column === 'begin') {

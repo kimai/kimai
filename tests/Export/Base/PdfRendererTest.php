@@ -31,22 +31,22 @@ class PdfRendererTest extends AbstractRendererTestCase
         $converter = $this->createMock(HtmlToPdfConverter::class);
         $projectStatisticService = $this->createMock(ProjectStatisticService::class);
 
-        return new PDFRenderer($twig, $converter, $projectStatisticService);
+        return new PDFRenderer(
+            $twig,
+            $converter,
+            $projectStatisticService,
+            'foo',
+            'bar',
+            'export/print.html.twig'
+        );
     }
 
     public function testConfiguration(): void
     {
         $sut = $this->getAbstractRenderer();
 
-        self::assertEquals('pdf', $sut->getId());
-        self::assertEquals('pdf', $sut->getTitle());
-
-        $sut->setTitle('foo-bar');
-        self::assertEquals('foo-bar', $sut->getTitle());
-
-        $sut->setId('bar-id');
-        self::assertEquals('bar-id', $sut->getId());
-
+        self::assertEquals('foo', $sut->getId());
+        self::assertEquals('bar', $sut->getTitle());
         self::assertEquals([], $sut->getPdfOptions());
         $sut->setPdfOption('foo', 'bar');
         self::assertEquals(['foo' => 'bar'], $sut->getPdfOptions());

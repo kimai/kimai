@@ -10,10 +10,10 @@
 namespace App\Export\Base;
 
 use App\Entity\ExportableItem;
+use App\Export\ColumnConverter;
 use App\Export\ExportFilename;
 use App\Export\ExportRendererInterface;
 use App\Export\Template;
-use App\Export\TimesheetExportInterface;
 use App\Form\Type\PdfFontType;
 use App\Pdf\HtmlToPdfConverter;
 use App\Pdf\PdfContext;
@@ -26,7 +26,7 @@ use Symfony\Component\Translation\LocaleSwitcher;
 use Twig\Environment;
 
 #[Exclude]
-class PdfTemplateRenderer implements DispositionInlineInterface, ExportRendererInterface, TimesheetExportInterface
+final class PdfTemplateRenderer implements DispositionInlineInterface, ExportRendererInterface
 {
     use RendererTrait;
     use PDFRendererTrait;

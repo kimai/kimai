@@ -31,19 +31,23 @@ use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use Twig\Extension\SandboxExtension;
 
+/**
+ * TODO 3.0 remove default values from constructor parameters and make class final
+ * @final
+ */
 #[Exclude]
 class HtmlRenderer implements ExportRendererInterface
 {
     use RendererTrait;
 
-    private string $id = 'html';
-    private string $template = 'default.html.twig';
-
     public function __construct(
         protected readonly Environment $twig,
         protected readonly EventDispatcherInterface $dispatcher,
         private readonly ProjectStatisticService $projectStatisticService,
-        private readonly ActivityStatisticService $activityStatisticService
+        private readonly ActivityStatisticService $activityStatisticService,
+        private string $id = 'html', // deprecated default parameter - TODO 3.0
+        private readonly string $title = 'print', // deprecated default parameter - TODO 3.0
+        private string $template = 'export/print.html.twig', // deprecated default parameter - TODO 3.0
     ) {
     }
 
@@ -121,17 +125,7 @@ class HtmlRenderer implements ExportRendererInterface
 
     protected function getTemplate(): string
     {
-        return '@export/' . $this->template;
-    }
-
-    public function setTemplate(string $filename): void
-    {
-        $this->template = $filename;
-    }
-
-    public function setId(string $id): void
-    {
-        $this->id = $id;
+        return $this->template;
     }
 
     public function getId(): string
@@ -141,6 +135,23 @@ class HtmlRenderer implements ExportRendererInterface
 
     public function getTitle(): string
     {
-        return 'print';
+        return $this->title;
     }
+
+    /**
+     * @deprecated since 2.40.0
+     */
+    public function setTemplate(string $filename): void
+    {
+        $this->template = '@export/' . $filename;
+    }
+
+    /**
+     * @deprecated since 2.40.0
+     */
+    public function setId(string $id): void
+    {
+        $this->id = $id;
+    }
+
 }

@@ -9,9 +9,9 @@
 
 namespace App\Export\Renderer;
 
-use App\Export\Base\ColumnConverter;
 use App\Export\Base\PDFRenderer;
 use App\Export\Base\PdfTemplateRenderer;
+use App\Export\ColumnConverter;
 use App\Export\Template;
 use App\Pdf\HtmlToPdfConverter;
 use App\Project\ProjectStatisticService;
@@ -29,14 +29,16 @@ final class PdfRendererFactory
     ) {
     }
 
-    public function create(string $id, string $template): PDFRenderer
+    public function create(string $id, string $template, ?string $title = null): PDFRenderer
     {
-        $renderer = new PDFRenderer($this->twig, $this->converter, $this->projectStatisticService);
-        $renderer->setId($id);
-        $renderer->setTitle($id);
-        $renderer->setTemplate($template);
-
-        return $renderer;
+        return new PDFRenderer(
+            $this->twig,
+            $this->converter,
+            $this->projectStatisticService,
+            $id,
+            $title ?? $id,
+            $template,
+        );
     }
 
     public function createFromTemplate(Template $template): PdfTemplateRenderer

@@ -10,9 +10,11 @@
 namespace App\Tests\Export\Base;
 
 use App\Entity\User;
-use App\Export\Base\SpreadsheetRenderer;
+use App\Export\Base\AbstractSpreadsheetRenderer;
 use App\Export\Base\XlsxRenderer;
+use App\Export\ColumnConverter;
 use App\Export\Package\SpoutSpreadsheet;
+use App\Export\Renderer\XlsxRendererFactory;
 use App\Tests\Export\Renderer\AbstractRendererTestCase;
 use App\Tests\Mocks\MetaFieldColumnSubscriberMock;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -25,8 +27,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * @covers \App\Export\Base\RendererTrait
  */
+#[CoversClass(AbstractSpreadsheetRenderer::class)]
 #[CoversClass(XlsxRenderer::class)]
-#[CoversClass(SpreadsheetRenderer::class)]
 #[CoversClass(SpoutSpreadsheet::class)]
 #[Group('integration')]
 class XlsxRendererTest extends AbstractRendererTestCase
@@ -43,22 +45,18 @@ class XlsxRendererTest extends AbstractRendererTestCase
         $dispatcher = new EventDispatcher();
         $dispatcher->addSubscriber(new MetaFieldColumnSubscriberMock());
 
-        return new XlsxRenderer(new SpreadsheetRenderer($dispatcher, $security), $translator);
+        $converter = new ColumnConverter($dispatcher, $security);
+        $factory = new XlsxRendererFactory($converter, $dispatcher, $translator);
+
+        return $factory->createDefault();
     }
 
-    public function testConfiguration(): void
+    public function testConfigurationFromTemplate(): void
     {
         $sut = $this->getAbstractRenderer();
-        $sut->setLocale('de');
 
         self::assertEquals('xlsx', $sut->getId());
         self::assertEquals('default', $sut->getTitle());
-
-        $sut->setTitle('foo-bar');
-        self::assertEquals('foo-bar', $sut->getTitle());
-
-        $sut->setId('bar-id');
-        self::assertEquals('bar-id', $sut->getId());
     }
 
     public function testRender(): void

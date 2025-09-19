@@ -9,7 +9,7 @@
 
 namespace App\Tests\Mocks\Export;
 
-use App\Export\Base\ColumnConverter;
+use App\Export\ColumnConverter;
 use App\Export\Renderer\PdfRendererFactory;
 use App\Pdf\HtmlToPdfConverter;
 use App\Project\ProjectStatisticService;
