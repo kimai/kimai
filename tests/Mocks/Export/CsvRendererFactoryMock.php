@@ -9,6 +9,7 @@
 
 namespace App\Tests\Mocks\Export;
 
+use App\Export\ColumnConverter;
 use App\Export\Renderer\CsvRendererFactory;
 use App\Tests\Mocks\AbstractMockFactory;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -20,11 +21,17 @@ class CsvRendererFactoryMock extends AbstractMockFactory
 {
     public function create(): CsvRendererFactory
     {
-        return new CsvRendererFactory(
-            $this->createMock(EventDispatcherInterface::class),
+        $dispatcher = $this->createMock(EventDispatcherInterface::class);
+        $converter = new ColumnConverter(
+            $dispatcher,
             $this->createMock(Security::class),
-            $this->createMock(TranslatorInterface::class),
             $this->createMock(LoggerInterface::class),
+        );
+
+        return new CsvRendererFactory(
+            $converter,
+            $dispatcher,
+            $this->createMock(TranslatorInterface::class),
         );
     }
 }

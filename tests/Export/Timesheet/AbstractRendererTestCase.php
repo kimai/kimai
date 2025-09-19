@@ -24,7 +24,7 @@ use App\Event\ActivityMetaDisplayEvent;
 use App\Event\CustomerMetaDisplayEvent;
 use App\Event\ProjectMetaDisplayEvent;
 use App\Event\TimesheetMetaDisplayEvent;
-use App\Export\TimesheetExportInterface;
+use App\Export\ExportRendererInterface;
 use App\Repository\Query\TimesheetQuery;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -33,7 +33,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractRendererTestCase extends KernelTestCase
 {
-    protected function render(TimesheetExportInterface $renderer): Response
+    protected function render(ExportRendererInterface $renderer): Response
     {
         $customer = new Customer('Customer Name');
         $customer->setNumber('A-0123456789');

@@ -9,36 +9,55 @@
 
 namespace App\Tests\Export\Base;
 
-use App\Export\Base\PDFRenderer;
+use App\Entity\User;
+use App\Export\Base\PdfTemplateRenderer;
 use App\Export\Base\RendererTrait;
+use App\Export\ColumnConverter;
+use App\Export\DefaultTemplate;
 use App\Pdf\HtmlToPdfConverter;
 use App\Pdf\PdfRendererTrait;
 use App\Project\ProjectStatisticService;
 use App\Tests\Export\Renderer\AbstractRendererTestCase;
+use App\Tests\Mocks\MetaFieldColumnSubscriberMock;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Translation\LocaleSwitcher;
 use Twig\Environment;
 
-#[CoversClass(RendererTrait::class)]
 #[CoversClass(PdfRendererTrait::class)]
-#[CoversClass(PDFRenderer::class)]
+#[CoversClass(RendererTrait::class)]
+#[CoversClass(PdfTemplateRenderer::class)]
 #[Group('integration')]
-class PdfRendererTest extends AbstractRendererTestCase
+class PdfTemplateRendererTest extends AbstractRendererTestCase
 {
-    protected function getAbstractRenderer(bool $exportDecimal = false): PDFRenderer
+    protected function getAbstractRenderer(): PdfTemplateRenderer
     {
         $twig = $this->createMock(Environment::class);
-        $converter = $this->createMock(HtmlToPdfConverter::class);
+        $htmlConverter = $this->createMock(HtmlToPdfConverter::class);
         $projectStatisticService = $this->createMock(ProjectStatisticService::class);
 
-        return new PDFRenderer(
+        $security = $this->createMock(Security::class);
+        $security->expects($this->any())->method('getUser')->willReturn(new User());
+        $security->expects($this->any())->method('isGranted')->willReturn(true);
+        $security->expects($this->any())->method('isGranted')->willReturn(true);
+
+        $dispatcher = new EventDispatcher();
+        $dispatcher->addSubscriber(new MetaFieldColumnSubscriberMock());
+
+        $converter = new ColumnConverter($dispatcher, $security);
+
+        $template = new DefaultTemplate($dispatcher, 'test', 'en', 'bar');
+
+        return new PdfTemplateRenderer(
             $twig,
-            $converter,
+            $htmlConverter,
             $projectStatisticService,
-            'foo',
-            'bar',
-            'export/print.html.twig'
+            $converter,
+            $this->createMock(LocaleSwitcher::class),
+            $template
         );
     }
 
@@ -46,28 +65,10 @@ class PdfRendererTest extends AbstractRendererTestCase
     {
         $sut = $this->getAbstractRenderer();
 
-        self::assertEquals('foo', $sut->getId());
+        self::assertEquals('test', $sut->getId());
         self::assertEquals('bar', $sut->getTitle());
-        self::assertEquals([], $sut->getPdfOptions());
-        $sut->setPdfOption('foo', 'bar');
-        self::assertEquals(['foo' => 'bar'], $sut->getPdfOptions());
-        $sut->setPdfOption('foo', 'bar2');
-        self::assertEquals(['foo' => 'bar2'], $sut->getPdfOptions());
-        $sut->setPdfOption('hello', 'world');
-        self::assertEquals(['foo' => 'bar2', 'hello' => 'world'], $sut->getPdfOptions());
-        self::assertFalse($sut->isInternal());
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testLegacy(): void
-    {
-        $sut = $this->getAbstractRenderer();
-
-        $sut->setTemplate('some'); // @phpstan-ignore method.deprecated
-        $sut->setTitle('xxxxxx'); // @phpstan-ignore method.deprecated
-        self::assertEquals('xxxxxx', $sut->getTitle());
+        self::assertEquals('pdf', $sut->getType());
+        self::assertTrue($sut->isInternal());
     }
 
     public function testRender(): void

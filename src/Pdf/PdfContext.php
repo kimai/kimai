@@ -17,17 +17,20 @@ final class PdfContext
 {
     private array $options = [];
 
-    public function setOption(string $key, string|array|null|bool $value): void
+    public function setOption(string $key, string|int|array|null|bool $value): void
     {
         $this->options[$key] = $value;
     }
 
+    /**
+     * @return array<string|int|array|null|bool>
+     */
     public function getOptions(): array
     {
         return $this->options;
     }
 
-    public function getOption(string $key): array|string|null
+    public function getOption(string $key): string|int|array|null|bool
     {
         if (\array_key_exists($key, $this->options)) {
             return $this->options[$key];

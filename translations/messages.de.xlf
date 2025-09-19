@@ -1340,7 +1340,7 @@
       </trans-unit>
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
-        <target>Ergebnisse</target>
+        <target>Seitengröße</target>
       </trans-unit>
       <trans-unit id="cjgNYUB" resname="entryState">
         <source>entryState</source>
@@ -1965,6 +1965,26 @@
       <trans-unit id="NA9GMDP" resname="Code">
         <source>Code</source>
         <target>Code</target>
+      </trans-unit>
+      <trans-unit id="xZzzKxM" resname="orientation">
+        <source>orientation</source>
+        <target>Ausrichtung</target>
+      </trans-unit>
+      <trans-unit id="UcWoKWo" resname="portrait">
+        <source>portrait</source>
+        <target>Porträt</target>
+      </trans-unit>
+      <trans-unit id="rLlV34K" resname="landscape">
+        <source>landscape</source>
+        <target>Querformat</target>
+      </trans-unit>
+      <trans-unit id="UZUFKZg" resname="remaining_budget">
+        <source>remaining_budget</source>
+        <target>Verbleibendes Budget</target>
+      </trans-unit>
+      <trans-unit id="eV6j76Q" resname="font">
+        <source>font</source>
+        <target>Schriftart</target>
       </trans-unit>
     </body>
   </file>

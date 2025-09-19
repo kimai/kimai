@@ -18,7 +18,6 @@
                     </div>
                 </div>
                 {{ form_row(form.language) }}
-                {{ form_row(form.separator, {row_attr: {class: 'mb-3 export-type csv'}}) }}
                 {{ form_row(form.columns) }}
                 {{ form_rest(form) }}
             {% endblock %}
@@ -26,9 +25,9 @@
                 <script>
                     function changeExportTemplateType(typeElement)
                     {
-                        typeElement.form.querySelectorAll('.export-type').forEach(
+                        typeElement.form.querySelectorAll('[data-type]').forEach(
                             element => {
-                                if (element.classList.contains(typeElement.value)) {
+                                if (element.dataset['type'] !== undefined && element.dataset['type'] === typeElement.value) {
                                     element.classList.remove('d-none');
                                 } else {
                                     element.classList.add('d-none');

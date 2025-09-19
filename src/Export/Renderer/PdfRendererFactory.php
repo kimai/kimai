@@ -10,8 +10,12 @@
 namespace App\Export\Renderer;
 
 use App\Export\Base\PDFRenderer;
+use App\Export\Base\PdfTemplateRenderer;
+use App\Export\ColumnConverter;
+use App\Export\Template;
 use App\Pdf\HtmlToPdfConverter;
 use App\Project\ProjectStatisticService;
+use Symfony\Component\Translation\LocaleSwitcher;
 use Twig\Environment;
 
 final class PdfRendererFactory
@@ -19,17 +23,33 @@ final class PdfRendererFactory
     public function __construct(
         private readonly Environment $twig,
         private readonly HtmlToPdfConverter $converter,
-        private readonly ProjectStatisticService $projectStatisticService
+        private readonly ProjectStatisticService $projectStatisticService,
+        private readonly LocaleSwitcher $localeSwitcher,
+        private readonly ColumnConverter $columnConverter
     ) {
     }
 
-    public function create(string $id, string $template): PDFRenderer
+    public function create(string $id, string $template, ?string $title = null): PDFRenderer
     {
-        $renderer = new PDFRenderer($this->twig, $this->converter, $this->projectStatisticService);
-        $renderer->setId($id);
-        $renderer->setTitle($id);
-        $renderer->setTemplate($template);
+        return new PDFRenderer(
+            $this->twig,
+            $this->converter,
+            $this->projectStatisticService,
+            $id,
+            $title ?? $id,
+            $template,
+        );
+    }
 
-        return $renderer;
+    public function createFromTemplate(Template $template): PdfTemplateRenderer
+    {
+        return new PdfTemplateRenderer(
+            $this->twig,
+            $this->converter,
+            $this->projectStatisticService,
+            $this->columnConverter,
+            $this->localeSwitcher,
+            $template
+        );
     }
 }

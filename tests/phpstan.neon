@@ -1352,11 +1352,6 @@ parameters:
             path: Export/Spreadsheet/Writer/BinaryFileResponseWriterTest.php
 
         -
-            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
-            count: 1
-            path: Export/Timesheet/HtmlRendererTest.php
-
-        -
             message: "#^Parameter \\#1 \\$items of method App\\\\Export\\\\TimesheetExportRepository\\:\\:setExported\\(\\) expects array\\<App\\\\Entity\\\\Timesheet\\>, array\\<int, App\\\\Entity\\\\Activity\\|App\\\\Entity\\\\Timesheet\\|stdClass\\|null\\> given\\.$#"
             count: 1
             path: Export/TimesheetExportRepositoryTest.php

@@ -9,6 +9,8 @@
 
 namespace App\Export;
 
+use App\Repository\Query\TimesheetQuery;
+
 final class Template implements TemplateInterface
 {
     private ?string $locale = null;
@@ -72,7 +74,7 @@ final class Template implements TemplateInterface
     /**
      * @return array<int, string>
      */
-    public function getColumns(): array
+    public function getColumns(TimesheetQuery $query): array
     {
         return $this->columns;
     }

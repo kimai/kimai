@@ -10,56 +10,44 @@
 namespace App\Export\Base;
 
 use App\Entity\ExportableItem;
+use App\Export\ColumnConverter;
 use App\Export\ExportFilename;
+use App\Export\ExportRendererInterface;
 use App\Export\Package\CellFormatter\DateStringFormatter;
 use App\Export\Package\CellFormatter\DurationPlainFormatter;
 use App\Export\Package\SpoutSpreadsheet;
-use App\Export\RendererInterface;
-use App\Export\TimesheetExportInterface;
+use App\Export\TemplateInterface;
 use App\Repository\Query\TimesheetQuery;
 use OpenSpout\Writer\CSV\Options;
 use OpenSpout\Writer\CSV\Writer;
+use Symfony\Component\DependencyInjection\Attribute\Exclude;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-final class CsvRenderer implements RendererInterface, TimesheetExportInterface
+#[Exclude]
+final class CsvRenderer extends AbstractSpreadsheetRenderer implements ExportRendererInterface
 {
-    use ExportTrait;
-
-    private string $id = 'csv';
-    private string $title = 'default';
-    private ?string $locale = null;
-
     public function __construct(
-        private readonly SpreadsheetRenderer $spreadsheetRenderer,
-        private readonly TranslatorInterface $translator
+        private readonly ColumnConverter $columnConverter,
+        private readonly TranslatorInterface $translator,
+        private readonly TemplateInterface $template,
     )
     {
     }
 
-    public function setId(string $id): void
+    public function getType(): string
     {
-        $this->id = $id;
+        return 'csv';
     }
 
     public function getId(): string
     {
-        return $this->id;
-    }
-
-    public function setTitle(string $title): void
-    {
-        $this->title = $title;
-    }
-
-    public function setLocale(?string $locale): void
-    {
-        $this->locale = $locale;
+        return $this->template->getId();
     }
 
     public function getTitle(): string
     {
-        return $this->title;
+        return $this->template->getTitle();
     }
 
     /**
@@ -87,18 +75,19 @@ final class CsvRenderer implements RendererInterface, TimesheetExportInterface
         $options = new Options();
         $options->SHOULD_ADD_BOM = false;
 
-        $opts = $this->spreadsheetRenderer->getTemplate($query)->getOptions();
+        $opts = $this->template->getOptions();
         if (\array_key_exists('separator', $opts) && $opts['separator'] === ';') {
             $options->FIELD_DELIMITER = ';';
         }
 
-        $spreadsheet = new SpoutSpreadsheet(new Writer($options), $this->translator, $this->locale ?? $this->spreadsheetRenderer->getTemplate($query)->getLocale());
+        $spreadsheet = new SpoutSpreadsheet(new Writer($options), $this->translator, $this->template->getLocale());
         $spreadsheet->open($filename);
 
-        $this->spreadsheetRenderer->registerFormatter('date', new DateStringFormatter());
-        $this->spreadsheetRenderer->registerFormatter('duration', new DurationPlainFormatter(false));
-        $this->spreadsheetRenderer->registerFormatter('duration_seconds', new DurationPlainFormatter(true));
-        $this->spreadsheetRenderer->writeSpreadsheet($spreadsheet, $exportItems, $query);
+        $this->columnConverter->registerFormatter('date', new DateStringFormatter());
+        $this->columnConverter->registerFormatter('duration', new DurationPlainFormatter(false));
+        $this->columnConverter->registerFormatter('duration_seconds', new DurationPlainFormatter(true));
+
+        $this->writeSpreadsheet($this->columnConverter, $this->template, $spreadsheet, $exportItems, $query);
 
         return new \SplFileInfo($filename);
     }

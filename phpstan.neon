@@ -1519,119 +1519,9 @@ parameters:
             path: src/Export/Annotation/Order.php
 
         -
-            message: "#^Cannot call method getBudget\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Cannot call method getCurrency\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 5
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Cannot call method getName\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Cannot call method getTimeBudget\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Cannot call method jsonSerialize\\(\\) on App\\\\Model\\\\Statistic\\\\BudgetStatistic\\|null\\.$#"
-            count: 2
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\HtmlRenderer\\:\\:calculateActivityBudget\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\HtmlRenderer\\:\\:calculateProjectBudget\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\HtmlRenderer\\:\\:calculateSummary\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
             message: "#^Method App\\\\Export\\\\Base\\\\HtmlRenderer\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Cannot call method getBudget\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Cannot call method getCurrency\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 5
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Cannot call method getName\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Cannot call method getTimeBudget\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Cannot call method jsonSerialize\\(\\) on App\\\\Model\\\\Statistic\\\\BudgetStatistic\\|null\\.$#"
-            count: 2
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\PDFRenderer\\:\\:calculateActivityBudget\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\PDFRenderer\\:\\:calculateProjectBudget\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\PDFRenderer\\:\\:calculateSummary\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
 
         -
             message: "#^Method App\\\\Export\\\\Base\\\\PDFRenderer\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -1640,11 +1530,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Export\\\\Base\\\\PDFRenderer\\:\\:getPdfOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Parameter \\#1 \\$filename of static method App\\\\Utils\\\\FileHelper\\:\\:convertToAsciiFilename\\(\\) expects string, array\\|string given\\.$#"
             count: 1
             path: src/Export/Base/PDFRenderer.php
 
@@ -3097,11 +2982,6 @@ parameters:
             message: "#^Parameter \\#3 \\$subject of function preg_replace expects array\\<float\\|int\\|string\\>\\|string, mixed given\\.$#"
             count: 2
             path: src/Invoice/Renderer/DocxRenderer.php
-
-        -
-            message: "#^Parameter \\#1 \\$filename of static method App\\\\Utils\\\\FileHelper\\:\\:convertToAsciiFilename\\(\\) expects string, array\\|string given\\.$#"
-            count: 1
-            path: src/Invoice/Renderer/PdfRenderer.php
 
         -
             message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"

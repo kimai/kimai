@@ -24,6 +24,7 @@ services:
             - '../src/Entity/'
             - '../src/Event/'
             - '../src/Export/Package/'
+            - '../src/Export/Base/'
             - '../src/Form/Model/'
             - '../src/Model/'
             - '../src/Repository/Loader/'

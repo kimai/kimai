@@ -28,7 +28,7 @@ final class ExportRendererValidator extends ConstraintValidator
             return;
         }
 
-        $ids = ['csv', 'xlsx'];
+        $ids = ['csv', 'xlsx', 'pdf'];
 
         if (!\is_string($value) || !\in_array($value, $ids, true)) {
             $this->context->buildViolation(ExportRenderer::getErrorName(ExportRenderer::UNKNOWN_TYPE))
