@@ -962,7 +962,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
-    public function setLastLogin(\DateTime $time = null): User
+    public function setLastLogin(?\DateTime $time = null): User
     {
         $this->lastLogin = $time;
 
