@@ -129,7 +129,8 @@
                                     {% set btnTitle = type|trans  %}
                                 {% endif %}
                                 {% if group|length == 1 %}
-                                    {% for id, title in group %}
+                                    {% for id, cfg in group %}
+                                        {% set title = cfg.title %}
                                         {% set btnTitle2 = ('button.' ~ title)|trans %}
                                         {% if btnTitle2 != ('button.' ~ title) %}
                                             {% set btnTitle = btnTitle2 %}
@@ -144,7 +145,8 @@
                                             {{ btnTitle }}
                                         </button>
                                         <div class="dropdown-menu">
-                                            {% for id, title in group %}
+                                            {% for id, cfg in group %}
+                                                {% set title = cfg.title %}
                                                 {% set btnTitle = id|trans({}, 'export') %}
                                                 {% if btnTitle == id %}
                                                     {% set btnTitle = title|trans %}
@@ -154,7 +156,7 @@
                                                 {% endif %}
                                                 <a href="#" class="dropdown-item startExportBtn" data-type="{{ id }}">
                                                     {{ btnTitle }}
-                                                    {% if allowCreate and loop.index0 != 0 and (type == 'csv' or type == 'xlsx') %}
+                                                    {% if allowCreate and cfg.internal %}
                                                         <span class="dropdown-action modal-ajax-form open-edit ps-2 ms-auto" data-href="{{ path('export_template_edit', {exportTemplate: id}) }}">{{ icon('edit') }}</span>
                                                         <span class="dropdown-action api-link text-red dd-ts-trash text-danger ms-2" href="{{ path('delete_export_template', {id: id}) }}" data-event="kimai.exportTemplate" data-method="DELETE" data-question="confirm.delete" data-msg-error="action.delete.error" data-msg-success="action.delete.success">{{ icon('delete') }}</span>
                                                     {% endif %}

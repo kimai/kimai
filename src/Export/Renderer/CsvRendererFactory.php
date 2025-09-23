@@ -10,33 +10,33 @@
 namespace App\Export\Renderer;
 
 use App\Export\Base\CsvRenderer;
-use App\Export\Base\SpreadsheetRenderer;
+use App\Export\ColumnConverter;
+use App\Export\DefaultTemplate;
 use App\Export\TemplateInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Psr\Log\LoggerInterface;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class CsvRendererFactory
 {
     public function __construct(
-        private readonly EventDispatcherInterface $dispatcher,
-        private readonly Security $voter,
+        private readonly ColumnConverter $converter,
+        private readonly EventDispatcherInterface $eventDispatcher,
         private readonly TranslatorInterface $translator,
-        private readonly ?LoggerInterface $logger = null,
     ) {
     }
 
     public function create(TemplateInterface $template): CsvRenderer
     {
-        $renderer = new SpreadsheetRenderer($this->dispatcher, $this->voter, $this->logger);
-        $renderer->setTemplate($template);
-
-        $renderer = new CsvRenderer($renderer, $this->translator);
-        $renderer->setId($template->getId());
-        $renderer->setTitle($template->getTitle());
-        $renderer->setLocale($template->getLocale());
+        $renderer = new CsvRenderer($this->converter, $this->translator, $template);
+        $renderer->setInternal(true);
 
         return $renderer;
+    }
+
+    public function createDefault(): CsvRenderer
+    {
+        $template = new DefaultTemplate($this->eventDispatcher, 'csv');
+
+        return new CsvRenderer($this->converter, $this->translator, $template);
     }
 }

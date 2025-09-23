@@ -10,6 +10,7 @@
 namespace App\Tests\Export\Renderer;
 
 use App\Export\Base\XlsxRenderer;
+use App\Export\ColumnConverter;
 use App\Export\Renderer\XlsxRendererFactory;
 use App\Export\Template;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -24,11 +25,16 @@ class XlsxRendererFactoryTest extends TestCase
 {
     public function testCreate(): void
     {
-        $sut = new XlsxRendererFactory(
-            $this->createMock(EventDispatcherInterface::class),
+        $dispatcher = $this->createMock(EventDispatcherInterface::class);
+        $converter = new ColumnConverter(
+            $dispatcher,
             $this->createMock(Security::class),
-            $this->createMock(TranslatorInterface::class),
             $this->createMock(LoggerInterface::class)
+        );
+        $sut = new XlsxRendererFactory(
+            $converter,
+            $dispatcher,
+            $this->createMock(TranslatorInterface::class),
         );
 
         $template = new Template('foo-id', 'bar-title');
@@ -39,5 +45,6 @@ class XlsxRendererFactoryTest extends TestCase
         self::assertInstanceOf(XlsxRenderer::class, $renderer);
         self::assertEquals('foo-id', $renderer->getId());
         self::assertEquals('bar-title', $renderer->getTitle());
+        self::assertTrue($renderer->isInternal());
     }
 }

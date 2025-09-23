@@ -12,9 +12,6 @@ namespace App\Tests\Export\Package;
 use App\Export\Package\Column;
 use App\Export\Package\SpreadsheetPackage;
 
-/**
- * @covers \App\Export\Package\SpoutSpreadsheet
- */
 class MemoryPackage implements SpreadsheetPackage
 {
     private ?string $filename = null;

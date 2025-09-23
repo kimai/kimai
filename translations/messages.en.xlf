@@ -1966,6 +1966,26 @@
         <source>Code</source>
         <target>Code</target>
       </trans-unit>
+      <trans-unit id="xZzzKxM" resname="orientation">
+        <source>Orientation</source>
+        <target>Orientation</target>
+      </trans-unit>
+      <trans-unit id="UcWoKWo" resname="portrait">
+        <source>Portrait</source>
+        <target>Portrait</target>
+      </trans-unit>
+      <trans-unit id="rLlV34K" resname="landscape">
+        <source>Landscape</source>
+        <target>Landscape</target>
+      </trans-unit>
+      <trans-unit id="UZUFKZg" resname="remaining_budget">
+        <source>remaining_budget</source>
+        <target>Remaining budget</target>
+      </trans-unit>
+      <trans-unit id="eV6j76Q" resname="font">
+        <source>font</source>
+        <target>Font</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

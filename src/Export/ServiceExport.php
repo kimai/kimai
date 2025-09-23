@@ -31,7 +31,7 @@ final class ServiceExport
      */
     private array $renderer = [];
     /**
-     * @var TimesheetExportInterface[]
+     * @var ExportRendererInterface[]
      */
     private array $timesheetExporter = [];
     /**
@@ -79,7 +79,12 @@ final class ServiceExport
      */
     public function getRenderer(): array
     {
-        $renderer = [];
+        $renderer = [
+            $this->csvRendererFactory->createDefault(),
+            $this->xlsxRendererFactory->createDefault(),
+            $this->pdfRendererFactory->create('pdf', 'export/pdf-layout.html.twig', 'default'),
+            $this->htmlRendererFactory->create('html', 'export/print.html.twig'),
+        ];
 
         foreach ($this->exportTemplateRepository->findAll() as $template) {
             $tpl = new Template((string) $template->getId(), $template->getTitle()); // @phpstan-ignore argument.type
@@ -94,6 +99,10 @@ final class ServiceExport
 
                 case 'xlsx':
                     $renderer[] = $this->xlsxRendererFactory->create($tpl);
+                    break;
+
+                case 'pdf':
+                    $renderer[] = $this->pdfRendererFactory->createFromTemplate($tpl);
                     break;
 
                 default:
@@ -115,7 +124,7 @@ final class ServiceExport
                         continue;
                     }
 
-                    $renderer[] = $this->htmlRendererFactory->create($tplName, $tplName);
+                    $renderer[] = $this->htmlRendererFactory->create($tplName, '@export/' . $tplName);
                 }
             }
 
@@ -127,7 +136,7 @@ final class ServiceExport
                         continue;
                     }
 
-                    $renderer[] = $this->pdfRendererFactory->create($tplName, $tplName);
+                    $renderer[] = $this->pdfRendererFactory->create($tplName, '@export/' . $tplName);
                 }
             }
         }
@@ -146,20 +155,27 @@ final class ServiceExport
         return null;
     }
 
-    public function addTimesheetExporter(TimesheetExportInterface $exporter): void
+    public function addTimesheetExporter(ExportRendererInterface $exporter): void
     {
         $this->timesheetExporter[] = $exporter;
     }
 
     /**
-     * @return TimesheetExportInterface[]
+     * @return ExportRendererInterface[]
      */
     public function getTimesheetExporter(): array
     {
-        return $this->timesheetExporter;
+        $exporter = [
+            $this->pdfRendererFactory->create('pdf', '@export/timesheet.pdf.twig'),
+            $this->xlsxRendererFactory->createDefault(),
+            $this->csvRendererFactory->createDefault(),
+            $this->htmlRendererFactory->create('print', 'timesheet/export.html.twig'),
+        ];
+
+        return array_merge($this->timesheetExporter, $exporter);
     }
 
-    public function getTimesheetExporterById(string $id): ?TimesheetExportInterface
+    public function getTimesheetExporterById(string $id): ?ExportRendererInterface
     {
         foreach ($this->getTimesheetExporter() as $exporter) {
             if ($exporter->getId() === $id) {

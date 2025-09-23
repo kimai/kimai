@@ -468,6 +468,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->getPreferenceValue(UserPreference::FIRST_WEEKDAY, User::DEFAULT_FIRST_WEEKDAY, false);
     }
 
+    /**
+     * @ deprecated since 2.40 - will be removed with 3.0
+     */
     public function isExportDecimal(): bool
     {
         return (bool) $this->getPreferenceValue('export_decimal', false, false);

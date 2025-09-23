@@ -106,7 +106,7 @@ class ExportTemplate
         $this->columns = $columns ?? [];
     }
 
-    public function getOption(string $key, int|string|bool $default): int|string|bool
+    public function getOption(string $key, int|string|bool|null $default): int|string|bool|null
     {
         if (\array_key_exists($key, $this->options)) {
             return $this->options[$key] ?? $default;
@@ -115,8 +115,16 @@ class ExportTemplate
         return $default;
     }
 
-    public function setOption(string $key, int|string|null|bool $value): void
+    public function setOption(string $key, int|string|bool|null $value): void
     {
+        if ($value === null) {
+            if (\array_key_exists($key, $this->options)) {
+                unset($this->options[$key]);
+            }
+
+            return;
+        }
+
         $this->options[$key] = $value;
     }
 
@@ -151,6 +159,96 @@ class ExportTemplate
     public function getSeparator(): string
     {
         return (string) $this->getOption('separator', ',');
+    }
+
+    /**
+     * Only used for PDF export
+     */
+    public function setName(?string $name): void
+    {
+        $this->setOption('name', $name);
+    }
+
+    public function getName(): ?string
+    {
+        $name = $this->getOption('name', null);
+
+        return \is_string($name) ? $name : null;
+    }
+
+    /**
+     * Only used for PDF export
+     */
+    public function setPageSize(?string $pageSize): void
+    {
+        $this->setOption('pageSize', $pageSize);
+    }
+
+    public function getPageSize(): ?string
+    {
+        $pageSize = $this->getOption('pageSize', null);
+
+        return \is_string($pageSize) ? $pageSize : null;
+    }
+
+    /**
+     * Only used for PDF export
+     */
+    public function setOrientation(?string $orientation): void
+    {
+        if ($orientation !== null) {
+            $orientation = strtolower($orientation);
+            if (!\in_array($orientation, ['landscape', 'portrait'], true)) {
+                throw new \InvalidArgumentException('Invalid orientation. Allowed values are "landscape" and "portrait".');
+            }
+        }
+        $this->setOption('orientation', $orientation);
+    }
+
+    public function getOrientation(): ?string
+    {
+        $orientation = $this->getOption('orientation', null);
+
+        return \is_string($orientation) ? $orientation : null;
+    }
+
+    /**
+     * Only used for PDF export
+     * @param array<string> $columns
+     */
+    public function setSummaryColumns(array $columns): void
+    {
+        $columns = \count($columns) > 0 ? implode(',', $columns) : null;
+
+        $this->setOption('summary_columns', $columns);
+    }
+
+    /**
+     * @return array<string>
+     */
+    public function getSummaryColumns(): array
+    {
+        $columns = $this->getOption('summary_columns', null);
+        if (!\is_string($columns)) {
+            return [];
+        }
+
+        return explode(',', $columns);
+    }
+
+    /**
+     * Only used for PDF export
+     */
+    public function setFont(?string $font): void
+    {
+        $this->setOption('font', $font);
+    }
+
+    public function getFont(): ?string
+    {
+        $font = $this->getOption('font', null);
+
+        return \is_string($font) ? $font : null;
     }
 
     public function __toString(): string
