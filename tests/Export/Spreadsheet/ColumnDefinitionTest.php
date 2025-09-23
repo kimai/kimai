@@ -22,9 +22,13 @@ class ColumnDefinitionTest extends TestCase
             return 'hello world';
         });
 
+        self::assertEquals('messages', $sut->getTranslationDomain());
         self::assertEquals('foo', $sut->getLabel());
         self::assertEquals('bar', $sut->getType());
         self::assertIsCallable($sut->getAccessor());
         self::assertEquals('hello world', \call_user_func($sut->getAccessor()));
+
+        $sut->setTranslationDomain('foo');
+        self::assertEquals('foo', $sut->getTranslationDomain());
     }
 }
