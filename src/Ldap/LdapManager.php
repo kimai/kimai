@@ -36,7 +36,6 @@ class LdapManager
 
         $criteria = [$params['usernameAttribute'] => $username];
 
-        $params = $this->config->getUserParameters();
         $filter = $this->buildFilter($criteria);
         $entries = $this->driver->search($params['baseDn'], $filter);
 
@@ -89,7 +88,9 @@ class LdapManager
         $user->setPreferenceValue('ldap_dn', $baseDn);
 
         $params = $this->config->getUserParameters();
-        $entries = $this->driver->search($baseDn, $params['attributesFilter']);
+        $criteria = [$params['usernameAttribute'] => $user->getUserIdentifier()];
+        $filter = $this->buildFilter($criteria);
+        $entries = $this->driver->search($params['baseDn'], $filter);
 
         if ($entries['count'] > 1) {
             throw new LdapDriverException('This search must only return a single user');
