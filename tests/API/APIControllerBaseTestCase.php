@@ -100,7 +100,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
         ]);
     }
 
-    public function request(HttpKernelBrowser $client, string $url, string $method = 'GET', array $parameters = [], string $content = null): Crawler
+    public function request(HttpKernelBrowser $client, string $url, string $method = 'GET', array $parameters = [], ?string $content = null): Crawler
     {
         $server = ['HTTP_CONTENT_TYPE' => 'application/json', 'CONTENT_TYPE' => 'application/json'];
 
