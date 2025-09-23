@@ -23,9 +23,11 @@ use App\Event\TimesheetMetaDisplayEvent;
 use App\Event\UserPreferenceDisplayEvent;
 use App\Export\ColumnConverter;
 use App\Export\DefaultTemplate;
+use App\Export\Template;
 use App\Repository\Query\TimesheetQuery;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
@@ -36,11 +38,13 @@ class ColumnConverterTest extends TestCase
     {
         $dispatcher = new EventDispatcher();
         $security = $this->createMock(Security::class);
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects(self::never())->method('warning');
 
         $template = new DefaultTemplate($dispatcher, 'foo');
         $query = new TimesheetQuery();
 
-        $sut = new ColumnConverter($dispatcher, $security);
+        $sut = new ColumnConverter($dispatcher, $security, $logger);
         $columns = $sut->getColumns($template, $query);
 
         $expected = [
@@ -81,12 +85,14 @@ class ColumnConverterTest extends TestCase
         $security = $this->createMock(Security::class);
         $security->method('getUser')->willReturn($user);
         $security->method('isGranted')->willReturn(false);
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects(self::never())->method('warning');
 
         $template = new DefaultTemplate($dispatcher, 'foo');
         $query = new TimesheetQuery();
         $query->setUser($user);
 
-        $sut = new ColumnConverter($dispatcher, $security);
+        $sut = new ColumnConverter($dispatcher, $security, $logger);
         $columns = $sut->getColumns($template, $query);
 
         $expected = [
@@ -144,12 +150,14 @@ class ColumnConverterTest extends TestCase
         $security = $this->createMock(Security::class);
         $security->method('getUser')->willReturn($user);
         $security->method('isGranted')->willReturn(false);
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects(self::never())->method('warning');
 
         $template = new DefaultTemplate($dispatcher, 'foo');
         $query = new TimesheetQuery();
         $query->setUser($user);
 
-        $sut = new ColumnConverter($dispatcher, $security);
+        $sut = new ColumnConverter($dispatcher, $security, $logger);
         $columns = $sut->getColumns($template, $query);
 
         $expected = [
@@ -183,6 +191,99 @@ class ColumnConverterTest extends TestCase
             'activity.meta.hello_activity',
             'user.meta.user_acme',
             'user.meta.user_foo',
+        ];
+
+        self::assertEquals($expected, array_keys($columns));
+    }
+
+    public function testWithAllAndUnknownColumns(): void
+    {
+        $user = new User();
+
+        $dispatcher = $this->createMock(EventDispatcher::class);
+        $security = $this->createMock(Security::class);
+        $security->method('getUser')->willReturn($user);
+        $security->method('isGranted')->willReturn(true);
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects(self::exactly(3))->method('warning');
+
+        $template = new Template('bar', 'foo');
+        $template->setColumns([
+            'date',
+            'begin',
+            'end',
+            'duration',
+            'duration_decimal',
+            'duration_seconds',
+            'break',
+            'break_decimal',
+            'break_seconds',
+            'exported',
+            'currency',
+            'rate',
+            'internal_rate',
+            'hourly_rate',
+            'fixed_rate',
+            'user.alias',
+            'unknown.1',
+            'activity.number',
+            'user.name',
+            'user.email',
+            'user.account_number',
+            'customer.name',
+            'project.name',
+            'activity.name',
+            'description',
+            'billable',
+            'tags',
+            'type',
+            'category',
+            'customer.number',
+            'project.tralalala',
+            'project.number',
+            'customer.vat_id',
+            'customer.is.never,evil',
+            'project.order_number',
+        ]);
+        $query = new TimesheetQuery();
+        $query->setUser($user);
+
+        $sut = new ColumnConverter($dispatcher, $security, $logger);
+        $columns = $sut->getColumns($template, $query);
+
+        $expected = [
+            'date',
+            'begin',
+            'end',
+            'duration',
+            'duration_decimal',
+            'duration_seconds',
+            'break',
+            'break_decimal',
+            'break_seconds',
+            'exported',
+            'currency',
+            'rate',
+            'internal_rate',
+            'hourly_rate',
+            'fixed_rate',
+            'user.alias',
+            'activity.number',
+            'user.name',
+            'user.email',
+            'user.account_number',
+            'customer.name',
+            'project.name',
+            'activity.name',
+            'description',
+            'billable',
+            'tags',
+            'type',
+            'category',
+            'customer.number',
+            'project.number',
+            'customer.vat_id',
+            'project.order_number',
         ];
 
         self::assertEquals($expected, array_keys($columns));
