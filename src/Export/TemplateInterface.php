@@ -9,6 +9,8 @@
 
 namespace App\Export;
 
+use App\Repository\Query\TimesheetQuery;
+
 interface TemplateInterface
 {
     public function getId(): string;
@@ -18,7 +20,7 @@ interface TemplateInterface
     /**
      * @return array<int, string>
      */
-    public function getColumns(): array;
+    public function getColumns(TimesheetQuery $query): array;
 
     public function getLocale(): ?string;
 
