@@ -81,6 +81,7 @@ final class PdfTemplateRenderer implements DispositionInlineInterface, ExportRen
         if (\array_key_exists('summary_columns', $options) && \is_string($options['summary_columns']) && $options['summary_columns'] !== '') {
             $summaryColumns = $options['summary_columns'];
             $summaryColumns = explode(',', $summaryColumns);
+            unset($options['summary_columns']);
         }
         $options['summary'] = $summaryColumns;
         if (\count($summaryColumns) > 0) {
