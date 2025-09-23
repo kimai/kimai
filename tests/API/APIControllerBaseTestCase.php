@@ -356,6 +356,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'enabled' => 'bool',
                     'apiToken' => 'bool',
                     'color' => '@string',
+                    'avatar' => '@string',
                     'alias' => '@string',
                     'accountNumber' => '@string',
                     'initials' => '@string',
@@ -431,6 +432,9 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'color' => '@string',
                     'number' => '@string',
                     'comment' => '@string',
+                    'currency' => 'string', // since 2.40.0
+                    'country' => 'string', // since 2.40.0
+                    'company' => '@string', // since 2.40.0
                 ];
 
                 // if a list of customers is loaded
@@ -446,6 +450,13 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'],
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                     'currency' => 'string', // since 1.10
+                    'country' => 'string',
+                    'company' => '@string',
+                    'homepage' => '@string',
+                    'fax' => '@string',
+                    'mobile' => '@string',
+                    'phone' => '@string',
+                    'timezone' => 'string',
                 ];
 
                 // if a customer is loaded explicitly
@@ -490,6 +501,8 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'orderNumber' => '@string',
                     'globalActivities' => 'bool',
                     'comment' => '@string',
+                    'start' => '@datetime',
+                    'end' => '@datetime',
                 ];
 
                 // if a project is embedded in an expanded collection (here timesheet)
@@ -505,6 +518,8 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'orderNumber' => '@string',
                     'globalActivities' => 'bool',
                     'comment' => '@string',
+                    'start' => '@datetime',
+                    'end' => '@datetime',
                 ];
 
                 // if a collection of projects is loaded

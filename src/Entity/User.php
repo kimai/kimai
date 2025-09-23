@@ -106,7 +106,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[ORM\Column(name: 'avatar', type: Types::STRING, length: 255, nullable: true)]
     #[Assert\Length(max: 255, groups: ['Profile'])]
     #[Serializer\Expose]
-    #[Serializer\Groups(['User_Entity'])]
+    #[Serializer\Groups(['Default'])]
     private ?string $avatar = null;
     /**
      * API token (password) for this user
