@@ -276,6 +276,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                 $fieldName = implode('.', $parts);
             }
 
+            self::assertIsString($fieldName);
             self::assertArrayHasKey($fieldName, $data, \sprintf('Could not find validation error for field "%s" in list: %s', $fieldName, implode(', ', $failedFields)));
             self::assertArrayHasKey('errors', $data[$fieldName], \sprintf('Field %s has no validation problem', $fieldName));
             foreach ($messages as $i => $message) {
