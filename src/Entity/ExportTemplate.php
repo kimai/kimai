@@ -60,6 +60,11 @@ class ExportTemplate
         return $this->id;
     }
 
+    public function isNew(): bool
+    {
+        return $this->id === null;
+    }
+
     public function setTitle(?string $title): void
     {
         $this->title = $title;

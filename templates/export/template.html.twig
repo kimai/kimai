@@ -3,7 +3,7 @@
 {% block main %}
     {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
         {% set formOptions = {
-            'title': 'create'|trans,
+            'title': (template.isNew() ? 'create'|trans : 'edit'|trans),
             'form': form,
             'back': path('export_template_create')
         } %}

@@ -19,6 +19,7 @@ class ExportTemplateTest extends AbstractEntityTestCase
     {
         $sut = new ExportTemplate();
         self::assertNull($sut->getId());
+        self::assertTrue($sut->isNew());
         self::assertNull($sut->getTitle());
         self::assertEquals('csv', $sut->getRenderer());
         self::assertNull($sut->getLanguage());
@@ -115,6 +116,7 @@ class ExportTemplateTest extends AbstractEntityTestCase
         $p->setAccessible(true);
         $p->setValue($sut, 13);
         self::assertEquals(13, $sut->getId());
+        self::assertFalse($sut->isNew());
 
         $sut2 = clone $sut;
         self::assertNull($sut2->getId());
