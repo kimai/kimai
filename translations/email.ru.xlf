@@ -38,6 +38,18 @@
         <source>Don't worry, Kimai will help you create a new one!</source>
         <target state="translated">Данная ссылка будет активна только в течении 15 минут.</target>
       </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="needs-translation">Запрошено подтверждение: %user%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">Ваш запрос был отклонён</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Ваш запрос был одобрен</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

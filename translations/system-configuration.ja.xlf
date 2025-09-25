@@ -58,6 +58,10 @@
         <source>calendar.visibleHours.end</source>
         <target>表示可能な時間帯の終了時刻</target>
       </trans-unit>
+      <trans-unit id="SnkW0Pk" resname="theme.avatar_url" xml:space="preserve">
+        <source>theme.avatar_url</source>
+        <target state="translated">アバター画像にURLが使用できるようにする</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

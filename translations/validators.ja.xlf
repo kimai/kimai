@@ -14,6 +14,22 @@
         <source>The begin date cannot be in the future.</source>
         <target>開始日に、未来日を設定することはできません。</target>
       </trans-unit>
+      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team." xml:space="preserve">
+        <source>At least one team leader must be assigned to the team.</source>
+        <target state="translated">チームには少なくとも一人のチームリーダーが割り当てられなければいけません。</target>
+      </trans-unit>
+      <trans-unit id="6WAG.Xj" resname="The entered passwords don't match." xml:space="preserve">
+        <source>The entered passwords don't match.</source>
+        <target state="translated">入力されたパスワードが一致しません。</target>
+      </trans-unit>
+      <trans-unit id="6u6oCwB" resname="The email is already used." xml:space="preserve">
+        <source>This e-mail address is already in use.</source>
+        <target state="translated">このメールアドレスは既に使用されています。</target>
+      </trans-unit>
+      <trans-unit id="S14XECA" resname="The username is already used." xml:space="preserve">
+        <source>The username is already used.</source>
+        <target state="translated">このユーザー名は既に使用されています。</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

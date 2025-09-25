@@ -18,6 +18,10 @@
         <source>Plugin Shop</source>
         <target state="translated">Дополнительные расширения</target>
       </trans-unit>
+      <trans-unit id="aNvGEaj" resname="update_available" xml:space="preserve">
+        <source>Update available</source>
+        <target state="needs-translation">Доступно обновление: %version%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
