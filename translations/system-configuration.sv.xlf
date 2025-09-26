@@ -124,19 +124,19 @@
       </trans-unit>
       <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target state="needs-translation">Golv: början, slutet och längden avrundas nedåt</target>
+        <target state="translated">Golv: början, slutet och längden avrundas nedåt</target>
       </trans-unit>
       <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target state="needs-translation">Standard: början avrundas nedåt, slutet och längden avrundas uppåt</target>
+        <target state="translated">Standard: början avrundas nedåt, slutet och längden avrundas uppåt</target>
       </trans-unit>
       <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target state="needs-translation">Närmast: matematisk avrundning till närmsta värdet</target>
+        <target state="translated">Närmast: matematisk avrundning till närmsta värdet</target>
       </trans-unit>
       <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target state="needs-translation">Tak: början, slutet och längden kommer avrundas uppåt</target>
+        <target state="translated">Tak: början, slutet och längden kommer avrundas uppåt</target>
       </trans-unit>
       <trans-unit id="oL_eD_9" resname="timesheet.rounding.default.days">
         <source>timesheet.rounding.default.days</source>

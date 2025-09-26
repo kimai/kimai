@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
         <source>The end date must not be earlier than the start date.</source>
-        <target state="needs-translation">Slutdatumet får inte vara tidigare än startdatumet.</target>
+        <target state="translated">Slutdatumet får inte vara tidigare än startdatumet.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
@@ -132,7 +132,7 @@
       </trans-unit>
       <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="needs-translation">Frånvaro kan inte registreras innan din första arbetsdag.</target>
+        <target state="translated">Frånvaro kan inte registreras innan din första arbetsdag.</target>
       </trans-unit>
       <trans-unit id="IN37g5N" resname="Not enough holidays left." xml:space="preserve">
         <source>Not enough holidays left.</source>
@@ -153,6 +153,18 @@
       <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form." xml:space="preserve">
         <source>The CSRF token is invalid. Please try to resubmit the form.</source>
         <target state="translated">Försök att skicka in formuläret igen. Om problemet kvarstår, ladda om din webbläsare.</target>
+      </trans-unit>
+      <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day." xml:space="preserve">
+        <source>An absence cannot be booked after the last working day.</source>
+        <target state="translated">En frånvaro kan inte bokas efter den sista arbetsdagen.</target>
+      </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target state="translated">Vald period kan inte låsas: det finns obekräftade frånvaroförfrågningar.</target>
+      </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
+        <source>Duration cannot be negative.</source>
+        <target state="translated">Tidslängden kan inte vara negativ.</target>
       </trans-unit>
     </body>
   </file>

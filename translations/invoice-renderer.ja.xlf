@@ -18,6 +18,18 @@
         <source>service-date</source>
         <target>フリーランサー</target>
       </trans-unit>
+      <trans-unit id="7mEUv6C" resname="help.upload" xml:space="preserve">
+        <source>help.upload</source>
+        <target state="translated">注意：既存のファイルが上書きされようとしています。利用可能なファイル形式は%extensions%です。</target>
+      </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer" xml:space="preserve">
+        <source>download_invoice_renderer</source>
+        <target state="translated">別のテンプレートのダウンロードはこちら</target>
+      </trans-unit>
+      <trans-unit id="E5BwZHT" resname="programmatic" xml:space="preserve">
+        <source>programmatic</source>
+        <target state="translated">追加処理</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
