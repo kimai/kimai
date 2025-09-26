@@ -68,7 +68,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
 
         $data = [
             'message' => 'Unauthorized',
-            'code' => 401
+            'code' => Response::HTTP_UNAUTHORIZED
         ];
 
         self::assertEquals(
