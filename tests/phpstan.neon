@@ -1800,26 +1800,10 @@ parameters:
             message: "#^Parameter \\#2 \\$type of class PHPUnit\\\\Framework\\\\MockObject\\\\MockBuilder constructor expects class\\-string\\<TMockedClass\\>, string given\\.$#"
             count: 1
             path: Mocks/AbstractMockFactory.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Mocks\\\\ActivityTestMetaFieldSubscriberMock\\:\\:loadMeta\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Mocks/ActivityTestMetaFieldSubscriberMock.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Mocks\\\\CustomerTestMetaFieldSubscriberMock\\:\\:loadMeta\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Mocks/CustomerTestMetaFieldSubscriberMock.php
-
         -
             message: "#^Parameter \\#1 \\$dataDir of class App\\\\Utils\\\\FileHelper constructor expects string, string\\|false given\\.$#"
             count: 1
             path: Mocks/FileHelperFactory.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Mocks\\\\ProjectTestMetaFieldSubscriberMock\\:\\:loadMeta\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Mocks/ProjectTestMetaFieldSubscriberMock.php
 
         -
             message: "#^Method App\\\\Tests\\\\Mocks\\\\RoundingServiceFactory\\:\\:create\\(\\) has parameter \\$rules with no value type specified in iterable type array\\.$#"
@@ -1830,11 +1814,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Mocks\\\\Saml\\\\SamlAuthFactoryFactory\\:\\:create\\(\\) has parameter \\$connection with no value type specified in iterable type array\\.$#"
             count: 1
             path: Mocks/Saml/SamlAuthFactoryFactory.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Mocks\\\\TimesheetTestMetaFieldSubscriberMock\\:\\:loadMeta\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Mocks/TimesheetTestMetaFieldSubscriberMock.php
 
         -
             message: "#^Method App\\\\Tests\\\\Mocks\\\\TrackingModeServiceFactory\\:\\:create\\(\\) has parameter \\$modes with no value type specified in iterable type array\\.$#"
