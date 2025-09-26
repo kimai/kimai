@@ -10,8 +10,11 @@
 namespace App\Tests\API;
 
 use App\Entity\User;
+use App\Tests\Mocks\PrepareUserEventSubscriberMock;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\Response;
 
 #[Group('integration')]
 class UserControllerTest extends APIControllerBaseTestCase
@@ -336,5 +339,68 @@ class UserControllerTest extends APIControllerBaseTestCase
         $response = $client->getResponse();
         self::assertEquals(400, $response->getStatusCode());
         $this->assertApiCallValidationError($response, ['email', 'language', 'timezone', 'roles'], true);
+    }
+
+    // ------------------------------------- [USER PREFERENCES] -------------------------------------
+
+    public function testUpdateUserPreferenceThrowsNotFound(): void
+    {
+        $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/users/42/preferences', []);
+    }
+
+    public function testUpdateUserPreferenceThrowsExceptionOnWrongStructure(): void
+    {
+        $this->assertExceptionForPatchAction(User::ROLE_SUPER_ADMIN, '/api/users/1/preferences', ['name' => 'X', 'value' => 'X'], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
+    public function testUpdateUserPreferenceThrowsExceptionOnMissingName(): void
+    {
+        $this->assertExceptionForPatchAction(User::ROLE_SUPER_ADMIN, '/api/users/1/preferences', [['value' => 'X']], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
+    public function testUpdateUserPreferenceThrowsExceptionOnMissingValue(): void
+    {
+        $this->assertExceptionForPatchAction(User::ROLE_SUPER_ADMIN, '/api/users/1/preferences', [['name' => 'X']], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
+    public function testUpdateUserPreferenceThrowsExceptionOnMissingMetafield(): void
+    {
+        $this->assertExceptionForPatchAction(User::ROLE_SUPER_ADMIN, '/api/users/1/preferences', [['name' => 'X', 'value' => 'Y']], [
+            'code' => Response::HTTP_NOT_FOUND,
+            'message' => 'Not Found'
+        ]);
+    }
+
+    public function testUpdateUserPreference(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new PrepareUserEventSubscriberMock());
+
+        $data = [
+            [
+                'name' => 'metatestmock',
+                'value' => 'another,testing,bar'
+            ]
+        ];
+        $this->request($client, '/api/users/1/preferences', 'PATCH', [], (string) json_encode($data));
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $em = $this->getEntityManager();
+        /** @var User $user */
+        $user = $em->getRepository(User::class)->find(1);
+        self::assertEquals('another,testing,bar', $user->getPreferenceValue('metatestmock'));
+        self::assertEquals('another,testing,bar', $user->getPreferenceValue('metatestmock'));
     }
 }

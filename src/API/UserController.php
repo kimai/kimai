@@ -11,6 +11,7 @@ namespace App\API;
 
 use App\Entity\AccessToken;
 use App\Entity\User;
+use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
 use App\Form\API\UserApiCreateForm;
 use App\Form\API\UserApiEditForm;
@@ -23,10 +24,12 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -220,6 +223,46 @@ final class UserController extends BaseApiController
         $accessTokenRepository->deleteAccessToken($accessToken);
 
         $view = new View(null, Response::HTTP_OK);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Update user preferences
+     */
+    #[IsGranted('edit', 'profile')]
+    #[OA\Response(response: 200, description: 'Sets the value of a consifgured preference. You cannot create unknown preferences: if the given name is not configured, an exception will be raised.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'User ID to set the custom-field value for', required: true)]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(type: 'array', items: new OA\Items(new Model(type: UserPreference::class))))]
+    #[Route(methods: ['PATCH'], path: '/{id}/preferences', requirements: ['id' => '\d+'])]
+    public function updateUserPreference(User $profile, Request $request, EventDispatcherInterface $dispatcher): Response
+    {
+        $event = new PrepareUserEvent($profile, false);
+        $dispatcher->dispatch($event);
+
+        foreach ($request->request->all() as $preference) {
+            // why is this not handled by FosRestBundle ?
+            if (!\is_array($preference)) {
+                throw new BadRequestHttpException('Invalid request, array expected');
+            }
+            if (!\array_key_exists('name', $preference) || !\array_key_exists('value', $preference)) {
+                throw new BadRequestHttpException('Missing required parameter "name" or "value"');
+            }
+
+            $name = $preference['name'];
+            $value = $preference['value'];
+
+            if (null === ($meta = $profile->getPreference($name))) {
+                throw $this->createNotFoundException(\sprintf('Unknown custom-field "%s" requested', $name));
+            }
+
+            $meta->setValue($value);
+        }
+
+        $this->repository->saveUser($profile);
+
+        $view = new View($profile, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
