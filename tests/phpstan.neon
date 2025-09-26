@@ -302,26 +302,6 @@ parameters:
             path: API/TimesheetControllerTest.php
 
         -
-            message: "#^Cannot access offset 'enabled' on mixed\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'id' on mixed\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
-            count: 8
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$command of method Symfony\\\\Bundle\\\\FrameworkBundle\\\\Console\\\\Application\\:\\:add\\(\\) expects Symfony\\\\Component\\\\Console\\\\Command\\\\Command, object given\\.$#"
-            count: 1
-            path: Command/BundleInstallerCommandTest.php
-
-        -
             message: "#^Parameter \\#1 \\$hashedPassword of method Symfony\\\\Component\\\\PasswordHasher\\\\PasswordHasherInterface\\:\\:verify\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: Command/ChangePasswordCommandTest.php
