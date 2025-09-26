@@ -129,7 +129,7 @@ parameters:
 
         -
             message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
-            count: 3
+            count: 1
             path: API/APIControllerBaseTestCase.php
 
         -
@@ -300,26 +300,6 @@ parameters:
             message: "#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#"
             count: 1
             path: API/TimesheetControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'enabled' on mixed\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Cannot access offset 'id' on mixed\\.$#"
-            count: 1
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
-            count: 8
-            path: API/UserControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$command of method Symfony\\\\Bundle\\\\FrameworkBundle\\\\Console\\\\Application\\:\\:add\\(\\) expects Symfony\\\\Component\\\\Console\\\\Command\\\\Command, object given\\.$#"
-            count: 1
-            path: Command/BundleInstallerCommandTest.php
 
         -
             message: "#^Parameter \\#1 \\$hashedPassword of method Symfony\\\\Component\\\\PasswordHasher\\\\PasswordHasherInterface\\:\\:verify\\(\\) expects string, string\\|null given\\.$#"
@@ -1800,26 +1780,10 @@ parameters:
             message: "#^Parameter \\#2 \\$type of class PHPUnit\\\\Framework\\\\MockObject\\\\MockBuilder constructor expects class\\-string\\<TMockedClass\\>, string given\\.$#"
             count: 1
             path: Mocks/AbstractMockFactory.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Mocks\\\\ActivityTestMetaFieldSubscriberMock\\:\\:loadMeta\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Mocks/ActivityTestMetaFieldSubscriberMock.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Mocks\\\\CustomerTestMetaFieldSubscriberMock\\:\\:loadMeta\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Mocks/CustomerTestMetaFieldSubscriberMock.php
-
         -
             message: "#^Parameter \\#1 \\$dataDir of class App\\\\Utils\\\\FileHelper constructor expects string, string\\|false given\\.$#"
             count: 1
             path: Mocks/FileHelperFactory.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Mocks\\\\ProjectTestMetaFieldSubscriberMock\\:\\:loadMeta\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Mocks/ProjectTestMetaFieldSubscriberMock.php
 
         -
             message: "#^Method App\\\\Tests\\\\Mocks\\\\RoundingServiceFactory\\:\\:create\\(\\) has parameter \\$rules with no value type specified in iterable type array\\.$#"
@@ -1830,11 +1794,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Mocks\\\\Saml\\\\SamlAuthFactoryFactory\\:\\:create\\(\\) has parameter \\$connection with no value type specified in iterable type array\\.$#"
             count: 1
             path: Mocks/Saml/SamlAuthFactoryFactory.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Mocks\\\\TimesheetTestMetaFieldSubscriberMock\\:\\:loadMeta\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Mocks/TimesheetTestMetaFieldSubscriberMock.php
 
         -
             message: "#^Method App\\\\Tests\\\\Mocks\\\\TrackingModeServiceFactory\\:\\:create\\(\\) has parameter \\$modes with no value type specified in iterable type array\\.$#"

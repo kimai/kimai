@@ -9,36 +9,35 @@
 
 namespace App\Tests\Mocks;
 
-use App\Entity\TimesheetMeta;
-use App\Event\TimesheetMetaDefinitionEvent;
+use App\Entity\UserPreference;
+use App\Event\PrepareUserEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Length;
 
-class TimesheetTestMetaFieldSubscriberMock implements EventSubscriberInterface
+class PrepareUserEventSubscriberMock implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(): array
     {
         return [
-            TimesheetMetaDefinitionEvent::class => ['loadMeta', 200],
+            PrepareUserEvent::class => ['prepareUserEvent', 200],
         ];
     }
 
-    public function loadMeta(TimesheetMetaDefinitionEvent $event): void
+    public function prepareUserEvent(PrepareUserEvent $event): void
     {
-        $definition = (new TimesheetMeta())
-            ->setName('metatestmock')
+        $definition = (new UserPreference('metatestmock'))
             ->setType(TextType::class)
             ->addConstraint(new Length(['max' => 200]))
-            ->setIsVisible(true);
+            ->setEnabled(true);
 
-        $event->getEntity()->setMetaField($definition);
-        $definition = (new TimesheetMeta())
-            ->setName('foobar')
+        $event->getUser()->addPreference($definition);
+
+        $definition = (new UserPreference('foobar'))
             ->setType(IntegerType::class)
-            ->setIsVisible(false);
+            ->setEnabled(false);
 
-        $event->getEntity()->setMetaField($definition);
+        $event->getUser()->addPreference($definition);
     }
 }

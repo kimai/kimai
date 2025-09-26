@@ -77,7 +77,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[ORM\Column(name: 'company', type: Types::STRING, length: 100, nullable: true)]
     #[Assert\Length(max: 100)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer_Entity'])]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'company')]
     private ?string $company = null;
     #[ORM\Column(name: 'vat_id', type: Types::STRING, length: 50, nullable: true)]
@@ -102,7 +102,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Assert\Country]
     #[Assert\Length(max: 2)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer_Entity'])]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'country')]
     private ?string $country = null;
     #[ORM\Column(name: 'currency', type: Types::STRING, length: 3, nullable: false)]
@@ -110,25 +110,25 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Assert\Currency]
     #[Assert\Length(max: 3)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer'])]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'currency')]
     private ?string $currency = self::DEFAULT_CURRENCY;
     #[ORM\Column(name: 'phone', type: Types::STRING, length: 30, nullable: true)]
     #[Assert\Length(max: 30)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer_Entity'])]
+    #[Serializer\Groups(['Customer'])]
     #[Exporter\Expose(label: 'phone')]
     private ?string $phone = null;
     #[ORM\Column(name: 'fax', type: Types::STRING, length: 30, nullable: true)]
     #[Assert\Length(max: 30)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer_Entity'])]
+    #[Serializer\Groups(['Customer'])]
     #[Exporter\Expose(label: 'fax')]
     private ?string $fax = null;
     #[ORM\Column(name: 'mobile', type: Types::STRING, length: 30, nullable: true)]
     #[Assert\Length(max: 30)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer_Entity'])]
+    #[Serializer\Groups(['Customer'])]
     #[Exporter\Expose(label: 'mobile')]
     private ?string $mobile = null;
     /**
@@ -143,7 +143,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[ORM\Column(name: 'homepage', type: Types::STRING, length: 100, nullable: true)]
     #[Assert\Length(max: 100)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer_Entity'])]
+    #[Serializer\Groups(['Customer'])]
     #[Exporter\Expose(label: 'homepage')]
     private ?string $homepage = null;
     /**
@@ -154,7 +154,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Assert\Timezone]
     #[Assert\Length(max: 64)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer_Entity'])]
+    #[Serializer\Groups(['Customer'])]
     #[Exporter\Expose(label: 'timezone')]
     private ?string $timezone = null;
     /**

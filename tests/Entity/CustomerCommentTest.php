@@ -9,13 +9,12 @@
 
 namespace App\Tests\Entity;
 
+use App\Entity\CommentTableTypeTrait;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Entity\CommentTableTypeTrait
- */
+#[CoversClass(CommentTableTypeTrait::class)]
 #[CoversClass(CustomerComment::class)]
 class CustomerCommentTest extends AbstractCommentEntityTestCase
 {

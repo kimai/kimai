@@ -96,7 +96,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
      */
     #[ORM\Column(name: 'start', type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Project'])]
+    #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: "DateTime<'Y-m-d'>")]
     #[Serializer\Accessor(getter: 'getStart')]
     private ?\DateTime $start = null;
@@ -107,7 +107,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
      */
     #[ORM\Column(name: 'end', type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Project'])]
+    #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: "DateTime<'Y-m-d'>")]
     #[Serializer\Accessor(getter: 'getEnd')]
     private ?\DateTime $end = null;

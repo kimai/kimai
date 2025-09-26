@@ -30,9 +30,9 @@ class WorkingTime
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     private ?User $user = null;
-    #[ORM\Column(name: 'date', type: Types::DATE_MUTABLE, nullable: false)]
+    #[ORM\Column(name: 'date', type: Types::DATE_IMMUTABLE, nullable: false)]
     #[Assert\NotNull]
-    private \DateTimeInterface $date;
+    private \DateTimeImmutable $date;
     #[ORM\Column(name: 'expected', type: Types::INTEGER, nullable: false)]
     #[Assert\NotNull]
     private int $expectedTime = 0;
@@ -46,7 +46,7 @@ class WorkingTime
     #[Assert\NotNull]
     private ?\DateTimeImmutable $approvedAt = null;
 
-    public function __construct(User $user, \DateTimeInterface $date)
+    public function __construct(User $user, \DateTimeImmutable $date)
     {
         $this->user = $user;
         $this->date = $date;
@@ -62,7 +62,7 @@ class WorkingTime
         return $this->user;
     }
 
-    public function getDate(): \DateTimeInterface
+    public function getDate(): \DateTimeImmutable
     {
         return $this->date;
     }

@@ -25,7 +25,7 @@ class CustomerTestMetaFieldSubscriberMock implements EventSubscriberInterface
         ];
     }
 
-    public function loadMeta(CustomerMetaDefinitionEvent $event)
+    public function loadMeta(CustomerMetaDefinitionEvent $event): void
     {
         $definition = (new CustomerMeta())
             ->setName('metatestmock')

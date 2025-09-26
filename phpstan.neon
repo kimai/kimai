@@ -424,11 +424,6 @@ parameters:
             path: src/Command/ReloadCommand.php
 
         -
-            message: "#^Access to an undefined property SimpleXMLElement\\|false\\:\\:\\$file\\.$#"
-            count: 1
-            path: src/Command/TranslationCommand.php
-
-        -
             message: "#^Argument of an invalid type list\\<string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
             count: 4
             path: src/Command/TranslationCommand.php
@@ -3199,21 +3194,6 @@ parameters:
             path: src/Plugin/PluginMetadata.php
 
         -
-            message: "#^Cannot access offset 'duration' on mixed\\.$#"
-            count: 3
-            path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'id' on mixed\\.$#"
-            count: 4
-            path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'lastRecord' on mixed\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
             message: "#^Cannot call method getEnd\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
             count: 2
             path: src/Project/ProjectStatisticService.php
@@ -3244,27 +3224,7 @@ parameters:
             path: src/Project/ProjectStatisticService.php
 
         -
-            message: "#^Parameter \\#1 \\$datetime of method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createDateTime\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
             message: "#^Parameter \\#1 \\$duration of method App\\\\Model\\\\TimesheetCountedStatistic\\:\\:setDuration\\(\\) expects int, float\\|int given\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Parameter \\#1 \\$durationDay of method App\\\\Reporting\\\\ProjectView\\\\ProjectViewModel\\:\\:setDurationDay\\(\\) expects int, mixed given\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Parameter \\#1 \\$durationMonth of method App\\\\Reporting\\\\ProjectView\\\\ProjectViewModel\\:\\:setDurationMonth\\(\\) expects int, mixed given\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Parameter \\#1 \\$durationWeek of method App\\\\Reporting\\\\ProjectView\\\\ProjectViewModel\\:\\:setDurationWeek\\(\\) expects int, mixed given\\.$#"
             count: 1
             path: src/Project/ProjectStatisticService.php
 
@@ -3617,26 +3577,6 @@ parameters:
             message: "#^Parameter \\#1 \\$begin of method App\\\\Entity\\\\Timesheet\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
             count: 1
             path: src/Timesheet/Rounding/ClosestRounding.php
-
-        -
-            message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"
-            count: 2
-            path: src/Timesheet/Rounding/DefaultRounding.php
-
-        -
-            message: "#^Cannot call method setTimestamp\\(\\) on DateTime\\|null\\.$#"
-            count: 2
-            path: src/Timesheet/Rounding/DefaultRounding.php
-
-        -
-            message: "#^Cannot clone DateTime\\|null\\.$#"
-            count: 2
-            path: src/Timesheet/Rounding/DefaultRounding.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Entity\\\\Timesheet\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Timesheet/Rounding/DefaultRounding.php
 
         -
             message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"

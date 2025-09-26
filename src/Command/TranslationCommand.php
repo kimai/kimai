@@ -457,7 +457,7 @@ final class TranslationCommand extends Command
                 $unit['resname'] = $source;
             }
             if ($unit['resname'] !== null) {
-                $unit['id'] = $this->generateId($unit['resname']); // @phpstan-ignore offsetAssign.valueType
+                $unit['id'] = $this->generateId($unit['resname']);
             }
         }
 
@@ -492,7 +492,7 @@ final class TranslationCommand extends Command
                 );
             }
             $unit->target[0] = $translations[$key];
-            $unit->target['state'] = 'needs-translation'; // @phpstan-ignore assign.propertyType
+            $unit->target['state'] = 'needs-translation';
             $foundEmpty = true;
         }
 

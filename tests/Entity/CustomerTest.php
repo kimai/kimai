@@ -12,6 +12,7 @@ namespace App\Tests\Entity;
 use App\Constants;
 use App\Entity\Customer;
 use App\Entity\CustomerMeta;
+use App\Entity\InvoiceTemplate;
 use App\Entity\Team;
 use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
@@ -51,6 +52,26 @@ class CustomerTest extends AbstractEntityTestCase
         self::assertNull($sut->getMetaField('foo'));
         self::assertInstanceOf(Collection::class, $sut->getTeams());
         self::assertEquals(0, $sut->getTeams()->count());
+        self::assertTrue($sut->isNew());
+        self::assertNull($sut->getInvoiceText());
+        self::assertNull($sut->getInvoiceTemplate());
+    }
+
+    public function testInvoiceText(): void
+    {
+        $sut = new Customer('foo');
+        self::assertNull($sut->getInvoiceText());
+        $sut->setInvoiceText('Some fancy long text to explain that tax should be handled by the receiving party');
+        self::assertEquals('Some fancy long text to explain that tax should be handled by the receiving party', $sut->getInvoiceText());
+    }
+
+    public function testInvoiceTemplate(): void
+    {
+        $tpl = new InvoiceTemplate();
+        $sut = new Customer('foo');
+        self::assertNull($sut->getInvoiceTemplate());
+        $sut->setInvoiceTemplate($tpl);
+        self::assertSame($tpl, $sut->getInvoiceTemplate());
     }
 
     public function testBudgets(): void
@@ -221,6 +242,9 @@ class CustomerTest extends AbstractEntityTestCase
     public function testClone(): void
     {
         $sut = new Customer('mycustomer');
+
+        $this->assertCloneResetsId($sut);
+
         $sut->setVatId('DE-0123456789');
         $sut->setTimeBudget(123456);
         $sut->setBudget(1234.56);

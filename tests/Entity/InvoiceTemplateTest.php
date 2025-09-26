@@ -34,6 +34,7 @@ class InvoiceTemplateTest extends TestCase
         self::assertEquals('default', $sut->getNumberGenerator());
         self::assertEquals('default', $sut->getRenderer());
         self::assertEquals(30, $sut->getDueDays());
+        self::assertTrue($sut->isDecimalDuration()); // @phpstan-ignore method.deprecated
     }
 
     public function testSetNullForOptionalValues(): void

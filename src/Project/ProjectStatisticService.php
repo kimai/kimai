@@ -721,6 +721,7 @@ class ProjectStatisticService
         $qb = clone $tplQb;
         $qb->addSelect('MAX(t.date) as lastRecord');
         $result = $qb->getQuery()->getScalarResult();
+        /** @var array{id: int, lastRecord: string, duration: int, rate: float} $row */
         foreach ($result as $row) {
             if ($row['lastRecord'] !== null) {
                 // might be the wrong timezone
@@ -736,6 +737,7 @@ class ProjectStatisticService
         ;
 
         $result = $qb->getQuery()->getScalarResult();
+        /** @var array{id: int, lastRecord: string, duration: int, rate: float} $row */
         foreach ($result as $row) {
             $projectViews[$row['id']]->setDurationDay($row['duration'] ?? 0);
         }
@@ -749,6 +751,7 @@ class ProjectStatisticService
         ;
 
         $result = $qb->getQuery()->getScalarResult();
+        /** @var array{id: int, lastRecord: string, duration: int, rate: float} $row */
         foreach ($result as $row) {
             $projectViews[$row['id']]->setDurationWeek($row['duration']);
         }
@@ -762,6 +765,7 @@ class ProjectStatisticService
         ;
 
         $result = $qb->getQuery()->getScalarResult();
+        /** @var array{id: int, lastRecord: string, duration: int, rate: float} $row */
         foreach ($result as $row) {
             $projectViews[$row['id']]->setDurationMonth($row['duration']);
         }

@@ -11,13 +11,12 @@ namespace App\Tests\Entity;
 
 use App\Entity\Activity;
 use App\Entity\ActivityRate;
+use App\Entity\Rate;
 use App\Entity\User;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Entity\Rate
- */
+#[CoversClass(Rate::class)]
 #[CoversClass(ActivityRate::class)]
 class ActivityRateTest extends TestCase
 {
