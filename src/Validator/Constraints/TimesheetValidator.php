@@ -11,7 +11,7 @@ namespace App\Validator\Constraints;
 
 use App\Entity\Timesheet as TimesheetEntity;
 use App\Validator\Constraints\Timesheet as TimesheetEntityConstraint;
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -22,7 +22,7 @@ final class TimesheetValidator extends ConstraintValidator
      * @param TimesheetConstraint[] $constraints
      */
     public function __construct(
-        #[TaggedIterator(TimesheetConstraint::class)]
+        #[AutowireIterator(TimesheetConstraint::class)]
         private iterable $constraints
     )
     {

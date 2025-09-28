@@ -42,7 +42,7 @@ final class PdfTemplateRenderer implements DispositionInlineInterface, ExportRen
     {
     }
 
-    public function isInternal(): bool
+    public function isInternal(): true
     {
         return true;
     }

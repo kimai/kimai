@@ -13,7 +13,7 @@ use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationFailureH
 
 final class SamlAuthenticationFailureHandler extends DefaultAuthenticationFailureHandler
 {
-    protected array $defaultOptions = [
+    protected array $defaultOptions = [ // @phpstan-ignore missingType.iterableValue
         'failure_path' => 'login',
         'failure_forward' => false,
         'login_path' => 'saml_login',

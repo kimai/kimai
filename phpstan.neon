@@ -49,16 +49,6 @@ parameters:
             path: src/API/ActivityController.php
 
         -
-            message: "#^Method App\\\\API\\\\Authentication\\\\TokenAuthenticator\\:\\:getCredentials\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/API/Authentication/TokenAuthenticator.php
-
-        -
-            message: "#^Parameter \\#2 \\$plainPassword of method Symfony\\\\Component\\\\PasswordHasher\\\\PasswordHasherInterface\\:\\:verify\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/API/Authentication/TokenAuthenticator.php
-
-        -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Customer\\:\\:getMetaField\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/API/CustomerController.php
@@ -407,11 +397,6 @@ parameters:
             message: "#^Method App\\\\Command\\\\PromoteUserCommand\\:\\:executeRoleCommand\\(\\) has parameter \\$role with no type specified\\.$#"
             count: 1
             path: src/Command/PromoteUserCommand.php
-
-        -
-            message: "#^Parameter \\#3 \\$length of function substr expects int\\|null, int\\<0, max\\>\\|false given\\.$#"
-            count: 1
-            path: src/Command/RegenerateLocalesCommand.php
 
         -
             message: "#^Cannot call method find\\(\\) on Symfony\\\\Component\\\\Console\\\\Application\\|null\\.$#"
@@ -1345,21 +1330,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Entity\\\\User\\:\\:removeRole\\(\\) has parameter \\$role with no type specified\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:setConfirmationToken\\(\\) has parameter \\$confirmationToken with no type specified\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:setPassword\\(\\) has parameter \\$password with no type specified\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:setPlainPassword\\(\\) has parameter \\$password with no type specified\\.$#"
             count: 1
             path: src/Entity/User.php
 
@@ -3485,23 +3455,13 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$identifier of method App\\\\Entity\\\\User\\:\\:setUserIdentifier\\(\\) expects string, string\\|null given\\.$#"
-            count: 2
+            count: 1
             path: src/Saml/SamlProvider.php
 
         -
             message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, mixed given\\.$#"
             count: 1
             path: src/Saml/SamlProvider.php
-
-        -
-            message: "#^Property App\\\\Saml\\\\Security\\\\SamlAuthenticationFailureHandler\\:\\:\\$defaultOptions has no type specified\\.$#"
-            count: 1
-            path: src/Saml/Security/SamlAuthenticationFailureHandler.php
-
-        -
-            message: "#^Property App\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandler\\:\\:\\$defaultOptions has no type specified\\.$#"
-            count: 1
-            path: src/Saml/Security/SamlAuthenticationSuccessHandler.php
 
         -
             message: "#^Method App\\\\Security\\\\KimaiUserProvider\\:\\:getProviders\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -4072,16 +4032,6 @@ parameters:
             message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
             count: 1
             path: src/Utils/ReleaseVersion.php
-
-        -
-            message: "#^Cannot access offset 'pattern' on mixed\\.$#"
-            count: 1
-            path: src/Validator/Constraints/Duration.php
-
-        -
-            message: "#^Parameter \\#1 \\$pattern of method Symfony\\\\Component\\\\Validator\\\\Constraints\\\\Regex\\:\\:__construct\\(\\) expects array\\|string\\|null, mixed given\\.$#"
-            count: 1
-            path: src/Validator/Constraints/Duration.php
 
         -
             message: "#^Parameter \\#1 \\$value \\(App\\\\Entity\\\\Team\\) of method App\\\\Validator\\\\Constraints\\\\TeamValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"

@@ -36,8 +36,7 @@ final class ApiRequestMatcher implements RequestMatcherInterface
         }
 
         // let's use this firewall if the deprecated username & token combination is available
-        if ($request->headers->has(TokenAuthenticator::HEADER_USERNAME) &&
-            $request->headers->has(TokenAuthenticator::HEADER_TOKEN)) {
+        if ($request->headers->has(TokenAuthenticator::HEADER_USERNAME) && $request->headers->has(TokenAuthenticator::HEADER_TOKEN)) { // @phpstan-ignore classConstant.deprecatedClass,classConstant.deprecatedClass
             return true;
         }
         // ------------------------------------------------------------------------------------

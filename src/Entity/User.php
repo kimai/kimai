@@ -839,7 +839,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function getUserIdentifier(): string
     {
-        return $this->getUsername();
+        return $this->getUsername(); // @phpstan-ignore return.type
     }
 
     public function getEmail(): ?string
@@ -950,14 +950,14 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
-    public function setPassword($password): User
+    public function setPassword(?string $password): User
     {
         $this->password = $password;
 
         return $this;
     }
 
-    public function setPlainPassword($password): User
+    public function setPlainPassword(?string $password): User
     {
         $this->plainPassword = $password;
 
@@ -971,7 +971,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
-    public function setConfirmationToken($confirmationToken): void
+    public function setConfirmationToken(?string $confirmationToken): void
     {
         $this->confirmationToken = $confirmationToken;
     }

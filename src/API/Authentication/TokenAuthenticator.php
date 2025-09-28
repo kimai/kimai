@@ -19,11 +19,15 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\CustomCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 
+/**
+ * @deprecated since 2.?
+ */
 final class TokenAuthenticator extends AbstractAuthenticator
 {
     public const HEADER_USERNAME = 'X-AUTH-USER';
@@ -53,6 +57,9 @@ final class TokenAuthenticator extends AbstractAuthenticator
         return false;
     }
 
+    /**
+     * @return array{username: string, password: string}
+     */
     private function getCredentials(Request $request): array
     {
         $apiUser = $request->headers->get(self::HEADER_USERNAME);
@@ -75,9 +82,13 @@ final class TokenAuthenticator extends AbstractAuthenticator
     {
         $credentials = $this->getCredentials($request);
 
-        $checkCredentials = function (?string $presentedPassword, User $user) {
-            if ('' === $presentedPassword) {
+        $checkCredentials = function (mixed $presentedPassword, UserInterface $user): bool {
+            if (!is_string($presentedPassword) || '' === $presentedPassword) {
                 throw new BadCredentialsException('The presented password cannot be empty.');
+            }
+
+            if (!$user instanceof User) {
+                throw new BadCredentialsException('The presented user object is not supported.');
             }
 
             if (null === $user->getApiToken()) {

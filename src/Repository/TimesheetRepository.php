@@ -58,9 +58,6 @@ class TimesheetRepository extends EntityRepository
 
     /**
      * Fetches the raw data of a timesheet, to allow comparison e.g. of submitted and previously stored data.
-     *
-     * @param int $id
-     * @return array
      */
     public function getRawData(int $id): array
     {
@@ -83,7 +80,14 @@ class TimesheetRepository extends EntityRepository
             ->setParameter('id', $id)
         ;
 
-        return $qb->getQuery()->getOneOrNullResult();
+        /** @var array<mixed>|null $result */
+        $result = $qb->getQuery()->getOneOrNullResult();
+
+        if ($result === null) {
+            throw new InvalidArgumentException('No result found for id ' . $id);
+        }
+
+        return $result;
     }
 
     public function delete(Timesheet $timesheet): void

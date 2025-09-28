@@ -37,14 +37,16 @@ final class SearchHelper
         }
 
         $aliases = $qb->getRootAliases();
-        if (!isset($aliases[0])) {
+        if (!isset($aliases[0]) || $aliases[0]) {
             throw new RepositoryException('No alias was set before invoking addSearchTerm().');
         }
 
         $rootAlias = $aliases[0];
         $searchAnd = $qb->expr()->andX();
+        $metaFieldClass = $this->configuration->getMetaFieldClass();
+        $metaFieldName = $this->configuration->getMetaFieldName();
 
-        if ($this->supportsMetaFields()) {
+        if ($metaFieldClass !== null && $metaFieldName !== null && $this->supportsMetaFields()) {
             $metaFieldRef = $rootAlias . '.' . $this->configuration->getEntityFieldName();
             $i = 0;
             $c = 0;
@@ -69,7 +71,7 @@ final class SearchHelper
                     $and->add($qb->expr()->isNotNull($field));
                 } elseif ($metaValue === '~') {
                     $and->add(
-                        \sprintf('NOT EXISTS(SELECT %s FROM %s %s WHERE %s.%s = %s.id AND %s.name = :%s)', $subqueryName, $this->configuration->getMetaFieldClass(), $subqueryName, $subqueryName, $this->configuration->getMetaFieldName(), $rootAlias, $subqueryName, $paramName)
+                        \sprintf('NOT EXISTS(SELECT %s FROM %s %s WHERE %s.%s = %s.id AND %s.name = :%s)', $subqueryName, $metaFieldClass, $subqueryName, $subqueryName, $metaFieldName, $rootAlias, $subqueryName, $paramName)
                     );
                 } elseif ($metaValue === '') {
                     $and->add(
@@ -78,7 +80,7 @@ final class SearchHelper
                                 $qb->expr()->eq($alias . '.name', ':' . $paramName),
                                 $qb->expr()->isNull($field)
                             ),
-                            \sprintf('NOT EXISTS(SELECT %s FROM %s %s WHERE %s.%s = %s.id AND %s.name = :%s)', $subqueryName, $this->configuration->getMetaFieldClass(), $subqueryName, $subqueryName, $this->configuration->getMetaFieldName(), $rootAlias, $subqueryName, $paramName)
+                            \sprintf('NOT EXISTS(SELECT %s FROM %s %s WHERE %s.%s = %s.id AND %s.name = :%s)', $subqueryName, $metaFieldClass, $subqueryName, $subqueryName, $metaFieldName, $rootAlias, $subqueryName, $paramName)
                         )
                     );
                 } else {

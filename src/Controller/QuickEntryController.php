@@ -125,7 +125,7 @@ final class QuickEntryController extends AbstractController
             if ($amount > 0) {
                 $takeOverWeeks = $this->configuration->find('quick_entry.recent_activity_weeks');
                 $startFrom = null;
-                if ($takeOverWeeks !== null && \intval($takeOverWeeks) > 0) {
+                if (is_string($takeOverWeeks) && \intval($takeOverWeeks) > 0) {
                     $startFrom = clone $startWeek;
                     $startFrom->modify(\sprintf('-%s weeks', $takeOverWeeks));
                 }
