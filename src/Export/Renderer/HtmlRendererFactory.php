@@ -27,10 +27,14 @@ final class HtmlRendererFactory
 
     public function create(string $id, string $template): HtmlRenderer
     {
-        $renderer = new HtmlRenderer($this->twig, $this->dispatcher, $this->projectStatisticService, $this->activityStatisticService);
-        $renderer->setId($id);
-        $renderer->setTemplate($template);
-
-        return $renderer;
+        return new HtmlRenderer(
+            $this->twig,
+            $this->dispatcher,
+            $this->projectStatisticService,
+            $this->activityStatisticService,
+            $id,
+            'print',
+            $template
+        );
     }
 }

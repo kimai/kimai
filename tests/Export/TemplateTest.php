@@ -10,6 +10,7 @@
 namespace App\Tests\Export;
 
 use App\Export\Template;
+use App\Repository\Query\TimesheetQuery;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -22,7 +23,7 @@ class TemplateTest extends TestCase
         self::assertEquals('id', $template->getId());
         self::assertEquals('title', $template->getTitle());
         self::assertNull($template->getLocale());
-        self::assertEquals([], $template->getColumns());
+        self::assertEquals([], $template->getColumns(new TimesheetQuery()));
         self::assertEquals([], $template->getOptions());
     }
 
@@ -31,9 +32,9 @@ class TemplateTest extends TestCase
         $template = new Template('id', 'title');
         $columns = ['Column1', 'Column2'];
         $template->setColumns($columns);
-        self::assertEquals($columns, $template->getColumns());
+        self::assertEquals($columns, $template->getColumns(new TimesheetQuery()));
         $template->setColumns([]);
-        self::assertEquals([], $template->getColumns());
+        self::assertEquals([], $template->getColumns(new TimesheetQuery()));
     }
 
     public function testSetsAndGetsOptionsCorrectly(): void

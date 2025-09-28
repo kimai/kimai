@@ -58,9 +58,9 @@
         <source>calendar.visibleHours.end</source>
         <target>Koniec widocznego zakresu czasu</target>
       </trans-unit>
-      <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
+      <trans-unit id="BYy.c1V" resname="calendar.slot_duration" xml:space="preserve">
         <source>calendar.slot_duration</source>
-        <target>Przedział czasowy dla widoku dziennego i tygodniowego (format: gg:mm:ss)</target>
+        <target state="translated">Przedział czasowy dla widoku dziennego i tygodniowego</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>

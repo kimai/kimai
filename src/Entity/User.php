@@ -106,7 +106,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[ORM\Column(name: 'avatar', type: Types::STRING, length: 255, nullable: true)]
     #[Assert\Length(max: 255, groups: ['Profile'])]
     #[Serializer\Expose]
-    #[Serializer\Groups(['User_Entity'])]
+    #[Serializer\Groups(['Default'])]
     private ?string $avatar = null;
     /**
      * API token (password) for this user
@@ -468,6 +468,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->getPreferenceValue(UserPreference::FIRST_WEEKDAY, User::DEFAULT_FIRST_WEEKDAY, false);
     }
 
+    /**
+     * @ deprecated since 2.40 - will be removed with 3.0
+     */
     public function isExportDecimal(): bool
     {
         return (bool) $this->getPreferenceValue('export_decimal', false, false);

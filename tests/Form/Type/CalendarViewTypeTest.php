@@ -42,7 +42,6 @@ class CalendarViewTypeTest extends TypeTestCase
             'view' => $expected
         ]);
 
-        dump($data);
         $form->submit($data);
 
         self::assertTrue($form->isSynchronized());

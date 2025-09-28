@@ -175,6 +175,8 @@ class ActivityTest extends AbstractEntityTestCase
         $sut->setName('activity1111');
         $sut->setComment('DE-0123456789');
 
+        $this->assertCloneResetsId($sut);
+
         $project = new Project();
         $project->setName('foo');
         $project->setOrderNumber('1234567890');

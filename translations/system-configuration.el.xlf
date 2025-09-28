@@ -78,9 +78,9 @@
         <source>calendar.visibleHours.end</source>
         <target>Λήξη ορατού ωριαίου εύρους</target>
       </trans-unit>
-      <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
+      <trans-unit id="BYy.c1V" resname="calendar.slot_duration" xml:space="preserve">
         <source>calendar.slot_duration</source>
-        <target>Χρονικό περιθώριο για προβολή εβδομάδας και ημέρας (μορφή: ωω: λλ: δδ)</target>
+        <target state="translated">Χρονικό περιθώριο για προβολή εβδομάδας και ημέρας</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>

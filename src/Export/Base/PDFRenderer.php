@@ -12,33 +12,48 @@ namespace App\Export\Base;
 use App\Entity\ExportableItem;
 use App\Export\ExportFilename;
 use App\Export\ExportRendererInterface;
-use App\Export\TimesheetExportInterface;
 use App\Pdf\HtmlToPdfConverter;
 use App\Pdf\PdfContext;
 use App\Pdf\PdfRendererTrait;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\SecurityPolicy\ExportPolicy;
+use Symfony\Component\DependencyInjection\Attribute\Exclude;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use Twig\Extension\SandboxExtension;
 
-class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface, TimesheetExportInterface
+/**
+ * TODO 3.0 remove default values from constructor parameters and make class final
+ * @final
+ */
+#[Exclude]
+class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
 {
     use RendererTrait;
     use PDFRendererTrait;
 
-    private string $id = 'pdf';
-    private string $title = 'pdf';
-    private string $template = 'default.pdf.twig';
     private array $pdfOptions = [];
 
     public function __construct(
         private readonly Environment $twig,
         private readonly HtmlToPdfConverter $converter,
-        private readonly ProjectStatisticService $projectStatisticService
+        private readonly ProjectStatisticService $projectStatisticService,
+        private string $id = 'pdf', // deprecated default parameter - TODO 3.0
+        private string $title = 'pdf', // deprecated default parameter - TODO 3.0
+        private string $template = 'export/pdf-layout.html.twig', // deprecated default parameter - TODO 3.0
     )
     {
+    }
+
+    public function isInternal(): bool
+    {
+        return false;
+    }
+
+    public function getType(): string
+    {
+        return 'pdf';
     }
 
     public function getTitle(): string
@@ -48,7 +63,7 @@ class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
 
     protected function getTemplate(): string
     {
-        return '@export/' . $this->template;
+        return $this->template;
     }
 
     protected function getOptions(TimesheetQuery $query): array
@@ -68,11 +83,9 @@ class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
         return $this->pdfOptions;
     }
 
-    public function setPdfOption(string $key, string $value): PDFRenderer
+    public function setPdfOption(string $key, string $value): void
     {
         $this->pdfOptions[$key] = $value;
-
-        return $this;
     }
 
     /**
@@ -110,16 +123,25 @@ class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
         return $this->createPdfResponse($content, $context);
     }
 
+    /**
+     * @deprecated since 2.40.0
+     */
     public function setTemplate(string $filename): void
     {
-        $this->template = $filename;
+        $this->template = '@export/' . $filename;
     }
 
+    /**
+     * @deprecated since 2.40.0
+     */
     public function setId(string $id): void
     {
         $this->id = $id;
     }
 
+    /**
+     * @deprecated since 2.40.0
+     */
     public function setTitle(string $title): void
     {
         $this->title = $title;

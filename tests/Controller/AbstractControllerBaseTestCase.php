@@ -169,12 +169,12 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
         return $url;
     }
 
-    public function request(HttpKernelBrowser $client, string $url, string $method = 'GET', array $parameters = [], string $content = null): Crawler
+    public function request(HttpKernelBrowser $client, string $url, string $method = 'GET', array $parameters = [], ?string $content = null): Crawler
     {
         return $client->request($method, $this->createUrl($url), $parameters, [], [], $content);
     }
 
-    public function requestPure(HttpKernelBrowser $client, string $url, string $method = 'GET', array $parameters = [], string $content = null): Crawler
+    public function requestPure(HttpKernelBrowser $client, string $url, string $method = 'GET', array $parameters = [], ?string $content = null): Crawler
     {
         return $client->request($method, $url, $parameters, [], [], $content);
     }
@@ -381,7 +381,7 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
      * @param HttpKernelBrowser $client
      * @param string|null $message
      */
-    protected function assertHasFlashSuccess(HttpKernelBrowser $client, string $message = null): void
+    protected function assertHasFlashSuccess(HttpKernelBrowser $client, ?string $message = null): void
     {
         $this->assertHasFlashMessage($client, 'success', $message);
     }
@@ -390,12 +390,12 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
      * @param HttpKernelBrowser $client
      * @param string|null $message
      */
-    protected function assertHasFlashError(HttpKernelBrowser $client, string $message = null): void
+    protected function assertHasFlashError(HttpKernelBrowser $client, ?string $message = null): void
     {
         $this->assertHasFlashMessage($client, 'error', $message);
     }
 
-    private function assertHasFlashMessage(HttpKernelBrowser $client, string $type, string $message = null): void
+    private function assertHasFlashMessage(HttpKernelBrowser $client, string $type, ?string $message = null): void
     {
         $content = $client->getResponse()->getContent();
         self::assertStringContainsString('ALERT.' . $type . '(\'', $content, 'Could not find flash ' . $type . ' message');

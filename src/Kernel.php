@@ -89,6 +89,14 @@ class Kernel extends BaseKernel
 
         $plugins = [];
         $finder = new Finder();
+        $finder->ignoreUnreadableDirs()->directories()->name('*Bundle-*');
+        foreach ($finder->in($pluginsDir) as $bundleDir) {
+            throw new \Exception(
+                \sprintf('Bundle "%s" has invalid directory name. Remove the version number, see https://www.kimai.org/documentation/plugin-management.html.', $bundleDir->getRelativePathname())
+            );
+        }
+
+        $finder = new Finder();
         $finder->ignoreUnreadableDirs()->directories()->name('*Bundle');
         /** @var SplFileInfo $bundleDir */
         foreach ($finder->in($pluginsDir) as $bundleDir) {

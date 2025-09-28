@@ -18,7 +18,11 @@ final class ExportRendererType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'choices' => ['button.csv' => 'csv', 'button.xlsx' => 'xlsx'],
+            'choices' => [
+                'button.csv' => 'csv',
+                'button.xlsx' => 'xlsx',
+                'button.pdf' => 'pdf'
+            ],
         ]);
     }
 

@@ -58,9 +58,9 @@
         <source>calendar.visibleHours.end</source>
         <target>可见时间范围的结束时间</target>
       </trans-unit>
-      <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
+      <trans-unit id="BYy.c1V" resname="calendar.slot_duration" xml:space="preserve">
         <source>calendar.slot_duration</source>
-        <target>周和日查看的空隙持续时间（格式：时:分:秒）</target>
+        <target state="translated">周和日查看的空隙持续时间</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>

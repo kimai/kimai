@@ -78,9 +78,9 @@
         <source>calendar.visibleHours.end</source>
         <target>نهاية النطاق الزمني المرئي</target>
       </trans-unit>
-      <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
+      <trans-unit id="BYy.c1V" resname="calendar.slot_duration" xml:space="preserve">
         <source>calendar.slot_duration</source>
-        <target>مدة الفتحة لعرض الأسبوع واليوم (التنسيق: ساعة: دقيقة: ثانية)</target>
+        <target state="needs-translation">مدة الفتحة لعرض الأسبوع واليوم (التنسيق: ساعة: دقيقة: ثانية)</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>

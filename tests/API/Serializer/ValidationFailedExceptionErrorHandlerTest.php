@@ -19,6 +19,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\ErrorHandler\Exception\FlattenException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -54,7 +55,7 @@ class ValidationFailedExceptionErrorHandlerTest extends TestCase
         $validations = new ValidationFailedException($constraints, 'Uuups, that is broken');
 
         $expected = [
-            'code' => '400',
+            'code' => Response::HTTP_BAD_REQUEST,
             'message' => null,
             'errors' => [
                 'children' => []
@@ -98,7 +99,7 @@ class ValidationFailedExceptionErrorHandlerTest extends TestCase
         $context->setAttribute('exception', $validations);
 
         $expected = [
-            'code' => '400',
+            'code' => Response::HTTP_BAD_REQUEST,
             'message' => 'Uuups, that is broken',
             'errors' => [
                 'children' => [

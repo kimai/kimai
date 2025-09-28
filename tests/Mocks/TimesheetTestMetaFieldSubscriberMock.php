@@ -25,7 +25,7 @@ class TimesheetTestMetaFieldSubscriberMock implements EventSubscriberInterface
         ];
     }
 
-    public function loadMeta(TimesheetMetaDefinitionEvent $event)
+    public function loadMeta(TimesheetMetaDefinitionEvent $event): void
     {
         $definition = (new TimesheetMeta())
             ->setName('metatestmock')

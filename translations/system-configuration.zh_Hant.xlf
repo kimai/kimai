@@ -70,9 +70,9 @@
         <source>calendar.visibleHours.end</source>
         <target state="final">可見時間範圍的結束時間</target>
       </trans-unit>
-      <trans-unit id="BYy.c1V" resname="calendar.slot_duration" xml:space="preserve" approved="yes">
+      <trans-unit id="BYy.c1V" resname="calendar.slot_duration" xml:space="preserve" approved="no">
         <source>calendar.slot_duration</source>
-        <target state="final">週份與日份報表的每時段時長（格式：時:分:秒）</target>
+        <target state="translated">週份與日份報表的每時段時長</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding" xml:space="preserve" approved="yes">
         <source>branding</source>

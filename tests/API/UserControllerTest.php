@@ -10,8 +10,11 @@
 namespace App\Tests\API;
 
 use App\Entity\User;
+use App\Tests\Mocks\PrepareUserEventSubscriberMock;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\Response;
 
 #[Group('integration')]
 class UserControllerTest extends APIControllerBaseTestCase
@@ -178,7 +181,7 @@ class UserControllerTest extends APIControllerBaseTestCase
                 'ROLE_ADMIN'
             ],
         ];
-        $this->request($client, '/api/users', 'POST', [], json_encode($data));
+        $this->request($client, '/api/users', 'POST', [], (string) json_encode($data));
         self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
@@ -211,7 +214,7 @@ class UserControllerTest extends APIControllerBaseTestCase
                 'ROLE_ADMIN'
             ],
         ];
-        $this->request($client, '/api/users', 'POST', [], json_encode($data));
+        $this->request($client, '/api/users', 'POST', [], (string) json_encode($data));
 
         $response = $client->getResponse();
         self::assertEquals(400, $response->getStatusCode());
@@ -231,7 +234,7 @@ class UserControllerTest extends APIControllerBaseTestCase
                 'ABC',
             ],
         ];
-        $this->request($client, '/api/users', 'POST', [], json_encode($data));
+        $this->request($client, '/api/users', 'POST', [], (string) json_encode($data));
 
         $response = $client->getResponse();
         self::assertEquals(400, $response->getStatusCode());
@@ -249,7 +252,7 @@ class UserControllerTest extends APIControllerBaseTestCase
             'language' => 'ru',
             'timezone' => 'Europe/Paris',
         ];
-        $this->request($client, '/api/users', 'POST', [], json_encode($data));
+        $this->request($client, '/api/users', 'POST', [], (string) json_encode($data));
         $response = $client->getResponse();
         $this->assertApiResponseAccessDenied($response, 'Access denied.');
     }
@@ -269,11 +272,12 @@ class UserControllerTest extends APIControllerBaseTestCase
                 'ROLE_ADMIN'
             ],
         ];
-        $this->request($client, '/api/users', 'POST', [], json_encode($data));
+        $this->request($client, '/api/users', 'POST', [], (string) json_encode($data));
         self::assertTrue($client->getResponse()->isSuccessful());
         $content = $client->getResponse()->getContent();
         self::assertIsString($content);
         $result = json_decode($content, true);
+        self::assertIsArray($result);
         self::assertFalse($result['enabled']);
 
         $data = [
@@ -287,7 +291,7 @@ class UserControllerTest extends APIControllerBaseTestCase
         ];
         $id = $result['id'];
         self::assertIsNumeric($id);
-        $this->request($client, '/api/users/' . $id, 'PATCH', [], json_encode($data));
+        $this->request($client, '/api/users/' . $id, 'PATCH', [], (string) json_encode($data));
         self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $client->getResponse()->getContent();
@@ -312,7 +316,7 @@ class UserControllerTest extends APIControllerBaseTestCase
     public function testPatchActionWithInvalidUser(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->request($client, '/api/users/1', 'PATCH', [], json_encode(['language' => 'hu']));
+        $this->request($client, '/api/users/1', 'PATCH', [], (string) json_encode(['language' => 'hu']));
         $this->assertApiResponseAccessDenied($client->getResponse(), 'Not allowed to edit user');
     }
 
@@ -330,10 +334,73 @@ class UserControllerTest extends APIControllerBaseTestCase
                 'ABC',
             ],
         ];
-        $this->request($client, '/api/users/1', 'PATCH', [], json_encode($data));
+        $this->request($client, '/api/users/1', 'PATCH', [], (string) json_encode($data));
 
         $response = $client->getResponse();
         self::assertEquals(400, $response->getStatusCode());
         $this->assertApiCallValidationError($response, ['email', 'language', 'timezone', 'roles'], true);
+    }
+
+    // ------------------------------------- [USER PREFERENCES] -------------------------------------
+
+    public function testUpdateUserPreferenceThrowsNotFound(): void
+    {
+        $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/users/42/preferences', []);
+    }
+
+    public function testUpdateUserPreferenceThrowsExceptionOnWrongStructure(): void
+    {
+        $this->assertExceptionForPatchAction(User::ROLE_SUPER_ADMIN, '/api/users/1/preferences', ['name' => 'X', 'value' => 'X'], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
+    public function testUpdateUserPreferenceThrowsExceptionOnMissingName(): void
+    {
+        $this->assertExceptionForPatchAction(User::ROLE_SUPER_ADMIN, '/api/users/1/preferences', [['value' => 'X']], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
+    public function testUpdateUserPreferenceThrowsExceptionOnMissingValue(): void
+    {
+        $this->assertExceptionForPatchAction(User::ROLE_SUPER_ADMIN, '/api/users/1/preferences', [['name' => 'X']], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
+    public function testUpdateUserPreferenceThrowsExceptionOnMissingMetafield(): void
+    {
+        $this->assertExceptionForPatchAction(User::ROLE_SUPER_ADMIN, '/api/users/1/preferences', [['name' => 'X', 'value' => 'Y']], [
+            'code' => Response::HTTP_NOT_FOUND,
+            'message' => 'Not Found'
+        ]);
+    }
+
+    public function testUpdateUserPreference(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new PrepareUserEventSubscriberMock());
+
+        $data = [
+            [
+                'name' => 'metatestmock',
+                'value' => 'another,testing,bar'
+            ]
+        ];
+        $this->request($client, '/api/users/1/preferences', 'PATCH', [], (string) json_encode($data));
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $em = $this->getEntityManager();
+        /** @var User $user */
+        $user = $em->getRepository(User::class)->find(1);
+        self::assertEquals('another,testing,bar', $user->getPreferenceValue('metatestmock'));
+        self::assertEquals('another,testing,bar', $user->getPreferenceValue('metatestmock'));
     }
 }
