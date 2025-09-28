@@ -71,7 +71,6 @@ final class Version20250830182140 extends AbstractMigration
                 'id' => $id,
             ]);
         }
-
     }
 
     public function isTransactional(): bool
