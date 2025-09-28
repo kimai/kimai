@@ -17,7 +17,7 @@ final class UserContractModel
     {
     }
 
-    public function __isset(string $name): true
+    public function __isset(string $name): true // @phpstan-ignore return.tooWideBool
     {
         return true;
     }
