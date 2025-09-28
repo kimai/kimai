@@ -28,14 +28,13 @@ doctrine:
             auto_mapping: false
         auto_generate_proxy_classes: false
         default_entity_manager: default
-        enable_lazy_ghost_objects: true
+        enable_native_lazy_objects: true
         entity_managers:
             default:
                 report_fields_where_declared: true
                 connection: default
                 naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
                 auto_mapping: true
-                enable_native_lazy_objects: true
                 mappings:
                     App:
                         type: attribute
