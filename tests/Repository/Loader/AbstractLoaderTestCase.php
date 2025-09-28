@@ -9,7 +9,6 @@
 
 namespace App\Tests\Repository\Loader;
 
-use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr;
