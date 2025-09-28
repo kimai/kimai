@@ -17,7 +17,6 @@ final class LocaleService
     public const DEFAULT_SETTINGS = [
         'date' => 'dd.MM.y',
         'time' => 'H:mm',
-        'rtl' => false,
         'translation' => false,
     ];
 
@@ -89,7 +88,12 @@ final class LocaleService
 
     public function isRightToLeft(string $locale): bool
     {
-        return (bool) $this->getConfig('rtl', $locale);
+        // see https://php.watch/versions/8.5/locale_is_right_to_left-Locale-isRightToleft
+        if (PHP_VERSION_ID >= 80500 && function_exists('locale_is_right_to_left')) {
+            return locale_is_right_to_left($locale);
+        }
+
+        return (bool) preg_match('/^(?:ar|he|fa|ur|ps|sd|ug|ckb|yi|dv|ku_arab|ku-arab)(?:[_-].*)?$/i', $locale);
     }
 
     public function isTranslated(string $locale): bool
