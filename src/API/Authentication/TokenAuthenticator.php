@@ -25,9 +25,6 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\CustomCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 
-/**
- * @deprecated since 2.?
- */
 final class TokenAuthenticator extends AbstractAuthenticator
 {
     public const HEADER_USERNAME = 'X-AUTH-USER';
@@ -83,7 +80,7 @@ final class TokenAuthenticator extends AbstractAuthenticator
         $credentials = $this->getCredentials($request);
 
         $checkCredentials = function (mixed $presentedPassword, UserInterface $user): bool {
-            if (!is_string($presentedPassword) || '' === $presentedPassword) {
+            if (!\is_string($presentedPassword) || '' === $presentedPassword) {
                 throw new BadCredentialsException('The presented password cannot be empty.');
             }
 

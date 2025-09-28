@@ -71,7 +71,7 @@ final class UTCDateTimeType extends DateTimeType
         }
 
         throw InvalidFormat::new(
-            is_scalar($value) ? (string) $value : 'unknown',
+            \is_scalar($value) ? (string) $value : 'unknown',
             Types::DATETIME_MUTABLE,
             $platform->getDateTimeFormatString()
         );

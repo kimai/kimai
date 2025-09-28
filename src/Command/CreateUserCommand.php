@@ -61,7 +61,7 @@ final class CreateUserCommand extends AbstractUserCommand
             $password = $this->askForPassword($input, $output);
         }
 
-        if (!is_string($password) || trim($password) === '') {
+        if (!\is_string($password) || trim($password) === '') {
             $io->error('Password must be a non-empty string');
 
             return Command::FAILURE;

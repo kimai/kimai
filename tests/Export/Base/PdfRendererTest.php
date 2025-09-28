@@ -55,7 +55,7 @@ class PdfRendererTest extends AbstractRendererTestCase
         self::assertEquals(['foo' => 'bar2'], $sut->getPdfOptions());
         $sut->setPdfOption('hello', 'world');
         self::assertEquals(['foo' => 'bar2', 'hello' => 'world'], $sut->getPdfOptions());
-        self::assertFalse($sut->isInternal());
+        self::assertFalse($sut->isInternal()); // @phpstan-ignore staticMethod.alreadyNarrowedType
     }
 
     /**

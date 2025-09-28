@@ -70,7 +70,7 @@ final class UTCDateTimeImmutableType extends DateTimeImmutableType
         }
 
         throw InvalidFormat::new(
-            is_scalar($value) ? (string) $value : 'unknown',
+            \is_scalar($value) ? (string) $value : 'unknown',
             Types::DATETIME_IMMUTABLE,
             $platform->getDateTimeFormatString()
         );

@@ -35,6 +35,6 @@ class HtmlRendererFactoryTest extends TestCase
         self::assertInstanceOf(HtmlRenderer::class, $renderer);
         self::assertEquals('foo', $renderer->getId());
         self::assertEquals('print', $renderer->getTitle());
-        self::assertFalse($renderer->isInternal());
+        self::assertFalse($renderer->isInternal()); // @phpstan-ignore staticMethod.alreadyNarrowedType
     }
 }

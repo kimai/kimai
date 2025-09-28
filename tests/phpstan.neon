@@ -22,6 +22,9 @@ parameters:
         - identifier: missingType.iterableValue
 
         -
+            message: "#^Cannot call method getContainer\\(\\) on Symfony\\\\Component\\\\HttpKernel\\\\KernelInterface\\|null\\.$#"
+
+        -
             message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) with '(.*)' and (.*) will always evaluate to true\\.$#"
 
         -
@@ -742,16 +745,6 @@ parameters:
             path: Controller/ProjectControllerTest.php
 
         -
-            message: "#^Cannot call method setEnd\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 2
-            path: Controller/ProjectControllerTest.php
-
-        -
-            message: "#^Cannot call method setMetaField\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 2
-            path: Controller/ProjectControllerTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Controller\\\\ProjectControllerTest\\:\\:assertAddRate\\(\\) has parameter \\$projectId with no type specified\\.$#"
             count: 1
             path: Controller/ProjectControllerTest.php
@@ -778,16 +771,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Controller\\\\ProjectControllerTest\\:\\:testValidationForCreateAction\\(\\) has parameter \\$validationFields with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Controller/ProjectControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$entity of method Doctrine\\\\ORM\\\\EntityManager\\:\\:persist\\(\\) expects object, App\\\\Entity\\\\Project\\|null given\\.$#"
-            count: 2
-            path: Controller/ProjectControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$project of method App\\\\Entity\\\\Team\\:\\:addProject\\(\\) expects App\\\\Entity\\\\Project, App\\\\Entity\\\\Project\\|null given\\.$#"
             count: 1
             path: Controller/ProjectControllerTest.php
 
@@ -1395,11 +1378,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\DurationTypeTest\\:\\:testSubmitValidData\\(\\) has parameter \\$value with no type specified\\.$#"
             count: 1
             path: Form/Type/DurationTypeTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\QuickEntryTimesheetTypeTest\\:\\:getExtensions\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Form/Type/QuickEntryTimesheetTypeTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\QuickEntryTimesheetTypeTest\\:\\:getTestData\\(\\) has no return type specified\\.$#"

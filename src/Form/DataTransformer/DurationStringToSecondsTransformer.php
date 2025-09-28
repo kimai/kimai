@@ -58,7 +58,7 @@ final class DurationStringToSecondsTransformer implements DataTransformerInterfa
         $pattern = (new DurationConstraint())->pattern;
 
         // we need this one here, because the data transformer is executed BEFORE the constraint is called
-        if (!is_string($pattern) || !preg_match($pattern, $value)) {
+        if (!\is_string($pattern) || !preg_match($pattern, $value)) {
             throw new TransformationFailedException('Invalid duration format given');
         }
 

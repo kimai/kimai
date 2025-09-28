@@ -15,6 +15,7 @@ use App\Repository\RepositoryException;
 use App\Repository\Search\SearchConfiguration;
 use App\Repository\Search\SearchHelper;
 use App\Utils\SearchTerm;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\Query\Expr\Andx;
@@ -148,7 +149,7 @@ class SearchHelperTest extends TestCase
         self::assertEquals('LIKE', $orParts[1]->getOperator());
         self::assertEquals(':searchTerm3', $orParts[1]->getRightExpr());
 
-        /** @var array<Parameter> $parameters */
+        /** @var ArrayCollection<int, Parameter> $parameters */
         $parameters = $qb->getParameters();
         self::assertCount(6, $parameters);
 
