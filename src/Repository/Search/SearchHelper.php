@@ -37,7 +37,7 @@ final class SearchHelper
         }
 
         $aliases = $qb->getRootAliases();
-        if (!isset($aliases[0]) || $aliases[0]) {
+        if (!isset($aliases[0])) {
             throw new RepositoryException('No alias was set before invoking addSearchTerm().');
         }
 

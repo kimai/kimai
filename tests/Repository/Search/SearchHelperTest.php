@@ -16,6 +16,7 @@ use App\Repository\Search\SearchConfiguration;
 use App\Repository\Search\SearchHelper;
 use App\Utils\SearchTerm;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\Query\Expr\Andx;
@@ -156,32 +157,32 @@ class SearchHelperTest extends TestCase
         self::assertInstanceOf(Parameter::class, $parameters[0]);
         self::assertEquals('metaValue0', $parameters[0]->getName());
         self::assertEquals('%value%', $parameters[0]->getValue());
-        self::assertEquals(2, $parameters[0]->getType());
+        self::assertEquals(ParameterType::STRING, $parameters[0]->getType());
 
         self::assertInstanceOf(Parameter::class, $parameters[1]);
         self::assertEquals('metaName0', $parameters[1]->getName());
         self::assertEquals('metaField', $parameters[1]->getValue());
-        self::assertEquals(2, $parameters[1]->getType());
+        self::assertEquals(ParameterType::STRING, $parameters[1]->getType());
 
         self::assertInstanceOf(Parameter::class, $parameters[2]);
         self::assertEquals('searchTerm0', $parameters[2]->getName());
         self::assertEquals('%foo%', $parameters[2]->getValue());
-        self::assertEquals(2, $parameters[2]->getType());
+        self::assertEquals(ParameterType::STRING, $parameters[2]->getType());
 
         self::assertInstanceOf(Parameter::class, $parameters[3]);
         self::assertEquals('searchTerm1', $parameters[3]->getName());
         self::assertEquals('%foo%', $parameters[3]->getValue());
-        self::assertEquals(2, $parameters[3]->getType());
+        self::assertEquals(ParameterType::STRING, $parameters[3]->getType());
 
         self::assertInstanceOf(Parameter::class, $parameters[4]);
         self::assertEquals('searchTerm2', $parameters[4]->getName());
         self::assertEquals('%test%', $parameters[4]->getValue());
-        self::assertEquals(2, $parameters[4]->getType());
+        self::assertEquals(ParameterType::STRING, $parameters[4]->getType());
 
         self::assertInstanceOf(Parameter::class, $parameters[5]);
         self::assertEquals('searchTerm3', $parameters[5]->getName());
         self::assertEquals('%test%', $parameters[5]->getValue());
-        self::assertEquals(2, $parameters[5]->getType());
+        self::assertEquals(ParameterType::STRING, $parameters[5]->getType());
     }
 
     public function testSearchTermWithExcludedFieldAddsExclusionCondition(): void
