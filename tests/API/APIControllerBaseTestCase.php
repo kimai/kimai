@@ -214,7 +214,6 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
     }
 
     /**
-     * @param Response $response
      * @param array<int, string>|array<string, mixed> $failedFields
      * @param bool $extraFields test for the error "This form should not contain extra fields"
      * @param array<int, string>|array<string, mixed> $globalError
@@ -231,7 +230,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
         }
 
         if (\count($globalError) > 0) {
-            self::assertArrayHasKey('errors', $result['errors']);
+            self::assertArrayHasKey('errors', $result['errors'], 'API response has no global errors, but expected ' . \count($globalError));
             foreach ($globalError as $err) {
                 self::assertTrue(\in_array($err, $result['errors']['errors']), 'Missing global validation error: ' . $err); // @phpstan-ignore binaryOp.invalid
             }

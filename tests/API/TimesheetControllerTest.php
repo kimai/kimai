@@ -874,12 +874,14 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $timesheets = $this->importFixtureForUser(User::ROLE_USER);
+        $begin = new \DateTimeImmutable();
+        $end = $begin->modify('-1 day');
 
         $data = [
             'activity' => 10,
             'project' => 1,
-            'begin' => (new \DateTime())->format('Y-m-d H:m'),
-            'end' => (new \DateTime('-1 day'))->format('Y-m-d H:m'),
+            'begin' => $begin->format('Y-m-d H:m'),
+            'end' => $end->format('Y-m-d H:m'),
             'description' => 'foo',
         ];
         $json = json_encode($data);
