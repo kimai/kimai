@@ -30,9 +30,13 @@ final class Version20250830182140 extends AbstractMigration
 
         foreach ($rows as $row) {
             $id = $row['id'];
-            $roles = $row['roles'];
+            $tmp = $row['roles'];
+            $roles = [];
 
-            $roles = unserialize($roles);
+            if (\is_string($tmp) && str_starts_with($tmp, 'a:')) {
+                $roles = unserialize($tmp);
+            }
+
             if (!\is_array($roles)) {
                 $roles = [];
             }
@@ -63,8 +67,13 @@ final class Version20250830182140 extends AbstractMigration
             $id = $row['id'];
             $roles = $row['roles'];
 
-            $json = json_decode($roles);
-            $data = serialize($json);
+            if (!json_validate($roles)) {
+                $json = json_decode($roles);
+                if (!\is_array($json)) {
+                    $json = [];
+                }
+                $data = serialize($json);
+            }
 
             $connection->executeStatement('UPDATE kimai2_users SET roles = :roles WHERE id = :id', [
                 'roles' => $data,
