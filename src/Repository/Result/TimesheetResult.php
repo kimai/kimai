@@ -90,6 +90,9 @@ final class TimesheetResult
         return $this->resultCache;
     }
 
+    /**
+     * @return Pagination<Timesheet>
+     */
     public function getPagerfanta(): Pagination
     {
         $loader = new LoaderQueryPaginator(new TimesheetLoader($this->entityManager, $this->timesheetQuery), $this->query, $this->getStatistic()->getCount());
@@ -98,6 +101,6 @@ final class TimesheetResult
         $paginator->setMaxPerPage($this->timesheetQuery->getPageSize());
         $paginator->setCurrentPage($this->timesheetQuery->getPage());
 
-        return $paginator;
+        return $paginator; // @phpstan-ignore return.type
     }
 }

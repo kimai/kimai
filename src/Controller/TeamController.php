@@ -54,8 +54,7 @@ final class TeamController extends AbstractController
 
         $entries = $repository->getPagerfantaForQuery($query);
 
-        $table = new DataTable('admin_teams', $query);
-        $table->setPagination($entries);
+        $table = new DataTable('admin_teams', $query, $entries);
         $table->setSearchForm($form);
         $table->setPaginationRoute('admin_team_paginated');
         $table->setReloadEvents('kimai.teamUpdate');

@@ -19,10 +19,10 @@ final class PageSetup
     private string $actionView = 'index';
     private string $translationDomain = 'messages';
     private array $actionPayload = [];
-    private ?DataTable $dataTable = null;
+    private ?DataTable $dataTable = null; // @phpstan-ignore missingType.generics
     private ?FormInterface $paginationForm = null;
 
-    public function __construct(private string $title)
+    public function __construct(private readonly string $title)
     {
     }
 
@@ -51,12 +51,12 @@ final class PageSetup
         return $this->dataTable !== null && $this->dataTable->getSearchForm() !== null;
     }
 
-    public function getDataTable(): ?DataTable
+    public function getDataTable(): ?DataTable // @phpstan-ignore missingType.generics
     {
         return $this->dataTable;
     }
 
-    public function setDataTable(?DataTable $dataTable): void
+    public function setDataTable(?DataTable $dataTable): void // @phpstan-ignore missingType.generics
     {
         $this->dataTable = $dataTable;
     }

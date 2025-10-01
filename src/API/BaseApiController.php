@@ -90,7 +90,7 @@ abstract class BaseApiController extends AbstractController
         }
     }
 
-    protected function createPaginatedView(Pagination $pagination): View
+    protected function createPaginatedView(Pagination $pagination): View // @phpstan-ignore missingType.generics
     {
         $results = (array) $pagination->getCurrentPageResults();
 
@@ -100,7 +100,7 @@ abstract class BaseApiController extends AbstractController
         return $view;
     }
 
-    protected function addPagination(View $view, Pagination $pagination): void
+    protected function addPagination(View $view, Pagination $pagination): void // @phpstan-ignore missingType.generics
     {
         $view->setHeader('X-Page', (string) $pagination->getCurrentPage());
         $view->setHeader('X-Total-Count', (string) $pagination->getNbResults());

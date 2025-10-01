@@ -3764,22 +3764,12 @@ parameters:
             path: src/Utils/Color.php
 
         -
-            message: "#^Class App\\\\Utils\\\\DataTable implements generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"
-            count: 1
-            path: src/Utils/DataTable.php
-
-        -
             message: "#^Method App\\\\Utils\\\\DataTable\\:\\:addColumn\\(\\) has parameter \\$column with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Utils/DataTable.php
 
         -
             message: "#^Method App\\\\Utils\\\\DataTable\\:\\:getColumns\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Utils/DataTable.php
-
-        -
-            message: "#^Method App\\\\Utils\\\\DataTable\\:\\:getIterator\\(\\) should return Traversable\\<mixed, mixed\\> but returns Traversable\\<\\(int\\|string\\), mixed\\>\\|null\\.$#"
             count: 1
             path: src/Utils/DataTable.php
 
@@ -3922,11 +3912,6 @@ parameters:
             message: "#^Property App\\\\Utils\\\\PageSetup\\:\\:\\$actionPayload type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Utils/PageSetup.php
-
-        -
-            message: "#^Class App\\\\Utils\\\\Pagination extends generic class Pagerfanta\\\\Pagerfanta but does not specify its types\\: T$#"
-            count: 1
-            path: src/Utils/Pagination.php
 
         -
             message: "#^Parameter \\#1 \\$class of method App\\\\Utils\\\\PaginationTemplate\\:\\:linkLi\\(\\) expects string, mixed given\\.$#"
