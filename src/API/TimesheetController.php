@@ -82,7 +82,7 @@ final class TimesheetController extends BaseApiController
     #[Rest\QueryParam(name: 'activity', requirements: '\d+', strict: true, nullable: true, description: 'Activity ID to filter timesheets')]
     #[Rest\QueryParam(name: 'activities', map: true, requirements: '\d+', strict: true, nullable: true, default: [], description: 'List of activity IDs to filter, e.g.: activities[]=1&activities[]=2')]
     #[Rest\QueryParam(name: 'page', requirements: '\d+', strict: true, nullable: true, description: 'The page to display, renders a 404 if not found (default: 1)')]
-    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page (default: 50)')]
+    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page (default: 50, max: 1000)')]
     #[Rest\QueryParam(name: 'tags', map: true, strict: true, nullable: true, default: [], description: 'List of tag names, e.g. tags[]=bar&tags[]=foo')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|begin|end|rate', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, begin, end, rate (default: begin)')]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: DESC)')]
@@ -175,8 +175,12 @@ final class TimesheetController extends BaseApiController
         }
 
         $size = $paramFetcher->get('size');
-        if (\is_string($size) && $size !== '') {
-            $query->setPageSize((int) $size);
+        if (is_numeric($size)) {
+            $size = (int) $size;
+            if ($size < 1 || $size > 1000) {
+                throw new BadRequestHttpException('Size must be between 1 and 1000');
+            }
+            $query->setPageSize($size);
         }
 
         /** @var array<string> $tags */
