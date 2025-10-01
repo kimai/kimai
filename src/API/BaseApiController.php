@@ -19,6 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 abstract class BaseApiController extends AbstractController
 {
@@ -78,14 +79,11 @@ abstract class BaseApiController extends AbstractController
         if (\array_key_exists('size', $all)) {
             $size = $all['size'];
             if (is_numeric($size)) {
-                $query->setPageSize((int) $size);
-            }
-        }
-
-        if (\array_key_exists('pageSize', $all)) {
-            $size = $all['pageSize'];
-            if (is_numeric($size)) {
-                $query->setPageSize((int) $size);
+                $size = (int) $size;
+                if ($size < 1 || $size > 1000) {
+                    throw new BadRequestHttpException('Size must be between 1 and 1000');
+                }
+                $query->setPageSize($size);
             }
         }
     }
