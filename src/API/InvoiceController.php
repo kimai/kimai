@@ -80,7 +80,7 @@ final class InvoiceController extends BaseApiController
         }
 
         $data = $this->repository->getPagerfantaForQuery($query);
-        $view = $this->createPaginatedView($data);
+        $view = new View($data, 200);
         $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
         return $this->viewHandler->handle($view);

@@ -221,3 +221,6 @@ services:
         arguments:
             - "[%%datetime%%] %%message%% %%context%%\n"
             - "Y-m-d H:i:s"
+
+    App\API\ViewHandler:
+        arguments: ['@fos_rest.view_handler.default']

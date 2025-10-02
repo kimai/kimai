@@ -12,9 +12,7 @@ namespace App\API;
 use App\Entity\User;
 use App\Repository\Query\BaseQuery;
 use App\Timesheet\DateTimeFactory;
-use App\Utils\Pagination;
 use FOS\RestBundle\Request\ParamFetcherInterface;
-use FOS\RestBundle\View\View;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormInterface;
@@ -61,13 +59,19 @@ abstract class BaseApiController extends AbstractController
         return DateTimeFactory::createByUser($user);
     }
 
-    protected function prepareQuery(BaseQuery $query, ParamFetcherInterface $paramFetcher): void
+    /**
+     * @template T of BaseQuery
+     * @param T $query
+     * @param ParamFetcherInterface $paramFetcher
+     * @return T
+     */
+    protected function prepareQuery(BaseQuery $query, ParamFetcherInterface $paramFetcher): BaseQuery
     {
         $query->setIsApiCall(true);
         $query->setCurrentUser($this->getUser());
 
         // there is no function has() in ParamFetcherInterface, so we need to use all() and check for the key
-        $all = $paramFetcher->all(true);
+        $all = $paramFetcher->all();
 
         if (\array_key_exists('page', $all)) {
             $page = $all['page'];
@@ -80,29 +84,27 @@ abstract class BaseApiController extends AbstractController
             $size = $all['size'];
             if (is_numeric($size)) {
                 $size = (int) $size;
-                if ($size < 1 || $size > 1000) {
-                    throw new BadRequestHttpException('Size must be between 1 and 1000');
+                if ($size < 1 || $size > 500) {
+                    throw new BadRequestHttpException('Size must be between 1 and 500');
                 }
                 $query->setPageSize($size);
             }
         }
-    }
 
-    protected function createPaginatedView(Pagination $pagination): View
-    {
-        $results = (array) $pagination->getCurrentPageResults();
+        if (\array_key_exists('order', $all)) {
+            $order = $all['order'];
+            if (\is_string($order) && $order !== '') {
+                $query->setOrder($order);
+            }
+        }
 
-        $view = new View($results, 200);
-        $this->addPagination($view, $pagination);
+        if (\array_key_exists('orderBy', $all)) {
+            $orderBy = $all['orderBy'];
+            if (\is_string($orderBy) && $orderBy !== '') {
+                $query->setOrderBy($orderBy);
+            }
+        }
 
-        return $view;
-    }
-
-    protected function addPagination(View $view, Pagination $pagination): void
-    {
-        $view->setHeader('X-Page', (string) $pagination->getCurrentPage());
-        $view->setHeader('X-Total-Count', (string) $pagination->getNbResults());
-        $view->setHeader('X-Total-Pages', (string) $pagination->getNbPages());
-        $view->setHeader('X-Per-Page', (string) $pagination->getMaxPerPage());
+        return $query;
     }
 }
