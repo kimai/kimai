@@ -82,7 +82,7 @@ final class TimesheetController extends BaseApiController
     #[Rest\QueryParam(name: 'activity', requirements: '\d+', strict: true, nullable: true, description: 'Activity ID to filter timesheets')]
     #[Rest\QueryParam(name: 'activities', map: true, requirements: '\d+', strict: true, nullable: true, default: [], description: 'List of activity IDs to filter, e.g.: activities[]=1&activities[]=2')]
     #[Rest\QueryParam(name: 'page', requirements: '\d+', strict: true, nullable: true, description: 'The page to display, renders a 404 if not found (default: 1)')]
-    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page (default: 50, max: 1000)')]
+    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page (default: 50, max: 500)')]
     #[Rest\QueryParam(name: 'tags', map: true, strict: true, nullable: true, default: [], description: 'List of tag names, e.g. tags[]=bar&tags[]=foo')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|begin|end|rate', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, begin, end, rate (default: begin)')]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: DESC)')]
@@ -97,7 +97,7 @@ final class TimesheetController extends BaseApiController
     public function cgetAction(ParamFetcherInterface $paramFetcher, CustomerRepository $customerRepository, ProjectRepository $projectRepository, ActivityRepository $activityRepository, UserRepository $userRepository): Response
     {
         $query = new TimesheetQuery(false);
-        $query->setCurrentUser($this->getUser());
+        $this->prepareQuery($query, $paramFetcher);
         $seeAll = false;
 
         if ($this->isGranted('view_other_timesheet')) {
@@ -169,20 +169,6 @@ final class TimesheetController extends BaseApiController
             $query->addActivity($activity);
         }
 
-        $page = $paramFetcher->get('page');
-        if (\is_string($page) && $page !== '') {
-            $query->setPage((int) $page);
-        }
-
-        $size = $paramFetcher->get('size');
-        if (is_numeric($size)) {
-            $size = (int) $size;
-            if ($size < 1 || $size > 1000) {
-                throw new BadRequestHttpException('Size must be between 1 and 1000');
-            }
-            $query->setPageSize($size);
-        }
-
         /** @var array<string> $tags */
         $tags = $paramFetcher->get('tags');
         if (\is_array($tags) && \count($tags) > 0) {
@@ -193,16 +179,6 @@ final class TimesheetController extends BaseApiController
             foreach ($tagsByName as $tag) {
                 $query->addTag($tag);
             }
-        }
-
-        $order = $paramFetcher->get('order');
-        if (\is_string($order) && $order !== '') {
-            $query->setOrder($order);
-        }
-
-        $orderBy = $paramFetcher->get('orderBy');
-        if (\is_string($orderBy) && $orderBy !== '') {
-            $query->setOrderBy($orderBy);
         }
 
         $factory = $this->getDateTimeFactory();
@@ -256,12 +232,9 @@ final class TimesheetController extends BaseApiController
             $query->setModifiedAfter($factory->createDateTime($modifiedAfter));
         }
 
-        $query->setIsApiCall(true);
         $data = $this->repository->getPagerfantaForQuery($query);
-        $results = (array) $data->getCurrentPageResults();
 
-        $view = new View($results, 200);
-        $this->addPagination($view, $data);
+        $view = new View($data, 200);
 
         $full = $paramFetcher->get('full');
         if ($full === '1' || $full === 'true') {
