@@ -22,6 +22,7 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -93,6 +94,10 @@ final class TeamController extends AbstractController
     public function duplicateTeam(Team $team, Request $request): Response
     {
         $newTeam = clone $team;
+
+        if ($team->getName() === null) {
+            throw new BadRequestHttpException('Team with empty name cannot be duplicated');
+        }
 
         $i = 1;
         do {

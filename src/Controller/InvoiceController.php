@@ -321,7 +321,7 @@ final class InvoiceController extends AbstractController
 
         if (null === $file) {
             throw $this->createNotFoundException(
-                \sprintf('Invoice file "%s" could not be found for invoice ID "%s"', $invoice->getInvoiceFilename(), $invoice->getId())
+                \sprintf('Invoice file could not be found for invoice ID "%s"', $invoice->getId()) // @phpstan-ignore argument.type
             );
         }
 
