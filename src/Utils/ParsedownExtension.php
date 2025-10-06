@@ -95,7 +95,7 @@ final class ParsedownExtension extends Parsedown
         return null;
     }
 
-    protected function blockTable($Line, array $Block = null) // @phpstan-ignore missingType.return,missingType.iterableValue,missingType.parameter
+    protected function blockTable($Line, ?array $Block = null) // @phpstan-ignore missingType.return,missingType.iterableValue,missingType.parameter
     {
         $Block = parent::blockTable($Line, $Block);
 

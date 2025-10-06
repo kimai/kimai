@@ -175,8 +175,12 @@ final class TimesheetController extends BaseApiController
         }
 
         $size = $paramFetcher->get('size');
-        if (\is_string($size) && $size !== '') {
-            $query->setPageSize((int) $size);
+        if (is_numeric($size)) {
+            $size = (int) $size;
+            if ($size < 1 || $size > 1000) {
+                throw new BadRequestHttpException('Size must be between 1 and 1000');
+            }
+            $query->setPageSize($size);
         }
 
         /** @var array<string> $tags */

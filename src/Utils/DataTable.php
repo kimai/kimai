@@ -15,9 +15,12 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Traversable;
 
+/**
+ * @template T
+ * @implements \IteratorAggregate<array-key, T>
+ */
 final class DataTable implements \Countable, \IteratorAggregate
 {
-    private ?Pagination $pagination = null;
     private ?FormInterface $searchForm = null;
     /**
      * @var FormInterface<MultiUpdateTableDTO>|null
@@ -29,9 +32,13 @@ final class DataTable implements \Countable, \IteratorAggregate
     private bool $sticky = true;
     private ?string $paginationRoute = null;
 
+    /**
+     * @param Pagination<T>|null $pagination
+     */
     public function __construct(
         private readonly string $tableName,
-        private readonly BaseQuery $query
+        private readonly BaseQuery $query,
+        private ?Pagination $pagination = null
     )
     {
     }
@@ -46,11 +53,18 @@ final class DataTable implements \Countable, \IteratorAggregate
         return $this->pagination;
     }
 
+    /**
+     * @return Pagination<T>|null
+     */
     public function getPagination(): ?Pagination
     {
         return $this->pagination;
     }
 
+    /**
+     * @param Pagination<T>|null $pagination
+     * @deprecated since 3.0
+     */
     public function setPagination(?Pagination $pagination): void
     {
         $this->pagination = $pagination;
@@ -130,10 +144,6 @@ final class DataTable implements \Countable, \IteratorAggregate
      * - translation_domain
      * - orderBy (string|false)
      * - order (desc, asc)
-     *
-     * @param string $name
-     * @param array $column
-     * @return void
      */
     public function addColumn(string $name, array $column = []): void
     {
@@ -200,9 +210,16 @@ final class DataTable implements \Countable, \IteratorAggregate
         $this->sticky = $sticky;
     }
 
+    /**
+     * return \Traversable<array-key, T>
+     */
     public function getIterator(): Traversable
     {
-        return $this->pagination?->getIterator();
+        if ($this->pagination === null) {
+            throw new \Exception('Cannot creator iterator, no Paginator set');
+        }
+
+        return $this->pagination->getIterator();
     }
 
     public function count(): int

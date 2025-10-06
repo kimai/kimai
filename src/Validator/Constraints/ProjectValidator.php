@@ -13,7 +13,7 @@ use App\Configuration\SystemConfiguration;
 use App\Entity\Project as ProjectEntity;
 use App\Repository\ProjectRepository;
 use App\Validator\Constraints\Project as ProjectEntityConstraint;
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -26,7 +26,7 @@ final class ProjectValidator extends ConstraintValidator
     public function __construct(
         private readonly SystemConfiguration $systemConfiguration,
         private readonly ProjectRepository $projectRepository,
-        #[TaggedIterator(ProjectConstraint::class)]
+        #[AutowireIterator(ProjectConstraint::class)]
         private iterable $constraints = []
     )
     {

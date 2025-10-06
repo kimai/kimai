@@ -104,7 +104,7 @@ final class PasswordResetController extends AbstractController
             }
 
             if (!$user->isPasswordRequestNonExpired($this->configuration->getPasswordResetRetryLifetime())) {
-                $loginLinkDetails = $loginLinkHandler->createLoginLink($user, $request, $this->configuration->getPasswordResetRetryLifetime()); // @phpstan-ignore-line
+                $loginLinkDetails = $loginLinkHandler->createLoginLink($user, $request, $this->configuration->getPasswordResetRetryLifetime());
                 $loginLink = $loginLinkDetails->getUrl();
 
                 $mail = $this->generateResettingEmailMessage($user, $translator, $loginLink);

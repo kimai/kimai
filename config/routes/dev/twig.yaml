@@ -1,5 +1,5 @@
 _errors:
-    resource: '@FrameworkBundle/Resources/config/routing/errors.xml'
+    resource: '@FrameworkBundle/Resources/config/routing/errors.php'
     prefix: /{_locale}/_error
     defaults:
         _locale: '%locale%'

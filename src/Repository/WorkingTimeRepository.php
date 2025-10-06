@@ -84,7 +84,7 @@ class WorkingTimeRepository extends EntityRepository
             ->setParameter('date', $date)
         ;
 
-        return $qb->getQuery()->getOneOrNullResult();
+        return $qb->getQuery()->getOneOrNullResult(); // @phpstan-ignore return.type
     }
 
     public function getLatestApprovalDate(User $user): ?\DateTimeInterface

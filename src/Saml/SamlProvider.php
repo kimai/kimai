@@ -33,28 +33,31 @@ final class SamlProvider
     public function findUser(SamlLoginAttributes $token): User
     {
         $user = null;
+        $identifier = $token->getUserIdentifier();
+
+        if ($identifier === null) {
+            throw new AuthenticationException('Empty SAML token user-identifier given');
+        }
 
         try {
-            if ($token->getUserIdentifier() !== null) {
-                /** @var User $user */
-                $user = $this->userProvider->loadUserByIdentifier($token->getUserIdentifier());
-            }
+            /** @var User $user */
+            $user = $this->userProvider->loadUserByIdentifier($identifier);
         } catch (UserNotFoundException $ex) {
             // this is expected for new users
-            $this->logger->debug('User is not existing: ' . $token->getUserIdentifier());
+            $this->logger->debug('User is not existing: ' . $identifier);
         }
 
         try {
             if (null === $user) {
                 $user = $this->userService->createNewUser();
-                $user->setUserIdentifier($token->getUserIdentifier());
+                $user->setUserIdentifier($identifier);
             }
             $this->hydrateUser($user, $token);
             $this->userService->saveUser($user);
         } catch (\Exception $ex) {
             $this->logger->error($ex->getMessage());
             throw new AuthenticationException(
-                \sprintf('Failed creating or hydrating user "%s": %s', $token->getUserIdentifier(), $ex->getMessage())
+                \sprintf('Failed creating or hydrating user "%s": %s', $identifier, $ex->getMessage())
             );
         }
 

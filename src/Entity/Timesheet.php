@@ -160,7 +160,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     #[Serializer\Groups(['Default'])]
     private ?string $description = null;
     #[ORM\Column(name: 'rate', type: Types::FLOAT, nullable: false)]
-    #[Assert\GreaterThanOrEqual(0)]
+    #[Assert\GreaterThanOrEqual(value: 0)]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -170,12 +170,12 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     #[Serializer\Groups(['Default'])]
     private ?float $internalRate = null;
     #[ORM\Column(name: 'fixed_rate', type: Types::FLOAT, nullable: true)]
-    #[Assert\GreaterThanOrEqual(0)]
+    #[Assert\GreaterThanOrEqual(value: 0)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Entity'])]
     private ?float $fixedRate = null;
     #[ORM\Column(name: 'hourly_rate', type: Types::FLOAT, nullable: true)]
-    #[Assert\GreaterThanOrEqual(0)]
+    #[Assert\GreaterThanOrEqual(value: 0)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Entity'])]
     private ?float $hourlyRate = null;

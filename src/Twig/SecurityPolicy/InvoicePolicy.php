@@ -34,6 +34,9 @@ final class InvoicePolicy implements SecurityPolicyInterface
                 // =================================================================
                 // vendor/twig/twig/src/Extension/CoreExtension.php
 
+                // Twig 4.0 disallows "use" and "extends" - do not allow them!
+                // https://github.com/twigphp/Twig/pull/4244/files
+
                 // formatting filters
                 'date',
                 'date_modify',
@@ -56,7 +59,6 @@ final class InvoicePolicy implements SecurityPolicyInterface
                 'striptags',
                 'trim',
                 'nl2br',
-                'spaceless',
 
                 // array helpers
                 'join',

@@ -204,7 +204,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     /**
      * List of all role names
      */
-    #[ORM\Column(name: 'roles', type: Types::ARRAY, nullable: false)] // @phpstan-ignore classConstant.deprecated
+    #[ORM\Column(name: 'roles', type: Types::JSON, nullable: false)]
     #[Serializer\Expose]
     #[Serializer\Groups(['User_Entity'])]
     #[Serializer\Type('array<string>')]
@@ -814,10 +814,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         }
     }
 
+    #[\Deprecated]
     public function eraseCredentials(): void
     {
-        $this->plainPassword = null;
-        $this->plainApiToken = null;
     }
 
     public function hasUsername(): bool
@@ -840,7 +839,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function getUserIdentifier(): string
     {
-        return $this->getUsername();
+        return $this->getUsername(); // @phpstan-ignore return.type
     }
 
     public function getEmail(): ?string
@@ -951,14 +950,14 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
-    public function setPassword($password): User
+    public function setPassword(?string $password): User
     {
         $this->password = $password;
 
         return $this;
     }
 
-    public function setPlainPassword($password): User
+    public function setPlainPassword(?string $password): User
     {
         $this->plainPassword = $password;
 
@@ -972,7 +971,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
-    public function setConfirmationToken($confirmationToken): void
+    public function setConfirmationToken(?string $confirmationToken): void
     {
         $this->confirmationToken = $confirmationToken;
     }
@@ -1031,6 +1030,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function __serialize(): array
     {
+        $this->plainPassword = null;
+        $this->plainApiToken = null;
+
         return [
             'id' => $this->id,
             'username' => $this->username,

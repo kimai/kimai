@@ -37,7 +37,7 @@ class RateServiceTest extends TestCase
         return $mock;
     }
 
-    private static function createDateTime(string $datetime = null): \DateTime
+    private static function createDateTime(?string $datetime = null): \DateTime
     {
         return new \DateTime($datetime ?? 'now', new \DateTimeZone('UTC'));
     }

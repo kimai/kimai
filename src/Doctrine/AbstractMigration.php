@@ -10,6 +10,7 @@
 namespace App\Doctrine;
 
 use Doctrine\DBAL\Exception;
+use Doctrine\DBAL\Platforms\MariaDBPlatform;
 use Doctrine\DBAL\Platforms\MySQLPlatform;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration as BaseAbstractMigration;
@@ -53,7 +54,7 @@ abstract class AbstractMigration extends BaseAbstractMigration
     private function abortIfPlatformNotSupported(): void
     {
         $platform = $this->connection->getDatabasePlatform();
-        if (!($platform instanceof MySQLPlatform)) {
+        if (!($platform instanceof MySQLPlatform) && !($platform instanceof MariaDBPlatform)) {
             $this->abortIf(true, 'Unsupported database platform: ' . \get_class($platform));
         }
     }

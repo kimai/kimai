@@ -78,8 +78,7 @@ final class ActivityController extends AbstractController
         $entries = $this->repository->getPagerfantaForQuery($query);
         $metaColumns = $this->findMetaColumns($query);
 
-        $table = new DataTable('activity_admin', $query);
-        $table->setPagination($entries);
+        $table = new DataTable('activity_admin', $query, $entries);
         $table->setSearchForm($form);
         $table->setPaginationRoute('admin_activity_paginated');
         $table->setReloadEvents('kimai.activityUpdate kimai.activityDelete kimai.activityTeamUpdate');

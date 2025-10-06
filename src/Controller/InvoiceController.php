@@ -320,7 +320,7 @@ final class InvoiceController extends AbstractController
 
         if (null === $file) {
             throw $this->createNotFoundException(
-                \sprintf('Invoice file "%s" could not be found for invoice ID "%s"', $invoice->getInvoiceFilename(), $invoice->getId())
+                \sprintf('Invoice file "%s" could not be found for invoice ID "%s"', $invoice->getInvoiceFilename() ?? 'not set', $invoice->getId() ?? 'unknown')
             );
         }
 
@@ -349,8 +349,7 @@ final class InvoiceController extends AbstractController
         $entries = $this->invoiceRepository->getPagerfantaForQuery($query);
         $metaColumns = $this->findMetaColumns($query);
 
-        $table = new DataTable('invoices', $query);
-        $table->setPagination($entries);
+        $table = new DataTable('invoices', $query, $entries);
         $table->setSearchForm($form);
         $table->setPaginationRoute('admin_invoice_list');
         $table->setReloadEvents('kimai.invoiceUpdate');
@@ -418,8 +417,7 @@ final class InvoiceController extends AbstractController
 
         $entries = $this->templateRepository->getPagerfantaForQuery($query);
 
-        $table = new DataTable('invoice_template', $query);
-        $table->setPagination($entries);
+        $table = new DataTable('invoice_template', $query, $entries);
         $table->setPaginationRoute('admin_invoice_template');
         $table->setReloadEvents('kimai.invoiceTemplateUpdate');
 

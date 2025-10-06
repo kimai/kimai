@@ -24,7 +24,7 @@ final class KimaiMailer implements MailerInterface
     {
     }
 
-    public function send(RawMessage $message, Envelope $envelope = null): void
+    public function send(RawMessage $message, ?Envelope $envelope = null): void
     {
         if (!$message instanceof Email) {
             $email = new Email();
@@ -43,7 +43,7 @@ final class KimaiMailer implements MailerInterface
         $this->mailer->send($message);
     }
 
-    public function sendToUser(User $user, Email $message, Envelope $envelope = null): void
+    public function sendToUser(User $user, Email $message, ?Envelope $envelope = null): void
     {
         if (!$user->isEnabled() || $user->getEmail() === null) {
             return;

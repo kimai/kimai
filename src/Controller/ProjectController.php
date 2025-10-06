@@ -85,8 +85,7 @@ final class ProjectController extends AbstractController
         $entries = $this->repository->getPagerfantaForQuery($query);
         $metaColumns = $this->findMetaColumns($query);
 
-        $table = new DataTable('project_admin', $query);
-        $table->setPagination($entries);
+        $table = new DataTable('project_admin', $query, $entries);
         $table->setSearchForm($form);
         $table->setPaginationRoute('admin_project_paginated');
         $table->setReloadEvents('kimai.projectUpdate kimai.projectDelete kimai.projectTeamUpdate');

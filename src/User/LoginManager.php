@@ -30,7 +30,7 @@ final class LoginManager
     ) {
     }
 
-    public function logInUser(User $user, Response $response = null)
+    public function logInUser(User $user, ?Response $response = null)
     {
         $this->userChecker->checkPreAuth($user);
 

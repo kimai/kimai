@@ -11,7 +11,7 @@ namespace App\WorkingTime\Mode;
 
 use App\Entity\User;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 final class WorkingTimeModeFactory
 {
@@ -19,7 +19,7 @@ final class WorkingTimeModeFactory
      * @param iterable<WorkingTimeMode> $modes
      */
     public function __construct(
-        #[TaggedIterator(WorkingTimeMode::class)]
+        #[AutowireIterator(WorkingTimeMode::class)]
         private readonly iterable $modes,
         private readonly LoggerInterface $logger
     )
@@ -45,7 +45,7 @@ final class WorkingTimeModeFactory
             return $this->getMode($user->getWorkContractMode());
         } catch (\InvalidArgumentException $ex) {
             $this->logger->error(
-                \sprintf('Unknown mode "%s" requested for user %s', $user->getWorkContractMode(), $user->getId())
+                \sprintf('Unknown mode "%s" requested for user %s', $user->getWorkContractMode(), $user->getUserIdentifier())
             );
 
             return new WorkingTimeModeNone(); // @CloudRequired

@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 final class Duration extends Regex
 {
-    public function __construct($options = null)
+    public function __construct(array $options = [])
     {
         $patterns = [
             // decimal times (can be separated by comma or dot, depending on the locale)

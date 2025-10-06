@@ -54,8 +54,7 @@ final class TeamController extends AbstractController
 
         $entries = $repository->getPagerfantaForQuery($query);
 
-        $table = new DataTable('admin_teams', $query);
-        $table->setPagination($entries);
+        $table = new DataTable('admin_teams', $query, $entries);
         $table->setSearchForm($form);
         $table->setPaginationRoute('admin_team_paginated');
         $table->setReloadEvents('kimai.teamUpdate');
@@ -96,7 +95,7 @@ final class TeamController extends AbstractController
 
         $i = 1;
         do {
-            $newName = \sprintf('%s (%s)', $team->getName(), $i++);
+            $newName = \sprintf('%s (%s)', $team->getName() ?? 'unknown', $i++);
         } while ($this->repository->count(['name' => $newName]) > 0 && $i < 10);
         $newTeam->setName($newName);
 

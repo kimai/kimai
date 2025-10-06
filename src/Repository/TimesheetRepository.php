@@ -58,9 +58,6 @@ class TimesheetRepository extends EntityRepository
 
     /**
      * Fetches the raw data of a timesheet, to allow comparison e.g. of submitted and previously stored data.
-     *
-     * @param int $id
-     * @return array
      */
     public function getRawData(int $id): array
     {
@@ -83,7 +80,14 @@ class TimesheetRepository extends EntityRepository
             ->setParameter('id', $id)
         ;
 
-        return $qb->getQuery()->getOneOrNullResult();
+        /** @var array<mixed>|null $result */
+        $result = $qb->getQuery()->getOneOrNullResult();
+
+        if ($result === null) {
+            throw new InvalidArgumentException('No result found for id ' . $id);
+        }
+
+        return $result;
     }
 
     public function delete(Timesheet $timesheet): void
@@ -112,22 +116,6 @@ class TimesheetRepository extends EntityRepository
             $em->rollback();
             throw $ex;
         }
-    }
-
-    public function begin(): void
-    {
-        $this->getEntityManager()->beginTransaction();
-    }
-
-    public function commit(): void
-    {
-        $this->getEntityManager()->flush();
-        $this->getEntityManager()->commit();
-    }
-
-    public function rollback(): void
-    {
-        $this->getEntityManager()->rollback();
     }
 
     public function save(Timesheet $timesheet): void
@@ -445,6 +433,9 @@ class TimesheetRepository extends EntityRepository
         return true;
     }
 
+    /**
+     * @return Pagination<Timesheet>
+     */
     public function getPagerfantaForQuery(TimesheetQuery $query): Pagination
     {
         return new Pagination($this->getPaginatorForQuery($query), $query);

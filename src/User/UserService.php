@@ -93,7 +93,8 @@ class UserService
 
         $this->hashPassword($user);
         $this->hashApiToken($user);
-        $user->eraseCredentials();
+        $user->setPlainPassword(null);
+        $user->setPlainApiToken(null);
 
         $this->dispatcher->dispatch(new UserCreatePreEvent($user)); // @CloudRequired
         $this->repository->saveUser($user);
@@ -122,7 +123,8 @@ class UserService
 
         $this->hashPassword($user);
         $this->hashApiToken($user);
-        $user->eraseCredentials();
+        $user->setPlainPassword(null);
+        $user->setPlainApiToken(null);
 
         $this->dispatcher->dispatch(new UserUpdatePreEvent($user));
         $this->repository->saveUser($user);

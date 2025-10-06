@@ -35,8 +35,8 @@ use App\Utils\PageSetup;
 use Doctrine\Common\Collections\ArrayCollection;
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Encoding\Encoding;
-use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
-use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
+use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\RoundBlockSizeMode;
 use Endroid\QrCode\Writer\PngWriter;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Totp\TotpAuthenticatorInterface;
@@ -531,16 +531,17 @@ final class ProfileController extends AbstractController
 
         $qrCodeContent = $totpAuthenticator->getQRContent($profile);
 
-        $result = Builder::create()
-            ->writer(new PngWriter())
-            ->writerOptions([])
-            ->data($qrCodeContent)
-            ->encoding(new Encoding('UTF-8'))
-            ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
-            ->size(200)
-            ->margin(0)
-            ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
-            ->build();
+        $builder = new Builder(
+            new PngWriter(),
+            [],
+            false,
+            $qrCodeContent,
+            new Encoding('UTF-8'),
+            ErrorCorrectionLevel::High,
+            200,
+            0,
+            RoundBlockSizeMode::Margin
+        );
 
         return $this->render('user/2fa.html.twig', [
             'tab' => '2fa',
@@ -548,7 +549,7 @@ final class ProfileController extends AbstractController
             'user' => $profile,
             'form' => $form->createView(),
             'deactivate' => $this->getTwoFactorDeactivationForm($profile)->createView(),
-            'qr_code' => $result,
+            'qr_code' => $builder->build(),
             'secret' => $profile->getTotpSecret(),
         ]);
     }

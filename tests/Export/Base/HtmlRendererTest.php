@@ -45,7 +45,7 @@ class HtmlRendererTest extends AbstractRendererTestCase
         self::assertEquals('foo', $sut->getId());
         self::assertEquals('bar', $sut->getTitle());
         self::assertEquals('html', $sut->getType());
-        self::assertFalse($sut->isInternal());
+        self::assertFalse($sut->isInternal()); // @phpstan-ignore staticMethod.alreadyNarrowedType
     }
 
     /**
