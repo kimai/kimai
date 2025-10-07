@@ -45,4 +45,27 @@ abstract class AbstractEntityTestCase extends TestCase
             self::assertEquals('Unknown budget type: foo', $e->getMessage());
         }
     }
+
+    public function assertCloneResetsId(object $sut): void
+    {
+        if (!property_exists($sut, 'id')) {
+            $this->fail('Entity does not have an ID property');
+        }
+        if (!method_exists($sut, 'getId')) {
+            $this->fail('Entity does not have a getId() method');
+        }
+
+        self::assertNull($sut->getId());
+        $obj = new \ReflectionObject($sut);
+        $prop = $obj->getProperty('id');
+        $prop->setAccessible(true);
+        $prop->setValue($sut, 123);
+        self::assertEquals(123, $sut->getId());
+
+        $clone = clone $sut;
+
+        self::assertNull($clone->getId());
+        $prop->setValue($sut, null);
+        $prop->setAccessible(false);
+    }
 }

@@ -33,7 +33,9 @@ class BundleInstallerCommandTest extends KernelTestCase
     {
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
-        $this->application->add(new $className());
+        $command = new $className();
+        self::assertInstanceOf(AbstractBundleInstallerCommand::class, $command);
+        $this->application->add($command);
 
         return $this->application->find('kimai:bundle:test:install');
     }

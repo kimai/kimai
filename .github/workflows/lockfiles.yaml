@@ -16,7 +16,7 @@ jobs:
                   persist-credentials: false
 
             - name: Prevent file change
-              uses: xalvarez/prevent-file-change-action@v1
+              uses: xalvarez/prevent-file-change-action@v3
               with:
                   githubToken: ${{ secrets.GITHUB_TOKEN }}
                   pattern: .*\.lock$

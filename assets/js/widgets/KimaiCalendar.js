@@ -73,21 +73,6 @@ export default class KimaiCalendar {
         /** @type {KimaiAlert} ALERT */
         const ALERT = this.kimai.getPlugin('alert');
 
-        let initialView = 'dayGridMonth';
-        switch (options['initialView']) {
-            case 'month':
-                initialView = 'dayGridMonth';
-                break;
-            case 'agendaWeek':
-            case 'week':
-                initialView = 'timeGridWeek';
-                break;
-            case 'agendaDay':
-            case 'day':
-                initialView = 'timeGridDay';
-                break;
-        }
-
         // Instead of using "buttonIcons" the theme needs to be adjusted directly
         // https://fullcalendar.io/docs/buttonIcons
         BootstrapTheme.prototype.classes = {
@@ -120,7 +105,8 @@ export default class KimaiCalendar {
                 esLocale, euLocale, faLocale, fiLocale, frLocale, heLocale, hrLocale, huLocale, itLocale, jaLocale, koLocale,
                 nbLocale, nlLocale, plLocale, ptLocale, ptBrLocale, roLocale, ruLocale, skLocale, svLocale, trLocale, zhLocale, viLocale ],
             plugins: [ bootstrap5Plugin, dayGridPlugin, timeGridPlugin, googlePlugin, iCalendarPlugin, interactionPlugin ],
-            initialView: initialView,
+            initialView: this.toInternalViewName(this.options['initialView']),
+            initialDate: this.options['initialDate'],
             // https://fullcalendar.io/docs/theming
             themeSystem: 'bootstrap5',
             // https://fullcalendar.io/docs/headerToolbar
@@ -155,8 +141,9 @@ export default class KimaiCalendar {
             slotMinTime: this.options['timeframeBegin'] + ':00',
             slotMaxTime: this.options['timeframeEnd'] === '23:59' ? '24:00:00' : (this.options['timeframeEnd'] + ':59'),
 
-            // auto calculation seems to do the better job, therefor deactivated
-            //slotLabelInterval: this.options['slotDuration'],
+            // deactivate for auto calculation, which does a good job.
+            // but 1h seems to be a "normal distance" for calendar apps (like Google and Apple)
+            slotLabelInterval: '1:00',
 
             // how long should entries look like when they don't have an end
             defaultTimedEventDuration: this.options['slotDuration'],
@@ -172,13 +159,19 @@ export default class KimaiCalendar {
             // once we can configure working days
             // hiddenDays: [ 2, 4 ]
 
-            // when we support holidays and other full day events
-            // allDaySlot: false,
             // dropAccept
 
             dayMaxEventRows: true,
             eventMaxStack: this.options['dayLimit'],
             dayMaxEvents: this.options['dayLimit'],
+
+            // the callbacks "viewDidMount" and "viewWillUnmount" are only called when switching between month and others, not between week and day
+            datesSet: (dateInfo) => {
+                document.dispatchEvent(new CustomEvent('kimai.calendar.changeDate', {detail: {
+                    view: this.toExternalViewName(dateInfo.view.type),
+                    date: dateInfo.start.toISOString().split('T')[0],
+                }}));
+            },
 
             views: {
                 dayGrid: {
@@ -536,6 +529,44 @@ export default class KimaiCalendar {
     }
 
     /**
+     * @param {string} viewName
+     * @returns {string}
+     */
+    toExternalViewName(viewName) {
+        switch(viewName) {
+            case 'timeGridDay':
+                return 'day';
+            case 'timeGridWeek':
+                return 'week';
+            case 'dayGridMonth':
+            default:
+                return 'month';
+        }
+    }
+
+    /**
+     * @param {string} viewName
+     * @returns {string}
+     */
+    toInternalViewName(viewName) {
+        switch(viewName) {
+            case 'day':
+            case 'agendaDay':
+            case 'timeGridDay':
+                return 'timeGridDay';
+            case 'week':
+            case 'agendaWeek':
+            case 'timeGridWeek':
+                return 'timeGridWeek';
+            case 'month':
+            case 'agendaMonth':
+            case 'dayGridMonth':
+            default:
+                return 'dayGridMonth';
+        }
+    }
+
+    /**
      * @param {string} name
      * @return {boolean}
      * @private
@@ -718,16 +749,16 @@ export default class KimaiCalendar {
         }
 
         events.forEach(item => {
-            const start = DateTime.fromJSDate(item.start);
+            const start = DateTime.fromJSDate(item.start).toUTC();
+            const dateStr = start.toFormat('yyyy-MM-dd');
 
-            const dateStr = start.toISODate();
             if (!durations[dateStr]) {
                 durations[dateStr] = 0;
             }
 
             // absences or public holidays are all day
             if (item.end !== null) {
-                const end = DateTime.fromJSDate(item.end);
+                const end = DateTime.fromJSDate(item.end).toUTC();
                 const duration = end.diff(start, 'hours').as('seconds');
                 durations[dateStr] += duration;
             }

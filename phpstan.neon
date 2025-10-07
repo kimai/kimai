@@ -424,11 +424,6 @@ parameters:
             path: src/Command/ReloadCommand.php
 
         -
-            message: "#^Access to an undefined property SimpleXMLElement\\|false\\:\\:\\$file\\.$#"
-            count: 1
-            path: src/Command/TranslationCommand.php
-
-        -
             message: "#^Argument of an invalid type list\\<string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
             count: 4
             path: src/Command/TranslationCommand.php
@@ -662,11 +657,6 @@ parameters:
             message: "#^Parameter \\#2 \\$replace of method App\\\\Repository\\\\ActivityRepository\\:\\:deleteActivity\\(\\) expects App\\\\Entity\\\\Activity\\|null, mixed given\\.$#"
             count: 1
             path: src/Controller/ActivityController.php
-
-        -
-            message: "#^Cannot access offset 'user' on mixed\\.$#"
-            count: 1
-            path: src/Controller/CalendarController.php
 
         -
             message: "#^Parameter \\#1 \\$name of class App\\\\Entity\\\\Team constructor expects string, string\\|null given\\.$#"
@@ -1524,119 +1514,9 @@ parameters:
             path: src/Export/Annotation/Order.php
 
         -
-            message: "#^Cannot call method getBudget\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Cannot call method getCurrency\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 5
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Cannot call method getName\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Cannot call method getTimeBudget\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Cannot call method jsonSerialize\\(\\) on App\\\\Model\\\\Statistic\\\\BudgetStatistic\\|null\\.$#"
-            count: 2
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\HtmlRenderer\\:\\:calculateActivityBudget\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\HtmlRenderer\\:\\:calculateProjectBudget\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\HtmlRenderer\\:\\:calculateSummary\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
             message: "#^Method App\\\\Export\\\\Base\\\\HtmlRenderer\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Cannot call method getBudget\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Cannot call method getCurrency\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 5
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Cannot call method getName\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Cannot call method getTimeBudget\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Cannot call method jsonSerialize\\(\\) on App\\\\Model\\\\Statistic\\\\BudgetStatistic\\|null\\.$#"
-            count: 2
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\PDFRenderer\\:\\:calculateActivityBudget\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\PDFRenderer\\:\\:calculateProjectBudget\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\PDFRenderer\\:\\:calculateSummary\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
 
         -
             message: "#^Method App\\\\Export\\\\Base\\\\PDFRenderer\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -1645,11 +1525,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Export\\\\Base\\\\PDFRenderer\\:\\:getPdfOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
-
-        -
-            message: "#^Parameter \\#1 \\$filename of static method App\\\\Utils\\\\FileHelper\\:\\:convertToAsciiFilename\\(\\) expects string, array\\|string given\\.$#"
             count: 1
             path: src/Export/Base/PDFRenderer.php
 
@@ -3104,11 +2979,6 @@ parameters:
             path: src/Invoice/Renderer/DocxRenderer.php
 
         -
-            message: "#^Parameter \\#1 \\$filename of static method App\\\\Utils\\\\FileHelper\\:\\:convertToAsciiFilename\\(\\) expects string, array\\|string given\\.$#"
-            count: 1
-            path: src/Invoice/Renderer/PdfRenderer.php
-
-        -
             message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
             count: 1
             path: src/Invoice/ServiceInvoice.php
@@ -3324,21 +3194,6 @@ parameters:
             path: src/Plugin/PluginMetadata.php
 
         -
-            message: "#^Cannot access offset 'duration' on mixed\\.$#"
-            count: 3
-            path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'id' on mixed\\.$#"
-            count: 4
-            path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Cannot access offset 'lastRecord' on mixed\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
             message: "#^Cannot call method getEnd\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
             count: 2
             path: src/Project/ProjectStatisticService.php
@@ -3369,27 +3224,7 @@ parameters:
             path: src/Project/ProjectStatisticService.php
 
         -
-            message: "#^Parameter \\#1 \\$datetime of method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createDateTime\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
             message: "#^Parameter \\#1 \\$duration of method App\\\\Model\\\\TimesheetCountedStatistic\\:\\:setDuration\\(\\) expects int, float\\|int given\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Parameter \\#1 \\$durationDay of method App\\\\Reporting\\\\ProjectView\\\\ProjectViewModel\\:\\:setDurationDay\\(\\) expects int, mixed given\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Parameter \\#1 \\$durationMonth of method App\\\\Reporting\\\\ProjectView\\\\ProjectViewModel\\:\\:setDurationMonth\\(\\) expects int, mixed given\\.$#"
-            count: 1
-            path: src/Project/ProjectStatisticService.php
-
-        -
-            message: "#^Parameter \\#1 \\$durationWeek of method App\\\\Reporting\\\\ProjectView\\\\ProjectViewModel\\:\\:setDurationWeek\\(\\) expects int, mixed given\\.$#"
             count: 1
             path: src/Project/ProjectStatisticService.php
 
@@ -3742,26 +3577,6 @@ parameters:
             message: "#^Parameter \\#1 \\$begin of method App\\\\Entity\\\\Timesheet\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
             count: 1
             path: src/Timesheet/Rounding/ClosestRounding.php
-
-        -
-            message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"
-            count: 2
-            path: src/Timesheet/Rounding/DefaultRounding.php
-
-        -
-            message: "#^Cannot call method setTimestamp\\(\\) on DateTime\\|null\\.$#"
-            count: 2
-            path: src/Timesheet/Rounding/DefaultRounding.php
-
-        -
-            message: "#^Cannot clone DateTime\\|null\\.$#"
-            count: 2
-            path: src/Timesheet/Rounding/DefaultRounding.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Entity\\\\Timesheet\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/Timesheet/Rounding/DefaultRounding.php
 
         -
             message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"

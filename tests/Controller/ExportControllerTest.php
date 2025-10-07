@@ -66,7 +66,7 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
             ->setUser($user)
             ->setAmount(20)
             ->setStartDate($begin)
-            ->setCallback(function (Timesheet $timesheet) use ($team, $em) {
+            ->setCallback(function (Timesheet $timesheet) use ($team, $em): void {
                 $team->addProject($timesheet->getProject());
                 $em->persist($team);
             })
@@ -105,10 +105,8 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         // assert export type buttons are available
         $expected = [
             'csv' => 'csv',
-            'default.html.twig' => 'default.html.twig',
-            'default-budget.pdf.twig' => 'default-budget.pdf.twig',
-            'default-internal.pdf.twig' => 'default-internal.pdf.twig',
-            'default.pdf.twig' => 'default.pdf.twig',
+            'html' => 'html',
+            'pdf' => 'pdf',
             'xlsx' => 'xlsx'
         ];
         $node = $client->getCrawler()->filter('#export-buttons .startExportBtn');
@@ -164,10 +162,8 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         // assert export type buttons are available
         $expected = [
             'csv' => 'csv',
-            'default.html.twig' => 'default.html.twig',
-            'default-budget.pdf.twig' => 'default-budget.pdf.twig',
-            'default-internal.pdf.twig' => 'default-internal.pdf.twig',
-            'default.pdf.twig' => 'default.pdf.twig',
+            'html' => 'html',
+            'pdf' => 'pdf',
             'xlsx' => 'xlsx'
         ];
         $node = $client->getCrawler()->filter('#export-buttons .startExportBtn');
@@ -231,7 +227,7 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
 
         // don't add daterange to make sure the current month is the default range
         $client->submit($form, [
-            'renderer' => 'default.html.twig',
+            'renderer' => 'html',
             'markAsExported' => 1
         ]);
 

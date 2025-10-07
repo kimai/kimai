@@ -72,19 +72,19 @@
       </trans-unit>
       <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve" approved="no">
         <source>stats.durationToday</source>
-        <target state="needs-translation">இன்றைய வேலை நேரம்</target>
+        <target state="translated">இன்று</target>
       </trans-unit>
       <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve" approved="no">
         <source>stats.durationWeek</source>
-        <target state="needs-translation">இந்த வார வேலை நேரம்</target>
+        <target state="translated">இந்த வாரம்</target>
       </trans-unit>
       <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve" approved="no">
         <source>stats.durationMonth</source>
-        <target state="needs-translation">இந்த மாத வேலை நேரம்</target>
+        <target state="translated">இந்த மாதம்</target>
       </trans-unit>
       <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve" approved="no">
         <source>stats.durationYear</source>
-        <target state="needs-translation">இந்த ஆண்டு வேலை நேரம்</target>
+        <target state="translated">இந்த ஆண்டு</target>
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve" approved="no">
         <source>stats.durationFinancialYear</source>
@@ -376,7 +376,7 @@
       </trans-unit>
       <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve" approved="no">
         <source>stats.durationTotal</source>
-        <target state="needs-translation">வேலை நேரம் மொத்தம்</target>
+        <target state="translated">மொத்தம்</target>
       </trans-unit>
       <trans-unit id="EI5gPkp" resname="stats.userDurationToday" xml:space="preserve" approved="no">
         <source>stats.userDurationToday</source>
@@ -1929,6 +1929,18 @@
       <trans-unit id="HQ2YM1b" resname="attendance_only_project" xml:space="preserve" approved="yes">
         <source>attendance_only_project</source>
         <target state="final">தேர்ந்தெடுக்கப்பட்ட திட்டத்தின் உள்ளீடுகளை மட்டுமே வேலை நேரமாக எண்ணுங்கள்</target>
+      </trans-unit>
+      <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve">
+        <source>Code</source>
+        <target state="translated">குறியீடு</target>
+      </trans-unit>
+      <trans-unit id="rD4oQRR" resname="postcode" xml:space="preserve">
+        <source>Postcode</source>
+        <target state="translated">அஞ்சல் குறியீடு</target>
+      </trans-unit>
+      <trans-unit id="EaYsI0E" resname="city" xml:space="preserve">
+        <source>City</source>
+        <target state="translated">நகரம்</target>
       </trans-unit>
     </body>
   </file>

@@ -74,11 +74,9 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
     }
 
     /**
-     * @param User $user
-     * @param string|null $timezone
      * @return array<UserPreference>
      */
-    private function getUserPreferences(User $user, string $timezone = null): array
+    private function getUserPreferences(User $user, ?string $timezone = null): array
     {
         $preferences = [];
 

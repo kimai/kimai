@@ -162,7 +162,7 @@ class ActivityStatisticService
     /**
      * @param Activity[] $activities
      */
-    private function createStatisticQueryBuilder(array $activities, \DateTimeInterface $begin = null, ?\DateTimeInterface $end = null): QueryBuilder
+    private function createStatisticQueryBuilder(array $activities, ?\DateTimeInterface $begin = null, ?\DateTimeInterface $end = null): QueryBuilder
     {
         $qb = $this->timesheetRepository->createQueryBuilder('t');
         $qb

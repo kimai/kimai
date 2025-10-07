@@ -105,6 +105,7 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
             '/api/users/{id}',
             '/api/users/me',
             '/api/users/api-token/{id}',
+            '/api/users/{id}/preferences',
         ];
 
         self::assertArrayHasKey('openapi', $json);

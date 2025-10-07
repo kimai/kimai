@@ -152,7 +152,7 @@
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
         <source>calendar.slot_duration</source>
-        <target>주별 및 일별 보기의 슬롯 지속시간 (형식: hh:mm:ss)</target>
+        <target>주별 및 일별 보기의 슬롯 지속시간</target>
       </trans-unit>
       <trans-unit id="RLgv62J" resname="timesheet.rules.lockdown_grace_period">
         <source>timesheet.rules.lockdown_grace_period</source>

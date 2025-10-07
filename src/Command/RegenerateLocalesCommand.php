@@ -40,7 +40,7 @@ final class RegenerateLocalesCommand extends Command
      *
      * @var string[]
      */
-    private array $noRegionCode = ['ar', 'id', 'pa', 'sl', 'ca', 'ta'];
+    private array $noRegionCode = ['ar', 'id', 'pa', 'sl', 'ca', 'ta', 'bg'];
     /**
      * A list of locales that will be activated no matter if translation files exist for them.
      *
@@ -152,6 +152,9 @@ final class RegenerateLocalesCommand extends Command
             if (str_contains($settings['time'], 'Bh')) {
                 $settings['time'] = str_replace('Bh', 'H', $settings['time']);
             }
+
+            // BULGARIAN: postfix of  d.MM.y \'г\'. causes problems in several areas
+            $settings['date'] = str_replace("\u{202f}'г'.", '', $settings['date']);
 
             // KOREAN: time format failed parsing - see https://github.com/kimai/kimai/issues/4402
             // Special case where time-patterns start with A / a => this will lead to an error

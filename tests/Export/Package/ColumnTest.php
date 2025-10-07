@@ -10,20 +10,38 @@
 namespace App\Tests\Export\Package;
 
 use App\Entity\ExportableItem;
+use App\Entity\Timesheet;
 use App\Export\Package\CellFormatter\CellFormatterInterface;
 use App\Export\Package\CellFormatter\DateFormatter;
 use App\Export\Package\Column;
+use App\Export\Package\ColumnWidth;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(Column::class)]
 class ColumnTest extends TestCase
 {
-    public function testGetNameReturnsColumnName(): void
+    public function testDefaults(): void
     {
         $formatter = $this->createMock(CellFormatterInterface::class);
         $column = new Column('testName', $formatter);
         self::assertEquals('testName', $column->getName());
+        self::assertNull($column->getFormat());
+        self::assertEquals('testName', $column->getHeader());
+        self::assertSame(ColumnWidth::DEFAULT, $column->getColumnWidth());
+
+        $column->withColumnWidth(ColumnWidth::LARGE);
+        self::assertSame(ColumnWidth::LARGE, $column->getColumnWidth());
+    }
+
+    public function testThrowsOnMissiungExtractor(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Missing extractor on column: testName');
+
+        $formatter = $this->createMock(CellFormatterInterface::class);
+        $column = new Column('testName', $formatter);
+        self::assertEquals('testName', $column->getValue(new Timesheet()));
     }
 
     public function withHeaderSetsHeader(): void
@@ -84,13 +102,6 @@ class ColumnTest extends TestCase
         $formatter = $this->createMock(CellFormatterInterface::class);
         $column = new Column('testName', $formatter);
         self::assertEquals('testName', $column->getHeader());
-    }
-
-    public function testWithFormatReturnsNull(): void
-    {
-        $formatter = $this->createMock(CellFormatterInterface::class);
-        $column = new Column('testName', $formatter);
-        self::assertNull($column->getFormat());
     }
 
     public function testWithFormatReturnsValueFromFormatter(): void

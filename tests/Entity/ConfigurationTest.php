@@ -31,5 +31,14 @@ class ConfigurationTest extends TestCase
         self::assertEquals('foo-bar', $sut->getName());
         self::assertInstanceOf(Configuration::class, $sut->setValue('hello world'));
         self::assertEquals('hello world', $sut->getValue());
+
+        self::assertInstanceOf(Configuration::class, $sut->setValue(true));
+        self::assertEquals('1', $sut->getValue());
+
+        self::assertInstanceOf(Configuration::class, $sut->setValue(null));
+        self::assertNull($sut->getValue());
+
+        self::assertInstanceOf(Configuration::class, $sut->setValue(false));
+        self::assertEquals('0', $sut->getValue());
     }
 }

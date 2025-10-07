@@ -58,9 +58,9 @@
         <source>calendar.visibleHours.end</source>
         <target>Kết thúc phạm vi thời gian có thể nhìn thấy</target>
       </trans-unit>
-      <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
+      <trans-unit id="BYy.c1V" resname="calendar.slot_duration" xml:space="preserve">
         <source>calendar.slot_duration</source>
-        <target>Thời lượng thời gian cho chế độ xem theo tuần và ngày (định dạng: hh: mm: ss)</target>
+        <target state="translated">Thời lượng thời gian cho chế độ xem theo tuần và ngày</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>

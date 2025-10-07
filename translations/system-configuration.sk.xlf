@@ -92,7 +92,7 @@
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
         <source>calendar.slot_duration</source>
-        <target>Trvanie slotu pre týždňové- a denné zobrazenie (formát: hh:mm:ss)</target>
+        <target>Trvanie slotu pre týždňové- a denné zobrazenie</target>
       </trans-unit>
       <trans-unit id="6nayLDB" resname="calendar.visibleHours.end">
         <source>calendar.visibleHours.end</source>

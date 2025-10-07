@@ -25,7 +25,7 @@ trait PdfRendererTrait
     protected function createPdfResponse(string $content, PdfContext $context): Response
     {
         $filename = $context->getOption('filename');
-        if (empty($filename)) {
+        if (!\is_string($filename) || empty($filename)) {
             throw new \Exception('Empty PDF filename given');
         }
         $filename = FileHelper::convertToAsciiFilename($filename);

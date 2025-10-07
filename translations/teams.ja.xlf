@@ -2,6 +2,22 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ja" datatype="plaintext" original="teams.en.xlf">
     <body>
+      <trans-unit id="A_4Fc7c" resname="teams.project_access" xml:space="preserve">
+        <source>teams.project_access</source>
+        <target state="translated">プロジェクトへのアクセスを許可する。</target>
+      </trans-unit>
+      <trans-unit id="QchGnbx" resname="teams.customer_access" xml:space="preserve">
+        <source>teams.customer_access</source>
+        <target state="translated">顧客へアクセス権を付与する。</target>
+      </trans-unit>
+      <trans-unit id=".yIcFDx" resname="team.visibility_global" xml:space="preserve">
+        <source>team.visibility_global</source>
+        <target state="translated">チームに割り当てられていない外部のユーザーからも閲覧可能</target>
+      </trans-unit>
+      <trans-unit id="hlIIRjb" resname="team.visibility_restricted" xml:space="preserve">
+        <source>team.visibility_restricted</source>
+        <target state="translated">所属するチームおよび管理者ユーザーのみ閲覧可能</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

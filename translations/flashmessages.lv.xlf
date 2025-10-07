@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="lv" datatype="plaintext" original="flashmessages.en.xlf">
+    <body>
+      <trans-unit id="S9k1S7Z" resname="warning" xml:space="preserve">
+        <source>warning</source>
+        <target state="translated">Brīdinājums</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

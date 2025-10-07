@@ -222,6 +222,38 @@
         {% endembed %}
     {% endif %}
 
+    {% if withWorkHourConfiguration %}
+        {% set expectedWeekTimes = 0 %}
+        {% for day in days %}
+            {% set expectedWeekTimes = expectedWeekTimes + day.duration %}
+        {% endfor %}
+
+        {% embed '@theme/embeds/collapsible.html.twig' with {id: 'work_contract_should_preview', border: false, item: {options: {bodyExtraClass: 'border-top'}}} %}
+            {% from "macros/status.html.twig" import status_duration %}
+            {% block title %}
+                {{ 'work_times_should'|trans }}
+                &nbsp;
+                {{ status_duration(expectedWeekTimes|duration) }}
+            {% endblock %}
+            {% block body %}
+                <div class="datagrid">
+                    {% for day in days %}
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">{{ day.date|day_name }}</div>
+                        <div class="datagrid-content">
+                            {% if day.duration is not null %}
+                                {{ day.duration|duration }}
+                            {% else %}
+                                &ndash;
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
+
     {% for controller in boxes %}
         {{ render(controller(controller, {'year': year, 'boxConfiguration': box_configuration})) }}
     {% endfor %}

@@ -6,6 +6,10 @@
         <source>kiosk.login</source>
         <target state="translated">登录屏幕</target>
       </trans-unit>
+      <trans-unit id="3349h0x" resname="Kiosk" xml:space="preserve" approved="no">
+        <source>Kiosk</source>
+        <target state="needs-translation">停机模式</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

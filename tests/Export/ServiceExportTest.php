@@ -16,7 +16,6 @@ use App\Export\Base\HtmlRenderer;
 use App\Export\Base\XlsxRenderer;
 use App\Export\ExportRepositoryInterface;
 use App\Export\ServiceExport;
-use App\Export\Timesheet\HtmlRenderer as HtmlExporter;
 use App\Project\ProjectStatisticService;
 use App\Repository\ExportTemplateRepository;
 use App\Repository\Query\ExportQuery;
@@ -83,10 +82,10 @@ class ServiceExportTest extends TestCase
     {
         $sut = $this->createSut();
 
-        self::assertEmpty($sut->getRenderer());
+        self::assertCount(4, $sut->getRenderer());
         self::assertNull($sut->getRendererById('default'));
 
-        self::assertEmpty($sut->getTimesheetExporter());
+        self::assertCount(4, $sut->getTimesheetExporter());
         self::assertNull($sut->getTimesheetExporterById('default'));
     }
 
@@ -102,7 +101,7 @@ class ServiceExportTest extends TestCase
         );
         $sut->addRenderer($renderer);
 
-        self::assertEquals(1, \count($sut->getRenderer()));
+        self::assertEquals(5, \count($sut->getRenderer()));
         self::assertSame($renderer, $sut->getRendererById('html'));
     }
 
@@ -110,10 +109,18 @@ class ServiceExportTest extends TestCase
     {
         $sut = $this->createSut();
 
-        $exporter = new HtmlExporter($this->createMock(Environment::class), new EventDispatcher(), $this->createMock(ProjectStatisticService::class), $this->createMock(ActivityStatisticService::class));
+        self::assertEquals(4, \count($sut->getTimesheetExporter()));
+
+        $exporter = new HtmlRenderer(
+            $this->createMock(Environment::class),
+            new EventDispatcher(),
+            $this->createMock(ProjectStatisticService::class),
+            $this->createMock(ActivityStatisticService::class),
+            'print'
+        );
         $sut->addTimesheetExporter($exporter);
 
-        self::assertEquals(1, \count($sut->getTimesheetExporter()));
+        self::assertEquals(5, \count($sut->getTimesheetExporter()));
         self::assertSame($exporter, $sut->getTimesheetExporterById('print'));
     }
 
@@ -133,15 +140,12 @@ class ServiceExportTest extends TestCase
 
     public function testWithTemplates(): void
     {
-        $sut = $this->createSut(true, 5);
+        $sut = $this->createSut(true, 2);
 
         $renderer = $sut->getRenderer();
-        self::assertCount(2, $renderer);
-        self::assertInstanceOf(CsvRenderer::class, $renderer[0]);
-        self::assertInstanceOf(XlsxRenderer::class, $renderer[1]);
+        self::assertCount(6, $renderer);
+        self::assertInstanceOf(CsvRenderer::class, $renderer[4]);
+        self::assertInstanceOf(XlsxRenderer::class, $renderer[5]);
         self::assertInstanceOf(CsvRenderer::class, $sut->getRendererById('1'));
-        self::assertNull($sut->getRendererById('default'));
-        self::assertNull($sut->getRendererById('csv'));
-        self::assertNull($sut->getRendererById('xlsx'));
     }
 }

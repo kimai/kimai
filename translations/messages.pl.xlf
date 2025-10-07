@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
         <source>Time Tracking</source>
-        <target state="translated">Śledzenie czasu</target>
+        <target state="translated">Ewidencja czasu</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -170,9 +170,9 @@
         <source>duration</source>
         <target state="translated">Czas trwania</target>
       </trans-unit>
-      <trans-unit id="BPiZbad" resname="user">
-        <source>user</source>
-        <target>Użytkownik</target>
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
+        <source>User</source>
+        <target state="translated">Użytkownik</target>
       </trans-unit>
       <trans-unit id="FveKfWM" resname="username">
         <source>username</source>
@@ -980,7 +980,7 @@
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
-        <target state="translated">Wysłano wiadomość e-mail z linkiem umożliwiającym zresetowanie hasła. Uwaga: o nowe hasło możesz poprosić tylko raz na %tokenLifetime% godzin. Jeśli nie otrzymasz wiadomości e-mail, sprawdź folder ze spamem lub spróbuj ponownie.</target>
+        <target state="translated">Wysłano wiadomość email z linkiem umożliwiającym zresetowanie hasła. Uwaga: o nowe hasło możesz poprosić tylko raz na %tokenLifetime% godzin. Jeśli nie otrzymasz wiadomości email, sprawdź folder ze spamem lub spróbuj ponownie.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
@@ -1486,9 +1486,9 @@
         <source>Category</source>
         <target>Kategorie</target>
       </trans-unit>
-      <trans-unit id="uLHYlMa" resname="Categories">
+      <trans-unit id="uLHYlMa" resname="Categories" xml:space="preserve">
         <source>Categories</source>
-        <target>Categories</target>
+        <target state="translated">Kategorie</target>
       </trans-unit>
       <trans-unit id="Vp7xjKh" resname="Audit logs">
         <source>Audit logs</source>
@@ -1528,7 +1528,7 @@
       </trans-unit>
       <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
         <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
-        <target state="needs-translation">Choroba, wizyta u lekarza, opieka nad bliskimi itp.</target>
+        <target state="translated">Niezdolność do pracy, wizyty lekarskie, urlop opiekuńczy itp.</target>
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
@@ -1776,7 +1776,7 @@
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target state="needs-translation">Filtruj ewidencję pomiarów</target>
+        <target state="translated">Arkusze czasu pracy</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
@@ -1937,6 +1937,34 @@
       <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="no">
         <source>Unlock month</source>
         <target state="translated">Odblokuj miesiąc</target>
+      </trans-unit>
+      <trans-unit id="rD4oQRR" resname="postcode" xml:space="preserve">
+        <source>Postcode</source>
+        <target state="translated">Kod pocztowy</target>
+      </trans-unit>
+      <trans-unit id="EaYsI0E" resname="city" xml:space="preserve">
+        <source>City</source>
+        <target state="translated">Miasto</target>
+      </trans-unit>
+      <trans-unit id="y1XHR1Q" resname="address_deprecated" xml:space="preserve">
+        <source>address_deprecated</source>
+        <target state="translated">To pole zostanie wkrótce usunięte. Prosimy o przeniesienie adresu, aby móc nadal generować prawidłowe faktury (np. do e-fakturowania).</target>
+      </trans-unit>
+      <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
+        <source>sending_company</source>
+        <target state="translated">Nadawca faktury</target>
+      </trans-unit>
+      <trans-unit id="Uzll0ps" resname="Customer portal" xml:space="preserve">
+        <source>Customer portal</source>
+        <target state="translated">Portal klienta</target>
+      </trans-unit>
+      <trans-unit id="cDOQMYv" resname="Beta" xml:space="preserve">
+        <source>Beta</source>
+        <target state="translated">Włącza funkcję podglądu, która jest nadal w fazie rozwoju.</target>
+      </trans-unit>
+      <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve">
+        <source>Code</source>
+        <target state="translated">Kod</target>
       </trans-unit>
     </body>
   </file>

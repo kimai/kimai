@@ -6,6 +6,13 @@
     'rtl' => true,
     'translation' => true,
   ],
+  'bg' => 
+  [
+    'date' => 'd.MM.y',
+    'time' => 'HH:mm',
+    'rtl' => false,
+    'translation' => true,
+  ],
   'cs' => 
   [
     'date' => 'dd.MM.y',

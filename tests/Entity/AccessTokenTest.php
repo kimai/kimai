@@ -48,4 +48,11 @@ class AccessTokenTest extends AbstractEntityTestCase
         $sut->setExpiresAt(new \DateTimeImmutable('-1 day'));
         self::assertFalse($sut->isValid());
     }
+
+    public function testClone(): void
+    {
+        $user = new User();
+        $sut = new AccessToken($user, 'foo');
+        $this->assertCloneResetsId($sut);
+    }
 }

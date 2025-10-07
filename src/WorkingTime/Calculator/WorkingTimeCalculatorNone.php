@@ -18,7 +18,7 @@ final class WorkingTimeCalculatorNone implements WorkingTimeCalculator
 
     public function isWorkDay(\DateTimeInterface $dateTime): bool
     {
-        // we don't know it, so we must assume every day is a a working day
+        // we don't know it, so we must assume every day is a working day
         return true;
     }
 }

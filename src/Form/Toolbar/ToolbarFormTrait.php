@@ -98,7 +98,7 @@ trait ToolbarFormTrait
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($builder, $options, $name, $multiCustomer, $multiProject) {
+            function (FormEvent $event) use ($builder, $options, $name, $multiCustomer, $multiProject): void {
                 /** @var array<string, mixed> $data */
                 $data = $event->getData();
                 $event->getForm()->add($name, CustomerType::class, array_merge([
@@ -187,7 +187,7 @@ trait ToolbarFormTrait
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($builder, $options, $name, $multiCustomer, $multiProject, $multiActivity) {
+            function (FormEvent $event) use ($builder, $options, $name, $multiCustomer, $multiProject, $multiActivity): void {
                 /** @var array<string, mixed> $data */
                 $data = $event->getData();
                 $event->getForm()->add($name, ProjectType::class, array_merge([
@@ -266,7 +266,7 @@ trait ToolbarFormTrait
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($name, $multiProject, $activityOptions, $options) {
+            function (FormEvent $event) use ($name, $multiProject, $activityOptions, $options): void {
                 /** @var array<string, mixed> $data */
                 $data = $event->getData();
                 $event->getForm()->add($name, ActivityType::class, array_merge($activityOptions, [

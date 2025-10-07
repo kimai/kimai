@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="lv" datatype="plaintext" original="invoice-renderer.en.xlf">
+    <body>
+      <trans-unit id="hOcTt2G" resname="invoice_renderer" xml:space="preserve">
+        <source>invoice_renderer</source>
+        <target state="translated">Rēķina veidne</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

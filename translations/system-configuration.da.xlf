@@ -60,7 +60,7 @@
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
         <source>calendar.slot_duration</source>
-        <target>Pladsvarighed for uge- og dagstilstande (format: hh:mm:ss)</target>
+        <target>Pladsvarighed for uge- og dagstilstande</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>

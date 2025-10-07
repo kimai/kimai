@@ -116,7 +116,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
      * Overwritten to fetch preferences when using the Profile controller actions.
      * Depends on the query, some magic mechanisms like the ParamConverter will use this method to fetch the user.
      */
-    public function findOneBy(array $criteria, array $orderBy = null): ?object
+    public function findOneBy(array $criteria, ?array $orderBy = null): ?object
     {
         if (\count($criteria) === 1 && isset($criteria['username']) && \is_string($criteria['username'])) {
             return $this->loadUserByIdentifier($criteria['username']);

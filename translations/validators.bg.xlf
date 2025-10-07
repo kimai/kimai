@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="bg" datatype="plaintext" original="validators.en.xlf">
+    <body>
+      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team." xml:space="preserve">
+        <source>At least one team leader must be assigned to the team.</source>
+        <target state="translated">На екипа трябва да бъде назначен поне един ръководител на екипа.</target>
+      </trans-unit>
+      <trans-unit id="6WAG.Xj" resname="The entered passwords don't match." xml:space="preserve">
+        <source>The entered passwords don't match.</source>
+        <target state="translated">Въведените пароли не съвпадат.</target>
+      </trans-unit>
+      <trans-unit id="6u6oCwB" resname="The email is already used." xml:space="preserve">
+        <source>This e-mail address is already in use.</source>
+        <target state="translated">Този имейл адрес вече се използва.</target>
+      </trans-unit>
+      <trans-unit id="S14XECA" resname="The username is already used." xml:space="preserve">
+        <source>The username is already used.</source>
+        <target state="translated">Потребителското име вече е използвано.</target>
+      </trans-unit>
+      <trans-unit id="ekO5eXI" resname="An equal username is already used." xml:space="preserve">
+        <source>An equal username is already used.</source>
+        <target state="translated">Вече се използва еквивалентно потребителско име.</target>
+      </trans-unit>
+      <trans-unit id="INlaCgW" resname="An equal email is already used." xml:space="preserve">
+        <source>An equal e-mail address is already in use.</source>
+        <target state="translated">Вече се използва еквивалентен имейл адрес.</target>
+      </trans-unit>
+      <trans-unit id="IkNxbBI" resname="This value is not a valid role." xml:space="preserve">
+        <source>This value is not a valid role.</source>
+        <target state="translated">Тази стойност не е валидна роля.</target>
+      </trans-unit>
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
+        <source>The end date must not be earlier than the start date.</source>
+        <target state="translated">Крайната дата не трябва да е по-ранна от началната дата.</target>
+      </trans-unit>
+      <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future." xml:space="preserve">
+        <source>The begin date cannot be in the future.</source>
+        <target state="translated">Началната дата не може да бъде в бъдещето.</target>
+      </trans-unit>
+      <trans-unit id="Jz1y3yB" resname="Duration cannot be zero." xml:space="preserve">
+        <source>Duration cannot be zero.</source>
+        <target state="translated">Не е разрешено празно поле за продължителност.</target>
+      </trans-unit>
+      <trans-unit id="1V6BsD_" resname="You must select at least one user or team." xml:space="preserve">
+        <source>You must select at least one user or team.</source>
+        <target state="translated">Трябва да изберете поне един потребител или екип.</target>
+      </trans-unit>
+      <trans-unit id="yDlKSRw" resname="This invoice document cannot be used, please rename the file and upload it again." xml:space="preserve">
+        <source>This invoice document cannot be used. Please rename the file and upload it again.</source>
+        <target state="translated">Този документ за фактура не може да бъде използван. Моля, преименувайте файла и го качете отново.</target>
+      </trans-unit>
+      <trans-unit id="0o.pH3X" resname="This period is locked, please choose a later date." xml:space="preserve">
+        <source>This period is locked. Please choose a later date.</source>
+        <target state="translated">Този период е заключен. Моля, изберете по-късна дата.</target>
+      </trans-unit>
+      <trans-unit id="u2wjm2i" resname="You already have an entry for this time." xml:space="preserve">
+        <source>You already have an entry for this time.</source>
+        <target state="translated">Вече имате запис за този час.</target>
+      </trans-unit>
+      <trans-unit id="VJSZSD0" resname="The given value is not a valid time." xml:space="preserve">
+        <source>The given value is not a valid time.</source>
+        <target state="translated">Дадената стойност не е валидно време.</target>
+      </trans-unit>
+      <trans-unit id="1oKCOa5" resname="The budget is completely used." xml:space="preserve">
+        <source>The budget is completely used.</source>
+        <target state="translated">Бюджетът е изчерпан. От наличния %budget%, %used% е резервиран досега, %free% все още може да се използва.</target>
+      </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up." xml:space="preserve">
+        <source>Sorry, the budget is used up.</source>
+        <target state="translated">За съжаление, бюджетът е изчерпан.</target>
+      </trans-unit>
+      <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded." xml:space="preserve">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target state="translated">Максималният брой разрешени часове е {{ value }}.</target>
+      </trans-unit>
+      <trans-unit id="to1Q85W" resname="An activity needs to be selected." xml:space="preserve">
+        <source>An activity needs to be selected.</source>
+        <target state="translated">Необходимо е да се избере дейност.</target>
+      </trans-unit>
+      <trans-unit id="rHd9_aA" resname="A project needs to be selected." xml:space="preserve">
+        <source>A project needs to be selected.</source>
+        <target state="translated">Необходимо е да се избере проект.</target>
+      </trans-unit>
+      <trans-unit id="mjlH0la" resname="This timesheet is already exported." xml:space="preserve">
+        <source>This timesheet is already exported.</source>
+        <target state="translated">Този отчет за работно време вече е експортиран.</target>
+      </trans-unit>
+      <trans-unit id="gSAwscA" resname="Validation Failed" xml:space="preserve">
+        <source>Validation Failed</source>
+        <target state="translated">Възникна проблем със запазването.</target>
+      </trans-unit>
+      <trans-unit id="7HYTefs" resname="Cannot stop running timesheet" xml:space="preserve">
+        <source>Cannot stop running timesheet</source>
+        <target state="translated">Имате активен запис на време, който не може да бъде спрян автоматично.</target>
+      </trans-unit>
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token." xml:space="preserve">
+        <source>The given code is not the correct TOTP token.</source>
+        <target state="translated">Даденият код не е правилният TOTP токен.</target>
+      </trans-unit>
+      <trans-unit id="7mqg3TC" resname="This value is not a valid role name." xml:space="preserve">
+        <source>This value is not a valid role name.</source>
+        <target state="translated">Това не е валидно име за потребителска роля.</target>
+      </trans-unit>
+      <trans-unit id="ZObikpA" resname="This absence type is not known." xml:space="preserve">
+        <source>This absence type is not known.</source>
+        <target state="translated">Този вид отсъствие не е известен.</target>
+      </trans-unit>
+      <trans-unit id="0ULsHQA" resname="The chosen date is not a working day." xml:space="preserve">
+        <source>The chosen date is not a working day.</source>
+        <target state="translated">Избраната дата не е работен ден.</target>
+      </trans-unit>
+      <trans-unit id="N21br.P" resname="The chosen date is already locked." xml:space="preserve">
+        <source>The chosen date is already locked.</source>
+        <target state="translated">Избраната дата вече е заключена.</target>
+      </trans-unit>
+      <trans-unit id="6H84TMs" resname="An absence must be assigned to a user." xml:space="preserve">
+        <source>An absence must be assigned to a user.</source>
+        <target state="translated">Отсъствието трябва да бъде присвоено на потребител.</target>
+      </trans-unit>
+      <trans-unit id="nLcihCc" resname="An absence must have a date." xml:space="preserve">
+        <source>An absence must have a date.</source>
+        <target state="translated">Отсъствието трябва да има дата.</target>
+      </trans-unit>
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
+        <source>An absence cannot be booked before your first working day.</source>
+        <target state="translated">Отсъствие не може да бъде заявено преди първия работен ден.</target>
+      </trans-unit>
+      <trans-unit id="IN37g5N" resname="Not enough holidays left." xml:space="preserve">
+        <source>Not enough holidays left.</source>
+        <target state="translated">Не са останали достатъчно празници.</target>
+      </trans-unit>
+      <trans-unit id="ByeEMxW" resname="You do not have enough overtime, remaining are {{ value }}." xml:space="preserve">
+        <source>You do not have enough overtime, remaining are {{ value }}.</source>
+        <target state="translated">Нямате достатъчно извънреден труд, остават {{ value }}.</target>
+      </trans-unit>
+      <trans-unit id="DiaaRa1" resname="You cannot have two absences of this type at one day." xml:space="preserve">
+        <source>You cannot have two absences of this type at one day.</source>
+        <target state="translated">Не можете да имате две отсъствия от този тип в един ден.</target>
+      </trans-unit>
+      <trans-unit id="kSBiyaF" resname="This is a public holiday, booking not allowed." xml:space="preserve">
+        <source>This is a public holiday, booking not allowed.</source>
+        <target state="translated">Това е официален празник, резервации не се допускат.</target>
+      </trans-unit>
+      <trans-unit id="c2B6.lW" resname="You can book a maximum of {{ value }} days at once." xml:space="preserve">
+        <source>You can book a maximum of {{ value }} days at once.</source>
+        <target state="translated">Можете да резервирате максимум {{ value }} дни наведнъж, в момента сте избрали {{ selected }}.</target>
+      </trans-unit>
+      <trans-unit id="BztgSSP" resname="The period of absence must not extend beyond the turn of the year." xml:space="preserve">
+        <source>The period of absence must not extend beyond the turn of the year.</source>
+        <target state="translated">Периодът на отсъствие не трябва да продължава след края на годината.</target>
+      </trans-unit>
+      <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form." xml:space="preserve">
+        <source>The CSRF token is invalid. Please try to resubmit the form.</source>
+        <target state="translated">Моля, опитайте да изпратите отново формуляра. Ако проблемът продължава, обновете браузъра си.</target>
+      </trans-unit>
+      <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day." xml:space="preserve">
+        <source>An absence cannot be booked after the last working day.</source>
+        <target state="translated">Отсъствие не може да бъде записано след последния работен ден.</target>
+      </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target state="translated">Избраният период не може да бъде заключен: непотвърдени заявки за отсъствие са в процес на обработка.</target>
+      </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
+        <source>Duration cannot be negative.</source>
+        <target state="translated">Продължителността не може да бъде отрицателна.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
