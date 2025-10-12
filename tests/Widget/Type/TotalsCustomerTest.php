@@ -13,10 +13,9 @@ use App\Entity\User;
 use App\Repository\CustomerRepository;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\TotalsCustomer;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Widget\Type\TotalsCustomer
- */
+#[CoversClass(TotalsCustomer::class)]
 class TotalsCustomerTest extends AbstractWidgetTestCase
 {
     /** @var User */

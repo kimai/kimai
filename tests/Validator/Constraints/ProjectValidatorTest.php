@@ -15,15 +15,16 @@ use App\Repository\ProjectRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\Constraints\Project as ProjectConstraint;
 use App\Validator\Constraints\ProjectValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\Project
- * @covers \App\Validator\Constraints\ProjectValidator
  * @extends ConstraintValidatorTestCase<ProjectValidator>
  */
+#[CoversClass(\App\Validator\Constraints\Project::class)]
+#[CoversClass(ProjectValidator::class)]
 class ProjectValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): ProjectValidator

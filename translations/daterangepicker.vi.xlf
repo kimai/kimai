@@ -34,6 +34,14 @@
         <source>daterangepicker.allTime</source>
         <target state="translated">Tùy chỉnh giai đoạn</target>
       </trans-unit>
+      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth" xml:space="preserve">
+        <source>daterangepicker.thisMonth</source>
+        <target state="translated">Tháng này</target>
+      </trans-unit>
+      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth" xml:space="preserve">
+        <source>daterangepicker.lastMonth</source>
+        <target state="translated">Tháng trước</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

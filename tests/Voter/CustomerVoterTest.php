@@ -13,12 +13,11 @@ use App\Entity\Customer;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Voter\CustomerVoter;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
-/**
- * @covers \App\Voter\CustomerVoter
- */
+#[CoversClass(CustomerVoter::class)]
 class CustomerVoterTest extends AbstractVoterTestCase
 {
     public function assertVote(User $user, $subject, $attribute, $result): void

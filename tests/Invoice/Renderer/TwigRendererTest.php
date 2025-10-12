@@ -9,19 +9,20 @@
 
 namespace App\Tests\Invoice\Renderer;
 
+use App\Invoice\Renderer\AbstractTwigRenderer;
 use App\Invoice\Renderer\TwigRenderer;
 use App\Model\InvoiceDocument;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-/**
- * @covers \App\Invoice\Renderer\AbstractTwigRenderer
- * @covers \App\Invoice\Renderer\TwigRenderer
- * @group integration
- */
+#[CoversClass(AbstractTwigRenderer::class)]
+#[CoversClass(TwigRenderer::class)]
+#[Group('integration')]
 class TwigRendererTest extends KernelTestCase
 {
     use RendererTestTrait;

@@ -9,9 +9,9 @@
 
 namespace App\Event;
 
-/**
- * Triggered for customer instances, which were just saved.
- */
+use App\Webhook\Attribute\AsWebhook;
+
+#[AsWebhook(name: 'customer.created', description: 'Triggered after a customer was created', payload: 'object.getCustomer()')]
 final class CustomerCreatePostEvent extends AbstractCustomerEvent
 {
 }

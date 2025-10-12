@@ -34,6 +34,18 @@
         <source>daterangepicker.allTime</source>
         <target state="translated">Общий период</target>
       </trans-unit>
+      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth" xml:space="preserve">
+        <source>daterangepicker.thisMonth</source>
+        <target state="needs-translation">Этот  месяц</target>
+      </trans-unit>
+      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth" xml:space="preserve">
+        <source>daterangepicker.lastMonth</source>
+        <target state="translated">Последний месяц</target>
+      </trans-unit>
+      <trans-unit id="mgJ2Z7M" resname="daterangepicker.thisFinancialYear" xml:space="preserve">
+        <source>daterangepicker.thisFinancialYear</source>
+        <target state="translated">Этот финансовый год</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

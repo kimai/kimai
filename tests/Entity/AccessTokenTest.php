@@ -11,10 +11,9 @@ namespace App\Tests\Entity;
 
 use App\Entity\AccessToken;
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Entity\AccessToken
- */
+#[CoversClass(AccessToken::class)]
 class AccessTokenTest extends AbstractEntityTestCase
 {
     public function testDefaultValues(): void
@@ -48,5 +47,12 @@ class AccessTokenTest extends AbstractEntityTestCase
         $sut = new AccessToken($user, 'foo');
         $sut->setExpiresAt(new \DateTimeImmutable('-1 day'));
         self::assertFalse($sut->isValid());
+    }
+
+    public function testClone(): void
+    {
+        $user = new User();
+        $sut = new AccessToken($user, 'foo');
+        $this->assertCloneResetsId($sut);
     }
 }

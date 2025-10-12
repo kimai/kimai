@@ -15,11 +15,10 @@ use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class ProjectViewControllerTest extends AbstractControllerBaseTestCase
 {
     public function testReportIsSecure(): void

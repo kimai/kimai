@@ -12,10 +12,9 @@ namespace App\Tests\Timesheet\TrackingMode;
 use App\Entity\Timesheet;
 use App\Tests\Mocks\RoundingServiceFactory;
 use App\Timesheet\TrackingMode\DefaultMode;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Timesheet\TrackingMode\DefaultMode
- */
+#[CoversClass(DefaultMode::class)]
 class DefaultModeTest extends AbstractTrackingModeTestCase
 {
     public function assertDefaultBegin(Timesheet $timesheet): void

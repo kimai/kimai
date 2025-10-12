@@ -458,6 +458,11 @@ final class SystemConfiguration
         return (bool) $this->find('timesheet.rules.break_time_active');
     }
 
+    public function getExportTimeout(): int
+    {
+        return (int) $this->find('export.timeout');
+    }
+
     // ========== Company configurations ==========
 
     public function getFinancialYearStart(): ?string

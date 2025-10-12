@@ -12,12 +12,11 @@ namespace App\Tests\Twig;
 use App\Repository\BookmarkRepository;
 use App\Twig\DatatableExtensions;
 use App\Utils\ProfileManager;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Twig\TwigFunction;
 
-/**
- * @covers \App\Twig\DatatableExtensions
- */
+#[CoversClass(DatatableExtensions::class)]
 class DatatableExtensionsTest extends TestCase
 {
     protected function getSut(string $locale): DatatableExtensions

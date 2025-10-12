@@ -11,10 +11,9 @@ namespace App\Tests\API;
 
 use App\Entity\User;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class ApiDocControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
@@ -48,7 +47,7 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
             }
         }
 
-        $expectedKeys = ['Actions', 'Activity', 'Default', 'Customer', 'Project', 'Tag', 'Team', 'Timesheet', 'User', 'Invoice'];
+        $expectedKeys = ['Actions', 'Activity', 'Default', 'Customer', 'Project', 'Tag', 'Team', 'Timesheet', 'User', 'Invoice', 'Export'];
         $actual = array_keys($tags);
 
         sort($actual);
@@ -73,6 +72,7 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
             '/api/customers/{id}/meta',
             '/api/customers/{id}/rates',
             '/api/customers/{id}/rates/{rateId}',
+            '/api/export/{id}',
             '/api/invoices',
             '/api/invoices/{id}',
             '/api/projects',
@@ -105,6 +105,7 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
             '/api/users/{id}',
             '/api/users/me',
             '/api/users/api-token/{id}',
+            '/api/users/{id}/preferences',
         ];
 
         self::assertArrayHasKey('openapi', $json);

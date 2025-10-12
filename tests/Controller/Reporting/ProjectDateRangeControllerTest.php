@@ -17,10 +17,9 @@ use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Timesheet\DateTimeFactory;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class ProjectDateRangeControllerTest extends AbstractControllerBaseTestCase
 {
     public function testReportIsSecure(): void
@@ -41,7 +40,7 @@ class ProjectDateRangeControllerTest extends AbstractControllerBaseTestCase
         $projects->setCustomers($customers);
         $projects->setAmount(2);
         $projects->setIsVisible(true);
-        $projects->setCallback(function (Project $project) {
+        $projects->setCallback(function (Project $project): void {
             $project->setIsMonthlyBudget();
         });
         $this->importFixture($projects);

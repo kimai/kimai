@@ -28,12 +28,10 @@ use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Entity\Invoice
- */
-class InvoiceTest extends TestCase
+#[CoversClass(Invoice::class)]
+class InvoiceTest extends AbstractEntityTestCase
 {
     public function testDefaultValues(): void
     {
@@ -220,6 +218,8 @@ class InvoiceTest extends TestCase
     public function testClone(): void
     {
         $sut = new Invoice();
+        $this->assertCloneResetsId($sut);
+
         $sut->setComment('foo kajsdhgf aksjdhfg');
         $sut->setFilename('1234567890');
 

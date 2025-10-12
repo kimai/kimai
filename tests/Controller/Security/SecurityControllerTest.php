@@ -16,14 +16,14 @@ use App\DataFixtures\UserFixtures;
 use App\Entity\User;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * This test makes sure the login and registration work as expected.
  * The logic is located in the FOSUserBundle and already tested, but we use a different layout.
- *
- * @group integration
  */
+#[Group('integration')]
 class SecurityControllerTest extends AbstractControllerBaseTestCase
 {
     public function testRootUrlIsRedirectedToLogin(): void

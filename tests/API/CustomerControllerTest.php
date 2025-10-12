@@ -21,13 +21,12 @@ use App\Entity\User;
 use App\Repository\CustomerRateRepository;
 use App\Repository\CustomerRepository;
 use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class CustomerControllerTest extends APIControllerBaseTestCase
 {
     use RateControllerTestTrait;
@@ -391,7 +390,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
     public function testMetaActionThrowsExceptionOnMissingName(): void
     {
         $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/customers/1/meta', ['value' => 'X'], [
-            'code' => 400,
+            'code' => Response::HTTP_BAD_REQUEST,
             'message' => 'Bad Request'
         ]);
     }
@@ -399,7 +398,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
     public function testMetaActionThrowsExceptionOnMissingValue(): void
     {
         $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/customers/1/meta', ['name' => 'X'], [
-            'code' => 400,
+            'code' => Response::HTTP_BAD_REQUEST,
             'message' => 'Bad Request'
         ]);
     }
@@ -407,7 +406,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
     public function testMetaActionThrowsExceptionOnMissingMetafield(): void
     {
         $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/customers/1/meta', ['name' => 'X', 'value' => 'Y'], [
-            'code' => 404,
+            'code' => Response::HTTP_NOT_FOUND,
             'message' => 'Not Found'
         ]);
     }

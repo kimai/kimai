@@ -17,11 +17,12 @@ use App\Ldap\LdapManager;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\Security\RoleServiceFactory;
 use App\Tests\Mocks\SystemConfigurationFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Ldap\LdapManager
- */
+#[CoversClass(LdapManager::class)]
 class LdapManagerTest extends TestCase
 {
     protected function getLdapManager(LdapDriver $driver, $roleConfig = null)
@@ -388,9 +389,7 @@ class LdapManagerTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getValidConfigsTestData
-     */
+    #[DataProvider('getValidConfigsTestData')]
     public function testUpdateUserOnValidResultWithRolesResult(array $expectedUsers, array $groupConfig, string $expectedGroupQuery): void
     {
         $expected = [
@@ -583,9 +582,7 @@ class LdapManagerTest extends TestCase
         $user = $sut->hydrate($ldapEntry);
     }
 
-    /**
-     * @group legacy
-     */
+    #[Group('legacy')]
     public function testHydrateWithDepercatedSetter(): void
     {
         $ldapConfig = [

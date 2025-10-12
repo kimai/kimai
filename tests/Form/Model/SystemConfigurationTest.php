@@ -11,12 +11,11 @@ namespace App\Tests\Form\Model;
 
 use App\Form\Model\Configuration;
 use App\Form\Model\SystemConfiguration;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Form\Model\Configuration
- * @covers \App\Form\Model\SystemConfiguration
- */
+#[CoversClass(Configuration::class)]
+#[CoversClass(SystemConfiguration::class)]
 class SystemConfigurationTest extends TestCase
 {
     public function testDefaultValues(): void

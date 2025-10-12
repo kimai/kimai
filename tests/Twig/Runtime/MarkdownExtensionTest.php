@@ -13,11 +13,10 @@ use App\Configuration\ConfigLoaderInterface;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Twig\Runtime\MarkdownExtension;
 use App\Utils\Markdown;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Twig\Runtime\MarkdownExtension
- */
+#[CoversClass(MarkdownExtension::class)]
 class MarkdownExtensionTest extends TestCase
 {
     public function testMarkdownToHtml(): void
@@ -26,7 +25,7 @@ class MarkdownExtensionTest extends TestCase
         $config = SystemConfigurationFactory::create($loader, ['timesheet' => ['markdown_content' => true]]);
         $sut = new MarkdownExtension(new Markdown(), $config);
         self::assertEquals('<p><em>test</em></p>', $sut->markdownToHtml('*test*'));
-        self::assertEquals('<h1>foobar</h1>', $sut->markdownToHtml('# foobar'));
+        self::assertEquals('<h1 id="foobar">foobar</h1>', $sut->markdownToHtml('# foobar'));
         self::assertEquals(
             '<p><a href="javascript%3Aalert(`XSS`)">XSS</a></p>',
             $sut->markdownToHtml('[XSS](javascript:alert(`XSS`))')

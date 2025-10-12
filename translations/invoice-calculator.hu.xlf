@@ -42,6 +42,18 @@
         <source>activity_user</source>
         <target state="translated">Tevékenység és felhasználó</target>
       </trans-unit>
+      <trans-unit id="aDtTH0H" resname="price" xml:space="preserve">
+        <source>price</source>
+        <target state="translated">Ár</target>
+      </trans-unit>
+      <trans-unit id="AJm1952" resname="project_user" xml:space="preserve">
+        <source>project_user</source>
+        <target state="translated">Projekt és user</target>
+      </trans-unit>
+      <trans-unit id="0l1P9cz" resname="date_user" xml:space="preserve">
+        <source>date_user</source>
+        <target state="translated">Dátum és user</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -60,7 +60,7 @@
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration" approved="yes">
         <source>calendar.slot_duration</source>
-        <target state="final">Durata slot per la vista settimanale e giornaliera (hh:mm:ss)</target>
+        <target state="final">Durata slot per la vista settimanale e giornaliera</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding" approved="yes">
         <source>branding</source>

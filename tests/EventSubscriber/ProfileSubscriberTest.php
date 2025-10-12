@@ -13,6 +13,8 @@ use App\Entity\User;
 use App\EventSubscriber\LastLoginSubscriber;
 use App\EventSubscriber\ProfileSubscriber;
 use App\Utils\ProfileManager;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -22,9 +24,7 @@ use Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
-/**
- * @covers \App\EventSubscriber\ProfileSubscriber
- */
+#[CoversClass(ProfileSubscriber::class)]
 class ProfileSubscriberTest extends TestCase
 {
     public function testGetSubscribedEvents(): void
@@ -102,9 +102,7 @@ class ProfileSubscriberTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getInvalidCookies
-     */
+    #[DataProvider('getInvalidCookies')]
     public function testOnLoginSuccessWithInvalidProfile(string $cookieValue): void
     {
         $manager = new ProfileManager();

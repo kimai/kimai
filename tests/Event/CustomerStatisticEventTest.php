@@ -13,11 +13,10 @@ use App\Entity\Customer;
 use App\Event\AbstractCustomerEvent;
 use App\Event\CustomerStatisticEvent;
 use App\Model\CustomerStatistic;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Event\AbstractCustomerEvent
- * @covers \App\Event\CustomerStatisticEvent
- */
+#[CoversClass(AbstractCustomerEvent::class)]
+#[CoversClass(CustomerStatisticEvent::class)]
 class CustomerStatisticEventTest extends AbstractCustomerEventTestCase
 {
     protected function createCustomerEvent(Customer $customer): AbstractCustomerEvent

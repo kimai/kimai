@@ -21,13 +21,13 @@ use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\VisibilityInterface;
 use App\Tests\Mocks\ProjectTestMetaFieldSubscriberMock;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class ProjectControllerTest extends APIControllerBaseTestCase
 {
     use RateControllerTestTrait;
@@ -191,9 +191,7 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider getCollectionTestData
-     */
+    #[DataProvider('getCollectionTestData')]
     public function testGetCollectionWithParams(string $url, ?int $project, array $parameters, array $expected): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
@@ -568,7 +566,7 @@ class ProjectControllerTest extends APIControllerBaseTestCase
     public function testMetaActionThrowsExceptionOnMissingName(): void
     {
         $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/projects/1/meta', ['value' => 'X'], [
-            'code' => 400,
+            'code' => Response::HTTP_BAD_REQUEST,
             'message' => 'Bad Request'
         ]);
     }
@@ -576,7 +574,7 @@ class ProjectControllerTest extends APIControllerBaseTestCase
     public function testMetaActionThrowsExceptionOnMissingValue(): void
     {
         $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/projects/1/meta', ['name' => 'X'], [
-            'code' => 400,
+            'code' => Response::HTTP_BAD_REQUEST,
             'message' => 'Bad Request'
         ]);
     }
@@ -584,7 +582,7 @@ class ProjectControllerTest extends APIControllerBaseTestCase
     public function testMetaActionThrowsExceptionOnMissingMetafield(): void
     {
         $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/projects/1/meta', ['name' => 'X', 'value' => 'Y'], [
-            'code' => 404,
+            'code' => Response::HTTP_NOT_FOUND,
             'message' => 'Not Found'
         ]);
     }

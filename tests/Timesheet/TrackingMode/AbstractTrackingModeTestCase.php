@@ -12,12 +12,11 @@ namespace App\Tests\Timesheet\TrackingMode;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Timesheet\TrackingMode\AbstractTrackingMode;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @covers \App\Timesheet\TrackingMode\AbstractTrackingMode
- */
+#[CoversClass(AbstractTrackingMode::class)]
 abstract class AbstractTrackingModeTestCase extends TestCase
 {
     /**

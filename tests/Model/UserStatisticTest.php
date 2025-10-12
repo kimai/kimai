@@ -12,10 +12,9 @@ namespace App\Tests\Model;
 use App\Entity\User;
 use App\Model\Statistic\Month;
 use App\Model\UserStatistic;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Model\UserStatistic
- */
+#[CoversClass(UserStatistic::class)]
 class UserStatisticTest extends AbstractTimesheetCountedStatisticTestCase
 {
     private function getSut(): UserStatistic

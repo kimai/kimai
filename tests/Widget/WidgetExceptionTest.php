@@ -10,11 +10,10 @@
 namespace App\Tests\Widget;
 
 use App\Widget\WidgetException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Widget\WidgetException
- */
+#[CoversClass(WidgetException::class)]
 class WidgetExceptionTest extends TestCase
 {
     public function testConstruct(): void

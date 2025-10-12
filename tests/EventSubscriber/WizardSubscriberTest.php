@@ -10,12 +10,11 @@
 namespace App\Tests\EventSubscriber;
 
 use App\EventSubscriber\WizardSubscriber;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-/**
- * @covers \App\EventSubscriber\WizardSubscriber
- */
+#[CoversClass(WizardSubscriber::class)]
 class WizardSubscriberTest extends TestCase
 {
     public function testGetSubscribedEvents(): void

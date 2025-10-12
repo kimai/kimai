@@ -10,34 +10,41 @@
 namespace App\Export\Base;
 
 use App\Entity\ExportableItem;
+use App\Export\ColumnConverter;
 use App\Export\ExportFilename;
+use App\Export\ExportRendererInterface;
 use App\Export\Package\SpoutSpreadsheet;
-use App\Export\RendererInterface;
-use App\Export\TimesheetExportInterface;
+use App\Export\TemplateInterface;
 use App\Repository\Query\TimesheetQuery;
 use OpenSpout\Writer\XLSX\Writer;
+use Symfony\Component\DependencyInjection\Attribute\Exclude;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-final class XlsxRenderer implements RendererInterface, TimesheetExportInterface
+#[Exclude]
+final class XlsxRenderer extends AbstractSpreadsheetRenderer implements ExportRendererInterface
 {
-    use ExportTrait;
-
     public function __construct(
-        private readonly SpreadsheetRenderer $spreadsheetRenderer,
+        private readonly ColumnConverter $columnConverter,
         private readonly TranslatorInterface $translator,
+        private readonly TemplateInterface $template,
     )
     {
     }
 
-    public function getId(): string
+    public function getType(): string
     {
         return 'xlsx';
     }
 
+    public function getId(): string
+    {
+        return $this->template->getId();
+    }
+
     public function getTitle(): string
     {
-        return 'xlsx';
+        return $this->template->getTitle();
     }
 
     /**
@@ -55,17 +62,17 @@ final class XlsxRenderer implements RendererInterface, TimesheetExportInterface
     /**
      * @param ExportableItem[] $exportItems
      */
-    public function renderFile(array $exportItems, TimesheetQuery $query): \SplFileInfo
+    private function renderFile(array $exportItems, TimesheetQuery $query): \SplFileInfo
     {
         $filename = @tempnam(sys_get_temp_dir(), 'kimai-export-xlsx');
         if (false === $filename) {
             throw new \Exception('Could not open temporary file');
         }
 
-        $spreadsheet = new SpoutSpreadsheet(new Writer(), $this->translator);
+        $spreadsheet = new SpoutSpreadsheet(new Writer(), $this->translator, $this->template->getLocale());
         $spreadsheet->open($filename);
 
-        $this->spreadsheetRenderer->writeSpreadsheet($spreadsheet, $exportItems, $query);
+        $this->writeSpreadsheet($this->columnConverter, $this->template, $spreadsheet, $exportItems, $query);
 
         return new \SplFileInfo($filename);
     }

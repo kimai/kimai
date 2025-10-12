@@ -1508,7 +1508,7 @@
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
-        <target state="needs-translation">%used% tatil gününüzün %days% gününü onaylandı.</target>
+        <target state="translated">Şu ana kadar mevcut %days% tatil gününüzün %used% kadarını kullandınız.</target>
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro">
         <source>absence_other.intro</source>
@@ -1518,9 +1518,9 @@
         <source>day_full</source>
         <target state="translated">Tüm gün</target>
       </trans-unit>
-      <trans-unit id="YDrWFFP" resname="sickness.intro">
-        <source>sickness.intro</source>
-        <target state="translated">Hastalık, doktor ziyareti, yakın akraba bakımı vb.</target>
+      <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="translated">İşe geçici olarak çalışma engeli, tıbben gerekli randevular, refakat izni vb.</target>
       </trans-unit>
       <trans-unit id="DA1.Ln_" resname="time_off.intro">
         <source>time_off.intro</source>
@@ -1936,7 +1936,7 @@
       </trans-unit>
       <trans-unit id="wvt4jH3" resname="training" xml:space="preserve">
         <source>training</source>
-        <target state="needs-translation">Eğitim</target>
+        <target state="translated">Eğitim</target>
       </trans-unit>
       <trans-unit id="rD4oQRR" resname="postcode" xml:space="preserve">
         <source>Postcode</source>

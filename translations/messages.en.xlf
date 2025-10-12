@@ -1630,9 +1630,9 @@
         <source>button.report</source>
         <target>Report</target>
       </trans-unit>
-      <trans-unit id="YDrWFFP" resname="sickness.intro">
-        <source>sickness.intro</source>
-        <target>Illness, doctor's visit, care of close relatives, etc.</target>
+      <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="translated">Incapacity for work, medically necessary appointments, care leave, etc.</target>
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
@@ -1953,6 +1953,38 @@
       <trans-unit id="nsbR30p" resname="sending_company">
         <source>sending_company</source>
         <target>Invoice Sender</target>
+      </trans-unit>
+      <trans-unit id="Uzll0ps" resname="Customer portal">
+        <source>Customer portal</source>
+        <target>Customer portal</target>
+      </trans-unit>
+      <trans-unit id="cDOQMYv" resname="Beta">
+        <source>Beta</source>
+        <target>Enables a preview feature that is still in development.</target>
+      </trans-unit>
+      <trans-unit id="NA9GMDP" resname="Code">
+        <source>Code</source>
+        <target>Code</target>
+      </trans-unit>
+      <trans-unit id="xZzzKxM" resname="orientation">
+        <source>Orientation</source>
+        <target>Orientation</target>
+      </trans-unit>
+      <trans-unit id="UcWoKWo" resname="portrait">
+        <source>Portrait</source>
+        <target>Portrait</target>
+      </trans-unit>
+      <trans-unit id="rLlV34K" resname="landscape">
+        <source>Landscape</source>
+        <target>Landscape</target>
+      </trans-unit>
+      <trans-unit id="UZUFKZg" resname="remaining_budget">
+        <source>remaining_budget</source>
+        <target>Remaining budget</target>
+      </trans-unit>
+      <trans-unit id="eV6j76Q" resname="font">
+        <source>font</source>
+        <target>Font</target>
       </trans-unit>
     </body>
   </file>

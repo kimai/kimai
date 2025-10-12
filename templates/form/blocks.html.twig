@@ -150,11 +150,30 @@
     </div>
 {%- endblock date_widget %}
 
+{% block day_widget -%}
+    {% set format = 'y-MM-D' %}
+    {% set jsFormat = format|js_format %}
+    {% set attr = attr|merge({'pattern': format|pattern, 'autocomplete': 'off', 'data-format': jsFormat}) -%}
+    <div class="input-group">
+        <div class="input-group-text">
+            <a href="#" data-form-widget="date-now" data-format="{{ jsFormat }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
+        </div>
+        {{- block('form_widget_simple') -}}
+        {% if not required %}
+        <span class="input-group-text">
+            <a href="javascript: void(0)" class="link-secondary fs-5" onclick="document.getElementById('{{ id }}').value = ''">
+                {{ icon('cancel') }}
+            </a>
+        </span>
+        {% endif %}
+    </div>
+{%- endblock day_widget %}
+
 {% block time_widget -%}
     {%- set attr = attr|merge({'pattern': time_format|pattern, 'autocomplete': 'off', 'data-timepicker': 'on', 'data-format': js_format, 'placeholder': time_format}) -%}
     <div class="input-group">
         <div class="input-group-text">
-            <a href="#" data-form-widget="date-now" data-format="{{ js_format }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
+            <a href="#" data-form-widget="date-now" data-format="{{ js_format }}" data-target="{{ id }}">{{ icon('clock') }}</a>
         </div>
         {{ block('form_widget_simple') }}
         {% set time_presets = form_time_presets(app.user.timezone) %}
@@ -200,46 +219,44 @@
 
 {% block duration_widget %}
     <div class="duration-widget">
+        <div class="input-group">
         {% if (form.vars.duration_presets is defined and form.vars.duration_presets is not empty) and (form.vars.disabled is same as (false)) %}
-            <div class="input-group">
-                {% if form.vars.icon is defined and form.vars.icon is not null %}
+            {% if form.vars.icon is defined and form.vars.icon is not null %}
+            <div class="input-group-text">
+                {{ icon(form.vars.icon) }}
+            </div>
+            {% endif %}
+            {{ block('form_widget_simple') }}
+            {% if form.vars.toggle is defined and form.vars.toggle %}
                 <div class="input-group-text">
-                    {{ icon(form.vars.icon) }}
+                    <a href="#" id="{{ form.vars.id }}_toggle" class="text-success">{{ icon('link') }}</a>
                 </div>
-                {% endif %}
-                {{ block('form_widget_simple') }}
-                {% if form.vars.toggle is defined and form.vars.toggle %}
-                    <div class="input-group-text">
-                        <a href="#" id="{{ form.vars.id }}_toggle" class="text-success">{{ icon('link') }}</a>
-                    </div>
-                {% endif %}
-                <button type="button" class="input-group-text dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                <div class="dropdown-menu dropdown-menu-end pre-scrollable">
-                    <div class="dropdown-menu-columns">
-                        {% for index in [0, 1, 2, 3] %}
-                            <div class="dropdown-menu-column" style="min-width: 4rem">
-                                {% for value in form.vars.duration_presets %}
-                                    {% if loop.index0 % 4 == index %}
-                                        <a class="dropdown-item justify-content-center" href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ value }}" data-event="change">{{ value }}</a>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                        {% endfor %}
-                    </div>
+            {% endif %}
+            <button type="button" class="input-group-text dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+            <div class="dropdown-menu dropdown-menu-end pre-scrollable">
+                <div class="dropdown-menu-columns">
+                    {% for index in [0, 1, 2, 3] %}
+                        <div class="dropdown-menu-column" style="min-width: 4rem">
+                            {% for value in form.vars.duration_presets %}
+                                {% if loop.index0 % 4 == index %}
+                                    <a class="dropdown-item justify-content-center" href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ value }}" data-event="change">{{ value }}</a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         {% else %}
             {% if icon is defined and icon is not empty %}
-                <div class="input-group">
-                    <div class="input-group-text">
-                        {{ icon(icon) }}
-                    </div>
-                    {{ block('form_widget_simple') }}
+                <div class="input-group-text">
+                    {{ icon(icon) }}
                 </div>
+                {{ block('form_widget_simple') }}
             {% else %}
                 {{ block('form_widget_simple') }}
             {% endif %}
         {% endif %}
+        </div>
     </div>
 {% endblock duration_widget %}
 

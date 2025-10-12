@@ -10,11 +10,10 @@
 namespace App\Tests\Model;
 
 use App\Model\PermissionSection;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Model\PermissionSection
- */
+#[CoversClass(PermissionSection::class)]
 class PermissionSectionTest extends TestCase
 {
     public function testFilter(): void

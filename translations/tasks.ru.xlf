@@ -66,6 +66,18 @@
         <source>task.assign</source>
         <target state="translated">Назначить себе</target>
       </trans-unit>
+      <trans-unit id="duBK63z" resname="task.close" xml:space="preserve" approved="no">
+        <source>task.close</source>
+        <target state="needs-translation">Выполненная задача</target>
+      </trans-unit>
+      <trans-unit id="kMOottI" resname="task.widget_rows" xml:space="preserve" approved="no">
+        <source>task.widget_rows</source>
+        <target state="needs-translation">Количество заданий на странице в виджете дашборда</target>
+      </trans-unit>
+      <trans-unit id="SzbkpWy" resname="task.help.description" xml:space="preserve" approved="no">
+        <source>task.help.description</source>
+        <target state="needs-translation">Это описание будет скопировано в каждую запись табеля учета рабочего времени.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

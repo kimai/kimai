@@ -13,22 +13,19 @@ use App\Entity\ExportableItem;
 use App\Repository\Query\TimesheetQuery;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * TODO change interface for 3.0
+ * @method getType() string
+ * @method isInternal() bool
+ */
 interface ExportRendererInterface
 {
     /**
      * @param ExportableItem[] $exportItems
-     * @param TimesheetQuery $query
-     * @return Response
      */
     public function render(array $exportItems, TimesheetQuery $query): Response;
 
-    /**
-     * @return string
-     */
     public function getId(): string;
 
-    /**
-     * @return string
-     */
     public function getTitle(): string;
 }

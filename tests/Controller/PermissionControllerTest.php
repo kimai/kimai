@@ -13,10 +13,9 @@ use App\DataFixtures\UserFixtures;
 use App\Entity\Role;
 use App\Entity\RolePermission;
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class PermissionControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
@@ -34,7 +33,7 @@ class PermissionControllerTest extends AbstractControllerBaseTestCase
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/permissions');
         $this->assertHasDataTable($client);
-        $this->assertDataTableRowCount($client, 'datatable_user_admin_permissions', 135);
+        $this->assertDataTableRowCount($client, 'datatable_user_admin_permissions', 136);
         $this->assertPageActions($client, [
             'create modal-ajax-form' => $this->createUrl('/admin/permissions/roles/create'),
         ]);

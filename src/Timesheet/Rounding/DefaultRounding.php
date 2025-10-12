@@ -24,6 +24,10 @@ final class DefaultRounding implements RoundingInterface
             return;
         }
 
+        if ($record->getBegin() === null) {
+            return;
+        }
+
         $timestamp = $record->getBegin()->getTimestamp();
         $seconds = $minutes * 60;
         $diff = $timestamp % $seconds;
@@ -40,6 +44,10 @@ final class DefaultRounding implements RoundingInterface
     public function roundEnd(Timesheet $record, int $minutes): void
     {
         if ($minutes <= 0) {
+            return;
+        }
+
+        if ($record->getEnd() === null) {
             return;
         }
 

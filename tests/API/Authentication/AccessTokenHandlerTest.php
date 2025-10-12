@@ -13,12 +13,11 @@ use App\API\Authentication\AccessTokenHandler;
 use App\Entity\AccessToken;
 use App\Entity\User;
 use App\Repository\AccessTokenRepository;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
-/**
- * @covers \App\API\Authentication\AccessTokenHandler
- */
+#[CoversClass(AccessTokenHandler::class)]
 class AccessTokenHandlerTest extends TestCase
 {
     private function getSut(?AccessToken $accessToken = null): AccessTokenHandler

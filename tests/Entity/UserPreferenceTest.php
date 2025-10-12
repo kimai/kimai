@@ -11,12 +11,11 @@ namespace App\Tests\Entity;
 
 use App\Entity\UserPreference;
 use App\Form\Type\YesNoType;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
-/**
- * @covers \App\Entity\UserPreference
- */
+#[CoversClass(UserPreference::class)]
 class UserPreferenceTest extends TestCase
 {
     public function testDefaultValues(): void

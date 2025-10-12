@@ -15,18 +15,20 @@ use App\Entity\InvoiceTemplate;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Invoice\Calculator\AbstractCalculator;
+use App\Invoice\Calculator\AbstractMergedCalculator;
+use App\Invoice\Calculator\AbstractSumInvoiceCalculator;
 use App\Invoice\Calculator\ActivityInvoiceCalculator;
 use App\Invoice\CalculatorInterface;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Invoice\Calculator\ActivityInvoiceCalculator
- * @covers \App\Invoice\Calculator\AbstractSumInvoiceCalculator
- * @covers \App\Invoice\Calculator\AbstractMergedCalculator
- * @covers \App\Invoice\Calculator\AbstractCalculator
- */
+#[CoversClass(ActivityInvoiceCalculator::class)]
+#[CoversClass(AbstractSumInvoiceCalculator::class)]
+#[CoversClass(AbstractMergedCalculator::class)]
+#[CoversClass(AbstractCalculator::class)]
 class ActivityInvoiceCalculatorTest extends AbstractCalculatorTestCase
 {
     protected function getCalculator(): CalculatorInterface

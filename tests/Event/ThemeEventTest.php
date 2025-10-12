@@ -11,11 +11,11 @@ namespace App\Tests\Event;
 
 use App\Entity\User;
 use App\Event\ThemeEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\ThemeEvent
- */
+#[CoversClass(ThemeEvent::class)]
 class ThemeEventTest extends TestCase
 {
     public function testEmpty(): void
@@ -54,9 +54,7 @@ class ThemeEventTest extends TestCase
         self::assertEquals('foo<script>', $sut->getContent());
     }
 
-    /**
-     * @group legacy
-     */
+    #[Group('legacy')]
     public function testDeprecatedStuff(): void
     {
         $user = new User();

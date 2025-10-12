@@ -17,10 +17,9 @@ use App\Entity\Team;
 use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use Doctrine\Common\Collections\Collection;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Entity\Activity
- */
+#[CoversClass(Activity::class)]
 class ActivityTest extends AbstractEntityTestCase
 {
     public function testDefaultValues(): void
@@ -175,6 +174,8 @@ class ActivityTest extends AbstractEntityTestCase
         $sut = new Activity();
         $sut->setName('activity1111');
         $sut->setComment('DE-0123456789');
+
+        $this->assertCloneResetsId($sut);
 
         $project = new Project();
         $project->setName('foo');

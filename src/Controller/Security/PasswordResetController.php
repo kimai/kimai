@@ -12,8 +12,8 @@ namespace App\Controller\Security;
 use App\Configuration\SystemConfiguration;
 use App\Controller\AbstractController;
 use App\Entity\User;
-use App\Event\EmailEvent;
 use App\Event\EmailPasswordResetEvent;
+use App\Event\UserEmailEvent;
 use App\User\UserService;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -112,7 +112,7 @@ final class PasswordResetController extends AbstractController
                 $this->eventDispatcher->dispatch($event);
 
                 // this will send the email
-                $this->eventDispatcher->dispatch(new EmailEvent($event->getEmail()));
+                $this->eventDispatcher->dispatch(new UserEmailEvent($user, $event->getEmail()));
 
                 $user->markPasswordRequested();
                 $user->setRequiresPasswordReset(true);

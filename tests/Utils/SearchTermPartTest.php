@@ -10,11 +10,11 @@
 namespace App\Tests\Utils;
 
 use App\Utils\SearchTermPart;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Utils\SearchTermPart
- */
+#[CoversClass(SearchTermPart::class)]
 class SearchTermPartTest extends TestCase
 {
     public static function getTestData(): array
@@ -32,9 +32,7 @@ class SearchTermPartTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testSearchTerm(string $term, string $expected, ?string $field, bool $excluded): void
     {
         $sut = new SearchTermPart($term);

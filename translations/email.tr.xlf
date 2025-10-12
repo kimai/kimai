@@ -54,6 +54,42 @@ Please review them at: %url%</source>
 
 Lütfen gözden geçirin: %url%</target>
       </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="translated">Onay talep edildi: %user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="translated">“%user% için onay talep edildi.
+
+%list%
+
+Lütfen bunları şu adreste inceleyin: %url%”**</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">Talebiniz reddedildi</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">“%created_by% tarafından yetkilendirme talebiniz reddedildi.
+
+%list%
+
+Lütfen taleplerinizi şu adreste inceleyin: %url%”**</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Talebiniz onaylandı</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="translated">“%created_by% tarafından talebiniz onaylandı.
+
+%list%
+
+Tüm taleplerinizi şu adreste bulabilirsiniz: %url%”**</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

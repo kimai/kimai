@@ -19,13 +19,13 @@ use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\ActivityTestMetaFieldSubscriberMock;
 use Doctrine\ORM\EntityManager;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class ActivityControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
@@ -68,7 +68,7 @@ class ActivityControllerTest extends AbstractControllerBaseTestCase
 
         $fixture = new ActivityFixtures();
         $fixture->setAmount(5);
-        $fixture->setCallback(function (Activity $activity) {
+        $fixture->setCallback(function (Activity $activity): void {
             $activity->setVisible(true);
             $activity->setComment('I am a foobar with tralalalala some more content');
             $activity->setMetaField((new ActivityMeta())->setName('location')->setValue('homeoffice'));
@@ -111,7 +111,7 @@ class ActivityControllerTest extends AbstractControllerBaseTestCase
 
         $fixture = new ActivityFixtures();
         $fixture->setAmount(5);
-        $fixture->setCallback(function (Activity $activity) {
+        $fixture->setCallback(function (Activity $activity): void {
             $activity->setVisible(true);
             $activity->setComment('I am a foobar with tralalalala some more content');
             $activity->setMetaField((new ActivityMeta())->setName('location')->setValue('homeoffice'));
@@ -427,9 +427,7 @@ class ActivityControllerTest extends AbstractControllerBaseTestCase
         self::assertFalse($client->getResponse()->isSuccessful());
     }
 
-    /**
-     * @dataProvider getValidationTestData
-     */
+    #[DataProvider('getValidationTestData')]
     public function testValidationForCreateAction(array $formData, array $validationFields): void
     {
         $this->assertFormHasValidationError(

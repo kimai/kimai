@@ -188,7 +188,7 @@ class TimesheetEditForm extends AbstractType
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
-            function (FormEvent $event) {
+            function (FormEvent $event): void {
                 /** @var Timesheet $timesheet */
                 $timesheet = $event->getData();
                 $begin = $timesheet->getBegin();
@@ -203,7 +203,7 @@ class TimesheetEditForm extends AbstractType
         // map single fields to original datetime object
         $builder->addEventListener(
             FormEvents::SUBMIT,
-            function (FormEvent $event) {
+            function (FormEvent $event): void {
                 /** @var Timesheet $data */
                 $data = $event->getData();
 
@@ -243,7 +243,7 @@ class TimesheetEditForm extends AbstractType
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
-            function (FormEvent $event) {
+            function (FormEvent $event): void {
                 /** @var Timesheet|null $data */
                 $data = $event->getData();
                 if (null !== $data->getEnd()) {
@@ -255,7 +255,7 @@ class TimesheetEditForm extends AbstractType
         // make sure that date & time fields are mapped back to begin & end fields
         $builder->addEventListener(
             FormEvents::SUBMIT,
-            function (FormEvent $event) {
+            function (FormEvent $event): void {
                 /** @var Timesheet $timesheet */
                 $timesheet = $event->getData();
                 $oldEnd = $timesheet->getEnd();
@@ -329,12 +329,12 @@ class TimesheetEditForm extends AbstractType
         $builder->add('duration', DurationType::class, $durationOptions);
 
         if ($this->systemConfiguration->isBreakTimeEnabled()) {
-            $builder->add('break', DurationType::class, ['label' => 'break', 'required' => false]);
+            $builder->add('break', DurationType::class, ['label' => 'break', 'required' => false, 'icon' => 'break']);
         }
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
-            function (FormEvent $event) {
+            function (FormEvent $event): void {
                 /** @var Timesheet|null $timesheet */
                 $timesheet = $event->getData();
                 if (null === $timesheet || ($timesheet instanceof Timesheet && $timesheet->isRunning())) {
@@ -346,7 +346,7 @@ class TimesheetEditForm extends AbstractType
         // make sure that duration is mapped back to end field
         $builder->addEventListener(
             FormEvents::SUBMIT,
-            function (FormEvent $event) use ($forceApply) {
+            function (FormEvent $event) use ($forceApply): void {
                 /** @var Timesheet $timesheet */
                 $timesheet = $event->getData();
 
@@ -392,7 +392,14 @@ class TimesheetEditForm extends AbstractType
             return;
         }
 
-        $builder->add('user', UserType::class);
+        $users = [];
+        if (isset($options['data']) && $options['data'] instanceof Timesheet) {
+            $users = [$options['data']->getUser()];
+        }
+
+        $builder->add('user', UserType::class, [
+            'include_users' => $users,
+        ]);
     }
 
     protected function addExported(FormBuilderInterface $builder, array $options): void

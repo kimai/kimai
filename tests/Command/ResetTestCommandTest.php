@@ -11,14 +11,14 @@ namespace App\Tests\Command;
 
 use App\Command\ResetTestCommand;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-/**
- * @covers \App\Command\ResetTestCommand
- * @group integration
- */
+#[CoversClass(ResetTestCommand::class)]
+#[Group('integration')]
 class ResetTestCommandTest extends KernelTestCase
 {
     public function testCommandName(): void

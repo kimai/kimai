@@ -11,10 +11,9 @@ namespace App\Tests\Model\Statistic;
 
 use App\Model\Statistic\BudgetStatistic;
 use App\Tests\Model\AbstractTimesheetCountedStatisticTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Model\Statistic\BudgetStatistic
- */
+#[CoversClass(BudgetStatistic::class)]
 class BudgetStatisticTest extends AbstractTimesheetCountedStatisticTestCase
 {
     public function testDefaultValues(): void

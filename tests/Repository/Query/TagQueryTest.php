@@ -10,10 +10,9 @@
 namespace App\Tests\Repository\Query;
 
 use App\Repository\Query\TagQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Repository\Query\TagQuery
- */
+#[CoversClass(TagQuery::class)]
 class TagQueryTest extends BaseQueryTest
 {
     public function testQuery(): void

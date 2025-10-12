@@ -11,12 +11,10 @@ namespace App\Tests\Entity;
 
 use App\Entity\Bookmark;
 use App\Entity\User;
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Entity\Bookmark
- */
-class BookmarkTest extends TestCase
+#[CoversClass(Bookmark::class)]
+class BookmarkTest extends AbstractEntityTestCase
 {
     public function testDefaultValues(): void
     {
@@ -48,5 +46,11 @@ class BookmarkTest extends TestCase
         $sut2 = clone $sut;
         self::assertEquals('sdsdsd', $sut2->getType());
         self::assertEquals('foo-bar', $sut2->getName());
+    }
+
+    public function testClone(): void
+    {
+        $sut = new Bookmark();
+        $this->assertCloneResetsId($sut);
     }
 }

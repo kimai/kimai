@@ -13,11 +13,11 @@ use App\Entity\Team;
 use App\Entity\User;
 use App\Tests\DataFixtures\TeamFixtures;
 use Doctrine\ORM\EntityManager;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class TeamControllerTest extends APIControllerBaseTestCase
 {
     /**
@@ -47,9 +47,7 @@ class TeamControllerTest extends APIControllerBaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider getRoleTestData
-     */
+    #[DataProvider('getRoleTestData')]
     public function testIsSecureForRole(string $role): void
     {
         $this->assertUrlIsSecuredForRole($role, '/api/teams');

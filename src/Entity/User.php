@@ -106,7 +106,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[ORM\Column(name: 'avatar', type: Types::STRING, length: 255, nullable: true)]
     #[Assert\Length(max: 255, groups: ['Profile'])]
     #[Serializer\Expose]
-    #[Serializer\Groups(['User_Entity'])]
+    #[Serializer\Groups(['Default'])]
     private ?string $avatar = null;
     /**
      * API token (password) for this user
@@ -131,7 +131,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @var Collection<UserPreference>|null
      */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserPreference::class, cascade: ['persist'])]
-    private ?Collection $preferences;
+    private ?Collection $preferences = null;
     /**
      * List of all team memberships.
      *
@@ -468,6 +468,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->getPreferenceValue(UserPreference::FIRST_WEEKDAY, User::DEFAULT_FIRST_WEEKDAY, false);
     }
 
+    /**
+     * @ deprecated since 2.40 - will be removed with 3.0
+     */
     public function isExportDecimal(): bool
     {
         return (bool) $this->getPreferenceValue('export_decimal', false, false);
@@ -504,10 +507,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $allowNull ? $value : ($value ?? $default);
     }
 
-    /**
-     * @param UserPreference $preference
-     * @return User
-     */
     public function addPreference(UserPreference $preference): User
     {
         if (null === $this->preferences) {
@@ -586,9 +585,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     }
 
     /**
-     * Checks if the user is member of any team.
-     *
-     * @return bool
+     * Checks if the user is a member of any team.
      */
     public function hasTeamAssignment(): bool
     {
@@ -599,7 +596,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * Checks is the user is teamlead in any of the assigned teams.
      *
      * @see User::hasTeamleadRole()
-     * @return bool
      */
     public function isTeamlead(): bool
     {
@@ -614,9 +610,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     /**
      * Checks if the given user is a team member.
-     *
-     * @param User $user
-     * @return bool
      */
     public function hasTeamMember(User $user): bool
     {
@@ -680,8 +673,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     /**
      * Required in the User profile screen to edit his teams.
-     *
-     * @param Team $team
      */
     public function addTeam(Team $team): void
     {
@@ -700,8 +691,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     /**
      * Required in the User profile screen to edit his teams.
-     *
-     * @param Team $team
      */
     public function removeTeam(Team $team): void
     {
@@ -928,6 +917,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
+    /**
+     * Alias for setUserIdentifier()
+     *
+     * The visible username is setAlias())
+     */
     public function setUsername(string $username): void
     {
         $this->username = $username;
@@ -971,7 +965,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
-    public function setLastLogin(\DateTime $time = null): User
+    public function setLastLogin(?\DateTime $time = null): User
     {
         $this->lastLogin = $time;
 

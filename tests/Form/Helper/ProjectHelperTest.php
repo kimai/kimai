@@ -14,12 +14,11 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Form\Helper\ProjectHelper;
 use App\Tests\Mocks\SystemConfigurationFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\Form\Helper\ProjectHelper
- */
+#[CoversClass(ProjectHelper::class)]
 class ProjectHelperTest extends TestCase
 {
     private function createSut(string $format): ProjectHelper

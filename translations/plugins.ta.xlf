@@ -18,6 +18,10 @@
         <source>Plugin Shop</source>
         <target state="final">மேலும் நீட்டிப்புகள்</target>
       </trans-unit>
+      <trans-unit id="aNvGEaj" resname="update_available" xml:space="preserve">
+        <source>Update available</source>
+        <target state="translated">புதிய பதிப்பு உள்ளது: %version%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

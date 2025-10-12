@@ -20,11 +20,11 @@ use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\RateService;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Timesheet\RateService
- */
+#[CoversClass(RateService::class)]
 class RateServiceTest extends TestCase
 {
     protected function getRateRepositoryMock(array $rates = [])
@@ -106,9 +106,7 @@ class RateServiceTest extends TestCase
         yield 'k1' => [8.82,    8.82,   1800,   17.64,  null,   null,   null,   null,   null,   false,   null,   null,   false,   null,   null,   true];
     }
 
-    /**
-     * @dataProvider getRateTestData
-     */
+    #[DataProvider('getRateTestData')]
     public function testRates(
         $expectedRate,
         $expectedInternalRate,
@@ -212,9 +210,8 @@ class RateServiceTest extends TestCase
 
     /**
      * Uses the hourly rate from user_preferences to calculate the rate.
-     *
-     * @dataProvider getRuleDefinitions
      */
+    #[DataProvider('getRuleDefinitions')]
     public function testCalculateWithRulesByUsersHourlyRate($duration, $rules, $expectedRate): void
     {
         $end = self::createDateTime('12:00:00');

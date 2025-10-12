@@ -11,11 +11,12 @@ namespace App\Tests\Timesheet;
 
 use App\Entity\Timesheet;
 use App\Tests\Mocks\RoundingServiceFactory;
+use App\Timesheet\RoundingService;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Timesheet\RoundingService
- */
+#[CoversClass(RoundingService::class)]
 class RoundingServiceTest extends TestCase
 {
     public function testCalculateWithEmptyEnd(): void
@@ -29,9 +30,7 @@ class RoundingServiceTest extends TestCase
         self::assertEquals(0, $record->getDuration());
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testCalculate($rules, $start, $end, $expectedStart, $expectedEnd, $expectedDuration): void
     {
         $record = new Timesheet();

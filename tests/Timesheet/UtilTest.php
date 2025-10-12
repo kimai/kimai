@@ -10,16 +10,14 @@
 namespace App\Tests\Timesheet;
 
 use App\Timesheet\Util;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Timesheet\Util
- */
+#[CoversClass(Util::class)]
 class UtilTest extends TestCase
 {
-    /**
-     * @dataProvider getRateCalculationData
-     */
+    #[DataProvider('getRateCalculationData')]
     public function testCalculateRate(int|float $hourlyRate, int $duration, int|float $expectedRate): void
     {
         self::assertEquals($expectedRate, Util::calculateRate($hourlyRate, $duration));

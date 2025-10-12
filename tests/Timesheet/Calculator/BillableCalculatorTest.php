@@ -14,16 +14,14 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Timesheet\Calculator\BillableCalculator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Timesheet\Calculator\BillableCalculator
- */
+#[CoversClass(BillableCalculator::class)]
 class BillableCalculatorTest extends TestCase
 {
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testCalculate(bool $billable, string $mode, bool $expected, ?Customer $customer, ?Project $project, ?Activity $activity): void
     {
         $sut = new BillableCalculator();

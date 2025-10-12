@@ -16,11 +16,10 @@ use App\Invoice\InvoiceModel;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\NumberGenerator\IncrementingNumberGenerator;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Invoice\InvoiceModel
- */
+#[CoversClass(InvoiceModel::class)]
 class InvoiceModelTest extends TestCase
 {
     public function testEmptyObject(): void

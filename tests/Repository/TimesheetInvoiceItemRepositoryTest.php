@@ -15,17 +15,16 @@ use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Repository\TimesheetInvoiceItemRepository;
 use App\Repository\TimesheetRepository;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Repository\TimesheetInvoiceItemRepository
- */
+#[CoversClass(TimesheetInvoiceItemRepository::class)]
 class TimesheetInvoiceItemRepositoryTest extends TestCase
 {
     public function testSetExported(): void
     {
         $repository = $this->createMock(TimesheetRepository::class);
-        $repository->expects($this->once())->method('setExported')->willReturnCallback(function (array $items) {
+        $repository->expects($this->once())->method('setExported')->willReturnCallback(function (array $items): void {
             self::assertCount(2, $items);
         });
 

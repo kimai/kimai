@@ -11,11 +11,10 @@ namespace App\Tests\Event;
 
 use App\Entity\User;
 use App\Event\PageActionsEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\PageActionsEvent
- */
+#[CoversClass(PageActionsEvent::class)]
 class PageActionsEventTest extends TestCase
 {
     public function testDefaultValues(): void

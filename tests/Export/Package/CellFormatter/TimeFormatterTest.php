@@ -10,11 +10,10 @@
 namespace App\Tests\Export\Package\CellFormatter;
 
 use App\Export\Package\CellFormatter\TimeFormatter;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Export\Package\CellFormatter\TimeFormatter
- */
+#[CoversClass(TimeFormatter::class)]
 class TimeFormatterTest extends TestCase
 {
     public function testFormatValueReturnsFormattedTimeForDateTimeInterface(): void

@@ -12,16 +12,17 @@ namespace App\Tests\Controller;
 use App\DataFixtures\UserFixtures;
 use App\Entity\User;
 use App\Entity\UserPreference;
+use App\Repository\AccessTokenRepository;
 use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\WorkingTime\Mode\WorkingTimeModeDay;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class ProfileControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
@@ -106,9 +107,7 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider getTabTestData
-     */
+    #[DataProvider('getTabTestData')]
     public function testEditActionTabs($role, $username): void
     {
         $client = $this->getClientForAuthenticatedUser($role);
@@ -243,15 +242,53 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         );
     }
 
-    /**
-     * @group legacy
-     */
-    public function testApiTokenAction(): void
+    public function testCreateApiToken(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $user = $this->getUserByRole(User::ROLE_USER);
+
+        /** @var AccessTokenRepository $tokenRepository */
+        $tokenRepository = self::getContainer()->get(AccessTokenRepository::class);
+        $tokens = $tokenRepository->findForUser($user);
+        self::assertCount(1, $tokens);
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/create-access-token');
+
+        $form = $client->getCrawler()->filter('form[name=access_token_form]')->form();
+        $client->submit($form, [
+            'access_token_form' => [
+                'name' => 'Demo',
+                'expiresAt' => ''
+            ]
+        ]);
+
+        // if you follow this redirect, the info will not be shown
+        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/api-token?hide-token=1'));
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/api-token');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $crawler = $client->getCrawler();
+        $block = $crawler->filter('div.codeblock');
+        self::assertEquals(1, $block->count());
+        $copy = $crawler->filter('div.codeblock-copy');
+        self::assertEquals(1, $copy->count());
+        $code = $block->filter('pre code');
+        self::assertEquals(1, $code->count());
+
+        $tokens = $tokenRepository->findForUser($user);
+        self::assertCount(2, $tokens);
+        self::assertEquals('Demo', $tokens[1]->getName());
+        self::assertEquals($code->innerText(), $tokens[1]->getToken());
+    }
+
+    #[Group('legacy')]
+    public function testCreateApiPassword(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/api-token');
 
-        /** @var User $user */
         $user = $this->getUserByRole(User::ROLE_USER);
         /** @var PasswordHasherFactoryInterface $passwordEncoder */
         $passwordEncoder = self::getContainer()->get('security.password_hasher_factory');
@@ -282,7 +319,8 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         self::assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), 'test1234'));
     }
 
-    public function testApiTokenActionFailsIfPasswordLengthToShort(): void
+    #[Group('legacy')]
+    public function testCreateApiPasswordFailsIfPasswordLengthToShort(): void
     {
         $this->assertFormHasValidationError(
             User::ROLE_USER,
@@ -400,9 +438,7 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider getPreferencesTestData
-     */
+    #[DataProvider('getPreferencesTestData')]
     public function testPreferencesAction($role, $username, $hourlyRateOriginal, $hourlyRate, string $expectedLocale, float|null $expectedInternalRate, bool $withRateSettings): void
     {
         $client = $this->getClientForAuthenticatedUser($role);

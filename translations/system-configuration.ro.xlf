@@ -60,7 +60,7 @@
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
         <source>calendar.slot_duration</source>
-        <target>Durata slotului pentru vizualizarea săptămânii și a zilei (format: hh:mm:ss)</target>
+        <target>Durata slotului pentru vizualizarea săptămânii și a zilei</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>

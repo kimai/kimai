@@ -14,15 +14,16 @@ use App\Entity\TeamMember;
 use App\Entity\User;
 use App\Validator\Constraints\Team as TeamConstraint;
 use App\Validator\Constraints\TeamValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\Team
- * @covers \App\Validator\Constraints\TeamValidator
  * @extends ConstraintValidatorTestCase<TeamValidator>
  */
+#[CoversClass(\App\Validator\Constraints\Team::class)]
+#[CoversClass(TeamValidator::class)]
 class TeamValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): TeamValidator

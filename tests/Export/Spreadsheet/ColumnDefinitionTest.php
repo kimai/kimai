@@ -9,22 +9,26 @@
 
 namespace App\Tests\Export\Spreadsheet;
 
+use App\Export\Spreadsheet\ColumnDefinition;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Export\Spreadsheet\ColumnDefinition
- */
+#[CoversClass(ColumnDefinition::class)]
 class ColumnDefinitionTest extends TestCase
 {
     public function testConstruct(): void
     {
-        $sut = new \App\Export\Spreadsheet\ColumnDefinition('foo', 'bar', function () {
+        $sut = new ColumnDefinition('foo', 'bar', function () {
             return 'hello world';
         });
 
+        self::assertEquals('messages', $sut->getTranslationDomain());
         self::assertEquals('foo', $sut->getLabel());
         self::assertEquals('bar', $sut->getType());
         self::assertIsCallable($sut->getAccessor());
         self::assertEquals('hello world', \call_user_func($sut->getAccessor()));
+
+        $sut->setTranslationDomain('foo');
+        self::assertEquals('foo', $sut->getTranslationDomain());
     }
 }

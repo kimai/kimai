@@ -13,7 +13,7 @@ use App\Entity\Invoice;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**
- * This event can be used, to dynamically add meta fields to invoices
+ * This event can be used, to dynamically add meta-fields to invoices
  */
 final class InvoiceMetaDefinitionEvent extends Event
 {

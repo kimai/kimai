@@ -11,10 +11,9 @@ namespace App\Tests\API;
 
 use App\Constants;
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class StatusControllerTest extends APIControllerBaseTestCase
 {
     public function testIsSecurePing(): void

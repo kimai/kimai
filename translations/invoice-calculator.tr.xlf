@@ -18,9 +18,9 @@
         <source>user</source>
         <target state="translated">Kullanıcı</target>
       </trans-unit>
-      <trans-unit id="BlGGO.X" resname="activity">
+      <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve">
         <source>activity</source>
-        <target state="translated">Etkinlik: her etkinlik için bir kayıt</target>
+        <target state="translated">Etkinlik</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>project</source>

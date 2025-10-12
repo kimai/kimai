@@ -14,10 +14,9 @@ use App\Export\Spreadsheet\CellFormatter\DurationFormatter;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Style;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Export\Spreadsheet\CellFormatter\DurationFormatter
- */
+#[CoversClass(DurationFormatter::class)]
 class DurationFormatterTest extends AbstractFormatterTestCase
 {
     protected function getFormatter(): CellFormatterInterface
@@ -25,12 +24,12 @@ class DurationFormatterTest extends AbstractFormatterTestCase
         return new DurationFormatter();
     }
 
-    protected function getActualValue()
+    protected function getActualValue(): int
     {
         return 3600;
     }
 
-    protected function getExpectedValue()
+    protected function getExpectedValue(): string
     {
         return '=3600/86400';
     }

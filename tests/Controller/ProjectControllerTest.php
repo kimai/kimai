@@ -24,13 +24,13 @@ use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\ProjectTestMetaFieldSubscriberMock;
 use Doctrine\ORM\EntityManager;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class ProjectControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
@@ -73,7 +73,7 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
         $fixture = new ProjectFixtures();
         $fixture->setAmount(5);
         $i = 0;
-        $fixture->setCallback(function (Project $project) use (&$i) {
+        $fixture->setCallback(function (Project $project) use (&$i): void {
             $project->setVisible(true);
             switch ($i++) {
                 case 0:
@@ -137,7 +137,7 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
 
         $fixture = new ProjectFixtures();
         $fixture->setAmount(5);
-        $fixture->setCallback(function (Project $project) {
+        $fixture->setCallback(function (Project $project): void {
             $project->setVisible(true);
             $project->setComment('I am a foobar with tralalalala some more content');
             $project->setMetaField((new ProjectMeta())->setName('location')->setValue('homeoffice'));
@@ -599,9 +599,7 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
         self::assertFalse($client->getResponse()->isSuccessful());
     }
 
-    /**
-     * @dataProvider getValidationTestData
-     */
+    #[DataProvider('getValidationTestData')]
     public function testValidationForCreateAction(array $formData, array $validationFields): void
     {
         $this->assertFormHasValidationError(

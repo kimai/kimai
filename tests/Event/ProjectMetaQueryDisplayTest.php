@@ -13,11 +13,10 @@ use App\Entity\ProjectMeta;
 use App\Event\MetaDisplayEventInterface;
 use App\Event\ProjectMetaDisplayEvent;
 use App\Repository\Query\ProjectQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\ProjectMetaDisplayEvent
- */
+#[CoversClass(ProjectMetaDisplayEvent::class)]
 class ProjectMetaQueryDisplayTest extends TestCase
 {
     public function testGetterAndSetter(): void

@@ -13,7 +13,7 @@ use App\Utils\Duration;
 
 final class DurationDecimalFormatter implements CellFormatterInterface
 {
-    private Duration $duration;
+    private readonly Duration $duration;
 
     public function __construct()
     {

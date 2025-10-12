@@ -10,11 +10,10 @@
 namespace App\Tests\Entity;
 
 use App\Entity\InvoiceTemplate;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Entity\InvoiceTemplate
- */
+#[CoversClass(InvoiceTemplate::class)]
 class InvoiceTemplateTest extends TestCase
 {
     public function testDefaultValues(): void
@@ -35,6 +34,7 @@ class InvoiceTemplateTest extends TestCase
         self::assertEquals('default', $sut->getNumberGenerator());
         self::assertEquals('default', $sut->getRenderer());
         self::assertEquals(30, $sut->getDueDays());
+        self::assertTrue($sut->isDecimalDuration()); // @phpstan-ignore method.deprecated
     }
 
     public function testSetterAndGetter(): void

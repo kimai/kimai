@@ -17,11 +17,10 @@ use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Invoice\Renderer\DebugRenderer;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\InvoicePreRenderEvent
- */
+#[CoversClass(InvoicePreRenderEvent::class)]
 class InvoicePreRenderEventTest extends TestCase
 {
     public function testDefaultValues(): void

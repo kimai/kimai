@@ -16,23 +16,151 @@ section.quick-entry-page {
         display: none;
     }
 
-    /* shrinks the dropdown elements for project and activity to fit into the table, instead of adjusting to the longest option element */
     .ts-wrapper {
-        display: table;
-        table-layout: fixed;
+        min-height: 36px;
+        max-height: 36px;
+        max-width: 150px;
+
+        .ts-control {
+            white-space: nowrap;
+            .item {
+                overflow: hidden;
+            }
+        }
+    }
+
+    .table tbody td:not(.total) {
+        padding: 3px;
+    }
+
+    .duration-widget input.duration-input {
+        min-width: 40px;
     }
 
     /* make the duration field and dropdown smaller */
     #quick_entry_box {
         .duration-widget {
             .input-group {
-                min-width: 85px;
+                max-width: 50px;
+                min-width: 50px;
             }
             .btn-duration-preset {
-                padding: 7px 8px 7px 5px;
+                display: none;
+                padding: 7px 5px 7px 2px;
             }
-            input {
-                padding: 7px 3px 7px 7px;
+            input.duration-input {
+                padding: 7px 5px;
+                max-width: 100%;
+                border-bottom-right-radius: var(--tblr-border-radius);
+                border-top-right-radius: var(--tblr-border-radius);
+            }
+        }
+
+        table.dataTable thead th,
+        table.dataTable td.total {
+            padding: .75rem 2px;
+        }
+    }
+
+    /* make sure dropdown never hides behind table responsive */
+    .dropdown-menu {
+        z-index: 1056;
+    }
+}
+
+@media (min-width: 900px) {
+    section.quick-entry-page {
+        .ts-wrapper {
+            max-width: 170px;
+        }
+    }
+}
+
+@media (min-width: 1000px) {
+    section.quick-entry-page {
+        .ts-wrapper {
+            max-width: 180px;
+        }
+    }
+}
+
+@media (min-width: 1200px) {
+    section.quick-entry-page {
+        .ts-wrapper {
+            max-width: 210px;
+        }
+        .duration-widget {
+            max-width: 100%;
+        }
+    }
+}
+
+@media (min-width: 1250px) {
+    section.quick-entry-page {
+        #quick_entry_box {
+            .duration-widget {
+                .input-group {
+                    max-width: 70px;
+                    min-width: 70px;
+                }
+                .btn-duration-preset {
+                    display: flex;
+                }
+                input.duration-input {
+                    border-bottom-right-radius: 0;
+                    border-top-right-radius: 0;
+                }
+            }
+            table.dataTable thead th,
+            table.dataTable td.total {
+                padding: .75rem;
+            }
+        }
+    }
+}
+
+@media (min-width: 1300px) {
+    section.quick-entry-page {
+        .ts-wrapper {
+            max-width: 230px;
+        }
+    }
+}
+
+@media (min-width: 1400px) {
+    section.quick-entry-page {
+        .ts-wrapper {
+            max-width: 270px;
+        }
+    }
+}
+
+@media (min-width: 1500px) {
+    section.quick-entry-page {
+        .ts-wrapper {
+            max-width: 300px;
+        }
+    }
+}
+
+@media (min-width: 1600px) {
+    section.quick-entry-page {
+        .ts-wrapper {
+            max-width: 370px;
+        }
+    }
+}
+
+@media (min-width: 1800px) {
+    section.quick-entry-page {
+        .ts-wrapper {
+            max-width: 450px;
+        }
+        #quick_entry_box {
+            .duration-widget {
+                .input-group {
+                    max-width: 100%;
+                }
             }
         }
     }

@@ -10,11 +10,10 @@
 namespace App\Tests\Entity;
 
 use App\Entity\Tag;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Entity\Tag
- */
+#[CoversClass(Tag::class)]
 class TagTest extends TestCase
 {
     public function testDefaultValues(): void

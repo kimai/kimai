@@ -35,7 +35,7 @@ final class TimesheetApiEditForm extends TimesheetEditForm
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) {
+            function (FormEvent $event): void {
                 $data = $event->getData();
                 if (\array_key_exists('billable', $data)) {
                     $data['billableMode'] = Timesheet::BILLABLE_AUTOMATIC;

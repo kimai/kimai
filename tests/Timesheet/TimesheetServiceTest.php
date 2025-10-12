@@ -22,6 +22,8 @@ use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingModeService;
 use App\Validator\ValidationFailedException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -30,9 +32,7 @@ use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-/**
- * @covers \App\Timesheet\TimesheetService
- */
+#[CoversClass(TimesheetService::class)]
 class TimesheetServiceTest extends TestCase
 {
     private function getSut(
@@ -65,9 +65,7 @@ class TimesheetServiceTest extends TestCase
         return $service;
     }
 
-    /**
-     * @group legacy
-     */
+    #[Group('legacy')]
     public function testCannotSavePersistedTimesheetAsNew(): void
     {
         $timesheet = $this->createMock(Timesheet::class);
@@ -163,9 +161,7 @@ class TimesheetServiceTest extends TestCase
         self::assertEquals('Europe/Paris', $timesheet->getTimezone());
     }
 
-    /**
-     * @group legacy
-     */
+    #[Group('legacy')]
     public function testUpdateTimesheetFixesTimezone(): void
     {
         $user = new User();

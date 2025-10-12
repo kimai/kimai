@@ -20,12 +20,12 @@ use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\TimesheetTestMetaFieldSubscriberMock;
 use App\Timesheet\DateTimeFactory;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class TimesheetControllerTest extends APIControllerBaseTestCase
 {
     public const DATE_FORMAT = 'Y-m-d H:i:s';
@@ -263,7 +263,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importFixtureForUser(User::ROLE_USER);
         $this->request($client, '/api/timesheets', 'GET', $query);
-        $this->assertApiException($client->getResponse(), ['code' => 404, 'message' => 'Not Found']);
+        $this->assertApiException($client->getResponse(), ['code' => Response::HTTP_NOT_FOUND, 'message' => 'Not Found']);
     }
 
     public function testGetCollectionWithSingleParamsQuery(): void
@@ -779,9 +779,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider getTrackingModeTestData
-     */
+    #[DataProvider('getTrackingModeTestData')]
     public function testCreateActionWithTrackingModeHasFieldsForUser(string $trackingMode, string $user, bool $showTimes): void
     {
         $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
@@ -1436,7 +1434,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $id = $timesheets[0]->getId();
 
         $this->assertExceptionForMethod($client, '/api/timesheets/' . $id . '/meta', 'PATCH', ['value' => 'X'], [
-            'code' => 400,
+            'code' => Response::HTTP_BAD_REQUEST,
             'message' => 'Bad Request'
         ]);
     }
@@ -1448,7 +1446,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $id = $timesheets[0]->getId();
 
         $this->assertExceptionForMethod($client, '/api/timesheets/' . $id . '/meta', 'PATCH', ['name' => 'X'], [
-            'code' => 404,
+            'code' => Response::HTTP_NOT_FOUND,
             'message' => 'Not Found'
         ]);
     }
@@ -1460,7 +1458,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $id = $timesheets[0]->getId();
 
         $this->assertExceptionForMethod($client, '/api/timesheets/' . $id . '/meta', 'PATCH', ['name' => 'X', 'value' => 'Y'], [
-            'code' => 404,
+            'code' => Response::HTTP_NOT_FOUND,
             'message' => 'Not Found'
         ]);
     }

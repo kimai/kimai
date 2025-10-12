@@ -27,12 +27,11 @@ use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use App\Utils\FileHelper;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 
-/**
- * @covers \App\Invoice\ServiceInvoice
- */
+#[CoversClass(ServiceInvoice::class)]
 class ServiceInvoiceTest extends TestCase
 {
     private function getSut(array $paths): ServiceInvoice
