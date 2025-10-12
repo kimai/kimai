@@ -77,6 +77,7 @@ final class QuickEntryController extends AbstractController
         $endWeek = $factory->getEndOfWeek($begin);
 
         $tmpDay = clone $startWeek;
+        /** @var array<string, array{day: \DateTime}> $week */
         $week = [];
         while ($tmpDay < $endWeek) {
             $nextDay = clone $tmpDay;

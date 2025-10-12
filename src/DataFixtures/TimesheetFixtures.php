@@ -133,7 +133,7 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
      * @param ObjectManager $manager
      * @param class-string<T> $class
      * @param int $amount
-     * @return array<int, T>
+     * @return non-empty-array<int, T>
      */
     private function findRandom(ObjectManager $manager, string $class, int $amount): array
     {
@@ -157,12 +157,15 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
         /** @var array<int, T> $result */
         $result = $qb->where($qb->expr()->in('entity.id', $ids))->setMaxResults($amount)->getQuery()->getResult();
 
+        if (\count($result) === 0) {
+            throw new \Exception('Could not find any entity: ' . $class);
+        }
+
         return $result;
     }
 
     /**
-     * @param ObjectManager $manager
-     * @return array<int|string, Tag>
+     * @return non-empty-array<int|string, Tag>
      */
     private function getAllTags(ObjectManager $manager): array
     {
@@ -170,8 +173,7 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
     }
 
     /**
-     * @param ObjectManager $manager
-     * @return array<int|string, User>
+     * @return non-empty-array<int|string, User>
      */
     private function getAllUsers(ObjectManager $manager): array
     {
@@ -182,12 +184,15 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
             $all[$temp->getId()] = $temp;
         }
 
+        if (\count($all) === 0) {
+            throw new \Exception('Could not find any user');
+        }
+
         return $all;
     }
 
     /**
-     * @param ObjectManager $manager
-     * @return array<int|string, Project>
+     * @return non-empty-array<int|string, Project>
      */
     private function getAllProjects(ObjectManager $manager): array
     {
@@ -195,8 +200,7 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
     }
 
     /**
-     * @param ObjectManager $manager
-     * @return array<int|string, Activity>
+     * @return non-empty-array<int|string, Activity>
      */
     private function getAllActivities(ObjectManager $manager): array
     {

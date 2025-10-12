@@ -41,6 +41,8 @@ parameters:
     symfony:
         containerXmlPath: %rootDir%/../../../var/cache/dev/App_KernelDevDebugContainer.xml
     ignoreErrors:
+        - identifier: throws.unusedType
+        - identifier: offsetAccess.notFound
         - '#^Method .*\(\) has parameter \$builder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'
 
         -
@@ -802,11 +804,6 @@ parameters:
             message: "#^Parameter \\#2 \\$replace of method App\\\\Repository\\\\ProjectRepository\\:\\:deleteProject\\(\\) expects App\\\\Entity\\\\Project\\|null, mixed given\\.$#"
             count: 1
             path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Call to function array_key_exists\\(\\) with 'entry' and array\\{day\\: DateTime, entry\\: App\\\\Entity\\\\Timesheet\\} will always evaluate to true\\.$#"
-            count: 1
-            path: src/Controller/QuickEntryController.php
 
         -
             message: "#^Cannot call method format\\(\\) on DateTime\\|null\\.$#"

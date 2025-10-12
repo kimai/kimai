@@ -37,8 +37,7 @@ final class TeamFixtures extends Fixture
     }
 
     /**
-     * @param ObjectManager $manager
-     * @return array<int|string, User>
+     * @return non-empty-array<int|string, User>
      */
     private function getAllUsers(ObjectManager $manager): array
     {
@@ -49,12 +48,15 @@ final class TeamFixtures extends Fixture
             $all[$temp->getId()] = $temp;
         }
 
+        if (\count($all) === 0) {
+            throw new \Exception('Could not find any user');
+        }
+
         return $all;
     }
 
     /**
-     * @param ObjectManager $manager
-     * @return array<int|string, Project>
+     * @return non-empty-array<int|string, Project>
      */
     private function getAllProjects(ObjectManager $manager): array
     {
@@ -64,6 +66,10 @@ final class TeamFixtures extends Fixture
         $entries = $manager->getRepository(Project::class)->findAll();
         foreach ($entries as $temp) {
             $all[$temp->getId()] = $temp;
+        }
+
+        if (\count($all) === 0) {
+            throw new \Exception('Could not find any project');
         }
 
         return $all;
