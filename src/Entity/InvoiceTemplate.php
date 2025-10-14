@@ -172,6 +172,9 @@ class InvoiceTemplate
         return $this->company;
     }
 
+    /**
+     * @deprecated since 2.40
+     */
     public function setCompany(?string $company): void
     {
         $this->company = $company;

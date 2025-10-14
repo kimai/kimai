@@ -984,11 +984,6 @@ parameters:
             path: src/Customer/CustomerStatisticService.php
 
         -
-            message: "#^Method App\\\\DataFixtures\\\\InvoiceFixtures\\:\\:getInvoiceConfigs\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/DataFixtures/InvoiceFixtures.php
-
-        -
             message: "#^Method App\\\\DataFixtures\\\\TeamFixtures\\:\\:getGroups\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/DataFixtures/TeamFixtures.php
