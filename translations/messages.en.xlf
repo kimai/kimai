@@ -1952,7 +1952,11 @@
       </trans-unit>
       <trans-unit id="nsbR30p" resname="sending_company">
         <source>sending_company</source>
-        <target>Invoice Sender</target>
+        <target>Invoice issuer</target>
+      </trans-unit>
+      <trans-unit id="nsbR30psdfsdf" resname="sending_company.help">
+        <source>sending_company.help</source>
+        <target>This company is shown as the issuer on the invoice. The name, address and tax information will be used.</target>
       </trans-unit>
       <trans-unit id="Uzll0ps" resname="Customer portal">
         <source>Customer portal</source>
@@ -1985,6 +1989,10 @@
       <trans-unit id="eV6j76Q" resname="font">
         <source>font</source>
         <target>Font</target>
+      </trans-unit>
+      <trans-unit id="eV6j76Qasdf" resname="address_row">
+        <source>address_row</source>
+        <target>Line %row%</target>
       </trans-unit>
     </body>
   </file>

@@ -104,17 +104,17 @@
                     {% endif %}
                     <div class="row">
                         <div class="col-12">
-                            {{ form_row(form.address_line1) }}
+                            {{ form_row(form.address_line1, {attr: {placeholder: 'address_row'|trans({'%row%': 1})}}) }}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            {{ form_row(form.address_line2) }}
+                            {{ form_row(form.address_line2, {attr: {placeholder: 'address_row'|trans({'%row%': 2})}}) }}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            {{ form_row(form.address_line3) }}
+                            {{ form_row(form.address_line3, {attr: {placeholder: 'address_row'|trans({'%row%': 3})}}) }}
                         </div>
                     </div>
                     <div class="row">

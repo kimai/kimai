@@ -64,6 +64,7 @@ final class InvoiceTemplateForm extends AbstractType
                 'required' => true,
                 'label' => 'sending_company',
                 'placeholder' => '',
+                'help' => 'sending_company.help',
             ])
         ;
     }
