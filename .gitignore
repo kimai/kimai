@@ -62,3 +62,6 @@ yarn-error.log
 /nbproject/*
 
 .dockerhub.secrets
+
+# data e.g. db dumps
+.data

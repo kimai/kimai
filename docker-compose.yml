@@ -1,0 +1,47 @@
+services:
+  db:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: kimai
+      MYSQL_USER: kimai
+      MYSQL_PASSWORD: kimai
+      MYSQL_ROOT_PASSWORD: rootpass
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  kimai:
+    image: kimai/kimai2:apache
+    restart: unless-stopped
+    ports:
+      - "8001:8001"
+    environment:
+      # Database connection
+      DATABASE_URL: mysql://kimai:kimai@db/kimai?charset=utf8mb4&serverVersion=8.4
+
+      # Initial admin user (created on first run)
+      ADMINMAIL: admin@example.com
+      ADMINPASS: changemeonlogin
+
+      # Application settings
+      APP_SECRET: change_this_to_something_unique_and_random
+      TRUSTED_HOSTS: localhost,127.0.0.1
+
+      # Email settings (optional, can be configured later)
+      MAILER_FROM: kimai@example.com
+      MAILER_URL: null://null
+    volumes:
+      # Persist Kimai data (logs, plugins, etc.)
+      - kimai_data:/opt/kimai/var
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  mysql_data:
+  kimai_data:

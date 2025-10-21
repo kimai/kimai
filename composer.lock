@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "05802c03af8f523624d93297a3a658eb",
+    "content-hash": "d09476010e2800e64114006d62d75db2",
     "packages": [
         {
             "name": "azuyalabs/yasumi",
@@ -2413,6 +2413,75 @@
             "time": "2024-11-06T12:45:22+00:00"
         },
         {
+            "name": "keleo/customer-portal",
+            "version": "4.5.0",
+            "dist": {
+                "type": "zip",
+                "url": "var/packages/CustomerPortalBundle-4.5.0.zip",
+                "shasum": "a7c02e93834411f0cd74f8e729b10384f1f2eaab"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "kimai/kimai": "dev-main",
+                "phpstan/phpstan": "^2.0",
+                "phpstan/phpstan-deprecation-rules": "^2.0",
+                "phpstan/phpstan-doctrine": "^2.0",
+                "phpstan/phpstan-strict-rules": "^2.0",
+                "phpstan/phpstan-symfony": "^2.0"
+            },
+            "type": "kimai-plugin",
+            "extra": {
+                "kimai": {
+                    "require": 22500,
+                    "name": "Customer Portal"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "KimaiPlugin\\CustomerPortalBundle\\": ""
+                }
+            },
+            "scripts": {
+                "test": [
+                    "phpunit tests/"
+                ],
+                "codestyle-fix": [
+                    "vendor/bin/php-cs-fixer fix"
+                ],
+                "codestyle-check": [
+                    "vendor/bin/php-cs-fixer fix --dry-run --verbose --using-cache=no --show-progress=none --format=checkstyle"
+                ],
+                "phpstan": [
+                    "vendor/bin/phpstan analyse . --configuration=phpstan.neon"
+                ],
+                "linting": [
+                    "composer validate --strict --no-check-version",
+                    "@codestyle-check",
+                    "@phpstan"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabian Vetter",
+                    "email": "info@vettersolutions.de",
+                    "homepage": "https://vettersolutions.de"
+                },
+                {
+                    "name": "Kevin Papst",
+                    "homepage": "https://www.kimai.org"
+                }
+            ],
+            "description": "Share timesheets and statistics via URLs",
+            "homepage": "https://www.kimai.org/store/customer-portal.html",
+            "keywords": [
+                "kimai",
+                "kimai-plugin"
+            ]
+        },
+        {
             "name": "kevinpapst/tabler-bundle",
             "version": "1.9.0",
             "source": {
@@ -2486,6 +2555,73 @@
                 }
             ],
             "time": "2025-08-07T16:44:12+00:00"
+        },
+        {
+            "name": "laminas/laminas-ldap",
+            "version": "2.19.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laminas/laminas-ldap.git",
+                "reference": "309f4af659cb254e16fed2ba8f5e26afb479d419"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laminas/laminas-ldap/zipball/309f4af659cb254e16fed2ba8f5e26afb479d419",
+                "reference": "309f4af659cb254e16fed2ba8f5e26afb479d419",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ldap": "*",
+                "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0"
+            },
+            "conflict": {
+                "amphp/amp": "<2.6.4",
+                "zendframework/zend-ldap": "*"
+            },
+            "require-dev": {
+                "laminas/laminas-coding-standard": "~3.0.0",
+                "laminas/laminas-config": "^3.8.0",
+                "laminas/laminas-eventmanager": "^3.6.0",
+                "laminas/laminas-stdlib": "^3.15.0",
+                "php-mock/php-mock-phpunit": "^2.8.0",
+                "phpunit/phpunit": "^10.5.41",
+                "psalm/plugin-phpunit": "^0.18.4",
+                "vimeo/psalm": "^5.16"
+            },
+            "suggest": {
+                "laminas/laminas-eventmanager": "Laminas\\EventManager component"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Laminas\\Ldap\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Provides support for LDAP operations including but not limited to binding, searching and modifying entries in an LDAP directory",
+            "homepage": "https://laminas.dev",
+            "keywords": [
+                "laminas",
+                "ldap"
+            ],
+            "support": {
+                "chat": "https://laminas.dev/chat",
+                "docs": "https://docs.laminas.dev/laminas-ldap/",
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/laminas/laminas-ldap/issues",
+                "rss": "https://github.com/laminas/laminas-ldap/releases.atom",
+                "source": "https://github.com/laminas/laminas-ldap"
+            },
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "time": "2025-01-28T21:40:41+00:00"
         },
         {
             "name": "league/csv",
