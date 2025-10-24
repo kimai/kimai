@@ -1,0 +1,12 @@
+{% extends kimai_context.modalRequest ? 'form.html.twig' : 'base.html.twig' %}
+
+{% block main %}
+    {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+    {% set formOptions = {
+        'title': (entity.id is null ? 'create'|trans : 'edit'|trans),
+        'form': form,
+        'back': path('manage_shared_project_timesheets')
+    } %}
+    {% embed formEditTemplate with formOptions %}
+    {% endembed %}
+{% endblock %}

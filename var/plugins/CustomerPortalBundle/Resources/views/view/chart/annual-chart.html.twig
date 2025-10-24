@@ -1,0 +1,62 @@
+{% set chartId = 'statsPerMonthChart' %}
+{% set backgroundColor = config('theme.chart.background_color') %}
+{% set gridColor = config('theme.chart.grid_color') %}
+
+<div class="chart">
+    <canvas id="{{ chartId }}" style="height: {{ config('theme.chart.height') }}px;"></canvas>
+</div>
+
+<script type="text/javascript">
+    new Chart(document.getElementById('{{ chartId }}').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: [
+                {% for name in month_names() %}
+                '{{ name }}',
+                {% endfor %}
+            ],
+            datasets: [{
+                label: '{{ 'duration' | trans }}',
+                backgroundColor: '{{ backgroundColor }}',
+                data: [
+                    {% for i in 1..12 %}
+                    {{ (statsPerMonth[i].duration / 3600) | number_format(2, '.', '') }},
+                    {% endfor %}
+                ],
+                realData: [
+                    {% for i in 1..12 %}
+                    '{{ statsPerMonth[i].duration | duration }}',
+                    {% endfor %}
+                ]
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            responsive: true,
+            legend: false,
+            scales: {
+                y: {
+                    scaleLabel: {
+                        display: true,
+                        labelString: '{{ 'duration'|trans }}',
+                    },
+                    ticks: {
+                        beginAtZero: true
+                    },
+                    gridLines: {
+                        display: true,
+                        color: '{{ gridColor }}',
+                        lineWidth: 1
+                    }
+                },
+            },
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItem, data) {
+                        return data.datasets[tooltipItem.datasetIndex].realData[tooltipItem.index];
+                    }
+                }
+            },
+        },
+    });
+</script>

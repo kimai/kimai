@@ -1,0 +1,45 @@
+shared_project_timesheets:
+    title: Customer portal
+
+    manage:
+        form:
+            record_merge_mode: Merge records of one day
+            password_hint: Leave empty to set no password
+            table_options: Timesheet table options
+            entry_user_visible: Entry user visible
+            entry_rate_visible: Entry rate visible
+            chart_options: Chart options
+            annual_chart_visible: Annual chart visible
+            monthly_chart_visible: Monthly chart visible
+            statistics_options: Statistics options
+            budget_stats_visible: Budget statistics visible
+            time_budget_stats_visible: Time budget statistics visible
+        table:
+            record_merge_mode: Merge records
+            entry_user_visible: Entry user visible
+            entry_rate_visible: Entry rate visible
+            annual_chart_visible: Annual chart visible
+            monthly_chart_visible: Monthly chart visible
+
+    view:
+        table:
+            title: Details
+            empty: No entries available for this month
+            rate_hour: Hour rate
+            rate_total: Total rate
+        error:
+            title: An error occurred
+        chart:
+            per_month_title: Hours per month in %year%
+        details:
+            table: Table
+            chart: Chart
+        stats:
+            title: "Statistics"
+
+    model:
+        merge_record_mode:
+            none: No
+            merge: Yes, merge all
+            merge_use_first_of_day: Yes, merge all and use description of first record
+            merge_use_last_of_day: Yes, merge all and use description of last record

@@ -1,0 +1,41 @@
+{% extends 'datatable.html.twig' %}
+{% import "macros/widgets.html.twig" as widgets %}
+{% import "@CustomerPortal/manage/actions.html.twig" as actions %}
+
+{% block datatable_row_attr %} class="modal-ajax-form open-edit" data-href="{{ url('update_shared_project_timesheets', {sharedProject: entry.id, shareKey: entry.shareKey}) }}"{% endblock %}
+
+{% block datatable_column_value %}
+    {% if column == 'name' %}
+        {{ entry.project.name ?? entry.customer.name }}
+    {% elseif column == 'type' %}
+        <i class="{% if entry.getCustomer() != null %}{{ 'customer'|icon(false) }}{% else %}{{ 'project'|icon(false) }}{% endif %}" title="{{ entry.getType() | trans }}"></i>
+    {% elseif column == 'url' %}
+        {% if entry.shareKey %}
+            {% set p_url = url('customer_portal_view', {shareKey: entry.shareKey}) %}
+            <a href="{{ p_url }}" target="_blank">
+                {{ p_url }}
+            </a>
+        {% else %}
+            -
+        {% endif %}
+    {% elseif column == 'password' %}
+        {{ widgets.label_boolean(entry.password != null) }}
+    {% elseif column == 'record_merge_mode' %}
+        {% if entry.hasRecordMerging() %}
+            {{ widgets.label('yes'|trans, 'success', (RecordMergeMode[entry.recordMergeMode] | trans) ) }}
+        {% else %}
+            {{ widgets.label_boolean(entry.hasRecordMerging()) }}
+        {% endif %}
+    {% elseif column == 'entry_user_visible' %}
+        {{ widgets.label_boolean(entry.entryUserVisible) }}
+    {% elseif column == 'entry_rate_visible' %}
+        {{ widgets.label_boolean(entry.entryRateVisible) }}
+    {% elseif column == 'annual_chart_visible' %}
+        {{ widgets.label_boolean(entry.annualChartVisible) }}
+    {% elseif column == 'monthly_chart_visible' %}
+        {{ widgets.label_boolean(entry.monthlyChartVisible) }}
+    {% elseif column == 'actions' %}
+        {% set event = actions(app.user, 'shared_project', 'index', {'sharedProject': entry}) %}
+        {{ widgets.table_actions(event.actions) }}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,45 @@
+shared_project_timesheets:
+    title: Kunden Portal
+
+    manage:
+        form:
+            record_merge_mode: Zeiten eines Tages zusammenführen
+            password_hint: Feld leer lassen um kein Passwort festzulegen
+            table_options: Detailtabelle - Optionen
+            entry_user_visible: Benutzer sichtbar
+            entry_rate_visible: Kosten sichtbar
+            chart_options: Diagramme - Optionen
+            annual_chart_visible: Jahresdiagramm sichtbar
+            monthly_chart_visible: Monatsdiagramm sichtbar
+            statistics_options: Projektstatistiken - Optionen
+            budget_stats_visible: Budgetstatistiken sichtbar
+            time_budget_stats_visible: Zeitbudgetstatistiken sichtbar
+        table:
+            record_merge_mode: Zeiten zusammenführen
+            entry_user_visible: Benutzer sichtbar
+            entry_rate_visible: Kosten sichtbar
+            annual_chart_visible: Jahresdiagramm sichtbar
+            monthly_chart_visible: Monatsdiagramm sichtbar
+
+    view:
+        table:
+            title: Details
+            empty: Keine Einträge verfügbar für diesen Monat
+            rate_hour: Stundenlohn
+            rate_total: Lohn gesamt
+        error:
+            title: Ein Fehler ist aufgetreten
+        chart:
+            per_month_title: Stunden pro Monat im Jahr %year%
+        details:
+            table: Tabelle
+            chart: Diagramm
+        stats:
+            title: "Statistiken"
+
+    model:
+        merge_record_mode:
+            none: Nein
+            merge: Ja, alle zusammenführen
+            merge_use_first_of_day: Ja, alle zusammenführen und Beschreibung des ersten Eintrags wählen
+            merge_use_last_of_day: Ja, alle zusammenführen und Beschreibung des letzten Eintrags wählen

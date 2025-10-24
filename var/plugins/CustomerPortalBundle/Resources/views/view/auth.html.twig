@@ -1,0 +1,25 @@
+{% extends '@theme/fullpage.html.twig' %}
+
+{% block page_content %}
+    <div class="container container-tight py-4">
+        <div class="text-center mb-4">
+            <h1>{{ 'security.unlock.button' | trans }}</h1>
+        </div>
+
+        <div class="card card-md">
+            <div class="card-body">
+                <form action="" method="POST">
+                    {% if invalidPassword %}
+                        <div class="alert alert-important alert-danger">{{ 'Invalid credentials.' | trans({}, 'security') }}</div>
+                    {% endif %}
+
+                    <div class="mb-3">
+                        <input type="password" id="spt-password" name="spt-password" class="form-control" placeholder="{{ 'password' | trans }}" required="required">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">{{ 'Sign In' | trans({}, 'TablerBundle') }}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

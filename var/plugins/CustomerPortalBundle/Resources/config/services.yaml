@@ -1,0 +1,26 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    KimaiPlugin\CustomerPortalBundle\:
+        resource: '../../*'
+        exclude:
+            - '../../Entity/'
+            - '../../Migrations/'
+            - '../../Model/'
+            - '../../Resources/'
+            - '../../tests/'
+
+    KimaiPlugin\CustomerPortalBundle\Controller\:
+        resource: '../../Controller'
+        tags: ['controller.service_arguments']
+
+    KimaiPlugin\CustomerPortalBundle\Command\InstallCommand:
+        arguments: ['%kimai.plugin_dir%']
+
+    KimaiPlugin\CustomerPortalBundle\Repository\SharedProjectTimesheetRepository:
+        class:     Doctrine\ORM\EntityRepository
+        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        arguments: ['KimaiPlugin\CustomerPortalBundle\Entity\SharedProjectTimesheet']

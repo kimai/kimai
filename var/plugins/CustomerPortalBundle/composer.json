@@ -1,0 +1,67 @@
+{
+    "name": "keleo/customer-portal",
+    "description": "Share timesheets and statistics via URLs",
+    "homepage": "https://www.kimai.org/store/customer-portal.html",
+    "type": "kimai-plugin",
+    "version": "4.5.0",
+    "keywords": [
+        "kimai",
+        "kimai-plugin"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fabian Vetter",
+            "email": "info@vettersolutions.de",
+            "homepage": "https://vettersolutions.de"
+        },
+        {
+            "name": "Kevin Papst",
+            "homepage": "https://www.kimai.org"
+        }
+    ],
+    "extra": {
+        "kimai": {
+            "require": 22500,
+            "name": "Customer Portal"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "KimaiPlugin\\CustomerPortalBundle\\": ""
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": false,
+            "symfony/runtime": false
+        },
+        "platform": {
+            "php": "8.1.3"
+        },
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "scripts": {
+        "test": "phpunit tests/",
+        "codestyle-fix": "vendor/bin/php-cs-fixer fix",
+        "codestyle-check": "vendor/bin/php-cs-fixer fix --dry-run --verbose --using-cache=no --show-progress=none --format=checkstyle",
+        "phpstan": "vendor/bin/phpstan analyse . --configuration=phpstan.neon",
+        "linting": [
+            "composer validate --strict --no-check-version",
+            "@codestyle-check",
+            "@phpstan"
+        ]
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "kimai/kimai": "dev-main",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "phpstan/phpstan-doctrine": "^2.0",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "phpstan/phpstan-symfony": "^2.0"
+    }
+}
