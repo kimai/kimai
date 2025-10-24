@@ -18,8 +18,8 @@ class WebhookService
     public function __construct(
         private readonly HttpClientInterface $httpClient,
         private readonly LoggerInterface $logger,
-        private readonly string $webhookUrl,
-        private readonly string $webhookSecret = ''
+        private readonly ?string $webhookUrl = null,
+        private readonly ?string $webhookSecret = null
     ) {
     }
 
