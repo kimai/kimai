@@ -33,8 +33,6 @@ services:
       NOTION_TASK_DATABASE_ID: ${NOTION_TASK_DATABASE_ID:-}
       NOTION_WORKSPACE: ${NOTION_WORKSPACE:-}
     volumes:
-      # Mount plugins from local directory
-      - ./var/plugins:/opt/kimai/var/plugins:ro
       # Only persist truly dynamic data
       - kimai_logs:/opt/kimai/var/logs
       - kimai_cache:/opt/kimai/var/cache
