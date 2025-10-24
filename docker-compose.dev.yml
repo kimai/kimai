@@ -1,22 +1,4 @@
 services:
-  db:
-    image: mysql:8.4
-    restart: unless-stopped
-    ports:
-      - "3306:3306" # Expose MySQL port for local access
-    environment:
-      MYSQL_DATABASE: kimai
-      MYSQL_USER: kimai
-      MYSQL_PASSWORD: kimai
-      MYSQL_ROOT_PASSWORD: rootpass
-    volumes:
-      - mysql_dev_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
   kimai:
     build:
       context: .
@@ -30,38 +12,46 @@ services:
     ports:
       - "8001:8001"
     environment:
-      # Database connection
-      DATABASE_URL: mysql://kimai:kimai@db/kimai?charset=utf8mb4&serverVersion=8.4
+      # Database connection - Using AWS RDS MySQL
+      DATABASE_URL: ${DATABASE_URL}
 
       # Initial admin user (created on first run)
-      ADMINMAIL: admin@example.com
-      ADMINPASS: changemeonlogin
+      ADMINMAIL: ${ADMINMAIL:-admin@example.com}
+      ADMINPASS: ${ADMINPASS:-changemeonlogin}
 
       # Application settings
-      APP_SECRET: change_this_to_something_unique_and_random
-      APP_ENV: dev
-      TRUSTED_HOSTS: localhost,127.0.0.1
+      APP_SECRET: ${APP_SECRET}
+      APP_ENV: ${APP_ENV:-dev}
+      TRUSTED_HOSTS: ${TRUSTED_HOSTS:-localhost,127.0.0.1}
 
       # Email settings (optional, can be configured later)
-      MAILER_FROM: kimai@example.com
-      MAILER_URL: null://null
+      MAILER_FROM: ${MAILER_FROM:-kimai@example.com}
+      MAILER_URL: ${MAILER_URL:-null://null}
+
+      # Webhook settings (optional)
+      WEBHOOK_URL: ${WEBHOOK_URL:-}
+      WEBHOOK_SECRET: ${WEBHOOK_SECRET:-}
+
+      # Notion integration (optional)
+      NOTION_API_KEY: ${NOTION_API_KEY:-}
+      NOTION_PROJECT_DATABASE_ID: ${NOTION_PROJECT_DATABASE_ID:-}
+      NOTION_TIME_ENTRY_DATABASE_ID: ${NOTION_TIME_ENTRY_DATABASE_ID:-}
+      NOTION_TASK_DATABASE_ID: ${NOTION_TASK_DATABASE_ID:-}
+      NOTION_WORKSPACE: ${NOTION_WORKSPACE:-}
 
       # Development settings
-      memory_limit: 512M
+      memory_limit: ${MEMORY_LIMIT:-512M}
     volumes:
       # Mount your local code for development
-      # WARNING: This will override the container's code
-      # Only uncomment if you want to modify PHP code on the fly
-      # - ./src:/opt/kimai/src
-      # - ./templates:/opt/kimai/templates
-      # - ./config:/opt/kimai/config
+      - ./composer.json:/opt/kimai/composer.json
+      - ./composer.lock:/opt/kimai/composer.lock
+      - ./var/plugins:/opt/kimai/var/plugins
+      - ./var/packages:/opt/kimai/var/packages
+      # Mount templates for live editing
+      - ./templates:/opt/kimai/templates
 
       # Persist Kimai data (logs, plugins, etc.)
       - kimai_dev_data:/opt/kimai/var
-    depends_on:
-      db:
-        condition: service_healthy
 
 volumes:
-  mysql_dev_data:
   kimai_dev_data:

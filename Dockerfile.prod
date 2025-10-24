@@ -1,0 +1,11 @@
+FROM kimai/kimai2:apache
+
+# Copy your custom plugins directly into the image
+COPY var/plugins/WebhookBundle /opt/kimai/var/plugins/WebhookBundle
+COPY var/plugins/CustomerPortalBundle /opt/kimai/var/plugins/CustomerPortalBundle
+
+# Set proper permissions
+RUN chown -R www-data:www-data /opt/kimai/var/plugins
+
+# Note: We don't run cache reload here because the database isn't available at build time.
+# The official kimai entrypoint will handle cache warming on container start.
