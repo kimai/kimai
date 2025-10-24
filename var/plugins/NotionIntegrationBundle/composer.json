@@ -1,0 +1,20 @@
+{
+  "name": "kimai/notion-integration-bundle",
+  "description": "Notion Integration for Kimai",
+  "homepage": "https://www.kimai.org/",
+  "type": "kimai-plugin",
+  "version": "1.0.0",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Kimai Community",
+      "homepage": "https://www.kimai.org"
+    }
+  ],
+  "extra": {
+    "kimai": {
+      "require": 20000,
+      "name": "Notion Integration Bundle"
+    }
+  }
+}

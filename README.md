@@ -7,8 +7,8 @@ docker compose -f docker-compose.dev.yml up -d
 # WIP
 
 [x] It is too slow for creating time entries. Need more async
-[x] we need to show notion project NAME and ID. Both properties?
+[] we need to show notion project NAME and ID. Both properties?
 [x] Show link to the page in notion
 [] run script to backfill notion project name to all projects
 [x] we need to update the existing time entries if they change
-[x] remove error console logs
+[] remove error console logs

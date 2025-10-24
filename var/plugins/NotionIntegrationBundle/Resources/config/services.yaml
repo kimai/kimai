@@ -1,0 +1,34 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    KimaiPlugin\NotionIntegrationBundle\:
+        resource: "../../*"
+        exclude: "../../{Resources}"
+
+    KimaiPlugin\NotionIntegrationBundle\Service\WebhookService:
+        arguments:
+            $webhookUrl: "%env(default::WEBHOOK_URL)%"
+            $webhookSecret: "%env(default::WEBHOOK_SECRET)%"
+
+    KimaiPlugin\NotionIntegrationBundle\Service\NotionService:
+        arguments:
+            $notionApiKey: "%env(default::NOTION_API_KEY)%"
+            $notionProjectDatabaseId: "%env(default::NOTION_PROJECT_DATABASE_ID)%"
+            $notionTimeEntryDatabaseId: "%env(default::NOTION_TIME_ENTRY_DATABASE_ID)%"
+            $notionTaskDatabaseId: "%env(default::NOTION_TASK_DATABASE_ID)%"
+
+    KimaiPlugin\NotionIntegrationBundle\EventSubscriber\NotionTimesheetSubscriber:
+        arguments:
+            $projectDir: "%kernel.project_dir%"
+            $notionApiKey: "%env(default::NOTION_API_KEY)%"
+
+    KimaiPlugin\NotionIntegrationBundle\EventSubscriber\NotionTimesheetMetaSubscriber:
+        arguments:
+            $notionWorkspace: "%env(default::NOTION_WORKSPACE)%"
+
+    KimaiPlugin\NotionIntegrationBundle\Command\SyncNotionTimeEntryCommand:
+        arguments:
+            $notionWorkspace: "%env(default::NOTION_WORKSPACE)%"

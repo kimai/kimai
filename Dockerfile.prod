@@ -1,7 +1,7 @@
 FROM kimai/kimai2:apache
 
 # Copy your custom plugins directly into the image
-COPY var/plugins/WebhookBundle /opt/kimai/var/plugins/WebhookBundle
+COPY var/plugins/NotionIntegrationBundle /opt/kimai/var/plugins/NotionIntegrationBundle
 COPY var/plugins/CustomerPortalBundle /opt/kimai/var/plugins/CustomerPortalBundle
 
 # Set proper permissions
