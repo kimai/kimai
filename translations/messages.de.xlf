@@ -1954,7 +1954,7 @@
         <source>sending_company</source>
         <target>Absender der Rechnung</target>
       </trans-unit>
-      <trans-unit id="nsbR30psdfsdf" resname="sending_company.help">
+      <trans-unit id="BmDRYT." resname="sending_company.help">
         <source>sending_company.help</source>
         <target>Dieses Unternehmen wird auf der Rechnung als Aussteller angegeben. Der Name, die Adresse und die Steuerinformationen werden verwendet.</target>
       </trans-unit>
@@ -1990,7 +1990,7 @@
         <source>font</source>
         <target>Schriftart</target>
       </trans-unit>
-      <trans-unit id="eV6j76Qasdf" resname="address_row">
+      <trans-unit id="PciSBv9" resname="address_row">
         <source>address_row</source>
         <target>Zeile %row%</target>
       </trans-unit>
