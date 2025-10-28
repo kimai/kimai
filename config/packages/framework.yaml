@@ -27,6 +27,7 @@ framework:
     session:
         handler_id: App\Security\SessionHandler
         name: KIMAISESSID
+        cookie_domain: '%env(KIMAI_COOKIE_DOMAIN)%'
         cookie_secure: auto
         cookie_samesite: lax
         cookie_httponly: true

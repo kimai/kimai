@@ -46,6 +46,7 @@ security:
                 secret: '%kernel.secret%'
                 lifetime: 604800
                 path: /
+                domain: '%env(KIMAI_COOKIE_DOMAIN)%'
                 always_remember_me: true
 
             # activate all configured user provider
