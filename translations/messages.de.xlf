@@ -1770,6 +1770,10 @@
         <source>api_token_hidden</source>
         <target>Dies ist das einzige Mal, dass der Token angezeigt wird! Bewahren Sie ihn gut auf und vergewissern Sie sich, dass Sie ihn notiert haben, bevor Sie dieses Fenster schließen.</target>
       </trans-unit>
+      <trans-unit id="YXBpX0h" resname="api_token_qr_hint">
+        <source>api_token_qr_hint</source>
+        <target>Wofür ist dieser QR-Code?</target>
+      </trans-unit>
       <trans-unit id="YXBpX3R" resname="api_token_qr_tooltip">
         <source>api_token_qr_tooltip</source>
         <target>Verwenden Sie diesen QR-Code, um den Arbeitsbereich in mobilen Apps zu konfigurieren.</target>

@@ -1770,6 +1770,10 @@
         <source>api_token_hidden</source>
         <target>This is the only time this key will ever be displayed! So keep it safe and make sure you've copied it down before closing this window.</target>
       </trans-unit>
+      <trans-unit id="YXBpX0h" resname="api_token_qr_hint">
+        <source>api_token_qr_hint</source>
+        <target>What is this QR Code for?</target>
+      </trans-unit>
       <trans-unit id="YXBpX3R" resname="api_token_qr_tooltip">
         <source>api_token_qr_tooltip</source>
         <target>Use this QR Code to configure the workspace in mobile apps.</target>
