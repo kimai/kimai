@@ -26,6 +26,7 @@ framework:
     # Remove or comment this section to explicitly disable session support.
     session:
         handler_id: App\Security\SessionHandler
+        name: KIMAISESSID
         cookie_secure: auto
         cookie_samesite: lax
         cookie_httponly: true
