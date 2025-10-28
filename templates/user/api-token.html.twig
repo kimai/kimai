@@ -28,15 +28,15 @@
                     <h3 class="card-title">{{ created_token.name }}</h3>
                     <p class="text-secondary"></p>
                     {% if qr_code is not null %}
-                    <p>
-                        <img style="max-width: 200px; max-height: 200px;" src="{{ qr_code.dataUri }}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'api_token_qr_tooltip'|trans }}" />
-                    </p>
-                    <p>
-                        <span data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'api_token_qr_tooltip'|trans }}">
-                            <i class="{{ 'info'|icon(false) }}"></i>
-                            <em>{{ 'api_token_qr_hint'|trans }}</em>
-                        </span>
-                    </p>
+                        <p>
+                            <img style="max-width: 200px; max-height: 200px;" src="{{ qr_code.dataUri }}" alt="{{ 'api_token_qr_tooltip'|trans }}" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'api_token_qr_tooltip'|trans }}" />
+                        </p>
+                        <p>
+                            <span data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'api_token_qr_tooltip'|trans }}">
+                                <i class="{{ 'info'|icon(false) }}"></i>
+                                <em>{{ 'api_token_qr_hint'|trans }}</em>
+                            </span>
+                        </p>
                     {% endif %}
                     <p>{{ 'api_token_hidden'|trans }}</p>
                     <div class="codeblock">
