@@ -1772,7 +1772,7 @@
       </trans-unit>
       <trans-unit id="YXBpX3R" resname="api_token_qr_tooltip">
         <source>api_token_qr_tooltip</source>
-        <target>Use this QR Code to configure the workspace in your Kimai Mobile app.</target>
+        <target>Use this QR Code to configure the workspace in mobile apps.</target>
       </trans-unit>
       <trans-unit id="TCr2ArH" resname="api_password_deprecated">
         <source>api_password_deprecated</source>
