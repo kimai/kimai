@@ -54,10 +54,14 @@ interface CalculatorInterface
 
     /**
      * Returns the percentage for the value-added tax (VAT) calculation.
-     *
-     * @return float
+     * @deprecated use getTaxRows() instead
      */
     public function getVat(): float;
+
+    /**
+     * @return array<TaxRow>
+     */
+    public function getTaxRows(): array;
 
     /**
      * Returns the total amount of worked time in seconds.

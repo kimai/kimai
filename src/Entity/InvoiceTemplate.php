@@ -262,6 +262,21 @@ class InvoiceTemplate
         $this->language = $language;
     }
 
+    /**
+     * @return Tax[]
+     */
+    public function getTaxRates(): array
+    {
+        // TODO make me configurable via UI
+        $tax = new Tax(
+            TaxType::STANDARD,
+            'VAT',
+            $this->vat ?? 0.00
+        );
+
+        return [$tax];
+    }
+
     public function __toString(): string
     {
         return $this->getName();
