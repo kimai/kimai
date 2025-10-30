@@ -32,13 +32,11 @@ use Symfony\Component\DependencyInjection\Attribute\Exclude;
 #[Exclude]
 final class InvoiceModel
 {
-    private ?Customer $customer = null;
     private ?InvoiceQuery $query = null;
     /**
      * @var ExportableItem[]
      */
     private array $entries = [];
-    private ?InvoiceTemplate $template = null;
     private ?CalculatorInterface $calculator = null;
     private ?NumberGeneratorInterface $generator = null;
     private \DateTimeInterface $invoiceDate;
