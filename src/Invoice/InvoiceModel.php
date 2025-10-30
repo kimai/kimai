@@ -23,11 +23,13 @@ use App\Invoice\Hydrator\InvoiceModelProjectHydrator;
 use App\Invoice\Hydrator\InvoiceModelUserHydrator;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\InvoiceQuery;
+use Symfony\Component\DependencyInjection\Attribute\Exclude;
 
 /**
  * InvoiceModel is the ONLY value that a RendererInterface receives for generating the invoice,
  * besides the InvoiceDocument which is used as a "template".
  */
+#[Exclude]
 final class InvoiceModel
 {
     private ?Customer $customer = null;
@@ -61,7 +63,14 @@ final class InvoiceModel
     /**
      * @internal use InvoiceModelFactory
      */
-    public function __construct(InvoiceFormatter $formatter, CustomerStatisticService $customerStatistic, ProjectStatisticService $projectStatistic, ActivityStatisticService $activityStatistic)
+    public function __construct(
+        InvoiceFormatter $formatter,
+        CustomerStatisticService $customerStatistic,
+        ProjectStatisticService $projectStatistic,
+        ActivityStatisticService $activityStatistic,
+        private readonly Customer $customer,
+        private readonly InvoiceTemplate $template,
+    )
     {
         $this->invoiceDate = new \DateTimeImmutable();
         $this->formatter = $formatter;
@@ -138,24 +147,14 @@ final class InvoiceModel
         return $this;
     }
 
-    public function getTemplate(): ?InvoiceTemplate
+    public function getTemplate(): InvoiceTemplate
     {
         return $this->template;
     }
 
-    public function setTemplate(InvoiceTemplate $template): void
-    {
-        $this->template = $template;
-    }
-
-    public function getCustomer(): ?Customer
+    public function getCustomer(): Customer
     {
         return $this->customer;
-    }
-
-    public function setCustomer(Customer $customer): void
-    {
-        $this->customer = $customer;
     }
 
     /**
