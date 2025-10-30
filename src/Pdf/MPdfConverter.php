@@ -110,11 +110,21 @@ final class MPdfConverter implements HtmlToPdfConverter
             unset($options['associated_files']);
         }
 
+        $additionalXmpRdf = null;
+        if (\array_key_exists('additional_xmp_rdf', $options) && \is_string($options['additional_xmp_rdf'])) {
+            $additionalXmpRdf = $options['additional_xmp_rdf'];
+            unset($options['additional_xmp_rdf']);
+        }
+
         $mpdf = new Mpdf($options);
         $mpdf->creator = Constants::SOFTWARE;
 
         if (\count($associatedFiles) > 0) {
             $mpdf->SetAssociatedFiles($associatedFiles);
+        }
+
+        if ($additionalXmpRdf !== null) {
+            $mpdf->SetAdditionalXmpRdf($additionalXmpRdf);
         }
 
         return $mpdf;
