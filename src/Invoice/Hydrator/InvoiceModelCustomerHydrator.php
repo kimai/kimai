@@ -12,6 +12,7 @@ namespace App\Invoice\Hydrator;
 use App\Customer\CustomerStatisticService;
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
+use Symfony\Component\Intl\Countries;
 
 final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
 {
@@ -26,6 +27,8 @@ final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
         $customer = $model->getCustomer();
 
         $prefix = 'customer.';
+        $language = $model->getTemplate()->getLanguage();
+        $country = $customer->getCountry();
 
         $values = [
             $prefix . 'id' => $customer->getId(),
@@ -41,7 +44,8 @@ final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
             $prefix . 'vat' => $customer->getVatId() ?? '', // deprecated since 2.0.15
             $prefix . 'vat_id' => $customer->getVatId() ?? '',
             $prefix . 'number' => $customer->getNumber() ?? '',
-            $prefix . 'country' => $customer->getCountry(),
+            $prefix . 'country' => $country,
+            $prefix . 'country_name' => $country !== null ? Countries::getName($country, $language) : null,
             $prefix . 'homepage' => $customer->getHomepage() ?? '',
             $prefix . 'comment' => $customer->getComment() ?? '',
             $prefix . 'email' => $customer->getEmail() ?? '',
