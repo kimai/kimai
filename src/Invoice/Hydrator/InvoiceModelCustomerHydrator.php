@@ -53,6 +53,7 @@ final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
             $prefix . 'phone' => $customer->getPhone() ?? '',
             $prefix . 'mobile' => $customer->getMobile() ?? '',
             $prefix . 'invoice_text' => $customer->getInvoiceText() ?? '',
+            $prefix . 'buyer_reference' => $customer->getBuyerReference() ?? '',
         ];
 
         $end = $model->getQuery()?->getEnd();

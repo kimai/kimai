@@ -1994,6 +1994,10 @@
         <source>address_row</source>
         <target>Line %row%</target>
       </trans-unit>
+      <trans-unit id="NthM4Fj" resname="buyerReference">
+        <source>buyerReference</source>
+        <target>Buyer reference</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

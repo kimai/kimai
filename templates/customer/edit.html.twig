@@ -140,6 +140,9 @@
                 {% import "macros/widgets.html.twig" as widgets %}
                 {% block title %}{{ 'invoices'|trans }}{% endblock %}
                 {% block body %}
+                    {% if form.buyerReference is defined %}
+                        {{ form_row(form.buyerReference) }}
+                    {% endif %}
                     {% if form.invoiceTemplate is defined %}
                         {{ form_row(form.invoiceTemplate) }}
                     {% endif %}

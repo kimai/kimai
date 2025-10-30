@@ -147,6 +147,10 @@ class CustomerEditForm extends AbstractType
                 'help' => 'help.invoiceTemplate_customer',
                 'required' => false,
             ])
+            ->add('buyerReference', TextType::class, [
+                'label' => 'buyerReference',
+                'required' => false,
+            ])
         ;
 
         if ($isNew) {

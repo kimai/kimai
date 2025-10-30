@@ -227,6 +227,12 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Groups(['Customer_Entity'])]
     #[Exporter\Expose(label: 'city')]
     private ?string $city = null;
+    #[ORM\Column(name: 'buyer_reference', type: Types::STRING, length: 50, nullable: true)]
+    #[Assert\Length(max: 50)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Customer_Entity'])]
+    #[Exporter\Expose(label: 'buyer_reference')]
+    private ?string $buyerReference = null;
 
     public function __construct(string $name)
     {
@@ -593,6 +599,16 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     public function setCity(?string $city): void
     {
         $this->city = $city;
+    }
+
+    public function getBuyerReference(): ?string
+    {
+        return $this->buyerReference;
+    }
+
+    public function setBuyerReference(?string $buyerReference): void
+    {
+        $this->buyerReference = $buyerReference;
     }
 
     public function __toString(): string
