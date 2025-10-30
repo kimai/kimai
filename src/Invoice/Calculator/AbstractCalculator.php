@@ -90,8 +90,6 @@ abstract class AbstractCalculator
 
     /**
      * Returns the total amount of worked time in seconds.
-     *
-     * @return int
      */
     public function getTimeWorked(): int
     {

@@ -26,29 +26,21 @@ interface CalculatorInterface
 
     /**
      * Set the invoice model and can be used to fetch the customer.
-     *
-     * @param InvoiceModel $model
      */
     public function setModel(InvoiceModel $model): void;
 
     /**
      * Returns the subtotal before taxes.
-     *
-     * @return float
      */
     public function getSubtotal(): float;
 
     /**
      * Returns the tax amount for this invoice.
-     *
-     * @return float
      */
     public function getTax(): float;
 
     /**
      * Returns the total amount for this invoice including taxes.
-     *
-     * @return float
      */
     public function getTotal(): float;
 
@@ -75,8 +67,6 @@ interface CalculatorInterface
      *
      * Prefix it with your company name followed by a hyphen (e.g. "acme-"),
      * if this is a third-party calculator.
-     *
-     * @return string
      */
     public function getId(): string;
 }
