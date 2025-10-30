@@ -155,17 +155,10 @@ final class InvoiceModel
         return $this->customer;
     }
 
-    /**
-     * Requires the template and invoice date to be set
-     */
     public function getDueDate(): \DateTimeInterface
     {
         $date = \DateTimeImmutable::createFromInterface($this->getInvoiceDate());
-
-        $dueDays = 14;
-        if ($this->getTemplate() !== null) {
-            $dueDays = $this->getTemplate()->getDueDays();
-        }
+        $dueDays = $this->template->getDueDays();
 
         return $date->add(new \DateInterval('P' . $dueDays . 'D'));
     }
@@ -243,8 +236,8 @@ final class InvoiceModel
 
     public function getCurrency(): string
     {
-        if (null !== $this->getCustomer() && $this->getCustomer()->getCurrency() !== null) {
-            return $this->getCustomer()->getCurrency();
+        if ($this->customer->getCurrency() !== null) {
+            return $this->customer->getCurrency();
         }
 
         return Customer::DEFAULT_CURRENCY;

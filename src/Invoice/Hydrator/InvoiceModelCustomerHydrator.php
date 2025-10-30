@@ -25,10 +25,6 @@ final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
     {
         $customer = $model->getCustomer();
 
-        if (null === $customer) {
-            return [];
-        }
-
         $prefix = 'customer.';
 
         $values = [

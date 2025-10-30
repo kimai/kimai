@@ -20,14 +20,15 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
     public function hydrate(InvoiceModel $model): array
     {
         $template = $model->getTemplate();
-        if ($template === null) {
-            throw new \InvalidArgumentException('InvoiceModel needs a template');
+        $calculator = $model->getCalculator();
+        if ($calculator === null) {
+            throw new \InvalidArgumentException('InvoiceModel needs a calculator');
         }
 
         $currency = $model->getCurrency();
-        $tax = $model->getCalculator()->getTax();
-        $total = $model->getCalculator()->getTotal();
-        $subtotal = $model->getCalculator()->getSubtotal();
+        $tax = $calculator->getTax();
+        $total = $calculator->getTotal();
+        $subtotal = $calculator->getSubtotal();
         $formatter = $model->getFormatter();
         $language = $template->getLanguage();
 
