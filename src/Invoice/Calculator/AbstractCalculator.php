@@ -11,6 +11,7 @@ namespace App\Invoice\Calculator;
 
 use App\Invoice\InvoiceItem;
 use App\Invoice\InvoiceModel;
+use App\Invoice\TaxRow;
 
 abstract class AbstractCalculator
 {
