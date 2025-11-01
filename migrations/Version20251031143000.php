@@ -31,7 +31,7 @@ final class Version20251031143000 extends AbstractMigration
     public function down(Schema $schema): void
     {
         $this->addSql('ALTER TABLE kimai2_invoice_templates_meta DROP FOREIGN KEY FK_A165B0555DA0FB8');
-        $this->addSql('DROP TABLE kimai2_invoice_templates_meta');
+        $schema->dropTable('kimai2_invoice_templates_meta');
     }
 
     public function isTransactional(): bool
