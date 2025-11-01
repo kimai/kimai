@@ -1722,11 +1722,6 @@ parameters:
             path: Invoice/Renderer/XlsxRendererTest.php
 
         -
-            message: "#^Cannot call method getLanguage\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: Invoice/ServiceInvoiceTest.php
-
-        -
             message: "#^Cannot call method getTotal\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
             count: 4
             path: Invoice/ServiceInvoiceTest.php
