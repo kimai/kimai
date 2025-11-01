@@ -73,6 +73,9 @@ class InvoiceTemplateTest extends TestCase
         $sut->setCalculator('fooBar');
         self::assertEquals('fooBar', $sut->getCalculator());
 
+        $sut->setCompany('looney toon'); // @phpstan-ignore method.deprecated
+        self::assertEquals('looney toon', $sut->getCompany());
+
         self::assertEquals($sut, clone $sut);
     }
 
