@@ -63,6 +63,7 @@ class InvoiceModelDefaultHydratorTest extends TestCase
             'invoice.tax_hide',
             'invoice.tax_nc',
             'invoice.tax_plain',
+            'invoice.tax_rows',
             'invoice.total_time',
             'invoice.duration_decimal',
             'invoice.first',
