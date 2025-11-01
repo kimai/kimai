@@ -492,6 +492,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'addressLine3' => '@string', // since 2.32
                     'city' => '@string', // since 2.32
                     'postCode' => '@string', // since 2.32
+                    'buyerReference' => '@string', // since 2.41
                 ];
 
                 // if a project is embedded
