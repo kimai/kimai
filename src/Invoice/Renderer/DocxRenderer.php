@@ -29,7 +29,7 @@ final class DocxRenderer extends AbstractRenderer implements RendererInterface
         $template = new TemplateProcessor($document->getFilename());
 
         foreach ($model->toArray() as $search => $replace) {
-            if (!\is_array($replace)) {
+            if (\is_array($replace)) {
                 // TODO tax rows
                 continue;
             }
@@ -54,7 +54,7 @@ final class DocxRenderer extends AbstractRenderer implements RendererInterface
         foreach ($model->getCalculator()->getEntries() as $entry) {
             $values = $model->itemToArray($entry);
             foreach ($values as $search => $replace) {
-                if (!\is_array($replace)) {
+                if (\is_array($replace)) {
                     // TODO tax rows
                     continue;
                 }
