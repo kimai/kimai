@@ -47,10 +47,10 @@ final class InvoiceFixtures extends Fixture
             $template->setDueDays($invoiceConfig[7]);
             $template->setPaymentTerms($invoiceConfig[8]);
             $template->setLanguage('en');
-            $template->setAddress($this->generateAddress($faker));
+            $template->setAddress($this->generateAddress($faker)); // @phpstan-ignore method.deprecated
             $template->setContact($this->generateContact($faker));
             $template->setPaymentDetails($this->generatePaymentDetails($faker));
-            $template->setVatId($faker->creditCardNumber());
+            $template->setVatId($faker->creditCardNumber()); // @phpstan-ignore method.deprecated
 
             $manager->persist($template);
             $manager->flush();

@@ -140,6 +140,9 @@ class InvoiceTemplate implements EntityWithMetaFields
         return $this->address;
     }
 
+    /**
+     * @deprecated since 2.41
+     */
     public function setAddress(?string $address): void
     {
         $this->address = $address;
@@ -185,7 +188,7 @@ class InvoiceTemplate implements EntityWithMetaFields
     }
 
     /**
-     * @deprecated since 2.40
+     * @deprecated since 2.41
      */
     public function setCompany(?string $company): void
     {
@@ -224,13 +227,12 @@ class InvoiceTemplate implements EntityWithMetaFields
 
     public function getVatId(): ?string
     {
-        if ($this->customer !== null) {
-            return $this->customer->getVatId();
-        }
-
-        return $this->vatId;
+        return $this->customer?->getVatId() ?? $this->vatId;
     }
 
+    /**
+     * @deprecated since 2.41
+     */
     public function setVatId(?string $vatId): void
     {
         $this->vatId = $vatId;

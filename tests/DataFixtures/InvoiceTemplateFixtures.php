@@ -32,6 +32,10 @@ class InvoiceTemplateFixtures implements TestFixture
         $customer->setCountry($faker->countryCode());
         $customer->setTimezone($faker->timezone());
         $customer->setCompany('Company name');
+        $customer->setAddressLine1($faker->streetAddress());
+        $customer->setAddressLine2($faker->streetAddress());
+        $customer->setPostCode($faker->postcode());
+        $customer->setCity($faker->city());
 
         $manager->persist($customer);
 
@@ -47,9 +51,7 @@ class InvoiceTemplateFixtures implements TestFixture
             'Please transfer the total amount within 14 days to the given account and use the invoice number ' .
             'as reference.'
         );
-        $template->setAddress(
-            $faker->streetAddress() . PHP_EOL .
-            $faker->city() . ' ' . $faker->postcode() . ', ' . $faker->country() . PHP_EOL .
+        $template->setContact(
             'Phone: ' . $faker->phoneNumber() . PHP_EOL .
             'Email: ' . $faker->safeEmail()
         );

@@ -58,7 +58,7 @@ class InvoiceTemplateTest extends TestCase
         $sut->setVat(7.31);
         self::assertEquals(7.31, $sut->getVat());
 
-        $sut->setVatId('1234567890');
+        $sut->setVatId('1234567890'); // @phpstan-ignore method.deprecated
         self::assertEquals('1234567890', $sut->getVatId());
 
         $sut->setLanguage('de');

@@ -101,15 +101,12 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             ];
         }
 
-        $customer = $template->getCustomer();
-        if ($customer !== null) {
-            $country = $customer->getCountry();
+        $seller = $template->getCustomer();
+        if ($seller !== null) {
+            $country = $seller->getCountry();
             if ($country !== null) {
-                $values['template.country'] = $country; // since 2.33
-                $values['template.country_name'] = Countries::getName($country, $language); // since 2.33
-            } else {
-                $values['template.country'] = ''; // since 2.33
-                $values['template.country_name'] = ''; // since 2.33
+                $values['template.country'] = $country;
+                $values['template.country_name'] = Countries::getName($country, $language);
             }
         }
 
