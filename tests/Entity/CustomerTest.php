@@ -227,6 +227,7 @@ class CustomerTest extends AbstractEntityTestCase
             ['visible', 'boolean'],
             ['comment', 'string'],
             ['billable', 'boolean'],
+            ['buyer_reference', 'string'],
         ];
 
         self::assertCount(\count($expected), $columns);
