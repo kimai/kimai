@@ -10,6 +10,8 @@
 namespace App\Entity;
 
 use App\Repository\InvoiceTemplateRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -20,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: InvoiceTemplateRepository::class)]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[UniqueEntity('name')]
-class InvoiceTemplate
+class InvoiceTemplate implements EntityWithMetaFields
 {
     #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[ORM\Id]
@@ -81,6 +83,16 @@ class InvoiceTemplate
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     #[Assert\NotNull]
     private ?Customer $customer = null;
+    /**
+     * @var Collection<int, InvoiceTemplateMeta>
+     */
+    #[ORM\OneToMany(mappedBy: 'template', targetEntity: InvoiceTemplateMeta::class, cascade: ['persist'])]
+    private Collection $meta;
+
+    public function __construct()
+    {
+        $this->meta = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -275,6 +287,62 @@ class InvoiceTemplate
         );
 
         return [$tax];
+    }
+
+    /**
+     * @return Collection|MetaTableTypeInterface[]
+     */
+    public function getMetaFields(): Collection
+    {
+        return $this->meta;
+    }
+
+    /**
+     * @return MetaTableTypeInterface[]
+     */
+    public function getVisibleMetaFields(): array
+    {
+        $all = [];
+        foreach ($this->meta as $meta) {
+            if ($meta->isVisible()) {
+                $all[] = $meta;
+            }
+        }
+
+        return $all;
+    }
+
+    public function getMetaField(string $name): ?MetaTableTypeInterface
+    {
+        foreach ($this->meta as $field) {
+            if ($field->getName() !== null && strtolower($field->getName()) === strtolower($name)) {
+                return $field;
+            }
+        }
+
+        return null;
+    }
+
+    public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields
+    {
+        if ($meta->getName() === null) {
+            throw new \InvalidArgumentException('Meta-field needs to have a name');
+        }
+
+        if (!$meta instanceof InvoiceTemplateMeta) {
+            throw new \InvalidArgumentException('Meta-field needs to be an instanceof InvoiceTemplateMeta');
+        }
+
+        if (null === ($current = $this->getMetaField($meta->getName()))) {
+            $meta->setEntity($this);
+            $this->meta->add($meta);
+
+            return $this;
+        }
+
+        $current->merge($meta);
+
+        return $this;
     }
 
     public function __toString(): string

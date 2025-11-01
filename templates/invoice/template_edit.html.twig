@@ -64,6 +64,15 @@
                     </div>
                 </div>
             </fieldset>
+            {% if form.metaFields is defined and form.metaFields is not empty %}
+            <fieldset class="form-fieldset pb-0">
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(form.metaFields) }}
+                    </div>
+                </div>
+            </fieldset>
+            {% endif %}
             {{ form_rest(form) }}
         {% endblock %}
     {% endembed %}    

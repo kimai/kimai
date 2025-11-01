@@ -10,6 +10,8 @@
 namespace App\Tests\Entity;
 
 use App\Entity\InvoiceTemplate;
+use App\Entity\InvoiceTemplateMeta;
+use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -35,6 +37,9 @@ class InvoiceTemplateTest extends TestCase
         self::assertEquals('default', $sut->getRenderer());
         self::assertEquals(30, $sut->getDueDays());
         self::assertTrue($sut->isDecimalDuration()); // @phpstan-ignore method.deprecated
+        self::assertInstanceOf(Collection::class, $sut->getMetaFields());
+        self::assertEquals(0, $sut->getMetaFields()->count());
+        self::assertNull($sut->getMetaField('foo'));
     }
 
     public function testSetterAndGetter(): void
@@ -78,5 +83,33 @@ class InvoiceTemplateTest extends TestCase
         $sut->setName('a template name');
         self::assertEquals('a template name', $sut->__toString());
         self::assertEquals('a template name', (string) $sut);
+    }
+
+    public function testMetaFields(): void
+    {
+        $sut = new InvoiceTemplate();
+        $meta = new InvoiceTemplateMeta();
+        $meta->setName('foo')->setValue('bar2')->setType('test');
+        self::assertInstanceOf(InvoiceTemplate::class, $sut->setMetaField($meta));
+        self::assertEquals(1, $sut->getMetaFields()->count());
+        $result = $sut->getMetaField('foo');
+        self::assertSame($result, $meta);
+        self::assertEquals('test', $result->getType());
+        self::assertEquals('bar2', $result->getValue());
+
+        $meta2 = new InvoiceTemplateMeta();
+        $meta2->setName('foo')->setValue('bar')->setType('test2');
+        self::assertInstanceOf(InvoiceTemplate::class, $sut->setMetaField($meta2));
+        self::assertEquals(1, $sut->getMetaFields()->count());
+        self::assertCount(0, $sut->getVisibleMetaFields());
+
+        $result = $sut->getMetaField('foo');
+        self::assertSame($result, $meta);
+        self::assertEquals('test2', $result->getType());
+
+        $sut->setMetaField((new InvoiceTemplateMeta())->setName('blub')->setIsVisible(true));
+        $sut->setMetaField((new InvoiceTemplateMeta())->setName('blab')->setIsVisible(true));
+        self::assertEquals(3, $sut->getMetaFields()->count());
+        self::assertCount(2, $sut->getVisibleMetaFields());
     }
 }

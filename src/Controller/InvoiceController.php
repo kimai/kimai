@@ -17,6 +17,7 @@ use App\Entity\MetaTableTypeInterface;
 use App\Event\InvoiceDocumentsEvent;
 use App\Event\InvoiceMetaDefinitionEvent;
 use App\Event\InvoiceMetaDisplayEvent;
+use App\Event\InvoiceTemplateMetaDefinitionEvent;
 use App\Export\Spreadsheet\EntityWithMetaFieldsExporter;
 use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
 use App\Export\Spreadsheet\Writer\XlsxWriter;
@@ -728,6 +729,9 @@ final class InvoiceController extends AbstractController
 
     private function renderTemplateForm(InvoiceTemplate $template, Request $request): Response
     {
+        $event = new InvoiceTemplateMetaDefinitionEvent($template);
+        $this->dispatcher->dispatch($event);
+
         $editForm = $this->createTemplateEditForm($template);
 
         $editForm->handleRequest($request);

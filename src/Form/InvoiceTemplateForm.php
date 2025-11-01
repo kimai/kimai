@@ -15,6 +15,7 @@ use App\Form\Type\InvoiceCalculatorType;
 use App\Form\Type\InvoiceNumberGeneratorType;
 use App\Form\Type\InvoiceRendererType;
 use App\Form\Type\LanguageType;
+use App\Form\Type\MetaFieldsCollectionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -66,6 +67,7 @@ final class InvoiceTemplateForm extends AbstractType
                 'placeholder' => '',
                 'help' => 'sending_company.help',
             ])
+            ->add('metaFields', MetaFieldsCollectionType::class)
         ;
     }
 
