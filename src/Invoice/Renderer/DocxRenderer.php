@@ -29,10 +29,13 @@ final class DocxRenderer extends AbstractRenderer implements RendererInterface
         $template = new TemplateProcessor($document->getFilename());
 
         foreach ($model->toArray() as $search => $replace) {
-            if (\is_scalar($replace)) {
-                $replace = $xmlEscaper->escape($replace);
-                $replace = preg_replace('/\n|\r\n?/', '</w:t><w:br /><w:t xml:space="preserve">', $replace);
+            if (!\is_array($replace)) {
+                // TODO tax rows
+                continue;
             }
+
+            $replace = $xmlEscaper->escape($replace);
+            $replace = preg_replace('/\n|\r\n?/', '</w:t><w:br /><w:t xml:space="preserve">', $replace);
 
             $template->setValue($search, $replace);
         }
@@ -51,10 +54,13 @@ final class DocxRenderer extends AbstractRenderer implements RendererInterface
         foreach ($model->getCalculator()->getEntries() as $entry) {
             $values = $model->itemToArray($entry);
             foreach ($values as $search => $replace) {
-                if (\is_scalar($replace)) {
-                    $replace = $xmlEscaper->escape($replace);
-                    $replace = preg_replace('/\n|\r\n?/', '</w:t><w:br /><w:t xml:space="preserve">', $replace);
+                if (!\is_array($replace)) {
+                    // TODO tax rows
+                    continue;
                 }
+
+                $replace = $xmlEscaper->escape($replace);
+                $replace = preg_replace('/\n|\r\n?/', '</w:t><w:br /><w:t xml:space="preserve">', $replace);
 
                 $template->setValue($search . '#' . $i, $replace);
             }
