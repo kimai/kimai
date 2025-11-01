@@ -130,10 +130,9 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
 
     /**
      * @template T of object
-     * @param ObjectManager $manager
      * @param class-string<T> $class
      * @param int $amount
-     * @return array<int, T>
+     * @return non-empty-array<int, T>
      */
     private function findRandom(ObjectManager $manager, string $class, int $amount): array
     {
@@ -154,14 +153,17 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
 
         $qb = $manager->getRepository($class)->createQueryBuilder('entity');
 
-        /** @var array<int, T> $result */
-        $result = $qb->where($qb->expr()->in('entity.id', $ids))->setMaxResults($amount)->getQuery()->getResult();
+        /** @var array<int, T> $all */
+        $all = $qb->where($qb->expr()->in('entity.id', $ids))->setMaxResults($amount)->getQuery()->getResult();
 
-        return $result;
+        if (\count($all) === 0) {
+            throw new \Exception('Need users to setup teams');
+        }
+
+        return $all;
     }
 
     /**
-     * @param ObjectManager $manager
      * @return array<int|string, Tag>
      */
     private function getAllTags(ObjectManager $manager): array
@@ -170,8 +172,7 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
     }
 
     /**
-     * @param ObjectManager $manager
-     * @return array<int|string, User>
+     * @return non-empty-array<int|string, User>
      */
     private function getAllUsers(ObjectManager $manager): array
     {
@@ -179,15 +180,18 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
         /** @var User[] $entries */
         $entries = $manager->getRepository(User::class)->findAll();
         foreach ($entries as $temp) {
-            $all[$temp->getId()] = $temp;
+            $all[(string) $temp->getId()] = $temp;
+        }
+
+        if (\count($all) === 0) {
+            throw new \Exception('Need users to setup timesheets');
         }
 
         return $all;
     }
 
     /**
-     * @param ObjectManager $manager
-     * @return array<int|string, Project>
+     * @return non-empty-array<int|string, Project>
      */
     private function getAllProjects(ObjectManager $manager): array
     {
@@ -195,8 +199,7 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
     }
 
     /**
-     * @param ObjectManager $manager
-     * @return array<int|string, Activity>
+     * @return non-empty-array<int|string, Activity>
      */
     private function getAllActivities(ObjectManager $manager): array
     {
