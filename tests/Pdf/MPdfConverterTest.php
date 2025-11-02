@@ -19,14 +19,20 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 #[Group('integration')]
 class MPdfConverterTest extends KernelTestCase
 {
-    public function test()
+    public function testConvertToPdf(): void
     {
         $kernel = self::bootKernel();
         $cacheDir = $kernel->getContainer()->getParameter('kernel.cache_dir');
 
+        $options = [
+            'foo' => 'bar',
+            'additional_xmp_rdf' => '<rdf:Description rdf:about="" xmlns:zf="urn:ferd:pdfa:CrossIndustryDocument:invoice:1p0#"></rdf:Description>',
+            'margin_top' => 2,
+        ];
+
         $sut = new MPdfConverter((new FileHelperFactory($this))->create(), $cacheDir);
-        $result = $sut->convertToPdf('<h1>Test</h1>');
-        // Yeah, thats not a real test, I know ;-)
+        $result = $sut->convertToPdf('<h1>Test</h1>', $options);
+        // Yeah, that's not a real test, I know ;-)
         self::assertNotEmpty($result);
         preg_match('/\/Creator \((.*)\)/', $result, $matches);
         self::assertCount(2, $matches);

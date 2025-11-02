@@ -11,6 +11,7 @@ namespace App\Invoice\Hydrator;
 
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
+use Symfony\Component\Intl\Countries;
 
 final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
 {
@@ -19,16 +20,23 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
     public function hydrate(InvoiceModel $model): array
     {
         $template = $model->getTemplate();
-        if ($template === null) {
-            throw new \InvalidArgumentException('InvoiceModel needs a template');
+        $calculator = $model->getCalculator();
+        if ($calculator === null) {
+            throw new \InvalidArgumentException('InvoiceModel needs a calculator');
         }
 
         $currency = $model->getCurrency();
-        $tax = $model->getCalculator()->getTax();
-        $total = $model->getCalculator()->getTotal();
-        $subtotal = $model->getCalculator()->getSubtotal();
+        $tax = $calculator->getTax();
+        $total = $calculator->getTotal();
+        $subtotal = $calculator->getSubtotal();
         $formatter = $model->getFormatter();
         $language = $template->getLanguage();
+        $taxRows = $calculator->getTaxRows();
+
+        $vat = 0.00;
+        foreach ($taxRows as $taxRow) {
+            $vat += $taxRow->getTax()->getRate();
+        }
 
         $values = [
             'invoice.due_date' => $formatter->getFormattedDateTime($model->getDueDate()),
@@ -39,13 +47,13 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             'invoice.currency' => $currency,
             'invoice.language' => $language, // since 1.9
             'invoice.currency_symbol' => $formatter->getCurrencySymbol($currency),
-            'invoice.vat' => $model->getCalculator()->getVat(),
+            'invoice.vat' => $vat, // @deprecated, use invoice.tax_rows instead
             'invoice.tax_hide' => $model->isHideZeroTax() && $tax === 0.00,
-            'invoice.tax' => $formatter->getFormattedMoney($tax, $currency),
-            'invoice.tax_nc' => $formatter->getFormattedMoney($tax, $currency, false),
-            'invoice.tax_plain' => $tax,
-            'invoice.total_time' => $formatter->getFormattedDuration($model->getCalculator()->getTimeWorked()),
-            'invoice.duration_decimal' => $formatter->getFormattedDecimalDuration($model->getCalculator()->getTimeWorked()),
+            'invoice.tax' => $formatter->getFormattedMoney($tax, $currency), // @deprecated, use invoice.tax_rows instead
+            'invoice.tax_nc' => $formatter->getFormattedMoney($tax, $currency, false), // @deprecated, use invoice.tax_rows instead
+            'invoice.tax_plain' => $tax, // @deprecated, use invoice.tax_rows instead
+            'invoice.total_time' => $formatter->getFormattedDuration($calculator->getTimeWorked()),
+            'invoice.duration_decimal' => $formatter->getFormattedDecimalDuration($calculator->getTimeWorked()),
             'invoice.total' => $formatter->getFormattedMoney($total, $currency),
             'invoice.total_nc' => $formatter->getFormattedMoney($total, $currency, false),
             'invoice.total_plain' => $total,
@@ -81,6 +89,26 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             // since 2.0.15
             'user.see_others' => ($model->getQuery()?->getUser() === null),
         ];
+
+        $values['invoice.tax_rows'] = [];
+        foreach ($taxRows as $taxRow) {
+            $values['invoice.tax_rows'][] = [
+                'type' => $taxRow->getTax()->getType()->value,
+                'name' => $taxRow->getTax()->getName(),
+                'rate' => $taxRow->getTax()->getRate(),
+                'amount' => $taxRow->getAmount(), // do not format, only available in twig anyway
+                'base' => $taxRow->getBasePrice(), // do not format, only available in twig anyway
+            ];
+        }
+
+        $seller = $template->getCustomer();
+        if ($seller !== null) {
+            $country = $seller->getCountry();
+            if ($country !== null) {
+                $values['template.country'] = $country;
+                $values['template.country_name'] = Countries::getName($country, $language);
+            }
+        }
 
         $query = $model->getQuery();
         if ($query !== null) {

@@ -9,7 +9,6 @@
 
 namespace App\Form\MultiUpdate;
 
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -42,7 +41,12 @@ final class MultiUpdateTable extends AbstractType
                         return [];
                     }
 
-                    return $repository->matching((new Criteria())->where(Criteria::expr()->in('id', explode(',', $ids))));
+                    $temp = explode(',', $ids);
+                    if (\count($temp) === 0) {
+                        return [];
+                    }
+
+                    return $repository->findBy(['id' => $temp]);
                 }
             )
         );

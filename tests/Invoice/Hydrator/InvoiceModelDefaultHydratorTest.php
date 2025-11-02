@@ -33,12 +33,12 @@ class InvoiceModelDefaultHydratorTest extends TestCase
     public function testHydrateThrowsOnMissing(): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('InvoiceModel needs a template');
+        $this->expectExceptionMessage('InvoiceModel needs a calculator');
 
         $model = $this->getInvoiceModel();
 
         $obj = new ReflectionObject($model);
-        $prop = $obj->getProperty('template');
+        $prop = $obj->getProperty('calculator');
         $prop->setAccessible(true);
         $prop->setValue($model, null);
 
@@ -63,6 +63,7 @@ class InvoiceModelDefaultHydratorTest extends TestCase
             'invoice.tax_hide',
             'invoice.tax_nc',
             'invoice.tax_plain',
+            'invoice.tax_rows',
             'invoice.total_time',
             'invoice.duration_decimal',
             'invoice.first',

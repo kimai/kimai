@@ -221,18 +221,12 @@ class Invoice implements EntityWithMetaFields
     public function setModel(InvoiceModel $model): Invoice
     {
         $template = $model->getTemplate();
-        if ($template === null) {
-            throw new \InvalidArgumentException('Missing invoice template');
-        }
 
         if ($template->getDueDays() === null || $template->getVat() === null) {
             throw new \InvalidArgumentException('Missing due-days or vat setting');
         }
 
         $customer = $model->getCustomer();
-        if ($customer === null) {
-            throw new \InvalidArgumentException('Missing invoice customer');
-        }
 
         $user = $model->getUser();
         if ($user === null) {

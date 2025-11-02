@@ -27,10 +27,8 @@ final class InvoiceModelFactory
 
     public function createModel(InvoiceFormatter $formatter, Customer $customer, InvoiceTemplate $template, InvoiceQuery $query): InvoiceModel
     {
-        $model = new InvoiceModel($formatter, $this->customerStatisticService, $this->projectStatisticService, $this->activityStatisticService);
+        $model = new InvoiceModel($formatter, $this->customerStatisticService, $this->projectStatisticService, $this->activityStatisticService, $customer, $template);
 
-        $model->setCustomer($customer);
-        $model->setTemplate($template);
         $model->setQuery($query);
 
         return $model;

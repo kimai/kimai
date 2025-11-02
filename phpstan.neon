@@ -41,6 +41,8 @@ parameters:
     symfony:
         containerXmlPath: %rootDir%/../../../var/cache/dev/App_KernelDevDebugContainer.xml
     ignoreErrors:
+        - identifier: throws.unusedType
+        - identifier: offsetAccess.notFound
         - '#^Method .*\(\) has parameter \$builder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'
 
         -
@@ -754,11 +756,6 @@ parameters:
             path: src/Controller/InvoiceController.php
 
         -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Controller/InvoiceController.php
-
-        -
             message: "#^Cannot call method getName\\(\\) on Symfony\\\\Component\\\\Form\\\\FormInterface\\|null\\.$#"
             count: 1
             path: src/Controller/InvoiceController.php
@@ -804,7 +801,7 @@ parameters:
             path: src/Controller/ProjectController.php
 
         -
-            message: "#^Call to function array_key_exists\\(\\) with 'entry' and array\\{day\\: DateTime, entry\\: App\\\\Entity\\\\Timesheet\\} will always evaluate to true\\.$#"
+            message: "#^Call to function array_key_exists\\(\\) with 'entry' and array\\{day\\?\\: mixed, entry\\: mixed} will always evaluate to true\\.$#"
             count: 1
             path: src/Controller/QuickEntryController.php
 
@@ -982,11 +979,6 @@ parameters:
             message: "#^Parameter \\#2 \\$statistic of class App\\\\Event\\\\CustomerStatisticEvent constructor expects App\\\\Model\\\\CustomerStatistic, App\\\\Model\\\\CustomerStatistic\\|null given\\.$#"
             count: 1
             path: src/Customer/CustomerStatisticService.php
-
-        -
-            message: "#^Method App\\\\DataFixtures\\\\InvoiceFixtures\\:\\:getInvoiceConfigs\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/DataFixtures/InvoiceFixtures.php
 
         -
             message: "#^Method App\\\\DataFixtures\\\\TeamFixtures\\:\\:getGroups\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -2764,11 +2756,6 @@ parameters:
             path: src/Form/UserTwoFactorType.php
 
         -
-            message: "#^Cannot call method getVat\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Calculator/AbstractCalculator.php
-
-        -
             message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"
             count: 2
             path: src/Invoice/Calculator/AbstractMergedCalculator.php
@@ -2819,31 +2806,6 @@ parameters:
             path: src/Invoice/Hydrator/InvoiceModelCustomerHydrator.php
 
         -
-            message: "#^Cannot call method getSubtotal\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getTax\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getTimeWorked\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
-            count: 2
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getTotal\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getVat\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
             message: "#^Method App\\\\Invoice\\\\Hydrator\\\\InvoiceModelDefaultHydrator\\:\\:hydrate\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
@@ -2872,16 +2834,6 @@ parameters:
             message: "#^Method App\\\\Invoice\\\\Hydrator\\\\InvoiceModelUserHydrator\\:\\:hydrate\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelUserHydrator.php
-
-        -
-            message: "#^Cannot call method getCompany\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Invoice/InvoiceFilename.php
-
-        -
-            message: "#^Cannot call method getName\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Invoice/InvoiceFilename.php
 
         -
             message: "#^Parameter \\#1 \\$filename of method App\\\\Invoice\\\\InvoiceFilename\\:\\:convert\\(\\) expects string, string\\|null given\\.$#"
@@ -2929,11 +2881,6 @@ parameters:
             path: src/Invoice/Renderer/AbstractSpreadsheetRenderer.php
 
         -
-            message: "#^Cannot call method getTitle\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Renderer/AbstractSpreadsheetRenderer.php
-
-        -
             message: "#^Parameter \\#1 \\$haystack of function stripos expects string, mixed given\\.$#"
             count: 5
             path: src/Invoice/Renderer/AbstractSpreadsheetRenderer.php
@@ -2950,11 +2897,6 @@ parameters:
 
         -
             message: "#^Cannot call method getEntries\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Renderer/AbstractTwigRenderer.php
-
-        -
-            message: "#^Cannot call method getLanguage\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
             count: 1
             path: src/Invoice/Renderer/AbstractTwigRenderer.php
 
@@ -2981,11 +2923,6 @@ parameters:
         -
             message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
             count: 1
-            path: src/Invoice/ServiceInvoice.php
-
-        -
-            message: "#^Cannot call method getRenderer\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 6
             path: src/Invoice/ServiceInvoice.php
 
         -
@@ -4207,3 +4144,8 @@ parameters:
             message: "#^Method App\\\\Form\\\\MultiUpdate\\\\MultiUpdateTableDTO\\:\\:setEntities\\(\\) has parameter \\$entities with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection but does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Form/MultiUpdate/MultiUpdateTableDTO.php
+
+        -
+          message: "#^Method App\\\\Entity\\\\InvoiceTemplate\\:\\:getMetaFields\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
+          count: 1
+          path: src/Entity/InvoiceTemplate.php

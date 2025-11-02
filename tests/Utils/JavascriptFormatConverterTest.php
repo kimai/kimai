@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(JavascriptFormatConverter::class)]
 class JavascriptFormatConverterTest extends TestCase
 {
-    public function test()
+    public function testConvert(): void
     {
         $sut = new JavascriptFormatConverter();
         self::assertEquals('DD.MM.YYYY HH:mm', $sut->convert('dd.MM.y HH:mm'));

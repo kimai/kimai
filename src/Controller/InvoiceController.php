@@ -17,6 +17,7 @@ use App\Entity\MetaTableTypeInterface;
 use App\Event\InvoiceDocumentsEvent;
 use App\Event\InvoiceMetaDefinitionEvent;
 use App\Event\InvoiceMetaDisplayEvent;
+use App\Event\InvoiceTemplateMetaDefinitionEvent;
 use App\Export\Spreadsheet\EntityWithMetaFieldsExporter;
 use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
 use App\Export\Spreadsheet\Writer\XlsxWriter;
@@ -425,7 +426,7 @@ final class InvoiceController extends AbstractController
 
         $table->addColumn('name', ['class' => 'alwaysVisible', 'orderBy' => false]);
         $table->addColumn('title', ['class' => 'd-none text-nowrap', 'orderBy' => false]);
-        $table->addColumn('company', ['class' => 'd-none', 'orderBy' => false]);
+        $table->addColumn('company', ['class' => 'd-none', 'orderBy' => false, 'title' => 'sending_company']);
         $table->addColumn('vat_id', ['class' => 'd-none text-nowrap', 'orderBy' => false]);
         $table->addColumn('tax_rate', ['class' => 'd-none text-nowrap', 'orderBy' => false]);
         $table->addColumn('due_days', ['class' => 'd-none text-nowrap', 'orderBy' => false]);
@@ -728,6 +729,9 @@ final class InvoiceController extends AbstractController
 
     private function renderTemplateForm(InvoiceTemplate $template, Request $request): Response
     {
+        $event = new InvoiceTemplateMetaDefinitionEvent($template);
+        $this->dispatcher->dispatch($event);
+
         $editForm = $this->createTemplateEditForm($template);
 
         $editForm->handleRequest($request);

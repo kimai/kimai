@@ -1952,7 +1952,11 @@
       </trans-unit>
       <trans-unit id="nsbR30p" resname="sending_company">
         <source>sending_company</source>
-        <target>Invoice Sender</target>
+        <target>Invoice issuer</target>
+      </trans-unit>
+      <trans-unit id="BmDRYT." resname="sending_company.help">
+        <source>sending_company.help</source>
+        <target>This company is shown as the issuer on the invoice. The name, address and tax information will be used.</target>
       </trans-unit>
       <trans-unit id="Uzll0ps" resname="Customer portal">
         <source>Customer portal</source>
@@ -1985,6 +1989,58 @@
       <trans-unit id="eV6j76Q" resname="font">
         <source>font</source>
         <target>Font</target>
+      </trans-unit>
+      <trans-unit id="PciSBv9" resname="address_row">
+        <source>address_row</source>
+        <target>Line %row%</target>
+      </trans-unit>
+      <trans-unit id="_Ep8Ogx" resname="buyerReference">
+        <source>buyerReference</source>
+        <target>Buyer reference</target>
+      </trans-unit>
+      <trans-unit id="nPJWKwW" resname="payment_type">
+        <source>payment_type</source>
+        <target>Payment type</target>
+      </trans-unit>
+      <trans-unit id="uXB48Vj" resname="SEPA Credit Transfer">
+        <source>SEPA Credit Transfer</source>
+        <target>SEPA Credit Transfer</target>
+      </trans-unit>
+      <trans-unit id="s42A2gm" resname="SEPA Direct Debit">
+        <source>SEPA Direct Debit</source>
+        <target>SEPA Direct Debit</target>
+      </trans-unit>
+      <trans-unit id="4toQj2M" resname="Cash">
+        <source>Cash</source>
+        <target>Cash</target>
+      </trans-unit>
+      <trans-unit id="cWZZc6D" resname="Cheque">
+        <source>Cheque</source>
+        <target>Cheque</target>
+      </trans-unit>
+      <trans-unit id="jMvh7bn" resname="Credit Transfer">
+        <source>Credit Transfer</source>
+        <target>Credit Transfer</target>
+      </trans-unit>
+      <trans-unit id="TJQbc0a" resname="Payment To Bank Account">
+        <source>Payment To Bank Account</source>
+        <target>Payment To Bank Account</target>
+      </trans-unit>
+      <trans-unit id=".UIt099" resname="Card Payment">
+        <source>Card Payment</source>
+        <target>Card Payment</target>
+      </trans-unit>
+      <trans-unit id="Wnb_qF0" resname="Direct Debit">
+        <source>Direct Debit</source>
+        <target>Direct Debit</target>
+      </trans-unit>
+      <trans-unit id="rIdfGxM" resname="payment_account_name">
+        <source>payment_account_name</source>
+        <target>Account or card holder</target>
+      </trans-unit>
+      <trans-unit id="jcT9Og6" resname="payment_account_number">
+        <source>payment_account_name</source>
+        <target>IBAN or card number</target>
       </trans-unit>
     </body>
   </file>

@@ -28,8 +28,6 @@ class InvoiceModelTest extends TestCase
         $sut = (new InvoiceModelFactoryFactory($this))->create()->createModel($formatter, new Customer('foo'), new InvoiceTemplate(), new InvoiceQuery());
 
         self::assertNotNull($sut->getQuery());
-        self::assertNotNull($sut->getCustomer());
-        self::assertNotNull($sut->getTemplate());
 
         self::assertFalse($sut->isPreview());
         self::assertFalse($sut->isHideZeroTax());

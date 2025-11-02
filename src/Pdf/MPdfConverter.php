@@ -34,7 +34,7 @@ final class MPdfConverter implements HtmlToPdfConverter
         $filtered = array_filter($options, function ($key): bool {
             $allowed = [
                 'mode', 'format', 'default_font_size', 'default_font', 'margin_left', 'margin_right', 'margin_top',
-                'margin_bottom', 'margin_header', 'margin_footer', 'orientation', 'fonts', 'associated_files'
+                'margin_bottom', 'margin_header', 'margin_footer', 'orientation', 'fonts', 'associated_files', 'additional_xmp_rdf'
             ];
             if (!\in_array($key, $allowed)) {
                 $configs = new ConfigVariables();
@@ -110,11 +110,21 @@ final class MPdfConverter implements HtmlToPdfConverter
             unset($options['associated_files']);
         }
 
+        $additionalXmpRdf = null;
+        if (\array_key_exists('additional_xmp_rdf', $options) && \is_string($options['additional_xmp_rdf'])) {
+            $additionalXmpRdf = $options['additional_xmp_rdf'];
+            unset($options['additional_xmp_rdf']);
+        }
+
         $mpdf = new Mpdf($options);
         $mpdf->creator = Constants::SOFTWARE;
 
         if (\count($associatedFiles) > 0) {
             $mpdf->SetAssociatedFiles($associatedFiles);
+        }
+
+        if ($additionalXmpRdf !== null) {
+            $mpdf->SetAdditionalXmpRdf($additionalXmpRdf);
         }
 
         return $mpdf;

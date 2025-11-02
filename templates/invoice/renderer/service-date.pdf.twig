@@ -14,6 +14,12 @@
         <tr>
             <td class="text-small">
                 {{ invoice['template.company'] }} &ndash; {{ invoice['template.address']|nl2str(' – ') }}
+                {% if invoice['template.country'] is not null %}
+                    {% set country = invoice['template.country']|country_name(invoice['invoice.language']) %}
+                    {% if country not in invoice['template.address'] %}
+                        – {{ country }}
+                    {% endif %}
+                {% endif %}
                 {% if invoice['template.vat_id'] is not empty %}
                     &ndash; {{ 'vat_id'|trans }}: {{ invoice['template.vat_id'] }}
                 {% endif %}
@@ -33,6 +39,12 @@
                 <br>
                 {{ invoice['template.company'] }}<br>
                 {{ invoice['template.address']|nl2br }}
+                {% if invoice['template.country'] is not null %}
+                    {% set country = invoice['template.country']|country_name(invoice['invoice.language']) %}
+                    {% if country not in invoice['template.address'] %}
+                        <br> {{ country }}
+                    {% endif %}
+                {% endif %}
             </td>
             <td class="text-center">
                 <strong>{{ 'invoice_bank_account'|trans }}</strong>
@@ -54,6 +66,10 @@ mpdf-->
             <td>
                 <strong>{{ invoice['customer.company']|default(invoice['customer.name']) }}</strong><br>
                 {{ invoice['customer.address']|nl2br }}
+                {% set country = invoice['customer.country']|country_name(invoice['invoice.language']) %}
+                {% if country not in invoice['customer.address'] %}
+                    <br> {{ country }}
+                {% endif %}
             </td>
             <td class="text-right">
                 {% set classLeft = 'text-left' %}

@@ -28,14 +28,6 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    {{ form_row(form.orderNumber) }}
-                </div>
-                <div class="col-md-6">
-                    {{ form_row(form.orderDate) }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
                     {{ form_row(form.start) }}
                 </div>
                 <div class="col-md-6">
@@ -66,6 +58,26 @@
                     </div>
                 </div>
             {% endif %}
+            {% if form.metaFields is defined and form.metaFields is not empty %}
+                {{ form_row(form.metaFields) }}
+            {% endif %}
+            {% embed '@theme/embeds/collapsible.html.twig' with {id: 'project_invoice_settings'} %}
+                {% import "macros/widgets.html.twig" as widgets %}
+                {% block title %}{{ 'invoices'|trans }}{% endblock %}
+                {% block body %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(form.orderNumber) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(form.orderDate) }}
+                        </div>
+                    </div>
+                    {% if form.invoiceText is defined %}
+                        {{ form_row(form.invoiceText) }}
+                    {% endif %}
+                {% endblock %}
+            {% endembed %}
             <div class="row">
                 <div class="col-md-4">
                     {{ form_row(form.visible) }}
@@ -77,18 +89,6 @@
                     {{ form_row(form.globalActivities) }}
                 </div>
             </div>
-            {% if form.metaFields is defined and form.metaFields is not empty %}
-                {{ form_row(form.metaFields) }}
-            {% endif %}
-            {% embed '@theme/embeds/collapsible.html.twig' with {id: 'project_invoice_settings'} %}
-                {% import "macros/widgets.html.twig" as widgets %}
-                {% block title %}{{ 'invoices'|trans }}{% endblock %}
-                {% block body %}
-                    {% if form.invoiceText is defined %}
-                        {{ form_row(form.invoiceText) }}
-                    {% endif %}
-                {% endblock %}
-            {% endembed %}
             {{ form_rest(form) }}
         {% endblock %}
     {% endembed %}

@@ -12,6 +12,7 @@ namespace App\Invoice\Hydrator;
 use App\Customer\CustomerStatisticService;
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
+use Symfony\Component\Intl\Countries;
 
 final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
 {
@@ -25,22 +26,26 @@ final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
     {
         $customer = $model->getCustomer();
 
-        if (null === $customer) {
-            return [];
-        }
-
         $prefix = 'customer.';
+        $language = $model->getTemplate()->getLanguage();
+        $country = $customer->getCountry();
 
         $values = [
             $prefix . 'id' => $customer->getId(),
-            $prefix . 'address' => $customer->getAddress() ?? '',
+            $prefix . 'address' => $customer->getFormattedAddress() ?? '',
+            $prefix . 'address_line1' => $customer->getAddressLine1() ?? '',
+            $prefix . 'address_line2' => $customer->getAddressLine2() ?? '',
+            $prefix . 'address_line3' => $customer->getAddressLine3() ?? '',
+            $prefix . 'postcode' => $customer->getPostCode() ?? '',
+            $prefix . 'city' => $customer->getCity() ?? '',
             $prefix . 'name' => $customer->getName() ?? '',
             $prefix . 'contact' => $customer->getContact() ?? '',
             $prefix . 'company' => $customer->getCompany() ?? '',
             $prefix . 'vat' => $customer->getVatId() ?? '', // deprecated since 2.0.15
             $prefix . 'vat_id' => $customer->getVatId() ?? '',
             $prefix . 'number' => $customer->getNumber() ?? '',
-            $prefix . 'country' => $customer->getCountry(),
+            $prefix . 'country' => $country,
+            $prefix . 'country_name' => $country !== null ? Countries::getName($country, $language) : null,
             $prefix . 'homepage' => $customer->getHomepage() ?? '',
             $prefix . 'comment' => $customer->getComment() ?? '',
             $prefix . 'email' => $customer->getEmail() ?? '',
@@ -48,6 +53,7 @@ final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
             $prefix . 'phone' => $customer->getPhone() ?? '',
             $prefix . 'mobile' => $customer->getMobile() ?? '',
             $prefix . 'invoice_text' => $customer->getInvoiceText() ?? '',
+            $prefix . 'buyer_reference' => $customer->getBuyerReference() ?? '',
         ];
 
         $end = $model->getQuery()?->getEnd();

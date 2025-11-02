@@ -59,7 +59,7 @@ class TwigRendererTest extends KernelTestCase
         $sut = new TwigRenderer($twig);
 
         $model = $this->getInvoiceModel();
-        $model->getTemplate()?->setLanguage('de');
+        $model->getTemplate()->setLanguage('de');
 
         $document = $this->getInvoiceDocument('timesheet.html.twig');
         $response = $sut->render($document, $model);
@@ -118,7 +118,7 @@ class TwigRendererTest extends KernelTestCase
         $sut = new TwigRenderer($twig);
 
         $model = $this->getInvoiceModel();
-        $model->getTemplate()?->setLanguage('de');
+        $model->getTemplate()->setLanguage('de');
 
         foreach ($files as $filename) {
             $document = new InvoiceDocument(new \SplFileInfo($filename));

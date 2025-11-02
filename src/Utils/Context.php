@@ -10,10 +10,12 @@
 namespace App\Utils;
 
 use App\Entity\User;
+use Symfony\Component\DependencyInjection\Attribute\Exclude;
 
+#[Exclude]
 final class Context
 {
-    public function __construct(private User $user)
+    public function __construct(private readonly User $user)
     {
     }
 

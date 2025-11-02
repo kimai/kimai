@@ -1722,11 +1722,6 @@ parameters:
             path: Invoice/Renderer/XlsxRendererTest.php
 
         -
-            message: "#^Cannot call method getLanguage\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: Invoice/ServiceInvoiceTest.php
-
-        -
             message: "#^Cannot call method getTotal\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
             count: 4
             path: Invoice/ServiceInvoiceTest.php
@@ -1854,11 +1849,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Model\\\\Statistic\\\\MonthTest\\:\\:testInvalidMonths\\(\\) has parameter \\$month with no type specified\\.$#"
             count: 1
             path: Model/Statistic/MonthTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Pdf\\\\MPdfConverterTest\\:\\:test\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Pdf/MPdfConverterTest.php
 
         -
             message: "#^Parameter \\#2 \\$cacheDirectory of class App\\\\Pdf\\\\MPdfConverter constructor expects string, array\\|bool\\|float\\|int\\|string\\|null given\\.$#"
@@ -2684,11 +2674,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Utils\\\\FormFormatConverterTest\\:\\:testProblemPattern\\(\\) has parameter \\$format with no type specified\\.$#"
             count: 1
             path: Utils/FormFormatConverterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Utils\\\\JavascriptFormatConverterTest\\:\\:test\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Utils/JavascriptFormatConverterTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Utils\\\\ProfileManagerTest\\:\\:getCookieProfiles\\(\\) has no return type specified\\.$#"

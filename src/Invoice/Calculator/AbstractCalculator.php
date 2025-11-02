@@ -11,6 +11,7 @@ namespace App\Invoice\Calculator;
 
 use App\Invoice\InvoiceItem;
 use App\Invoice\InvoiceModel;
+use App\Invoice\TaxRow;
 
 abstract class AbstractCalculator
 {
@@ -51,21 +52,35 @@ abstract class AbstractCalculator
         return round($amount, 2);
     }
 
+    /**
+     * @deprecated use getTaxRows() instead
+     */
     public function getVat(): float
     {
         return $this->model->getTemplate()->getVat() ?? 0.00;
     }
 
-    public function getTax(): float
+    /**
+     * @return array<TaxRow>
+     */
+    public function getTaxRows(): array
     {
-        $vat = $this->getVat();
-        if (0.00 === $vat) {
-            return 0.00;
+        $rows = [];
+        foreach ($this->model->getTemplate()->getTaxRates() as $taxRate) {
+            $rows[] = new TaxRow($taxRate, $this->getSubtotal());
         }
 
-        $percent = $vat / 100.00;
+        return $rows;
+    }
 
-        return round($this->getSubtotal() * $percent, 2);
+    public function getTax(): float
+    {
+        $tax = 0.00;
+        foreach ($this->getTaxRows() as $row) {
+            $tax += $row->getAmount();
+        }
+
+        return round($tax, 2);
     }
 
     public function getTotal(): float
@@ -75,8 +90,6 @@ abstract class AbstractCalculator
 
     /**
      * Returns the total amount of worked time in seconds.
-     *
-     * @return int
      */
     public function getTimeWorked(): int
     {
