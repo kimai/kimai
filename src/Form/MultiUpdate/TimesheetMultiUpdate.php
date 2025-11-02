@@ -21,7 +21,6 @@ use App\Form\Type\UserType;
 use App\Form\Type\YesNoType;
 use App\Repository\CustomerRepository;
 use App\Repository\TimesheetRepository;
-use Doctrine\Common\Collections\Criteria;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -253,7 +252,12 @@ final class TimesheetMultiUpdate extends AbstractType
                         return [];
                     }
 
-                    return $this->timesheet->matching((new Criteria())->where(Criteria::expr()->in('id', explode(',', $ids))));
+                    $temp = explode(',', $ids);
+                    if (\count($temp) === 0) {
+                        return [];
+                    }
+
+                    return $this->timesheet->findBy(['id' => $temp]);
                 }
             )
         );
