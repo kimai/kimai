@@ -2676,31 +2676,6 @@ parameters:
             path: Utils/FormFormatConverterTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Utils\\\\ProfileManagerTest\\:\\:getCookieProfiles\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Utils/ProfileManagerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Utils\\\\ProfileManagerTest\\:\\:getDatatableNames\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Utils/ProfileManagerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Utils\\\\ProfileManagerTest\\:\\:getInvalidProfiles\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Utils/ProfileManagerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Utils\\\\ProfileManagerTest\\:\\:getProfileNames\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Utils/ProfileManagerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Utils\\\\ProfileManagerTest\\:\\:getSessionProfiles\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Utils/ProfileManagerTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Utils\\\\StringHelperTest\\:\\:getDdeAttackStrings\\(\\) has no return type specified\\.$#"
             count: 1
             path: Utils/StringHelperTest.php
