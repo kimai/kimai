@@ -19,7 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 #[Group('integration')]
 class MPdfConverterTest extends KernelTestCase
 {
-    public function test()
+    public function testConvertToPdf(): void
     {
         $kernel = self::bootKernel();
         $cacheDir = $kernel->getContainer()->getParameter('kernel.cache_dir');
@@ -27,7 +27,7 @@ class MPdfConverterTest extends KernelTestCase
         $options = [
             'foo' => 'bar',
             'additional_xmp_rdf' => '<rdf:Description rdf:about="" xmlns:zf="urn:ferd:pdfa:CrossIndustryDocument:invoice:1p0#"></rdf:Description>',
-            'margin_top' => '2rem',
+            'margin_top' => 2,
         ];
 
         $sut = new MPdfConverter((new FileHelperFactory($this))->create(), $cacheDir);
