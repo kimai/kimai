@@ -187,10 +187,6 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
             throw new \Exception('Need users to setup timesheets');
         }
 
-        if (\count($all) === 0) {
-            throw new \Exception('Could not find any user');
-        }
-
         return $all;
     }
 
