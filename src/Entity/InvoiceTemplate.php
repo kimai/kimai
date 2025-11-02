@@ -133,11 +133,7 @@ class InvoiceTemplate implements EntityWithMetaFields
 
     public function getAddress(): ?string
     {
-        if ($this->customer !== null) {
-            return $this->customer->getFormattedAddress();
-        }
-
-        return $this->address;
+        return $this->customer?->getFormattedAddress() ?? $this->address;
     }
 
     /**
@@ -180,11 +176,7 @@ class InvoiceTemplate implements EntityWithMetaFields
 
     public function getCompany(): ?string
     {
-        if ($this->customer !== null) {
-            return $this->customer->getCompany() ?? $this->customer->getName();
-        }
-
-        return $this->company;
+        return $this->customer?->getCompany() ?? $this->customer?->getName() ?? $this->company;
     }
 
     /**

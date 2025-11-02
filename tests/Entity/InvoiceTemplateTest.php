@@ -9,6 +9,8 @@
 
 namespace App\Tests\Entity;
 
+use App\Entity\Customer;
+use App\Entity\CustomerMeta;
 use App\Entity\InvoiceTemplate;
 use App\Entity\InvoiceTemplateMeta;
 use Doctrine\Common\Collections\Collection;
@@ -76,7 +78,25 @@ class InvoiceTemplateTest extends TestCase
         $sut->setCompany('looney toon'); // @phpstan-ignore method.deprecated
         self::assertEquals('looney toon', $sut->getCompany());
 
+        $sut->setAddress('acme street, 1234 looney town, rainbow'); // @phpstan-ignore method.deprecated
+        self::assertEquals('acme street, 1234 looney town, rainbow', $sut->getAddress());
+
         self::assertEquals($sut, clone $sut);
+
+        $customer = new Customer('foo');
+        $customer->setVatId('0987654321');
+        $customer->setCompany('bar');
+        $customer->setAddressLine1('elmstreet');
+        $customer->setAddressLine2('2nd floor');
+        $customer->setPostCode('4711');
+        $customer->setCity('Over the rainbow');
+        $sut->setCustomer($customer);
+
+        self::assertEquals('elmstreet
+2nd floor
+4711 Over the rainbow', $sut->getAddress());
+        self::assertEquals('bar', $sut->getCompany());
+        self::assertEquals('0987654321', $sut->getVatId());
     }
 
     public function testToString(): void
@@ -114,5 +134,23 @@ class InvoiceTemplateTest extends TestCase
         $sut->setMetaField((new InvoiceTemplateMeta())->setName('blab')->setIsVisible(true));
         self::assertEquals(3, $sut->getMetaFields()->count());
         self::assertCount(2, $sut->getVisibleMetaFields());
+    }
+
+    public function testThrowsOnMetaFieldWithoutName(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Meta-field needs to have a name');
+        $sut = new InvoiceTemplate();
+        $sut->setMetaField(new CustomerMeta());
+    }
+
+    public function testThrowsOnMetaFieldsWrongType(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Meta-field needs to be an instanceof InvoiceTemplateMeta');
+        $sut = new InvoiceTemplate();
+        $meta = new CustomerMeta();
+        $meta->setName('foo');
+        $sut->setMetaField($meta);
     }
 }
