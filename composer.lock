@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5de74433dcf1cf3ad650d7643b57e24f",
+    "content-hash": "0e017e736364638de484ae1799d11b8f",
     "packages": [
         {
             "name": "azuyalabs/yasumi",
@@ -2401,6 +2401,71 @@
                 "source": "https://github.com/horstoeko/zugferd/tree/v1.0.116"
             },
             "time": "2025-10-14T12:07:57+00:00"
+        },
+        {
+            "name": "horstoeko/zugferdublbridge",
+            "version": "v1.0.15",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/horstoeko/zugferdublbridge.git",
+                "reference": "059bc2d70114432a42e2ac21f1ea7b50aa8f9b49"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/horstoeko/zugferdublbridge/zipball/059bc2d70114432a42e2ac21f1ea7b50aa8f9b49",
+                "reference": "059bc2d70114432a42e2ac21f1ea7b50aa8f9b49",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "horstoeko/stringmanagement": "^1",
+                "nette/php-generator": "*",
+                "pdepend/pdepend": "^2",
+                "phpdocumentor/reflection-docblock": "^5",
+                "phploc/phploc": "^7",
+                "phpmd/phpmd": "^2",
+                "phpstan/phpstan": "^1|^2",
+                "phpunit/phpunit": "^9",
+                "rector/rector": "*",
+                "sebastian/phpcpd": "^6",
+                "squizlabs/php_codesniffer": "^3"
+            },
+            "type": "package",
+            "autoload": {
+                "psr-4": {
+                    "horstoeko\\zugferdublbridge\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Erling",
+                    "email": "daniel@erling.com.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Convert Factur-X/ZUGFeRD (CII-Syntax) to PEPPOL (UBL-Syntax) and visa versa",
+            "homepage": "https://github.com/horstoeko/zugferdublbridge",
+            "keywords": [
+                "ZUGFeRD",
+                "cii",
+                "convert",
+                "electronic",
+                "factur-x",
+                "invoice",
+                "ubl",
+                "xrechnung"
+            ],
+            "support": {
+                "issues": "https://github.com/horstoeko/zugferdublbridge/issues",
+                "source": "https://github.com/horstoeko/zugferdublbridge/tree/v1.0.15"
+            },
+            "time": "2025-05-17T20:05:53+00:00"
         },
         {
             "name": "jms/metadata",
