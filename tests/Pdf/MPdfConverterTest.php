@@ -31,7 +31,7 @@ class MPdfConverterTest extends KernelTestCase
         ];
 
         $sut = new MPdfConverter((new FileHelperFactory($this))->create(), $cacheDir);
-        $result = $sut->convertToPdf('<h1>Test</h1>');
+        $result = $sut->convertToPdf('<h1>Test</h1>', $options);
         // Yeah, that's not a real test, I know ;-)
         self::assertNotEmpty($result);
         preg_match('/\/Creator \((.*)\)/', $result, $matches);
