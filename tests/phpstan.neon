@@ -1851,11 +1851,6 @@ parameters:
             path: Model/Statistic/MonthTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Pdf\\\\MPdfConverterTest\\:\\:test\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Pdf/MPdfConverterTest.php
-
-        -
             message: "#^Parameter \\#2 \\$cacheDirectory of class App\\\\Pdf\\\\MPdfConverter constructor expects string, array\\|bool\\|float\\|int\\|string\\|null given\\.$#"
             count: 1
             path: Pdf/MPdfConverterTest.php
@@ -2679,11 +2674,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Utils\\\\FormFormatConverterTest\\:\\:testProblemPattern\\(\\) has parameter \\$format with no type specified\\.$#"
             count: 1
             path: Utils/FormFormatConverterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Utils\\\\JavascriptFormatConverterTest\\:\\:test\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Utils/JavascriptFormatConverterTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Utils\\\\ProfileManagerTest\\:\\:getCookieProfiles\\(\\) has no return type specified\\.$#"
