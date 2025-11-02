@@ -12,13 +12,12 @@ namespace App\API;
 use App\Utils\Pagination;
 use FOS\RestBundle\View\ConfigurableViewHandlerInterface;
 use FOS\RestBundle\View\View;
-use FOS\RestBundle\View\ViewHandler as BaseViewHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ViewHandler implements ConfigurableViewHandlerInterface
 {
-    public function __construct(private readonly BaseViewHandler $baseViewHandler)
+    public function __construct(private readonly ConfigurableViewHandlerInterface $baseViewHandler)
     {
     }
 
