@@ -44,14 +44,9 @@ final class ProjectUserInvoiceCalculator extends AbstractSumInvoiceCalculator im
 
     protected function mergeSumInvoiceItem(InvoiceItem $invoiceItem, ExportableItem $entry): void
     {
-        if ($entry->getProject() === null) {
-            return;
-        }
-
-        if ($entry->getProject()->getInvoiceText() !== null) {
-            $invoiceItem->setDescription($entry->getProject()->getInvoiceText());
-        } else {
-            $invoiceItem->setDescription($entry->getProject()->getName());
+        $project = $entry->getProject();
+        if ($project !== null) {
+            $invoiceItem->setDescription($project->getInvoiceText() ?? $project->getName());
         }
     }
 
