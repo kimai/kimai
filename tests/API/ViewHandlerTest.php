@@ -34,22 +34,6 @@ class ViewHandlerTest extends TestCase
         $base->expects($this->once())->method('createResponse')->willReturn(new Response());
         $base->expects($this->once())->method('handle')->willReturn(new Response());
 
-        /*
-        public function handle(View $view, ?Request $request = null): Response
-        {
-            $data = $view->getData();
-
-            if ($data instanceof Pagination) {
-                $results = (array) $data->getCurrentPageResults();
-                $view->setData($results);
-
-                $view->setHeader('X-Page', (string) $data->getCurrentPage());
-                $view->setHeader('X-Total-Count', (string) $data->getNbResults());
-                $view->setHeader('X-Total-Pages', (string) $data->getNbPages());
-                $view->setHeader('X-Per-Page', (string) $data->getMaxPerPage());
-            }
-        }
-        */
         $sut = new ViewHandler($base);
         self::assertTrue($sut->supports('asdf'));
         $sut->setExclusionStrategyGroups(['bar', 'test']);
