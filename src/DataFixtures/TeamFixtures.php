@@ -56,6 +56,10 @@ final class TeamFixtures extends Fixture
             throw new \Exception('Could not find any user');
         }
 
+        if (\count($all) === 0) {
+            throw new \Exception('Could not find any user');
+        }
+
         return $all;
     }
 
@@ -74,6 +78,10 @@ final class TeamFixtures extends Fixture
 
         if (\count($all) === 0) {
             throw new \Exception('Need projects to setup teams');
+        }
+
+        if (\count($all) === 0) {
+            throw new \Exception('Could not find any project');
         }
 
         if (\count($all) === 0) {
