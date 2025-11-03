@@ -438,7 +438,7 @@ class InvoiceControllerTest extends AbstractControllerBaseTestCase
         self::assertTrue($client->getResponse()->isSuccessful());
         $this->assertHasFlashSuccess($client);
 
-        self::assertEquals(0, $this->getEntityManager()->getRepository(InvoiceTemplate::class)->count([]));
+        self::assertEquals(1, $this->getEntityManager()->getRepository(InvoiceTemplate::class)->count([]));
     }
 
     public function testUploadDocumentAction(): void

@@ -184,7 +184,7 @@ final class InvoiceCreateCommand extends Command
             $searchTerm = new SearchTerm($input->getOption('search'));
         }
 
-        if ($input->getOption('preview') !== null) {
+        if (null !== $input->getOption('preview')) {
             $this->previewUniqueFile = (bool) $input->getOption('preview-unique');
             $this->previewDirectory = rtrim($input->getOption('preview'), '/') . '/';
             if (!is_dir($this->previewDirectory) || !is_writable($this->previewDirectory)) {
@@ -196,6 +196,23 @@ final class InvoiceCreateCommand extends Command
             @trigger_error('The "set-exported" option of kimai:invoice:create command has no meaning anymore, it will be removed soon', E_USER_DEPRECATED);
         }
 
+        $overwriteTemplate = null;
+        if (null !== ($tplOption = $input->getOption('template'))) {
+            if (\is_string($tplOption) || \is_int($tplOption)){
+                $tplOption = \strval($tplOption);
+                $overwriteTemplate = $this->getCommandLineArgumentTemplateForCustomer($tplOption);
+                if (null === $overwriteTemplate){
+                    $io->error('Invalid invoice template name or id given');
+
+                    return Command::FAILURE;
+                }
+            } else {
+                $io->error('Option --template must be string or int');
+
+                return Command::FAILURE;
+            }
+        }
+
         // =============== VALIDATION END ===============
 
         $defaultQuery = new InvoiceQuery();
@@ -204,6 +221,10 @@ final class InvoiceCreateCommand extends Command
         $defaultQuery->setCurrentUser($user);
         $defaultQuery->setSearchTerm($searchTerm);
         $defaultQuery->setExported($exportedFilter);
+        if (null !== $overwriteTemplate){
+            $defaultQuery->setTemplate($overwriteTemplate);
+            $defaultQuery->setAllowTemplateOverwrite(true);
+        }
 
         /** @var Invoice[] $invoices */
         $invoices = [];
@@ -275,12 +296,15 @@ final class InvoiceCreateCommand extends Command
             $query->addProject($project);
             $query->addCustomer($customer);
 
-            $tpl = $this->getTemplateForCustomer($input, $customer);
+            $tpl = $query->getTemplate();
             if (null === $tpl) {
-                $io->warning(\sprintf('Could not find invoice template for project "%s", skipping!', $project->getName()));
-                continue;
+                $tpl = $customer->getInvoiceTemplate();
+                if (null === $tpl) {
+                    $io->warning(\sprintf('Could not find invoice template for project "%s", skipping!', $project->getName()));
+                    continue;
+                }
+                $query->setTemplate($tpl);
             }
-            $query->setTemplate($tpl);
 
             try {
                 $model = $this->serviceInvoice->createModel($query);
@@ -350,12 +374,15 @@ final class InvoiceCreateCommand extends Command
             $query = clone $defaultQuery;
             $query->addCustomer($customer);
 
-            $tpl = $this->getTemplateForCustomer($input, $customer);
+            $tpl = $query->getTemplate();
             if (null === $tpl) {
-                $io->warning(\sprintf('Could not find invoice template for customer "%s", skipping!', $customer->getName()));
-                continue;
+                $tpl = $customer->getInvoiceTemplate();
+                if (null === $tpl) {
+                    $io->warning(\sprintf('Could not find invoice template for customer "%s", skipping!', $customer->getName()));
+                    continue;
+                }
+                $query->setTemplate($tpl);
             }
-            $query->setTemplate($tpl);
 
             try {
                 $model = $this->serviceInvoice->createModel($query);
@@ -434,14 +461,8 @@ final class InvoiceCreateCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function getTemplateForCustomer(InputInterface $input, Customer $customer): ?InvoiceTemplate
+    private function getCommandLineArgumentTemplateForCustomer(string $template): ?InvoiceTemplate
     {
-        $template = $input->getOption('template');
-
-        if (null === $template) {
-            return $customer->getInvoiceTemplate();
-        }
-
         $tpl = $this->invoiceTemplateRepository->find($template);
 
         if (null !== $tpl) {
