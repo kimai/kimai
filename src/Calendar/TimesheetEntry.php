@@ -18,9 +18,7 @@ use App\Entity\Timesheet;
  */
 final class TimesheetEntry implements DragAndDropEntry
 {
-    public function __construct(private Timesheet $timesheet, private string $color, private bool $copy = false)
-    {
-    }
+    public function __construct(private Timesheet $timesheet, private string $color, private bool $copy = false) {}
 
     public function getData(): array
     {

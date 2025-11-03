@@ -4,8 +4,11 @@ FROM kimai/kimai2:apache
 COPY var/plugins/NotionIntegrationBundle /opt/kimai/var/plugins/NotionIntegrationBundle
 COPY var/plugins/CustomerPortalBundle /opt/kimai/var/plugins/CustomerPortalBundle
 
+# Copy customized templates (if you have any local changes)
+COPY templates /opt/kimai/templates
+
 # Set proper permissions
-RUN chown -R www-data:www-data /opt/kimai/var/plugins
+RUN chown -R www-data:www-data /opt/kimai/var/plugins /opt/kimai/templates
 
 # Note: We don't run cache reload here because the database isn't available at build time.
 # The official kimai entrypoint will handle cache warming on container start.

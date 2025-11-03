@@ -4,8 +4,7 @@ import globals from "globals";
 export default [
     js.configs.recommended,
     {
-        files: ["assets/js/**/*.js"],
-        ignores: ["assets/*.js"],
+        files: ["assets/**/*.js"],
         rules: {
             eqeqeq: 1,
             curly: "error",

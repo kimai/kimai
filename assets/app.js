@@ -7,3 +7,4 @@ global.KimaiPaginatedBoxWidget = require('./js/widgets/KimaiPaginatedBoxWidget')
 global.KimaiReloadPageWidget = require('./js/widgets/KimaiReloadPageWidget').default;
 global.KimaiColor = require('./js/widgets/KimaiColor').default;
 global.KimaiStorage = require('./js/widgets/KimaiStorage').default;
+global.TagAutoFill = require('./js/widgets/TagAutoFill').default;

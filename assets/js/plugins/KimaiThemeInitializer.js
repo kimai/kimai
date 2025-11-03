@@ -9,84 +9,103 @@
  * [KIMAI] KimaiThemeInitializer: initialize theme functionality
  */
 
-import { Tooltip, Offcanvas } from 'bootstrap';
-import KimaiPlugin from '../KimaiPlugin';
+import { Tooltip, Offcanvas } from "bootstrap";
+import KimaiPlugin from "../KimaiPlugin";
 
 export default class KimaiThemeInitializer extends KimaiPlugin {
-
-    init()
-    {
-        // the tooltip do not use data-bs-toggle="tooltip" so they can be mixed with data-toggle="modal"
-        [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]')).map(function (tooltipTriggerEl) {
-            return new Tooltip(tooltipTriggerEl);
+  init() {
+    // the tooltip do not use data-bs-toggle="tooltip" so they can be mixed with data-toggle="modal"
+    // Fix: Add proper cleanup to prevent tooltips from sticking
+    [].slice
+      .call(document.querySelectorAll('[data-toggle="tooltip"]'))
+      .map(function (tooltipTriggerEl) {
+        const tooltip = new Tooltip(tooltipTriggerEl, {
+          trigger: "hover",
+          delay: { show: 500, hide: 100 },
         });
 
-        // support for offcanvas elements
-        const offcanvasElementList = document.querySelectorAll('.offcanvas');
-        [...offcanvasElementList].map(offcanvasEl => new Offcanvas(offcanvasEl));
+        // Force hide tooltip when mouse leaves
+        tooltipTriggerEl.addEventListener("mouseleave", function () {
+          tooltip.hide();
+        });
 
-        // activate all form plugins
-        /** @type {KimaiForm} FORMS */
-        const FORMS = this.getContainer().getPlugin('form');
-        FORMS.activateForm('div.page-wrapper form');
+        // Cleanup tooltip when element is removed from DOM
+        tooltipTriggerEl.addEventListener("DOMNodeRemoved", function () {
+          tooltip.dispose();
+        });
 
-        this._registerModalAutofocus('#remote_form_modal');
+        return tooltip;
+      });
 
+    // support for offcanvas elements
+    const offcanvasElementList = document.querySelectorAll(".offcanvas");
+    [...offcanvasElementList].map((offcanvasEl) => new Offcanvas(offcanvasEl));
+
+    // activate all form plugins
+    /** @type {KimaiForm} FORMS */
+    const FORMS = this.getContainer().getPlugin("form");
+    FORMS.activateForm("div.page-wrapper form");
+
+    this._registerModalAutofocus("#remote_form_modal");
+
+    this.overlay = null;
+
+    // register a global event listener, which displays an overlays upon notification
+    document.addEventListener("kimai.reloadContent", (event) => {
+      // do not allow more than one loading screen at a time
+      if (this.overlay !== null) {
+        return;
+      }
+
+      // at which element we append the loading screen
+      let container = "body";
+      if (event.detail !== undefined && event.detail !== null) {
+        container = event.detail;
+      }
+
+      const temp = document.createElement("div");
+      temp.innerHTML =
+        '<div class="overlay"><div class="fas fa-sync fa-spin"></div></div>';
+      this.overlay = temp.firstElementChild;
+      document.querySelector(container).append(this.overlay);
+    });
+
+    // register a global event listener, which hides an overlay upon notification
+    document.addEventListener("kimai.reloadedContent", () => {
+      if (this.overlay !== null) {
+        this.overlay.remove();
         this.overlay = null;
+      }
+    });
+  }
 
-        // register a global event listener, which displays an overlays upon notification
-        document.addEventListener('kimai.reloadContent', (event) => {
-            // do not allow more than one loading screen at a time
-            if (this.overlay !== null) {
-                return;
-            }
-
-            // at which element we append the loading screen
-            let container = 'body';
-            if (event.detail !== undefined && event.detail !== null) {
-                container = event.detail;
-            }
-
-            const temp = document.createElement('div');
-            temp.innerHTML = '<div class="overlay"><div class="fas fa-sync fa-spin"></div></div>';
-            this.overlay = temp.firstElementChild;
-            document.querySelector(container).append(this.overlay);
-        });
-
-        // register a global event listener, which hides an overlay upon notification
-        document.addEventListener('kimai.reloadedContent', () => {
-            if (this.overlay !== null) {
-                this.overlay.remove();
-                this.overlay = null;
-            }
-        });
+  /**
+   * Helps to set the autofocus on modals.
+   *
+   * @param {string} selector
+   */
+  _registerModalAutofocus(selector) {
+    // on mobile you do not want to trigger the virtual keyboard upon modal open
+    if (this.isMobile()) {
+      return;
     }
 
-    /**
-     * Helps to set the autofocus on modals.
-     *
-     * @param {string} selector
-     */
-    _registerModalAutofocus(selector) {
-        // on mobile you do not want to trigger the virtual keyboard upon modal open
-        if (this.isMobile()) {
-            return;
-        }
-
-        const modal = document.querySelector(selector);
-        if (modal === null) {
-            return;
-        }
-
-        modal.addEventListener('shown.bs.modal', () => {
-            const form = modal.querySelector('form');
-            let formAutofocus = form.querySelectorAll('[autofocus]');
-            if (formAutofocus.length < 1) {
-                formAutofocus = form.querySelectorAll('input[type=text],input[type=date],textarea,select');
-            }
-            if (formAutofocus.length > 0) {
-                formAutofocus[0].focus();
-            }
-        });
+    const modal = document.querySelector(selector);
+    if (modal === null) {
+      return;
     }
+
+    modal.addEventListener("shown.bs.modal", () => {
+      const form = modal.querySelector("form");
+      let formAutofocus = form.querySelectorAll("[autofocus]");
+      if (formAutofocus.length < 1) {
+        formAutofocus = form.querySelectorAll(
+          "input[type=text],input[type=date],textarea,select"
+        );
+      }
+      if (formAutofocus.length > 0) {
+        formAutofocus[0].focus();
+      }
+    });
+  }
 }

@@ -46,9 +46,7 @@ class TimesheetEditForm extends AbstractType
     public function __construct(
         private readonly CustomerRepository $customers,
         private readonly SystemConfiguration $systemConfiguration
-    )
-    {
-    }
+    ) {}
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -134,12 +132,34 @@ class TimesheetEditForm extends AbstractType
             // 'allow_create' => $allowCreate && $options['create_activity'],
         ]);
 
-        $descriptionOptions = ['required' => false];
+        // Add tags before description for better UX
+        $builder->add('tags', TagsType::class, [
+            'required' => false,
+            'attr' => [
+                'data-auto-fill-target' => 'description',
+            ],
+        ]);
+
+        // Make description required
+        $descriptionOptions = [
+            'required' => true,
+            'label_attr' => [
+                'class' => 'required',
+            ],
+            'attr' => [
+                'data-description-field' => 'true',
+                'required' => 'required',
+            ],
+            'constraints' => [
+                new NotBlank([
+                    'message' => 'Description cannot be empty. Clients need to see what work was done.',
+                ])
+            ],
+        ];
         if (!$isNew) {
-            $descriptionOptions['attr'] = ['autofocus' => 'autofocus'];
+            $descriptionOptions['attr']['autofocus'] = 'autofocus';
         }
         $builder->add('description', DescriptionType::class, $descriptionOptions);
-        $builder->add('tags', TagsType::class, ['required' => false]);
         $this->addRates($builder, $currency, $options);
         $this->addUser($builder, $options);
         $builder->add('metaFields', MetaFieldsCollectionType::class);

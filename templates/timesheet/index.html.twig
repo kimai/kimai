@@ -135,11 +135,23 @@
             {{ widgets.label_activity(entry.activity) }}
         {% endif %}
     {% elseif column == 'description' %}
-        {% if allowMarkdown %}
-            {{ entry.description|desc2html }}
-        {% else %}
-            {{ entry.description|nl2br }}
-        {% endif %}
+        <div class="timesheet-description-wrapper">
+            {% if entry.project %}
+                <div class="text-muted small mb-1">
+                    <strong>{{ entry.project.name }}</strong>
+                    {% if entry.activity %}
+                        / {{ entry.activity.name }}
+                    {% endif %}
+                </div>
+            {% endif %}
+            <div>
+                {% if allowMarkdown %}
+                    {{ entry.description|desc2html }}
+                {% else %}
+                    {{ entry.description|nl2br }}
+                {% endif %}
+            </div>
+        </div>
     {% elseif column == 'tags' %}
         {{ widgets.tag_list(entry.tags) }}
     {% elseif column == 'billable' %}

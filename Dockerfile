@@ -301,6 +301,9 @@ RUN \
 ENV APP_ENV=dev
 ENV DATABASE_URL=
 ENV memory_limit=512M
+# Increase Apache request header limits to handle large cookies/tokens
+RUN echo "LimitRequestFieldSize 32768" >> /etc/apache2/apache2.conf && \
+    echo "LimitRequestLine 32768" >> /etc/apache2/apache2.conf
 
 # the "prod" stage (production build) is configured as last stage in the file, as this is the default target in BuildKit
 FROM base AS prod

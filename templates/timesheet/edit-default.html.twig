@@ -58,11 +58,16 @@
             {% if form.activity is defined %}
                 {{ form_row(form.activity, {'row_attr': {'class': 'mb-3 ' ~ form.vars.name ~ '_row_' ~ form.activity.vars.name}}) }}
             {% endif %}
-            {% if form.description is defined %}
-                {{ form_row(form.description, {'row_attr': {'class': 'mb-3 ' ~ form.vars.name ~ '_row_' ~ form.description.vars.name}}) }}
-            {% endif %}
             {% if form.tags is defined %}
                 {{ form_row(form.tags, {'row_attr': {'class': 'mb-3 ' ~ form.vars.name ~ '_row_' ~ form.tags.vars.name}}) }}
+            {% endif %}
+            {% if form.description is defined %}
+                {{ form_row(form.description, {'required': true, 'row_attr': {'class': 'mb-0 ' ~ form.vars.name ~ '_row_' ~ form.description.vars.name}}) }}
+                <div class="row mb-3">
+                    <div class="col-sm-10 offset-sm-2">
+                        <small class="form-text text-dark" style="opacity: 0.8;">Clients see what you write here</small>
+                    </div>
+                </div>
             {% endif %}
             {% if form.user is defined %}
                 {{ form_row(form.user, {'row_attr': {'class': 'mb-3 ' ~ form.vars.name ~ '_row_' ~ form.user.vars.name}}) }}

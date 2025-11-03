@@ -76,6 +76,16 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
             delete this._activity;
         }
 
+        if (this._tags !== undefined && this._tagsListener !== undefined) {
+            this._tags.removeEventListener('change', this._tagsListener);
+            delete this._tagsListener;
+            delete this._tags;
+        }
+
+        if (this._description !== undefined) {
+            delete this._description;
+        }
+
         if (this._project !== undefined) {
             delete this._project;
         }
@@ -91,6 +101,8 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
 
         this._activity = document.getElementById(formPrefix + '_activity');
         this._project = document.getElementById(formPrefix + '_project');
+        this._tags = document.getElementById(formPrefix + '_tags');
+        this._description = document.getElementById(formPrefix + '_description');
 
         /** @param {CustomEvent} event */
         this._activityListener = (event) => {
@@ -106,6 +118,12 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
             });
         };
         this._activity.addEventListener('create', this._activityListener);
+
+        // Auto-fill description from tags
+        if (this._tags && this._description) {
+            this._tagsListener = () => this._autoFillDescriptionFromTags();
+            this._tags.addEventListener('change', this._tagsListener);
+        }
 
         this._beginDate = document.getElementById(formPrefix + '_begin_date');
         this._beginTime = document.getElementById(formPrefix + '_begin_time');
@@ -694,5 +712,44 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
         setTimeout(() => {
             timeField.setSelectionRange(cursorPos, cursorPos);
         }, 0);
+    }
+
+    /**
+     * Auto-fill description field from tags when tags are added
+     * Only fills if description is empty
+     * @private
+     */
+    _autoFillDescriptionFromTags()
+    {
+        if (!this._tags || !this._description) {
+            return;
+        }
+
+        // Only auto-fill if description is empty
+        if (this._description.value.trim() !== '') {
+            return;
+        }
+
+        // Get the tag values - TomSelect stores values differently
+        let tagValues = [];
+        
+        // Check if TomSelect is initialized on the tags field
+        if (this._tags.tomselect) {
+            tagValues = this._tags.tomselect.getValue();
+            if (typeof tagValues === 'string') {
+                tagValues = tagValues.split(',').filter(t => t.trim() !== '');
+            }
+        } else {
+            // Fallback to regular select value
+            const selectedOptions = Array.from(this._tags.selectedOptions || []);
+            tagValues = selectedOptions.map(option => option.text || option.value);
+        }
+
+        // Join tags with comma and space, and set as description
+        if (tagValues.length > 0) {
+            this._description.value = tagValues.join(', ');
+            // Trigger change event so any listeners are notified
+            this._description.dispatchEvent(new Event('change', { bubbles: true }));
+        }
     }
 }

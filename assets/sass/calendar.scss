@@ -1,20 +1,23 @@
 .calendar-entry {
-    ul {
-        padding: 0;
-        list-style-type: none;
-    }
-    div {
-        white-space: pre-line;
-    }
+  ul {
+    padding: 0;
+    list-style-type: none;
+  }
+  div {
+    white-space: pre-line;
+  }
 }
 
 .draggable {
-    cursor: grab;
+  cursor: grab;
 }
 
 #timesheet_calendar {
-    --bs-gray-400: var(--tblr-border-color);
-    --bs-gray-200: var(--tblr-gray-200);
+  --bs-gray-400: var(--tblr-border-color);
+  --bs-gray-200: var(--tblr-gray-200);
 }
 
-.fc-day-sat, .fc-day-sun { background-color: var(--tblr-bg-surface-secondary); }
+.fc-day-sat,
+.fc-day-sun {
+  background-color: var(--tblr-bg-surface-secondary);
+}

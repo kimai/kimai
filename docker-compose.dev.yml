@@ -1,4 +1,17 @@
 services:
+  db:
+    image: mariadb:10.5
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: kimai
+      MYSQL_USER: kimai
+      MYSQL_PASSWORD: kimai
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
   kimai:
     build:
       context: .
@@ -11,8 +24,10 @@ services:
     restart: unless-stopped
     ports:
       - "8001:8001"
+    depends_on:
+      - db
     environment:
-      # Database connection - Using AWS RDS MySQL
+      # Database connection - Using local MariaDB
       DATABASE_URL: ${DATABASE_URL}
 
       # Initial admin user (created on first run)
@@ -54,4 +69,5 @@ services:
       - kimai_dev_data:/opt/kimai/var
 
 volumes:
+  db_data:
   kimai_dev_data:

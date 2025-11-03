@@ -156,6 +156,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     #[OA\Property(ref: '#/components/schemas/ProjectExpanded')]
     private ?Project $project = null;
     #[ORM\Column(name: 'description', type: Types::TEXT, nullable: true)]
+    #[Assert\NotBlank(message: 'Description cannot be empty. Clients need to see what work was done.')]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?string $description = null;

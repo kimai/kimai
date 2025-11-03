@@ -1,27 +1,41 @@
 {% set active_timesheets = active_timesheets(app.user) %}
 {% set hasActiveRecords = active_timesheets is not empty %}
 {% if not hasActiveRecords %}
-    {# fake entry, because at least one html template node is needed #}
-    {% set active_timesheets = [{'id': '000', 'begin': null, 'activity': {'name': ''}, 'project': {'name': '', 'customer': {'name': ''}}}] %}
+	{# fake entry, because at least one html template node is needed #}
+	{% set active_timesheets = [{'id': '000', 'begin': null, 'activity': {'name': ''}, 'project': {'name': '', 'customer': {'name': ''}}}] %}
 {% endif %}
 <div class="nav-item d-flex me-1 ticktac">
-    <div class="btn-list">
-        {% set class = "btn-outline-white" %}
-        {% if tabler_bundle.isDarkMode() or tabler_bundle.isNavbarOverlapping() %}
-            {% set class = "btn-dark" %}
-        {% endif %}
-        {% set entry = active_timesheets[0] %}
-        <div class="ticktac-menu" data-api="{{ path('active_timesheet') }}" data-href="{{ path('stop_timesheet', {'id' : '000'}) }}" style="{% if not hasActiveRecords %}display:none{% endif %}">
-            <a title="{{ 'timesheet.stop'|trans }}" data-replacer="url" class="api-link ticktac-running ticktac-stop btn {{ class }} btn-icon px-sm-2" href="#" data-href="{{ path('stop_timesheet', {'id' : entry.id}) }}" data-event="kimai.timesheetStop kimai.timesheetUpdate" data-method="PATCH" data-msg-error="timesheet.stop.error" data-msg-success="timesheet.stop.success"{% if hasActiveRecords %} accesskey="s"{% endif %}>
-                <i class="text-red {{ 'stop-small'|icon(false) }} me-0 me-sm-1"></i>
-                <span class="d-none d-sm-block" data-replacer="duration" data-title="true" data-since="{{ entry.begin is null ? '' : entry.begin|date_format(constant('DATE_ISO8601')) }}">{{ entry is iterable ? 0|duration : entry|duration }}</span>
-            </a>
-        </div>
-        <div class="ticktac-menu-empty" style="{% if hasActiveRecords %}display:none{% endif %}">
-            <a title="{{ 'timesheet.start'|trans }}" href="{{ path('timesheet_create') }}" class="modal-ajax-form ticktac-start btn {{ class }} btn-icon px-sm-2" accesskey="n">
-                <i class="text-green {{ 'start'|icon(false) }} me-0 me-sm-1"></i>
-                <span class="d-none d-sm-block">{{ 0|duration }}</span>
-            </a>
-        </div>
-    </div>
+	<div class="btn-list">
+		{% set class = "btn-outline-white" %}
+		{% if tabler_bundle.isDarkMode() or tabler_bundle.isNavbarOverlapping() %}
+			{% set class = "btn-dark" %}
+		{% endif %}
+		{% set entry = active_timesheets[0] %}
+		<div class="ticktac-menu" data-api="{{ path('active_timesheet') }}" data-href="{{ path('stop_timesheet', {'id' : '000'}) }}" style="{% if not hasActiveRecords %}display:none{% endif %}">
+			<div class="d-flex align-items-center">
+				<div class="d-none d-lg-block me-2 text-end" style="max-width: 250px;">
+					{% if entry.project is not null %}
+						<div class="text-truncate" style="font-size: 0.875rem; line-height: 1.2;">
+							<strong data-replacer="project">{{ entry.project.name }}</strong>
+						</div>
+					{% endif %}
+					{% if entry.activity is not null %}
+						<div class="text-truncate text-muted" style="font-size: 0.75rem; line-height: 1.2;">
+							<span data-replacer="activity">{{ entry.activity.name }}</span>
+						</div>
+					{% endif %}
+				</div>
+				<a title="{{ 'timesheet.stop'|trans }}" data-replacer="url" class="api-link ticktac-running ticktac-stop btn {{ class }} btn-icon px-sm-2" href="#" data-href="{{ path('stop_timesheet', {'id' : entry.id}) }}" data-event="kimai.timesheetStop kimai.timesheetUpdate" data-method="PATCH" data-msg-error="timesheet.stop.error" data-msg-success="timesheet.stop.success" {% if hasActiveRecords %} accesskey="s" {% endif %}>
+					<i class="text-red {{ 'stop-small'|icon(false) }} me-0 me-sm-1"></i>
+					<span class="d-none d-sm-block" data-replacer="duration" data-title="true" data-since="{{ entry.begin is null ? '' : entry.begin|date_format(constant('DATE_ISO8601')) }}">{{ entry is iterable ? 0|duration : entry|duration }}</span>
+				</a>
+			</div>
+		</div>
+		<div class="ticktac-menu-empty" style="{% if hasActiveRecords %}display:none{% endif %}">
+			<a title="{{ 'timesheet.start'|trans }}" href="{{ path('timesheet_create') }}" class="modal-ajax-form ticktac-start btn {{ class }} btn-icon px-sm-2" accesskey="n">
+				<i class="text-green {{ 'start'|icon(false) }} me-0 me-sm-1"></i>
+				<span class="d-none d-sm-block">{{ 0|duration }}</span>
+			</a>
+		</div>
+	</div>
 </div>

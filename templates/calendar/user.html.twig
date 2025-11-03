@@ -2,246 +2,262 @@
 {% import "macros/widgets.html.twig" as widgets %}
 
 {% block main %}
-    <div class="row">
-        {% set hasTwoColumns = (config.dragDropAmount > 0 and dragAndDrop is not empty and (dragAndDrop|filter(s => s.entries|length > 0)|length > 0)) or form is not null %}
-        {% if hasTwoColumns %}
-        <div class="col-md-4 col-lg-3 d-none d-md-block order-last">
-            {% if form is not null %}
-                {% embed '@theme/embeds/card.html.twig' %}
-                    {% block box_body %}
-                        {{ form_start(form, {attr: {id: 'calendar-form'}}) }}
-                        {% if form.user is defined %}
-                            {% set user_class = '' %}
-                            {% if form.user.vars.choices|length < 2 %}
-                                {% set user_class = 'd-none' %}
-                            {% endif %}
-                            {{ form_row(form.user, {row_attr: {class: user_class}}) }}
-                        {% endif %}
-                        {% if form.date is defined %}
-                            {{ form_row(form.date, {row_attr: {class: 'd-none'}}) }}
-                        {% endif %}
-                        {% if form.view is defined %}
-                            {{ form_row(form.view, {row_attr: {class: 'd-none'}}) }}
-                        {% endif %}
-                        {{ form_rest(form) }}
-                        {{ form_end(form) }}
-                    {% endblock %}
-                {% endembed %}
-            {% endif %}
-            {% for source in dragAndDrop|filter(s => s.entries|length > 0) %}
-                {% embed '@theme/embeds/card.html.twig' %}
-                    {% block box_title %}{{ source.title|trans({}, source.translationDomain) }}{% endblock %}
-                    {% block box_body_class %}drag-and-drop-source p-0{% endblock %}
-                    {% block box_body %}
-                        <div class="list-group list-group-flush external-events" data-method="{{ source.method }}" data-route="{{ path(source.route, source.routeParams) }}" data-route-replacer="{{ source.routeReplacer|json_encode|e('html_attr') }}">
-                            {% for entry in source.entries|slice(0, config.dragDropAmount) %}
-                                <div class="p-1 ps-2 list-group-item external-event draggable" data-entry="{{ entry.data|json_encode|e('html_attr') }}"{% if entry.project is not null %} data-toggle="tooltip" title="{{ entry.project.customer.name }}"{% endif %}>
-                                    <div class="row align-items-center">
-                                        <div class="col text-truncate">
-                                            {% if source.blockInclude is not null and entry.blockName is not null and block(entry.blockName, source.blockInclude) is defined %}
-                                                {{ block(entry.blockName, source.blockInclude) }}
-                                            {% else %}
-                                                <span class="d-block text-body-secondary text-truncate mt-n1">{{ entry.title }}</span>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    {% endblock %}
-                {% endembed %}
-            {% endfor %}
-        </div>
-        {% endif %}
+	<div class="row">
+		{% set hasTwoColumns = (config.dragDropAmount > 0 and dragAndDrop is not empty and (dragAndDrop|filter(s => s.entries|length > 0)|length > 0)) or form is not null %}
+		{% if hasTwoColumns %}
+			<div class="col-md-4 col-lg-3 d-none d-md-block order-last">
+				{% if form is not null %}
+					{% embed '@theme/embeds/card.html.twig' %}
+						{% block box_body %}
+							{{ form_start(form, {attr: {id: 'calendar-form'}}) }}
+							{% if form.user is defined %}
+								{% set user_class = '' %}
+								{% if form.user.vars.choices|length < 2 %}
+									{% set user_class = 'd-none' %}
+								{% endif %}
+								{{ form_row(form.user, {row_attr: {class: user_class}}) }}
+							{% endif %}
+							{% if form.date is defined %}
+								{{ form_row(form.date, {row_attr: {class: 'd-none'}}) }}
+							{% endif %}
+							{% if form.view is defined %}
+								{{ form_row(form.view, {row_attr: {class: 'd-none'}}) }}
+							{% endif %}
+							{{ form_rest(form) }}
+							{{ form_end(form) }}
+						{% endblock %}
+					{% endembed %}
+				{% endif %}
+				{% for source in dragAndDrop|filter(s => s.entries|length > 0) %}
+					{% embed '@theme/embeds/card.html.twig' %}
+						{% block box_title %}
+							{{ source.title|trans({}, source.translationDomain) }}
+						{% endblock %}
+						{% block box_body_class %}drag-and-drop-source p-0
+						{% endblock %}
+						{% block box_body %}
+							<div class="list-group list-group-flush external-events" data-method="{{ source.method }}" data-route="{{ path(source.route, source.routeParams) }}" data-route-replacer="{{ source.routeReplacer|json_encode|e('html_attr') }}">
+								{% for entry in source.entries|slice(0, config.dragDropAmount) %}
+									<div class="p-1 ps-2 list-group-item external-event draggable" data-entry="{{ entry.data|json_encode|e('html_attr') }}" {% if entry.project is not null %} data-toggle="tooltip" title="{{ entry.project.customer.name }}" {% endif %}>
+										<div class="row align-items-center">
+											<div class="col text-truncate">
+												{% if source.blockInclude is not null and entry.blockName is not null and block(entry.blockName, source.blockInclude) is defined %}
+													{{ block(entry.blockName, source.blockInclude) }}
+												{% else %}
+													<span class="d-block text-body-secondary text-truncate mt-n1">{{ entry.title }}</span>
+												{% endif %}
+											</div>
+										</div>
+									</div>
+								{% endfor %}
+							</div>
+						{% endblock %}
+					{% endembed %}
+				{% endfor %}
+			</div>
+		{% endif %}
 
-        <div class="col-xs-12 {% if hasTwoColumns %}col-md-8 col-lg-9 col-print-12{% endif %}">
-            {% embed '@theme/embeds/card.html.twig' %}
-                {% block box_body_class %}p-0{% endblock %}
-                {% block box_body %}
-                    <div id="timesheet_calendar"></div>
-                {% endblock %}
-            {% endembed %}
-        </div>
-    </div>
+		<div class="col-xs-12 {% if hasTwoColumns %}col-md-8 col-lg-9 col-print-12{% endif %}">
+			{% embed '@theme/embeds/card.html.twig' %}
+				{% block box_body_class %}p-0
+				{% endblock %}
+				{% block box_body %}
+					<div id="timesheet_calendar"></div>
+				{% endblock %}
+			{% endembed %}
+		</div>
+	</div>
 {% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('calendar') }}
+	{{ parent() }}
+	{{ encore_entry_link_tags('calendar') }}
 {% endblock %}
 
 {% block head %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('calendar') }}
+	{{ parent() }}
+	{{ encore_entry_script_tags('calendar') }}
 {% endblock %}
 
 {% block javascripts %}
-    {% set calendarSelector = 'timesheet_calendar' %}
-    {% set createParams = '' %}
-    {% set createRoute = 'timesheet_create' %}
-    {% set editRoute = 'timesheet_edit' %}
-    {% set canCreate = is_granted('create_own_timesheet') %}
-    {% set canEdit = is_granted('edit_own_timesheet') %}
-    {% set canEditExported = is_granted('edit_exported_timesheet') %}
-    {% set isForeignEdit = false %}
-    {% if user != app.user %}
-        {% set isForeignEdit = true %}
-        {% set createParams = 'user=' ~ user.id ~ '&' %}
-        {% set createRoute = 'admin_timesheet_create' %}
-        {% set editRoute = 'admin_timesheet_edit' %}
-        {% set canCreate = is_granted('create_other_timesheet') %}
-        {% set canEdit = is_granted('edit_other_timesheet') %}
-    {% endif %}
+	{% set calendarSelector = 'timesheet_calendar' %}
+	{% set createParams = '' %}
+	{% set createRoute = 'timesheet_create' %}
+	{% set editRoute = 'timesheet_edit' %}
+	{% set canCreate = is_granted('create_own_timesheet') %}
+	{% set canEdit = is_granted('edit_own_timesheet') %}
+	{% set canEditExported = is_granted('edit_exported_timesheet') %}
+	{% set isForeignEdit = false %}
+	{% if user != app.user %}
+		{% set isForeignEdit = true %}
+		{% set createParams = 'user=' ~ user.id ~ '&' %}
+		{% set createRoute = 'admin_timesheet_create' %}
+		{% set editRoute = 'admin_timesheet_edit' %}
+		{% set canCreate = is_granted('create_other_timesheet') %}
+		{% set canEdit = is_granted('edit_other_timesheet') %}
+	{% endif %}
 
-    {{ parent() }}
-    <script>
-        {# using var, so it can be re-used in the different scopes #}
-        var calendar = null;
+	{{ parent() }}
+	<script>
+var calendar = null;
 
-        const reloader = function() { calendar.reloadEvents(); };
-        document.addEventListener('kimai.timesheetUpdate', reloader);
-        document.addEventListener('kimai.timesheetDelete', reloader);
+const reloader = function () {
+calendar.reloadEvents();
+};
+document.addEventListener('kimai.timesheetUpdate', reloader);
+document.addEventListener('kimai.timesheetDelete', reloader);
 
-        document.addEventListener('kimai.calendar.changeDate', function(event) {
-            var queryParams = new URLSearchParams(window.location.search);
+document.addEventListener('kimai.calendar.changeDate', function (event) {
+var queryParams = new URLSearchParams(window.location.search);
 
-            const dateSelect = document.getElementById('date');
-            if (dateSelect !== null) {
-                dateSelect.value = event.detail.date;
-                queryParams.set('date', event.detail.date);
-            }
-            const viewSelect = document.getElementById('view');
-            if (viewSelect !== null) {
-                viewSelect.value = event.detail.view;
-                queryParams.set('view', event.detail.view);
-            }
+const dateSelect = document.getElementById('date');
+if (dateSelect !== null) {
+dateSelect.value = event.detail.date;
+queryParams.set('date', event.detail.date);
+}
+const viewSelect = document.getElementById('view');
+if (viewSelect !== null) {
+viewSelect.value = event.detail.view;
+queryParams.set('view', event.detail.view);
+}
 
-            history.replaceState(null, null, "?" + queryParams.toString());
-        });
+history.replaceState(null, null, "?" + queryParams.toString());
+});
 
-        document.addEventListener('kimai.initialized', function(event) {
-            const kimai = event.detail.kimai;
+document.addEventListener('kimai.initialized', function (event) {
+const kimai = event.detail.kimai;
 
-            let calendarOptions = {
-                initialDate: '{{ initial_date|report_date }}',
-                dragdrop: {
-                    container: '.external-events',
-                    items: '.external-event',
-                },
-                initialView: '{{ initial_view }}',
-                translations: {
-                    customer: '{{ 'customer'|trans }}',
-                    project: '{{ 'project'|trans }}',
-                    activity: '{{ 'activity'|trans }}',
-                },
-                permissions: {
-                    edit: {% if canEdit %}true{% else %}false{% endif %},
-                    edit_exported: {% if canEditExported %}true{% else %}false{% endif %},
-                    create: {% if canCreate %}true{% else %}false{% endif %},
-                    edit_begin: {% if can_edit_begin %}true{% else %}false{% endif %},
-                    edit_end: {% if can_edit_end %}true{% else %}false{% endif %},
-                    edit_duration: {% if can_edit_duration %}true{% else %}false{% endif %},
-                    punch: {% if is_punch_mode %}true{% else %}false{% endif %},
-                },
-                icons: {
-                    next: '{{ 'right'|icon(true) }}',
-                    previous: '{{ 'left'|icon(true) }}',
-                    nextYear: '{{ 'right2'|icon(true) }}',
-                    previousYear: '{{ 'left2'|icon(true) }}',
-                },
-                {% if google is not null %}
-                googleCalendarApiKey: '{{ google.apiKey }}',
-                {% endif %}
-                patterns: {
-                    title: '{{ config.entryTitlePattern }}',
-                },
-                defaultStartTime: {% if defaultStartTime is null %}null{% else %}'{{ defaultStartTime }}'{% endif %},
-                now: '{{ now|date_format('c') }}',
-                {# see https://github.com/kimai/kimai/issues/2155 #}
-                timezone: '{{ app.user.timezone == 'UTC' ? 'GMT' : app.user.timezone }}',
-                eventSources: [
-                    {
-                        id: 'kimaiUserTimeSource',
-                        type: 'timesheet',
-                        url: '{{ path('get_timesheets', {'user': user.id, 'size': 1000, 'full': 'true', 'begin': '__FROM__', 'end': '__TO__'})|raw }}',
-                        options: {
-                            color: '{{ config('theme.calendar.background_color') }}',
-                        },
-                    }
-                    {% if google is not null %}
-                    {% for source in google.sources %}
-                    ,
-                    {
-                        id: 'googleCompanyCalendar{{ loop.index }}',
-                        type: '{{ source.typeName }}',
-                        options: {
-                            googleCalendarId: '{{ source.uri }}',
-                            name: '{{ source.id }}',
-                            color: '{{ source.color }}',
-                            textColor: '{{ source.color|font_contrast }}',
-                        }
-                    }
-                    {% endfor %}
-                    {% endif %}
-                    {% for source in sources %}
-                    ,
-                    {
-                        id: '{{ source.id }}{{ loop.index }}',
-                        type: '{{ source.typeName }}',
-                        url: '{{ source.uri|raw }}',
-                        options: {...{{ source.options|json_encode|raw }}, ...{
-                            color: '{{ source.color }}',
-                            textColor: '{{ source.color|font_contrast }}',
-                        }}
-                    }
-                    {% endfor %}
-                ],
-                url: {
-                    update: (timesheetId) => {
-                        return '{{ path('patch_timesheet', {id: 1}) }}'.replace('1', timesheetId);
-                    },
-                    create: (start, end) => {
-                        let createUrl = '{{ path(createRoute) }}' + '?{{ createParams|raw }}';
-                        if (end !== undefined) {
-                            createUrl += 'from=' + start + '&to=' + end;
-                        } else {
-                            createUrl += 'begin=' + start;
-                        }
-                        return createUrl;
-                    },
-                    edit: (timesheetId) => {
-                        return '{{ path(editRoute, {id: '-XX-'}) }}'.replace('-XX-', timesheetId);
-                    },
-                    actions: (timesheetId) => {
-                        return '{{ path('get_timesheet_actions', {id: 1, 'view': 'calendar', 'locale': (app.request.locale)}) }}'.replace('1', timesheetId);
-                    },
-                },
-                preparePayloadForUpdate: (data) => {
-                    {% if isForeignEdit %}
-                    data.user = {{ user.id }};
-                    {% endif %}
+let calendarOptions = {
+initialDate: '{{ initial_date|report_date }}',
+dragdrop: {
+container: '.external-events',
+items: '.external-event'
+},
+initialView: '{{ initial_view }}',
+translations: {
+customer: '{{ 'customer'|trans }}',
+project: '{{ 'project'|trans }}',
+activity: '{{ 'activity'|trans }}'
+},
+permissions: {
+edit:{% if canEdit %}true
+{% else %}
+false
+{% endif %},
+edit_exported:{% if canEditExported %}true
+{% else %}
+false
+{% endif %},
+create:{% if canCreate %}true
+{% else %}
+false
+{% endif %},
+edit_begin:{% if can_edit_begin %}true
+{% else %}
+false
+{% endif %},
+edit_end:{% if can_edit_end %}true
+{% else %}
+false
+{% endif %},
+edit_duration:{% if can_edit_duration %}true
+{% else %}
+false
+{% endif %},
+punch:{% if is_punch_mode %}true
+{% else %}
+false
+{% endif %}
+},
+icons: {
+next: '{{ 'right'|icon(true) }}',
+previous: '{{ 'left'|icon(true) }}',
+nextYear: '{{ 'right2'|icon(true) }}',
+previousYear: '{{ 'left2'|icon(true) }}'
+},{% if google is not null %}googleCalendarApiKey : '{{ google.apiKey }}',{% endif %}patterns: {
+title: '{{ config.entryTitlePattern }}'
+},
+defaultStartTime:{% if defaultStartTime is null %}null
+{% else %}'{{ defaultStartTime }}'{% endif %},
+now: '{{ now|date_format('c') }}',
+{# see https://github.com/kimai/kimai/issues/2155 #}
+timezone: '{{ app.user.timezone == 'UTC' ? 'GMT' : app.user.timezone }}',
+eventSources: [
+{
+id: 'kimaiUserTimeSource',
+type: 'timesheet',
+url: '{{ path('get_timesheets', {'user': user.id, 'size': 1000, 'full': 'true', 'begin': '__FROM__', 'end': '__TO__'})|raw }}',
+options: {
+color: '{{ config('theme.calendar.background_color') }}'
+}
+}
+{% if google is not null %}
+{% for source in google.sources %}, {
+id: 'googleCompanyCalendar    {{ loop.index }}',
+type: '{{ source.typeName }}',
+options: {
+googleCalendarId: '{{ source.uri }}',
+name: '{{ source.id }}',
+color: '{{ source.color }}',
+textColor: '{{ source.color|font_contrast }}'
+}
+}
+{% endfor %}
+{% endif %}
+{% for source in sources %}, {
+id: '{{ source.id }}{{ loop.index }}',
+type: '{{ source.typeName }}',
+url: '{{ source.uri|raw }}',
+options: {
+...{{ source.options|json_encode|raw }},
+...{
+color: '{{ source.color }}',
+textColor: '{{ source.color|font_contrast }}'
+}
+}
+}
+{% endfor %}
+],
+url: {
+update: (timesheetId) => {
+return '{{ path('patch_timesheet', {id: 1}) }}'.replace('1', timesheetId);
+},
+create: (start, end) => {
+let createUrl = '{{ path(createRoute) }}' + '?    {{ createParams|raw }}';
+if (end !== undefined) {
+createUrl += 'from=' + start + '&to=' + end;
+} else {
+createUrl += 'begin=' + start;
+}
+return createUrl;
+},
+edit: (timesheetId) => {
+return '{{ path(editRoute, {id: '-XX-'}) }}'.replace('-XX-', timesheetId);
+},
+actions: (timesheetId) => {
+return '{{ path('get_timesheet_actions', {id: 1, 'view': 'calendar', 'locale': (app.request.locale)}) }}'.replace('1', timesheetId);
+}
+},
+preparePayloadForUpdate: (data) => {
+{% if isForeignEdit %}
+data.user = {{ user.id }};{% endif %}return data;
+}
+};
 
-                    return data;
-                },
-            };
+calendar = new KimaiCalendar(kimai, document.getElementById('{{ calendarSelector }}'), Object.assign({}, calendarOptions, {{ config|json_encode|raw }}));
+calendar.render();
 
-            calendar = new KimaiCalendar(
-                kimai,
-                document.getElementById('{{ calendarSelector }}'),
-                Object.assign({}, calendarOptions, {{ config|json_encode|raw }})
-            );
-            calendar.render();
+document.querySelector('.fc-today-button').classList.remove('btn-icon');
+document.querySelector('.fc-header-toolbar').classList.toggle('row');
+document.querySelector('.fc-header-toolbar').classList.add('p-3');
+const toolbar = document.querySelectorAll('.fc-header-toolbar .fc-toolbar-chunk');
+toolbar[0].parentElement.classList.add('p-3');
+toolbar[0].classList.add('col-md-4', 'col-6', 'mb-1', 'text-start', 'order-xs-1');
+toolbar[1].classList.add('col-md-4', 'col-12', 'mb-1', 'text-center', 'order-3');
+toolbar[2].classList.add('col-md-4', 'col-6', 'mb-1', 'text-end', 'order-md-4', 'order-xs-2');
 
-            document.querySelector('.fc-today-button').classList.remove('btn-icon');
-            document.querySelector('.fc-header-toolbar').classList.toggle('row');
-            document.querySelector('.fc-header-toolbar').classList.add('p-3');
-            const toolbar = document.querySelectorAll('.fc-header-toolbar .fc-toolbar-chunk');
-            toolbar[0].parentElement.classList.add('p-3');
-            toolbar[0].classList.add('col-md-4', 'col-6', 'mb-1', 'text-start', 'order-xs-1');
-            toolbar[1].classList.add('col-md-4', 'col-12', 'mb-1', 'text-center', 'order-3');
-            toolbar[2].classList.add('col-md-4', 'col-6', 'mb-1', 'text-end', 'order-md-4', 'order-xs-2');
-
-            KimaiReloadPageWidget.create('kimai.systemConfigUpdate', true);
-        });
-    </script>
+KimaiReloadPageWidget.create('kimai.systemConfigUpdate', true);
+}
+);
+</script>
 {% endblock %}

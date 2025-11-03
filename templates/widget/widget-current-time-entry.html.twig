@@ -1,0 +1,57 @@
+{% import "macros/widgets.html.twig" as widgets %}
+
+<div class="card card-sm">
+    <div class="card-body">
+        {% if data is null %}
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <span class="bg-secondary text-white avatar">
+                        {{ icon('pause', true) }}
+                    </span>
+                </div>
+                <div class="col">
+                    <div class="font-weight-medium">
+                        {{ title|trans }}
+                    </div>
+                    <div class="text-body-secondary">
+                        No active time entry
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <span class="bg-{{ options.color|default('green') }} text-white avatar">
+                        {{ icon('duration', true) }}
+                    </span>
+                </div>
+                <div class="col">
+                    <div class="font-weight-medium">
+                        {{ title|trans }}
+                    </div>
+                    <div class="text-body-secondary">
+                        <div class="mb-1">
+                            <strong>{{ data.project.name }}</strong>
+                            {% if data.activity %}
+                                - {{ data.activity.name }}
+                            {% endif %}
+                        </div>
+                        {% if data.description %}
+                            <div class="mb-1 text-truncate" style="max-width: 300px;" title="{{ data.description }}">
+                                {{ data.description }}
+                            </div>
+                        {% endif %}
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge bg-info">
+                                <i data-since="{{ data.begin.format(constant('DATE_ISO8601')) }}">{{ data|duration }}</i>
+                            </span>
+                            <small class="text-muted">
+                                Started: {{ data.begin|time }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
