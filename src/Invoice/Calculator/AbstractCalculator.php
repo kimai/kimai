@@ -16,11 +16,34 @@ use App\Invoice\TaxRow;
 abstract class AbstractCalculator
 {
     protected InvoiceModel $model;
+    /**
+     * @var array InvoiceItem[]
+     */
+    private array $cached = [];
 
     /**
+     * TODO make this method abstract in 3.0
+     *
      * @return InvoiceItem[]
      */
-    abstract public function getEntries(): array;
+    protected function calculateEntries(): array
+    {
+        return [];
+    }
+
+    /**
+     * TODO make this method final in 3.0
+     *
+     * @return InvoiceItem[]
+     */
+    public function getEntries(): array
+    {
+        if (\count($this->cached) === 0) {
+            $this->cached[] = $this->calculateEntries();
+        }
+
+        return $this->cached;
+    }
 
     /**
      * @param array<InvoiceItem> $items
