@@ -49,6 +49,7 @@ final class ExportColumnsType extends AbstractType
     {
         $columns = [
             'timesheet' => [
+                'id' => 'id',
                 'date' => 'date',
                 'begin' => 'begin',
                 'end' => 'end',
