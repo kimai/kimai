@@ -88,6 +88,11 @@ final class InvoiceItem
         return $this;
     }
 
+    public function getAppliedRate(): float
+    {
+        return $this->fixedRate ?? $this->hourlyRate ?? 0.00;
+    }
+
     public function isFixedRate(): bool
     {
         return null !== $this->getFixedRate();
