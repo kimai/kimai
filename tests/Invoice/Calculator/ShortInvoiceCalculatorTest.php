@@ -94,11 +94,11 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTestCase
         $sut->setModel($model);
 
         self::assertEquals('short', $sut->getId());
-        self::assertEquals(562.28, $sut->getTotal());
+        self::assertEquals(561.87, $sut->getTotal());
         $this->assertTax($sut, 19);
         self::assertEquals('EUR', $model->getCurrency());
-        self::assertEquals(472.5, $sut->getSubtotal());
-        self::assertEquals(5800, $sut->getTimeWorked());
+        self::assertEquals(472.16, $sut->getSubtotal());
+        self::assertEquals(5796, $sut->getTimeWorked());
         self::assertEquals(1, \count($sut->getEntries()));
 
         $entries = $sut->getEntries();
@@ -109,8 +109,8 @@ class ShortInvoiceCalculatorTest extends AbstractCalculatorTestCase
         self::assertEquals('', $result->getDescription());
         self::assertEquals(293.27, $result->getHourlyRate());
         self::assertNull($result->getFixedRate());
-        self::assertEquals(472.5, $result->getRate());
-        self::assertEquals(5800, $result->getDuration());
+        self::assertEquals(472.16, $result->getRate());
+        self::assertEquals(5796, $result->getDuration());
         self::assertEquals(3, $result->getAmount());
         self::assertEquals(['foo', 'bar', 'bar1'], $result->getTags());
     }

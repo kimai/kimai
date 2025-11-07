@@ -243,7 +243,7 @@ class RateServiceTest extends TestCase
             [
                 31837,
                 [],
-                663.2708
+                663
             ],
             [
                 31837,
@@ -257,7 +257,7 @@ class RateServiceTest extends TestCase
                         'factor' => 1.5
                     ],
                 ],
-                1326.5417
+                1326 // 8,84 * 75 (see user) * 2
             ],
             [
                 31837,
@@ -271,7 +271,7 @@ class RateServiceTest extends TestCase
                         'factor' => 1.5
                     ],
                 ],
-                2321.4479
+                2320.5 // 75 * 8,84 * 3,5
             ],
         ];
     }

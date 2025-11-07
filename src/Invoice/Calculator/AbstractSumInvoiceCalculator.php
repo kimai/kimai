@@ -47,10 +47,10 @@ abstract class AbstractSumInvoiceCalculator extends AbstractMergedCalculator imp
         $prefix = $this->calculateSumIdentifier($entry);
 
         if (null !== $entry->getFixedRate()) {
-            return $prefix . '_fixed_' . (string) $entry->getFixedRate();
+            return $prefix . '_fixed_' . $entry->getFixedRate();
         }
 
-        return $prefix . '_hourly_' . (string) $entry->getHourlyRate();
+        return $prefix . '_hourly_' . ($entry->getHourlyRate() ?? '__NULL__');
     }
 
     /**
