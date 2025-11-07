@@ -136,7 +136,7 @@ final class CustomerController extends BaseApiController
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
-            $this->repository->saveCustomer($customer);
+            $this->customerService->saveCustomer($customer);
 
             $view = new View($customer, 200);
             $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -178,7 +178,7 @@ final class CustomerController extends BaseApiController
             return $this->viewHandler->handle($view);
         }
 
-        $this->repository->saveCustomer($customer);
+        $this->customerService->saveCustomer($customer);
 
         $view = new View($customer, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -228,7 +228,7 @@ final class CustomerController extends BaseApiController
 
         $meta->setValue($value);
 
-        $this->repository->saveCustomer($customer);
+        $this->customerService->saveCustomer($customer);
 
         $view = new View($customer, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
