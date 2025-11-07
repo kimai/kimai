@@ -95,7 +95,7 @@ final class InvoiceItem
 
     public function isFixedRate(): bool
     {
-        return null !== $this->getFixedRate();
+        return $this->fixedRate !== null;
     }
 
     public function getFixedRate(): ?float

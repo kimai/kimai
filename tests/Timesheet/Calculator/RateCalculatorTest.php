@@ -28,7 +28,7 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(RateCalculator::class)]
 class RateCalculatorTest extends TestCase
 {
-    protected function getRateRepositoryMock(array $rates = [])
+    protected function getRateRepositoryMock(array $rates = []): TimesheetRepository
     {
         $mock = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->getMock();
         if (!empty($rates)) {
@@ -176,7 +176,7 @@ class RateCalculatorTest extends TestCase
         self::assertEquals($expectedInternalRate, $timesheet->getInternalRate());
     }
 
-    protected function getTestUser($rate = 75, $internalRate = 75)
+    protected function getTestUser(?float $rate = 75.0, ?float $internalRate = 75.0): User
     {
         $user = new User();
 
@@ -230,7 +230,7 @@ class RateCalculatorTest extends TestCase
         self::assertEquals($expectedRate, $record->getRate());
     }
 
-    public static function getRuleDefinitions()
+    public static function getRuleDefinitions(): array
     {
         $start = new \DateTime('12:00:00', new \DateTimeZone('UTC'));
         $day = $start->format('l');

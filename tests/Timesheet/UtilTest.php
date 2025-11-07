@@ -18,11 +18,14 @@ use PHPUnit\Framework\TestCase;
 class UtilTest extends TestCase
 {
     #[DataProvider('getRateCalculationData')]
-    public function testCalculateRate(int|float $hourlyRate, int $duration, int|float $expectedRate): void
+    public function testCalculateRate(float $hourlyRate, int $duration, float $expectedRate): void
     {
         self::assertEquals($expectedRate, Util::calculateRate($hourlyRate, $duration));
     }
 
+    /**
+     * @return array<int, array<float, int, >>|\Generator
+     */
     public static function getRateCalculationData()
     {
         yield [0, 0, 0];

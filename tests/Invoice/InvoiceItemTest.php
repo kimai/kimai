@@ -25,7 +25,7 @@ class InvoiceItemTest extends TestCase
         self::assertNull($sut->getFixedRate());
         self::assertNull($sut->getEnd());
         self::assertEquals(0.00, $sut->getRate());
-        self::assertEquals(0.00, $sut->getInternalRate());
+        self::assertEquals(0.00, $sut->getInternalRate()); // @phpstan-ignore method.deprecated
         self::assertEquals(0.00, $sut->getAppliedRate());
         self::assertNull($sut->getProject());
         self::assertIsArray($sut->getAdditionalFields());
