@@ -49,6 +49,7 @@ final class DurationType extends AbstractType
             $class .= ' ' . $view->vars['attr']['class'];
         }
         $view->vars['attr']['class'] = $class;
+        $view->vars['attr']['autocomplete'] = 'off';
         $view->vars['toggle'] = $options['toggle'];
 
         if ($options['preset_hours'] !== null && $options['preset_minutes'] !== null) {
