@@ -57,10 +57,10 @@ class ViewHandler implements ConfigurableViewHandlerInterface
             $results = (array) $data->getCurrentPageResults();
             $view->setData($results);
 
-            $view->setHeader('x-page', (string) $data->getCurrentPage());
-            $view->setHeader('x-total-count', (string) $data->getNbResults());
-            $view->setHeader('x-total-pages', (string) $data->getNbPages());
-            $view->setHeader('x-per-page', (string) $data->getMaxPerPage());
+            $view->setHeader('X-Page', (string) $data->getCurrentPage());
+            $view->setHeader('X-Total-Count', (string) $data->getNbResults());
+            $view->setHeader('X-Total-Pages', (string) $data->getNbPages());
+            $view->setHeader('X-Per-Page', (string) $data->getMaxPerPage());
         }
 
         return $this->baseViewHandler->handle($view, $request);
