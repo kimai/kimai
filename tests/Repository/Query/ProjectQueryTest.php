@@ -22,6 +22,7 @@ class ProjectQueryTest extends BaseQueryTest
         $sut = new ProjectQuery();
 
         $this->assertBaseQuery($sut, 'name');
+        $this->assertVisibility($sut);
         $this->assertCustomer($sut);
         $this->assertResetByFormError(new ProjectQuery(), 'name');
 

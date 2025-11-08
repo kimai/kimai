@@ -20,6 +20,7 @@ class CustomerQueryTest extends BaseQueryTest
         $sut = new CustomerQuery();
 
         $this->assertBaseQuery($sut, 'name');
+        $this->assertVisibility($sut);
         $this->assertResetByFormError(new CustomerQuery(), 'name');
     }
 }

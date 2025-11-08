@@ -20,6 +20,7 @@ class UserQueryTest extends BaseQueryTest
     {
         $sut = new UserQuery();
         $this->assertBaseQuery($sut, 'username');
+        $this->assertVisibility($sut);
         $this->assertRole($sut);
         $this->assertSearchTeam($sut);
         $this->assertResetByFormError(new UserQuery(), 'username');

@@ -20,6 +20,7 @@ class TagQueryTest extends BaseQueryTest
         $sut = new TagQuery();
 
         $this->assertBaseQuery($sut, 'name');
+        $this->assertVisibility($sut);
         $this->assertResetByFormError(new TagQuery(), 'name');
     }
 }
