@@ -801,11 +801,6 @@ parameters:
             path: src/Controller/ProjectController.php
 
         -
-            message: "#^Call to function array_key_exists\\(\\) with 'entry' and array\\{day\\?\\: mixed, entry\\: mixed} will always evaluate to true\\.$#"
-            count: 1
-            path: src/Controller/QuickEntryController.php
-
-        -
             message: "#^Cannot call method format\\(\\) on DateTime\\|null\\.$#"
             count: 1
             path: src/Controller/QuickEntryController.php

@@ -35,6 +35,7 @@ use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\Query\TeamQuery;
 use App\Repository\Query\TimesheetQuery;
+use App\Repository\Query\VisibilityInterface;
 use App\Repository\TeamRepository;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
@@ -146,7 +147,7 @@ final class CustomerController extends AbstractController
     {
         $customer = $customerService->createNewCustomer('');
 
-        return $this->renderCustomerForm($customer, $request, true);
+        return $this->renderCustomerForm($customer, $request, true, $customerService);
     }
 
     #[Route(path: '/{id}/permissions', name: 'admin_customer_permissions', methods: ['GET', 'POST'])]
@@ -281,7 +282,7 @@ final class CustomerController extends AbstractController
         $query->setPage($page);
         $query->setPageSize(5);
         $query->addCustomer($customer);
-        $query->setShowBoth();
+        $query->setVisibility(VisibilityInterface::SHOW_BOTH);
         $query->addOrderGroup('visible', ProjectQuery::ORDER_DESC);
         $query->addOrderGroup('name', ProjectQuery::ORDER_ASC);
 
@@ -421,9 +422,9 @@ final class CustomerController extends AbstractController
 
     #[Route(path: '/{id}/edit', name: 'admin_customer_edit', methods: ['GET', 'POST'])]
     #[IsGranted('edit', 'customer')]
-    public function editAction(Customer $customer, Request $request): Response
+    public function editAction(Customer $customer, Request $request, CustomerService $customerService): Response
     {
-        return $this->renderCustomerForm($customer, $request);
+        return $this->renderCustomerForm($customer, $request, false, $customerService);
     }
 
     #[Route(path: '/{id}/delete', name: 'admin_customer_delete', methods: ['GET', 'POST'])]
@@ -496,7 +497,7 @@ final class CustomerController extends AbstractController
         return $writer->getFileResponse($spreadsheet);
     }
 
-    private function renderCustomerForm(Customer $customer, Request $request, bool $create = false): Response
+    private function renderCustomerForm(Customer $customer, Request $request, bool $create, CustomerService $customerService): Response
     {
         $editForm = $this->createEditForm($customer);
 
@@ -504,7 +505,7 @@ final class CustomerController extends AbstractController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->repository->saveCustomer($customer);
+                $customerService->saveCustomer($customer);
                 $this->flashSuccess('action.update.success');
 
                 if ($create) {

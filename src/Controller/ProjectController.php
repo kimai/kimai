@@ -38,6 +38,7 @@ use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\Query\TeamQuery;
 use App\Repository\Query\TimesheetQuery;
+use App\Repository\Query\VisibilityInterface;
 use App\Repository\TeamRepository;
 use App\Utils\Context;
 use App\Utils\DataTable;
@@ -313,7 +314,7 @@ final class ProjectController extends AbstractController
         $query->setPageSize(5);
         $query->addProject($project);
         $query->setExcludeGlobals(true);
-        $query->setShowBoth();
+        $query->setVisibility(VisibilityInterface::SHOW_BOTH);
         $query->addOrderGroup('visible', ActivityQuery::ORDER_DESC);
         $query->addOrderGroup('name', ActivityQuery::ORDER_ASC);
 

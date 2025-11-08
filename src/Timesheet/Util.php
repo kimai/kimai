@@ -23,8 +23,18 @@ final class Util
      */
     public static function calculateRate(float $hourlyRate, int $seconds): float
     {
-        $rate = $hourlyRate * ($seconds / 3600);
+        $rate = $hourlyRate * round(($seconds / 3600), 2, PHP_ROUND_HALF_UP);
 
-        return round($rate, 4);
+        return round($rate, 2, PHP_ROUND_HALF_UP);
+    }
+
+    /**
+     * Makes sure tha the duration is full compatible with decimal format, stripping away overflowing seconds.
+     */
+    public static function decimalizeDuration(int $seconds): int
+    {
+        $decimal = round(($seconds / 3600), 2, PHP_ROUND_HALF_UP);
+
+        return (int) round(($decimal * 3600), 0, PHP_ROUND_HALF_UP);
     }
 }

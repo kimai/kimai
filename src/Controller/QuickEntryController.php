@@ -77,6 +77,7 @@ final class QuickEntryController extends AbstractController
         $endWeek = $factory->getEndOfWeek($begin);
 
         $tmpDay = clone $startWeek;
+        /** @var array<string, array{day: \DateTime}> $week */
         $week = [];
         while ($tmpDay < $endWeek) {
             $nextDay = clone $tmpDay;
@@ -125,7 +126,7 @@ final class QuickEntryController extends AbstractController
             if ($amount > 0) {
                 $takeOverWeeks = $this->configuration->find('quick_entry.recent_activity_weeks');
                 $startFrom = null;
-                if ($takeOverWeeks !== null && \intval($takeOverWeeks) > 0) {
+                if (is_numeric($takeOverWeeks) && \intval($takeOverWeeks) > 0) {
                     $startFrom = clone $startWeek;
                     $startFrom->modify(\sprintf('-%s weeks', (string) $takeOverWeeks));
                 }

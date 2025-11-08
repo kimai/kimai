@@ -161,7 +161,7 @@ final class ActivityController extends BaseApiController
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
-            $this->repository->saveActivity($activity);
+            $this->activityService->saveActivity($activity);
 
             $view = new View($activity, 200);
             $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -203,7 +203,7 @@ final class ActivityController extends BaseApiController
             return $this->viewHandler->handle($view);
         }
 
-        $this->repository->saveActivity($activity);
+        $this->activityService->saveActivity($activity);
 
         $view = new View($activity, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -253,7 +253,7 @@ final class ActivityController extends BaseApiController
 
         $meta->setValue($value);
 
-        $this->repository->saveActivity($activity);
+        $this->activityService->saveActivity($activity);
 
         $view = new View($activity, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);

@@ -19,6 +19,7 @@ use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\BaseQuery;
 use App\Repository\Query\DateRangeInterface;
 use App\Repository\Query\TimesheetQuery;
+use App\Repository\Query\VisibilityInterface;
 use App\Utils\SearchTerm;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -340,6 +341,20 @@ class BaseQueryTest extends TestCase
         $sut->addProject($project);
 
         self::assertEquals([13, 27], $sut->getProjectIds());
+    }
+
+    protected function assertVisibility(VisibilityInterface $sut): void
+    {
+        self::assertEquals(VisibilityInterface::SHOW_VISIBLE, $sut->getVisibility());
+
+        $sut->setVisibility(VisibilityInterface::SHOW_BOTH);
+        self::assertEquals(VisibilityInterface::SHOW_BOTH, $sut->getVisibility());
+
+        $sut->setVisibility(VisibilityInterface::SHOW_HIDDEN);
+        self::assertEquals(VisibilityInterface::SHOW_HIDDEN, $sut->getVisibility());
+
+        $sut->setVisibility(VisibilityInterface::SHOW_VISIBLE);
+        self::assertEquals(VisibilityInterface::SHOW_VISIBLE, $sut->getVisibility());
     }
 
     protected function assertDateRangeTrait(DateRangeInterface $sut): void

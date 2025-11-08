@@ -28,7 +28,7 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(RateCalculator::class)]
 class RateCalculatorTest extends TestCase
 {
-    protected function getRateRepositoryMock(array $rates = [])
+    protected function getRateRepositoryMock(array $rates = []): TimesheetRepository
     {
         $mock = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->getMock();
         if (!empty($rates)) {
@@ -38,18 +38,26 @@ class RateCalculatorTest extends TestCase
         return $mock;
     }
 
-    public function testCalculateWithTimesheetHourlyRate(): void
+    private function assertRateByTimesheetHourlyRate(int $duration, float $hourlyRate, float $rate): void
     {
         $record = new Timesheet();
         $record->setEnd(new \DateTime());
-        $record->setDuration(1800);
-        $record->setHourlyRate(100);
+        $record->setDuration($duration);
+        $record->setHourlyRate($hourlyRate);
         $record->setActivity(new Activity());
         $record->setUser($this->getTestUser());
 
         $sut = new RateCalculator(new RateService([], $this->getRateRepositoryMock()));
         $sut->calculate($record, []);
-        self::assertEquals(50, $record->getRate());
+        self::assertEquals($rate, $record->getRate());
+    }
+
+    public function testCalculateWithTimesheetHourlyRate(): void
+    {
+        $this->assertRateByTimesheetHourlyRate(1800, 100, 50);
+        $this->assertRateByTimesheetHourlyRate(400, 100, 11);
+        $this->assertRateByTimesheetHourlyRate(1234, 100, 34);
+        $this->assertRateByTimesheetHourlyRate(2739, 100, 76);
     }
 
     public function testCalculateWithTimesheetFixedRate(): void
@@ -176,7 +184,7 @@ class RateCalculatorTest extends TestCase
         self::assertEquals($expectedInternalRate, $timesheet->getInternalRate());
     }
 
-    protected function getTestUser($rate = 75, $internalRate = 75)
+    protected function getTestUser(?float $rate = 75.0, ?float $internalRate = 75.0): User
     {
         $user = new User();
 
@@ -230,19 +238,19 @@ class RateCalculatorTest extends TestCase
         self::assertEquals($expectedRate, $record->getRate());
     }
 
-    public static function getRuleDefinitions()
+    public static function getRuleDefinitions(): array
     {
         $start = new \DateTime('12:00:00', new \DateTimeZone('UTC'));
         $day = $start->format('l');
 
         return [
             [
-                31837,
+                31837, // 31824 = 8,84
                 [],
-                663.2708
+                663
             ],
             [
-                31837,
+                31837, // 31824 = 8,84
                 [
                     'default' => [
                         'days' => [$day],
@@ -253,10 +261,10 @@ class RateCalculatorTest extends TestCase
                         'factor' => 1.5
                     ],
                 ],
-                1326.5417
+                1326 // 8,84 * 75 (see user) * 2
             ],
             [
-                31837,
+                31837, // 31824 = 8,84
                 [
                     'default' => [
                         'days' => [$day],
@@ -267,7 +275,7 @@ class RateCalculatorTest extends TestCase
                         'factor' => 1.5
                     ],
                 ],
-                2321.4479
+                2320.5 // 75 * 8,84 * 3,5
             ],
         ];
     }

@@ -27,7 +27,7 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(RateService::class)]
 class RateServiceTest extends TestCase
 {
-    protected function getRateRepositoryMock(array $rates = [])
+    protected function getRateRepositoryMock(array $rates = []): TimesheetRepository
     {
         $mock = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->getMock();
         if (!empty($rates)) {
@@ -37,7 +37,7 @@ class RateServiceTest extends TestCase
         return $mock;
     }
 
-    private static function createDateTime(string $datetime = null): \DateTime
+    private static function createDateTime(?string $datetime = null): \DateTime
     {
         return new \DateTime($datetime ?? 'now', new \DateTimeZone('UTC'));
     }
@@ -124,7 +124,7 @@ class RateServiceTest extends TestCase
         $customerRate,
         $customerInternal,
         $customerIsFixed
-    ) {
+    ): void {
         $customer = new Customer('foo');
 
         $project = new Project();
@@ -180,7 +180,7 @@ class RateServiceTest extends TestCase
         self::assertEquals($expectedInternalRate, $rate->getInternalRate());
     }
 
-    protected function getTestUser($rate = 75, $internalRate = 75)
+    protected function getTestUser(?float $rate = 75.0, ?float $internalRate = 75.0): User
     {
         $user = new User();
 
@@ -234,7 +234,7 @@ class RateServiceTest extends TestCase
         self::assertEquals($expectedRate, $rate->getRate());
     }
 
-    public static function getRuleDefinitions()
+    public static function getRuleDefinitions(): array
     {
         $start = self::createDateTime('12:00:00');
         $day = $start->format('l');
@@ -243,7 +243,7 @@ class RateServiceTest extends TestCase
             [
                 31837,
                 [],
-                663.2708
+                663
             ],
             [
                 31837,
@@ -257,7 +257,7 @@ class RateServiceTest extends TestCase
                         'factor' => 1.5
                     ],
                 ],
-                1326.5417
+                1326 // 8,84 * 75 (see user) * 2
             ],
             [
                 31837,
@@ -271,7 +271,7 @@ class RateServiceTest extends TestCase
                         'factor' => 1.5
                     ],
                 ],
-                2321.4479
+                2320.5 // 75 * 8,84 * 3,5
             ],
         ];
     }

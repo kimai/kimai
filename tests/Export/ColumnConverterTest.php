@@ -209,6 +209,7 @@ class ColumnConverterTest extends TestCase
 
         $template = new Template('bar', 'foo');
         $template->setColumns([
+            'id',
             'date',
             'begin',
             'end',
@@ -252,6 +253,7 @@ class ColumnConverterTest extends TestCase
         $columns = $sut->getColumns($template, $query);
 
         $expected = [
+            'id',
             'date',
             'begin',
             'end',

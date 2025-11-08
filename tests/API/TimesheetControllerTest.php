@@ -422,12 +422,12 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
             'begin' => '2020-03-27T14:35:00+1300',
             'end' => '2020-03-28T03:30:00+1300',
             'description' => "**foo**\nbar",
-            'duration' => 46500,
+            'duration' => 46500, // 12,916 => rounded 12,92 * 137,21 = 46512
             'exported' => true,
             'metaFields' => [],
             'hourlyRate' => 137.21,
-            'rate' => 1772.2958,
-            'internalRate' => 1772.2958,
+            'rate' => 1772.75, // 12,92 * 137,21
+            'internalRate' => 1772.75,
         ];
 
         foreach ($expected as $key => $value) {

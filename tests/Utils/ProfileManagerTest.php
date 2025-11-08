@@ -31,7 +31,10 @@ class ProfileManagerTest extends TestCase
         self::assertEquals(ProfileManager::PROFILE_DESKTOP, $sut->getProfileFromSession($session));
     }
 
-    public static function getInvalidProfiles()
+    /**
+     * @return array<int, array<string>>
+     */
+    public static function getInvalidProfiles(): array
     {
         return [
             ['MOBILE'],
@@ -52,7 +55,10 @@ class ProfileManagerTest extends TestCase
         self::assertFalse($sut->isValidProfile($profile));
     }
 
-    public static function getDatatableNames()
+    /**
+     * @return array<int, array<string|null>>
+     */
+    public static function getDatatableNames(): array
     {
         return [
             ['admin-timesheet_mobile', 'admin-timesheet', 'mobile'],
@@ -73,7 +79,10 @@ class ProfileManagerTest extends TestCase
         self::assertEquals($expected, $sut->getDatatableName($datatable, $prefix));
     }
 
-    public static function getProfileNames()
+    /**
+     * @return array<int, array<string>>
+     */
+    public static function getProfileNames(): array
     {
         return [
             ['mobile', ProfileManager::PROFILE_MOBILE],
@@ -119,7 +128,10 @@ class ProfileManagerTest extends TestCase
         self::assertNull($session->get(ProfileManager::SESSION_PROFILE));
     }
 
-    public static function getCookieProfiles()
+    /**
+     * @return array<int, array<string>>
+     */
+    public static function getCookieProfiles(): array
     {
         return [
             ['mobile', ProfileManager::PROFILE_MOBILE],
@@ -146,7 +158,10 @@ class ProfileManagerTest extends TestCase
         self::assertEquals($expected, $profile);
     }
 
-    public static function getSessionProfiles()
+    /**
+     * @return array<int, array<string>>
+     */
+    public static function getSessionProfiles(): array
     {
         return [
             ['mobile', ProfileManager::PROFILE_MOBILE],

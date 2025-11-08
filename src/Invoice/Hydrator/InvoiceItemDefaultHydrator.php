@@ -29,7 +29,7 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
         $formatter = $this->model->getFormatter();
 
         $rate = $item->getRate();
-        $internalRate = $item->getInternalRate();
+        $internalRate = $item->getInternalRate(); // @phpstan-ignore method.deprecated
         $appliedRate = $item->getHourlyRate();
         $amount = $formatter->getFormattedDecimalDuration($item->getDuration());
         $description = $item->getDescription();
@@ -63,9 +63,9 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
             'entry.rate' => $formatter->getFormattedMoney($appliedRate, $currency),
             'entry.rate_nc' => $formatter->getFormattedMoney($appliedRate, $currency, false),
             'entry.rate_plain' => $appliedRate,
-            'entry.rate_internal' => $formatter->getFormattedMoney($internalRate, $currency),
-            'entry.rate_internal_nc' => $formatter->getFormattedMoney($internalRate, $currency, false),
-            'entry.rate_internal_plain' => $internalRate,
+            'entry.rate_internal' => $formatter->getFormattedMoney($internalRate, $currency), // @deprecated since 2.41
+            'entry.rate_internal_nc' => $formatter->getFormattedMoney($internalRate, $currency, false),  // @deprecated since 2.41
+            'entry.rate_internal_plain' => $internalRate,  // @deprecated since 2.41
             'entry.rate_fixed' => ($item->isFixedRate() ? $item->getFixedRate() : null),
             'entry.total' => $formatter->getFormattedMoney($rate, $currency),
             'entry.total_nc' => $formatter->getFormattedMoney($rate, $currency, false),

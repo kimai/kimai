@@ -2042,6 +2042,10 @@
         <source>payment_account_name</source>
         <target>IBAN oder Kartennummer</target>
       </trans-unit>
+      <trans-unit id="jcT9sdfOg6" resname="electronic_invoice">
+        <source>electronic_invoice</source>
+        <target>E-Rechnung</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

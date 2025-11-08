@@ -1966,37 +1966,12 @@ parameters:
             path: Timesheet/Calculator/DurationCalculatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:getRateRepositoryMock\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:getRateRepositoryMock\\(\\) has parameter \\$rates with no value type specified in iterable type array\\.$#"
             count: 1
             path: Timesheet/Calculator/RateCalculatorTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:getRateTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:getRuleDefinitions\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:getTestUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:getTestUser\\(\\) has parameter \\$internalRate with no type specified\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:getTestUser\\(\\) has parameter \\$rate with no type specified\\.$#"
             count: 1
             path: Timesheet/Calculator/RateCalculatorTest.php
 
@@ -2121,37 +2096,12 @@ parameters:
             path: Timesheet/LockdownServiceTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:getRateRepositoryMock\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:getRateRepositoryMock\\(\\) has parameter \\$rates with no value type specified in iterable type array\\.$#"
             count: 1
             path: Timesheet/RateServiceTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:getRateTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:getRuleDefinitions\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:getTestUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:getTestUser\\(\\) has parameter \\$internalRate with no type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:getTestUser\\(\\) has parameter \\$rate with no type specified\\.$#"
             count: 1
             path: Timesheet/RateServiceTest.php
 
@@ -2167,11 +2117,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:testCalculateWithRulesByUsersHourlyRate\\(\\) has parameter \\$rules with no type specified\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:testRates\\(\\) has no return type specified\\.$#"
             count: 1
             path: Timesheet/RateServiceTest.php
 
@@ -2436,11 +2381,6 @@ parameters:
             path: Timesheet/TrackingMode/DurationFixedBeginModeTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\UtilTest\\:\\:getRateCalculationData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Timesheet/UtilTest.php
-
-        -
             message: "#^Cannot access property \\$file on SimpleXMLElement\\|false\\.$#"
             count: 4
             path: TranslationsTest.php
@@ -2674,31 +2614,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Utils\\\\FormFormatConverterTest\\:\\:testProblemPattern\\(\\) has parameter \\$format with no type specified\\.$#"
             count: 1
             path: Utils/FormFormatConverterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Utils\\\\ProfileManagerTest\\:\\:getCookieProfiles\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Utils/ProfileManagerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Utils\\\\ProfileManagerTest\\:\\:getDatatableNames\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Utils/ProfileManagerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Utils\\\\ProfileManagerTest\\:\\:getInvalidProfiles\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Utils/ProfileManagerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Utils\\\\ProfileManagerTest\\:\\:getProfileNames\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Utils/ProfileManagerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Utils\\\\ProfileManagerTest\\:\\:getSessionProfiles\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Utils/ProfileManagerTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Utils\\\\StringHelperTest\\:\\:getDdeAttackStrings\\(\\) has no return type specified\\.$#"

@@ -153,18 +153,18 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
 
         $qb = $manager->getRepository($class)->createQueryBuilder('entity');
 
-        /** @var array<int, T> $all */
-        $all = $qb->where($qb->expr()->in('entity.id', $ids))->setMaxResults($amount)->getQuery()->getResult();
+        /** @var array<int, T> $result */
+        $result = $qb->where($qb->expr()->in('entity.id', $ids))->setMaxResults($amount)->getQuery()->getResult();
 
-        if (\count($all) === 0) {
-            throw new \Exception('Need users to setup teams');
+        if (\count($result) === 0) {
+            throw new \Exception('Could not find any entity: ' . $class);
         }
 
-        return $all;
+        return $result;
     }
 
     /**
-     * @return array<int|string, Tag>
+     * @return non-empty-array<int|string, Tag>
      */
     private function getAllTags(ObjectManager $manager): array
     {
