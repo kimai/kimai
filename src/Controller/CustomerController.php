@@ -35,6 +35,7 @@ use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\Query\TeamQuery;
 use App\Repository\Query\TimesheetQuery;
+use App\Repository\Query\VisibilityInterface;
 use App\Repository\TeamRepository;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
@@ -281,7 +282,7 @@ final class CustomerController extends AbstractController
         $query->setPage($page);
         $query->setPageSize(5);
         $query->addCustomer($customer);
-        $query->setShowBoth();
+        $query->setVisibility(VisibilityInterface::SHOW_BOTH);
         $query->addOrderGroup('visible', ProjectQuery::ORDER_DESC);
         $query->addOrderGroup('name', ProjectQuery::ORDER_ASC);
 
