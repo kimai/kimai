@@ -1952,7 +1952,7 @@
       </trans-unit>
       <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
         <source>sending_company</source>
-        <target state="translated">مُرسل الفاتورة</target>
+        <target state="needs-translation">مُرسل الفاتورة</target>
       </trans-unit>
       <trans-unit id="Uzll0ps" resname="Customer portal" xml:space="preserve">
         <source>Customer portal</source>

@@ -2,37 +2,37 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="hu" datatype="plaintext" original="invoice-calculator.en.xlf">
     <body>
-      <trans-unit id="MviRJeB" resname="invoice_calculator">
+      <trans-unit id="MviRJeB" resname="invoice_calculator" xml:space="preserve">
         <source>invoice_calculator</source>
-        <target>Összeg számítása</target>
+        <target state="translated">Számla tételeinek csoportosítása</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
         <source>default</source>
-        <target>Bejegyzés alapján - Egy bejegyzés időmérésenként (alapértelmezett)</target>
+        <target state="translated">Alapértelmezett (bejegyzésenként egy tétel)</target>
       </trans-unit>
-      <trans-unit id="_bAHi13" resname="short">
+      <trans-unit id="_bAHi13" resname="short" xml:space="preserve">
         <source>short</source>
-        <target>Idők összeadva - csak egy bejegyzés</target>
+        <target state="translated">Összesítve (egy összesített tétel)</target>
       </trans-unit>
-      <trans-unit id="BPiZbad" resname="user">
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
         <source>user</source>
         <target state="translated">Felhasználó</target>
       </trans-unit>
-      <trans-unit id="BlGGO.X" resname="activity">
+      <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve">
         <source>activity</source>
-        <target>Tevékenységenként csoportosítva - egy bejegyzés tevékenységenként</target>
+        <target state="translated">Tevékenység</target>
       </trans-unit>
-      <trans-unit id="JEIQ5IQ" resname="project">
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
         <source>project</source>
         <target state="translated">Projekt</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
-        <target>Dátum: napi egy bejegyzés (a kezdési dátumot használja)</target>
+        <target state="translated">Dátum</target>
       </trans-unit>
-      <trans-unit id="iFDs7Zh" resname="weekly">
+      <trans-unit id="iFDs7Zh" resname="weekly" xml:space="preserve">
         <source>weekly</source>
-        <target>Hetente: heti egy bejegyzés (a kezdési dátumot használja)</target>
+        <target state="translated">Naptári hét szerint</target>
       </trans-unit>
       <trans-unit id="KWX.j1b" resname="invoice_calculator.help" xml:space="preserve">
         <source>invoice_calculator.help</source>
@@ -40,19 +40,19 @@
       </trans-unit>
       <trans-unit id="oRa0mkz" resname="activity_user" xml:space="preserve">
         <source>activity_user</source>
-        <target state="translated">Tevékenység és felhasználó</target>
+        <target state="translated">Tevékenységek és felhasználók szerint</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price" xml:space="preserve">
         <source>price</source>
-        <target state="translated">Ár</target>
+        <target state="translated">Ár szerint</target>
       </trans-unit>
       <trans-unit id="AJm1952" resname="project_user" xml:space="preserve">
         <source>project_user</source>
-        <target state="translated">Projekt és user</target>
+        <target state="translated">Projektek és felhasználók szerint</target>
       </trans-unit>
       <trans-unit id="0l1P9cz" resname="date_user" xml:space="preserve">
         <source>date_user</source>
-        <target state="translated">Dátum és user</target>
+        <target state="translated">Dátum és felhasználók szerint</target>
       </trans-unit>
     </body>
   </file>

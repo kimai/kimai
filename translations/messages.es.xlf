@@ -780,7 +780,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple" xml:space="preserve">
         <source>update_multiple</source>
-        <target state="translated">%action% %count% entradas</target>
+        <target state="translated">¿Entradas %action% %count% ?</target>
       </trans-unit>
       <trans-unit id="Uvo1CbP" resname="status.pending">
         <source>status.pending</source>
@@ -1086,9 +1086,9 @@
         <source>error.directory_protected</source>
         <target>El directorio «%dir%» está protegido contra escritura.</target>
       </trans-unit>
-      <trans-unit id="fVA3M2x" resname="choice_pattern">
+      <trans-unit id="fVA3M2x" resname="choice_pattern" xml:space="preserve">
         <source>Display of entries in selection lists</source>
-        <target state="translated">Visualización de las entradas en las listas de selección</target>
+        <target state="translated">Desplegar las entradas en las listas de selección</target>
       </trans-unit>
       <trans-unit id="dnQEYoJ" resname="budgetType_full">
         <source>budgetType_full</source>
@@ -1446,9 +1446,9 @@
         <source>Review</source>
         <target state="translated">Revisar</target>
       </trans-unit>
-      <trans-unit id="t1r372x" resname="invisible">
+      <trans-unit id="t1r372x" resname="invisible" xml:space="preserve">
         <source>invisible</source>
-        <target state="translated">Invisible</target>
+        <target state="translated">Oculto</target>
       </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>
@@ -1700,7 +1700,7 @@
       </trans-unit>
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
         <source>absence_comment_mandatory</source>
-        <target state="translated">El comentario es obligatorio</target>
+        <target state="translated">Ausencia: El comentario es obligatorio.</target>
       </trans-unit>
       <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve">
         <source>Project number</source>
@@ -1944,7 +1944,7 @@
       </trans-unit>
       <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
         <source>sending_company</source>
-        <target state="translated">Remitente de la factura</target>
+        <target state="needs-translation">Remitente de la factura</target>
       </trans-unit>
       <trans-unit id="rD4oQRR" resname="postcode" xml:space="preserve">
         <source>Postcode</source>
@@ -1965,6 +1965,26 @@
       <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve">
         <source>Code</source>
         <target state="translated">Código</target>
+      </trans-unit>
+      <trans-unit id="xZzzKxM" resname="orientation" xml:space="preserve">
+        <source>Orientation</source>
+        <target state="translated">Orientación</target>
+      </trans-unit>
+      <trans-unit id="UcWoKWo" resname="portrait" xml:space="preserve">
+        <source>Portrait</source>
+        <target state="translated">Vertical</target>
+      </trans-unit>
+      <trans-unit id="rLlV34K" resname="landscape" xml:space="preserve">
+        <source>Landscape</source>
+        <target state="translated">Horizontal</target>
+      </trans-unit>
+      <trans-unit id="eV6j76Q" resname="font" xml:space="preserve">
+        <source>font</source>
+        <target state="translated">Fuente</target>
+      </trans-unit>
+      <trans-unit id="UZUFKZg" resname="remaining_budget" xml:space="preserve">
+        <source>remaining_budget</source>
+        <target state="translated">Saldo</target>
       </trans-unit>
     </body>
   </file>

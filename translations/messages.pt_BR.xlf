@@ -1936,7 +1936,7 @@
       </trans-unit>
       <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
         <source>sending_company</source>
-        <target state="translated">Remetente da fatura</target>
+        <target state="needs-translation">Remetente da fatura</target>
       </trans-unit>
       <trans-unit id="rD4oQRR" resname="postcode" xml:space="preserve">
         <source>Postcode</source>

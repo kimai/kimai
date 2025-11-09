@@ -1952,7 +1952,95 @@
       </trans-unit>
       <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
         <source>sending_company</source>
-        <target state="translated">Fatura Göndereni</target>
+        <target state="translated">Fatura düzenleyen</target>
+      </trans-unit>
+      <trans-unit id="Uzll0ps" resname="Customer portal" xml:space="preserve">
+        <source>Customer portal</source>
+        <target state="translated">Müşteri portalı</target>
+      </trans-unit>
+      <trans-unit id="cDOQMYv" resname="Beta" xml:space="preserve">
+        <source>Beta</source>
+        <target state="translated">Halen geliştirme aşamasında olan bir ön izleme özelliğini etkinleştirir.</target>
+      </trans-unit>
+      <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve">
+        <source>Code</source>
+        <target state="translated">Kod</target>
+      </trans-unit>
+      <trans-unit id="xZzzKxM" resname="orientation" xml:space="preserve">
+        <source>Orientation</source>
+        <target state="translated">Yön</target>
+      </trans-unit>
+      <trans-unit id="UcWoKWo" resname="portrait" xml:space="preserve">
+        <source>Portrait</source>
+        <target state="translated">Dikey</target>
+      </trans-unit>
+      <trans-unit id="rLlV34K" resname="landscape" xml:space="preserve">
+        <source>Landscape</source>
+        <target state="translated">Yatay</target>
+      </trans-unit>
+      <trans-unit id="UZUFKZg" resname="remaining_budget" xml:space="preserve">
+        <source>remaining_budget</source>
+        <target state="translated">Kalan bütçe</target>
+      </trans-unit>
+      <trans-unit id="eV6j76Q" resname="font" xml:space="preserve">
+        <source>font</source>
+        <target state="translated">Yazi tipi</target>
+      </trans-unit>
+      <trans-unit id="BmDRYT." resname="sending_company.help" xml:space="preserve">
+        <source>sending_company.help</source>
+        <target state="translated">Bu şirket faturada ihraççı olarak gösterilmektedir. Ad, adres ve vergi bilgileri kullanılacaktır.</target>
+      </trans-unit>
+      <trans-unit id="PciSBv9" resname="address_row" xml:space="preserve">
+        <source>address_row</source>
+        <target state="translated">Sıralama %row%</target>
+      </trans-unit>
+      <trans-unit id="_Ep8Ogx" resname="buyerReference" xml:space="preserve">
+        <source>buyerReference</source>
+        <target state="translated">Alıcı referansı</target>
+      </trans-unit>
+      <trans-unit id="nPJWKwW" resname="payment_type" xml:space="preserve">
+        <source>payment_type</source>
+        <target state="translated">Ödeme yöntemi</target>
+      </trans-unit>
+      <trans-unit id="uXB48Vj" resname="SEPA Credit Transfer" xml:space="preserve">
+        <source>SEPA Credit Transfer</source>
+        <target state="translated">SEPA Kredi Havalesi</target>
+      </trans-unit>
+      <trans-unit id="s42A2gm" resname="SEPA Direct Debit" xml:space="preserve">
+        <source>SEPA Direct Debit</source>
+        <target state="translated">SEPA Otomatik Ödeme</target>
+      </trans-unit>
+      <trans-unit id="4toQj2M" resname="Cash" xml:space="preserve">
+        <source>Cash</source>
+        <target state="translated">Nakit</target>
+      </trans-unit>
+      <trans-unit id="cWZZc6D" resname="Cheque" xml:space="preserve">
+        <source>Cheque</source>
+        <target state="translated">Çek</target>
+      </trans-unit>
+      <trans-unit id="jMvh7bn" resname="Credit Transfer" xml:space="preserve">
+        <source>Credit Transfer</source>
+        <target state="translated">Kredi Transferi</target>
+      </trans-unit>
+      <trans-unit id="TJQbc0a" resname="Payment To Bank Account" xml:space="preserve">
+        <source>Payment To Bank Account</source>
+        <target state="translated">Banka Hesabına Ödeme</target>
+      </trans-unit>
+      <trans-unit id=".UIt099" resname="Card Payment" xml:space="preserve">
+        <source>Card Payment</source>
+        <target state="translated">Kartla Ödeme</target>
+      </trans-unit>
+      <trans-unit id="Wnb_qF0" resname="Direct Debit" xml:space="preserve">
+        <source>Direct Debit</source>
+        <target state="translated">Otomatik Karta</target>
+      </trans-unit>
+      <trans-unit id="rIdfGxM" resname="payment_account_name" xml:space="preserve">
+        <source>payment_account_name</source>
+        <target state="translated">Hesap veya kart sahibi</target>
+      </trans-unit>
+      <trans-unit id="jcT9Og6" resname="payment_account_number" xml:space="preserve">
+        <source>payment_account_name</source>
+        <target state="translated">IBAN veya kart numarası</target>
       </trans-unit>
     </body>
   </file>

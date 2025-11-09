@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
         <source>Time Tracking</source>
-        <target state="translated">Időrögzítő</target>
+        <target state="translated">Időrögzítés</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes">
         <source>yes</source>
@@ -42,9 +42,9 @@
         <source>cancel</source>
         <target>Mégse</target>
       </trans-unit>
-      <trans-unit id="PyZ8KrQ" resname="confirm">
+      <trans-unit id="PyZ8KrQ" resname="confirm" xml:space="preserve">
         <source>confirm</source>
-        <target>Alkalmaz</target>
+        <target state="translated">Megerősít</target>
       </trans-unit>
       <trans-unit id="XohImNo" resname="password" approved="yes">
         <source>Password</source>
@@ -86,13 +86,13 @@
         <source>menu.logout</source>
         <target>Kijelentkezés</target>
       </trans-unit>
-      <trans-unit id="ebTjBb9" resname="my_times">
+      <trans-unit id="ebTjBb9" resname="my_times" xml:space="preserve">
         <source>my_times</source>
-        <target>Rögzített órák</target>
+        <target state="translated">Munkaóráim</target>
       </trans-unit>
-      <trans-unit id="yxQop43" resname="all_times">
+      <trans-unit id="yxQop43" resname="all_times" xml:space="preserve">
         <source>all_times</source>
-        <target>Rögzített órák</target>
+        <target state="translated">Összes munkaóra</target>
       </trans-unit>
       <trans-unit id="IeshU90" resname="customers">
         <source>customers</source>
@@ -114,9 +114,9 @@
         <source>menu.plugin</source>
         <target>Bővítmények</target>
       </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
+      <trans-unit id="IXtkHRw" resname="menu.system_configuration" xml:space="preserve">
         <source>menu.system_configuration</source>
-        <target>Rendszer beállítások</target>
+        <target state="translated">Rendszerbeállítások</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
@@ -126,9 +126,9 @@
         <source>error.no_entries_found</source>
         <target>Nem található bejegyzés a kiválasztott szűrők alapján.</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
-        <target>Dátum</target>
+        <target state="translated">Dátum</target>
       </trans-unit>
       <trans-unit id="BHk4pZ3" resname="starttime">
         <source>starttime</source>
@@ -142,7 +142,7 @@
         <source>duration</source>
         <target>Időtartam</target>
       </trans-unit>
-      <trans-unit id="BPiZbad" resname="user">
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
         <source>User</source>
         <target state="translated">Felhasználó</target>
       </trans-unit>
@@ -176,13 +176,13 @@
       </trans-unit>
       <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="needs-translation">Meghatározott időkeret</target>
+        <target state="translated">Időkeret</target>
       </trans-unit>
-      <trans-unit id="BlGGO.X" resname="activity">
+      <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve">
         <source>activity</source>
-        <target>Tevékenység</target>
+        <target state="translated">Tevékenység</target>
       </trans-unit>
-      <trans-unit id="JEIQ5IQ" resname="project">
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
         <source>Project</source>
         <target state="translated">Projekt</target>
       </trans-unit>
@@ -242,9 +242,9 @@
         <source>toggle_dropdown</source>
         <target>Menü megjelenítése</target>
       </trans-unit>
-      <trans-unit id="VXj0Y3h" resname="timesheet.title">
+      <trans-unit id="VXj0Y3h" resname="timesheet.title" xml:space="preserve">
         <source>timesheet.title</source>
-        <target>Rögzített órák</target>
+        <target state="translated">Munkaóráim</target>
       </trans-unit>
       <trans-unit id="dwEVXUR" resname="timesheet.edit">
         <source>timesheet.edit</source>
@@ -284,7 +284,7 @@
       </trans-unit>
       <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target state="translated">Hét első munkanapja</target>
+        <target state="translated">Munkaviszony kezdete</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
@@ -294,9 +294,9 @@
         <source>profile.password</source>
         <target>Jelszó</target>
       </trans-unit>
-      <trans-unit id="Z34ZpjK" resname="profile.api-token">
+      <trans-unit id="Z34ZpjK" resname="profile.api-token" xml:space="preserve">
         <source>profile.api-token</source>
-        <target>API</target>
+        <target state="translated">API hozzáférés</target>
       </trans-unit>
       <trans-unit id="ygtTz8." resname="profile.roles">
         <source>profile.roles</source>
@@ -326,29 +326,29 @@
         <source>agendaDay</source>
         <target>Nap</target>
       </trans-unit>
-      <trans-unit id="r49TNAg" resname="daily_stats">
+      <trans-unit id="r49TNAg" resname="daily_stats" xml:space="preserve">
         <source>daily_stats</source>
-        <target>Napi statisztika megjelenítése a rögzített óráknál</target>
+        <target state="translated">Napi statisztika megjelenítése a munkaidő-bejegyzéseknél</target>
       </trans-unit>
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Naptár</target>
       </trans-unit>
-      <trans-unit id="EohvnQA" resname="number">
+      <trans-unit id="EohvnQA" resname="number" xml:space="preserve">
         <source>number</source>
-        <target>Adószám</target>
+        <target state="translated">Azonosító</target>
       </trans-unit>
-      <trans-unit id="8WjM3ZF" resname="company">
+      <trans-unit id="8WjM3ZF" resname="company" xml:space="preserve">
         <source>company</source>
-        <target>Cég neve</target>
+        <target state="translated">Cégnév</target>
       </trans-unit>
-      <trans-unit id="fFErSLq" resname="vat">
+      <trans-unit id="fFErSLq" resname="vat" xml:space="preserve">
         <source>vat</source>
-        <target>Áfa</target>
+        <target state="translated">Áfa</target>
       </trans-unit>
-      <trans-unit id="CT59X9u" resname="contact">
+      <trans-unit id="CT59X9u" resname="contact" xml:space="preserve">
         <source>Contact</source>
-        <target state="needs-translation">Kapcsolat</target>
+        <target state="translated">Kapcsolattartó</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">
         <source>address</source>
@@ -406,17 +406,17 @@
         <source>version</source>
         <target>Verzió</target>
       </trans-unit>
-      <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN">
+      <trans-unit id="WRuKTcz" resname="ROLE_SUPER_ADMIN" xml:space="preserve">
         <source>ROLE_SUPER_ADMIN</source>
-        <target>Rendszer adminisztrátor</target>
+        <target state="translated">Rendszergazda</target>
       </trans-unit>
       <trans-unit id="718iPw6" resname="ROLE_ADMIN">
         <source>ROLE_ADMIN</source>
         <target>Adminisztrátor</target>
       </trans-unit>
-      <trans-unit id="yttGLAB" resname="ROLE_TEAMLEAD">
+      <trans-unit id="yttGLAB" resname="ROLE_TEAMLEAD" xml:space="preserve">
         <source>ROLE_TEAMLEAD</source>
-        <target>Vezető</target>
+        <target state="translated">Csapatvezető</target>
       </trans-unit>
       <trans-unit id="rvO5ZXf" resname="ROLE_USER">
         <source>ROLE_USER</source>
@@ -424,43 +424,43 @@
       </trans-unit>
       <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target state="needs-translation">Mai munkaórák</target>
+        <target state="translated">Mai munkaórák</target>
       </trans-unit>
       <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target state="needs-translation">Eheti munkaórák</target>
+        <target state="translated">Munkaórák ezen a héten</target>
       </trans-unit>
       <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target state="needs-translation">E havi munkaórák</target>
+        <target state="translated">Munkaórák ebben a hónapban</target>
       </trans-unit>
       <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target state="needs-translation">Idei munkaórák</target>
+        <target state="translated">Munkaórák ebben az évben</target>
       </trans-unit>
       <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
-        <target state="needs-translation">Összes munkaórák</target>
+        <target state="translated">Összes munkaóra</target>
       </trans-unit>
-      <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
+      <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours" xml:space="preserve">
         <source>stats.yourWorkingHours</source>
-        <target>Munkaóráid</target>
+        <target state="translated">Munkaóráim</target>
       </trans-unit>
       <trans-unit id="023M9Ta" resname="stats.amountToday">
         <source>stats.amountToday</source>
         <target>Mai bevétel</target>
       </trans-unit>
-      <trans-unit id="xnJvYAE" resname="stats.amountWeek">
+      <trans-unit id="xnJvYAE" resname="stats.amountWeek" xml:space="preserve">
         <source>stats.amountWeek</source>
-        <target>Eheti bevétel</target>
+        <target state="translated">Bevétel ezen a héten</target>
       </trans-unit>
-      <trans-unit id="ulr3reE" resname="stats.amountMonth">
+      <trans-unit id="ulr3reE" resname="stats.amountMonth" xml:space="preserve">
         <source>stats.amountMonth</source>
-        <target>E havi bevvétel</target>
+        <target state="translated">Bevétel ebben a hónapban</target>
       </trans-unit>
-      <trans-unit id="bQZyZaO" resname="stats.amountYear">
+      <trans-unit id="bQZyZaO" resname="stats.amountYear" xml:space="preserve">
         <source>stats.amountYear</source>
-        <target>Idei bevétel</target>
+        <target state="translated">Bevétel ebben az évben</target>
       </trans-unit>
       <trans-unit id="Z0fz23v" resname="stats.amountTotal">
         <source>stats.amountTotal</source>
@@ -470,45 +470,45 @@
         <source>stats.activeUsersToday</source>
         <target>Mai aktív felhasználók</target>
       </trans-unit>
-      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek">
+      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek" xml:space="preserve">
         <source>stats.activeUsersWeek</source>
-        <target>Eheti aktív felhasználók</target>
+        <target state="translated">Aktív felhasználók ezen a héten</target>
       </trans-unit>
-      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth">
+      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth" xml:space="preserve">
         <source>stats.activeUsersMonth</source>
-        <target>E havi aktív felhasználók</target>
+        <target state="translated">Aktív felhasználók ebben a hónapban</target>
       </trans-unit>
-      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
+      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear" xml:space="preserve">
         <source>stats.activeUsersYear</source>
-        <target>Idei aktív felhasználók</target>
+        <target state="translated">Aktív felhasználók ebben az évben</target>
       </trans-unit>
-      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">
+      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal" xml:space="preserve">
         <source>stats.activeUsersTotal</source>
-        <target>Összes aktjv felhasználó</target>
+        <target state="translated">Összes aktív felhasználó</target>
       </trans-unit>
       <trans-unit id="lEW82ex" resname="stats.activeRecordings">
         <source>stats.activeRecordings</source>
         <target>Aktív rögzítések</target>
       </trans-unit>
-      <trans-unit id="t5eIWp8" resname="stats.userTotal">
+      <trans-unit id="t5eIWp8" resname="stats.userTotal" xml:space="preserve">
         <source>stats.userTotal</source>
-        <target>Felhasználó</target>
+        <target state="translated">Összes felhasználó</target>
       </trans-unit>
-      <trans-unit id="Bor.76M" resname="stats.activityTotal">
+      <trans-unit id="Bor.76M" resname="stats.activityTotal" xml:space="preserve">
         <source>stats.activityTotal</source>
-        <target>Tevékenység</target>
+        <target state="translated">Összes tevékenység</target>
       </trans-unit>
-      <trans-unit id="67uSaR3" resname="stats.projectTotal">
+      <trans-unit id="67uSaR3" resname="stats.projectTotal" xml:space="preserve">
         <source>stats.projectTotal</source>
-        <target>Projekt</target>
+        <target state="translated">Összes projekt</target>
       </trans-unit>
-      <trans-unit id="tnD6aPj" resname="stats.customerTotal">
+      <trans-unit id="tnD6aPj" resname="stats.customerTotal" xml:space="preserve">
         <source>stats.customerTotal</source>
-        <target>Ügyfél</target>
+        <target state="translated">Összes ügyfél</target>
       </trans-unit>
-      <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
+      <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title" xml:space="preserve">
         <source>admin_invoice_template.title</source>
-        <target>Számla sablon</target>
+        <target state="translated">Számlasablon</target>
       </trans-unit>
       <trans-unit id="SR2r1Cs" resname="invoices">
         <source>invoices</source>
@@ -538,9 +538,9 @@
         <source>invoice_print</source>
         <target>Számla</target>
       </trans-unit>
-      <trans-unit id="XN4PEpj" resname="template">
+      <trans-unit id="XN4PEpj" resname="template" xml:space="preserve">
         <source>template</source>
-        <target>Sablon</target>
+        <target state="translated">Számla sablon</target>
       </trans-unit>
       <trans-unit id="ohNu8DK" resname="due_days">
         <source>due_days</source>
@@ -550,17 +550,17 @@
         <source>invoice.due_days</source>
         <target>Fizetési határidő</target>
       </trans-unit>
-      <trans-unit id="4XKFnWh" resname="invoice.from">
+      <trans-unit id="4XKFnWh" resname="invoice.from" xml:space="preserve">
         <source>invoice.from</source>
-        <target>Feladó</target>
+        <target state="translated">Eladó</target>
       </trans-unit>
-      <trans-unit id="hx7vsMA" resname="invoice.to">
+      <trans-unit id="hx7vsMA" resname="invoice.to" xml:space="preserve">
         <source>invoice.to</source>
-        <target>Címzett</target>
+        <target state="translated">Vevő</target>
       </trans-unit>
-      <trans-unit id="x_W5sV4" resname="invoice.number">
+      <trans-unit id="x_W5sV4" resname="invoice.number" xml:space="preserve">
         <source>invoice.number</source>
-        <target>Számla száma</target>
+        <target state="translated">Számla sorszáma</target>
       </trans-unit>
       <trans-unit id="86KyrKO" resname="invoice.subtotal">
         <source>invoice.subtotal</source>
@@ -594,21 +594,21 @@
         <source>payment_terms</source>
         <target>Fizetési feltételek</target>
       </trans-unit>
-      <trans-unit id="9p2KQag" resname="invoice.signature_user">
+      <trans-unit id="9p2KQag" resname="invoice.signature_user" xml:space="preserve">
         <source>invoice.signature_user</source>
-        <target>Dátum, Megbízott, Aláírás</target>
+        <target state="translated">Dátum, Eladó képviselője, Aláírás</target>
       </trans-unit>
-      <trans-unit id="Q9ykNhO" resname="invoice.signature_customer">
+      <trans-unit id="Q9ykNhO" resname="invoice.signature_customer" xml:space="preserve">
         <source>invoice.signature_customer</source>
-        <target>Dátum, Megbízó, Aláírás</target>
+        <target state="translated">Dátum, Vevő képviselője, Aláírás</target>
       </trans-unit>
-      <trans-unit id="c3d6p33" resname="invoice.total_working_time">
+      <trans-unit id="c3d6p33" resname="invoice.total_working_time" xml:space="preserve">
         <source>invoice.total_working_time</source>
-        <target>Teljes munkaidő</target>
+        <target state="translated">Összes munkaidő</target>
       </trans-unit>
-      <trans-unit id="3tegKgk" resname="orderNumber">
+      <trans-unit id="3tegKgk" resname="orderNumber" xml:space="preserve">
         <source>orderNumber</source>
-        <target>Megbízás száma</target>
+        <target state="translated">Rendelési azonosító</target>
       </trans-unit>
       <trans-unit id="WMJwy8r" resname="invoice_tax_number">
         <source>invoice_tax_number</source>
@@ -626,9 +626,9 @@
         <source>export.period</source>
         <target>Exportált időszak</target>
       </trans-unit>
-      <trans-unit id="3CQ7A2m" resname="export.document_title">
+      <trans-unit id="3CQ7A2m" resname="export.document_title" xml:space="preserve">
         <source>export.document_title</source>
-        <target>Kiadások listája</target>
+        <target state="translated">Munkaidő-bejegyzések listája</target>
       </trans-unit>
       <trans-unit id="d5wyWRD" resname="export.full_list">
         <source>export.full_list</source>
@@ -654,9 +654,9 @@
         <source>recent.activities</source>
         <target>Egyik korábbi rögzítésed újraindítása</target>
       </trans-unit>
-      <trans-unit id="dTHY7Mw" resname="timesheet.start">
+      <trans-unit id="dTHY7Mw" resname="timesheet.start" xml:space="preserve">
         <source>timesheet.start</source>
-        <target state="needs-translation">Új rögzítés indítása</target>
+        <target state="translated">Időrögzítés indítása</target>
       </trans-unit>
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
@@ -666,9 +666,9 @@
         <source>entryState</source>
         <target>Rögzítések</target>
       </trans-unit>
-      <trans-unit id="Qn2ouiL" resname="exported">
+      <trans-unit id="Qn2ouiL" resname="exported" xml:space="preserve">
         <source>exported</source>
-        <target>Exportált</target>
+        <target state="translated">Exportálva</target>
       </trans-unit>
       <trans-unit id="_DDecAV" resname="entryState.exported">
         <source>entryState.exported</source>
@@ -726,13 +726,13 @@
         <source>progress</source>
         <target>Haladás</target>
       </trans-unit>
-      <trans-unit id="Ia0kvPi" resname="my_team_projects">
+      <trans-unit id="Ia0kvPi" resname="my_team_projects" xml:space="preserve">
         <source>my_team_projects</source>
-        <target>Csoport projektjei &amp; költségvetése</target>
+        <target state="translated">Projektjeim</target>
       </trans-unit>
-      <trans-unit id="L05Qw2x" resname="my_teams">
+      <trans-unit id="L05Qw2x" resname="my_teams" xml:space="preserve">
         <source>my_teams</source>
-        <target>Csoportjaim</target>
+        <target state="translated">Csapataim</target>
       </trans-unit>
       <trans-unit id="tKZKI2Z" resname="action.reset">
         <source>action.reset</source>
@@ -746,13 +746,13 @@
         <source>placeholder.type_message</source>
         <target>Üzenet írása…</target>
       </trans-unit>
-      <trans-unit id="evFI7nW" resname="teamlead">
+      <trans-unit id="evFI7nW" resname="teamlead" xml:space="preserve">
         <source>teamlead</source>
-        <target>Csoportvezető</target>
+        <target state="translated">Csapatvezető</target>
       </trans-unit>
-      <trans-unit id="yosi0Nu" resname="team">
+      <trans-unit id="yosi0Nu" resname="team" xml:space="preserve">
         <source>team</source>
-        <target>Csoport</target>
+        <target state="translated">Csapat</target>
       </trans-unit>
       <trans-unit id="Qc5nsFn" resname="recalculate_rates">
         <source>recalculate_rates</source>
@@ -782,9 +782,9 @@
         <source>Doctor</source>
         <target>Doktor</target>
       </trans-unit>
-      <trans-unit id="_t.2z4V" resname="teams">
+      <trans-unit id="_t.2z4V" resname="teams" xml:space="preserve">
         <source>teams</source>
-        <target>Csoportok</target>
+        <target state="translated">Csapatok</target>
       </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">
         <source>menu.reporting</source>
@@ -802,9 +802,9 @@
         <source>batch_meta_fields</source>
         <target>További mezők</target>
       </trans-unit>
-      <trans-unit id="iwWaUoa" resname="export.filter">
+      <trans-unit id="iwWaUoa" resname="export.filter" xml:space="preserve">
         <source>export.filter</source>
-        <target>Adat szűrés exportáláshoz</target>
+        <target state="translated">Adatok szűrése exportáláshoz</target>
       </trans-unit>
       <trans-unit id="PHJwR4w" resname="status.paid">
         <source>status.paid</source>
@@ -834,17 +834,17 @@
         <source>preview</source>
         <target>Előnézet</target>
       </trans-unit>
-      <trans-unit id="ov4OQOh" resname="invoice.filter">
+      <trans-unit id="ov4OQOh" resname="invoice.filter" xml:space="preserve">
         <source>invoice.filter</source>
-        <target>Számla adat szűrő</target>
+        <target state="translated">Adatok szűrése a számlához</target>
       </trans-unit>
-      <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft">
+      <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft" xml:space="preserve">
         <source>stats.percentUsedLeft</source>
-        <target>%percent%% használatban (%left% még elérhető)</target>
+        <target state="translated">%percent%% felhasználva (%left% még felhasználható)</target>
       </trans-unit>
-      <trans-unit id="unC5MXv" resname="stats.percentUsed">
+      <trans-unit id="unC5MXv" resname="stats.percentUsed" xml:space="preserve">
         <source>stats.percentUsed</source>
-        <target>%percent%% használatban</target>
+        <target state="translated">%percent%% felhasználva</target>
       </trans-unit>
       <trans-unit id="JnUFsNi" resname="stats.workingTimeYear">
         <source>stats.workingTimeYear</source>
@@ -874,9 +874,9 @@
         <source>user_permissions.title</source>
         <target>Felhasználói engedélyek</target>
       </trans-unit>
-      <trans-unit id="EJDS9HY" resname="vat_id">
+      <trans-unit id="EJDS9HY" resname="vat_id" xml:space="preserve">
         <source>vat_id</source>
-        <target>ÁFA-ID</target>
+        <target state="translated">Adószám</target>
       </trans-unit>
       <trans-unit id="Xyjr.V." resname="project_start">
         <source>project_start</source>
@@ -894,9 +894,9 @@
         <source>lastLogin</source>
         <target>Utolsó bejelentkezés</target>
       </trans-unit>
-      <trans-unit id="1c0EQaz" resname="profile.registration_date">
+      <trans-unit id="1c0EQaz" resname="profile.registration_date" xml:space="preserve">
         <source>profile.registration_date</source>
-        <target>Regisztrált ekkor</target>
+        <target state="translated">Regisztráció dátuma</target>
       </trans-unit>
       <trans-unit id="b43sCwO" resname="help.fixedRate">
         <source>help.fixedRate</source>
@@ -906,9 +906,9 @@
         <source>update_multiple</source>
         <target>%action% %count% bejegyzést</target>
       </trans-unit>
-      <trans-unit id="zFfl7jw" resname="sum.total">
+      <trans-unit id="zFfl7jw" resname="sum.total" xml:space="preserve">
         <source>sum.total</source>
-        <target>Összes</target>
+        <target state="translated">Összes óra</target>
       </trans-unit>
       <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>
@@ -956,19 +956,19 @@
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
         <source>stats.durationFinancialYear</source>
-        <target state="needs-translation">Munkaórák ebben a pénzügyi évben</target>
+        <target state="translated">Munkaórák ebben a pénzügyi évben</target>
       </trans-unit>
-      <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month">
+      <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month" xml:space="preserve">
         <source>stats.percentUsedLeft_month</source>
-        <target>%percent%% felhasználva (%left% még elérhető ebben a hónapban)</target>
+        <target state="translated">%percent%% felhasználva (%left% még felhasználható ebben a hónapban)</target>
       </trans-unit>
       <trans-unit id="crrlEUA" resname="preview.skipped_rows">
         <source>preview.skipped_rows</source>
         <target>Előnézetből kihagyva %rows% további sor…</target>
       </trans-unit>
-      <trans-unit id="qX_CKtU" resname="tax_rate">
+      <trans-unit id="qX_CKtU" resname="tax_rate" xml:space="preserve">
         <source>tax_rate</source>
-        <target>Áfa százalák</target>
+        <target state="translated">Áfakulcs</target>
       </trans-unit>
       <trans-unit id="8W_TZI0" resname="searchTerm">
         <source>searchTerm</source>
@@ -996,7 +996,7 @@
       </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
         <source>Working hours</source>
-        <target>Munkaidő</target>
+        <target state="translated">Munkaórák</target>
       </trans-unit>
       <trans-unit id="Nx9_QiO" resname="revenue">
         <source>revenue</source>
@@ -1018,17 +1018,17 @@
         <source>action.add</source>
         <target state="translated">Hozzáadás</target>
       </trans-unit>
-      <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
+      <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort" xml:space="preserve">
         <source>stats.workingTimeWeekShort</source>
-        <target state="translated">hét %week%</target>
+        <target state="translated">Hét %week%</target>
       </trans-unit>
       <trans-unit id="ViUuILv" resname="includeBudgetType_month">
         <source>includeBudgetType_month</source>
         <target state="translated">A "havi" költségvetésű bejegyzések megjelenítése</target>
       </trans-unit>
-      <trans-unit id="KukrzcT" resname="includeBudgetType_full">
+      <trans-unit id="KukrzcT" resname="includeBudgetType_full" xml:space="preserve">
         <source>includeBudgetType_full</source>
-        <target state="translated">Az "életciklus” költségvetésű bejegyzések megjelenítése</target>
+        <target state="translated">Az "életciklus" költségvetésű bejegyzések megjelenítése</target>
       </trans-unit>
       <trans-unit id="o0yOFHL" resname="not_invoiced">
         <source>not_invoiced</source>
@@ -1038,9 +1038,9 @@
         <source>last_record_before</source>
         <target state="translated">Azóta nincs időfoglalás</target>
       </trans-unit>
-      <trans-unit id="KH2hgil" resname="account_number">
+      <trans-unit id="KH2hgil" resname="account_number" xml:space="preserve">
         <source>account_number</source>
-        <target state="translated">A személyzet száma</target>
+        <target state="translated">Alkalmazotti azonosító</target>
       </trans-unit>
       <trans-unit id="4Ndj7Xo" resname="budgetType">
         <source>budgetType</source>
@@ -1058,25 +1058,25 @@
         <source>last_record</source>
         <target state="translated">Utolsó bejegyzés</target>
       </trans-unit>
-      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+      <trans-unit id="GzWKgBk" resname="error.directory_missing" xml:space="preserve">
         <source>The directory “%dir%” does not exist and could not be created.</source>
-        <target state="translated">A „%dir%” könyvtár nem létezik, és nem hozható létre.</target>
+        <target state="translated">A "%dir%" könyvtár nem létezik, és nem hozható létre.</target>
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
         <target state="translated">A "%dir%" könyvtár írásvédett.</target>
       </trans-unit>
-      <trans-unit id="gT9W2pZ" resname="status.canceled">
+      <trans-unit id="gT9W2pZ" resname="status.canceled" xml:space="preserve">
         <source>status.canceled</source>
-        <target state="translated">Törölve</target>
+        <target state="translated">Sztornózva</target>
       </trans-unit>
-      <trans-unit id="L27KvC9" resname="includeNoWork">
+      <trans-unit id="L27KvC9" resname="includeNoWork" xml:space="preserve">
         <source>includeNoWork</source>
-        <target state="translated">Bejegyzések megjelenítése foglalás nélkül</target>
+        <target state="translated">Időtartam nélküli bejegyzések megjelenítése</target>
       </trans-unit>
-      <trans-unit id="L0hRlcf" resname="includeNoBudget">
+      <trans-unit id="L0hRlcf" resname="includeNoBudget" xml:space="preserve">
         <source>includeNoBudget</source>
-        <target state="translated">Bejegyzések megjelenítése költségvetés nélkül</target>
+        <target state="translated">Költségvetés nélküli bejegyzések megjelenítése</target>
       </trans-unit>
       <trans-unit id="2dm.ZWM" resname="not_exported">
         <source>not_exported</source>
@@ -1090,21 +1090,21 @@
         <source>about.title</source>
         <target>A Kimai névjegye</target>
       </trans-unit>
-      <trans-unit id="aOJITgv" resname="help.invoiceText">
+      <trans-unit id="aOJITgv" resname="help.invoiceText" xml:space="preserve">
         <source>help.invoiceText</source>
-        <target state="translated">Ezt a szöveget a számla bizonylatokban használják, és használható pl. jegyezze meg a további szállítási feltételeket.</target>
+        <target state="translated">Ez a szöveg a számlákon szerepel, és használható pl. további szállítási információk megadásához.</target>
       </trans-unit>
-      <trans-unit id="jLzX0Ae" resname="help.invoiceLabel">
+      <trans-unit id="jLzX0Ae" resname="help.invoiceLabel" xml:space="preserve">
         <source>help.invoiceLabel</source>
-        <target state="translated">Ez a szöveg helyettesíti az objektum nevét, így részletesebb címkéket tesz lehetővé a számlatételekhez.</target>
+        <target state="translated">A számlán ez a szöveg helyettesíti a tétel megnevezését, ezáltal részletesebb leírást tesz lehetővé.</target>
       </trans-unit>
-      <trans-unit id="KgBw0BS" resname="skin">
+      <trans-unit id="KgBw0BS" resname="skin" xml:space="preserve">
         <source>skin</source>
-        <target state="translated">Tervezés</target>
+        <target state="translated">Megjelenés</target>
       </trans-unit>
-      <trans-unit id="oq1jcSQ" resname="help.billable">
+      <trans-unit id="oq1jcSQ" resname="help.billable" xml:space="preserve">
         <source>help.billable</source>
-        <target state="translated">Ha a beállítás ki van kapcsolva, a jövőben rögzített összes időbejegyzés „nem számlázható”-ként lesz megjelölve.</target>
+        <target state="translated">Ha a beállítás ki van kapcsolva, a jövőben rögzített összes időbejegyzés "nem számlázható"-ként lesz megjelölve.</target>
       </trans-unit>
       <trans-unit id="AeMGtJO" resname="help.visible">
         <source>help.visible</source>
@@ -1138,29 +1138,29 @@
         <source>help.teams</source>
         <target state="translated">A láthatóságot a kiválasztott csapatokra korlátozza.</target>
       </trans-unit>
-      <trans-unit id="OJ.wI1U" resname="invoiceText">
+      <trans-unit id="OJ.wI1U" resname="invoiceText" xml:space="preserve">
         <source>invoiceText</source>
-        <target state="translated">Számlázási információ</target>
+        <target state="translated">Számla megjegyzés</target>
       </trans-unit>
-      <trans-unit id="IDDfzoR" resname="invoiceLabel">
+      <trans-unit id="IDDfzoR" resname="invoiceLabel" xml:space="preserve">
         <source>invoiceLabel</source>
-        <target state="translated">Számla szövege</target>
+        <target state="translated">Tétel megnevezése</target>
       </trans-unit>
       <trans-unit id="LDsHBXd" resname="modal.columns.label">
         <source>modal.columns.label</source>
         <target state="translated">Táblázat oszlopai</target>
       </trans-unit>
-      <trans-unit id="EGpYQvx" resname="help">
+      <trans-unit id="EGpYQvx" resname="help" xml:space="preserve">
         <source>help</source>
-        <target>Súgó</target>
+        <target state="translated">Dokumentáció</target>
       </trans-unit>
       <trans-unit id="oYYDCG5" resname="support">
         <source>support</source>
         <target>Támogatás</target>
       </trans-unit>
-      <trans-unit id="mz4ieCN" resname="donate">
+      <trans-unit id="mz4ieCN" resname="donate" xml:space="preserve">
         <source>donate</source>
-        <target>Támogasd</target>
+        <target state="translated">Adományozás</target>
       </trans-unit>
       <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
         <source>invoice_number_generator.date</source>
@@ -1170,9 +1170,9 @@
         <source>invoice_number_generator.default</source>
         <target>Konfigurált formátum</target>
       </trans-unit>
-      <trans-unit id="UI6nPeP" resname="invoice_number_generator">
+      <trans-unit id="UI6nPeP" resname="invoice_number_generator" xml:space="preserve">
         <source>invoice_number_generator</source>
-        <target>Számlaszám-generátor</target>
+        <target state="translated">Számlasorszám-generátor</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
@@ -1194,17 +1194,17 @@
         <source>trash</source>
         <target>Törlés</target>
       </trans-unit>
-      <trans-unit id="hF6RgxM" resname="report">
+      <trans-unit id="hF6RgxM" resname="report" xml:space="preserve">
         <source>report</source>
-        <target>Riport</target>
+        <target state="translated">Jelentés</target>
       </trans-unit>
       <trans-unit id="JeK2sQZ" resname="repeat">
         <source>repeat</source>
         <target>Újrakezdés</target>
       </trans-unit>
-      <trans-unit id="J0sRBY_" resname="profile-stats">
+      <trans-unit id="J0sRBY_" resname="profile-stats" xml:space="preserve">
         <source>profile-stats</source>
-        <target>Statisztikák</target>
+        <target state="translated">Profil</target>
       </trans-unit>
       <trans-unit id="zeD7Dew" resname="settings">
         <source>settings</source>
@@ -1212,7 +1212,7 @@
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target state="needs-translation">Rögzített órák</target>
+        <target state="translated">Munkaidő-bejegyzések</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
@@ -1230,17 +1230,17 @@
         <source>create-activity</source>
         <target>Tevékenység létrehozása</target>
       </trans-unit>
-      <trans-unit id="QR1nvcR" resname="create-timesheet">
+      <trans-unit id="QR1nvcR" resname="create-timesheet" xml:space="preserve">
         <source>create-timesheet</source>
-        <target>Rögzítés létrehozása</target>
+        <target state="translated">Munkaidő-bejegyzés létrehozása</target>
       </trans-unit>
       <trans-unit id="9M4b2ZN" resname="invoice.paid">
         <source>invoice.paid</source>
         <target>Számla kifizetve</target>
       </trans-unit>
-      <trans-unit id="hHIeqOW" resname="invoice.pending">
+      <trans-unit id="hHIeqOW" resname="invoice.pending" xml:space="preserve">
         <source>invoice.pending</source>
-        <target>Kiegyenlítésre várva</target>
+        <target state="translated">Kiegyenlítésre vár</target>
       </trans-unit>
       <trans-unit id="aP9j_4L" resname="download">
         <source>download</source>
@@ -1254,17 +1254,17 @@
         <source>permissions</source>
         <target>Csoport engedélyek</target>
       </trans-unit>
-      <trans-unit id="Qh5mV5Q" resname="create-timesheet-multiuser">
+      <trans-unit id="Qh5mV5Q" resname="create-timesheet-multiuser" xml:space="preserve">
         <source>create-timesheet-multiuser</source>
-        <target>Többszörös felhasználóknak</target>
+        <target state="translated">Létrehozás több felhasználónak</target>
       </trans-unit>
       <trans-unit id="38M3a4J" resname="filter">
         <source>filter</source>
         <target>Adatok szűrése</target>
       </trans-unit>
-      <trans-unit id="SEyZupT" resname="invoice.cancel">
+      <trans-unit id="SEyZupT" resname="invoice.cancel" xml:space="preserve">
         <source>invoice.cancel</source>
-        <target>Törölje a számlát</target>
+        <target state="translated">Számla sztornózása</target>
       </trans-unit>
       <trans-unit id="QCf1FUG" resname="reload" xml:space="preserve">
         <source>reload</source>
@@ -1276,11 +1276,11 @@
       </trans-unit>
       <trans-unit id="FeFBn_3" resname="profile.2fa" xml:space="preserve">
         <source>profile.2fa</source>
-        <target state="translated">két faktoros (2FA)</target>
+        <target state="translated">Kétfaktoros (2FA)</target>
       </trans-unit>
       <trans-unit id="erN3h3b" resname="replace" xml:space="preserve">
         <source>replace</source>
-        <target state="translated">kicserél</target>
+        <target state="translated">Lecserél</target>
       </trans-unit>
       <trans-unit id="hPY2VcD" resname="profile.2fa_intro" xml:space="preserve">
         <source>profile.2fa_intro</source>
@@ -1288,15 +1288,15 @@
       </trans-unit>
       <trans-unit id="EYXzfTO" resname="deleted" xml:space="preserve">
         <source>deleted</source>
-        <target state="translated">törölve</target>
+        <target state="translated">Törölve</target>
       </trans-unit>
       <trans-unit id="EX27Gdt" resname="created_by" xml:space="preserve">
         <source>created_by</source>
-        <target state="translated">Készítette</target>
+        <target state="translated">Létrehozta</target>
       </trans-unit>
       <trans-unit id="QG7.sen" resname="created" xml:space="preserve">
         <source>Created</source>
-        <target state="translated">készítette</target>
+        <target state="translated">Létrehozva</target>
       </trans-unit>
       <trans-unit id="t1r372x" resname="invisible" xml:space="preserve">
         <source>invisible</source>
@@ -1305,6 +1305,590 @@
       <trans-unit id="1MfS6X5" resname="remove_filter" xml:space="preserve">
         <source>remove_filter</source>
         <target state="translated">Keresési szűrő törlése</target>
+      </trans-unit>
+      <trans-unit id="eCEGRzN" resname="work_contract" xml:space="preserve">
+        <source>work_contract</source>
+        <target state="translated">Munkaviszony</target>
+      </trans-unit>
+      <trans-unit id="7_d7IB3" resname="evaluation" xml:space="preserve">
+        <source>evaluation</source>
+        <target state="translated">Próbaidő</target>
+      </trans-unit>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
+        <source>Complete month</source>
+        <target state="translated">Hónap lezárása</target>
+      </trans-unit>
+      <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="no">
+        <source>Unlock month</source>
+        <target state="translated">Hónap feloldása</target>
+      </trans-unit>
+      <trans-unit id="SdLZTel" resname="favorite_routes" xml:space="preserve">
+        <source>favorite_routes</source>
+        <target state="translated">Kedvencek</target>
+      </trans-unit>
+      <trans-unit id="XE01Ar1" resname="parental" xml:space="preserve">
+        <source>parental</source>
+        <target state="translated">Szülői szabadság</target>
+      </trans-unit>
+      <trans-unit id="i7aSJ1i" resname="notifications" xml:space="preserve">
+        <source>notifications</source>
+        <target state="translated">Értesítések</target>
+      </trans-unit>
+      <trans-unit id="On18MKP" resname="plugin.installed" xml:space="preserve">
+        <source>plugin.installed</source>
+        <target state="translated">Telepített bővítmények</target>
+      </trans-unit>
+      <trans-unit id="PLLl1E0" resname="system_account" xml:space="preserve">
+        <source>system_account</source>
+        <target state="translated">Rendszerfiók</target>
+      </trans-unit>
+      <trans-unit id="0Hhg4zQ" resname="system_account.help" xml:space="preserve">
+        <source>system_account.help</source>
+        <target state="translated">El lesz rejtve a jelentésekben és a legördülő listákban</target>
+      </trans-unit>
+      <trans-unit id="t.jgy7A" resname="all_invoices" xml:space="preserve">
+        <source>all_invoices</source>
+        <target state="translated">Számlatörténet</target>
+      </trans-unit>
+      <trans-unit id="ojfv7Jl" resname="invoice_form.title" xml:space="preserve">
+        <source>invoice_form.title</source>
+        <target state="translated">Számla kiállítása</target>
+      </trans-unit>
+      <trans-unit id="o0hsx2H" resname="mark_as_open" xml:space="preserve">
+        <source>mark_as_open</source>
+        <target state="translated">Megjelölés megnyitottként</target>
+      </trans-unit>
+      <trans-unit id="mR_Y5Mv" resname="timesheet.stop" xml:space="preserve">
+        <source>timesheet.stop</source>
+        <target state="translated">Időrögzítés leállítása</target>
+      </trans-unit>
+      <trans-unit id="f8oNzSP" resname="quick_entry.title" xml:space="preserve">
+        <source>quick_entry.title</source>
+        <target state="translated">Heti munkaórák</target>
+      </trans-unit>
+      <trans-unit id="mjKOAgQ" resname="skin.light" xml:space="preserve">
+        <source>skin.light</source>
+        <target state="translated">Világos</target>
+      </trans-unit>
+      <trans-unit id="WOFPb2i" resname="skin.dark" xml:space="preserve">
+        <source>skin.dark</source>
+        <target state="translated">Sötét</target>
+      </trans-unit>
+      <trans-unit id="ulgdXdi" resname="hour_24" xml:space="preserve">
+        <source>hour_24</source>
+        <target state="translated">24-órás</target>
+      </trans-unit>
+      <trans-unit id="M2B0gF." resname="time" xml:space="preserve">
+        <source>time</source>
+        <target state="translated">Idő</target>
+      </trans-unit>
+      <trans-unit id="fWuGTog" resname="public_holiday" xml:space="preserve">
+        <source>public_holiday</source>
+        <target state="translated">Ünnepnap</target>
+      </trans-unit>
+      <trans-unit id="zlmddHB" resname="public_holidays" xml:space="preserve">
+        <source>public_holidays</source>
+        <target state="translated">Ünnepnapok</target>
+      </trans-unit>
+      <trans-unit id="u4lbYD5" resname="public_holiday.group" xml:space="preserve">
+        <source>public_holiday.group</source>
+        <target state="translated">Ünnepnap csoport</target>
+      </trans-unit>
+      <trans-unit id="GIgQHa4" resname="absence" xml:space="preserve">
+        <source>absence</source>
+        <target state="translated">Távollét</target>
+      </trans-unit>
+      <trans-unit id="YTzKpcP" resname="Absence calendar" xml:space="preserve">
+        <source>Absence calendar</source>
+        <target state="translated">Távollét naptár</target>
+      </trans-unit>
+      <trans-unit id="4PMHpIp" resname="time_off" xml:space="preserve">
+        <source>time_off</source>
+        <target state="translated">Túlóra</target>
+      </trans-unit>
+      <trans-unit id="_WlU8Fp" resname="sickness" xml:space="preserve">
+        <source>sickness</source>
+        <target state="translated">Betegség</target>
+      </trans-unit>
+      <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
+        <source>Sickness of a relative</source>
+        <target state="translated">Rokon betegsége</target>
+      </trans-unit>
+      <trans-unit id="2SmKENG" resname="other" xml:space="preserve">
+        <source>other</source>
+        <target state="translated">Egyéb</target>
+      </trans-unit>
+      <trans-unit id="Od3xvQK" resname="button.report" xml:space="preserve">
+        <source>button.report</source>
+        <target state="translated">Jelentés</target>
+      </trans-unit>
+      <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
+        <source>absence_other.intro</source>
+        <target state="translated">Családi események, költözés, szélsőséges időjárás, stb.</target>
+      </trans-unit>
+      <trans-unit id="TTnaBm4" resname="day_full" xml:space="preserve">
+        <source>day_full</source>
+        <target state="translated">Teljes nap</target>
+      </trans-unit>
+      <trans-unit id="Eml59KV" resname="day_half" xml:space="preserve">
+        <source>day_half</source>
+        <target state="translated">Fél nap</target>
+      </trans-unit>
+      <trans-unit id="CDTC1gc" resname="supervisor" xml:space="preserve">
+        <source>supervisor</source>
+        <target state="translated">Felettes</target>
+      </trans-unit>
+      <trans-unit id=".wmq_rT" resname="force_password_change" xml:space="preserve">
+        <source>force_password_change</source>
+        <target state="translated">Új jelszó kérése</target>
+      </trans-unit>
+      <trans-unit id="vURcRit" resname="overview" xml:space="preserve">
+        <source>Overview</source>
+        <target state="translated">Áttekintés</target>
+      </trans-unit>
+      <trans-unit id="0xFBb6O" resname="Expenses" xml:space="preserve">
+        <source>Expenses</source>
+        <target state="translated">Kiadások</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category" xml:space="preserve">
+        <source>Category</source>
+        <target state="translated">Kategória</target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories" xml:space="preserve">
+        <source>Categories</source>
+        <target state="translated">Kategóriák</target>
+      </trans-unit>
+      <trans-unit id="7Sycs4M" resname="Importer" xml:space="preserve">
+        <source>Importer</source>
+        <target state="translated">Importőr</target>
+      </trans-unit>
+      <trans-unit id="J6EJUj9" resname="Meta fields" xml:space="preserve">
+        <source>Meta fields</source>
+        <target state="translated">Egyedi mezők</target>
+      </trans-unit>
+      <trans-unit id="JmpBuQ1" resname="Translations" xml:space="preserve">
+        <source>Translations</source>
+        <target state="translated">Fordítások</target>
+      </trans-unit>
+      <trans-unit id="b712axp" resname="Translation" xml:space="preserve">
+        <source>Translation</source>
+        <target state="translated">Fordítás</target>
+      </trans-unit>
+      <trans-unit id="YRRgZCe" resname="Custom content" xml:space="preserve">
+        <source>Custom content</source>
+        <target state="translated">Egyedi tartalom</target>
+      </trans-unit>
+      <trans-unit id="q1EATp1" resname="days" xml:space="preserve">
+        <source>days</source>
+        <target state="translated">Napok</target>
+      </trans-unit>
+      <trans-unit id="Ga4bvUX" resname="unpaid_vacation" xml:space="preserve">
+        <source>unpaid_vacation</source>
+        <target state="translated">Fizetetlen szabadság</target>
+      </trans-unit>
+      <trans-unit id="q59lI2y" resname="user_identifier" xml:space="preserve">
+        <source>user_identifier</source>
+        <target state="translated">Felhasználó azonosító</target>
+      </trans-unit>
+      <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve">
+        <source>Expiry date</source>
+        <target state="translated">Lejárati dátum</target>
+      </trans-unit>
+      <trans-unit id="rkCw7Ml" resname="last_usage" xml:space="preserve">
+        <source>Last usage</source>
+        <target state="translated">Utolsó használat</target>
+      </trans-unit>
+      <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
+        <source>hours_per_day</source>
+        <target state="translated">Órák naponta</target>
+      </trans-unit>
+      <trans-unit id="y7KtuSS" resname="hours_per_week" xml:space="preserve">
+        <source>hours_per_week</source>
+        <target state="translated">Órák hetente</target>
+      </trans-unit>
+      <trans-unit id="07e8ywS" resname="hours_per_month" xml:space="preserve">
+        <source>hours_per_month</source>
+        <target state="translated">Órák havonta</target>
+      </trans-unit>
+      <trans-unit id="7p_pFHl" resname="work_days" xml:space="preserve">
+        <source>work_days</source>
+        <target state="translated">Munkanapok</target>
+      </trans-unit>
+      <trans-unit id="2pbkbn_" resname="work_hours_mode" xml:space="preserve">
+        <source>work_hours_mode</source>
+        <target state="translated">Munkaidő számítása</target>
+      </trans-unit>
+      <trans-unit id="IFT9pou" resname="last_working_day" xml:space="preserve">
+        <source>last_working_day</source>
+        <target state="translated">Munkaviszony vége</target>
+      </trans-unit>
+      <trans-unit id="0jvo0RQ" resname="profit" xml:space="preserve">
+        <source>profit</source>
+        <target state="translated">Nyereség</target>
+      </trans-unit>
+      <trans-unit id="vN5pKOU" resname="costs" xml:space="preserve">
+        <source>costs</source>
+        <target state="translated">Költségek</target>
+      </trans-unit>
+      <trans-unit id="FOvlalA" resname="break" xml:space="preserve">
+        <source>break</source>
+        <target state="translated">Szünet</target>
+      </trans-unit>
+      <trans-unit id="EedlgkM" resname="stats.userDurationTotal" xml:space="preserve">
+        <source>stats.userDurationTotal</source>
+        <target state="translated">Összes munkaórám</target>
+      </trans-unit>
+      <trans-unit id="mS4SSmt" resname="work_times" xml:space="preserve">
+        <source>Working times</source>
+        <target state="translated">Munkaidő</target>
+      </trans-unit>
+      <trans-unit id="iaJj4va" resname="work_times_account" xml:space="preserve">
+        <source>Account working times</source>
+        <target state="translated">Munkaidő elszámolás</target>
+      </trans-unit>
+      <trans-unit id="EI5gPkp" resname="stats.userDurationToday" xml:space="preserve">
+        <source>stats.userDurationToday</source>
+        <target state="translated">Mai munkaóráim</target>
+      </trans-unit>
+      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek" xml:space="preserve">
+        <source>stats.userDurationWeek</source>
+        <target state="translated">Munkaóráim ezen a héten</target>
+      </trans-unit>
+      <trans-unit id="0WpgaGa" resname="stats.userDurationMonth" xml:space="preserve">
+        <source>stats.userDurationMonth</source>
+        <target state="translated">Munkaóráim ebben a hónapban</target>
+      </trans-unit>
+      <trans-unit id="BjyLITj" resname="stats.userDurationYear" xml:space="preserve">
+        <source>stats.userDurationYear</source>
+        <target state="translated">Munkaóráim ebben az évben</target>
+      </trans-unit>
+      <trans-unit id="mQMcndl" resname="stats.userAmountToday" xml:space="preserve">
+        <source>stats.userAmountToday</source>
+        <target state="translated">Mai bevételem</target>
+      </trans-unit>
+      <trans-unit id="LDS9o5X" resname="stats.userAmountWeek" xml:space="preserve">
+        <source>stats.userAmountWeek</source>
+        <target state="translated">Bevételem ezen a héten</target>
+      </trans-unit>
+      <trans-unit id="E3Kj9lt" resname="stats.userAmountMonth" xml:space="preserve">
+        <source>stats.userAmountMonth</source>
+        <target state="translated">Bevételem ebben a hónapban</target>
+      </trans-unit>
+      <trans-unit id="xvdsZsS" resname="stats.userAmountYear" xml:space="preserve">
+        <source>stats.userAmountYear</source>
+        <target state="translated">Bevételem ebben az évben</target>
+      </trans-unit>
+      <trans-unit id="9jlbhkf" resname="stats.userAmountTotal" xml:space="preserve">
+        <source>stats.userAmountTotal</source>
+        <target state="translated">Összes bevételem</target>
+      </trans-unit>
+      <trans-unit id="tvV0NhL" resname="delete_warning.short_stats" xml:space="preserve">
+        <source>delete_warning.short_stats</source>
+        <target state="translated">Jelenleg %records% bejegyzés létezik, aminek az összes időtartama %duration%.</target>
+      </trans-unit>
+      <trans-unit id="aGk9Aqt" resname="desktop" xml:space="preserve">
+        <source>desktop</source>
+        <target state="translated">Asztali</target>
+      </trans-unit>
+      <trans-unit id="Y0PRG9Z" resname="profile.2fa_confirmation" xml:space="preserve">
+        <source>profile.2fa_confirmation</source>
+        <target state="translated">Erősítsd meg a kódot, ami aktiválja a kétfaktoros hitelesítést a fiókodhoz.</target>
+      </trans-unit>
+      <trans-unit id="IRzPWmL" resname="login.2fa_intro" xml:space="preserve">
+        <source>login.2fa_intro</source>
+        <target state="translated">Add meg a megerősítő kódot a bejelentkezéshez.</target>
+      </trans-unit>
+      <trans-unit id="FgKTw5v" resname="login.2fa_label" xml:space="preserve">
+        <source>login.2fa_label</source>
+        <target state="translated">Megerősítő kód</target>
+      </trans-unit>
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
+        <source>Expected number of hours</source>
+        <target state="translated">Elvárt órák</target>
+      </trans-unit>
+      <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve">
+        <source>Project number</source>
+        <target state="translated">Projekt azonosító</target>
+      </trans-unit>
+      <trans-unit id="8JEDuyx" resname="activity_number" xml:space="preserve">
+        <source>Activity number</source>
+        <target state="translated">Tevékenység azonosító</target>
+      </trans-unit>
+      <trans-unit id="Zngu6M9" resname="status.planned" xml:space="preserve">
+        <source>status.planned</source>
+        <target state="translated">Tervezett</target>
+      </trans-unit>
+      <trans-unit id="m8V2yFG" resname="status.progress" xml:space="preserve">
+        <source>status.progress</source>
+        <target state="translated">Folyamatban</target>
+      </trans-unit>
+      <trans-unit id="HF70hZq" resname="status.closed" xml:space="preserve">
+        <source>status.closed</source>
+        <target state="translated">Lezárt</target>
+      </trans-unit>
+      <trans-unit id="opDmYAa" resname="status.approved" xml:space="preserve">
+        <source>status.approved</source>
+        <target state="translated">Elfogadott</target>
+      </trans-unit>
+      <trans-unit id="dOIWgOr" resname="approve" xml:space="preserve">
+        <source>approve</source>
+        <target state="translated">Elfogadás</target>
+      </trans-unit>
+      <trans-unit id="Na24cyT" resname="status.requested" xml:space="preserve">
+        <source>status.requested</source>
+        <target state="translated">Igényelt</target>
+      </trans-unit>
+      <trans-unit id="H1i5FFs" resname="request" xml:space="preserve">
+        <source>request</source>
+        <target state="translated">Igénylés</target>
+      </trans-unit>
+      <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve" approved="no">
+        <source>Rejected</source>
+        <target state="translated">Elutasított</target>
+      </trans-unit>
+      <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve">
+        <source>reject</source>
+        <target state="translated">Elutasítás</target>
+      </trans-unit>
+      <trans-unit id="HNFpvnH" resname="globalActivities" xml:space="preserve">
+        <source>globalActivities</source>
+        <target state="translated">Globális tevékenységek engedélyezése</target>
+      </trans-unit>
+      <trans-unit id="Zif614Q" resname="add_user.label" xml:space="preserve">
+        <source>add_user.label</source>
+        <target state="translated">Felhasználó hozzáadása</target>
+      </trans-unit>
+      <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve">
+        <source>Code</source>
+        <target state="translated">Kód</target>
+      </trans-unit>
+      <trans-unit id="xZzzKxM" resname="orientation" xml:space="preserve">
+        <source>Orientation</source>
+        <target state="translated">Tájolás</target>
+      </trans-unit>
+      <trans-unit id="UcWoKWo" resname="portrait" xml:space="preserve">
+        <source>Portrait</source>
+        <target state="translated">Álló</target>
+      </trans-unit>
+      <trans-unit id="rLlV34K" resname="landscape" xml:space="preserve">
+        <source>Landscape</source>
+        <target state="translated">Fekvő</target>
+      </trans-unit>
+      <trans-unit id="eV6j76Q" resname="font" xml:space="preserve">
+        <source>font</source>
+        <target state="translated">Betűtípus</target>
+      </trans-unit>
+      <trans-unit id="rD4oQRR" resname="postcode" xml:space="preserve">
+        <source>Postcode</source>
+        <target state="translated">Irányítószám</target>
+      </trans-unit>
+      <trans-unit id="EaYsI0E" resname="city" xml:space="preserve">
+        <source>City</source>
+        <target state="translated">Város</target>
+      </trans-unit>
+      <trans-unit id="EiWubBr" resname="sessions" xml:space="preserve">
+        <source>Sessions</source>
+        <target state="translated">Munkamenetek</target>
+      </trans-unit>
+      <trans-unit id="f0kKHXR" resname="sessions_logout" xml:space="preserve">
+        <source>Log out of all devices</source>
+        <target state="translated">Összes eszköz kijelentkeztetése</target>
+      </trans-unit>
+      <trans-unit id="9qIU96X" resname="result" xml:space="preserve">
+        <source>result</source>
+        <target state="translated">Eredmény</target>
+      </trans-unit>
+      <trans-unit id="wvt4jH3" resname="training" xml:space="preserve">
+        <source>training</source>
+        <target state="translated">Képzés</target>
+      </trans-unit>
+      <trans-unit id="Uzll0ps" resname="Customer portal" xml:space="preserve">
+        <source>Customer portal</source>
+        <target state="translated">Ügyfélportál</target>
+      </trans-unit>
+      <trans-unit id="F7xeAn4" resname="invoice_date" xml:space="preserve">
+        <source>invoice_date</source>
+        <target state="translated">Számla dátuma</target>
+      </trans-unit>
+      <trans-unit id="NOEx3FF" resname="invoice_date.help" xml:space="preserve">
+        <source>invoice_date.help</source>
+        <target state="translated">Itt tudod megváltoztatni a számla dátumát</target>
+      </trans-unit>
+      <trans-unit id="M.zFjwe" resname="pto_year_holiday" approved="no" xml:space="preserve">
+        <source>Holidays per year</source>
+        <target state="translated">Éves szabadság</target>
+      </trans-unit>
+      <trans-unit id="gcFtM3o" resname="holiday" xml:space="preserve">
+        <source>holiday</source>
+        <target state="translated">Szabadság</target>
+      </trans-unit>
+      <trans-unit id="2lL9ACs" resname="help.invoiceTemplate" xml:space="preserve">
+        <source>help.invoiceTemplate</source>
+        <target state="translated">A számla ezzel a sablonnal kerül kiállításra.</target>
+      </trans-unit>
+      <trans-unit id="Vp7xjKh" resname="Audit logs" xml:space="preserve">
+        <source>Audit logs</source>
+        <target state="translated">Audit naplók</target>
+      </trans-unit>
+      <trans-unit id="pJzNT.n" resname="vcard" xml:space="preserve">
+        <source>vcard</source>
+        <target state="translated">Névjegykártya</target>
+      </trans-unit>
+      <trans-unit id="2cMESs." resname="widget_add" xml:space="preserve">
+        <source>Add widget</source>
+        <target state="translated">Widget hozzáadása</target>
+      </trans-unit>
+      <trans-unit id="YCc5UoO" resname="widget_remove" xml:space="preserve">
+        <source>Remove widget</source>
+        <target state="translated">Widget eltávolítása</target>
+      </trans-unit>
+      <trans-unit id="5vJvarK" resname="syncronisation" xml:space="preserve">
+        <source>Synchronization</source>
+        <target state="translated">Szinkronizáció</target>
+      </trans-unit>
+      <trans-unit id="2UL2SIZ" resname="import" xml:space="preserve">
+        <source>import</source>
+        <target state="translated">Importálás</target>
+      </trans-unit>
+      <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
+        <source>work_times_is</source>
+        <target state="translated">Ledolgozott órák</target>
+      </trans-unit>
+      <trans-unit id="dru_Thv" resname="please_choose" xml:space="preserve">
+        <source>please_choose</source>
+        <target state="translated">Kérlek válassz</target>
+      </trans-unit>
+      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
+        <source>api_password_deprecated</source>
+        <target state="translated">Az API jelszavak elavultak: kérlek használd helyettük az API tokeneket.</target>
+      </trans-unit>
+      <trans-unit id="y1XHR1Q" resname="address_deprecated" xml:space="preserve">
+        <source>address_deprecated</source>
+        <target state="translated">Ez a mező hamarosan eltávolításra kerül. Kérlek írd át a címet, hogy továbbra is érvényes számlák generálódjanak (pl. e-számlázás céljából).</target>
+      </trans-unit>
+      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached" xml:space="preserve">
+        <source>invoice_document.max_reached</source>
+        <target state="translated">A számlasablonok száma elérte a maximumot (%max%). Csak törlés után adhatsz hozzá továbbiakat.</target>
+      </trans-unit>
+      <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer" xml:space="preserve">
+        <source>help.invoiceTemplate_customer</source>
+        <target state="translated">A számlák alapértelmezetten ezzel a sablonnal kerülnek kiállításra az ügyfél számára. Ezt meg lehet változtatni a számla kiállítása során, ha szükséges.</target>
+      </trans-unit>
+      <trans-unit id="yXrOTI." resname="review" xml:space="preserve">
+        <source>Review</source>
+        <target state="translated">Ellenőrzés</target>
+      </trans-unit>
+      <trans-unit id="eWmotjb" resname="completed_month_pdf" xml:space="preserve">
+        <source>completed_month_pdf</source>
+        <target state="translated">Lezárt hónap PDF</target>
+      </trans-unit>
+      <trans-unit id="AXr_aHI" resname="completed_month_pdf_note" xml:space="preserve">
+        <source>completed_month_pdf_note</source>
+        <target state="translated">Ez a dokumentum igazolja a hónapban ledolgozott órákat.</target>
+      </trans-unit>
+      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve" approved="no">
+        <source>Time, date and currency format</source>
+        <target state="translated">Idő, dátum és pénznem formátum</target>
+      </trans-unit>
+      <trans-unit id="5kFod8o" resname="team.configure_teamlead.help" xml:space="preserve">
+        <source>team.configure_teamlead.help</source>
+        <target state="translated">A kijelölt / kiemelt felhasználók a csapatvezetők.</target>
+      </trans-unit>
+      <trans-unit id="IAx_YiA" resname="activate" xml:space="preserve">
+        <source>Activate</source>
+        <target state="translated">Aktiválás</target>
+      </trans-unit>
+      <trans-unit id="3WHV.yf" resname="activated" xml:space="preserve">
+        <source>Activated</source>
+        <target state="translated">Aktiválva</target>
+      </trans-unit>
+      <trans-unit id="Uu8YvYV" resname="deactivated" xml:space="preserve">
+        <source>Deactivated</source>
+        <target state="translated">Deaktiválva</target>
+      </trans-unit>
+      <trans-unit id="WwesQPU" resname="deactivate" xml:space="preserve">
+        <source>Deactivate</source>
+        <target state="translated">Deaktiválás</target>
+      </trans-unit>
+      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="translated">%used% napot használtál fel az elérhető %days% nap szabadságodból.</target>
+      </trans-unit>
+      <trans-unit id="0bKwA0k" resname="force_password_change_help" xml:space="preserve">
+        <source>force_password_change_help</source>
+        <target state="translated">A felhasználó legközelebbi belépésekor meg kell adnia egy új jelszót.</target>
+      </trans-unit>
+      <trans-unit id="UZUFKZg" resname="remaining_budget" xml:space="preserve">
+        <source>remaining_budget</source>
+        <target state="translated">Maradék keret</target>
+      </trans-unit>
+      <trans-unit id="5NugIxO" resname="includeWithBudget" xml:space="preserve">
+        <source>includeWithBudget</source>
+        <target state="translated">Költségvetéssel rendelkező bejegyzések megjelenítése</target>
+      </trans-unit>
+      <trans-unit id="6Hip2aF" resname="created_at" xml:space="preserve">
+        <source>created_at</source>
+        <target state="translated">Létrehozás időpontja</target>
+      </trans-unit>
+      <trans-unit id="WbT2QLP" resname="extended_settings" xml:space="preserve">
+        <source>extended_settings</source>
+        <target state="translated">További beállítások</target>
+      </trans-unit>
+      <trans-unit id="ZZaqTEr" resname="no_activity" xml:space="preserve">
+        <source>no_activity</source>
+        <target state="translated">Tevékenység nélkül</target>
+      </trans-unit>
+      <trans-unit id="IPHM4iP" resname="updated_at" xml:space="preserve">
+        <source>Updated at</source>
+        <target state="translated">Frissítés időpontja</target>
+      </trans-unit>
+      <trans-unit id="J_teUVB" resname="updated" xml:space="preserve">
+        <source>Updated</source>
+        <target state="translated">Frissítve</target>
+      </trans-unit>
+      <trans-unit id="rlJLVNm" resname="append" xml:space="preserve">
+        <source>append</source>
+        <target state="translated">Hozzáfűz</target>
+      </trans-unit>
+      <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
+        <source>api_password.intro</source>
+        <target state="translated">Itt kezelheted az API tokenjeidet, amelyeket az alkalmazásod hitelesítésére használhatsz a Kimaiban.</target>
+      </trans-unit>
+      <trans-unit id="QT8.BCN" resname="api_password.missing_title" xml:space="preserve">
+        <source>api_password.missing_title</source>
+        <target state="translated">Az API nem használható</target>
+      </trans-unit>
+      <trans-unit id="wYcx0So" resname="search.no_results" xml:space="preserve">
+        <source>search.no_results</source>
+        <target state="translated">Nincs találat erre "%input%"</target>
+      </trans-unit>
+      <trans-unit id="biHjm0h" resname="select.add_new" xml:space="preserve">
+        <source>select.add_new</source>
+        <target state="translated">Új létrehozása ezzel a névvel "%input%"</target>
+      </trans-unit>
+      <trans-unit id="yNWIi5U" resname="default_value_new" xml:space="preserve">
+        <source>default_value_new</source>
+        <target state="translated">Alapértelmezett értékek az új bejegyzésekhez</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
+        <source>absence_comment_mandatory</source>
+        <target state="translated">Távollét: A megjegyzés egy kötelező mező</target>
+      </trans-unit>
+      <trans-unit id="DA1.Ln_" resname="time_off.intro" xml:space="preserve">
+        <source>time_off.intro</source>
+        <target state="translated">A munkaidő-nyilvántartásod egyenlege %hours% óra.</target>
+      </trans-unit>
+      <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="translated">Keresőképtelenség, kötelező orvosi vizsgálat, gondozói szabadság, stb.</target>
+      </trans-unit>
+      <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
+        <source>sending_company</source>
+        <target state="needs-translation">Számla kiállítója</target>
+      </trans-unit>
+      <trans-unit id="cDOQMYv" resname="Beta" xml:space="preserve">
+        <source>Beta</source>
+        <target state="translated">Engedélyez egy előzetes funkciót, ami még fejlesztés alatt áll.</target>
       </trans-unit>
     </body>
   </file>

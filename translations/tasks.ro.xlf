@@ -98,6 +98,10 @@
         <source>task_no_estimation</source>
         <target state="translated">Fără estimare</target>
       </trans-unit>
+      <trans-unit id="cu1.2JS" resname="task_not_started" xml:space="preserve" approved="no">
+        <source>task_not_started</source>
+        <target state="translated">Neinceput</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

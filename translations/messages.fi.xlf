@@ -1948,7 +1948,7 @@
       </trans-unit>
       <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
         <source>sending_company</source>
-        <target state="translated">Laskun lähettäjä</target>
+        <target state="needs-translation">Laskun lähettäjä</target>
       </trans-unit>
       <trans-unit id="EiWubBr" resname="sessions" xml:space="preserve">
         <source>Sessions</source>

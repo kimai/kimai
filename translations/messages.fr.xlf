@@ -146,9 +146,9 @@
         <source>User</source>
         <target state="translated">Utilisateur</target>
       </trans-unit>
-      <trans-unit id="FveKfWM" resname="username">
+      <trans-unit id="FveKfWM" resname="username" xml:space="preserve">
         <source>username</source>
-        <target>Identifiant</target>
+        <target state="translated">Nom d'utilisateur</target>
       </trans-unit>
       <trans-unit id="yQRveje" resname="description">
         <source>Description</source>
@@ -1952,7 +1952,7 @@
       </trans-unit>
       <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
         <source>sending_company</source>
-        <target state="translated">Expéditeur de la facture</target>
+        <target state="translated">Émmetteur de la facture</target>
       </trans-unit>
       <trans-unit id="Uzll0ps" resname="Customer portal" xml:space="preserve">
         <source>Customer portal</source>
@@ -1965,6 +1965,82 @@
       <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve">
         <source>Code</source>
         <target state="translated">Code</target>
+      </trans-unit>
+      <trans-unit id="rLlV34K" resname="landscape" xml:space="preserve">
+        <source>Landscape</source>
+        <target state="translated">Paysage</target>
+      </trans-unit>
+      <trans-unit id="UZUFKZg" resname="remaining_budget" xml:space="preserve">
+        <source>remaining_budget</source>
+        <target state="translated">Budget restant</target>
+      </trans-unit>
+      <trans-unit id="eV6j76Q" resname="font" xml:space="preserve">
+        <source>font</source>
+        <target state="translated">Police</target>
+      </trans-unit>
+      <trans-unit id="xZzzKxM" resname="orientation" xml:space="preserve">
+        <source>Orientation</source>
+        <target state="translated">Orientation</target>
+      </trans-unit>
+      <trans-unit id="UcWoKWo" resname="portrait" xml:space="preserve">
+        <source>Portrait</source>
+        <target state="translated">Portrait</target>
+      </trans-unit>
+      <trans-unit id="jcT9Og6" resname="payment_account_number" xml:space="preserve">
+        <source>payment_account_name</source>
+        <target state="translated">IBAN ou numéro de carte</target>
+      </trans-unit>
+      <trans-unit id="BmDRYT." resname="sending_company.help" xml:space="preserve">
+        <source>sending_company.help</source>
+        <target state="translated">Cette entreprise est indiquée comme émittrice de la facture. Son non, addresse et informations fiscales seront utilisés.</target>
+      </trans-unit>
+      <trans-unit id="PciSBv9" resname="address_row" xml:space="preserve">
+        <source>address_row</source>
+        <target state="translated">Ligne %row%</target>
+      </trans-unit>
+      <trans-unit id="_Ep8Ogx" resname="buyerReference" xml:space="preserve">
+        <source>buyerReference</source>
+        <target state="translated">Référence de l'acheteur</target>
+      </trans-unit>
+      <trans-unit id="nPJWKwW" resname="payment_type" xml:space="preserve">
+        <source>payment_type</source>
+        <target state="translated">Type de paiment</target>
+      </trans-unit>
+      <trans-unit id="uXB48Vj" resname="SEPA Credit Transfer" xml:space="preserve">
+        <source>SEPA Credit Transfer</source>
+        <target state="translated">Virement SEPA</target>
+      </trans-unit>
+      <trans-unit id="s42A2gm" resname="SEPA Direct Debit" xml:space="preserve">
+        <source>SEPA Direct Debit</source>
+        <target state="translated">Prélèvement SEPA</target>
+      </trans-unit>
+      <trans-unit id="4toQj2M" resname="Cash" xml:space="preserve">
+        <source>Cash</source>
+        <target state="translated">Espèces</target>
+      </trans-unit>
+      <trans-unit id="cWZZc6D" resname="Cheque" xml:space="preserve">
+        <source>Cheque</source>
+        <target state="translated">Chèque</target>
+      </trans-unit>
+      <trans-unit id="jMvh7bn" resname="Credit Transfer" xml:space="preserve">
+        <source>Credit Transfer</source>
+        <target state="translated">Virement</target>
+      </trans-unit>
+      <trans-unit id="TJQbc0a" resname="Payment To Bank Account" xml:space="preserve">
+        <source>Payment To Bank Account</source>
+        <target state="translated">Paiement sur Compte Bancaire</target>
+      </trans-unit>
+      <trans-unit id=".UIt099" resname="Card Payment" xml:space="preserve">
+        <source>Card Payment</source>
+        <target state="translated">Paiment par Carte</target>
+      </trans-unit>
+      <trans-unit id="Wnb_qF0" resname="Direct Debit" xml:space="preserve">
+        <source>Direct Debit</source>
+        <target state="translated">Prélèvement</target>
+      </trans-unit>
+      <trans-unit id="rIdfGxM" resname="payment_account_name" xml:space="preserve">
+        <source>payment_account_name</source>
+        <target state="translated">Titulaire du compte ou de la carte</target>
       </trans-unit>
     </body>
   </file>

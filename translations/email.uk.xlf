@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="uk" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
+      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer" xml:space="preserve">
         <source>automated_email_dont_answer</source>
-        <target state="translated">Це автоматично згенерований лист. Будь ласка, не відповідайте, тому що це адреса не читається.</target>
+        <target state="translated">Це автоматично згенерований лист. Будь ласка, не відповідайте, тому що ця адреса не читається.</target>
       </trans-unit>
       <trans-unit id="pjr3FDv" resname="registration.subject">
         <source>registration.subject</source>

@@ -14,9 +14,9 @@
         <source>no</source>
         <target state="translated">Nej</target>
       </trans-unit>
-      <trans-unit id=".3dyBTq" resname="both">
-        <source>both</source>
-        <target state="translated">båda</target>
+      <trans-unit id=".3dyBTq" resname="both" xml:space="preserve">
+        <source>Both</source>
+        <target state="translated">Båda</target>
       </trans-unit>
       <trans-unit id="KLIuHvt" resname="This is a mandatory field">
         <source>This is a mandatory field</source>
@@ -1953,6 +1953,94 @@
       <trans-unit id="rD4oQRR" resname="postcode" xml:space="preserve">
         <source>Postcode</source>
         <target state="translated">Postnummer</target>
+      </trans-unit>
+      <trans-unit id="Uzll0ps" resname="Customer portal" xml:space="preserve">
+        <source>Customer portal</source>
+        <target state="translated">Kundportal</target>
+      </trans-unit>
+      <trans-unit id="cDOQMYv" resname="Beta" xml:space="preserve">
+        <source>Beta</source>
+        <target state="translated">Aktiverar en förhandsgranskningsfunktion som fortfarande är under utveckling.</target>
+      </trans-unit>
+      <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve">
+        <source>Code</source>
+        <target state="translated">Kod</target>
+      </trans-unit>
+      <trans-unit id="xZzzKxM" resname="orientation" xml:space="preserve">
+        <source>Orientation</source>
+        <target state="translated">Orientering</target>
+      </trans-unit>
+      <trans-unit id="UcWoKWo" resname="portrait" xml:space="preserve">
+        <source>Portrait</source>
+        <target state="translated">Porträtt</target>
+      </trans-unit>
+      <trans-unit id="rLlV34K" resname="landscape" xml:space="preserve">
+        <source>Landscape</source>
+        <target state="translated">Landskap</target>
+      </trans-unit>
+      <trans-unit id="UZUFKZg" resname="remaining_budget" xml:space="preserve">
+        <source>remaining_budget</source>
+        <target state="translated">Kvarstående budget</target>
+      </trans-unit>
+      <trans-unit id="eV6j76Q" resname="font" xml:space="preserve">
+        <source>font</source>
+        <target state="translated">Typsnitt</target>
+      </trans-unit>
+      <trans-unit id="BmDRYT." resname="sending_company.help" xml:space="preserve" approved="no">
+        <source>sending_company.help</source>
+        <target state="translated">Detta företag visas som utställare på fakturan. Namn, adress och skatteuppgifter kommer att användas.</target>
+      </trans-unit>
+      <trans-unit id="PciSBv9" resname="address_row" xml:space="preserve" approved="no">
+        <source>address_row</source>
+        <target state="translated">Rad %row%</target>
+      </trans-unit>
+      <trans-unit id="_Ep8Ogx" resname="buyerReference" xml:space="preserve" approved="no">
+        <source>buyerReference</source>
+        <target state="translated">Köparreferens</target>
+      </trans-unit>
+      <trans-unit id="nPJWKwW" resname="payment_type" xml:space="preserve" approved="no">
+        <source>payment_type</source>
+        <target state="translated">Betalningstyp</target>
+      </trans-unit>
+      <trans-unit id="uXB48Vj" resname="SEPA Credit Transfer" xml:space="preserve" approved="no">
+        <source>SEPA Credit Transfer</source>
+        <target state="translated">SEPA‑kreditöverföring</target>
+      </trans-unit>
+      <trans-unit id="s42A2gm" resname="SEPA Direct Debit" xml:space="preserve" approved="no">
+        <source>SEPA Direct Debit</source>
+        <target state="translated">SEPA‑autogiro</target>
+      </trans-unit>
+      <trans-unit id="4toQj2M" resname="Cash" xml:space="preserve" approved="no">
+        <source>Cash</source>
+        <target state="translated">Kontant</target>
+      </trans-unit>
+      <trans-unit id="cWZZc6D" resname="Cheque" xml:space="preserve" approved="no">
+        <source>Cheque</source>
+        <target state="translated">Check</target>
+      </trans-unit>
+      <trans-unit id="jMvh7bn" resname="Credit Transfer" xml:space="preserve" approved="no">
+        <source>Credit Transfer</source>
+        <target state="translated">Kreditöverföring</target>
+      </trans-unit>
+      <trans-unit id="TJQbc0a" resname="Payment To Bank Account" xml:space="preserve" approved="no">
+        <source>Payment To Bank Account</source>
+        <target state="translated">Betalning till bankkonto</target>
+      </trans-unit>
+      <trans-unit id=".UIt099" resname="Card Payment" xml:space="preserve" approved="no">
+        <source>Card Payment</source>
+        <target state="translated">Kortbetalning</target>
+      </trans-unit>
+      <trans-unit id="Wnb_qF0" resname="Direct Debit" xml:space="preserve" approved="no">
+        <source>Direct Debit</source>
+        <target state="translated">Autogiro</target>
+      </trans-unit>
+      <trans-unit id="rIdfGxM" resname="payment_account_name" xml:space="preserve" approved="no">
+        <source>payment_account_name</source>
+        <target state="translated">Kontoinnehavare</target>
+      </trans-unit>
+      <trans-unit id="jcT9Og6" resname="payment_account_number" xml:space="preserve" approved="no">
+        <source>payment_account_name</source>
+        <target state="translated">IBAN eller kortnummer</target>
       </trans-unit>
     </body>
   </file>
