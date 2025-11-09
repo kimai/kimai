@@ -2,17 +2,17 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="hu" datatype="plaintext" original="invoice-renderer.en.xlf">
     <body>
-      <trans-unit id="hOcTt2G" resname="invoice_renderer">
+      <trans-unit id="hOcTt2G" resname="invoice_renderer" xml:space="preserve">
         <source>invoice_renderer</source>
-        <target>Számlaformátum</target>
+        <target state="translated">Számlasablon</target>
       </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice">
+      <trans-unit id="Utbj3k_" resname="invoice" xml:space="preserve">
         <source>invoice</source>
-        <target>Számla (alapértelmezett)</target>
+        <target state="translated">Számla</target>
       </trans-unit>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
         <source>timesheet</source>
-        <target>Rögzített órák</target>
+        <target state="translated">Munkaidő-nyilvántartás</target>
       </trans-unit>
       <trans-unit id="m1UyfD9" resname="service-date">
         <source>service-date</source>
@@ -26,17 +26,17 @@
         <source>programmatic</source>
         <target>További feldolgozáshoz</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default">
-        <source>default</source>
-        <target>Számla</target>
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
+        <source>Invoice</source>
+        <target state="translated">Számla (alapértelmezett)</target>
       </trans-unit>
       <trans-unit id="mC2ePrm" resname="text">
         <source>text</source>
         <target>Szöveg</target>
       </trans-unit>
-      <trans-unit id="22pt8Gs" resname="download_invoice_renderer">
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer" xml:space="preserve">
         <source>download_invoice_renderer</source>
-        <target state="translated">További sablonokat innen tölthet le</target>
+        <target state="translated">További sablonokat innen tölthetsz le</target>
       </trans-unit>
     </body>
   </file>

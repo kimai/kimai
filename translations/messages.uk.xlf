@@ -1952,7 +1952,7 @@
       </trans-unit>
       <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
         <source>sending_company</source>
-        <target state="translated">Відправник рахунку</target>
+        <target state="translated">Емітент рахунку-фактури</target>
       </trans-unit>
       <trans-unit id="Uzll0ps" resname="Customer portal" xml:space="preserve" approved="no">
         <source>Customer portal</source>
@@ -1985,6 +1985,66 @@
       <trans-unit id="eV6j76Q" resname="font" xml:space="preserve">
         <source>font</source>
         <target state="translated">Шрифт</target>
+      </trans-unit>
+      <trans-unit id="BmDRYT." resname="sending_company.help" xml:space="preserve" approved="no">
+        <source>sending_company.help</source>
+        <target state="translated">Ця компанія вказана як емітент у рахунку-фактурі. Будуть використані назва, адреса та податкова інформація.</target>
+      </trans-unit>
+      <trans-unit id="PciSBv9" resname="address_row" xml:space="preserve" approved="no">
+        <source>address_row</source>
+        <target state="translated">Рядок %row%</target>
+      </trans-unit>
+      <trans-unit id="_Ep8Ogx" resname="buyerReference" xml:space="preserve" approved="no">
+        <source>buyerReference</source>
+        <target state="translated">Посилання покупця</target>
+      </trans-unit>
+      <trans-unit id="nPJWKwW" resname="payment_type" xml:space="preserve" approved="no">
+        <source>payment_type</source>
+        <target state="translated">Тип оплати</target>
+      </trans-unit>
+      <trans-unit id="uXB48Vj" resname="SEPA Credit Transfer" xml:space="preserve" approved="no">
+        <source>SEPA Credit Transfer</source>
+        <target state="translated">Кредитний переказ SEPA</target>
+      </trans-unit>
+      <trans-unit id="s42A2gm" resname="SEPA Direct Debit" xml:space="preserve" approved="no">
+        <source>SEPA Direct Debit</source>
+        <target state="translated">Прямий дебет SEPA</target>
+      </trans-unit>
+      <trans-unit id="4toQj2M" resname="Cash" xml:space="preserve" approved="no">
+        <source>Cash</source>
+        <target state="translated">Готівка</target>
+      </trans-unit>
+      <trans-unit id="cWZZc6D" resname="Cheque" xml:space="preserve" approved="no">
+        <source>Cheque</source>
+        <target state="translated">Чек</target>
+      </trans-unit>
+      <trans-unit id="jMvh7bn" resname="Credit Transfer" xml:space="preserve" approved="no">
+        <source>Credit Transfer</source>
+        <target state="translated">Кредитний переказ</target>
+      </trans-unit>
+      <trans-unit id="TJQbc0a" resname="Payment To Bank Account" xml:space="preserve" approved="no">
+        <source>Payment To Bank Account</source>
+        <target state="translated">Оплата на банківський рахунок</target>
+      </trans-unit>
+      <trans-unit id=".UIt099" resname="Card Payment" xml:space="preserve" approved="no">
+        <source>Card Payment</source>
+        <target state="translated">Оплата карткою</target>
+      </trans-unit>
+      <trans-unit id="Wnb_qF0" resname="Direct Debit" xml:space="preserve" approved="no">
+        <source>Direct Debit</source>
+        <target state="translated">Прямий дебет</target>
+      </trans-unit>
+      <trans-unit id="rIdfGxM" resname="payment_account_name" xml:space="preserve" approved="no">
+        <source>payment_account_name</source>
+        <target state="translated">Власник рахунку або картки</target>
+      </trans-unit>
+      <trans-unit id="jcT9Og6" resname="payment_account_number" xml:space="preserve" approved="no">
+        <source>payment_account_name</source>
+        <target state="translated">IBAN або номер картки</target>
+      </trans-unit>
+      <trans-unit id="jcT9sdfOg6" resname="electronic_invoice" xml:space="preserve" approved="no">
+        <source>electronic_invoice</source>
+        <target state="translated">E-Invoice</target>
       </trans-unit>
     </body>
   </file>

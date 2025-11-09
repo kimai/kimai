@@ -1952,7 +1952,7 @@
       </trans-unit>
       <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
         <source>sending_company</source>
-        <target state="translated">Fakturaafsender</target>
+        <target state="needs-translation">Fakturaafsender</target>
       </trans-unit>
     </body>
   </file>

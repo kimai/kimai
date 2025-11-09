@@ -298,6 +298,10 @@
         <source>activity.allow_inline_create</source>
         <target state="translated">Permiteți crearea de activități în forma de urmărire a timpului</target>
       </trans-unit>
+      <trans-unit id="jj1NmKW" resname="allow_duplicate_number" xml:space="preserve">
+        <source>allow_duplicate_number</source>
+        <target state="translated">Permiteti mai multe utilizari ale aceluiasi numar</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

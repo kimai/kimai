@@ -14,13 +14,13 @@
         <source>report_monthly_users</source>
         <target>Összes felhasználó havi nézete</target>
       </trans-unit>
-      <trans-unit id="VD98UBN" resname="report_yearly_users">
+      <trans-unit id="VD98UBN" resname="report_yearly_users" xml:space="preserve">
         <source>report_yearly_users</source>
-        <target>Éves nézet minden felhasználó számára</target>
+        <target state="translated">Összes felhasználó éves nézete</target>
       </trans-unit>
-      <trans-unit id="q_A4AHD" resname="report_weekly_users">
+      <trans-unit id="q_A4AHD" resname="report_weekly_users" xml:space="preserve">
         <source>report_weekly_users</source>
-        <target>Heti nézet minden felhasználó számára</target>
+        <target state="translated">Összes felhasználó heti nézete</target>
       </trans-unit>
       <trans-unit id="518eY_l" resname="report_project_details">
         <source>report_project_details</source>
@@ -34,13 +34,13 @@
         <source>report_customer_monthly_projects</source>
         <target>Projektek hónap, tevékenység és felhasználó szerint</target>
       </trans-unit>
-      <trans-unit id="3JLmvfB" resname="report_user_year">
+      <trans-unit id="3JLmvfB" resname="report_user_year" xml:space="preserve">
         <source>report_user_year</source>
-        <target>Éves megtekintés egy felhasználó számára</target>
+        <target state="translated">Egy felhasználó éves nézete</target>
       </trans-unit>
-      <trans-unit id="R.9yUkf" resname="report_project_view">
+      <trans-unit id="R.9yUkf" resname="report_project_view" xml:space="preserve">
         <source>report_project_view</source>
-        <target>A projekt áttekintése</target>
+        <target state="translated">Projekt áttekintése</target>
       </trans-unit>
       <trans-unit id="BQAsynV" resname="report_project_daterange">
         <source>report_project_daterange</source>

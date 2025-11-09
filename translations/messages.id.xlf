@@ -732,7 +732,7 @@
       </trans-unit>
       <trans-unit id="FveKfWM" resname="username" xml:space="preserve">
         <source>username</source>
-        <target state="translated">Nama pengguna</target>
+        <target state="translated">Pengguna</target>
       </trans-unit>
       <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
@@ -1156,7 +1156,7 @@
       </trans-unit>
       <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
         <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
-        <target state="needs-translation">Penyakit, Kunjungan dokter, merawat kerabat dekat, dll.</target>
+        <target state="translated">Ketidakmampuan untuk bekerja, janji temu medis yang diperlukan, cuti perawatan, dll.</target>
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
@@ -1929,6 +1929,118 @@
       <trans-unit id="PBlIO2x" resname="create-project" xml:space="preserve">
         <source>create-project</source>
         <target state="translated">Buat proyek</target>
+      </trans-unit>
+      <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="no">
+        <source>Unlock month</source>
+        <target state="translated">Buka kunci bulan</target>
+      </trans-unit>
+      <trans-unit id="mhOe3Iy" resname="unlock_month.help" xml:space="preserve">
+        <source>unlock_month.help</source>
+        <target state="translated">Ini membuka semua hari dalam setahun setelah tanggal yang dipilih.</target>
+      </trans-unit>
+      <trans-unit id="rD4oQRR" resname="postcode" xml:space="preserve">
+        <source>Postcode</source>
+        <target state="translated">Kode Pos</target>
+      </trans-unit>
+      <trans-unit id="EaYsI0E" resname="city" xml:space="preserve">
+        <source>City</source>
+        <target state="translated">Kota</target>
+      </trans-unit>
+      <trans-unit id="y1XHR1Q" resname="address_deprecated" xml:space="preserve">
+        <source>address_deprecated</source>
+        <target state="translated">Kolom ini akan dihapus segera. Silakan pindahkan alamat tersebut untuk melanjutkan pembuatan faktur yang valid (misalnya untuk faktur elektronik).</target>
+      </trans-unit>
+      <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
+        <source>sending_company</source>
+        <target state="translated">Penerbit faktur</target>
+      </trans-unit>
+      <trans-unit id="BmDRYT." resname="sending_company.help" xml:space="preserve" approved="no">
+        <source>sending_company.help</source>
+        <target state="translated">Perusahaan ini tercantum sebagai penerbit pada faktur. Nama, alamat, dan informasi pajak akan digunakan.</target>
+      </trans-unit>
+      <trans-unit id="Uzll0ps" resname="Customer portal" xml:space="preserve">
+        <source>Customer portal</source>
+        <target state="translated">Portal Pelanggan</target>
+      </trans-unit>
+      <trans-unit id="cDOQMYv" resname="Beta" xml:space="preserve">
+        <source>Beta</source>
+        <target state="translated">Mengaktifkan fitur pratinjau yang masih dalam tahap pengembangan.</target>
+      </trans-unit>
+      <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve">
+        <source>Code</source>
+        <target state="translated">Kode</target>
+      </trans-unit>
+      <trans-unit id="xZzzKxM" resname="orientation" xml:space="preserve">
+        <source>Orientation</source>
+        <target state="translated">Orientasi</target>
+      </trans-unit>
+      <trans-unit id="UcWoKWo" resname="portrait" xml:space="preserve">
+        <source>Portrait</source>
+        <target state="translated">Potret</target>
+      </trans-unit>
+      <trans-unit id="rLlV34K" resname="landscape" xml:space="preserve">
+        <source>Landscape</source>
+        <target state="translated">Pemandangan</target>
+      </trans-unit>
+      <trans-unit id="UZUFKZg" resname="remaining_budget" xml:space="preserve">
+        <source>remaining_budget</source>
+        <target state="translated">Sisa anggaran</target>
+      </trans-unit>
+      <trans-unit id="eV6j76Q" resname="font" xml:space="preserve">
+        <source>font</source>
+        <target state="translated">Font</target>
+      </trans-unit>
+      <trans-unit id="PciSBv9" resname="address_row" xml:space="preserve" approved="no">
+        <source>address_row</source>
+        <target state="translated">Baris %row%</target>
+      </trans-unit>
+      <trans-unit id="_Ep8Ogx" resname="buyerReference" xml:space="preserve" approved="no">
+        <source>buyerReference</source>
+        <target state="translated">Referensi pembeli</target>
+      </trans-unit>
+      <trans-unit id="nPJWKwW" resname="payment_type" xml:space="preserve" approved="no">
+        <source>payment_type</source>
+        <target state="translated">Jenis pembayaran</target>
+      </trans-unit>
+      <trans-unit id="uXB48Vj" resname="SEPA Credit Transfer" xml:space="preserve" approved="no">
+        <source>SEPA Credit Transfer</source>
+        <target state="translated">Transfer Kredit SEPA</target>
+      </trans-unit>
+      <trans-unit id="s42A2gm" resname="SEPA Direct Debit" xml:space="preserve" approved="no">
+        <source>SEPA Direct Debit</source>
+        <target state="translated">SEPA Pembayaran Langsung</target>
+      </trans-unit>
+      <trans-unit id="4toQj2M" resname="Cash" xml:space="preserve" approved="no">
+        <source>Cash</source>
+        <target state="translated">Uang tunai</target>
+      </trans-unit>
+      <trans-unit id="cWZZc6D" resname="Cheque" xml:space="preserve" approved="no">
+        <source>Cheque</source>
+        <target state="translated">Cek</target>
+      </trans-unit>
+      <trans-unit id="jMvh7bn" resname="Credit Transfer" xml:space="preserve" approved="no">
+        <source>Credit Transfer</source>
+        <target state="translated">Transfer Kredit</target>
+      </trans-unit>
+      <trans-unit id="TJQbc0a" resname="Payment To Bank Account" xml:space="preserve" approved="no">
+        <source>Payment To Bank Account</source>
+        <target state="translated">Pembayaran ke Rekening Bank</target>
+      </trans-unit>
+      <trans-unit id=".UIt099" resname="Card Payment" xml:space="preserve" approved="no">
+        <source>Card Payment</source>
+        <target state="translated">Pembayaran dengan Kartu</target>
+      </trans-unit>
+      <trans-unit id="Wnb_qF0" resname="Direct Debit" xml:space="preserve" approved="no">
+        <source>Direct Debit</source>
+        <target state="translated">Debit Langsung</target>
+      </trans-unit>
+      <trans-unit id="rIdfGxM" resname="payment_account_name" xml:space="preserve" approved="no">
+        <source>payment_account_name</source>
+        <target state="translated">Pemegang akun atau kartu</target>
+      </trans-unit>
+      <trans-unit id="jcT9Og6" resname="payment_account_number" xml:space="preserve" approved="no">
+        <source>payment_account_name</source>
+        <target state="translated">Nomor IBAN atau nomor kartu</target>
       </trans-unit>
     </body>
   </file>

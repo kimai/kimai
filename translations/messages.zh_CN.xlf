@@ -1960,7 +1960,7 @@
       </trans-unit>
       <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
         <source>sending_company</source>
-        <target state="translated">发送发票者</target>
+        <target state="needs-translation">发送发票者</target>
       </trans-unit>
       <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve">
         <source>Code</source>
