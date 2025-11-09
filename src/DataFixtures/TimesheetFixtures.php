@@ -62,10 +62,12 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
         $all = 0;
 
         foreach ($allUser as $user) {
+            // reload, because the manager might have been cleared
             $user = $manager->find(User::class, $user->getId());
             // random amount of timesheet entries for every user
             $timesheetForUser = rand(self::MIN_TIMESHEETS_PER_USER, self::MAX_TIMESHEETS_PER_USER);
 
+            // load on each round, because the manager might have been cleared
             $activities = $this->getAllActivities($manager);
             $projects = $this->getAllProjects($manager);
 
