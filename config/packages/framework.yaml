@@ -27,6 +27,7 @@ framework:
     # Enables session support. Note that the session will ONLY be started if you read or write from it.
     # Remove or comment this section to explicitly disable session support.
     session:
+        name: KIMAI_SESSID
         handler_id: App\Security\SessionHandler
         cookie_secure: auto
         cookie_samesite: lax
