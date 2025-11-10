@@ -656,17 +656,7 @@ parameters:
             path: src/Controller/ActivityController.php
 
         -
-            message: "#^Parameter \\#2 \\$replace of method App\\\\Repository\\\\ActivityRepository\\:\\:deleteActivity\\(\\) expects App\\\\Entity\\\\Activity\\|null, mixed given\\.$#"
-            count: 1
-            path: src/Controller/ActivityController.php
-
-        -
             message: "#^Parameter \\#1 \\$name of class App\\\\Entity\\\\Team constructor expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
-            message: "#^Parameter \\#2 \\$replace of method App\\\\Repository\\\\CustomerRepository\\:\\:deleteCustomer\\(\\) expects App\\\\Entity\\\\Customer\\|null, mixed given\\.$#"
             count: 1
             path: src/Controller/CustomerController.php
 
@@ -792,11 +782,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$name of class App\\\\Entity\\\\Team constructor expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Parameter \\#2 \\$replace of method App\\\\Repository\\\\ProjectRepository\\:\\:deleteProject\\(\\) expects App\\\\Entity\\\\Project\\|null, mixed given\\.$#"
             count: 1
             path: src/Controller/ProjectController.php
 
