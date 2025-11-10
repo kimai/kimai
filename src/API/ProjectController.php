@@ -12,7 +12,6 @@ namespace App\API;
 use App\Entity\Project;
 use App\Entity\ProjectRate;
 use App\Entity\User;
-use App\Event\ProjectMetaDefinitionEvent;
 use App\Form\API\ProjectApiEditForm;
 use App\Form\API\ProjectRateApiForm;
 use App\Project\ProjectService;
@@ -26,7 +25,6 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use OpenApi\Attributes as OA;
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,7 +45,6 @@ final class ProjectController extends BaseApiController
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
         private readonly ProjectRepository $repository,
-        private readonly EventDispatcherInterface $dispatcher,
         private readonly ProjectRateRepository $projectRateRepository,
         private readonly ProjectService $projectService
     ) {
@@ -212,8 +209,7 @@ final class ProjectController extends BaseApiController
     #[Route(methods: ['PATCH'], path: '/{id}', name: 'patch_project', requirements: ['id' => '\d+'])]
     public function patchAction(Request $request, Project $project): Response
     {
-        $event = new ProjectMetaDefinitionEvent($project);
-        $this->dispatcher->dispatch($event);
+        $this->projectService->loadMetaFields($project);
 
         $form = $this->createForm(ProjectApiEditForm::class, $project, [
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
@@ -270,8 +266,7 @@ final class ProjectController extends BaseApiController
     #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
     public function metaAction(Project $project, ParamFetcherInterface $paramFetcher): Response
     {
-        $event = new ProjectMetaDefinitionEvent($project);
-        $this->dispatcher->dispatch($event);
+        $this->projectService->loadMetaFields($project);
 
         $name = $paramFetcher->get('name');
         $value = $paramFetcher->get('value');

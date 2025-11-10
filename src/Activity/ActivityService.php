@@ -40,6 +40,11 @@ class ActivityService
     {
     }
 
+    public function loadMetaFields(Activity $activity): void
+    {
+        $this->dispatcher->dispatch(new ActivityMetaDefinitionEvent($activity));
+    }
+
     public function createNewActivity(?Project $project = null): Activity
     {
         $activity = new Activity();
@@ -49,7 +54,7 @@ class ActivityService
             $activity->setProject($project);
         }
 
-        $this->dispatcher->dispatch(new ActivityMetaDefinitionEvent($activity));
+        $this->loadMetaFields($activity);
         $this->dispatcher->dispatch(new ActivityCreateEvent($activity));
 
         return $activity;

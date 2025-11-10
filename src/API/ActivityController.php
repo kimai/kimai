@@ -13,7 +13,6 @@ use App\Activity\ActivityService;
 use App\Entity\Activity;
 use App\Entity\ActivityRate;
 use App\Entity\User;
-use App\Event\ActivityMetaDefinitionEvent;
 use App\Form\API\ActivityApiEditForm;
 use App\Form\API\ActivityRateApiForm;
 use App\Repository\ActivityRateRepository;
@@ -26,7 +25,6 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use OpenApi\Attributes as OA;
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,7 +44,6 @@ final class ActivityController extends BaseApiController
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
         private readonly ActivityRepository $repository,
-        private readonly EventDispatcherInterface $dispatcher,
         private readonly ActivityRateRepository $activityRateRepository,
         private readonly ActivityService $activityService
     ) {
@@ -149,9 +146,7 @@ final class ActivityController extends BaseApiController
         }
 
         $activity = new Activity();
-
-        $event = new ActivityMetaDefinitionEvent($activity);
-        $this->dispatcher->dispatch($event);
+        $this->activityService->loadMetaFields($activity);
 
         $form = $this->createForm(ActivityApiEditForm::class, $activity, [
             'include_budget' => $this->isGranted('budget', $activity),
@@ -185,8 +180,7 @@ final class ActivityController extends BaseApiController
     #[Route(methods: ['PATCH'], path: '/{id}', name: 'patch_activity', requirements: ['id' => '\d+'])]
     public function patchAction(Request $request, Activity $activity): Response
     {
-        $event = new ActivityMetaDefinitionEvent($activity);
-        $this->dispatcher->dispatch($event);
+        $this->activityService->loadMetaFields($activity);
 
         $form = $this->createForm(ActivityApiEditForm::class, $activity, [
             'include_budget' => $this->isGranted('budget', $activity),
@@ -241,8 +235,7 @@ final class ActivityController extends BaseApiController
     #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
     public function metaAction(Activity $activity, ParamFetcherInterface $paramFetcher): Response
     {
-        $event = new ActivityMetaDefinitionEvent($activity);
-        $this->dispatcher->dispatch($event);
+        $this->activityService->loadMetaFields($activity);
 
         $name = $paramFetcher->get('name');
         $value = $paramFetcher->get('value');

@@ -13,7 +13,6 @@ use App\Customer\CustomerService;
 use App\Entity\Customer;
 use App\Entity\CustomerRate;
 use App\Entity\User;
-use App\Event\CustomerMetaDefinitionEvent;
 use App\Form\API\CustomerApiEditForm;
 use App\Form\API\CustomerRateApiForm;
 use App\Repository\CustomerRateRepository;
@@ -25,7 +24,6 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use OpenApi\Attributes as OA;
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,7 +43,6 @@ final class CustomerController extends BaseApiController
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
         private readonly CustomerRepository $repository,
-        private readonly EventDispatcherInterface $dispatcher,
         private readonly CustomerRateRepository $customerRateRepository,
         private readonly CustomerService $customerService,
     ) {
@@ -125,9 +122,6 @@ final class CustomerController extends BaseApiController
 
         $customer = $customerService->createNewCustomer('');
 
-        $event = new CustomerMetaDefinitionEvent($customer);
-        $this->dispatcher->dispatch($event);
-
         $form = $this->createForm(CustomerApiEditForm::class, $customer, [
             'include_budget' => $this->isGranted('budget', $customer),
             'include_time' => $this->isGranted('time', $customer),
@@ -160,8 +154,7 @@ final class CustomerController extends BaseApiController
     #[Route(methods: ['PATCH'], path: '/{id}', name: 'patch_customer', requirements: ['id' => '\d+'])]
     public function patchAction(Request $request, Customer $customer): Response
     {
-        $event = new CustomerMetaDefinitionEvent($customer);
-        $this->dispatcher->dispatch($event);
+        $this->customerService->loadMetaFields($customer);
 
         $form = $this->createForm(CustomerApiEditForm::class, $customer, [
             'include_budget' => $this->isGranted('budget', $customer),
@@ -216,8 +209,7 @@ final class CustomerController extends BaseApiController
     #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
     public function metaAction(Customer $customer, ParamFetcherInterface $paramFetcher): Response
     {
-        $event = new CustomerMetaDefinitionEvent($customer);
-        $this->dispatcher->dispatch($event);
+        $this->customerService->loadMetaFields($customer);
 
         $name = $paramFetcher->get('name');
         $value = $paramFetcher->get('value');
