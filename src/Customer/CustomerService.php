@@ -86,10 +86,10 @@ final class CustomerService
         return $customer;
     }
 
-    public function deleteCustomer(Customer $customer): void
+    public function deleteCustomer(Customer $customer, ?Customer $replace = null): void
     {
-        $this->dispatcher->dispatch(new CustomerDeleteEvent($customer));
-        $this->repository->deleteCustomer($customer);
+        $this->dispatcher->dispatch(new CustomerDeleteEvent($customer, $replace));
+        $this->repository->deleteCustomer($customer, $replace);
     }
 
     /**

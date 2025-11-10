@@ -502,7 +502,7 @@ final class ProjectController extends AbstractController
 
     #[Route(path: '/{id}/delete', name: 'admin_project_delete', methods: ['GET', 'POST'])]
     #[IsGranted('delete', 'project')]
-    public function deleteAction(Project $project, Request $request, ProjectStatisticService $statisticService): Response
+    public function deleteAction(Project $project, Request $request, ProjectStatisticService $statisticService, ProjectService $projectService): Response
     {
         $stats = $statisticService->getProjectStatistics($project);
 
@@ -527,7 +527,9 @@ final class ProjectController extends AbstractController
 
         if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
             try {
-                $this->repository->deleteProject($project, $deleteForm->get('project')->getData());
+                /** @var Project|null $replace */
+                $replace = $deleteForm->get('project')->getData();
+                $projectService->deleteProject($project, $replace);
                 $this->flashSuccess('action.delete.success');
             } catch (\Exception $ex) {
                 $this->flashDeleteException($ex);

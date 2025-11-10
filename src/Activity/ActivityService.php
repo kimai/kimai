@@ -82,10 +82,10 @@ class ActivityService
         return $activity;
     }
 
-    public function deleteActivity(Activity $activity): void
+    public function deleteActivity(Activity $activity, ?Activity $replace = null): void
     {
-        $this->dispatcher->dispatch(new ActivityDeleteEvent($activity));
-        $this->repository->deleteActivity($activity);
+        $this->dispatcher->dispatch(new ActivityDeleteEvent($activity, $replace));
+        $this->repository->deleteActivity($activity, $replace);
     }
 
     /**

@@ -377,7 +377,7 @@ final class ActivityController extends AbstractController
 
     #[Route(path: '/{id}/delete', name: 'admin_activity_delete', methods: ['GET', 'POST'])]
     #[IsGranted('delete', 'activity')]
-    public function deleteAction(Activity $activity, Request $request, ActivityStatisticService $statisticService): Response
+    public function deleteAction(Activity $activity, Request $request, ActivityStatisticService $statisticService, ActivityService $activityService): Response
     {
         $stats = $statisticService->getActivityStatistics($activity);
 
@@ -404,7 +404,9 @@ final class ActivityController extends AbstractController
 
         if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
             try {
-                $this->repository->deleteActivity($activity, $deleteForm->get('activity')->getData());
+                /** @var Activity|null $replace */
+                $replace = $deleteForm->get('activity')->getData();
+                $activityService->deleteActivity($activity, $replace);
                 $this->flashSuccess('action.delete.success');
             } catch (Exception $ex) {
                 $this->flashDeleteException($ex);

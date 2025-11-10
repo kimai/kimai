@@ -90,10 +90,10 @@ final class ProjectService
         return $project;
     }
 
-    public function deleteProject(Project $project): void
+    public function deleteProject(Project $project, ?Project $replace = null): void
     {
-        $this->dispatcher->dispatch(new ProjectDeleteEvent($project));
-        $this->repository->deleteProject($project);
+        $this->dispatcher->dispatch(new ProjectDeleteEvent($project, $replace));
+        $this->repository->deleteProject($project, $replace);
     }
 
     /**

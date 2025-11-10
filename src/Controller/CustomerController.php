@@ -429,7 +429,7 @@ final class CustomerController extends AbstractController
 
     #[Route(path: '/{id}/delete', name: 'admin_customer_delete', methods: ['GET', 'POST'])]
     #[IsGranted('delete', 'customer')]
-    public function deleteAction(Customer $customer, Request $request, CustomerStatisticService $statisticService): Response
+    public function deleteAction(Customer $customer, Request $request, CustomerStatisticService $statisticService, CustomerService $customerService): Response
     {
         $stats = $statisticService->getCustomerStatistics($customer);
 
@@ -453,7 +453,9 @@ final class CustomerController extends AbstractController
 
         if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
             try {
-                $this->repository->deleteCustomer($customer, $deleteForm->get('customer')->getData());
+                /** @var Customer|null $replace */
+                $replace = $deleteForm->get('customer')->getData();
+                $customerService->deleteCustomer($customer, $replace);
                 $this->flashSuccess('action.delete.success');
             } catch (\Exception $ex) {
                 $this->flashDeleteException($ex);

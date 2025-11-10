@@ -11,7 +11,6 @@ namespace App\Repository;
 
 use App\Entity\Role;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Exception\ORMException;
 
 /**
  * @extends EntityRepository<Role>
@@ -35,7 +34,7 @@ class RoleRepository extends EntityRepository
             $em->remove($role);
             $em->flush();
             $em->commit();
-        } catch (ORMException $ex) {
+        } catch (\Exception $ex) {
             $em->rollback();
             throw $ex;
         }
