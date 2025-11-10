@@ -19,7 +19,8 @@ doctrine:
                     charset: utf8mb4
                     collation: utf8mb4_unicode_ci
                 schema_manager_factory: doctrine.dbal.default_schema_manager_factory
-
+                mapping_types:
+                    enum: string
         types:
             datetime: App\Doctrine\UTCDateTimeType
             datetime_immutable: App\Doctrine\UTCDateTimeImmutableType
