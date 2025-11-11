@@ -174,7 +174,7 @@
         <source>timeBudget</source>
         <target state="translated">Kvot per timme</target>
       </trans-unit>
-      <trans-unit id="BlGGO.X" resname="activity">
+      <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve">
         <source>activity</source>
         <target state="translated">Aktivitet</target>
       </trans-unit>
@@ -2041,6 +2041,10 @@
       <trans-unit id="jcT9Og6" resname="payment_account_number" xml:space="preserve" approved="no">
         <source>payment_account_name</source>
         <target state="translated">IBAN eller kortnummer</target>
+      </trans-unit>
+      <trans-unit id="jcT9sdfOg6" resname="electronic_invoice" xml:space="preserve">
+        <source>electronic_invoice</source>
+        <target state="translated">E-faktura</target>
       </trans-unit>
     </body>
   </file>

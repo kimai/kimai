@@ -1986,6 +1986,10 @@
         <source>remaining_budget</source>
         <target state="translated">Saldo</target>
       </trans-unit>
+      <trans-unit id="jcT9sdfOg6" resname="electronic_invoice" xml:space="preserve">
+        <source>electronic_invoice</source>
+        <target state="translated">Factura electrónica</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
