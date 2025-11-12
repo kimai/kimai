@@ -9,7 +9,6 @@
 
 namespace App\Form\Type;
 
-use App\API\BaseApiController;
 use App\Entity\Project;
 use App\Form\Helper\CustomerHelper;
 use App\Form\Helper\ProjectHelper;
@@ -129,7 +128,7 @@ final class ProjectType extends AbstractType
                 return [
                     'select' => $options['activity_select'],
                     'route' => 'get_activities',
-                    'route_params' => [$name => '%' . $name . '%', 'visible' => $options['activity_visibility'], 'size' => BaseApiController::MAX_PAGE_SIZE],
+                    'route_params' => [$name => '%' . $name . '%', 'visible' => $options['activity_visibility']],
                     'empty_route_params' => ['globals' => 'true', 'visible' => $options['activity_visibility']],
                 ];
             }
