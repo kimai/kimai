@@ -12,7 +12,6 @@ namespace App\API;
 use App\Activity\ActivityService;
 use App\Entity\Activity;
 use App\Entity\ActivityRate;
-use App\Entity\User;
 use App\Form\API\ActivityApiEditForm;
 use App\Form\API\ActivityRateApiForm;
 use App\Repository\ActivityRateRepository;
@@ -63,22 +62,9 @@ final class ActivityController extends BaseApiController
     #[Rest\QueryParam(name: 'term', description: 'Free search term')]
     public function cgetAction(ParamFetcherInterface $paramFetcher, ProjectRepository $projectRepository): Response
     {
-        /** @var User $user */
-        $user = $this->getUser();
-
         $query = new ActivityQuery();
         $query->loadTeams();
-        $query->setCurrentUser($user);
-
-        $order = $paramFetcher->get('order');
-        if (\is_string($order) && $order !== '') {
-            $query->setOrder($order);
-        }
-
-        $orderBy = $paramFetcher->get('orderBy');
-        if (\is_string($orderBy) && $orderBy !== '') {
-            $query->setOrderBy($orderBy);
-        }
+        $this->prepareQuery($query, $paramFetcher);
 
         $globals = $paramFetcher->get('globals');
         if (\is_string($globals) && ($globals === 'true' || $globals === '1')) {
@@ -110,7 +96,6 @@ final class ActivityController extends BaseApiController
             $query->setSearchTerm(new SearchTerm($term));
         }
 
-        $query->setIsApiCall(true);
         $data = $this->repository->getActivitiesForQuery($query);
         $view = new View($data, 200);
         $view->getContext()->setGroups(self::GROUPS_COLLECTION);
