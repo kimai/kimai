@@ -23,12 +23,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[OA\Tag(name: 'Export')]
 final class ExportController extends BaseApiController
 {
-    public function __construct(
-        private readonly ViewHandlerInterface $viewHandler,
-        private readonly ExportTemplateRepository $repository,
-    ) {
-    }
-
     /**
      * Delete export template
      */
@@ -36,12 +30,12 @@ final class ExportController extends BaseApiController
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Delete export template')], x: ['internal' => true])]
     #[OA\Parameter(name: 'id', description: 'Export template ID to delete', in: 'path', required: true)]
     #[Route(path: '/{id}', name: 'delete_export_template', requirements: ['id' => '\d+'], methods: ['DELETE'])]
-    public function deleteTemplate(ExportTemplate $exportTemplate): Response
+    public function deleteTemplate(ExportTemplate $exportTemplate, ExportTemplateRepository $repository, ViewHandlerInterface $viewHandler): Response
     {
-        $this->repository->removeExportTemplate($exportTemplate);
+        $repository->removeExportTemplate($exportTemplate);
 
         $view = new View(null, Response::HTTP_NO_CONTENT);
 
-        return $this->viewHandler->handle($view);
+        return $viewHandler->handle($view);
     }
 }
