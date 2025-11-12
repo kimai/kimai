@@ -24,8 +24,10 @@ class ProjectDeleteEventTest extends AbstractProjectEventTestCase
 
     public function testReplacement(): void
     {
-        $entity = new Project('project 1');
-        $replacement = new Project('project 2');
+        $entity = new Project();
+        $entity->setName('project 1');
+        $replacement = new Project();
+        $replacement->setName('project 2');
 
         $sut = new ProjectDeleteEvent($entity, $replacement);
 

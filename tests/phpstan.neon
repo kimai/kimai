@@ -912,16 +912,6 @@ parameters:
             path: Controller/TeamControllerTest.php
 
         -
-            message: "#^Cannot call method modify\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
-            message: "#^Cannot call method setTime\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
             message: "#^Cannot clone DateTime\\|null\\.$#"
             count: 2
             path: Controller/TimesheetControllerTest.php
@@ -957,11 +947,6 @@ parameters:
             path: Controller/TimesheetControllerTest.php
 
         -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Entity\\\\Timesheet\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: Controller/TimesheetControllerTest.php
-
-        -
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 1
             path: Controller/TimesheetControllerTest.php
@@ -972,23 +957,8 @@ parameters:
             path: Controller/TimesheetTeamControllerTest.php
 
         -
-            message: "#^Cannot call method modify\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: Controller/TimesheetTeamControllerTest.php
-
-        -
-            message: "#^Cannot call method setTime\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: Controller/TimesheetTeamControllerTest.php
-
-        -
             message: "#^Cannot clone DateTime\\|null\\.$#"
             count: 2
-            path: Controller/TimesheetTeamControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Entity\\\\Timesheet\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
             path: Controller/TimesheetTeamControllerTest.php
 
         -

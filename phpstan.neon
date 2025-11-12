@@ -41,7 +41,6 @@ parameters:
     symfony:
         containerXmlPath: %rootDir%/../../../var/cache/dev/App_KernelDevDebugContainer.xml
     ignoreErrors:
-        - identifier: throws.unusedType
         - identifier: offsetAccess.notFound
         - '#^Method .*\(\) has parameter \$builder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'
 
@@ -966,17 +965,7 @@ parameters:
             path: src/DataFixtures/TeamFixtures.php
 
         -
-            message: "#^Cannot call method setTimestamp\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: src/DataFixtures/TimesheetFixtures.php
-
-        -
             message: "#^Cannot clone DateTime\\|null\\.$#"
-            count: 1
-            path: src/DataFixtures/TimesheetFixtures.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Entity\\\\Timesheet\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
             count: 1
             path: src/DataFixtures/TimesheetFixtures.php
 
@@ -1896,11 +1885,6 @@ parameters:
             path: src/Form/TimesheetEditForm.php
 
         -
-            message: "#^Cannot call method modify\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: src/Form/TimesheetEditForm.php
-
-        -
             message: "#^Cannot clone DateTime\\|null\\.$#"
             count: 1
             path: src/Form/TimesheetEditForm.php
@@ -2671,11 +2655,6 @@ parameters:
             path: src/Form/Type/MetaFieldsCollectionType.php
 
         -
-            message: "#^Cannot call method modify\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: src/Form/Type/QuickEntryTimesheetType.php
-
-        -
             message: "#^Cannot cast mixed to int\\.$#"
             count: 2
             path: src/Form/Type/QuickEntryTimesheetType.php
@@ -3296,11 +3275,6 @@ parameters:
             path: src/Repository/TimesheetRepository.php
 
         -
-            message: "#^Cannot call method add\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: src/Repository/TimesheetRepository.php
-
-        -
             message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
             count: 1
             path: src/Repository/TimesheetRepository.php
@@ -3461,18 +3435,8 @@ parameters:
             path: src/Timesheet/Rounding/CeilRounding.php
 
         -
-            message: "#^Cannot call method setTimestamp\\(\\) on DateTime\\|null\\.$#"
-            count: 2
-            path: src/Timesheet/Rounding/CeilRounding.php
-
-        -
             message: "#^Cannot clone DateTime\\|null\\.$#"
             count: 2
-            path: src/Timesheet/Rounding/CeilRounding.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Entity\\\\Timesheet\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
             path: src/Timesheet/Rounding/CeilRounding.php
 
         -
@@ -3481,18 +3445,8 @@ parameters:
             path: src/Timesheet/Rounding/ClosestRounding.php
 
         -
-            message: "#^Cannot call method setTimestamp\\(\\) on DateTime\\|null\\.$#"
-            count: 4
-            path: src/Timesheet/Rounding/ClosestRounding.php
-
-        -
             message: "#^Cannot clone DateTime\\|null\\.$#"
             count: 2
-            path: src/Timesheet/Rounding/ClosestRounding.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Entity\\\\Timesheet\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
             path: src/Timesheet/Rounding/ClosestRounding.php
 
         -
@@ -3501,28 +3455,13 @@ parameters:
             path: src/Timesheet/Rounding/FloorRounding.php
 
         -
-            message: "#^Cannot call method setTimestamp\\(\\) on DateTime\\|null\\.$#"
-            count: 2
-            path: src/Timesheet/Rounding/FloorRounding.php
-
-        -
             message: "#^Cannot clone DateTime\\|null\\.$#"
             count: 2
-            path: src/Timesheet/Rounding/FloorRounding.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Entity\\\\Timesheet\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
             path: src/Timesheet/Rounding/FloorRounding.php
 
         -
             message: "#^Cannot call method getTimezone\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
             count: 2
-            path: src/Timesheet/TimesheetService.php
-
-        -
-            message: "#^Cannot call method getTimezone\\(\\) on DateTime\\|null\\.$#"
-            count: 1
             path: src/Timesheet/TimesheetService.php
 
         -
@@ -3547,11 +3486,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Timesheet\\\\TimesheetService\\:\\:updateMultipleTimesheets\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Timesheet/TimesheetService.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Entity\\\\Timesheet\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
             count: 1
             path: src/Timesheet/TimesheetService.php
 
