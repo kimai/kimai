@@ -59,7 +59,7 @@ final class ActivityController extends BaseApiController
     #[Rest\QueryParam(name: 'globals', requirements: '0|1|true|false', strict: true, nullable: true, description: 'Use if you want to fetch only global activities. Allowed values: 0|1 (default: 0 for false)')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name|project', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name, project (default: name)')]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
-    #[Rest\QueryParam(name: 'term', description: 'Free search term')]
+    #[Rest\QueryParam(name: 'term', description: 'Free search term', nullable: true)]
     public function cgetAction(ParamFetcherInterface $paramFetcher, ProjectRepository $projectRepository): Response
     {
         $query = new ActivityQuery();
