@@ -85,8 +85,8 @@ abstract class BaseApiController extends AbstractController
             $size = $all['size'];
             if (is_numeric($size)) {
                 $size = (int) $size;
-                if ($size < 1 || $size > 500) {
-                    throw new BadRequestHttpException('Size must be between 1 and 500');
+                if ($size < 1 || $size > self::MAX_PAGE_SIZE) {
+                    throw new BadRequestHttpException('Size must be between 1 and ' . self::MAX_PAGE_SIZE);
                 }
                 $query->setPageSize($size);
             }
