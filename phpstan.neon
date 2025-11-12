@@ -3696,11 +3696,6 @@ parameters:
             path: src/Twig/Runtime/WidgetExtension.php
 
         -
-            message: "#^Method App\\\\User\\\\LoginManager\\:\\:logInUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/User/LoginManager.php
-
-        -
             message: "#^Method App\\\\User\\\\UserService\\:\\:updateUser\\(\\) has parameter \\$groups with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/User/UserService.php
