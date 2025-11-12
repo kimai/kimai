@@ -42,6 +42,7 @@ security:
                 - App\Saml\SamlAuthenticator
 
             remember_me:
+                name: KIMAI_REMEMBER
                 secret: '%kernel.secret%'
                 lifetime: 604800
                 path: /

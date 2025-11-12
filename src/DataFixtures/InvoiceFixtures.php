@@ -31,7 +31,7 @@ final class InvoiceFixtures extends Fixture
     {
         $faker = Factory::create('en_US');
         /** @var non-empty-array<Customer> $customers */
-        $customers = $manager->getRepository(Customer::class)->findAll();
+        $customers = $manager->getRepository(Customer::class)->findBy(['visible' => true]);
 
         foreach ($this->getInvoiceConfigs($faker) as $invoiceConfig) {
             // name, title, renderer, calculator, numberGenerator, company, vat, dueDays, address, paymentTerms

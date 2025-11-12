@@ -45,6 +45,11 @@ final class CustomerService
         return $timezone;
     }
 
+    public function loadMetaFields(Customer $customer): void
+    {
+        $this->dispatcher->dispatch(new CustomerMetaDefinitionEvent($customer));
+    }
+
     public function createNewCustomer(string $name): Customer
     {
         $customer = new Customer($name);
@@ -53,7 +58,7 @@ final class CustomerService
         $customer->setCurrency($this->configuration->getCustomerDefaultCurrency());
         $customer->setNumber($this->calculateNextCustomerNumber());
 
-        $this->dispatcher->dispatch(new CustomerMetaDefinitionEvent($customer));
+        $this->loadMetaFields($customer);
         $this->dispatcher->dispatch(new CustomerCreateEvent($customer));
 
         return $customer;
@@ -86,10 +91,10 @@ final class CustomerService
         return $customer;
     }
 
-    public function deleteCustomer(Customer $customer): void
+    public function deleteCustomer(Customer $customer, ?Customer $replace = null): void
     {
-        $this->dispatcher->dispatch(new CustomerDeleteEvent($customer));
-        $this->repository->deleteCustomer($customer);
+        $this->dispatcher->dispatch(new CustomerDeleteEvent($customer, $replace));
+        $this->repository->deleteCustomer($customer, $replace);
     }
 
     /**

@@ -81,4 +81,27 @@ class UtilTest extends TestCase
         self::assertEqualsWithDelta(1147.51 * $repeat, $total, 0.00001);
         self::assertEqualsWithDelta(149176.3, $total, 0.00001);
     }
+
+    public function testDecimalDuration(): void
+    {
+        $inputs = [
+            [900, 900],
+            [1600, 1584],
+            [4200, 4212],
+            [8763, 8748],
+            [3300, 3312],
+            [600, 612],
+            [1300, 1296],
+            [1837, 1836],
+            [4217, 4212],
+            [5400, 5400],
+            [3283, 3276],
+            [600, 612],
+            [7200, 7200],
+        ];
+
+        foreach ($inputs as $row) {
+            self::assertEquals($row[1], Util::decimalizeDuration($row[0]));
+        }
+    }
 }

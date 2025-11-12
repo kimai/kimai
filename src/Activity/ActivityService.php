@@ -40,6 +40,11 @@ class ActivityService
     {
     }
 
+    public function loadMetaFields(Activity $activity): void
+    {
+        $this->dispatcher->dispatch(new ActivityMetaDefinitionEvent($activity));
+    }
+
     public function createNewActivity(?Project $project = null): Activity
     {
         $activity = new Activity();
@@ -49,7 +54,7 @@ class ActivityService
             $activity->setProject($project);
         }
 
-        $this->dispatcher->dispatch(new ActivityMetaDefinitionEvent($activity));
+        $this->loadMetaFields($activity);
         $this->dispatcher->dispatch(new ActivityCreateEvent($activity));
 
         return $activity;
@@ -82,10 +87,10 @@ class ActivityService
         return $activity;
     }
 
-    public function deleteActivity(Activity $activity): void
+    public function deleteActivity(Activity $activity, ?Activity $replace = null): void
     {
-        $this->dispatcher->dispatch(new ActivityDeleteEvent($activity));
-        $this->repository->deleteActivity($activity);
+        $this->dispatcher->dispatch(new ActivityDeleteEvent($activity, $replace));
+        $this->repository->deleteActivity($activity, $replace);
     }
 
     /**

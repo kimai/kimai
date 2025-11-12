@@ -23,16 +23,12 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[OA\Tag(name: 'Default')]
 final class ConfigurationController extends BaseApiController
 {
-    public function __construct(private readonly ViewHandlerInterface $viewHandler)
-    {
-    }
-
     /**
      * Fetch timesheet configuration
      */
     #[OA\Response(response: 200, description: 'Returns the instance specific timesheet configuration', content: new OA\JsonContent(ref: new Model(type: TimesheetConfig::class)))]
     #[Route(path: '/config/timesheet', methods: ['GET'])]
-    public function timesheetConfigAction(SystemConfiguration $configuration): Response
+    public function timesheetConfigAction(SystemConfiguration $configuration, ViewHandlerInterface $viewHandler): Response
     {
         $model = new TimesheetConfig();
         $model->setTrackingMode($configuration->getTimesheetTrackingMode());
@@ -44,7 +40,7 @@ final class ConfigurationController extends BaseApiController
         $view = new View($model, 200);
         $view->getContext()->setGroups(['Default', 'Config']);
 
-        return $this->viewHandler->handle($view);
+        return $viewHandler->handle($view);
     }
 
     /**
@@ -52,11 +48,11 @@ final class ConfigurationController extends BaseApiController
      */
     #[OA\Response(response: 200, description: 'Returns the configured color codes and names', content: new OA\JsonContent(type: 'object', example: ['Red' => '#ff0000'], additionalProperties: new OA\AdditionalProperties(type: 'string')))]
     #[Route(path: '/config/colors', methods: ['GET'])]
-    public function colorConfigAction(SystemConfiguration $configuration): Response
+    public function colorConfigAction(SystemConfiguration $configuration, ViewHandlerInterface $viewHandler): Response
     {
         $view = new View($configuration->getThemeColors(), 200);
         $view->getContext()->setGroups(['Default']);
 
-        return $this->viewHandler->handle($view);
+        return $viewHandler->handle($view);
     }
 }

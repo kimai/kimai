@@ -12,8 +12,6 @@ namespace App\API;
 use App\Activity\ActivityService;
 use App\Entity\Activity;
 use App\Entity\ActivityRate;
-use App\Entity\User;
-use App\Event\ActivityMetaDefinitionEvent;
 use App\Form\API\ActivityApiEditForm;
 use App\Form\API\ActivityRateApiForm;
 use App\Repository\ActivityRateRepository;
@@ -26,7 +24,6 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use OpenApi\Attributes as OA;
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,7 +43,6 @@ final class ActivityController extends BaseApiController
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
         private readonly ActivityRepository $repository,
-        private readonly EventDispatcherInterface $dispatcher,
         private readonly ActivityRateRepository $activityRateRepository,
         private readonly ActivityService $activityService
     ) {
@@ -63,25 +59,12 @@ final class ActivityController extends BaseApiController
     #[Rest\QueryParam(name: 'globals', requirements: '0|1|true|false', strict: true, nullable: true, description: 'Use if you want to fetch only global activities. Allowed values: 0|1 (default: 0 for false)')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name|project', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name, project (default: name)')]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
-    #[Rest\QueryParam(name: 'term', description: 'Free search term')]
+    #[Rest\QueryParam(name: 'term', description: 'Free search term', nullable: true)]
     public function cgetAction(ParamFetcherInterface $paramFetcher, ProjectRepository $projectRepository): Response
     {
-        /** @var User $user */
-        $user = $this->getUser();
-
         $query = new ActivityQuery();
         $query->loadTeams();
-        $query->setCurrentUser($user);
-
-        $order = $paramFetcher->get('order');
-        if (\is_string($order) && $order !== '') {
-            $query->setOrder($order);
-        }
-
-        $orderBy = $paramFetcher->get('orderBy');
-        if (\is_string($orderBy) && $orderBy !== '') {
-            $query->setOrderBy($orderBy);
-        }
+        $this->prepareQuery($query, $paramFetcher);
 
         $globals = $paramFetcher->get('globals');
         if (\is_string($globals) && ($globals === 'true' || $globals === '1')) {
@@ -113,7 +96,6 @@ final class ActivityController extends BaseApiController
             $query->setSearchTerm(new SearchTerm($term));
         }
 
-        $query->setIsApiCall(true);
         $data = $this->repository->getActivitiesForQuery($query);
         $view = new View($data, 200);
         $view->getContext()->setGroups(self::GROUPS_COLLECTION);
@@ -149,9 +131,7 @@ final class ActivityController extends BaseApiController
         }
 
         $activity = new Activity();
-
-        $event = new ActivityMetaDefinitionEvent($activity);
-        $this->dispatcher->dispatch($event);
+        $this->activityService->loadMetaFields($activity);
 
         $form = $this->createForm(ActivityApiEditForm::class, $activity, [
             'include_budget' => $this->isGranted('budget', $activity),
@@ -185,8 +165,7 @@ final class ActivityController extends BaseApiController
     #[Route(methods: ['PATCH'], path: '/{id}', name: 'patch_activity', requirements: ['id' => '\d+'])]
     public function patchAction(Request $request, Activity $activity): Response
     {
-        $event = new ActivityMetaDefinitionEvent($activity);
-        $this->dispatcher->dispatch($event);
+        $this->activityService->loadMetaFields($activity);
 
         $form = $this->createForm(ActivityApiEditForm::class, $activity, [
             'include_budget' => $this->isGranted('budget', $activity),
@@ -241,8 +220,7 @@ final class ActivityController extends BaseApiController
     #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
     public function metaAction(Activity $activity, ParamFetcherInterface $paramFetcher): Response
     {
-        $event = new ActivityMetaDefinitionEvent($activity);
-        $this->dispatcher->dispatch($event);
+        $this->activityService->loadMetaFields($activity);
 
         $name = $paramFetcher->get('name');
         $value = $paramFetcher->get('value');

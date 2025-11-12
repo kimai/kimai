@@ -9,9 +9,19 @@
 
 namespace App\Event;
 
+use App\Entity\Customer;
 use App\Webhook\Attribute\AsWebhook;
 
 #[AsWebhook(name: 'customer.deleted', description: 'Triggered right before a customer will be deleted', payload: 'object.getCustomer()')]
 final class CustomerDeleteEvent extends AbstractCustomerEvent
 {
+    public function __construct(Customer $customer, private readonly ?Customer $replacementCustomer = null)
+    {
+        parent::__construct($customer);
+    }
+
+    public function getReplacementCustomer(): ?Customer
+    {
+        return $this->replacementCustomer;
+    }
 }
