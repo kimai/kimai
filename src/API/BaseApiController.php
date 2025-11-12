@@ -21,6 +21,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 abstract class BaseApiController extends AbstractController
 {
+    public const MAX_PAGE_SIZE = 500;
     public const DATE_ONLY_FORMAT = 'yyyy-MM-dd';
     public const DATE_FORMAT = DateTimeType::HTML5_FORMAT;
     public const DATE_FORMAT_PHP = 'Y-m-d\TH:i:s';
