@@ -2042,6 +2042,10 @@
         <source>payment_account_name</source>
         <target state="translated">IBAN ili broj kartice</target>
       </trans-unit>
+      <trans-unit id="jcT9sdfOg6" resname="electronic_invoice" xml:space="preserve" approved="no">
+        <source>electronic_invoice</source>
+        <target state="translated">E-račun</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
