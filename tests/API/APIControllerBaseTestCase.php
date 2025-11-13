@@ -304,6 +304,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'user' => ['result' => 'object', 'type' => '@User'],
                     'dueDays' => 'int',
                     'invoiceNumber' => 'string',
+                    'invoiceFilename' => 'string',
                     'metaFields' => 'array',
                     'paymentDate' => '@datetime',
                     'status' => 'string',
