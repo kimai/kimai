@@ -2042,7 +2042,7 @@
         <source>buyerReference</source>
         <target state="final">זיהוי רוכש</target>
       </trans-unit>
-      <trans-unit id="jcT9sdfOg6" resname="electronic_invoice" xml:space="preserve" approved="yes">
+      <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve" approved="yes">
         <source>electronic_invoice</source>
         <target state="final">חשבונית דיגיטלית</target>
       </trans-unit>

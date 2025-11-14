@@ -2042,7 +2042,7 @@
         <source>payment_account_name</source>
         <target state="translated">IBAN eller kortnummer</target>
       </trans-unit>
-      <trans-unit id="jcT9sdfOg6" resname="electronic_invoice" xml:space="preserve">
+      <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve">
         <source>electronic_invoice</source>
         <target state="translated">E-faktura</target>
       </trans-unit>
