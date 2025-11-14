@@ -6,7 +6,7 @@
  */
 
 /*!
- * [KIMAI] KimaiRecentActivities: responsible to reload the users recent activities
+ * [KIMAI] KimaiRemoteModal: load remote content (without forms) into a modal
  */
 
 import KimaiPlugin from '../KimaiPlugin';
