@@ -311,28 +311,28 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
 
-        $expected = [
-            'parentTitle' => 'first one',
-            'customer' => $customer->getId(),
-            'id' => $project->getId(),
-            'name' => 'first',
-            'orderNumber' => null,
-            // make sure the timezone is properly applied in serializer (see #1858)
-            'orderDate' => '2019-11-29',
-            'start' => '2020-01-07',
-            'end' => '2021-03-23',
-            'comment' => null,
-            'visible' => true,
-            'budget' => 0.0,
-            'timeBudget' => 0,
-            'metaFields' => [],
-            'teams' => [],
-            'color' => null,
-        ];
-
-        foreach ($expected as $key => $value) {
-            self::assertEquals($value, $result[$key]);
-        }
+        self::assertCount(19, array_keys($result));
+        self::assertEquals('first one', $result['parentTitle']);
+        self::assertEquals($project->getId(), $result['id']);
+        self::assertIsArray($result['teams']);
+        self::assertEquals([], $result['teams']);
+        self::assertIsArray($result['metaFields']);
+        self::assertEquals([], $result['metaFields']);
+        self::assertEquals('first', $result['name']);
+        self::assertEquals($customer->getId(), $result['customer']);
+        self::assertEquals('2019-11-29', $result['orderDate']);
+        self::assertEquals('2020-01-07', $result['start']);
+        self::assertEquals('2021-03-23', $result['end']);
+        self::assertEquals(0.0, $result['budget']);
+        self::assertEquals(0, $result['timeBudget']);
+        self::assertNull($result['budgetType']);
+        self::assertNull($result['orderNumber']);
+        self::assertNull($result['number']);
+        self::assertNull($result['comment']);
+        self::assertNull($result['color']);
+        self::assertTrue($result['globalActivities']);
+        self::assertTrue($result['billable']);
+        self::assertTrue($result['visible']);
     }
 
     public function testNotFound(): void
@@ -360,6 +360,7 @@ class ProjectControllerTest extends APIControllerBaseTestCase
             'globalActivities' => true,
             'visible' => true,
             'billable' => true,
+            'teams' => [1],
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
         self::assertTrue($client->getResponse()->isSuccessful());
@@ -370,7 +371,12 @@ class ProjectControllerTest extends APIControllerBaseTestCase
 
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
+        self::assertEquals('Test', $result['parentTitle']);
         self::assertNotEmpty($result['id']);
+        self::assertIsArray($result['teams']);
+        self::assertEquals([['id' => 1, 'name' => 'Test team', 'color' => null]], $result['teams']);
+        self::assertIsArray($result['metaFields']);
+        self::assertEquals([], $result['metaFields']);
         self::assertEquals('foo', $result['name']);
         self::assertEquals(1, $result['customer']);
         self::assertEquals('2018-04-17', $result['orderDate']);

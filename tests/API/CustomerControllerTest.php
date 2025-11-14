@@ -228,6 +228,42 @@ class CustomerControllerTest extends APIControllerBaseTestCase
 
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
+
+        self::assertCount(30, array_keys($result));
+        self::assertNotEmpty($result['id']);
+        self::assertIsArray($result['teams']);
+        self::assertCount(1, $result['teams']);
+        self::assertEquals('Testing customer 1 team', $result['teams'][0]['name']);
+        self::assertIsArray($result['metaFields']);
+        self::assertCount(1, $result['metaFields']);
+        self::assertEquals([['name' => 'foo', 'value' => 'bar']], $result['metaFields']);
+        self::assertEquals('Test', $result['name']);
+        self::assertEquals(1000, $result['budget']);
+        self::assertEquals(100000, $result['timeBudget']);
+        self::assertNull($result['budgetType']);
+        self::assertEquals('1', $result['number']);
+        self::assertEquals('Test comment', $result['comment']);
+        self::assertEquals('Test', $result['company']);
+        self::assertNull($result['vatId']);
+        self::assertEquals('Test', $result['contact']);
+        self::assertEquals('Test', $result['address']);
+        self::assertNull($result['addressLine1']);
+        self::assertNull($result['addressLine2']);
+        self::assertNull($result['addressLine3']);
+        self::assertNull($result['postCode']);
+        self::assertNull($result['city']);
+        self::assertEquals('DE', $result['country']);
+        self::assertEquals('EUR', $result['currency']);
+        self::assertEquals('111', $result['phone']);
+        self::assertEquals('222', $result['fax']);
+        self::assertEquals('333', $result['mobile']);
+        self::assertEquals('test@example.com', $result['email']);
+        self::assertNull($result['homepage']);
+        self::assertEquals('Europe/Berlin', $result['timezone']);
+        self::assertNull($result['buyerReference']);
+        self::assertNull($result['color']);
+        self::assertTrue($result['visible']);
+        self::assertTrue($result['billable']);
     }
 
     public function testNotFound(): void
@@ -265,7 +301,8 @@ class CustomerControllerTest extends APIControllerBaseTestCase
             'buyerReference' => 'REF-0123456789',
             'color' => '#ff0000',
             'visible' => true,
-            'billable' => true
+            'billable' => true,
+            'teams' => [1],
         ];
         $this->request($client, '/api/customers', 'POST', [], json_encode($data));
         self::assertTrue($client->getResponse()->isSuccessful());
@@ -277,7 +314,10 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
         self::assertNotEmpty($result['id']);
-
+        self::assertIsArray($result['teams']);
+        self::assertEquals([['id' => 1, 'name' => 'Test team', 'color' => null]], $result['teams']);
+        self::assertIsArray($result['metaFields']);
+        self::assertEquals([], $result['metaFields']);
         self::assertEquals('foo', $result['name']);
         self::assertEquals('999', $result['budget']);
         self::assertEquals('36900', $result['timeBudget']);
@@ -287,6 +327,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertEquals('IT Professional Comp.', $result['company']);
         self::assertEquals('DE0123456789', $result['vatId']);
         self::assertEquals('Mr. John Doe', $result['contact']);
+        self::assertNull($result['address']);
         self::assertEquals('test address line 1', $result['addressLine1']);
         self::assertEquals('foo address line 2', $result['addressLine2']);
         self::assertEquals('bar address line 3', $result['addressLine3']);
@@ -302,8 +343,8 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertEquals('Europe/Berlin', $result['timezone']);
         self::assertEquals('REF-0123456789', $result['buyerReference']);
         self::assertEquals('#ff0000', $result['color']);
-        self::assertEquals(true, $result['visible']);
-        self::assertEquals(true, $result['billable']);
+        self::assertTrue($result['visible']);
+        self::assertTrue($result['billable']);
     }
 
     public function testPostActionWithLeastFields(): void

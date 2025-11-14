@@ -243,6 +243,24 @@ class ActivityControllerTest extends APIControllerBaseTestCase
 
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ActivityEntity', $result);
+
+        self::assertCount(14, array_keys($result));
+        self::assertNull($result['parentTitle']);
+        self::assertNotEmpty($result['id']);
+        self::assertIsArray($result['teams']);
+        self::assertEquals([], $result['teams']);
+        self::assertIsArray($result['metaFields']);
+        self::assertEquals([], $result['metaFields']);
+        self::assertEquals('Test', $result['name']);
+        self::assertNull($result['project']);
+        self::assertEquals(1000, $result['budget']);
+        self::assertEquals(100000, $result['timeBudget']);
+        self::assertNull($result['budgetType']);
+        self::assertNull($result['number']);
+        self::assertEquals('Test comment', $result['comment']);
+        self::assertNull($result['color']);
+        self::assertTrue($result['visible']);
+        self::assertTrue($result['billable']);
     }
 
     public function testNotFound(): void
@@ -265,6 +283,7 @@ class ActivityControllerTest extends APIControllerBaseTestCase
             'color' => '#000000',
             'visible' => true,
             'billable' => true,
+            'teams' => [1],
         ];
         $this->request($client, '/api/activities', 'POST', [], json_encode($data));
         self::assertTrue($client->getResponse()->isSuccessful());
@@ -275,8 +294,12 @@ class ActivityControllerTest extends APIControllerBaseTestCase
 
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ActivityEntity', $result);
+        self::assertEquals('Test', $result['parentTitle']);
         self::assertNotEmpty($result['id']);
-
+        self::assertIsArray($result['teams']);
+        self::assertEquals([['id' => 1, 'name' => 'Test team', 'color' => null]], $result['teams']);
+        self::assertIsArray($result['metaFields']);
+        self::assertEquals([], $result['metaFields']);
         self::assertEquals('foo', $result['name']);
         self::assertEquals(1, $result['project']);
         self::assertEquals('999', $result['budget']);
@@ -285,8 +308,8 @@ class ActivityControllerTest extends APIControllerBaseTestCase
         self::assertEquals('P-754', $result['number']);
         self::assertEquals('Awesome activity since a short time', $result['comment']);
         self::assertEquals('#000000', $result['color']);
-        self::assertEquals(true, $result['visible']);
-        self::assertEquals(true, $result['billable']);
+        self::assertTrue($result['visible']);
+        self::assertTrue($result['billable']);
     }
 
     public function testPostActionWithLeastFields(): void
