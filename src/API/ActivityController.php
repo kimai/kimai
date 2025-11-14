@@ -129,8 +129,7 @@ final class ActivityController extends BaseApiController
             throw $this->createAccessDeniedException('User cannot create activities');
         }
 
-        $activity = new Activity();
-        $this->activityService->loadMetaFields($activity);
+        $activity = $this->activityService->createNewActivity();
 
         $form = $this->createForm(ActivityApiEditForm::class, $activity, [
             'include_budget' => $this->isGranted('budget', $activity),
