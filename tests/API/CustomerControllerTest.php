@@ -233,6 +233,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result['id']);
         self::assertIsArray($result['teams']);
         self::assertCount(1, $result['teams']);
+        self::assertIsArray($result['teams'][0]);
         self::assertEquals('Testing customer 1 team', $result['teams'][0]['name']);
         self::assertIsArray($result['metaFields']);
         self::assertCount(1, $result['metaFields']);
