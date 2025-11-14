@@ -10,7 +10,22 @@
 namespace App\Form\API;
 
 use App\Form\ProjectEditForm;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-final class ProjectApiEditForm extends ProjectEditForm
+final class ProjectApiEditForm extends AbstractType
 {
+    public function getParent(): string
+    {
+        return ProjectEditForm::class;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        // overwritten, so the docs show these fields
+        $resolver->setDefaults([
+            'include_budget' => true,
+            'include_time' => true,
+        ]);
+    }
 }
