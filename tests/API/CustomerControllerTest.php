@@ -242,6 +242,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
             'name' => 'foo',
             'budget' => '999',
             'timeBudget' => '10,25',
+            'budgetType' => 'month',
             'number' => 'C-754',
             'comment' => 'Awesome customer since a long time',
             'company' => 'IT Professional Comp.',
@@ -280,6 +281,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertEquals('foo', $result['name']);
         self::assertEquals('999', $result['budget']);
         self::assertEquals('36900', $result['timeBudget']);
+        self::assertEquals('month', $result['budgetType']);
         self::assertEquals('C-754', $result['number']);
         self::assertEquals('Awesome customer since a long time', $result['comment']);
         self::assertEquals('IT Professional Comp.', $result['company']);
