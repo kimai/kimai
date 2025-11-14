@@ -33,7 +33,7 @@ class CustomerEditForm extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $isNew = false;
+        $isNew = true;
         $hasAddress = false;
 
         if (isset($options['data'])) {
