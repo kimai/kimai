@@ -33,7 +33,7 @@ class CustomerEditForm extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $isNew = false;
+        $isNew = true;
         $hasAddress = false;
 
         if (isset($options['data'])) {
@@ -54,6 +54,9 @@ class CustomerEditForm extends AbstractType
             ->add('number', TextType::class, [
                 'label' => 'number',
                 'required' => false,
+                'attr' => [
+                    'maxlength' => 50,
+                ],
             ])
             ->add('comment', TextareaType::class, [
                 'label' => 'description',
@@ -83,19 +86,19 @@ class CustomerEditForm extends AbstractType
         }
 
         $builder
-            ->add('address_line1', TextType::class, [
+            ->add('addressLine1', TextType::class, [
                 'label' => 'address',
                 'required' => false,
             ])
-            ->add('address_line2', TextType::class, [
+            ->add('addressLine2', TextType::class, [
                 'label' => false,
                 'required' => false,
             ])
-            ->add('address_line3', TextType::class, [
+            ->add('addressLine3', TextType::class, [
                 'label' => false,
                 'required' => false,
             ])
-            ->add('postcode', TextType::class, [
+            ->add('postCode', TextType::class, [
                 'label' => 'postcode',
                 'required' => false,
             ])

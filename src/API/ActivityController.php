@@ -36,7 +36,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class ActivityController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Activity', 'Activity_Entity'];
-    public const GROUPS_FORM = ['Default', 'Entity', 'Activity'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Activity'];
     public const GROUPS_RATE = ['Default', 'Entity', 'Activity_Rate'];
 
@@ -130,8 +129,7 @@ final class ActivityController extends BaseApiController
             throw $this->createAccessDeniedException('User cannot create activities');
         }
 
-        $activity = new Activity();
-        $this->activityService->loadMetaFields($activity);
+        $activity = $this->activityService->createNewActivity();
 
         $form = $this->createForm(ActivityApiEditForm::class, $activity, [
             'include_budget' => $this->isGranted('budget', $activity),
@@ -150,7 +148,7 @@ final class ActivityController extends BaseApiController
         }
 
         $view = new View($form);
-        $view->getContext()->setGroups(self::GROUPS_FORM);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -177,7 +175,7 @@ final class ActivityController extends BaseApiController
 
         if (false === $form->isValid()) {
             $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_FORM);
+            $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
             return $this->viewHandler->handle($view);
         }

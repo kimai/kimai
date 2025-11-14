@@ -38,7 +38,6 @@ use Symfony\Component\Validator\Constraints;
 final class ProjectController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Project', 'Project_Entity'];
-    public const GROUPS_FORM = ['Default', 'Entity', 'Project'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Project'];
     public const GROUPS_RATE = ['Default', 'Entity', 'Project_Rate'];
 
@@ -194,7 +193,7 @@ final class ProjectController extends BaseApiController
         }
 
         $view = new View($form);
-        $view->getContext()->setGroups(self::GROUPS_FORM);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -223,7 +222,7 @@ final class ProjectController extends BaseApiController
 
         if (false === $form->isValid()) {
             $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_FORM);
+            $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
             return $this->viewHandler->handle($view);
         }

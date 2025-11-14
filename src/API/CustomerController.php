@@ -36,7 +36,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class CustomerController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Customer', 'Customer_Entity'];
-    public const GROUPS_FORM = ['Default', 'Entity', 'Customer'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Customer'];
     public const GROUPS_RATE = ['Default', 'Entity', 'Customer_Rate'];
 
@@ -139,7 +138,7 @@ final class CustomerController extends BaseApiController
         }
 
         $view = new View($form);
-        $view->getContext()->setGroups(self::GROUPS_FORM);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -166,7 +165,7 @@ final class CustomerController extends BaseApiController
 
         if (false === $form->isValid()) {
             $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_FORM);
+            $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
             return $this->viewHandler->handle($view);
         }
