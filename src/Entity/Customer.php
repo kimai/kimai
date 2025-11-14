@@ -96,7 +96,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Exporter\Expose(label: 'contact')]
     private ?string $contact = null;
     /**
-     * Unstructured address, better use the fields: address_line1-3, postcode, city, country
+     * Unstructured address, better use the fields: addressLine1-3, postcode, city, country
      */
     #[ORM\Column(name: 'address', type: Types::TEXT, nullable: true)]
     #[Serializer\Expose]

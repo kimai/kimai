@@ -83,19 +83,19 @@ class CustomerEditForm extends AbstractType
         }
 
         $builder
-            ->add('address_line1', TextType::class, [
+            ->add('addressLine1', TextType::class, [
                 'label' => 'address',
                 'required' => false,
             ])
-            ->add('address_line2', TextType::class, [
+            ->add('addressLine2', TextType::class, [
                 'label' => false,
                 'required' => false,
             ])
-            ->add('address_line3', TextType::class, [
+            ->add('addressLine3', TextType::class, [
                 'label' => false,
                 'required' => false,
             ])
-            ->add('postcode', TextType::class, [
+            ->add('postCode', TextType::class, [
                 'label' => 'postcode',
                 'required' => false,
             ])
