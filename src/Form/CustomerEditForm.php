@@ -54,6 +54,9 @@ class CustomerEditForm extends AbstractType
             ->add('number', TextType::class, [
                 'label' => 'number',
                 'required' => false,
+                'attr' => [
+                    'maxlength' => 50,
+                ],
             ])
             ->add('comment', TextareaType::class, [
                 'label' => 'description',
