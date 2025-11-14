@@ -100,7 +100,7 @@ final class ResetTestCommand extends AbstractResetCommand
         $user2->setAvatar('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y');
         $user2->setEnabled(true);
         $user2->setRoles(['ROLE_USER']);
-        $user2->setUserIdentifier('john_user');
+        $user2->setUserIdentifier(UserFixtures::USERNAME_USER);
         $user2->setEmail('john_user@example.com');
         $token2 = new AccessToken($user2, UserFixtures::DEFAULT_API_TOKEN . '_user');
         $token2->setName('Test fixture');
@@ -118,41 +118,41 @@ final class ResetTestCommand extends AbstractResetCommand
         $token3 = new AccessToken($user3, UserFixtures::DEFAULT_API_TOKEN . '_inactive');
         $token3->setName('Test fixture');
 
-        $user4 = new User();
-        $user4->setPreferenceValue(UserPreference::HOURLY_RATE, 35);
-        $user4->setAlias('Tony Maier');
-        $user4->setRegisteredAt(new \DateTime('2018-02-06 23:28:57'));
-        $user4->setTitle('Head of Development');
-        $user4->setAvatar('https://en.gravatar.com/userimage/3533186/bf2163b1dd23f3107a028af0195624e9.jpeg');
-        $user4->setEnabled(true);
-        $user4->setRoles(['ROLE_TEAMLEAD']);
-        $user4->setUserIdentifier('tony_teamlead');
-        $user4->setEmail('tony_teamlead@example.com');
-        $token4 = new AccessToken($user4, UserFixtures::DEFAULT_API_TOKEN . '_teamlead');
+        $userTeamlead = new User();
+        $userTeamlead->setPreferenceValue(UserPreference::HOURLY_RATE, 35);
+        $userTeamlead->setAlias('Tony Maier');
+        $userTeamlead->setRegisteredAt(new \DateTime('2018-02-06 23:28:57'));
+        $userTeamlead->setTitle('Head of Development');
+        $userTeamlead->setAvatar('https://en.gravatar.com/userimage/3533186/bf2163b1dd23f3107a028af0195624e9.jpeg');
+        $userTeamlead->setEnabled(true);
+        $userTeamlead->setRoles(['ROLE_TEAMLEAD']);
+        $userTeamlead->setUserIdentifier(UserFixtures::USERNAME_TEAMLEAD);
+        $userTeamlead->setEmail('tony_teamlead@example.com');
+        $token4 = new AccessToken($userTeamlead, UserFixtures::DEFAULT_API_TOKEN . '_teamlead');
         $token4->setName('Test fixture');
 
-        $user5 = new User();
-        $user5->setPreferenceValue(UserPreference::HOURLY_RATE, 81);
-        $user5->setAlias('Anna Smith');
-        $user5->setRegisteredAt(new \DateTime('2018-02-06 23:28:57'));
-        $user5->setTitle('Administrator');
-        $user5->setEnabled(true);
-        $user5->setRoles(['ROLE_ADMIN']);
-        $user5->setUserIdentifier('anna_admin');
-        $user5->setEmail('anna_admin@example.com');
-        $token5 = new AccessToken($user5, UserFixtures::DEFAULT_API_TOKEN . '_admin');
+        $userAdmin = new User();
+        $userAdmin->setPreferenceValue(UserPreference::HOURLY_RATE, 81);
+        $userAdmin->setAlias('Anna Smith');
+        $userAdmin->setRegisteredAt(new \DateTime('2018-02-06 23:28:57'));
+        $userAdmin->setTitle('Administrator');
+        $userAdmin->setEnabled(true);
+        $userAdmin->setRoles(['ROLE_ADMIN']);
+        $userAdmin->setUserIdentifier(UserFixtures::USERNAME_ADMIN);
+        $userAdmin->setEmail('anna_admin@example.com');
+        $token5 = new AccessToken($userAdmin, UserFixtures::DEFAULT_API_TOKEN . '_admin');
         $token5->setName('Test fixture');
 
-        $user6 = new User();
-        $user6->setPreferenceValue(UserPreference::HOURLY_RATE, 46);
-        $user6->setRegisteredAt(new \DateTime('2018-02-06 23:28:57'));
-        $user6->setTitle('Super Administrator');
-        $user6->setAvatar('/bundles/avanzuadmintheme/img/avatar.png');
-        $user6->setEnabled(true);
-        $user6->setRoles(['ROLE_SUPER_ADMIN']);
-        $user6->setUserIdentifier('susan_super');
-        $user6->setEmail('susan_super@example.com');
-        $token6 = new AccessToken($user6, UserFixtures::DEFAULT_API_TOKEN . '_super');
+        $userSuperAdmin = new User();
+        $userSuperAdmin->setPreferenceValue(UserPreference::HOURLY_RATE, 46);
+        $userSuperAdmin->setRegisteredAt(new \DateTime('2018-02-06 23:28:57'));
+        $userSuperAdmin->setTitle('Super Administrator');
+        $userSuperAdmin->setAvatar('/bundles/avanzuadmintheme/img/avatar.png');
+        $userSuperAdmin->setEnabled(true);
+        $userSuperAdmin->setRoles(['ROLE_SUPER_ADMIN']);
+        $userSuperAdmin->setUserIdentifier(UserFixtures::USERNAME_SUPER_ADMIN);
+        $userSuperAdmin->setEmail('susan_super@example.com');
+        $token6 = new AccessToken($userSuperAdmin, UserFixtures::DEFAULT_API_TOKEN . '_super');
         $token6->setName('Test fixture');
 
         $user7 = new User();
@@ -180,9 +180,9 @@ final class ResetTestCommand extends AbstractResetCommand
             [$user1, $token1],
             [$user2, $token2],
             [$user3, $token3],
-            [$user4, $token4],
-            [$user5, $token5],
-            [$user6, $token6],
+            [$userTeamlead, $token4],
+            [$userAdmin, $token5],
+            [$userSuperAdmin, $token6],
             [$user7, $token7],
             [$user8, $token8],
         ];
