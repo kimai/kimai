@@ -471,7 +471,7 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(CustomerTypePatternType::class),
                     (new Configuration('customer.number_format'))
                         ->setLabel('customer.number_format')
-                        ->setOptions(['help' => 'allowed_replacer', 'help_translation_parameters' => ['%replacer%' => '{cc}']])
+                        ->setOptions(['help' => 'allowed_replacer', 'help_translation_parameters' => ['%replacer%' => '{cc}, {Y}, {y}, {M}, {m}, {D}, {d}, {YY}, {yy}, {MM}, {DD}']])
                         ->setRequired(true)
                         ->setType(TextType::class)
                         ->setTranslationDomain('system-configuration'),
@@ -491,7 +491,7 @@ final class SystemConfigurationController extends AbstractController
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration('project.number_format'))
                         ->setLabel('project.number_format')
-                        ->setOptions(['help' => 'allowed_replacer', 'help_translation_parameters' => ['%replacer%' => '{pc}']])
+                        ->setOptions(['help' => 'allowed_replacer', 'help_translation_parameters' => ['%replacer%' => '{pc}, {Y}, {y}, {M}, {m}, {D}, {d}, {YY}, {yy}, {MM}, {DD}']])
                         ->setRequired(false)
                         ->setType(TextType::class)
                         ->setTranslationDomain('system-configuration'),
@@ -507,7 +507,7 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(ActivityTypePatternType::class),
                     (new Configuration('activity.number_format'))
                         ->setLabel('activity.number_format')
-                        ->setOptions(['help' => 'allowed_replacer', 'help_translation_parameters' => ['%replacer%' => '{ac}']])
+                        ->setOptions(['help' => 'allowed_replacer', 'help_translation_parameters' => ['%replacer%' => '{ac}, {Y}, {y}, {M}, {m}, {D}, {d}, {YY}, {yy}, {MM}, {DD}']])
                         ->setRequired(false)
                         ->setType(TextType::class)
                         ->setTranslationDomain('system-configuration'),
