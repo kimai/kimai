@@ -86,15 +86,15 @@ export default class KimaiRemoteModal extends KimaiPlugin {
                 }
 
                 return response.text().then(html => {
-                    const newFormHtml = document.createElement('div');
-                    newFormHtml.classList.add('modal-body');
-                    newFormHtml.classList.add('p-0');
-                    newFormHtml.innerHTML = html;
+                    const modalBody = document.createElement('div');
+                    modalBody.classList.add('modal-body');
+                    modalBody.classList.add('p-0');
+                    modalBody.innerHTML = html;
 
-                    this._initElement(newFormHtml);
+                    this._initElement(modalBody);
 
                     const modal = this._getModalElement();
-                    modal.querySelector('.modal-body').replaceWith(newFormHtml);
+                    modal.querySelector('.modal-body').replaceWith(modalBody);
                     if (element.dataset['modalTitle'] !== undefined) {
                         modal.querySelector('.modal-title').textContent = element.dataset['modalTitle'];
                     }
