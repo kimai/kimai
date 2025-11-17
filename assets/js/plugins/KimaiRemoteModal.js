@@ -12,6 +12,11 @@
 import KimaiPlugin from '../KimaiPlugin';
 import { Modal } from 'bootstrap';
 
+/**
+ * Use like this:
+ * <a href="{{ path('your-route') }}" class="remote-modal-load" data-modal-id="remote_modal" data-modal-class="p-0" data-modal-title="Some title" title="Some title">Modal</a>
+ * <a href="{{ path('your-route') }}" class="remote-modal-load" data-modal-title="Some title" title="Some title">Modal</a>
+ */
 export default class KimaiRemoteModal extends KimaiPlugin {
 
     constructor()
@@ -42,31 +47,6 @@ export default class KimaiRemoteModal extends KimaiPlugin {
     }
 
     /**
-     * @param {HTMLElement} element
-     * @private
-     */
-    _initElement(element)
-    {
-        for (let link of element.querySelectorAll('a.remote-modal-reload')) {
-            link.addEventListener('click', this.handle);
-        }
-    }
-
-    _getModalElement()
-    {
-        return document.getElementById('remote_modal');
-    }
-
-    /**
-     * @returns {Modal}
-     * @private
-     */
-    _getModal()
-    {
-        return Modal.getOrCreateInstance(this._getModalElement());
-    }
-
-    /**
      * @param {HTMLLinkElement} element
      * @private
      */
@@ -78,21 +58,33 @@ export default class KimaiRemoteModal extends KimaiPlugin {
                     return;
                 }
 
+                let modalSelector = 'remote_modal';
+                if (element.dataset['modalId'] !== undefined) {
+                    modalSelector = element.dataset['modalId'];
+                }
+                const modalElement = document.getElementById(modalSelector);
+                if (modalElement === null) {
+                    console.log('Could not find modal with ID: ' + modalSelector);
+                }
+
                 return response.text().then(html => {
                     const modalBody = document.createElement('div');
                     modalBody.classList.add('modal-body');
-                    modalBody.classList.add('p-0');
+                    if (element.dataset['modalClass'] !== undefined) {
+                        modalBody.classList.add(element.dataset['modalClass']);
+                    }
                     modalBody.innerHTML = html;
 
-                    this._initElement(modalBody);
-
-                    const modal = this._getModalElement();
-                    modal.querySelector('.modal-body').replaceWith(modalBody);
-                    if (element.dataset['modalTitle'] !== undefined) {
-                        modal.querySelector('.modal-title').textContent = element.dataset['modalTitle'];
+                    for (let link of modalBody.querySelectorAll('a.remote-modal-reload')) {
+                        link.addEventListener('click', this.handle);
                     }
 
-                    this._getModal().show();
+                    modalElement.querySelector('.modal-body').replaceWith(modalBody);
+                    if (element.dataset['modalTitle'] !== undefined) {
+                        modalElement.querySelector('.modal-title').textContent = element.dataset['modalTitle'];
+                    }
+
+                    Modal.getOrCreateInstance(modalElement).show();
                 });
             })
             .catch((reason) =>  {
