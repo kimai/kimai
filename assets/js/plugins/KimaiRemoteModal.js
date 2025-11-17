@@ -39,8 +39,6 @@ export default class KimaiRemoteModal extends KimaiPlugin {
         for (let link of document.querySelectorAll(this._selector)) {
             link.addEventListener('click', this.handle);
         }
-
-        document.addEventListener('kimai.closeRemoteModal', () => { this._hide(); });
     }
 
     /**
@@ -52,11 +50,6 @@ export default class KimaiRemoteModal extends KimaiPlugin {
         for (let link of element.querySelectorAll('a.remote-modal-reload')) {
             link.addEventListener('click', this.handle);
         }
-    }
-
-    _hide()
-    {
-        this._getModal().hide();
     }
 
     _getModalElement()
