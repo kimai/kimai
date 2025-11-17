@@ -133,15 +133,15 @@
  */
 
 /*!
- * [KIMAI] KimaiRecentActivities: responsible to reload the users recent activities
- */
-
-/*!
  * [KIMAI] KimaiReducedClickHandler: abstract class
  */
 
 /*!
  * [KIMAI] KimaiReloadPageWidget: a simple helper to reload the page on events
+ */
+
+/*!
+ * [KIMAI] KimaiRemoteModal: load remote content (without forms) into a modal
  */
 
 /*!
