@@ -77,7 +77,7 @@
         {% if lastEntry is not null and entry.end is not null and entry.user is same as (lastEntry.user) %}
             {% if checkOverlappingDesc and entry.end.timestamp > lastEntry.begin.timestamp %}
                 {% set class = class ~ ' overlapping' %}
-            {% elseif checkOverlappingAsc and entry.begin.timestamp < lastEntry.end.timestamp %}
+            {% elseif checkOverlappingAsc and lastEntry.end is not null and entry.begin.timestamp < lastEntry.end.timestamp %}
                 {% set class = class ~ ' overlapping' %}
             {% endif %}
         {% endif %}
