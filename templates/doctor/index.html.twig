@@ -3,7 +3,7 @@
 {% block status %}
     {% from "macros/status.html.twig" import status %}
     {{ status(constant('App\\Constants::VERSION')) }}
-    {{ status(environment, environment == 'dev' ? 'red' : 'green') }}
+    {{ status(environment, environment == 'dev' ? 'danger' : 'success') }}
 {% endblock %}
 
 {% block main %}
