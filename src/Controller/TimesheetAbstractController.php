@@ -84,7 +84,7 @@ abstract class TimesheetAbstractController extends AbstractController
         }
 
         if ($this->configuration->isBreakTimeEnabled()) {
-            $table->addColumn('break', ['class' => 'text-end text-nowrap']);
+            $table->addColumn('break', ['class' => 'text-end text-nowrap', 'orderBy' => false]);
         }
 
         $table->addColumn('duration', ['class' => 'text-end text-nowrap']);
