@@ -2042,7 +2042,7 @@
         <source>payment_account_name</source>
         <target state="final">IBAN o numero di carta</target>
       </trans-unit>
-      <trans-unit id="jcT9sdfOg6" resname="electronic_invoice" xml:space="preserve" approved="yes">
+      <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve" approved="yes">
         <source>electronic_invoice</source>
         <target state="final">Fattura elettronica</target>
       </trans-unit>

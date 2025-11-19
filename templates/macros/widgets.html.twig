@@ -226,10 +226,14 @@
 {% endmacro %}
 
 {% macro badge_team_access(teams) %}
-    {% if teams|length > 0 %}
-        {{ _self.badge_counter(teams|length) }}
+    {{ _self.badge_counted(teams|length) }}
+{% endmacro %}
+
+{% macro badge_counted(amount) %}
+    {% if amount > 0 %}
+        {{ _self.badge_counter(amount, null, 'primary') }}
     {% else %}
-        {{ _self.badge_counter(0, null, 'gray') }}
+        {{ _self.badge_counter(0, null, 'secondary') }}
     {% endif %}
 {% endmacro %}
 

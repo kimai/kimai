@@ -6,7 +6,7 @@
  */
 
 /*!
- * [KIMAI] KimaiFormPlugin: base class for all none ID plugin that handle forms
+ * [KIMAI] KimaiFormTomselectPlugin: base form plugin for everyone using tomselect
  */
 
 import KimaiFormPlugin from './KimaiFormPlugin';

@@ -19,6 +19,9 @@ class ThemeEvent extends Event
     public const HTML_HEAD = 'app.theme.html_head';
     public const CONTENT_BEFORE = 'app.theme.content_before';
     public const CONTENT_START = 'app.theme.content_start';
+    /**
+     * The toolbar is rendered twice for small and large screens.
+     */
     public const TOOLBAR = 'app.theme.toolbar';
     public const CONTENT_END = 'app.theme.content_end';
     public const CONTENT_AFTER = 'app.theme.content_after';
