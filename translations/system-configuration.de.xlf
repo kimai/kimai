@@ -10,9 +10,9 @@
         <source>theme.markdown_content</source>
         <target>Erlaube Markdown-Formatierungen in Beschreibungen und Kommentaren</target>
       </trans-unit>
-      <trans-unit id="SnkW0Pk" resname="theme.avatar_url">
+      <trans-unit id="SnkW0Pk" resname="theme.avatar_url" xml:space="preserve">
         <source>theme.avatar_url</source>
-        <target>Erlaube die Nutzung von URLs für Avatar Bilder</target>
+        <target state="translated">Erlaube die Nutzung von URLs für Avatarbilder</target>
       </trans-unit>
       <trans-unit id="FaGqoTT" resname="timesheet.mode" xml:space="preserve">
         <source>timesheet.mode</source>
