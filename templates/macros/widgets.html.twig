@@ -80,10 +80,6 @@
     {% endfor -%}
 {%- endmacro -%}
 
-{% macro page_header(title) %}
-    <h2 class="page-header">{{ title|trans }}</h2>
-{% endmacro %}
-
 {% macro label_boolean(visible) %}
     {% if visible %}
         {{ _self.label('yes'|trans, 'success') }}
