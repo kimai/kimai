@@ -38,7 +38,7 @@
         "horstoeko/zugferd": "^1.0",
         "horstoeko/zugferdublbridge": "^1.0",
         "jms/serializer-bundle": "^5.0",
-        "kevinpapst/tabler-bundle": "^1.4",
+        "kevinpapst/tabler-bundle": "dev-main",
         "league/csv": "^9.4",
         "mpdf/mpdf": "^8.0",
         "nelmio/api-doc-bundle": "^5.0",
