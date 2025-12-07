@@ -1,10 +1,6 @@
 {% set favorites = favorite_timesheets(app.user, 10) %}
 {% if favorites|length > 0 %}
     {% from 'macros/widgets.html.twig' import label_customer, label_project, label_activity %}
-    {% set class = "btn-outline-white" %}
-    {% if tabler_bundle.isDarkMode() or tabler_bundle.isNavbarOverlapping() %}
-        {% set class = "btn-dark" %}
-    {% endif %}
     <div class="list-group list-group-flush list-group-hoverable menu">
         {% set counter = 0 %}
         {% for favorite in favorites %}
@@ -18,7 +14,7 @@
                                data-event="kimai.timesheetStart kimai.timesheetUpdate" data-method="PATCH" data-msg-error="timesheet.start.error"
                                data-msg-success="timesheet.start.success" data-bs-dismiss="modal">
                                 {{ label_activity(entry.activity) }}
-                                <div class="d-block text-truncate mt-n1">
+                                <div class="d-block text-truncate">
                                     {{ label_project(entry.project) }}
                                     {{ label_customer(entry.project.customer) }}
                                 </div>

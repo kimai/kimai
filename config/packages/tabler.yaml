@@ -6,20 +6,18 @@
 #
 tabler:
     options:
-        # dark or normal layout
+        theme_auto: true
         dark_mode: false
-        # condensed = one nav-bar, false = two nav-bars
         navbar_condensed: true
-        # overlap = https://preview.tabler.io/layout-navbar-overlap.html
-        navbar_overlap: true
-        # boxed layout (true) or full-screen (false)
+        navbar_overlap: false
+        navbar_dark: true
         boxed_layout: false
-        # right to left = true
         rtl_mode: false
-        # true = only avatar, false = show username and title as well
-        user_menu_condensed: true
-        # url to your company logo
+        user_menu_condensed: false
         logo_url: "touch-icon-192x192.png"
+        theme_base: "neutral"
+        theme_radius: "0.5"
+        theme_primary: "blue"
 
     knp_menu:
         enable: false

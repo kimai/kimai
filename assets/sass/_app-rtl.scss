@@ -5,13 +5,20 @@
  * file that was distributed with this source code.
  */
 
-$modal-backdrop-opacity: 0.6 !default;
+$modal-backdrop-opacity: 0.7 !default;
+
+@import "~@tabler/core/scss/config";
 
 /*
     THIS DOES NOT WORK AS EXPECTED, AS TABLER IS NOT REGENERATED HERE.
     SO WE CANNOT CHANGE VARIABLES, LIKE THE ABOVE...
 */
 @import '~@tabler/core/dist/css/tabler.rtl.css';
+@import '~@tabler/core/dist/css/tabler-themes.rtl.css';
+
+@import '~tom-select/dist/scss/tom-select';
+@import '~tom-select/dist/scss/tom-select.bootstrap5';
+
 @import '~@tabler/core/dist/css/tabler-vendors.rtl.css';
 
 /**
@@ -22,21 +29,6 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts/";
 @import '~@fortawesome/fontawesome-free/scss/regular';
 @import '~@fortawesome/fontawesome-free/scss/solid';
 @import '~@fortawesome/fontawesome-free/scss/brands';
-
-/**
- * We need that, to compile the rest of the file
- */
-@import "~bootstrap/scss/functions";
-
-@import "~@tabler/core/src/scss/variables";
-@import "~@tabler/core/src/scss/variables-dark";
-@import "~@tabler/core/src/scss/mixins";
-
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/variables-dark";
-@import "~bootstrap/scss/maps";
-@import "~bootstrap/scss/mixins";
-@import "~bootstrap/scss/utilities";
 
 /**
  * Kimai related stuff

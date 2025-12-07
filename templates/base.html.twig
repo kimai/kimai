@@ -25,8 +25,6 @@
     <div id="toast-container" class="toast-container position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 11"></div>
 {% endblock %}
 
-{% block page_content_class %}{{ parent() }} {% block page_class %}{% endblock %}{% endblock %}
-
 {% block page_content_start %}
     {% if app.session and app.session.started and app.session.flashbag.peekAll|length > 0 %}
         {% set domain = 'flashmessages' %}
@@ -57,10 +55,11 @@
     <div class="d-print-none hidden-no-space">
         {% block main_before %}{% endblock %}
     </div>
+    <section class="content {% block page_class %}{% endblock %}">
 {% endblock %}
 
 {% block page_content_after %}
-    {% block main_after %}{% endblock %}
+    </section>
     {% set event = trigger(constant('App\\Event\\ThemeEvent::CONTENT_AFTER')) %}
     {{ event.content|raw }}
     {% if page_setup is defined and page_setup.help is not null %}
@@ -142,7 +141,7 @@
     {% set mylogo %}{{ parent() }}{% endset %}
     {# only for mobile view #}
     <div class="d-flex justify-content-start flex-fill d-lg-none">
-        <h2 class="page-title d-lg-none ps-2 text-white">
+        <h2 class="page-title d-lg-none ps-2">
             {{- block('page_title') -}}
         </h2>
         {{ mylogo }}
