@@ -17,6 +17,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
+ * Adds the links in the user profile dropdown in the template on each page.
+ *
  * @internal
  */
 class UserDetailsSubscriber implements EventSubscriberInterface

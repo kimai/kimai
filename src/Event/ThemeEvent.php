@@ -29,6 +29,8 @@ class ThemeEvent extends Event
     private string $content = '';
 
     /**
+     * User is nullable, because theme events are triggered on anonymous pages, like "Login" or "Kiosk"
+     *
      * @param array<string, mixed|array<mixed>> $payload
      */
     public function __construct(private readonly ?User $user = null, protected array $payload = [])
