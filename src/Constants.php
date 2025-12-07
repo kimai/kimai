@@ -21,7 +21,7 @@ final class Constants
     /**
      * The current release: major * 10000 + minor * 100 + patch
      */
-    public const VERSION_ID = 24400;
+    public const VERSION_ID = 24500;
     /**
      * The software name
      */
