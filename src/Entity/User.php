@@ -352,6 +352,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
         $all = [];
         foreach ($this->preferences as $preference) {
+            if ($preference->getName() === null || $preference->getName()[0] === '_') {
+                continue;
+            }
             if ($preference->isEnabled() && !\in_array($preference->getName(), $skip)) {
                 $all[] = $preference;
             }
@@ -370,7 +373,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     /**
      * @param iterable<UserPreference> $preferences
-     * @return User
      */
     public function setPreferences(iterable $preferences): User
     {
@@ -384,7 +386,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     }
 
     /**
-     * @param string $name
      * @param bool|int|string|float|null $value
      */
     public function setPreferenceValue(string $name, $value = null): void
