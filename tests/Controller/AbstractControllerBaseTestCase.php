@@ -250,7 +250,7 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
 
     protected function assertMainContentClass(HttpKernelBrowser $client, string $classname): void
     {
-        self::assertStringContainsString('<section id="" class="content ' . $classname . '">', $client->getResponse()->getContent());
+        self::assertStringContainsString('<section class="content ' . $classname . '">', $client->getResponse()->getContent());
     }
 
     /**
@@ -363,7 +363,7 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
      */
     protected function assertCalloutWidgetWithMessage(HttpKernelBrowser $client, string $message): void
     {
-        $node = $client->getCrawler()->filter('div.alert.alert-warning.alert-important');
+        $node = $client->getCrawler()->filter('div.alert.alert-info');
         self::assertStringContainsString($message, $node->text(null, true));
     }
 
