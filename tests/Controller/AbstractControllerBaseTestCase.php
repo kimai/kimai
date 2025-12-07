@@ -253,17 +253,11 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
         self::assertStringContainsString('<section class="content ' . $classname . '">', $client->getResponse()->getContent());
     }
 
-    /**
-     * @param HttpKernelBrowser $client
-     */
     protected function assertHasDataTable(HttpKernelBrowser $client): void
     {
         self::assertStringContainsString('<table class="table table-hover dataTable" role="grid" data-reload-event="', $client->getResponse()->getContent());
     }
 
-    /**
-     * @param HttpKernelBrowser $client
-     */
     protected static function assertHasProgressbar(HttpKernelBrowser $client): void
     {
         $content = $client->getResponse()->getContent();
@@ -272,11 +266,6 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
         self::assertStringContainsString('" aria-valuemin="0" aria-valuemax="100" style="width: ', $content);
     }
 
-    /**
-     * @param HttpKernelBrowser $client
-     * @param string $class
-     * @param int $count
-     */
     protected function assertDataTableRowCount(HttpKernelBrowser $client, string $class, int $count): void
     {
         $node = $client->getCrawler()->filter('section.content div.' . $class . ' table.dataTable tbody tr:not(.summary)');
@@ -284,8 +273,7 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
     }
 
     /**
-     * @param HttpKernelBrowser $client
-     * @param array $buttons
+     * @param array<string, string> $buttons
      */
     protected function assertPageActions(HttpKernelBrowser $client, array $buttons): void
     {
@@ -349,18 +337,11 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
         $this->assertHasValidationError($client, $url, $formSelector, $formData, $fieldNames);
     }
 
-    /**
-     * @param HttpKernelBrowser $client
-     */
     protected function assertHasNoEntriesWithFilter(HttpKernelBrowser $client): void
     {
         $this->assertCalloutWidgetWithMessage($client, 'No entries were found based on your selected filters.');
     }
 
-    /**
-     * @param HttpKernelBrowser $client
-     * @param string $message
-     */
     protected function assertCalloutWidgetWithMessage(HttpKernelBrowser $client, string $message): void
     {
         $node = $client->getCrawler()->filter('div.alert.alert-info');
@@ -377,19 +358,11 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
         $this->assertHasFlashSuccess($client, 'Saved changes');
     }
 
-    /**
-     * @param HttpKernelBrowser $client
-     * @param string|null $message
-     */
     protected function assertHasFlashSuccess(HttpKernelBrowser $client, ?string $message = null): void
     {
         $this->assertHasFlashMessage($client, 'success', $message);
     }
 
-    /**
-     * @param HttpKernelBrowser $client
-     * @param string|null $message
-     */
     protected function assertHasFlashError(HttpKernelBrowser $client, ?string $message = null): void
     {
         $this->assertHasFlashMessage($client, 'error', $message);
