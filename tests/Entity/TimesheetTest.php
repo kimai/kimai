@@ -155,26 +155,6 @@ class TimesheetTest extends TestCase
         self::assertTrue($sut->isBillable());
     }
 
-    public function testCategory(): void
-    {
-        $sut = new Timesheet();
-        self::assertInstanceOf(Timesheet::class, $sut->setCategory(Timesheet::HOLIDAY));
-        self::assertEquals('holiday', $sut->getCategory());
-        self::assertInstanceOf(Timesheet::class, $sut->setCategory(Timesheet::WORK));
-        self::assertEquals('work', $sut->getCategory());
-        self::assertInstanceOf(Timesheet::class, $sut->setCategory(Timesheet::SICKNESS));
-        self::assertEquals('sickness', $sut->getCategory());
-        self::assertInstanceOf(Timesheet::class, $sut->setCategory(Timesheet::PARENTAL));
-        self::assertEquals('parental', $sut->getCategory());
-        self::assertInstanceOf(Timesheet::class, $sut->setCategory(Timesheet::OVERTIME));
-        self::assertEquals('overtime', $sut->getCategory());
-
-        self::expectException(\InvalidArgumentException::class);
-        self::expectExceptionMessage('Invalid timesheet category "foo" given, expected one of: work, holiday, sickness, parental, overtime');
-
-        $sut->setCategory('foo');
-    }
-
     public function testClone(): void
     {
         $sut = new Timesheet();

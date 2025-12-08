@@ -659,7 +659,6 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'billable' => 'bool',
                     'fixedRate' => '@float',
                     'hourlyRate' => '@float',
-                    // TODO new fields: category
                 ];
 
             case 'TimesheetExpanded':
@@ -680,7 +679,6 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'billable' => 'bool',
                     'fixedRate' => '@float',
                     'hourlyRate' => '@float',
-                    // TODO new fields: category
                 ];
 
             case 'TimesheetCollection':
