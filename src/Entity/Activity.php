@@ -96,7 +96,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
      */
     #[ORM\OneToMany(mappedBy: 'activity', targetEntity: ActivityMeta::class, cascade: ['persist'])]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Activity'])]
+    #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: 'array<App\Entity\ActivityMeta>')]
     #[Serializer\SerializedName('metaFields')]
     #[Serializer\Accessor(getter: 'getVisibleMetaFields')]

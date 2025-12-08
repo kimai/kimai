@@ -436,6 +436,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'currency' => 'string', // since 2.40.0
                     'country' => 'string', // since 2.40.0
                     'company' => '@string', // since 2.40.0
+                    'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'], // since 2.45
                 ];
 
                 // if a list of customers is loaded
@@ -506,6 +507,8 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'customer' => 'int',
                     'number' => '@string',
                     'orderNumber' => '@string',
+                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'], // since 2.45
+                    'orderDate' => '@date', // since 2.45
                     'globalActivities' => 'bool',
                     'comment' => '@string',
                     'start' => '@datetime',
@@ -521,8 +524,10 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'billable' => 'bool',
                     'color' => '@string',
                     'customer' => ['result' => 'object', 'type' => 'Customer'],
+                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'], // since 2.45
                     'number' => '@string',
                     'orderNumber' => '@string',
+                    'orderDate' => '@date', // since 2.45
                     'globalActivities' => 'bool',
                     'comment' => '@string',
                     'start' => '@datetime',
@@ -539,6 +544,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'customer' => 'int',
                     'number' => '@string',
                     'orderNumber' => '@string',
+                    'orderDate' => '@date', // since 2.45
                     'color' => '@string',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'parentTitle' => 'string',
@@ -583,6 +589,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'project' => '@int',
                     'number' => '@string',
                     'color' => '@string',
+                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'], // since 2.45
                     'comment' => '@string',
                 ];
 
@@ -595,6 +602,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'project' => ['result' => 'object', 'type' => '@ProjectExpanded'],
                     'number' => '@string',
                     'color' => '@string',
+                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'], // since 2.45
                     'comment' => '@string',
                 ];
 
