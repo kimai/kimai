@@ -75,6 +75,8 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
             'entry.duration_format' => $formatter->getFormattedDuration($item->getDuration()),
             'entry.duration_decimal' => $formatter->getFormattedDecimalDuration($item->getDuration()),
             'entry.duration_minutes' => (int) ($item->getDuration() / 60),
+            // prepare optional field with empty string
+            'entry.activity' => '',
         ];
 
         if ($begin !== null) {
