@@ -56,7 +56,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Subresource', 'Expanded'])]
+    #[Serializer\Groups(['Expanded'])]
     #[OA\Property(ref: '#/components/schemas/Customer')]
     private ?Customer $customer = null;
     /**
