@@ -304,12 +304,13 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'user' => ['result' => 'object', 'type' => '@User'],
                     'dueDays' => 'int',
                     'invoiceNumber' => 'string',
-                    'metaFields' => 'array',
                     'paymentDate' => '@datetime',
                     'status' => 'string',
                     'tax' => 'float',
                     'total' => 'float',
                     'vat' => 'float',
+                    'overdue' => 'bool',
+                    'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'], // since 2.45
                 ];
 
             case 'PageActionItem':

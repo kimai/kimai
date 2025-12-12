@@ -60,7 +60,7 @@ class Invoice implements EntityWithMetaFields
     private ?string $invoiceNumber = null;
     #[ORM\Column(name: 'comment', type: Types::TEXT, nullable: true)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Invoice'])]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'comment')]
     private ?string $comment = null;
     #[ORM\ManyToOne(targetEntity: Customer::class)]
@@ -79,8 +79,6 @@ class Invoice implements EntityWithMetaFields
     private ?User $user = null;
     #[ORM\Column(name: 'created_at', type: Types::DATETIME_MUTABLE, nullable: false)]
     #[Assert\NotNull]
-    #[Serializer\Expose]
-    #[Serializer\Groups(['Default'])]
     private ?\DateTime $createdAt = null;
     #[ORM\Column(name: 'timezone', type: Types::STRING, length: 64, nullable: false)]
     private ?string $timezone = null;
@@ -107,7 +105,7 @@ class Invoice implements EntityWithMetaFields
     #[Assert\NotNull]
     #[Assert\Range(min: 0, max: 999)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Invoice'])]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'due_days', type: 'integer')]
     private int $dueDays = 30;
     #[ORM\Column(name: 'vat', type: Types::FLOAT, nullable: false)]
@@ -140,7 +138,7 @@ class Invoice implements EntityWithMetaFields
      */
     #[ORM\OneToMany(mappedBy: 'invoice', targetEntity: InvoiceMeta::class, cascade: ['persist'])]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Invoice'])]
+    #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: 'array<App\Entity\InvoiceMeta>')]
     #[Serializer\SerializedName('metaFields')]
     #[Serializer\Accessor(getter: 'getVisibleMetaFields')]
@@ -176,6 +174,9 @@ class Invoice implements EntityWithMetaFields
         return $this->total;
     }
 
+    #[Serializer\VirtualProperty]
+    #[Serializer\SerializedName('createdAt')]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(name: 'createdAt', label: 'date', type: 'datetime')]
     public function getCreatedAt(): ?\DateTime
     {
@@ -202,6 +203,9 @@ class Invoice implements EntityWithMetaFields
         return $dueDate;
     }
 
+    #[Serializer\VirtualProperty()]
+    #[Serializer\SerializedName('overdue')]
+    #[Serializer\Groups(['Default'])]
     public function isOverdue(): bool
     {
         if (null === $this->getDueDate()) {
