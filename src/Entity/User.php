@@ -169,6 +169,8 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[Assert\NotBlank(groups: ['Registration', 'UserCreate', 'Profile'])]
     #[Assert\Length(min: 2, max: 180)]
     #[Assert\Email(mode: 'html5', groups: ['Registration', 'UserCreate', 'Profile'])]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?string $email = null;
     #[ORM\Column(name: 'account', type: Types::STRING, length: 30, nullable: true)]
     #[Assert\Length(max: 30)]
@@ -219,6 +221,8 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[ORM\Column(name: 'totp_enabled', type: Types::BOOLEAN, nullable: false, options: ['default' => false])]
     private bool $totpEnabled = false;
     #[ORM\Column(name: 'system_account', type: Types::BOOLEAN, nullable: false, options: ['default' => false])]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private bool $systemAccount = false;
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]

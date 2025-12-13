@@ -355,8 +355,10 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                 return [
                     'id' => 'int',
                     'username' => 'string',
+                    'email' => 'string',
                     'enabled' => 'bool',
                     'apiToken' => 'bool',
+                    'systemAccount' => 'bool',
                     'color' => '@string',
                     'avatar' => '@string',
                     'alias' => '@string',
@@ -370,8 +372,10 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                 return [
                     'id' => 'int',
                     'username' => 'string',
+                    'email' => 'string',
                     'enabled' => 'bool',
                     'apiToken' => 'bool',
+                    'systemAccount' => 'bool',
                     'alias' => '@string',
                     'title' => '@string',
                     'supervisor' => ['result' => 'object', 'type' => '@UserEntity'],
