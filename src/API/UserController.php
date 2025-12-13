@@ -66,7 +66,7 @@ final class UserController extends BaseApiController
         $query->setCurrentUser($this->getUser());
 
         $visible = $paramFetcher->get('visible');
-        if (\is_string($visible) && $visible !== '') {
+        if (\is_numeric($visible)) {
             $query->setVisibility((int) $visible);
         }
 
