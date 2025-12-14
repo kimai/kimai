@@ -43,6 +43,7 @@ class TeamTest extends TestCase
     {
         $sut = new Team('foo');
         self::assertNull($sut->getColor());
+        self::assertEquals('#e135f4', $sut->getColorSafe());
         self::assertFalse($sut->hasColor());
 
         $sut->setColor(Constants::DEFAULT_COLOR);

@@ -53,6 +53,7 @@ class CustomerTest extends AbstractEntityTestCase
         self::assertNull($sut->getTimezone());
 
         self::assertNull($sut->getColor());
+        self::assertEquals('#e135f4', $sut->getColorSafe());
         self::assertFalse($sut->hasColor());
         self::assertInstanceOf(Collection::class, $sut->getMetaFields());
         self::assertEquals(0, $sut->getMetaFields()->count());

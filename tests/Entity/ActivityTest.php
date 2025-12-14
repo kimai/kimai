@@ -34,6 +34,7 @@ class ActivityTest extends AbstractEntityTestCase
         self::assertTrue($sut->isBillable());
         self::assertTrue($sut->isGlobal());
         self::assertNull($sut->getColor());
+        self::assertIsString($sut->getColorSafe());
         self::assertFalse($sut->hasColor());
         self::assertInstanceOf(Collection::class, $sut->getMetaFields());
         self::assertEquals(0, $sut->getMetaFields()->count());
@@ -71,6 +72,9 @@ class ActivityTest extends AbstractEntityTestCase
         $sut->setColor('#fffccc');
         self::assertEquals('#fffccc', $sut->getColor());
         self::assertTrue($sut->hasColor());
+        self::assertNotEmpty($sut->getColorSafe());
+        $sut->setName('alsjdkhfalsf');
+        self::assertEquals('#fffccc', $sut->getColorSafe());
 
         $sut->setColor(Constants::DEFAULT_COLOR);
         self::assertNull($sut->getColor());
