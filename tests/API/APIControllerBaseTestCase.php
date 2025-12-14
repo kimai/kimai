@@ -387,6 +387,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'language' => 'string',
                     'locale' => 'string',
                     'timezone' => 'string',
+                    // TODO more info in entity than in collection
                     'supervisor' => ['result' => 'object', 'type' => '@UserEntity'],
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                     'roles' => ['result' => 'array', 'type' => 'string'],
@@ -411,6 +412,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'name' => 'string',
                     'color' => 'string',
                     'members' => ['result' => 'array', 'type' => 'TeamMember'],
+                    // TODO more info in entity than in collection
                     'customers' => ['result' => 'array', 'type' => '@Customer'],
                     'projects' => ['result' => 'array', 'type' => '@Project'],
                     'activities' => ['result' => 'array', 'type' => '@Activity'],
@@ -470,7 +472,6 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'mobile' => '@string',
                     'phone' => '@string',
                     'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'],
-                    // TODO more info in collection than in subresource
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                 ];
 
@@ -496,7 +497,6 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                     // TODO more info in entity than in collection
                     'contact' => '@string',
-                    'address' => '@string',
                     'email' => '@string',
                     'vatId' => '@string',
                     'addressLine1' => '@string',
@@ -506,6 +506,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'postCode' => '@string',
                     'buyerReference' => '@string',
                     // only available in the entity itself
+                    'address' => '@string', // deprecated, do not expose in collection
                     'budget' => 'float',
                     'timeBudget' => 'int',
                     'budgetType' => '@string',
@@ -634,7 +635,6 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'color' => 'string',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'comment' => '@string',
-                    // more than above
                     'parentTitle' => '@string',
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                 ];
