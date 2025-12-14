@@ -29,7 +29,7 @@ final class Util
     }
 
     /**
-     * Makes sure tha the duration is full compatible with decimal format, stripping away overflowing seconds.
+     * Makes sure that the duration is full compatible with decimal format, stripping away overflowing seconds.
      */
     public static function decimalizeDuration(int $seconds): int
     {

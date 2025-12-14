@@ -18,7 +18,7 @@ use App\Timesheet\RateServiceInterface;
  */
 final class RateCalculator implements CalculatorInterface
 {
-    public function __construct(private RateServiceInterface $service)
+    public function __construct(private readonly RateServiceInterface $service)
     {
     }
 

@@ -49,11 +49,11 @@ final class ServiceInvoice
     private array $invoiceItemRepositories = [];
 
     public function __construct(
-        private InvoiceDocumentRepository $documents,
-        private FileHelper $fileHelper,
-        private InvoiceRepository $invoiceRepository,
-        private LocaleService $formatter,
-        private InvoiceModelFactory $invoiceModelFactory
+        private readonly InvoiceDocumentRepository $documents,
+        private readonly FileHelper $fileHelper,
+        private readonly InvoiceRepository $invoiceRepository,
+        private readonly LocaleService $formatter,
+        private readonly InvoiceModelFactory $invoiceModelFactory
     ) {
     }
 
