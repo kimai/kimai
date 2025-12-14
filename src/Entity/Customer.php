@@ -122,19 +122,19 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[ORM\Column(name: 'phone', type: Types::STRING, length: 30, nullable: true)]
     #[Assert\Length(max: 30)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer'])]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'phone')]
     private ?string $phone = null;
     #[ORM\Column(name: 'fax', type: Types::STRING, length: 30, nullable: true)]
     #[Assert\Length(max: 30)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer'])]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'fax')]
     private ?string $fax = null;
     #[ORM\Column(name: 'mobile', type: Types::STRING, length: 30, nullable: true)]
     #[Assert\Length(max: 30)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer'])]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'mobile')]
     private ?string $mobile = null;
     /**
