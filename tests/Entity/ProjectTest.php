@@ -74,7 +74,7 @@ class ProjectTest extends AbstractEntityTestCase
         self::assertInstanceOf(Project::class, $sut->setName('123456789'));
         self::assertEquals('123456789', (string) $sut);
 
-        self::assertEquals('#e135f4', $sut->getColorSafe());
+        self::assertEquals('#FF9800', $sut->getColorSafe());
 
         self::assertInstanceOf(Project::class, $sut->setOrderNumber('123456789'));
         self::assertEquals('123456789', $sut->getOrderNumber());

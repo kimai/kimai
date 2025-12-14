@@ -187,11 +187,13 @@ class UserTest extends TestCase
         self::assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
 
+        $sut->setUsername('foo test 123');
+        self::assertEquals('#a972c9', $sut->getColorSafe());
+
         $sut->setColor('#000000');
         self::assertEquals('#000000', $sut->getColor());
         self::assertTrue($sut->hasColor());
-        $sut->setUsername('foo test 123');
-        self::assertEquals('#a972c9', $sut->getColorSafe());
+        self::assertEquals('#000000', $sut->getColorSafe());
     }
 
     public function testWizards(): void
