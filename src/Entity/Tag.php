@@ -20,6 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\UniqueConstraint(columns: ['name'])]
 #[ORM\Entity(repositoryClass: TagRepository::class)]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[ORM\Index(columns: ['visible'])]
 #[UniqueEntity('name')]
 #[Serializer\ExclusionPolicy('all')]
 class Tag

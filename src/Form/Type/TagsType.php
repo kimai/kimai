@@ -39,7 +39,7 @@ final class TagsType extends AbstractType
     public function getParent(): string
     {
         if ($this->count === null) {
-            $this->count = $this->repository->count([]);
+            $this->count = $this->repository->count(['visible' => true]);
         }
 
         if ($this->count > self::MAX_AMOUNT_SELECT) {
