@@ -501,14 +501,14 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'email' => '@string',
                     'budget' => 'float',
                     'timeBudget' => 'int',
-                    'vatId' => '@string', // since 1.10
-                    'budgetType' => '@string', // since 1.15
-                    'addressLine1' => '@string', // since 2.32
-                    'addressLine2' => '@string', // since 2.32
-                    'addressLine3' => '@string', // since 2.32
-                    'city' => '@string', // since 2.32
-                    'postCode' => '@string', // since 2.32
-                    'buyerReference' => '@string', // since 2.41
+                    'vatId' => '@string',
+                    'budgetType' => '@string',
+                    'addressLine1' => '@string',
+                    'addressLine2' => '@string',
+                    'addressLine3' => '@string',
+                    'city' => '@string',
+                    'postCode' => '@string',
+                    'buyerReference' => '@string',
                 ];
 
                 // if a project is embedded
