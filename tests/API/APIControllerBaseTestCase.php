@@ -310,7 +310,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'total' => 'float',
                     'vat' => 'float',
                     'overdue' => 'bool',
-                    'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'], // since 2.45
+                    'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'],
                 ];
 
             case 'PageActionItem':
@@ -438,9 +438,9 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'color' => '@string',
                     'number' => '@string',
                     'comment' => '@string',
-                    'currency' => 'string', // since 2.40.0
-                    'country' => 'string', // since 2.40.0
-                    'company' => '@string', // since 2.40.0
+                    'currency' => 'string',
+                    'country' => 'string',
+                    'company' => '@string',
                     'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'], // since 2.45
                 ];
 
@@ -532,7 +532,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'], // since 2.45
                     'number' => '@string',
                     'orderNumber' => '@string',
-                    'orderDate' => '@date', // since 2.45
+                    'orderDate' => '@date',
                     'globalActivities' => 'bool',
                     'comment' => '@string',
                     'start' => '@datetime',
