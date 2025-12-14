@@ -444,6 +444,8 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'currency' => 'string',
                     'country' => 'string',
                     'company' => '@string',
+                    'homepage' => '@string',
+                    'timezone' => 'string',
                     'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'], // since 2.45
                 ];
 
@@ -457,16 +459,17 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'color' => '@string',
                     'number' => '@string',
                     'comment' => '@string',
-                    'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'],
-                    'teams' => ['result' => 'array', 'type' => 'Team'],
-                    'currency' => 'string', // since 1.10
+                    'currency' => 'string',
                     'country' => 'string',
                     'company' => '@string',
                     'homepage' => '@string',
+                    'timezone' => 'string',
+                    // TODO more info in collection than in subresource
                     'fax' => '@string',
                     'mobile' => '@string',
                     'phone' => '@string',
-                    'timezone' => 'string',
+                    'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'],
+                    'teams' => ['result' => 'array', 'type' => 'Team'],
                 ];
 
                 // if a customer is loaded explicitly
@@ -477,6 +480,16 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'visible' => 'bool',
                     'billable' => 'bool',
                     'color' => '@string',
+                    'number' => '@string',
+                    'comment' => '@string',
+                    'currency' => 'string',
+                    'country' => 'string',
+                    'company' => '@string',
+                    'homepage' => '@string',
+                    'timezone' => 'string',
+                    'fax' => '@string',
+                    'mobile' => '@string',
+                    'phone' => '@string',
                     'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'],
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                     'homepage' => '@string',
@@ -485,13 +498,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'company' => '@string',
                     'contact' => '@string',
                     'address' => '@string',
-                    'country' => 'string',
-                    'currency' => 'string',
-                    'phone' => '@string',
-                    'fax' => '@string',
-                    'mobile' => '@string',
                     'email' => '@string',
-                    'timezone' => 'string',
                     'budget' => 'float',
                     'timeBudget' => 'int',
                     'vatId' => '@string', // since 1.10

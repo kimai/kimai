@@ -149,7 +149,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[ORM\Column(name: 'homepage', type: Types::STRING, length: 100, nullable: true)]
     #[Assert\Length(max: 100)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer'])]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'homepage')]
     private ?string $homepage = null;
     /**
@@ -160,7 +160,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Assert\Timezone]
     #[Assert\Length(max: 64)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer'])]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'timezone')]
     private ?string $timezone = null;
     /**
