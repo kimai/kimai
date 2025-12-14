@@ -327,7 +327,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                 return [
                     'id' => 'int',
                     'name' => 'string',
-                    'color' => '@string',
+                    'color' => 'string',
                     'color-safe' => 'string',
                     'visible' => 'bool',
                 ];
@@ -359,7 +359,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'enabled' => 'bool',
                     'apiToken' => 'bool',
                     'systemAccount' => 'bool',
-                    'color' => '@string',
+                    'color' => 'string',
                     'avatar' => '@string',
                     'alias' => '@string',
                     'accountNumber' => '@string',
@@ -379,7 +379,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'enabled' => 'bool',
                     'apiToken' => 'bool',
                     'systemAccount' => 'bool',
-                    'color' => '@string',
+                    'color' => 'string',
                     'avatar' => '@string',
                     'alias' => '@string',
                     'accountNumber' => '@string',
@@ -402,7 +402,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                 return [
                     'id' => 'int',
                     'name' => 'string',
-                    'color' => '@string',
+                    'color' => 'string',
                 ];
 
                 // explicitly requested team
@@ -410,7 +410,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                 return [
                     'id' => 'int',
                     'name' => 'string',
-                    'color' => '@string',
+                    'color' => 'string',
                     'members' => ['result' => 'array', 'type' => 'TeamMember'],
                     'customers' => ['result' => 'array', 'type' => '@Customer'],
                     'projects' => ['result' => 'array', 'type' => '@Project'],
@@ -438,7 +438,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'name' => 'string',
                     'visible' => 'bool',
                     'billable' => 'bool',
-                    'color' => '@string',
+                    'color' => 'string',
                     'number' => '@string',
                     'comment' => '@string',
                     'currency' => 'string',
@@ -456,7 +456,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'name' => 'string',
                     'visible' => 'boolean',
                     'billable' => 'bool',
-                    'color' => '@string',
+                    'color' => 'string',
                     'number' => '@string',
                     'comment' => '@string',
                     'currency' => 'string',
@@ -479,7 +479,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'name' => 'string',
                     'visible' => 'bool',
                     'billable' => 'bool',
-                    'color' => '@string',
+                    'color' => 'string',
                     'number' => '@string',
                     'comment' => '@string',
                     'currency' => 'string',
@@ -514,7 +514,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'name' => 'string',
                     'visible' => 'bool',
                     'billable' => 'bool',
-                    'color' => '@string',
+                    'color' => 'string',
                     'customer' => 'int',
                     'number' => '@string',
                     'orderNumber' => '@string',
@@ -533,7 +533,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'name' => 'string',
                     'visible' => 'bool',
                     'billable' => 'bool',
-                    'color' => '@string',
+                    'color' => 'string',
                     'customer' => ['result' => 'object', 'type' => 'Customer'],
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'], // since 2.45
                     'number' => '@string',
@@ -552,6 +552,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'name' => 'string',
                     'visible' => 'bool',
                     'billable' => 'bool',
+                    'color' => 'string',
                     'customer' => 'int',
                     'number' => '@string',
                     'orderNumber' => '@string',
@@ -573,6 +574,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'name' => 'string',
                     'visible' => 'bool',
                     'billable' => 'bool',
+                    'color' => 'string',
                     'customer' => 'int',
                     'number' => '@string',
                     'color' => '@string',
@@ -599,7 +601,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'billable' => 'bool',
                     'project' => '@int',
                     'number' => '@string',
-                    'color' => '@string',
+                    'color' => 'string',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'], // since 2.45
                     'comment' => '@string',
                 ];
@@ -612,7 +614,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'billable' => 'bool',
                     'project' => ['result' => 'object', 'type' => '@ProjectExpanded'],
                     'number' => '@string',
-                    'color' => '@string',
+                    'color' => 'string',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'], // since 2.45
                     'comment' => '@string',
                 ];
@@ -626,7 +628,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'billable' => 'bool',
                     'project' => '@int',
                     'number' => '@string',
-                    'color' => '@string',
+                    'color' => 'string',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'parentTitle' => '@string',
                     'comment' => '@string',
@@ -642,7 +644,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'billable' => 'bool',
                     'project' => '@int',
                     'number' => '@string',
-                    'color' => '@string',
+                    'color' => 'string',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'parentTitle' => '@string',
                     'comment' => '@string',
