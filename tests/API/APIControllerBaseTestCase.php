@@ -328,7 +328,6 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'id' => 'int',
                     'name' => 'string',
                     'color' => 'string',
-                    'color-safe' => 'string',
                     'visible' => 'bool',
                 ];
 
