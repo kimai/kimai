@@ -493,21 +493,22 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'mobile' => '@string',
                     'phone' => '@string',
                     'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'],
-                    // TODO more info in entity than in collection
                     'teams' => ['result' => 'array', 'type' => 'Team'],
+                    // TODO more info in entity than in collection
                     'contact' => '@string',
                     'address' => '@string',
                     'email' => '@string',
-                    'budget' => 'float',
-                    'timeBudget' => 'int',
                     'vatId' => '@string',
-                    'budgetType' => '@string',
                     'addressLine1' => '@string',
                     'addressLine2' => '@string',
                     'addressLine3' => '@string',
                     'city' => '@string',
                     'postCode' => '@string',
                     'buyerReference' => '@string',
+                    // only available in the entity itself
+                    'budget' => 'float',
+                    'timeBudget' => 'int',
+                    'budgetType' => '@string',
                 ];
 
                 // if a project is embedded
@@ -579,19 +580,19 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'color' => 'string',
                     'customer' => 'int',
                     'number' => '@string',
-                    'color' => '@string',
-                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
-                    'parentTitle' => 'string',
-                    'start' => '@date',
-                    'end' => '@date',
-                    'globalActivities' => 'bool',
-                    'teams' => ['result' => 'array', 'type' => 'Team'],
-                    'comment' => '@string',
-                    'budget' => 'float',
-                    'timeBudget' => 'int',
                     'orderNumber' => '@string',
                     'orderDate' => '@date',
-                    'budgetType' => '@string', // since 1.15
+                    'globalActivities' => 'bool',
+                    'comment' => '@string',
+                    'start' => '@date',
+                    'end' => '@date',
+                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
+                    'teams' => ['result' => 'array', 'type' => 'Team'],
+                    'parentTitle' => 'string',
+                    // only available in the entity itself
+                    'budget' => 'float',
+                    'timeBudget' => 'int',
+                    'budgetType' => '@string',
                 ];
 
                 // embedded activities
@@ -652,7 +653,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'comment' => '@string',
                     'parentTitle' => '@string',
                     'teams' => ['result' => 'array', 'type' => 'Team'],
-                    // these should only be in the entity
+                    // only available in the entity itself
                     'budget' => 'float',
                     'timeBudget' => 'int',
                     'budgetType' => '@string',
