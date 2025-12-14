@@ -424,7 +424,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      */
     #[Serializer\VirtualProperty]
     #[Serializer\SerializedName('locale')]
-    #[Serializer\Groups(['User_Entity'])]
+    #[Serializer\Groups(['Default'])]
     #[OA\Property(type: 'string')]
     public function getLocale(): string
     {
@@ -439,7 +439,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     #[Serializer\VirtualProperty]
     #[Serializer\SerializedName('timezone')]
-    #[Serializer\Groups(['User_Entity'])]
+    #[Serializer\Groups(['Default'])]
     #[OA\Property(type: 'string')]
     public function getTimezone(): string
     {
@@ -447,11 +447,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     }
 
     /**
-     * The locale used for translations
+     * The locale used for translating the UI
      */
     #[Serializer\VirtualProperty]
     #[Serializer\SerializedName('language')]
-    #[Serializer\Groups(['User_Entity'])]
+    #[Serializer\Groups(['Default'])]
     #[OA\Property(type: 'string')]
     public function getLanguage(): string
     {
