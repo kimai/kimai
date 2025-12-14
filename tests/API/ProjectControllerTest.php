@@ -329,7 +329,7 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         self::assertNull($result['orderNumber']);
         self::assertNull($result['number']);
         self::assertNull($result['comment']);
-        self::assertNull($result['color']);
+        self::assertEquals('#2ECC40', $result['color']);
         self::assertTrue($result['globalActivities']);
         self::assertTrue($result['billable']);
         self::assertTrue($result['visible']);
@@ -374,7 +374,7 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         self::assertEquals('Test', $result['parentTitle']);
         self::assertNotEmpty($result['id']);
         self::assertIsArray($result['teams']);
-        self::assertEquals([['id' => 1, 'name' => 'Test team', 'color' => null]], $result['teams']);
+        self::assertEquals([['id' => 1, 'name' => 'Test team', 'color' => '#03A9F4']], $result['teams']);
         self::assertIsArray($result['metaFields']);
         self::assertEquals([], $result['metaFields']);
         self::assertEquals('foo', $result['name']);
