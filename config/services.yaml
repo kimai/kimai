@@ -86,6 +86,9 @@ services:
     App\Timesheet\RateService:
         arguments: ['%kimai.timesheet.rates%']
 
+    App\Timesheet\RateCalculator\RateCalculatorMode:
+        factory: ['@App\Timesheet\RateCalculator\RateCalculatorFactory', getRateCalculatorMode]
+
     # ================================================================================
     # SECURITY & VOTER
     # ================================================================================
