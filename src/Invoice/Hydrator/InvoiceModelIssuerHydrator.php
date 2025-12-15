@@ -9,7 +9,6 @@
 
 namespace App\Invoice\Hydrator;
 
-use App\Customer\CustomerStatisticService;
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
 use Symfony\Component\Intl\Countries;
