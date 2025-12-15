@@ -9,12 +9,6 @@
 
 namespace App\Event;
 
-use App\Entity\Team;
-
-class TeamDeleteEvent extends AbstractTeamEvent
+final class TeamDeleteEvent extends AbstractTeamEvent
 {
-    public function __construct(Team $team)
-    {
-        parent::__construct($team);
-    }
 }

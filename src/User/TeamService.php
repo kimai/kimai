@@ -15,11 +15,11 @@ use App\Event\TeamCreatePostEvent;
 use App\Event\TeamCreatePreEvent;
 use App\Event\TeamUpdatePostEvent;
 use App\Event\TeamUpdatePreEvent;
-use App\Validator\ValidationFailedException;
-use Psr\EventDispatcher\EventDispatcherInterface;
 use App\Repository\TeamRepository;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use App\Validator\ValidationFailedException;
 use InvalidArgumentException;
+use Psr\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class TeamService
 {
@@ -49,6 +49,7 @@ final class TeamService
     {
         $team = new Team($name);
         $this->dispatcher->dispatch(new TeamCreateEvent($team));
+
         return $team;
     }
 
@@ -58,14 +59,10 @@ final class TeamService
             // invalidate cache only on new teams
             return $this->saveNewTeam($team);
         }
+
         return $this->updateTeam($team);
     }
 
-    /**
-     *
-     * @param Team $team
-     * @return Team
-     */
     private function saveNewTeam(Team $team): Team
     {
         if (null !== $team->getId()) {
@@ -86,7 +83,7 @@ final class TeamService
         return $this->countTeams() > 0;
     }
 
-    private function validateTeam(Team $team, array $groups = []):void
+    private function validateTeam(Team $team, array $groups = []): void
     {
         $errors = $this->validator->validate($team, null, $groups);
 

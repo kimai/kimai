@@ -38,6 +38,7 @@ use App\Repository\Query\TeamQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\Query\VisibilityInterface;
 use App\Repository\TeamRepository;
+use App\User\TeamService;
 use App\Utils\Context;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
@@ -267,19 +268,19 @@ final class ProjectController extends AbstractController
     #[Route(path: '/{id}/create_team', name: 'project_team_create', methods: ['GET'])]
     #[IsGranted('create_team')]
     #[IsGranted('permissions', 'project')]
-    public function createDefaultTeamAction(Project $project, TeamRepository $teamRepository): Response
+    public function createDefaultTeamAction(Project $project, TeamRepository $teamRepository, TeamService $teamService): Response
     {
         $defaultTeam = $teamRepository->findOneBy(['name' => $project->getName()]);
 
         if (null === $defaultTeam) {
-            $defaultTeam = new Team($project->getName());
+            $defaultTeam = $teamService->createNewTeam($project->getName());
         }
 
         $defaultTeam->addTeamlead($this->getUser());
         $defaultTeam->addProject($project);
 
         try {
-            $teamRepository->saveTeam($defaultTeam);
+            $teamService->saveTeam($defaultTeam);
         } catch (\Exception $ex) {
             $this->flashUpdateException($ex);
         }

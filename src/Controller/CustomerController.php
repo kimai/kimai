@@ -35,6 +35,7 @@ use App\Repository\Query\TeamQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\Query\VisibilityInterface;
 use App\Repository\TeamRepository;
+use App\User\TeamService;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -239,19 +240,19 @@ final class CustomerController extends AbstractController
     #[Route(path: '/{id}/create_team', name: 'customer_team_create', methods: ['GET'])]
     #[IsGranted('create_team')]
     #[IsGranted('permissions', 'customer')]
-    public function createDefaultTeamAction(Customer $customer, TeamRepository $teamRepository): Response
+    public function createDefaultTeamAction(Customer $customer, TeamRepository $teamRepository, TeamService $teamService): Response
     {
         $defaultTeam = $teamRepository->findOneBy(['name' => $customer->getName()]);
 
         if (null === $defaultTeam) {
-            $defaultTeam = new Team($customer->getName());
+            $defaultTeam = $teamService->createNewTeam($customer->getName());
         }
 
         $defaultTeam->addTeamlead($this->getUser());
         $defaultTeam->addCustomer($customer);
 
         try {
-            $teamRepository->saveTeam($defaultTeam);
+            $teamService->saveTeam($defaultTeam);
         } catch (\Exception $ex) {
             $this->flashUpdateException($ex);
         }
