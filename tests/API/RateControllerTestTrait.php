@@ -15,9 +15,6 @@ use App\Entity\ProjectRate;
 use App\Entity\RateInterface;
 use App\Entity\User;
 
-/**
- * @group integration
- */
 trait RateControllerTestTrait
 {
     abstract protected function getRateUrl(?int $id = 1, ?int $rateId = null): string;

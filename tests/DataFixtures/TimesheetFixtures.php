@@ -310,7 +310,6 @@ final class TimesheetFixtures implements TestFixture
     }
 
     /**
-     * @param \DateTime $start
      * @param array<Tag> $tagArray
      */
     private function createTimesheetEntry(User $user, Activity $activity, Project $project, ?string $description, \DateTime $start, array $tagArray = [], bool $setEndDate = true): Timesheet

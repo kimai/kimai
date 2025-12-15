@@ -12,8 +12,10 @@ namespace App\Tests\Timesheet;
 use App\Timesheet\Util;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
+#[Group('legacy')]
 #[CoversClass(Util::class)]
 class UtilTest extends TestCase
 {
