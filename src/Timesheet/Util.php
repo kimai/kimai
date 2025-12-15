@@ -10,7 +10,7 @@
 namespace App\Timesheet;
 
 /**
- * A static helper class for re-usable functionality.
+ * @deprecated use RateCalculatorMode instead
  */
 final class Util
 {

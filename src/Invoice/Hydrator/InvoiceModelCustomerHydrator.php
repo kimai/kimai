@@ -32,7 +32,7 @@ final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
 
         $values = [
             $prefix . 'id' => $customer->getId(),
-            $prefix . 'address' => $customer->getFormattedAddress() ?? '',
+            $prefix . 'address' => $customer->getFormattedAddress() ?? '', // deprecated since 2.44
             $prefix . 'address_line1' => $customer->getAddressLine1() ?? '',
             $prefix . 'address_line2' => $customer->getAddressLine2() ?? '',
             $prefix . 'address_line3' => $customer->getAddressLine3() ?? '',
