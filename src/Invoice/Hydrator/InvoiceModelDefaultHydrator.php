@@ -11,11 +11,16 @@ namespace App\Invoice\Hydrator;
 
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
+use App\Timesheet\RateCalculator\RateCalculatorMode;
 use Symfony\Component\Intl\Countries;
 
 final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
 {
     private const DATE_PROCESS_FORMAT = 'Y-m-d h:i:s';
+
+    public function __construct(private readonly RateCalculatorMode $rateCalculatorMode)
+    {
+    }
 
     public function hydrate(InvoiceModel $model): array
     {
@@ -60,6 +65,10 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             'invoice.subtotal' => $formatter->getFormattedMoney($subtotal, $currency),
             'invoice.subtotal_nc' => $formatter->getFormattedMoney($subtotal, $currency, false),
             'invoice.subtotal_plain' => $subtotal,
+
+            'invoice.decimals_amount' => $this->rateCalculatorMode->getAmountDecimals(),
+            'invoice.decimals_units' => $this->rateCalculatorMode->getUnitAmountDecimals(),
+            'invoice.decimals_quantity' => $this->rateCalculatorMode->getQuantityDecimals(),
 
             'template.name' => $template->getName() ?? '',
             'template.company' => $template->getCompany() ?? '',

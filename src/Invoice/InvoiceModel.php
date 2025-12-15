@@ -24,6 +24,7 @@ use App\Invoice\Hydrator\InvoiceModelProjectHydrator;
 use App\Invoice\Hydrator\InvoiceModelUserHydrator;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\InvoiceQuery;
+use App\Timesheet\RateCalculator\RateCalculatorMode;
 use Symfony\Component\DependencyInjection\Attribute\Exclude;
 
 /**
@@ -69,11 +70,12 @@ final class InvoiceModel
         ActivityStatisticService $activityStatistic,
         private readonly Customer $customer,
         private readonly InvoiceTemplate $template,
+        private readonly RateCalculatorMode $rateCalculatorMode
     )
     {
         $this->invoiceDate = new \DateTimeImmutable();
         $this->formatter = $formatter;
-        $this->addModelHydrator(new InvoiceModelDefaultHydrator());
+        $this->addModelHydrator(new InvoiceModelDefaultHydrator($rateCalculatorMode));
         $this->addModelHydrator(new InvoiceModelCustomerHydrator($customerStatistic));
         $this->addModelHydrator(new InvoiceModelIssuerHydrator());
         $this->addModelHydrator(new InvoiceModelProjectHydrator($projectStatistic));
@@ -207,6 +209,11 @@ final class InvoiceModel
     public function getCalculator(): ?CalculatorInterface
     {
         return $this->calculator;
+    }
+
+    public function getRateCalculatorMode(): RateCalculatorMode
+    {
+        return $this->rateCalculatorMode;
     }
 
     /**

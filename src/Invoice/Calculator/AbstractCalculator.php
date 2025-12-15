@@ -12,7 +12,6 @@ namespace App\Invoice\Calculator;
 use App\Invoice\InvoiceItem;
 use App\Invoice\InvoiceModel;
 use App\Invoice\TaxRow;
-use App\Timesheet\Util;
 
 abstract class AbstractCalculator
 {
@@ -42,10 +41,10 @@ abstract class AbstractCalculator
         if (\count($this->cached) === 0) {
             foreach ($this->calculateEntries() as $entry) {
                 if (!$entry->isFixedRate() && $entry->getHourlyRate() !== null && $entry->getHourlyRate() > 0) {
-                    $entry->setDuration(Util::decimalizeDuration($entry->getDuration()));
+                    $entry->setDuration($this->model->getRateCalculatorMode()->roundDuration($entry->getDuration()));
                     // when merging many entries, we might run into rounding issues
                     // so we have to recalculate the hourly rate here
-                    $entry->setRate(Util::calculateRate($entry->getHourlyRate(), $entry->getDuration()));
+                    $entry->setRate($this->model->getRateCalculatorMode()->calculateRate($entry->getHourlyRate(), $entry->getDuration()));
                 }
 
                 $this->cached[] = $entry;
