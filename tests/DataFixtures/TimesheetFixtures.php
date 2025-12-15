@@ -15,7 +15,8 @@ use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
-use App\Timesheet\Util;
+use App\Timesheet\RateCalculator\ClassicRateCalculator;
+use App\Timesheet\RateCalculator\RateCalculatorMode;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
@@ -205,6 +206,7 @@ final class TimesheetFixtures implements TestFixture
             }
         }
         $manager->flush();
+        $calculator = new ClassicRateCalculator();
 
         for ($i = 0; $i < $this->amount; $i++) {
             $description = $faker->text();
@@ -225,6 +227,7 @@ final class TimesheetFixtures implements TestFixture
             }
 
             $timesheet = $this->createTimesheetEntry(
+                $calculator,
                 $user,
                 $activity,
                 $project,
@@ -250,6 +253,7 @@ final class TimesheetFixtures implements TestFixture
             }
 
             $timesheet = $this->createTimesheetEntry(
+                $calculator,
                 $user,
                 $activity,
                 $project,
@@ -312,14 +316,23 @@ final class TimesheetFixtures implements TestFixture
     /**
      * @param array<Tag> $tagArray
      */
-    private function createTimesheetEntry(User $user, Activity $activity, Project $project, ?string $description, \DateTime $start, array $tagArray = [], bool $setEndDate = true): Timesheet
+    private function createTimesheetEntry(
+        RateCalculatorMode $calculatorMode,
+        User $user,
+        Activity $activity,
+        Project $project,
+        ?string $description,
+        \DateTime $start,
+        array $tagArray = [],
+        bool $setEndDate = true
+    ): Timesheet
     {
         $end = clone $start;
         $end = $end->modify('+ ' . (rand(1, 86400)) . ' seconds');
 
         $duration = $end->getTimestamp() - $start->getTimestamp();
         $hourlyRate = (float) $user->getPreferenceValue(UserPreference::HOURLY_RATE);
-        $rate = Util::calculateRate($hourlyRate, $duration);
+        $rate = $calculatorMode->calculateRate($hourlyRate, $duration);
 
         $entry = new Timesheet();
         $entry->setActivity($activity);
