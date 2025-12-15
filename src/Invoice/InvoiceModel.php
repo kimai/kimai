@@ -19,6 +19,7 @@ use App\Invoice\Hydrator\InvoiceItemDefaultHydrator;
 use App\Invoice\Hydrator\InvoiceModelActivityHydrator;
 use App\Invoice\Hydrator\InvoiceModelCustomerHydrator;
 use App\Invoice\Hydrator\InvoiceModelDefaultHydrator;
+use App\Invoice\Hydrator\InvoiceModelIssuerHydrator;
 use App\Invoice\Hydrator\InvoiceModelProjectHydrator;
 use App\Invoice\Hydrator\InvoiceModelUserHydrator;
 use App\Project\ProjectStatisticService;
@@ -74,6 +75,7 @@ final class InvoiceModel
         $this->formatter = $formatter;
         $this->addModelHydrator(new InvoiceModelDefaultHydrator());
         $this->addModelHydrator(new InvoiceModelCustomerHydrator($customerStatistic));
+        $this->addModelHydrator(new InvoiceModelIssuerHydrator());
         $this->addModelHydrator(new InvoiceModelProjectHydrator($projectStatistic));
         $this->addModelHydrator(new InvoiceModelActivityHydrator($activityStatistic));
         $this->addModelHydrator(new InvoiceModelUserHydrator());
