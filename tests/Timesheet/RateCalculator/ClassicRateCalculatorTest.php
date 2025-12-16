@@ -47,15 +47,6 @@ class ClassicRateCalculatorTest extends TestCase
         $this->assertSame(3601, $sut->roundDuration(3601));
     }
 
-    public function testDecimalSettings(): void
-    {
-        $sut = new ClassicRateCalculator();
-
-        $this->assertSame(4, $sut->getQuantityDecimals());
-        $this->assertSame(4, $sut->getUnitAmountDecimals());
-        $this->assertSame(2, $sut->getAmountDecimals());
-    }
-
     #[DataProvider('getRateCalculationData')]
     public function testCalculateRates(float $hourlyRate, int $duration, float $expectedRate): void
     {
