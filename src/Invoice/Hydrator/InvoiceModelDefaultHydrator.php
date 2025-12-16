@@ -66,17 +66,13 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             'invoice.subtotal_nc' => $formatter->getFormattedMoney($subtotal, $currency, false),
             'invoice.subtotal_plain' => $subtotal,
 
-            'invoice.decimals_amount' => $this->rateCalculatorMode->getAmountDecimals(),
-            'invoice.decimals_units' => $this->rateCalculatorMode->getUnitAmountDecimals(),
-            'invoice.decimals_quantity' => $this->rateCalculatorMode->getQuantityDecimals(),
-
             'template.name' => $template->getName() ?? '',
-            'template.company' => $template->getCompany() ?? '',
+            'template.company' => $template->getCompany() ?? '', // deprecated since 2.45
             'template.address' => $template->getAddress() ?? '',
             'template.title' => $template->getTitle() ?? '',
             'template.payment_terms' => $template->getPaymentTerms() ?? '',
             'template.due_days' => $template->getDueDays(),
-            'template.vat_id' => $template->getVatId() ?? '',
+            'template.vat_id' => $template->getVatId() ?? '', // deprecated since 2.45
             'template.contact' => $template->getContact() ?? '',
             'template.country' => null,
             'template.country_name' => null,
@@ -84,16 +80,16 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
 
             'query.begin' => '',
             'query.begin_day' => '',
-            'query.begin_process' => null,         // since 2.14
+            'query.begin_process' => null, // since 2.14
             'query.begin_month' => '',
             'query.begin_month_number' => '',
             'query.begin_year' => '',
-            'query.end' => '',                  // since 1.9
-            'query.end_day' => '',              // since 1.9
-            'query.end_process' => null,           // since 2.14
-            'query.end_month' => '',            // since 1.9
-            'query.end_month_number' => '',     // since 1.9
-            'query.end_year' => '',             // since 1.9
+            'query.end' => '', // since 1.9
+            'query.end_day' => '', // since 1.9
+            'query.end_process' => null, // since 2.14
+            'query.end_month' => '', // since 1.9
+            'query.end_month_number' => '', // since 1.9
+            'query.end_year' => '', // since 1.9
 
             // since 2.0.15
             'user.see_others' => ($model->getQuery()?->getUser() === null),
@@ -114,8 +110,8 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
         if ($seller !== null) {
             $country = $seller->getCountry();
             if ($country !== null) {
-                $values['template.country'] = $country;
-                $values['template.country_name'] = Countries::getName($country, $language);
+                $values['template.country'] = $country; // deprecated since 2.45
+                $values['template.country_name'] = Countries::getName($country, $language); // deprecated since 2.45
             }
         }
 
@@ -125,14 +121,10 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             if ($begin !== null) {
                 $values = array_merge($values, [
                     'query.day' => $begin->format('d'),
-                    // @deprecated - but impossible to delete
-                    'query.month' => $formatter->getFormattedMonthName($begin),
-                    // @deprecated - but impossible to delete
-                    'query.month_number' => $begin->format('m'),
-                    // @deprecated - but impossible to delete
-                    'query.year' => $begin->format('Y'),
-                    // @deprecated - but impossible to delete
-                    'query.begin' => $formatter->getFormattedDateTime($begin),
+                    'query.month' => $formatter->getFormattedMonthName($begin), // @deprecated - but impossible to delete
+                    'query.month_number' => $begin->format('m'), // @deprecated - but impossible to delete
+                    'query.year' => $begin->format('Y'), // @deprecated - but impossible to delete
+                    'query.begin' => $formatter->getFormattedDateTime($begin), // @deprecated - but impossible to delete
                     'query.begin_process' => $begin->format(self::DATE_PROCESS_FORMAT), // since 2.14
                     'query.begin_day' => $begin->format('d'),
                     'query.begin_month' => $formatter->getFormattedMonthName($begin),
