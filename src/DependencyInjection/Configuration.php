@@ -369,6 +369,10 @@ final class Configuration implements ConfigurationInterface
                 ->booleanNode('upload_twig')
                     ->defaultFalse()
                 ->end()
+                ->enumNode('rounding_mode')
+                    ->values(['decimal', 'classic'])
+                    ->defaultValue('classic')
+                ->end()
             ->end()
         ;
 

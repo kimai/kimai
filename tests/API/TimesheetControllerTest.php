@@ -426,8 +426,8 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
             'exported' => true,
             'metaFields' => [],
             'hourlyRate' => 137.21,
-            'rate' => 1772.75, // 12,92 * 137,21
-            'internalRate' => 1772.75,
+            'rate' => 1772.2958,
+            'internalRate' => 1772.2958,
         ];
 
         foreach ($expected as $key => $value) {

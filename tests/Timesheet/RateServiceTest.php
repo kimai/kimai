@@ -18,7 +18,7 @@ use App\Entity\ProjectRate;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
-use App\Repository\TimesheetRepository;
+use App\Tests\Mocks\RateServiceFactory;
 use App\Timesheet\RateService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -27,14 +27,11 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(RateService::class)]
 class RateServiceTest extends TestCase
 {
-    protected function getRateRepositoryMock(array $rates = []): TimesheetRepository
+    private function getSut(array $rules = [], array $rates = []): RateService
     {
-        $mock = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->getMock();
-        if (!empty($rates)) {
-            $mock->expects($this->any())->method('findMatchingRates')->willReturn($rates);
-        }
+        $factory = new RateServiceFactory($this);
 
-        return $mock;
+        return $factory->create($rules, $rates);
     }
 
     private static function createDateTime(?string $datetime = null): \DateTime
@@ -51,7 +48,7 @@ class RateServiceTest extends TestCase
         $record->setActivity(new Activity());
         $record->setUser($this->getTestUser());
 
-        $sut = new RateService([], $this->getRateRepositoryMock());
+        $sut = $this->getSut();
         $rate = $sut->calculate($record);
         self::assertEquals(50, $rate->getRate());
     }
@@ -67,7 +64,7 @@ class RateServiceTest extends TestCase
         $record->setActivity(new Activity());
         $record->setUser($this->getTestUser());
 
-        $sut = new RateService([], $this->getRateRepositoryMock());
+        $sut = $this->getSut();
         $rate = $sut->calculate($record);
         self::assertEquals(10, $rate->getRate());
     }
@@ -108,22 +105,22 @@ class RateServiceTest extends TestCase
 
     #[DataProvider('getRateTestData')]
     public function testRates(
-        $expectedRate,
-        $expectedInternalRate,
-        $duration,
-        $userRate,
-        $userInternalRate,
-        $timesheetHourly,
-        $timesheetFixed,
-        $activityRate,
-        $activityInternal,
-        $activityIsFixed,
-        $projectRate,
-        $projectInternal,
-        $projectIsFixed,
-        $customerRate,
-        $customerInternal,
-        $customerIsFixed
+        float $expectedRate,
+        float $expectedInternalRate,
+        int $duration,
+        float $userRate,
+        ?float $userInternalRate,
+        ?float $timesheetHourly,
+        ?float $timesheetFixed,
+        ?float $activityRate,
+        ?float $activityInternal,
+        bool $activityIsFixed,
+        ?float $projectRate,
+        ?float $projectInternal,
+        bool $projectIsFixed,
+        ?float $customerRate,
+        ?float $customerInternal,
+        bool $customerIsFixed
     ): void {
         $customer = new Customer('foo');
 
@@ -174,7 +171,7 @@ class RateServiceTest extends TestCase
             $rates[] = $rate;
         }
 
-        $sut = new RateService([], $this->getRateRepositoryMock($rates));
+        $sut = $this->getSut([], $rates);
         $rate = $sut->calculate($timesheet);
         self::assertEquals($expectedRate, $rate->getRate());
         self::assertEquals($expectedInternalRate, $rate->getInternalRate());
@@ -203,7 +200,7 @@ class RateServiceTest extends TestCase
 
         self::assertEquals(0, $record->getRate());
 
-        $sut = new RateService([], $this->getRateRepositoryMock());
+        $sut = $this->getSut();
         $rate = $sut->calculate($record);
         self::assertEquals(0, $rate->getRate());
     }
@@ -212,7 +209,7 @@ class RateServiceTest extends TestCase
      * Uses the hourly rate from user_preferences to calculate the rate.
      */
     #[DataProvider('getRuleDefinitions')]
-    public function testCalculateWithRulesByUsersHourlyRate($duration, $rules, $expectedRate): void
+    public function testCalculateWithRulesByUsersHourlyRate(int $duration, array $rules, float $expectedRate): void
     {
         $end = self::createDateTime('12:00:00');
         $start = clone $end;
@@ -228,7 +225,7 @@ class RateServiceTest extends TestCase
 
         $record->setEnd($end);
 
-        $sut = new RateService($rules, $this->getRateRepositoryMock());
+        $sut = $this->getSut($rules);
         $rate = $sut->calculate($record);
 
         self::assertEquals($expectedRate, $rate->getRate());
@@ -243,7 +240,7 @@ class RateServiceTest extends TestCase
             [
                 31837,
                 [],
-                663
+                663.2708
             ],
             [
                 31837,
@@ -257,7 +254,7 @@ class RateServiceTest extends TestCase
                         'factor' => 1.5
                     ],
                 ],
-                1326 // 8,84 * 75 (see user) * 2
+                1326.5417
             ],
             [
                 31837,
@@ -271,7 +268,7 @@ class RateServiceTest extends TestCase
                         'factor' => 1.5
                     ],
                 ],
-                2320.5 // 75 * 8,84 * 3,5
+                2321.4479
             ],
         ];
     }

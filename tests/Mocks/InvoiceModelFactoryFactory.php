@@ -13,6 +13,7 @@ use App\Activity\ActivityStatisticService;
 use App\Customer\CustomerStatisticService;
 use App\Invoice\InvoiceModelFactory;
 use App\Project\ProjectStatisticService;
+use App\Timesheet\RateCalculator\DecimalRateCalculator;
 
 class InvoiceModelFactoryFactory extends AbstractMockFactory
 {
@@ -24,7 +25,8 @@ class InvoiceModelFactoryFactory extends AbstractMockFactory
         $projectStatistic = $this->getMockBuilder(ProjectStatisticService::class)->disableOriginalConstructor()->getMock();
         /** @var ActivityStatisticService $activityStatistic */
         $activityStatistic = $this->getMockBuilder(ActivityStatisticService::class)->disableOriginalConstructor()->getMock();
+        $rateMode = new DecimalRateCalculator();
 
-        return new InvoiceModelFactory($customerStatistic, $projectStatistic, $activityStatistic);
+        return new InvoiceModelFactory($customerStatistic, $projectStatistic, $activityStatistic, $rateMode);
     }
 }
