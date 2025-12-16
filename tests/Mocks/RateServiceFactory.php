@@ -15,13 +15,13 @@ use App\Timesheet\RateService;
 
 class RateServiceFactory extends AbstractMockFactory
 {
-    public function create(array $rates = []): RateService
+    public function create(array $rules = [], array $rates = []): RateService
     {
         $mock = $this->createMock(TimesheetRepository::class);
         if (!empty($rates)) {
             $mock->expects($this->getTestCase()->any())->method('findMatchingRates')->willReturn($rates);
         }
 
-        return new RateService([], $mock, new ClassicRateCalculator());
+        return new RateService($rules, $mock, new ClassicRateCalculator());
     }
 }

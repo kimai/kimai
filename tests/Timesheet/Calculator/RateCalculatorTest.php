@@ -28,11 +28,11 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(RateCalculator::class)]
 class RateCalculatorTest extends TestCase
 {
-    private function getRateService(array $rates = []): RateService
+    private function getRateService(array $rules = [], array $rates = []): RateService
     {
         $factory = new RateServiceFactory($this);
 
-        return $factory->create($rates);
+        return $factory->create($rules, $rates);
     }
 
     private function assertRateByTimesheetHourlyRate(int $duration, float $hourlyRate, float $rate): void
@@ -52,9 +52,9 @@ class RateCalculatorTest extends TestCase
     public function testCalculateWithTimesheetHourlyRate(): void
     {
         $this->assertRateByTimesheetHourlyRate(1800, 100, 50);
-        $this->assertRateByTimesheetHourlyRate(400, 100, 11);
-        $this->assertRateByTimesheetHourlyRate(1234, 100, 34);
-        $this->assertRateByTimesheetHourlyRate(2739, 100, 76);
+        $this->assertRateByTimesheetHourlyRate(400, 100, 11.1111);
+        $this->assertRateByTimesheetHourlyRate(1234, 100, 34.2778);
+        $this->assertRateByTimesheetHourlyRate(2739, 100, 76.0833);
     }
 
     public function testCalculateWithTimesheetFixedRate(): void
@@ -109,22 +109,22 @@ class RateCalculatorTest extends TestCase
 
     #[DataProvider('getRateTestData')]
     public function testRates(
-        $expectedRate,
-        $expectedInternalRate,
-        $duration,
-        $userRate,
-        $userInternalRate,
-        $timesheetHourly,
-        $timesheetFixed,
-        $activityRate,
-        $activityInternal,
-        $activityIsFixed,
-        $projectRate,
-        $projectInternal,
-        $projectIsFixed,
-        $customerRate,
-        $customerInternal,
-        $customerIsFixed
+        float $expectedRate,
+        float $expectedInternalRate,
+        int $duration,
+        float $userRate,
+        ?float $userInternalRate,
+        ?float $timesheetHourly,
+        ?float $timesheetFixed,
+        ?float $activityRate,
+        ?float $activityInternal,
+        bool $activityIsFixed,
+        ?float $projectRate,
+        ?float $projectInternal,
+        bool $projectIsFixed,
+        ?float $customerRate,
+        ?float $customerInternal,
+        bool $customerIsFixed
     ) {
         $customer = new Customer('foo');
 
@@ -175,7 +175,7 @@ class RateCalculatorTest extends TestCase
             $rates[] = $rate;
         }
 
-        $sut = new RateCalculator($this->getRateService($rates));
+        $sut = new RateCalculator($this->getRateService([], $rates));
         $sut->calculate($timesheet, []);
         self::assertEquals($expectedRate, $timesheet->getRate());
         self::assertEquals($expectedInternalRate, $timesheet->getInternalRate());
@@ -213,7 +213,7 @@ class RateCalculatorTest extends TestCase
      * Uses the hourly rate from user_preferences to calculate the rate.
      */
     #[DataProvider('getRuleDefinitions')]
-    public function testCalculateWithRulesByUsersHourlyRate($duration, $rules, $expectedRate): void
+    public function testCalculateWithRulesByUsersHourlyRate(int $duration, array $rules, float $expectedRate): void
     {
         $end = new \DateTime('12:00:00', new \DateTimeZone('UTC'));
         $start = clone $end;
@@ -229,7 +229,7 @@ class RateCalculatorTest extends TestCase
 
         $record->setEnd($end);
 
-        $sut = new RateCalculator($this->getRateService());
+        $sut = new RateCalculator($this->getRateService($rules));
         $sut->calculate($record, []);
 
         self::assertEquals($expectedRate, $record->getRate());
@@ -244,7 +244,7 @@ class RateCalculatorTest extends TestCase
             [
                 31837, // 31824 = 8,84
                 [],
-                663
+                663.2708
             ],
             [
                 31837, // 31824 = 8,84
@@ -258,7 +258,7 @@ class RateCalculatorTest extends TestCase
                         'factor' => 1.5
                     ],
                 ],
-                1326 // 8,84 * 75 (see user) * 2
+                1326.5417
             ],
             [
                 31837, // 31824 = 8,84
@@ -272,7 +272,7 @@ class RateCalculatorTest extends TestCase
                         'factor' => 1.5
                     ],
                 ],
-                2320.5 // 75 * 8,84 * 3,5
+                2321.4479
             ],
         ];
     }
