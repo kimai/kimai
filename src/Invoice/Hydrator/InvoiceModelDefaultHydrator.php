@@ -11,16 +11,11 @@ namespace App\Invoice\Hydrator;
 
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
-use App\Timesheet\RateCalculator\RateCalculatorMode;
 use Symfony\Component\Intl\Countries;
 
 final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
 {
     private const DATE_PROCESS_FORMAT = 'Y-m-d h:i:s';
-
-    public function __construct(private readonly RateCalculatorMode $rateCalculatorMode)
-    {
-    }
 
     public function hydrate(InvoiceModel $model): array
     {

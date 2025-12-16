@@ -75,7 +75,7 @@ final class InvoiceModel
     {
         $this->invoiceDate = new \DateTimeImmutable();
         $this->formatter = $formatter;
-        $this->addModelHydrator(new InvoiceModelDefaultHydrator($rateCalculatorMode));
+        $this->addModelHydrator(new InvoiceModelDefaultHydrator());
         $this->addModelHydrator(new InvoiceModelCustomerHydrator($customerStatistic));
         $this->addModelHydrator(new InvoiceModelIssuerHydrator());
         $this->addModelHydrator(new InvoiceModelProjectHydrator($projectStatistic));
