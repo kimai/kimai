@@ -967,11 +967,6 @@ parameters:
             path: Controller/TimesheetTeamControllerTest.php
 
         -
-            message: "#^Parameter \\#2 \\$seconds of static method App\\\\Timesheet\\\\Util\\:\\:calculateRate\\(\\) expects int, int\\|null given\\.$#"
-            count: 1
-            path: Controller/TimesheetTeamControllerTest.php
-
-        -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
             count: 2
             path: Controller/UserControllerTest.php
@@ -1412,17 +1407,7 @@ parameters:
             path: Invoice/Hydrator/InvoiceItemDefaultHydratorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceItemDefaultHydratorTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
-            count: 1
-            path: Invoice/Hydrator/InvoiceItemDefaultHydratorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelActivityHydratorTest\\:\\:assertModelStructure\\(\\) has parameter \\$model with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Invoice/Hydrator/InvoiceModelActivityHydratorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelActivityHydratorTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
             count: 1
             path: Invoice/Hydrator/InvoiceModelActivityHydratorTest.php
 
@@ -1432,17 +1417,7 @@ parameters:
             path: Invoice/Hydrator/InvoiceModelCustomerHydratorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelCustomerHydratorTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
-            count: 1
-            path: Invoice/Hydrator/InvoiceModelCustomerHydratorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelDefaultHydratorTest\\:\\:assertModelStructure\\(\\) has parameter \\$model with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Invoice/Hydrator/InvoiceModelDefaultHydratorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelDefaultHydratorTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
             count: 1
             path: Invoice/Hydrator/InvoiceModelDefaultHydratorTest.php
 
@@ -1452,17 +1427,7 @@ parameters:
             path: Invoice/Hydrator/InvoiceModelProjectHydratorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelProjectHydratorTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
-            count: 1
-            path: Invoice/Hydrator/InvoiceModelProjectHydratorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelUserHydratorTest\\:\\:assertModelStructure\\(\\) has parameter \\$model with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Invoice/Hydrator/InvoiceModelUserHydratorTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceModelUserHydratorTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
             count: 1
             path: Invoice/Hydrator/InvoiceModelUserHydratorTest.php
 
@@ -1522,11 +1487,6 @@ parameters:
             path: Invoice/Renderer/DebugRendererTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\DebugRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
-            count: 1
-            path: Invoice/Renderer/DebugRendererTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\DebugRendererTest\\:\\:getTestModel\\(\\) has no return type specified\\.$#"
             count: 1
             path: Invoice/Renderer/DebugRendererTest.php
@@ -1577,16 +1537,6 @@ parameters:
             path: Invoice/Renderer/DebugRendererTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\DocxRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
-            count: 1
-            path: Invoice/Renderer/DocxRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\OdsRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
-            count: 1
-            path: Invoice/Renderer/OdsRendererTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\OdsRendererTest\\:\\:getTestModel\\(\\) has no return type specified\\.$#"
             count: 1
             path: Invoice/Renderer/OdsRendererTest.php
@@ -1622,11 +1572,6 @@ parameters:
             path: Invoice/Renderer/OdsRendererTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\PdfRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
-            count: 1
-            path: Invoice/Renderer/PdfRendererTest.php
-
-        -
             message: "#^Parameter \\#2 \\$cacheDirectory of class App\\\\Pdf\\\\MPdfConverter constructor expects string, array\\|bool\\|float\\|int\\|string\\|null given\\.$#"
             count: 1
             path: Invoice/Renderer/PdfRendererTest.php
@@ -1637,11 +1582,6 @@ parameters:
             path: Invoice/Renderer/PdfRendererTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\TwigRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
-            count: 1
-            path: Invoice/Renderer/TwigRendererTest.php
-
-        -
             message: "#^Parameter \\#1 \\$haystack of function substr_count expects string, string\\|false given\\.$#"
             count: 1
             path: Invoice/Renderer/TwigRendererTest.php
@@ -1650,11 +1590,6 @@ parameters:
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 3
             path: Invoice/Renderer/TwigRendererTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\XlsxRendererTest\\:\\:getAbstractRenderer\\(\\) should return App\\\\Invoice\\\\Renderer\\\\AbstractRenderer but returns object\\.$#"
-            count: 1
-            path: Invoice/Renderer/XlsxRendererTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Renderer\\\\XlsxRendererTest\\:\\:getTestModel\\(\\) has no return type specified\\.$#"
@@ -1732,19 +1667,10 @@ parameters:
             path: Ldap/LdapManagerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Mocks\\\\AbstractMockFactory\\:\\:createMock\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Mocks/AbstractMockFactory.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Mocks\\\\AbstractMockFactory\\:\\:getMockBuilder\\(\\) return type with generic class PHPUnit\\\\Framework\\\\MockObject\\\\MockBuilder does not specify its types\\: TMockedClass$#"
             count: 1
             path: Mocks/AbstractMockFactory.php
 
-        -
-            message: "#^Parameter \\#2 \\$type of class PHPUnit\\\\Framework\\\\MockObject\\\\MockBuilder constructor expects class\\-string\\<TMockedClass\\>, string given\\.$#"
-            count: 1
-            path: Mocks/AbstractMockFactory.php
         -
             message: "#^Parameter \\#1 \\$dataDir of class App\\\\Utils\\\\FileHelper constructor expects string, string\\|false given\\.$#"
             count: 1
@@ -1936,11 +1862,6 @@ parameters:
             path: Timesheet/Calculator/DurationCalculatorTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:getRateRepositoryMock\\(\\) has parameter \\$rates with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Timesheet/Calculator/RateCalculatorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Timesheet\\\\Calculator\\\\RateCalculatorTest\\:\\:getRateTestData\\(\\) has no return type specified\\.$#"
             count: 1
             path: Timesheet/Calculator/RateCalculatorTest.php
@@ -2064,11 +1985,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Timesheet\\\\LockdownServiceTest\\:\\:getTestData\\(\\) has no return type specified\\.$#"
             count: 1
             path: Timesheet/LockdownServiceTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:getRateRepositoryMock\\(\\) has parameter \\$rates with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Timesheet/RateServiceTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Timesheet\\\\RateServiceTest\\:\\:getRateTestData\\(\\) has no return type specified\\.$#"
@@ -2924,3 +2840,29 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\UserDurationYearTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Widget/Type/UserDurationYearTest.php
+        -
+          message: '''
+                    #^Access to constant on deprecated class App\\Timesheet\\Util\:
+                    use RateCalculatorMode instead$#
+                '''
+          identifier: classConstant.deprecatedClass
+          count: 1
+          path: Timesheet/UtilTest.php
+
+        -
+          message: '''
+                    #^Call to method calculateRate\(\) of deprecated class App\\Timesheet\\Util\:
+                    use RateCalculatorMode instead$#
+                '''
+          identifier: staticMethod.deprecatedClass
+          count: 2
+          path: Timesheet/UtilTest.php
+
+        -
+          message: '''
+                    #^Call to method decimalizeDuration\(\) of deprecated class App\\Timesheet\\Util\:
+                    use RateCalculatorMode instead$#
+                '''
+          identifier: staticMethod.deprecatedClass
+          count: 1
+          path: Timesheet/UtilTest.php

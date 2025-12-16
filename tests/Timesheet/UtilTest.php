@@ -19,6 +19,7 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(Util::class)]
 class UtilTest extends TestCase
 {
+    #[Group('legacy')]
     #[DataProvider('getRateCalculationData')]
     public function testCalculateRate(float $hourlyRate, int $duration, float $expectedRate): void
     {
@@ -44,6 +45,7 @@ class UtilTest extends TestCase
         yield [7360.99, 1234, 2502.74];
     }
 
+    #[Group('legacy')]
     public function testCalculateRateWithRounding(): void
     {
         $total = 0.00;
@@ -84,6 +86,7 @@ class UtilTest extends TestCase
         self::assertEqualsWithDelta(149176.3, $total, 0.00001);
     }
 
+    #[Group('legacy')]
     public function testDecimalDuration(): void
     {
         $inputs = [
