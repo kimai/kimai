@@ -15,6 +15,9 @@ use Symfony\Component\Intl\Countries;
 
 final class InvoiceModelIssuerHydrator implements InvoiceModelHydrator
 {
+    /**
+     * @return array<string, mixed>
+     */
     public function hydrate(InvoiceModel $model): array
     {
         $customer = $model->getTemplate()->getCustomer();

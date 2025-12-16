@@ -219,6 +219,9 @@ final class TimesheetFixtures implements TestFixture
             }
 
             $user = $users[array_rand($users)];
+            if ($user === null) {
+                continue;
+            }
             $activity = $activities[array_rand($activities)];
             $project = $activity->getProject();
 
@@ -247,8 +250,11 @@ final class TimesheetFixtures implements TestFixture
             $activity = $activities[array_rand($activities)];
             $project = $activity->getProject();
             $user = $users[array_rand($users)];
+            if ($user === null) {
+                continue;
+            }
 
-            if (null === $project) {
+            if ($project === null) {
                 $project = $projects[array_rand($projects)];
             }
 

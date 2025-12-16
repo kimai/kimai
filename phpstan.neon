@@ -970,11 +970,6 @@ parameters:
             path: src/DataFixtures/TimesheetFixtures.php
 
         -
-            message: "#^Parameter \\#1 \\$user of method App\\\\DataFixtures\\\\TimesheetFixtures\\:\\:createTimesheetEntry\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 2
-            path: src/DataFixtures/TimesheetFixtures.php
-
-        -
             message: "#^Method App\\\\DependencyInjection\\\\AppExtension\\:\\:createPermissionParameter\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/DependencyInjection/AppExtension.php
