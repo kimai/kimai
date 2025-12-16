@@ -310,6 +310,10 @@
         <source>copy_teams_on_create</source>
         <target>Übernehme Teams beim Erstellen neuer Einträge vom angemeldeten Benutzer</target>
       </trans-unit>
+      <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="yes">
+        <source>invoice.rounding_mode</source>
+        <target>Rundungsmodus</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
