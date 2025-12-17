@@ -28,6 +28,7 @@
     'actions':       {'class': 'actions alwaysVisible'},
 }) %}
 {% set tableName = 'project_daterange_reporting' %}
+{% set queryValue = app.request.query.get('view') %}
 
 {% block main_before %}
     {{ tables.data_table_column_modal(tableName, columns) }}
@@ -51,6 +52,9 @@
                 {{ form_widget(form.includeNoWork) }}
             </li>
         </ul>
+        <button onclick="{{ form.view.vars.id }}.value = {{ queryValue == '1' ? 0 : 1 }}" type="submit"  class="btn btn-icon {% if queryValue != '1' %}active{% endif %}">
+            {{ icon('collapse', true) }}
+        </button>
     </div>
 {% endblock %}
 
@@ -70,42 +74,158 @@
             {% else %}
                 {{ tables.datatable_header(tableName, columns, null, {'boxClass': ''}) }}
 
-                {% for id, mapping in entries|sort((a, b) => a.customer.name <=> b.customer.name) %}
-                    <tr class="summary">
-                        <td colspan="{{ columns|length }}">{{ widgets.label_customer(mapping.customer) }}</td>
-                    </tr>
-                    {% for entry in mapping.projects|sort((a, b) => a.entity.name <=> b.entity.name) %}
-                        {% set project = entry.entity %}
-                        {% set currency = project.customer.currency %}
-                        <tr {{ widgets.project_row_attr(project, queryEnd) }}>
-                        {% for name, column_config in columns %}
-                            <td class="{{ tables.data_table_column_class(tableName, columns, name) }}">
-                            {% if name == 'name' %}
-                                {{ widgets.label_project(project) }}
-                            {% elseif name == 'duration' %}
-                                {{ entry.statistic.duration|duration }}
-                            {% elseif name == 'revenue' %}
-                                {{ entry.statistic.rateBillable|money(currency) }}
-                            {% elseif name == 'costs' %}
-                                {{ entry.statistic.internalRate|money(currency) }}
-                            {% elseif name == 'profit' %}
-                                {{ (entry.statistic.rateBillable - entry.statistic.internalRate)|money(currency) }}
-                            {% elseif name == 'timeBudget' %}
-                                {% if is_granted('time', project) %}
-                                    {{ progress.progressbar_timebudget(entry) }}
-                                {% endif %}
-                            {% elseif name == 'budget' %}
-                                {% if is_granted('budget', project) %}
-                                    {{ progress.progressbar_budget(entry, currency) }}
-                                {% endif %}
-                            {% elseif name == 'actions' %}
-                                {{ projectActions.project(project, 'custom', true, {'daterange': date_range(queryBegin, queryEnd)}) }}
-                            {% endif %}
-                            </td>
+                {% if queryValue != '1' %}
+                    {% for id, mapping in entries|sort((a, b) => a.customer.name <=> b.customer.name) %}
+                        {% set currency = mapping.customer.currency %}
+                        {% set totalDuration = 0 %}
+                        {% set totalRevenue = 0 %}
+                        {% set totalCosts = 0 %}
+
+                        {% for entry in mapping.projects %}
+                            {% set totalDuration = totalDuration + entry.statistic.duration %}
+                            {% set totalRevenue = totalRevenue + entry.statistic.rateBillable %}
+                            {% set totalCosts = totalCosts + entry.statistic.internalRate %}
                         {% endfor %}
+                        {% set totalProfit = totalRevenue - totalCosts %}
+
+                        <tr class="summary">
+                            {% for name, column_config in columns %}
+                                <td class="{{ tables.data_table_column_class(tableName, columns, name) }}">
+                                    {% if name == 'name' %}
+                                        {{ widgets.label_customer(mapping.customer) }}
+                                    {% elseif name == 'duration' %}
+                                        {{ totalDuration|duration }}
+                                    {% elseif name == 'revenue' %}
+                                        {{ totalRevenue|money(currency) }}
+                                    {% elseif name == 'costs' %}
+                                        {{ totalCosts|money(currency) }}
+                                    {% elseif name == 'profit' %}
+                                        {{ totalProfit|money(currency) }}
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                        {% for entry in mapping.projects|sort((a, b) => a.entity.name <=> b.entity.name) %}
+                            {% set project = entry.entity %}
+                            <tr {{ widgets.project_row_attr(project, queryEnd) }}>
+                            {% for name, column_config in columns %}
+                                <td class="{{ tables.data_table_column_class(tableName, columns, name) }}">
+                                {% if name == 'name' %}
+                                    {{ widgets.label_project(project) }}
+                                {% elseif name == 'duration' %}
+                                    {{ entry.statistic.duration|duration }}
+                                {% elseif name == 'revenue' %}
+                                    {{ entry.statistic.rateBillable|money(currency) }}
+                                {% elseif name == 'costs' %}
+                                    {{ entry.statistic.internalRate|money(currency) }}
+                                {% elseif name == 'profit' %}
+                                    {{ (entry.statistic.rateBillable - entry.statistic.internalRate)|money(currency) }}
+                                {% elseif name == 'timeBudget' %}
+                                    {% if is_granted('time', project) %}
+                                        {{ progress.progressbar_timebudget(entry) }}
+                                    {% endif %}
+                                {% elseif name == 'budget' %}
+                                    {% if is_granted('budget', project) %}
+                                        {{ progress.progressbar_budget(entry, currency) }}
+                                    {% endif %}
+                                {% elseif name == 'actions' %}
+                                    {{ projectActions.project(project, 'custom', true, {'daterange': date_range(queryBegin, queryEnd)}) }}
+                                {% endif %}
+                                </td>
+                            {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    {% for id, mapping in entries|sort((a, b) => a.customer.name <=> b.customer.name) %}
+                        {% set currency = mapping.customer.currency %}
+                        {% set totalDuration = 0 %}
+                        {% set totalRevenue = 0 %}
+                        {% set totalCosts = 0 %}
+
+                        {% for entry in mapping.projects %}
+                            {% set totalDuration = totalDuration + entry.statistic.duration %}
+                            {% set totalRevenue = totalRevenue + entry.statistic.rateBillable %}
+                            {% set totalCosts = totalCosts + entry.statistic.internalRate %}
+                        {% endfor %}
+                        {% set totalProfit = totalRevenue - totalCosts %}
+
+                        <tr>
+                            {% for name, column_config in columns %}
+                                <td class="{{ tables.data_table_column_class(tableName, columns, name) }}">
+                                    {% if name == 'name' %}
+                                        {{ widgets.label_customer(mapping.customer) }}
+                                    {% elseif name == 'duration' %}
+                                        {{ totalDuration|duration }}
+                                    {% elseif name == 'revenue' %}
+                                        {{ totalRevenue|money(currency) }}
+                                    {% elseif name == 'costs' %}
+                                        {{ totalCosts|money(currency) }}
+                                    {% elseif name == 'profit' %}
+                                        {{ totalProfit|money(currency) }}
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
                         </tr>
                     {% endfor %}
+                {% endif %}
+
+                {% set grandTotalDuration = 0 %}
+                {% set grandTotalRevenue = 0 %}
+                {% set grandTotalCosts = 0 %}
+                {% set grandTotalProfit = 0 %}
+                {% set currencyTotal = null %}
+
+                {% for id, mapping in entries %}
+                    {% set currency = mapping.customer.currency %}
+                    {% if currencyTotal is null %}
+                        {% set currencyTotal = currency %}
+                    {% endif %}
+                    {% if currency != currencyTotal %}
+                        {% set currencyTotal = false %}
+                    {% endif %}
+                    {% set totalDuration = 0 %}
+                    {% set totalRevenue = 0 %}
+                    {% set totalCosts = 0 %}
+
+                    {# accumulate project data per customer #}
+                    {% for entry in mapping.projects %}
+                        {% set totalDuration = totalDuration + entry.statistic.duration %}
+                        {% set totalRevenue = totalRevenue + entry.statistic.rateBillable %}
+                        {% set totalCosts = totalCosts + entry.statistic.internalRate %}
+                    {% endfor %}
+
+                    {% set totalProfit = totalRevenue - totalCosts %}
+
+                    {# accumulate grand totals #}
+                    {% set grandTotalDuration = grandTotalDuration + totalDuration %}
+                    {% set grandTotalRevenue = grandTotalRevenue + totalRevenue %}
+                    {% set grandTotalCosts = grandTotalCosts + totalCosts %}
+                    {% set grandTotalProfit = grandTotalProfit + totalProfit %}
                 {% endfor %}
+
+                {% if currencyTotal is same as (false) %}
+                    {% set currencyTotal = null %}
+                {% endif %}
+
+                <tr class="summary">
+                    {% for name, column_config in columns %}
+                        <td class="{{ tables.data_table_column_class(tableName, columns, name) }}">
+                            {% if name == 'name' %}
+                                <strong>{{ 'sum.total'|trans }}</strong>
+                            {% elseif name == 'duration' %}
+                                <strong>{{ grandTotalDuration|duration }}</strong>
+                            {% elseif name == 'revenue' %}
+                                <strong>{{ grandTotalRevenue|money(currencyTotal) }}</strong>
+                            {% elseif name == 'costs' %}
+                                <strong>{{ grandTotalCosts|money(currencyTotal) }}</strong>
+                            {% elseif name == 'profit' %}
+                                <strong>{{ grandTotalProfit|money(currencyTotal) }}</strong>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+
                 {{ tables.data_table_footer(entries) }}
             {% endif %}
         {% endblock %}
