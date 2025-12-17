@@ -85,7 +85,7 @@ final class ProjectDateRangeQuery
         $this->budgetType = $budgetType;
     }
 
-    public function getView(): string
+    public function getView(): ?string
     {
         return $this->view;
     }
