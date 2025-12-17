@@ -94,6 +94,18 @@
         <source>task_todo</source>
         <target state="needs-translation">وصف المهمة</target>
       </trans-unit>
+      <trans-unit id="XjAwhoV" resname="task.start" xml:space="preserve" approved="no">
+        <source>task.start</source>
+        <target state="translated">بدء المعالجة</target>
+      </trans-unit>
+      <trans-unit id="XD7TZh7" resname="task.stop" xml:space="preserve" approved="no">
+        <source>task.stop</source>
+        <target state="translated">إيقاف المعالجة مؤقتًا</target>
+      </trans-unit>
+      <trans-unit id="qLewfPg" resname="task.unassign" xml:space="preserve" approved="no">
+        <source>task.unassign</source>
+        <target state="translated">إصدار المهمة</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

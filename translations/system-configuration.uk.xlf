@@ -310,6 +310,10 @@
         <source>allow_duplicate_number</source>
         <target state="translated">Дозволити використання номера декілька разів</target>
       </trans-unit>
+      <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="no" xml:space="preserve">
+        <source>invoice.rounding_mode</source>
+        <target state="translated">Режим округлення</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

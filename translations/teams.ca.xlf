@@ -2,6 +2,38 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ca" datatype="plaintext" original="teams.en.xlf">
     <body>
-      </body>
+      <trans-unit id="A_4Fc7c" resname="teams.project_access" xml:space="preserve">
+        <source>teams.project_access</source>
+        <target state="translated">Permet accés a projectes</target>
+      </trans-unit>
+      <trans-unit id="QchGnbx" resname="teams.customer_access" xml:space="preserve">
+        <source>teams.customer_access</source>
+        <target state="translated">Permet accés a clients</target>
+      </trans-unit>
+      <trans-unit id=".yIcFDx" resname="team.visibility_global" xml:space="preserve">
+        <source>team.visibility_global</source>
+        <target state="translated">Visible per a tothom, perquè no s'ha assignat cap equip.</target>
+      </trans-unit>
+      <trans-unit id="hlIIRjb" resname="team.visibility_restricted" xml:space="preserve">
+        <source>team.visibility_restricted</source>
+        <target state="translated">Només visible per al següents equips i els administradors.</target>
+      </trans-unit>
+      <trans-unit id="sx7AVYH" resname="team.project_visibility_inherited" xml:space="preserve">
+        <source>team.project_visibility_inherited</source>
+        <target state="translated">El projecte té accés limitat, perquè els permisos de l'equip estan configurats per al client.</target>
+      </trans-unit>
+      <trans-unit id="FC4DW27" resname="team.activity_visibility_inherited" xml:space="preserve">
+        <source>team.activity_visibility_inherited</source>
+        <target state="translated">L'activitat té accés limitat, perquè els permisos de l'equip estan configurats per al projecte i/o client.</target>
+      </trans-unit>
+      <trans-unit id="cZEIdcu" resname="team.create_default" xml:space="preserve">
+        <source>team.create_default</source>
+        <target state="translated">Crea un nou equip per limitar l'accés</target>
+      </trans-unit>
+      <trans-unit id="6g81kYY" approved="no" resname="team.member" xml:space="preserve">
+        <source>team.member</source>
+        <target state="translated">Membre</target>
+      </trans-unit>
+    </body>
   </file>
 </xliff>

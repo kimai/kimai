@@ -2042,6 +2042,10 @@
         <source>payment_account_name</source>
         <target state="translated">Titulaire du compte ou de la carte</target>
       </trans-unit>
+      <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve">
+        <source>electronic_invoice</source>
+        <target state="translated">Facture électronique</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

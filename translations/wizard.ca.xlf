@@ -2,6 +2,42 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ca" datatype="plaintext" original="wizard.en.xlf">
     <body>
-      </body>
+      <trans-unit id="9XidDHG" resname="wizard.intro.title" xml:space="preserve">
+        <source>wizard.intro.title</source>
+        <target state="translated">Benvingut/da a Kimai</target>
+      </trans-unit>
+      <trans-unit id="X0ws5mu" resname="wizard.intro.description" xml:space="preserve">
+        <source>wizard.intro.description</source>
+        <target state="translated">Aquest assistent t'ajudarà a personalitzar Kimai a les teves necessitats.</target>
+      </trans-unit>
+      <trans-unit id="FCMK0ph" resname="wizard.separator" xml:space="preserve">
+        <source>wizard.separator</source>
+        <target state="translated">La teva configuració</target>
+      </trans-unit>
+      <trans-unit id="8_e6ApF" resname="wizard.profile.title" xml:space="preserve">
+        <source>wizard.profile.title</source>
+        <target state="translated">El teu perfil</target>
+      </trans-unit>
+      <trans-unit id="Mo1506M" resname="wizard.profile.description" xml:space="preserve">
+        <source>wizard.profile.description</source>
+        <target state="translated">Unes configuracions bàsiques per treballar més fàcilment amb Kimai.</target>
+      </trans-unit>
+      <trans-unit id="7Vipfs7" resname="wizard.password.title" xml:space="preserve">
+        <source>wizard.password.title</source>
+        <target state="translated">La teva contrasenya</target>
+      </trans-unit>
+      <trans-unit id="zlNbbUg" resname="wizard.password.description" xml:space="preserve">
+        <source>wizard.password.description</source>
+        <target state="translated">Introdueix la teva nova contrasenya per iniciar sessió a partir d'ara.</target>
+      </trans-unit>
+      <trans-unit id="8p.2pXa" resname="wizard.done.title" xml:space="preserve">
+        <source>wizard.done.title</source>
+        <target state="translated">Enhorabona</target>
+      </trans-unit>
+      <trans-unit id="k1SzMuI" resname="wizard.done.description" xml:space="preserve">
+        <source>wizard.done.description</source>
+        <target state="translated">La configuració més important ja està completa. Hi ha moltes més opcions que podràs personalitzar més endavant al teu perfil.</target>
+      </trans-unit>
+    </body>
   </file>
 </xliff>
