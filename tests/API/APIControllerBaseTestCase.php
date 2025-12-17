@@ -677,6 +677,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'billable' => 'bool',
                     'fixedRate' => '@float',
                     'hourlyRate' => '@float',
+                    'break' => 'int',
                 ];
 
             case 'TimesheetExpanded':
@@ -697,6 +698,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'billable' => 'bool',
                     'fixedRate' => '@float',
                     'hourlyRate' => '@float',
+                    'break' => 'int',
                 ];
 
             case 'TimesheetCollection':
@@ -715,6 +717,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'internalRate' => 'float',
                     'exported' => 'bool',
                     'billable' => 'bool',
+                    'break' => 'int',
                 ];
 
             case 'TimesheetCollectionFull':
@@ -733,6 +736,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'internalRate' => 'float',
                     'exported' => 'bool',
                     'billable' => 'bool',
+                    'break' => 'int',
                 ];
 
             default:

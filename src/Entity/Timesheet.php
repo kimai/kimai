@@ -132,6 +132,8 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?int $duration = 0;
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     #[ORM\Column(name: 'break', type: Types::INTEGER, nullable: true)]
     private ?int $break = 0;
     #[ORM\ManyToOne(targetEntity: User::class)]
