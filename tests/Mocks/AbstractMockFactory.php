@@ -10,11 +10,12 @@
 namespace App\Tests\Mocks;
 
 use PHPUnit\Framework\MockObject\MockBuilder;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 abstract class AbstractMockFactory
 {
-    public function __construct(private TestCase $testCase)
+    public function __construct(private readonly TestCase $testCase)
     {
     }
 
@@ -23,11 +24,19 @@ abstract class AbstractMockFactory
         return $this->testCase;
     }
 
-    protected function createMock(string $className)
+    /**
+     * @template T of object
+     * @param class-string<T> $className
+     * @return T&MockObject
+     */
+    protected function createMock(string $className): object
     {
-        return $this->getMockBuilder($className)->disableOriginalConstructor()->getMock();
+        return $this->getMockBuilder($className)->disableOriginalConstructor()->getMock(); // @phpstan-ignore return.type
     }
 
+    /**
+     * @param class-string $className
+     */
     protected function getMockBuilder(string $className): MockBuilder
     {
         return new MockBuilder($this->testCase, $className);

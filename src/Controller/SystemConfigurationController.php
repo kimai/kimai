@@ -449,6 +449,11 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(TextType::class)
                         ->setConstraints([new NotBlank()])
                         ->setTranslationDomain('system-configuration'),
+                    (new Configuration('invoice.rounding_mode'))
+                        ->setLabel('invoice.rounding_mode')
+                        ->setType(ChoiceType::class)
+                        ->setOptions(['choices' => ['classic' => 'classic', 'decimal' => 'decimal']])
+                        ->setTranslationDomain('system-configuration'),
                 ]),
             $authentication,
             (new SystemConfigurationModel('customer'))

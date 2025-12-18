@@ -15,7 +15,8 @@ use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
-use App\Timesheet\Util;
+use App\Timesheet\RateCalculator\ClassicRateCalculator;
+use App\Timesheet\RateCalculator\RateCalculatorMode;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -60,10 +61,14 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
         $allUser = $this->getAllUsers($manager);
         $faker = Factory::create();
         $all = 0;
+        $calculator = new ClassicRateCalculator();
 
         foreach ($allUser as $user) {
             // reload, because the manager might have been cleared
             $user = $manager->find(User::class, $user->getId());
+            if ($user === null) {
+                continue;
+            }
             // random amount of timesheet entries for every user
             $timesheetForUser = rand(self::MIN_TIMESHEETS_PER_USER, self::MAX_TIMESHEETS_PER_USER);
 
@@ -84,6 +89,7 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
                 }
 
                 $entry = $this->createTimesheetEntry(
+                    $calculator,
                     $user,
                     $activities[array_rand($activities)],
                     $projects[array_rand($projects)],
@@ -98,6 +104,7 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
             // create active records
             if ($all % 3 === 0) {
                 $entry = $this->createTimesheetEntry(
+                    $calculator,
                     $user,
                     $activities[array_rand($activities)],
                     $projects[array_rand($projects)],
@@ -208,7 +215,7 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
         return $this->findRandom($manager, Activity::class, 50);
     }
 
-    private function createTimesheetEntry(User $user, Activity $activity, Project $project, ?string $description, bool $setEndDate): Timesheet
+    private function createTimesheetEntry(RateCalculatorMode $calculatorMode, User $user, Activity $activity, Project $project, ?string $description, bool $setEndDate): Timesheet
     {
         $start = $this->getRandomFirstDay();
         $start = $start->modify('- ' . (rand(1, 86400)) . ' seconds');
@@ -227,7 +234,7 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
 
             $duration = $end->getTimestamp() - $start->getTimestamp();
             $hourlyRate = (float) $user->getPreferenceValue(UserPreference::HOURLY_RATE);
-            $rate = Util::calculateRate($hourlyRate, $duration);
+            $rate = $calculatorMode->calculateRate($hourlyRate, $duration);
 
             $entry->setEnd($end);
             $entry->setRate($rate);

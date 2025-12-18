@@ -7,21 +7,14 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Timesheet;
+namespace App\Timesheet\RateCalculator;
 
-/**
- * @deprecated use RateCalculatorMode instead
- */
-final class Util
+final class DecimalRateCalculator implements RateCalculatorMode
 {
-    private function __construct()
-    {
-    }
-
     /**
      * Calculates the rate by an hourly rate and a given duration in seconds.
      */
-    public static function calculateRate(float $hourlyRate, int $seconds): float
+    public function calculateRate(float $hourlyRate, int $seconds): float
     {
         $rate = $hourlyRate * round(($seconds / 3600), 2, PHP_ROUND_HALF_UP);
 
@@ -29,9 +22,9 @@ final class Util
     }
 
     /**
-     * Makes sure that the duration is full compatible with decimal format, stripping away overflowing seconds.
+     * Makes sure tha the duration is full compatible with decimal format, stripping away overflowing seconds.
      */
-    public static function decimalizeDuration(int $seconds): int
+    public function roundDuration(int $seconds): int
     {
         $decimal = round(($seconds / 3600), 2, PHP_ROUND_HALF_UP);
 

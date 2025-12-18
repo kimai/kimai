@@ -54,9 +54,17 @@ trait RendererTestTrait
         );
     }
 
+    /**
+     * @param class-string $classname
+     */
     protected function getAbstractRenderer(string $classname): AbstractRenderer
     {
-        return new $classname();
+        $t = new $classname();
+        if (!$t instanceof AbstractRenderer) {
+            throw new \InvalidArgumentException('Not an instance of AbstractRenderer: ' . \get_class($t));
+        }
+
+        return $t;
     }
 
     protected function getFormatter(): InvoiceFormatter
