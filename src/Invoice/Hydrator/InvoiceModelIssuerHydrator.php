@@ -9,30 +9,29 @@
 
 namespace App\Invoice\Hydrator;
 
-use App\Customer\CustomerStatisticService;
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
 use Symfony\Component\Intl\Countries;
 
-final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
+final class InvoiceModelIssuerHydrator implements InvoiceModelHydrator
 {
-    use BudgetHydratorTrait;
-
-    public function __construct(private readonly CustomerStatisticService $customerStatisticService)
-    {
-    }
-
+    /**
+     * @return array<string, mixed>
+     */
     public function hydrate(InvoiceModel $model): array
     {
-        $customer = $model->getCustomer();
+        $customer = $model->getTemplate()->getCustomer();
+        if (null === $customer) {
+            return [];
+        }
 
-        $prefix = 'customer.';
+        $prefix = 'issuer.';
         $language = $model->getTemplate()->getLanguage();
         $country = $customer->getCountry();
 
         $values = [
             $prefix . 'id' => $customer->getId(),
-            $prefix . 'address' => $customer->getFormattedAddress() ?? '', // deprecated since 2.44
+            $prefix . 'address' => $customer->getFormattedAddress() ?? '',
             $prefix . 'address_line1' => $customer->getAddressLine1() ?? '',
             $prefix . 'address_line2' => $customer->getAddressLine2() ?? '',
             $prefix . 'address_line3' => $customer->getAddressLine3() ?? '',
@@ -41,7 +40,6 @@ final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
             $prefix . 'name' => $customer->getName() ?? '',
             $prefix . 'contact' => $customer->getContact() ?? '',
             $prefix . 'company' => $customer->getCompany() ?? '',
-            $prefix . 'vat' => $customer->getVatId() ?? '', // deprecated since 2.0.15
             $prefix . 'vat_id' => $customer->getVatId() ?? '',
             $prefix . 'number' => $customer->getNumber() ?? '',
             $prefix . 'country' => $country,
@@ -55,13 +53,6 @@ final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
             $prefix . 'invoice_text' => $customer->getInvoiceText() ?? '',
             $prefix . 'buyer_reference' => $customer->getBuyerReference() ?? '',
         ];
-
-        $end = $model->getQuery()?->getEnd();
-        if ($end !== null) {
-            $statistic = $this->customerStatisticService->getBudgetStatisticModel($customer, $end);
-
-            $values = array_merge($values, $this->getBudgetValues($prefix, $statistic, $model));
-        }
 
         foreach ($customer->getMetaFields() as $metaField) {
             $values = array_merge($values, [

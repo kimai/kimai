@@ -7,23 +7,53 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Timesheet;
+namespace App\Tests\Timesheet\RateCalculator;
 
-use App\Timesheet\Util;
+use App\Timesheet\RateCalculator\DecimalRateCalculator;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
-#[Group('legacy')]
-#[CoversClass(Util::class)]
-class UtilTest extends TestCase
+#[CoversClass(DecimalRateCalculator::class)]
+class DecimalRateCalculatorTest extends TestCase
 {
-    #[Group('legacy')]
-    #[DataProvider('getRateCalculationData')]
-    public function testCalculateRate(float $hourlyRate, int $duration, float $expectedRate): void
+    #[DataProvider('provideRates')]
+    public function testCalculateRate(float $hourlyRate, int $seconds, float $expected): void
     {
-        self::assertEquals($expectedRate, Util::calculateRate($hourlyRate, $duration));
+        $sut = new DecimalRateCalculator();
+
+        $result = $sut->calculateRate($hourlyRate, $seconds);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public static function provideRates(): array
+    {
+        return [
+            'zero duration' => [100.0, 0, 0.0],
+            'full hour' => [100.0, 3600, 100.0],
+            'half hour' => [100.0, 1800, 50.0],
+            'one minute with rounding' => [123.4567, 60, 2.47],
+            'one second tiny amount' => [1.23, 1, 0],
+        ];
+    }
+
+    public function testRoundDurationKeepsOriginalSeconds(): void
+    {
+        $sut = new DecimalRateCalculator();
+
+        $this->assertSame(0, $sut->roundDuration(0));
+        $this->assertSame(36, $sut->roundDuration(45));
+        $this->assertSame(72, $sut->roundDuration(59));
+        $this->assertSame(1224, $sut->roundDuration(1234));
+        $this->assertSame(3600, $sut->roundDuration(3601));
+    }
+
+    #[DataProvider('getRateCalculationData')]
+    public function testCalculateRates(float $hourlyRate, int $duration, float $expectedRate): void
+    {
+        $sut = new DecimalRateCalculator();
+        self::assertEquals($expectedRate, $sut->calculateRate($hourlyRate, $duration));
     }
 
     /**
@@ -45,7 +75,6 @@ class UtilTest extends TestCase
         yield [7360.99, 1234, 2502.74];
     }
 
-    #[Group('legacy')]
     public function testCalculateRateWithRounding(): void
     {
         $total = 0.00;
@@ -68,13 +97,14 @@ class UtilTest extends TestCase
         ];
 
         $totalExpected = 0.00;
+        $sut = new DecimalRateCalculator();
 
         for ($a = 0; $a < $repeat; $a++) {
             foreach ($inputs as $row) {
                 [$duration, $rate] = $row;
                 $seconds += $duration;
                 $totalExpected += $rate;
-                $tmp = Util::calculateRate(114.75, $duration);
+                $tmp = $sut->calculateRate(114.75, $duration);
                 self::assertEquals($rate, $tmp);
                 $total += $tmp;
             }
@@ -86,7 +116,6 @@ class UtilTest extends TestCase
         self::assertEqualsWithDelta(149176.3, $total, 0.00001);
     }
 
-    #[Group('legacy')]
     public function testDecimalDuration(): void
     {
         $inputs = [
@@ -105,8 +134,9 @@ class UtilTest extends TestCase
             [7200, 7200],
         ];
 
+        $sut = new DecimalRateCalculator();
         foreach ($inputs as $row) {
-            self::assertEquals($row[1], Util::decimalizeDuration($row[0]));
+            self::assertEquals($row[1], $sut->roundDuration($row[0]));
         }
     }
 }

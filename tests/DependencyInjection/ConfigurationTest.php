@@ -310,6 +310,7 @@ class ConfigurationTest extends TestCase
                 ],
                 'number_format' => '{Y}/{cy,3}',
                 'upload_twig' => false,
+                'rounding_mode' => 'classic',
             ],
             'export' => [
                 'documents' => [

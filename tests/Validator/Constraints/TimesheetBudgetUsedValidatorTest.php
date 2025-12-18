@@ -27,6 +27,7 @@ use App\Project\ProjectStatisticService;
 use App\Repository\TimesheetRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\Rate;
+use App\Timesheet\RateCalculator\ClassicRateCalculator;
 use App\Timesheet\RateService;
 use App\Timesheet\RateServiceInterface;
 use App\Validator\Constraints\TimesheetBudgetUsed;
@@ -92,7 +93,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
             $rateService = $this->createMock(RateServiceInterface::class);
             $rateService->method('calculate')->willReturn($rate);
         } else {
-            $rateService = new RateService([], $timesheetRepository);
+            $rateService = new RateService([], $timesheetRepository, new ClassicRateCalculator());
         }
 
         $auth = $this->createMock(AuthorizationCheckerInterface::class);
