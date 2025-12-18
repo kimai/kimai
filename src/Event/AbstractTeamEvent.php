@@ -13,7 +13,7 @@ use App\Entity\Team;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**
- * Base event class to used with team manipulations.
+ * Base event class triggered for Team manipulations.
  */
 abstract class AbstractTeamEvent extends Event
 {

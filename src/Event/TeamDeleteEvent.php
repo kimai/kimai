@@ -9,6 +9,9 @@
 
 namespace App\Event;
 
+use App\Webhook\Attribute\AsWebhook;
+
+#[AsWebhook(name: 'team.deleted', description: 'Triggered after a team was deleted', payload: 'object.getTeam()')]
 final class TeamDeleteEvent extends AbstractTeamEvent
 {
 }

@@ -15,6 +15,7 @@ use App\Event\TeamCreatePostEvent;
 use App\Event\TeamCreatePreEvent;
 use App\Event\TeamUpdatePostEvent;
 use App\Event\TeamUpdatePreEvent;
+use App\Event\TeamDeleteEvent;
 use App\Repository\TeamRepository;
 use App\Validator\ValidationFailedException;
 use InvalidArgumentException;
@@ -105,8 +106,7 @@ final class TeamService
 
     public function deleteTeam(Team $delete): void
     {
-        $this->dispatcher->dispatch(new TeamDeletePreEvent($delete));
+        $this->dispatcher->dispatch(new TeamDeleteEvent($delete));
         $this->repository->deleteTeam($delete);
-        $this->dispatcher->dispatch(new TeamDeletePostEvent($delete));
     }
 }
