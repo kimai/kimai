@@ -141,7 +141,9 @@ final class TeamController extends BaseApiController
                 $team->removeMember($member);
                 $this->repository->removeTeamMember($member);
             }
-            $this->teamService->saveTeam($team);
+            // this fails, if we use the teamservice, because the validator
+            // complains about teams without members or teamleads
+            $this->repository->saveTeam($team);
         }
 
         $form = $this->createForm(TeamApiEditForm::class, $team);
