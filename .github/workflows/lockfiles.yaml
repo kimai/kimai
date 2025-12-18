@@ -10,8 +10,8 @@ jobs:
         name: Verify lock file integrity
         steps:
             - name: Prevent file change
-              uses: xalvarez/prevent-file-change-action@v2
+              uses: xalvarez/prevent-file-change-action@v3
               with:
                   githubToken: ${{ secrets.GITHUB_TOKEN }}
-                  pattern: .*\.lock$
+                  pattern: .*\.lock$|^\.github\/.*$
                   trustedAuthors: kevinpapst, dependabot
