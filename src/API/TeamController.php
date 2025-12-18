@@ -20,6 +20,7 @@ use App\Repository\CustomerRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\TeamQuery;
 use App\Repository\TeamRepository;
+use App\User\TeamService;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use OpenApi\Attributes as OA;
@@ -41,7 +42,8 @@ final class TeamController extends BaseApiController
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
-        private readonly TeamRepository $repository
+        private readonly TeamRepository $repository,
+        private readonly TeamService $teamService
     )
     {
     }
@@ -88,7 +90,7 @@ final class TeamController extends BaseApiController
     #[Route(methods: ['DELETE'], path: '/{id}', name: 'delete_team', requirements: ['id' => '\d+'])]
     public function deleteAction(Team $team): Response
     {
-        $this->repository->deleteTeam($team);
+        $this->teamService->deleteTeam($team);
 
         $view = new View(null, Response::HTTP_NO_CONTENT);
 
@@ -104,13 +106,13 @@ final class TeamController extends BaseApiController
     #[Route(methods: ['POST'], path: '', name: 'post_team')]
     public function postAction(Request $request): Response
     {
-        $team = new Team('');
+        $team = $this->teamService->createNewTeam('');
 
         $form = $this->createForm(TeamApiEditForm::class, $team);
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
-            $this->repository->saveTeam($team);
+            $this->teamService->saveTeam($team);
 
             $view = new View($team, 200);
             $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -139,7 +141,7 @@ final class TeamController extends BaseApiController
                 $team->removeMember($member);
                 $this->repository->removeTeamMember($member);
             }
-            $this->repository->saveTeam($team);
+            $this->teamService->saveTeam($team);
         }
 
         $form = $this->createForm(TeamApiEditForm::class, $team);
@@ -154,7 +156,7 @@ final class TeamController extends BaseApiController
             return $this->viewHandler->handle($view);
         }
 
-        $this->repository->saveTeam($team);
+        $this->teamService->saveTeam($team);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -178,7 +180,7 @@ final class TeamController extends BaseApiController
 
         $team->addUser($member);
 
-        $this->repository->saveTeam($team);
+        $this->teamService->saveTeam($team);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -206,7 +208,7 @@ final class TeamController extends BaseApiController
 
         $team->removeUser($member);
 
-        $this->repository->saveTeam($team);
+        $this->teamService->saveTeam($team);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);

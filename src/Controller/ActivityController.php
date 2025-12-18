@@ -15,7 +15,6 @@ use App\Configuration\SystemConfiguration;
 use App\Entity\Activity;
 use App\Entity\ActivityRate;
 use App\Entity\Project;
-use App\Entity\Team;
 use App\Event\ActivityDetailControllerEvent;
 use App\Event\ActivityMetaDisplayEvent;
 use App\Export\Spreadsheet\EntityWithMetaFieldsExporter;
@@ -32,6 +31,7 @@ use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\TeamQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TeamRepository;
+use App\User\TeamService;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
 use Exception;
@@ -303,19 +303,19 @@ final class ActivityController extends AbstractController
     #[Route(path: '/{id}/create_team', name: 'activity_team_create', methods: ['GET'])]
     #[IsGranted('create_team')]
     #[IsGranted('permissions', 'activity')]
-    public function createDefaultTeamAction(Activity $activity, TeamRepository $teamRepository): Response
+    public function createDefaultTeamAction(Activity $activity, TeamRepository $teamRepository, TeamService $teamService): Response
     {
         $defaultTeam = $teamRepository->findOneBy(['name' => $activity->getName()]);
 
         if (null === $defaultTeam) {
-            $defaultTeam = new Team($activity->getName());
+            $defaultTeam = $teamService->createNewTeam($activity->getName());
         }
 
         $defaultTeam->addTeamlead($this->getUser());
         $defaultTeam->addActivity($activity);
 
         try {
-            $teamRepository->saveTeam($defaultTeam);
+            $teamService->saveTeam($defaultTeam);
         } catch (Exception $ex) {
             $this->flashUpdateException($ex);
         }
