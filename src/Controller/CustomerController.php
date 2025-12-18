@@ -42,6 +42,7 @@ use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -239,12 +240,17 @@ final class CustomerController extends AbstractController
     #[Route(path: '/{id}/create_team', name: 'customer_team_create', methods: ['GET'])]
     #[IsGranted('create_team')]
     #[IsGranted('permissions', 'customer')]
-    public function createDefaultTeamAction(Customer $customer, TeamRepository $teamRepository, TeamService $teamService): Response
+    public function createDefaultTeamAction(Customer $customer, TeamService $teamService): Response
     {
-        $defaultTeam = $teamRepository->findOneBy(['name' => $customer->getName()]);
+        $name = $customer->getName();
+        if ($name === null) {
+            throw new BadRequestHttpException('Cannot create default team for customer with empty name: ' . $customer->getId());
+        }
+
+        $defaultTeam = $teamService->findTeamByName($name);
 
         if (null === $defaultTeam) {
-            $defaultTeam = $teamService->createNewTeam($customer->getName());
+            $defaultTeam = $teamService->createNewTeam($name);
         }
 
         $defaultTeam->addTeamlead($this->getUser());

@@ -30,11 +30,16 @@ final class TeamService
     private array $cache = [];
 
     public function __construct(
-        private TeamRepository $repository,
+        private readonly TeamRepository $repository,
         private readonly ValidatorInterface $validator,
         private readonly EventDispatcherInterface $dispatcher,
     )
     {
+    }
+
+    public function findTeamByName(string $name): ?Team
+    {
+        return $this->repository->findOneBy(['name' => $name]);
     }
 
     public function countTeams(): int

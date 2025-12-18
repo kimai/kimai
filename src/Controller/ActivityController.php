@@ -40,6 +40,7 @@ use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -303,12 +304,17 @@ final class ActivityController extends AbstractController
     #[Route(path: '/{id}/create_team', name: 'activity_team_create', methods: ['GET'])]
     #[IsGranted('create_team')]
     #[IsGranted('permissions', 'activity')]
-    public function createDefaultTeamAction(Activity $activity, TeamRepository $teamRepository, TeamService $teamService): Response
+    public function createDefaultTeamAction(Activity $activity, TeamService $teamService): Response
     {
-        $defaultTeam = $teamRepository->findOneBy(['name' => $activity->getName()]);
+        $name = $activity->getName();
+        if ($name === null) {
+            throw new BadRequestHttpException('Cannot create default team for activity with empty name: ' . $activity->getId());
+        }
+
+        $defaultTeam = $teamService->findTeamByName($name);
 
         if (null === $defaultTeam) {
-            $defaultTeam = $teamService->createNewTeam($activity->getName());
+            $defaultTeam = $teamService->createNewTeam($name);
         }
 
         $defaultTeam->addTeamlead($this->getUser());
