@@ -14,7 +14,6 @@ use App\Customer\CustomerStatisticService;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
 use App\Entity\CustomerRate;
-use App\Entity\Team;
 use App\Event\CustomerDetailControllerEvent;
 use App\Event\CustomerMetaDisplayEvent;
 use App\Export\Spreadsheet\EntityWithMetaFieldsExporter;

@@ -14,7 +14,6 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\ProjectComment;
 use App\Entity\ProjectRate;
-use App\Entity\Team;
 use App\Event\ProjectDetailControllerEvent;
 use App\Event\ProjectMetaDisplayEvent;
 use App\Export\Spreadsheet\EntityWithMetaFieldsExporter;

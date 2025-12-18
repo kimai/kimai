@@ -13,9 +13,9 @@ use App\Entity\Team;
 use App\Event\TeamCreateEvent;
 use App\Event\TeamCreatePostEvent;
 use App\Event\TeamCreatePreEvent;
+use App\Event\TeamDeleteEvent;
 use App\Event\TeamUpdatePostEvent;
 use App\Event\TeamUpdatePreEvent;
-use App\Event\TeamDeleteEvent;
 use App\Repository\TeamRepository;
 use App\Validator\ValidationFailedException;
 use InvalidArgumentException;
@@ -70,7 +70,7 @@ final class TeamService
             throw new InvalidArgumentException('Cannot create team, already persisted');
         }
 
-        $this->validateTeam($team, ['TeamCreate']);
+        $this->validateTeam($team);
 
         $this->dispatcher->dispatch(new TeamCreatePreEvent($team));
         $this->repository->saveTeam($team);
@@ -84,18 +84,18 @@ final class TeamService
         return $this->countTeams() > 0;
     }
 
-    private function validateTeam(Team $team, array $groups = []): void
+    private function validateTeam(Team $team): void
     {
-        $errors = $this->validator->validate($team, null, $groups);
+        $errors = $this->validator->validate($team);
 
         if ($errors->count() > 0) {
             throw new ValidationFailedException($errors);
         }
     }
 
-    private function updateTeam(Team $team, array $groups = []): Team
+    private function updateTeam(Team $team): Team
     {
-        $this->validateTeam($team, $groups);
+        $this->validateTeam($team);
 
         $this->dispatcher->dispatch(new TeamUpdatePreEvent($team));
         $this->repository->saveTeam($team);

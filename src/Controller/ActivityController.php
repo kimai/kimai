@@ -15,7 +15,6 @@ use App\Configuration\SystemConfiguration;
 use App\Entity\Activity;
 use App\Entity\ActivityRate;
 use App\Entity\Project;
-use App\Entity\Team;
 use App\Event\ActivityDetailControllerEvent;
 use App\Event\ActivityMetaDisplayEvent;
 use App\Export\Spreadsheet\EntityWithMetaFieldsExporter;
