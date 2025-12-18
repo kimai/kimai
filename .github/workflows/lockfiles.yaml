@@ -1,6 +1,6 @@
 name: Check .lock files
 on:
-    pull_request: null
+    pull_request_target: null
     push:
         branches:
             - main
