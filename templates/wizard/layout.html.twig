@@ -21,7 +21,7 @@
 
 {% block wizard_progress_bar %}
     {% if percent is defined and percent is not null %}
-        {{ progress_bar({current: percent, max: 100, min: 0}) }}
+        {{ progress_bar({value: percent, max: 100, min: 0}) }}
     {% endif %}
 {% endblock %}
 
