@@ -10,7 +10,7 @@
     {% endif %}
     {{ form_widget(form.sumType) }}
     {% from '@theme/components/buttons.html.twig' import submit_button %}
-    {{ submit_button('download', {'attr': {'formaction': path(export_route)}, 'icon': 'download', 'combined': false}, 'primary') }}
+    {{ submit_button('download', {'attr': {'formaction': path(export_route)}, 'icon': 'download', 'combined': false}) }}
 {% endblock %}
 
 {% block report %}

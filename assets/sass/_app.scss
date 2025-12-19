@@ -5,11 +5,14 @@
  * file that was distributed with this source code.
  */
 
-$modal-backdrop-opacity: 0.6 !default;
+$modal-backdrop-opacity: 0.7 !default;
 
-@import '~@tabler/core/src/scss/tabler';
-@import '~@tabler/core/src/scss/vendor/litepicker';
-@import '~@tabler/core/src/scss/vendor/tom-select';
+@import '~@tabler/core/scss/tabler';
+@import '~@tabler/core/scss/tabler-themes';
+@import '~@tabler/core/scss/vendor/litepicker';
+
+@import '~tom-select/dist/scss/tom-select.bootstrap5';
+@import '~@tabler/core/scss/vendor/tom-select';
 
 /**
  * Everyone needs icons

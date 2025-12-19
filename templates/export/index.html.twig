@@ -135,13 +135,13 @@
                                         {% if btnTitle2 != ('button.' ~ title) %}
                                             {% set btnTitle = btnTitle2 %}
                                         {% endif %}
-                                        <button type="button" id="export-{{ id }}-button" class="btn btn-success startExportBtn" data-type="{{ id }}">
+                                        <button type="button" id="export-{{ id }}-button" class="btn btn-primary startExportBtn" data-type="{{ id }}">
                                             {{ btnTitle }}
                                         </button>
                                     {% endfor %}
                                 {% else %}
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             {{ btnTitle }}
                                         </button>
                                         <div class="dropdown-menu">
@@ -287,7 +287,7 @@
                     {% if is_granted('edit_export', entry) %}
                         {% if entry.exported %}
                             {% if editExported %}
-                                <button type="button" class="btn btn-outline-secondary exportBtn active" data-toggle="button" aria-pressed="true"
+                                <button type="button" class="btn btn-default exportBtn" data-toggle="button" aria-pressed="true"
                                         data-exported-text="{{ 'entryState.exported'|trans }}" data-clean-text="{{ 'entryState.not_exported'|trans }}" data-timesheet="{{ entry.id }}">
                                     {{ 'entryState.exported'|trans }}
                                 </button>
@@ -295,7 +295,7 @@
                                 {{ 'entryState.exported'|trans }}
                             {% endif %}
                         {% else %}
-                            <button type="button" class="btn btn-light exportBtn" data-toggle="button" aria-pressed="false"
+                            <button type="button" class="btn btn-default exportBtn" data-toggle="button" aria-pressed="false"
                                     data-exported-text="{{ 'entryState.exported'|trans }}" data-clean-text="{{ 'entryState.not_exported'|trans }}" data-timesheet="{{ entry.id }}">
                                 {{ 'entryState.not_exported'|trans }}
                             </button>

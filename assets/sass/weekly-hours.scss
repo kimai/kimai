@@ -5,12 +5,17 @@
  * file that was distributed with this source code.
  */
 
-/*
-    ----------- This file contains rules that only page to certain pages -----------
- */
+/* This file contains rules for the "weekly-hours" AKA "quick-entries" form */
 
-/* weekly working times AKA quick-entries form */
-section.quick-entry-page {
+.quick-entry-page {
+
+    .form-dataTable {
+        table.dataTable {
+            .form-group {
+                margin-bottom: 0;
+            }
+        }
+    }
 
     #quick_entry_form {
         display: none;
@@ -46,19 +51,14 @@ section.quick-entry-page {
             }
             .btn-duration-preset {
                 display: none;
-                padding: 7px 5px 7px 2px;
+                min-width: 30px;
             }
             input.duration-input {
                 padding: 7px 5px;
-                max-width: 100%;
+                max-width: 50px;
                 border-bottom-right-radius: var(--tblr-border-radius);
                 border-top-right-radius: var(--tblr-border-radius);
             }
-        }
-
-        table.dataTable thead th,
-        table.dataTable td.total {
-            padding: .75rem 2px;
         }
     }
 
@@ -69,25 +69,33 @@ section.quick-entry-page {
 }
 
 @media (min-width: 900px) {
-    section.quick-entry-page {
+    .quick-entry-page {
         .ts-wrapper {
             max-width: 170px;
         }
     }
 }
 
-@media (min-width: 1000px) {
-    section.quick-entry-page {
+@media (min-width: 992px) {
+    .quick-entry-page {
         .ts-wrapper {
-            max-width: 180px;
+            max-width: 100px;
+        }
+    }
+}
+
+@media (min-width: 1100px) {
+    .quick-entry-page {
+        .ts-wrapper {
+            max-width: 160px;
         }
     }
 }
 
 @media (min-width: 1200px) {
-    section.quick-entry-page {
+    .quick-entry-page {
         .ts-wrapper {
-            max-width: 210px;
+            max-width: 165px;
         }
         .duration-widget {
             max-width: 100%;
@@ -96,12 +104,12 @@ section.quick-entry-page {
 }
 
 @media (min-width: 1250px) {
-    section.quick-entry-page {
+    .quick-entry-page {
         #quick_entry_box {
             .duration-widget {
                 .input-group {
-                    max-width: 70px;
-                    min-width: 70px;
+                    max-width: 85px;
+                    min-width: 75px;
                 }
                 .btn-duration-preset {
                     display: flex;
@@ -111,48 +119,51 @@ section.quick-entry-page {
                     border-top-right-radius: 0;
                 }
             }
-            table.dataTable thead th,
-            table.dataTable td.total {
-                padding: .75rem;
-            }
         }
     }
 }
 
 @media (min-width: 1300px) {
-    section.quick-entry-page {
+    .quick-entry-page {
+        #quick_entry_box {
+            .duration-widget {
+                input.duration-input {
+                    max-width: 100%;
+                }
+            }
+        }
         .ts-wrapper {
-            max-width: 230px;
+            max-width: 190px;
         }
     }
 }
 
 @media (min-width: 1400px) {
-    section.quick-entry-page {
+    .quick-entry-page {
         .ts-wrapper {
-            max-width: 270px;
+            max-width: 235px;
         }
     }
 }
 
 @media (min-width: 1500px) {
-    section.quick-entry-page {
+    .quick-entry-page {
         .ts-wrapper {
-            max-width: 300px;
+            max-width: 290px;
         }
     }
 }
 
 @media (min-width: 1600px) {
-    section.quick-entry-page {
+    .quick-entry-page {
         .ts-wrapper {
-            max-width: 370px;
+            max-width: 340px;
         }
     }
 }
 
 @media (min-width: 1800px) {
-    section.quick-entry-page {
+    .quick-entry-page {
         .ts-wrapper {
             max-width: 450px;
         }

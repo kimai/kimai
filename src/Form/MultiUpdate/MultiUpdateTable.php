@@ -60,7 +60,7 @@ final class MultiUpdateTable extends AbstractType
                 'label' => $key,
                 'attr' => [
                     'data-href' => $value,
-                    'class' => 'multi_update_table_action' . (stripos($key, 'delete') !== false ? ' btn-danger' : ''),
+                    'class' => 'multi_update_table_action' . (stripos($key, 'delete') !== false ? ' btn-danger' : ' btn-primary'),
                 ],
             ]);
         }

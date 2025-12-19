@@ -35,13 +35,13 @@
                     {% block box_body %}
                         <div class="list-group list-group-flush external-events" data-method="{{ source.method }}" data-route="{{ path(source.route, source.routeParams) }}" data-route-replacer="{{ source.routeReplacer|json_encode|e('html_attr') }}">
                             {% for entry in source.entries|slice(0, config.dragDropAmount) %}
-                                <div class="p-1 ps-2 list-group-item external-event draggable" data-entry="{{ entry.data|json_encode|e('html_attr') }}"{% if entry.project is not null %} data-toggle="tooltip" title="{{ entry.project.customer.name }}"{% endif %}>
+                                <div class="p-2 ps-3 lh-lg list-group-item external-event draggable" data-entry="{{ entry.data|json_encode|e('html_attr') }}"{% if entry.project is not null %} data-toggle="tooltip" title="{{ entry.project.customer.name }}"{% endif %}>
                                     <div class="row align-items-center">
                                         <div class="col text-truncate">
                                             {% if source.blockInclude is not null and entry.blockName is not null and block(entry.blockName, source.blockInclude) is defined %}
                                                 {{ block(entry.blockName, source.blockInclude) }}
                                             {% else %}
-                                                <span class="d-block text-body-secondary text-truncate mt-n1">{{ entry.title }}</span>
+                                                <span class="d-block text-body-secondary text-truncate">{{ entry.title }}</span>
                                             {% endif %}
                                         </div>
                                     </div>

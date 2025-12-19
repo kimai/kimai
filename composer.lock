@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0e017e736364638de484ae1799d11b8f",
+    "content-hash": "9f49e3cfd10e3bdd29e6bd67968ec19b",
     "packages": [
         {
             "name": "azuyalabs/yasumi",
@@ -2723,30 +2723,30 @@
         },
         {
             "name": "kevinpapst/tabler-bundle",
-            "version": "1.9.0",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/TablerBundle.git",
-                "reference": "2e1cd990e4c88c1b465d851ab9c4e7cbf97cc5d1"
+                "reference": "6a3942ea16c97e8163bf20b9a24f4263ce6d8bd7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/2e1cd990e4c88c1b465d851ab9c4e7cbf97cc5d1",
-                "reference": "2e1cd990e4c88c1b465d851ab9c4e7cbf97cc5d1",
+                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/6a3942ea16c97e8163bf20b9a24f4263ce6d8bd7",
+                "reference": "6a3942ea16c97e8163bf20b9a24f4263ce6d8bd7",
                 "shasum": ""
             },
             "require": {
                 "php": "^8.1",
-                "symfony/asset": "^6.0 || ^7.0",
-                "symfony/config": "^6.0 || ^7.0",
-                "symfony/dependency-injection": "^6.0 || ^7.0",
-                "symfony/event-dispatcher": "^6.0 || ^7.0",
-                "symfony/http-foundation": "^6.0 || ^7.0",
-                "symfony/http-kernel": "^6.0 || ^7.0",
-                "symfony/options-resolver": "^6.0 || ^7.0",
-                "symfony/security-core": "^6.0 || ^7.0",
-                "symfony/translation": "^6.0 || ^7.0",
-                "symfony/twig-bridge": "^6.0 || ^7.0",
+                "symfony/asset": "^6.0 || ^7.0 || ^8.0",
+                "symfony/config": "^6.0 || ^7.0 || ^8.0",
+                "symfony/dependency-injection": "^6.0 || ^7.0 || ^8.0",
+                "symfony/event-dispatcher": "^6.0 || ^7.0 || ^8.0",
+                "symfony/http-foundation": "^6.0 || ^7.0 || ^8.0",
+                "symfony/http-kernel": "^6.0 || ^7.0 || ^8.0",
+                "symfony/options-resolver": "^6.0 || ^7.0 || ^8.0",
+                "symfony/security-core": "^6.0 || ^7.0 || ^8.0",
+                "symfony/translation": "^6.0 || ^7.0 || ^8.0",
+                "symfony/twig-bridge": "^6.0 || ^7.0 || ^8.0",
                 "twig/twig": "^3.0"
             },
             "require-dev": {
@@ -2758,7 +2758,7 @@
                 "phpstan/phpstan-strict-rules": "^2.0",
                 "phpstan/phpstan-symfony": "^2.0",
                 "phpunit/phpunit": "^9.0",
-                "symfony/framework-bundle": "^6.0 || ^7.0"
+                "symfony/framework-bundle": "^6.0 || ^7.0 || ^8.0"
             },
             "suggest": {
                 "knplabs/knp-menu-bundle": "Allows easy menu integration"
@@ -2782,7 +2782,7 @@
             "description": "Admin/Backend theme bundle for Symfony based on Tabler.io",
             "support": {
                 "issues": "https://github.com/kevinpapst/TablerBundle/issues",
-                "source": "https://github.com/kevinpapst/TablerBundle/tree/1.9.0"
+                "source": "https://github.com/kevinpapst/TablerBundle/tree/2.0.2"
             },
             "funding": [
                 {
@@ -2794,7 +2794,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-08-07T16:44:12+00:00"
+            "time": "2025-12-19T17:20:55+00:00"
         },
         {
             "name": "league/csv",
@@ -12012,16 +12012,16 @@
         },
         {
             "name": "phpstan/phpstan-phpunit",
-            "version": "2.0.10",
+            "version": "2.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-phpunit.git",
-                "reference": "8d61a5854e7497d95bc85188e13537e99bd7aae7"
+                "reference": "5e30669bef866eff70db8b58d72a5c185aa82414"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-phpunit/zipball/8d61a5854e7497d95bc85188e13537e99bd7aae7",
-                "reference": "8d61a5854e7497d95bc85188e13537e99bd7aae7",
+                "url": "https://api.github.com/repos/phpstan/phpstan-phpunit/zipball/5e30669bef866eff70db8b58d72a5c185aa82414",
+                "reference": "5e30669bef866eff70db8b58d72a5c185aa82414",
                 "shasum": ""
             },
             "require": {
@@ -12059,9 +12059,9 @@
             "description": "PHPUnit extensions and rules for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-phpunit/issues",
-                "source": "https://github.com/phpstan/phpstan-phpunit/tree/2.0.10"
+                "source": "https://github.com/phpstan/phpstan-phpunit/tree/2.0.11"
             },
-            "time": "2025-12-06T11:15:39+00:00"
+            "time": "2025-12-19T09:05:35+00:00"
         },
         {
             "name": "phpstan/phpstan-strict-rules",

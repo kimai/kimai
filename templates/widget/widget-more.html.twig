@@ -2,12 +2,13 @@
 {% if options.route is defined %}
     {% set url = path(options.route, options.routeOptions|default([])) %}
 {% endif %}
+{% set color = options.color|default('green') %}
 
 <div class="card card-sm">
     <div class="card-body">
         <div class="row align-items-center">
             <div class="col-auto">
-                <span class="bg-{{ options.color|default('green') }} text-white avatar">
+                <span class="bg-{{ color }} text-{{ color }}-fg avatar">
                     {{ icon(options.icon, true) }}
                 </span>
             </div>
