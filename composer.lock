@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e4cb4fb5ccd5625300454acb8d04b3bf",
+    "content-hash": "9f49e3cfd10e3bdd29e6bd67968ec19b",
     "packages": [
         {
             "name": "azuyalabs/yasumi",
@@ -2723,16 +2723,16 @@
         },
         {
             "name": "kevinpapst/tabler-bundle",
-            "version": "dev-main",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/TablerBundle.git",
-                "reference": "2a2bdf32d2e327f26402b3f03eb6af000a5bfeb7"
+                "reference": "cf46140b31f7121208ca72cf6ae32ce89ecd4769"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/2a2bdf32d2e327f26402b3f03eb6af000a5bfeb7",
-                "reference": "2a2bdf32d2e327f26402b3f03eb6af000a5bfeb7",
+                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/cf46140b31f7121208ca72cf6ae32ce89ecd4769",
+                "reference": "cf46140b31f7121208ca72cf6ae32ce89ecd4769",
                 "shasum": ""
             },
             "require": {
@@ -2763,7 +2763,6 @@
             "suggest": {
                 "knplabs/knp-menu-bundle": "Allows easy menu integration"
             },
-            "default-branch": true,
             "type": "symfony-bundle",
             "autoload": {
                 "psr-4": {
@@ -2783,7 +2782,7 @@
             "description": "Admin/Backend theme bundle for Symfony based on Tabler.io",
             "support": {
                 "issues": "https://github.com/kevinpapst/TablerBundle/issues",
-                "source": "https://github.com/kevinpapst/TablerBundle/tree/main"
+                "source": "https://github.com/kevinpapst/TablerBundle/tree/2.0.0"
             },
             "funding": [
                 {
@@ -2795,7 +2794,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-12-19T15:12:41+00:00"
+            "time": "2025-12-19T15:30:16+00:00"
         },
         {
             "name": "league/csv",
@@ -14541,9 +14540,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "kevinpapst/tabler-bundle": 20
-    },
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
