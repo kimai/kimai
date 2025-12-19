@@ -1,4 +1,4 @@
-{% extends '@theme/layout/default-layout.html.twig' %}
+{% extends tabler_bundle.isBoxedLayout() ? '@Tabler/layout_horizontal.html.twig' : '@Tabler/layout_vertical.html.twig' %}
 
 {% block body_start %}
     data-title="{{- get_title()|e('html_attr') -}}"
