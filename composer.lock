@@ -2727,12 +2727,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/TablerBundle.git",
-                "reference": "bca515d118038f099d8c1d9df46861024d8a1282"
+                "reference": "2a2bdf32d2e327f26402b3f03eb6af000a5bfeb7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/bca515d118038f099d8c1d9df46861024d8a1282",
-                "reference": "bca515d118038f099d8c1d9df46861024d8a1282",
+                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/2a2bdf32d2e327f26402b3f03eb6af000a5bfeb7",
+                "reference": "2a2bdf32d2e327f26402b3f03eb6af000a5bfeb7",
                 "shasum": ""
             },
             "require": {
@@ -2795,7 +2795,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-12-19T08:59:11+00:00"
+            "time": "2025-12-19T15:12:41+00:00"
         },
         {
             "name": "league/csv",
