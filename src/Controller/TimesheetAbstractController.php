@@ -91,8 +91,8 @@ abstract class TimesheetAbstractController extends AbstractController
 
         if ($canSeeRate) {
             $table->addColumn('hourlyRate', ['class' => 'text-end d-none text-nowrap']);
-            $table->addColumn('internalRate', ['class' => 'text-end text-nowrap d-none d-xxl-table-cell']);
-            $table->addColumn('rate', ['class' => 'text-end text-nowrap']);
+            $table->addColumn('internalRate', ['class' => 'text-end text-nowrap d-none']);
+            $table->addColumn('rate', ['class' => 'text-end text-nowrap d-none']);
         }
 
         $table->addColumn('customer', ['class' => 'd-none d-md-table-cell']);

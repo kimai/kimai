@@ -17,22 +17,18 @@ table.dataTable {
         position: relative;
     }
 
-    thead .sorting_asc,
-    thead .sorting_desc {
-        font-weight: bold;
-    }
-
     thead .sorting:after,
     thead .sorting_asc:after,
     thead .sorting_desc:after {
         padding-left: 5px;
-        font-family: 'Font Awesome 6 Free';
+        font-family: 'Font Awesome\ 6 Free';
         opacity: 0.5;
         font-size: 12px;
+        font-weight: 700
     }
     thead .sorting:after {
         opacity: 0.2;
-        content: "\f0dc"; /* sort */
+        content: "\f0dc";
     }
     thead .sorting_asc:after {
         content: "\f077";
@@ -42,7 +38,7 @@ table.dataTable {
     }
 
     thead > tr > th {
-        vertical-align: top;
+        vertical-align: middle;
         white-space: nowrap;
     }
 
@@ -92,7 +88,7 @@ table.dataTable {
         &.summary td {
             font-weight: bold;
             border: 0;
-            background-color: var(--tblr-bg-surface-secondary);
+            background-color: var(--tblr-secondary-lt);
         }
         th.multiCheckbox {
             width: 15px;
@@ -135,14 +131,6 @@ table.dataTable {
     }
 }
 
-/* Quick entry form */
-.form-dataTable {
-    table.dataTable {
-        .form-group {
-            margin-bottom: 0;
-        }
-    }
-}
 
 table.table-hover {
     tr {

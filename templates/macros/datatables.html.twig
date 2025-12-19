@@ -36,7 +36,7 @@
         <div class="input-group inline-search position-static">
             <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-haspopup="true" aria-expanded="false" id="search-dropdown-btn" title="{{ 'search_filter'|trans }}">
                 {{ icon('filter', true) }}
-                {% if filterCount > 0 %}<span class="badge badge-pill bg-primary text-primary-fg ms-1 d-none d-md-inline">{{ filterCount }}</span>{% endif %}
+                {% if filterCount > 0 %}<span class="badge badge-notification bg-primary text-primary-fg ms-1 d-none d-sm-inline">{{ filterCount }}</span>{% endif %}
             </button>
             <div class="dropdown-menu p-3 search-dropdown" data-popper-placement="bottom-start" aria-labelledby="search-dropdown-btn">
                 {{ form_rest(form) }}
@@ -60,7 +60,7 @@
             {{ searchTerm|raw }}
             <span class="input-group-text">
                 {% set bookmarkToken = csrf_token('search') %}
-                {% set searchBtnClass = 'btn btn-icon btn-sm btn-ghost-secondary' %}
+                {% set searchBtnClass = 'btn btn-icon btn-sm btn-ghost-secondary p-1' %}
                 <input type="hidden" name="_token" value="{{ bookmarkToken }}">
                 <button type="submit" class="{{ searchBtnClass }}" data-toggle="tooltip" title="{{ 'search'|trans }}">
                     {{ icon('search') }}

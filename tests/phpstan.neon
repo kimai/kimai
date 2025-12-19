@@ -527,11 +527,6 @@ parameters:
             path: Controller/AbstractControllerBaseTestCase.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:assertPageActions\\(\\) has parameter \\$buttons with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Controller/AbstractControllerBaseTestCase.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:importFixture\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Controller/AbstractControllerBaseTestCase.php
