@@ -64,6 +64,9 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
             $this->helper->setIsDarkMode(true);
         } elseif ($skin === 'auto') {
             $this->helper->setThemeAuto(true);
+        } else {
+            $this->helper->setIsDarkMode(false);
+            $this->helper->setThemeAuto(false);
         }
 
         // do not allow boxed layout, header is not compatible and other functions need the full size as well
