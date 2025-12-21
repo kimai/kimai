@@ -4,6 +4,10 @@ on:
     push:
         branches:
             - main
+
+permissions:
+    pull-requests: read
+
 jobs:
     lockfiles:
         runs-on: ubuntu-latest
@@ -13,5 +17,5 @@ jobs:
               uses: xalvarez/prevent-file-change-action@v3
               with:
                   githubToken: ${{ secrets.GITHUB_TOKEN }}
-                  pattern: .*\.lock$
+                  pattern: .*\.lock$|^\.github\/.*$
                   trustedAuthors: kevinpapst, dependabot

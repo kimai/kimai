@@ -304,12 +304,13 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'user' => ['result' => 'object', 'type' => '@User'],
                     'dueDays' => 'int',
                     'invoiceNumber' => 'string',
-                    'metaFields' => 'array',
                     'paymentDate' => '@datetime',
                     'status' => 'string',
                     'tax' => 'float',
                     'total' => 'float',
                     'vat' => 'float',
+                    'overdue' => 'bool',
+                    'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'],
                 ];
 
             case 'PageActionItem':
@@ -326,8 +327,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                 return [
                     'id' => 'int',
                     'name' => 'string',
-                    'color' => '@string',
-                    'color-safe' => 'string',
+                    'color' => 'string',
                     'visible' => 'bool',
                 ];
 
@@ -354,14 +354,19 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                 return [
                     'id' => 'int',
                     'username' => 'string',
+                    'email' => 'string',
                     'enabled' => 'bool',
                     'apiToken' => 'bool',
-                    'color' => '@string',
+                    'systemAccount' => 'bool',
+                    'color' => 'string',
                     'avatar' => '@string',
                     'alias' => '@string',
                     'accountNumber' => '@string',
                     'initials' => '@string',
                     'title' => '@string',
+                    'language' => 'string',
+                    'locale' => 'string',
+                    'timezone' => 'string',
                 ];
 
                 // if a user is loaded explicitly
@@ -369,20 +374,23 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                 return [
                     'id' => 'int',
                     'username' => 'string',
+                    'email' => 'string',
                     'enabled' => 'bool',
                     'apiToken' => 'bool',
-                    'alias' => '@string',
-                    'title' => '@string',
-                    'supervisor' => ['result' => 'object', 'type' => '@UserEntity'],
+                    'systemAccount' => 'bool',
+                    'color' => 'string',
                     'avatar' => '@string',
-                    'color' => '@string',
-                    'teams' => ['result' => 'array', 'type' => 'Team'],
-                    'roles' => ['result' => 'array', 'type' => 'string'],
+                    'alias' => '@string',
+                    'accountNumber' => '@string',
                     'initials' => 'string',
+                    'title' => '@string',
                     'language' => 'string',
                     'locale' => 'string',
                     'timezone' => 'string',
-                    'accountNumber' => '@string',
+                    // TODO more info in entity than in collection
+                    'supervisor' => ['result' => 'object', 'type' => '@UserEntity'],
+                    'teams' => ['result' => 'array', 'type' => 'Team'],
+                    'roles' => ['result' => 'array', 'type' => 'string'],
                     'memberships' => ['result' => 'array', 'type' => 'TeamMembership'],
                     'preferences' => ['result' => 'array', 'type' => 'UserPreference'],
                 ];
@@ -394,7 +402,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                 return [
                     'id' => 'int',
                     'name' => 'string',
-                    'color' => '@string',
+                    'color' => 'string',
                 ];
 
                 // explicitly requested team
@@ -402,8 +410,9 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                 return [
                     'id' => 'int',
                     'name' => 'string',
-                    'color' => '@string',
+                    'color' => 'string',
                     'members' => ['result' => 'array', 'type' => 'TeamMember'],
+                    // TODO more info in entity than in collection
                     'customers' => ['result' => 'array', 'type' => '@Customer'],
                     'projects' => ['result' => 'array', 'type' => '@Project'],
                     'activities' => ['result' => 'array', 'type' => '@Activity'],
@@ -430,12 +439,18 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'name' => 'string',
                     'visible' => 'bool',
                     'billable' => 'bool',
-                    'color' => '@string',
+                    'color' => 'string',
                     'number' => '@string',
                     'comment' => '@string',
-                    'currency' => 'string', // since 2.40.0
-                    'country' => 'string', // since 2.40.0
-                    'company' => '@string', // since 2.40.0
+                    'currency' => 'string',
+                    'country' => 'string',
+                    'company' => '@string',
+                    'homepage' => '@string',
+                    'timezone' => 'string',
+                    'fax' => '@string',
+                    'mobile' => '@string',
+                    'phone' => '@string',
+                    'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'], // since 2.45
                 ];
 
                 // if a list of customers is loaded
@@ -445,19 +460,19 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'name' => 'string',
                     'visible' => 'boolean',
                     'billable' => 'bool',
-                    'color' => '@string',
+                    'color' => 'string',
                     'number' => '@string',
                     'comment' => '@string',
-                    'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'],
-                    'teams' => ['result' => 'array', 'type' => 'Team'],
-                    'currency' => 'string', // since 1.10
+                    'currency' => 'string',
                     'country' => 'string',
                     'company' => '@string',
                     'homepage' => '@string',
+                    'timezone' => 'string',
                     'fax' => '@string',
                     'mobile' => '@string',
                     'phone' => '@string',
-                    'timezone' => 'string',
+                    'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'],
+                    'teams' => ['result' => 'array', 'type' => 'Team'],
                 ];
 
                 // if a customer is loaded explicitly
@@ -467,32 +482,34 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'name' => 'string',
                     'visible' => 'bool',
                     'billable' => 'bool',
-                    'color' => '@string',
-                    'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'],
-                    'teams' => ['result' => 'array', 'type' => 'Team'],
-                    'homepage' => '@string',
+                    'color' => 'string',
                     'number' => '@string',
                     'comment' => '@string',
-                    'company' => '@string',
-                    'contact' => '@string',
-                    'address' => '@string',
-                    'country' => 'string',
                     'currency' => 'string',
-                    'phone' => '@string',
+                    'country' => 'string',
+                    'company' => '@string',
+                    'homepage' => '@string',
+                    'timezone' => 'string',
                     'fax' => '@string',
                     'mobile' => '@string',
+                    'phone' => '@string',
+                    'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'],
+                    'teams' => ['result' => 'array', 'type' => 'Team'],
+                    // TODO more info in entity than in collection
+                    'contact' => '@string',
                     'email' => '@string',
-                    'timezone' => 'string',
+                    'vatId' => '@string',
+                    'addressLine1' => '@string',
+                    'addressLine2' => '@string',
+                    'addressLine3' => '@string',
+                    'city' => '@string',
+                    'postCode' => '@string',
+                    'buyerReference' => '@string',
+                    // only available in the entity itself
+                    'address' => '@string', // deprecated, do not expose in collection
                     'budget' => 'float',
                     'timeBudget' => 'int',
-                    'vatId' => '@string', // since 1.10
-                    'budgetType' => '@string', // since 1.15
-                    'addressLine1' => '@string', // since 2.32
-                    'addressLine2' => '@string', // since 2.32
-                    'addressLine3' => '@string', // since 2.32
-                    'city' => '@string', // since 2.32
-                    'postCode' => '@string', // since 2.32
-                    'buyerReference' => '@string', // since 2.41
+                    'budgetType' => '@string',
                 ];
 
                 // if a project is embedded
@@ -502,14 +519,16 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'name' => 'string',
                     'visible' => 'bool',
                     'billable' => 'bool',
-                    'color' => '@string',
+                    'color' => 'string',
                     'customer' => 'int',
                     'number' => '@string',
                     'orderNumber' => '@string',
+                    'orderDate' => '@date',
                     'globalActivities' => 'bool',
                     'comment' => '@string',
                     'start' => '@datetime',
                     'end' => '@datetime',
+                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                 ];
 
                 // if a project is embedded in an expanded collection (here timesheet)
@@ -519,14 +538,16 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'name' => 'string',
                     'visible' => 'bool',
                     'billable' => 'bool',
-                    'color' => '@string',
+                    'color' => 'string',
                     'customer' => ['result' => 'object', 'type' => 'Customer'],
                     'number' => '@string',
                     'orderNumber' => '@string',
+                    'orderDate' => '@date',
                     'globalActivities' => 'bool',
                     'comment' => '@string',
                     'start' => '@datetime',
                     'end' => '@datetime',
+                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                 ];
 
                 // if a collection of projects is loaded
@@ -536,17 +557,18 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'name' => 'string',
                     'visible' => 'bool',
                     'billable' => 'bool',
+                    'color' => 'string',
                     'customer' => 'int',
                     'number' => '@string',
                     'orderNumber' => '@string',
-                    'color' => '@string',
-                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
-                    'parentTitle' => 'string',
+                    'orderDate' => '@date',
+                    'globalActivities' => 'bool',
+                    'comment' => '@string',
                     'start' => '@datetime',
                     'end' => '@datetime',
-                    'globalActivities' => 'bool',
+                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'teams' => ['result' => 'array', 'type' => 'Team'],
-                    'comment' => '@string',
+                    'parentTitle' => 'string',
                 ];
 
                 // if a project is explicitly loaded
@@ -556,21 +578,22 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'name' => 'string',
                     'visible' => 'bool',
                     'billable' => 'bool',
+                    'color' => 'string',
                     'customer' => 'int',
                     'number' => '@string',
-                    'color' => '@string',
-                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
-                    'parentTitle' => 'string',
-                    'start' => '@date',
-                    'end' => '@date',
-                    'globalActivities' => 'bool',
-                    'teams' => ['result' => 'array', 'type' => 'Team'],
-                    'comment' => '@string',
-                    'budget' => 'float',
-                    'timeBudget' => 'int',
                     'orderNumber' => '@string',
                     'orderDate' => '@date',
-                    'budgetType' => '@string', // since 1.15
+                    'globalActivities' => 'bool',
+                    'comment' => '@string',
+                    'start' => '@date',
+                    'end' => '@date',
+                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
+                    'teams' => ['result' => 'array', 'type' => 'Team'],
+                    'parentTitle' => 'string',
+                    // only available in the entity itself
+                    'budget' => 'float',
+                    'timeBudget' => 'int',
+                    'budgetType' => '@string',
                 ];
 
                 // embedded activities
@@ -582,7 +605,8 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'billable' => 'bool',
                     'project' => '@int',
                     'number' => '@string',
-                    'color' => '@string',
+                    'color' => 'string',
+                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'], // since 2.45
                     'comment' => '@string',
                 ];
 
@@ -594,7 +618,8 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'billable' => 'bool',
                     'project' => ['result' => 'object', 'type' => '@ProjectExpanded'],
                     'number' => '@string',
-                    'color' => '@string',
+                    'color' => 'string',
+                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'], // since 2.45
                     'comment' => '@string',
                 ];
 
@@ -607,10 +632,10 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'billable' => 'bool',
                     'project' => '@int',
                     'number' => '@string',
-                    'color' => '@string',
+                    'color' => 'string',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
-                    'parentTitle' => '@string',
                     'comment' => '@string',
+                    'parentTitle' => '@string',
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                 ];
 
@@ -623,14 +648,15 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'billable' => 'bool',
                     'project' => '@int',
                     'number' => '@string',
-                    'color' => '@string',
+                    'color' => 'string',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
-                    'parentTitle' => '@string',
                     'comment' => '@string',
+                    'parentTitle' => '@string',
+                    'teams' => ['result' => 'array', 'type' => 'Team'],
+                    // only available in the entity itself
                     'budget' => 'float',
                     'timeBudget' => 'int',
-                    'teams' => ['result' => 'array', 'type' => 'Team'],
-                    'budgetType' => '@string', // since 1.15
+                    'budgetType' => '@string',
                 ];
 
             case 'TimesheetEntity':
@@ -651,7 +677,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'billable' => 'bool',
                     'fixedRate' => '@float',
                     'hourlyRate' => '@float',
-                    // TODO new fields: category
+                    'break' => 'int',
                 ];
 
             case 'TimesheetExpanded':
@@ -672,7 +698,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'billable' => 'bool',
                     'fixedRate' => '@float',
                     'hourlyRate' => '@float',
-                    // TODO new fields: category
+                    'break' => 'int',
                 ];
 
             case 'TimesheetCollection':
@@ -691,6 +717,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'internalRate' => 'float',
                     'exported' => 'bool',
                     'billable' => 'bool',
+                    'break' => 'int',
                 ];
 
             case 'TimesheetCollectionFull':
@@ -709,6 +736,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'internalRate' => 'float',
                     'exported' => 'bool',
                     'billable' => 'bool',
+                    'break' => 'int',
                 ];
 
             default:

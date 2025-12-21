@@ -14,7 +14,6 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\ProjectComment;
 use App\Entity\ProjectRate;
-use App\Entity\Team;
 use App\Event\ProjectDetailControllerEvent;
 use App\Event\ProjectMetaDisplayEvent;
 use App\Export\Spreadsheet\EntityWithMetaFieldsExporter;
@@ -38,6 +37,7 @@ use App\Repository\Query\TeamQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\Query\VisibilityInterface;
 use App\Repository\TeamRepository;
+use App\User\TeamService;
 use App\Utils\Context;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
@@ -46,6 +46,7 @@ use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -267,19 +268,24 @@ final class ProjectController extends AbstractController
     #[Route(path: '/{id}/create_team', name: 'project_team_create', methods: ['GET'])]
     #[IsGranted('create_team')]
     #[IsGranted('permissions', 'project')]
-    public function createDefaultTeamAction(Project $project, TeamRepository $teamRepository): Response
+    public function createDefaultTeamAction(Project $project, TeamService $teamService): Response
     {
-        $defaultTeam = $teamRepository->findOneBy(['name' => $project->getName()]);
+        $name = $project->getName();
+        if ($name === null) {
+            throw new BadRequestHttpException('Cannot create default team for project with empty name: ' . $project->getId());
+        }
+
+        $defaultTeam = $teamService->findTeamByName($name);
 
         if (null === $defaultTeam) {
-            $defaultTeam = new Team($project->getName());
+            $defaultTeam = $teamService->createNewTeam($name);
         }
 
         $defaultTeam->addTeamlead($this->getUser());
         $defaultTeam->addProject($project);
 
         try {
-            $teamRepository->saveTeam($defaultTeam);
+            $teamService->saveTeam($defaultTeam);
         } catch (\Exception $ex) {
             $this->flashUpdateException($ex);
         }

@@ -122,19 +122,19 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[ORM\Column(name: 'phone', type: Types::STRING, length: 30, nullable: true)]
     #[Assert\Length(max: 30)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer'])]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'phone')]
     private ?string $phone = null;
     #[ORM\Column(name: 'fax', type: Types::STRING, length: 30, nullable: true)]
     #[Assert\Length(max: 30)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer'])]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'fax')]
     private ?string $fax = null;
     #[ORM\Column(name: 'mobile', type: Types::STRING, length: 30, nullable: true)]
     #[Assert\Length(max: 30)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer'])]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'mobile')]
     private ?string $mobile = null;
     /**
@@ -149,7 +149,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[ORM\Column(name: 'homepage', type: Types::STRING, length: 100, nullable: true)]
     #[Assert\Length(max: 100)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer'])]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'homepage')]
     private ?string $homepage = null;
     /**
@@ -160,7 +160,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Assert\Timezone]
     #[Assert\Length(max: 64)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer'])]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'timezone')]
     private ?string $timezone = null;
     /**
@@ -170,7 +170,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
      */
     #[ORM\OneToMany(mappedBy: 'customer', targetEntity: CustomerMeta::class, cascade: ['persist'])]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer'])]
+    #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: 'array<App\Entity\CustomerMeta>')]
     #[Serializer\SerializedName('metaFields')]
     #[Serializer\Accessor(getter: 'getVisibleMetaFields')]

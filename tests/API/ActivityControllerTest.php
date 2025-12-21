@@ -258,7 +258,7 @@ class ActivityControllerTest extends APIControllerBaseTestCase
         self::assertNull($result['budgetType']);
         self::assertNull($result['number']);
         self::assertEquals('Test comment', $result['comment']);
-        self::assertNull($result['color']);
+        self::assertEquals('#5319e7', $result['color']);
         self::assertTrue($result['visible']);
         self::assertTrue($result['billable']);
     }
@@ -297,7 +297,7 @@ class ActivityControllerTest extends APIControllerBaseTestCase
         self::assertEquals('Test', $result['parentTitle']);
         self::assertNotEmpty($result['id']);
         self::assertIsArray($result['teams']);
-        self::assertEquals([['id' => 1, 'name' => 'Test team', 'color' => null]], $result['teams']);
+        self::assertEquals([['id' => 1, 'name' => 'Test team', 'color' => '#03A9F4']], $result['teams']);
         self::assertIsArray($result['metaFields']);
         self::assertEquals([], $result['metaFields']);
         self::assertEquals('foo', $result['name']);

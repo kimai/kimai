@@ -25,7 +25,7 @@ jobs:
               echo "Using input provided: $input"
               version="$input"
           fi
-            
+
           echo "kimai_version=$version" >> $GITHUB_ENV
 
           if [[ ! $version =~ ^2\.(0|[1-9]*)(0?)\.(0|[0-9]*)(0?)$ ]]; then

@@ -262,7 +262,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertNull($result['homepage']);
         self::assertEquals('Europe/Berlin', $result['timezone']);
         self::assertNull($result['buyerReference']);
-        self::assertNull($result['color']);
+        self::assertEquals('#5319e7', $result['color']);
         self::assertTrue($result['visible']);
         self::assertTrue($result['billable']);
     }
@@ -316,7 +316,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
         self::assertNotEmpty($result['id']);
         self::assertIsArray($result['teams']);
-        self::assertEquals([['id' => 1, 'name' => 'Test team', 'color' => null]], $result['teams']);
+        self::assertEquals([['id' => 1, 'name' => 'Test team', 'color' => '#03A9F4']], $result['teams']);
         self::assertIsArray($result['metaFields']);
         self::assertEquals([], $result['metaFields']);
         self::assertEquals('foo', $result['name']);

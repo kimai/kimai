@@ -76,7 +76,7 @@ final class CustomerController extends BaseApiController
         }
 
         $visible = $paramFetcher->get('visible');
-        if (\is_string($visible) && $visible !== '') {
+        if (is_numeric($visible)) {
             $query->setVisibility((int) $visible);
         }
 

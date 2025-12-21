@@ -34,6 +34,7 @@ class UserTest extends TestCase
         self::assertInstanceOf(EquatableInterface::class, $user);
         self::assertInstanceOf(UserInterface::class, $user);
         self::assertInstanceOf(ArrayCollection::class, $user->getPreferences());
+        self::assertEquals([], $user->getVisiblePreferences());
         self::assertNull($user->getTitle());
         self::assertNull($user->getAvatar());
         self::assertNull($user->getAlias());
@@ -186,9 +187,13 @@ class UserTest extends TestCase
         self::assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
 
+        $sut->setUsername('foo test 123');
+        self::assertEquals('#a972c9', $sut->getColorSafe());
+
         $sut->setColor('#000000');
         self::assertEquals('#000000', $sut->getColor());
         self::assertTrue($sut->hasColor());
+        self::assertEquals('#000000', $sut->getColorSafe());
     }
 
     public function testWizards(): void
@@ -267,6 +272,19 @@ class UserTest extends TestCase
 
         $prefs = $user->getPreferences();
         self::assertCount(3, $prefs);
+
+        $preference1 = new UserPreference('_aaaaa', 'bbbbb');
+        $user->addPreference($preference1);
+
+        $preference2 = new UserPreference('AAAAAA', 'CCCCCC');
+        $user->addPreference($preference2);
+
+        $prefs = $user->getPreferences();
+        self::assertCount(5, $prefs);
+
+        $visiblePrefs = $user->getVisiblePreferences();
+        self::assertCount(3, $visiblePrefs); // export_decimal and _aaaaa is skipped
+        self::assertEquals([$user->getPreference('test'), $user->getPreference('test2'), $preference2], $visiblePrefs);
 
         self::assertInstanceOf(UserPreference::class, $prefs[0]);
         self::assertEquals('test', $prefs[0]->getName());

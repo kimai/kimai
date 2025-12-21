@@ -311,9 +311,9 @@ mpdf-->
                 {% if id in ['duration', 'duration_decimal', 'duration_seconds'] %}
                     <td class="totals duration">{{ duration|duration(id == 'duration_decimal') }}</td>
                 {% elseif id == 'internal_rate' %}
-                    <td class="totals cost">3{% if currency is not null %}{{ rateInternal|money(currency) }}{% endif %}</td>
+                    <td class="totals cost">{% if currency is not null %}{{ rateInternal|money(currency) }}{% endif %}</td>
                 {% elseif id == 'rate' %}
-                    <td class="totals cost">4{% if currency is not null %}{{ rate|money(currency) }}{% endif %}</td>
+                    <td class="totals cost">{% if currency is not null %}{{ rate|money(currency) }}{% endif %}</td>
                 {% else %}
                     <td></td>
                 {% endif %}

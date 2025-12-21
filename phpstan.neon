@@ -650,16 +650,6 @@ parameters:
             path: src/Controller/ActivityController.php
 
         -
-            message: "#^Parameter \\#1 \\$name of class App\\\\Entity\\\\Team constructor expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/ActivityController.php
-
-        -
-            message: "#^Parameter \\#1 \\$name of class App\\\\Entity\\\\Team constructor expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
             message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
             count: 2
             path: src/Controller/DashboardController.php
@@ -776,11 +766,6 @@ parameters:
 
         -
             message: "#^Cannot call method getCurrency\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Parameter \\#1 \\$name of class App\\\\Entity\\\\Team constructor expects string, string\\|null given\\.$#"
             count: 1
             path: src/Controller/ProjectController.php
 

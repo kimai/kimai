@@ -10,7 +10,6 @@
 namespace App\Entity;
 
 use App\Repository\TagRepository;
-use App\Utils\Color;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
@@ -21,9 +20,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\UniqueConstraint(columns: ['name'])]
 #[ORM\Entity(repositoryClass: TagRepository::class)]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+#[ORM\Index(columns: ['visible'])]
 #[UniqueEntity('name')]
 #[Serializer\ExclusionPolicy('all')]
-#[Serializer\VirtualProperty('ColorSafe', exp: 'object.getColorSafe()', options: [new Serializer\SerializedName('color-safe'), new Serializer\Type(name: 'string'), new Serializer\Groups(['Default'])])]
 class Tag
 {
     /**
@@ -87,10 +86,5 @@ class Tag
     public function __toString(): string
     {
         return $this->getName();
-    }
-
-    public function getColorSafe(): string
-    {
-        return $this->getColor() ?? (new Color())->getRandom($this->getName());
     }
 }

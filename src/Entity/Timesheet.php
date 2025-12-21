@@ -54,23 +54,23 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     use ModifiedTrait;
 
     /**
-     * Category: Normal work-time (default category)
+     * @deprecated since 2.45
      */
     public const WORK = 'work';
     /**
-     * Category: Holiday
+     * @deprecated since 2.45
      */
     public const HOLIDAY = 'holiday';
     /**
-     * Category: Sickness
+     * @deprecated since 2.45
      */
     public const SICKNESS = 'sickness';
     /**
-     * Category: Parental leave
+     * @deprecated since 2.45
      */
     public const PARENTAL = 'parental';
     /**
-     * Category: Overtime reduction
+     * @deprecated since 2.45
      */
     public const OVERTIME = 'overtime';
 
@@ -132,27 +132,29 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?int $duration = 0;
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     #[ORM\Column(name: 'break', type: Types::INTEGER, nullable: true)]
     private ?int $break = 0;
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: '`user`', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Subresource', 'Expanded'])]
+    #[Serializer\Groups(['Expanded'])]
     #[OA\Property(ref: '#/components/schemas/User')]
     private ?User $user = null;
     #[ORM\ManyToOne(targetEntity: Activity::class)]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Subresource', 'Expanded'])]
+    #[Serializer\Groups(['Expanded'])]
     #[OA\Property(ref: '#/components/schemas/ActivityExpanded')]
     private ?Activity $activity = null;
     #[ORM\ManyToOne(targetEntity: Project::class)]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Subresource', 'Expanded'])]
+    #[Serializer\Groups(['Expanded'])]
     #[OA\Property(ref: '#/components/schemas/ProjectExpanded')]
     private ?Project $project = null;
     #[ORM\Column(name: 'description', type: Types::TEXT, nullable: true)]
@@ -196,7 +198,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     private ?string $billableMode = self::BILLABLE_DEFAULT;
     #[ORM\Column(name: 'category', type: Types::STRING, length: 10, nullable: false, options: ['default' => 'work'])]
     #[Assert\NotNull]
-    private ?string $category = self::WORK;
+    private ?string $category = 'work';
     /**
      * Tags
      *
@@ -503,11 +505,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
 
     public function setCategory(string $category): Timesheet
     {
-        $allowed = [self::WORK, self::HOLIDAY, self::SICKNESS, self::PARENTAL, self::OVERTIME];
-
-        if (!\in_array($category, $allowed)) {
-            throw new \InvalidArgumentException(\sprintf('Invalid timesheet category "%s" given, expected one of: %s', $category, implode(', ', $allowed)));
-        }
+        @trigger_error('Timesheet::setCategory() is deprecated.', E_USER_DEPRECATED);
 
         $this->category = $category;
 

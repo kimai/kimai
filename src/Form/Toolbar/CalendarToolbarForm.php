@@ -25,10 +25,12 @@ final class CalendarToolbarForm extends AbstractType
             'view_timezone' => $options['timezone'],
         ]);
         $builder->add('view', CalendarViewType::class, []);
-        $builder->add('user', UserType::class, [
-            'required' => false,
-            'attr' => ['onchange' => 'this.form.submit()']
-        ]);
+        if ($options['change_user']) {
+            $builder->add('user', UserType::class, [
+                'required' => false,
+                'attr' => ['onchange' => 'this.form.submit()']
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void

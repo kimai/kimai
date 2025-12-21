@@ -14,7 +14,6 @@ use App\Customer\CustomerStatisticService;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
 use App\Entity\CustomerRate;
-use App\Entity\Team;
 use App\Event\CustomerDetailControllerEvent;
 use App\Event\CustomerMetaDisplayEvent;
 use App\Export\Spreadsheet\EntityWithMetaFieldsExporter;
@@ -35,6 +34,7 @@ use App\Repository\Query\TeamQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\Query\VisibilityInterface;
 use App\Repository\TeamRepository;
+use App\User\TeamService;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -42,6 +42,7 @@ use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -239,19 +240,24 @@ final class CustomerController extends AbstractController
     #[Route(path: '/{id}/create_team', name: 'customer_team_create', methods: ['GET'])]
     #[IsGranted('create_team')]
     #[IsGranted('permissions', 'customer')]
-    public function createDefaultTeamAction(Customer $customer, TeamRepository $teamRepository): Response
+    public function createDefaultTeamAction(Customer $customer, TeamService $teamService): Response
     {
-        $defaultTeam = $teamRepository->findOneBy(['name' => $customer->getName()]);
+        $name = $customer->getName();
+        if ($name === null) {
+            throw new BadRequestHttpException('Cannot create default team for customer with empty name: ' . $customer->getId());
+        }
+
+        $defaultTeam = $teamService->findTeamByName($name);
 
         if (null === $defaultTeam) {
-            $defaultTeam = new Team($customer->getName());
+            $defaultTeam = $teamService->createNewTeam($name);
         }
 
         $defaultTeam->addTeamlead($this->getUser());
         $defaultTeam->addCustomer($customer);
 
         try {
-            $teamRepository->saveTeam($defaultTeam);
+            $teamService->saveTeam($defaultTeam);
         } catch (\Exception $ex) {
             $this->flashUpdateException($ex);
         }

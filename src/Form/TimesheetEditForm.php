@@ -105,6 +105,10 @@ class TimesheetEditForm extends AbstractType
             $this->addDuration($builder, $options, (!$options['allow_begin_datetime'] || !$options['allow_end_datetime']), $isNew);
         }
 
+        if ($this->systemConfiguration->isBreakTimeEnabled()) {
+            $builder->add('break', DurationType::class, ['label' => 'break', 'required' => false, 'icon' => 'break']);
+        }
+
         // -----------------------------------------------------
         $query = new CustomerFormTypeQuery($customer);
         $query->setUser($options['user']); // @phpstan-ignore-line
@@ -327,10 +331,6 @@ class TimesheetEditForm extends AbstractType
         }
 
         $builder->add('duration', DurationType::class, $durationOptions);
-
-        if ($this->systemConfiguration->isBreakTimeEnabled()) {
-            $builder->add('break', DurationType::class, ['label' => 'break', 'required' => false, 'icon' => 'break']);
-        }
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
