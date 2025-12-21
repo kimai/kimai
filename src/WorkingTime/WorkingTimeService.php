@@ -181,7 +181,7 @@ final class WorkingTimeService
         return $year->getMonth($monthDate);
     }
 
-    // deprecated 3.0 remove $user, fetch from $month->getUser() instead
+    // FIXME deprecated 3.0 remove $user, fetch from $month->getUser() instead
     public function approveMonth(User $user, Month $month, \DateTimeInterface $approvalDate, User $approvedBy): void
     {
         foreach ($month->getDays() as $day) {
