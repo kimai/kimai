@@ -310,6 +310,10 @@
         <source>project.number_format</source>
         <target state="translated">Projektreferens, format</target>
       </trans-unit>
+      <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="no" xml:space="preserve">
+        <source>invoice.rounding_mode</source>
+        <target state="translated">Avrundningsläge</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
