@@ -251,7 +251,7 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
 
         $configService = $this->getSystemConfiguration();
         self::assertNull($configService->find('defaults.user.timezone'));
-        self::assertEquals('default', $configService->find('defaults.user.theme'));
+        self::assertEquals('auto', $configService->find('defaults.user.theme'));
         self::assertEquals('en', $configService->find('defaults.user.language'));
 
         $form = $client->getCrawler()->filter('form[name=system_configuration_form_user]')->form();
