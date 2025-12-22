@@ -62,7 +62,9 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
         $skin = $user->getSkin();
         if ($skin === 'dark') {
             $this->helper->setIsDarkMode(true);
+            $this->helper->setThemeAuto(false);
         } elseif ($skin === 'auto') {
+            $this->helper->setIsDarkMode(false);
             $this->helper->setThemeAuto(true);
         } else {
             $this->helper->setIsDarkMode(false);
