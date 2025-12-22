@@ -449,7 +449,7 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
 
         self::assertEquals($hourlyRateOriginal, $user->getPreferenceValue(UserPreference::HOURLY_RATE));
         self::assertNull($user->getPreferenceValue(UserPreference::INTERNAL_RATE));
-        self::assertEquals('default', $user->getPreferenceValue(UserPreference::SKIN));
+        self::assertEquals('auto', $user->getPreferenceValue(UserPreference::SKIN));
 
         $data = [
             UserPreference::TIMEZONE => ['value' => 'America/Creston'],
