@@ -364,8 +364,7 @@ class ConfigurationTest extends TestCase
                 'user' => [
                     'timezone' => null,
                     'language' => 'en',
-                    'theme' => 'default',
-                    'currency' => 'EUR',
+                    'theme' => 'auto',
                 ],
             ],
             'permissions' => [
