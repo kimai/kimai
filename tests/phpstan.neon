@@ -427,16 +427,6 @@ parameters:
             path: Configuration/SamlConfigurationTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\SystemConfigurationTest\\:\\:getSut\\(\\) has parameter \\$loaderSettings with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Configuration/SystemConfigurationTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Configuration\\\\SystemConfigurationTest\\:\\:getSut\\(\\) has parameter \\$settings with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Configuration/SystemConfigurationTest.php
-
-        -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Activity\\|null\\.$#"
             count: 4
             path: Controller/ActivityControllerTest.php

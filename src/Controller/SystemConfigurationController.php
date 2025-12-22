@@ -467,10 +467,6 @@ final class SystemConfigurationController extends AbstractController
                         ->setLabel('country')
                         ->setType(CountryType::class)
                         ->setOptions(['help' => 'default_value_new']),
-                    (new Configuration('defaults.customer.currency'))
-                        ->setLabel('currency')
-                        ->setType(CurrencyType::class)
-                        ->setOptions(['help' => 'default_value_new']),
                     (new Configuration('customer.choice_pattern'))
                         ->setLabel('choice_pattern')
                         ->setType(CustomerTypePatternType::class),
@@ -542,9 +538,6 @@ final class SystemConfigurationController extends AbstractController
                         ->setLabel('skin')
                         ->setType(SkinType::class)
                         ->setOptions(['help' => 'default_value_new']),
-                    (new Configuration('defaults.user.currency'))
-                        ->setLabel('currency')
-                        ->setType(CurrencyType::class),
                     (new Configuration('theme.avatar_url'))
                         ->setRequired(false)
                         ->setLabel('theme.avatar_url')
@@ -617,6 +610,10 @@ final class SystemConfigurationController extends AbstractController
                         ->setTranslationDomain('system-configuration')
                         ->setRequired(false)
                         ->setType(TextType::class),
+                    (new Configuration('defaults.customer.currency'))
+                        ->setLabel('currency')
+                        ->setType(CurrencyType::class)
+                        ->setOptions(['help' => 'Can be overwritten per customer']),
                     (new Configuration('company.financial_year'))
                         ->setTranslationDomain('system-configuration')
                         ->setRequired(false)

@@ -323,11 +323,6 @@ final class SystemConfiguration
         return $this->find('defaults.customer.timezone');
     }
 
-    public function getCustomerDefaultCurrency(): string
-    {
-        return $this->find('defaults.customer.currency');
-    }
-
     public function getCustomerDefaultCountry(): string
     {
         return $this->find('defaults.customer.country');
@@ -340,20 +335,35 @@ final class SystemConfiguration
         return $this->find('defaults.user.timezone');
     }
 
-    public function getUserDefaultTheme(): ?string
+    public function getUserDefaultTheme(): string
     {
-        return $this->find('defaults.user.theme');
+        return $this->getString('defaults.user.theme', 'auto');
     }
 
     public function getUserDefaultLanguage(): string
     {
-        return $this->find('defaults.user.language');
+        return $this->getString('defaults.user.language', 'en');
     }
 
-    // TODO this is only used to display the hourly rate in the user profile
+    public function getDefaultCurrency(): string
+    {
+        return $this->getString('defaults.customer.currency', 'EUR');
+    }
+
+    /**
+     * @deprecated use getDefaultCurrency() instead
+     */
+    public function getCustomerDefaultCurrency(): string
+    {
+        return $this->getDefaultCurrency();
+    }
+
+    /**
+     * @deprecated use getDefaultCurrency() instead
+     */
     public function getUserDefaultCurrency(): string
     {
-        return $this->find('defaults.user.currency');
+        return $this->getDefaultCurrency();
     }
 
     // ========== Timesheet configurations ==========

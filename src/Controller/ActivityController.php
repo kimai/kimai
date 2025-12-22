@@ -111,7 +111,7 @@ final class ActivityController extends AbstractController
             'page_setup' => $page,
             'dataTable' => $table,
             'metaColumns' => $metaColumns,
-            'defaultCurrency' => $configuration->getCustomerDefaultCurrency(),
+            'defaultCurrency' => $configuration->getDefaultCurrency(),
             'now' => $this->getDateTimeFactory()->createDateTime(),
         ]);
     }
@@ -452,7 +452,7 @@ final class ActivityController extends AbstractController
      */
     private function createEditForm(Activity $activity, SystemConfiguration $configuration): FormInterface
     {
-        $currency = $configuration->getCustomerDefaultCurrency();
+        $currency = $configuration->getDefaultCurrency();
         $url = $this->generateUrl('admin_activity_create');
         if ($activity->getProject()?->getId() !== null) {
             $url = $this->generateUrl('admin_activity_create_with_project', ['project' => $activity->getProject()->getId()]);

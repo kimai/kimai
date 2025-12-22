@@ -30,6 +30,8 @@ final class Version20251214160001 extends AbstractMigration
             // used to count the tags for the dropdown (filter and timesheet edit)
             $table->addIndex(['visible'], 'IDX_27CAF54C7AB0E859');
         }
+        // deleted in this release
+        $this->addSql("DELETE from kimai2_configuration where name = 'defaults.user.language'");
     }
 
     public function down(Schema $schema): void
