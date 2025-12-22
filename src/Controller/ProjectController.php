@@ -177,7 +177,7 @@ final class ProjectController extends AbstractController
     {
         $project = $projectService->createNewProject($customer);
 
-        $editForm = $this->createEditForm($project, $configuration->getCustomerDefaultCurrency());
+        $editForm = $this->createEditForm($project, $configuration->getDefaultCurrency());
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -440,7 +440,7 @@ final class ProjectController extends AbstractController
     {
         $projectService->loadMetaFields($project);
 
-        $editForm = $this->createEditForm($project, $configuration->getCustomerDefaultCurrency());
+        $editForm = $this->createEditForm($project, $configuration->getDefaultCurrency());
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

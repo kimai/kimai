@@ -60,7 +60,7 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
 
         if ($this->voter->isGranted('hourly-rate', $user)) {
             $enableHourlyRate = true;
-            $hourlyRateOptions = ['currency' => $this->systemConfiguration->getUserDefaultCurrency()];
+            $hourlyRateOptions = ['currency' => $this->systemConfiguration->getDefaultCurrency()];
         }
 
         return [
