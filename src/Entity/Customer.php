@@ -9,6 +9,8 @@
 
 namespace App\Entity;
 
+use App\Audit\Loggable;
+use App\Audit\Versioned;
 use App\Doctrine\Behavior\CreatedAt;
 use App\Doctrine\Behavior\CreatedTrait;
 use App\Export\Annotation as Exporter;
@@ -29,6 +31,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Serializer\ExclusionPolicy('all')]
 #[Exporter\Order(['id', 'name', 'company', 'number', 'vatId', 'address', 'contact', 'email', 'phone', 'mobile', 'fax', 'homepage', 'addressLine1', 'addressLine2', 'addressLine3', 'postCode', 'city', 'country', 'currency', 'timezone', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable'])]
 #[Constraints\Customer]
+#[Loggable(CustomerMeta::class)]
 class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
 {
     public const DEFAULT_CURRENCY = 'EUR';
@@ -50,41 +53,48 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'name')]
+    #[Versioned]
     private ?string $name = null;
     #[ORM\Column(name: 'number', type: Types::STRING, length: 50, nullable: true)]
     #[Assert\Length(max: 50)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'number')]
+    #[Versioned]
     private ?string $number = null;
     #[ORM\Column(name: 'comment', type: Types::TEXT, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'comment')]
+    #[Versioned]
     private ?string $comment = null;
     #[ORM\Column(name: 'visible', type: Types::BOOLEAN, nullable: false)]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'visible', type: 'boolean')]
+    #[Versioned]
     private bool $visible = true;
     #[ORM\Column(name: 'billable', type: Types::BOOLEAN, nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'billable', type: 'boolean')]
+    #[Versioned]
     private bool $billable = true;
     #[ORM\Column(name: 'company', type: Types::STRING, length: 100, nullable: true)]
     #[Assert\Length(max: 100)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'company')]
+    #[Versioned]
     private ?string $company = null;
     #[ORM\Column(name: 'vat_id', type: Types::STRING, length: 50, nullable: true)]
     #[Assert\Length(max: 50)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
     #[Exporter\Expose(label: 'vat_id')]
+    #[Versioned]
     private ?string $vatId = null;
     /**
      * Contact person (name)
@@ -94,6 +104,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
     #[Exporter\Expose(label: 'contact')]
+    #[Versioned]
     private ?string $contact = null;
     /**
      * Unstructured address, better use the fields: addressLine1-3, postcode, city, country
@@ -102,6 +113,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
     #[Exporter\Expose(label: 'address')]
+    #[Versioned]
     private ?string $address = null;
     #[ORM\Column(name: 'country', type: Types::STRING, length: 2, nullable: false)]
     #[Assert\NotBlank]
@@ -110,6 +122,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'country')]
+    #[Versioned]
     private ?string $country = null;
     #[ORM\Column(name: 'currency', type: Types::STRING, length: 3, nullable: false)]
     #[Assert\NotBlank]
@@ -118,24 +131,28 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'currency')]
+    #[Versioned]
     private ?string $currency = self::DEFAULT_CURRENCY;
     #[ORM\Column(name: 'phone', type: Types::STRING, length: 30, nullable: true)]
     #[Assert\Length(max: 30)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'phone')]
+    #[Versioned]
     private ?string $phone = null;
     #[ORM\Column(name: 'fax', type: Types::STRING, length: 30, nullable: true)]
     #[Assert\Length(max: 30)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'fax')]
+    #[Versioned]
     private ?string $fax = null;
     #[ORM\Column(name: 'mobile', type: Types::STRING, length: 30, nullable: true)]
     #[Assert\Length(max: 30)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'mobile')]
+    #[Versioned]
     private ?string $mobile = null;
     /**
      * Contact email
@@ -145,15 +162,17 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
     #[Exporter\Expose(label: 'email')]
+    #[Versioned]
     private ?string $email = null;
     #[ORM\Column(name: 'homepage', type: Types::STRING, length: 100, nullable: true)]
     #[Assert\Length(max: 100)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'homepage')]
+    #[Versioned]
     private ?string $homepage = null;
     /**
-     * Timezone of begin and end
+     * Timezone of the customers headquarter
      */
     #[ORM\Column(name: 'timezone', type: Types::STRING, length: 64, nullable: false)]
     #[Assert\NotBlank]
@@ -162,6 +181,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'timezone')]
+    #[Versioned]
     private ?string $timezone = null;
     /**
      * Meta fields registered with the customer
@@ -193,20 +213,24 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
      */
     #[ORM\ManyToOne(targetEntity: InvoiceTemplate::class)]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
+    #[Versioned]
     private ?InvoiceTemplate $invoiceTemplate = null;
     #[ORM\Column(name: 'invoice_text', type: Types::TEXT, nullable: true)]
+    #[Versioned]
     private ?string $invoiceText = null;
     #[ORM\Column(name: 'address_line1', type: Types::STRING, length: 150, nullable: true)]
     #[Assert\Length(max: 150)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
     #[Exporter\Expose(label: 'address_line1')]
+    #[Versioned]
     private ?string $addressLine1 = null;
     #[ORM\Column(name: 'address_line2', type: Types::STRING, length: 150, nullable: true)]
     #[Assert\Length(max: 150)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
     #[Exporter\Expose(label: 'address_line2')]
+    #[Versioned]
     private ?string $addressLine2 = null;
     #[ORM\Column(name: 'address_line3', type: Types::STRING, length: 150, nullable: true)]
     #[Assert\Length(max: 150)]
@@ -214,11 +238,13 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Groups(['Customer_Entity'])]
     #[Exporter\Expose(label: 'address_line3')]
     private ?string $addressLine3 = null;
+    #[Versioned]
     #[ORM\Column(name: 'postcode', type: Types::STRING, length: 20, nullable: true)]
     #[Assert\Length(max: 20)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
     #[Exporter\Expose(label: 'postcode')]
+    #[Versioned]
     private ?string $postCode = null;
     // this should be more than enough to cover 99.99% - https://en.wikipedia.org/wiki/List_of_long_place_names
     #[ORM\Column(name: 'city', type: Types::STRING, length: 50, nullable: true)]
@@ -226,12 +252,14 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
     #[Exporter\Expose(label: 'city')]
+    #[Versioned]
     private ?string $city = null;
     #[ORM\Column(name: 'buyer_reference', type: Types::STRING, length: 50, nullable: true)]
     #[Assert\Length(max: 50)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
     #[Exporter\Expose(label: 'buyer_reference')]
+    #[Versioned]
     private ?string $buyerReference = null;
 
     public function __construct(string $name)

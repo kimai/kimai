@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Audit\Versioned;
 use App\Export\Annotation as Exporter;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -26,6 +27,7 @@ trait BudgetTrait
     #[Serializer\Expose]
     #[Serializer\Groups(['Activity_Entity', 'Project_Entity', 'Customer_Entity'])]
     #[Exporter\Expose(label: 'budget', type: 'float')]
+    #[Versioned]
     private float $budget = 0.00;
     /**
      * The time budget in seconds (default: 0).
@@ -36,6 +38,7 @@ trait BudgetTrait
     #[Serializer\Expose]
     #[Serializer\Groups(['Activity_Entity', 'Project_Entity', 'Customer_Entity'])]
     #[Exporter\Expose(label: 'timeBudget', type: 'duration')]
+    #[Versioned]
     private int $timeBudget = 0;
     /**
      * The type of budget:
@@ -46,6 +49,7 @@ trait BudgetTrait
     #[Serializer\Expose]
     #[Serializer\Groups(['Activity_Entity', 'Project_Entity', 'Customer_Entity'])]
     #[Exporter\Expose(label: 'budgetType')]
+    #[Versioned]
     private ?string $budgetType = null;
 
     public function setBudget(float $budget): void
