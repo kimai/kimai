@@ -138,10 +138,6 @@ final class InvoiceController extends AbstractController
     #[IsGranted('access', 'customer')]
     public function previewAction(Customer $customer, string $token, Request $request, ServiceInvoice $service): Response
     {
-        if (!$this->templateRepository->hasTemplate()) {
-            return $this->redirectToRoute('invoice');
-        }
-
         if (!$this->isCsrfTokenValid('invoice.preview', $token)) {
             $this->flashError('action.csrf.error');
 
@@ -259,14 +255,14 @@ final class InvoiceController extends AbstractController
     #[Route(path: '/edit/{id}', name: 'admin_invoice_edit', methods: ['GET', 'POST'])]
     #[IsGranted('create_invoice')]
     #[IsGranted(new Expression("is_granted('access', subject.getCustomer())"), 'invoice')]
-    public function editAction(Invoice $invoice, Request $request): Response
+    public function editAction(Invoice $invoice, Request $request, InvoiceRepository $invoiceRepository): Response
     {
         $form = $this->createInvoiceEditForm($invoice);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $this->invoiceRepository->saveInvoice($invoice);
+                $invoiceRepository->saveInvoice($invoice);
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute('admin_invoice_list');
@@ -308,9 +304,9 @@ final class InvoiceController extends AbstractController
     #[Route(path: '/download/{id}', name: 'admin_invoice_download', methods: ['GET'])]
     #[IsGranted('view_invoice')]
     #[IsGranted(new Expression("is_granted('access', subject.getCustomer())"), 'invoice')]
-    public function downloadAction(Invoice $invoice): Response
+    public function downloadAction(Invoice $invoice, ServiceInvoice $service): Response
     {
-        $file = $this->service->getInvoiceFile($invoice);
+        $file = $service->getInvoiceFile($invoice);
 
         if (null === $file) {
             throw $this->createNotFoundException(
