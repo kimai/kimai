@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Audit\Versioned;
 use App\Constants;
 use App\Export\Annotation as Exporter;
 use App\Utils\Color;
@@ -26,6 +27,7 @@ trait ColorTrait
     #[Serializer\Exclude]
     #[Exporter\Expose(label: 'color')]
     #[Constraints\HexColor]
+    #[Versioned]
     private ?string $color = null;
 
     public function getColor(): ?string
