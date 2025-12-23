@@ -2046,6 +2046,10 @@
         <source>electronic_invoice</source>
         <target>E-Rechnung</target>
       </trans-unit>
+      <trans-unit id="QnN_ONc" resname="invoice_tax_type">
+        <source>invoice_tax_type</source>
+        <target>Steuerstatus</target>
+      </trans-unit>
       <trans-unit id="Mi7y8Q3" resname="tax.type.exempt">
         <source>tax.type.exempt</source>
         <target>Ausgenommen</target>
