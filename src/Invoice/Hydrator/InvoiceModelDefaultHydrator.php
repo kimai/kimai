@@ -96,10 +96,14 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
 
         $values['invoice.tax_rows'] = [];
         foreach ($taxRows as $taxRow) {
+            $tax = $taxRow->getTax();
             $values['invoice.tax_rows'][] = [
-                'type' => $taxRow->getTax()->getType()->value,
-                'name' => $taxRow->getTax()->getName(),
-                'rate' => $taxRow->getTax()->getRate(),
+                'type' => $tax->getType()->value,
+                'name' => $tax->getName(),
+                'rate' => $tax->getRate(),
+                'note' => $tax->getNote(),
+                'show' => $tax->isShow(),
+                'currency' => $currency,
                 'amount' => $taxRow->getAmount(), // do not format, only available in twig anyway
                 'base' => $taxRow->getBasePrice(), // do not format, only available in twig anyway
             ];
