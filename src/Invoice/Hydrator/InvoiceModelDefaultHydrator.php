@@ -31,6 +31,10 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
         $subtotal = $calculator->getSubtotal();
         $formatter = $model->getFormatter();
         $language = $template->getLanguage();
+        if ($language === null) {
+            throw new \InvalidArgumentException('InvoiceTemplate needs a language');
+        }
+
         $taxRows = $calculator->getTaxRows();
 
         $vat = 0.00;
