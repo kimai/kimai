@@ -88,6 +88,10 @@ class InvoiceTemplate implements EntityWithMetaFields
      */
     #[ORM\OneToMany(mappedBy: 'template', targetEntity: InvoiceTemplateMeta::class, cascade: ['persist'])]
     private Collection $meta;
+    /**
+     * @var array<Tax>
+     */
+    private array $taxRates = [];
 
     public function __construct()
     {
@@ -269,15 +273,28 @@ class InvoiceTemplate implements EntityWithMetaFields
     }
 
     /**
+     * @param array<Tax> $taxRates
+     */
+    public function setTaxRates(array $taxRates): void
+    {
+        $this->taxRates = $taxRates;
+    }
+
+    /**
      * @return Tax[]
      */
     public function getTaxRates(): array
     {
-        // TODO make me configurable via UI
+        if (\count($this->taxRates) > 0) {
+            return $this->taxRates;
+        }
+
         $tax = new Tax(
             TaxType::STANDARD,
-            'VAT',
-            $this->vat ?? 0.00
+            $this->vat ?? 0.00,
+            'vat',
+            true,
+            null
         );
 
         return [$tax];

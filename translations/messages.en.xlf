@@ -2046,6 +2046,26 @@
         <source>electronic_invoice</source>
         <target>E-Invoice</target>
       </trans-unit>
+      <trans-unit id="QnN_ONc" resname="invoice_tax_type">
+        <source>invoice_tax_type</source>
+        <target>Tax status</target>
+      </trans-unit>
+      <trans-unit id="Mi7y8Q3" resname="tax.type.exempt">
+        <source>tax.type.exempt</source>
+        <target>Exempt</target>
+      </trans-unit>
+      <trans-unit id="lU1Njcy" resname="tax.type.standard">
+        <source>tax.type.standard</source>
+        <target>Taxable</target>
+      </trans-unit>
+      <trans-unit id="E470U8W" resname="tax.type.reverse">
+        <source>tax.type.reverse</source>
+        <target>Reverse charge</target>
+      </trans-unit>
+      <trans-unit id="hi31a3v" resname="tax.note.reverse_charge">
+        <source>tax.note.reverse_charge</source>
+        <target>Tax to be paid on reverse charge basis</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

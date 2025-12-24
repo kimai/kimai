@@ -31,6 +31,10 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
         $subtotal = $calculator->getSubtotal();
         $formatter = $model->getFormatter();
         $language = $template->getLanguage();
+        if ($language === null) {
+            throw new \InvalidArgumentException('InvoiceTemplate needs a language');
+        }
+
         $taxRows = $calculator->getTaxRows();
 
         $vat = 0.00;
@@ -48,7 +52,7 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             'invoice.language' => $language, // since 1.9
             'invoice.currency_symbol' => $formatter->getCurrencySymbol($currency),
             'invoice.vat' => $vat, // @deprecated, use invoice.tax_rows instead
-            'invoice.tax_hide' => $model->isHideZeroTax() && $tax === 0.00,
+            'invoice.tax_hide' => $model->isHideZeroTax() && $tax === 0.00, // @deprecated, use invoice.tax_rows instead
             'invoice.tax' => $formatter->getFormattedMoney($tax, $currency), // @deprecated, use invoice.tax_rows instead
             'invoice.tax_nc' => $formatter->getFormattedMoney($tax, $currency, false), // @deprecated, use invoice.tax_rows instead
             'invoice.tax_plain' => $tax, // @deprecated, use invoice.tax_rows instead
@@ -91,11 +95,17 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
         ];
 
         $values['invoice.tax_rows'] = [];
+        $counter = 1;
         foreach ($taxRows as $taxRow) {
+            $tax = $taxRow->getTax();
             $values['invoice.tax_rows'][] = [
-                'type' => $taxRow->getTax()->getType()->value,
-                'name' => $taxRow->getTax()->getName(),
-                'rate' => $taxRow->getTax()->getRate(),
+                'counter' => $counter++,
+                'type' => $tax->getType()->value,
+                'name' => $tax->getName(),
+                'rate' => $tax->getRate(),
+                'note' => $tax->getNote(),
+                'show' => $tax->isShow(),
+                'currency' => $currency,
                 'amount' => $taxRow->getAmount(), // do not format, only available in twig anyway
                 'base' => $taxRow->getBasePrice(), // do not format, only available in twig anyway
             ];
