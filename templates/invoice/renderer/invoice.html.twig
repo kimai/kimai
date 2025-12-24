@@ -115,20 +115,25 @@
                         {% endfor %}
                         </tbody>
                         <tfoot>
-                        {% if not invoice['invoice.tax_hide'] %}
                             <tr>
                                 <td colspan="4" class="text-end">
                                     {{ 'invoice.subtotal'|trans }}
                                 </td>
                                 <td class="text-end">{{ invoice['invoice.subtotal'] }}</td>
                             </tr>
-                            <tr>
-                                <td colspan="4" class="text-end">
-                                    {{ 'invoice.tax'|trans }} ({{ invoice['invoice.vat'] }}%)
-                                </td>
-                                <td class="text-end">{{ invoice['invoice.tax'] }}</td>
-                            </tr>
-                        {% endif %}
+                            {% for taxRow in invoice['invoice.tax_rows'] %}
+                                {% if taxRow['show'] %}
+                                    <tr>
+                                        <td colspan="4" class="text-end">
+                                            {{ taxRow['name']|trans }} ({{ taxRow['rate'] }}%)
+                                            {% if taxRow['note'] is not null %}
+                                                <sup>[{{ taxRow['counter'] }}]</sup>
+                                            {% endif %}
+                                        </td>
+                                        <td class="last text-right">{{ taxRow['amount']|money(taxRow['currency']) }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
                         <tr>
                             <td colspan="4" class="text-end text-nowrap">
                                 <strong>{{ 'invoice.total'|trans }}</strong>
@@ -144,10 +149,16 @@
 
             <div class="row">
                 <div class="col-xs-12">
+                    {% for taxRow in invoice['invoice.tax_rows'] %}
+                        {% if taxRow['note'] is not null %}
+                        <p>
+                            <sup>[{{ taxRow['counter'] }}]</sup>
+                            {{ taxRow['note']|trans }}
+                        </p>
+                        {% endif %}
+                    {% endfor %}
                     {% if invoice['template.payment_terms'] is not empty %}
-                        <div class="paymentTerms">
-                            {{ invoice['template.payment_terms']|md2html }}
-                        </div>
+                        {{ invoice['template.payment_terms']|md2html }}
                     {% endif %}
                 </div>
             </div>
