@@ -36,7 +36,7 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
     private int $state = self::STATE_ALL;
     private int $exported = self::STATE_ALL;
     private ?int $maxResults = null;
-    private ?\DateTime $modifiedAfter = null;
+    private ?\DateTimeInterface $modifiedAfter = null;
     /**
      * @var array<Tag>
      */
@@ -244,15 +244,13 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
         $this->tags[$tag->getId()] = $tag;
     }
 
-    public function getModifiedAfter(): ?\DateTime
+    public function getModifiedAfter(): ?\DateTimeInterface
     {
         return $this->modifiedAfter;
     }
 
-    public function setModifiedAfter(\DateTime $modifiedAfter): TimesheetQuery
+    public function setModifiedAfter(\DateTimeInterface $modifiedAfter): void
     {
         $this->modifiedAfter = $modifiedAfter;
-
-        return $this;
     }
 }

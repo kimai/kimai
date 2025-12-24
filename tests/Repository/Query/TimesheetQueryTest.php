@@ -169,7 +169,7 @@ class TimesheetQueryTest extends BaseQueryTest
         self::assertNull($sut->getModifiedAfter());
         $date = new \DateTime('-3 hours');
 
-        self::assertInstanceOf(TimesheetQuery::class, $sut->setModifiedAfter($date));
+        $sut->setModifiedAfter($date);
         self::assertNotNull($sut->getModifiedAfter()); // just here to fix a PHPStan issue
         self::assertSame($date, $sut->getModifiedAfter());
     }

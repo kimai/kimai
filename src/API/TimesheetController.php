@@ -93,7 +93,7 @@ final class TimesheetController extends BaseApiController
     #[Rest\QueryParam(name: 'billable', requirements: '0|1', strict: true, nullable: true, description: 'Filter for non-/billable records. Allowed values: 0=non-billable, 1=billable (default: all)')]
     #[Rest\QueryParam(name: 'full', requirements: '0|1|true|false', strict: true, nullable: true, description: 'Allows to fetch full objects including subresources. Allowed values: 0|1|false|true (default: false)')]
     #[Rest\QueryParam(name: 'term', description: 'Free search term', nullable: true)]
-    #[Rest\QueryParam(name: 'modified_after', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records changed after this date will be included (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
+    #[Rest\QueryParam(name: 'modified_after', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records changed after this date will be included. You need to pass in a UTC date-time, as this field is stored in UTC (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
     public function cgetAction(ParamFetcherInterface $paramFetcher, CustomerRepository $customerRepository, ProjectRepository $projectRepository, ActivityRepository $activityRepository, UserRepository $userRepository): Response
     {
         $query = new TimesheetQuery(false);
@@ -228,8 +228,9 @@ final class TimesheetController extends BaseApiController
             $query->setSearchTerm(new SearchTerm($term));
         }
 
-        if (!empty($modifiedAfter = $paramFetcher->get('modified_after'))) {
-            $query->setModifiedAfter($factory->createDateTime($modifiedAfter));
+        $modifiedAfter = $paramFetcher->get('modified_after');
+        if (\is_string($modifiedAfter)) {
+            $query->setModifiedAfter(new \DateTimeImmutable($modifiedAfter, new \DateTimeZone('UTC')));
         }
 
         $data = $this->repository->getPagerfantaForQuery($query);
@@ -392,7 +393,8 @@ final class TimesheetController extends BaseApiController
             $limit = (int) $reqLimit;
         }
 
-        if (null !== ($reqBegin = $paramFetcher->get('begin'))) {
+        $reqBegin = $paramFetcher->get('begin');
+        if (\is_string($reqBegin)) {
             $begin = $this->getDateTimeFactory($user)->createDateTime($reqBegin);
         }
 
@@ -471,7 +473,8 @@ final class TimesheetController extends BaseApiController
         $factory = $this->getDateTimeFactory();
 
         $begin = $factory->createDateTime();
-        if (null !== ($beginTmp = $paramFetcher->get('begin'))) {
+        $beginTmp = $paramFetcher->get('begin');
+        if (\is_string($beginTmp)) {
             $begin = $factory->createDateTime($beginTmp);
         }
 
