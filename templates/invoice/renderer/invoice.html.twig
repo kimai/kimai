@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <h2 class="page-header">
-                        <span contenteditable="true">{{ invoice['template.title'] }}</span>
+                        <span>{{ invoice['template.title'] }}</span>
                     </h2>
                 </div>
             </div>
@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-sm-5">
                     {{ 'invoice.to'|trans }}
-                    <address contenteditable="true">
+                    <address>
                         <strong>{{ invoice['customer.company']|default(invoice['customer.name']) }}</strong><br>
                         {{ invoice['customer.address']|nl2br }}
                         {% set country = invoice['customer.country']|country_name(invoice['invoice.language']) %}
@@ -46,7 +46,7 @@
                 <div class="col-sm-2"></div>
                 <div class="col-sm-5">
                     {{ 'invoice.from'|trans }}
-                    <address contenteditable="true">
+                    <address>
                         <strong>{{ invoice['template.company'] }}</strong><br>
                         {{ invoice['template.address']|trim|nl2br }}
                         {% if invoice['template.country'] is not null %}
@@ -66,7 +66,7 @@
 
             <div class="row">
                 <div class="col-sm-5">
-                    <p contenteditable="true">
+                    <p>
                         <strong>{{ 'date'|trans }}:</strong>
                         {{ invoice['invoice.date'] }}
 
@@ -98,7 +98,7 @@
                         {% for invoiceLineItem in entries %}
                             <tr>
                                 <td nowrap class="text-nowrap">{{ invoiceLineItem['entry.begin'] }}</td>
-                                <td contenteditable="true">
+                                <td>
                                     {% if invoiceLineItem['entry.description'] is not empty %}
                                         {{ invoiceLineItem['entry.description']|nl2br }}
                                     {% else %}
@@ -145,7 +145,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     {% if invoice['template.payment_terms'] is not empty %}
-                        <div contenteditable="true" class="paymentTerms">
+                        <div class="paymentTerms">
                             {{ invoice['template.payment_terms']|md2html }}
                         </div>
                     {% endif %}
