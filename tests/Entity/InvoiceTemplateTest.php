@@ -54,7 +54,7 @@ class InvoiceTemplateTest extends TestCase
         self::assertCount(1, $rates);
         self::assertEquals(TaxType::STANDARD, $rates[0]->getType());
         self::assertEquals(0.00, $rates[0]->getRate());
-        self::assertEquals('tax.name.vat', $rates[0]->getName());
+        self::assertEquals('vat', $rates[0]->getName());
         self::assertNull($rates[0]->getNote());
 
         $tax1 = new Tax(
