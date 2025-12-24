@@ -2062,14 +2062,6 @@
         <source>tax.type.reverse</source>
         <target>Umkehrung der Steuerschuld</target>
       </trans-unit>
-      <trans-unit id="Cz4vb2G" resname="tax.name.reverse_charge">
-        <source>tax.name.reverse_charge</source>
-        <target>Reverse-Charge</target>
-      </trans-unit>
-      <trans-unit id="N.W.ghy" resname="tax.name.vat">
-        <source>tax.name.vat</source>
-        <target>USt.</target>
-      </trans-unit>
       <trans-unit id="hi31a3v" resname="tax.note.reverse_charge">
         <source>tax.note.reverse_charge</source>
         <target>Steuer zahlbar auf Reverse-Charge-Basis</target>

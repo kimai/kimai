@@ -292,7 +292,7 @@ class InvoiceTemplate implements EntityWithMetaFields
         $tax = new Tax(
             TaxType::STANDARD,
             $this->vat ?? 0.00,
-            'tax.name.vat',
+            'vat',
             true,
             null
         );
