@@ -228,7 +228,8 @@ final class TimesheetController extends BaseApiController
             $query->setSearchTerm(new SearchTerm($term));
         }
 
-        if (!empty($modifiedAfter = $paramFetcher->get('modified_after'))) {
+        $modifiedAfter = $paramFetcher->get('modified_after');
+        if (\is_string($modifiedAfter)) {
             $query->setModifiedAfter(new \DateTimeImmutable($modifiedAfter, new \DateTimeZone('UTC')));
         }
 
@@ -392,7 +393,8 @@ final class TimesheetController extends BaseApiController
             $limit = (int) $reqLimit;
         }
 
-        if (null !== ($reqBegin = $paramFetcher->get('begin'))) {
+        $reqBegin = $paramFetcher->get('begin');
+        if (\is_string($reqBegin)) {
             $begin = $this->getDateTimeFactory($user)->createDateTime($reqBegin);
         }
 
@@ -471,7 +473,8 @@ final class TimesheetController extends BaseApiController
         $factory = $this->getDateTimeFactory();
 
         $begin = $factory->createDateTime();
-        if (null !== ($beginTmp = $paramFetcher->get('begin'))) {
+        $beginTmp = $paramFetcher->get('begin');
+        if (\is_string($beginTmp)) {
             $begin = $factory->createDateTime($beginTmp);
         }
 
