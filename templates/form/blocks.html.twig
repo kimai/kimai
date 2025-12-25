@@ -474,7 +474,9 @@
 
 {%- block meta_fields_collection_widget -%}
     {% for meta in form|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
-        {{ form_row(meta.value, {'row_attr': {'class': 'mb-3 ' ~  form.parent.vars.name ~ '_row_' ~ form.vars.name ~ '_' ~ meta.vars.name}}) }}
+        {% if not meta.rendered %}
+            {{ form_row(meta.value, {'row_attr': {'class': 'mb-3 ' ~  form.parent.vars.name ~ '_row_' ~ form.vars.name ~ '_' ~ meta.vars.name}}) }}
+        {% endif %}
     {% endfor %}
 {%- endblock meta_fields_collection_widget %}
 

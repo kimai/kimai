@@ -67,6 +67,7 @@ trait MetaTableTypeTrait
      */
     private mixed $data = null;
     private bool $updated = false;
+    private ?string $section = null;
 
     public function getName(): ?string
     {
@@ -207,6 +208,10 @@ trait MetaTableTypeTrait
             $this->setType($meta->getType());
         }
 
+        if ($meta->getSection() !== null) {
+            $this->setSection($meta->getSection());
+        }
+
         return $this;
     }
 
@@ -262,6 +267,16 @@ trait MetaTableTypeTrait
         if ($this->id) {
             $this->id = null;
         }
+    }
+
+    public function setSection(?string $section): void
+    {
+        $this->section = $section;
+    }
+
+    public function getSection(): ?string
+    {
+        return $this->section;
     }
 
     /**
