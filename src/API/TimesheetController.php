@@ -86,8 +86,8 @@ final class TimesheetController extends BaseApiController
     #[Rest\QueryParam(name: 'tags', map: true, strict: true, nullable: true, default: [], description: 'List of tag names, e.g. tags[]=bar&tags[]=foo')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|begin|end|rate', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, begin, end, rate (default: begin)')]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: DESC)')]
-    #[Rest\QueryParam(name: 'begin', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records after this date will be included (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
-    #[Rest\QueryParam(name: 'end', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records before this date will be included (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
+    #[Rest\QueryParam(name: 'begin', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records started at or after this date-time will be included (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
+    #[Rest\QueryParam(name: 'end', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records started at or before this date-time will be included (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
     #[Rest\QueryParam(name: 'exported', requirements: '0|1', strict: true, nullable: true, description: 'Use this flag if you want to filter for export state. Allowed values: 0=not exported, 1=exported (default: all)')]
     #[Rest\QueryParam(name: 'active', requirements: '0|1', strict: true, nullable: true, description: 'Filter for running/active records. Allowed values: 0=stopped, 1=active (default: all)')]
     #[Rest\QueryParam(name: 'billable', requirements: '0|1', strict: true, nullable: true, description: 'Filter for non-/billable records. Allowed values: 0=non-billable, 1=billable (default: all)')]
@@ -380,7 +380,7 @@ final class TimesheetController extends BaseApiController
     #[IsGranted('view_own_timesheet')]
     #[OA\Response(response: 200, description: 'Returns a collection of recent user activities (always the latest entry of a unique working set grouped by customer, project and activity)', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TimesheetCollectionExpanded')))]
     #[Route(methods: ['GET'], path: '/recent', name: 'recent_timesheet')]
-    #[Rest\QueryParam(name: 'begin', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records after this date will be included. Default: today - 1 year (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
+    #[Rest\QueryParam(name: 'begin', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records started at or after this date will be included. Default: today - 1 year (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
     #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries (default: 10)')]
     public function recentAction(ParamFetcherInterface $paramFetcher): Response
     {
