@@ -109,18 +109,16 @@ abstract class AbstractMetaEntityTestCase extends TestCase
         self::assertCount(2, $meta1->getOptions());
 
         $meta2 = $this->getMetaEntity();
-        $meta2
-            ->setName('foo2')
-            ->setLabel('TRALALA')
-            ->setValue('bar2')
-            ->setType('blub2')
-            ->setEntity($entity2)
-            ->setIsRequired(true)
-            ->setIsVisible(true)
-            ->setOrder(93)
-            ->setConstraints([new NotBlank(), new Length(['min' => 1])])
-            ->setOptions(['foo1' => 'bar1'])
-        ;
+        $meta2->setName('foo2');
+        $meta2->setLabel('TRALALA');
+        $meta2->setValue('bar2');
+        $meta2->setType('blub2');
+        $meta2->setEntity($entity2);
+        $meta2->setIsRequired(true);
+        $meta2->setIsVisible(true);
+        $meta2->setOrder(93);
+        $meta2->setConstraints([new NotBlank(), new Length(['min' => 1])]);
+        $meta2->setOptions(['foo1' => 'bar1']);
 
         self::assertInstanceOf(MetaTableTypeInterface::class, $meta1->merge($meta2));
 

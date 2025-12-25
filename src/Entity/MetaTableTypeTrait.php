@@ -193,13 +193,11 @@ trait MetaTableTypeTrait
 
     public function merge(MetaTableTypeInterface $meta): MetaTableTypeInterface
     {
-        $this
-            ->setConstraints($meta->getConstraints())
-            ->setIsRequired($meta->isRequired())
-            ->setIsVisible($meta->isVisible())
-            ->setOptions($meta->getOptions())
-            ->setOrder($meta->getOrder())
-        ;
+        $this->setConstraints($meta->getConstraints());
+        $this->setIsRequired($meta->isRequired());
+        $this->setIsVisible($meta->isVisible());
+        $this->setOptions($meta->getOptions());
+        $this->setOrder($meta->getOrder());
 
         if ($meta->getLabel() !== null) {
             $this->setLabel($meta->getLabel());
