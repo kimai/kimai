@@ -38,6 +38,13 @@
         GRANT execute,select,insert,update,delete,create,alter,drop,index,references ON `kimai2_test`.* TO kimai2_test@127.0.0.1;
     -->
     <env name="BOOTSTRAP_RESET_DATABASE" value="true"/>
+
+        <!-- ###+ symfony/messenger ### -->
+        <!-- Choose one of the transports below -->
+        <!-- MESSENGER_TRANSPORT_DSN=amqp://guest:guest@localhost:5672/%2f/messages -->
+        <!-- MESSENGER_TRANSPORT_DSN=redis://localhost:6379/messages -->
+        <env name="MESSENGER_TRANSPORT_DSN" value="doctrine://default?auto_setup=0"/>
+        <!-- ###- symfony/messenger ### -->
   </php>
   <testsuites>
     <testsuite name="Kimai">
