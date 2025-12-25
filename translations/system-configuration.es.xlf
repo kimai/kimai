@@ -310,6 +310,10 @@
         <source>activity.number_format</source>
         <target state="translated">Formato del número de actividad</target>
       </trans-unit>
+      <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="no" xml:space="preserve">
+        <source>invoice.rounding_mode</source>
+        <target state="translated">Modo de redondeo</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
