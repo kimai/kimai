@@ -14,9 +14,9 @@ use App\Repository\Query\TimesheetQuery;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * TODO change interface for 3.0
- * @method getType() string
- * @method isInternal() bool
+ * FIXME change interface for 3.0
+ * @method string getType()
+ * @method bool isInternal()
  */
 interface ExportRendererInterface
 {
