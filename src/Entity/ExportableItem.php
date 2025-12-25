@@ -12,7 +12,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\Collection;
 
 /**
- * @method array getTags()
+ * @method array<Tag> getTags()
  * @method int getBreak()
  */
 interface ExportableItem
