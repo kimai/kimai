@@ -2046,6 +2046,26 @@
         <source>electronic_invoice</source>
         <target state="final">Fattura elettronica</target>
       </trans-unit>
+      <trans-unit id="QnN_ONc" resname="invoice_tax_type" xml:space="preserve" approved="yes">
+        <source>invoice_tax_type</source>
+        <target state="final">Stato fiscale</target>
+      </trans-unit>
+      <trans-unit id="Mi7y8Q3" resname="tax.type.exempt" xml:space="preserve" approved="yes">
+        <source>tax.type.exempt</source>
+        <target state="final">Esonera</target>
+      </trans-unit>
+      <trans-unit id="lU1Njcy" resname="tax.type.standard" xml:space="preserve" approved="yes">
+        <source>tax.type.standard</source>
+        <target state="final">Tassabile</target>
+      </trans-unit>
+      <trans-unit id="E470U8W" resname="tax.type.reverse" xml:space="preserve" approved="yes">
+        <source>tax.type.reverse</source>
+        <target state="final">Addebito inverso</target>
+      </trans-unit>
+      <trans-unit id="hi31a3v" resname="tax.note.reverse_charge" xml:space="preserve" approved="yes">
+        <source>tax.note.reverse_charge</source>
+        <target state="final">Tassa da pagare in base all'addebito inverso</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
