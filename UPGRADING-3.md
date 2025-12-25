@@ -13,6 +13,8 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 ### Developer
 
+Do not use method chaining: all fluent interface, especially in Entities, are no longer supported. 
+
 Removed translations:
 - `action.edit`: use `edit` instead
 - `my.profile`: use `user_profile` instead

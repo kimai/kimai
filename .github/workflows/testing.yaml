@@ -87,7 +87,7 @@ jobs:
                     MAILER_URL: null://localhost
 
             -   name: Full test-suite
-                if: matrix.php != '8.2'
+                if: matrix.php != '8.5'
                 run: vendor/bin/phpunit tests/
                 env:
                     DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?charset=utf8mb4&serverVersion=8.0.35
@@ -95,7 +95,7 @@ jobs:
                     MAILER_URL: null://localhost
 
             -   name: Full test-suite with coverage
-                if: matrix.php == '8.2'
+                if: matrix.php == '8.5'
                 run: vendor/bin/phpunit tests/ --coverage-clover=coverage.xml
                 env:
                     DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?charset=utf8mb4&serverVersion=8.0.35
@@ -103,7 +103,7 @@ jobs:
                     MAILER_URL: null://localhost
 
             -   name: Upload code coverage
-                if: matrix.php == '8.2'
+                if: matrix.php == '8.5'
                 uses: codecov/codecov-action@v5
                 with:
                     token: ${{ secrets.CODECOV_TOKEN }}
