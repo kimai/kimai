@@ -11,6 +11,10 @@ namespace App\Entity;
 
 use Symfony\Component\Validator\Constraint;
 
+/**
+ * @method null|string getSection()
+ * @method void setSection(?string $name)
+ */
 interface MetaTableTypeInterface
 {
     /**
@@ -43,6 +47,8 @@ interface MetaTableTypeInterface
     /**
      * This will merge the current object with the values from the given $meta instance.
      * It should NOT update the name or value, but only the form settings.
+     *
+     * Settings from the given $meta object will win over the current ones.
      */
     public function merge(MetaTableTypeInterface $meta): MetaTableTypeInterface;
 
@@ -131,6 +137,16 @@ interface MetaTableTypeInterface
      * Returns the order (default: 0).
      */
     public function getOrder(): int;
+
+    /**
+     * FIXME activate with 3.0
+     */
+    //public function setSection(?string $section): void;
+
+    /**
+     * FIXME activate with 3.0
+     */
+    //public function getSection(): ?string;
 
     /**
      * Whether true if this field is defined by a plugin, or false if it is a value stored in the database.

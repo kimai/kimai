@@ -12,8 +12,8 @@ namespace App\Entity;
 use Doctrine\Common\Collections\Collection;
 
 /**
- * @method getTags() array
- * @method getBreak() int
+ * @method array<Tag> getTags()
+ * @method int getBreak()
  */
 interface ExportableItem
 {
