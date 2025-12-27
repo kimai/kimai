@@ -90,7 +90,7 @@ final class CustomerController extends AbstractController
         $table->addColumn('company', ['class' => 'd-none']);
         $table->addColumn('vat_id', ['class' => 'd-none w-min']);
         $table->addColumn('contact', ['class' => 'd-none']);
-        $table->addColumn('address', ['class' => 'd-none']);
+        $table->addColumn('city', ['class' => 'd-none']);
         $table->addColumn('country', ['class' => 'd-none w-min']);
         $table->addColumn('currency', ['class' => 'd-none w-min']);
         $table->addColumn('phone', ['class' => 'd-none']);
