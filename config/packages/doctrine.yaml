@@ -10,27 +10,31 @@ doctrine:
         default_connection: default
         connections:
             default:
+                profiling_collect_backtrace: '%kernel.debug%'
+                use_savepoints: true
                 # existing migrations will fail if the schema filter is activated
                 #schema_filter: ~^(?!(bundle_migration_|kimai2_sessions))~
-                url: '%env(DATABASE_URL)%'
+                url: '%env(resolve:DATABASE_URL)%'
                 driver: 'pdo_mysql'
                 charset: utf8mb4
                 default_table_options:
                     charset: utf8mb4
                     collation: utf8mb4_unicode_ci
                 schema_manager_factory: doctrine.dbal.default_schema_manager_factory
-
         types:
             datetime: App\Doctrine\UTCDateTimeType
             datetime_immutable: App\Doctrine\UTCDateTimeImmutableType
     orm:
         controller_resolver:
             auto_mapping: false
-        auto_generate_proxy_classes: false
+        auto_generate_proxy_classes: true
         default_entity_manager: default
         enable_native_lazy_objects: true
         entity_managers:
             default:
+                identity_generation_preferences:
+                    Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
+                validate_xml_mapping: true
                 report_fields_where_declared: true
                 connection: default
                 naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
@@ -54,17 +58,23 @@ when@test:
             connections:
                 default:
                     logging: false
-                    use_savepoints: true
 
 when@prod:
     doctrine:
         orm:
-            metadata_cache_driver:
-                type: pool
-                pool: doctrine.system_cache_pool
+            auto_generate_proxy_classes: false
+            proxy_dir: '%kernel.build_dir%/doctrine/orm/Proxies'
             query_cache_driver:
                 type: pool
                 pool: doctrine.system_cache_pool
             result_cache_driver:
                 type: pool
                 pool: doctrine.result_cache_pool
+
+framework:
+    cache:
+        pools:
+            doctrine.result_cache_pool:
+                adapter: cache.app
+            doctrine.system_cache_pool:
+                adapter: cache.system
