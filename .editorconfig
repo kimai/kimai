@@ -21,3 +21,7 @@ indent_size = 4
 [*.yml]
 indent_style = space
 indent_size = 4
+
+[{*.xml,*.xml.dist}]
+indent_style = space
+indent_size = 4
