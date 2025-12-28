@@ -138,13 +138,16 @@
         "version": "1.13.0"
     },
     "jms/serializer-bundle": {
-        "version": "2.0",
+        "version": "5.5",
         "recipe": {
             "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "2.0",
-            "ref": "fe60ce509ef04a3f40da96e3979bc8d9b13b2372"
-        }
+            "branch": "main",
+            "version": "4.0",
+            "ref": "cc04e10cf7171525b50c18b36004edf64cb478be"
+        },
+        "files": [
+            "config/packages/jms_serializer.yaml"
+        ]
     },
     "kevinpapst/tabler-bundle": {
         "version": "dev-initial"
