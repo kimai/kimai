@@ -228,6 +228,43 @@ class CustomerControllerTest extends APIControllerBaseTestCase
 
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
+
+        self::assertCount(30, array_keys($result));
+        self::assertNotEmpty($result['id']);
+        self::assertIsArray($result['teams']);
+        self::assertCount(1, $result['teams']);
+        self::assertIsArray($result['teams'][0]);
+        self::assertEquals('Testing customer 1 team', $result['teams'][0]['name']);
+        self::assertIsArray($result['metaFields']);
+        self::assertCount(1, $result['metaFields']);
+        self::assertEquals([['name' => 'foo', 'value' => 'bar']], $result['metaFields']);
+        self::assertEquals('Test', $result['name']);
+        self::assertEquals(1000, $result['budget']);
+        self::assertEquals(100000, $result['timeBudget']);
+        self::assertNull($result['budgetType']);
+        self::assertEquals('1', $result['number']);
+        self::assertEquals('Test comment', $result['comment']);
+        self::assertEquals('Test', $result['company']);
+        self::assertNull($result['vatId']);
+        self::assertEquals('Test', $result['contact']);
+        self::assertEquals('Test', $result['address']);
+        self::assertNull($result['addressLine1']);
+        self::assertNull($result['addressLine2']);
+        self::assertNull($result['addressLine3']);
+        self::assertNull($result['postCode']);
+        self::assertNull($result['city']);
+        self::assertEquals('DE', $result['country']);
+        self::assertEquals('EUR', $result['currency']);
+        self::assertEquals('111', $result['phone']);
+        self::assertEquals('222', $result['fax']);
+        self::assertEquals('333', $result['mobile']);
+        self::assertEquals('test@example.com', $result['email']);
+        self::assertNull($result['homepage']);
+        self::assertEquals('Europe/Berlin', $result['timezone']);
+        self::assertNull($result['buyerReference']);
+        self::assertEquals('#5319e7', $result['color']);
+        self::assertTrue($result['visible']);
+        self::assertTrue($result['billable']);
     }
 
     public function testNotFound(): void
@@ -240,12 +277,33 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'visible' => true,
+            'budget' => '999',
+            'timeBudget' => '10,25',
+            'budgetType' => 'month',
+            'number' => 'C-754',
+            'comment' => 'Awesome customer since a long time',
+            'company' => 'IT Professional Comp.',
+            'vatId' => 'DE0123456789',
+            'contact' => 'Mr. John Doe',
+            'addressLine1' => 'test address line 1',
+            'addressLine2' => 'foo address line 2',
+            'addressLine3' => 'bar address line 3',
+            'postCode' => '12345',
+            'city' => 'Acme Town',
             'country' => 'DE',
             'currency' => 'EUR',
+            'phone' => '666667787778999909087',
+            'fax' => '0987654321',
+            'mobile' => '01234534567890',
+            'email' => 'admin@example.com',
+            'homepage' => 'https://www.example.com/',
             'timezone' => 'Europe/Berlin',
-            'budget' => '999',
-            'timeBudget' => '7200',
+            'invoiceText' => 'Some random text, pay fast please!',
+            'buyerReference' => 'REF-0123456789',
+            'color' => '#ff0000',
+            'visible' => true,
+            'billable' => true,
+            'teams' => [1],
         ];
         $this->request($client, '/api/customers', 'POST', [], json_encode($data));
         self::assertTrue($client->getResponse()->isSuccessful());
@@ -257,6 +315,37 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
         self::assertNotEmpty($result['id']);
+        self::assertIsArray($result['teams']);
+        self::assertEquals([['id' => 1, 'name' => 'Test team', 'color' => '#03A9F4']], $result['teams']);
+        self::assertIsArray($result['metaFields']);
+        self::assertEquals([], $result['metaFields']);
+        self::assertEquals('foo', $result['name']);
+        self::assertEquals('999', $result['budget']);
+        self::assertEquals('36900', $result['timeBudget']);
+        self::assertEquals('month', $result['budgetType']);
+        self::assertEquals('C-754', $result['number']);
+        self::assertEquals('Awesome customer since a long time', $result['comment']);
+        self::assertEquals('IT Professional Comp.', $result['company']);
+        self::assertEquals('DE0123456789', $result['vatId']);
+        self::assertEquals('Mr. John Doe', $result['contact']);
+        self::assertNull($result['address']);
+        self::assertEquals('test address line 1', $result['addressLine1']);
+        self::assertEquals('foo address line 2', $result['addressLine2']);
+        self::assertEquals('bar address line 3', $result['addressLine3']);
+        self::assertEquals('12345', $result['postCode']);
+        self::assertEquals('Acme Town', $result['city']);
+        self::assertEquals('DE', $result['country']);
+        self::assertEquals('EUR', $result['currency']);
+        self::assertEquals('666667787778999909087', $result['phone']);
+        self::assertEquals('0987654321', $result['fax']);
+        self::assertEquals('01234534567890', $result['mobile']);
+        self::assertEquals('admin@example.com', $result['email']);
+        self::assertEquals('https://www.example.com/', $result['homepage']);
+        self::assertEquals('Europe/Berlin', $result['timezone']);
+        self::assertEquals('REF-0123456789', $result['buyerReference']);
+        self::assertEquals('#ff0000', $result['color']);
+        self::assertTrue($result['visible']);
+        self::assertTrue($result['billable']);
     }
 
     public function testPostActionWithLeastFields(): void

@@ -22,12 +22,15 @@ class Parsedown extends \Parsedown
         $block = parent::blockHeader($Line);
 
         $text = $block['element']['text'];
-        $id = $this->getIDfromText($text);
 
-        // add id-attribute
-        $block['element']['attributes'] = [
-            'id' => $id
-        ];
+        if (\is_string($text) && $text !== '') {
+            $id = $this->getIDfromText($text);
+
+            // add id-attribute
+            $block['element']['attributes'] = [
+                'id' => $id
+            ];
+        }
 
         return $block;
     }

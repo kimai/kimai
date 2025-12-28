@@ -67,6 +67,7 @@ trait MetaTableTypeTrait
      */
     private mixed $data = null;
     private bool $updated = false;
+    private ?string $section = null;
 
     public function getName(): ?string
     {
@@ -193,13 +194,11 @@ trait MetaTableTypeTrait
 
     public function merge(MetaTableTypeInterface $meta): MetaTableTypeInterface
     {
-        $this
-            ->setConstraints($meta->getConstraints())
-            ->setIsRequired($meta->isRequired())
-            ->setIsVisible($meta->isVisible())
-            ->setOptions($meta->getOptions())
-            ->setOrder($meta->getOrder())
-        ;
+        $this->setConstraints($meta->getConstraints());
+        $this->setIsRequired($meta->isRequired());
+        $this->setIsVisible($meta->isVisible());
+        $this->setOptions($meta->getOptions());
+        $this->setOrder($meta->getOrder());
 
         if ($meta->getLabel() !== null) {
             $this->setLabel($meta->getLabel());
@@ -207,6 +206,10 @@ trait MetaTableTypeTrait
 
         if ($meta->getType() !== null) {
             $this->setType($meta->getType());
+        }
+
+        if ($meta->getSection() !== null) {
+            $this->setSection($meta->getSection());
         }
 
         return $this;
@@ -264,6 +267,16 @@ trait MetaTableTypeTrait
         if ($this->id) {
             $this->id = null;
         }
+    }
+
+    public function setSection(?string $section): void
+    {
+        $this->section = $section;
+    }
+
+    public function getSection(): ?string
+    {
+        return $this->section;
     }
 
     /**

@@ -169,6 +169,8 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[Assert\NotBlank(groups: ['Registration', 'UserCreate', 'Profile'])]
     #[Assert\Length(min: 2, max: 180)]
     #[Assert\Email(mode: 'html5', groups: ['Registration', 'UserCreate', 'Profile'])]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?string $email = null;
     #[ORM\Column(name: 'account', type: Types::STRING, length: 30, nullable: true)]
     #[Assert\Length(max: 30)]
@@ -219,6 +221,8 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[ORM\Column(name: 'totp_enabled', type: Types::BOOLEAN, nullable: false, options: ['default' => false])]
     private bool $totpEnabled = false;
     #[ORM\Column(name: 'system_account', type: Types::BOOLEAN, nullable: false, options: ['default' => false])]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private bool $systemAccount = false;
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
@@ -352,6 +356,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
         $all = [];
         foreach ($this->preferences as $preference) {
+            if ($preference->getName() === null || $preference->getName()[0] === '_') {
+                continue;
+            }
             if ($preference->isEnabled() && !\in_array($preference->getName(), $skip)) {
                 $all[] = $preference;
             }
@@ -370,7 +377,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     /**
      * @param iterable<UserPreference> $preferences
-     * @return User
      */
     public function setPreferences(iterable $preferences): User
     {
@@ -384,7 +390,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     }
 
     /**
-     * @param string $name
      * @param bool|int|string|float|null $value
      */
     public function setPreferenceValue(string $name, $value = null): void
@@ -419,7 +424,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      */
     #[Serializer\VirtualProperty]
     #[Serializer\SerializedName('locale')]
-    #[Serializer\Groups(['User_Entity'])]
+    #[Serializer\Groups(['Default'])]
     #[OA\Property(type: 'string')]
     public function getLocale(): string
     {
@@ -434,7 +439,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     #[Serializer\VirtualProperty]
     #[Serializer\SerializedName('timezone')]
-    #[Serializer\Groups(['User_Entity'])]
+    #[Serializer\Groups(['Default'])]
     #[OA\Property(type: 'string')]
     public function getTimezone(): string
     {
@@ -442,11 +447,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     }
 
     /**
-     * The locale used for translations
+     * The locale used for translating the UI
      */
     #[Serializer\VirtualProperty]
     #[Serializer\SerializedName('language')]
-    #[Serializer\Groups(['User_Entity'])]
+    #[Serializer\Groups(['Default'])]
     #[OA\Property(type: 'string')]
     public function getLanguage(): string
     {

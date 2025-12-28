@@ -24,11 +24,11 @@
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target state="needs-translation">إعادة تعيين كلمة المرور</target>
+        <target state="translated">تسجيل الدخول إلى Kimai</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="needs-translation">يمكن أن يحدث ذلك …</target>
+        <target state="translated">تسجيل الدخول إلى حسابك</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>

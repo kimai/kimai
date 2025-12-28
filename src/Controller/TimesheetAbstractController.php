@@ -83,15 +83,15 @@ abstract class TimesheetAbstractController extends AbstractController
         }
 
         if ($this->configuration->isBreakTimeEnabled()) {
-            $table->addColumn('break', ['class' => 'text-end text-nowrap']);
+            $table->addColumn('break', ['class' => 'text-end text-nowrap', 'orderBy' => false]);
         }
 
         $table->addColumn('duration', ['class' => 'text-end text-nowrap']);
 
         if ($canSeeRate) {
             $table->addColumn('hourlyRate', ['class' => 'text-end d-none text-nowrap']);
-            $table->addColumn('internalRate', ['class' => 'text-end text-nowrap d-none d-xxl-table-cell']);
-            $table->addColumn('rate', ['class' => 'text-end text-nowrap']);
+            $table->addColumn('internalRate', ['class' => 'text-end text-nowrap d-none']);
+            $table->addColumn('rate', ['class' => 'text-end text-nowrap d-none']);
         }
 
         $table->addColumn('customer', ['class' => 'd-none d-md-table-cell']);

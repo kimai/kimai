@@ -13,13 +13,18 @@ use App\Entity\RateInterface;
 use App\Entity\Timesheet;
 use App\Entity\UserPreference;
 use App\Repository\TimesheetRepository;
+use App\Timesheet\RateCalculator\RateCalculatorMode;
 
 /**
  * Implementation to calculate the rate for a timesheet record.
  */
 final class RateService implements RateServiceInterface
 {
-    public function __construct(private array $rates, private TimesheetRepository $repository)
+    public function __construct(
+        private readonly array $rates,
+        private readonly TimesheetRepository $repository,
+        private readonly RateCalculatorMode $calculatorMode
+    )
     {
     }
 
@@ -79,8 +84,8 @@ final class RateService implements RateServiceInterface
         $totalInternalRate = 0;
 
         if (null !== $record->getDuration()) {
-            $totalRate = Util::calculateRate($factoredHourlyRate, $record->getDuration());
-            $totalInternalRate = Util::calculateRate($factoredInternalRate, $record->getDuration());
+            $totalRate = $this->calculatorMode->calculateRate($factoredHourlyRate, $record->getDuration());
+            $totalInternalRate = $this->calculatorMode->calculateRate($factoredInternalRate, $record->getDuration());
         }
 
         return new Rate($totalRate, $totalInternalRate, $factoredHourlyRate, null);

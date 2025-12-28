@@ -56,7 +56,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Assert\NotNull]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Subresource', 'Expanded'])]
+    #[Serializer\Groups(['Expanded'])]
     #[OA\Property(ref: '#/components/schemas/Customer')]
     private ?Customer $customer = null;
     /**
@@ -85,7 +85,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
      */
     #[ORM\Column(name: 'order_date', type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Project_Entity'])]
+    #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: "DateTime<'Y-m-d'>")]
     #[Serializer\Accessor(getter: 'getOrderDate')]
     private ?\DateTime $orderDate = null;
@@ -141,7 +141,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
      */
     #[ORM\OneToMany(mappedBy: 'project', targetEntity: ProjectMeta::class, cascade: ['persist'])]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Project'])]
+    #[Serializer\Groups(['Default'])]
     #[Serializer\Type(name: 'array<App\Entity\ProjectMeta>')]
     #[Serializer\SerializedName('metaFields')]
     #[Serializer\Accessor(getter: 'getVisibleMetaFields')]

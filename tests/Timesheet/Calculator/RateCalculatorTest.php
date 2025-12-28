@@ -18,7 +18,7 @@ use App\Entity\ProjectRate;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
-use App\Repository\TimesheetRepository;
+use App\Tests\Mocks\RateServiceFactory;
 use App\Timesheet\Calculator\RateCalculator;
 use App\Timesheet\RateService;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -28,28 +28,33 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(RateCalculator::class)]
 class RateCalculatorTest extends TestCase
 {
-    protected function getRateRepositoryMock(array $rates = [])
+    private function getRateService(array $rules = [], array $rates = []): RateService
     {
-        $mock = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->getMock();
-        if (!empty($rates)) {
-            $mock->expects($this->any())->method('findMatchingRates')->willReturn($rates);
-        }
+        $factory = new RateServiceFactory($this);
 
-        return $mock;
+        return $factory->create($rules, $rates);
+    }
+
+    private function assertRateByTimesheetHourlyRate(int $duration, float $hourlyRate, float $rate): void
+    {
+        $record = new Timesheet();
+        $record->setEnd(new \DateTime());
+        $record->setDuration($duration);
+        $record->setHourlyRate($hourlyRate);
+        $record->setActivity(new Activity());
+        $record->setUser($this->getTestUser());
+
+        $sut = new RateCalculator($this->getRateService());
+        $sut->calculate($record, []);
+        self::assertEquals($rate, $record->getRate());
     }
 
     public function testCalculateWithTimesheetHourlyRate(): void
     {
-        $record = new Timesheet();
-        $record->setEnd(new \DateTime());
-        $record->setDuration(1800);
-        $record->setHourlyRate(100);
-        $record->setActivity(new Activity());
-        $record->setUser($this->getTestUser());
-
-        $sut = new RateCalculator(new RateService([], $this->getRateRepositoryMock()));
-        $sut->calculate($record, []);
-        self::assertEquals(50, $record->getRate());
+        $this->assertRateByTimesheetHourlyRate(1800, 100, 50);
+        $this->assertRateByTimesheetHourlyRate(400, 100, 11.1111);
+        $this->assertRateByTimesheetHourlyRate(1234, 100, 34.2778);
+        $this->assertRateByTimesheetHourlyRate(2739, 100, 76.0833);
     }
 
     public function testCalculateWithTimesheetFixedRate(): void
@@ -63,7 +68,7 @@ class RateCalculatorTest extends TestCase
         $record->setActivity(new Activity());
         $record->setUser($this->getTestUser());
 
-        $sut = new RateCalculator(new RateService([], $this->getRateRepositoryMock()));
+        $sut = new RateCalculator($this->getRateService());
         $sut->calculate($record, []);
         self::assertEquals(10, $record->getRate());
     }
@@ -104,22 +109,22 @@ class RateCalculatorTest extends TestCase
 
     #[DataProvider('getRateTestData')]
     public function testRates(
-        $expectedRate,
-        $expectedInternalRate,
-        $duration,
-        $userRate,
-        $userInternalRate,
-        $timesheetHourly,
-        $timesheetFixed,
-        $activityRate,
-        $activityInternal,
-        $activityIsFixed,
-        $projectRate,
-        $projectInternal,
-        $projectIsFixed,
-        $customerRate,
-        $customerInternal,
-        $customerIsFixed
+        float $expectedRate,
+        float $expectedInternalRate,
+        int $duration,
+        float $userRate,
+        ?float $userInternalRate,
+        ?float $timesheetHourly,
+        ?float $timesheetFixed,
+        ?float $activityRate,
+        ?float $activityInternal,
+        bool $activityIsFixed,
+        ?float $projectRate,
+        ?float $projectInternal,
+        bool $projectIsFixed,
+        ?float $customerRate,
+        ?float $customerInternal,
+        bool $customerIsFixed
     ) {
         $customer = new Customer('foo');
 
@@ -170,13 +175,13 @@ class RateCalculatorTest extends TestCase
             $rates[] = $rate;
         }
 
-        $sut = new RateCalculator(new RateService([], $this->getRateRepositoryMock($rates)));
+        $sut = new RateCalculator($this->getRateService([], $rates));
         $sut->calculate($timesheet, []);
         self::assertEquals($expectedRate, $timesheet->getRate());
         self::assertEquals($expectedInternalRate, $timesheet->getInternalRate());
     }
 
-    protected function getTestUser($rate = 75, $internalRate = 75)
+    protected function getTestUser(?float $rate = 75.0, ?float $internalRate = 75.0): User
     {
         $user = new User();
 
@@ -199,7 +204,7 @@ class RateCalculatorTest extends TestCase
 
         self::assertEquals(0, $record->getRate());
 
-        $sut = new RateCalculator(new RateService([], $this->getRateRepositoryMock()));
+        $sut = new RateCalculator($this->getRateService());
         $sut->calculate($record, []);
         self::assertEquals(0, $record->getRate());
     }
@@ -208,7 +213,7 @@ class RateCalculatorTest extends TestCase
      * Uses the hourly rate from user_preferences to calculate the rate.
      */
     #[DataProvider('getRuleDefinitions')]
-    public function testCalculateWithRulesByUsersHourlyRate($duration, $rules, $expectedRate): void
+    public function testCalculateWithRulesByUsersHourlyRate(int $duration, array $rules, float $expectedRate): void
     {
         $end = new \DateTime('12:00:00', new \DateTimeZone('UTC'));
         $start = clone $end;
@@ -224,25 +229,25 @@ class RateCalculatorTest extends TestCase
 
         $record->setEnd($end);
 
-        $sut = new RateCalculator(new RateService($rules, $this->getRateRepositoryMock()));
+        $sut = new RateCalculator($this->getRateService($rules));
         $sut->calculate($record, []);
 
         self::assertEquals($expectedRate, $record->getRate());
     }
 
-    public static function getRuleDefinitions()
+    public static function getRuleDefinitions(): array
     {
         $start = new \DateTime('12:00:00', new \DateTimeZone('UTC'));
         $day = $start->format('l');
 
         return [
             [
-                31837,
+                31837, // 31824 = 8,84
                 [],
                 663.2708
             ],
             [
-                31837,
+                31837, // 31824 = 8,84
                 [
                     'default' => [
                         'days' => [$day],
@@ -256,7 +261,7 @@ class RateCalculatorTest extends TestCase
                 1326.5417
             ],
             [
-                31837,
+                31837, // 31824 = 8,84
                 [
                     'default' => [
                         'days' => [$day],

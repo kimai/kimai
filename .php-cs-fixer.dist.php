@@ -143,7 +143,7 @@ $fixer
         'whitespace_after_comma_in_array' => true,
         'yoda_style' => false,
         'ternary_to_null_coalescing' => true,
-        'visibility_required' => ['elements' => [
+        'modifier_keywords' => ['elements' => [
             'const',
             'method',
             'property',

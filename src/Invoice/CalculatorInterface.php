@@ -26,38 +26,34 @@ interface CalculatorInterface
 
     /**
      * Set the invoice model and can be used to fetch the customer.
-     *
-     * @param InvoiceModel $model
      */
     public function setModel(InvoiceModel $model): void;
 
     /**
      * Returns the subtotal before taxes.
-     *
-     * @return float
      */
     public function getSubtotal(): float;
 
     /**
      * Returns the tax amount for this invoice.
-     *
-     * @return float
      */
     public function getTax(): float;
 
     /**
      * Returns the total amount for this invoice including taxes.
-     *
-     * @return float
      */
     public function getTotal(): float;
 
     /**
      * Returns the percentage for the value-added tax (VAT) calculation.
-     *
-     * @return float
+     * @deprecated use getTaxRows() instead
      */
     public function getVat(): float;
+
+    /**
+     * @return array<TaxRow>
+     */
+    public function getTaxRows(): array;
 
     /**
      * Returns the total amount of worked time in seconds.
@@ -71,8 +67,6 @@ interface CalculatorInterface
      *
      * Prefix it with your company name followed by a hyphen (e.g. "acme-"),
      * if this is a third-party calculator.
-     *
-     * @return string
      */
     public function getId(): string;
 }

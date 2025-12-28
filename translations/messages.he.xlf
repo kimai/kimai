@@ -1462,9 +1462,9 @@
         <source>complete_month.help</source>
         <target state="translated">הפעולה הזאת תנעל את כל הימים של השנה לפני התאריך הנבחר. לאחר השלמת החודש, המשתמש לא יוכל עוד ליצור או לערוך תיעוד שעות לפרק הזמן הזה.</target>
       </trans-unit>
-      <trans-unit id="EYXzfTO" resname="deleted">
+      <trans-unit id="EYXzfTO" resname="deleted" xml:space="preserve" approved="yes">
         <source>deleted</source>
-        <target state="translated">נמחק</target>
+        <target state="final">נמחק</target>
       </trans-unit>
       <trans-unit id="yXrOTI." resname="review">
         <source>review</source>
@@ -1952,7 +1952,99 @@
       </trans-unit>
       <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve" approved="yes">
         <source>sending_company</source>
-        <target state="final">משלח חשבוניות</target>
+        <target state="final">מנפיק חשבוניות</target>
+      </trans-unit>
+      <trans-unit id="Uzll0ps" resname="Customer portal" xml:space="preserve" approved="yes">
+        <source>Customer portal</source>
+        <target state="final">שער הלקוחות</target>
+      </trans-unit>
+      <trans-unit id="cDOQMYv" resname="Beta" xml:space="preserve" approved="yes">
+        <source>Beta</source>
+        <target state="final">הפעלת תצוגה מקדימה של יכולת שעדיין בפיתוח.</target>
+      </trans-unit>
+      <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve" approved="yes">
+        <source>Code</source>
+        <target state="final">קוד</target>
+      </trans-unit>
+      <trans-unit id="xZzzKxM" resname="orientation" xml:space="preserve" approved="yes">
+        <source>Orientation</source>
+        <target state="final">כיוון</target>
+      </trans-unit>
+      <trans-unit id="UcWoKWo" resname="portrait" xml:space="preserve" approved="yes">
+        <source>Portrait</source>
+        <target state="final">לאורך</target>
+      </trans-unit>
+      <trans-unit id="rLlV34K" resname="landscape" xml:space="preserve" approved="yes">
+        <source>Landscape</source>
+        <target state="final">לרוחב</target>
+      </trans-unit>
+      <trans-unit id="UZUFKZg" resname="remaining_budget" xml:space="preserve" approved="yes">
+        <source>remaining_budget</source>
+        <target state="final">תקציב שנותר</target>
+      </trans-unit>
+      <trans-unit id="eV6j76Q" resname="font" xml:space="preserve" approved="yes">
+        <source>font</source>
+        <target state="final">גופן</target>
+      </trans-unit>
+      <trans-unit id="BmDRYT." resname="sending_company.help" xml:space="preserve" approved="yes">
+        <source>sending_company.help</source>
+        <target state="final">החברה הזאת מופיעה כמנפיקה על החשבונית. ייעשה שימוש בשם, בכתובת ובפרטי המס.</target>
+      </trans-unit>
+      <trans-unit id="PciSBv9" resname="address_row" xml:space="preserve" approved="yes">
+        <source>address_row</source>
+        <target state="final">שורה %row%</target>
+      </trans-unit>
+      <trans-unit id="nPJWKwW" resname="payment_type" xml:space="preserve" approved="yes">
+        <source>payment_type</source>
+        <target state="final">סוג תשלום</target>
+      </trans-unit>
+      <trans-unit id="uXB48Vj" resname="SEPA Credit Transfer" xml:space="preserve" approved="yes">
+        <source>SEPA Credit Transfer</source>
+        <target state="final">העברה בנקאית של SEPA</target>
+      </trans-unit>
+      <trans-unit id="s42A2gm" resname="SEPA Direct Debit" xml:space="preserve" approved="yes">
+        <source>SEPA Direct Debit</source>
+        <target state="final">חיוב ישיר של SEPA</target>
+      </trans-unit>
+      <trans-unit id="4toQj2M" resname="Cash" xml:space="preserve" approved="yes">
+        <source>Cash</source>
+        <target state="final">מזומן</target>
+      </trans-unit>
+      <trans-unit id="cWZZc6D" resname="Cheque" xml:space="preserve" approved="yes">
+        <source>Cheque</source>
+        <target state="final">צ׳ק</target>
+      </trans-unit>
+      <trans-unit id="jMvh7bn" resname="Credit Transfer" xml:space="preserve" approved="yes">
+        <source>Credit Transfer</source>
+        <target state="final">העברת אשראי</target>
+      </trans-unit>
+      <trans-unit id="TJQbc0a" resname="Payment To Bank Account" xml:space="preserve" approved="yes">
+        <source>Payment To Bank Account</source>
+        <target state="final">תשלום לחשבון בנק</target>
+      </trans-unit>
+      <trans-unit id=".UIt099" resname="Card Payment" xml:space="preserve" approved="yes">
+        <source>Card Payment</source>
+        <target state="final">תשלום בכרטיס</target>
+      </trans-unit>
+      <trans-unit id="Wnb_qF0" resname="Direct Debit" xml:space="preserve" approved="yes">
+        <source>Direct Debit</source>
+        <target state="final">חיוב ישיר</target>
+      </trans-unit>
+      <trans-unit id="rIdfGxM" resname="payment_account_name" xml:space="preserve" approved="yes">
+        <source>payment_account_name</source>
+        <target state="final">בעלי החשבון או הכרטיס</target>
+      </trans-unit>
+      <trans-unit id="jcT9Og6" resname="payment_account_number" xml:space="preserve" approved="yes">
+        <source>payment_account_name</source>
+        <target state="final">מספר זה״ב/IBAN או כרטיס</target>
+      </trans-unit>
+      <trans-unit id="_Ep8Ogx" resname="buyerReference" xml:space="preserve" approved="yes">
+        <source>buyerReference</source>
+        <target state="final">זיהוי רוכש</target>
+      </trans-unit>
+      <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve" approved="yes">
+        <source>electronic_invoice</source>
+        <target state="final">חשבונית דיגיטלית</target>
       </trans-unit>
     </body>
   </file>

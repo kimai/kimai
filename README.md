@@ -29,7 +29,7 @@ and so much more.
 
 ### Requirements
 
-- PHP 8.1.3 minimum (support for PHP 8.2, 8.3, 8.4)
+- PHP 8.1.3 minimum with support for 8.2, 8.3, 8.4, 8.5
 - MariaDB or MySQL
 - A webserver and subdomain (subdirectory is not supported)
 - PHP extensions: `gd`, `intl`, `json`, `mbstring`, `pdo`, `tokenizer`, `xml`, `xsl`, `zip`
@@ -44,7 +44,7 @@ and so much more.
 
 There are more documented ways for [on-premise hosting](https://www.kimai.org/documentation/chapter-on-premise.html). 
 
-And if you don't want to host Kimai, you can use [the Cloud version](https://www.kimai.cloud/) of it.
+And if you don't want to host Kimai, you can use the [Cloud version](https://www.kimai.cloud/) of it.
 
 ### Updating Kimai
 

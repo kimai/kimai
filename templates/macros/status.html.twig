@@ -1,18 +1,16 @@
 {% macro status(title, color) %}
     {% from '@theme/components/status.html.twig' import status %}
-    {% set options = {} %}
-    {% if color %}{% set options = options|merge({'color': color}) %}{% endif %}
-    {{ status(title, options) }}
+    {{ status(title, {'color': color|default('primary-lt'), lite: true}) }}
 {% endmacro %}
 
 {% macro status_duration(duration) %}
-    {{ _self.status(duration, 'azure') }}
+    {{ _self.status(duration) }}
 {% endmacro %}
 
 {% macro status_money(money) %}
-    {{ _self.status(money, 'blue') }}
+    {{ _self.status(money) }}
 {% endmacro %}
 
 {% macro status_count(counter) %}
-    {{ _self.status(counter, 'teal') }}
+    {{ _self.status(counter) }}
 {% endmacro %}

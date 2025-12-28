@@ -22,31 +22,13 @@
 {% endmacro %}
 
 {%- macro page_actions(actions) -%}
-    {% set btnClasses = 'btn-primary' %}
-    {% set helpClasses = '' %}
-    {% if tabler_bundle.isNavbarOverlapping() %}
-        {% set helpClasses = 'btn-dark' %}
-    {% elseif not tabler_bundle.isDarkMode() %}
-        {% set btnClasses = 'btn-white' %}
-    {% endif %}
-    {% set later = {} %}
-    {% set help = null %}
+    {% set btnClasses = '' %}
     <div class="page-actions">
         <div class="pa-desktop d-none d-sm-inline-flex btn-list">
         {{ _self.actions(actions, {large: true, button_class: btnClasses}) }}
-        {% if help is not null %}
-            {% set help = help|merge({class: helpClasses ~ ' action-help ' ~ (help.class|default(''))}) %}
-            {{ _self.action_button('help', help) }}
-        {% endif %}
         </div>
         <div class="pa-mobile d-inline-flex d-sm-none btn-list">
-            {% set btnClass = 'btn btn-icon ' %}
-            {% if tabler_bundle.isNavbarOverlapping() %}
-                {% set btnClass = 'btn btn-icon btn-dark' %}
-            {% elseif not tabler_bundle.isDarkMode() %}
-                {% set btnClass = 'btn btn-icon btn-white' %}
-            {% endif %}
-            {{ _self.table_actions(actions, btnClass) }}
+            {{ _self.table_actions(actions, 'btn btn-icon') }}
         </div>
     </div>
 {%- endmacro -%}
@@ -79,10 +61,6 @@
         {% endif %}
     {% endfor -%}
 {%- endmacro -%}
-
-{% macro page_header(title) %}
-    <h2 class="page-header">{{ title|trans }}</h2>
-{% endmacro %}
 
 {% macro label_boolean(visible) %}
     {% if visible %}
@@ -226,10 +204,14 @@
 {% endmacro %}
 
 {% macro badge_team_access(teams) %}
-    {% if teams|length > 0 %}
-        {{ _self.badge_counter(teams|length) }}
+    {{ _self.badge_counted(teams|length) }}
+{% endmacro %}
+
+{% macro badge_counted(amount) %}
+    {% if amount > 0 %}
+        {{ _self.badge_counter(amount, null, 'primary') }}
     {% else %}
-        {{ _self.badge_counter(0, null, 'gray') }}
+        {{ _self.badge_counter(0, null, 'secondary') }}
     {% endif %}
 {% endmacro %}
 
@@ -278,9 +260,9 @@
     {{ alert({type: type, description: description|trans, title: title|trans, icon: icon, dismissible: dismissible, important: true}) }}
 {% endmacro %}
 
-{% macro callout(type, description, title, icon) %}
+{% macro callout(type, description, title, icon, important) %}
     {% from '@theme/components/alert.html.twig' import alert %}
-    {{ alert({type: type|default('danger'), description: description|trans, title: title|trans, icon: icon, dismissible: false, important: true}) }}
+    {{ alert({type: type|default('danger'), description: description|trans, title: title|trans, icon: icon, dismissible: false, important: important ?? true}) }}
 {% endmacro %}
 
 {% macro table_actions(actions, class) %}
@@ -421,7 +403,7 @@
 {% endmacro %}
 
 {% macro nothing_found(events) %}
-    {{ _self.callout('warning', 'error.no_entries_found') }}
+    {{ _self.callout('info', 'error.no_entries_found', null, 'info', false) }}
     {% if events is not empty %}
     <script type="text/javascript">
         document.addEventListener('kimai.initialized', function() {

@@ -20,10 +20,9 @@ trait VisibilityTrait
 
     public function setVisibility(int $visibility): void
     {
-        if (!\in_array($visibility, VisibilityInterface::ALLOWED_VISIBILITY_STATES, true)) {
-            throw new \InvalidArgumentException('Unknown visibility given');
+        if (\in_array($visibility, VisibilityInterface::ALLOWED_VISIBILITY_STATES, true)) {
+            $this->visibility = $visibility;
         }
-        $this->visibility = $visibility;
     }
 
     public function isShowHidden(): bool
@@ -36,6 +35,9 @@ trait VisibilityTrait
         return $this->visibility === VisibilityInterface::SHOW_VISIBLE;
     }
 
+    /**
+     * @deprecated since 2.41
+     */
     public function setShowBoth(): void
     {
         $this->setVisibility(VisibilityInterface::SHOW_BOTH);

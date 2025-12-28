@@ -42,6 +42,7 @@ security:
                 - App\Saml\SamlAuthenticator
 
             remember_me:
+                name: KIMAI_REMEMBER
                 secret: '%kernel.secret%'
                 lifetime: 604800
                 path: /
@@ -81,21 +82,21 @@ security:
         allow_if_all_abstain: false
 
     role_hierarchy:
-        ROLE_USER:        ~
-        ROLE_TEAMLEAD:    ROLE_USER
-        ROLE_ADMIN:       ROLE_TEAMLEAD
+        ROLE_USER: ~
+        ROLE_TEAMLEAD: ROLE_USER
+        ROLE_ADMIN: ROLE_TEAMLEAD
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     access_control:
-        - { path: '^/auth/2fa', role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
-        - { path: '^/auth', roles: PUBLIC_ACCESS }
-        - { path: '^/{_locale}$', role: PUBLIC_ACCESS }
-        - { path: '^/{_locale}/auth', role: PUBLIC_ACCESS }
-        - { path: '^/{_locale}/login', role: PUBLIC_ACCESS }
-        - { path: '^/{_locale}/register', role: PUBLIC_ACCESS }
-        - { path: '^/{_locale}/resetting', role: PUBLIC_ACCESS }
-        - { path: '^/{_locale}/', roles: ROLE_USER }
-        - { path: '^/api', roles: IS_AUTHENTICATED }
+        - {path: '^/auth/2fa', role: IS_AUTHENTICATED_2FA_IN_PROGRESS}
+        - {path: '^/auth', roles: PUBLIC_ACCESS}
+        - {path: '^/{_locale}$', role: PUBLIC_ACCESS}
+        - {path: '^/{_locale}/auth', role: PUBLIC_ACCESS}
+        - {path: '^/{_locale}/login', role: PUBLIC_ACCESS}
+        - {path: '^/{_locale}/register', role: PUBLIC_ACCESS}
+        - {path: '^/{_locale}/resetting', role: PUBLIC_ACCESS}
+        - {path: '^/{_locale}/', roles: ROLE_USER}
+        - {path: '^/api', roles: IS_AUTHENTICATED}
 
 when@test:
     # this configuration simplifies testing URLs protected by the security mechanism
@@ -105,6 +106,6 @@ when@test:
             App\Entity\User:
                 algorithm: auto
                 # see https://github.com/symfony/recipes/pull/1026
-                cost: 4 # Lowest possible value for bcrypt
-                time_cost: 3 # Lowest possible value for argon
-                memory_cost: 10 # Lowest possible value for argon
+                cost: 4  # Lowest possible value for bcrypt
+                time_cost: 3  # Lowest possible value for argon
+                memory_cost: 10  # Lowest possible value for argon

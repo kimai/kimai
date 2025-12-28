@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="mk" datatype="plaintext" original="system-configuration.en.xlf">
+    <body>
+      <trans-unit id="PLggHn." resname="theme" xml:space="preserve">
+        <source>theme</source>
+        <target state="translated">Тема</target>
+      </trans-unit>
+      <trans-unit id="mPRUBFX" resname="theme.markdown_content" xml:space="preserve">
+        <source>theme.markdown_content</source>
+        <target state="translated">Дозволете форматирање на markdown во описи и коментари</target>
+      </trans-unit>
+      <trans-unit id="SnkW0Pk" resname="theme.avatar_url" xml:space="preserve">
+        <source>theme.avatar_url</source>
+        <target state="translated">Дозволете употреба на URL-адреси за аватар слики</target>
+      </trans-unit>
+      <trans-unit id="FaGqoTT" resname="timesheet.mode" xml:space="preserve">
+        <source>timesheet.mode</source>
+        <target state="translated">Режим на следење на време</target>
+      </trans-unit>
+      <trans-unit id="A11vhSN" resname="timesheet.mode_default" xml:space="preserve">
+        <source>timesheet.mode_default</source>
+        <target state="translated">[Стандардно] времето на почеток и крај може да се уредува</target>
+      </trans-unit>
+      <trans-unit id="CJZhtYx" resname="timesheet.mode_duration_fixed_begin" approved="no" xml:space="preserve">
+        <source>[Duration] configurable fixed start-time, only duration can be changed</source>
+        <target state="translated">[Времетраење] конфигурабилно фиксно време на почеток, само времетраењето може да се промени</target>
+      </trans-unit>
+      <trans-unit id="3tlkqJC" resname="timesheet.mode_punch" xml:space="preserve">
+        <source>timesheet.mode_punch</source>
+        <target state="translated">Корисникот [Временски часовник] може да започнува и запира записи, но не и да ги уредува времињата или времетраењето</target>
+      </trans-unit>
+      <trans-unit id="k4pl27g" resname="timesheet.rules.allow_future_times" xml:space="preserve">
+        <source>timesheet.rules.allow_future_times</source>
+        <target state="translated">Дозволи временски записи во иднина</target>
+      </trans-unit>
+      <trans-unit id="yBBvkfb" resname="timesheet.rules.allow_zero_duration" xml:space="preserve">
+        <source>timesheet.rules.allow_zero_duration</source>
+        <target state="translated">Дозволи временски записи со празно времетраење</target>
+      </trans-unit>
+      <trans-unit id="2KUm56c" resname="timesheet.rules.allow_overbooking_budget" xml:space="preserve">
+        <source>timesheet.rules.allow_overbooking_budget</source>
+        <target state="translated">Дозволи пререзервирање на складирани буџети</target>
+      </trans-unit>
+      <trans-unit id="ZCg9UVM" resname="timesheet.rules.allow_overlapping_records" xml:space="preserve">
+        <source>timesheet.rules.allow_overlapping_records</source>
+        <target state="translated">Дозволи преклопувачки временски записи</target>
+      </trans-unit>
+      <trans-unit id="tuPXa0S" resname="lockdown_period" xml:space="preserve">
+        <source>lockdown_period</source>
+        <target state="translated">Заклучи период</target>
+      </trans-unit>
+      <trans-unit id="wrnXs_a" resname="timesheet.rules.lockdown_period_timezone" xml:space="preserve">
+        <source>timesheet.rules.lockdown_period_timezone</source>
+        <target state="translated">Временска зона (доколку е празно, се користи временската зона на соодветниот корисник)</target>
+      </trans-unit>
+      <trans-unit id="_PvFlQ9" resname="timesheet.rules.lockdown_period_start" xml:space="preserve">
+        <source>timesheet.rules.lockdown_period_start</source>
+        <target state="translated">Почеток на периодот на заклучување (PHP релативен датум во однос на сегашниот)</target>
+      </trans-unit>
+      <trans-unit id="M1iVHeQ" resname="timesheet.rules.lockdown_period_end" xml:space="preserve">
+        <source>timesheet.rules.lockdown_period_end</source>
+        <target state="translated">Крај на периодот на заклучување (PHP релативен датум во однос на сегашниот)</target>
+      </trans-unit>
+      <trans-unit id="RLgv62J" resname="timesheet.rules.lockdown_grace_period" xml:space="preserve">
+        <source>timesheet.rules.lockdown_grace_period</source>
+        <target state="translated">Крај на грејс периодот на заклучување (PHP релативен датум во однос на крајот на периодот на заклучување)</target>
+      </trans-unit>
+      <trans-unit id="Fe18zp4" resname="timesheet.active_entries.hard_limit" xml:space="preserve">
+        <source>timesheet.active_entries.hard_limit</source>
+        <target state="translated">Дозволен број на истовремено активни записи</target>
+      </trans-unit>
+      <trans-unit id="xa6f6fq" resname="quick_entry.recent_activities" xml:space="preserve">
+        <source>quick_entry.recent_activities</source>
+        <target state="translated">Број на записи преземени од претходните недели</target>
+      </trans-unit>
+      <trans-unit id="Vp1e9qb" resname="quick_entry.recent_activity_weeks" xml:space="preserve">
+        <source>quick_entry.recent_activity_weeks</source>
+        <target state="translated">Преземи записи од последните X недели (празни или 0 за цело време)</target>
+      </trans-unit>
+      <trans-unit id="KbAqHBa" resname="quick_entry.minimum_rows" xml:space="preserve">
+        <source>quick_entry.minimum_rows</source>
+        <target state="translated">Минимален број на редови</target>
+      </trans-unit>
+      <trans-unit id="t38HFZd" resname="calendar.week_numbers" xml:space="preserve">
+        <source>calendar.week_numbers</source>
+        <target state="translated">Прикажи броеви на недели</target>
+      </trans-unit>
+      <trans-unit id="qaoBvYU" resname="calendar.weekends" xml:space="preserve">
+        <source>calendar.weekends</source>
+        <target state="translated">Прикажи викенди</target>
+      </trans-unit>
+      <trans-unit id="yUeuM2_" resname="calendar.businessHours.begin" xml:space="preserve">
+        <source>calendar.businessHours.begin</source>
+        <target state="translated">Почеток на редовното работно време (ќе биде обележано)</target>
+      </trans-unit>
+      <trans-unit id="Aa_Ushz" resname="calendar.businessHours.end" xml:space="preserve">
+        <source>calendar.businessHours.end</source>
+        <target state="translated">Крај на редовното работно време (ќе биде обележано)</target>
+      </trans-unit>
+      <trans-unit id="1bHgx7p" resname="calendar.visibleHours.begin" xml:space="preserve">
+        <source>calendar.visibleHours.begin</source>
+        <target state="translated">Почеток на видлив временски опсег</target>
+      </trans-unit>
+      <trans-unit id="6nayLDB" resname="calendar.visibleHours.end" xml:space="preserve">
+        <source>calendar.visibleHours.end</source>
+        <target state="translated">Крај на видливиот временски опсег</target>
+      </trans-unit>
+      <trans-unit id="BYy.c1V" resname="calendar.slot_duration" xml:space="preserve">
+        <source>calendar.slot_duration</source>
+        <target state="translated">Времетраење на терминот за преглед на неделата и денот</target>
+      </trans-unit>
+      <trans-unit id="nwuLBP4" resname="branding" xml:space="preserve">
+        <source>branding</source>
+        <target state="translated">Моја фирма</target>
+      </trans-unit>
+      <trans-unit id="o9mON14" resname="theme.branding.logo" xml:space="preserve">
+        <source>theme.branding.logo</source>
+        <target state="translated">URL-адреса на лого (го заменува името на компанијата на екранот за најавување)</target>
+      </trans-unit>
+      <trans-unit id="en0.Ahu" resname="theme.branding.company" xml:space="preserve">
+        <source>theme.branding.company</source>
+        <target state="translated">Име на фирма</target>
+      </trans-unit>
+      <trans-unit id="AzOiQES" resname="company.financial_year" xml:space="preserve">
+        <source>company.financial_year</source>
+        <target state="translated">Фискална година</target>
+      </trans-unit>
+      <trans-unit id="Gdb5M4w" resname="rounding" xml:space="preserve">
+        <source>rounding</source>
+        <target state="translated">Заокружување на времето</target>
+      </trans-unit>
+      <trans-unit id="ZMvZTTx" resname="timesheet.rounding.default.begin" xml:space="preserve">
+        <source>timesheet.rounding.default.begin</source>
+        <target state="translated">Заокружување на времето на почеток во минути (0 = деактивирано)</target>
+      </trans-unit>
+      <trans-unit id="AUc43eR" resname="timesheet.rounding.default.end" xml:space="preserve">
+        <source>timesheet.rounding.default.end</source>
+        <target state="translated">Заокружување на времето на завршување во минути (0 = деактивирано)</target>
+      </trans-unit>
+      <trans-unit id="t.YW9eU" resname="timesheet.rounding.default.duration" xml:space="preserve">
+        <source>timesheet.rounding.default.duration</source>
+        <target state="translated">Заокружување на времетраењето во минути (0 = деактивирано)</target>
+      </trans-unit>
+      <trans-unit id="O8E4Hj5" resname="timesheet.rounding.default.mode" xml:space="preserve">
+        <source>timesheet.rounding.default.mode</source>
+        <target state="translated">Режим на заокружување</target>
+      </trans-unit>
+      <trans-unit id="oL_eD_9" resname="timesheet.rounding.default.days" xml:space="preserve">
+        <source>timesheet.rounding.default.days</source>
+        <target state="translated">Денови од неделата кога ќе се примени заокружување</target>
+      </trans-unit>
+      <trans-unit id="agDfwdy" resname="Monday" xml:space="preserve">
+        <source>Monday</source>
+        <target state="translated">Понеделник</target>
+      </trans-unit>
+      <trans-unit id="fYrx3hJ" resname="Tuesday" xml:space="preserve">
+        <source>Tuesday</source>
+        <target state="translated">Вторник</target>
+      </trans-unit>
+      <trans-unit id="wKbMgpz" resname="Wednesday" xml:space="preserve">
+        <source>Wednesday</source>
+        <target state="translated">Среда</target>
+      </trans-unit>
+      <trans-unit id=".CZiBi." resname="Thursday" xml:space="preserve">
+        <source>Thursday</source>
+        <target state="translated">Четврток</target>
+      </trans-unit>
+      <trans-unit id="4h8.Nyp" resname="Friday" xml:space="preserve">
+        <source>Friday</source>
+        <target state="translated">Петок</target>
+      </trans-unit>
+      <trans-unit id="2_Ncc2P" resname="Saturday" xml:space="preserve">
+        <source>Saturday</source>
+        <target state="translated">Сабота</target>
+      </trans-unit>
+      <trans-unit id="hz.vdg5" resname="Sunday" xml:space="preserve">
+        <source>Sunday</source>
+        <target state="translated">Недела</target>
+      </trans-unit>
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
+        <source>Ceil</source>
+        <target state="translated">Почетокот, крајот и времетраењето ќе бидат заокружени</target>
+      </trans-unit>
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
+        <source>Closest</source>
+        <target state="translated">Математичко заокружување на најблиската вредност</target>
+      </trans-unit>
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
+        <source>Default</source>
+        <target state="translated">Почетокот ќе биде заокружен надолу, крајот и времетраењето нагоре</target>
+      </trans-unit>
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
+        <source>Floor</source>
+        <target state="translated">Почетокот, крајот и времетраењето ќе бидат заокружени надолу</target>
+      </trans-unit>
+      <trans-unit id="_0OBfZf" resname="timesheet.default_begin" xml:space="preserve">
+        <source>timesheet.default_begin</source>
+        <target state="translated">Стандардно време на почеток (не се користи во сите режими на следење на времето)</target>
+      </trans-unit>
+      <trans-unit id="UTurPF1" resname="invoice.number_format" xml:space="preserve">
+        <source>invoice.number_format</source>
+        <target state="translated">Формат на бројот на фактура</target>
+      </trans-unit>
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
+        <source>customer.number_format</source>
+        <target state="translated">Формат на бројот на клиент</target>
+      </trans-unit>
+      <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number" xml:space="preserve">
+        <source>customer.allow_duplicate_number</source>
+        <target state="translated">Дозволи дупликат број на сметка</target>
+      </trans-unit>
+      <trans-unit id="3xUU9V." resname="project.number_format" xml:space="preserve">
+        <source>project.number_format</source>
+        <target state="translated">Формат на бројот на проектот</target>
+      </trans-unit>
+      <trans-unit id="ifgrIHh" resname="activity.number_format" xml:space="preserve">
+        <source>activity.number_format</source>
+        <target state="translated">Формат на бројот на активноста</target>
+      </trans-unit>
+      <trans-unit id="jj1NmKW" resname="allow_duplicate_number" xml:space="preserve">
+        <source>allow_duplicate_number</source>
+        <target state="translated">Дозволи повеќекратна употреба на истиот број</target>
+      </trans-unit>
+      <trans-unit id="IZY5kqL" resname="allowed_replacer" xml:space="preserve">
+        <source>allowed_replacer</source>
+        <target state="translated">Дозволен заменувач: %replacer%</target>
+      </trans-unit>
+      <trans-unit id="6CSB6iM" resname="first_weekday" xml:space="preserve">
+        <source>first_weekday</source>
+        <target state="translated">Прв ден од неделата</target>
+      </trans-unit>
+      <trans-unit id="nqWKu27" resname="timesheet.duration_increment" xml:space="preserve">
+        <source>timesheet.duration_increment</source>
+        <target state="translated">Избор на минути за времетраење</target>
+      </trans-unit>
+      <trans-unit id="OIvZ_wc" resname="timesheet.time_increment" xml:space="preserve">
+        <source>timesheet.time_increment</source>
+        <target state="translated">Избор на минути за Од &amp; До</target>
+      </trans-unit>
+      <trans-unit id="tNxm3eg" resname="off" xml:space="preserve">
+        <source>off</source>
+        <target state="translated">Исклучено</target>
+      </trans-unit>
+      <trans-unit id="EFY6GmX" resname="theme.color_choices" xml:space="preserve">
+        <source>theme.color_choices</source>
+        <target state="translated">Дозволени бои</target>
+      </trans-unit>
+      <trans-unit id="aUc3uU1" resname="help.theme.color_choices" xml:space="preserve">
+        <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
+        <target state="translated">Листа на HTML кодови за бои одвоени со запирки. Имињата на боите може да се постават со додавање на име и разграничувач „|“ како префикс на кодот за боја, на пр.: Бела|#ffffff, Црна|#000000.</target>
+      </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication" xml:space="preserve">
+        <source>authentication</source>
+        <target state="translated">Автентикација</target>
+      </trans-unit>
+      <trans-unit id="BGHQ8YO" resname="user_auth_login" xml:space="preserve">
+        <source>user_auth_login</source>
+        <target state="translated">Формулар за најавување</target>
+      </trans-unit>
+      <trans-unit id="C26_mL7" resname="user_auth_registration" xml:space="preserve">
+        <source>user_auth_registration</source>
+        <target state="translated">Регистрација на корисник</target>
+      </trans-unit>
+      <trans-unit id="5RSshEN" resname="user_auth_password_reset" xml:space="preserve">
+        <source>user_auth_password_reset</source>
+        <target state="translated">Заборавена лозинка</target>
+      </trans-unit>
+      <trans-unit id="E9URNEx" resname="user_auth_password_reset_retry_ttl" xml:space="preserve">
+        <source>user_auth_password_reset_retry_ttl</source>
+        <target state="translated">Заборавена лозинка - секунди пред корисникот да може да побара следната е-пошта</target>
+      </trans-unit>
+      <trans-unit id="55s60b4" resname="user_auth_password_reset_token_ttl" xml:space="preserve">
+        <source>user_auth_password_reset_token_ttl</source>
+        <target state="translated">Заборавена лозинка - секунди пред да истече линкот за ресетирање</target>
+      </trans-unit>
+      <trans-unit id="ihORk9W" resname="ldap_activate" xml:space="preserve">
+        <source>ldap_activate</source>
+        <target state="translated">LDAP најавување</target>
+      </trans-unit>
+      <trans-unit id="0noFWbL" resname="saml_activate" xml:space="preserve">
+        <source>saml_activate</source>
+        <target state="translated">SAML најавување</target>
+      </trans-unit>
+      <trans-unit id="Rf_fb9x" resname="timesheet.rules.break_warning_duration" xml:space="preserve">
+        <source>timesheet.rules.break_warning_duration</source>
+        <target state="translated">Максимално времетраење на записот во табелата со часови во минути пред да се прикаже „предупредување за пауза“ (0 = деактивирано)</target>
+      </trans-unit>
+      <trans-unit id="vg5G_9i" resname="timesheet.rules.long_running_duration" xml:space="preserve">
+        <source>timesheet.rules.long_running_duration</source>
+        <target state="translated">Максималното времетраење на записот за работен лист во минути пред зачувувањето да биде отфрлено (0 = деактивирано)</target>
+      </trans-unit>
+      <trans-unit id="xlNjElF" resname="calendar.dragdrop_amount" xml:space="preserve">
+        <source>calendar.dragdrop_amount</source>
+        <target state="translated">Број на записи за drag &amp; drop (0 = деактивирано)</target>
+      </trans-unit>
+      <trans-unit id="9efN4Oc" resname="calendar.dragdrop_data" xml:space="preserve">
+        <source>Copies data when adding via drag and drop</source>
+        <target state="translated">Копира податоци при додавање преку drag and drop</target>
+      </trans-unit>
+      <trans-unit id="winWMI1" resname="calendar.title_pattern" xml:space="preserve">
+        <source>calendar.title_pattern</source>
+        <target state="translated">Приказ на насловите на записите во календарот</target>
+      </trans-unit>
+      <trans-unit id="12sQGSo" resname="activity.allow_inline_create" xml:space="preserve">
+        <source>activity.allow_inline_create</source>
+        <target state="translated">Дозволете креирање активности во форма за следење на времето</target>
+      </trans-unit>
+      <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no" xml:space="preserve">
+        <source>copy_teams_on_create</source>
+        <target state="translated">Преземи ги тимовите од најавениот корисник при креирање нови записи</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

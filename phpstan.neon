@@ -41,6 +41,7 @@ parameters:
     symfony:
         containerXmlPath: %rootDir%/../../../var/cache/dev/App_KernelDevDebugContainer.xml
     ignoreErrors:
+        - identifier: offsetAccess.notFound
         - '#^Method .*\(\) has parameter \$builder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'
 
         -
@@ -112,11 +113,6 @@ parameters:
             message: "#^Parameter \\#1 \\$filter of method App\\\\Repository\\\\TagRepository\\:\\:findAllTagNames\\(\\) expects string\\|null, mixed given\\.$#"
             count: 1
             path: src/API/TagController.php
-
-        -
-            message: "#^Parameter \\#1 \\$datetime of method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createDateTime\\(\\) expects string, mixed given\\.$#"
-            count: 3
-            path: src/API/TimesheetController.php
 
         -
             message: "#^Parameter \\#2 \\$statistic of class App\\\\Event\\\\ActivityStatisticEvent constructor expects App\\\\Model\\\\ActivityStatistic, App\\\\Model\\\\ActivityStatistic\\|null given\\.$#"
@@ -569,32 +565,12 @@ parameters:
             path: src/Configuration/SystemConfiguration.php
 
         -
-            message: "#^Method App\\\\Configuration\\\\SystemConfiguration\\:\\:getCustomerDefaultCurrency\\(\\) should return string but returns bool\\|float\\|int\\|string\\|null\\.$#"
-            count: 1
-            path: src/Configuration/SystemConfiguration.php
-
-        -
             message: "#^Method App\\\\Configuration\\\\SystemConfiguration\\:\\:getCustomerDefaultTimezone\\(\\) should return string\\|null but returns bool\\|float\\|int\\|string\\|null\\.$#"
             count: 1
             path: src/Configuration/SystemConfiguration.php
 
         -
             message: "#^Method App\\\\Configuration\\\\SystemConfiguration\\:\\:getSamlProvider\\(\\) should return string\\|null but returns bool\\|float\\|int\\|string\\|null\\.$#"
-            count: 1
-            path: src/Configuration/SystemConfiguration.php
-
-        -
-            message: "#^Method App\\\\Configuration\\\\SystemConfiguration\\:\\:getUserDefaultCurrency\\(\\) should return string but returns bool\\|float\\|int\\|string\\|null\\.$#"
-            count: 1
-            path: src/Configuration/SystemConfiguration.php
-
-        -
-            message: "#^Method App\\\\Configuration\\\\SystemConfiguration\\:\\:getUserDefaultLanguage\\(\\) should return string but returns bool\\|float\\|int\\|string\\|null\\.$#"
-            count: 1
-            path: src/Configuration/SystemConfiguration.php
-
-        -
-            message: "#^Method App\\\\Configuration\\\\SystemConfiguration\\:\\:getUserDefaultTheme\\(\\) should return string\\|null but returns bool\\|float\\|int\\|string\\|null\\.$#"
             count: 1
             path: src/Configuration/SystemConfiguration.php
 
@@ -632,26 +608,6 @@ parameters:
             message: "#^Cannot call method getCurrency\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
             path: src/Controller/ActivityController.php
-
-        -
-            message: "#^Parameter \\#1 \\$name of class App\\\\Entity\\\\Team constructor expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/ActivityController.php
-
-        -
-            message: "#^Parameter \\#2 \\$replace of method App\\\\Repository\\\\ActivityRepository\\:\\:deleteActivity\\(\\) expects App\\\\Entity\\\\Activity\\|null, mixed given\\.$#"
-            count: 1
-            path: src/Controller/ActivityController.php
-
-        -
-            message: "#^Parameter \\#1 \\$name of class App\\\\Entity\\\\Team constructor expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
-
-        -
-            message: "#^Parameter \\#2 \\$replace of method App\\\\Repository\\\\CustomerRepository\\:\\:deleteCustomer\\(\\) expects App\\\\Entity\\\\Customer\\|null, mixed given\\.$#"
-            count: 1
-            path: src/Controller/CustomerController.php
 
         -
             message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
@@ -739,11 +695,6 @@ parameters:
             path: src/Controller/InvoiceController.php
 
         -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Controller/InvoiceController.php
-
-        -
             message: "#^Cannot call method getName\\(\\) on Symfony\\\\Component\\\\Form\\\\FormInterface\\|null\\.$#"
             count: 1
             path: src/Controller/InvoiceController.php
@@ -777,21 +728,6 @@ parameters:
             message: "#^Cannot call method getCurrency\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
             path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Parameter \\#1 \\$name of class App\\\\Entity\\\\Team constructor expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Parameter \\#2 \\$replace of method App\\\\Repository\\\\ProjectRepository\\:\\:deleteProject\\(\\) expects App\\\\Entity\\\\Project\\|null, mixed given\\.$#"
-            count: 1
-            path: src/Controller/ProjectController.php
-
-        -
-            message: "#^Call to function array_key_exists\\(\\) with 'entry' and array\\{day\\: DateTime, entry\\: App\\\\Entity\\\\Timesheet\\} will always evaluate to true\\.$#"
-            count: 1
-            path: src/Controller/QuickEntryController.php
 
         -
             message: "#^Cannot call method format\\(\\) on DateTime\\|null\\.$#"
@@ -969,33 +905,13 @@ parameters:
             path: src/Customer/CustomerStatisticService.php
 
         -
-            message: "#^Method App\\\\DataFixtures\\\\InvoiceFixtures\\:\\:getInvoiceConfigs\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/DataFixtures/InvoiceFixtures.php
-
-        -
             message: "#^Method App\\\\DataFixtures\\\\TeamFixtures\\:\\:getGroups\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/DataFixtures/TeamFixtures.php
 
         -
-            message: "#^Cannot call method setTimestamp\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: src/DataFixtures/TimesheetFixtures.php
-
-        -
             message: "#^Cannot clone DateTime\\|null\\.$#"
             count: 1
-            path: src/DataFixtures/TimesheetFixtures.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Entity\\\\Timesheet\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
-            path: src/DataFixtures/TimesheetFixtures.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\DataFixtures\\\\TimesheetFixtures\\:\\:createTimesheetEntry\\(\\) expects App\\\\Entity\\\\User, App\\\\Entity\\\\User\\|null given\\.$#"
-            count: 2
             path: src/DataFixtures/TimesheetFixtures.php
 
         -
@@ -1894,11 +1810,6 @@ parameters:
             path: src/Form/TimesheetEditForm.php
 
         -
-            message: "#^Cannot call method modify\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: src/Form/TimesheetEditForm.php
-
-        -
             message: "#^Cannot clone DateTime\\|null\\.$#"
             count: 1
             path: src/Form/TimesheetEditForm.php
@@ -2669,11 +2580,6 @@ parameters:
             path: src/Form/Type/MetaFieldsCollectionType.php
 
         -
-            message: "#^Cannot call method modify\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: src/Form/Type/QuickEntryTimesheetType.php
-
-        -
             message: "#^Cannot cast mixed to int\\.$#"
             count: 2
             path: src/Form/Type/QuickEntryTimesheetType.php
@@ -2734,11 +2640,6 @@ parameters:
             path: src/Form/UserTwoFactorType.php
 
         -
-            message: "#^Cannot call method getVat\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Calculator/AbstractCalculator.php
-
-        -
             message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"
             count: 2
             path: src/Invoice/Calculator/AbstractMergedCalculator.php
@@ -2789,31 +2690,6 @@ parameters:
             path: src/Invoice/Hydrator/InvoiceModelCustomerHydrator.php
 
         -
-            message: "#^Cannot call method getSubtotal\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getTax\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getTimeWorked\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
-            count: 2
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getTotal\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
-            message: "#^Cannot call method getVat\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
             message: "#^Method App\\\\Invoice\\\\Hydrator\\\\InvoiceModelDefaultHydrator\\:\\:hydrate\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
@@ -2842,16 +2718,6 @@ parameters:
             message: "#^Method App\\\\Invoice\\\\Hydrator\\\\InvoiceModelUserHydrator\\:\\:hydrate\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelUserHydrator.php
-
-        -
-            message: "#^Cannot call method getCompany\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Invoice/InvoiceFilename.php
-
-        -
-            message: "#^Cannot call method getName\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Invoice/InvoiceFilename.php
 
         -
             message: "#^Parameter \\#1 \\$filename of method App\\\\Invoice\\\\InvoiceFilename\\:\\:convert\\(\\) expects string, string\\|null given\\.$#"
@@ -2899,11 +2765,6 @@ parameters:
             path: src/Invoice/Renderer/AbstractSpreadsheetRenderer.php
 
         -
-            message: "#^Cannot call method getTitle\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Renderer/AbstractSpreadsheetRenderer.php
-
-        -
             message: "#^Parameter \\#1 \\$haystack of function stripos expects string, mixed given\\.$#"
             count: 5
             path: src/Invoice/Renderer/AbstractSpreadsheetRenderer.php
@@ -2920,11 +2781,6 @@ parameters:
 
         -
             message: "#^Cannot call method getEntries\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
-            count: 1
-            path: src/Invoice/Renderer/AbstractTwigRenderer.php
-
-        -
-            message: "#^Cannot call method getLanguage\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
             count: 1
             path: src/Invoice/Renderer/AbstractTwigRenderer.php
 
@@ -2951,11 +2807,6 @@ parameters:
         -
             message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
             count: 1
-            path: src/Invoice/ServiceInvoice.php
-
-        -
-            message: "#^Cannot call method getRenderer\\(\\) on App\\\\Entity\\\\InvoiceTemplate\\|null\\.$#"
-            count: 6
             path: src/Invoice/ServiceInvoice.php
 
         -
@@ -3349,11 +3200,6 @@ parameters:
             path: src/Repository/TimesheetRepository.php
 
         -
-            message: "#^Cannot call method add\\(\\) on DateTime\\|null\\.$#"
-            count: 1
-            path: src/Repository/TimesheetRepository.php
-
-        -
             message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
             count: 1
             path: src/Repository/TimesheetRepository.php
@@ -3504,18 +3350,8 @@ parameters:
             path: src/Timesheet/Rounding/CeilRounding.php
 
         -
-            message: "#^Cannot call method setTimestamp\\(\\) on DateTime\\|null\\.$#"
-            count: 2
-            path: src/Timesheet/Rounding/CeilRounding.php
-
-        -
             message: "#^Cannot clone DateTime\\|null\\.$#"
             count: 2
-            path: src/Timesheet/Rounding/CeilRounding.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Entity\\\\Timesheet\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
             path: src/Timesheet/Rounding/CeilRounding.php
 
         -
@@ -3524,18 +3360,8 @@ parameters:
             path: src/Timesheet/Rounding/ClosestRounding.php
 
         -
-            message: "#^Cannot call method setTimestamp\\(\\) on DateTime\\|null\\.$#"
-            count: 4
-            path: src/Timesheet/Rounding/ClosestRounding.php
-
-        -
             message: "#^Cannot clone DateTime\\|null\\.$#"
             count: 2
-            path: src/Timesheet/Rounding/ClosestRounding.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Entity\\\\Timesheet\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
             path: src/Timesheet/Rounding/ClosestRounding.php
 
         -
@@ -3544,28 +3370,13 @@ parameters:
             path: src/Timesheet/Rounding/FloorRounding.php
 
         -
-            message: "#^Cannot call method setTimestamp\\(\\) on DateTime\\|null\\.$#"
-            count: 2
-            path: src/Timesheet/Rounding/FloorRounding.php
-
-        -
             message: "#^Cannot clone DateTime\\|null\\.$#"
             count: 2
-            path: src/Timesheet/Rounding/FloorRounding.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Entity\\\\Timesheet\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
-            count: 1
             path: src/Timesheet/Rounding/FloorRounding.php
 
         -
             message: "#^Cannot call method getTimezone\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
             count: 2
-            path: src/Timesheet/TimesheetService.php
-
-        -
-            message: "#^Cannot call method getTimezone\\(\\) on DateTime\\|null\\.$#"
-            count: 1
             path: src/Timesheet/TimesheetService.php
 
         -
@@ -3590,11 +3401,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Timesheet\\\\TimesheetService\\:\\:updateMultipleTimesheets\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Timesheet/TimesheetService.php
-
-        -
-            message: "#^Parameter \\#1 \\$begin of method App\\\\Entity\\\\Timesheet\\:\\:setBegin\\(\\) expects DateTime, DateTime\\|null given\\.$#"
             count: 1
             path: src/Timesheet/TimesheetService.php
 
@@ -3737,11 +3543,6 @@ parameters:
             message: "#^Method App\\\\Twig\\\\Runtime\\\\WidgetExtension\\:\\:renderWidget\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Twig/Runtime/WidgetExtension.php
-
-        -
-            message: "#^Method App\\\\User\\\\LoginManager\\:\\:logInUser\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/User/LoginManager.php
 
         -
             message: "#^Method App\\\\User\\\\UserService\\:\\:updateUser\\(\\) has parameter \\$groups with no value type specified in iterable type array\\.$#"
@@ -4142,3 +3943,8 @@ parameters:
             message: "#^Method App\\\\Form\\\\MultiUpdate\\\\MultiUpdateTableDTO\\:\\:setEntities\\(\\) has parameter \\$entities with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection but does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Form/MultiUpdate/MultiUpdateTableDTO.php
+
+        -
+          message: "#^Method App\\\\Entity\\\\InvoiceTemplate\\:\\:getMetaFields\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
+          count: 1
+          path: src/Entity/InvoiceTemplate.php

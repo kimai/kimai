@@ -66,9 +66,9 @@
         <source>Sorry, the budget is used up.</source>
         <target state="translated">Вибачте, бюджет вичерпано.</target>
       </trans-unit>
-      <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded.">
+      <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded." xml:space="preserve" approved="yes">
         <source>Maximum duration of {{ value }} hours exceeded.</source>
-        <target state="translated">Максимально дозволено {{ value }} годин.</target>
+        <target state="final">Максимально дозволено {{ value }} годин.</target>
       </trans-unit>
       <trans-unit id="to1Q85W" resname="An activity needs to be selected.">
         <source>An activity needs to be selected.</source>

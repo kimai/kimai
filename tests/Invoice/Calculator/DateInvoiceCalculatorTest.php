@@ -114,7 +114,7 @@ class DateInvoiceCalculatorTest extends AbstractCalculatorTestCase
 
         self::assertEquals('date', $sut->getId());
         self::assertEquals(3000.13, $sut->getTotal());
-        self::assertEquals(19, $sut->getVat());
+        $this->assertTax($sut, 19);
         self::assertEquals('EUR', $model->getCurrency());
         self::assertEquals(2521.12, $sut->getSubtotal());
         self::assertEquals(6600, $sut->getTimeWorked());

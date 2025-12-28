@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="rLKr7Zu" resname="tasks.my" xml:space="preserve" approved="no">
         <source>tasks.my</source>
-        <target state="translated">Saját feladatok</target>
+        <target state="translated">Feladataim</target>
       </trans-unit>
       <trans-unit id="WCaBimL" resname="task.help.end" xml:space="preserve" approved="no">
         <source>task.help.end</source>
@@ -97,6 +97,18 @@
       <trans-unit id="kMOottI" resname="task.widget_rows" xml:space="preserve" approved="no">
         <source>task.widget_rows</source>
         <target state="translated">Feladatok száma oldalanként a vezérlőpult widgetben</target>
+      </trans-unit>
+      <trans-unit id="duBK63z" resname="task.close" xml:space="preserve" approved="no">
+        <source>task.close</source>
+        <target state="translated">Feladat befejezése</target>
+      </trans-unit>
+      <trans-unit id="SzbkpWy" resname="task.help.description" xml:space="preserve" approved="no">
+        <source>task.help.description</source>
+        <target state="translated">Ez a leírás minden munkaidő-bejegyzésbe bemásolásra kerül</target>
+      </trans-unit>
+      <trans-unit id="zJvuPBv" resname="task.help.tags" xml:space="preserve" approved="no">
+        <source>task.help.tags</source>
+        <target state="translated">Ezek a címkék minden munkaidő-bejegyzésbe bemásolásra kerülnek</target>
       </trans-unit>
     </body>
   </file>

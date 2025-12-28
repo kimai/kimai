@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
         <source>The end date must not be earlier than the start date.</source>
-        <target state="needs-translation">تاریخ پایان نباید زودتر از تاریخ شروع باشد.</target>
+        <target state="translated">تاریخ پایان نباید زودتر از تاریخ شروع باشد.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
@@ -101,6 +101,70 @@
       <trans-unit resname="Cannot stop running timesheet" id="7HYTefs">
         <source>Cannot stop running timesheet</source>
         <target state="translated">شما یک رکورد زمانی فعال دارید که به طور خودکار متوقف نمی شود.</target>
+      </trans-unit>
+      <trans-unit id="ZObikpA" resname="This absence type is not known." xml:space="preserve">
+        <source>This absence type is not known.</source>
+        <target state="translated">این نوع غیبت شناخته شده نیست.</target>
+      </trans-unit>
+      <trans-unit id="0ULsHQA" resname="The chosen date is not a working day." xml:space="preserve">
+        <source>The chosen date is not a working day.</source>
+        <target state="translated">تاریخ انتخاب شده روز کاری نیست.</target>
+      </trans-unit>
+      <trans-unit id="N21br.P" resname="The chosen date is already locked." xml:space="preserve">
+        <source>The chosen date is already locked.</source>
+        <target state="translated">تاریخ انتخاب شده از قبل قفل شده است.</target>
+      </trans-unit>
+      <trans-unit id="6H84TMs" resname="An absence must be assigned to a user." xml:space="preserve">
+        <source>An absence must be assigned to a user.</source>
+        <target state="translated">غیبت باید به یک کاربر اختصاص داده شود.</target>
+      </trans-unit>
+      <trans-unit id="nLcihCc" resname="An absence must have a date." xml:space="preserve">
+        <source>An absence must have a date.</source>
+        <target state="translated">غیبت باید تاریخ داشته باشد.</target>
+      </trans-unit>
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
+        <source>An absence cannot be booked before your first working day.</source>
+        <target state="translated">قبل از اولین روز کاری، امکان ثبت غیبت وجود ندارد.</target>
+      </trans-unit>
+      <trans-unit id="IN37g5N" resname="Not enough holidays left." xml:space="preserve">
+        <source>Not enough holidays left.</source>
+        <target state="translated">تعطیلات کافی باقی نمانده است.</target>
+      </trans-unit>
+      <trans-unit id="ByeEMxW" resname="You do not have enough overtime, remaining are {{ value }}." xml:space="preserve">
+        <source>You do not have enough overtime, remaining are {{ value }}.</source>
+        <target state="translated">شما اضافه کاری کافی ندارید، {{ value }} باقی مانده است.</target>
+      </trans-unit>
+      <trans-unit id="DiaaRa1" resname="You cannot have two absences of this type at one day." xml:space="preserve">
+        <source>You cannot have two absences of this type at one day.</source>
+        <target state="translated">شما نمی‌توانید دو غیبت از این نوع را در یک روز داشته باشید.</target>
+      </trans-unit>
+      <trans-unit id="kSBiyaF" resname="This is a public holiday, booking not allowed." xml:space="preserve">
+        <source>This is a public holiday, booking not allowed.</source>
+        <target state="translated">این یک تعطیلات رسمی است، رزرو مجاز نیست.</target>
+      </trans-unit>
+      <trans-unit id="c2B6.lW" resname="You can book a maximum of {{ value }} days at once." xml:space="preserve">
+        <source>You can book a maximum of {{ value }} days at once.</source>
+        <target state="translated">شما می‌توانید حداکثر {{ value }} روز را همزمان رزرو کنید، شما در حال حاضر {{ selected }} را انتخاب کرده‌اید.</target>
+      </trans-unit>
+      <trans-unit id="BztgSSP" resname="The period of absence must not extend beyond the turn of the year." xml:space="preserve">
+        <source>The period of absence must not extend beyond the turn of the year.</source>
+        <target state="translated">مدت غیبت نباید از تحویل سال بیشتر باشد.</target>
+      </trans-unit>
+      <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form." xml:space="preserve">
+        <source>The CSRF token is invalid. Please try to resubmit the form.</source>
+        <target state="translated">لطفا فرم را دوباره ارسال کنید. اگر مشکل همچنان ادامه داشت، مرورگر خود را دوباره لود کنید.</target>
+      </trans-unit>
+      <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day." xml:space="preserve">
+        <source>An absence cannot be booked after the last working day.</source>
+        <target state="translated">بعد از آخرین روز کاری، امکان ثبت غیبت وجود ندارد.</target>
+      </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target state="translated">دوره انتخاب شده قابل قفل شدن نیست: درخواست‌های غیبت تأیید نشده در حال بررسی هستند.</target>
+      </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
+        <source>Duration cannot be negative.</source>
+        <target state="translated">مدت زمان نمی‌تواند منفی باشد.</target>
       </trans-unit>
     </body>
   </file>

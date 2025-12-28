@@ -1,0 +1,178 @@
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/* This file contains rules for the "weekly-hours" AKA "quick-entries" form */
+
+.quick-entry-page {
+
+    .form-dataTable {
+        table.dataTable {
+            .form-group {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    #quick_entry_form {
+        display: none;
+    }
+
+    .ts-wrapper {
+        min-height: 36px;
+        max-height: 36px;
+        max-width: 150px;
+
+        .ts-control {
+            white-space: nowrap;
+            .item {
+                overflow: hidden;
+            }
+        }
+    }
+
+    .table tbody td:not(.total) {
+        padding: 3px;
+    }
+
+    .duration-widget input.duration-input {
+        min-width: 40px;
+    }
+
+    /* make the duration field and dropdown smaller */
+    #quick_entry_box {
+        .duration-widget {
+            .input-group {
+                max-width: 50px;
+                min-width: 50px;
+            }
+            .btn-duration-preset {
+                display: none;
+                min-width: 30px;
+            }
+            input.duration-input {
+                padding: 7px 5px;
+                max-width: 50px;
+                border-bottom-right-radius: var(--tblr-border-radius);
+                border-top-right-radius: var(--tblr-border-radius);
+            }
+        }
+    }
+
+    /* make sure dropdown never hides behind table responsive */
+    .dropdown-menu {
+        z-index: 1056;
+    }
+}
+
+@media (min-width: 900px) {
+    .quick-entry-page {
+        .ts-wrapper {
+            max-width: 170px;
+        }
+    }
+}
+
+@media (min-width: 992px) {
+    .quick-entry-page {
+        .ts-wrapper {
+            max-width: 100px;
+        }
+    }
+}
+
+@media (min-width: 1100px) {
+    .quick-entry-page {
+        .ts-wrapper {
+            max-width: 160px;
+        }
+    }
+}
+
+@media (min-width: 1200px) {
+    .quick-entry-page {
+        .ts-wrapper {
+            max-width: 165px;
+        }
+        .duration-widget {
+            max-width: 100%;
+        }
+    }
+}
+
+@media (min-width: 1250px) {
+    .quick-entry-page {
+        #quick_entry_box {
+            .duration-widget {
+                .input-group {
+                    max-width: 85px;
+                    min-width: 75px;
+                }
+                .btn-duration-preset {
+                    display: flex;
+                }
+                input.duration-input {
+                    border-bottom-right-radius: 0;
+                    border-top-right-radius: 0;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 1300px) {
+    .quick-entry-page {
+        #quick_entry_box {
+            .duration-widget {
+                input.duration-input {
+                    max-width: 100%;
+                }
+            }
+        }
+        .ts-wrapper {
+            max-width: 190px;
+        }
+    }
+}
+
+@media (min-width: 1400px) {
+    .quick-entry-page {
+        .ts-wrapper {
+            max-width: 235px;
+        }
+    }
+}
+
+@media (min-width: 1500px) {
+    .quick-entry-page {
+        .ts-wrapper {
+            max-width: 290px;
+        }
+    }
+}
+
+@media (min-width: 1600px) {
+    .quick-entry-page {
+        .ts-wrapper {
+            max-width: 340px;
+        }
+    }
+}
+
+@media (min-width: 1800px) {
+    .quick-entry-page {
+        .ts-wrapper {
+            max-width: 450px;
+        }
+        #quick_entry_box {
+            .duration-widget {
+                .input-group {
+                    max-width: 100%;
+                }
+            }
+        }
+    }
+}

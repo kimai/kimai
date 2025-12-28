@@ -14,10 +14,7 @@ use App\Customer\CustomerStatisticService;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
 use App\Entity\CustomerRate;
-use App\Entity\MetaTableTypeInterface;
-use App\Entity\Team;
 use App\Event\CustomerDetailControllerEvent;
-use App\Event\CustomerMetaDefinitionEvent;
 use App\Event\CustomerMetaDisplayEvent;
 use App\Export\Spreadsheet\EntityWithMetaFieldsExporter;
 use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
@@ -35,7 +32,9 @@ use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\Query\TeamQuery;
 use App\Repository\Query\TimesheetQuery;
+use App\Repository\Query\VisibilityInterface;
 use App\Repository\TeamRepository;
+use App\User\TeamService;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -43,6 +42,7 @@ use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -54,17 +54,14 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route(path: '/admin/customer')]
 final class CustomerController extends AbstractController
 {
-    public function __construct(
-        private readonly CustomerRepository $repository,
-        private readonly EventDispatcherInterface $dispatcher
-    )
+    public function __construct(private readonly CustomerRepository $repository)
     {
     }
 
     #[Route(path: '/', defaults: ['page' => 1], name: 'admin_customer', methods: ['GET'])]
     #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'admin_customer_paginated', methods: ['GET'])]
     #[IsGranted(new Expression("is_granted('listing', 'customer')"))]
-    public function indexAction(int $page, Request $request): Response
+    public function indexAction(int $page, Request $request, EventDispatcherInterface $dispatcher): Response
     {
         $query = new CustomerQuery();
         $query->loadTeams();
@@ -77,7 +74,9 @@ final class CustomerController extends AbstractController
         }
 
         $entries = $this->repository->getPagerfantaForQuery($query);
-        $metaColumns = $this->findMetaColumns($query);
+        $event = new CustomerMetaDisplayEvent($query, CustomerMetaDisplayEvent::CUSTOMER);
+        $dispatcher->dispatch($event);
+        $metaColumns = $event->getFields();
 
         $table = new DataTable('customer_admin', $query, $entries);
         $table->setSearchForm($form);
@@ -90,7 +89,7 @@ final class CustomerController extends AbstractController
         $table->addColumn('company', ['class' => 'd-none']);
         $table->addColumn('vat_id', ['class' => 'd-none w-min']);
         $table->addColumn('contact', ['class' => 'd-none']);
-        $table->addColumn('address', ['class' => 'd-none']);
+        $table->addColumn('city', ['class' => 'd-none']);
         $table->addColumn('country', ['class' => 'd-none w-min']);
         $table->addColumn('currency', ['class' => 'd-none w-min']);
         $table->addColumn('phone', ['class' => 'd-none']);
@@ -128,24 +127,13 @@ final class CustomerController extends AbstractController
         ]);
     }
 
-    /**
-     * @return MetaTableTypeInterface[]
-     */
-    private function findMetaColumns(CustomerQuery $query): array
-    {
-        $event = new CustomerMetaDisplayEvent($query, CustomerMetaDisplayEvent::CUSTOMER);
-        $this->dispatcher->dispatch($event);
-
-        return $event->getFields();
-    }
-
     #[Route(path: '/create', name: 'admin_customer_create', methods: ['GET', 'POST'])]
     #[IsGranted('create_customer')]
     public function createAction(Request $request, CustomerService $customerService): Response
     {
         $customer = $customerService->createNewCustomer('');
 
-        return $this->renderCustomerForm($customer, $request, true);
+        return $this->renderCustomerForm($customer, $request, $customerService);
     }
 
     #[Route(path: '/{id}/permissions', name: 'admin_customer_permissions', methods: ['GET', 'POST'])]
@@ -251,19 +239,24 @@ final class CustomerController extends AbstractController
     #[Route(path: '/{id}/create_team', name: 'customer_team_create', methods: ['GET'])]
     #[IsGranted('create_team')]
     #[IsGranted('permissions', 'customer')]
-    public function createDefaultTeamAction(Customer $customer, TeamRepository $teamRepository): Response
+    public function createDefaultTeamAction(Customer $customer, TeamService $teamService): Response
     {
-        $defaultTeam = $teamRepository->findOneBy(['name' => $customer->getName()]);
+        $name = $customer->getName();
+        if ($name === null) {
+            throw new BadRequestHttpException('Cannot create default team for customer with empty name: ' . $customer->getId());
+        }
+
+        $defaultTeam = $teamService->findTeamByName($name);
 
         if (null === $defaultTeam) {
-            $defaultTeam = new Team($customer->getName());
+            $defaultTeam = $teamService->createNewTeam($name);
         }
 
         $defaultTeam->addTeamlead($this->getUser());
         $defaultTeam->addCustomer($customer);
 
         try {
-            $teamRepository->saveTeam($defaultTeam);
+            $teamService->saveTeam($defaultTeam);
         } catch (\Exception $ex) {
             $this->flashUpdateException($ex);
         }
@@ -280,7 +273,7 @@ final class CustomerController extends AbstractController
         $query->setPage($page);
         $query->setPageSize(5);
         $query->addCustomer($customer);
-        $query->setShowBoth();
+        $query->setVisibility(VisibilityInterface::SHOW_BOTH);
         $query->addOrderGroup('visible', ProjectQuery::ORDER_DESC);
         $query->addOrderGroup('name', ProjectQuery::ORDER_ASC);
 
@@ -296,10 +289,9 @@ final class CustomerController extends AbstractController
 
     #[Route(path: '/{id}/details', name: 'customer_details', methods: ['GET', 'POST'])]
     #[IsGranted('view', 'customer')]
-    public function detailsAction(Customer $customer, TeamRepository $teamRepository, CustomerRateRepository $rateRepository, CustomerStatisticService $statisticService): Response
+    public function detailsAction(Customer $customer, TeamRepository $teamRepository, CustomerRateRepository $rateRepository, CustomerStatisticService $statisticService, CustomerService $customerService, EventDispatcherInterface $dispatcher): Response
     {
-        $event = new CustomerMetaDefinitionEvent($customer);
-        $this->dispatcher->dispatch($event);
+        $customerService->loadMetaFields($customer);
 
         $stats = null;
         $timezone = null;
@@ -348,7 +340,7 @@ final class CustomerController extends AbstractController
 
         // additional boxes by plugins
         $event = new CustomerDetailControllerEvent($customer);
-        $this->dispatcher->dispatch($event);
+        $dispatcher->dispatch($event);
         $boxes = $event->getController();
 
         $page = $this->createPageSetup();
@@ -420,14 +412,16 @@ final class CustomerController extends AbstractController
 
     #[Route(path: '/{id}/edit', name: 'admin_customer_edit', methods: ['GET', 'POST'])]
     #[IsGranted('edit', 'customer')]
-    public function editAction(Customer $customer, Request $request): Response
+    public function editAction(Customer $customer, Request $request, CustomerService $customerService): Response
     {
-        return $this->renderCustomerForm($customer, $request);
+        $customerService->loadMetaFields($customer);
+
+        return $this->renderCustomerForm($customer, $request, $customerService);
     }
 
     #[Route(path: '/{id}/delete', name: 'admin_customer_delete', methods: ['GET', 'POST'])]
     #[IsGranted('delete', 'customer')]
-    public function deleteAction(Customer $customer, Request $request, CustomerStatisticService $statisticService): Response
+    public function deleteAction(Customer $customer, Request $request, CustomerStatisticService $statisticService, CustomerService $customerService): Response
     {
         $stats = $statisticService->getCustomerStatistics($customer);
 
@@ -451,7 +445,9 @@ final class CustomerController extends AbstractController
 
         if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
             try {
-                $this->repository->deleteCustomer($customer, $deleteForm->get('customer')->getData());
+                /** @var Customer|null $replace */
+                $replace = $deleteForm->get('customer')->getData();
+                $customerService->deleteCustomer($customer, $replace);
                 $this->flashSuccess('action.delete.success');
             } catch (\Exception $ex) {
                 $this->flashDeleteException($ex);
@@ -495,15 +491,28 @@ final class CustomerController extends AbstractController
         return $writer->getFileResponse($spreadsheet);
     }
 
-    private function renderCustomerForm(Customer $customer, Request $request, bool $create = false): Response
+    private function renderCustomerForm(Customer $customer, Request $request, CustomerService $customerService): Response
     {
-        $editForm = $this->createEditForm($customer);
+        $create = ($customer->getId() === null);
+
+        if ($create) {
+            $url = $this->generateUrl('admin_customer_create');
+        } else {
+            $url = $this->generateUrl('admin_customer_edit', ['id' => $customer->getId()]);
+        }
+
+        $editForm = $this->createForm(CustomerEditForm::class, $customer, [
+            'action' => $url,
+            'method' => 'POST',
+            'include_budget' => $this->isGranted('budget', $customer),
+            'include_time' => $this->isGranted('time', $customer),
+        ]);
 
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $this->repository->saveCustomer($customer);
+                $customerService->saveCustomer($customer);
                 $this->flashSuccess('action.update.success');
 
                 if ($create) {
@@ -552,28 +561,6 @@ final class CustomerController extends AbstractController
         return $this->createForm(CustomerCommentForm::class, $comment, [
             'action' => $this->generateUrl('customer_comment_add', ['id' => $comment->getCustomer()->getId()]),
             'method' => 'POST',
-        ]);
-    }
-
-    /**
-     * @return FormInterface<Customer>
-     */
-    private function createEditForm(Customer $customer): FormInterface
-    {
-        $event = new CustomerMetaDefinitionEvent($customer);
-        $this->dispatcher->dispatch($event);
-
-        if ($customer->getId() === null) {
-            $url = $this->generateUrl('admin_customer_create');
-        } else {
-            $url = $this->generateUrl('admin_customer_edit', ['id' => $customer->getId()]);
-        }
-
-        return $this->createForm(CustomerEditForm::class, $customer, [
-            'action' => $url,
-            'method' => 'POST',
-            'include_budget' => $this->isGranted('budget', $customer),
-            'include_time' => $this->isGranted('time', $customer),
         ]);
     }
 

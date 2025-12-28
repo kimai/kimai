@@ -1952,7 +1952,11 @@
       </trans-unit>
       <trans-unit id="nsbR30p" resname="sending_company">
         <source>sending_company</source>
-        <target>Rechnungsabsender</target>
+        <target>Absender der Rechnung</target>
+      </trans-unit>
+      <trans-unit id="BmDRYT." resname="sending_company.help">
+        <source>sending_company.help</source>
+        <target>Dieses Unternehmen wird auf der Rechnung als Aussteller angegeben. Der Name, die Adresse und die Steuerinformationen werden verwendet.</target>
       </trans-unit>
       <trans-unit id="Uzll0ps" resname="Customer portal">
         <source>Customer portal</source>
@@ -1985,6 +1989,82 @@
       <trans-unit id="eV6j76Q" resname="font">
         <source>font</source>
         <target>Schriftart</target>
+      </trans-unit>
+      <trans-unit id="PciSBv9" resname="address_row">
+        <source>address_row</source>
+        <target>Zeile %row%</target>
+      </trans-unit>
+      <trans-unit id="_Ep8Ogx" resname="buyerReference">
+        <source>buyerReference</source>
+        <target>Bestellreferenz</target>
+      </trans-unit>
+      <trans-unit id="nPJWKwW" resname="payment_type">
+        <source>payment_type</source>
+        <target>Zahlart</target>
+      </trans-unit>
+      <trans-unit id="uXB48Vj" resname="SEPA Credit Transfer">
+        <source>SEPA Credit Transfer</source>
+        <target>SEPA-Überweisung</target>
+      </trans-unit>
+      <trans-unit id="s42A2gm" resname="SEPA Direct Debit">
+        <source>SEPA Direct Debit</source>
+        <target>SEPA-Lastschrift</target>
+      </trans-unit>
+      <trans-unit id="4toQj2M" resname="Cash">
+        <source>Cash</source>
+        <target>Bar</target>
+      </trans-unit>
+      <trans-unit id="cWZZc6D" resname="Cheque">
+        <source>Cheque</source>
+        <target>Check</target>
+      </trans-unit>
+      <trans-unit id="jMvh7bn" resname="Credit Transfer">
+        <source>Credit Transfer</source>
+        <target>Überweisung</target>
+      </trans-unit>
+      <trans-unit id="TJQbc0a" resname="Payment To Bank Account">
+        <source>Payment To Bank Account</source>
+        <target>Zahlung auf Bankkonto</target>
+      </trans-unit>
+      <trans-unit id=".UIt099" resname="Card Payment">
+        <source>Card Payment</source>
+        <target>Kartenzahlung</target>
+      </trans-unit>
+      <trans-unit id="Wnb_qF0" resname="Direct Debit">
+        <source>Direct Debit</source>
+        <target>Lastschrift</target>
+      </trans-unit>
+      <trans-unit id="rIdfGxM" resname="payment_account_name">
+        <source>payment_account_name</source>
+        <target>Konto- oder Karteninhaber</target>
+      </trans-unit>
+      <trans-unit id="jcT9Og6" resname="payment_account_number">
+        <source>payment_account_name</source>
+        <target>IBAN oder Kartennummer</target>
+      </trans-unit>
+      <trans-unit id="N_ZNih_" resname="electronic_invoice">
+        <source>electronic_invoice</source>
+        <target>E-Rechnung</target>
+      </trans-unit>
+      <trans-unit id="QnN_ONc" resname="invoice_tax_type">
+        <source>invoice_tax_type</source>
+        <target>Steuerstatus</target>
+      </trans-unit>
+      <trans-unit id="Mi7y8Q3" resname="tax.type.exempt">
+        <source>tax.type.exempt</source>
+        <target>Ausgenommen</target>
+      </trans-unit>
+      <trans-unit id="lU1Njcy" resname="tax.type.standard">
+        <source>tax.type.standard</source>
+        <target>Steuerpflichtig</target>
+      </trans-unit>
+      <trans-unit id="E470U8W" resname="tax.type.reverse">
+        <source>tax.type.reverse</source>
+        <target>Umkehrung der Steuerschuld</target>
+      </trans-unit>
+      <trans-unit id="hi31a3v" resname="tax.note.reverse_charge">
+        <source>tax.note.reverse_charge</source>
+        <target>Steuer zahlbar auf Reverse-Charge-Basis</target>
       </trans-unit>
     </body>
   </file>

@@ -39,6 +39,6 @@ class FavoriteControllerTest extends AbstractControllerBaseTestCase
         $content = $client->getResponse()->getContent();
         self::assertNotFalse($content);
         self::assertStringContainsString('<a class="api-link text-decoration-none text-body d-block" href="/api/timesheets/', $content);
-        self::assertStringContainsString('data-event="kimai.timesheetStart kimai.timesheetUpdate kimai.closeRemoteModal" data-method="PATCH" data-msg-error="timesheet', $content);
+        self::assertStringContainsString('data-event="kimai.timesheetStart kimai.timesheetUpdate" data-method="PATCH" data-msg-error="timesheet', $content);
     }
 }

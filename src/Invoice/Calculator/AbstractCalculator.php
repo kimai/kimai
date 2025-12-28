@@ -11,15 +11,48 @@ namespace App\Invoice\Calculator;
 
 use App\Invoice\InvoiceItem;
 use App\Invoice\InvoiceModel;
+use App\Invoice\TaxRow;
 
 abstract class AbstractCalculator
 {
     protected InvoiceModel $model;
+    /**
+     * @var InvoiceItem[]
+     */
+    private array $cached = [];
 
     /**
+     * TODO make this method abstract in 3.0
+     *
      * @return InvoiceItem[]
      */
-    abstract public function getEntries(): array;
+    protected function calculateEntries(): array
+    {
+        return [];
+    }
+
+    /**
+     * TODO make this method final in 3.0
+     *
+     * @return InvoiceItem[]
+     */
+    public function getEntries(): array
+    {
+        if (\count($this->cached) === 0) {
+            foreach ($this->calculateEntries() as $entry) {
+                if (!$entry->isFixedRate() && $entry->getHourlyRate() !== null && $entry->getHourlyRate() > 0) {
+                    $entry->setDuration($this->model->getRateCalculatorMode()->roundDuration($entry->getDuration()));
+                    // when merging many entries, we might run into rounding issues
+                    // so we have to recalculate the hourly rate here
+                    $entry->setRate($this->model->getRateCalculatorMode()->calculateRate($entry->getHourlyRate(), $entry->getDuration()));
+                }
+
+                $this->cached[] = $entry;
+            }
+        }
+
+        return $this->cached;
+    }
 
     /**
      * @param array<InvoiceItem> $items
@@ -44,44 +77,58 @@ abstract class AbstractCalculator
     public function getSubtotal(): float
     {
         $amount = 0.00;
-        foreach ($this->model->getEntries() as $entry) {
+        // using the entries and not the raw data, so we make sure to use the same base for everything
+        foreach ($this->getEntries() as $entry) {
             $amount += $entry->getRate();
         }
 
-        return round($amount, 2);
+        return round($amount, 2, PHP_ROUND_HALF_UP);
     }
 
+    /**
+     * @deprecated use getTaxRows() instead
+     */
     public function getVat(): float
     {
         return $this->model->getTemplate()->getVat() ?? 0.00;
     }
 
-    public function getTax(): float
+    /**
+     * @return array<TaxRow>
+     */
+    public function getTaxRows(): array
     {
-        $vat = $this->getVat();
-        if (0.00 === $vat) {
-            return 0.00;
+        $rows = [];
+        foreach ($this->model->getTemplate()->getTaxRates() as $taxRate) {
+            $rows[] = new TaxRow($taxRate, $this->getSubtotal());
         }
 
-        $percent = $vat / 100.00;
+        return $rows;
+    }
 
-        return round($this->getSubtotal() * $percent, 2);
+    public function getTax(): float
+    {
+        $tax = 0.00;
+        foreach ($this->getTaxRows() as $row) {
+            $tax += $row->getAmount();
+        }
+
+        return round($tax, 2, PHP_ROUND_HALF_UP);
     }
 
     public function getTotal(): float
     {
-        return $this->getSubtotal() + $this->getTax();
+        return round($this->getSubtotal() + $this->getTax(), 2, PHP_ROUND_HALF_UP);
     }
 
     /**
      * Returns the total amount of worked time in seconds.
-     *
-     * @return int
      */
     public function getTimeWorked(): int
     {
         $time = 0;
-        foreach ($this->model->getEntries() as $entry) {
+        // using the entries and not the raw data, so we make sure to use the same base for everything
+        foreach ($this->getEntries() as $entry) {
             if (null !== $entry->getDuration()) {
                 $time += $entry->getDuration();
             }

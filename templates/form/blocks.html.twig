@@ -136,35 +136,28 @@
     {% set jsFormat = format|js_format %}
     {% set attr = attr|merge({'pattern': format|pattern, 'autocomplete': 'off', 'data-datepicker': 'on', 'data-format': jsFormat, 'placeholder': jsFormat}) -%}
     <div class="input-group">
-        <div class="input-group-text">
-            <a href="#" data-form-widget="date-now" data-format="{{ jsFormat }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
-        </div>
+        <a class="btn" href="#" data-form-widget="date-now" data-format="{{ jsFormat }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
         {{- block('form_widget_simple') -}}
         {% if not required %}
-        <span class="input-group-text">
-            <a href="javascript: void(0)" class="link-secondary fs-5" onclick="document.getElementById('{{ id }}').value = ''">
-                {{ icon('cancel') }}
-            </a>
-        </span>
+        <a href="javascript: void(0)" class="btn link-secondary fs-5" onclick="document.getElementById('{{ id }}').value = ''">
+            {{ icon('cancel') }}
+        </a>
         {% endif %}
     </div>
 {%- endblock date_widget %}
 
+{# this is used for auto-forms using the correct format for HTML5 compatibility, e.g. in the calendar #}
 {% block day_widget -%}
     {% set format = 'y-MM-D' %}
     {% set jsFormat = format|js_format %}
     {% set attr = attr|merge({'pattern': format|pattern, 'autocomplete': 'off', 'data-format': jsFormat}) -%}
     <div class="input-group">
-        <div class="input-group-text">
-            <a href="#" data-form-widget="date-now" data-format="{{ jsFormat }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
-        </div>
+        <a class="btn" href="#" data-form-widget="date-now" data-format="{{ jsFormat }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
         {{- block('form_widget_simple') -}}
         {% if not required %}
-        <span class="input-group-text">
-            <a href="javascript: void(0)" class="link-secondary fs-5" onclick="document.getElementById('{{ id }}').value = ''">
-                {{ icon('cancel') }}
-            </a>
-        </span>
+        <a href="javascript: void(0)" class="btn link-secondary fs-5" onclick="document.getElementById('{{ id }}').value = ''">
+            {{ icon('cancel') }}
+        </a>
         {% endif %}
     </div>
 {%- endblock day_widget %}
@@ -172,13 +165,11 @@
 {% block time_widget -%}
     {%- set attr = attr|merge({'pattern': time_format|pattern, 'autocomplete': 'off', 'data-timepicker': 'on', 'data-format': js_format, 'placeholder': time_format}) -%}
     <div class="input-group">
-        <div class="input-group-text">
-            <a href="#" data-form-widget="date-now" data-format="{{ js_format }}" data-target="{{ id }}">{{ icon('clock') }}</a>
-        </div>
+        <a class="btn" href="#" data-form-widget="date-now" data-format="{{ js_format }}" data-target="{{ id }}">{{ icon('clock') }}</a>
         {{ block('form_widget_simple') }}
         {% set time_presets = form_time_presets(app.user.timezone) %}
         {% if time_presets|length > 0 and form.vars.disabled is same as (false) %}
-        <button type="button" class="input-group-text dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+        <button type="button" class="btn dropdown-toggle dropdown-toggle-split btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
         <div class="dropdown-menu dropdown-menu-end pre-scrollable">
             <div class="dropdown-menu-columns">
                 {% for index in [0, 1, 2, 3] %}
@@ -202,7 +193,7 @@
     {% set attr = attr|merge({'data-daterangepicker': 'on', 'autocomplete': 'off', 'data-format': format, 'placeholder': format ~ attr['data-separator'] ~  format}) -%}
     <div class="input-group">
         {% if ranges is defined %}
-        <button type="button" class="input-group-text dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+        <button type="button" class="btn dropdown-toggle dropdown-toggle-split btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
         <div class="dropdown-menu dropdown-menu-start pre-scrollable">
             {% for title, range in ranges %}
                 {% if range|length == 0 %}
@@ -228,11 +219,12 @@
             {% endif %}
             {{ block('form_widget_simple') }}
             {% if form.vars.toggle is defined and form.vars.toggle %}
+                {# this feature was never actually developed #}
                 <div class="input-group-text">
                     <a href="#" id="{{ form.vars.id }}_toggle" class="text-success">{{ icon('link') }}</a>
                 </div>
             {% endif %}
-            <button type="button" class="input-group-text dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+            <button type="button" class="btn dropdown-toggle dropdown-toggle-split btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
             <div class="dropdown-menu dropdown-menu-end pre-scrollable">
                 <div class="dropdown-menu-columns">
                     {% for index in [0, 1, 2, 3] %}
@@ -482,7 +474,9 @@
 
 {%- block meta_fields_collection_widget -%}
     {% for meta in form|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
-        {{ form_row(meta.value, {'row_attr': {'class': 'mb-3 ' ~  form.parent.vars.name ~ '_row_' ~ form.vars.name ~ '_' ~ meta.vars.name}}) }}
+        {% if not meta.rendered %}
+            {{ form_row(meta.value, {'row_attr': {'class': 'mb-3 ' ~  form.parent.vars.name ~ '_row_' ~ form.vars.name ~ '_' ~ meta.vars.name}}) }}
+        {% endif %}
     {% endfor %}
 {%- endblock meta_fields_collection_widget %}
 

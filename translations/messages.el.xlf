@@ -1944,7 +1944,7 @@
       </trans-unit>
       <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
         <source>sending_company</source>
-        <target state="translated">Αποστολέας τιμολογίου</target>
+        <target state="needs-translation">Αποστολέας τιμολογίου</target>
       </trans-unit>
       <trans-unit id="y1XHR1Q" resname="address_deprecated" xml:space="preserve">
         <source>address_deprecated</source>

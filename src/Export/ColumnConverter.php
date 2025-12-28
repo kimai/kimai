@@ -236,6 +236,8 @@ final class ColumnConverter
                 $columns[$column] = (new Column('vat_id', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getProject()?->getCustomer()?->getVatId());
             } elseif ($column === 'project.order_number') {
                 $columns[$column] = (new Column('orderNumber', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getProject()?->getOrderNumber());
+            } elseif ($column === 'id') {
+                $columns[$column] = (new Column('id', $this->getFormatter('default')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getId());
             } elseif (str_starts_with($column, 'timesheet.meta.') && \array_key_exists($column, $timesheetMeta)) {
                 $columns[$column] = $timesheetMeta[$column];
             } elseif (str_starts_with($column, 'customer.meta.') && \array_key_exists($column, $customerMeta)) {

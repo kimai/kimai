@@ -118,9 +118,9 @@
         <source>login_required</source>
         <target state="translated">Відсутній дозвіл. Перенаправити на вхід?</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target state="translated">На адресу %email% надісланий лист. У ньому міститься посилання для активації, за яким потрібно перейти для активації Вашого облікового запису.</target>
+      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve" approved="yes">
+        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
+        <target state="final">На адресу %email% надісланий лист. У ньому міститься посилання для активації, за яким потрібно перейти для активації Вашого облікового запису.</target>
       </trans-unit>
       <trans-unit id="UoOv6mx" resname="menu.homepage" xml:space="preserve">
         <source>menu.homepage</source>
@@ -170,9 +170,9 @@
         <source>modal.dirty</source>
         <target state="translated">Форма змінилася. Будь ласка, натисніть "Зберегти" для збереження змін або "Закрити" для їх скасування.</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve" approved="yes">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
-        <target state="translated">Надісланий е-лист з посиланням для зміни пароля. Примітка: Ви можете запитати новий пароль протягом %tokenLifetime% годин лише один раз. Якщо Ви не отримали листа, перевірте "Спам" або спробуйте ще раз.</target>
+        <target state="final">Надісланий е-лист з посиланням для зміни пароля. Примітка: Ви можете запитати новий пароль протягом %tokenLifetime% годин лише один раз. Якщо Ви не отримали листа, перевірте "Спам" або спробуйте ще раз.</target>
       </trans-unit>
       <trans-unit id="JXfA9Ve" resname="projects" xml:space="preserve">
         <source>projects</source>
@@ -1952,7 +1952,7 @@
       </trans-unit>
       <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
         <source>sending_company</source>
-        <target state="translated">Відправник рахунку</target>
+        <target state="translated">Емітент рахунку-фактури</target>
       </trans-unit>
       <trans-unit id="Uzll0ps" resname="Customer portal" xml:space="preserve" approved="no">
         <source>Customer portal</source>
@@ -1965,6 +1965,86 @@
       <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve" approved="no">
         <source>Code</source>
         <target state="translated">Код</target>
+      </trans-unit>
+      <trans-unit id="xZzzKxM" resname="orientation" xml:space="preserve">
+        <source>Orientation</source>
+        <target state="translated">Орієнтація</target>
+      </trans-unit>
+      <trans-unit id="UcWoKWo" resname="portrait" xml:space="preserve" approved="yes">
+        <source>Portrait</source>
+        <target state="final">Вертикально</target>
+      </trans-unit>
+      <trans-unit id="rLlV34K" resname="landscape" xml:space="preserve" approved="yes">
+        <source>Landscape</source>
+        <target state="final">Горизонтально</target>
+      </trans-unit>
+      <trans-unit id="UZUFKZg" resname="remaining_budget" xml:space="preserve" approved="yes">
+        <source>remaining_budget</source>
+        <target state="final">Залишок бюджету</target>
+      </trans-unit>
+      <trans-unit id="eV6j76Q" resname="font" xml:space="preserve" approved="yes">
+        <source>font</source>
+        <target state="final">Шрифт</target>
+      </trans-unit>
+      <trans-unit id="BmDRYT." resname="sending_company.help" xml:space="preserve" approved="no">
+        <source>sending_company.help</source>
+        <target state="translated">Ця компанія вказана як емітент у рахунку-фактурі. Будуть використані назва, адреса та податкова інформація.</target>
+      </trans-unit>
+      <trans-unit id="PciSBv9" resname="address_row" xml:space="preserve" approved="yes">
+        <source>address_row</source>
+        <target state="final">Рядок %row%</target>
+      </trans-unit>
+      <trans-unit id="_Ep8Ogx" resname="buyerReference" xml:space="preserve" approved="yes">
+        <source>buyerReference</source>
+        <target state="final">Ідентифікатор покупця</target>
+      </trans-unit>
+      <trans-unit id="nPJWKwW" resname="payment_type" xml:space="preserve" approved="yes">
+        <source>payment_type</source>
+        <target state="final">Тип оплати</target>
+      </trans-unit>
+      <trans-unit id="uXB48Vj" resname="SEPA Credit Transfer" xml:space="preserve" approved="yes">
+        <source>SEPA Credit Transfer</source>
+        <target state="final">Переказ SEPA</target>
+      </trans-unit>
+      <trans-unit id="s42A2gm" resname="SEPA Direct Debit" xml:space="preserve" approved="yes">
+        <source>SEPA Direct Debit</source>
+        <target state="final">Дозвіл на списання SEPA</target>
+      </trans-unit>
+      <trans-unit id="4toQj2M" resname="Cash" xml:space="preserve" approved="yes">
+        <source>Cash</source>
+        <target state="final">Готівка</target>
+      </trans-unit>
+      <trans-unit id="cWZZc6D" resname="Cheque" xml:space="preserve" approved="yes">
+        <source>Cheque</source>
+        <target state="final">Чек</target>
+      </trans-unit>
+      <trans-unit id="jMvh7bn" resname="Credit Transfer" xml:space="preserve" approved="yes">
+        <source>Credit Transfer</source>
+        <target state="final">Переказ</target>
+      </trans-unit>
+      <trans-unit id="TJQbc0a" resname="Payment To Bank Account" xml:space="preserve" approved="yes">
+        <source>Payment To Bank Account</source>
+        <target state="final">Оплата на банківський рахунок</target>
+      </trans-unit>
+      <trans-unit id=".UIt099" resname="Card Payment" xml:space="preserve" approved="yes">
+        <source>Card Payment</source>
+        <target state="final">Оплата карткою</target>
+      </trans-unit>
+      <trans-unit id="Wnb_qF0" resname="Direct Debit" xml:space="preserve" approved="yes">
+        <source>Direct Debit</source>
+        <target state="final">Дозвіл на списання</target>
+      </trans-unit>
+      <trans-unit id="rIdfGxM" resname="payment_account_name" xml:space="preserve" approved="yes">
+        <source>payment_account_name</source>
+        <target state="final">Власник рахунку або картки</target>
+      </trans-unit>
+      <trans-unit id="jcT9Og6" resname="payment_account_number" xml:space="preserve" approved="yes">
+        <source>payment_account_name</source>
+        <target state="final">IBAN або номер картки</target>
+      </trans-unit>
+      <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve" approved="no">
+        <source>electronic_invoice</source>
+        <target state="translated">Е-Рахунок-фактура</target>
       </trans-unit>
     </body>
   </file>

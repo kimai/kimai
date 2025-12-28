@@ -12,7 +12,6 @@ namespace App\API;
 use App\Entity\Project;
 use App\Entity\ProjectRate;
 use App\Entity\User;
-use App\Event\ProjectMetaDefinitionEvent;
 use App\Form\API\ProjectApiEditForm;
 use App\Form\API\ProjectRateApiForm;
 use App\Project\ProjectService;
@@ -26,7 +25,6 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use OpenApi\Attributes as OA;
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,14 +38,12 @@ use Symfony\Component\Validator\Constraints;
 final class ProjectController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Project', 'Project_Entity'];
-    public const GROUPS_FORM = ['Default', 'Entity', 'Project'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Project'];
     public const GROUPS_RATE = ['Default', 'Entity', 'Project_Rate'];
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
         private readonly ProjectRepository $repository,
-        private readonly EventDispatcherInterface $dispatcher,
         private readonly ProjectRateRepository $projectRateRepository,
         private readonly ProjectService $projectService
     ) {
@@ -67,7 +63,7 @@ final class ProjectController extends BaseApiController
     #[Rest\QueryParam(name: 'globalActivities', requirements: '0|1', strict: true, nullable: true, description: "If given, filters projects by their 'global activity' support. Allowed values: 1 (supports global activities) and 0 (without global activities) (default: all)")]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name|customer', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name, customer (default: name)')]
-    #[Rest\QueryParam(name: 'term', description: 'Free search term')]
+    #[Rest\QueryParam(name: 'term', description: 'Free search term', nullable: true)]
     public function cgetAction(ParamFetcherInterface $paramFetcher, CustomerRepository $customerRepository): Response
     {
         /** @var User $user */
@@ -103,7 +99,7 @@ final class ProjectController extends BaseApiController
         }
 
         $visible = $paramFetcher->get('visible');
-        if (\is_string($visible) && $visible !== '') {
+        if (is_numeric($visible)) {
             $query->setVisibility((int) $visible);
         }
 
@@ -197,7 +193,7 @@ final class ProjectController extends BaseApiController
         }
 
         $view = new View($form);
-        $view->getContext()->setGroups(self::GROUPS_FORM);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -212,8 +208,7 @@ final class ProjectController extends BaseApiController
     #[Route(methods: ['PATCH'], path: '/{id}', name: 'patch_project', requirements: ['id' => '\d+'])]
     public function patchAction(Request $request, Project $project): Response
     {
-        $event = new ProjectMetaDefinitionEvent($project);
-        $this->dispatcher->dispatch($event);
+        $this->projectService->loadMetaFields($project);
 
         $form = $this->createForm(ProjectApiEditForm::class, $project, [
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
@@ -227,7 +222,7 @@ final class ProjectController extends BaseApiController
 
         if (false === $form->isValid()) {
             $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_FORM);
+            $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
             return $this->viewHandler->handle($view);
         }
@@ -270,8 +265,7 @@ final class ProjectController extends BaseApiController
     #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
     public function metaAction(Project $project, ParamFetcherInterface $paramFetcher): Response
     {
-        $event = new ProjectMetaDefinitionEvent($project);
-        $this->dispatcher->dispatch($event);
+        $this->projectService->loadMetaFields($project);
 
         $name = $paramFetcher->get('name');
         $value = $paramFetcher->get('value');

@@ -2,6 +2,58 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ca" datatype="plaintext" original="flashmessages.en.xlf">
     <body>
-      </body>
+      <trans-unit id="S9k1S7Z" resname="warning" xml:space="preserve">
+        <source>warning</source>
+        <target state="translated">Advertència</target>
+      </trans-unit>
+      <trans-unit id="WmrEP_5" resname="timesheet.stop.success" xml:space="preserve">
+        <source>timesheet.stop.success</source>
+        <target state="translated">S'ha aturat l'enregistrament de temps</target>
+      </trans-unit>
+      <trans-unit id="NPBnpK_" resname="timesheet.stop.error" xml:space="preserve">
+        <source>timesheet.stop.error</source>
+        <target state="translated">No s'ha pogut aturar l'enregistrament de temps</target>
+      </trans-unit>
+      <trans-unit id="CCUoZga" resname="timesheet.start.success" xml:space="preserve">
+        <source>timesheet.start.success</source>
+        <target state="translated">L'enregistrament del temps s'ha iniciat</target>
+      </trans-unit>
+      <trans-unit id="3w9tuox" resname="timesheet.start.error" xml:space="preserve">
+        <source>timesheet.start.error</source>
+        <target state="translated">L'enregistrament de temps no es pot iniciar</target>
+      </trans-unit>
+      <trans-unit id="kPINWEK" resname="timesheet.locked.warning" xml:space="preserve">
+        <source>timesheet.locked.warning</source>
+        <target state="translated">Estàs editant un registre exportat</target>
+      </trans-unit>
+      <trans-unit id="72Ih8zO" resname="action.update.success" xml:space="preserve">
+        <source>action.update.success</source>
+        <target state="translated">Desa canvis</target>
+      </trans-unit>
+      <trans-unit id="xeu1LSy" resname="action.update.error" xml:space="preserve">
+        <source>action.update.error</source>
+        <target state="translated">Els canvis no s'han guardat: %reason%</target>
+      </trans-unit>
+      <trans-unit id="YV50HDB" resname="action.delete.success" xml:space="preserve">
+        <source>action.delete.success</source>
+        <target state="translated">S'ha eliminat el registre</target>
+      </trans-unit>
+      <trans-unit id="mW91Tmb" resname="action.delete.error" xml:space="preserve">
+        <source>action.delete.error</source>
+        <target state="translated">Registre no esborrat: %reason%</target>
+      </trans-unit>
+      <trans-unit id="B_cz49z" resname="invoice.first_template" xml:space="preserve">
+        <source>invoice.first_template</source>
+        <target state="translated">Primer cal crear una plantilla de factura</target>
+      </trans-unit>
+      <trans-unit id="wejAEcR" resname="action.upload.error" xml:space="preserve">
+        <source>action.upload.error</source>
+        <target state="translated">El fitxer no s'ha pogut pujar o guardar: %reason%</target>
+      </trans-unit>
+      <trans-unit resname="action.csrf.error" id="bOE_q5R" xml:space="preserve">
+        <source>action.csrf.error</source>
+        <target state="translated">No s'ha pogut realitzar l'acció: token de seguretat invàlid.</target>
+      </trans-unit>
+    </body>
   </file>
 </xliff>

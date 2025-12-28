@@ -86,6 +86,9 @@ services:
     App\Timesheet\RateService:
         arguments: ['%kimai.timesheet.rates%']
 
+    App\Timesheet\RateCalculator\RateCalculatorMode:
+        factory: ['@App\Timesheet\RateCalculator\RateCalculatorFactory', getRateCalculatorMode]
+
     # ================================================================================
     # SECURITY & VOTER
     # ================================================================================
@@ -112,102 +115,102 @@ services:
     # ================================================================================
 
     App\Repository\TimesheetRepository:
-        class:     App\Repository\TimesheetRepository
-        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        class: App\Repository\TimesheetRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Timesheet']
 
     App\Repository\UserRepository:
-        class:     App\Repository\UserRepository
-        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        class: App\Repository\UserRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\User']
 
     App\Repository\TeamRepository:
-        class:     App\Repository\TeamRepository
-        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        class: App\Repository\TeamRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Team']
 
     App\Repository\ActivityRepository:
-        class:     App\Repository\ActivityRepository
-        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        class: App\Repository\ActivityRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Activity']
 
     App\Repository\ProjectRepository:
-        class:     App\Repository\ProjectRepository
-        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        class: App\Repository\ProjectRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Project']
 
     App\Repository\TagRepository:
-        class:     App\Repository\TagRepository
-        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        class: App\Repository\TagRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Tag']
 
     App\Repository\CustomerRepository:
-        class:     App\Repository\CustomerRepository
-        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        class: App\Repository\CustomerRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Customer']
 
     App\Repository\InvoiceTemplateRepository:
-        class:     App\Repository\InvoiceTemplateRepository
-        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        class: App\Repository\InvoiceTemplateRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\InvoiceTemplate']
 
     App\Repository\ConfigurationRepository:
-        class:     App\Repository\ConfigurationRepository
-        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        class: App\Repository\ConfigurationRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Configuration']
 
     App\Repository\RoleRepository:
-        class:     App\Repository\RoleRepository
-        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        class: App\Repository\RoleRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Role']
 
     App\Repository\RolePermissionRepository:
-        class:     App\Repository\RolePermissionRepository
-        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        class: App\Repository\RolePermissionRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\RolePermission']
-    
+
     App\Repository\InvoiceDocumentRepository:
         class: App\Repository\InvoiceDocumentRepository
         arguments: ['%kimai.invoice.documents%']
 
     App\Repository\CustomerRateRepository:
-        class:     App\Repository\CustomerRateRepository
-        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        class: App\Repository\CustomerRateRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\CustomerRate']
 
     App\Repository\ActivityRateRepository:
-        class:     App\Repository\ActivityRateRepository
-        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        class: App\Repository\ActivityRateRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\ActivityRate']
 
     App\Repository\ProjectRateRepository:
-        class:     App\Repository\ProjectRateRepository
-        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        class: App\Repository\ProjectRateRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\ProjectRate']
 
     App\Repository\InvoiceRepository:
-        class:     App\Repository\InvoiceRepository
-        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        class: App\Repository\InvoiceRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Invoice']
 
     App\Repository\BookmarkRepository:
-        class:     App\Repository\BookmarkRepository
-        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        class: App\Repository\BookmarkRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\Bookmark']
 
     App\Repository\WorkingTimeRepository:
-        class:     App\Repository\WorkingTimeRepository
-        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        class: App\Repository\WorkingTimeRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\WorkingTime']
 
     App\Repository\AccessTokenRepository:
-        class:     App\Repository\AccessTokenRepository
-        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        class: App\Repository\AccessTokenRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\AccessToken']
 
     App\Repository\ExportTemplateRepository:
-        class:     App\Repository\ExportTemplateRepository
-        factory:   ['@doctrine.orm.entity_manager', getRepository]
+        class: App\Repository\ExportTemplateRepository
+        factory: ['@doctrine.orm.entity_manager', getRepository]
         arguments: ['App\Entity\ExportTemplate']
 
     monolog.formatter.kimai:
@@ -221,3 +224,6 @@ services:
         arguments:
             - "[%%datetime%%] %%message%% %%context%%\n"
             - "Y-m-d H:i:s"
+
+    App\API\ViewHandler:
+        arguments: ['@fos_rest.view_handler.default']

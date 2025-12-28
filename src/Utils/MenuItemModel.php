@@ -28,6 +28,7 @@ final class MenuItemModel implements MenuItemInterface
     private bool $divider = false;
     private bool $lastWasDivider = false;
     private bool $expanded = false;
+    private bool $disabled = false;
     private string $translationDomain = 'messages';
 
     public function __construct(
@@ -307,5 +308,15 @@ final class MenuItemModel implements MenuItemInterface
     public function setTranslationDomain(string $translationDomain): void
     {
         $this->translationDomain = $translationDomain;
+    }
+
+    public function setDisabled(bool $disabled): void
+    {
+        $this->disabled = $disabled;
+    }
+
+    public function isDisabled(): bool
+    {
+        return $this->disabled;
     }
 }

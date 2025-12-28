@@ -25,7 +25,8 @@ class InvoiceItemTest extends TestCase
         self::assertNull($sut->getFixedRate());
         self::assertNull($sut->getEnd());
         self::assertEquals(0.00, $sut->getRate());
-        self::assertEquals(0.00, $sut->getInternalRate());
+        self::assertEquals(0.00, $sut->getInternalRate()); // @phpstan-ignore method.deprecated
+        self::assertEquals(0.00, $sut->getAppliedRate());
         self::assertNull($sut->getProject());
         self::assertIsArray($sut->getAdditionalFields());
         self::assertEmpty($sut->getAdditionalFields());
@@ -52,5 +53,24 @@ class InvoiceItemTest extends TestCase
         $sut->addTag('bar');
         $sut->addTag('foo1');
         self::assertEquals(['foo', 'foo1', 'BaR'], $sut->getTags());
+    }
+
+    public function testRates(): void
+    {
+        $sut = new InvoiceItem();
+
+        self::assertEquals(0.00, $sut->getHourlyRate());
+        self::assertNull($sut->getFixedRate());
+        self::assertEquals(0.00, $sut->getAppliedRate());
+
+        $sut->setHourlyRate(13.50);
+        self::assertEquals(13.50, $sut->getHourlyRate());
+        self::assertNull($sut->getFixedRate());
+        self::assertEquals(13.50, $sut->getAppliedRate());
+
+        $sut->setFixedRate(30.24);
+        self::assertEquals(13.50, $sut->getHourlyRate());
+        self::assertEquals(30.24, $sut->getFixedRate());
+        self::assertEquals(30.24, $sut->getAppliedRate());
     }
 }

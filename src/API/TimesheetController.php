@@ -82,22 +82,22 @@ final class TimesheetController extends BaseApiController
     #[Rest\QueryParam(name: 'activity', requirements: '\d+', strict: true, nullable: true, description: 'Activity ID to filter timesheets')]
     #[Rest\QueryParam(name: 'activities', map: true, requirements: '\d+', strict: true, nullable: true, default: [], description: 'List of activity IDs to filter, e.g.: activities[]=1&activities[]=2')]
     #[Rest\QueryParam(name: 'page', requirements: '\d+', strict: true, nullable: true, description: 'The page to display, renders a 404 if not found (default: 1)')]
-    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page (default: 50)')]
+    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries for each page (default: 50, max: 500)')]
     #[Rest\QueryParam(name: 'tags', map: true, strict: true, nullable: true, default: [], description: 'List of tag names, e.g. tags[]=bar&tags[]=foo')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|begin|end|rate', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, begin, end, rate (default: begin)')]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: DESC)')]
-    #[Rest\QueryParam(name: 'begin', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records after this date will be included (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
-    #[Rest\QueryParam(name: 'end', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records before this date will be included (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
+    #[Rest\QueryParam(name: 'begin', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records started at or after this date-time will be included (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
+    #[Rest\QueryParam(name: 'end', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records started at or before this date-time will be included (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
     #[Rest\QueryParam(name: 'exported', requirements: '0|1', strict: true, nullable: true, description: 'Use this flag if you want to filter for export state. Allowed values: 0=not exported, 1=exported (default: all)')]
     #[Rest\QueryParam(name: 'active', requirements: '0|1', strict: true, nullable: true, description: 'Filter for running/active records. Allowed values: 0=stopped, 1=active (default: all)')]
     #[Rest\QueryParam(name: 'billable', requirements: '0|1', strict: true, nullable: true, description: 'Filter for non-/billable records. Allowed values: 0=non-billable, 1=billable (default: all)')]
     #[Rest\QueryParam(name: 'full', requirements: '0|1|true|false', strict: true, nullable: true, description: 'Allows to fetch full objects including subresources. Allowed values: 0|1|false|true (default: false)')]
-    #[Rest\QueryParam(name: 'term', description: 'Free search term')]
-    #[Rest\QueryParam(name: 'modified_after', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records changed after this date will be included (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
+    #[Rest\QueryParam(name: 'term', description: 'Free search term', nullable: true)]
+    #[Rest\QueryParam(name: 'modified_after', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records changed after this date will be included. You need to pass in a UTC date-time, as this field is stored in UTC (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
     public function cgetAction(ParamFetcherInterface $paramFetcher, CustomerRepository $customerRepository, ProjectRepository $projectRepository, ActivityRepository $activityRepository, UserRepository $userRepository): Response
     {
         $query = new TimesheetQuery(false);
-        $query->setCurrentUser($this->getUser());
+        $this->prepareQuery($query, $paramFetcher);
         $seeAll = false;
 
         if ($this->isGranted('view_other_timesheet')) {
@@ -169,20 +169,6 @@ final class TimesheetController extends BaseApiController
             $query->addActivity($activity);
         }
 
-        $page = $paramFetcher->get('page');
-        if (\is_string($page) && $page !== '') {
-            $query->setPage((int) $page);
-        }
-
-        $size = $paramFetcher->get('size');
-        if (is_numeric($size)) {
-            $size = (int) $size;
-            if ($size < 1 || $size > 1000) {
-                throw new BadRequestHttpException('Size must be between 1 and 1000');
-            }
-            $query->setPageSize($size);
-        }
-
         /** @var array<string> $tags */
         $tags = $paramFetcher->get('tags');
         if (\is_array($tags) && \count($tags) > 0) {
@@ -193,16 +179,6 @@ final class TimesheetController extends BaseApiController
             foreach ($tagsByName as $tag) {
                 $query->addTag($tag);
             }
-        }
-
-        $order = $paramFetcher->get('order');
-        if (\is_string($order) && $order !== '') {
-            $query->setOrder($order);
-        }
-
-        $orderBy = $paramFetcher->get('orderBy');
-        if (\is_string($orderBy) && $orderBy !== '') {
-            $query->setOrderBy($orderBy);
         }
 
         $factory = $this->getDateTimeFactory();
@@ -252,16 +228,14 @@ final class TimesheetController extends BaseApiController
             $query->setSearchTerm(new SearchTerm($term));
         }
 
-        if (!empty($modifiedAfter = $paramFetcher->get('modified_after'))) {
-            $query->setModifiedAfter($factory->createDateTime($modifiedAfter));
+        $modifiedAfter = $paramFetcher->get('modified_after');
+        if (\is_string($modifiedAfter)) {
+            $query->setModifiedAfter(new \DateTimeImmutable($modifiedAfter, new \DateTimeZone('UTC')));
         }
 
-        $query->setIsApiCall(true);
         $data = $this->repository->getPagerfantaForQuery($query);
-        $results = (array) $data->getCurrentPageResults();
 
-        $view = new View($results, 200);
-        $this->addPagination($view, $data);
+        $view = new View($data, 200);
 
         $full = $paramFetcher->get('full');
         if ($full === '1' || $full === 'true') {
@@ -406,7 +380,7 @@ final class TimesheetController extends BaseApiController
     #[IsGranted('view_own_timesheet')]
     #[OA\Response(response: 200, description: 'Returns a collection of recent user activities (always the latest entry of a unique working set grouped by customer, project and activity)', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TimesheetCollectionExpanded')))]
     #[Route(methods: ['GET'], path: '/recent', name: 'recent_timesheet')]
-    #[Rest\QueryParam(name: 'begin', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records after this date will be included. Default: today - 1 year (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
+    #[Rest\QueryParam(name: 'begin', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records started at or after this date will be included. Default: today - 1 year (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
     #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries (default: 10)')]
     public function recentAction(ParamFetcherInterface $paramFetcher): Response
     {
@@ -419,7 +393,8 @@ final class TimesheetController extends BaseApiController
             $limit = (int) $reqLimit;
         }
 
-        if (null !== ($reqBegin = $paramFetcher->get('begin'))) {
+        $reqBegin = $paramFetcher->get('begin');
+        if (\is_string($reqBegin)) {
             $begin = $this->getDateTimeFactory($user)->createDateTime($reqBegin);
         }
 
@@ -498,7 +473,8 @@ final class TimesheetController extends BaseApiController
         $factory = $this->getDateTimeFactory();
 
         $begin = $factory->createDateTime();
-        if (null !== ($beginTmp = $paramFetcher->get('begin'))) {
+        $beginTmp = $paramFetcher->get('begin');
+        if (\is_string($beginTmp)) {
             $begin = $factory->createDateTime($beginTmp);
         }
 

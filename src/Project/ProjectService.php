@@ -41,6 +41,11 @@ final class ProjectService
     {
     }
 
+    public function loadMetaFields(Project $project): void
+    {
+        $this->dispatcher->dispatch(new ProjectMetaDefinitionEvent($project));
+    }
+
     public function createNewProject(?Customer $customer = null): Project
     {
         $project = new Project();
@@ -50,7 +55,7 @@ final class ProjectService
             $project->setCustomer($customer);
         }
 
-        $this->dispatcher->dispatch(new ProjectMetaDefinitionEvent($project));
+        $this->loadMetaFields($project);
         $this->dispatcher->dispatch(new ProjectCreateEvent($project));
 
         return $project;
@@ -90,10 +95,10 @@ final class ProjectService
         return $project;
     }
 
-    public function deleteProject(Project $project): void
+    public function deleteProject(Project $project, ?Project $replace = null): void
     {
-        $this->dispatcher->dispatch(new ProjectDeleteEvent($project));
-        $this->repository->deleteProject($project);
+        $this->dispatcher->dispatch(new ProjectDeleteEvent($project, $replace));
+        $this->repository->deleteProject($project, $replace);
     }
 
     /**

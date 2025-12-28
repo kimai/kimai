@@ -10,45 +10,45 @@
         <source>timesheet.active_entries.hard_limit</source>
         <target>Egyszerre futtatható rögzítések száma</target>
       </trans-unit>
-      <trans-unit id="qaoBvYU" resname="calendar.weekends">
+      <trans-unit id="qaoBvYU" resname="calendar.weekends" xml:space="preserve">
         <source>calendar.weekends</source>
-        <target>Mutasd a</target>
+        <target state="translated">Hétvégék megjelenítése</target>
       </trans-unit>
-      <trans-unit id="t38HFZd" resname="calendar.week_numbers">
+      <trans-unit id="t38HFZd" resname="calendar.week_numbers" xml:space="preserve">
         <source>calendar.week_numbers</source>
-        <target>Mutasd a hetek</target>
+        <target state="translated">Hetek számainak megjelenítése</target>
       </trans-unit>
-      <trans-unit id="RLgv62J" resname="timesheet.rules.lockdown_grace_period">
+      <trans-unit id="RLgv62J" resname="timesheet.rules.lockdown_grace_period" xml:space="preserve">
         <source>timesheet.rules.lockdown_grace_period</source>
-        <target>Lezárási kegyelmi időszak vége (PHP dátuma relatív a lezárási időszak végéhez)</target>
+        <target state="translated">Lezárási türelmi időszak vége (PHP relatív dátum a lezárási időszak végéhez képest)</target>
       </trans-unit>
-      <trans-unit id="M1iVHeQ" resname="timesheet.rules.lockdown_period_end">
+      <trans-unit id="M1iVHeQ" resname="timesheet.rules.lockdown_period_end" xml:space="preserve">
         <source>timesheet.rules.lockdown_period_end</source>
-        <target>Lezárási időszak vége (PHP dátuma relatív a jelenlegihez)</target>
+        <target state="translated">Lezárási időszak vége (PHP relatív dátum a mostanihoz képest)</target>
       </trans-unit>
-      <trans-unit id="_PvFlQ9" resname="timesheet.rules.lockdown_period_start">
+      <trans-unit id="_PvFlQ9" resname="timesheet.rules.lockdown_period_start" xml:space="preserve">
         <source>timesheet.rules.lockdown_period_start</source>
-        <target>Lezárási időszak kezdete (PHP dátuma relatív a jelenlegihez)</target>
+        <target state="translated">Lezárási időszak kezdete (PHP relatív dátum a mostanihoz képest)</target>
       </trans-unit>
-      <trans-unit id="ZCg9UVM" resname="timesheet.rules.allow_overlapping_records">
+      <trans-unit id="ZCg9UVM" resname="timesheet.rules.allow_overlapping_records" xml:space="preserve">
         <source>timesheet.rules.allow_overlapping_records</source>
-        <target>Engedélyezd az átfedő rögzítéseket</target>
+        <target state="translated">Átfedő bejegyzések engedélyezése</target>
       </trans-unit>
-      <trans-unit id="3tlkqJC" resname="timesheet.mode_punch">
+      <trans-unit id="3tlkqJC" resname="timesheet.mode_punch" xml:space="preserve">
         <source>timesheet.mode_punch</source>
-        <target>"Ökölcsapás" mód - a felhasználó elindíthat és leállíthat felvételeket, de nem szerkesztheti az időt vagy a hosszt</target>
+        <target state="translated">[Óra] a felhasználó elindíthat és leállíthat rögzítéseket, de nem szerkesztheti az időt vagy az időtartamot</target>
       </trans-unit>
-      <trans-unit id="CJZhtYx" resname="timesheet.mode_duration_fixed_begin">
-        <source>timesheet.mode_duration_fixed_begin</source>
-        <target>"Alapértelmezett fix kezdés" mód - konfigurálható fix kezdeti-idő, csak a terjedelem változtatható</target>
+      <trans-unit id="CJZhtYx" resname="timesheet.mode_duration_fixed_begin" xml:space="preserve">
+        <source>[Duration] configurable fixed start-time, only duration can be changed</source>
+        <target state="translated">[Időtartam] konfigurálható fix kezdési idő, csak az időtartam változtatható</target>
       </trans-unit>
-      <trans-unit id="A11vhSN" resname="timesheet.mode_default">
+      <trans-unit id="A11vhSN" resname="timesheet.mode_default" xml:space="preserve">
         <source>timesheet.mode_default</source>
-        <target>"Alapértelmezett mód" - a kezdeti és vég időpontok szerkeszthetőek</target>
+        <target state="translated">[Alapértelmezett] a kezdés és a befejezés időpontja szerkeszthető</target>
       </trans-unit>
-      <trans-unit id="FaGqoTT" resname="timesheet.mode">
+      <trans-unit id="FaGqoTT" resname="timesheet.mode" xml:space="preserve">
         <source>timesheet.mode</source>
-        <target>Időmérő mód</target>
+        <target state="translated">Időrögzítési mód</target>
       </trans-unit>
       <trans-unit id="mPRUBFX" resname="theme.markdown_content">
         <source>theme.markdown_content</source>
@@ -66,57 +66,57 @@
         <source>calendar.visibleHours.begin</source>
         <target>Látható időtartam kezdete</target>
       </trans-unit>
-      <trans-unit id="Aa_Ushz" resname="calendar.businessHours.end">
+      <trans-unit id="Aa_Ushz" resname="calendar.businessHours.end" xml:space="preserve">
         <source>calendar.businessHours.end</source>
-        <target>Rendes munkaidő vége(ki lesz emelve)</target>
+        <target state="translated">Rendes munkaidő vége (ki lesz emelve)</target>
       </trans-unit>
-      <trans-unit id="yUeuM2_" resname="calendar.businessHours.begin">
+      <trans-unit id="yUeuM2_" resname="calendar.businessHours.begin" xml:space="preserve">
         <source>calendar.businessHours.begin</source>
-        <target>Rendes munkaidő kezdete(ki lesz emelve)</target>
+        <target state="translated">Rendes munkaidő kezdete (ki lesz emelve)</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>
         <target>Arculat</target>
       </trans-unit>
-      <trans-unit id="o9mON14" resname="theme.branding.logo">
+      <trans-unit id="o9mON14" resname="theme.branding.logo" xml:space="preserve">
         <source>theme.branding.logo</source>
-        <target>Logó (Kép link, kicseréli a logót a bejelentkezési képernyőn)</target>
+        <target state="translated">Logó URL (leváltja a cégnevet a bejelentkezési képernyőn)</target>
       </trans-unit>
-      <trans-unit id="en0.Ahu" resname="theme.branding.company">
+      <trans-unit id="en0.Ahu" resname="theme.branding.company" xml:space="preserve">
         <source>theme.branding.company</source>
-        <target>Cég név</target>
+        <target state="translated">Cégnév</target>
       </trans-unit>
       <trans-unit id="6CSB6iM" resname="first_weekday">
         <source>first_weekday</source>
         <target>Hét első napja</target>
       </trans-unit>
-      <trans-unit id="UTurPF1" resname="invoice.number_format">
+      <trans-unit id="UTurPF1" resname="invoice.number_format" xml:space="preserve">
         <source>invoice.number_format</source>
-        <target>Számla szám formátum</target>
+        <target state="translated">Számla sorszám formátuma</target>
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
         <source>calendar.slot_duration</source>
         <target>Bejegyzés hossza heti és napi nézetben</target>
       </trans-unit>
-      <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
+      <trans-unit id="_0OBfZf" resname="timesheet.default_begin" xml:space="preserve">
         <source>timesheet.default_begin</source>
-        <target>Alapértelmezett kezdési idő (nem használja minden időmérő mód)</target>
+        <target state="translated">Alapértelmezett kezdési idő (nem használja minden időrögzítési mód)</target>
       </trans-unit>
       <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target state="needs-translation">Lefele: kezdés, befejezés és időtartam is lefele lesz kerekítve</target>
+        <target state="translated">Kezdés, befejezés és időtartam is lefele lesz kerekítve</target>
       </trans-unit>
       <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target state="needs-translation">Standard: kezdés lefele lesz kerekítve, befejezés és időtartam felfele</target>
+        <target state="translated">Kezdés lefele lesz kerekítve, befejezés és időtartam felfele</target>
       </trans-unit>
       <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target state="needs-translation">Legközelebbi: matematikai kerekítés, a legközelebbi értékre</target>
+        <target state="translated">Matematikai kerekítés, a legközelebbi értékre</target>
       </trans-unit>
       <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target state="needs-translation">Felfele: kezdés, befejezés és időtartam is felfele lesz kerekítve</target>
+        <target state="translated">Kezdés, befejezés és időtartam is felfele lesz kerekítve</target>
       </trans-unit>
       <trans-unit id="hz.vdg5" resname="Sunday">
         <source>Sunday</source>
@@ -146,9 +146,9 @@
         <source>Monday</source>
         <target>Hétfő</target>
       </trans-unit>
-      <trans-unit id="oL_eD_9" resname="timesheet.rounding.default.days">
+      <trans-unit id="oL_eD_9" resname="timesheet.rounding.default.days" xml:space="preserve">
         <source>timesheet.rounding.default.days</source>
-        <target>Hét napjai, amikor a kerekítés alkalmazva lesz</target>
+        <target state="translated">Hét napjai, amikor a kerekítés alkalmazásra kerül</target>
       </trans-unit>
       <trans-unit id="O8E4Hj5" resname="timesheet.rounding.default.mode">
         <source>timesheet.rounding.default.mode</source>
@@ -245,6 +245,70 @@
       <trans-unit id="KbAqHBa" resname="quick_entry.minimum_rows" xml:space="preserve">
         <source>quick_entry.minimum_rows</source>
         <target state="translated">Minimum sorok száma</target>
+      </trans-unit>
+      <trans-unit id="ihORk9W" resname="ldap_activate" xml:space="preserve">
+        <source>ldap_activate</source>
+        <target state="translated">LDAP bejelentkezés</target>
+      </trans-unit>
+      <trans-unit id="0noFWbL" resname="saml_activate" xml:space="preserve">
+        <source>saml_activate</source>
+        <target state="translated">SAML bejelentkezés</target>
+      </trans-unit>
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
+        <source>customer.number_format</source>
+        <target state="translated">Ügyfél azonosító formátuma</target>
+      </trans-unit>
+      <trans-unit id="3xUU9V." resname="project.number_format" xml:space="preserve">
+        <source>project.number_format</source>
+        <target state="translated">Projekt azonosító formátuma</target>
+      </trans-unit>
+      <trans-unit id="ifgrIHh" resname="activity.number_format" xml:space="preserve">
+        <source>activity.number_format</source>
+        <target state="translated">Tevékenység azonosító formátuma</target>
+      </trans-unit>
+      <trans-unit id="jj1NmKW" resname="allow_duplicate_number" xml:space="preserve">
+        <source>allow_duplicate_number</source>
+        <target state="translated">Azonosító többszöri használatának engedélyezése</target>
+      </trans-unit>
+      <trans-unit id="IZY5kqL" resname="allowed_replacer" xml:space="preserve">
+        <source>allowed_replacer</source>
+        <target state="translated">Engedélyezett helyettesítő: %replacer%</target>
+      </trans-unit>
+      <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number" xml:space="preserve">
+        <source>customer.allow_duplicate_number</source>
+        <target state="translated">Duplikált azonosító engedélyezése</target>
+      </trans-unit>
+      <trans-unit id="Vp1e9qb" resname="quick_entry.recent_activity_weeks" xml:space="preserve">
+        <source>quick_entry.recent_activity_weeks</source>
+        <target state="translated">Bejegyzések átvétele az utolsó X hétből (üres vagy 0 az összes időből)</target>
+      </trans-unit>
+      <trans-unit id="aUc3uU1" resname="help.theme.color_choices" xml:space="preserve">
+        <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
+        <target state="translated">HTML színkódok vesszővel elválasztva. A színek neveit meg lehet adni a színkódok elé írt névvel és a "|" elválasztóval, pl.: Fehér|#ffffff,Fekete|#000000.</target>
+      </trans-unit>
+      <trans-unit id="vg5G_9i" resname="timesheet.rules.long_running_duration" xml:space="preserve">
+        <source>timesheet.rules.long_running_duration</source>
+        <target state="translated">Egy munkaidő-bejegyzés maximális időtartama percben, aminek a mentése még nem kerül elutasításra (0 = letiltva)</target>
+      </trans-unit>
+      <trans-unit id="winWMI1" resname="calendar.title_pattern" xml:space="preserve">
+        <source>calendar.title_pattern</source>
+        <target state="translated">Naptárbejegyzések címének megjelenítése</target>
+      </trans-unit>
+      <trans-unit id="12sQGSo" resname="activity.allow_inline_create" xml:space="preserve">
+        <source>activity.allow_inline_create</source>
+        <target state="translated">Tevékenységek létrehozásának engedélyezése munkaidő-bejegyzés készítésekor</target>
+      </trans-unit>
+      <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no" xml:space="preserve">
+        <source>copy_teams_on_create</source>
+        <target state="translated">Csapatok átvétele a bejelentkezett felhasználótól új bejegyzések készítésekor</target>
+      </trans-unit>
+      <trans-unit id="xlNjElF" resname="calendar.dragdrop_amount" xml:space="preserve">
+        <source>calendar.dragdrop_amount</source>
+        <target state="translated">Bejegyzések száma a korábbi rögzítések listán (0 = letiltva)</target>
+      </trans-unit>
+      <trans-unit id="9efN4Oc" resname="calendar.dragdrop_data" xml:space="preserve">
+        <source>Copies data when adding via drag and drop</source>
+        <target state="translated">Adatok másolása bejegyzések húzással történő létrehozásakor</target>
       </trans-unit>
     </body>
   </file>

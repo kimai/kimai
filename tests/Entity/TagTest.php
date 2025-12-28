@@ -28,9 +28,11 @@ class TagTest extends TestCase
     {
         $sut = new Tag();
 
+        self::assertIsString($sut->getColorSafe());
         self::assertInstanceOf(Tag::class, $sut->setName('foo'));
         self::assertEquals('foo', $sut->getName());
         self::assertEquals('foo', (string) $sut);
+        self::assertEquals('#e135f4', $sut->getColorSafe());
 
         $sut->setName(null);
         self::assertNull($sut->getName());

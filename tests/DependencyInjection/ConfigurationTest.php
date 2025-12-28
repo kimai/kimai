@@ -310,6 +310,7 @@ class ConfigurationTest extends TestCase
                 ],
                 'number_format' => '{Y}/{cy,3}',
                 'upload_twig' => false,
+                'rounding_mode' => 'classic',
             ],
             'export' => [
                 'documents' => [
@@ -363,8 +364,7 @@ class ConfigurationTest extends TestCase
                 'user' => [
                     'timezone' => null,
                     'language' => 'en',
-                    'theme' => 'default',
-                    'currency' => 'EUR',
+                    'theme' => 'auto',
                 ],
             ],
             'permissions' => [

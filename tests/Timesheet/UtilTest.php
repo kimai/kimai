@@ -12,60 +12,101 @@ namespace App\Tests\Timesheet;
 use App\Timesheet\Util;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
+#[Group('legacy')]
 #[CoversClass(Util::class)]
 class UtilTest extends TestCase
 {
+    #[Group('legacy')]
     #[DataProvider('getRateCalculationData')]
-    public function testCalculateRate(int|float $hourlyRate, int $duration, int|float $expectedRate): void
+    public function testCalculateRate(float $hourlyRate, int $duration, float $expectedRate): void
     {
         self::assertEquals($expectedRate, Util::calculateRate($hourlyRate, $duration));
     }
 
+    /**
+     * @return array<int, array<float, int, >>|\Generator
+     */
     public static function getRateCalculationData()
     {
-        yield [0, 0, 0];
-        yield [1, 100, 0.0278];
-        yield [1, 900, 0.25];
-        yield [1, 1800, 0.5];
-        yield [10000, 1, 2.7778];
-        yield [736, 123, 25.1467];
-        yield [7360, 1234, 2522.8444];
-        yield [7360.34, 1234, 2522.961];
-        yield [7360.01, 1234, 2522.8479];
-        yield [7360.99, 1234, 2523.1838];
+        yield [0.00, 0, 0.00];
+        yield [10.00, 7260, 20.2];
+        yield [1.00, 3600, 1.00];
+        yield [1.00, 100, 0.03];
+        yield [1.00, 900, 0.25];
+        yield [1.00, 1800, 0.5];
+        yield [10000.00, 60, 200.00];
+        yield [736.00, 123, 22.08];
+        yield [7360.00, 1234, 2502.4];
+        yield [7360.34, 1234, 2502.52];
+        yield [7360.01, 1234, 2502.4];
+        yield [7360.99, 1234, 2502.74];
     }
 
+    #[Group('legacy')]
     public function testCalculateRateWithRounding(): void
     {
         $total = 0.00;
         $seconds = 0;
         $repeat = 130;
 
-        for ($a = 0; $a < $repeat; $a++) {
-            $inputs = [
-                900,
-                1600,
-                4200,
-                8763,
-                3300,
-                600,
-                1300,
-                1837,
-                4217,
-                5400,
-                3283,
-                600,
-            ];
+        $inputs = [
+            [900, 28.69, 0],
+            [1600, 50.49, 0],
+            [4200, 134.26, 0],
+            [8763, 278.84, 0],
+            [3300, 105.57, 0],
+            [600, 19.51, 0],
+            [1300, 41.31, 0],
+            [1837, 58.52, 0],
+            [4217, 134.26, 0],
+            [5400, 172.13, 0],
+            [3283, 104.42, 0],
+            [600, 19.51, 0],
+        ];
 
-            foreach ($inputs as $i) {
-                $seconds += $i;
-                $total += Util::calculateRate(114.75, $i);
+        $totalExpected = 0.00;
+
+        for ($a = 0; $a < $repeat; $a++) {
+            foreach ($inputs as $row) {
+                [$duration, $rate] = $row;
+                $seconds += $duration;
+                $totalExpected += $rate;
+                $tmp = Util::calculateRate(114.75, $duration);
+                self::assertEquals($rate, $tmp);
+                $total += $tmp;
             }
         }
 
         self::assertEquals(36000 * $repeat, $seconds);
-        self::assertEquals(1147.50 * $repeat, $total);
+        self::assertEquals($totalExpected, $total);
+        self::assertEqualsWithDelta(1147.51 * $repeat, $total, 0.00001);
+        self::assertEqualsWithDelta(149176.3, $total, 0.00001);
+    }
+
+    #[Group('legacy')]
+    public function testDecimalDuration(): void
+    {
+        $inputs = [
+            [900, 900],
+            [1600, 1584],
+            [4200, 4212],
+            [8763, 8748],
+            [3300, 3312],
+            [600, 612],
+            [1300, 1296],
+            [1837, 1836],
+            [4217, 4212],
+            [5400, 5400],
+            [3283, 3276],
+            [600, 612],
+            [7200, 7200],
+        ];
+
+        foreach ($inputs as $row) {
+            self::assertEquals($row[1], Util::decimalizeDuration($row[0]));
+        }
     }
 }

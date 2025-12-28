@@ -30,6 +30,10 @@
         <source>wizard.done.description</source>
         <target state="translated">اكتملت الآن أهم الإعدادات. هناك العديد من الأشياء الأخرى التي يمكنك تخصيصها لاحقا في ملف تعريف المستخدم الخاص بك.</target>
       </trans-unit>
+      <trans-unit id="7Vipfs7" resname="wizard.password.title" xml:space="preserve">
+        <source>wizard.password.title</source>
+        <target state="translated">كلمة المرور الخاصة بك</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

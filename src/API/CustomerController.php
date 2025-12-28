@@ -13,7 +13,6 @@ use App\Customer\CustomerService;
 use App\Entity\Customer;
 use App\Entity\CustomerRate;
 use App\Entity\User;
-use App\Event\CustomerMetaDefinitionEvent;
 use App\Form\API\CustomerApiEditForm;
 use App\Form\API\CustomerRateApiForm;
 use App\Repository\CustomerRateRepository;
@@ -25,7 +24,6 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use OpenApi\Attributes as OA;
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,14 +36,12 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class CustomerController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Customer', 'Customer_Entity'];
-    public const GROUPS_FORM = ['Default', 'Entity', 'Customer'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Customer'];
     public const GROUPS_RATE = ['Default', 'Entity', 'Customer_Rate'];
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
         private readonly CustomerRepository $repository,
-        private readonly EventDispatcherInterface $dispatcher,
         private readonly CustomerRateRepository $customerRateRepository,
         private readonly CustomerService $customerService,
     ) {
@@ -59,7 +55,7 @@ final class CustomerController extends BaseApiController
     #[Rest\QueryParam(name: 'visible', requirements: '1|2|3', default: 1, strict: true, nullable: true, description: 'Visibility status to filter customers: 1=visible, 2=hidden, 3=both')]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name (default: name)')]
-    #[Rest\QueryParam(name: 'term', description: 'Free search term')]
+    #[Rest\QueryParam(name: 'term', description: 'Free search term', nullable: true)]
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         /** @var User $user */
@@ -80,7 +76,7 @@ final class CustomerController extends BaseApiController
         }
 
         $visible = $paramFetcher->get('visible');
-        if (\is_string($visible) && $visible !== '') {
+        if (is_numeric($visible)) {
             $query->setVisibility((int) $visible);
         }
 
@@ -125,9 +121,6 @@ final class CustomerController extends BaseApiController
 
         $customer = $customerService->createNewCustomer('');
 
-        $event = new CustomerMetaDefinitionEvent($customer);
-        $this->dispatcher->dispatch($event);
-
         $form = $this->createForm(CustomerApiEditForm::class, $customer, [
             'include_budget' => $this->isGranted('budget', $customer),
             'include_time' => $this->isGranted('time', $customer),
@@ -136,7 +129,7 @@ final class CustomerController extends BaseApiController
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
-            $this->repository->saveCustomer($customer);
+            $this->customerService->saveCustomer($customer);
 
             $view = new View($customer, 200);
             $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -145,7 +138,7 @@ final class CustomerController extends BaseApiController
         }
 
         $view = new View($form);
-        $view->getContext()->setGroups(self::GROUPS_FORM);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
@@ -160,8 +153,7 @@ final class CustomerController extends BaseApiController
     #[Route(methods: ['PATCH'], path: '/{id}', name: 'patch_customer', requirements: ['id' => '\d+'])]
     public function patchAction(Request $request, Customer $customer): Response
     {
-        $event = new CustomerMetaDefinitionEvent($customer);
-        $this->dispatcher->dispatch($event);
+        $this->customerService->loadMetaFields($customer);
 
         $form = $this->createForm(CustomerApiEditForm::class, $customer, [
             'include_budget' => $this->isGranted('budget', $customer),
@@ -173,12 +165,12 @@ final class CustomerController extends BaseApiController
 
         if (false === $form->isValid()) {
             $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_FORM);
+            $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
             return $this->viewHandler->handle($view);
         }
 
-        $this->repository->saveCustomer($customer);
+        $this->customerService->saveCustomer($customer);
 
         $view = new View($customer, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -216,8 +208,7 @@ final class CustomerController extends BaseApiController
     #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
     public function metaAction(Customer $customer, ParamFetcherInterface $paramFetcher): Response
     {
-        $event = new CustomerMetaDefinitionEvent($customer);
-        $this->dispatcher->dispatch($event);
+        $this->customerService->loadMetaFields($customer);
 
         $name = $paramFetcher->get('name');
         $value = $paramFetcher->get('value');
@@ -228,7 +219,7 @@ final class CustomerController extends BaseApiController
 
         $meta->setValue($value);
 
-        $this->repository->saveCustomer($customer);
+        $this->customerService->saveCustomer($customer);
 
         $view = new View($customer, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);

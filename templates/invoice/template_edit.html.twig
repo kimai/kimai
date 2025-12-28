@@ -18,24 +18,18 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
-                        {{ form_row(form.company) }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ form_row(form.vatId) }}
+                    <div class="col-md-12">
+                        {{ form_row(form.customer) }}
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
-                        {{ form_row(form.address) }}
+                    <div class="col-md-12">
+                        {{ form_row(form.paymentTerms) }}
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-md-6">
                         {{ form_row(form.contact) }}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        {{ form_row(form.paymentTerms) }}
                     </div>
                     <div class="col-md-6">
                         {{ form_row(form.paymentDetails) }}
@@ -70,6 +64,15 @@
                     </div>
                 </div>
             </fieldset>
+            {% if form.metaFields is defined and form.metaFields is not empty %}
+            <fieldset class="form-fieldset pb-0">
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(form.metaFields) }}
+                    </div>
+                </div>
+            </fieldset>
+            {% endif %}
             {{ form_rest(form) }}
         {% endblock %}
     {% endembed %}    

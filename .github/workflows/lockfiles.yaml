@@ -1,23 +1,21 @@
 name: Check .lock files
 on:
-    pull_request: null
+    pull_request_target: null
     push:
         branches:
             - main
+
+permissions:
+    pull-requests: read
+
 jobs:
     lockfiles:
         runs-on: ubuntu-latest
         name: Verify lock file integrity
         steps:
-
-            - name: Clone Kimai
-              uses: actions/checkout@v4
-              with:
-                  persist-credentials: false
-
             - name: Prevent file change
-              uses: xalvarez/prevent-file-change-action@v1
+              uses: xalvarez/prevent-file-change-action@v3
               with:
                   githubToken: ${{ secrets.GITHUB_TOKEN }}
-                  pattern: .*\.lock$
+                  pattern: .*\.lock$|^\.github\/.*$
                   trustedAuthors: kevinpapst, dependabot

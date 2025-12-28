@@ -21,7 +21,7 @@ final class ShortInvoiceCalculator extends AbstractMergedCalculator implements C
     /**
      * @return InvoiceItem[]
      */
-    public function getEntries(): array
+    protected function calculateEntries(): array
     {
         $entries = $this->model->getEntries();
         if (empty($entries)) {

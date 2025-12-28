@@ -38,6 +38,14 @@
         <source>Don't worry, Kimai will help you create a new one!</source>
         <target state="needs-translation">… ți-ai uitat parola? Nu te îngrijora. Kimai te va ajuta să îți creezi o parolă nouă:</target>
       </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">Cererea ta a fost respinsa</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Cererea ta a fost aprobata</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

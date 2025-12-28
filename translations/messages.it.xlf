@@ -1944,7 +1944,7 @@
       </trans-unit>
       <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve" approved="yes">
         <source>sending_company</source>
-        <target state="final">Mittente fattura</target>
+        <target state="final">Emittente fattura</target>
       </trans-unit>
       <trans-unit id="y1XHR1Q" resname="address_deprecated" xml:space="preserve" approved="yes">
         <source>address_deprecated</source>
@@ -1965,6 +1965,106 @@
       <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve" approved="yes">
         <source>Code</source>
         <target state="final">Codice</target>
+      </trans-unit>
+      <trans-unit id="xZzzKxM" resname="orientation" xml:space="preserve" approved="yes">
+        <source>Orientation</source>
+        <target state="final">Orientamento</target>
+      </trans-unit>
+      <trans-unit id="UcWoKWo" resname="portrait" xml:space="preserve" approved="yes">
+        <source>Portrait</source>
+        <target state="final">Verticale</target>
+      </trans-unit>
+      <trans-unit id="rLlV34K" resname="landscape" xml:space="preserve" approved="yes">
+        <source>Landscape</source>
+        <target state="final">Orizzontale</target>
+      </trans-unit>
+      <trans-unit id="UZUFKZg" resname="remaining_budget" xml:space="preserve" approved="yes">
+        <source>remaining_budget</source>
+        <target state="final">Budget rimanente</target>
+      </trans-unit>
+      <trans-unit id="eV6j76Q" resname="font" xml:space="preserve" approved="yes">
+        <source>font</source>
+        <target state="final">Font</target>
+      </trans-unit>
+      <trans-unit id="BmDRYT." resname="sending_company.help" xml:space="preserve" approved="yes">
+        <source>sending_company.help</source>
+        <target state="final">Questa azienda è indicata come emittente sulla fattura. Verranno utilizzati il nome, l'indirizzo e i dati fiscali.</target>
+      </trans-unit>
+      <trans-unit id="PciSBv9" resname="address_row" xml:space="preserve" approved="yes">
+        <source>address_row</source>
+        <target state="final">Riga %row%</target>
+      </trans-unit>
+      <trans-unit id="_Ep8Ogx" resname="buyerReference" xml:space="preserve" approved="yes">
+        <source>buyerReference</source>
+        <target state="final">Riferimento acquirente</target>
+      </trans-unit>
+      <trans-unit id="nPJWKwW" resname="payment_type" xml:space="preserve" approved="yes">
+        <source>payment_type</source>
+        <target state="final">Tipo di pagamento</target>
+      </trans-unit>
+      <trans-unit id="uXB48Vj" resname="SEPA Credit Transfer" xml:space="preserve" approved="yes">
+        <source>SEPA Credit Transfer</source>
+        <target state="final">Bonifico SEPA</target>
+      </trans-unit>
+      <trans-unit id="s42A2gm" resname="SEPA Direct Debit" xml:space="preserve" approved="yes">
+        <source>SEPA Direct Debit</source>
+        <target state="final">Addebito diretto SEPA</target>
+      </trans-unit>
+      <trans-unit id="4toQj2M" resname="Cash" xml:space="preserve" approved="yes">
+        <source>Cash</source>
+        <target state="final">Contanti</target>
+      </trans-unit>
+      <trans-unit id="cWZZc6D" resname="Cheque" xml:space="preserve" approved="yes">
+        <source>Cheque</source>
+        <target state="final">Controllo</target>
+      </trans-unit>
+      <trans-unit id="jMvh7bn" resname="Credit Transfer" xml:space="preserve" approved="yes">
+        <source>Credit Transfer</source>
+        <target state="final">Trasferimento di credito</target>
+      </trans-unit>
+      <trans-unit id="TJQbc0a" resname="Payment To Bank Account" xml:space="preserve" approved="yes">
+        <source>Payment To Bank Account</source>
+        <target state="final">Pagamento sul conto bancario</target>
+      </trans-unit>
+      <trans-unit id=".UIt099" resname="Card Payment" xml:space="preserve" approved="yes">
+        <source>Card Payment</source>
+        <target state="final">Pagamento con carta</target>
+      </trans-unit>
+      <trans-unit id="Wnb_qF0" resname="Direct Debit" xml:space="preserve" approved="yes">
+        <source>Direct Debit</source>
+        <target state="final">Addebito diretto</target>
+      </trans-unit>
+      <trans-unit id="rIdfGxM" resname="payment_account_name" xml:space="preserve" approved="yes">
+        <source>payment_account_name</source>
+        <target state="final">Titolare del conto o della carta</target>
+      </trans-unit>
+      <trans-unit id="jcT9Og6" resname="payment_account_number" xml:space="preserve" approved="yes">
+        <source>payment_account_name</source>
+        <target state="final">IBAN o numero di carta</target>
+      </trans-unit>
+      <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve" approved="yes">
+        <source>electronic_invoice</source>
+        <target state="final">Fattura elettronica</target>
+      </trans-unit>
+      <trans-unit id="QnN_ONc" resname="invoice_tax_type" xml:space="preserve" approved="yes">
+        <source>invoice_tax_type</source>
+        <target state="final">Stato fiscale</target>
+      </trans-unit>
+      <trans-unit id="Mi7y8Q3" resname="tax.type.exempt" xml:space="preserve" approved="yes">
+        <source>tax.type.exempt</source>
+        <target state="final">Esonera</target>
+      </trans-unit>
+      <trans-unit id="lU1Njcy" resname="tax.type.standard" xml:space="preserve" approved="yes">
+        <source>tax.type.standard</source>
+        <target state="final">Tassabile</target>
+      </trans-unit>
+      <trans-unit id="E470U8W" resname="tax.type.reverse" xml:space="preserve" approved="yes">
+        <source>tax.type.reverse</source>
+        <target state="final">Addebito inverso</target>
+      </trans-unit>
+      <trans-unit id="hi31a3v" resname="tax.note.reverse_charge" xml:space="preserve" approved="yes">
+        <source>tax.note.reverse_charge</source>
+        <target state="final">Tassa da pagare in base all'addebito inverso</target>
       </trans-unit>
     </body>
   </file>

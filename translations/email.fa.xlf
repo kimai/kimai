@@ -24,19 +24,71 @@
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target state="needs-translation">پسورد خود را ریست کنید</target>
+        <target state="translated">ورود به کیمای</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="needs-translation">آن می تواند اتفاق بیفتد …</target>
+        <target state="translated">وارد حساب کاربری خود شوید</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="needs-translation">پسورد خود را ریست کنید</target>
+        <target state="translated">وارد شوید</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="needs-translation">… خب شما پسورد خود را فراموش کرده اید؟ نگران نباشید : kimai به شما کمک خواهد کرد تا یکی جدید بسازید:</target>
+        <target state="translated">این لینک فقط تا ۱۵ دقیقه آینده معتبر خواهد بود.</target>
+      </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
+        <source>absence_created_supervisor_subject</source>
+        <target state="translated">غیبت جدید:%user% (%type%)</target>
+      </trans-unit>
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
+        <source>A new absence was created for %user%.
+
+%list%
+
+Please review them at: %url%</source>
+        <target state="translated">غیبت جدیدی ایجاد شد برای %user%
+
+%list%
+
+لطفا آنها را بررسی کنید در:%url%</target>
+      </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="translated">درخواست تأیید:%user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="translated">درخواست تأیید برای %user% ارسال شد.
+
+%list%
+
+لطفا آنها را بررسی کنید در:%url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">درخواست شما رد شد</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">درخواست مجوز شما توسط رد شده است%created_by%
+
+%list%
+
+لطفا آنها را بررسی کنید در:%url%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">درخواست شما تایید شد</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="translated">درخواست شما توسط %created_by% تایید شد
+
+%list%
+
+شما می توانید تمام سوالات خود را در زیر بیابید:%url%</target>
       </trans-unit>
     </body>
   </file>

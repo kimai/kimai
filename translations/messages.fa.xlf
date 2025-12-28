@@ -56,7 +56,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple" xml:space="preserve">
         <source>update_multiple</source>
-        <target state="needs-translation">%action% %count% ورودی ها؟</target>
+        <target state="translated">%action% %count% ورودی ها</target>
       </trans-unit>
       <trans-unit id="OTDmccn" resname="attachments">
         <source>attachments</source>
@@ -244,7 +244,7 @@
       </trans-unit>
       <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="needs-translation">بودجه زمان</target>
+        <target state="translated">بودجه زمان</target>
       </trans-unit>
       <trans-unit id="CvlqjtY" resname="budget">
         <source>budget</source>
@@ -290,9 +290,9 @@
         <source>starttime</source>
         <target>شروع</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
-        <target>روز</target>
+        <target state="translated">تاریخ</target>
       </trans-unit>
       <trans-unit id="hlu4iX5" resname="error.no_comments_found">
         <source>error.no_comments_found</source>
@@ -468,7 +468,7 @@
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
-        <target state="needs-translation">‌لینکی به ایمیل شما ارسال شد. جهت بازیابی رمز خود روی آن کلیک کنید. نکته: شما در طی %tokenLifetime% ساعت فقط یکبار می‌توانید رمز جدید درخواست کنید. اگر ایمیل برای شما ارسال نشد پوشه هرزنامه را بررسی کنید یا دوباره تلاش کنید.</target>
+        <target state="translated">‌لینکی به ایمیل شما ارسال شد. جهت بازیابی رمز خود روی آن کلیک کنید. نکته: شما در طی %tokenLifetime% ساعت فقط یکبار می‌توانید رمز جدید درخواست کنید. اگر ایمیل برای شما ارسال نشد پوشه هرزنامه را بررسی کنید یا دوباره تلاش کنید.</target>
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
         <source>error.too_many_entries</source>
@@ -480,7 +480,7 @@
       </trans-unit>
       <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target state="needs-translation">کار میکند از تاریخ</target>
+        <target state="translated">اولین روز کاری</target>
       </trans-unit>
       <trans-unit id="fVA3M2x" resname="choice_pattern">
         <source>Display of entries in selection lists</source>
@@ -624,27 +624,27 @@
       </trans-unit>
       <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target state="needs-translation">ساعت کاری امروز</target>
+        <target state="translated">امروز</target>
       </trans-unit>
       <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target state="needs-translation">ساعت کاری این هفته</target>
+        <target state="translated">ساعت کاری این هفته</target>
       </trans-unit>
       <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target state="needs-translation">ساعت کاری این ماه</target>
+        <target state="translated">ساعت کاری این ماه</target>
       </trans-unit>
       <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target state="needs-translation">ساعت کاری امسال</target>
+        <target state="translated">ساعت کاری امسال</target>
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
         <source>stats.durationFinancialYear</source>
-        <target state="needs-translation">ساعات کار در این سال مالی</target>
+        <target state="translated">سال مالی</target>
       </trans-unit>
       <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
-        <target state="needs-translation">کل ساعت کاری</target>
+        <target state="translated">کل</target>
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
@@ -790,9 +790,9 @@
         <source>active.entries</source>
         <target state="translated">اندازه گیری زمان فعالیت شما</target>
       </trans-unit>
-      <trans-unit id="dTHY7Mw" resname="timesheet.start">
+      <trans-unit id="dTHY7Mw" resname="timesheet.start" xml:space="preserve">
         <source>timesheet.start</source>
-        <target state="needs-translation">رکورد زمانی ایجاد کنید</target>
+        <target state="translated">ردیابی زمان را شروع کنید</target>
       </trans-unit>
       <trans-unit id="igCkqAP" resname="pageSize">
         <source>pageSize</source>
@@ -1318,9 +1318,9 @@
         <source>team.configure_teamlead.help</source>
         <target state="translated">کاربران برگزیده / برجسته شده رهبران تیم هستند.</target>
       </trans-unit>
-      <trans-unit id="wwrREDg" resname="pagination">
+      <trans-unit id="wwrREDg" resname="pagination" xml:space="preserve">
         <source>pagination</source>
-        <target state="translated">Show entries %start% to %end% from %total%.</target>
+        <target state="translated">نمایش ورودی‌ها از %start% تا %end% از %total%.</target>
       </trans-unit>
       <trans-unit id="mjKOAgQ" resname="skin.light">
         <source>skin.light</source>
@@ -1332,7 +1332,7 @@
       </trans-unit>
       <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
-        <target state="needs-translation">رمز عبور API برای ارتباط بین Kimai و برنامه های شما استفاده می شود</target>
+        <target state="translated">در اینجا می توانید توکن های API خود را که برای احراز هویت برنامه شما در Kimai استفاده می شود، مدیریت کنید.</target>
       </trans-unit>
       <trans-unit id="QT8.BCN" resname="api_password.missing_title">
         <source>api_password.missing_title</source>
@@ -1436,7 +1436,7 @@
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
-        <target state="needs-translation">فیلتر تایم شیت ها</target>
+        <target state="translated">جداول زمانی</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
@@ -1446,9 +1446,9 @@
         <source>home</source>
         <target state="translated">صفحه اصلی</target>
       </trans-unit>
-      <trans-unit id="PBlIO2x" resname="create-project">
+      <trans-unit id="PBlIO2x" resname="create-project" xml:space="preserve">
         <source>create-project</source>
-        <target state="needs-translation">ایجاد پروژه</target>
+        <target state="translated">ایجاد پروژه</target>
       </trans-unit>
       <trans-unit id="UbouFOs" resname="create-activity">
         <source>create-activity</source>
@@ -1501,6 +1501,546 @@
       <trans-unit id="pJzNT.n" resname="vcard">
         <source>vcard</source>
         <target state="translated">کارت بازرگانی</target>
+      </trans-unit>
+      <trans-unit id="EYXzfTO" resname="deleted" xml:space="preserve">
+        <source>deleted</source>
+        <target state="translated">حذف شده</target>
+      </trans-unit>
+      <trans-unit id="EX27Gdt" resname="created_by" xml:space="preserve">
+        <source>created_by</source>
+        <target state="translated">ایجاد شده توسط</target>
+      </trans-unit>
+      <trans-unit id="6Hip2aF" resname="created_at" xml:space="preserve">
+        <source>created_at</source>
+        <target state="translated">ایجاد شده در</target>
+      </trans-unit>
+      <trans-unit id="QG7.sen" resname="created" xml:space="preserve">
+        <source>Created</source>
+        <target state="translated">ایجاد شد</target>
+      </trans-unit>
+      <trans-unit id="t1r372x" resname="invisible" xml:space="preserve">
+        <source>invisible</source>
+        <target state="translated">نامرئی</target>
+      </trans-unit>
+      <trans-unit id="erN3h3b" resname="replace" xml:space="preserve">
+        <source>replace</source>
+        <target state="translated">جایگزین</target>
+      </trans-unit>
+      <trans-unit id="rlJLVNm" resname="append" xml:space="preserve">
+        <source>append</source>
+        <target state="translated">ضمیمه</target>
+      </trans-unit>
+      <trans-unit id="eCEGRzN" resname="work_contract" xml:space="preserve">
+        <source>work_contract</source>
+        <target state="translated">قرارداد کار</target>
+      </trans-unit>
+      <trans-unit id="7_d7IB3" resname="evaluation" xml:space="preserve">
+        <source>evaluation</source>
+        <target state="translated">ارزیابی</target>
+      </trans-unit>
+      <trans-unit id="4lrfIsZ" resname="complete_month" xml:space="preserve">
+        <source>Complete month</source>
+        <target state="translated">ماه قفل</target>
+      </trans-unit>
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
+        <source>complete_month.help</source>
+        <target state="translated">تمام روزهای سال قبل از تاریخ انتخابی قفل می شود. کاربر دیگر قادر به ایجاد یا ویرایش زمان برای دوره قفل شده نخواهد بود.</target>
+      </trans-unit>
+      <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="no">
+        <source>Unlock month</source>
+        <target state="translated">باز کردن فقل ماه</target>
+      </trans-unit>
+      <trans-unit id="mhOe3Iy" resname="unlock_month.help" xml:space="preserve">
+        <source>unlock_month.help</source>
+        <target state="translated">این قفل تمام روزهای سال بعد از تاریخ انتخاب شده را باز می کند.</target>
+      </trans-unit>
+      <trans-unit id="eWmotjb" resname="completed_month_pdf" xml:space="preserve">
+        <source>completed_month_pdf</source>
+        <target state="translated">پی دی اف ماه تکمیل شد</target>
+      </trans-unit>
+      <trans-unit id="AXr_aHI" resname="completed_month_pdf_note" xml:space="preserve">
+        <source>completed_month_pdf_note</source>
+        <target state="translated">این سند به عنوان مدرکی برای ساعات کار عمل می کند.</target>
+      </trans-unit>
+      <trans-unit id="yXrOTI." resname="review" xml:space="preserve">
+        <source>Review</source>
+        <target state="translated">بررسی کنید</target>
+      </trans-unit>
+      <trans-unit id="mS4SSmt" resname="work_times" xml:space="preserve">
+        <source>Working times</source>
+        <target state="translated">زمان های کاری</target>
+      </trans-unit>
+      <trans-unit id="iaJj4va" resname="work_times_account" xml:space="preserve">
+        <source>Account working times</source>
+        <target state="translated">زمان کار حساب</target>
+      </trans-unit>
+      <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
+        <source>Expected number of hours</source>
+        <target state="translated">ساعت های مورد انتظار</target>
+      </trans-unit>
+      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured" xml:space="preserve">
+        <source>work_times_should.none_configured</source>
+        <target state="translated">هیچ ساعت هدفی برای این کاربر در تنظیمات قرارداد کاری پیکربندی نشده است.</target>
+      </trans-unit>
+      <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
+        <source>work_times_is</source>
+        <target state="translated">ساعت کار کرد</target>
+      </trans-unit>
+      <trans-unit id="8yqaKzX" resname="confirmed_by_at" xml:space="preserve">
+        <source>confirmed_by_at</source>
+        <target state="translated">تأیید شده توسط %user% در %date%</target>
+      </trans-unit>
+      <trans-unit id="wZRRqg0" resname="manual_bookings" xml:space="preserve">
+        <source>manual_bookings</source>
+        <target state="translated">رزروهای دستی</target>
+      </trans-unit>
+      <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro" xml:space="preserve">
+        <source>manual_bookings.work_contract_intro</source>
+        <target state="translated">رزروهای دستی را نمی‌توان بعداً تغییر داد یا حذف کرد!</target>
+      </trans-unit>
+      <trans-unit id="znIJiOw" resname="manual_bookings.duration_help" xml:space="preserve">
+        <source>manual_bookings.duration_help</source>
+        <target state="translated">مدت زمان می تواند مثبت (افزایش زمان است) وهم منفی (کاهش زمان است)باشد.</target>
+      </trans-unit>
+      <trans-unit id="M.zFjwe" resname="pto_year_holiday" approved="no" xml:space="preserve">
+        <source>Holidays per year</source>
+        <target state="translated">تعطیلات در سال</target>
+      </trans-unit>
+      <trans-unit id="gcFtM3o" resname="holiday" xml:space="preserve">
+        <source>holiday</source>
+        <target state="translated">تعطیلات</target>
+      </trans-unit>
+      <trans-unit id="XE01Ar1" resname="parental" xml:space="preserve">
+        <source>parental</source>
+        <target state="translated">مرخصی والدین</target>
+      </trans-unit>
+      <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve">
+        <source>Project number</source>
+        <target state="translated">شماره پروژه</target>
+      </trans-unit>
+      <trans-unit id="8JEDuyx" resname="activity_number" xml:space="preserve">
+        <source>Activity number</source>
+        <target state="translated">شماره فعالیت</target>
+      </trans-unit>
+      <trans-unit id="NOEx3FF" resname="invoice_date.help" xml:space="preserve">
+        <source>invoice_date.help</source>
+        <target state="translated">در اینجا می توانید تاریخ فاکتور را تغییر دهید</target>
+      </trans-unit>
+      <trans-unit id="F7xeAn4" resname="invoice_date" xml:space="preserve">
+        <source>invoice_date</source>
+        <target state="translated">تاریخ فاکتور</target>
+      </trans-unit>
+      <trans-unit id="Zngu6M9" resname="status.planned" xml:space="preserve">
+        <source>status.planned</source>
+        <target state="translated">برنامه ریزی شده</target>
+      </trans-unit>
+      <trans-unit id="m8V2yFG" resname="status.progress" xml:space="preserve">
+        <source>status.progress</source>
+        <target state="translated">در حال انجام</target>
+      </trans-unit>
+      <trans-unit id="HF70hZq" resname="status.closed" xml:space="preserve">
+        <source>status.closed</source>
+        <target state="translated">تکمیل شد</target>
+      </trans-unit>
+      <trans-unit id="opDmYAa" resname="status.approved" xml:space="preserve">
+        <source>status.approved</source>
+        <target state="translated">تصویب شد</target>
+      </trans-unit>
+      <trans-unit id="dOIWgOr" resname="approve" xml:space="preserve">
+        <source>approve</source>
+        <target state="translated">تایید کنید</target>
+      </trans-unit>
+      <trans-unit id="Na24cyT" resname="status.requested" xml:space="preserve">
+        <source>status.requested</source>
+        <target state="translated">درخواست شده است</target>
+      </trans-unit>
+      <trans-unit id="H1i5FFs" resname="request" xml:space="preserve">
+        <source>request</source>
+        <target state="translated">درخواست کنید</target>
+      </trans-unit>
+      <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve" approved="no">
+        <source>Rejected</source>
+        <target state="translated">رد شد</target>
+      </trans-unit>
+      <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve">
+        <source>reject</source>
+        <target state="translated">رد کردن</target>
+      </trans-unit>
+      <trans-unit id="mR_Y5Mv" resname="timesheet.stop" xml:space="preserve">
+        <source>timesheet.stop</source>
+        <target state="translated">ردیابی زمان را متوقف کنید</target>
+      </trans-unit>
+      <trans-unit id="f1Cgptu" resname="batch_table_checkbox" xml:space="preserve">
+        <source>batch_table_checkbox</source>
+        <target state="translated">افزودن ورودی به لیست به روز رسانی دسته ای</target>
+      </trans-unit>
+      <trans-unit id="ekN4GLW" resname="batch_table_checkbox_all" xml:space="preserve">
+        <source>batch_table_checkbox_all</source>
+        <target state="translated">همه ورودی ها را برای لیست به روز رسانی دسته ای انتخاب کنید</target>
+      </trans-unit>
+      <trans-unit id="J_teUVB" resname="updated" xml:space="preserve">
+        <source>Updated</source>
+        <target state="translated">به روز شد</target>
+      </trans-unit>
+      <trans-unit id="WwesQPU" resname="deactivate" xml:space="preserve">
+        <source>Deactivate</source>
+        <target state="translated">غیر فعال کردن</target>
+      </trans-unit>
+      <trans-unit id="IAx_YiA" resname="activate" xml:space="preserve">
+        <source>Activate</source>
+        <target state="translated">فعال کردن</target>
+      </trans-unit>
+      <trans-unit id="i_XOmN4" resname="help_locales" xml:space="preserve">
+        <source>help_locales</source>
+        <target state="translated">در اینجا نمونه هایی از قوانین قالب بندی برای زبان های پشتیبانی شده آورده شده است</target>
+      </trans-unit>
+      <trans-unit id="d9m85KE" resname="locale" xml:space="preserve" approved="no">
+        <source>Time, date and currency format</source>
+        <target state="translated">زمان، تاریخ و فرمت ارز</target>
+      </trans-unit>
+      <trans-unit id="JmkKf48" resname="user.language.help" xml:space="preserve">
+        <source>user.language.help</source>
+        <target state="translated">این تنظیمات وظیفه ترجمه نرم افزار را بر عهده دارد</target>
+      </trans-unit>
+      <trans-unit id="ulgdXdi" resname="hour_24" xml:space="preserve">
+        <source>hour_24</source>
+        <target state="translated">24 ساعته</target>
+      </trans-unit>
+      <trans-unit id="M2B0gF." resname="time" xml:space="preserve">
+        <source>time</source>
+        <target state="translated">زمان</target>
+      </trans-unit>
+      <trans-unit id="95DUED0" resname="send_to" xml:space="preserve">
+        <source>send_to</source>
+        <target state="translated">ارسال به %name%</target>
+      </trans-unit>
+      <trans-unit id="5buBUCm" resname="receive_from" xml:space="preserve">
+        <source>receive_from</source>
+        <target state="translated">دریافت از %name%</target>
+      </trans-unit>
+      <trans-unit id="fWuGTog" resname="public_holiday" xml:space="preserve">
+        <source>public_holiday</source>
+        <target state="translated">تعطیل رسمی</target>
+      </trans-unit>
+      <trans-unit id="zlmddHB" resname="public_holidays" xml:space="preserve">
+        <source>public_holidays</source>
+        <target state="translated">تعطیلات رسمی</target>
+      </trans-unit>
+      <trans-unit id="u4lbYD5" resname="public_holiday.group" xml:space="preserve">
+        <source>public_holiday.group</source>
+        <target state="translated">گروه تعطیلات</target>
+      </trans-unit>
+      <trans-unit id="GIgQHa4" resname="absence" xml:space="preserve">
+        <source>absence</source>
+        <target state="translated">غیبت</target>
+      </trans-unit>
+      <trans-unit id="YTzKpcP" resname="Absence calendar" xml:space="preserve">
+        <source>Absence calendar</source>
+        <target state="translated">تقویم غیبت</target>
+      </trans-unit>
+      <trans-unit id="4PMHpIp" resname="time_off" xml:space="preserve">
+        <source>time_off</source>
+        <target state="translated">زمان مرخصی</target>
+      </trans-unit>
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
+        <source>default</source>
+        <target state="translated">پیش فرض</target>
+      </trans-unit>
+      <trans-unit id="_WlU8Fp" resname="sickness" xml:space="preserve">
+        <source>sickness</source>
+        <target state="translated">بیماری</target>
+      </trans-unit>
+      <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
+        <source>Sickness of a relative</source>
+        <target state="translated">بیماری یکی از بستگان</target>
+      </trans-unit>
+      <trans-unit id="2SmKENG" resname="other" xml:space="preserve">
+        <source>other</source>
+        <target state="translated">دیگر</target>
+      </trans-unit>
+      <trans-unit id="Od3xvQK" resname="button.report" xml:space="preserve">
+        <source>button.report</source>
+        <target state="translated">گزارش</target>
+      </trans-unit>
+      <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="translated">ناتوانی در کار، قرار ملاقات های ضروری پزشکی، مرخصی مراقبتی و غیره.</target>
+      </trans-unit>
+      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
+        <source>You have submitted %used% of your available %days% vacation days so far.</source>
+        <target state="translated">%used%استفاده شده از %days% روزهای تعطیل موجود خود را تاکنون ارسال کرده‌اید.</target>
+      </trans-unit>
+      <trans-unit id="DA1.Ln_" resname="time_off.intro" xml:space="preserve">
+        <source>time_off.intro</source>
+        <target state="translated">موجودی حساب زمان کاری شما %hours% ساعت است.</target>
+      </trans-unit>
+      <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
+        <source>absence_other.intro</source>
+        <target state="translated">رویدادهای خانوادگی، خانه تکانی، هرج و مرج آب و هوا و غیره.</target>
+      </trans-unit>
+      <trans-unit id="TTnaBm4" resname="day_full" xml:space="preserve">
+        <source>day_full</source>
+        <target state="translated">روز کامل</target>
+      </trans-unit>
+      <trans-unit id="Eml59KV" resname="day_half" xml:space="preserve">
+        <source>day_half</source>
+        <target state="translated">نصف روز</target>
+      </trans-unit>
+      <trans-unit id="CDTC1gc" resname="supervisor" xml:space="preserve">
+        <source>supervisor</source>
+        <target state="translated">سرپرست</target>
+      </trans-unit>
+      <trans-unit id=".wmq_rT" resname="force_password_change" xml:space="preserve">
+        <source>force_password_change</source>
+        <target state="translated">درخواست رمز عبور جدید</target>
+      </trans-unit>
+      <trans-unit id="0bKwA0k" resname="force_password_change_help" xml:space="preserve">
+        <source>force_password_change_help</source>
+        <target state="translated">دفعه بعد که کاربر وارد سیستم می شود، باید یک رمز عبور جدید وارد کند.</target>
+      </trans-unit>
+      <trans-unit id="vURcRit" resname="overview" xml:space="preserve">
+        <source>Overview</source>
+        <target state="translated">نمای کلی</target>
+      </trans-unit>
+      <trans-unit id="0xFBb6O" resname="Expenses" xml:space="preserve">
+        <source>Expenses</source>
+        <target state="translated">مخارج</target>
+      </trans-unit>
+      <trans-unit id="KSwG8AR" resname="Category" xml:space="preserve">
+        <source>Category</source>
+        <target state="translated">دسته بندی</target>
+      </trans-unit>
+      <trans-unit id="uLHYlMa" resname="Categories" xml:space="preserve">
+        <source>Categories</source>
+        <target state="translated">دسته بندی ها</target>
+      </trans-unit>
+      <trans-unit id="7Sycs4M" resname="Importer" xml:space="preserve">
+        <source>Importer</source>
+        <target state="translated">وارد کننده</target>
+      </trans-unit>
+      <trans-unit id="J6EJUj9" resname="Meta fields" xml:space="preserve">
+        <source>Meta fields</source>
+        <target state="translated">فیلدهای سفارشی</target>
+      </trans-unit>
+      <trans-unit id="JmpBuQ1" resname="Translations" xml:space="preserve">
+        <source>Translations</source>
+        <target state="translated">ترجمه ها</target>
+      </trans-unit>
+      <trans-unit id="b712axp" resname="Translation" xml:space="preserve">
+        <source>Translation</source>
+        <target state="translated">ترجمه</target>
+      </trans-unit>
+      <trans-unit id="Vp7xjKh" resname="Audit logs" xml:space="preserve">
+        <source>Audit logs</source>
+        <target state="translated">گزارش های حسابرسی</target>
+      </trans-unit>
+      <trans-unit id="YRRgZCe" resname="Custom content" xml:space="preserve">
+        <source>Custom content</source>
+        <target state="translated">محتوای سفارشی</target>
+      </trans-unit>
+      <trans-unit id="q1EATp1" resname="days" xml:space="preserve">
+        <source>days</source>
+        <target state="translated">روزها</target>
+      </trans-unit>
+      <trans-unit id="Ga4bvUX" resname="unpaid_vacation" xml:space="preserve">
+        <source>unpaid_vacation</source>
+        <target state="translated">تعطیلات بدون حقوق</target>
+      </trans-unit>
+      <trans-unit id="q59lI2y" resname="user_identifier" xml:space="preserve">
+        <source>user_identifier</source>
+        <target state="translated">شناسه کاربری</target>
+      </trans-unit>
+      <trans-unit id="uqv2Lrv" resname="user_identifier.help" xml:space="preserve">
+        <source>user_identifier.help</source>
+        <target state="translated">شناسه منحصر به فرد کاربر برای احراز هویت و در صادرات استفاده می‌شود</target>
+      </trans-unit>
+      <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
+        <source>absence_comment_mandatory</source>
+        <target state="translated">عدم حضور: نظر دادن یک فیلد اجباری است</target>
+      </trans-unit>
+      <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve">
+        <source>booking_allow_only_work_days</source>
+        <target state="translated">فقط برای روزهایی که ساعات کاری مورد انتظار در قرارداد کار تعریف شده است، اجازه ورود زمان بدهید</target>
+      </trans-unit>
+      <trans-unit id="HQ2YM1b" resname="attendance_only_project" xml:space="preserve">
+        <source>attendance_only_project</source>
+        <target state="translated">فقط ورودی‌های پروژه انتخاب شده را به عنوان زمان کار حساب کنید</target>
+      </trans-unit>
+      <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
+        <source>api_token_hidden</source>
+        <target state="translated">این تنها باری است که این کلید نمایش داده می‌شود! پس آن را در جای امنی نگه دارید و قبل از بستن این پنجره، مطمئن شوید که آن را کپی کرده‌اید.</target>
+      </trans-unit>
+      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
+        <source>api_password_deprecated</source>
+        <target state="translated">رمزهای عبور API قدیمی هستند: لطفاً به جای آنها از توکن‌های API استفاده کنید.</target>
+      </trans-unit>
+      <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
+        <source>hours_per_day</source>
+        <target state="translated">ساعت در روز</target>
+      </trans-unit>
+      <trans-unit id="y7KtuSS" resname="hours_per_week" xml:space="preserve">
+        <source>hours_per_week</source>
+        <target state="translated">ساعت در هفته</target>
+      </trans-unit>
+      <trans-unit id="07e8ywS" resname="hours_per_month" xml:space="preserve">
+        <source>hours_per_month</source>
+        <target state="translated">ساعت در ماه</target>
+      </trans-unit>
+      <trans-unit id="7p_pFHl" resname="work_days" xml:space="preserve">
+        <source>work_days</source>
+        <target state="translated">روزهای کاری</target>
+      </trans-unit>
+      <trans-unit id="2pbkbn_" resname="work_hours_mode" xml:space="preserve">
+        <source>work_hours_mode</source>
+        <target state="translated">محاسبه زمان کار</target>
+      </trans-unit>
+      <trans-unit id="IFT9pou" resname="last_working_day" xml:space="preserve">
+        <source>last_working_day</source>
+        <target state="translated">آخرین روز کاری</target>
+      </trans-unit>
+      <trans-unit id="0jvo0RQ" resname="profit" xml:space="preserve">
+        <source>profit</source>
+        <target state="translated">سود</target>
+      </trans-unit>
+      <trans-unit id="vN5pKOU" resname="costs" xml:space="preserve">
+        <source>costs</source>
+        <target state="translated">هزینه ها</target>
+      </trans-unit>
+      <trans-unit id="FOvlalA" resname="break" xml:space="preserve">
+        <source>break</source>
+        <target state="translated">شکستن</target>
+      </trans-unit>
+      <trans-unit id="QCf1FUG" resname="reload" xml:space="preserve">
+        <source>reload</source>
+        <target state="translated">بارگذاری مجدد</target>
+      </trans-unit>
+      <trans-unit id="5vJvarK" resname="syncronisation" xml:space="preserve">
+        <source>Synchronization</source>
+        <target state="translated">همگام سازی</target>
+      </trans-unit>
+      <trans-unit id="2UL2SIZ" resname="import" xml:space="preserve">
+        <source>import</source>
+        <target state="translated">واردات</target>
+      </trans-unit>
+      <trans-unit id="EiWubBr" resname="sessions" xml:space="preserve">
+        <source>Sessions</source>
+        <target state="translated">جلسات</target>
+      </trans-unit>
+      <trans-unit id="f0kKHXR" resname="sessions_logout" xml:space="preserve">
+        <source>Log out of all devices</source>
+        <target state="translated">خروج تمام دستگاه ها</target>
+      </trans-unit>
+      <trans-unit id="9qIU96X" resname="result" xml:space="preserve">
+        <source>result</source>
+        <target state="translated">نتیجه</target>
+      </trans-unit>
+      <trans-unit id="wvt4jH3" resname="training" xml:space="preserve">
+        <source>training</source>
+        <target state="translated">آموزش</target>
+      </trans-unit>
+      <trans-unit id="rD4oQRR" resname="postcode" xml:space="preserve">
+        <source>Postcode</source>
+        <target state="translated">ZIP / کد پستی</target>
+      </trans-unit>
+      <trans-unit id="EaYsI0E" resname="city" xml:space="preserve">
+        <source>City</source>
+        <target state="translated">شهر</target>
+      </trans-unit>
+      <trans-unit id="y1XHR1Q" resname="address_deprecated" xml:space="preserve">
+        <source>address_deprecated</source>
+        <target state="translated">این فیلد به زودی حذف خواهد شد. لطفاً آدرس را برای ادامه تولید فاکتورهای معتبر (مثلاً برای صورتحساب الکترونیکی) منتقل کنید.</target>
+      </trans-unit>
+      <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
+        <source>sending_company</source>
+        <target state="translated">صادرکننده فاکتور</target>
+      </trans-unit>
+      <trans-unit id="BmDRYT." resname="sending_company.help" xml:space="preserve" approved="no">
+        <source>sending_company.help</source>
+        <target state="translated">این شرکت به عنوان صادرکننده در فاکتور نشان داده شده است. نام، آدرس و اطلاعات مالیاتی مورد استفاده قرار خواهد گرفت.</target>
+      </trans-unit>
+      <trans-unit id="Uzll0ps" resname="Customer portal" xml:space="preserve">
+        <source>Customer portal</source>
+        <target state="translated">پورتال مشتری</target>
+      </trans-unit>
+      <trans-unit id="cDOQMYv" resname="Beta" xml:space="preserve">
+        <source>Beta</source>
+        <target state="translated">قابلیت پیش‌نمایشی را فعال می‌کند که هنوز در دست توسعه است.</target>
+      </trans-unit>
+      <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve">
+        <source>Code</source>
+        <target state="translated">کد</target>
+      </trans-unit>
+      <trans-unit id="xZzzKxM" resname="orientation" xml:space="preserve">
+        <source>Orientation</source>
+        <target state="translated">جهت گیری</target>
+      </trans-unit>
+      <trans-unit id="UcWoKWo" resname="portrait" xml:space="preserve">
+        <source>Portrait</source>
+        <target state="translated">پرتره</target>
+      </trans-unit>
+      <trans-unit id="rLlV34K" resname="landscape" xml:space="preserve">
+        <source>Landscape</source>
+        <target state="translated">نمایش افقی (چشم انداز)</target>
+      </trans-unit>
+      <trans-unit id="UZUFKZg" resname="remaining_budget" xml:space="preserve">
+        <source>remaining_budget</source>
+        <target state="translated">بودجه باقی مانده</target>
+      </trans-unit>
+      <trans-unit id="eV6j76Q" resname="font" xml:space="preserve">
+        <source>font</source>
+        <target state="translated">فونت</target>
+      </trans-unit>
+      <trans-unit id="PciSBv9" resname="address_row" xml:space="preserve" approved="no">
+        <source>address_row</source>
+        <target state="translated">خط%row%</target>
+      </trans-unit>
+      <trans-unit id="_Ep8Ogx" resname="buyerReference" xml:space="preserve" approved="no">
+        <source>buyerReference</source>
+        <target state="translated">مرجع خریدار</target>
+      </trans-unit>
+      <trans-unit id="nPJWKwW" resname="payment_type" xml:space="preserve" approved="no">
+        <source>payment_type</source>
+        <target state="translated">نوع پرداخت</target>
+      </trans-unit>
+      <trans-unit id="uXB48Vj" resname="SEPA Credit Transfer" xml:space="preserve" approved="no">
+        <source>SEPA Credit Transfer</source>
+        <target state="translated">انتقال اعتبار SEPA</target>
+      </trans-unit>
+      <trans-unit id="s42A2gm" resname="SEPA Direct Debit" xml:space="preserve" approved="no">
+        <source>SEPA Direct Debit</source>
+        <target state="translated">بدهی مستقیم SEPA</target>
+      </trans-unit>
+      <trans-unit id="4toQj2M" resname="Cash" xml:space="preserve" approved="no">
+        <source>Cash</source>
+        <target state="translated">پول نقد</target>
+      </trans-unit>
+      <trans-unit id="cWZZc6D" resname="Cheque" xml:space="preserve" approved="no">
+        <source>Cheque</source>
+        <target state="translated">چک کردن</target>
+      </trans-unit>
+      <trans-unit id="jMvh7bn" resname="Credit Transfer" xml:space="preserve" approved="no">
+        <source>Credit Transfer</source>
+        <target state="translated">انتقال اعتبار</target>
+      </trans-unit>
+      <trans-unit id="TJQbc0a" resname="Payment To Bank Account" xml:space="preserve" approved="no">
+        <source>Payment To Bank Account</source>
+        <target state="translated">پرداخت به حساب بانکی</target>
+      </trans-unit>
+      <trans-unit id=".UIt099" resname="Card Payment" xml:space="preserve" approved="no">
+        <source>Card Payment</source>
+        <target state="translated">پرداخت کارت</target>
+      </trans-unit>
+      <trans-unit id="Wnb_qF0" resname="Direct Debit" xml:space="preserve" approved="no">
+        <source>Direct Debit</source>
+        <target state="translated">بدهی مستقیم</target>
+      </trans-unit>
+      <trans-unit id="rIdfGxM" resname="payment_account_name" xml:space="preserve" approved="no">
+        <source>payment_account_name</source>
+        <target state="translated">دارنده حساب یا کارت</target>
+      </trans-unit>
+      <trans-unit id="jcT9Og6" resname="payment_account_number" xml:space="preserve" approved="no">
+        <source>payment_account_name</source>
+        <target state="translated">شماره شبا یا شماره کارت</target>
       </trans-unit>
     </body>
   </file>

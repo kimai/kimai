@@ -15,7 +15,8 @@ use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
-use App\Timesheet\Util;
+use App\Timesheet\RateCalculator\ClassicRateCalculator;
+use App\Timesheet\RateCalculator\RateCalculatorMode;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -60,12 +61,18 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
         $allUser = $this->getAllUsers($manager);
         $faker = Factory::create();
         $all = 0;
+        $calculator = new ClassicRateCalculator();
 
         foreach ($allUser as $user) {
+            // reload, because the manager might have been cleared
             $user = $manager->find(User::class, $user->getId());
+            if ($user === null) {
+                continue;
+            }
             // random amount of timesheet entries for every user
             $timesheetForUser = rand(self::MIN_TIMESHEETS_PER_USER, self::MAX_TIMESHEETS_PER_USER);
 
+            // load on each round, because the manager might have been cleared
             $activities = $this->getAllActivities($manager);
             $projects = $this->getAllProjects($manager);
 
@@ -82,6 +89,7 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
                 }
 
                 $entry = $this->createTimesheetEntry(
+                    $calculator,
                     $user,
                     $activities[array_rand($activities)],
                     $projects[array_rand($projects)],
@@ -96,6 +104,7 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
             // create active records
             if ($all % 3 === 0) {
                 $entry = $this->createTimesheetEntry(
+                    $calculator,
                     $user,
                     $activities[array_rand($activities)],
                     $projects[array_rand($projects)],
@@ -130,10 +139,9 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
 
     /**
      * @template T of object
-     * @param ObjectManager $manager
      * @param class-string<T> $class
      * @param int $amount
-     * @return array<int, T>
+     * @return non-empty-array<int, T>
      */
     private function findRandom(ObjectManager $manager, string $class, int $amount): array
     {
@@ -157,12 +165,15 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
         /** @var array<int, T> $result */
         $result = $qb->where($qb->expr()->in('entity.id', $ids))->setMaxResults($amount)->getQuery()->getResult();
 
+        if (\count($result) === 0) {
+            throw new \Exception('Could not find any entity: ' . $class);
+        }
+
         return $result;
     }
 
     /**
-     * @param ObjectManager $manager
-     * @return array<int|string, Tag>
+     * @return non-empty-array<int|string, Tag>
      */
     private function getAllTags(ObjectManager $manager): array
     {
@@ -170,8 +181,7 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
     }
 
     /**
-     * @param ObjectManager $manager
-     * @return array<int|string, User>
+     * @return non-empty-array<int|string, User>
      */
     private function getAllUsers(ObjectManager $manager): array
     {
@@ -179,15 +189,18 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
         /** @var User[] $entries */
         $entries = $manager->getRepository(User::class)->findAll();
         foreach ($entries as $temp) {
-            $all[$temp->getId()] = $temp;
+            $all[(string) $temp->getId()] = $temp;
+        }
+
+        if (\count($all) === 0) {
+            throw new \Exception('Need users to setup timesheets');
         }
 
         return $all;
     }
 
     /**
-     * @param ObjectManager $manager
-     * @return array<int|string, Project>
+     * @return non-empty-array<int|string, Project>
      */
     private function getAllProjects(ObjectManager $manager): array
     {
@@ -195,15 +208,14 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
     }
 
     /**
-     * @param ObjectManager $manager
-     * @return array<int|string, Activity>
+     * @return non-empty-array<int|string, Activity>
      */
     private function getAllActivities(ObjectManager $manager): array
     {
         return $this->findRandom($manager, Activity::class, 50);
     }
 
-    private function createTimesheetEntry(User $user, Activity $activity, Project $project, ?string $description, bool $setEndDate): Timesheet
+    private function createTimesheetEntry(RateCalculatorMode $calculatorMode, User $user, Activity $activity, Project $project, ?string $description, bool $setEndDate): Timesheet
     {
         $start = $this->getRandomFirstDay();
         $start = $start->modify('- ' . (rand(1, 86400)) . ' seconds');
@@ -222,7 +234,7 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
 
             $duration = $end->getTimestamp() - $start->getTimestamp();
             $hourlyRate = (float) $user->getPreferenceValue(UserPreference::HOURLY_RATE);
-            $rate = Util::calculateRate($hourlyRate, $duration);
+            $rate = $calculatorMode->calculateRate($hourlyRate, $duration);
 
             $entry->setEnd($end);
             $entry->setRate($rate);
