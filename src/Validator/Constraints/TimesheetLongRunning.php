@@ -11,16 +11,22 @@ namespace App\Validator\Constraints;
 
 final class TimesheetLongRunning extends TimesheetConstraint
 {
-    public const LONG_RUNNING = 'kimai-timesheet-long-running-01';
-    public const MAXIMUM = 'kimai-timesheet-long-running-02';
+    public const string LONG_RUNNING = 'kimai-timesheet-long-running-01';
+    public const string MAXIMUM = 'kimai-timesheet-long-running-02';
 
-    protected const ERROR_NAMES = [
+    protected const array ERROR_NAMES = [
         self::LONG_RUNNING => 'TIMESHEET_LONG_RUNNING',
         self::MAXIMUM => 'MAXIMUM',
     ];
 
     public string $message = 'Maximum duration of {{ value }} hours exceeded.';
     public string $maximumMessage = 'Maximum duration exceeded.';
+
+    public function __construct(?string $message = null)
+    {
+        $this->message = $message ?? $this->message;
+        parent::__construct();
+    }
 
     public function getTargets(): string
     {

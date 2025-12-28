@@ -9,12 +9,10 @@
 
 namespace App\Validator\Constraints;
 
-use Symfony\Component\Validator\Attribute\HasNamedArguments;
 use Symfony\Component\Validator\Constraints\Regex;
 
 final class Duration extends Regex
 {
-    #[HasNamedArguments]
     public function __construct(?string $message = null)
     {
         $patterns = [

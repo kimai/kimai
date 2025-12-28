@@ -11,9 +11,9 @@ namespace App\Validator\Constraints;
 
 final class TimesheetExported extends TimesheetConstraint
 {
-    public const TIMESHEET_EXPORTED = 'kimai-timesheet-exported-01';
+    public const string TIMESHEET_EXPORTED = 'kimai-timesheet-exported-01';
 
-    protected const ERROR_NAMES = [
+    protected const array ERROR_NAMES = [
         self::TIMESHEET_EXPORTED => 'This timesheet is already exported.',
     ];
 
@@ -23,6 +23,12 @@ final class TimesheetExported extends TimesheetConstraint
      * @var \DateTime|string|null
      */
     public null|\DateTime|string $now;
+
+    public function __construct(?string $message = null)
+    {
+        $this->message = $message ?? $this->message;
+        parent::__construct();
+    }
 
     public function getTargets(): string
     {

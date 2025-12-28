@@ -61,7 +61,7 @@ class TimesheetFutureTimesValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetFutureTimes(['message' => 'myMessage']));
+        $this->validator->validate(new NotBlank(), new TimesheetFutureTimes(message: 'myMessage'));
     }
 
     public function testFutureBeginIsDisallowed(): void
@@ -70,7 +70,7 @@ class TimesheetFutureTimesValidatorTest extends ConstraintValidatorTestCase
         $timesheet = new Timesheet();
         $timesheet->setBegin($begin);
 
-        $this->validator->validate($timesheet, new TimesheetFutureTimes(['message' => 'myMessage']));
+        $this->validator->validate($timesheet, new TimesheetFutureTimes(message: 'myMessage'));
 
         $this->buildViolation('The begin date cannot be in the future.')
             ->atPath('property.path.begin_date')
@@ -87,7 +87,7 @@ class TimesheetFutureTimesValidatorTest extends ConstraintValidatorTestCase
         $timesheet = new Timesheet();
         $timesheet->setBegin($begin);
 
-        $this->validator->validate($timesheet, new TimesheetFutureTimes(['message' => 'myMessage']));
+        $this->validator->validate($timesheet, new TimesheetFutureTimes(message: 'myMessage'));
         self::assertEmpty($this->context->getViolations());
     }
 }

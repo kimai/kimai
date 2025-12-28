@@ -11,13 +11,19 @@ namespace App\Validator\Constraints;
 
 final class TimesheetNegativeDuration extends TimesheetConstraint
 {
-    public const NEGATIVE_DURATION_ERROR = 'kimai-timesheet-negative-duration-01';
+    public const string NEGATIVE_DURATION_ERROR = 'kimai-timesheet-negative-duration-01';
 
-    protected const ERROR_NAMES = [
+    protected const array ERROR_NAMES = [
         self::NEGATIVE_DURATION_ERROR => 'Duration cannot be negative.',
     ];
 
     public string $message = 'Duration cannot be negative.';
+
+    public function __construct(?string $message = null)
+    {
+        $this->message = $message ?? $this->message;
+        parent::__construct();
+    }
 
     public function getTargets(): string
     {

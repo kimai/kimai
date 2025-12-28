@@ -11,13 +11,19 @@ namespace App\Validator\Constraints;
 
 final class TimesheetRestart extends TimesheetConstraint
 {
-    public const START_DISALLOWED = 'kimai-timesheet-restart-01';
+    public const string START_DISALLOWED = 'kimai-timesheet-restart-01';
 
-    protected const ERROR_NAMES = [
+    protected const array ERROR_NAMES = [
         self::START_DISALLOWED => 'You are not allowed to start this timesheet record.',
     ];
 
     public string $message = 'You are not allowed to start this timesheet record.';
+
+    public function __construct(?string $message = null)
+    {
+        $this->message = $message ?? $this->message;
+        parent::__construct();
+    }
 
     public function getTargets(): string
     {

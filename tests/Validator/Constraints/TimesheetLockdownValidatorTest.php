@@ -77,7 +77,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetLockdown(['message' => 'myMessage']));
+        $this->validator->validate(new NotBlank(), new TimesheetLockdown(message: 'myMessage'));
     }
 
     public function testValidatorWithoutNowConstraint(): void
@@ -90,7 +90,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         $timesheet = new Timesheet();
         $timesheet->setBegin($begin);
 
-        $constraint = new TimesheetLockdown(['message' => 'myMessage']);
+        $constraint = new TimesheetLockdown(message: 'myMessage');
 
         $this->validator->validate($timesheet, $constraint);
 
@@ -105,7 +105,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         $this->validator = $this->createMyValidator(false, false, 'first day of last month', 'last day of last month', '+10 days');
         $this->validator->initialize($this->context);
 
-        $constraint = new TimesheetLockdown(['message' => 'myMessage']);
+        $constraint = new TimesheetLockdown(message: 'myMessage');
 
         $this->validator->validate(new Timesheet(), $constraint);
         self::assertEmpty($this->context->getViolations());
@@ -121,7 +121,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         $timesheet = new Timesheet();
         $timesheet->setBegin($begin);
 
-        $constraint = new TimesheetLockdown(['message' => 'myMessage', 'now' => 'first day of this month']);
+        $constraint = new TimesheetLockdown(message: 'myMessage', now: 'first day of this month');
 
         $this->validator->validate($timesheet, $constraint);
         self::assertEmpty($this->context->getViolations());
@@ -137,7 +137,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         $timesheet = new Timesheet();
         $timesheet->setBegin($begin);
 
-        $constraint = new TimesheetLockdown(['message' => 'myMessage', 'now' => 'first day of this month']);
+        $constraint = new TimesheetLockdown(message: 'myMessage', now: 'first day of this month');
 
         $this->validator->validate($timesheet, $constraint);
         self::assertEmpty($this->context->getViolations());
@@ -157,7 +157,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         $now = new \DateTime('first day of this month');
         $now->modify($nowModifier);
 
-        $constraint = new TimesheetLockdown(['message' => 'myMessage', 'now' => $now]);
+        $constraint = new TimesheetLockdown(message: 'myMessage', now: $now);
 
         $this->validator->validate($timesheet, $constraint);
 
@@ -203,7 +203,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
 
         $now = new \DateTime('first day of this month');
 
-        $constraint = new TimesheetLockdown(['message' => 'myMessage', 'now' => $now]);
+        $constraint = new TimesheetLockdown(message: 'myMessage', now: $now);
 
         $this->validator->validate($timesheet, $constraint);
 

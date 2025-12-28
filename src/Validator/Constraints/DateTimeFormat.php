@@ -9,7 +9,6 @@
 
 namespace App\Validator\Constraints;
 
-use Symfony\Component\Validator\Attribute\HasNamedArguments;
 use Symfony\Component\Validator\Constraint;
 
 final class DateTimeFormat extends Constraint
@@ -23,7 +22,6 @@ final class DateTimeFormat extends Constraint
     public ?string $separator = null;
     public ?string $message = 'This value is not a valid datetime.';
 
-    #[HasNamedArguments]
     public function __construct(?string $separator = null)
     {
         $this->separator = $separator;

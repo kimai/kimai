@@ -56,7 +56,7 @@ class TimesheetZeroDurationValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetZeroDuration(['message' => 'Duration cannot be zero.']));
+        $this->validator->validate(new NotBlank(), new TimesheetZeroDuration(message: 'Duration cannot be zero.'));
     }
 
     private function prepareTimesheet(): Timesheet
@@ -75,7 +75,7 @@ class TimesheetZeroDurationValidatorTest extends ConstraintValidatorTestCase
     {
         $timesheet = $this->prepareTimesheet();
 
-        $this->validator->validate($timesheet, new TimesheetZeroDuration(['message' => 'Duration cannot be zero.']));
+        $this->validator->validate($timesheet, new TimesheetZeroDuration(message: 'Duration cannot be zero.'));
 
         $this->buildViolation('Duration cannot be zero.')
             ->atPath('property.path.duration')
@@ -90,7 +90,7 @@ class TimesheetZeroDurationValidatorTest extends ConstraintValidatorTestCase
 
         $timesheet = $this->prepareTimesheet();
 
-        $this->validator->validate($timesheet, new TimesheetZeroDuration(['message' => 'Duration cannot be zero.']));
+        $this->validator->validate($timesheet, new TimesheetZeroDuration(message: 'Duration cannot be zero.'));
 
         $this->assertNoViolation();
     }

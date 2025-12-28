@@ -11,9 +11,9 @@ namespace App\Validator\Constraints;
 
 final class TimesheetLockdown extends TimesheetConstraint
 {
-    public const PERIOD_LOCKED = 'kimai-timesheet-lockdown-01';
+    public const string PERIOD_LOCKED = 'kimai-timesheet-lockdown-01';
 
-    protected const ERROR_NAMES = [
+    protected const array ERROR_NAMES = [
         self::PERIOD_LOCKED => 'This period is locked, please choose a later date.',
     ];
 
@@ -22,6 +22,13 @@ final class TimesheetLockdown extends TimesheetConstraint
      * @var \DateTime|string|null
      */
     public \DateTime|string|null $now;
+
+    public function __construct(?string $message = null, \DateTime|string|null $now = null)
+    {
+        $this->message = $message ?? $this->message;
+        $this->now = $now;
+        parent::__construct();
+    }
 
     public function getTargets(): string
     {
