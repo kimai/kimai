@@ -20,6 +20,7 @@
 /var/dev/*
 /var/data/*
 /var/cache/*
+/var/share/*
 /var/invoices*
 /var/export*
 /var/log/*
