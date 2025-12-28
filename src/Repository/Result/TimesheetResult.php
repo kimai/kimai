@@ -101,6 +101,6 @@ final class TimesheetResult
         $paginator->setMaxPerPage($this->timesheetQuery->getPageSize());
         $paginator->setCurrentPage($this->timesheetQuery->getPage());
 
-        return $paginator; // @phpstan-ignore return.type
+        return $paginator;
     }
 }

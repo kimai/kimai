@@ -40,7 +40,7 @@ class ChangePasswordCommandTest extends KernelTestCase
         /** @var UserService $userService */
         $userService = $container->get(UserService::class);
 
-        $this->application->add(new ChangePasswordCommand($userService));
+        $this->application->addCommand(new ChangePasswordCommand($userService));
     }
 
     public function testCommandName(): void

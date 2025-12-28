@@ -34,7 +34,7 @@ class CreateUserCommandTest extends KernelTestCase
         $container = self::$kernel->getContainer();
         /** @var UserService $userService */
         $userService = $container->get(UserService::class);
-        $this->application->add(new CreateUserCommand($userService));
+        $this->application->addCommand(new CreateUserCommand($userService));
     }
 
     public function testCreateUserFailsForShortPassword(): void

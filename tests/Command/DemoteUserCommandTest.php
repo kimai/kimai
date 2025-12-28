@@ -39,7 +39,7 @@ class DemoteUserCommandTest extends KernelTestCase
         /** @var UserService $userService */
         $userService = $container->get(UserService::class);
 
-        $this->application->add(new DemoteUserCommand($userService));
+        $this->application->addCommand(new DemoteUserCommand($userService));
     }
 
     public function testCommandName(): void

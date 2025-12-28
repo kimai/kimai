@@ -36,7 +36,7 @@ class DeactivateUserCommandTest extends KernelTestCase
         /** @var UserService $userService */
         $userService = $container->get(UserService::class);
 
-        $this->application->add(new DeactivateUserCommand($userService));
+        $this->application->addCommand(new DeactivateUserCommand($userService));
     }
 
     public function testCommandName(): void

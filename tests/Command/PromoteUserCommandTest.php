@@ -39,7 +39,7 @@ class PromoteUserCommandTest extends KernelTestCase
         $userService = $container->get(UserService::class);
         self::assertInstanceOf(UserService::class, $userService);
 
-        $this->application->add(new PromoteUserCommand($userService));
+        $this->application->addCommand(new PromoteUserCommand($userService));
     }
 
     public function testCommandName(): void

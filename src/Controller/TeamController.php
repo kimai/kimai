@@ -100,13 +100,13 @@ final class TeamController extends AbstractController
     {
         $newTeam = clone $team;
 
-        if ($team->getName() === null) {
+        if (($name = $team->getName()) === null) {
             throw new BadRequestHttpException('Team with empty name cannot be duplicated');
         }
 
         $i = 1;
         do {
-            $newName = \sprintf('%s (%s)', $team->getName() ?? 'unknown', $i++);
+            $newName = \sprintf('%s (%s)', $name, $i++);
         } while ($this->repository->count(['name' => $newName]) > 0 && $i < 10);
         $newTeam->setName($newName);
 

@@ -37,7 +37,7 @@ class ActivateUserCommandTest extends KernelTestCase
         /** @var UserService $userService */
         $userService = $container->get(UserService::class);
 
-        $this->application->add(new ActivateUserCommand($userService));
+        $this->application->addCommand(new ActivateUserCommand($userService));
     }
 
     public function testCommandName(): void

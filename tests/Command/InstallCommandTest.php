@@ -31,7 +31,7 @@ class InstallCommandTest extends KernelTestCase
         /** @var Registry $doctrine */
         $doctrine = $container->get('doctrine');
 
-        $this->application->add(new InstallCommand(
+        $this->application->addCommand(new InstallCommand(
             $doctrine->getConnection() // @phpstan-ignore argument.type
         ));
     }
