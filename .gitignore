@@ -1,6 +1,5 @@
 # some hosters require a htaccess to change the PHP version
 /public/.htaccess
-/.env-*
 /.idea/
 .DS_Store
 
@@ -34,7 +33,6 @@
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
-.env
 /public/bundles/
 /vendor/
 ###< symfony/framework-bundle ###

@@ -11,6 +11,10 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 **!! This release requires minimum PHP version 8.4 !!**
 
+### Rename .env
+
+Rename your file `.env` to `.env.local`
+
 ### Developer
 
 Do not use method chaining: all fluent interface, especially in Entities, are no longer supported. 
