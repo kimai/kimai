@@ -9,13 +9,16 @@
         "version": "1.1.0"
     },
     "dama/doctrine-test-bundle": {
-        "version": "4.0",
+        "version": "8.4",
         "recipe": {
             "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "4.0",
-            "ref": "56eaa387b5e48ebcc7c95a893b47dfa1ad51449c"
-        }
+            "branch": "main",
+            "version": "8.3",
+            "ref": "dfc51177476fb39d014ed89944cde53dc3326d23"
+        },
+        "files": [
+            "config/packages/dama_doctrine_test_bundle.yaml"
+        ]
     },
     "doctrine/collections": {
         "version": "v1.5.0"
