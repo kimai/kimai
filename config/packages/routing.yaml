@@ -1,3 +1,6 @@
+parameters:
+    env(default_uri): 'http://localhost'
+
 framework:
     router:
         utf8: true
