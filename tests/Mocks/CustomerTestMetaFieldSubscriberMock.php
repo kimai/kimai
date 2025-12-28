@@ -30,7 +30,7 @@ class CustomerTestMetaFieldSubscriberMock implements EventSubscriberInterface
         $definition = (new CustomerMeta())
             ->setName('metatestmock')
             ->setType(TextType::class)
-            ->addConstraint(new Length(['max' => 200]))
+            ->addConstraint(new Length(max: 200))
             ->setIsVisible(true);
 
         $event->getEntity()->setMetaField($definition);
