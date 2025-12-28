@@ -52,6 +52,12 @@
         <env name="MAILER_URL" value="null://null"/>
         <env name="MAILER_FROM" value="kimai@example.com"/>
         <!-- ###- symfony/mailer ### -->
+
+        <!-- ###+ symfony/routing ### -->
+        <!-- Configure how to generate URLs in non-HTTP contexts, such as CLI commands. -->
+        <!-- See https://symfony.com/doc/current/routing.html#generating-urls-in-commands -->
+        <env name="DEFAULT_URI" value="http://localhost"/>
+        <!-- ###- symfony/routing ### -->
     </php>
     <testsuites>
         <testsuite name="Kimai">
