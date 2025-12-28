@@ -13,7 +13,7 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 ### Rename .env
 
-Rename your file `.env` to `.env.local`
+Rename your file `.env` to `.env.local` or even better: move all variables to your  
 
 ### Developer
 
