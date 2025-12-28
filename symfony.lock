@@ -105,13 +105,16 @@
         "version": "v1.15.0"
     },
     "friendsofphp/php-cs-fixer": {
-        "version": "2.2",
+        "version": "3.92",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "2.2",
-            "ref": "bb31a3bbec00a8fc8aa1c9fbf9b0ef9fc492f93d"
-        }
+            "branch": "main",
+            "version": "3.0",
+            "ref": "be2103eb4a20942e28a6dd87736669b757132435"
+        },
+        "files": [
+            ".php-cs-fixer.dist.php"
+        ]
     },
     "friendsofsymfony/rest-bundle": {
         "version": "2.2",
