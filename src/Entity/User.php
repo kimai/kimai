@@ -51,20 +51,20 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Constraints\User(groups: ['UserCreate', 'Registration', 'Default', 'Profile'])]
 class User implements UserInterface, EquatableInterface, ThemeUserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
 {
-    public const ROLE_USER = 'ROLE_USER';
-    public const ROLE_TEAMLEAD = 'ROLE_TEAMLEAD';
-    public const ROLE_ADMIN = 'ROLE_ADMIN';
-    public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+    public const string ROLE_USER = 'ROLE_USER';
+    public const string ROLE_TEAMLEAD = 'ROLE_TEAMLEAD';
+    public const string ROLE_ADMIN = 'ROLE_ADMIN';
+    public const string ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 
-    public const DEFAULT_ROLE = self::ROLE_USER;
-    public const DEFAULT_LANGUAGE = 'en';
-    public const DEFAULT_FIRST_WEEKDAY = 'monday';
+    public const string DEFAULT_ROLE = self::ROLE_USER;
+    public const string DEFAULT_LANGUAGE = 'en';
+    public const string DEFAULT_FIRST_WEEKDAY = 'monday';
 
-    public const AUTH_INTERNAL = 'kimai';
-    public const AUTH_LDAP = 'ldap';
-    public const AUTH_SAML = 'saml';
+    public const string AUTH_INTERNAL = 'kimai';
+    public const string AUTH_LDAP = 'ldap';
+    public const string AUTH_SAML = 'saml';
 
-    public const WIZARDS = ['intro', 'profile'];
+    public const array WIZARDS = ['intro', 'profile'];
 
     /**
      * Unique User ID
@@ -877,8 +877,8 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     /**
      * Alias for setUserIdentifier()
-     *
      * The visible username is setAlias())
+     * @deprecated
      */
     public function setUsername(string $username): void
     {
@@ -887,7 +887,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function setUserIdentifier(string $identifier): void
     {
-        $this->setUsername($identifier);
+        $this->username = $identifier;
     }
 
     public function setEmail(?string $email): User

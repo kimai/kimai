@@ -61,23 +61,6 @@ class SearchTermTest extends TestCase
         }
     }
 
-    #[Group('legacy')]
-    public function testWithMultipleMetaFields(): void
-    {
-        $sut = new SearchTerm('foo:bar bar:foo');
-        self::assertFalse($sut->hasSearchTerm());
-        self::assertEquals('', $sut->getSearchTerm());
-        self::assertNotEmpty($sut->getSearchFields());
-        self::assertFalse($sut->hasSearchField('test')); // @phpstan-ignore method.deprecated
-        self::assertTrue($sut->hasSearchField('foo')); // @phpstan-ignore method.deprecated
-        self::assertTrue($sut->hasSearchField('bar')); // @phpstan-ignore method.deprecated
-        self::assertEquals('bar', $sut->getSearchField('foo')); // @phpstan-ignore method.deprecated
-        self::assertEquals('foo', $sut->getSearchField('bar')); // @phpstan-ignore method.deprecated
-        self::assertEquals(['foo' => 'bar', 'bar' => 'foo'], $sut->getSearchFields());
-        self::assertEquals('foo:bar bar:foo', $sut->getOriginalSearch());
-        self::assertCount(2, $sut->getParts());
-    }
-
     public function testComplexWithMultipleAndDuplicateMetaFields(): void
     {
         $sut = new SearchTerm('foo:bar hello bar:!foo world test foo:bar2 wuff');

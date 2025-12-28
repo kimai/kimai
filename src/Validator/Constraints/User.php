@@ -28,10 +28,10 @@ final class User extends Constraint
 
     public string $message = 'The user has invalid settings.';
 
-    public function __construct(?string $message = null)
+    public function __construct(?string $message = null, ?array $groups = null)
     {
         $this->message = $message ?? $this->message;
-        parent::__construct();
+        parent::__construct(groups: $groups);
     }
 
     public function getTargets(): string

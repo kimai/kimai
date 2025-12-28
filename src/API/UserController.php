@@ -38,10 +38,10 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[OA\Tag(name: 'User')]
 final class UserController extends BaseApiController
 {
-    public const GROUPS_ENTITY = ['Default', 'Entity', 'User', 'User_Entity'];
-    public const GROUPS_FORM = ['Default', 'Entity', 'User', 'User_Entity'];
-    public const GROUPS_COLLECTION = ['Default', 'Collection', 'User'];
-    public const GROUPS_COLLECTION_FULL = ['Default', 'Collection', 'User', 'User_Entity'];
+    private const array GROUPS_ENTITY = ['Default', 'Entity', 'User', 'User_Entity'];
+    private const array GROUPS_FORM = ['Default', 'Entity', 'User', 'User_Entity'];
+    private const array GROUPS_COLLECTION = ['Default', 'Collection', 'User'];
+    private const array GROUPS_COLLECTION_FULL = ['Default', 'Collection', 'User', 'User_Entity'];
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,

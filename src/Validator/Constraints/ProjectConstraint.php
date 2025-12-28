@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Extend this class if you want to add dynamic project validation (eg. via a bundle).
+ * Extend this class if you want to add dynamic project validation.
  */
 #[AutoconfigureTag]
 abstract class ProjectConstraint extends Constraint

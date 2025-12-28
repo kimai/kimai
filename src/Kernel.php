@@ -31,8 +31,8 @@ class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
-    public const PLUGIN_DIRECTORY = '/var/plugins';
-    public const CONFIG_EXTS = '.{php,yaml}';
+    public const string PLUGIN_DIRECTORY = '/var/plugins';
+    public const string CONFIG_EXTS = '.{php,yaml}';
 
     public function getCacheDir(): string
     {

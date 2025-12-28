@@ -36,38 +36,6 @@ final class SearchTerm
     }
 
     /**
-     * @deprecated since 2.34.0
-     */
-    public function hasSearchField(string $name): bool
-    {
-        @trigger_error('The SearchTerm::hasSearchField() method is deprecated and will be removed with 3.0', E_USER_DEPRECATED);
-
-        foreach ($this->parts as $part) {
-            if ($part->getField() === $name) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @deprecated since 2.34.0
-     */
-    public function getSearchField(string $name): ?string
-    {
-        @trigger_error('The SearchTerm::getSearchField() method is deprecated and will be removed with 3.0', E_USER_DEPRECATED);
-
-        foreach ($this->parts as $part) {
-            if ($part->getField() === $name) {
-                return $part->getTerm();
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * @return array<string, string>
      */
     public function getSearchFields(): array
@@ -99,7 +67,7 @@ final class SearchTerm
 
     public function hasSearchTerm(): bool
     {
-        // TODO refactor and use the parts and check if any part has an emoty field name
+        // TODO refactor and use the parts and check if any part has an empty field name
         return $this->term !== '';
     }
 

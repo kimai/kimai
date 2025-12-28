@@ -76,13 +76,19 @@ class CreateUserCommandTest extends KernelTestCase
         return $commandTester;
     }
 
-    public function testUserWithEmptyFieldsTriggersValidationProblem(): void
+    public function testUserWithEmptyPasswordTriggersValidationProblem(): void
     {
         $commandTester = $this->createUser('xx', '', 'ROLE_USER', '');
         $output = $commandTester->getDisplay();
+        self::assertStringContainsString('[ERROR] Password must be a non-empty string', $output);
+    }
+
+    public function testUserWithEmptyFieldsTriggersValidationProblem(): void
+    {
+        $commandTester = $this->createUser('xx', '', 'ROLE_USER', '1');
+        $output = $commandTester->getDisplay();
         self::assertStringContainsString('[ERROR] email: This value should not be blank', $output);
-        self::assertStringContainsString('[ERROR] plainPassword: This value should not be blank', $output);
-        self::assertStringContainsString('[ERROR] plainPassword: This value is too short.', $output);
+        self::assertStringContainsString('[ERROR] plainPassword: This value is too short. It should have 8 characters or more.', $output);
     }
 
     public function testUserAlreadyExisting(): void

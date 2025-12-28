@@ -53,31 +53,10 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
 {
     use ModifiedTrait;
 
-    /**
-     * @deprecated since 2.45
-     */
-    public const WORK = 'work';
-    /**
-     * @deprecated since 2.45
-     */
-    public const HOLIDAY = 'holiday';
-    /**
-     * @deprecated since 2.45
-     */
-    public const SICKNESS = 'sickness';
-    /**
-     * @deprecated since 2.45
-     */
-    public const PARENTAL = 'parental';
-    /**
-     * @deprecated since 2.45
-     */
-    public const OVERTIME = 'overtime';
-
-    public const BILLABLE_AUTOMATIC = 'auto';
-    public const BILLABLE_YES = 'yes';
-    public const BILLABLE_NO = 'no';
-    public const BILLABLE_DEFAULT = 'default';
+    public const string BILLABLE_AUTOMATIC = 'auto';
+    public const string BILLABLE_YES = 'yes';
+    public const string BILLABLE_NO = 'no';
+    public const string BILLABLE_DEFAULT = 'default';
 
     /**
      * Unique Timesheet ID

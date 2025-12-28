@@ -28,9 +28,9 @@ use Symfony\Component\HttpFoundation\Response;
 #[Group('integration')]
 class TimesheetControllerTest extends APIControllerBaseTestCase
 {
-    public const DATE_FORMAT = 'Y-m-d H:i:s';
-    public const DATE_FORMAT_HTML5 = 'Y-m-d\TH:i:s';
-    public const TEST_TIMEZONE = 'Europe/London';
+    public const string DATE_FORMAT = 'Y-m-d H:i:s';
+    public const string DATE_FORMAT_HTML5 = 'Y-m-d\TH:i:s';
+    public const string TEST_TIMEZONE = 'Europe/London';
 
     /**
      * @return Timesheet[]

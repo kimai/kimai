@@ -192,8 +192,6 @@ final class InvoiceCreateCommand extends Command
 
                 return Command::FAILURE;
             }
-        } elseif ($input->getOption('set-exported')) {
-            @trigger_error('The "set-exported" option of kimai:invoice:create command has no meaning anymore, it will be removed soon', E_USER_DEPRECATED);
         }
 
         // =============== VALIDATION END ===============

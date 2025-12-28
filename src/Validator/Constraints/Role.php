@@ -22,9 +22,9 @@ final class Role extends Constraint
 
     public string $message = 'This value is not a valid role.';
 
-    public function __construct(?string $message = null)
+    public function __construct(?string $message = null, ?array $groups = null)
     {
         $this->message = $message ?? $this->message;
-        parent::__construct();
+        parent::__construct(groups: $groups);
     }
 }

@@ -23,7 +23,7 @@ final class QuickEntryTimesheetValidator extends ConstraintValidator
      */
     public function __construct(
         #[AutowireIterator(TimesheetConstraint::class)]
-        private iterable $constraints
+        private iterable $constraints = []
     )
     {
     }

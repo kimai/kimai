@@ -27,9 +27,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[OA\Tag(name: 'Tag')]
 final class TagController extends BaseApiController
 {
-    public const GROUPS_COLLECTION = ['Default', 'Collection', 'Tag'];
-    public const GROUPS_ENTITY = ['Default', 'Entity', 'Tag'];
-    public const GROUPS_FORM = ['Default', 'Entity', 'Tag'];
+    private const array GROUPS_COLLECTION = ['Default', 'Collection', 'Tag'];
+    private const array GROUPS_ENTITY = ['Default', 'Entity', 'Tag'];
+    private const array GROUPS_FORM = ['Default', 'Entity', 'Tag'];
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,

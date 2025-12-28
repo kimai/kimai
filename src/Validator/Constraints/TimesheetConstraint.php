@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Extend this class if you want to add dynamic timesheet validation (eg. via a bundle).
+ * Extend this class if you want to add dynamic timesheet validation.
  */
 #[AutoconfigureTag]
 abstract class TimesheetConstraint extends Constraint
