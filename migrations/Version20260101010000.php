@@ -52,6 +52,7 @@ final class Version20260101010000 extends AbstractMigration
         $this->addSql('ALTER TABLE kimai2_users CHANGE roles roles JSON NOT NULL');
 
         $schema->getTable('kimai2_users')->dropColumn('api_token');
+        $schema->getTable('kimai2_timesheet')->dropColumn('category');
     }
 
     public function down(Schema $schema): void
@@ -82,9 +83,10 @@ final class Version20260101010000 extends AbstractMigration
                 'roles' => serialize($data),
                 'id' => $id,
             ]);
-
-            $schema->getTable('kimai2_users')->addColumn('api_token', 'string', ['length' => 255, 'notnull' => false, 'default' => null]);
         }
+
+        $schema->getTable('kimai2_timesheet')->addColumn('category', 'string', ['length' => 10, 'notnull' => true, 'default' => 'work']);
+        $schema->getTable('kimai2_users')->addColumn('api_token', 'string', ['length' => 255, 'notnull' => false, 'default' => null]);
     }
 
     public function isTransactional(): bool

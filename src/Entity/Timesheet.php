@@ -196,9 +196,6 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
      */
     #[Assert\NotNull]
     private ?string $billableMode = self::BILLABLE_DEFAULT;
-    #[ORM\Column(name: 'category', type: Types::STRING, length: 10, nullable: false, options: ['default' => 'work'])]
-    #[Assert\NotNull]
-    private ?string $category = 'work';
     /**
      * Tags
      *
@@ -500,16 +497,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
 
     public function getCategory(): string
     {
-        return $this->category;
-    }
-
-    public function setCategory(string $category): Timesheet
-    {
-        @trigger_error('Timesheet::setCategory() is deprecated.', E_USER_DEPRECATED);
-
-        $this->category = $category;
-
-        return $this;
+        return 'work';
     }
 
     public function isBillable(): bool
