@@ -209,7 +209,7 @@ final class UserController extends BaseApiController
     #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Success if the token could be deleted.')])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The API token ID to remove', required: true)]
     #[Route(methods: ['DELETE'], path: '/api-token/{id}', name: 'delete_api_token', requirements: ['id' => '\d+'])]
-    public function deleteApiToken(AccessToken $accessToken, AccessTokenRepository $accessTokenRepository): Response
+    public function deleteAccessToken(AccessToken $accessToken, AccessTokenRepository $accessTokenRepository): Response
     {
         $user = $this->getUser();
         if (!$this->isGranted('api-token', $user)) {

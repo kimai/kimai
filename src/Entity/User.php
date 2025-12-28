@@ -109,17 +109,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[Serializer\Groups(['Default'])]
     private ?string $avatar = null;
     /**
-     * API token (password) for this user
-     */
-    #[ORM\Column(name: 'api_token', type: Types::STRING, length: 255, nullable: true)]
-    private ?string $apiToken = null;
-    /**
-     * @internal to be set via form, must not be persisted
-     */
-    #[Assert\NotBlank(groups: ['ApiTokenUpdate'])]
-    #[Assert\Length(min: 8, max: 60, groups: ['ApiTokenUpdate'])]
-    private ?string $plainApiToken = null;
-    /**
      * User preferences
      *
      * List of preferences for this user, required ones have dedicated fields/methods
@@ -289,41 +278,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function setAvatar(?string $avatar): User
     {
         $this->avatar = $avatar;
-
-        return $this;
-    }
-
-    public function getApiToken(): ?string
-    {
-        return $this->apiToken;
-    }
-
-    public function setApiToken(?string $apiToken): User
-    {
-        $this->apiToken = $apiToken;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated since 2.15
-     */
-    #[Serializer\VirtualProperty]
-    #[Serializer\SerializedName('apiToken')]
-    #[Serializer\Groups(['Default'])]
-    public function hasApiToken(): bool
-    {
-        return $this->apiToken !== null;
-    }
-
-    public function getPlainApiToken(): ?string
-    {
-        return $this->plainApiToken;
-    }
-
-    public function setPlainApiToken(?string $plainApiToken): User
-    {
-        $this->plainApiToken = $plainApiToken;
 
         return $this;
     }
@@ -1036,7 +990,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function __serialize(): array
     {
         $this->plainPassword = null;
-        $this->plainApiToken = null;
 
         return [
             'id' => $this->id,

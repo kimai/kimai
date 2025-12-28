@@ -40,8 +40,6 @@ class UserTest extends TestCase
         self::assertNull($user->getAlias());
         self::assertNull($user->getId());
         self::assertNull($user->getAccountNumber());
-        self::assertNull($user->getApiToken());
-        self::assertNull($user->getPlainApiToken());
         self::assertFalse($user->hasTotpSecret());
         self::assertNull($user->getTotpSecret());
         self::assertEquals(User::DEFAULT_LANGUAGE, $user->getLanguage());
@@ -65,14 +63,8 @@ class UserTest extends TestCase
         $user->setAvatar('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y');
         self::assertEquals('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y', $user->getAvatar());
 
-        $user->setApiToken('nbvfdswe34567ujko098765rerfghbgvfcdsert');
-        self::assertEquals('nbvfdswe34567ujko098765rerfghbgvfcdsert', $user->getApiToken());
-
         $user->setTotpSecret('ertzuio878t6rtdrjfcghvjkiu87');
         self::assertEquals('ertzuio878t6rtdrjfcghvjkiu87', $user->getTotpSecret());
-
-        $user->setPlainApiToken('https://www.gravatar.com/avatar/nbvfdswe34567ujko098765rerfghbgvfcdsert');
-        self::assertEquals('https://www.gravatar.com/avatar/nbvfdswe34567ujko098765rerfghbgvfcdsert', $user->getPlainApiToken());
 
         $user->setTitle('Mr. Code Blaster');
         self::assertEquals('Mr. Code Blaster', $user->getTitle());

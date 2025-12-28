@@ -16,7 +16,6 @@ use App\Event\PrepareUserEvent;
 use App\Form\AccessTokenForm;
 use App\Form\Model\TotpActivation;
 use App\Form\Model\UserContractModel;
-use App\Form\UserApiPasswordType;
 use App\Form\UserContractType;
 use App\Form\UserEditType;
 use App\Form\UserPasswordType;
@@ -208,7 +207,7 @@ final class ProfileController extends AbstractController
     #[Route(path: '/{username}/api-token', name: 'user_profile_api_token', methods: ['GET', 'POST'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[IsGranted('api-token', 'profile')]
-    public function apiTokenAction(
+    public function accessTokenAction(
         #[MapEntity(mapping: ['username' => 'username'])]
         User $profile,
         Request $request,
@@ -216,22 +215,6 @@ final class ProfileController extends AbstractController
         AccessTokenRepository $accessTokenRepository
     ): Response
     {
-        $form = $this->createForm(UserApiPasswordType::class, $profile, [
-            'action' => $this->generateUrl('user_profile_api_token', ['username' => $profile->getUserIdentifier()]),
-            'method' => 'POST'
-        ]);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            @trigger_error('User ' . $profile->getUsername() . ' created deprecated API password.', E_USER_DEPRECATED);
-
-            $userService->saveUser($profile);
-
-            $this->flashSuccess('action.update.success');
-
-            return $this->redirectToRoute('user_profile_api_token', ['username' => $profile->getUserIdentifier()]);
-        }
-
         $accessTokens = $accessTokenRepository->findForUser($profile);
 
         $createdToken = null;
@@ -254,7 +237,6 @@ final class ProfileController extends AbstractController
             'access_tokens' => $accessTokens,
             'page_setup' => $this->getPageSetup($profile, 'api-token'),
             'user' => $profile,
-            'form' => $form->createView(),
         ]);
     }
 

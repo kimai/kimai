@@ -27,8 +27,6 @@ security:
             stateless: true
             remember_me: false
             provider: chain_provider
-            custom_authenticators:
-                - App\API\Authentication\TokenAuthenticator
         secured_area:
             kimai_ldap: ~
             pattern: ^/

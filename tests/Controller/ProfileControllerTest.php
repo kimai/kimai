@@ -242,7 +242,7 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         );
     }
 
-    public function testCreateApiToken(): void
+    public function testCreateAccessToken(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
@@ -281,61 +281,6 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         self::assertCount(2, $tokens);
         self::assertEquals('Demo', $tokens[1]->getName());
         self::assertEquals($code->innerText(), $tokens[1]->getToken());
-    }
-
-    #[Group('legacy')]
-    public function testCreateApiPassword(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/api-token');
-
-        $user = $this->getUserByRole(User::ROLE_USER);
-        /** @var PasswordHasherFactoryInterface $passwordEncoder */
-        $passwordEncoder = self::getContainer()->get('security.password_hasher_factory');
-
-        self::assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), UserFixtures::DEFAULT_API_TOKEN));
-        self::assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), 'test1234'));
-        self::assertEquals(UserFixtures::USERNAME_USER, $user->getUserIdentifier());
-
-        $form = $client->getCrawler()->filter('form[name=user_api_password]')->form();
-        $client->submit($form, [
-            'user_api_password' => [
-                'plainApiToken' => [
-                    'first' => 'test1234',
-                    'second' => 'test1234',
-                ]
-            ]
-        ]);
-
-        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/api-token'));
-        $client->followRedirect();
-        self::assertTrue($client->getResponse()->isSuccessful());
-
-        $this->assertHasFlashSuccess($client);
-
-        $user = $this->getUserByRole(User::ROLE_USER);
-
-        self::assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), UserFixtures::DEFAULT_API_TOKEN));
-        self::assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), 'test1234'));
-    }
-
-    #[Group('legacy')]
-    public function testCreateApiPasswordFailsIfPasswordLengthToShort(): void
-    {
-        $this->assertFormHasValidationError(
-            User::ROLE_USER,
-            '/profile/' . UserFixtures::USERNAME_USER . '/api-token',
-            'form[name=user_api_password]',
-            [
-                'user_api_password' => [
-                    'plainApiToken' => [
-                        'first' => 'abcdef1',
-                        'second' => 'abcdef1',
-                    ]
-                ]
-            ],
-            ['#user_api_password_plainApiToken_first']
-        );
     }
 
     public function testRolesActionIsSecured(): void
