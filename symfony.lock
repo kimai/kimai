@@ -117,13 +117,16 @@
         ]
     },
     "friendsofsymfony/rest-bundle": {
-        "version": "2.2",
+        "version": "3.8",
         "recipe": {
             "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "2.2",
-            "ref": "258300d52be6ad59b32a888d5ddafbf9638540ff"
-        }
+            "branch": "main",
+            "version": "3.0",
+            "ref": "3762cc4e4f2d6faabeca5a151b41c8c791bd96e5"
+        },
+        "files": [
+            "config/packages/fos_rest.yaml"
+        ]
     },
     "gedmo/doctrine-extensions": {
         "version": "v2.4.36"
