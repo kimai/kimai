@@ -588,7 +588,7 @@ final class SystemConfigurationController extends AbstractController
                         ->setTranslationDomain('system-configuration')
                         ->setType(ChoiceType::class)
                         ->setOptions(['choices' => ['00:15' => '00:15:00', '00:30' => '00:30:00', '01:00' => '01:00:00']])
-                        ->setConstraints([new Regex(['pattern' => '/[0-2]{1}[0-9]{1}:[0-9]{2}:[0-9]{2}/']), new NotNull()]),
+                        ->setConstraints([new Regex(pattern: '/[0-2]{1}[0-9]{1}:[0-9]{2}:[0-9]{2}/'), new NotNull()]),
                     (new Configuration('calendar.dragdrop_amount'))
                         ->setTranslationDomain('system-configuration')
                         ->setType(IntegerType::class)
