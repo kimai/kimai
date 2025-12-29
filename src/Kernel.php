@@ -10,6 +10,7 @@
 namespace App;
 
 use App\DependencyInjection\AppExtension;
+use App\DependencyInjection\Compiler\ConstraintCompilerPass;
 use App\DependencyInjection\Compiler\ExportServiceCompilerPass;
 use App\DependencyInjection\Compiler\InvoiceServiceCompilerPass;
 use App\DependencyInjection\Compiler\TwigContextCompilerPass;
@@ -133,8 +134,8 @@ class Kernel extends BaseKernel
     {
         $container->registerExtension(new AppExtension());
 
-        $container->setParameter('container.autowiring.strict_mode', true);
         $container->setParameter('.container.dumper.inline_class_loader', true);
+        $container->setParameter('.container.dumper.inline_factories', true);
         $confDir = $this->getProjectDir() . '/config';
 
         // using this one instead of $loader->load($confDir . '/packages/*' . self::CONFIG_EXTS, 'glob');
@@ -163,6 +164,7 @@ class Kernel extends BaseKernel
         $container->addCompilerPass(new InvoiceServiceCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new ExportServiceCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new WidgetCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
+        $container->addCompilerPass(new ConstraintCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 99);
     }
 
     private function configureRoutes(RoutingConfigurator $routes): void // @phpstan-ignore-line
