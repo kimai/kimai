@@ -32,7 +32,7 @@
         "doctrine/orm": "^3.0",
         "easybill/zugferd-php": "^2.1",
         "endroid/qr-code": "^6.0",
-        "erusev/parsedown": "^1.6",
+        "parsedown/parsedown": "^1.6",
         "friendsofsymfony/rest-bundle": "3.9.0-beta1",
         "gedmo/doctrine-extensions": "^3.6",
         "horstoeko/zugferd": "^1.0",
