@@ -11,6 +11,8 @@ namespace DoctrineMigrations;
 
 use App\Doctrine\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 
 /**
  * @version 3.0
@@ -49,9 +51,12 @@ final class Version20260101010000 extends AbstractMigration
             ]);
         }
 
-        $this->addSql('ALTER TABLE kimai2_users CHANGE roles roles JSON NOT NULL');
+        $usersTable = $schema->getTable('kimai2_users');
+        $rolesColumn = $usersTable->getColumn('roles');
+        $rolesColumn->setType(Type::getType(Types::JSON));
+        $rolesColumn->setNotnull(true);
 
-        $schema->getTable('kimai2_users')->dropColumn('api_token');
+        $usersTable->dropColumn('api_token');
         $schema->getTable('kimai2_timesheet')->dropColumn('category');
     }
 
@@ -60,7 +65,7 @@ final class Version20260101010000 extends AbstractMigration
         $connection = $this->connection;
 
         $connection->executeStatement('ALTER TABLE kimai2_users CHANGE roles roles LONGTEXT NOT NULL COMMENT \'(DC2Type:array)\'');
-        $connection->executeStatement('ALTER TABLE kimai2_users DROP CONSTRAINT IF EXISTS roles');
+        $connection->executeStatement('ALTER TABLE kimai2_users DROP CONSTRAINT roles');
 
         // Fetch the existing rows from the table
         $rows = $connection->fetchAllAssociative('SELECT id, roles FROM kimai2_users');
@@ -85,8 +90,11 @@ final class Version20260101010000 extends AbstractMigration
             ]);
         }
 
-        $schema->getTable('kimai2_timesheet')->addColumn('category', 'string', ['length' => 10, 'notnull' => true, 'default' => 'work']);
-        $schema->getTable('kimai2_users')->addColumn('api_token', 'string', ['length' => 255, 'notnull' => false, 'default' => null]);
+        $timesheetTable = $schema->getTable('kimai2_timesheet');
+        $timesheetTable->addColumn('category', 'string', ['length' => 10, 'notnull' => true, 'default' => 'work']);
+
+        $usersTable = $schema->getTable('kimai2_users');
+        $usersTable->addColumn('api_token', 'string', ['length' => 255, 'notnull' => false, 'default' => null]);
     }
 
     public function isTransactional(): bool
