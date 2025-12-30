@@ -179,7 +179,7 @@ class UserTest extends TestCase
         self::assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
 
-        $sut->setUsername('foo test 123');
+        $sut->setUserIdentifier('foo test 123');
         self::assertEquals('#a972c9', $sut->getColorSafe());
 
         $sut->setColor('#000000');

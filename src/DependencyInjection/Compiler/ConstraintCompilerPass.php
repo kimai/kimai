@@ -25,13 +25,22 @@ final class ConstraintCompilerPass implements CompilerPassInterface
 
         foreach ($container->getDefinitions() as $id => $definition) {
             $class = $definition->getClass();
+            if ($class === null) {
+                continue;
+            }
+
             if (!str_starts_with($class, 'Symfony\\') && str_contains($class, '\\Constraints\\')) {
                 $reflectionClass = $container->getReflectionClass($class, false);
-                $parent = $reflectionClass->getParentClass()?->getName();
-                if ($parent === null) {
+                if ($reflectionClass === null) {
                     continue;
                 }
 
+                $parent = $reflectionClass->getParentClass();
+                if ($parent === false) {
+                    continue;
+                }
+
+                $parent = $parent->getName();
                 if (\in_array($parent, $constraints, true)) {
                     $definition->clearTag('container.excluded');
                 }

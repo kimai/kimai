@@ -1155,11 +1155,6 @@ parameters:
             path: src/Entity/Team.php
 
         -
-            message: "#^Method App\\\\Entity\\\\Timesheet\\:\\:getCategory\\(\\) should return string but returns string\\|null\\.$#"
-            count: 1
-            path: src/Entity/Timesheet.php
-
-        -
             message: "#^Method App\\\\Entity\\\\Timesheet\\:\\:getMetaFields\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/Timesheet.php
@@ -1903,61 +1898,6 @@ parameters:
             message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
             count: 1
             path: src/Form/TimesheetPreCreateForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addProjectSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/AbstractToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
