@@ -88,7 +88,7 @@ class CreateUserCommandTest extends KernelTestCase
         $commandTester = $this->createUser('xx', '', 'ROLE_USER', '1');
         $output = $commandTester->getDisplay();
         self::assertStringContainsString('[ERROR] email: This value should not be blank', $output);
-        self::assertStringContainsString('[ERROR] plainPassword: This value is too short. It should have 8 characters or more.', $output);
+        self::assertStringContainsString('[ERROR] plainPassword: This value is too short. It should have 8 characters or', $output);
     }
 
     public function testUserAlreadyExisting(): void

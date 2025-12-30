@@ -56,7 +56,7 @@ final class CustomerService
         $customer->setTimezone($this->getDefaultTimezone());
         $customer->setCountry($this->configuration->getCustomerDefaultCountry());
         $customer->setCurrency($this->configuration->getDefaultCurrency());
-        $customer->setNumber($this->calculateNextCustomerNumber());
+        $customer->setNumber($this->calculateNextCustomerNumber($customer));
 
         $this->loadMetaFields($customer);
         $this->dispatcher->dispatch(new CustomerCreateEvent($customer));
@@ -147,7 +147,7 @@ final class CustomerService
         return $this->repository->countCustomer($visible);
     }
 
-    private function calculateNextCustomerNumber(): ?string
+    private function calculateNextCustomerNumber(Customer $customer): ?string
     {
         $format = $this->configuration->find('customer.number_format');
         if (empty($format) || !\is_string($format)) {
@@ -157,7 +157,7 @@ final class CustomerService
         // we cannot use max(number) because a varchar column returns unexpected results
         $start = $this->repository->countCustomer();
         $i = 0;
-        $createDate = new \DateTimeImmutable();
+        $createDate = new \DateTimeImmutable('now', new \DateTimeZone($customer->getTimezone() ?? $this->getDefaultTimezone()));
 
         do {
             $start++;

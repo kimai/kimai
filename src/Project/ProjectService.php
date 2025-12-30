@@ -49,7 +49,7 @@ final class ProjectService
     public function createNewProject(?Customer $customer = null): Project
     {
         $project = new Project();
-        $project->setNumber($this->calculateNextProjectNumber());
+        $project->setNumber($this->calculateNextProjectNumber($project->getCustomer()));
 
         if ($customer !== null) {
             $project->setCustomer($customer);
@@ -142,7 +142,7 @@ final class ProjectService
         return $this->repository->findOneBy(['number' => $number]);
     }
 
-    public function calculateNextProjectNumber(): ?string
+    public function calculateNextProjectNumber(?Customer $customer = null): ?string
     {
         $format = $this->configuration->find('project.number_format');
         if (empty($format) || !\is_string($format)) {
@@ -152,7 +152,13 @@ final class ProjectService
         // we cannot use max(number) because a varchar column returns unexpected results
         $start = $this->repository->countProject();
         $i = 0;
-        $createDate = new \DateTimeImmutable();
+
+        $timezone = $customer?->getTimezone();
+        if ($timezone === null && null === ($timezone = $this->configuration->getCustomerDefaultTimezone())) {
+            $timezone = date_default_timezone_get();
+        }
+
+        $createDate = new \DateTimeImmutable('now', new \DateTimeZone($timezone));
 
         do {
             $start++;
