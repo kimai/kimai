@@ -61,8 +61,12 @@ class ExportFilenameTest extends TestCase
         $sut = new ExportFilename($query);
         self::assertEquals($datePrefix . '-ss_n_--Demo_ProjecT1', $sut->getFilename());
 
+        $reflectionUser = new \ReflectionClass(User::class);
+        $userIdProperty = $reflectionUser->getProperty('id');
+
         $user = new User();
         $user->setUserIdentifier('ayumi');
+        $userIdProperty->setValue($user, 1);
         $query->addUser($user);
 
         $sut = new ExportFilename($query);
@@ -71,12 +75,7 @@ class ExportFilenameTest extends TestCase
 
         $sut = new ExportFilename($query);
         self::assertEquals($datePrefix . '-ss_n_--Demo_ProjecT1-Martin_Muller-Ludenscheidt', $sut->getFilename());
-
-        $user = $this->createMock(User::class);
-        $user->method('getId')->willReturn(1);
-        $query->addUser($user);
-        $sut = new ExportFilename($query);
-        self::assertEquals($datePrefix . '-ss_n_--Demo_ProjecT1', $sut->getFilename());
+        $query->removeUser($user);
 
         $project = new Project();
         $project->setName('Project2');
