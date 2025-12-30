@@ -457,7 +457,6 @@ class UserTest extends TestCase
         $preference = new UserPreference('test', 'foobar');
 
         $property = new \ReflectionProperty(User::class, 'preferences');
-        $property->setAccessible(true);
         $property->setValue($sut, null);
 
         // make sure that addPreference will work, even if the internal collection was set to null

@@ -125,9 +125,7 @@ class TimesheetValidationTest extends KernelTestCase
         if ($id !== null) {
             $o = new \ReflectionClass($entity);
             $p = $o->getProperty('id');
-            $p->setAccessible(true);
             $p->setValue($entity, $id);
-            $p->setAccessible(false);
         }
 
         return $entity;
