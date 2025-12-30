@@ -65,7 +65,8 @@ final class Version20260101010000 extends AbstractMigration
         $connection = $this->connection;
 
         $connection->executeStatement('ALTER TABLE kimai2_users CHANGE roles roles LONGTEXT NOT NULL COMMENT \'(DC2Type:array)\'');
-        $connection->executeStatement('ALTER TABLE kimai2_users DROP CONSTRAINT roles');
+        // FIXME do we need that? does not work on mysql
+        // $connection->executeStatement('ALTER TABLE kimai2_users DROP CONSTRAINT IF EXISTS roles');
 
         // Fetch the existing rows from the table
         $rows = $connection->fetchAllAssociative('SELECT id, roles FROM kimai2_users');
