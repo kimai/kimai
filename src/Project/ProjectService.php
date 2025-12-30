@@ -49,11 +49,8 @@ final class ProjectService
     public function createNewProject(?Customer $customer = null): Project
     {
         $project = new Project();
-        $project->setNumber($this->calculateNextProjectNumber($project->getCustomer()));
-
-        if ($customer !== null) {
-            $project->setCustomer($customer);
-        }
+        $project->setCustomer($customer);
+        $project->setNumber($this->calculateNextProjectNumber($customer));
 
         $this->loadMetaFields($project);
         $this->dispatcher->dispatch(new ProjectCreateEvent($project));
