@@ -75,7 +75,7 @@ class TimesheetRepository extends EntityRepository
                 'IDENTITY(t.activity) as activity',
                 'IDENTITY(t.user) as user'
             ])
-            ->leftJoin(Project::class, 'p', Join::WITH, 'p.id = t.project')
+            ->leftJoin(Project::class, 'p', Join::ON, 'p.id = t.project')
             ->andWhere($qb->expr()->eq('t.id', ':id'))
             ->setParameter('id', $id)
         ;
