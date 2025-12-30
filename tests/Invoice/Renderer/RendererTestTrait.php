@@ -85,6 +85,12 @@ trait RendererTestTrait
 
     protected function getInvoiceModel(): InvoiceModel
     {
+        $reflectionUser = new \ReflectionClass(User::class);
+        $userIdProperty = $reflectionUser->getProperty('id');
+
+        $reflectionCustomer = new \ReflectionClass(Customer::class);
+        $customerIdProperty = $reflectionCustomer->getProperty('id');
+
         $user = new User();
         $user->setUserIdentifier('one-user');
         $user->setTitle('user title');
@@ -92,12 +98,14 @@ trait RendererTestTrait
         $user->setEmail('fantastic@four');
         $user->addPreference(new UserPreference('kitty', 'kat'));
         $user->addPreference(new UserPreference('hello', 'world'));
+        $userIdProperty->setValue($user, 120);
 
         $customer = new Customer('customer,with/special#name');
         $customer->setAddress('Foo' . PHP_EOL . 'Street' . PHP_EOL . '1111 City');
         $customer->setCurrency('EUR');
         $customer->setCountry('AT');
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
+        $customerIdProperty->setValue($customer, 120);
 
         $template = new InvoiceTemplate();
         $template->setTitle('a very *long* test invoice / template title with [ßpecial] chäracter');
@@ -155,11 +163,11 @@ trait RendererTestTrait
         $user1->method('getUserIdentifier')->willReturn('foo-bar');
         $user1->method('getVisiblePreferences')->willReturn([$pref1, $pref2]);
 
-        $user2 = $this->createMock(User::class);
-        $user2->method('getId')->willReturn(2);
-        $user2->method('getUsername')->willReturn('hello-world');
-        $user2->method('getUserIdentifier')->willReturn('hello-world');
-        $user2->method('getVisiblePreferences')->willReturn([$pref1, $pref2]);
+        $user2 = new User();
+        $user2->setUserIdentifier('hello-world');
+        $user2->addPreference($pref1);
+        $user2->addPreference($pref2);
+        $userIdProperty->setValue($user2, 2);
 
         $timesheet = new Timesheet();
         $timesheet->setDuration(3600);
@@ -215,6 +223,7 @@ trait RendererTestTrait
         $userKevin->setUserIdentifier('kevin');
         $userKevin->addPreference($pref1);
         $userKevin->addPreference($pref2);
+        $userIdProperty->setValue($userKevin, 123);
 
         $timesheet5 = new Timesheet();
         $timesheet5->setDuration(400);
@@ -271,6 +280,15 @@ trait RendererTestTrait
 
     protected function getInvoiceModelOneEntry(): InvoiceModel
     {
+        $reflectionUser = new \ReflectionClass(User::class);
+        $userIdProperty = $reflectionUser->getProperty('id');
+
+        $reflectionCustomer = new \ReflectionClass(Customer::class);
+        $customerIdProperty = $reflectionCustomer->getProperty('id');
+
+        $reflectionActivity = new \ReflectionClass(Activity::class);
+        $activityIdProperty = $reflectionActivity->getProperty('id');
+
         $user = new User();
         $user->setUserIdentifier('one-user');
         $user->setTitle('user title');
@@ -278,11 +296,13 @@ trait RendererTestTrait
         $user->setEmail('fantastic@four');
         $user->addPreference(new UserPreference('kitty', 'kat'));
         $user->addPreference(new UserPreference('hello', 'world'));
+        $userIdProperty->setValue($user, 1);
 
         $customer = new Customer('customer,with/special#name');
         $customer->setCountry('DE');
         $customer->setCurrency('USD');
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
+        $customerIdProperty->setValue($customer, 1);
 
         $template = new InvoiceTemplate();
         $template->setTitle('a test invoice template title');
@@ -299,6 +319,7 @@ trait RendererTestTrait
         $activity->setName('activity description');
         $activity->setProject($project);
         $activity->setMetaField((new ActivityMeta())->setName('foo-activity')->setValue('bar-activity')->setIsVisible(true));
+        $activityIdProperty->setValue($activity, 1);
 
         $pref1 = new UserPreference('foo', 'bar');
         $pref2 = new UserPreference('mad', 123.45);
