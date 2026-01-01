@@ -29,7 +29,7 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
         $formatter = $this->model->getFormatter();
 
         $rate = $item->getRate();
-        $internalRate = $item->getInternalRate(); // @phpstan-ignore method.deprecated
+        $internalRate = $item->getInternalRate();
         $appliedRate = $item->getHourlyRate();
         $amount = $formatter->getFormattedDecimalDuration($item->getDuration());
         $description = $item->getDescription();
