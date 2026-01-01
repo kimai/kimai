@@ -2613,29 +2613,3 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\UserDurationYearTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Widget/Type/UserDurationYearTest.php
-        -
-          message: '''
-                    #^Access to constant on deprecated class App\\Timesheet\\Util\:
-                    use RateCalculatorMode instead$#
-                '''
-          identifier: classConstant.deprecatedClass
-          count: 1
-          path: Timesheet/UtilTest.php
-
-        -
-          message: '''
-                    #^Call to method calculateRate\(\) of deprecated class App\\Timesheet\\Util\:
-                    use RateCalculatorMode instead$#
-                '''
-          identifier: staticMethod.deprecatedClass
-          count: 2
-          path: Timesheet/UtilTest.php
-
-        -
-          message: '''
-                    #^Call to method decimalizeDuration\(\) of deprecated class App\\Timesheet\\Util\:
-                    use RateCalculatorMode instead$#
-                '''
-          identifier: staticMethod.deprecatedClass
-          count: 1
-          path: Timesheet/UtilTest.php
