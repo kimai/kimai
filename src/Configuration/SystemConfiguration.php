@@ -15,7 +15,7 @@ final class SystemConfiguration
 {
     private bool $initialized = false;
 
-    public function __construct(private ConfigLoaderInterface $repository, private array $settings = [])
+    public function __construct(private readonly ConfigLoaderInterface $repository, private array $settings = [])
     {
     }
 
@@ -117,38 +117,6 @@ final class SystemConfiguration
         }, ARRAY_FILTER_USE_KEY);
 
         return \count($result) > 0;
-    }
-
-    // ========== Array access methods ==========
-
-    /**
-     * @deprecated since 2.0.35
-     */
-    public function offsetExists($offset): bool
-    {
-        @trigger_error('The method "SystemConfiguration::offsetExists()" is deprecated, use "has()" instead', E_USER_DEPRECATED);
-
-        return $this->has($offset);
-    }
-
-    /**
-     * @deprecated since 2.0.35
-     */
-    public function offsetGet($offset): mixed
-    {
-        @trigger_error('The method "SystemConfiguration::offsetGet()" is deprecated, use "find()" instead', E_USER_DEPRECATED);
-
-        return $this->find($offset);
-    }
-
-    /**
-     * @deprecated since 2.0.35
-     */
-    public function offsetSet(mixed $offset, mixed $value): void
-    {
-        @trigger_error('The method "SystemConfiguration::offsetSet()" is deprecated, use "set()" instead', E_USER_DEPRECATED);
-
-        $this->set($offset, $value);
     }
 
     // ========== Authentication configurations ==========
@@ -348,22 +316,6 @@ final class SystemConfiguration
     public function getDefaultCurrency(): string
     {
         return $this->getString('defaults.customer.currency', 'EUR');
-    }
-
-    /**
-     * @deprecated use getDefaultCurrency() instead
-     */
-    public function getCustomerDefaultCurrency(): string
-    {
-        return $this->getDefaultCurrency();
-    }
-
-    /**
-     * @deprecated use getDefaultCurrency() instead
-     */
-    public function getUserDefaultCurrency(): string
-    {
-        return $this->getDefaultCurrency();
     }
 
     // ========== Timesheet configurations ==========

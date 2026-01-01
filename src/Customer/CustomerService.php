@@ -67,16 +67,13 @@ final class CustomerService
     public function saveCustomer(Customer $customer): Customer
     {
         if ($customer->isNew()) {
-            return $this->saveNewCustomer($customer); // @phpstan-ignore method.deprecated
+            return $this->saveNewCustomer($customer);
         } else {
-            return $this->updateCustomer($customer); // @phpstan-ignore method.deprecated
+            return $this->updateCustomer($customer);
         }
     }
 
-    /**
-     * @deprecated since 2.35 - use saveCustomer() instead
-     */
-    public function saveNewCustomer(Customer $customer): Customer
+    private function saveNewCustomer(Customer $customer): Customer
     {
         if (null !== $customer->getId()) {
             throw new InvalidArgumentException('Cannot create customer, already persisted');
@@ -110,10 +107,7 @@ final class CustomerService
         }
     }
 
-    /**
-     * @deprecated since 2.35 - use saveCustomer() instead
-     */
-    public function updateCustomer(Customer $customer): Customer
+    private function updateCustomer(Customer $customer): Customer
     {
         $this->validateCustomer($customer);
 

@@ -33,41 +33,32 @@ final class DataTable implements \Countable, \IteratorAggregate
     private ?string $paginationRoute = null;
 
     /**
-     * @param Pagination<T>|null $pagination
+     * @param Pagination<T> $pagination
      */
     public function __construct(
         private readonly string $tableName,
         private readonly BaseQuery $query,
-        private ?Pagination $pagination = null
+        private readonly Pagination $pagination
     )
     {
     }
 
     public function hasResults(): bool
     {
-        return $this->pagination !== null && $this->pagination->count() > 0;
+        return $this->pagination->count() > 0;
     }
 
-    public function getResults(): ?iterable
+    public function getResults(): iterable
     {
         return $this->pagination;
     }
 
     /**
-     * @return Pagination<T>|null
+     * @return Pagination<T>
      */
-    public function getPagination(): ?Pagination
+    public function getPagination(): Pagination
     {
         return $this->pagination;
-    }
-
-    /**
-     * @param Pagination<T>|null $pagination
-     * @deprecated since 3.0
-     */
-    public function setPagination(?Pagination $pagination): void
-    {
-        $this->pagination = $pagination;
     }
 
     public function getTableName(): string
@@ -215,19 +206,11 @@ final class DataTable implements \Countable, \IteratorAggregate
      */
     public function getIterator(): Traversable
     {
-        if ($this->pagination === null) {
-            throw new \Exception('Cannot creator iterator, no Paginator set');
-        }
-
         return $this->pagination->getIterator();
     }
 
     public function count(): int
     {
-        if ($this->pagination === null) {
-            return 0;
-        }
-
         return $this->pagination->count();
     }
 }
