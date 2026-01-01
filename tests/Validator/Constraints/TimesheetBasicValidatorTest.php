@@ -52,13 +52,13 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetBasic(message: 'myMessage'));
+        $this->validator->validate(new NotBlank(), new TimesheetBasic());
     }
 
     public function testEmptyTimesheet(): void
     {
         $timesheet = new Timesheet();
-        $this->validator->validate($timesheet, new TimesheetBasic(message: 'myMessage'));
+        $this->validator->validate($timesheet, new TimesheetBasic());
 
         $this->buildViolation('You must submit a begin date.')
             ->atPath('property.path.begin_date')
@@ -78,7 +78,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
         $timesheet = new Timesheet();
         $timesheet->setBegin($begin);
 
-        $this->validator->validate($timesheet, new TimesheetBasic(message: 'myMessage'));
+        $this->validator->validate($timesheet, new TimesheetBasic());
 
         $this
             ->buildViolation('An activity needs to be selected.')
@@ -105,7 +105,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
         $timesheet->setBegin($begin);
         $timesheet->setEnd($end);
 
-        $this->validator->validate($timesheet, new TimesheetBasic(message: 'myMessage'));
+        $this->validator->validate($timesheet, new TimesheetBasic());
 
         $this->buildViolation('End date must not be earlier then start date.')
             ->atPath('property.path.end_date')
@@ -137,7 +137,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
             ->setProject($project2)
         ;
 
-        $this->validator->validate($timesheet, new TimesheetBasic(message: 'myMessage'));
+        $this->validator->validate($timesheet, new TimesheetBasic());
 
         $this->buildViolation('Project mismatch, project specific activity and timesheet project are different.')
             ->atPath('property.path.project')
@@ -187,7 +187,7 @@ class TimesheetBasicValidatorTest extends ConstraintValidatorTestCase
         $timesheet->setProject($project);
         $timesheet->setActivity(new Activity());
 
-        $this->validator->validate($timesheet, new TimesheetBasic(message: 'myMessage'));
+        $this->validator->validate($timesheet, new TimesheetBasic());
 
         $assertion = null;
         foreach ($violations as $violation) {
