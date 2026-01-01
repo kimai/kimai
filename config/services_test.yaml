@@ -9,17 +9,6 @@ services:
     App\Configuration\SystemConfiguration:
         arguments: ['@App\Configuration\ConfigurationService', "%kimai.config%"]
 
-    # required for the importer command test
-    App\Repository\UserRepository:
-        class:     Doctrine\ORM\EntityRepository
-        factory:   ['@doctrine.orm.entity_manager', getRepository]
-        arguments: ['App\Entity\User']
-
-    # required for the importer command test
-    App\Importer\ImporterService:
-        public: true
-        arguments: ['@App\Customer\CustomerService', '@App\Project\ProjectService']
-
     App\User\UserService:
         public: true
         arguments: ['@App\Repository\UserRepository', '@event_dispatcher', '@validator', '@App\Configuration\SystemConfiguration', '@security.user_password_hasher']
