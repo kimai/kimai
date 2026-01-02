@@ -14,8 +14,8 @@ use App\Repository\TimesheetRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Widget\Type\AbstractWidget;
 use App\Widget\Type\RevenueUser;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[CoversClass(RevenueUser::class)]
 class RevenueUserTest extends AbstractWidgetTestCase
