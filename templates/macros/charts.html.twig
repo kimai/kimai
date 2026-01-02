@@ -63,8 +63,8 @@
 {% macro doughnut_chart(id, labels, dataset, options) %}
     {% set height = options.height|default(config('theme.chart.height') ~ 'px') %}
     {% set bgColor = config('theme.chart.background_color') %}
-    <div class="{{ config('chart-class') }}" style="position: relative;">
-        <canvas id="{{ id }}" style="height: {{ height }}; width: 100%;"></canvas>
+    <div class="chart-container" style="position: relative;">
+        <canvas class="chartjs" id="{{ id }}" style="height: {{ height }}; width: 100%;"></canvas>
     </div>
     <script type="text/javascript">
         document.addEventListener('{{ options.renderEvent|default('kimai.initialized') }}', function() {
@@ -197,8 +197,8 @@
 {% macro bar_chart(id, labels, datasets, options) %}
     {% set height = options.height|default(config('theme.chart.height') ~ 'px') %}
     {% set bgColor = config('theme.chart.background_color') %}
-    <div class="{{ config('chart-class') }}" style="position: relative;">
-        <canvas id="{{ id }}" style="height: {{ height }}; width: 100%;"></canvas>
+    <div class="chart-container" style="position: relative;">
+        <canvas class="chartjs" id="{{ id }}" style="height: {{ height }}; width: 100%;"></canvas>
     </div>
     <script type="text/javascript">
         document.addEventListener('{{ options.renderEvent|default('kimai.initialized') }}', function() {

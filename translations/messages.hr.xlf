@@ -678,22 +678,6 @@
         <source>stats.yourWorkingHours</source>
         <target>Moje radno vrijeme</target>
       </trans-unit>
-      <trans-unit id="023M9Ta" resname="stats.amountToday">
-        <source>stats.amountToday</source>
-        <target>Prihod danas</target>
-      </trans-unit>
-      <trans-unit id="xnJvYAE" resname="stats.amountWeek">
-        <source>stats.amountWeek</source>
-        <target>Prihod ovaj tjedan</target>
-      </trans-unit>
-      <trans-unit id="ulr3reE" resname="stats.amountMonth">
-        <source>stats.amountMonth</source>
-        <target>Prihod ovaj mjesec</target>
-      </trans-unit>
-      <trans-unit id="bQZyZaO" resname="stats.amountYear">
-        <source>stats.amountYear</source>
-        <target>Prihod ove godine</target>
-      </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
         <source>stats.amountFinancialYear</source>
         <target>Prihod ove fiskalne godine</target>
@@ -702,49 +686,9 @@
         <source>stats.amountTotal</source>
         <target>Prihod ukupno</target>
       </trans-unit>
-      <trans-unit id="HzICegM" resname="stats.activeUsersToday">
-        <source>stats.activeUsersToday</source>
-        <target>Aktivni korisnici danas</target>
-      </trans-unit>
-      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek">
-        <source>stats.activeUsersWeek</source>
-        <target>Aktivni korisnici ovaj tjedan</target>
-      </trans-unit>
-      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth">
-        <source>stats.activeUsersMonth</source>
-        <target>Aktivni korisnici ovaj mjesec</target>
-      </trans-unit>
-      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
-        <source>stats.activeUsersYear</source>
-        <target>Aktivni korisnici ove godine</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>Aktivni korisnici ove fiskalne godine</target>
-      </trans-unit>
-      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal" xml:space="preserve">
-        <source>stats.activeUsersTotal</source>
-        <target state="translated">Aktivni korisnici ikada</target>
-      </trans-unit>
       <trans-unit id="lEW82ex" resname="stats.activeRecordings">
         <source>stats.activeRecordings</source>
         <target>Aktivni zapisi</target>
-      </trans-unit>
-      <trans-unit id="t5eIWp8" resname="stats.userTotal">
-        <source>stats.userTotal</source>
-        <target>Korisnici</target>
-      </trans-unit>
-      <trans-unit id="Bor.76M" resname="stats.activityTotal">
-        <source>stats.activityTotal</source>
-        <target>Aktivnosti</target>
-      </trans-unit>
-      <trans-unit id="67uSaR3" resname="stats.projectTotal">
-        <source>stats.projectTotal</source>
-        <target>Projekti</target>
-      </trans-unit>
-      <trans-unit id="tnD6aPj" resname="stats.customerTotal">
-        <source>stats.customerTotal</source>
-        <target>Kupci</target>
       </trans-unit>
       <trans-unit id="unC5MXv" resname="stats.percentUsed">
         <source>stats.percentUsed</source>
@@ -1174,18 +1118,6 @@
         <source>system_account.help</source>
         <target state="translated">Bit će skriveni u izvještajima i padajućim izbornicima</target>
       </trans-unit>
-      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek">
-        <source>stats.userDurationWeek</source>
-        <target state="translated">Moje radno vrijeme ovaj tjedan</target>
-      </trans-unit>
-      <trans-unit id="BjyLITj" resname="stats.userDurationYear">
-        <source>stats.userDurationYear</source>
-        <target state="translated">Moje radno vrijeme ove godine</target>
-      </trans-unit>
-      <trans-unit id="0WpgaGa" resname="stats.userDurationMonth">
-        <source>stats.userDurationMonth</source>
-        <target state="translated">Moje radno vrijeme ovaj mjesec</target>
-      </trans-unit>
       <trans-unit id="E3Kj9lt" resname="stats.userAmountMonth">
         <source>stats.userAmountMonth</source>
         <target state="translated">Moj prihod ovaj mjesec</target>
@@ -1193,10 +1125,6 @@
       <trans-unit id="52lzpZE" resname="active.help">
         <source>active.help</source>
         <target state="translated">Deaktivirani korisnici se više ne mogu prijaviti i skriveni su u izvještajima i okvirima za odabir</target>
-      </trans-unit>
-      <trans-unit id="EedlgkM" resname="stats.userDurationTotal">
-        <source>stats.userDurationTotal</source>
-        <target state="translated">Moje radno vrijeme ukupno</target>
       </trans-unit>
       <trans-unit id="IRzPWmL" resname="login.2fa_intro">
         <source>login.2fa_intro</source>
@@ -1357,10 +1285,6 @@
       <trans-unit id="SdLZTel" resname="favorite_routes">
         <source>favorite_routes</source>
         <target state="translated">Favoriti</target>
-      </trans-unit>
-      <trans-unit id="EI5gPkp" resname="stats.userDurationToday">
-        <source>stats.userDurationToday</source>
-        <target state="translated">Moje radno vrijeme danas</target>
       </trans-unit>
       <trans-unit id="mQMcndl" resname="stats.userAmountToday">
         <source>stats.userAmountToday</source>

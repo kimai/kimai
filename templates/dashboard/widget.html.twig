@@ -1,0 +1,41 @@
+{# Options #}
+{% set _id       = id|default(tabler_unique_id('widget')) %}
+{% set _fullsize = fullsize ?? false %}
+
+{# Common blocks : Declared this way to use `is not empty` and prevent the `has already been rendered` form field twig error #}
+{% set tools %}{% block box_tools %}{% endblock %}{% endset %}
+{% set pagination %}{% block box_pagination %}{% endblock %}{% endset %}
+
+<div id="{{ _id }}" class="card mb-0" {% block box_attributes %}{% endblock %}>
+    <div class="card-header">
+        <div class="card-title">{{ title|trans({}, widget.translationDomain) }}</div>
+        <div class="card-actions">
+            {% block box_options %}{% include 'dashboard/widget-options.html.twig' %}{% endblock %}
+            {% if pagination is not empty or tools is not empty %}
+            <div class="d-none d-md-flex">
+                <div class="d-flex widget_edit">
+                    {{ pagination|raw }}
+                    <span class="me-3"></span>
+                    {{ tools|raw }}
+                </div>
+            </div>
+            {% endif %}
+            <a href="#" class="btn-action widget_edit d-none" onclick="removeWidget('{{ _id }}')">
+                {{ icon('remove') }}
+            </a>
+        </div>
+    </div>
+
+    <div class="card-body{% if _fullsize %} p-0{% endif %}">
+        {% block box_body %}{% endblock %}
+    </div>
+
+    {% if pagination is not empty or tools is not empty %}
+        <div class="card-footer d-md-none">
+            <div class="d-flex">
+            {{ tools|raw }}
+            {{ pagination|raw }}
+            </div>
+        </div>
+    {% endif %}
+</div>

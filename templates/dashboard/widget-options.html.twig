@@ -1,0 +1,18 @@
+{% if options.daterange is defined %}
+    {% set ranges = {
+        'today': 'daterangepicker.today',
+        'week': 'daterangepicker.thisWeek',
+        'month': 'daterangepicker.thisMonth',
+        'year': 'daterangepicker.thisYear',
+        'financial': 'daterangepicker.thisFinancialYear',
+        'total': 'daterangepicker.allTime',
+    } %}
+    <div class="dropdown widget_view">
+        <a class="dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ ranges[(options.daterange)]|trans({}, 'daterangepicker') }}</a>
+        <div class="dropdown-menu dropdown-menu-end">
+            {% for name, t in ranges %}
+                <a href="#" class="dropdown-item widget-option{% if options.daterange == name %} active{% endif %}" onclick="setWidgetOption(this, 'daterange', '{{ name }}')">{{ t|trans({}, 'daterangepicker') }}</a>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

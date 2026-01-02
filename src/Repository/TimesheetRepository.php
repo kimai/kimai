@@ -168,19 +168,15 @@ class TimesheetRepository extends EntityRepository
         @trigger_error('Repository method getStatistic() is deprecated, use explicit methods instead', E_USER_DEPRECATED);
 
         switch ($type) {
-            case 'active':
-                return $this->countActiveEntries($user);
             case 'duration':
                 return $this->getDurationForTimeRange($begin, $end, $user, $billable);
             case 'rate':
                 return $this->getRevenue($begin, $end, $user);
-            case 'users':
-                return $this->countActiveUsers($begin, $end, $billable);
             case 'amount':
                 return $this->queryTimeRange('COUNT(t.id)', $begin, $end, $user, $billable);
         }
 
-        throw new InvalidArgumentException('Invalid query type: ' . $type); // @phpstan-ignore-line
+        throw new InvalidArgumentException('Invalid query type: ' . $type);
     }
 
     public function getDurationForTimeRange(?\DateTimeInterface $begin, ?\DateTimeInterface $end, ?User $user, ?bool $billable = null): int
@@ -197,7 +193,7 @@ class TimesheetRepository extends EntityRepository
     /**
      * @return array<Revenue>
      */
-    public function getRevenue(?\DateTimeInterface $begin, ?\DateTimeInterface $end, ?User $user): array
+    public function getRevenue(?\DateTimeInterface $begin, ?\DateTimeInterface $end, ?User $user = null): array
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -349,43 +345,6 @@ class TimesheetRepository extends EntityRepository
         }
 
         return $this->getHydratedResultsByQuery($qb);
-    }
-
-    /**
-     * @return int<0, max>
-     */
-    public function countActiveEntries(?User $user = null): int
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-
-        $qb->select($qb->expr()->count('t'))
-            ->from(Timesheet::class, 't')
-            ->andWhere($qb->expr()->isNull('t.end'))
-        ;
-
-        if (null !== $user) {
-            $qb
-                ->andWhere('t.user = :user')
-                ->groupBy('t.user')
-                ->setParameter('user', $user)
-            ;
-        }
-
-        return (int) $qb->getQuery()->getSingleScalarResult(); // @phpstan-ignore-line
-    }
-
-    /**
-     * @return int<0, max>
-     */
-    public function countActiveUsers(?\DateTimeInterface $begin, ?\DateTimeInterface $end, ?bool $billable = null): int
-    {
-        $tmp = $this->queryTimeRange('COUNT(DISTINCT(t.user))', $begin, $end, null, $billable);
-
-        if (!is_numeric($tmp)) {
-            return 0;
-        }
-
-        return (int) $tmp; // @phpstan-ignore-line
     }
 
     /**

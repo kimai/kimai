@@ -1,12 +1,12 @@
-{% set type = options.type|default('bar') %}
-{% set chart_id = options.id %}
+{% set type = 'bar' %}
+{% set chart_id = tabler_unique_id('DailyWorkingTimeChart_') %}
 {% set backgroundColor = config('theme.chart.background_color') %}
 {% set gridColor = config('theme.chart.grid_color') %}
 {% set activities = data.activities %}
 {% set data = data.data %}
 
-<div class="chart">
-    <canvas id="{{ chart_id }}" style="height: {{ config('theme.chart.height') }}px; width: 100%;"></canvas>
+<div class="chart-container" style="position: relative">
+    <canvas class="chartjs" id="{{ chart_id }}" style="height: {{ config('theme.chart.height') }}px; width: 100%;"></canvas>
 </div>
 
 <script type="text/javascript">

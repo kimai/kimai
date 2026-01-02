@@ -11,13 +11,13 @@ namespace App\Tests\Widget\Type;
 
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
-use App\Widget\Type\AbstractWidgetType;
+use App\Widget\Type\AbstractWidget;
 use App\Widget\Type\DailyWorkingTimeChart;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(DailyWorkingTimeChart::class)]
-#[CoversClass(AbstractWidgetType::class)]
+#[CoversClass(AbstractWidget::class)]
 #[CoversClass(TimesheetRepository::class)]
 class DailyWorkingTimeChartTest extends TestCase
 {
@@ -49,15 +49,5 @@ class DailyWorkingTimeChartTest extends TestCase
         // options
         $sut->setOption('föööö', 'trääääää');
         self::assertEquals('trääääää', $sut->getOptions()['föööö']);
-    }
-
-    public function testGetOptions(): void
-    {
-        $sut = $this->createSut();
-
-        $options = $sut->getOptions(['type' => 'xxx']);
-        self::assertIsString($options['id']);
-        self::assertStringStartsWith('DailyWorkingTimeChart_', $options['id']);
-        self::assertEquals('xxx', $options['type']);
     }
 }

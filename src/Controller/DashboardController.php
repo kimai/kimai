@@ -17,12 +17,13 @@ use App\Utils\PageSetup;
 use App\Widget\WidgetInterface;
 use App\Widget\WidgetService;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Validator\Constraints\Json;
 
 /**
  * Dashboard controller for the admin area.
@@ -33,6 +34,7 @@ final class DashboardController extends AbstractController
 {
     public const BOOKMARK_TYPE = 'dashboard';
     public const BOOKMARK_NAME = 'default';
+
     /**
      * @var WidgetInterface[]|null
      */
@@ -47,9 +49,7 @@ final class DashboardController extends AbstractController
     }
 
     /**
-     * @param User $user
      * @return array<WidgetInterface>
-     * @throws \Exception
      */
     private function getAllAvailableWidgets(User $user): array
     {
@@ -91,29 +91,8 @@ final class DashboardController extends AbstractController
 
         // default widgets
         $dashboard = [
+            // FIXME
             'PaginatedWorkingTimeChart',
-            //'UserAmountToday',
-            //'UserAmountWeek',
-            //'UserAmountMonth',
-            //'UserAmountYear',
-            //'UserTeams',
-            //'UserTeamProjects',
-            'DurationToday',
-            'DurationWeek',
-            'DurationMonth',
-            'DurationYear',
-            //'ActiveUsersToday',
-            //'ActiveUsersWeek',
-            //'ActiveUsersMonth',
-            //'ActiveUsersYear',
-            //'AmountToday',
-            //'AmountWeek',
-            //'AmountMonth',
-            //'AmountYear',
-            //'TotalsUser',
-            //'TotalsCustomer',
-            //'TotalsProject',
-            //'TotalsActivity',
         ];
 
         foreach ($dashboard as $widgetName) {
@@ -128,14 +107,16 @@ final class DashboardController extends AbstractController
     /**
      * Returns the list of widgets names and options for a user.
      *
-     * @param User $user
      * @return array<int, array<string, mixed>>
      */
     private function getUserConfig(User $user): array
     {
         $bookmark = $this->getBookmark($user);
         if ($bookmark !== null) {
-            return $bookmark->getContent();
+            $config = $bookmark->getContent();
+            if (\count($config) > 0) {
+                return $config;
+            }
         }
 
         $widgets = [];
@@ -149,7 +130,6 @@ final class DashboardController extends AbstractController
 
     /**
      * @param array<WidgetInterface> $widgets
-     * @param User $user
      * @return array<WidgetInterface>
      */
     private function filterWidgets(array $widgets, User $user): array
@@ -162,7 +142,14 @@ final class DashboardController extends AbstractController
             foreach ($widgets as $widget) {
                 if ($widget->getId() === $id) {
                     $tmpWidget = clone $widget;
+                    // protect from invalid old values
+                    if (!\is_array($options)) {
+                        break;
+                    }
                     foreach ($options as $key => $value) {
+                        if (!\is_scalar($value)) {
+                            continue;
+                        }
                         $tmpWidget->setOption($key, $value);
                     }
                     $filteredWidgets[] = $tmpWidget;
@@ -174,8 +161,8 @@ final class DashboardController extends AbstractController
         return $filteredWidgets;
     }
 
-    #[Route(path: '/', defaults: [], name: 'dashboard', methods: ['GET'])]
-    public function index(): Response
+    #[Route(path: '/', defaults: [], name: 'dashboard', methods: ['GET', 'POST'])]
+    public function index(Request $request): Response
     {
         $user = $this->getUser();
         $available = $this->getAllAvailableWidgets($user);
@@ -186,10 +173,79 @@ final class DashboardController extends AbstractController
         $page->setActionName('dashboard');
         $page->setActionPayload(['widgets' => $widgets, 'available' => $available]);
 
+        $choices = [];
+
+        // the list of widgets for the dropdown is mainly used for saving
+        foreach ($available as $widget) {
+            if ($widget->isInternal() || $widget->getTitle() === '') {
+                continue;
+            }
+            $choices[$widget->getId()] = $widget->getId();
+        }
+
+        $form = $this->createFormBuilder(null, [])
+            ->add('widgets', TextType::class, ['constraints' => new Json([
+                    'message' => 'Invalid widget configuration',
+                ])
+            ])
+            ->setMethod('POST')
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            $error = null;
+            $saveWidgets = [];
+            if (!$form->isValid()) {
+                $error = 'Invalid widget configuration';
+            } else {
+                $widgetsJson = $form->getData()['widgets'];
+                $json = false;
+                if (\is_string($widgetsJson)) {
+                    $json = json_decode($widgetsJson, true);
+                }
+                if ($json === false) {
+                    $error = 'Invalid widget configuration';
+                } else {
+                    try {
+                        foreach ($json as $widget) {
+                            if (!\is_array($widget) || !isset($widget['name']) || !isset($widget['options'])) {
+                                $error = 'Invalid widget configuration';
+                            } else {
+                                $widgetId = $widget['name'];
+                                $options = $widget['options'];
+                                if (!\is_array($options)) {
+                                    throw new \InvalidArgumentException('Widgets options must be an array');
+                                }
+                                foreach ($available as $tmpWidget) {
+                                    if ($widgetId === $tmpWidget->getId()) {
+                                        $saveWidgets[] = ['id' => $widgetId, 'options' => $options];
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    } catch (\Exception $ex) {
+                        $this->flashDeleteException($ex);
+                    }
+                }
+            }
+
+            if ($error !== null) {
+                $this->flashError($error);
+            } else {
+                $this->saveBookmark($user, $saveWidgets);
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRoute('dashboard');
+            }
+        }
+
         return $this->render('dashboard/index.html.twig', [
             'page_setup' => $page,
             'widgets' => $widgets,
             'available' => $available,
+            'form' => $form,
         ]);
     }
 
@@ -208,21 +264,21 @@ final class DashboardController extends AbstractController
     public function add(string $widget): Response
     {
         $user = $this->getUser();
-
         $widgets = $this->getUserConfig($user);
 
         // prevent to add the same widget multiple times
         foreach ($widgets as $id => $setting) {
             if ($setting['id'] === $widget) {
-                return $this->redirectToRoute('dashboard_edit');
+                $this->flashError(\sprintf('Cannot add widget "%s" multiple times.', $widget));
+
+                return $this->redirectToRoute('dashboard');
             }
         }
 
         $widgets[] = ['id' => $widget, 'options' => []];
-
         $this->saveBookmark($user, $widgets);
 
-        return $this->redirectToRoute('dashboard_edit');
+        return $this->redirectToRoute('dashboard');
     }
 
     private function saveBookmark(User $user, array $widgets): void
@@ -237,69 +293,5 @@ final class DashboardController extends AbstractController
         $bookmark->setContent($widgets);
 
         $this->repository->saveBookmark($bookmark);
-    }
-
-    #[Route(path: '/edit/', defaults: [], name: 'dashboard_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request): Response
-    {
-        $user = $this->getUser();
-
-        $available = $this->getAllAvailableWidgets($user);
-        $widgets = $this->filterWidgets($available, $user);
-
-        $choices = [];
-
-        // the list of widgets for the dropdown is created in the EventListener and not here
-        // this form is mainly used for saving
-        foreach ($available as $widget) {
-            if (empty($widget->getTitle())) {
-                continue;
-            }
-            $choices[$widget->getId()] = $widget->getId();
-        }
-
-        $form = $this->createFormBuilder(null, [])
-            ->add('widgets', ChoiceType::class, ['choices' => $choices, 'multiple' => true])
-            ->setAction($this->generateUrl('dashboard_edit'))
-            ->setMethod('POST')
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            try {
-                $userWidgets = $this->getUserConfig($user);
-                $saveWidgets = [];
-                foreach ($form->getData()['widgets'] as $widgetId) {
-                    $options = [];
-                    foreach ($userWidgets as $setting) {
-                        if ($setting['id'] === $widgetId) {
-                            $options = $setting['options'];
-                        }
-                    }
-                    $saveWidgets[] = ['id' => $widgetId, 'options' => $options];
-                }
-
-                $this->saveBookmark($user, $saveWidgets);
-
-                $this->flashSuccess('action.update.success');
-
-                return $this->redirectToRoute('dashboard');
-            } catch (\Exception $ex) {
-                $this->flashDeleteException($ex);
-            }
-        }
-
-        $page = new PageSetup('dashboard.title');
-        $page->setHelp('dashboard.html');
-        $page->setActionName('dashboard');
-        $page->setActionView('edit');
-        $page->setActionPayload(['widgets' => $widgets, 'available' => $available]);
-
-        return $this->render('dashboard/grid.html.twig', [
-            'page_setup' => $page,
-            'widgets' => $widgets,
-            'form' => $form->createView(),
-        ]);
     }
 }

@@ -345,7 +345,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
     /**
      * @return int<0, max>
      */
-    public function countUsersForQuery(UserQuery $query): int
+    private function countUsersForQuery(UserQuery $query): int
     {
         $qb = $this->getQueryBuilderForQuery($query);
         $qb

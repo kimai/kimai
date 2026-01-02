@@ -11,7 +11,6 @@ namespace App\Widget\Type;
 
 use App\Project\ProjectStatisticService;
 use App\Repository\Loader\TeamLoader;
-use App\Widget\WidgetInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class UserTeamProjects extends AbstractWidget
@@ -21,16 +20,6 @@ final class UserTeamProjects extends AbstractWidget
         private readonly EntityManagerInterface $entityManager
     )
     {
-    }
-
-    public function getWidth(): int
-    {
-        return WidgetInterface::WIDTH_HALF;
-    }
-
-    public function getHeight(): int
-    {
-        return WidgetInterface::HEIGHT_LARGE;
     }
 
     public function getTitle(): string
@@ -60,7 +49,7 @@ final class UserTeamProjects extends AbstractWidget
     }
 
     /**
-     * @param array<string, string|bool|int|null|array<string, mixed>> $options
+     * @param array<string, string|bool|int|float> $options
      */
     public function getData(array $options = []): mixed
     {

@@ -650,34 +650,6 @@
         <source>stats.yourWorkingHours</source>
         <target state="translated">ساعت کاری من</target>
       </trans-unit>
-      <trans-unit id="xnJvYAE" resname="stats.amountWeek">
-        <source>stats.amountWeek</source>
-        <target state="translated">درآمد این هفته</target>
-      </trans-unit>
-      <trans-unit id="ulr3reE" resname="stats.amountMonth">
-        <source>stats.amountMonth</source>
-        <target state="translated">درآمد این ماه</target>
-      </trans-unit>
-      <trans-unit id="bQZyZaO" resname="stats.amountYear">
-        <source>stats.amountYear</source>
-        <target state="translated">درآمد امسال</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target state="translated">کاربران فعال در این سال مالی</target>
-      </trans-unit>
-      <trans-unit id="Bor.76M" resname="stats.activityTotal">
-        <source>stats.activityTotal</source>
-        <target state="translated">فعالیت ها</target>
-      </trans-unit>
-      <trans-unit id="67uSaR3" resname="stats.projectTotal">
-        <source>stats.projectTotal</source>
-        <target state="translated">پروژه ها</target>
-      </trans-unit>
-      <trans-unit id="tnD6aPj" resname="stats.customerTotal">
-        <source>stats.customerTotal</source>
-        <target state="translated">مشتریان</target>
-      </trans-unit>
       <trans-unit id="unC5MXv" resname="stats.percentUsed">
         <source>stats.percentUsed</source>
         <target state="translated">%percent%% استفاده شده</target>
@@ -882,41 +854,13 @@
         <source>stats.workingTimeYear</source>
         <target state="translated">تمام سال %year%</target>
       </trans-unit>
-      <trans-unit id="023M9Ta" resname="stats.amountToday">
-        <source>stats.amountToday</source>
-        <target state="translated">درآمد امروز</target>
-      </trans-unit>
       <trans-unit id="Z0fz23v" resname="stats.amountTotal">
         <source>stats.amountTotal</source>
         <target state="translated">کل درآمد</target>
       </trans-unit>
-      <trans-unit id="HzICegM" resname="stats.activeUsersToday">
-        <source>stats.activeUsersToday</source>
-        <target state="translated">کاربران فعال امروز</target>
-      </trans-unit>
-      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek">
-        <source>stats.activeUsersWeek</source>
-        <target state="translated">کاربران فعال این هفته</target>
-      </trans-unit>
-      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth">
-        <source>stats.activeUsersMonth</source>
-        <target state="translated">کاربران فعال این ماه</target>
-      </trans-unit>
-      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
-        <source>stats.activeUsersYear</source>
-        <target state="translated">کاربران فعال امسال</target>
-      </trans-unit>
-      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">
-        <source>stats.activeUsersTotal</source>
-        <target state="translated">کاربران فعال همیشه</target>
-      </trans-unit>
       <trans-unit id="lEW82ex" resname="stats.activeRecordings">
         <source>stats.activeRecordings</source>
         <target state="translated">سوابق فعال</target>
-      </trans-unit>
-      <trans-unit id="t5eIWp8" resname="stats.userTotal">
-        <source>stats.userTotal</source>
-        <target state="translated">کاربران</target>
       </trans-unit>
       <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month">
         <source>stats.percentUsedLeft_month</source>
@@ -1142,21 +1086,9 @@
         <source>notifications.welcome</source>
         <target state="translated">از اینکه با اعلان‌ها موافقت کردید متشکریم!</target>
       </trans-unit>
-      <trans-unit id="0WpgaGa" resname="stats.userDurationMonth">
-        <source>stats.userDurationMonth</source>
-        <target state="translated">ساعت کاری من در این ماه</target>
-      </trans-unit>
-      <trans-unit id="EedlgkM" resname="stats.userDurationTotal">
-        <source>stats.userDurationTotal</source>
-        <target state="translated">کل ساعت کاری من</target>
-      </trans-unit>
       <trans-unit id="E3Kj9lt" resname="stats.userAmountMonth">
         <source>stats.userAmountMonth</source>
         <target state="translated">درآمد من در این ماه</target>
-      </trans-unit>
-      <trans-unit id="BjyLITj" resname="stats.userDurationYear">
-        <source>stats.userDurationYear</source>
-        <target state="translated">ساعت کاری من امسال</target>
       </trans-unit>
       <trans-unit id="2lL9ACs" resname="help.invoiceTemplate">
         <source>help.invoiceTemplate</source>
@@ -1265,14 +1197,6 @@
       <trans-unit id="On18MKP" resname="plugin.installed">
         <source>plugin.installed</source>
         <target state="translated">پلاگین های نصب شده</target>
-      </trans-unit>
-      <trans-unit id="EI5gPkp" resname="stats.userDurationToday">
-        <source>stats.userDurationToday</source>
-        <target state="translated">ساعت کاری امروز من</target>
-      </trans-unit>
-      <trans-unit id="DXcvOMM" resname="stats.userDurationWeek">
-        <source>stats.userDurationWeek</source>
-        <target state="translated">ساعت کاری من در این هفته</target>
       </trans-unit>
       <trans-unit id="mQMcndl" resname="stats.userAmountToday">
         <source>stats.userAmountToday</source>

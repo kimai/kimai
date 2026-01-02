@@ -1,0 +1,53 @@
+<?php
+
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace App\Tests\Widget\Type;
+
+use App\Entity\User;
+use App\Repository\TimesheetRepository;
+use App\Tests\Mocks\SystemConfigurationFactory;
+use App\Widget\Type\AbstractWidget;
+use App\Widget\Type\Duration;
+use PHPUnit\Framework\Attributes\CoversClass;
+
+#[CoversClass(Duration::class)]
+class DurationTest extends AbstractWidgetTestCase
+{
+    /**
+     * @return Duration
+     */
+    public function createSut(): AbstractWidget
+    {
+        $repository = $this->createMock(TimesheetRepository::class);
+        $configuration = SystemConfigurationFactory::createStub();
+
+        $sut = new Duration($repository, $configuration);
+        $sut->setUser(new User());
+
+        return $sut;
+    }
+
+    protected function assertDefaultData(AbstractWidget $sut): void
+    {
+        self::assertEquals(0, $sut->getData());
+    }
+
+    public function getDefaultOptions(): array
+    {
+        return [];
+    }
+
+    public function testSettings(): void
+    {
+        $sut = $this->createSut();
+
+        self::assertEquals('widget/widget-duration.html.twig', $sut->getTemplateName());
+        self::assertEquals('Duration', $sut->getId());
+    }
+}
