@@ -12,7 +12,11 @@ namespace App\Doctrine;
 use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Platforms\MariaDBPlatform;
 use Doctrine\DBAL\Platforms\MySQLPlatform;
+use Doctrine\DBAL\Schema\Name\Identifier;
+use Doctrine\DBAL\Schema\Name\UnqualifiedName;
+use Doctrine\DBAL\Schema\PrimaryKeyConstraint;
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\DBAL\Schema\Table;
 use Doctrine\Migrations\AbstractMigration as BaseAbstractMigration;
 
 /**
@@ -78,5 +82,20 @@ abstract class AbstractMigration extends BaseAbstractMigration
         }
 
         parent::addSql($sql, $params, $types);
+    }
+
+    /**
+     * @param non-empty-list<non-empty-string> $primaryKeyColumns
+     */
+    protected function addPrimaryKeyConstraint(Table $table, array $primaryKeyColumns): void
+    {
+        $primaryKey = PrimaryKeyConstraint::editor();
+        foreach ($primaryKeyColumns as $primaryKeyColumn) {
+            $primaryKey->addColumnName(new UnqualifiedName(Identifier::unquoted($primaryKeyColumn)));
+        }
+
+        $primaryKey->setIsClustered(true);
+
+        $table->addPrimaryKeyConstraint($primaryKey->create());
     }
 }
