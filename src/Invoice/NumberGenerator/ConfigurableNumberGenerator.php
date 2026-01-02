@@ -53,11 +53,11 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
                 throw new \InvalidArgumentException('Missing invoice model, cannot calculate invoice number');
             }
 
-            if ($format === 'cname' && $this->model->getCustomer()?->getName() === null) {
+            if ($format === 'cname' && $this->model->getCustomer()->getName() === null) {
                 throw new \InvalidArgumentException('Customer has no name, replacer {cname} failed evaluation');
             }
 
-            if ($format === 'cnumber' && $this->model->getCustomer()?->getNumber() === null) {
+            if ($format === 'cnumber' && $this->model->getCustomer()->getNumber() === null) {
                 throw new \InvalidArgumentException('Customer has no number, replacer {cnumber} failed evaluation');
             }
 
@@ -87,8 +87,8 @@ final class ConfigurableNumberGenerator implements NumberGeneratorInterface
                 'cy' => $this->repository->getCounterForYear($invoiceDate) + $increaseBy,
                 'cm' => $this->repository->getCounterForMonth($invoiceDate) + $increaseBy,
                 'cd' => $this->repository->getCounterForDay($invoiceDate) + $increaseBy,
-                'cname' => (string) $this->model->getCustomer()?->getName(),
-                'cnumber' => (string) $this->model->getCustomer()?->getNumber(),
+                'cname' => (string) $this->model->getCustomer()->getName(),
+                'cnumber' => (string) $this->model->getCustomer()->getNumber(),
                 default => $originalFormat,
             };
         });

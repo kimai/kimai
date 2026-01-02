@@ -14,7 +14,7 @@ use App\Entity\RolePermission;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * @extends \Doctrine\ORM\EntityRepository<RolePermission>
+ * @extends EntityRepository<RolePermission>
  */
 class RolePermissionRepository extends EntityRepository
 {

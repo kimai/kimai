@@ -94,9 +94,9 @@
         <source>Cannot stop running timesheet</source>
         <target>Sie haben eine aktive Zeitmessung, die nicht automatisch beendet werden kann.</target>
       </trans-unit>
-      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token.">
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token." xml:space="preserve">
         <source>The given code is not the correct TOTP token.</source>
-        <target>Der übermittelte Code ist nicht der korrekte TOTP Token.</target>
+        <target state="translated">Der übermittelte Code ist nicht der korrekte TOTP-Token.</target>
       </trans-unit>
       <trans-unit id="7mqg3TC" resname="This value is not a valid role name.">
         <source>This value is not a valid role name.</source>
@@ -150,13 +150,21 @@
         <source>The period of absence must not extend beyond the turn of the year.</source>
         <target>Der Zeitraum der Abwesenheit darf nicht über einen Jahreswechsel hinweg gehen.</target>
       </trans-unit>
-      <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form.">
+      <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form." xml:space="preserve">
         <source>The CSRF token is invalid. Please try to resubmit the form.</source>
-        <target>Bitte senden Sie das Formular erneut ab. Sollte das Problem weiterhin bestehen, laden Sie die bitte die Seite neu.</target>
+        <target state="translated">Bitte senden Sie das Formular erneut ab. Sollte das Problem weiterhin bestehen, laden Sie bitte die Seite neu.</target>
       </trans-unit>
       <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day.">
         <source>An absence cannot be booked after the last working day.</source>
         <target>Eine Abwesenheit kann nicht nach dem letzten Arbeitstag gebucht werden.</target>
+      </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending.">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target>Ausgewählter Zeitraum kann nicht gesperrt werden: unbestätigte Abwesenheitsanträge stehen an.</target>
+      </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
+        <source>Duration cannot be negative.</source>
+        <target state="translated">Die Dauer darf nicht negativ sein.</target>
       </trans-unit>
     </body>
   </file>

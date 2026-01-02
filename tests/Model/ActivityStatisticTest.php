@@ -11,10 +11,9 @@ namespace App\Tests\Model;
 
 use App\Entity\Activity;
 use App\Model\ActivityStatistic;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Model\ActivityStatistic
- */
+#[CoversClass(ActivityStatistic::class)]
 class ActivityStatisticTest extends AbstractTimesheetCountedStatisticTestCase
 {
     public function testDefaultValues(): void

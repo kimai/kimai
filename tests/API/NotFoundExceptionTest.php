@@ -10,11 +10,10 @@
 namespace App\Tests\API;
 
 use App\API\NotFoundException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\API\NotFoundException
- */
+#[CoversClass(NotFoundException::class)]
 class NotFoundExceptionTest extends TestCase
 {
     public function testConstructor(): void

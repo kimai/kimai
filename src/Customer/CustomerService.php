@@ -45,20 +45,37 @@ final class CustomerService
         return $timezone;
     }
 
+    public function loadMetaFields(Customer $customer): void
+    {
+        $this->dispatcher->dispatch(new CustomerMetaDefinitionEvent($customer));
+    }
+
     public function createNewCustomer(string $name): Customer
     {
         $customer = new Customer($name);
         $customer->setTimezone($this->getDefaultTimezone());
         $customer->setCountry($this->configuration->getCustomerDefaultCountry());
-        $customer->setCurrency($this->configuration->getCustomerDefaultCurrency());
+        $customer->setCurrency($this->configuration->getDefaultCurrency());
         $customer->setNumber($this->calculateNextCustomerNumber());
 
-        $this->dispatcher->dispatch(new CustomerMetaDefinitionEvent($customer));
+        $this->loadMetaFields($customer);
         $this->dispatcher->dispatch(new CustomerCreateEvent($customer));
 
         return $customer;
     }
 
+    public function saveCustomer(Customer $customer): Customer
+    {
+        if ($customer->isNew()) {
+            return $this->saveNewCustomer($customer); // @phpstan-ignore method.deprecated
+        } else {
+            return $this->updateCustomer($customer); // @phpstan-ignore method.deprecated
+        }
+    }
+
+    /**
+     * @deprecated since 2.35 - use saveCustomer() instead
+     */
     public function saveNewCustomer(Customer $customer): Customer
     {
         if (null !== $customer->getId()) {
@@ -74,10 +91,10 @@ final class CustomerService
         return $customer;
     }
 
-    public function deleteCustomer(Customer $customer): void
+    public function deleteCustomer(Customer $customer, ?Customer $replace = null): void
     {
-        $this->dispatcher->dispatch(new CustomerDeleteEvent($customer));
-        $this->repository->deleteCustomer($customer);
+        $this->dispatcher->dispatch(new CustomerDeleteEvent($customer, $replace));
+        $this->repository->deleteCustomer($customer, $replace);
     }
 
     /**
@@ -89,10 +106,13 @@ final class CustomerService
         $errors = $this->validator->validate($customer, null, $groups);
 
         if ($errors->count() > 0) {
-            throw new ValidationFailedException($errors, 'Validation Failed');
+            throw new ValidationFailedException($errors);
         }
     }
 
+    /**
+     * @deprecated since 2.35 - use saveCustomer() instead
+     */
     public function updateCustomer(Customer $customer): Customer
     {
         $this->validateCustomer($customer);
@@ -137,12 +157,23 @@ final class CustomerService
         // we cannot use max(number) because a varchar column returns unexpected results
         $start = $this->repository->countCustomer();
         $i = 0;
+        $createDate = new \DateTimeImmutable();
 
         do {
             $start++;
 
-            $numberGenerator = new NumberGenerator($format, function (string $originalFormat, string $format, int $increaseBy) use ($start): string|int {
+            $numberGenerator = new NumberGenerator($format, function (string $originalFormat, string $format, int $increaseBy) use ($start, $createDate): string|int {
                 return match ($format) {
+                    'Y' => $createDate->format('Y'),
+                    'y' => $createDate->format('y'),
+                    'M' => $createDate->format('m'),
+                    'm' => $createDate->format('n'),
+                    'D' => $createDate->format('d'),
+                    'd' => $createDate->format('j'),
+                    'YY' => (int) $createDate->format('Y') + $increaseBy,
+                    'yy' => (int) $createDate->format('y') + $increaseBy,
+                    'MM' => (int) $createDate->format('m') + $increaseBy,
+                    'DD' => (int) $createDate->format('d') + $increaseBy,
                     'cc' => $start + $increaseBy,
                     default => $originalFormat,
                 };

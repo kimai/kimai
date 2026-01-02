@@ -12,8 +12,6 @@ namespace App\API;
 use App\Activity\ActivityService;
 use App\Entity\Activity;
 use App\Entity\ActivityRate;
-use App\Entity\User;
-use App\Event\ActivityMetaDefinitionEvent;
 use App\Form\API\ActivityApiEditForm;
 use App\Form\API\ActivityRateApiForm;
 use App\Repository\ActivityRateRepository;
@@ -26,7 +24,6 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use OpenApi\Attributes as OA;
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,21 +36,19 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class ActivityController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Activity', 'Activity_Entity'];
-    public const GROUPS_FORM = ['Default', 'Entity', 'Activity'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Activity'];
     public const GROUPS_RATE = ['Default', 'Entity', 'Activity_Rate'];
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
         private readonly ActivityRepository $repository,
-        private readonly EventDispatcherInterface $dispatcher,
         private readonly ActivityRateRepository $activityRateRepository,
         private readonly ActivityService $activityService
     ) {
     }
 
     /**
-     * Returns a collection of activities (which are visible to the user)
+     * Fetch activities
      */
     #[OA\Response(response: 200, description: 'Returns a collection of activities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ActivityCollection')))]
     #[Route(methods: ['GET'], path: '', name: 'get_activities')]
@@ -63,25 +58,12 @@ final class ActivityController extends BaseApiController
     #[Rest\QueryParam(name: 'globals', requirements: '0|1|true|false', strict: true, nullable: true, description: 'Use if you want to fetch only global activities. Allowed values: 0|1 (default: 0 for false)')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name|project', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name, project (default: name)')]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
-    #[Rest\QueryParam(name: 'term', description: 'Free search term')]
+    #[Rest\QueryParam(name: 'term', description: 'Free search term', nullable: true)]
     public function cgetAction(ParamFetcherInterface $paramFetcher, ProjectRepository $projectRepository): Response
     {
-        /** @var User $user */
-        $user = $this->getUser();
-
         $query = new ActivityQuery();
         $query->loadTeams();
-        $query->setCurrentUser($user);
-
-        $order = $paramFetcher->get('order');
-        if (\is_string($order) && $order !== '') {
-            $query->setOrder($order);
-        }
-
-        $orderBy = $paramFetcher->get('orderBy');
-        if (\is_string($orderBy) && $orderBy !== '') {
-            $query->setOrderBy($orderBy);
-        }
+        $this->prepareQuery($query, $paramFetcher);
 
         $globals = $paramFetcher->get('globals');
         if (\is_string($globals) && ($globals === 'true' || $globals === '1')) {
@@ -104,7 +86,7 @@ final class ActivityController extends BaseApiController
         }
 
         $visible = $paramFetcher->get('visible');
-        if (\is_string($visible) && $visible !== '') {
+        if (is_numeric($visible)) {
             $query->setVisibility((int) $visible);
         }
 
@@ -113,7 +95,6 @@ final class ActivityController extends BaseApiController
             $query->setSearchTerm(new SearchTerm($term));
         }
 
-        $query->setIsApiCall(true);
         $data = $this->repository->getActivitiesForQuery($query);
         $view = new View($data, 200);
         $view->getContext()->setGroups(self::GROUPS_COLLECTION);
@@ -122,7 +103,7 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Returns one activity
+     * Fetch activity
      */
     #[OA\Response(response: 200, description: 'Returns one activity entity', content: new OA\JsonContent(ref: '#/components/schemas/ActivityEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Activity ID to fetch', required: true)]
@@ -137,7 +118,7 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Creates a new activity
+     * Create activity
      */
     #[OA\Post(description: 'Creates a new activity and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created activity', content: new OA\JsonContent(ref: '#/components/schemas/ActivityEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/ActivityEditForm'))]
@@ -148,10 +129,7 @@ final class ActivityController extends BaseApiController
             throw $this->createAccessDeniedException('User cannot create activities');
         }
 
-        $activity = new Activity();
-
-        $event = new ActivityMetaDefinitionEvent($activity);
-        $this->dispatcher->dispatch($event);
+        $activity = $this->activityService->createNewActivity();
 
         $form = $this->createForm(ActivityApiEditForm::class, $activity, [
             'include_budget' => $this->isGranted('budget', $activity),
@@ -161,7 +139,7 @@ final class ActivityController extends BaseApiController
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
-            $this->repository->saveActivity($activity);
+            $this->activityService->saveActivity($activity);
 
             $view = new View($activity, 200);
             $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -170,13 +148,13 @@ final class ActivityController extends BaseApiController
         }
 
         $view = new View($form);
-        $view->getContext()->setGroups(self::GROUPS_FORM);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
 
     /**
-     * Update an existing activity
+     * Update activity
      */
     #[IsGranted('edit', 'activity')]
     #[OA\Patch(description: 'Update an existing activity, you can pass all or just a subset of all attributes', responses: [new OA\Response(response: 200, description: 'Returns the updated activity', content: new OA\JsonContent(ref: '#/components/schemas/ActivityEntity'))])]
@@ -185,8 +163,7 @@ final class ActivityController extends BaseApiController
     #[Route(methods: ['PATCH'], path: '/{id}', name: 'patch_activity', requirements: ['id' => '\d+'])]
     public function patchAction(Request $request, Activity $activity): Response
     {
-        $event = new ActivityMetaDefinitionEvent($activity);
-        $this->dispatcher->dispatch($event);
+        $this->activityService->loadMetaFields($activity);
 
         $form = $this->createForm(ActivityApiEditForm::class, $activity, [
             'include_budget' => $this->isGranted('budget', $activity),
@@ -198,12 +175,12 @@ final class ActivityController extends BaseApiController
 
         if (false === $form->isValid()) {
             $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_FORM);
+            $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
             return $this->viewHandler->handle($view);
         }
 
-        $this->repository->saveActivity($activity);
+        $this->activityService->saveActivity($activity);
 
         $view = new View($activity, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -212,10 +189,10 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Delete an existing activity
+     * Delete activity
      *
      * [DANGER] This will also delete ALL linked timesheets.
-     * Maybe use `PATCH` instead and mark it as inactive with `visible=false`?
+     * Do you want to use `PATCH` instead and mark it as inactive with `{visible: false}` instead?
      */
     #[IsGranted('delete', 'activity')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Delete one activity')])]
@@ -231,7 +208,7 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Sets the value of a meta-field for an existing activity
+     * Update activity custom-field
      */
     #[IsGranted('edit', 'activity')]
     #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/ActivityEntity'))]
@@ -241,8 +218,7 @@ final class ActivityController extends BaseApiController
     #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
     public function metaAction(Activity $activity, ParamFetcherInterface $paramFetcher): Response
     {
-        $event = new ActivityMetaDefinitionEvent($activity);
-        $this->dispatcher->dispatch($event);
+        $this->activityService->loadMetaFields($activity);
 
         $name = $paramFetcher->get('name');
         $value = $paramFetcher->get('value');
@@ -253,7 +229,7 @@ final class ActivityController extends BaseApiController
 
         $meta->setValue($value);
 
-        $this->repository->saveActivity($activity);
+        $this->activityService->saveActivity($activity);
 
         $view = new View($activity, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -262,7 +238,7 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Returns a collection of all rates for one activity
+     * Fetch rates for activity
      */
     #[IsGranted('edit', 'activity')]
     #[OA\Response(response: 200, description: 'Returns a collection of activity rate entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ActivityRate')))]
@@ -279,7 +255,7 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Deletes one rate for an activity
+     * Delete rate for activity
      */
     #[IsGranted('edit', 'activity')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
@@ -300,7 +276,7 @@ final class ActivityController extends BaseApiController
     }
 
     /**
-     * Adds a new rate to an activity
+     * Add rate for activity
      */
     #[IsGranted('edit', 'activity')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the new created rate', content: new OA\JsonContent(ref: '#/components/schemas/ActivityRate'))])]

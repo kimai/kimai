@@ -10,19 +10,22 @@
 namespace App\Tests\Export\Renderer;
 
 use App\Export\Base\PDFRenderer;
+use App\Export\Base\RendererTrait;
 use App\Pdf\HtmlToPdfConverter;
 use App\Pdf\MPdfConverter;
+use App\Pdf\PdfRendererTrait;
 use App\Project\ProjectStatisticService;
 use App\Tests\Mocks\FileHelperFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment;
 
-/**
- * @covers \App\Export\Base\PDFRenderer
- * @covers \App\Export\Base\RendererTrait
- * @group integration
- */
+#[CoversClass(PDFRendererTrait::class)]
+#[CoversClass(RendererTrait::class)]
+#[CoversClass(PDFRenderer::class)]
+#[Group('integration')]
 class PdfRendererTest extends AbstractRendererTestCase
 {
     public function testConfiguration(): void

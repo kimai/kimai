@@ -18,11 +18,10 @@ use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Entity\Timesheet
- */
+#[CoversClass(Timesheet::class)]
 class TimesheetTest extends TestCase
 {
     public function testDefaultValues(): void
@@ -154,26 +153,6 @@ class TimesheetTest extends TestCase
         self::assertFalse($sut->isBillable());
         self::assertInstanceOf(Timesheet::class, $sut->setBillable(true));
         self::assertTrue($sut->isBillable());
-    }
-
-    public function testCategory(): void
-    {
-        $sut = new Timesheet();
-        self::assertInstanceOf(Timesheet::class, $sut->setCategory(Timesheet::HOLIDAY));
-        self::assertEquals('holiday', $sut->getCategory());
-        self::assertInstanceOf(Timesheet::class, $sut->setCategory(Timesheet::WORK));
-        self::assertEquals('work', $sut->getCategory());
-        self::assertInstanceOf(Timesheet::class, $sut->setCategory(Timesheet::SICKNESS));
-        self::assertEquals('sickness', $sut->getCategory());
-        self::assertInstanceOf(Timesheet::class, $sut->setCategory(Timesheet::PARENTAL));
-        self::assertEquals('parental', $sut->getCategory());
-        self::assertInstanceOf(Timesheet::class, $sut->setCategory(Timesheet::OVERTIME));
-        self::assertEquals('overtime', $sut->getCategory());
-
-        self::expectException(\InvalidArgumentException::class);
-        self::expectExceptionMessage('Invalid timesheet category "foo" given, expected one of: work, holiday, sickness, parental, overtime');
-
-        $sut->setCategory('foo');
     }
 
     public function testClone(): void

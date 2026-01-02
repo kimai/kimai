@@ -14,15 +14,16 @@ use App\Tests\Security\TestUserEntity;
 use App\User\UserService;
 use App\Validator\Constraints\User;
 use App\Validator\Constraints\UserValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\User
- * @covers \App\Validator\Constraints\UserValidator
  * @extends ConstraintValidatorTestCase<UserValidator>
  */
+#[CoversClass(\App\Validator\Constraints\User::class)]
+#[CoversClass(UserValidator::class)]
 class UserValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): UserValidator

@@ -18,26 +18,23 @@ use App\Entity\ProjectRate;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Entity\UserPreference;
-use App\Repository\TimesheetRepository;
+use App\Tests\Mocks\RateServiceFactory;
 use App\Timesheet\RateService;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Timesheet\RateService
- */
+#[CoversClass(RateService::class)]
 class RateServiceTest extends TestCase
 {
-    protected function getRateRepositoryMock(array $rates = [])
+    private function getSut(array $rules = [], array $rates = []): RateService
     {
-        $mock = $this->getMockBuilder(TimesheetRepository::class)->disableOriginalConstructor()->getMock();
-        if (!empty($rates)) {
-            $mock->expects($this->any())->method('findMatchingRates')->willReturn($rates);
-        }
+        $factory = new RateServiceFactory($this);
 
-        return $mock;
+        return $factory->create($rules, $rates);
     }
 
-    private static function createDateTime(string $datetime = null): \DateTime
+    private static function createDateTime(?string $datetime = null): \DateTime
     {
         return new \DateTime($datetime ?? 'now', new \DateTimeZone('UTC'));
     }
@@ -51,7 +48,7 @@ class RateServiceTest extends TestCase
         $record->setActivity(new Activity());
         $record->setUser($this->getTestUser());
 
-        $sut = new RateService([], $this->getRateRepositoryMock());
+        $sut = $this->getSut();
         $rate = $sut->calculate($record);
         self::assertEquals(50, $rate->getRate());
     }
@@ -67,7 +64,7 @@ class RateServiceTest extends TestCase
         $record->setActivity(new Activity());
         $record->setUser($this->getTestUser());
 
-        $sut = new RateService([], $this->getRateRepositoryMock());
+        $sut = $this->getSut();
         $rate = $sut->calculate($record);
         self::assertEquals(10, $rate->getRate());
     }
@@ -106,27 +103,25 @@ class RateServiceTest extends TestCase
         yield 'k1' => [8.82,    8.82,   1800,   17.64,  null,   null,   null,   null,   null,   false,   null,   null,   false,   null,   null,   true];
     }
 
-    /**
-     * @dataProvider getRateTestData
-     */
+    #[DataProvider('getRateTestData')]
     public function testRates(
-        $expectedRate,
-        $expectedInternalRate,
-        $duration,
-        $userRate,
-        $userInternalRate,
-        $timesheetHourly,
-        $timesheetFixed,
-        $activityRate,
-        $activityInternal,
-        $activityIsFixed,
-        $projectRate,
-        $projectInternal,
-        $projectIsFixed,
-        $customerRate,
-        $customerInternal,
-        $customerIsFixed
-    ) {
+        float $expectedRate,
+        float $expectedInternalRate,
+        int $duration,
+        float $userRate,
+        ?float $userInternalRate,
+        ?float $timesheetHourly,
+        ?float $timesheetFixed,
+        ?float $activityRate,
+        ?float $activityInternal,
+        bool $activityIsFixed,
+        ?float $projectRate,
+        ?float $projectInternal,
+        bool $projectIsFixed,
+        ?float $customerRate,
+        ?float $customerInternal,
+        bool $customerIsFixed
+    ): void {
         $customer = new Customer('foo');
 
         $project = new Project();
@@ -136,15 +131,13 @@ class RateServiceTest extends TestCase
         $activity->setProject($project);
 
         $timesheet = new Timesheet();
-        $timesheet
-            ->setEnd(self::createDateTime())
-            ->setHourlyRate($timesheetHourly)
-            ->setFixedRate($timesheetFixed)
-            ->setActivity($activity)
-            ->setProject($project)
-            ->setDuration($duration)
-            ->setUser($this->getTestUser($userRate, $userInternalRate))
-        ;
+        $timesheet->setEnd(self::createDateTime());
+        $timesheet->setHourlyRate($timesheetHourly);
+        $timesheet->setFixedRate($timesheetFixed);
+        $timesheet->setActivity($activity);
+        $timesheet->setProject($project);
+        $timesheet->setDuration($duration);
+        $timesheet->setUser($this->getTestUser($userRate, $userInternalRate));
 
         $rates = [];
 
@@ -178,13 +171,13 @@ class RateServiceTest extends TestCase
             $rates[] = $rate;
         }
 
-        $sut = new RateService([], $this->getRateRepositoryMock($rates));
+        $sut = $this->getSut([], $rates);
         $rate = $sut->calculate($timesheet);
         self::assertEquals($expectedRate, $rate->getRate());
         self::assertEquals($expectedInternalRate, $rate->getInternalRate());
     }
 
-    protected function getTestUser($rate = 75, $internalRate = 75)
+    protected function getTestUser(?float $rate = 75.0, ?float $internalRate = 75.0): User
     {
         $user = new User();
 
@@ -207,17 +200,16 @@ class RateServiceTest extends TestCase
 
         self::assertEquals(0, $record->getRate());
 
-        $sut = new RateService([], $this->getRateRepositoryMock());
+        $sut = $this->getSut();
         $rate = $sut->calculate($record);
         self::assertEquals(0, $rate->getRate());
     }
 
     /**
      * Uses the hourly rate from user_preferences to calculate the rate.
-     *
-     * @dataProvider getRuleDefinitions
      */
-    public function testCalculateWithRulesByUsersHourlyRate($duration, $rules, $expectedRate): void
+    #[DataProvider('getRuleDefinitions')]
+    public function testCalculateWithRulesByUsersHourlyRate(int $duration, array $rules, float $expectedRate): void
     {
         $end = self::createDateTime('12:00:00');
         $start = clone $end;
@@ -233,13 +225,13 @@ class RateServiceTest extends TestCase
 
         $record->setEnd($end);
 
-        $sut = new RateService($rules, $this->getRateRepositoryMock());
+        $sut = $this->getSut($rules);
         $rate = $sut->calculate($record);
 
         self::assertEquals($expectedRate, $rate->getRate());
     }
 
-    public static function getRuleDefinitions()
+    public static function getRuleDefinitions(): array
     {
         $start = self::createDateTime('12:00:00');
         $day = $start->format('l');

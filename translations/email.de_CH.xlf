@@ -2,21 +2,21 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de-CH" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
+      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer" xml:space="preserve">
         <source>automated_email_dont_answer</source>
-        <target state="translated">Dies ist eine automatisch generierte E-Mail. Bitte nicht antworten, E-Mails an diese Adresse werden nicht gelesen.</target>
+        <target state="translated">Dies ist eine automatisch generierte E-Mail. Bitte antworten Sie nicht, die Adresse wird nicht gelesen.</target>
       </trans-unit>
       <trans-unit id="QtcznHC" resname="registration.title">
         <source>registration.title</source>
         <target state="translated">Willkommen %username%</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject">
+      <trans-unit id="pjr3FDv" resname="registration.subject" xml:space="preserve">
         <source>registration.subject</source>
-        <target state="translated">Account aktivieren</target>
+        <target state="translated">Benutzerkonto aktivieren</target>
       </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button">
+      <trans-unit id="YMLel3P" resname="registration.button" xml:space="preserve">
         <source>registration.button</source>
-        <target state="translated">Account aktivieren</target>
+        <target state="translated">Benutzerkonto aktivieren</target>
       </trans-unit>
       <trans-unit id="IkjnHoP" resname="registration.intro">
         <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
@@ -24,19 +24,71 @@
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target state="needs-translation">Passwort zurücksetzen</target>
+        <target state="translated">Anmelden bei Kimai</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="needs-translation">Das kann passieren…</target>
+        <target state="translated">Bei Ihrem Konto anmelden</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="needs-translation">Passwort zurücksetzen</target>
+        <target state="translated">Anmelden</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="needs-translation">... Sie haben also Ihr Passwort vergessen? Keine Sorge: Kimai hilft Ihnen, ein neues zu erstellen:</target>
+        <target state="translated">Dieser Link ist nur für die nächsten 15 Minuten gültig.</target>
+      </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
+        <source>absence_created_supervisor_subject</source>
+        <target state="translated">Neue Abwesenheit: %user% (%type%)</target>
+      </trans-unit>
+      <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
+        <source>A new absence was created for %user%.
+
+%list%
+
+Please review them at: %url%</source>
+        <target state="translated">Für %user% wurde eine neue Abwesenheit angelegt.
+
+%list%
+
+Bitte überprüfen Sie diese unter: %url%</target>
+      </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="translated">Freigabe beantragt: %user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="translated">Für %user% wurde eine Freigabe beantragt.
+
+%list%
+
+Bitte überprüfen Sie diese unter: %url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">Ihre Genehmigungsanfrage wurde abgelehnt</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">Ihre Genehmigungsanfrage wurde von %created_by% abgelehnt.
+
+%list%
+
+Bitte überprüfen Sie ihre Anfragen unter: %url%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Ihre Genehmigungsanfrage wurde bestätigt</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="translated">Ihre Anfrage wurde von %created_by% genehmigt.
+
+%list%
+
+Sie finden alle Ihre Anfragen unter: %url%</target>
       </trans-unit>
     </body>
   </file>

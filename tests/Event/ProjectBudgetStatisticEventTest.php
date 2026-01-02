@@ -12,11 +12,10 @@ namespace App\Tests\Event;
 use App\Entity\Project;
 use App\Event\ProjectBudgetStatisticEvent;
 use App\Model\ProjectBudgetStatisticModel;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\ProjectBudgetStatisticEvent
- */
+#[CoversClass(ProjectBudgetStatisticEvent::class)]
 class ProjectBudgetStatisticEventTest extends TestCase
 {
     public function testStatistic(): void

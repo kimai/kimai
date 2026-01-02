@@ -10,13 +10,13 @@
 namespace App\Tests\Event;
 
 use App\Entity\User;
+use App\Event\AbstractUserEvent;
 use App\Event\UserCreateEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\AbstractUserEvent
- * @covers \App\Event\UserCreateEvent
- */
+#[CoversClass(AbstractUserEvent::class)]
+#[CoversClass(UserCreateEvent::class)]
 class UserCreateEventTest extends TestCase
 {
     public function testGetter(): void

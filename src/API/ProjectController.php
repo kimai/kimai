@@ -12,7 +12,6 @@ namespace App\API;
 use App\Entity\Project;
 use App\Entity\ProjectRate;
 use App\Entity\User;
-use App\Event\ProjectMetaDefinitionEvent;
 use App\Form\API\ProjectApiEditForm;
 use App\Form\API\ProjectRateApiForm;
 use App\Project\ProjectService;
@@ -26,7 +25,6 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use OpenApi\Attributes as OA;
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,21 +38,19 @@ use Symfony\Component\Validator\Constraints;
 final class ProjectController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Project', 'Project_Entity'];
-    public const GROUPS_FORM = ['Default', 'Entity', 'Project'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Project'];
     public const GROUPS_RATE = ['Default', 'Entity', 'Project_Rate'];
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
         private readonly ProjectRepository $repository,
-        private readonly EventDispatcherInterface $dispatcher,
         private readonly ProjectRateRepository $projectRateRepository,
         private readonly ProjectService $projectService
     ) {
     }
 
     /**
-     * Returns a collection of projects (which are visible to the user)
+     * Fetch projects
      */
     #[OA\Response(response: 200, description: 'Returns a collection of projects', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ProjectCollection')))]
     #[Route(methods: ['GET'], path: '', name: 'get_projects')]
@@ -67,7 +63,7 @@ final class ProjectController extends BaseApiController
     #[Rest\QueryParam(name: 'globalActivities', requirements: '0|1', strict: true, nullable: true, description: "If given, filters projects by their 'global activity' support. Allowed values: 1 (supports global activities) and 0 (without global activities) (default: all)")]
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name|customer', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name, customer (default: name)')]
-    #[Rest\QueryParam(name: 'term', description: 'Free search term')]
+    #[Rest\QueryParam(name: 'term', description: 'Free search term', nullable: true)]
     public function cgetAction(ParamFetcherInterface $paramFetcher, CustomerRepository $customerRepository): Response
     {
         /** @var User $user */
@@ -103,7 +99,7 @@ final class ProjectController extends BaseApiController
         }
 
         $visible = $paramFetcher->get('visible');
-        if (\is_string($visible) && $visible !== '') {
+        if (is_numeric($visible)) {
             $query->setVisibility((int) $visible);
         }
 
@@ -151,7 +147,7 @@ final class ProjectController extends BaseApiController
     }
 
     /**
-     * Returns one project
+     * Fetch project
      */
     #[OA\Response(response: 200, description: 'Returns one project entity', content: new OA\JsonContent(ref: '#/components/schemas/ProjectEntity'))]
     #[Route(methods: ['GET'], path: '/{id}', name: 'get_project', requirements: ['id' => '\d+'])]
@@ -165,7 +161,7 @@ final class ProjectController extends BaseApiController
     }
 
     /**
-     * Creates a new project
+     * Create project
      */
     #[OA\Post(description: 'Creates a new project and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created project', content: new OA\JsonContent(ref: '#/components/schemas/ProjectEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/ProjectEditForm'))]
@@ -188,7 +184,7 @@ final class ProjectController extends BaseApiController
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
-            $this->projectService->saveNewProject($project);
+            $this->projectService->saveProject($project);
 
             $view = new View($project, 200);
             $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -197,13 +193,13 @@ final class ProjectController extends BaseApiController
         }
 
         $view = new View($form);
-        $view->getContext()->setGroups(self::GROUPS_FORM);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }
 
     /**
-     * Update an existing project
+     * Update project
      */
     #[IsGranted('edit', 'project')]
     #[OA\Patch(description: 'Update an existing project, you can pass all or just a subset of all attributes', responses: [new OA\Response(response: 200, description: 'Returns the updated project', content: new OA\JsonContent(ref: '#/components/schemas/ProjectEntity'))])]
@@ -212,8 +208,7 @@ final class ProjectController extends BaseApiController
     #[Route(methods: ['PATCH'], path: '/{id}', name: 'patch_project', requirements: ['id' => '\d+'])]
     public function patchAction(Request $request, Project $project): Response
     {
-        $event = new ProjectMetaDefinitionEvent($project);
-        $this->dispatcher->dispatch($event);
+        $this->projectService->loadMetaFields($project);
 
         $form = $this->createForm(ProjectApiEditForm::class, $project, [
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
@@ -227,12 +222,12 @@ final class ProjectController extends BaseApiController
 
         if (false === $form->isValid()) {
             $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_FORM);
+            $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
             return $this->viewHandler->handle($view);
         }
 
-        $this->projectService->updateProject($project);
+        $this->projectService->saveProject($project);
 
         $view = new View($project, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -241,10 +236,10 @@ final class ProjectController extends BaseApiController
     }
 
     /**
-     * Delete an existing project
+     * Delete project
      *
      * [DANGER] This will also delete ALL linked activities and timesheets.
-     * Maybe use `PATCH` instead and mark it as inactive with `visible=false`?
+     * Do you want to use `PATCH` instead and mark it as inactive with `{visible: false}` instead?
      */
     #[IsGranted('delete', 'project')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Delete one project')])]
@@ -260,7 +255,7 @@ final class ProjectController extends BaseApiController
     }
 
     /**
-     * Sets the value of a meta-field for an existing project
+     * Update project custom-field
      */
     #[IsGranted('edit', 'project')]
     #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/ProjectEntity'))]
@@ -270,8 +265,7 @@ final class ProjectController extends BaseApiController
     #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
     public function metaAction(Project $project, ParamFetcherInterface $paramFetcher): Response
     {
-        $event = new ProjectMetaDefinitionEvent($project);
-        $this->dispatcher->dispatch($event);
+        $this->projectService->loadMetaFields($project);
 
         $name = $paramFetcher->get('name');
         $value = $paramFetcher->get('value');
@@ -282,7 +276,7 @@ final class ProjectController extends BaseApiController
 
         $meta->setValue($value);
 
-        $this->projectService->updateProject($project);
+        $this->projectService->saveProject($project);
 
         $view = new View($project, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -291,7 +285,7 @@ final class ProjectController extends BaseApiController
     }
 
     /**
-     * Returns a collection of all rates for one project
+     * Fetch rates for project
      */
     #[IsGranted('edit', 'project')]
     #[OA\Response(response: 200, description: 'Returns a collection of project rate entities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ProjectRate')))]
@@ -308,7 +302,7 @@ final class ProjectController extends BaseApiController
     }
 
     /**
-     * Deletes one rate for a project
+     * Delete rate for project
      */
     #[IsGranted('edit', 'project')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
@@ -329,7 +323,7 @@ final class ProjectController extends BaseApiController
     }
 
     /**
-     * Adds a new rate to a project
+     * Add rate for project
      */
     #[IsGranted('edit', 'project')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the new created rate', content: new OA\JsonContent(ref: '#/components/schemas/ProjectRate'))])]

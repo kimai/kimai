@@ -14,15 +14,16 @@ use App\Repository\ActivityRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Validator\Constraints\Activity as ActivityConstraint;
 use App\Validator\Constraints\ActivityValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\Activity
- * @covers \App\Validator\Constraints\ActivityValidator
  * @extends ConstraintValidatorTestCase<ActivityValidator>
  */
+#[CoversClass(ActivityConstraint::class)]
+#[CoversClass(ActivityValidator::class)]
 class ActivityValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): ActivityValidator

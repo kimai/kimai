@@ -16,11 +16,10 @@ use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Invoice\NumberGenerator\DateNumberGenerator
- */
+#[CoversClass(DateNumberGenerator::class)]
 class DateNumberGeneratorTest extends TestCase
 {
     private function getSut(bool $hasInitialInvoice, bool $followingInvoices)

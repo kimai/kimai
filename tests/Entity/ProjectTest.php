@@ -17,10 +17,9 @@ use App\Entity\Team;
 use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use Doctrine\Common\Collections\Collection;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Entity\Project
- */
+#[CoversClass(Project::class)]
 class ProjectTest extends AbstractEntityTestCase
 {
     public function testDefaultValues(): void
@@ -39,6 +38,7 @@ class ProjectTest extends AbstractEntityTestCase
         self::assertTrue($sut->isBillable());
         self::assertTrue($sut->isGlobalActivities());
         self::assertNull($sut->getColor());
+        self::assertIsString($sut->getColorSafe());
         self::assertFalse($sut->hasColor());
         self::assertInstanceOf(Collection::class, $sut->getMetaFields());
         self::assertEquals(0, $sut->getMetaFields()->count());
@@ -61,8 +61,20 @@ class ProjectTest extends AbstractEntityTestCase
         self::assertInstanceOf(Project::class, $sut->setCustomer($customer));
         self::assertSame($customer, $sut->getCustomer());
 
+        self::assertFalse($sut->hasColor());
+        $sut->setColor('#fffccc');
+        self::assertEquals('#fffccc', $sut->getColor());
+        self::assertIsString($sut->getColorSafe());
+        self::assertTrue($sut->hasColor());
+
+        $sut->setColor(Constants::DEFAULT_COLOR);
+        self::assertNull($sut->getColor());
+        self::assertFalse($sut->hasColor());
+
         self::assertInstanceOf(Project::class, $sut->setName('123456789'));
         self::assertEquals('123456789', (string) $sut);
+
+        self::assertEquals('#FF9800', $sut->getColorSafe());
 
         self::assertInstanceOf(Project::class, $sut->setOrderNumber('123456789'));
         self::assertEquals('123456789', $sut->getOrderNumber());
@@ -88,15 +100,6 @@ class ProjectTest extends AbstractEntityTestCase
 
         $sut->setInvoiceText('very long invoice text comment 12324');
         self::assertEquals('very long invoice text comment 12324', $sut->getInvoiceText());
-
-        self::assertFalse($sut->hasColor());
-        $sut->setColor('#fffccc');
-        self::assertEquals('#fffccc', $sut->getColor());
-        self::assertTrue($sut->hasColor());
-
-        $sut->setColor(Constants::DEFAULT_COLOR);
-        self::assertNull($sut->getColor());
-        self::assertFalse($sut->hasColor());
 
         self::assertInstanceOf(Project::class, $sut->setVisible(false));
         self::assertFalse($sut->isVisible());

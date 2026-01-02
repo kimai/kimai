@@ -21,7 +21,6 @@ use App\Form\Type\UserType;
 use App\Form\Type\YesNoType;
 use App\Repository\CustomerRepository;
 use App\Repository\TimesheetRepository;
-use Doctrine\Common\Collections\Criteria;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -94,7 +93,7 @@ final class TimesheetMultiUpdate extends AbstractType
         // TODO replace me with FormTrait
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($project, $customer) {
+            function (FormEvent $event) use ($project, $customer): void {
                 $data = $event->getData();
                 $customer = isset($data['customer']) && !empty($data['customer']) ? $data['customer'] : null;
                 $project = isset($data['project']) && !empty($data['project']) ? $data['project'] : $project;
@@ -126,7 +125,7 @@ final class TimesheetMultiUpdate extends AbstractType
         // TODO replace me with FormTrait
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($activityOptions) {
+            function (FormEvent $event) use ($activityOptions): void {
                 $data = $event->getData();
                 if (!isset($data['project']) || empty($data['project'])) {
                     return;
@@ -183,8 +182,8 @@ final class TimesheetMultiUpdate extends AbstractType
                 'label' => 'mark_as_exported',
                 'required' => false,
                 'choices' => [
-                    'entryState.exported' => true,
-                    'entryState.not_exported' => false
+                    'yes' => true,
+                    'no' => false
                 ]
             ]);
         }
@@ -253,7 +252,12 @@ final class TimesheetMultiUpdate extends AbstractType
                         return [];
                     }
 
-                    return $this->timesheet->matching((new Criteria())->where(Criteria::expr()->in('id', explode(',', $ids))));
+                    $temp = explode(',', $ids);
+                    if (\count($temp) === 0) {
+                        return [];
+                    }
+
+                    return $this->timesheet->findBy(['id' => $temp]);
                 }
             )
         );

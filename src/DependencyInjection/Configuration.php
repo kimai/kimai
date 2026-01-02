@@ -369,6 +369,10 @@ final class Configuration implements ConfigurationInterface
                 ->booleanNode('upload_twig')
                     ->defaultFalse()
                 ->end()
+                ->enumNode('rounding_mode')
+                    ->values(['decimal', 'classic'])
+                    ->defaultValue('classic')
+                ->end()
             ->end()
         ;
 
@@ -396,6 +400,10 @@ final class Configuration implements ConfigurationInterface
                     ->scalarPrototype()->end()
                     ->defaultValue([])
                 ->end()
+                ->integerNode('timeout')
+                    ->defaultValue(60)
+                ->end()
+
             ->end()
         ;
 
@@ -617,8 +625,7 @@ final class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('timezone')->defaultNull()->end()
                         ->scalarNode('language')->defaultValue(User::DEFAULT_LANGUAGE)->end()
-                        ->scalarNode('theme')->defaultValue('default')->end()
-                        ->scalarNode('currency')->defaultValue(Customer::DEFAULT_CURRENCY)->end()
+                        ->scalarNode('theme')->defaultValue('auto')->end()
                     ->end()
                 ->end()
             ->end()

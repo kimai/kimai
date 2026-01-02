@@ -582,25 +582,25 @@
         <source>stats.workingTimeYear</source>
         <target state="final">Anno intero %year%</target>
       </trans-unit>
-      <trans-unit id="TdBJBAl" resname="stats.durationToday" approved="yes">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday" approved="yes" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target state="final">Ore lavorative oggi</target>
+        <target state="final">Oggi</target>
       </trans-unit>
-      <trans-unit id="XhKalZH" resname="stats.durationWeek" approved="yes">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek" approved="yes" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target state="final">Ore lavorative questa settimana</target>
+        <target state="final">Questa settimana</target>
       </trans-unit>
-      <trans-unit id="uaOwf_P" resname="stats.durationMonth" approved="yes">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth" approved="yes" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target state="final">Ore lavorative questo mese</target>
+        <target state="final">Questo mese</target>
       </trans-unit>
-      <trans-unit id="WqF84KR" resname="stats.durationYear" approved="yes">
+      <trans-unit id="WqF84KR" resname="stats.durationYear" approved="yes" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target state="final">Ore lavorative quest'anno</target>
+        <target state="final">Quest'anno</target>
       </trans-unit>
-      <trans-unit id="YtvPnl1" resname="stats.durationTotal" approved="yes">
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal" approved="yes" xml:space="preserve">
         <source>stats.durationTotal</source>
-        <target state="final">Totale ore lavorative</target>
+        <target state="final">Totale</target>
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours" approved="yes">
         <source>stats.yourWorkingHours</source>
@@ -940,7 +940,7 @@
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" approved="yes">
         <source>stats.durationFinancialYear</source>
-        <target state="final">Ore lavorative in quest'anno finanziario</target>
+        <target state="final">Anno finanziario</target>
       </trans-unit>
       <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear" approved="yes">
         <source>stats.workingTimeFinancialYear</source>
@@ -1470,9 +1470,9 @@
         <source>sickness</source>
         <target state="final">Malattia</target>
       </trans-unit>
-      <trans-unit id="YDrWFFP" resname="sickness.intro" approved="yes">
-        <source>sickness.intro</source>
-        <target state="final">Malattia, visita medica, cura di parenti stretti, ecc.</target>
+      <trans-unit id="YDrWFFP" resname="sickness.intro" approved="yes" xml:space="preserve">
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="final">Incapacità lavorativa, appuntamenti medici necessari, congedo per assistenza.</target>
       </trans-unit>
       <trans-unit id="2SmKENG" resname="other" approved="yes">
         <source>other</source>
@@ -1853,6 +1853,142 @@
       <trans-unit id="HQ2YM1b" resname="attendance_only_project" xml:space="preserve" approved="yes">
         <source>attendance_only_project</source>
         <target state="final">Contare solo le voci del progetto selezionato come tempo di lavoro</target>
+      </trans-unit>
+      <trans-unit id="mhOe3Iy" resname="unlock_month.help" xml:space="preserve" approved="yes">
+        <source>unlock_month.help</source>
+        <target state="final">In questo modo vengono sbloccati tutti i giorni dell'anno successivi alla data selezionata.</target>
+      </trans-unit>
+      <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="yes">
+        <source>Unlock month</source>
+        <target state="final">Sblocca mese</target>
+      </trans-unit>
+      <trans-unit id="EaYsI0E" resname="city" xml:space="preserve" approved="yes">
+        <source>City</source>
+        <target state="final">Città</target>
+      </trans-unit>
+      <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve" approved="yes">
+        <source>sending_company</source>
+        <target state="final">Emittente fattura</target>
+      </trans-unit>
+      <trans-unit id="y1XHR1Q" resname="address_deprecated" xml:space="preserve" approved="yes">
+        <source>address_deprecated</source>
+        <target state="final">Questo campo verrà rimosso presto. Trasferisci l'indirizzo per poter continuare a generare fatture valide (ad esempio, per la fatturazione elettronica).</target>
+      </trans-unit>
+      <trans-unit id="rD4oQRR" resname="postcode" xml:space="preserve" approved="yes">
+        <source>Postcode</source>
+        <target state="final">CAP / Codice postale</target>
+      </trans-unit>
+      <trans-unit id="Uzll0ps" resname="Customer portal" xml:space="preserve" approved="yes">
+        <source>Customer portal</source>
+        <target state="final">Portale clienti</target>
+      </trans-unit>
+      <trans-unit id="cDOQMYv" resname="Beta" xml:space="preserve" approved="yes">
+        <source>Beta</source>
+        <target state="final">Abilita una funzionalità di anteprima ancora in fase di sviluppo.</target>
+      </trans-unit>
+      <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve" approved="yes">
+        <source>Code</source>
+        <target state="final">Codice</target>
+      </trans-unit>
+      <trans-unit id="xZzzKxM" resname="orientation" xml:space="preserve" approved="yes">
+        <source>Orientation</source>
+        <target state="final">Orientamento</target>
+      </trans-unit>
+      <trans-unit id="UcWoKWo" resname="portrait" xml:space="preserve" approved="yes">
+        <source>Portrait</source>
+        <target state="final">Verticale</target>
+      </trans-unit>
+      <trans-unit id="rLlV34K" resname="landscape" xml:space="preserve" approved="yes">
+        <source>Landscape</source>
+        <target state="final">Orizzontale</target>
+      </trans-unit>
+      <trans-unit id="UZUFKZg" resname="remaining_budget" xml:space="preserve" approved="yes">
+        <source>remaining_budget</source>
+        <target state="final">Budget rimanente</target>
+      </trans-unit>
+      <trans-unit id="eV6j76Q" resname="font" xml:space="preserve" approved="yes">
+        <source>font</source>
+        <target state="final">Font</target>
+      </trans-unit>
+      <trans-unit id="BmDRYT." resname="sending_company.help" xml:space="preserve" approved="yes">
+        <source>sending_company.help</source>
+        <target state="final">Questa azienda è indicata come emittente sulla fattura. Verranno utilizzati il nome, l'indirizzo e i dati fiscali.</target>
+      </trans-unit>
+      <trans-unit id="PciSBv9" resname="address_row" xml:space="preserve" approved="yes">
+        <source>address_row</source>
+        <target state="final">Riga %row%</target>
+      </trans-unit>
+      <trans-unit id="_Ep8Ogx" resname="buyerReference" xml:space="preserve" approved="yes">
+        <source>buyerReference</source>
+        <target state="final">Riferimento acquirente</target>
+      </trans-unit>
+      <trans-unit id="nPJWKwW" resname="payment_type" xml:space="preserve" approved="yes">
+        <source>payment_type</source>
+        <target state="final">Tipo di pagamento</target>
+      </trans-unit>
+      <trans-unit id="uXB48Vj" resname="SEPA Credit Transfer" xml:space="preserve" approved="yes">
+        <source>SEPA Credit Transfer</source>
+        <target state="final">Bonifico SEPA</target>
+      </trans-unit>
+      <trans-unit id="s42A2gm" resname="SEPA Direct Debit" xml:space="preserve" approved="yes">
+        <source>SEPA Direct Debit</source>
+        <target state="final">Addebito diretto SEPA</target>
+      </trans-unit>
+      <trans-unit id="4toQj2M" resname="Cash" xml:space="preserve" approved="yes">
+        <source>Cash</source>
+        <target state="final">Contanti</target>
+      </trans-unit>
+      <trans-unit id="cWZZc6D" resname="Cheque" xml:space="preserve" approved="yes">
+        <source>Cheque</source>
+        <target state="final">Controllo</target>
+      </trans-unit>
+      <trans-unit id="jMvh7bn" resname="Credit Transfer" xml:space="preserve" approved="yes">
+        <source>Credit Transfer</source>
+        <target state="final">Trasferimento di credito</target>
+      </trans-unit>
+      <trans-unit id="TJQbc0a" resname="Payment To Bank Account" xml:space="preserve" approved="yes">
+        <source>Payment To Bank Account</source>
+        <target state="final">Pagamento sul conto bancario</target>
+      </trans-unit>
+      <trans-unit id=".UIt099" resname="Card Payment" xml:space="preserve" approved="yes">
+        <source>Card Payment</source>
+        <target state="final">Pagamento con carta</target>
+      </trans-unit>
+      <trans-unit id="Wnb_qF0" resname="Direct Debit" xml:space="preserve" approved="yes">
+        <source>Direct Debit</source>
+        <target state="final">Addebito diretto</target>
+      </trans-unit>
+      <trans-unit id="rIdfGxM" resname="payment_account_name" xml:space="preserve" approved="yes">
+        <source>payment_account_name</source>
+        <target state="final">Titolare del conto o della carta</target>
+      </trans-unit>
+      <trans-unit id="jcT9Og6" resname="payment_account_number" xml:space="preserve" approved="yes">
+        <source>payment_account_name</source>
+        <target state="final">IBAN o numero di carta</target>
+      </trans-unit>
+      <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve" approved="yes">
+        <source>electronic_invoice</source>
+        <target state="final">Fattura elettronica</target>
+      </trans-unit>
+      <trans-unit id="QnN_ONc" resname="invoice_tax_type" xml:space="preserve" approved="yes">
+        <source>invoice_tax_type</source>
+        <target state="final">Stato fiscale</target>
+      </trans-unit>
+      <trans-unit id="Mi7y8Q3" resname="tax.type.exempt" xml:space="preserve" approved="yes">
+        <source>tax.type.exempt</source>
+        <target state="final">Esonera</target>
+      </trans-unit>
+      <trans-unit id="lU1Njcy" resname="tax.type.standard" xml:space="preserve" approved="yes">
+        <source>tax.type.standard</source>
+        <target state="final">Tassabile</target>
+      </trans-unit>
+      <trans-unit id="E470U8W" resname="tax.type.reverse" xml:space="preserve" approved="yes">
+        <source>tax.type.reverse</source>
+        <target state="final">Addebito inverso</target>
+      </trans-unit>
+      <trans-unit id="hi31a3v" resname="tax.note.reverse_charge" xml:space="preserve" approved="yes">
+        <source>tax.note.reverse_charge</source>
+        <target state="final">Tassa da pagare in base all'addebito inverso</target>
       </trans-unit>
     </body>
   </file>

@@ -72,23 +72,23 @@
       </trans-unit>
       <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve" approved="no">
         <source>stats.durationToday</source>
-        <target state="translated">இன்றைய வேலை நேரம்</target>
+        <target state="translated">இன்று</target>
       </trans-unit>
       <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve" approved="no">
         <source>stats.durationWeek</source>
-        <target state="translated">இந்த வார வேலை நேரம்</target>
+        <target state="translated">இந்த வாரம்</target>
       </trans-unit>
       <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve" approved="no">
         <source>stats.durationMonth</source>
-        <target state="translated">இந்த மாத வேலை நேரம்</target>
+        <target state="translated">இந்த மாதம்</target>
       </trans-unit>
       <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve" approved="no">
         <source>stats.durationYear</source>
-        <target state="translated">இந்த ஆண்டு வேலை நேரம்</target>
+        <target state="translated">இந்த ஆண்டு</target>
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve" approved="no">
         <source>stats.durationFinancialYear</source>
-        <target state="translated">இந்தப் பொருள் ஆண்டு வேலை நேரம்</target>
+        <target state="needs-translation">இந்தப் பொருள் ஆண்டு வேலை நேரம்</target>
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours" xml:space="preserve" approved="no">
         <source>stats.yourWorkingHours</source>
@@ -316,7 +316,7 @@
       </trans-unit>
       <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve" approved="no">
         <source>stats.durationTotal</source>
-        <target state="translated">வேலை நேரம் மொத்தம்</target>
+        <target state="translated">மொத்தம்</target>
       </trans-unit>
       <trans-unit id="Z0fz23v" resname="stats.amountTotal" xml:space="preserve" approved="no">
         <source>stats.amountTotal</source>
@@ -382,21 +382,21 @@
         <source>filter</source>
         <target state="translated">தரவை வடிகட்டு</target>
       </trans-unit>
-      <trans-unit id="CT59X9u" resname="contact" approved="no" xml:space="preserve">
+      <trans-unit id="CT59X9u" resname="contact" approved="yes" xml:space="preserve">
         <source>Contact</source>
-        <target state="translated">தொடர்பு</target>
+        <target state="final">தொடர்பு</target>
       </trans-unit>
-      <trans-unit id="mz4ieCN" resname="donate" xml:space="preserve" approved="no">
+      <trans-unit id="mz4ieCN" resname="donate" xml:space="preserve" approved="yes">
         <source>donate</source>
-        <target state="translated">நன்கொடை</target>
+        <target state="final">நன்கொடை</target>
       </trans-unit>
       <trans-unit id="XohImNo" resname="password" approved="yes" xml:space="preserve">
         <source>Password</source>
         <target state="final">கடவுச்சொல்</target>
       </trans-unit>
-      <trans-unit id="yQRveje" resname="description" approved="no" xml:space="preserve">
+      <trans-unit id="yQRveje" resname="description" approved="yes" xml:space="preserve">
         <source>Description</source>
-        <target state="translated">விவரம்</target>
+        <target state="final">விவரம்</target>
       </trans-unit>
       <trans-unit id="k5Apjz_" resname="no" xml:space="preserve" approved="yes">
         <source>no</source>
@@ -1599,8 +1599,8 @@
         <target state="translated">விடுமுறை நேரம்</target>
       </trans-unit>
       <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve" approved="no">
-        <source>sickness.intro</source>
-        <target state="translated">நோய், மருத்துவரின் வருகை, நெருங்கிய உறவினர்களின் கவனிப்பு போன்றவை.</target>
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="needs-translation">நோய், மருத்துவரின் வருகை, நெருங்கிய உறவினர்களின் கவனிப்பு போன்றவை.</target>
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve" approved="no">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
@@ -1853,6 +1853,18 @@
       <trans-unit id="HQ2YM1b" resname="attendance_only_project" xml:space="preserve" approved="yes">
         <source>attendance_only_project</source>
         <target state="final">தேர்ந்தெடுக்கப்பட்ட திட்டத்தின் உள்ளீடுகளை மட்டுமே வேலை நேரமாக எண்ணுங்கள்</target>
+      </trans-unit>
+      <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve">
+        <source>Code</source>
+        <target state="translated">குறியீடு</target>
+      </trans-unit>
+      <trans-unit id="rD4oQRR" resname="postcode" xml:space="preserve">
+        <source>Postcode</source>
+        <target state="translated">அஞ்சல் குறியீடு</target>
+      </trans-unit>
+      <trans-unit id="EaYsI0E" resname="city" xml:space="preserve">
+        <source>City</source>
+        <target state="translated">நகரம்</target>
       </trans-unit>
     </body>
   </file>

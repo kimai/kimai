@@ -31,6 +31,9 @@ trait EntityFormTrait
 
         if ($showMoney) {
             $builder->add('budget', MoneyType::class, [
+                'documentation' => [
+                    'description' => 'The money budget',
+                ],
                 'empty_data' => '0.00',
                 'label' => 'budget',
                 'required' => false,

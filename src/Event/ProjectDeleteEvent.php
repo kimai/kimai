@@ -9,9 +9,19 @@
 
 namespace App\Event;
 
-/**
- * Triggered right before a project will be deleted.
- */
+use App\Entity\Project;
+use App\Webhook\Attribute\AsWebhook;
+
+#[AsWebhook(name: 'project.deleted', description: 'Triggered right before a project will be deleted', payload: 'object.getProject()')]
 final class ProjectDeleteEvent extends AbstractProjectEvent
 {
+    public function __construct(Project $project, private readonly ?Project $replacementProject = null)
+    {
+        parent::__construct($project);
+    }
+
+    public function getReplacementProject(): ?Project
+    {
+        return $this->replacementProject;
+    }
 }

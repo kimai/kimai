@@ -108,7 +108,7 @@
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration" xml:space="preserve">
         <source>calendar.slot_duration</source>
-        <target state="translated">வாரம் மற்றும் நாள் பார்வைக்கான ச்லாட் காலம் (வடிவம்: HH: MM: SS)</target>
+        <target state="translated">வாரம் மற்றும் நாள் பார்வைக்கான ச்லாட் காலம்</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding" xml:space="preserve">
         <source>branding</source>
@@ -180,19 +180,19 @@
       </trans-unit>
       <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target state="translated">சீல்: தொடக்கம், முடிவு மற்றும் காலம் வட்டமிடப்படும்</target>
+        <target state="translated">தொடக்கம், முடிவு மற்றும் காலம்மேல் வட்டமிடப்படும்</target>
       </trans-unit>
       <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target state="translated">நெருங்கிய: அருகிலுள்ள மதிப்புக்கு கணித ரவுண்டிங்</target>
+        <target state="translated">அருகில் உள்ள மதிப்புக்குக் கணித சுற்று</target>
       </trans-unit>
       <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target state="translated">தரநிலை: தொடக்கமானது கீழே, முடிவு மற்றும் கால அளவைக் கொண்டிருக்கும்</target>
+        <target state="translated">தொடக்கமானது கீழே, முடிவு மற்றும் கால அளவைக் கொண்டிருக்கும்</target>
       </trans-unit>
       <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target state="translated">மாடி: தொடக்கம், முடிவு மற்றும் காலம் வட்டமிடப்படும்</target>
+        <target state="translated">தொடக்கம், முடிவு மற்றும் காலம் கீழ் வட்டமிடப்படும்</target>
       </trans-unit>
       <trans-unit id="_0OBfZf" resname="timesheet.default_begin" xml:space="preserve">
         <source>timesheet.default_begin</source>

@@ -20,11 +20,11 @@ use App\Repository\Query\TimesheetQuery;
 use App\Repository\Query\TimesheetQueryHint;
 use App\Repository\TimesheetRepository;
 use App\Utils\Pagination;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @covers \App\Repository\TimesheetRepository
- * @group integration
- */
+#[CoversClass(TimesheetRepository::class)]
+#[Group('integration')]
 class TimesheetRepositoryTest extends AbstractRepositoryTestCase
 {
     public function testResultTypeForQueryState(): void

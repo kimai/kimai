@@ -102,6 +102,22 @@
         <source>The given code is not the correct TOTP token.</source>
         <target state="translated">Codul dat nu este token-ul TOTP corect.</target>
       </trans-unit>
+      <trans-unit id="0ULsHQA" resname="The chosen date is not a working day." xml:space="preserve">
+        <source>The chosen date is not a working day.</source>
+        <target state="translated">Data aleasa nu este o zi de lucru.</target>
+      </trans-unit>
+      <trans-unit id="N21br.P" resname="The chosen date is already locked." xml:space="preserve">
+        <source>The chosen date is already locked.</source>
+        <target state="translated">Data aleasa este deja blocata.</target>
+      </trans-unit>
+      <trans-unit id="IN37g5N" resname="Not enough holidays left." xml:space="preserve">
+        <source>Not enough holidays left.</source>
+        <target state="translated">Insuficiente zile libere ramase.</target>
+      </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
+        <source>Duration cannot be negative.</source>
+        <target state="translated">Durata nu poate fi negativa.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

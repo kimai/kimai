@@ -10,10 +10,9 @@
 namespace App\Tests\Controller\Security;
 
 use App\Tests\Controller\AbstractControllerBaseTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class PasswordResetControllerTest extends AbstractControllerBaseTestCase
 {
     private function testResetActionWithDeactivatedFeature(string $route, string $method = 'GET'): void
@@ -51,7 +50,7 @@ class PasswordResetControllerTest extends AbstractControllerBaseTestCase
 
         $content = $response->getContent();
         self::assertNotFalse($content);
-        self::assertStringContainsString('<title>Kimai – Time Tracking</title>', $content);
+        self::assertStringContainsString('<title>Kimai</title>', $content);
         self::assertStringContainsString('Reset your password', $content);
         self::assertStringContainsString('<form class="card-body security-password-reset" action="/en/resetting/send-email" method="post" autocomplete="off">', $content);
         self::assertStringContainsString('<input autocomplete="username" type="text"', $content);

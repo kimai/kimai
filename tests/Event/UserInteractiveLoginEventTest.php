@@ -10,13 +10,13 @@
 namespace App\Tests\Event;
 
 use App\Entity\User;
+use App\Event\AbstractUserEvent;
 use App\Event\UserInteractiveLoginEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\AbstractUserEvent
- * @covers \App\Event\UserInteractiveLoginEvent
- */
+#[CoversClass(AbstractUserEvent::class)]
+#[CoversClass(UserInteractiveLoginEvent::class)]
 class UserInteractiveLoginEventTest extends TestCase
 {
     public function testGetter(): void

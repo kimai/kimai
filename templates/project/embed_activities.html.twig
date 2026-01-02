@@ -1,10 +1,8 @@
-    {% embed '@theme/embeds/card.html.twig' with {'project': project, 'activities': activities, 'page': page} %}
+    {% embed '@theme/embeds/card.html.twig' with {'project': project, 'activities': activities, 'page': page, 'id': 'activity_list_box'} %}
         {% import "activity/actions.html.twig" as actions %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_title %}{{ 'activities'|trans }}{% endblock %}
-        {% block box_attributes %}
-            id="activity_list_box" data-reload="kimai.activityUpdate kimai.activityDelete"
-        {% endblock %}
+        {% block box_attributes %} data-reload="kimai.activityUpdate kimai.activityDelete" {% endblock %}
         {% block box_tools %}
             {%- if project.visible and project.customer.visible and is_granted('create_activity') -%}
                 {{ widgets.card_tool_button('create', {'class': 'modal-ajax-form open-edit', 'title': 'create', 'url': path('admin_activity_create_with_project', {'project': project.id})}) }}

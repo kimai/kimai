@@ -10,11 +10,11 @@
 namespace App\Tests\Utils;
 
 use App\Utils\FileHelper;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Utils\FileHelper
- */
+#[CoversClass(FileHelper::class)]
 class FileHelperTest extends TestCase
 {
     public static function getFileTestData()
@@ -32,9 +32,7 @@ class FileHelperTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getFileTestData
-     */
+    #[DataProvider('getFileTestData')]
     public function testEnsureMaxLength(string $expected, string $original): void
     {
         self::assertEquals($expected, FileHelper::convertToAsciiFilename($original));

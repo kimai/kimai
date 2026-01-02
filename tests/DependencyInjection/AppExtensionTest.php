@@ -11,12 +11,11 @@ namespace App\Tests\DependencyInjection;
 
 use App\DependencyInjection\AppExtension;
 use App\Tests\Mocks\SystemConfigurationFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-/**
- * @covers \App\DependencyInjection\AppExtension
- */
+#[CoversClass(AppExtension::class)]
 class AppExtensionTest extends TestCase
 {
     private ?AppExtension $extension = null;
@@ -68,20 +67,20 @@ class AppExtensionTest extends TestCase
             'kimai.data_dir' => '/tmp/',
             'kimai.languages' => [
                 'en' => [
-                    'date' => 'M/d/yy',
+                    'date' => 'M/d/y',
                     'time' => 'h:mm a',
                     'rtl' => false,
                     'translation' => true,
                 ],
                 'de' => [
-                    'date' => 'dd.MM.yy',
+                    'date' => 'dd.MM.y',
                     'time' => 'HH:mm',
                     'rtl' => false,
                     'translation' => true,
                 ],
                 'he' => [
                     'date' => 'd.M.y',
-                    'time' => 'H:mm',
+                    'time' => 'HH:mm',
                     'rtl' => true,
                     'translation' => true,
                 ],

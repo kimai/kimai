@@ -191,6 +191,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         $admin = false;
         $superAdmin = false;
         $timezone = date_default_timezone_get();
+        $roles = [];
 
         if ($user !== null) {
             $browserTitle = (bool) $user->getPreferenceValue('update_browser_title');
@@ -200,6 +201,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
             $admin = $user->isAdmin();
             $superAdmin = $user->isSuperAdmin();
             $timezone = $user->getTimezone();
+            $roles = $user->getRoles();
         }
 
         $language ??= $this->locale ?? User::DEFAULT_LANGUAGE;
@@ -213,7 +215,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
             'twentyFourHours' => $this->localeService->is24Hour($this->locale),
             'updateBrowserTitle' => $browserTitle,
             'timezone' => $timezone,
-            'user' => ['id' => $id, 'name' => $name, 'admin' => $admin, 'superAdmin' => $superAdmin],
+            'user' => ['id' => $id, 'name' => $name, 'admin' => $admin, 'superAdmin' => $superAdmin, 'roles' => $roles],
         ];
     }
 

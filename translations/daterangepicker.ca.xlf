@@ -2,6 +2,50 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ca" datatype="plaintext" original="daterangepicker.en.xlf">
     <body>
-      </body>
+      <trans-unit id="s9Hdo7E" resname="daterangepicker.today" xml:space="preserve">
+        <source>daterangepicker.today</source>
+        <target state="translated">Avui</target>
+      </trans-unit>
+      <trans-unit id="gkQA1YG" resname="daterangepicker.yesterday" xml:space="preserve">
+        <source>daterangepicker.yesterday</source>
+        <target state="translated">Ahir</target>
+      </trans-unit>
+      <trans-unit id="CAvVEbc" resname="daterangepicker.lastWeek" xml:space="preserve">
+        <source>daterangepicker.lastWeek</source>
+        <target state="translated">Setmana passada</target>
+      </trans-unit>
+      <trans-unit id="HfcD1_y" resname="daterangepicker.thisWeek" xml:space="preserve">
+        <source>daterangepicker.thisWeek</source>
+        <target state="translated">Aquesta setmana</target>
+      </trans-unit>
+      <trans-unit id="_9rEFED" resname="daterangepicker.lastYear" xml:space="preserve">
+        <source>daterangepicker.lastYear</source>
+        <target state="translated">Any passat</target>
+      </trans-unit>
+      <trans-unit id="XgIrZS3" resname="daterangepicker.thisYear" xml:space="preserve">
+        <source>daterangepicker.thisYear</source>
+        <target state="translated">Aquest any</target>
+      </trans-unit>
+      <trans-unit id="AY_E9UR" resname="daterangepicker.thisYearUntilNow" xml:space="preserve">
+        <source>This year — until today</source>
+        <target state="translated">Aquest any fins avui</target>
+      </trans-unit>
+      <trans-unit id="m0lJOke" resname="daterangepicker.allTime" xml:space="preserve">
+        <source>daterangepicker.allTime</source>
+        <target state="translated">Període total</target>
+      </trans-unit>
+      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth" xml:space="preserve">
+        <source>daterangepicker.thisMonth</source>
+        <target state="translated">Aquest mes</target>
+      </trans-unit>
+      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth" xml:space="preserve">
+        <source>daterangepicker.lastMonth</source>
+        <target state="translated">El mes passat</target>
+      </trans-unit>
+      <trans-unit id="mgJ2Z7M" resname="daterangepicker.thisFinancialYear" xml:space="preserve">
+        <source>daterangepicker.thisFinancialYear</source>
+        <target state="translated">Aquest any fiscal</target>
+      </trans-unit>
+    </body>
   </file>
 </xliff>

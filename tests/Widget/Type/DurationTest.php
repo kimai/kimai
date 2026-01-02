@@ -14,10 +14,9 @@ use App\Repository\TimesheetRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Widget\Type\AbstractWidget;
 use App\Widget\Type\Duration;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Widget\Type\Duration
- */
+#[CoversClass(Duration::class)]
 class DurationTest extends AbstractWidgetTestCase
 {
     /**

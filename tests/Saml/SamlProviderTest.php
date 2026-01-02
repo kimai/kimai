@@ -16,14 +16,13 @@ use App\Saml\SamlProvider;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\User\UserService;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-/**
- * @covers \App\Saml\SamlProvider
- */
+#[CoversClass(SamlProvider::class)]
 class SamlProviderTest extends TestCase
 {
     protected function getSamlProvider(array $mapping = null, ?User $user = null): SamlProvider
@@ -121,5 +120,37 @@ class SamlProviderTest extends TestCase
 
         $sut = $this->getSamlProvider(null, $user);
         $sut->findUser($token);
+    }
+
+    public function testAuthenticateNotThrowsOnOptionalAttribute(): void
+    {
+        $mapping = [
+            'mapping' => [
+                ['saml' => '$Chicken', 'kimai' => 'alias'],
+                ['saml' => '$$Email', 'kimai' => 'title'],
+            ],
+            'roles' => [
+                'attribute' => '',
+                'mapping' => []
+            ]
+        ];
+
+        $user = new User();
+        $user->setAuth(User::AUTH_SAML);
+        $user->setUserIdentifier('foo1@example.com');
+        $user->setTitle('I will not be overwritten');
+
+        $token = new SamlLoginAttributes();
+        $token->setUserIdentifier($user->getUserIdentifier());
+        $token->setAttributes([
+            'Chicken' => ['foo@example.com'],
+        ]);
+
+        $sut = $this->getSamlProvider($mapping, $user);
+        $tokenUser = $sut->findUser($token);
+        self::assertSame($user, $tokenUser);
+        self::assertTrue($tokenUser->isSamlUser());
+        self::assertEquals('foo@example.com', $tokenUser->getAlias());
+        self::assertEquals('I will not be overwritten', $tokenUser->getTitle());
     }
 }

@@ -158,6 +158,14 @@
         <source>An absence cannot be booked after the last working day.</source>
         <target state="translated">Odsutnost se ne može rezervirati nakon zadnjeg radnog dana.</target>
       </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
+        <source>Duration cannot be negative.</source>
+        <target state="translated">Trajanje ne može biti negativno.</target>
+      </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target state="translated">Odabrano razdoblje se ne može zaključati: nepotvrđeni zahtjevi za izostanak su u tijeku.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

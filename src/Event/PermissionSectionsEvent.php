@@ -20,9 +20,9 @@ final class PermissionSectionsEvent extends Event
     /**
      * @var array<PermissionSectionInterface>
      */
-    private array $sections = [];
+    private array $sections = []; // @phpstan-ignore property.deprecatedInterface
 
-    public function addSection(PermissionSectionInterface $section): PermissionSectionsEvent
+    public function addSection(PermissionSectionInterface $section): PermissionSectionsEvent // @phpstan-ignore parameter.deprecatedInterface
     {
         $this->sections[] = $section;
 
@@ -32,7 +32,7 @@ final class PermissionSectionsEvent extends Event
     /**
      * @return PermissionSectionInterface[]
      */
-    public function getSections(): array
+    public function getSections(): array  // @phpstan-ignore return.deprecatedInterface
     {
         return $this->sections;
     }

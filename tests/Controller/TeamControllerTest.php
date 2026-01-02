@@ -12,11 +12,10 @@ namespace App\Tests\Controller;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Tests\DataFixtures\TeamFixtures;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class TeamControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
@@ -50,7 +49,7 @@ class TeamControllerTest extends AbstractControllerBaseTestCase
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $fixture = new TeamFixtures();
         $fixture->setAmount(5);
-        $fixture->setCallback(function (Team $team) {
+        $fixture->setCallback(function (Team $team): void {
             $team->setName($team->getName() . '- fantastic team with foooo bar magic');
         });
         $this->importFixture($fixture);

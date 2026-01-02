@@ -12,11 +12,10 @@ namespace App\Tests\Invoice\Hydrator;
 use App\Customer\CustomerStatisticService;
 use App\Invoice\Hydrator\InvoiceModelCustomerHydrator;
 use App\Tests\Invoice\Renderer\RendererTestTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Invoice\Hydrator\InvoiceModelCustomerHydrator
- */
+#[CoversClass(InvoiceModelCustomerHydrator::class)]
 class InvoiceModelCustomerHydratorTest extends TestCase
 {
     use RendererTestTrait;
@@ -37,13 +36,20 @@ class InvoiceModelCustomerHydratorTest extends TestCase
         self::assertEquals([
             'customer.id' => null,
             'customer.address' => "Foo\nStreet\n1111 City",
+            'customer.address_line1' => '',
+            'customer.address_line2' => '',
+            'customer.address_line3' => '',
+            'customer.buyer_reference' => '',
+            'customer.city' => '',
+            'customer.postcode' => '',
             'customer.name' => 'customer,with/special#name',
             'customer.contact' => '',
             'customer.company' => '',
             'customer.vat' => '',
             'customer.vat_id' => '',
             'customer.number' => '',
-            'customer.country' => null,
+            'customer.country' => 'AT',
+            'customer.country_name' => 'Austria',
             'customer.homepage' => '',
             'customer.comment' => '',
             'customer.email' => '',
@@ -64,12 +70,19 @@ class InvoiceModelCustomerHydratorTest extends TestCase
         $keys = [
             'customer.id',
             'customer.address',
+            'customer.address_line1',
+            'customer.address_line2',
+            'customer.address_line3',
+            'customer.buyer_reference',
+            'customer.city',
+            'customer.postcode',
             'customer.name',
             'customer.contact',
             'customer.company',
             'customer.vat',
             'customer.vat_id',
             'customer.country',
+            'customer.country_name',
             'customer.number',
             'customer.homepage',
             'customer.comment',

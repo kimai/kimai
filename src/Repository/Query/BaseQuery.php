@@ -44,6 +44,10 @@ class BaseQuery
      * @var array<string, string>
      */
     private array $orderGroups = [];
+    /**
+     * @var array<string>
+     */
+    private array $allowedOrderColumns = [];
     private ?User $currentUser = null;
     /**
      * @var array<Team>
@@ -320,7 +324,6 @@ class BaseQuery
      * @template T of BaseQuery
      * @param T $query
      * @return T
-     * @internal
      */
     final public function copyTo(BaseQuery $query): BaseQuery
     {
@@ -427,5 +430,26 @@ class BaseQuery
     public function isApiCall(): bool
     {
         return $this->isApiCall;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAllowedOrderColumns(): array
+    {
+        return $this->allowedOrderColumns;
+    }
+
+    /**
+     * @param array<string> $allowedOrderColumns
+     */
+    public function setAllowedOrderColumns(array $allowedOrderColumns): void
+    {
+        $this->allowedOrderColumns = $allowedOrderColumns;
+    }
+
+    public function addAllowedOrderColumns(string $allowedOrderColumn): void
+    {
+        $this->allowedOrderColumns[] = $allowedOrderColumn;
     }
 }

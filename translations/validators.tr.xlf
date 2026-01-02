@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
         <source>The end date must not be earlier than the start date.</source>
-        <target state="needs-translation">Bitiş tarihi, başlangıç tarihinden önce olmamalıdır.</target>
+        <target state="translated">Bitiş tarihi, başlangıç tarihinden önce olmamalıdır.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
@@ -157,6 +157,14 @@
       <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day." xml:space="preserve" approved="no">
         <source>An absence cannot be booked after the last working day.</source>
         <target state="translated">İlk iş gününden sonra devamsızlık rezervasyonu yapılamaz.</target>
+      </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target state="translated">Seçilen dönem kilitlenemez: onaylanmamış devamsızlık talepleri bulunmaktadır.</target>
+      </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
+        <source>Duration cannot be negative.</source>
+        <target state="translated">Süre negatif olamaz.</target>
       </trans-unit>
     </body>
   </file>

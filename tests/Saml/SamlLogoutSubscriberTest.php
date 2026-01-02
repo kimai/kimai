@@ -15,14 +15,13 @@ use App\Saml\SamlLogoutSubscriber;
 use App\Saml\SamlToken;
 use OneLogin\Saml2\Auth;
 use OneLogin\Saml2\Error;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\LogoutEvent;
 
-/**
- * @covers \App\Saml\SamlLogoutSubscriber
- */
+#[CoversClass(SamlLogoutSubscriber::class)]
 class SamlLogoutSubscriberTest extends TestCase
 {
     public function testLogout(): void
@@ -62,7 +61,7 @@ class SamlLogoutSubscriberTest extends TestCase
         $auth = $this->getMockBuilder(Auth::class)->disableOriginalConstructor()->getMock();
         $auth->expects($this->once())->method('processSLO')->willThrowException(new Error('blub'));
         $auth->expects($this->once())->method('getSLOurl')->willReturn('/logout');
-        $auth->expects($this->once())->method('logout')->willReturnCallback(function () {
+        $auth->expects($this->once())->method('logout')->willReturnCallback(function (): void {
             $args = \func_get_args();
             self::assertNull($args[0]);
             self::assertEquals([], $args[1]);

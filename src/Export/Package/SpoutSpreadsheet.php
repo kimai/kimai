@@ -26,15 +26,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SpoutSpreadsheet implements SpreadsheetPackage
 {
-    private Style $dateStyle;
+    /** @var array<int, Style|null> */
+    private array $styles = [];
 
     public function __construct(
         private readonly WriterInterface $writer,
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator,
+        private readonly ?string $locale = null,
     )
     {
         $this->writer->setCreator(Constants::SOFTWARE);
-        $this->dateStyle = (new Style())->setFormat('yyyy-mm-dd');
     }
 
     /**
@@ -48,9 +49,15 @@ class SpoutSpreadsheet implements SpreadsheetPackage
         }
 
         $tmp = [];
+        $i = 0;
         foreach ($columns as $column) {
-            $title = $this->translator->trans($column->getHeader());
+            $title = $this->translator->trans($column->getHeader(), [], null, $this->locale);
             $tmp[] = Cell::fromValue($title);
+            $style = null;
+            if (($format = $column->getFormat()) !== null) {
+                $style = (new Style())->setFormat($format);
+            }
+            $this->styles[$i++] = $style;
         }
 
         $style = new Style();
@@ -100,12 +107,9 @@ class SpoutSpreadsheet implements SpreadsheetPackage
         }
 
         $tmp = [];
+        $i = 0;
         foreach ($columns as $column) {
-            if ($column instanceof \DateTimeInterface) {
-                $tmp[] = Cell::fromValue($column, $this->dateStyle);
-            } else {
-                $tmp[] = Cell::fromValue($column); // @phpstan-ignore argument.type
-            }
+            $tmp[] = Cell::fromValue($column, $this->styles[$i++]); // @phpstan-ignore argument.type
         }
 
         $this->writer->addRow(new Row($tmp, $style));
@@ -117,8 +121,10 @@ class SpoutSpreadsheet implements SpreadsheetPackage
 
         if ($this->writer instanceof AbstractWriterMultiSheets) {
             $sheetView = new SheetView();
-            $sheetView->setFreezeColumn('D');
-            $sheetView->setFreezeRow(2);
+
+            // deactivated, because the column order is now configurable
+            //$sheetView->setFreezeColumn('D');
+            //$sheetView->setFreezeRow(2);
 
             $this->writer->getCurrentSheet()->setSheetView($sheetView);
         }

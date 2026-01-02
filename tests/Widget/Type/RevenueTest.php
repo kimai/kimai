@@ -14,10 +14,9 @@ use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Widget\Type\AbstractWidget;
 use App\Widget\Type\Revenue;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Widget\Type\Revenue
- */
+#[CoversClass(Revenue::class)]
 class RevenueTest extends AbstractWidgetTestCase
 {
     protected function assertDefaultData(AbstractWidget $sut): void

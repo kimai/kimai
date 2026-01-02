@@ -35,6 +35,10 @@
     {{ form_row(form.duration, {row_attr: {class: 'p-0'}}) }}
 {%- endblock %}
 
+{% block _quick_entry_form_rows_entry_metaFields_entry_widget %}
+    {{ form_row(form, {row_attr: {class: 'p-0'}}) }}
+{%- endblock %}
+
 {% block quick_entry_week_row %}
     <tr{% with {attr: row_attr|merge({class: (row_attr.class|default('') ~ ' form-group qe-entry-week-row' ~ (not valid ? ' is-invalid'))|trim})} %}{{ block('attributes') }}{% endwith %}>
         <td>
@@ -43,6 +47,11 @@
         <td>
             {{ form_row(form.activity, {row_attr: {class: 'p-0'}}) }}
         </td>
+        {% for meta in form.metaFields|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
+            <td>
+                {{ form_row(meta.value, {label: false}) }}
+            </td>
+        {% endfor %}
         {% for timesheet in form.timesheets %}
             <td class="text-center{% if timesheet.vars.data.begin is weekend %} weekend{% endif %}{% if timesheet.vars.data.begin is today %} today{% endif %}">
                 {{ form_widget(timesheet) }}
@@ -127,39 +136,46 @@
     {% set jsFormat = format|js_format %}
     {% set attr = attr|merge({'pattern': format|pattern, 'autocomplete': 'off', 'data-datepicker': 'on', 'data-format': jsFormat, 'placeholder': jsFormat}) -%}
     <div class="input-group">
-        <div class="input-group-text">
-            <a href="#" data-form-widget="date-now" data-format="{{ jsFormat }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
-        </div>
+        <a class="btn" href="#" data-form-widget="date-now" data-format="{{ jsFormat }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
         {{- block('form_widget_simple') -}}
         {% if not required %}
-        <span class="input-group-text">
-            <a href="javascript: void(0)" class="link-secondary fs-5" onclick="document.getElementById('{{ id }}').value = ''">
-                {{ icon('cancel') }}
-            </a>
-        </span>
+        <a href="javascript: void(0)" class="btn link-secondary fs-5" onclick="document.getElementById('{{ id }}').value = ''">
+            {{ icon('cancel') }}
+        </a>
         {% endif %}
     </div>
 {%- endblock date_widget %}
 
-{% block time_widget -%}
-    {%- set user_format = format -%}
-    {%- set format = locale_format('time') -%}
-    {%- set jsFormat = format|js_format -%}
-    {%- set attr = attr|merge({'pattern': format|pattern, 'autocomplete': 'off', 'data-timepicker': 'on', 'data-format': jsFormat, 'placeholder': jsFormat}) -%}
+{# this is used for auto-forms using the correct format for HTML5 compatibility, e.g. in the calendar #}
+{% block day_widget -%}
+    {% set format = 'y-MM-D' %}
+    {% set jsFormat = format|js_format %}
+    {% set attr = attr|merge({'pattern': format|pattern, 'autocomplete': 'off', 'data-format': jsFormat}) -%}
     <div class="input-group">
-        <div class="input-group-text">
-            <a href="#" data-form-widget="date-now" data-format="{{ jsFormat }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
-        </div>
+        <a class="btn" href="#" data-form-widget="date-now" data-format="{{ jsFormat }}" data-target="{{ id }}">{{ icon('calendar') }}</a>
+        {{- block('form_widget_simple') -}}
+        {% if not required %}
+        <a href="javascript: void(0)" class="btn link-secondary fs-5" onclick="document.getElementById('{{ id }}').value = ''">
+            {{ icon('cancel') }}
+        </a>
+        {% endif %}
+    </div>
+{%- endblock day_widget %}
+
+{% block time_widget -%}
+    {%- set attr = attr|merge({'pattern': time_format|pattern, 'autocomplete': 'off', 'data-timepicker': 'on', 'data-format': js_format, 'placeholder': time_format}) -%}
+    <div class="input-group">
+        <a class="btn" href="#" data-form-widget="date-now" data-format="{{ js_format }}" data-target="{{ id }}">{{ icon('clock') }}</a>
         {{ block('form_widget_simple') }}
         {% set time_presets = form_time_presets(app.user.timezone) %}
         {% if time_presets|length > 0 and form.vars.disabled is same as (false) %}
-        <button type="button" class="input-group-text dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+        <button type="button" class="btn dropdown-toggle dropdown-toggle-split btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
         <div class="dropdown-menu dropdown-menu-end pre-scrollable">
             <div class="dropdown-menu-columns">
                 {% for index in [0, 1, 2, 3] %}
                     <div class="dropdown-menu-column" style="min-width: 4rem">
                         {% for value in time_presets %}
-                            {% set value = value|date_format(user_format) %}
+                            {% set value = value|date_format(format) %}
                             {% if loop.index0 % 4 == index %}
                                 <a class="dropdown-item justify-content-center" href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ value }}" data-event="change">{{ value }}</a>
                             {% endif %}
@@ -177,7 +193,7 @@
     {% set attr = attr|merge({'data-daterangepicker': 'on', 'autocomplete': 'off', 'data-format': format, 'placeholder': format ~ attr['data-separator'] ~  format}) -%}
     <div class="input-group">
         {% if ranges is defined %}
-        <button type="button" class="input-group-text dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+        <button type="button" class="btn dropdown-toggle dropdown-toggle-split btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
         <div class="dropdown-menu dropdown-menu-start pre-scrollable">
             {% for title, range in ranges %}
                 {% if range|length == 0 %}
@@ -194,46 +210,45 @@
 
 {% block duration_widget %}
     <div class="duration-widget">
+        <div class="input-group">
         {% if (form.vars.duration_presets is defined and form.vars.duration_presets is not empty) and (form.vars.disabled is same as (false)) %}
-            <div class="input-group">
-                {% if form.vars.icon is defined and form.vars.icon is not null %}
+            {% if form.vars.icon is defined and form.vars.icon is not null %}
+            <div class="input-group-text">
+                {{ icon(form.vars.icon) }}
+            </div>
+            {% endif %}
+            {{ block('form_widget_simple') }}
+            {% if form.vars.toggle is defined and form.vars.toggle %}
+                {# this feature was never actually developed #}
                 <div class="input-group-text">
-                    {{ icon(form.vars.icon) }}
+                    <a href="#" id="{{ form.vars.id }}_toggle" class="text-success">{{ icon('link') }}</a>
                 </div>
-                {% endif %}
-                {{ block('form_widget_simple') }}
-                {% if form.vars.toggle is defined and form.vars.toggle %}
-                    <div class="input-group-text">
-                        <a href="#" id="{{ form.vars.id }}_toggle" class="text-success">{{ icon('link') }}</a>
-                    </div>
-                {% endif %}
-                <button type="button" class="input-group-text dropdown-toggle btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                <div class="dropdown-menu dropdown-menu-end pre-scrollable">
-                    <div class="dropdown-menu-columns">
-                        {% for index in [0, 1, 2, 3] %}
-                            <div class="dropdown-menu-column" style="min-width: 4rem">
-                                {% for value in form.vars.duration_presets %}
-                                    {% if loop.index0 % 4 == index %}
-                                        <a class="dropdown-item justify-content-center" href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ value }}" data-event="change">{{ value }}</a>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                        {% endfor %}
-                    </div>
+            {% endif %}
+            <button type="button" class="btn dropdown-toggle dropdown-toggle-split btn-duration-preset" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+            <div class="dropdown-menu dropdown-menu-end pre-scrollable">
+                <div class="dropdown-menu-columns">
+                    {% for index in [0, 1, 2, 3] %}
+                        <div class="dropdown-menu-column" style="min-width: 4rem">
+                            {% for value in form.vars.duration_presets %}
+                                {% if loop.index0 % 4 == index %}
+                                    <a class="dropdown-item justify-content-center" href="#" data-form-widget="copy-data" data-target="#{{ form.vars.id }}" data-value="{{ value }}" data-event="change">{{ value }}</a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         {% else %}
             {% if icon is defined and icon is not empty %}
-                <div class="input-group">
-                    <div class="input-group-text">
-                        {{ icon(icon) }}
-                    </div>
-                    {{ block('form_widget_simple') }}
+                <div class="input-group-text">
+                    {{ icon(icon) }}
                 </div>
+                {{ block('form_widget_simple') }}
             {% else %}
                 {{ block('form_widget_simple') }}
             {% endif %}
         {% endif %}
+        </div>
     </div>
 {% endblock duration_widget %}
 
@@ -459,7 +474,9 @@
 
 {%- block meta_fields_collection_widget -%}
     {% for meta in form|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
-        {{ form_row(meta.value, {'row_attr': {'class': 'mb-3 ' ~  form.parent.vars.name ~ '_row_' ~ form.vars.name ~ '_' ~ meta.vars.name}}) }}
+        {% if not meta.rendered %}
+            {{ form_row(meta.value, {'row_attr': {'class': 'mb-3 ' ~  form.parent.vars.name ~ '_row_' ~ form.vars.name ~ '_' ~ meta.vars.name}}) }}
+        {% endif %}
     {% endfor %}
 {%- endblock meta_fields_collection_widget %}
 

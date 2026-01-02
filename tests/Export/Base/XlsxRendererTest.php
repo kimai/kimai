@@ -10,22 +10,24 @@
 namespace App\Tests\Export\Base;
 
 use App\Entity\User;
-use App\Export\Base\SpreadsheetRenderer;
+use App\Export\Base\AbstractSpreadsheetRenderer;
 use App\Export\Base\XlsxRenderer;
+use App\Export\ColumnConverter;
+use App\Export\Package\SpoutSpreadsheet;
+use App\Export\Renderer\XlsxRendererFactory;
 use App\Tests\Export\Renderer\AbstractRendererTestCase;
-use App\Tests\Export\Renderer\MetaFieldColumnSubscriber;
+use App\Tests\Mocks\MetaFieldColumnSubscriberMock;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @covers \App\Export\Base\XlsxRenderer
- * @covers \App\Export\Base\SpreadsheetRenderer
- * @covers \App\Export\Base\RendererTrait
- * @covers \App\Export\Package\SpoutSpreadsheet
- * @group integration
- */
+#[CoversClass(AbstractSpreadsheetRenderer::class)]
+#[CoversClass(SpoutSpreadsheet::class)]
+#[CoversClass(XlsxRenderer::class)]
+#[Group('integration')]
 class XlsxRendererTest extends AbstractRendererTestCase
 {
     protected function getAbstractRenderer(): XlsxRenderer
@@ -38,25 +40,32 @@ class XlsxRendererTest extends AbstractRendererTestCase
         $translator->method('trans')->willReturnArgument(0);
 
         $dispatcher = new EventDispatcher();
-        $dispatcher->addSubscriber(new MetaFieldColumnSubscriber());
+        $dispatcher->addSubscriber(new MetaFieldColumnSubscriberMock());
 
-        return new XlsxRenderer(new SpreadsheetRenderer($dispatcher, $security), $translator);
+        $converter = new ColumnConverter($dispatcher, $security);
+        $factory = new XlsxRendererFactory($converter, $dispatcher, $translator);
+
+        return $factory->createDefault();
     }
 
-    public function testConfiguration(): void
+    public function testConfigurationFromTemplate(): void
     {
         $sut = $this->getAbstractRenderer();
 
+        self::assertEquals('xlsx', $sut->getType());
         self::assertEquals('xlsx', $sut->getId());
-        self::assertEquals('xlsx', $sut->getTitle());
+        self::assertEquals('default', $sut->getTitle());
+        self::assertFalse($sut->isInternal());
+        $sut->setInternal(true);
+        self::assertTrue($sut->isInternal());
     }
 
     public function testRender(): void
     {
         $sut = $this->getAbstractRenderer();
 
-        /** @var BinaryFileResponse $response */
         $response = $this->render($sut);
+        self::assertInstanceOf(BinaryFileResponse::class, $response);
 
         $file = $response->getFile();
         $prefix = date('Ymd');

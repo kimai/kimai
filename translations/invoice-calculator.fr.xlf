@@ -18,13 +18,13 @@
         <source>user</source>
         <target state="translated">Utilisateur</target>
       </trans-unit>
-      <trans-unit id="BlGGO.X" resname="activity">
+      <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve">
         <source>activity</source>
-        <target>Groupe d'activités - une entrée par activité</target>
+        <target state="translated">Activité</target>
       </trans-unit>
-      <trans-unit id="JEIQ5IQ" resname="project">
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
         <source>project</source>
-        <target state="translated">Projet : une entrée par projet</target>
+        <target state="translated">Projet</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>
@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="KWX.j1b" resname="invoice_calculator.help" xml:space="preserve">
         <source>invoice_calculator.help</source>
-        <target state="translated">Sélectionnez les champs par lesquels les éléments de la facture doivent être regroupés.</target>
+        <target state="translated">Sélectionnez les champs par lesquels les éléments de la facture doivent être regroupés</target>
       </trans-unit>
       <trans-unit id="oRa0mkz" resname="activity_user" xml:space="preserve">
         <source>activity_user</source>

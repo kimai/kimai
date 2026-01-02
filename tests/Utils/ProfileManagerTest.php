@@ -10,14 +10,14 @@
 namespace App\Tests\Utils;
 
 use App\Utils\ProfileManager;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
 
-/**
- * @covers \App\Utils\ProfileManager
- */
+#[CoversClass(ProfileManager::class)]
 class ProfileManagerTest extends TestCase
 {
     public function testEmpty(): void
@@ -31,7 +31,10 @@ class ProfileManagerTest extends TestCase
         self::assertEquals(ProfileManager::PROFILE_DESKTOP, $sut->getProfileFromSession($session));
     }
 
-    public static function getInvalidProfiles()
+    /**
+     * @return array<int, array<string>>
+     */
+    public static function getInvalidProfiles(): array
     {
         return [
             ['MOBILE'],
@@ -45,16 +48,17 @@ class ProfileManagerTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getInvalidProfiles
-     */
+    #[DataProvider('getInvalidProfiles')]
     public function testIsInvalidProfile(string $profile): void
     {
         $sut = new ProfileManager();
         self::assertFalse($sut->isValidProfile($profile));
     }
 
-    public static function getDatatableNames()
+    /**
+     * @return array<int, array<string|null>>
+     */
+    public static function getDatatableNames(): array
     {
         return [
             ['admin-timesheet_mobile', 'admin-timesheet', 'mobile'],
@@ -68,16 +72,17 @@ class ProfileManagerTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getDatatableNames
-     */
+    #[DataProvider('getDatatableNames')]
     public function testDatatableName(string $expected, string $datatable, ?string $prefix): void
     {
         $sut = new ProfileManager();
         self::assertEquals($expected, $sut->getDatatableName($datatable, $prefix));
     }
 
-    public static function getProfileNames()
+    /**
+     * @return array<int, array<string>>
+     */
+    public static function getProfileNames(): array
     {
         return [
             ['mobile', ProfileManager::PROFILE_MOBILE],
@@ -95,9 +100,7 @@ class ProfileManagerTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getProfileNames
-     */
+    #[DataProvider('getProfileNames')]
     public function testGetProfile(string $profile, string $expected): void
     {
         $sut = new ProfileManager();
@@ -125,7 +128,10 @@ class ProfileManagerTest extends TestCase
         self::assertNull($session->get(ProfileManager::SESSION_PROFILE));
     }
 
-    public static function getCookieProfiles()
+    /**
+     * @return array<int, array<string>>
+     */
+    public static function getCookieProfiles(): array
     {
         return [
             ['mobile', ProfileManager::PROFILE_MOBILE],
@@ -136,9 +142,7 @@ class ProfileManagerTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getCookieProfiles
-     */
+    #[DataProvider('getCookieProfiles')]
     public function testGetProfileFromCookie(string $cookieValue, string $expected): void
     {
         $request = new Request();
@@ -154,7 +158,10 @@ class ProfileManagerTest extends TestCase
         self::assertEquals($expected, $profile);
     }
 
-    public static function getSessionProfiles()
+    /**
+     * @return array<int, array<string>>
+     */
+    public static function getSessionProfiles(): array
     {
         return [
             ['mobile', ProfileManager::PROFILE_MOBILE],
@@ -165,9 +172,7 @@ class ProfileManagerTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getSessionProfiles
-     */
+    #[DataProvider('getSessionProfiles')]
     public function testGetProfileFromSession(string $sessionValue, string $expected): void
     {
         $request = new Request();

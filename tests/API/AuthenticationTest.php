@@ -11,14 +11,14 @@ namespace App\Tests\API;
 
 use App\DataFixtures\UserFixtures;
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * These tests make sure, that the deprecated API login with X-AUTH-USER and X-AUTH-TOKEN still works.
- *
- * @group legacy
- * @group integration
+ * Make sure that the deprecated API login with X-AUTH-USER and X-AUTH-TOKEN still works.
  */
+#[Group('legacy')]
+#[Group('integration')]
 class AuthenticationTest extends APIControllerBaseTestCase
 {
     public function testPinIsSecure(): void

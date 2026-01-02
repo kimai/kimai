@@ -62,13 +62,10 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
             plugins.push('remove_button');
         }
 
-        /*
-        const isOrdering = false;
-        if (isOrdering) {
-            plugins.push('caret_position');
+        if (node.dataset['order'] !== undefined && node.dataset['order'] === '1') {
+            //plugins.push('caret_position');
             plugins.push('drag_drop');
         }
-        */
 
         let options = {
             // see https://github.com/orchidjs/tom-select/issues/543#issuecomment-1664342257
@@ -83,8 +80,11 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
             // if there are more than X entries, the other ones are hidden and can only be found
             // by typing some characters to trigger the internal option search
             // see App\Form\Type\TagsType::MAX_AMOUNT_SELECT
+            // TODO make this value configurable with a data attribute
             maxOptions: 500,
             sortField:[{field: '$order'}, {field: '$score'}],
+            // required so it works in table.responsive, but requires z-index 1056, because bootstrap modal would otherwise hide it
+            dropdownParent: 'body',
         };
 
         let render = {

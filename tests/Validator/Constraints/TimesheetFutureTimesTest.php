@@ -11,11 +11,10 @@ namespace App\Tests\Validator\Constraints;
 
 use App\Validator\Constraints\TimesheetConstraint;
 use App\Validator\Constraints\TimesheetFutureTimes;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Validator\Constraints\TimesheetFutureTimes
- */
+#[CoversClass(TimesheetFutureTimes::class)]
 class TimesheetFutureTimesTest extends TestCase
 {
     public function testIsTimesheetConstraint(): void

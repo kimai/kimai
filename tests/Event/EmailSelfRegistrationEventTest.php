@@ -10,15 +10,16 @@
 namespace App\Tests\Event;
 
 use App\Entity\User;
+use App\Event\EmailEvent;
 use App\Event\EmailSelfRegistrationEvent;
+use App\Event\UserEmailEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Mime\Email;
 
-/**
- * @covers \App\Event\EmailEvent
- * @covers \App\Event\UserEmailEvent
- * @covers \App\Event\EmailSelfRegistrationEvent
- */
+#[CoversClass(EmailEvent::class)]
+#[CoversClass(UserEmailEvent::class)]
+#[CoversClass(EmailSelfRegistrationEvent::class)]
 class EmailSelfRegistrationEventTest extends TestCase
 {
     public function testGetter(): void

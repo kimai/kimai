@@ -9,9 +9,19 @@
 
 namespace App\Event;
 
-/**
- * Triggered right before a activity will be deleted.
- */
+use App\Entity\Activity;
+use App\Webhook\Attribute\AsWebhook;
+
+#[AsWebhook(name: 'activity.deleted', description: 'Triggered right before an activity will be deleted', payload: 'object.getActivity()')]
 final class ActivityDeleteEvent extends AbstractActivityEvent
 {
+    public function __construct(Activity $activity, private readonly ?Activity $replacementActivity = null)
+    {
+        parent::__construct($activity);
+    }
+
+    public function getReplacementActivity(): ?Activity
+    {
+        return $this->replacementActivity;
+    }
 }

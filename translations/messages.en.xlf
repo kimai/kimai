@@ -614,6 +614,14 @@
         <source>complete_month.help</source>
         <target>This will lock all days of the year before the chosen date. The user will no longer be able to create or edit times for the locked period.</target>
       </trans-unit>
+      <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="yes">
+        <source>Unlock month</source>
+        <target state="final">Unlock month</target>
+      </trans-unit>
+      <trans-unit id="mhOe3Iy" resname="unlock_month.help">
+        <source>unlock_month.help</source>
+        <target>This unlocks all days of the year after the selected date.</target>
+      </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf">
         <source>completed_month_pdf</source>
         <target>Completed month PDF</target>
@@ -1562,9 +1570,9 @@
         <source>button.report</source>
         <target>Report</target>
       </trans-unit>
-      <trans-unit id="YDrWFFP" resname="sickness.intro">
-        <source>sickness.intro</source>
-        <target>Illness, doctor's visit, care of close relatives, etc.</target>
+      <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="translated">Incapacity for work, medically necessary appointments, care leave, etc.</target>
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
@@ -1869,6 +1877,134 @@
       <trans-unit id="wvt4jH3" resname="training">
         <source>training</source>
         <target>Training</target>
+      </trans-unit>
+      <trans-unit id="rD4oQRR" resname="postcode">
+        <source>Postcode</source>
+        <target>ZIP / Postcode</target>
+      </trans-unit>
+      <trans-unit id="EaYsI0E" resname="city">
+        <source>City</source>
+        <target>City</target>
+      </trans-unit>
+      <trans-unit id="y1XHR1Q" resname="address_deprecated">
+        <source>address_deprecated</source>
+        <target>This field will be removed soon. Please transfer the address to continue generating valid invoices (e.g. for e-invoicing).</target>
+      </trans-unit>
+      <trans-unit id="nsbR30p" resname="sending_company">
+        <source>sending_company</source>
+        <target>Invoice issuer</target>
+      </trans-unit>
+      <trans-unit id="BmDRYT." resname="sending_company.help">
+        <source>sending_company.help</source>
+        <target>This company is shown as the issuer on the invoice. The name, address and tax information will be used.</target>
+      </trans-unit>
+      <trans-unit id="Uzll0ps" resname="Customer portal">
+        <source>Customer portal</source>
+        <target>Customer portal</target>
+      </trans-unit>
+      <trans-unit id="cDOQMYv" resname="Beta">
+        <source>Beta</source>
+        <target>Enables a preview feature that is still in development.</target>
+      </trans-unit>
+      <trans-unit id="NA9GMDP" resname="Code">
+        <source>Code</source>
+        <target>Code</target>
+      </trans-unit>
+      <trans-unit id="xZzzKxM" resname="orientation">
+        <source>Orientation</source>
+        <target>Orientation</target>
+      </trans-unit>
+      <trans-unit id="UcWoKWo" resname="portrait">
+        <source>Portrait</source>
+        <target>Portrait</target>
+      </trans-unit>
+      <trans-unit id="rLlV34K" resname="landscape">
+        <source>Landscape</source>
+        <target>Landscape</target>
+      </trans-unit>
+      <trans-unit id="UZUFKZg" resname="remaining_budget">
+        <source>remaining_budget</source>
+        <target>Remaining budget</target>
+      </trans-unit>
+      <trans-unit id="eV6j76Q" resname="font">
+        <source>font</source>
+        <target>Font</target>
+      </trans-unit>
+      <trans-unit id="PciSBv9" resname="address_row">
+        <source>address_row</source>
+        <target>Line %row%</target>
+      </trans-unit>
+      <trans-unit id="_Ep8Ogx" resname="buyerReference">
+        <source>buyerReference</source>
+        <target>Buyer reference</target>
+      </trans-unit>
+      <trans-unit id="nPJWKwW" resname="payment_type">
+        <source>payment_type</source>
+        <target>Payment type</target>
+      </trans-unit>
+      <trans-unit id="uXB48Vj" resname="SEPA Credit Transfer">
+        <source>SEPA Credit Transfer</source>
+        <target>SEPA Credit Transfer</target>
+      </trans-unit>
+      <trans-unit id="s42A2gm" resname="SEPA Direct Debit">
+        <source>SEPA Direct Debit</source>
+        <target>SEPA Direct Debit</target>
+      </trans-unit>
+      <trans-unit id="4toQj2M" resname="Cash">
+        <source>Cash</source>
+        <target>Cash</target>
+      </trans-unit>
+      <trans-unit id="cWZZc6D" resname="Cheque">
+        <source>Cheque</source>
+        <target>Cheque</target>
+      </trans-unit>
+      <trans-unit id="jMvh7bn" resname="Credit Transfer">
+        <source>Credit Transfer</source>
+        <target>Credit Transfer</target>
+      </trans-unit>
+      <trans-unit id="TJQbc0a" resname="Payment To Bank Account">
+        <source>Payment To Bank Account</source>
+        <target>Payment To Bank Account</target>
+      </trans-unit>
+      <trans-unit id=".UIt099" resname="Card Payment">
+        <source>Card Payment</source>
+        <target>Card Payment</target>
+      </trans-unit>
+      <trans-unit id="Wnb_qF0" resname="Direct Debit">
+        <source>Direct Debit</source>
+        <target>Direct Debit</target>
+      </trans-unit>
+      <trans-unit id="rIdfGxM" resname="payment_account_name">
+        <source>payment_account_name</source>
+        <target>Account or card holder</target>
+      </trans-unit>
+      <trans-unit id="jcT9Og6" resname="payment_account_number">
+        <source>payment_account_name</source>
+        <target>IBAN or card number</target>
+      </trans-unit>
+      <trans-unit id="N_ZNih_" resname="electronic_invoice">
+        <source>electronic_invoice</source>
+        <target>E-Invoice</target>
+      </trans-unit>
+      <trans-unit id="QnN_ONc" resname="invoice_tax_type">
+        <source>invoice_tax_type</source>
+        <target>Tax status</target>
+      </trans-unit>
+      <trans-unit id="Mi7y8Q3" resname="tax.type.exempt">
+        <source>tax.type.exempt</source>
+        <target>Exempt</target>
+      </trans-unit>
+      <trans-unit id="lU1Njcy" resname="tax.type.standard">
+        <source>tax.type.standard</source>
+        <target>Taxable</target>
+      </trans-unit>
+      <trans-unit id="E470U8W" resname="tax.type.reverse">
+        <source>tax.type.reverse</source>
+        <target>Reverse charge</target>
+      </trans-unit>
+      <trans-unit id="hi31a3v" resname="tax.note.reverse_charge">
+        <source>tax.note.reverse_charge</source>
+        <target>Tax to be paid on reverse charge basis</target>
       </trans-unit>
     </body>
   </file>

@@ -10,14 +10,13 @@
 namespace App\Tests\Twig;
 
 use App\Twig\RuntimeExtensions;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Twig\Node\TextNode;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
-/**
- * @covers \App\Twig\RuntimeExtensions
- */
+#[CoversClass(RuntimeExtensions::class)]
 class RuntimeExtensionsTest extends TestCase
 {
     public function testGetFilters(): void
@@ -79,7 +78,6 @@ class RuntimeExtensionsTest extends TestCase
         foreach ($filters as $filter) {
             switch ($filter->getName()) {
                 case 'md2html':
-                    self::assertEquals('html', $filters[0]->getPreEscape());
                     self::assertEquals(['html'], $filters[0]->getSafe(new TextNode('', 10)));
                     $found_md2html = true;
                     break;

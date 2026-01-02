@@ -10,9 +10,7 @@
 namespace App\EventSubscriber;
 
 use App\Configuration\LocaleService;
-use App\Constants;
 use App\Entity\User;
-use App\Entity\UserPreference;
 use KevinPapst\TablerBundle\Helper\ContextHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\KernelEvent;
@@ -46,8 +44,6 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $this->helper->setAssetVersion((string) Constants::VERSION_ID);
-
         if ($this->localeService->isRightToLeft($event->getRequest()->getLocale())) {
             $this->helper->setIsRightToLeft(true);
         }
@@ -63,9 +59,16 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $skin = $user->getPreferenceValue(UserPreference::SKIN);
+        $skin = $user->getSkin();
         if ($skin === 'dark') {
             $this->helper->setIsDarkMode(true);
+            $this->helper->setThemeAuto(false);
+        } elseif ($skin === 'auto') {
+            $this->helper->setIsDarkMode(false);
+            $this->helper->setThemeAuto(true);
+        } else {
+            $this->helper->setIsDarkMode(false);
+            $this->helper->setThemeAuto(false);
         }
 
         // do not allow boxed layout, header is not compatible and other functions need the full size as well

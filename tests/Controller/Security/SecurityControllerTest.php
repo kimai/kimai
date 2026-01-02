@@ -16,14 +16,14 @@ use App\DataFixtures\UserFixtures;
 use App\Entity\User;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * This test makes sure the login and registration work as expected.
  * The logic is located in the FOSUserBundle and already tested, but we use a different layout.
- *
- * @group integration
  */
+#[Group('integration')]
 class SecurityControllerTest extends AbstractControllerBaseTestCase
 {
     public function testRootUrlIsRedirectedToLogin(): void
@@ -45,7 +45,7 @@ class SecurityControllerTest extends AbstractControllerBaseTestCase
         self::assertTrue($client->getResponse()->isSuccessful());
 
         $content = $response->getContent();
-        self::assertStringContainsString('<title>Kimai – Time Tracking</title>', $content);
+        self::assertStringContainsString('<title>Kimai</title>', $content);
         self::assertStringContainsString('<form action="/en/login_check" method="post"', $content);
         self::assertStringContainsString('<input autocomplete="username" type="text" id="username" name="_username"', $content);
         self::assertStringContainsString('<input autocomplete="new-password" id="password" name="_password" type="password"', $content);

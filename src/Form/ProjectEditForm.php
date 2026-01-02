@@ -29,7 +29,7 @@ class ProjectEditForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $customer = null;
-        $isNew = false;
+        $isNew = true;
         $options['currency'] = null;
         $customerOptions = [];
 

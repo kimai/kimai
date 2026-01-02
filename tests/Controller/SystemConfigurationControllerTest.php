@@ -11,10 +11,9 @@ namespace App\Tests\Controller;
 
 use App\Configuration\SystemConfiguration;
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
 {
     public function testIsSecure(): void
@@ -209,7 +208,6 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
                 'configuration' => [
                     ['name' => 'defaults.customer.timezone', 'value' => 'Atlantic/Canary'],
                     ['name' => 'defaults.customer.country', 'value' => 'BB'],
-                    ['name' => 'defaults.customer.currency', 'value' => 'GBP'],
                 ]
             ]
         ]);
@@ -222,7 +220,6 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
         $configService = $this->getSystemConfiguration();
         self::assertEquals('Atlantic/Canary', $configService->find('defaults.customer.timezone'));
         self::assertEquals('BB', $configService->find('defaults.customer.country'));
-        self::assertEquals('GBP', $configService->find('defaults.customer.currency'));
     }
 
     public function testUpdateCustomerConfigWithSingleParam(): void
@@ -237,7 +234,6 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
                 'configuration' => [
                     ['name' => 'defaults.customer.timezone', 'value' => 'Atlantic/Canary'],
                     ['name' => 'defaults.customer.country', 'value' => 'BB'],
-                    ['name' => 'defaults.customer.currency', 'value' => 'GBP'],
                 ]
             ]
         ]);
@@ -255,7 +251,7 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
 
         $configService = $this->getSystemConfiguration();
         self::assertNull($configService->find('defaults.user.timezone'));
-        self::assertEquals('default', $configService->find('defaults.user.theme'));
+        self::assertEquals('auto', $configService->find('defaults.user.theme'));
         self::assertEquals('en', $configService->find('defaults.user.language'));
 
         $form = $client->getCrawler()->filter('form[name=system_configuration_form_user]')->form();
@@ -291,14 +287,12 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
                     'configuration' => [
                         ['name' => 'defaults.customer.timezone', 'value' => 'XX'],
                         ['name' => 'defaults.customer.country', 'value' => 1],
-                        ['name' => 'defaults.customer.currency', 'value' => 'XXX'],
                     ]
                 ]
             ],
             [
                 '#system_configuration_form_customer_configuration_0_value',
                 '#system_configuration_form_customer_configuration_1_value',
-                '#system_configuration_form_customer_configuration_2_value',
             ]
         );
     }

@@ -14,14 +14,14 @@ use App\Entity\Project;
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
+use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\PaginatedWorkingTimeChart;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Widget\Type\PaginatedWorkingTimeChart
- * @covers \App\Widget\Type\AbstractWidgetType
- * @covers \App\Repository\TimesheetRepository
- */
+#[CoversClass(PaginatedWorkingTimeChart::class)]
+#[CoversClass(AbstractWidgetType::class)]
+#[CoversClass(TimesheetRepository::class)]
 class PaginatedWorkingTimeChartTest extends TestCase
 {
     public function createSut(): PaginatedWorkingTimeChart

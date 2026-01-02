@@ -9,6 +9,7 @@
 
 namespace App\Project;
 
+use App\Activity\ActivityService;
 use App\Entity\Project;
 use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
@@ -21,7 +22,8 @@ final class ProjectDuplicationService
         private readonly ProjectService $projectService,
         private readonly ActivityRepository $activityRepository,
         private readonly ProjectRateRepository $projectRateRepository,
-        private readonly ActivityRateRepository $activityRateRepository
+        private readonly ActivityRateRepository $activityRateRepository,
+        private readonly ActivityService $activityService
     ) {
     }
 
@@ -46,7 +48,7 @@ final class ProjectDuplicationService
             $newProject->setEnd(null);
         }
 
-        $this->projectService->saveNewProject($newProject);
+        $this->projectService->saveProject($newProject);
 
         foreach ($this->projectRateRepository->getRatesForProject($project) as $rate) {
             $newRate = clone $rate;
@@ -68,7 +70,7 @@ final class ProjectDuplicationService
                 $newActivity->setMetaField($newMetaField);
             }
 
-            $this->activityRepository->saveActivity($newActivity);
+            $this->activityService->saveActivity($newActivity);
 
             foreach ($this->activityRateRepository->getRatesForActivity($activity) as $rate) {
                 $newRate = clone $rate;

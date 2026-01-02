@@ -10,12 +10,13 @@
 namespace App\Configuration;
 
 use App\Entity\User;
+use App\Utils\Duration;
 
 final class LocaleService
 {
     public const DEFAULT_SETTINGS = [
         'date' => 'dd.MM.y',
-        'time' => 'HH:mm',
+        'time' => 'H:mm',
         'rtl' => false,
         'translation' => false,
     ];
@@ -55,10 +56,7 @@ final class LocaleService
     }
 
     /**
-     * Returns the locale specific date format, which should be used in combination with the twig filter "|date".
-     *
-     * @param string $locale
-     * @return string
+     * Returns the locale-specific date format, which should be used in combination with the twig filter "|date".
      */
     public function getDateFormat(string $locale): string
     {
@@ -66,10 +64,7 @@ final class LocaleService
     }
 
     /**
-     * Returns the locale specific time format, which should be used in combination with the twig filter "|time".
-     *
-     * @param string $locale
-     * @return string
+     * Returns the locale-specific time format, which should be used in combination with the twig filter "|time".
      */
     public function getTimeFormat(string $locale): string
     {
@@ -77,10 +72,7 @@ final class LocaleService
     }
 
     /**
-     * Returns the locale specific datetime format, which should be used in combination with the twig filter "|date".
-     *
-     * @param string $locale
-     * @return string
+     * Returns the locale-specific datetime format, which should be used in combination with the twig filter "|date".
      */
     public function getDateTimeFormat(string $locale): string
     {
@@ -89,13 +81,10 @@ final class LocaleService
 
     /**
      * Returns the format used in the "|duration" twig filter to display a Timesheet duration.
-     *
-     * @param string $locale
-     * @return string
      */
     public function getDurationFormat(string $locale): string
     {
-        return '%h:%m';
+        return Duration::FORMAT_DEFAULT;
     }
 
     public function isRightToLeft(string $locale): bool

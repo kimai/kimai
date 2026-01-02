@@ -6,9 +6,9 @@
         <source>Time Tracking</source>
         <target state="translated">Theo dõi thời gian</target>
       </trans-unit>
-      <trans-unit id="inmIkP6" resname="yes">
+      <trans-unit id="inmIkP6" resname="yes" xml:space="preserve">
         <source>yes</source>
-        <target>Đúng</target>
+        <target state="translated">Có</target>
       </trans-unit>
       <trans-unit id="k5Apjz_" resname="no">
         <source>no</source>
@@ -208,7 +208,7 @@
       </trans-unit>
       <trans-unit id="1C7xSXk" resname="visible" xml:space="preserve">
         <source>Visible</source>
-        <target state="translated">Hiện</target>
+        <target state="translated">Hiển thị</target>
       </trans-unit>
       <trans-unit id="CvlqjtY" resname="budget">
         <source>budget</source>
@@ -216,7 +216,7 @@
       </trans-unit>
       <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="needs-translation">Ngân sách thời gian</target>
+        <target state="translated">Hạn ngạch theo giờ</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -538,25 +538,25 @@
         <source>ROLE_USER</source>
         <target>Người dùng</target>
       </trans-unit>
-      <trans-unit id="TdBJBAl" resname="stats.durationToday">
+      <trans-unit id="TdBJBAl" resname="stats.durationToday" xml:space="preserve">
         <source>stats.durationToday</source>
-        <target>Giờ làm việc hôm nay</target>
+        <target state="needs-translation">Giờ làm việc hôm nay</target>
       </trans-unit>
-      <trans-unit id="XhKalZH" resname="stats.durationWeek">
+      <trans-unit id="XhKalZH" resname="stats.durationWeek" xml:space="preserve">
         <source>stats.durationWeek</source>
-        <target>Giờ làm việc trong tuần này</target>
+        <target state="needs-translation">Giờ làm việc trong tuần này</target>
       </trans-unit>
-      <trans-unit id="uaOwf_P" resname="stats.durationMonth">
+      <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve">
         <source>stats.durationMonth</source>
-        <target>Giờ làm việc trong tháng này</target>
+        <target state="needs-translation">Giờ làm việc trong tháng này</target>
       </trans-unit>
-      <trans-unit id="WqF84KR" resname="stats.durationYear">
+      <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
-        <target>Giờ làm việc năm nay</target>
+        <target state="needs-translation">Giờ làm việc năm nay</target>
       </trans-unit>
-      <trans-unit id="YtvPnl1" resname="stats.durationTotal">
+      <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
-        <target>Tổng số giờ làm việc</target>
+        <target state="needs-translation">Tổng số giờ làm việc</target>
       </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
@@ -926,9 +926,9 @@
         <source>revenue</source>
         <target>Doanh thu</target>
       </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
+      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
         <source>stats.durationFinancialYear</source>
-        <target state="translated">Tổng số giờ làm việc trong năm tài chính này</target>
+        <target state="needs-translation">Tổng số giờ làm việc trong năm tài chính này</target>
       </trans-unit>
       <trans-unit id="CiA4s9E" resname="set_as_default">
         <source>set_as_default</source>
@@ -1160,7 +1160,7 @@
       </trans-unit>
       <trans-unit id="oq1jcSQ" resname="help.billable" xml:space="preserve">
         <source>help.billable</source>
-        <target state="translated">Nếu cài đặt tắt, tất cả thời gian được lưu trong tương lai sẽ được đánh dấu là "không cần thanh toán".</target>
+        <target state="translated">Nếu tắt cài đặt, tất cả bảng chấm công được lưu trong tương lai sẽ được đánh dấu là "không cần lên hóa đơn".</target>
       </trans-unit>
       <trans-unit id="KgBw0BS" resname="skin" xml:space="preserve">
         <source>skin</source>
@@ -1503,8 +1503,8 @@
         <target state="needs-translation">Nghỉ người nhà bị ốm</target>
       </trans-unit>
       <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
-        <source>sickness.intro</source>
-        <target state="translated">Bệnh, đi khám bác sĩ, chăm sóc người nhà, v.v.</target>
+        <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
+        <target state="needs-translation">Bệnh, đi khám bác sĩ, chăm sóc người nhà, v.v.</target>
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
@@ -1710,9 +1710,9 @@
         <source>permissions</source>
         <target>Phân quyền nhóm</target>
       </trans-unit>
-      <trans-unit id="Qf.Yt2r" resname="details">
+      <trans-unit id="Qf.Yt2r" resname="details" xml:space="preserve">
         <source>details</source>
-        <target>Hiện</target>
+        <target state="translated">Hiển thị</target>
       </trans-unit>
       <trans-unit id="aP9j_4L" resname="download">
         <source>download</source>

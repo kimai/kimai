@@ -18,6 +18,7 @@ final class ProjectDateRangeQuery
     private ?Customer $customer = null;
     private bool $includeNoWork = false;
     private ?string $budgetType = null;
+    private ?string $view = '0';
 
     public function __construct(\DateTime $month, private User $user)
     {
@@ -82,5 +83,15 @@ final class ProjectDateRangeQuery
     public function setBudgetType(?string $budgetType): void
     {
         $this->budgetType = $budgetType;
+    }
+
+    public function getView(): ?string
+    {
+        return $this->view;
+    }
+
+    public function setView(?string $view): void
+    {
+        $this->view = $view;
     }
 }

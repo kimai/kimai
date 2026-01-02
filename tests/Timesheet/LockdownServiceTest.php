@@ -13,11 +13,11 @@ use App\Configuration\ConfigLoaderInterface;
 use App\Entity\Timesheet;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\LockdownService;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Timesheet\LockdownService
- */
+#[CoversClass(LockdownService::class)]
 class LockdownServiceTest extends TestCase
 {
     protected function createService(?string $start, ?string $end, ?string $grace = null, ?string $timezone = null): LockdownService
@@ -80,9 +80,7 @@ class LockdownServiceTest extends TestCase
         self::assertTrue($sut->isEditable($timesheet, new \DateTime('first day of this month'), false));
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testLockdown(bool $allowOverwriteGrace, string $beginModifier, string $nowModifier, bool $isViolation): void
     {
         $sut = $this->createService('first day of last month', 'last day of last month', '+10 days');
@@ -117,9 +115,7 @@ class LockdownServiceTest extends TestCase
         yield [true, '+5 days', '+11 days', false];
     }
 
-    /**
-     * @dataProvider getConfigTestData
-     */
+    #[DataProvider('getConfigTestData')]
     public function testLockdownConfig(bool $allowOverwriteGrace, ?string $lockdownBegin, ?string $lockdownEnd, ?string $grace, bool $isViolation): void
     {
         $sut = $this->createService($lockdownBegin, $lockdownEnd, $grace);

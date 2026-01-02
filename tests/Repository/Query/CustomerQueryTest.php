@@ -10,10 +10,9 @@
 namespace App\Tests\Repository\Query;
 
 use App\Repository\Query\CustomerQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Repository\Query\CustomerQuery
- */
+#[CoversClass(CustomerQuery::class)]
 class CustomerQueryTest extends BaseQueryTest
 {
     public function testQuery(): void
@@ -21,6 +20,7 @@ class CustomerQueryTest extends BaseQueryTest
         $sut = new CustomerQuery();
 
         $this->assertBaseQuery($sut, 'name');
+        $this->assertVisibility($sut);
         $this->assertResetByFormError(new CustomerQuery(), 'name');
     }
 }

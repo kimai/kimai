@@ -22,6 +22,8 @@ use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingModeService;
 use App\Validator\ValidationFailedException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -30,9 +32,7 @@ use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-/**
- * @covers \App\Timesheet\TimesheetService
- */
+#[CoversClass(TimesheetService::class)]
 class TimesheetServiceTest extends TestCase
 {
     private function getSut(
@@ -65,6 +65,7 @@ class TimesheetServiceTest extends TestCase
         return $service;
     }
 
+    #[Group('legacy')]
     public function testCannotSavePersistedTimesheetAsNew(): void
     {
         $timesheet = $this->createMock(Timesheet::class);
@@ -75,7 +76,7 @@ class TimesheetServiceTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Cannot create timesheet, already persisted');
 
-        $sut->saveNewTimesheet($timesheet);
+        $sut->saveNewTimesheet($timesheet); // @phpstan-ignore method.deprecated
     }
 
     public function testCannotStartTimesheet(): void
@@ -88,7 +89,7 @@ class TimesheetServiceTest extends TestCase
         $this->expectException(AccessDeniedHttpException::class);
         $this->expectExceptionMessage('You are not allowed to start this timesheet record');
 
-        $sut->saveNewTimesheet(new Timesheet());
+        $sut->saveTimesheet(new Timesheet());
     }
 
     public function testSaveNewTimesheetHasValidationError(): void
@@ -107,7 +108,7 @@ class TimesheetServiceTest extends TestCase
         $this->expectException(ValidationFailedException::class);
         $this->expectExceptionMessage('Validation Failed');
 
-        $sut->saveNewTimesheet(new Timesheet());
+        $sut->saveTimesheet(new Timesheet());
     }
 
     public function testSaveNewTimesheetStopsActiveRecords(): void
@@ -134,7 +135,7 @@ class TimesheetServiceTest extends TestCase
 
         $sut = $this->getSut($authorizationChecker, null, null, $repository);
 
-        $sut->saveNewTimesheet($newTimesheet);
+        $sut->saveTimesheet($newTimesheet);
     }
 
     public function testSaveNewTimesheetFixesTimezone(): void
@@ -155,11 +156,12 @@ class TimesheetServiceTest extends TestCase
         $authorizationChecker->expects($this->once())->method('isGranted')->willReturn(true);
         $sut = $this->getSut($authorizationChecker);
 
-        $sut->saveNewTimesheet($timesheet);
+        $sut->saveTimesheet($timesheet);
 
         self::assertEquals('Europe/Paris', $timesheet->getTimezone());
     }
 
+    #[Group('legacy')]
     public function testUpdateTimesheetFixesTimezone(): void
     {
         $user = new User();
@@ -176,7 +178,7 @@ class TimesheetServiceTest extends TestCase
 
         $sut = $this->getSut();
 
-        $sut->updateTimesheet($timesheet);
+        $sut->updateTimesheet($timesheet); // @phpstan-ignore method.deprecated
 
         self::assertEquals('Europe/Paris', $timesheet->getTimezone());
     }

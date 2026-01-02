@@ -9,6 +9,7 @@
 
 namespace App\Tests\DataFixtures;
 
+use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -27,10 +28,21 @@ class InvoiceTemplateFixtures implements TestFixture
 
         $faker = Factory::create();
 
+        $customer = new Customer($faker->company());
+        $customer->setCountry($faker->countryCode());
+        $customer->setTimezone($faker->timezone());
+        $customer->setCompany('Company name');
+        $customer->setAddressLine1($faker->streetAddress());
+        $customer->setAddressLine2($faker->streetAddress());
+        $customer->setPostCode($faker->postcode());
+        $customer->setCity($faker->city());
+
+        $manager->persist($customer);
+
         $template = new InvoiceTemplate();
         $template->setName('Invoice');
         $template->setTitle('Your company name');
-        $template->setCompany($faker->company());
+        $template->setCustomer($customer);
         $template->setVat(19);
         $template->setDueDays(14);
         $template->setPaymentTerms(
@@ -39,9 +51,7 @@ class InvoiceTemplateFixtures implements TestFixture
             'Please transfer the total amount within 14 days to the given account and use the invoice number ' .
             'as reference.'
         );
-        $template->setAddress(
-            $faker->streetAddress() . PHP_EOL .
-            $faker->city() . ' ' . $faker->postcode() . ', ' . $faker->country() . PHP_EOL .
+        $template->setContact(
             'Phone: ' . $faker->phoneNumber() . PHP_EOL .
             'Email: ' . $faker->safeEmail()
         );

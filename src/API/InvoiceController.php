@@ -38,15 +38,13 @@ final class InvoiceController extends BaseApiController
     }
 
     /**
-     * Returns a paginated collection of invoices.
-     *
-     * Needs permission: view_invoice
+     * Fetch invoices
      */
     #[IsGranted('view_invoice')]
     #[OA\Response(response: 200, description: 'Returns a collection of invoices', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/InvoiceCollection')))]
     #[Route(methods: ['GET'], path: '', name: 'get_invoices')]
-    #[Rest\QueryParam(name: 'begin', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records after this date will be included (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
-    #[Rest\QueryParam(name: 'end', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records before this date will be included (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
+    #[Rest\QueryParam(name: 'begin', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only invoices created at or after this date-time will be included (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
+    #[Rest\QueryParam(name: 'end', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only invoices created before or at this date-time will be included (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
     #[Rest\QueryParam(name: 'customers', map: true, requirements: '\d+', strict: true, nullable: true, default: [], description: 'List of customer IDs to filter, e.g.: customers[]=1&customers[]=2')]
     #[Rest\QueryParam(name: 'status', map: true, requirements: 'pending|paid|canceled|new', strict: true, nullable: true, default: [], description: 'Invoice status: pending, paid, canceled, new. Default: all')]
     #[Rest\QueryParam(name: 'page', requirements: '\d+', strict: true, nullable: true, description: 'The page to display, renders a 404 if not found (default: 1)')]
@@ -82,16 +80,14 @@ final class InvoiceController extends BaseApiController
         }
 
         $data = $this->repository->getPagerfantaForQuery($query);
-        $view = $this->createPaginatedView($data);
+        $view = new View($data, 200);
         $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
         return $this->viewHandler->handle($view);
     }
 
     /**
-     * Returns one invoice.
-     *
-     * Needs permission: view_invoice
+     * Fetch invoice
      */
     #[IsGranted('view_invoice')]
     #[OA\Response(response: 200, description: 'Returns one invoice', content: new OA\JsonContent(ref: '#/components/schemas/Invoice'))]

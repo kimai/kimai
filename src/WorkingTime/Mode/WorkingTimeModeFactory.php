@@ -45,7 +45,7 @@ final class WorkingTimeModeFactory
             return $this->getMode($user->getWorkContractMode());
         } catch (\InvalidArgumentException $ex) {
             $this->logger->error(
-                \sprintf('Unknown mode "%s" requested for user %s', $user->getWorkContractMode(), $user->getId())
+                \sprintf('Unknown mode "%s" requested for user %s', $user->getWorkContractMode(), $user->getUserIdentifier())
             );
 
             return new WorkingTimeModeNone(); // @CloudRequired

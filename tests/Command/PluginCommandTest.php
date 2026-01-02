@@ -13,14 +13,14 @@ use App\Command\PluginCommand;
 use App\Plugin\PackageManager;
 use App\Plugin\PluginInterface;
 use App\Plugin\PluginManager;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
-/**
- * @covers \App\Command\PluginCommand
- * @group integration
- */
+#[CoversClass(PluginCommand::class)]
+#[Group('integration')]
 class PluginCommandTest extends KernelTestCase
 {
     private Application $application;
@@ -40,9 +40,10 @@ class PluginCommandTest extends KernelTestCase
 
     private function getCommandTester(array $plugins, array $options = []): CommandTester
     {
+        $projectDirectory = __DIR__ . '/../../';
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
-        $this->application->add(new PluginCommand(new PluginManager($plugins), new PackageManager(__DIR__ . '/../../')));
+        $this->application->add(new PluginCommand(new PluginManager($plugins), new PackageManager($projectDirectory), $projectDirectory));
 
         $command = $this->application->find('kimai:plugins');
         $commandTester = new CommandTester($command);

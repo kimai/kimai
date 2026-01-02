@@ -12,12 +12,11 @@ namespace App\Tests\Form\DataTransformer;
 use App\Entity\Tag;
 use App\Form\DataTransformer\TagArrayToStringTransformer;
 use App\Repository\TagRepository;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
-/**
- * @covers \App\Form\DataTransformer\TagArrayToStringTransformer
- */
+#[CoversClass(TagArrayToStringTransformer::class)]
 class TagArrayToStringTransformerTest extends TestCase
 {
     public function testTransform(): void

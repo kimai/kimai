@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="mk" datatype="plaintext" original="daterangepicker.en.xlf">
+    <body>
+      <trans-unit id="s9Hdo7E" resname="daterangepicker.today" xml:space="preserve">
+        <source>daterangepicker.today</source>
+        <target state="translated">Денес</target>
+      </trans-unit>
+      <trans-unit id="gkQA1YG" resname="daterangepicker.yesterday" xml:space="preserve">
+        <source>daterangepicker.yesterday</source>
+        <target state="translated">Вчера</target>
+      </trans-unit>
+      <trans-unit id="CAvVEbc" resname="daterangepicker.lastWeek" xml:space="preserve">
+        <source>daterangepicker.lastWeek</source>
+        <target state="translated">Минатата недела</target>
+      </trans-unit>
+      <trans-unit id="HfcD1_y" resname="daterangepicker.thisWeek" xml:space="preserve">
+        <source>daterangepicker.thisWeek</source>
+        <target state="translated">Оваа недела</target>
+      </trans-unit>
+      <trans-unit id="_9rEFED" resname="daterangepicker.lastYear" xml:space="preserve">
+        <source>daterangepicker.lastYear</source>
+        <target state="translated">Минатата година</target>
+      </trans-unit>
+      <trans-unit id="XgIrZS3" resname="daterangepicker.thisYear" xml:space="preserve">
+        <source>daterangepicker.thisYear</source>
+        <target state="translated">Оваа година</target>
+      </trans-unit>
+      <trans-unit id="AY_E9UR" resname="daterangepicker.thisYearUntilNow" xml:space="preserve">
+        <source>This year — until today</source>
+        <target state="translated">Оваа година - до денес</target>
+      </trans-unit>
+      <trans-unit id="m0lJOke" resname="daterangepicker.allTime" xml:space="preserve">
+        <source>daterangepicker.allTime</source>
+        <target state="translated">Вкупен период</target>
+      </trans-unit>
+      <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth" xml:space="preserve">
+        <source>daterangepicker.thisMonth</source>
+        <target state="translated">Овој месец</target>
+      </trans-unit>
+      <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth" xml:space="preserve">
+        <source>daterangepicker.lastMonth</source>
+        <target state="translated">Минатиот месец</target>
+      </trans-unit>
+      <trans-unit id="mgJ2Z7M" resname="daterangepicker.thisFinancialYear" xml:space="preserve">
+        <source>daterangepicker.thisFinancialYear</source>
+        <target state="translated">Оваа финансиска година</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -18,12 +18,13 @@ use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use App\Tests\Mocks\SystemConfigurationFactory;
+use App\Utils\NumberGenerator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Invoice\NumberGenerator\ConfigurableNumberGenerator
- * @covers \App\Utils\NumberGenerator
- */
+#[CoversClass(ConfigurableNumberGenerator::class)]
+#[CoversClass(NumberGenerator::class)]
 class ConfigurableNumberGeneratorTest extends TestCase
 {
     private function getSut(string $format, int $counter = 1): ConfigurableNumberGenerator
@@ -185,9 +186,7 @@ class ConfigurableNumberGeneratorTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testGetInvoiceNumber(string $format, string $expectedInvoiceNumber, \DateTime $invoiceDate, int $counter = 1): void
     {
         $customer = new Customer('Acme company');
@@ -232,9 +231,7 @@ class ConfigurableNumberGeneratorTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getInvalidTestData
-     */
+    #[DataProvider('getInvalidTestData')]
     public function testInvalidGetInvoiceNumber(string $format, \DateTime $invoiceDate, string $brokenPart): void
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -259,9 +256,7 @@ class ConfigurableNumberGeneratorTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getMissingFieldTestData
-     */
+    #[DataProvider('getMissingFieldTestData')]
     public function testCustomerHasMissingField(string $format, string $message): void
     {
         $this->expectException(\InvalidArgumentException::class);

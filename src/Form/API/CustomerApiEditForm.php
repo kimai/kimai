@@ -10,7 +10,22 @@
 namespace App\Form\API;
 
 use App\Form\CustomerEditForm;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-final class CustomerApiEditForm extends CustomerEditForm
+final class CustomerApiEditForm extends AbstractType
 {
+    public function getParent(): string
+    {
+        return CustomerEditForm::class;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        // overwritten, so the docs show these fields
+        $resolver->setDefaults([
+            'include_budget' => true,
+            'include_time' => true,
+        ]);
+    }
 }

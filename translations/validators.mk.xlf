@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="mk" datatype="plaintext" original="validators.en.xlf">
+    <body>
+      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team." xml:space="preserve">
+        <source>At least one team leader must be assigned to the team.</source>
+        <target state="translated">Во тимот мора да биде назначен барем еден лидер на тимот.</target>
+      </trans-unit>
+      <trans-unit id="6WAG.Xj" resname="The entered passwords don't match." xml:space="preserve">
+        <source>The entered passwords don't match.</source>
+        <target state="translated">Внесените лозинки не се совпаѓаат.</target>
+      </trans-unit>
+      <trans-unit id="6u6oCwB" resname="The email is already used." xml:space="preserve">
+        <source>This e-mail address is already in use.</source>
+        <target state="translated">Оваа е-адреса е веќе во употреба.</target>
+      </trans-unit>
+      <trans-unit id="S14XECA" resname="The username is already used." xml:space="preserve">
+        <source>The username is already used.</source>
+        <target state="translated">Оваа порака му се прикажува на крајниот корисник ако е отворена саморегистрација и името на сметката што се обидува да ја регистрира веќе постои.</target>
+      </trans-unit>
+      <trans-unit id="ekO5eXI" resname="An equal username is already used." xml:space="preserve">
+        <source>An equal username is already used.</source>
+        <target state="translated">Веќе се користи исто корисничко име.</target>
+      </trans-unit>
+      <trans-unit id="INlaCgW" resname="An equal email is already used." xml:space="preserve">
+        <source>An equal e-mail address is already in use.</source>
+        <target state="translated">Веќе се користи иста е-адреса.</target>
+      </trans-unit>
+      <trans-unit id="IkNxbBI" resname="This value is not a valid role." xml:space="preserve">
+        <source>This value is not a valid role.</source>
+        <target state="translated">Оваа вредност не е валидна улога.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

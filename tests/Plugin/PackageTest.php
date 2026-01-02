@@ -11,11 +11,10 @@ namespace App\Tests\Plugin;
 
 use App\Plugin\Package;
 use App\Plugin\PluginMetadata;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Plugin\Package
- */
+#[CoversClass(Package::class)]
 class PackageTest extends TestCase
 {
     public function testGetPackageFileReturnsCorrectFile(): void

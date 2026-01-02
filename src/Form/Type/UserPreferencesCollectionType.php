@@ -29,7 +29,7 @@ final class UserPreferencesCollectionType extends AbstractType
     {
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) {
+            function (FormEvent $event): void {
                 /** @var ArrayCollection<UserPreference> $collection */
                 $collection = $event->getData();
                 foreach ($collection as $collectionItem) {

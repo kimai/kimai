@@ -27,21 +27,24 @@ use App\Project\ProjectStatisticService;
 use App\Repository\TimesheetRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\Rate;
+use App\Timesheet\RateCalculator\ClassicRateCalculator;
 use App\Timesheet\RateService;
 use App\Timesheet\RateServiceInterface;
 use App\Validator\Constraints\TimesheetBudgetUsed;
 use App\Validator\Constraints\TimesheetBudgetUsedValidator;
 use DateTime;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\TimesheetBudgetUsed
- * @covers \App\Validator\Constraints\TimesheetBudgetUsedValidator
  * @extends ConstraintValidatorTestCase<TimesheetBudgetUsedValidator>
  */
+#[CoversClass(TimesheetBudgetUsed::class)]
+#[CoversClass(TimesheetBudgetUsedValidator::class)]
 class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
 {
     /**
@@ -90,7 +93,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
             $rateService = $this->createMock(RateServiceInterface::class);
             $rateService->method('calculate')->willReturn($rate);
         } else {
-            $rateService = new RateService([], $timesheetRepository);
+            $rateService = new RateService([], $timesheetRepository, new ClassicRateCalculator());
         }
 
         $auth = $this->createMock(AuthorizationCheckerInterface::class);
@@ -195,7 +198,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public static function getViolationTestData()
+    public static function getViolationTestData(): array
     {
         return [
             // activity: violations ----------------------------------------------------------------------
@@ -268,9 +271,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @dataProvider getViolationTestData
-     */
+    #[DataProvider('getViolationTestData')]
     public function testWithActivityTimeBudget(
         ?int $activityDuration,
         ?float $activityRate,
@@ -294,7 +295,7 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         string $duration,
         array $rawData = [],
         ?Rate $rate = null
-    ) {
+    ): void {
         $activityStatistic = new ActivityStatistic();
         if ($activityDuration !== null) {
             $activityStatistic->setDuration($activityDuration);

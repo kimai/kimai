@@ -11,12 +11,11 @@ namespace App\Tests\Security;
 
 use App\Entity\User;
 use App\Security\UserChecker;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Exception\DisabledException;
 
-/**
- * @covers \App\Security\UserChecker
- */
+#[CoversClass(UserChecker::class)]
 class UserCheckerTest extends TestCase
 {
     public function testCheckPreAuthReturnsOnUnknownUserClass(): void

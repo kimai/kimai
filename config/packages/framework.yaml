@@ -1,6 +1,7 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 parameters:
     env(TRUSTED_PROXIES): ''
+    env(TRUSTED_HOSTS): ''
 
 framework:
     secret: '%env(APP_SECRET)%'
@@ -14,6 +15,7 @@ framework:
         enable_attributes: true
 
     trusted_proxies: '%env(string:TRUSTED_PROXIES)%'
+    trusted_hosts: '%env(string:TRUSTED_HOSTS)%'
 
     exceptions:
         App\Validator\ValidationFailedException:
@@ -25,6 +27,7 @@ framework:
     # Enables session support. Note that the session will ONLY be started if you read or write from it.
     # Remove or comment this section to explicitly disable session support.
     session:
+        name: KIMAI_SESSION
         handler_id: App\Security\SessionHandler
         cookie_secure: auto
         cookie_samesite: lax

@@ -12,17 +12,15 @@ namespace App\Tests\Voter;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Voter\TeamVoter;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
-/**
- * @covers \App\Voter\TeamVoter
- */
+#[CoversClass(TeamVoter::class)]
 class TeamVoterTest extends AbstractVoterTestCase
 {
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testVote(User $user, $subject, $attribute, $result): void
     {
         $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());

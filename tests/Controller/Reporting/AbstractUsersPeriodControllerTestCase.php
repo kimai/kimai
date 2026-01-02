@@ -12,11 +12,11 @@ namespace App\Tests\Controller\Reporting;
 use App\Entity\User;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 abstract class AbstractUsersPeriodControllerTestCase extends AbstractControllerBaseTestCase
 {
     protected function importReportingFixture(string $role): void
@@ -49,9 +49,7 @@ abstract class AbstractUsersPeriodControllerTestCase extends AbstractControllerB
         ];
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testUsersPeriodReport(string $dataType, string $title): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
@@ -62,9 +60,7 @@ abstract class AbstractUsersPeriodControllerTestCase extends AbstractControllerB
         self::assertEquals($title, $cell->text());
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testUsersPeriodReportAsTeamlead(string $dataType, string $title): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
@@ -77,9 +73,7 @@ abstract class AbstractUsersPeriodControllerTestCase extends AbstractControllerB
         self::assertEquals($title, $cell->text());
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testUsersPeriodReportExport(string $dataType, string $title): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);

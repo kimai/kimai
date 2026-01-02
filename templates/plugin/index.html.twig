@@ -23,15 +23,20 @@
                 {% import "macros/widgets.html.twig" as widgets %}
                 {{ tables.datatable_header(tableName, columns, null, {columnConfig: false}) }}
                 {% for plugin in plugins|sort((p1, p2) => p1.name|lower <=> p2.name|lower) %}
+                    {% set pluginClass = 'success' %}
                     <tr>
                         <td class="{{ tables.data_table_column_class(tableName, columns, 'name') }}">
                             <a href="{{ plugin.metadata.homepage }}" title="{{ 'homepage'|trans }}" target="_blank">{{ plugin.name }}</a>
                         </td>
                         <td class="{{ tables.data_table_column_class(tableName, columns, 'description') }}">
                             {{ plugin.metadata.description }}
+                            {% if updates[plugin.id] is defined and updates[plugin.id] == true %}
+                                {% set pluginClass = 'warning' %}
+                                {{ widgets.alert('warning', 'update_available'|trans({'%version%': bundles[plugin.id]['latest_release']}, 'plugins')) }}
+                            {% endif %}
                         </td>
                         <td class="{{ tables.data_table_column_class(tableName, columns, 'version') }}">
-                            {{ widgets.label(plugin.metadata.version, 'primary', plugin.id) }}
+                            {{ widgets.label(plugin.metadata.version, pluginClass, plugin.id) }}
                         </td>
                     </tr>
                 {% endfor %}
@@ -46,7 +51,7 @@
             {% block box_title %}{{ 'plugin.marketplace'|trans({}, 'plugins') }}{% endblock %}
             {% block box_body_class %}p-0{% endblock %}
             {% block box_tools %}
-                {{ card_tool_button('shop', {'title': 'shop', 'translation_domain': 'plugins', 'target': '_blank', 'url': constant('App\\Constants::HOMEPAGE') ~ '/store/', 'icon': false, 'class': 'btn-warning'}) }}
+                {{ card_tool_button('shop', {'title': 'shop', 'translation_domain': 'plugins', 'target': '_blank', 'url': constant('App\\Constants::HOMEPAGE') ~ '/store/', 'icon': false, 'class': 'btn-primary'}) }}
             {% endblock %}
             {% block box_body %}
                 {% set columns = {

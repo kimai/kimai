@@ -14,10 +14,9 @@ use App\Repository\TimesheetRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Widget\Type\AbstractWidget;
 use App\Widget\Type\ActiveUsers;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Widget\Type\ActiveUsers
- */
+#[CoversClass(ActiveUsers::class)]
 class ActiveUsersTest extends AbstractWidgetTestCase
 {
     /**

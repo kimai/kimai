@@ -59,8 +59,8 @@ final class YearPerUserSummary implements \Countable, \IteratorAggregate
     public function getExpectedTime(): int
     {
         $all = 0;
-        foreach ($this->getSummaries() as $month) {
-            $all += $month->getExpectedTime();
+        foreach ($this->getSummaries() as $year) {
+            $all += $year->getExpectedTime();
         }
 
         return $all;
@@ -69,8 +69,8 @@ final class YearPerUserSummary implements \Countable, \IteratorAggregate
     public function getActualTime(): int
     {
         $all = 0;
-        foreach ($this->getSummaries() as $month) {
-            $all += $month->getActualTime();
+        foreach ($this->getSummaries() as $year) {
+            $all += $year->getActualTime();
         }
 
         return $all;

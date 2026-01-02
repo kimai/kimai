@@ -12,10 +12,9 @@ namespace App\Tests\Export\Spreadsheet\CellFormatter;
 use App\Export\Spreadsheet\CellFormatter\BooleanFormatter;
 use App\Export\Spreadsheet\CellFormatter\CellFormatterInterface;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Export\Spreadsheet\CellFormatter\BooleanFormatter
- */
+#[CoversClass(BooleanFormatter::class)]
 class BooleanFormatterTest extends AbstractFormatterTestCase
 {
     protected function getFormatter(): CellFormatterInterface
@@ -23,12 +22,12 @@ class BooleanFormatterTest extends AbstractFormatterTestCase
         return new BooleanFormatter();
     }
 
-    protected function getActualValue()
+    protected function getActualValue(): bool
     {
         return false;
     }
 
-    protected function getExpectedValue()
+    protected function getExpectedValue(): bool
     {
         return false;
     }

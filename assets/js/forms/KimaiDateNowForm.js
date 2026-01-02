@@ -43,7 +43,10 @@ export default class KimaiDateNowForm extends KimaiFormPlugin {
                         const formElement = document.getElementById(linkTarget.dataset.target);
                         if (!formElement.disabled) {
                             formElement.value = this.getDateUtils().format(linkTarget.dataset.format, null);
+                            // this should usually work
                             formElement.dispatchEvent(new Event('change', {bubbles: true}));
+                            // this is required for Litepicker to pick the new date (with autoRefresh option)
+                            formElement.dispatchEvent(new Event('keyup', {bubbles: true}));
                         }
 
                         event.preventDefault();

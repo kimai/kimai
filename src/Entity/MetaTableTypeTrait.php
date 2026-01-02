@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use App\Form\Type\YesNoType;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -22,13 +23,13 @@ trait MetaTableTypeTrait
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[Serializer\Exclude]
     private ?int $id = null;
     /**
      * Name of the meta (custom) field
      */
-    #[ORM\Column(name: 'name', type: 'string', length: 50, nullable: false)]
+    #[ORM\Column(name: 'name', type: Types::STRING, length: 50, nullable: false)]
     #[Assert\NotNull]
     #[Assert\Length(min: 2, max: 50)]
     #[Serializer\Expose]
@@ -37,12 +38,12 @@ trait MetaTableTypeTrait
     /**
      * Value of the meta (custom) field
      */
-    #[ORM\Column(name: 'value', type: 'text', length: 65535, nullable: true)]
+    #[ORM\Column(name: 'value', type: Types::TEXT, length: 65535, nullable: true)]
     #[Assert\Length(max: 65535)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?string $value = null;
-    #[ORM\Column(name: 'visible', type: 'boolean', nullable: false, options: ['default' => false])]
+    #[ORM\Column(name: 'visible', type: Types::BOOLEAN, nullable: false, options: ['default' => false])]
     #[Assert\NotNull]
     private bool $visible = false;
     private ?string $label = null;
@@ -66,6 +67,7 @@ trait MetaTableTypeTrait
      */
     private mixed $data = null;
     private bool $updated = false;
+    private ?string $section = null;
 
     public function getName(): ?string
     {
@@ -192,13 +194,11 @@ trait MetaTableTypeTrait
 
     public function merge(MetaTableTypeInterface $meta): MetaTableTypeInterface
     {
-        $this
-            ->setConstraints($meta->getConstraints())
-            ->setIsRequired($meta->isRequired())
-            ->setIsVisible($meta->isVisible())
-            ->setOptions($meta->getOptions())
-            ->setOrder($meta->getOrder())
-        ;
+        $this->setConstraints($meta->getConstraints());
+        $this->setIsRequired($meta->isRequired());
+        $this->setIsVisible($meta->isVisible());
+        $this->setOptions($meta->getOptions());
+        $this->setOrder($meta->getOrder());
 
         if ($meta->getLabel() !== null) {
             $this->setLabel($meta->getLabel());
@@ -206,6 +206,10 @@ trait MetaTableTypeTrait
 
         if ($meta->getType() !== null) {
             $this->setType($meta->getType());
+        }
+
+        if ($meta->getSection() !== null) {
+            $this->setSection($meta->getSection());
         }
 
         return $this;
@@ -263,6 +267,16 @@ trait MetaTableTypeTrait
         if ($this->id) {
             $this->id = null;
         }
+    }
+
+    public function setSection(?string $section): void
+    {
+        $this->section = $section;
+    }
+
+    public function getSection(): ?string
+    {
+        return $this->section;
     }
 
     /**

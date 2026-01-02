@@ -6,12 +6,17 @@
  */
 
 /*!
- * [KIMAI] KimaiRecentActivities: responsible to reload the users recent activities
+ * [KIMAI] KimaiRemoteModal: load remote content (without forms) into a modal
  */
 
 import KimaiPlugin from '../KimaiPlugin';
 import { Modal } from 'bootstrap';
 
+/**
+ * Use like this:
+ * <a href="{{ path('your-route') }}" class="remote-modal-load" data-modal-id="remote_modal" data-modal-class="p-0" data-modal-title="Some title" title="Some title">Modal</a>
+ * <a href="{{ path('your-route') }}" class="remote-modal-load" data-modal-title="Some title" title="Some title">Modal</a>
+ */
 export default class KimaiRemoteModal extends KimaiPlugin {
 
     constructor()
@@ -39,38 +44,6 @@ export default class KimaiRemoteModal extends KimaiPlugin {
         for (let link of document.querySelectorAll(this._selector)) {
             link.addEventListener('click', this.handle);
         }
-
-        document.addEventListener('kimai.closeRemoteModal', () => { this._hide(); });
-    }
-
-    /**
-     * @param {HTMLElement} element
-     * @private
-     */
-    _initElement(element)
-    {
-        for (let link of element.querySelectorAll('a.remote-modal-reload')) {
-            link.addEventListener('click', this.handle);
-        }
-    }
-
-    _hide()
-    {
-        this._getModal().hide();
-    }
-
-    _getModalElement()
-    {
-        return document.getElementById('remote_modal');
-    }
-
-    /**
-     * @returns {Modal}
-     * @private
-     */
-    _getModal()
-    {
-        return Modal.getOrCreateInstance(this._getModalElement());
     }
 
     /**
@@ -85,21 +58,33 @@ export default class KimaiRemoteModal extends KimaiPlugin {
                     return;
                 }
 
+                let modalSelector = 'remote_modal';
+                if (element.dataset['modalId'] !== undefined) {
+                    modalSelector = element.dataset['modalId'];
+                }
+                const modalElement = document.getElementById(modalSelector);
+                if (modalElement === null) {
+                    console.log('Could not find modal with ID: ' + modalSelector);
+                }
+
                 return response.text().then(html => {
-                    const newFormHtml = document.createElement('div');
-                    newFormHtml.classList.add('modal-body');
-                    newFormHtml.classList.add('p-0');
-                    newFormHtml.innerHTML = html;
+                    const modalBody = document.createElement('div');
+                    modalBody.classList.add('modal-body');
+                    if (element.dataset['modalClass'] !== undefined) {
+                        modalBody.classList.add(element.dataset['modalClass']);
+                    }
+                    modalBody.innerHTML = html;
 
-                    this._initElement(newFormHtml);
-
-                    const modal = this._getModalElement();
-                    modal.querySelector('.modal-body').replaceWith(newFormHtml);
-                    if (element.dataset['modalTitle'] !== undefined) {
-                        modal.querySelector('.modal-title').textContent = element.dataset['modalTitle'];
+                    for (let link of modalBody.querySelectorAll('a.remote-modal-reload')) {
+                        link.addEventListener('click', this.handle);
                     }
 
-                    this._getModal().show();
+                    modalElement.querySelector('.modal-body').replaceWith(modalBody);
+                    if (element.dataset['modalTitle'] !== undefined) {
+                        modalElement.querySelector('.modal-title').textContent = element.dataset['modalTitle'];
+                    }
+
+                    Modal.getOrCreateInstance(modalElement).show();
                 });
             })
             .catch((reason) =>  {

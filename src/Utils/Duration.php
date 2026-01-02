@@ -19,12 +19,17 @@ final class Duration
     public const FORMAT_DECIMAL = 'decimal';
     public const FORMAT_DEFAULT = '%h:%m';
 
+    public function formatDecimal(?int $seconds): float
+    {
+        if ($seconds === null || $seconds === 0) {
+            return 0.0;
+        }
+
+        return (float) number_format($seconds / 3600, 2, '.', '');
+    }
+
     /**
      * Transforms seconds into a duration string.
-     *
-     * @param int|null $seconds
-     * @param string $format
-     * @return string|null
      */
     public function format(?int $seconds, string $format = self::FORMAT_DEFAULT): ?string
     {

@@ -14,11 +14,10 @@ use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Calendar\TimesheetEntry
- */
+#[CoversClass(TimesheetEntry::class)]
 class TimesheetEntryTest extends TestCase
 {
     public function testConstruct(): void

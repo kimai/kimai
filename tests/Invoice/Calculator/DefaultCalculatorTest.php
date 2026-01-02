@@ -14,16 +14,16 @@ use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
+use App\Invoice\Calculator\AbstractCalculator;
 use App\Invoice\Calculator\DefaultCalculator;
 use App\Invoice\CalculatorInterface;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Invoice\Calculator\DefaultCalculator
- * @covers \App\Invoice\Calculator\AbstractCalculator
- */
+#[CoversClass(DefaultCalculator::class)]
+#[CoversClass(AbstractCalculator::class)]
 class DefaultCalculatorTest extends AbstractCalculatorTestCase
 {
     protected function getCalculator(): CalculatorInterface
@@ -72,7 +72,7 @@ class DefaultCalculatorTest extends AbstractCalculatorTestCase
 
         self::assertEquals('default', $sut->getId());
         self::assertEquals(581.17, $sut->getTotal());
-        self::assertEquals(19, $sut->getVat());
+        $this->assertTax($sut, 19);
         self::assertEquals('EUR', $model->getCurrency());
         self::assertEquals(488.38, $sut->getSubtotal());
         self::assertEquals(5800, $sut->getTimeWorked());

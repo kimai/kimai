@@ -37,6 +37,7 @@ use App\Validator\Constraints\ColorChoices;
 use App\Validator\Constraints\DateTimeFormat;
 use App\Validator\Constraints\TimeFormat;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -348,6 +349,10 @@ final class SystemConfigurationController extends AbstractController
                         ->setConstraints([
                             new GreaterThanOrEqual(['value' => 0])
                         ]),
+                    (new Configuration('timesheet.rules.break_time_active'))
+                        ->setLabel('break')
+                        ->setType(YesNoType::class)
+                        ->setOptions(['help' => 'Beta']),
                 ]),
             (new SystemConfigurationModel('quick_entry'))
                 ->setTranslation('quick_entry.title')
@@ -444,6 +449,11 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(TextType::class)
                         ->setConstraints([new NotBlank()])
                         ->setTranslationDomain('system-configuration'),
+                    (new Configuration('invoice.rounding_mode'))
+                        ->setLabel('invoice.rounding_mode')
+                        ->setType(ChoiceType::class)
+                        ->setOptions(['choices' => ['classic' => 'classic', 'decimal' => 'decimal']])
+                        ->setTranslationDomain('system-configuration'),
                 ]),
             $authentication,
             (new SystemConfigurationModel('customer'))
@@ -457,16 +467,12 @@ final class SystemConfigurationController extends AbstractController
                         ->setLabel('country')
                         ->setType(CountryType::class)
                         ->setOptions(['help' => 'default_value_new']),
-                    (new Configuration('defaults.customer.currency'))
-                        ->setLabel('currency')
-                        ->setType(CurrencyType::class)
-                        ->setOptions(['help' => 'default_value_new']),
                     (new Configuration('customer.choice_pattern'))
                         ->setLabel('choice_pattern')
                         ->setType(CustomerTypePatternType::class),
                     (new Configuration('customer.number_format'))
                         ->setLabel('customer.number_format')
-                        ->setOptions(['help' => 'allowed_replacer', 'help_translation_parameters' => ['%replacer%' => '{cc}']])
+                        ->setOptions(['help' => 'allowed_replacer', 'help_translation_parameters' => ['%replacer%' => '{cc}, {Y}, {y}, {M}, {m}, {D}, {d}, {YY}, {yy}, {MM}, {DD}']])
                         ->setRequired(true)
                         ->setType(TextType::class)
                         ->setTranslationDomain('system-configuration'),
@@ -486,7 +492,7 @@ final class SystemConfigurationController extends AbstractController
                         ->setTranslationDomain('system-configuration'),
                     (new Configuration('project.number_format'))
                         ->setLabel('project.number_format')
-                        ->setOptions(['help' => 'allowed_replacer', 'help_translation_parameters' => ['%replacer%' => '{pc}']])
+                        ->setOptions(['help' => 'allowed_replacer', 'help_translation_parameters' => ['%replacer%' => '{pc}, {Y}, {y}, {M}, {m}, {D}, {d}, {YY}, {yy}, {MM}, {DD}']])
                         ->setRequired(false)
                         ->setType(TextType::class)
                         ->setTranslationDomain('system-configuration'),
@@ -502,7 +508,7 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(ActivityTypePatternType::class),
                     (new Configuration('activity.number_format'))
                         ->setLabel('activity.number_format')
-                        ->setOptions(['help' => 'allowed_replacer', 'help_translation_parameters' => ['%replacer%' => '{ac}']])
+                        ->setOptions(['help' => 'allowed_replacer', 'help_translation_parameters' => ['%replacer%' => '{ac}, {Y}, {y}, {M}, {m}, {D}, {d}, {YY}, {yy}, {MM}, {DD}']])
                         ->setRequired(false)
                         ->setType(TextType::class)
                         ->setTranslationDomain('system-configuration'),
@@ -532,9 +538,6 @@ final class SystemConfigurationController extends AbstractController
                         ->setLabel('skin')
                         ->setType(SkinType::class)
                         ->setOptions(['help' => 'default_value_new']),
-                    (new Configuration('defaults.user.currency'))
-                        ->setLabel('currency')
-                        ->setType(CurrencyType::class),
                     (new Configuration('theme.avatar_url'))
                         ->setRequired(false)
                         ->setLabel('theme.avatar_url')
@@ -583,7 +586,8 @@ final class SystemConfigurationController extends AbstractController
                         ->setConstraints([new NotBlank(), new TimeFormat()]),
                     (new Configuration('calendar.slot_duration'))
                         ->setTranslationDomain('system-configuration')
-                        ->setType(TextType::class)
+                        ->setType(ChoiceType::class)
+                        ->setOptions(['choices' => ['00:15' => '00:15:00', '00:30' => '00:30:00', '01:00' => '01:00:00']])
                         ->setConstraints([new Regex(['pattern' => '/[0-2]{1}[0-9]{1}:[0-9]{2}:[0-9]{2}/']), new NotNull()]),
                     (new Configuration('calendar.dragdrop_amount'))
                         ->setTranslationDomain('system-configuration')
@@ -606,6 +610,10 @@ final class SystemConfigurationController extends AbstractController
                         ->setTranslationDomain('system-configuration')
                         ->setRequired(false)
                         ->setType(TextType::class),
+                    (new Configuration('defaults.customer.currency'))
+                        ->setLabel('currency')
+                        ->setType(CurrencyType::class)
+                        ->setOptions(['help' => 'Can be overwritten per customer']),
                     (new Configuration('company.financial_year'))
                         ->setTranslationDomain('system-configuration')
                         ->setRequired(false)

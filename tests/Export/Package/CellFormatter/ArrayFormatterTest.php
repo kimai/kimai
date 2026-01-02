@@ -10,11 +10,10 @@
 namespace App\Tests\Export\Package\CellFormatter;
 
 use App\Export\Package\CellFormatter\ArrayFormatter;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Export\Package\CellFormatter\ArrayFormatter
- */
+#[CoversClass(ArrayFormatter::class)]
 class ArrayFormatterTest extends TestCase
 {
     public function testFormatValueReturnsCommaSeparatedStringForArray(): void

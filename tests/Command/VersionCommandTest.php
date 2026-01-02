@@ -11,14 +11,15 @@ namespace App\Tests\Command;
 
 use App\Command\VersionCommand;
 use App\Constants;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
-/**
- * @covers \App\Command\VersionCommand
- * @group integration
- */
+#[CoversClass(VersionCommand::class)]
+#[Group('integration')]
 class VersionCommandTest extends KernelTestCase
 {
     private Application $application;
@@ -32,9 +33,7 @@ class VersionCommandTest extends KernelTestCase
         $this->application->add(new VersionCommand());
     }
 
-    /**
-     * @dataProvider getTestData
-     */
+    #[DataProvider('getTestData')]
     public function testVersion(array $options, $result): void
     {
         $commandTester = $this->getCommandTester($options);

@@ -25,7 +25,10 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
     public const STATE_EXPORTED = 4;
     public const STATE_NOT_EXPORTED = 5;
 
-    public const TIMESHEET_ORDER_ALLOWED = ['begin', 'end', 'duration', 'rate', 'hourlyRate', 'customer', 'project', 'activity', 'description'];
+    /**
+     * @deprecated since 2.31.0
+     */
+    public const TIMESHEET_ORDER_ALLOWED = ['begin', 'end', 'duration', 'rate', 'hourlyRate', 'customer', 'project', 'activity', 'description', 'billable', 'exported'];
 
     private ?User $timesheetUser = null;
     /** @var array<Activity> */
@@ -33,7 +36,7 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
     private int $state = self::STATE_ALL;
     private int $exported = self::STATE_ALL;
     private ?int $maxResults = null;
-    private ?\DateTime $modifiedAfter = null;
+    private ?\DateTimeInterface $modifiedAfter = null;
     /**
      * @var array<Tag>
      */
@@ -61,6 +64,7 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
             'users' => [],
             'activities' => [],
         ]);
+        $this->setAllowedOrderColumns(self::TIMESHEET_ORDER_ALLOWED); // @phpstan-ignore-line
     }
 
     public function addQueryHint(TimesheetQueryHint $hint): void
@@ -240,15 +244,13 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
         $this->tags[$tag->getId()] = $tag;
     }
 
-    public function getModifiedAfter(): ?\DateTime
+    public function getModifiedAfter(): ?\DateTimeInterface
     {
         return $this->modifiedAfter;
     }
 
-    public function setModifiedAfter(\DateTime $modifiedAfter): TimesheetQuery
+    public function setModifiedAfter(\DateTimeInterface $modifiedAfter): void
     {
         $this->modifiedAfter = $modifiedAfter;
-
-        return $this;
     }
 }

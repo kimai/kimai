@@ -14,12 +14,12 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-/**
- * @covers \App\Entity\Timesheet
- * @group integration
- */
+#[CoversClass(Timesheet::class)]
+#[Group('integration')]
 class TimesheetValidationTest extends KernelTestCase
 {
     use EntityValidationTestTrait;
@@ -251,7 +251,7 @@ class TimesheetValidationTest extends KernelTestCase
         $entity->setBegin($begin);
         $entity->setEnd($end);
 
-        $this->assertHasViolationForField($entity, 'end_date');
+        $this->assertHasViolationForField($entity, ['end_date', 'duration']);
 
         // allow same begin and end
         $entity = $this->getEntity();

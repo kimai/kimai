@@ -76,7 +76,7 @@
             {% if form.metaFields is defined and form.metaFields is not empty %}
                 {{ form_row(form.metaFields) }}
             {% endif %}
-            {% if form.fixedRate is defined or form.hourlyRate is defined or form.billable is defined or form.billableMode is defined or form.exported is defined %}
+            {% if form.fixedRate is defined or form.hourlyRate is defined or form.internalRate is defined or form.billable is defined or form.billableMode is defined or form.exported is defined %}
                 {% embed '@theme/embeds/collapsible.html.twig' with {id: 'timesheet_extended_settings'} %}
                     {% import "macros/widgets.html.twig" as widgets %}
                     {% block title %}{{ 'extended_settings'|trans }}{% endblock %}
@@ -86,6 +86,9 @@
                         {% endif %}
                         {% if form.hourlyRate is defined %}
                             {{ form_row(form.hourlyRate, {'row_attr': {'class': 'mb-3 ' ~ form.vars.name ~ '_row_' ~ form.hourlyRate.vars.name}}) }}
+                        {% endif %}
+                        {% if form.internalRate is defined %}
+                            {{ form_row(form.internalRate, {'row_attr': {'class': 'mb-3 ' ~ form.vars.name ~ '_row_' ~ form.internalRate.vars.name}}) }}
                         {% endif %}
                         {% if form.billable is defined %}
                             {{ form_row(form.billable, {'row_attr': {'class': 'mb-3 ' ~ form.vars.name ~ '_row_' ~ form.billable.vars.name}}) }}

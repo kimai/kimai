@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="tasks.en.xlf">
     <body>
@@ -6,9 +6,9 @@
         <source>report_tasks_assigned</source>
         <target>Aufgaben pro Benutzer</target>
       </trans-unit>
-      <trans-unit id="8c0YWZm" resname="report_tasks_teams">
+      <trans-unit id="8c0YWZm" resname="report_tasks_teams" xml:space="preserve" approved="no">
         <source>report_tasks_teams</source>
-        <target>Team Aufgaben</target>
+        <target state="translated">Team-Aufgaben</target>
       </trans-unit>
       <trans-unit id="XjAwhoV" resname="task.start">
         <source>task.start</source>

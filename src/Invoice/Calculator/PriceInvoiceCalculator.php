@@ -23,7 +23,7 @@ final class PriceInvoiceCalculator extends AbstractSumInvoiceCalculator implemen
             return ['fixed_' . $invoiceItem->getFixedRate()];
         }
 
-        return ['hourly_' . $invoiceItem->getHourlyRate()];
+        return ['hourly_' . ($invoiceItem->getHourlyRate() ?? '__NULL__')];
     }
 
     public function getId(): string

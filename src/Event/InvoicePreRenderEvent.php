@@ -14,9 +14,21 @@ use App\Invoice\RendererInterface;
 use App\Model\InvoiceDocument;
 use Symfony\Contracts\EventDispatcher\Event;
 
+/**
+ * Triggered right before an invoice is rendered.
+ *
+ * You can use this event to:
+ * - add invoice hydrator
+ * - read and change invoice model
+ * - change tax rates
+ */
 final class InvoicePreRenderEvent extends Event
 {
-    public function __construct(private InvoiceModel $model, private InvoiceDocument $document, private RendererInterface $renderer)
+    public function __construct(
+        private readonly InvoiceModel $model,
+        private readonly InvoiceDocument $document,
+        private readonly RendererInterface $renderer
+    )
     {
     }
 

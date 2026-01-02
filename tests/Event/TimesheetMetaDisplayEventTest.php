@@ -10,15 +10,15 @@
 namespace App\Tests\Event;
 
 use App\Entity\TimesheetMeta;
+use App\Event\AbstractMetaDisplayEvent;
 use App\Event\MetaDisplayEventInterface;
 use App\Event\TimesheetMetaDisplayEvent;
 use App\Repository\Query\TimesheetQuery;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\AbstractMetaDisplayEvent
- * @covers \App\Event\TimesheetMetaDisplayEvent
- */
+#[CoversClass(AbstractMetaDisplayEvent::class)]
+#[CoversClass(TimesheetMetaDisplayEvent::class)]
 class TimesheetMetaDisplayEventTest extends TestCase
 {
     public function testGetterAndSetter(): void

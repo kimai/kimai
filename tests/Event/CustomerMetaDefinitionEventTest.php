@@ -11,11 +11,10 @@ namespace App\Tests\Event;
 
 use App\Entity\Customer;
 use App\Event\CustomerMetaDefinitionEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Event\CustomerMetaDefinitionEvent
- */
+#[CoversClass(CustomerMetaDefinitionEvent::class)]
 class CustomerMetaDefinitionEventTest extends TestCase
 {
     public function testGetterAndSetter(): void

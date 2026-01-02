@@ -15,11 +15,10 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\InvoiceTemplateFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-/**
- * @group integration
- */
+#[Group('integration')]
 class InvoiceControllerTest extends AbstractControllerBaseTestCase
 {
     protected function setUp(): void
@@ -103,9 +102,9 @@ class InvoiceControllerTest extends AbstractControllerBaseTestCase
         $form = $client->getCrawler()->filter('form[name=invoice_template_form]')->form();
         $client->submit($form, [
             'invoice_template_form' => [
-                'name' => 'Test',
+                'name' => 'FooBar Template',
                 'title' => 'Test invoice template',
-                'company' => 'Company name',
+                'customer' => 1,
                 'renderer' => 'default',
                 'calculator' => 'default',
                 'vat' => '27,937',
@@ -118,9 +117,9 @@ class InvoiceControllerTest extends AbstractControllerBaseTestCase
         $this->assertHasFlashSuccess($client);
 
         $template = $this->getEntityManager()->getRepository(InvoiceTemplate::class)->findAll()[0];
-        self::assertEquals('Test', $template->getName());
+        self::assertEquals('FooBar Template', $template->getName());
         self::assertEquals('Test invoice template', $template->getTitle());
-        self::assertEquals('Company name', $template->getCompany());
+        self::assertEquals('Test', $template->getCompany());
         self::assertEquals('default', $template->getRenderer());
         self::assertEquals('default', $template->getCalculator());
         self::assertEquals('27.937', $template->getVat());
@@ -146,8 +145,6 @@ class InvoiceControllerTest extends AbstractControllerBaseTestCase
         self::assertEquals($template->getCalculator(), $values['calculator']);
         self::assertEquals($template->getVat(), $values['vat']);
         self::assertEquals($template->getRenderer(), $values['renderer']);
-        self::assertEquals($template->getCompany(), $values['company']);
-        self::assertEquals($template->getAddress(), $values['address']);
         self::assertEquals($template->getPaymentTerms(), $values['paymentTerms']);
     }
 
@@ -409,7 +406,7 @@ class InvoiceControllerTest extends AbstractControllerBaseTestCase
             'invoice_template_form' => [
                 'name' => 'Test 2!',
                 'title' => 'Test invoice template',
-                'company' => 'Company name',
+                'customer' => 1,
                 'renderer' => 'default',
                 'calculator' => 'default',
             ]

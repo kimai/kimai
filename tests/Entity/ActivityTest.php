@@ -17,10 +17,9 @@ use App\Entity\Team;
 use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use Doctrine\Common\Collections\Collection;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Entity\Activity
- */
+#[CoversClass(Activity::class)]
 class ActivityTest extends AbstractEntityTestCase
 {
     public function testDefaultValues(): void
@@ -35,6 +34,7 @@ class ActivityTest extends AbstractEntityTestCase
         self::assertTrue($sut->isBillable());
         self::assertTrue($sut->isGlobal());
         self::assertNull($sut->getColor());
+        self::assertIsString($sut->getColorSafe());
         self::assertFalse($sut->hasColor());
         self::assertInstanceOf(Collection::class, $sut->getMetaFields());
         self::assertEquals(0, $sut->getMetaFields()->count());
@@ -72,6 +72,9 @@ class ActivityTest extends AbstractEntityTestCase
         $sut->setColor('#fffccc');
         self::assertEquals('#fffccc', $sut->getColor());
         self::assertTrue($sut->hasColor());
+        self::assertNotEmpty($sut->getColorSafe());
+        $sut->setName('alsjdkhfalsf');
+        self::assertEquals('#fffccc', $sut->getColorSafe());
 
         $sut->setColor(Constants::DEFAULT_COLOR);
         self::assertNull($sut->getColor());
@@ -175,6 +178,8 @@ class ActivityTest extends AbstractEntityTestCase
         $sut = new Activity();
         $sut->setName('activity1111');
         $sut->setComment('DE-0123456789');
+
+        $this->assertCloneResetsId($sut);
 
         $project = new Project();
         $project->setName('foo');

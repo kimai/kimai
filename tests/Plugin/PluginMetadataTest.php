@@ -10,11 +10,10 @@
 namespace App\Tests\Plugin;
 
 use App\Plugin\PluginMetadata;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Plugin\PluginMetadata
- */
+#[CoversClass(PluginMetadata::class)]
 class PluginMetadataTest extends TestCase
 {
     public function testNonExistingDirectoryThrowsException(): void

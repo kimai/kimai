@@ -18,10 +18,33 @@ use NumberFormatter;
 use Symfony\Component\Intl\Currencies;
 
 /**
- * Use this class to format values into locale specific representations.
+ * Use this class to format values into locale-specific representations.
  */
 final class LocaleFormatter
 {
+    /**
+     * Special locales to test:
+     *
+     * - el             h:mm a      9:41 π.μ.
+     * - fr_CA          HH 'h' mm   09 h 41
+     * - ko             h:mm a      10:18 오전
+     * - tr_CY          h:mm a      9:41 ÖÖ
+     * - pa             h:mm a      10:18 ਪੂ.ਦੁ.
+     * - pt_MO          h:mm a      9:41 da manhã
+     * - zh_Hant        Bh:mm       上午9:41
+     * - zh_Hant_TW     Bh:mm       上午9:41
+     */
+    // IntlDateFormatter::RELATIVE_* - not usable for times
+    // IntlDateFormatter::LONG - with seconds and timezone, and translation for h and min if locale supports it
+    // IntlDateFormatter::MEDIUM - with seconds, and translation for h and min if locale supports it
+    // IntlDateFormatter::SHORT - no seconds, no timezone - but translates e.g. am/pm to locale specific like zh_Hant
+    public const TIME_PATTERN = \IntlDateFormatter::SHORT;
+    // IntlDateFormatter::RELATIVE_* - translates words for "today" and "yesterday"
+    // IntlDateFormatter::LONG - translates the month name
+    // IntlDateFormatter::MEDIUM - date as we likely want to use it, but with translations if locale supports it, e.g. 2025年5月26日
+    // IntlDateFormatter::SHORT - date with dots, but year with two numbers in some locales causing conflicts e.g., in invoices
+    public const DATE_PATTERN = \IntlDateFormatter::SHORT;
+
     private ?Duration $durationFormatter = null;
     private ?IntlDateFormatter $dateFormatter = null;
     private ?IntlDateFormatter $dateTimeFormatter = null;
@@ -44,10 +67,7 @@ final class LocaleFormatter
             return $this->durationDecimal($duration);
         }
 
-        return $this->formatDuration(
-            $this->getSecondsForDuration($duration),
-            $this->localeService->getDurationFormat($this->locale)
-        );
+        return $this->formatDuration($this->getSecondsForDuration($duration));
     }
 
     /**
@@ -84,13 +104,13 @@ final class LocaleFormatter
         return (int) $duration;
     }
 
-    private function formatDuration(int $seconds, string $format): string
+    private function formatDuration(int $seconds): string
     {
         if ($this->durationFormatter === null) {
             $this->durationFormatter = new Duration();
         }
 
-        return $this->durationFormatter->format($seconds, $format);
+        return $this->durationFormatter->format($seconds);
     }
 
     /**
@@ -170,8 +190,8 @@ final class LocaleFormatter
         if (null === $this->dateFormatter) {
             $this->dateFormatter = new IntlDateFormatter(
                 $this->locale,
-                IntlDateFormatter::MEDIUM,
-                IntlDateFormatter::MEDIUM,
+                self::DATE_PATTERN,
+                IntlDateFormatter::NONE,
                 date_default_timezone_get(),
                 IntlDateFormatter::GREGORIAN,
                 $this->localeService->getDateFormat($this->locale)
@@ -204,8 +224,8 @@ final class LocaleFormatter
         if (null === $this->dateTimeFormatter) {
             $this->dateTimeFormatter = new IntlDateFormatter(
                 $this->locale,
-                IntlDateFormatter::MEDIUM,
-                IntlDateFormatter::MEDIUM,
+                self::DATE_PATTERN,
+                self::TIME_PATTERN,
                 date_default_timezone_get(),
                 IntlDateFormatter::GREGORIAN,
                 $this->localeService->getDateTimeFormat($this->locale)
@@ -255,8 +275,8 @@ final class LocaleFormatter
         if (null === $this->timeFormatter) {
             $this->timeFormatter = new IntlDateFormatter(
                 $this->locale,
-                IntlDateFormatter::MEDIUM,
-                IntlDateFormatter::MEDIUM,
+                IntlDateFormatter::NONE,
+                self::TIME_PATTERN,
                 date_default_timezone_get(),
                 IntlDateFormatter::GREGORIAN,
                 $this->localeService->getTimeFormat($this->locale)

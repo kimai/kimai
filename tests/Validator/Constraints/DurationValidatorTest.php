@@ -11,16 +11,18 @@ namespace App\Tests\Validator\Constraints;
 
 use App\Validator\Constraints\Duration;
 use App\Validator\Constraints\DurationValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @covers \App\Validator\Constraints\Duration
- * @covers \App\Validator\Constraints\DurationValidator
  * @extends ConstraintValidatorTestCase<DurationValidator>
  */
+#[CoversClass(Duration::class)]
+#[CoversClass(DurationValidator::class)]
 class DurationValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): DurationValidator
@@ -65,9 +67,7 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
         $this->validator->validate('foo', new NotBlank());
     }
 
-    /**
-     * @dataProvider getValidData
-     */
+    #[DataProvider('getValidData')]
     public function testConstraintWithValidData(string|int|null $input): void
     {
         $constraint = new Duration();
@@ -99,9 +99,7 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @dataProvider getInvalidData
-     */
+    #[DataProvider('getInvalidData')]
     public function testValidationError(string $input): void
     {
         $constraint = new Duration([
@@ -117,9 +115,7 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    /**
-     * @dataProvider getInvalidData
-     */
+    #[DataProvider('getInvalidData')]
     public function testValidationErrorUpperCase(string $input): void
     {
         $input = strtoupper($input);

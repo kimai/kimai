@@ -40,6 +40,11 @@ class ActivityService
     {
     }
 
+    public function loadMetaFields(Activity $activity): void
+    {
+        $this->dispatcher->dispatch(new ActivityMetaDefinitionEvent($activity));
+    }
+
     public function createNewActivity(?Project $project = null): Activity
     {
         $activity = new Activity();
@@ -49,12 +54,24 @@ class ActivityService
             $activity->setProject($project);
         }
 
-        $this->dispatcher->dispatch(new ActivityMetaDefinitionEvent($activity));
+        $this->loadMetaFields($activity);
         $this->dispatcher->dispatch(new ActivityCreateEvent($activity));
 
         return $activity;
     }
 
+    public function saveActivity(Activity $activity): Activity
+    {
+        if ($activity->isNew()) {
+            return $this->saveNewActivity($activity); // @phpstan-ignore method.deprecated
+        } else {
+            return $this->updateActivity($activity); // @phpstan-ignore method.deprecated
+        }
+    }
+
+    /**
+     * @deprecated since 2.35 - use saveActivity() instead
+     */
     public function saveNewActivity(Activity $activity): Activity
     {
         if (null !== $activity->getId()) {
@@ -70,10 +87,10 @@ class ActivityService
         return $activity;
     }
 
-    public function deleteActivity(Activity $activity): void
+    public function deleteActivity(Activity $activity, ?Activity $replace = null): void
     {
-        $this->dispatcher->dispatch(new ActivityDeleteEvent($activity));
-        $this->repository->deleteActivity($activity);
+        $this->dispatcher->dispatch(new ActivityDeleteEvent($activity, $replace));
+        $this->repository->deleteActivity($activity, $replace);
     }
 
     /**
@@ -85,10 +102,13 @@ class ActivityService
         $errors = $this->validator->validate($activity, null, $groups);
 
         if ($errors->count() > 0) {
-            throw new ValidationFailedException($errors, 'Validation Failed');
+            throw new ValidationFailedException($errors);
         }
     }
 
+    /**
+     * @deprecated since 2.35 - use saveActivity() instead
+     */
     public function updateActivity(Activity $activity): Activity
     {
         $this->validateActivity($activity);
@@ -120,12 +140,23 @@ class ActivityService
         // we cannot use max(number) because a varchar column returns unexpected results
         $start = $this->repository->countActivity();
         $i = 0;
+        $createDate = new \DateTimeImmutable();
 
         do {
             $start++;
 
-            $numberGenerator = new NumberGenerator($format, function (string $originalFormat, string $format, int $increaseBy) use ($start): string|int {
+            $numberGenerator = new NumberGenerator($format, function (string $originalFormat, string $format, int $increaseBy) use ($start, $createDate): string|int {
                 return match ($format) {
+                    'Y' => $createDate->format('Y'),
+                    'y' => $createDate->format('y'),
+                    'M' => $createDate->format('m'),
+                    'm' => $createDate->format('n'),
+                    'D' => $createDate->format('d'),
+                    'd' => $createDate->format('j'),
+                    'YY' => (int) $createDate->format('Y') + $increaseBy,
+                    'yy' => (int) $createDate->format('y') + $increaseBy,
+                    'MM' => (int) $createDate->format('m') + $increaseBy,
+                    'DD' => (int) $createDate->format('d') + $increaseBy,
                     'ac' => $start + $increaseBy,
                     default => $originalFormat,
                 };

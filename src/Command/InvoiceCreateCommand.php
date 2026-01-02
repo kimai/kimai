@@ -34,19 +34,19 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-#[AsCommand(name: 'kimai:invoice:create')]
+#[AsCommand(name: 'kimai:invoice:create', description: 'Create invoices')]
 final class InvoiceCreateCommand extends Command
 {
     private ?string $previewDirectory = null;
     private bool $previewUniqueFile = false;
 
     public function __construct(
-        private ServiceInvoice $serviceInvoice,
-        private CustomerRepository $customerRepository,
-        private ProjectRepository $projectRepository,
-        private InvoiceTemplateRepository $invoiceTemplateRepository,
-        private UserRepository $userRepository,
-        private EventDispatcherInterface $eventDispatcher
+        private readonly ServiceInvoice $serviceInvoice,
+        private readonly CustomerRepository $customerRepository,
+        private readonly ProjectRepository $projectRepository,
+        private readonly InvoiceTemplateRepository $invoiceTemplateRepository,
+        private readonly UserRepository $userRepository,
+        private readonly EventDispatcherInterface $eventDispatcher
     ) {
         parent::__construct();
     }
@@ -54,7 +54,6 @@ final class InvoiceCreateCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Create invoices')
             ->setHelp('This command allows to create invoices by several different filters.')
             ->addOption('user', null, InputOption::VALUE_REQUIRED, 'The user to be used for generating the invoices')
             ->addOption('start', null, InputOption::VALUE_OPTIONAL, 'Start date (format: 2020-01-01, default: start of the month)', null)
@@ -256,9 +255,6 @@ final class InvoiceCreateCommand extends Command
 
     /**
      * @param Project[] $projects
-     * @param InvoiceQuery $defaultQuery
-     * @param InputInterface $input
-     * @param OutputInterface $output
      * @return Invoice[]
      * @throws \Exception
      */
@@ -281,19 +277,25 @@ final class InvoiceCreateCommand extends Command
 
             $tpl = $this->getTemplateForCustomer($input, $customer);
             if (null === $tpl) {
-                $io->warning(\sprintf('Could not find invoice template for project "%s", skipping!', $project->getName()));
+                $io->warning('Could not find invoice template for project, skipping.');
                 continue;
             }
             $query->setTemplate($tpl);
 
             try {
+                $model = $this->serviceInvoice->createModel($query);
+                // this check makes sure to only fetch invoices with records
+                if (\count($model->getEntries()) === 0) {
+                    continue;
+                }
+
                 if (null !== $this->previewDirectory) {
-                    $invoices[] = $this->saveInvoicePreview($this->serviceInvoice->renderInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher));
+                    $invoices[] = $this->saveInvoicePreview($this->serviceInvoice->renderInvoice($model, $this->eventDispatcher));
                 } else {
-                    $invoices[] = $this->serviceInvoice->createInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher);
+                    $invoices[] = $this->serviceInvoice->createInvoice($model, $this->eventDispatcher);
                 }
             } catch (\Exception $ex) {
-                $io->error(\sprintf('Failed to create invoice for project "%s" with: %s', $project->getName(), $ex->getMessage()));
+                $io->error(\sprintf('Failed to create invoice for project with: %s', $ex->getMessage()));
             }
         }
 
@@ -334,8 +336,6 @@ final class InvoiceCreateCommand extends Command
 
     /**
      * @param Customer[] $customers
-     * @param InvoiceQuery $defaultQuery
-     * @param InputInterface $input
      * @return Invoice[]
      * @throws \Exception
      */
@@ -352,19 +352,25 @@ final class InvoiceCreateCommand extends Command
 
             $tpl = $this->getTemplateForCustomer($input, $customer);
             if (null === $tpl) {
-                $io->warning(\sprintf('Could not find invoice template for customer "%s", skipping!', $customer->getName()));
+                $io->warning('Could not find invoice template for customer, skipping.');
                 continue;
             }
             $query->setTemplate($tpl);
 
             try {
+                $model = $this->serviceInvoice->createModel($query);
+                // this check makes sure to only fetch invoices with records
+                if (\count($model->getEntries()) === 0) {
+                    continue;
+                }
+
                 if (null !== $this->previewDirectory) {
-                    $invoices[] = $this->saveInvoicePreview($this->serviceInvoice->renderInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher));
+                    $invoices[] = $this->saveInvoicePreview($this->serviceInvoice->renderInvoice($model, $this->eventDispatcher));
                 } else {
-                    $invoices[] = $this->serviceInvoice->createInvoice($this->serviceInvoice->createModel($query), $this->eventDispatcher);
+                    $invoices[] = $this->serviceInvoice->createInvoice($model, $this->eventDispatcher);
                 }
             } catch (\Exception $ex) {
-                $io->error(\sprintf('Failed to create invoice for customer "%s" with: %s', $customer->getName(), $ex->getMessage()));
+                $io->error(\sprintf('Failed to create invoice for customer with: %s', $ex->getMessage()));
             }
         }
 
@@ -372,10 +378,7 @@ final class InvoiceCreateCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
      * @param Invoice[] $invoices
-     * @return int
      */
     protected function renderInvoiceResult(InputInterface $input, OutputInterface $output, array $invoices): int
     {
@@ -413,7 +416,7 @@ final class InvoiceCreateCommand extends Command
             $file = $this->serviceInvoice->getInvoiceFile($invoice);
             if (null === $file) {
                 $io->warning(
-                    \sprintf('Created invoice with ID %s, but file was not found %s', $invoice->getId(), $invoice->getInvoiceFilename())
+                    \sprintf('Created invoice with ID %s, but file was not found %s', $invoice->getId() ?? 'unknown', $invoice->getInvoiceFilename() ?? 'unknown')
                 );
                 continue;
             }
@@ -449,7 +452,6 @@ final class InvoiceCreateCommand extends Command
     }
 
     /**
-     * @param InvoiceQuery $invoiceQuery
      * @return Customer[]
      */
     private function getActiveCustomers(InvoiceQuery $invoiceQuery): array
@@ -467,7 +469,6 @@ final class InvoiceCreateCommand extends Command
     }
 
     /**
-     * @param InvoiceQuery $invoiceQuery
      * @return Project[]
      */
     private function getActiveProjects(InvoiceQuery $invoiceQuery): array

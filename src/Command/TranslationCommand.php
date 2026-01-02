@@ -25,7 +25,7 @@ use Symfony\Component\HttpClient\HttpClient;
  *
  * @codeCoverageIgnore
  */
-#[AsCommand(name: 'kimai:translations')]
+#[AsCommand(name: 'kimai:translations', description: 'Automated translation adjustments')]
 final class TranslationCommand extends Command
 {
     public function __construct(
@@ -40,7 +40,6 @@ final class TranslationCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Translation adjustments')
             ->addOption('resname', null, InputOption::VALUE_NONE, 'Fix the resname vs. id attribute')
             ->addOption('duplicates', null, InputOption::VALUE_NONE, 'Find duplicate translation keys')
             ->addOption('delete-resname', null, InputOption::VALUE_REQUIRED, 'Deletes the translation by resname')
@@ -48,6 +47,8 @@ final class TranslationCommand extends Command
             ->addOption('fill-empty', null, InputOption::VALUE_NONE, 'Pre-fills empty translations with the english version')
             ->addOption('delete-empty', null, InputOption::VALUE_NONE, 'Delete all empty keys and files which have no translated key at all')
             ->addOption('move-resname', null, InputOption::VALUE_REQUIRED, 'Move a resname from one file to another (needs "source" and "target" options)')
+            ->addOption('copy-resname', null, InputOption::VALUE_REQUIRED, 'Copy a resname within one file (needs "source" option)')
+            ->addOption('target-resname', null, InputOption::VALUE_REQUIRED, 'Target resname when copying (needs "source" option)')
             ->addOption('move-all', null, InputOption::VALUE_NONE, 'Move all keys from one file to another (needs "source" and "target" options)')
             ->addOption('source', null, InputOption::VALUE_REQUIRED, 'Single source file to use')
             ->addOption('only-core', null, InputOption::VALUE_NONE, 'Do not include plugin and theme directories')
@@ -149,6 +150,21 @@ final class TranslationCommand extends Command
             }
 
             return $this->moveResname($io, $moveResname, $sources, $targets);
+        }
+
+        // ==========================================================================
+        // Move resname from source to target
+        // ==========================================================================
+        $copyResname = $input->getOption('copy-resname');
+        $targetResname = $input->getOption('target-resname');
+        if (\is_string($copyResname)) {
+            if (!\is_string($targetResname)) {
+                $io->error('To copy a resname, we need a target-resname');
+
+                return Command::FAILURE;
+            }
+
+            return $this->copyResname($io, $copyResname, $targetResname, $sources);
         }
 
         // ==========================================================================
@@ -454,10 +470,12 @@ final class TranslationCommand extends Command
 
         foreach ($xml->file->body->{'trans-unit'} as $unit) {
             $source = $unit->source;
-            if (!isset($unit['resname'])) {
+            if (!isset($unit['resname']) && $source !== null) {
                 $unit['resname'] = $source;
             }
-            $unit['id'] = $this->generateId($unit['resname']);
+            if ($unit['resname'] !== null) {
+                $unit['id'] = $this->generateId($unit['resname']);
+            }
         }
 
         $xmlDocument = new \DOMDocument('1.0');
@@ -647,6 +665,62 @@ final class TranslationCommand extends Command
                 $xmlDocument->formatOutput = true;
                 $xmlDocument->loadXML($targetDocument->saveXML()); // @phpstan-ignore-line
                 file_put_contents($target, $xmlDocument->saveXML());
+            }
+        }
+
+        return Command::SUCCESS;
+    }
+
+    /**
+     * @param array<string> $sources
+     */
+    private function copyResname(SymfonyStyle $io, string $resname, string $target, array $sources): int
+    {
+        foreach ($sources as $source) {
+            $tmp = basename($source);
+            $pos = strpos($tmp, '.');
+            if ($pos === false) {
+                $io->error('Unexpected filename: ' . $source);
+
+                return Command::FAILURE;
+            }
+
+            $sourceDocument = new \DOMDocument('1.0');
+            $sourceDocument->load($source);
+
+            $copiedNode = false;
+
+            /** @var \DOMElement $element */
+            foreach ($sourceDocument->getElementsByTagName('trans-unit') as $element) {
+                if (!$element->hasAttribute('resname')) {
+                    continue;
+                }
+
+                $key = $element->getAttribute('resname');
+
+                if ($key === $resname) {
+                    $newElement = clone $element;
+                    $newElement->setAttribute('resname', $target);
+                    foreach ($newElement->childNodes->getIterator() as $child) {
+                        if ($child->nodeName === 'source') {
+                            $child->textContent = $target;
+                        }
+                    }
+                    $newElement->setAttribute('id', $this->generateId($target));
+
+                    $newNode = $sourceDocument->importNode($newElement, true);
+                    $sourceDocument->documentElement->firstElementChild->firstElementChild->appendChild($newNode); // @phpstan-ignore-line
+                    $copiedNode = true;
+                    break;
+                }
+            }
+
+            if ($copiedNode) {
+                $xmlDocument = new \DOMDocument('1.0');
+                $xmlDocument->preserveWhiteSpace = false;
+                $xmlDocument->formatOutput = true;
+                $xmlDocument->loadXML($sourceDocument->saveXML()); // @phpstan-ignore-line
+                file_put_contents($source, $xmlDocument->saveXML());
             }
         }
 

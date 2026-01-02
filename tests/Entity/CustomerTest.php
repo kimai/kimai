@@ -12,14 +12,14 @@ namespace App\Tests\Entity;
 use App\Constants;
 use App\Entity\Customer;
 use App\Entity\CustomerMeta;
+use App\Entity\InvoiceTemplate;
 use App\Entity\Team;
 use App\Export\Spreadsheet\ColumnDefinition;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use Doctrine\Common\Collections\Collection;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\Entity\Customer
- */
+#[CoversClass(Customer::class)]
 class CustomerTest extends AbstractEntityTestCase
 {
     public function testDefaultValues(): void
@@ -35,6 +35,13 @@ class CustomerTest extends AbstractEntityTestCase
         self::assertNull($sut->getVatId());
         self::assertNull($sut->getContact());
         self::assertNull($sut->getAddress());
+        self::assertNull($sut->getAddressLine1());
+        self::assertNull($sut->getAddressLine2());
+        self::assertNull($sut->getAddressLine3());
+        self::assertNull($sut->getFormattedAddress());
+        self::assertNull($sut->getCity());
+        self::assertNull($sut->getPostCode());
+        self::assertNull($sut->getBuyerReference());
         self::assertNull($sut->getCountry());
         self::assertEquals('EUR', $sut->getCurrency());
         self::assertEquals('EUR', Customer::DEFAULT_CURRENCY);
@@ -46,12 +53,33 @@ class CustomerTest extends AbstractEntityTestCase
         self::assertNull($sut->getTimezone());
 
         self::assertNull($sut->getColor());
+        self::assertEquals('#e135f4', $sut->getColorSafe());
         self::assertFalse($sut->hasColor());
         self::assertInstanceOf(Collection::class, $sut->getMetaFields());
         self::assertEquals(0, $sut->getMetaFields()->count());
         self::assertNull($sut->getMetaField('foo'));
         self::assertInstanceOf(Collection::class, $sut->getTeams());
         self::assertEquals(0, $sut->getTeams()->count());
+        self::assertTrue($sut->isNew());
+        self::assertNull($sut->getInvoiceText());
+        self::assertNull($sut->getInvoiceTemplate());
+    }
+
+    public function testInvoiceText(): void
+    {
+        $sut = new Customer('foo');
+        self::assertNull($sut->getInvoiceText());
+        $sut->setInvoiceText('Some fancy long text to explain that tax should be handled by the receiving party');
+        self::assertEquals('Some fancy long text to explain that tax should be handled by the receiving party', $sut->getInvoiceText());
+    }
+
+    public function testInvoiceTemplate(): void
+    {
+        $tpl = new InvoiceTemplate();
+        $sut = new Customer('foo');
+        self::assertNull($sut->getInvoiceTemplate());
+        $sut->setInvoiceTemplate($tpl);
+        self::assertSame($tpl, $sut->getInvoiceTemplate());
     }
 
     public function testBudgets(): void
@@ -117,6 +145,51 @@ class CustomerTest extends AbstractEntityTestCase
 
         $sut->setCurrency(null);
         self::assertNull($sut->getCurrency());
+
+        $sut->setBuyerReference('BR-876876876876');
+        self::assertEquals('BR-876876876876', $sut->getBuyerReference());
+
+        $sut->setBuyerReference(null);
+        self::assertNull($sut->getBuyerReference());
+
+        $sut->setAddressLine1('address line 1');
+        $sut->setAddressLine2('address line 2');
+        $sut->setAddressLine3('address line 3');
+        $sut->setCity('looney toon');
+        $sut->setPostcode('zip 12345');
+        $sut->setAddress('foo bar
+sdfsadf
+sdfarwt34
+786876 uitiutziuz');
+
+        self::assertEquals('address line 1', $sut->getAddressLine1());
+        self::assertEquals('address line 2', $sut->getAddressLine2());
+        self::assertEquals('address line 3', $sut->getAddressLine3());
+        self::assertEquals('looney toon', $sut->getCity());
+        self::assertEquals('zip 12345', $sut->getPostCode());
+        self::assertEquals('foo bar
+sdfsadf
+sdfarwt34
+786876 uitiutziuz', $sut->getAddress());
+        self::assertEquals('address line 1
+address line 2
+address line 3
+zip 12345 looney toon', $sut->getFormattedAddress());
+
+        $sut->setAddressLine1(null);
+        $sut->setAddressLine2(null);
+        $sut->setAddressLine3(null);
+        $sut->setCity(null);
+        $sut->setPostcode(null);
+        $sut->setAddress(null);
+
+        self::assertNull($sut->getAddress());
+        self::assertNull($sut->getAddressLine1());
+        self::assertNull($sut->getAddressLine2());
+        self::assertNull($sut->getAddressLine3());
+        self::assertNull($sut->getFormattedAddress());
+        self::assertNull($sut->getCity());
+        self::assertNull($sut->getPostCode());
     }
 
     public function testMetaFields(): void
@@ -192,6 +265,11 @@ class CustomerTest extends AbstractEntityTestCase
             ['mobile', 'string'],
             ['fax', 'string'],
             ['homepage', 'string'],
+            ['address_line1', 'string'],
+            ['address_line2', 'string'],
+            ['address_line3', 'string'],
+            ['postcode', 'string'],
+            ['city', 'string'],
             ['country', 'string'],
             ['currency', 'string'],
             ['timezone', 'string'],
@@ -202,6 +280,7 @@ class CustomerTest extends AbstractEntityTestCase
             ['visible', 'boolean'],
             ['comment', 'string'],
             ['billable', 'boolean'],
+            ['buyerReference', 'string'],
         ];
 
         self::assertCount(\count($expected), $columns);
@@ -222,6 +301,9 @@ class CustomerTest extends AbstractEntityTestCase
     public function testClone(): void
     {
         $sut = new Customer('mycustomer');
+
+        $this->assertCloneResetsId($sut);
+
         $sut->setVatId('DE-0123456789');
         $sut->setTimeBudget(123456);
         $sut->setBudget(1234.56);

@@ -17,6 +17,7 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Invoice\CalculatorInterface;
 use App\Invoice\InvoiceModel;
+use App\Invoice\TaxRow;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
@@ -43,11 +44,21 @@ abstract class AbstractCalculatorTestCase extends TestCase
         $sut->setModel($model);
 
         self::assertEquals(0, $sut->getTotal());
-        self::assertEquals(0, $sut->getVat());
         self::assertEquals(0, $sut->getSubtotal());
         self::assertEquals(0, $sut->getTimeWorked());
         self::assertEquals(0, \count($sut->getEntries()));
         self::assertEquals(0, $sut->getTax());
+        self::assertTax($sut, 0);
+    }
+
+    protected function assertTax(CalculatorInterface $sut, int $rate): void
+    {
+        self::assertEquals($rate, $sut->getVat()); // @phpstan-ignore method.deprecated
+        $rows = $sut->getTaxRows();
+        self::assertCount(1, $rows);
+
+        self::assertInstanceOf(TaxRow::class, $rows[0]);
+        self::assertEquals($rate, $rows[0]->getTax()->getRate());
     }
 
     private function getEmptyModel(): InvoiceModel
@@ -86,14 +97,13 @@ abstract class AbstractCalculatorTestCase extends TestCase
         }
 
         $timesheet = new Timesheet();
-        $timesheet
-            ->setDescription('timesheet description')
-            ->setBegin(new \DateTime())
-            ->setDuration(3600)
-            ->setRate(293.27)
-            ->setUser($user)
-            ->setActivity($activity)
-            ->setProject($project);
+        $timesheet->setDescription('timesheet description');
+        $timesheet->setBegin(new \DateTime());
+        $timesheet->setDuration(3600);
+        $timesheet->setRate(293.27);
+        $timesheet->setUser($user);
+        $timesheet->setActivity($activity);
+        $timesheet->setProject($project);
 
         $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), $customer, $template, $query);
         $model->addEntries([$timesheet]);

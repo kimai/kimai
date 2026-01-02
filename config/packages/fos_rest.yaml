@@ -39,3 +39,5 @@ fos_rest:
             - { path: ^/api, prefer_extension: true, fallback_format: json, priorities: [ json ] }
     zone:
         - { path: ^/api/* }
+    service:
+        view_handler: App\API\ViewHandler

@@ -12,42 +12,58 @@ namespace App\Export\Base;
 use App\Entity\ExportableItem;
 use App\Export\ExportFilename;
 use App\Export\ExportRendererInterface;
-use App\Export\TimesheetExportInterface;
 use App\Pdf\HtmlToPdfConverter;
 use App\Pdf\PdfContext;
 use App\Pdf\PdfRendererTrait;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\SecurityPolicy\ExportPolicy;
+use Symfony\Component\DependencyInjection\Attribute\Exclude;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use Twig\Extension\SandboxExtension;
 
-class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface, TimesheetExportInterface
+/**
+ * TODO 3.0 remove default values from constructor parameters and make class final
+ * @final
+ */
+#[Exclude]
+class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
 {
     use RendererTrait;
     use PDFRendererTrait;
 
-    private string $id = 'pdf';
-    private string $template = 'default.pdf.twig';
     private array $pdfOptions = [];
 
     public function __construct(
         private readonly Environment $twig,
         private readonly HtmlToPdfConverter $converter,
-        private readonly ProjectStatisticService $projectStatisticService
+        private readonly ProjectStatisticService $projectStatisticService,
+        private string $id = 'pdf', // deprecated default parameter - TODO 3.0
+        private string $title = 'pdf', // deprecated default parameter - TODO 3.0
+        private string $template = 'export/pdf-layout.html.twig', // deprecated default parameter - TODO 3.0
     )
     {
     }
 
-    public function getTitle(): string
+    public function isInternal(): bool
+    {
+        return false;
+    }
+
+    public function getType(): string
     {
         return 'pdf';
     }
 
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
     protected function getTemplate(): string
     {
-        return '@export/' . $this->template;
+        return $this->template;
     }
 
     protected function getOptions(TimesheetQuery $query): array
@@ -67,28 +83,24 @@ class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
         return $this->pdfOptions;
     }
 
-    public function setPdfOption(string $key, string $value): PDFRenderer
+    public function setPdfOption(string $key, string $value): void
     {
         $this->pdfOptions[$key] = $value;
-
-        return $this;
     }
 
     /**
-     * @param ExportableItem[] $timesheets
-     * @param TimesheetQuery $query
-     * @return Response
+     * @param ExportableItem[] $exportItems
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function render(array $timesheets, TimesheetQuery $query): Response
+    public function render(array $exportItems, TimesheetQuery $query): Response
     {
         $filename = new ExportFilename($query);
         $context = new PdfContext();
         $context->setOption('filename', $filename->getFilename());
 
-        $summary = $this->calculateSummary($timesheets);
+        $summary = $this->calculateSummary($exportItems);
 
         // enable basic security measures
         $sandbox = new SandboxExtension(new ExportPolicy());
@@ -96,10 +108,10 @@ class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
         $this->twig->addExtension($sandbox);
 
         $content = $this->twig->render($this->getTemplate(), array_merge([
-            'entries' => $timesheets,
+            'entries' => $exportItems,
             'query' => $query,
             'summaries' => $summary,
-            'budgets' => $this->calculateProjectBudget($timesheets, $query, $this->projectStatisticService),
+            'budgets' => $this->calculateProjectBudget($exportItems, $query, $this->projectStatisticService),
             'decimal' => false,
             'pdfContext' => $context
         ], $this->getOptions($query)));
@@ -111,18 +123,28 @@ class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
         return $this->createPdfResponse($content, $context);
     }
 
-    public function setTemplate(string $filename): PDFRenderer
+    /**
+     * @deprecated since 2.40.0
+     */
+    public function setTemplate(string $filename): void
     {
-        $this->template = $filename;
-
-        return $this;
+        $this->template = '@export/' . $filename;
     }
 
-    public function setId(string $id): PDFRenderer
+    /**
+     * @deprecated since 2.40.0
+     */
+    public function setId(string $id): void
     {
         $this->id = $id;
+    }
 
-        return $this;
+    /**
+     * @deprecated since 2.40.0
+     */
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
     }
 
     public function getId(): string

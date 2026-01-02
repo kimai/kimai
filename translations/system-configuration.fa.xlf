@@ -96,7 +96,7 @@
       </trans-unit>
       <trans-unit id="BYy.c1V" resname="calendar.slot_duration">
         <source>calendar.slot_duration</source>
-        <target state="translated">مدت زمان اسلات برای نمای هفته و روز (قالب: hh:mm:ss)</target>
+        <target state="translated">مدت زمان اسلات برای نمای هفته و روز</target>
       </trans-unit>
       <trans-unit id="nwuLBP4" resname="branding">
         <source>branding</source>
@@ -166,21 +166,21 @@
         <source>Sunday</source>
         <target state="translated">یکشنبه</target>
       </trans-unit>
-      <trans-unit id="jmsE4EY" resname="Ceil">
+      <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target state="translated">سقف: شروع، پایان و مدت زمان گرد می شود</target>
+        <target state="translated">شروع، پایان و مدت زمان به بالا گرد می‌شوند</target>
       </trans-unit>
-      <trans-unit id="Y_qmsDz" resname="Closest">
+      <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target state="translated">نزدیکترین: گرد کردن اعداد به نزدیکترین مقدار</target>
+        <target state="translated">گرد کردن ریاضی به نزدیکترین مقدار</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target state="translated">استاندارد: شروع به پایین، پایان و مدت به بالا گرد می شود</target>
+        <target state="translated">شروع به پایین، پایان و مدت زمان به بالا گرد می‌شوند</target>
       </trans-unit>
-      <trans-unit id="0mjJxEk" resname="Floor">
+      <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target state="translated">کف: شروع، پایان و مدت زمان به پایین گرد می شود</target>
+        <target state="translated">شروع، پایان و مدت زمان به پایین گرد می‌شوند</target>
       </trans-unit>
       <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
         <source>timesheet.default_begin</source>
@@ -288,11 +288,27 @@
       </trans-unit>
       <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
         <source>customer.number_format</source>
-        <target state="needs-translation">فرمت شماره مشتری</target>
+        <target state="translated">فرمت شماره مشتری</target>
       </trans-unit>
       <trans-unit id="12sQGSo" resname="activity.allow_inline_create">
         <source>activity.allow_inline_create</source>
         <target state="translated">اجازه ایجاد فعالیت‌ها به شکل ردیابی زمان را بدهید</target>
+      </trans-unit>
+      <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number" xml:space="preserve">
+        <source>customer.allow_duplicate_number</source>
+        <target state="translated">شماره حساب تکراری مجاز است</target>
+      </trans-unit>
+      <trans-unit id="3xUU9V." resname="project.number_format" xml:space="preserve">
+        <source>project.number_format</source>
+        <target state="translated">فرمت شماره پروژه</target>
+      </trans-unit>
+      <trans-unit id="ifgrIHh" resname="activity.number_format" xml:space="preserve">
+        <source>activity.number_format</source>
+        <target state="translated">فرمت شماره فعالیت</target>
+      </trans-unit>
+      <trans-unit id="jj1NmKW" resname="allow_duplicate_number" xml:space="preserve">
+        <source>allow_duplicate_number</source>
+        <target state="translated">اجازه استفاده چندگانه از یک شماره را بدهید</target>
       </trans-unit>
     </body>
   </file>

@@ -33,7 +33,7 @@ final class Markdown
     public function withFullMarkdownSupport(string $text): string
     {
         if ($this->parserFull === null) {
-            $this->parserFull = new \Parsedown();
+            $this->parserFull = new Parsedown();
             $this->parserFull->setUrlsLinked(true);
             $this->parserFull->setBreaksEnabled(true);
             $this->parserFull->setSafeMode(true);

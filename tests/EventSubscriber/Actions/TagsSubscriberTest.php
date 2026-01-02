@@ -10,10 +10,9 @@
 namespace App\Tests\EventSubscriber\Actions;
 
 use App\EventSubscriber\Actions\TagsSubscriber;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \App\EventSubscriber\Actions\TagsSubscriber
- */
+#[CoversClass(TagsSubscriber::class)]
 class TagsSubscriberTest extends AbstractActionsSubscriberTestCase
 {
     public function testEventName(): void

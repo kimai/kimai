@@ -10,11 +10,11 @@
 namespace App\Tests\Utils;
 
 use App\Utils\Duration;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \App\Utils\Duration
- */
+#[CoversClass(Duration::class)]
 class DurationTest extends TestCase
 {
     public function testFormat(): void
@@ -25,18 +25,14 @@ class DurationTest extends TestCase
         self::assertEquals('2:38', $sut->format(9494));
     }
 
-    /**
-     * @dataProvider getParseDurationTestData
-     */
+    #[DataProvider('getParseDurationTestData')]
     public function testParseDurationString($expected, $duration, $mode): void
     {
         $sut = new Duration();
         self::assertEquals($expected, $sut->parseDurationString($duration));
     }
 
-    /**
-     * @dataProvider getParseDurationTestData
-     */
+    #[DataProvider('getParseDurationTestData')]
     public function testParseDuration($expected, $duration, $mode): void
     {
         $sut = new Duration();
@@ -102,9 +98,7 @@ class DurationTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getParseDurationInvalidData
-     */
+    #[DataProvider('getParseDurationInvalidData')]
     public function testParseDurationThrowsInvalidArgumentException($duration, $mode): void
     {
         $this->expectException(\InvalidArgumentException::class);

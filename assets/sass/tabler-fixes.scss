@@ -17,16 +17,6 @@ fieldset.form-fieldset > legend {
     --tblr-dropdown-divider-margin-y: .5rem;
 }
 
-/* fix translucent scroll border (e.g. timesheet modal duration dropdown) - see https://github.com/tabler/tabler/issues/1606 */
-.dropdown-menu {
-    background-clip: border-box;
-}
-
-/* hide empty fieldset - see https://github.com/tabler/tabler/issues/1650 */
-fieldset:empty {
-    display: none;
-}
-
 :host,:root,[data-bs-theme=light] {
     /* remove the shadow from all form element groups */
     --tblr-box-shadow-input: none;
@@ -43,20 +33,19 @@ fieldset:empty {
     border-style: solid;
 }
 
-[data-bs-theme=dark] {
-    /* fixes  https://github.com/tabler/tabler/issues/1974 */
-    .litepicker .container__days .day-item.is-in-range {
-        --litepicker-is-in-range-color: var(--tblr-primary-text-emphasis);
-    }
-}
-
 /* fixes contrast of batch-update checkboxes - https://github.com/kimai/kimai/issues/5146 */
-.multiupdater[type=checkbox]
-{
+.multiupdater[type=checkbox] {
     --tblr-border-color-translucent: rgba(4, 32, 69, .2);
 }
 
 /* fixes height for long tags https://github.com/kimai/kimai/issues/5169 */
 .tag {
     --tblr-tag-height: unset;
+}
+
+/* Page title (e.g. Dashboard) does not work properly in navbar, just outside */
+.navbar {
+    .page-title {
+        color: var(--tblr-body-color);
+    }
 }

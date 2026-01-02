@@ -33,13 +33,15 @@ class CustomerEditForm extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $isNew = false;
+        $isNew = true;
+        $hasAddress = false;
 
         if (isset($options['data'])) {
             /** @var Customer $customer */
             $customer = $options['data'];
             $isNew = $customer->getId() === null;
             $options['currency'] = $customer->getCurrency();
+            $hasAddress = $customer->getAddress() !== null && $customer->getAddress() !== '';
         }
 
         $builder
@@ -52,6 +54,9 @@ class CustomerEditForm extends AbstractType
             ->add('number', TextType::class, [
                 'label' => 'number',
                 'required' => false,
+                'attr' => [
+                    'maxlength' => 50,
+                ],
             ])
             ->add('comment', TextareaType::class, [
                 'label' => 'description',
@@ -69,8 +74,36 @@ class CustomerEditForm extends AbstractType
                 'label' => 'contact',
                 'required' => false,
             ])
-            ->add('address', TextareaType::class, [
+        ;
+
+        if ($hasAddress) {
+            $builder
+                ->add('address', TextareaType::class, [
+                    'label' => 'address',
+                    'help' => 'address_deprecated',
+                    'required' => false,
+                ]);
+        }
+
+        $builder
+            ->add('addressLine1', TextType::class, [
                 'label' => 'address',
+                'required' => false,
+            ])
+            ->add('addressLine2', TextType::class, [
+                'label' => false,
+                'required' => false,
+            ])
+            ->add('addressLine3', TextType::class, [
+                'label' => false,
+                'required' => false,
+            ])
+            ->add('postCode', TextType::class, [
+                'label' => 'postcode',
+                'required' => false,
+            ])
+            ->add('city', TextType::class, [
+                'label' => 'city',
                 'required' => false,
             ])
             ->add('country', CountryType::class, [
@@ -115,6 +148,10 @@ class CustomerEditForm extends AbstractType
             ])
             ->add('invoiceTemplate', InvoiceTemplateType::class, [
                 'help' => 'help.invoiceTemplate_customer',
+                'required' => false,
+            ])
+            ->add('buyerReference', TextType::class, [
+                'label' => 'buyerReference',
                 'required' => false,
             ])
         ;

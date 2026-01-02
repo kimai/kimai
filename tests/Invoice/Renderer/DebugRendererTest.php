@@ -14,6 +14,7 @@ use App\Invoice\InvoiceItemHydrator;
 use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceModelHydrator;
 use App\Model\InvoiceDocument;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -27,9 +28,7 @@ class DebugRendererTest extends TestCase
         yield [static fn (self $testCase) => $testCase->getInvoiceModelOneEntry(), '293.27', 1, 1, 0, 1, 0, false, []];
     }
 
-    /**
-     * @dataProvider getTestModel
-     */
+    #[DataProvider('getTestModel')]
     public function testRender(callable $invoiceModel, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3, $hasProject, $metaFields = []): void
     {
         /** @var InvoiceModel $model */
@@ -97,6 +96,7 @@ class DebugRendererTest extends TestCase
             'invoice.language',
             'invoice.tax_nc',
             'invoice.tax_plain',
+            'invoice.tax_rows',
             'invoice.total_time',
             'invoice.duration_decimal',
             'invoice.first',
@@ -109,8 +109,32 @@ class DebugRendererTest extends TestCase
             'invoice.subtotal',
             'invoice.subtotal_nc',
             'invoice.subtotal_plain',
+            'issuer.address',
+            'issuer.address_line1',
+            'issuer.address_line2',
+            'issuer.address_line3',
+            'issuer.buyer_reference',
+            'issuer.city',
+            'issuer.comment',
+            'issuer.company',
+            'issuer.contact',
+            'issuer.country',
+            'issuer.country_name',
+            'issuer.email',
+            'issuer.fax',
+            'issuer.homepage',
+            'issuer.id',
+            'issuer.invoice_text',
+            'issuer.meta.foo-customer',
+            'issuer.mobile',
+            'issuer.name',
+            'issuer.number',
+            'issuer.phone',
+            'issuer.postcode',
+            'issuer.vat_id',
             'template.name',
             'template.company',
+            'template.country',
             'template.address',
             'template.title',
             'template.payment_terms',
@@ -118,6 +142,7 @@ class DebugRendererTest extends TestCase
             'template.vat_id',
             'template.contact',
             'template.payment_details',
+            'template.country_name',
             'query.day',
             'query.month',
             'query.month_number',
@@ -136,12 +161,19 @@ class DebugRendererTest extends TestCase
             'query.end_year',
             'customer.id',
             'customer.address',
+            'customer.address_line1',
+            'customer.address_line2',
+            'customer.address_line3',
+            'customer.buyer_reference',
+            'customer.city',
+            'customer.postcode',
             'customer.name',
             'customer.contact',
             'customer.company',
             'customer.vat',
             'customer.vat_id',
             'customer.country',
+            'customer.country_name',
             'customer.number',
             'customer.homepage',
             'customer.comment',

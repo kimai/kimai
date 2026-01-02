@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <h2 class="page-header">
-                        <span contenteditable="true">{{ invoice['template.title'] }}</span>
+                        <span>{{ invoice['template.title'] }}</span>
                     </h2>
                 </div>
             </div>
@@ -22,9 +22,13 @@
             <div class="row">
                 <div class="col-sm-5">
                     {{ 'invoice.to'|trans }}
-                    <address contenteditable="true">
+                    <address>
                         <strong>{{ invoice['customer.company']|default(invoice['customer.name']) }}</strong><br>
                         {{ invoice['customer.address']|nl2br }}
+                        {% set country = invoice['customer.country']|country_name(invoice['invoice.language']) %}
+                        {% if country not in invoice['customer.address'] %}
+                            <br> {{ country }}
+                        {% endif %}
                         {% if invoice['customer.vat_id'] is not empty %}
                             <br>
                             {{ 'vat_id'|trans }}: {{ invoice['customer.vat_id'] }}
@@ -42,9 +46,15 @@
                 <div class="col-sm-2"></div>
                 <div class="col-sm-5">
                     {{ 'invoice.from'|trans }}
-                    <address contenteditable="true">
+                    <address>
                         <strong>{{ invoice['template.company'] }}</strong><br>
                         {{ invoice['template.address']|trim|nl2br }}
+                        {% if invoice['template.country'] is not null %}
+                            {% set country = invoice['template.country']|country_name(invoice['invoice.language']) %}
+                            {% if country not in invoice['template.address'] %}
+                                <br> {{ country }}
+                            {% endif %}
+                        {% endif %}
                         {% if invoice['template.vat_id'] is not empty %}
                             <br>
                             {{ 'vat_id'|trans }}:
@@ -56,7 +66,7 @@
 
             <div class="row">
                 <div class="col-sm-5">
-                    <p contenteditable="true">
+                    <p>
                         <strong>{{ 'date'|trans }}:</strong>
                         {{ invoice['invoice.date'] }}
 
@@ -88,7 +98,7 @@
                         {% for invoiceLineItem in entries %}
                             <tr>
                                 <td nowrap class="text-nowrap">{{ invoiceLineItem['entry.begin'] }}</td>
-                                <td contenteditable="true">
+                                <td>
                                     {% if invoiceLineItem['entry.description'] is not empty %}
                                         {{ invoiceLineItem['entry.description']|nl2br }}
                                     {% else %}
@@ -105,20 +115,25 @@
                         {% endfor %}
                         </tbody>
                         <tfoot>
-                        {% if not invoice['invoice.tax_hide'] %}
                             <tr>
                                 <td colspan="4" class="text-end">
                                     {{ 'invoice.subtotal'|trans }}
                                 </td>
                                 <td class="text-end">{{ invoice['invoice.subtotal'] }}</td>
                             </tr>
-                            <tr>
-                                <td colspan="4" class="text-end">
-                                    {{ 'invoice.tax'|trans }} ({{ invoice['invoice.vat'] }}%)
-                                </td>
-                                <td class="text-end">{{ invoice['invoice.tax'] }}</td>
-                            </tr>
-                        {% endif %}
+                            {% for taxRow in invoice['invoice.tax_rows'] %}
+                                {% if taxRow['show'] %}
+                                    <tr>
+                                        <td colspan="4" class="text-end">
+                                            {{ taxRow['name']|trans }} ({{ taxRow['rate'] }}%)
+                                            {% if taxRow['note'] is not null %}
+                                                <sup>[{{ taxRow['counter'] }}]</sup>
+                                            {% endif %}
+                                        </td>
+                                        <td class="last text-right">{{ taxRow['amount']|money(taxRow['currency']) }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
                         <tr>
                             <td colspan="4" class="text-end text-nowrap">
                                 <strong>{{ 'invoice.total'|trans }}</strong>
@@ -134,10 +149,16 @@
 
             <div class="row">
                 <div class="col-xs-12">
+                    {% for taxRow in invoice['invoice.tax_rows'] %}
+                        {% if taxRow['note'] is not null %}
+                        <p>
+                            <sup>[{{ taxRow['counter'] }}]</sup>
+                            {{ taxRow['note']|trans }}
+                        </p>
+                        {% endif %}
+                    {% endfor %}
                     {% if invoice['template.payment_terms'] is not empty %}
-                        <div contenteditable="true" class="paymentTerms">
-                            {{ invoice['template.payment_terms']|md2html }}
-                        </div>
+                        {{ invoice['template.payment_terms']|md2html }}
                     {% endif %}
                 </div>
             </div>

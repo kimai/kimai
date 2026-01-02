@@ -29,6 +29,11 @@ final class DocxRenderer extends AbstractRenderer implements RendererInterface
         $template = new TemplateProcessor($document->getFilename());
 
         foreach ($model->toArray() as $search => $replace) {
+            if (\is_array($replace)) {
+                // TODO tax rows
+                continue;
+            }
+
             $replace = $xmlEscaper->escape($replace);
             $replace = preg_replace('/\n|\r\n?/', '</w:t><w:br /><w:t xml:space="preserve">', $replace);
 
