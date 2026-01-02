@@ -115,7 +115,7 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
                 'entry.activity_id' => $activity->getId(),
             ]);
 
-            foreach ($activity->getMetaFields() as $metaField) {
+            foreach ($activity->getVisibleMetaFields() as $metaField) {
                 $values = array_merge($values, [
                     'entry.activity.meta.' . $metaField->getName() => $metaField->getValue(),
                 ]);
@@ -128,7 +128,7 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
                 'entry.project_id' => $project->getId(),
             ]);
 
-            foreach ($project->getMetaFields() as $metaField) {
+            foreach ($project->getVisibleMetaFields() as $metaField) {
                 $values = array_merge($values, [
                     'entry.project.meta.' . $metaField->getName() => $metaField->getValue(),
                 ]);
@@ -141,7 +141,7 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
                 'entry.customer_id' => $customer->getId(),
             ]);
 
-            foreach ($customer->getMetaFields() as $metaField) {
+            foreach ($customer->getVisibleMetaFields() as $metaField) {
                 $values = array_merge($values, [
                     'entry.customer.meta.' . $metaField->getName() => $metaField->getValue(),
                 ]);
