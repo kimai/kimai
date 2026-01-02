@@ -1,4 +1,3 @@
-var/share/
 # some hosters require a htaccess to change the PHP version
 /public/.htaccess
 /.env-*
