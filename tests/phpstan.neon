@@ -22,9 +22,6 @@ parameters:
         - identifier: missingType.iterableValue
 
         -
-            message: "#^Cannot call method getContainer\\(\\) on Symfony\\\\Component\\\\HttpKernel\\\\KernelInterface\\|null\\.$#"
-
-        -
             message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) with '(.*)' and (.*) will always evaluate to true\\.$#"
 
         -
@@ -265,16 +262,6 @@ parameters:
             path: API/TeamControllerTest.php
 
         -
-            message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
-            count: 1
-            path: API/TimesheetControllerTest.php
-
-        -
-            message: "#^Cannot access offset 0 on mixed\\.$#"
-            count: 1
-            path: API/TimesheetControllerTest.php
-
-        -
             message: "#^Cannot call method getDescription\\(\\) on App\\\\Entity\\\\Timesheet\\|null\\.$#"
             count: 1
             path: API/TimesheetControllerTest.php
@@ -296,11 +283,6 @@ parameters:
 
         -
             message: "#^Cannot call method isExported\\(\\) on App\\\\Entity\\\\Timesheet\\|null\\.$#"
-            count: 1
-            path: API/TimesheetControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#"
             count: 1
             path: API/TimesheetControllerTest.php
 

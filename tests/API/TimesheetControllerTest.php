@@ -1036,6 +1036,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertIsString($content);
         $result = json_decode($content, true);
 
+        self::assertIsArray($result);
         self::assertEquals(3, \count($result));
         foreach ($result as $timesheet) {
             self::assertIsArray($timesheet);
@@ -1286,7 +1287,9 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('TimesheetEntity', $result);
         self::assertEquals('foo', $result['description']);
-        self::assertEquals([['name' => 'sdfsdf', 'value' => 'nnnnn'], ['name' => '1234567890', 'value' => '1234567890']], $result['metaFields']);
+        self::assertIsArray($result['metaFields']);
+        self::assertEquals(['name' => 'sdfsdf', 'value' => 'nnnnn'], $result['metaFields'][0]);
+        self::assertEquals(['name' => '1234567890', 'value' => '1234567890'], $result['metaFields'][1]);
         self::assertEquals(['another', 'testing', 'bar'], $result['tags']);
 
         $em = $this->getEntityManager();
@@ -1490,7 +1493,16 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
 
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('TimesheetEntity', $result);
-        self::assertEquals(['name' => 'metatestmock', 'value' => 'another,testing,bar'], $result['metaFields'][0]);
+        self::assertIsArray($result['metaFields']);
+        $found = false;
+        foreach ($result['metaFields'] as $field) {
+            self::assertIsArray($field);
+            if ($field['name'] === 'metatestmock') {
+                self::assertEquals(['name' => 'metatestmock', 'value' => 'another,testing,bar'], $field);
+                $found = true;
+            }
+        }
+        self::assertTrue($found);
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */

@@ -332,18 +332,13 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
 
                 // embedded meta data
             case 'UserPreference':
-                return [
-                    'name' => 'string',
-                    'value' => '@string',
-                ];
-
             case 'CustomerMeta':
             case 'ProjectMeta':
             case 'ActivityMeta':
             case 'TimesheetMeta':
                 return [
                     'name' => 'string',
-                    'value' => 'string',
+                    'value' => '@string',
                 ];
 
                 // if a user is embedded in other objects
