@@ -13,18 +13,20 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 ### Rename .env
 
-Rename your file `.env` to `.env.local` or even better: move all variables to your  
+Rename your file `.env` to `.env.local` or even better: move all variables to your webserver/container environment.
 
 ### Developer
 
-Do not use method chaining: all fluent interface, especially in Entities, are no longer supported. 
+- Do not use method chaining: all fluent interface, especially in Entities, are no longer supported. 
+- Removed `TimesheetConstraint` - use a normal `Constraint` as base class and attach the `#[App\Validator\Attribute\TimesheetConstraint]` attribute 
+- Removed `ProjectConstraint` - use a `FormExtension` and attach your custom constraints 
+- Removed and renamed translations:
+  - `action.edit`: use `edit` instead
+  - `my.profile`: use `user_profile` instead
+  - `stats.userAmountToday`: use `` instead
+  - `stats.userAmountWeek`: use `` instead
+  - `stats.userAmountMonth`: use `` instead
+  - `stats.userAmountYear`: use `` instead
+  - `stats.userAmountTotal`: use `` instead
+  - `update_multiple`
 
-Removed translations:
-- `action.edit`: use `edit` instead
-- `my.profile`: use `user_profile` instead
-- `stats.userAmountToday`: use `` instead
-- `stats.userAmountWeek`: use `` instead
-- `stats.userAmountMonth`: use `` instead
-- `stats.userAmountYear`: use `` instead
-- `stats.userAmountTotal`: use `` instead
-- `update_multiple`

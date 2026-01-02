@@ -13,21 +13,15 @@ use App\Configuration\SystemConfiguration;
 use App\Entity\Project as ProjectEntity;
 use App\Repository\ProjectRepository;
 use App\Validator\Constraints\Project as ProjectEntityConstraint;
-use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class ProjectValidator extends ConstraintValidator
 {
-    /**
-     * @param ProjectConstraint[] $constraints
-     */
     public function __construct(
         private readonly SystemConfiguration $systemConfiguration,
-        private readonly ProjectRepository $projectRepository,
-        #[AutowireIterator(ProjectConstraint::class)]
-        private iterable $constraints = []
+        private readonly ProjectRepository $projectRepository
     )
     {
     }
@@ -65,13 +59,6 @@ final class ProjectValidator extends ConstraintValidator
                     break;
                 }
             }
-        }
-
-        foreach ($this->constraints as $innerConstraint) {
-            $this->context
-                ->getValidator()
-                ->inContext($this->context)
-                ->validate($value, $innerConstraint, [Constraint::DEFAULT_GROUP]);
         }
     }
 }
