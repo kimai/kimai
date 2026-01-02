@@ -19,12 +19,6 @@ final class TimesheetRestart extends TimesheetConstraint
 
     public string $message = 'You are not allowed to start this timesheet record.';
 
-    public function __construct(?string $message = null)
-    {
-        $this->message = $message ?? $this->message;
-        parent::__construct();
-    }
-
     public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;

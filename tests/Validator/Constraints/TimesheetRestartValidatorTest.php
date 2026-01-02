@@ -59,7 +59,7 @@ class TimesheetRestartValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetOverlapping(message: 'myMessage'));
+        $this->validator->validate(new NotBlank(), new TimesheetOverlapping());
     }
 
     #[DataProvider('getTestData')]
@@ -82,7 +82,7 @@ class TimesheetRestartValidatorTest extends ConstraintValidatorTestCase
             ->setProject($project)
         ;
 
-        $this->validator->validate($timesheet, new TimesheetRestart(message: 'myMessage'));
+        $this->validator->validate($timesheet, new TimesheetRestart());
 
         if (null !== $property) {
             $this->buildViolation('You are not allowed to start this timesheet record.')

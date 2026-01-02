@@ -19,12 +19,6 @@ final class TimesheetOverlapping extends TimesheetConstraint
 
     public string $message = 'You already have an entry for this time.';
 
-    public function __construct(?string $message = null)
-    {
-        $this->message = $message ?? $this->message;
-        parent::__construct();
-    }
-
     public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;

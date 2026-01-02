@@ -40,7 +40,7 @@ class TimesheetNegativeDurationValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetNegativeDuration(message: 'Duration cannot be negative.'));
+        $this->validator->validate(new NotBlank(), new TimesheetNegativeDuration());
     }
 
     public function testNegativeDurationIsNotAllowed(): void
@@ -51,7 +51,7 @@ class TimesheetNegativeDurationValidatorTest extends ConstraintValidatorTestCase
         $timesheet->setEnd(clone $begin);
         $timesheet->setBreak(3600);
 
-        $this->validator->validate($timesheet, new TimesheetNegativeDuration(message: 'Duration cannot be negative.'));
+        $this->validator->validate($timesheet, new TimesheetNegativeDuration());
 
         $this->buildViolation('Duration cannot be negative.')
             ->atPath('property.path.duration')
@@ -69,7 +69,7 @@ class TimesheetNegativeDurationValidatorTest extends ConstraintValidatorTestCase
         $this->validator = $this->createValidator();
         $this->validator->initialize($this->context);
 
-        $this->validator->validate($timesheet, new TimesheetNegativeDuration(message: 'Duration cannot be negative.'));
+        $this->validator->validate($timesheet, new TimesheetNegativeDuration());
 
         $this->assertNoViolation();
     }
@@ -84,7 +84,7 @@ class TimesheetNegativeDurationValidatorTest extends ConstraintValidatorTestCase
         $this->validator = $this->createValidator();
         $this->validator->initialize($this->context);
 
-        $this->validator->validate($timesheet, new TimesheetNegativeDuration(message: 'Duration cannot be negative.'));
+        $this->validator->validate($timesheet, new TimesheetNegativeDuration());
 
         $this->assertNoViolation();
     }

@@ -19,12 +19,6 @@ final class TimesheetNegativeDuration extends TimesheetConstraint
 
     public string $message = 'Duration cannot be negative.';
 
-    public function __construct(?string $message = null)
-    {
-        $this->message = $message ?? $this->message;
-        parent::__construct();
-    }
-
     public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;

@@ -33,12 +33,6 @@ final class TimesheetBasic extends TimesheetConstraint
 
     public string $message = 'This timesheet has invalid settings.';
 
-    public function __construct(?string $message = null)
-    {
-        $this->message = $message ?? $this->message;
-        parent::__construct();
-    }
-
     public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;

@@ -43,7 +43,7 @@ class TimesheetDeactivatedValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetDeactivated(message: 'myMessage'));
+        $this->validator->validate(new NotBlank(), new TimesheetDeactivated());
     }
 
     public function testDisabledValuesDuringStart(): void
@@ -65,7 +65,7 @@ class TimesheetDeactivatedValidatorTest extends ConstraintValidatorTestCase
             ->setProject($project)
         ;
 
-        $this->validator->validate($timesheet, new TimesheetDeactivated(message: 'myMessage'));
+        $this->validator->validate($timesheet, new TimesheetDeactivated());
 
         $this->buildViolation(TimesheetDeactivated::getErrorName(TimesheetDeactivated::DISABLED_ACTIVITY_ERROR))
             ->atPath('property.path.activity')

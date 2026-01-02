@@ -22,12 +22,6 @@ final class TimesheetFutureTimes extends TimesheetConstraint
 
     public string $message = 'The date cannot be in the future.';
 
-    public function __construct(?string $message = null)
-    {
-        $this->message = $message ?? $this->message;
-        parent::__construct();
-    }
-
     public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;

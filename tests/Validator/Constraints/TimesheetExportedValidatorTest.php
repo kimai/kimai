@@ -60,7 +60,7 @@ class TimesheetExportedValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetExported(message: 'myMessage'));
+        $this->validator->validate(new NotBlank(), new TimesheetExported());
     }
 
     public function testTriggersOnMissingPermission(): void
