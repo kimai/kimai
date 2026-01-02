@@ -11,13 +11,13 @@ namespace App\Tests\Widget\Type;
 
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
-use App\Widget\Type\AbstractWidgetType;
+use App\Widget\Type\AbstractWidget;
 use App\Widget\Type\DailyWorkingTimeChart;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(DailyWorkingTimeChart::class)]
-#[CoversClass(AbstractWidgetType::class)]
+#[CoversClass(AbstractWidget::class)]
 #[CoversClass(TimesheetRepository::class)]
 class DailyWorkingTimeChartTest extends TestCase
 {
