@@ -86,7 +86,7 @@ abstract class AbstractCalculator
     }
 
     /**
-     * @deprecated use getTaxRows() instead
+     * @deprecated - cannot be deleted, referenced in customer templates
      */
     public function getVat(): float
     {
@@ -94,7 +94,7 @@ abstract class AbstractCalculator
     }
 
     /**
-     * @return array<TaxRow>
+     * @return non-empty-array<TaxRow>
      */
     public function getTaxRows(): array
     {

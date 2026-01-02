@@ -1762,16 +1762,6 @@ parameters:
             path: Repository/TimesheetInvoiceItemRepositoryTest.php
 
         -
-            message: "#^Cannot call method getId\\(\\) on mixed\\.$#"
-            count: 2
-            path: Repository/TimesheetRepositoryTest.php
-
-        -
-            message: "#^Cannot call method getName\\(\\) on mixed\\.$#"
-            count: 2
-            path: Repository/TimesheetRepositoryTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Saml\\\\SamlProviderTest\\:\\:getSamlProvider\\(\\) has parameter \\$mapping with no value type specified in iterable type array\\.$#"
             count: 1
             path: Saml/SamlProviderTest.php

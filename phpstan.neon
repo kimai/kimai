@@ -1145,11 +1145,6 @@ parameters:
             path: src/Entity/Timesheet.php
 
         -
-            message: "#^Method App\\\\Entity\\\\Timesheet\\:\\:getTags\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Timesheet.php
-
-        -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Timesheet\\:\\:getMetaField\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Entity/Timesheet.php
@@ -1308,11 +1303,6 @@ parameters:
             message: "#^Method App\\\\Event\\\\RevenueStatisticEvent\\:\\:getRevenue\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Event/RevenueStatisticEvent.php
-
-        -
-            message: "#^Method App\\\\Event\\\\ThemeJavascriptTranslationsEvent\\:\\:getTranslations\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Event/ThemeJavascriptTranslationsEvent.php
 
         -
             message: "#^Parameter \\#1 \\$string of function strtolower expects string, string\\|null given\\.$#"
@@ -3428,21 +3418,6 @@ parameters:
             message: "#^Parameter \\#1 \\$locale of method App\\\\Configuration\\\\LocaleService\\:\\:is24Hour\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Twig/LocaleFormatExtensions.php
-
-        -
-            message: "#^Method App\\\\Twig\\\\PaginationExtension\\:\\:createRouteGenerator\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Twig/PaginationExtension.php
-
-        -
-            message: "#^Method App\\\\Twig\\\\PaginationExtension\\:\\:renderPagination\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Twig/PaginationExtension.php
-
-        -
-            message: "#^Method App\\\\Twig\\\\PaginationExtension\\:\\:renderPagination\\(\\) has parameter \\$pager with generic class Pagerfanta\\\\Pagerfanta but does not specify its types\\: T$#"
-            count: 1
-            path: src/Twig/PaginationExtension.php
 
         -
             message: "#^Method App\\\\Twig\\\\Runtime\\\\ThemeExtension\\:\\:actions\\(\\) has parameter \\$payload with no value type specified in iterable type array\\.$#"

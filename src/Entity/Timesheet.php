@@ -407,7 +407,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     }
 
     /**
-     * @return Collection<Tag>
+     * @return Collection<int, Tag>
      */
     public function getTags(): Collection
     {

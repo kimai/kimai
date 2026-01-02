@@ -86,13 +86,13 @@ interface ExportableItem
      */
     public function getCategory(): string;
 
-    /*
+    /**
      * Returns all assigned tags.
-     * @return Collection<Tag>
+     * @return Collection<int, Tag>
      */
     public function getTags(): Collection;
 
-    /*
+    /**
      * Returns the break duration.
      */
     public function getBreak(): int;

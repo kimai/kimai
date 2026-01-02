@@ -281,7 +281,7 @@ class InvoiceTemplate implements EntityWithMetaFields
     }
 
     /**
-     * @return Tax[]
+     * @return non-empty-array<Tax>
      */
     public function getTaxRates(): array
     {

@@ -42,7 +42,6 @@ final class InvoiceModel
      */
     private array $itemHydrator = [];
     private ?string $invoiceNumber = null;
-    private bool $hideZeroTax = false;
     private bool $isPreview = false;
     /**
      * @var array<string, string|array<string|int, mixed>|null|bool|int|float>
@@ -252,14 +251,14 @@ final class InvoiceModel
         return $values;
     }
 
+    /**
+     * @deprecated - cannot be delete, used in customer invoice templates
+     */
     public function isHideZeroTax(): bool
     {
-        return $this->hideZeroTax;
-    }
+        @trigger_error('isHideZeroTax() is deprecated, access tax_rows in your invoice template instead', E_USER_DEPRECATED);
 
-    public function setHideZeroTax(bool $hideZeroTax): void
-    {
-        $this->hideZeroTax = $hideZeroTax;
+        return false;
     }
 
     public function isPreview(): bool

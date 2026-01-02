@@ -61,16 +61,13 @@ final class ProjectService
     public function saveProject(Project $project, ?Context $context = null): Project
     {
         if ($project->isNew()) {
-            return $this->saveNewProject($project, $context); // @phpstan-ignore method.deprecated
+            return $this->saveNewProject($project, $context);
         } else {
-            return $this->updateProject($project); // @phpstan-ignore method.deprecated
+            return $this->updateProject($project);
         }
     }
 
-    /**
-     * @deprecated since 2.35 - use saveProject() instead
-     */
-    public function saveNewProject(Project $project, ?Context $context = null): Project
+    private function saveNewProject(Project $project, ?Context $context = null): Project
     {
         if (null !== $project->getId()) {
             throw new InvalidArgumentException('Cannot create project, already persisted');
@@ -111,9 +108,6 @@ final class ProjectService
         }
     }
 
-    /**
-     * @deprecated since 2.35 - use saveProject() instead
-     */
     public function updateProject(Project $project): Project
     {
         $this->validateProject($project);

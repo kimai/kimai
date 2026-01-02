@@ -547,13 +547,13 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         $form = $client->getCrawler()->filter('form[name=user_contract]')->form();
 
         $client->submit($form, [
-            'user_contract[workHoursMonday]' => '1:00',
-            'user_contract[workHoursTuesday]' => '2:00',
-            'user_contract[workHoursWednesday]' => '3:00',
-            'user_contract[workHoursThursday]' => '4:30',
-            'user_contract[workHoursFriday]' => '5:12',
-            'user_contract[workHoursSaturday]' => '6:59',
-            'user_contract[workHoursSunday]' => '0:01',
+            'user_contract[work_monday]' => '1:00',
+            'user_contract[work_tuesday]' => '2:00',
+            'user_contract[work_wednesday]' => '3:00',
+            'user_contract[work_thursday]' => '4:30',
+            'user_contract[work_friday]' => '5:12',
+            'user_contract[work_saturday]' => '6:59',
+            'user_contract[work_sunday]' => '0:01',
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/contract'));

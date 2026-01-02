@@ -25,13 +25,13 @@ class WorkingTimeModeDay implements WorkingTimeMode
      * @var array<string, string>
      */
     private array $fields = [
-        'workHoursMonday' => 'Monday',
-        'workHoursTuesday' => 'Tuesday',
-        'workHoursWednesday' => 'Wednesday',
-        'workHoursThursday' => 'Thursday',
-        'workHoursFriday' => 'Friday',
-        'workHoursSaturday' => 'Saturday',
-        'workHoursSunday' => 'Sunday',
+        WorkingTimeCalculatorDay::WORK_HOURS_MONDAY => 'Monday',
+        WorkingTimeCalculatorDay::WORK_HOURS_TUESDAY => 'Tuesday',
+        WorkingTimeCalculatorDay::WORK_HOURS_WEDNESDAY => 'Wednesday',
+        WorkingTimeCalculatorDay::WORK_HOURS_THURSDAY => 'Thursday',
+        WorkingTimeCalculatorDay::WORK_HOURS_FRIDAY => 'Friday',
+        WorkingTimeCalculatorDay::WORK_HOURS_SATURDAY => 'Saturday',
+        WorkingTimeCalculatorDay::WORK_HOURS_SUNDAY => 'Sunday',
     ];
 
     public function getId(): string

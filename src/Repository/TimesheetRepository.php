@@ -24,7 +24,6 @@ use App\Repository\Loader\TimesheetLoader;
 use App\Repository\Paginator\LoaderQueryPaginator;
 use App\Repository\Paginator\PaginatorInterface;
 use App\Repository\Query\TimesheetQuery;
-use App\Repository\Query\TimesheetQueryHint;
 use App\Repository\Result\TimesheetResult;
 use App\Repository\Search\SearchConfiguration;
 use App\Repository\Search\SearchHelper;
@@ -45,17 +44,6 @@ use InvalidArgumentException;
  */
 class TimesheetRepository extends EntityRepository
 {
-    /** @deprecated since 2.0.35 */
-    public const STATS_QUERY_DURATION = 'duration';
-    /** @deprecated since 2.0.35 */
-    public const STATS_QUERY_RATE = 'rate';
-    /** @deprecated since 2.0.35 */
-    public const STATS_QUERY_USER = 'users';
-    /** @deprecated since 2.0.35 */
-    public const STATS_QUERY_AMOUNT = 'amount';
-    /** @deprecated since 2.0.35 */
-    public const STATS_QUERY_ACTIVE = 'active';
-
     /**
      * Fetches the raw data of a timesheet, to allow comparison e.g. of submitted and previously stored data.
      */
@@ -144,31 +132,6 @@ class TimesheetRepository extends EntityRepository
             $em->rollback();
             throw $ex;
         }
-    }
-
-    /**
-     * @param self::STATS_QUERY_* $type
-     * @return int|mixed
-     * @deprecated since 2.0.35
-     */
-    public function getStatistic(string $type, ?\DateTimeInterface $begin, ?\DateTimeInterface $end, ?User $user, ?bool $billable = null): mixed
-    {
-        @trigger_error('Repository method getStatistic() is deprecated, use explicit methods instead', E_USER_DEPRECATED);
-
-        switch ($type) {
-            case 'active':
-                return $this->countActiveEntries($user);
-            case 'duration':
-                return $this->getDurationForTimeRange($begin, $end, $user, $billable);
-            case 'rate':
-                return $this->getRevenue($begin, $end, $user);
-            case 'users':
-                return $this->countActiveUsers($begin, $end, $billable);
-            case 'amount':
-                return $this->queryTimeRange('COUNT(t.id)', $begin, $end, $user, $billable);
-        }
-
-        throw new InvalidArgumentException('Invalid query type: ' . $type); // @phpstan-ignore-line
     }
 
     public function getDurationForTimeRange(?\DateTimeInterface $begin, ?\DateTimeInterface $end, ?User $user, ?bool $billable = null): int
@@ -465,24 +428,6 @@ class TimesheetRepository extends EntityRepository
         $query = $this->createTimesheetQuery($timesheetQuery);
 
         return new LoaderQueryPaginator(new TimesheetLoader($this->getEntityManager(), $timesheetQuery), $query, $counter);
-    }
-
-    /**
-     * TODO @deprecated since 2.25 - use getTimesheetResult() with TimesheetQueryHint instead
-     *
-     * @return Timesheet[]
-     */
-    public function getTimesheetsForQuery(TimesheetQuery $query, bool $fullyHydrated = false): array
-    {
-        $qb = $this->getQueryBuilderForQuery($query);
-
-        if ($fullyHydrated) {
-            $query->addQueryHint(TimesheetQueryHint::CUSTOMER_META_FIELDS);
-            $query->addQueryHint(TimesheetQueryHint::PROJECT_META_FIELDS);
-            $query->addQueryHint(TimesheetQueryHint::ACTIVITY_META_FIELDS);
-        }
-
-        return $this->getHydratedResultsByQuery($qb, $query);
     }
 
     public function getTimesheetResult(TimesheetQuery $query): TimesheetResult
