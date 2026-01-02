@@ -27,12 +27,4 @@ Do not use method chaining: all fluent interface, especially in Entities, are no
 - Interface `MetaTableTypeInterface` has new methods: `getSection()`, `setSection()`
 - Interface `ExportRendererInterface` has new methods: `getType()`, `isInternal()`
 - Interface `ExportableItem` has new methods: `getTags()`, `getBreak()` 
-- Removed and renamed translations:
-  - `action.edit`: use `edit` instead
-  - `my.profile`: use `user_profile` instead
-  - `stats.userAmountToday`: use `` instead
-  - `stats.userAmountWeek`: use `` instead
-  - `stats.userAmountMonth`: use `` instead
-  - `stats.userAmountYear`: use `` instead
-  - `stats.userAmountTotal`: use `` instead
-  - `update_multiple`
+- Removed and renamed translations, most important `action.edit` => `edit`, `my.profile` => `user_profile`
