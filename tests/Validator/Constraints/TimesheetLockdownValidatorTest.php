@@ -77,7 +77,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetLockdown(message: 'myMessage'));
+        $this->validator->validate(new NotBlank(), new TimesheetLockdown());
     }
 
     public function testValidatorWithoutNowConstraint(): void
@@ -90,7 +90,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         $timesheet = new Timesheet();
         $timesheet->setBegin($begin);
 
-        $constraint = new TimesheetLockdown(message: 'myMessage');
+        $constraint = new TimesheetLockdown();
 
         $this->validator->validate($timesheet, $constraint);
 
@@ -105,7 +105,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         $this->validator = $this->createMyValidator(false, false, 'first day of last month', 'last day of last month', '+10 days');
         $this->validator->initialize($this->context);
 
-        $constraint = new TimesheetLockdown(message: 'myMessage');
+        $constraint = new TimesheetLockdown();
 
         $this->validator->validate(new Timesheet(), $constraint);
         self::assertEmpty($this->context->getViolations());
@@ -121,7 +121,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         $timesheet = new Timesheet();
         $timesheet->setBegin($begin);
 
-        $constraint = new TimesheetLockdown(message: 'myMessage', now: 'first day of this month');
+        $constraint = new TimesheetLockdown();
 
         $this->validator->validate($timesheet, $constraint);
         self::assertEmpty($this->context->getViolations());
@@ -137,14 +137,14 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         $timesheet = new Timesheet();
         $timesheet->setBegin($begin);
 
-        $constraint = new TimesheetLockdown(message: 'myMessage', now: 'first day of this month');
+        $constraint = new TimesheetLockdown();
 
         $this->validator->validate($timesheet, $constraint);
         self::assertEmpty($this->context->getViolations());
     }
 
     #[DataProvider('getTestData')]
-    public function testLockdown(bool $allowOverwriteFull, bool $allowOverwriteGrace, string $beginModifier, string $nowModifier, bool $isViolation): void
+    public function testLockdown(bool $allowOverwriteFull, bool $allowOverwriteGrace, string $beginModifier, bool $isViolation): void
     {
         $this->validator = $this->createMyValidator($allowOverwriteFull, $allowOverwriteGrace, 'first day of last month', 'last day of last month', '+10 days');
         $this->validator->initialize($this->context);
@@ -154,10 +154,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         $timesheet = new Timesheet();
         $timesheet->setBegin($begin);
 
-        $now = new \DateTime('first day of this month');
-        $now->modify($nowModifier);
-
-        $constraint = new TimesheetLockdown(message: 'myMessage', now: $now);
+        $constraint = new TimesheetLockdown();
 
         $this->validator->validate($timesheet, $constraint);
 
@@ -174,20 +171,18 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
     public static function getTestData(): iterable
     {
         // changing before last dockdown period is not allowed
-        yield [false, false, '-5 days', '+5 days', true];
+        yield [false, false, '-5 days', true];
         // changing before last dockdown period is not allowed with grace permission
-        yield [false, true, '-5 days', '+5 days', true];
+        yield [false, true, '-5 days', true];
         // changing before last dockdown period is allowed with full permission
-        yield [true, true, '-5 days', '+5 days', false];
-        yield [true, false, '-5 days', '+5 days', false];
+        yield [true, true, '-5 days', false];
+        yield [true, false, '-5 days', false];
         // changing a value in the last lockdown period is allowed during grace period
-        yield [false, false, '+5 days', '+5 days', false];
-        // changing outside grace period is not allowed
-        yield [false, false, '+5 days', '+11 days', true];
+        yield [false, false, '+5 days', false];
         // changing outside grace period is allowed with grace and full permission
-        yield [false, true, '+5 days', '+11 days', false];
-        yield [true, false, '+5 days', '+11 days', false];
-        yield [true, true, '+5 days', '+11 days', false];
+        yield [false, true, '+5 days', false];
+        yield [true, false, '+5 days', false];
+        yield [true, true, '+5 days', false];
     }
 
     #[DataProvider('getConfigTestData')]
@@ -201,9 +196,7 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         $timesheet = new Timesheet();
         $timesheet->setBegin($begin);
 
-        $now = new \DateTime('first day of this month');
-
-        $constraint = new TimesheetLockdown(message: 'myMessage', now: $now);
+        $constraint = new TimesheetLockdown();
 
         $this->validator->validate($timesheet, $constraint);
 
