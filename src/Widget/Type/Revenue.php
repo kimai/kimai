@@ -51,8 +51,12 @@ final class Revenue extends AbstractWidget
         }
 
         if ($data === null) {
+            $today = $factory->create();
+            $beginOfDay = $today->modify('00:00:00');
+            $endOfDay = $today->modify('23:59:59');
+
             $data = match ($type) {
-                DateRangeEnum::TODAY => $this->getRevenue($factory->createStartOfDay(), $factory->createEndOfDay()),
+                DateRangeEnum::TODAY => $this->getRevenue($beginOfDay, $endOfDay),
                 DateRangeEnum::WEEK => $this->getRevenue($factory->getStartOfWeek(), $factory->getEndOfWeek()),
                 DateRangeEnum::YEAR => $this->getRevenue($factory->createStartOfYear(), $factory->createEndOfYear()),
                 DateRangeEnum::TOTAL => $this->getRevenue(null, null),

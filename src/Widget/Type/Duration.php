@@ -79,9 +79,13 @@ final class Duration extends AbstractWidget
             $days->setDate($d);
         }
 
+        $today = $factory->create();
+        $beginOfDay = $today->modify('00:00:00');
+        $endOfDay = $today->modify('23:59:59');
+
         return [
             'days' => $days->getDays(),
-            'today' => $this->getDataForTimeRange($factory->createStartOfDay(), $factory->createEndOfDay()),
+            'today' => $this->getDataForTimeRange($beginOfDay, $endOfDay),
             'week' => $this->getDataForTimeRange($factory->getStartOfWeek(), $factory->getEndOfWeek()),
             'month' => $this->getDataForTimeRange($factory->getStartOfMonth(), $factory->getEndOfMonth()),
             'year' => $this->getDataForTimeRange($factory->createStartOfYear(), $factory->createEndOfYear()),
