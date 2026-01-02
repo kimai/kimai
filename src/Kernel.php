@@ -18,9 +18,11 @@ use App\DependencyInjection\Compiler\WidgetCompilerPass;
 use App\Ldap\FormLoginLdapFactory;
 use App\Plugin\PluginInterface;
 use App\Plugin\PluginMetadata;
+use App\Validator\Attribute\TimesheetConstraint;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Finder\Finder;
@@ -50,6 +52,10 @@ class Kernel extends BaseKernel
         /** @var SecurityExtension $extension */
         $extension = $container->getExtension('security');
         $extension->addAuthenticatorFactory(new FormLoginLdapFactory());
+
+        $container->registerAttributeForAutoconfiguration(TimesheetConstraint::class, static function (ChildDefinition $definition) {
+            $definition->addResourceTag('validator.timesheet');
+        });
     }
 
     public function registerBundles(): iterable

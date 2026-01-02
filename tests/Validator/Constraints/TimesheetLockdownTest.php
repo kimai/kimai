@@ -9,16 +9,14 @@
 
 namespace App\Tests\Validator\Constraints;
 
-use App\Validator\Constraints\TimesheetConstraint;
 use App\Validator\Constraints\TimesheetLockdown;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\TestCase;
 
 #[CoversClass(TimesheetLockdown::class)]
-class TimesheetLockdownTest extends TestCase
+class TimesheetLockdownTest extends AbstractConstraintTestCase
 {
     public function testIsTimesheetConstraint(): void
     {
-        self::assertInstanceOf(TimesheetConstraint::class, new TimesheetLockdown());
+        $this->assertTimesheetConstraint(new TimesheetLockdown());
     }
 }

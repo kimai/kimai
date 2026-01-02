@@ -9,7 +9,11 @@
 
 namespace App\Validator\Constraints;
 
-final class TimesheetLongRunning extends TimesheetConstraint
+use App\Validator\Attribute\TimesheetConstraint;
+use Symfony\Component\Validator\Constraint;
+
+#[TimesheetConstraint]
+final class TimesheetLongRunning extends Constraint
 {
     public const string LONG_RUNNING = 'kimai-timesheet-long-running-01';
     public const string MAXIMUM = 'kimai-timesheet-long-running-02';

@@ -9,7 +9,11 @@
 
 namespace App\Validator\Constraints;
 
-final class TimesheetExported extends TimesheetConstraint
+use App\Validator\Attribute\TimesheetConstraint;
+use Symfony\Component\Validator\Constraint;
+
+#[TimesheetConstraint]
+final class TimesheetExported extends Constraint
 {
     public const string TIMESHEET_EXPORTED = 'kimai-timesheet-exported-01';
 

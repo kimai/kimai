@@ -9,7 +9,11 @@
 
 namespace App\Validator\Constraints;
 
-final class TimesheetOverlapping extends TimesheetConstraint
+use App\Validator\Attribute\TimesheetConstraint;
+use Symfony\Component\Validator\Constraint;
+
+#[TimesheetConstraint]
+final class TimesheetOverlapping extends Constraint
 {
     public const string RECORD_OVERLAPPING = 'kimai-timesheet-overlapping-01';
 

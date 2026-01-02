@@ -9,7 +9,11 @@
 
 namespace App\Validator\Constraints;
 
-final class TimesheetZeroDuration extends TimesheetConstraint
+use App\Validator\Attribute\TimesheetConstraint;
+use Symfony\Component\Validator\Constraint;
+
+#[TimesheetConstraint]
+final class TimesheetZeroDuration extends Constraint
 {
     public const string ZERO_DURATION_ERROR = 'kimai-timesheet-zero-duration-01';
 

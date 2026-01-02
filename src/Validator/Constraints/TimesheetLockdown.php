@@ -9,7 +9,11 @@
 
 namespace App\Validator\Constraints;
 
-final class TimesheetLockdown extends TimesheetConstraint
+use App\Validator\Attribute\TimesheetConstraint;
+use Symfony\Component\Validator\Constraint;
+
+#[TimesheetConstraint]
+final class TimesheetLockdown extends Constraint
 {
     public const string PERIOD_LOCKED = 'kimai-timesheet-lockdown-01';
 

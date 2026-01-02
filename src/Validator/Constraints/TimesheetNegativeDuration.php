@@ -9,7 +9,11 @@
 
 namespace App\Validator\Constraints;
 
-final class TimesheetNegativeDuration extends TimesheetConstraint
+use App\Validator\Attribute\TimesheetConstraint;
+use Symfony\Component\Validator\Constraint;
+
+#[TimesheetConstraint]
+final class TimesheetNegativeDuration extends Constraint
 {
     public const string NEGATIVE_DURATION_ERROR = 'kimai-timesheet-negative-duration-01';
 

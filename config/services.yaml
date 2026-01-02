@@ -238,3 +238,9 @@ services:
 
     App\API\ViewHandler:
         arguments: ['@fos_rest.view_handler.default']
+
+    App\Validator\Constraints\TimesheetAllValidator:
+        arguments: ['%kimai.validator_timesheet%']
+
+    App\Validator\Constraints\QuickEntryTimesheetValidator:
+        arguments: ['%kimai.validator_timesheet%']

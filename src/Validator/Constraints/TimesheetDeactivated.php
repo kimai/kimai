@@ -9,8 +9,11 @@
 
 namespace App\Validator\Constraints;
 
-#[\Attribute(\Attribute::TARGET_CLASS)]
-final class TimesheetDeactivated extends TimesheetConstraint
+use App\Validator\Attribute\TimesheetConstraint;
+use Symfony\Component\Validator\Constraint;
+
+#[TimesheetConstraint]
+final class TimesheetDeactivated extends Constraint
 {
     public const string DISABLED_ACTIVITY_ERROR = 'kimai-timesheet-deactivated-activity';
     public const string DISABLED_PROJECT_ERROR = 'kimai-timesheet-deactivated-project';

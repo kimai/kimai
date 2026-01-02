@@ -9,13 +9,15 @@
 
 namespace App\Validator\Constraints;
 
-use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\Validator\Constraint;
 
-/**
- * Extend this class if you want to add dynamic timesheet validation.
- */
-#[AutoconfigureTag]
-abstract class TimesheetConstraint extends Constraint
+#[\Attribute(\Attribute::TARGET_CLASS)]
+final class TimesheetAll extends Constraint
 {
+    public string $message = 'This timesheet has invalid settings.';
+
+    public function getTargets(): string
+    {
+        return self::CLASS_CONSTRAINT;
+    }
 }

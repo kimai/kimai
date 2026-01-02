@@ -9,8 +9,11 @@
 
 namespace App\Validator\Constraints;
 
-#[\Attribute(\Attribute::TARGET_CLASS)]
-final class TimesheetFutureTimes extends TimesheetConstraint
+use App\Validator\Attribute\TimesheetConstraint;
+use Symfony\Component\Validator\Constraint;
+
+#[TimesheetConstraint]
+final class TimesheetFutureTimes extends Constraint
 {
     public const string BEGIN_IN_FUTURE_ERROR = 'kimai-timesheet-future-times-01';
     public const string END_IN_FUTURE_ERROR = 'kimai-timesheet-future-times-02';

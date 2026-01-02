@@ -10,28 +10,28 @@
 namespace App\Tests\Validator\Constraints;
 
 use App\Entity\Timesheet;
-use App\Validator\Constraints\Timesheet as TimesheetConstraint;
-use App\Validator\Constraints\TimesheetValidator;
+use App\Validator\Constraints\TimesheetAll;
+use App\Validator\Constraints\TimesheetAllValidator;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @extends ConstraintValidatorTestCase<TimesheetValidator>
+ * @extends ConstraintValidatorTestCase<TimesheetAllValidator>
  */
-#[CoversClass(\App\Validator\Constraints\Timesheet::class)]
-#[CoversClass(TimesheetValidator::class)]
-class TimesheetValidatorTest extends ConstraintValidatorTestCase
+#[CoversClass(TimesheetAll::class)]
+#[CoversClass(TimesheetAllValidator::class)]
+class TimesheetAllValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator(): TimesheetValidator
+    protected function createValidator(): TimesheetAllValidator
     {
         return $this->createMyValidator();
     }
 
-    protected function createMyValidator(bool $isGranted = true): TimesheetValidator
+    protected function createMyValidator(bool $isGranted = true): TimesheetAllValidator
     {
-        return new TimesheetValidator([]);
+        return new TimesheetAllValidator([]);
     }
 
     public function testConstraintIsInvalid(): void
@@ -45,6 +45,6 @@ class TimesheetValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetConstraint());
+        $this->validator->validate(new NotBlank(), new TimesheetAll());
     }
 }

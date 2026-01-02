@@ -9,7 +9,11 @@
 
 namespace App\Validator\Constraints;
 
-final class TimesheetBasic extends TimesheetConstraint
+use App\Validator\Attribute\TimesheetConstraint;
+use Symfony\Component\Validator\Constraint;
+
+#[TimesheetConstraint]
+final class TimesheetBasic extends Constraint
 {
     public const string MISSING_BEGIN_ERROR = 'kimai-timesheet-81';
     public const string END_BEFORE_BEGIN_ERROR = 'kimai-timesheet-82';

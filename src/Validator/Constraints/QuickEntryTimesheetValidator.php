@@ -11,7 +11,6 @@ namespace App\Validator\Constraints;
 
 use App\Entity\Timesheet as TimesheetEntity;
 use App\Validator\Constraints\QuickEntryTimesheet as QuickEntryTimesheetConstraint;
-use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -19,11 +18,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 final class QuickEntryTimesheetValidator extends ConstraintValidator
 {
     /**
-     * @param TimesheetConstraint[] $constraints
+     * @param class-string[] $constraints
      */
     public function __construct(
-        #[AutowireIterator(TimesheetConstraint::class)]
-        private iterable $constraints = []
+        private readonly array $constraints = []
     )
     {
     }
@@ -42,7 +40,13 @@ final class QuickEntryTimesheetValidator extends ConstraintValidator
             return;
         }
 
-        foreach ($this->constraints as $innerConstraint) {
+        foreach ($this->constraints as $constraintClass) {
+            $r = new \ReflectionClass($constraintClass);
+            $innerConstraint = $r->newInstance();
+            if (!$innerConstraint instanceof Constraint) {
+                throw new \InvalidArgumentException('Attribute #[TimesheetConstraint] was applied to a non-constraint class: ' . $constraintClass);
+            }
+
             $this->context
                 ->getValidator()
                 ->inContext($this->context)
