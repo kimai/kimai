@@ -35,7 +35,7 @@ class ChangePasswordCommandTest extends KernelTestCase
         parent::setUp();
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
-        $container = self::$kernel->getContainer();
+        $container = self::getContainer();
 
         /** @var UserService $userService */
         $userService = $container->get(UserService::class);

@@ -31,7 +31,7 @@ class CreateUserCommandTest extends KernelTestCase
         parent::setUp();
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
-        $container = self::$kernel->getContainer();
+        $container = self::getContainer();
         /** @var UserService $userService */
         $userService = $container->get(UserService::class);
         $this->application->addCommand(new CreateUserCommand($userService));
@@ -52,7 +52,7 @@ class CreateUserCommandTest extends KernelTestCase
         $output = $commandTester->getDisplay();
         self::assertStringContainsString('[OK] Success! Created user: MyTestUser', $output);
 
-        $container = self::$kernel->getContainer();
+        $container = self::getContainer();
         /** @var Registry $doctrine */
         $doctrine = $container->get('doctrine');
         /** @var UserRepository $userRepository */

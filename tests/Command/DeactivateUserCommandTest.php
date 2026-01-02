@@ -32,7 +32,7 @@ class DeactivateUserCommandTest extends KernelTestCase
         parent::setUp();
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
-        $container = self::$kernel->getContainer();
+        $container = self::getContainer();
         /** @var UserService $userService */
         $userService = $container->get(UserService::class);
 
@@ -71,7 +71,7 @@ class DeactivateUserCommandTest extends KernelTestCase
         $output = $commandTester->getDisplay();
         self::assertStringContainsString('[OK] User "john_user" has been deactivated.', $output);
 
-        $container = self::$kernel->getContainer();
+        $container = self::getContainer();
         /** @var Registry $doctrine */
         $doctrine = $container->get('doctrine');
         /** @var UserRepository $userRepository */

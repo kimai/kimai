@@ -34,7 +34,7 @@ class DemoteUserCommandTest extends KernelTestCase
         parent::setUp();
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
-        $container = self::$kernel->getContainer();
+        $container = self::getContainer();
 
         /** @var UserService $userService */
         $userService = $container->get(UserService::class);
@@ -82,7 +82,7 @@ class DemoteUserCommandTest extends KernelTestCase
         $output = $commandTester->getDisplay();
         self::assertStringContainsString('[OK] Role "ROLE_TEAMLEAD" has been removed from user "tony_teamlead".', $output);
 
-        $container = self::$kernel->getContainer();
+        $container = self::getContainer();
         /** @var Registry $doctrine */
         $doctrine = $container->get('doctrine');
         /** @var UserRepository $userRepository */
@@ -99,7 +99,7 @@ class DemoteUserCommandTest extends KernelTestCase
         $output = $commandTester->getDisplay();
         self::assertStringContainsString('[OK] Super administrator role has been removed from the user "susan_super".', $output);
 
-        $container = self::$kernel->getContainer();
+        $container = self::getContainer();
         /** @var Registry $doctrine */
         $doctrine = $container->get('doctrine');
         /** @var UserRepository $userRepository */
