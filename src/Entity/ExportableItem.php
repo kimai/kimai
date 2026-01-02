@@ -11,10 +11,6 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\Collection;
 
-/**
- * @method array<Tag> getTags()
- * @method int getBreak()
- */
 interface ExportableItem
 {
     public function getId(): ?int;
@@ -92,15 +88,12 @@ interface ExportableItem
 
     /*
      * Returns all assigned tags.
-     * @TODO activate for 3.0
      * @return Collection<Tag>
      */
-    //public function getTags(): array;
+    public function getTags(): Collection;
 
     /*
      * Returns the break duration.
-     * @TODO activate for 3.0
-     * @return Collection<Tag>
      */
-    //public function getBreak(): int;
+    public function getBreak(): int;
 }

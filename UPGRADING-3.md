@@ -29,4 +29,6 @@ Rename your file `.env` to `.env.local` or even better: move all variables to yo
   - `stats.userAmountYear`: use `` instead
   - `stats.userAmountTotal`: use `` instead
   - `update_multiple`
-
+- Interface `MetaTableTypeInterface` has new methods: `getSection()`, `setSection()`
+- Interface `ExportRendererInterface` has new methods: `getType()`, `isInternal()`
+- Interface `ExportableItem` has new methods: `getTags()`, `getBreak()` 
