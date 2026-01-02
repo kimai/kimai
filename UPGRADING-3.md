@@ -17,9 +17,16 @@ Rename your file `.env` to `.env.local` or even better: move all variables to yo
 
 ### Developer
 
-- Do not use method chaining: all fluent interface, especially in Entities, are no longer supported. 
+Do not use method chaining: all fluent interface, especially in Entities, are no longer supported.
+
+- Require PHP 8.4
+- Bump to Symfony 7.4
+- Removed old API token `X-AUTH-USER` and `X-AUTH-TOKEN`
 - Removed `TimesheetConstraint` - use a normal `Constraint` as base class and attach the `#[App\Validator\Attribute\TimesheetConstraint]` attribute 
 - Removed `ProjectConstraint` - use a `FormExtension` and attach your custom constraints 
+- Interface `MetaTableTypeInterface` has new methods: `getSection()`, `setSection()`
+- Interface `ExportRendererInterface` has new methods: `getType()`, `isInternal()`
+- Interface `ExportableItem` has new methods: `getTags()`, `getBreak()` 
 - Removed and renamed translations:
   - `action.edit`: use `edit` instead
   - `my.profile`: use `user_profile` instead
@@ -29,6 +36,3 @@ Rename your file `.env` to `.env.local` or even better: move all variables to yo
   - `stats.userAmountYear`: use `` instead
   - `stats.userAmountTotal`: use `` instead
   - `update_multiple`
-- Interface `MetaTableTypeInterface` has new methods: `getSection()`, `setSection()`
-- Interface `ExportRendererInterface` has new methods: `getType()`, `isInternal()`
-- Interface `ExportableItem` has new methods: `getTags()`, `getBreak()` 
