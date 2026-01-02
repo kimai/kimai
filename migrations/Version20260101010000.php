@@ -32,41 +32,43 @@ final class Version20260101010000 extends AbstractMigration
 
         foreach ($rows as $row) {
             $id = $row['id'];
-            $tmp = $row['roles'];
-            $roles = [];
+            $value = $row['roles'];
+            $data = [];
 
-            if (\is_string($tmp) && str_starts_with($tmp, 'a:')) {
-                $roles = unserialize($tmp);
+            if (\is_string($value) && str_starts_with($value, 'a:')) {
+                $data = unserialize($value);
             }
 
-            if (!\is_array($roles)) {
-                $roles = [];
+            if (!\is_array($data)) {
+                $data = [];
             }
 
-            $data = json_encode($roles);
+            $json = json_encode($data);
 
-            $connection->executeStatement('UPDATE kimai2_users SET roles = :roles WHERE id = :id', [
-                'roles' => $data,
+            $connection->executeStatement('UPDATE kimai2_users SET roles = :data WHERE id = :id', [
+                'data' => $json,
                 'id' => $id,
             ]);
         }
 
-        $usersTable = $schema->getTable('kimai2_users');
-        $rolesColumn = $usersTable->getColumn('roles');
-        $rolesColumn->setType(Type::getType(Types::JSON));
-        $rolesColumn->setNotnull(true);
+        $table = $schema->getTable('kimai2_users');
+        $table->dropColumn('api_token');
 
-        $usersTable->dropColumn('api_token');
-        $schema->getTable('kimai2_timesheet')->dropColumn('category');
+        $column = $table->getColumn('roles');
+        $column->setType(Type::getType(Types::JSON));
+        $column->setComment('(DC2Type:json)');
+        $column->setNotnull(true);
+
+        $table = $schema->getTable('kimai2_timesheet');
+        $table->dropColumn('category');
     }
 
     public function down(Schema $schema): void
     {
         $connection = $this->connection;
 
+        // this will leave behind a json_valid() check in mariadb
         $connection->executeStatement('ALTER TABLE kimai2_users CHANGE roles roles LONGTEXT NOT NULL COMMENT \'(DC2Type:array)\'');
-        // FIXME do we need that? does not work on mysql
-        // $connection->executeStatement('ALTER TABLE kimai2_users DROP CONSTRAINT IF EXISTS roles');
 
         // Fetch the existing rows from the table
         $rows = $connection->fetchAllAssociative('SELECT id, roles FROM kimai2_users');
@@ -78,7 +80,7 @@ final class Version20260101010000 extends AbstractMigration
             $data = [];
 
             if (json_validate($roles)) {
-                $data = json_decode($roles);
+                $data = json_decode($roles, true);
             }
 
             if (!\is_array($data)) {
