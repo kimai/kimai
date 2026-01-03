@@ -18,17 +18,11 @@ use App\Pdf\PdfRendererTrait;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\SecurityPolicy\ExportPolicy;
-use Symfony\Component\DependencyInjection\Attribute\Exclude;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use Twig\Extension\SandboxExtension;
 
-/**
- * TODO 3.0 remove default values from constructor parameters and make class final
- * @final
- */
-#[Exclude]
-class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
+final class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
 {
     use RendererTrait;
     use PDFRendererTrait;
@@ -39,9 +33,9 @@ class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
         private readonly Environment $twig,
         private readonly HtmlToPdfConverter $converter,
         private readonly ProjectStatisticService $projectStatisticService,
-        private string $id = 'pdf', // deprecated default parameter - TODO 3.0
-        private string $title = 'pdf', // deprecated default parameter - TODO 3.0
-        private string $template = 'export/pdf-layout.html.twig', // deprecated default parameter - TODO 3.0
+        private string $id,
+        private string $title,
+        private string $template,
     )
     {
     }
@@ -121,30 +115,6 @@ class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
         $content = $this->converter->convertToPdf($content, $pdfOptions);
 
         return $this->createPdfResponse($content, $context);
-    }
-
-    /**
-     * @deprecated since 2.40.0
-     */
-    public function setTemplate(string $filename): void
-    {
-        $this->template = '@export/' . $filename;
-    }
-
-    /**
-     * @deprecated since 2.40.0
-     */
-    public function setId(string $id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @deprecated since 2.40.0
-     */
-    public function setTitle(string $title): void
-    {
-        $this->title = $title;
     }
 
     public function getId(): string

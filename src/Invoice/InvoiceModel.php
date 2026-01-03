@@ -252,13 +252,13 @@ final class InvoiceModel
     }
 
     /**
-     * @deprecated - cannot be delete, used in customer invoice templates
+     * deprecated - cannot be deleted, used in customer invoice templates
      */
     public function isHideZeroTax(): bool
     {
         @trigger_error('isHideZeroTax() is deprecated, access tax_rows in your invoice template instead', E_USER_DEPRECATED);
 
-        return false;
+        return !$this->getTemplate()->getTaxRates()[0]->isShow();
     }
 
     public function isPreview(): bool

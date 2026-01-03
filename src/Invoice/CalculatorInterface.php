@@ -46,7 +46,7 @@ interface CalculatorInterface
 
     /**
      * Returns the percentage for the value-added tax (VAT) calculation.
-     * @deprecated - cannot be deleted, referenced in customer templates
+     * deprecated - cannot be deleted, referenced in customer templates
      */
     public function getVat(): float;
 

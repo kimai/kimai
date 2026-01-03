@@ -58,16 +58,6 @@ class PdfRendererTest extends AbstractRendererTestCase
         self::assertFalse($sut->isInternal()); // @phpstan-ignore staticMethod.alreadyNarrowedType
     }
 
-    #[Group('legacy')]
-    public function testLegacy(): void
-    {
-        $sut = $this->getAbstractRenderer();
-
-        $sut->setTemplate('some'); // @phpstan-ignore method.deprecated
-        $sut->setTitle('xxxxxx'); // @phpstan-ignore method.deprecated
-        self::assertEquals('xxxxxx', $sut->getTitle());
-    }
-
     public function testRender(): void
     {
         $sut = $this->getAbstractRenderer();

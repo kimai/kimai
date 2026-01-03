@@ -22,14 +22,9 @@ abstract class AbstractCalculator
     private array $cached = [];
 
     /**
-     * TODO make this method abstract in 3.0
-     *
      * @return InvoiceItem[]
      */
-    protected function calculateEntries(): array
-    {
-        return [];
-    }
+    abstract protected function calculateEntries(): array;
 
     /**
      * TODO make this method final in 3.0
@@ -86,7 +81,7 @@ abstract class AbstractCalculator
     }
 
     /**
-     * @deprecated - cannot be deleted, referenced in customer templates
+     * deprecated - cannot be deleted, referenced in customer templates
      */
     public function getVat(): float
     {

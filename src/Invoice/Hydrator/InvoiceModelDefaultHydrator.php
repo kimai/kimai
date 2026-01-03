@@ -54,12 +54,12 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             'invoice.subtotal_plain' => $subtotal,
 
             'template.name' => $template->getName() ?? '',
-            'template.company' => $template->getCompany() ?? '', // deprecated since 2.45
-            'template.address' => $template->getAddress() ?? '',
+            'template.company' => $template->getCompany() ?? '', // deprecated - cannot be deleted, referenced in customer templates
+            'template.address' => $template->getAddress() ?? '', // deprecated - cannot be deleted, referenced in customer templates
             'template.title' => $template->getTitle() ?? '',
             'template.payment_terms' => $template->getPaymentTerms() ?? '',
             'template.due_days' => $template->getDueDays(),
-            'template.vat_id' => $template->getVatId() ?? '', // deprecated since 2.45
+            'template.vat_id' => $template->getVatId() ?? '', // deprecated - cannot be deleted, referenced in customer templates
             'template.contact' => $template->getContact() ?? '',
             'template.country' => null,
             'template.country_name' => null,
@@ -118,8 +118,8 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
         if ($seller !== null) {
             $country = $seller->getCountry();
             if ($country !== null) {
-                $values['template.country'] = $country; // deprecated since 2.45
-                $values['template.country_name'] = Countries::getName($country, $language); // deprecated since 2.45
+                $values['template.country'] = $country; // deprecated - cannot be deleted, referenced in customer templates
+                $values['template.country_name'] = Countries::getName($country, $language); // deprecated - cannot be deleted, referenced in customer templates
             }
         }
 
@@ -129,10 +129,10 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             if ($begin !== null) {
                 $values = array_merge($values, [
                     'query.day' => $begin->format('d'),
-                    'query.month' => $formatter->getFormattedMonthName($begin), // @deprecated - cannot be deleted, referenced in customer templates
-                    'query.month_number' => $begin->format('m'), // @deprecated - cannot be deleted, referenced in customer templates
-                    'query.year' => $begin->format('Y'), // @deprecated - cannot be deleted, referenced in customer templates
-                    'query.begin' => $formatter->getFormattedDateTime($begin), // @deprecated - cannot be deleted, referenced in customer templates
+                    'query.month' => $formatter->getFormattedMonthName($begin), // deprecated - cannot be deleted, referenced in customer templates
+                    'query.month_number' => $begin->format('m'), // deprecated - cannot be deleted, referenced in customer templates
+                    'query.year' => $begin->format('Y'), // deprecated - cannot be deleted, referenced in customer templates
+                    'query.begin' => $formatter->getFormattedDateTime($begin), // deprecated - cannot be deleted, referenced in customer templates
                     'query.begin_process' => $begin->format(self::DATE_PROCESS_FORMAT),
                     'query.begin_day' => $begin->format('d'),
                     'query.begin_month' => $formatter->getFormattedMonthName($begin),

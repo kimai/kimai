@@ -12,7 +12,7 @@ namespace App\Utils;
 final class SearchTerm
 {
     private string $originalTerm;
-    private string $term;
+    private bool $hasSearchTerm = false;
     /**
      * @var SearchTermPart[]
      */
@@ -27,28 +27,10 @@ final class SearchTerm
         foreach ($terms as $term) {
             $part = new SearchTermPart($term);
             if ($part->getField() === null) {
-                $finalTerm[] = $part->getTerm();
+                $this->hasSearchTerm = true;
             }
             $this->parts[] = $part;
         }
-
-        $this->term = implode(' ', $finalTerm);
-    }
-
-    /**
-     * @return array<string, string>
-     */
-    public function getSearchFields(): array
-    {
-        // TODO deprecated 3.0 - all places that use this method should use the RepositorySearchTrait instead (soft deprecation for plugins)
-        $fields = [];
-        foreach ($this->parts as $part) {
-            if (($field = $part->getField()) !== null) {
-                $fields[$field] = $part->getTerm();
-            }
-        }
-
-        return $fields;
     }
 
     /**
@@ -59,16 +41,9 @@ final class SearchTerm
         return $this->parts;
     }
 
-    public function getSearchTerm(): string
-    {
-        // TODO deprecated 3.0 - all places that use this method should use the RepositorySearchTrait instead (soft deprecation for plugins)
-        return $this->term;
-    }
-
     public function hasSearchTerm(): bool
     {
-        // TODO refactor and use the parts and check if any part has an empty field name
-        return $this->term !== '';
+        return $this->hasSearchTerm;
     }
 
     public function getOriginalSearch(): string

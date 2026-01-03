@@ -109,7 +109,7 @@ trait RendererTestTrait
 
         $template = new InvoiceTemplate();
         $template->setTitle('a very *long* test invoice / template title with [ßpecial] chäracter');
-        $template->setVat(19);
+        $template->setTaxRate(19.0);
         $template->setLanguage('en');
         $template->setCustomer($customer);
 
@@ -306,7 +306,7 @@ trait RendererTestTrait
 
         $template = new InvoiceTemplate();
         $template->setTitle('a test invoice template title');
-        $template->setVat(19);
+        $template->setTaxRate(19.0);
         $template->setLanguage('it');
         $template->setCustomer($customer);
 
