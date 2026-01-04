@@ -2042,6 +2042,18 @@
         <source>payment_account_name</source>
         <target state="translated">شماره شبا یا شماره کارت</target>
       </trans-unit>
+      <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve">
+        <source>electronic_invoice</source>
+        <target state="translated">فاکتور الکترونیکی</target>
+      </trans-unit>
+      <trans-unit id="QnN_ONc" resname="invoice_tax_type" xml:space="preserve">
+        <source>invoice_tax_type</source>
+        <target state="translated">وضعیت مالیاتی</target>
+      </trans-unit>
+      <trans-unit id="lU1Njcy" resname="tax.type.standard" xml:space="preserve">
+        <source>tax.type.standard</source>
+        <target state="translated">مشمول مالیات</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
