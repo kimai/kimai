@@ -238,7 +238,6 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Groups(['Customer_Entity'])]
     #[Exporter\Expose(label: 'address_line3')]
     private ?string $addressLine3 = null;
-    #[Versioned]
     #[ORM\Column(name: 'postcode', type: Types::STRING, length: 20, nullable: true)]
     #[Assert\Length(max: 20)]
     #[Serializer\Expose]
@@ -258,7 +257,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Assert\Length(max: 50)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
-    #[Exporter\Expose(label: 'buyer_reference')]
+    #[Exporter\Expose(label: 'buyerReference')]
     #[Versioned]
     private ?string $buyerReference = null;
 

@@ -125,11 +125,6 @@ parameters:
             path: src/API/TagController.php
 
         -
-            message: "#^Parameter \\#1 \\$datetime of method App\\\\Timesheet\\\\DateTimeFactory\\:\\:createDateTime\\(\\) expects string, mixed given\\.$#"
-            count: 3
-            path: src/API/TimesheetController.php
-
-        -
             message: "#^Parameter \\#2 \\$statistic of class App\\\\Event\\\\ActivityStatisticEvent constructor expects App\\\\Model\\\\ActivityStatistic, App\\\\Model\\\\ActivityStatistic\\|null given\\.$#"
             count: 1
             path: src/Activity/ActivityStatisticService.php

@@ -13,6 +13,8 @@ use App\Entity\Customer;
 use App\Entity\CustomerMeta;
 use App\Entity\InvoiceTemplate;
 use App\Entity\InvoiceTemplateMeta;
+use App\Entity\Tax;
+use App\Entity\TaxType;
 use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -42,6 +44,48 @@ class InvoiceTemplateTest extends TestCase
         self::assertInstanceOf(Collection::class, $sut->getMetaFields());
         self::assertEquals(0, $sut->getMetaFields()->count());
         self::assertNull($sut->getMetaField('foo'));
+    }
+
+    public function testTaxRates(): void
+    {
+        $sut = new InvoiceTemplate();
+
+        $rates = $sut->getTaxRates();
+        self::assertCount(1, $rates);
+        self::assertEquals(TaxType::STANDARD, $rates[0]->getType());
+        self::assertEquals(0.00, $rates[0]->getRate());
+        self::assertEquals('vat', $rates[0]->getName());
+        self::assertNull($rates[0]->getNote());
+
+        $tax1 = new Tax(
+            TaxType::REVERSE,
+            $this->vat ?? 0.00,
+            'tax.name.reverse_charge',
+            true,
+            null
+        );
+        $tax2 = new Tax(
+            TaxType::EXEMPT,
+            $this->vat ?? 0.00,
+            'tax.name.exempt',
+            true,
+            null
+        );
+
+        $sut->setTaxRates([$tax1, $tax2]);
+        $rates = $sut->getTaxRates();
+
+        self::assertCount(2, $rates);
+
+        self::assertEquals(TaxType::REVERSE, $rates[0]->getType());
+        self::assertEquals(0.00, $rates[0]->getRate());
+        self::assertEquals('tax.name.reverse_charge', $rates[0]->getName());
+        self::assertNull($rates[0]->getNote());
+
+        self::assertEquals(TaxType::EXEMPT, $rates[1]->getType());
+        self::assertEquals(0.00, $rates[1]->getRate());
+        self::assertEquals('tax.name.exempt', $rates[1]->getName());
+        self::assertNull($rates[1]->getNote());
     }
 
     public function testSetterAndGetter(): void
