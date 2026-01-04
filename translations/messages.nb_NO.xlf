@@ -86,14 +86,6 @@
         <source>user_profile</source>
         <target>Min profil</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>API-passord</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>Gjenta API-passord</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target state="translated">Manglende tillatelse. Videresend til innlogging?</target>
@@ -1869,10 +1861,6 @@
       <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
         <source>api_token_hidden</source>
         <target state="translated">Dette er den eneste gangen nøkkelen vil vises! Oppbevar den trygt og sørg for at du har kopiert den før du lukker vinduet.</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">API-passord er foreldet: vennligst bruk API-nøkler i stedet.</target>
       </trans-unit>
       <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
         <source>hours_per_day</source>

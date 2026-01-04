@@ -13,13 +13,13 @@ use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 
 final class SessionHandler extends PdoSessionHandler
 {
     public function __construct(
         Connection $connection,
-        private readonly RateLimiterFactory $sessionPredictionLimiter,
+        private readonly RateLimiterFactoryInterface $sessionPredictionLimiter,
         private readonly RequestStack $requestStack
     )
     {

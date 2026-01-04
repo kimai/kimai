@@ -9,30 +9,28 @@
 
 namespace App\Event;
 
-use App\Model\PermissionSectionInterface;
+use App\Model\PermissionSection;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**
- * This event can be used, to dynamically add sections to the permission screen.
+ * Allows to dynamically add sections to the permission screen.
  */
 final class PermissionSectionsEvent extends Event
 {
     /**
-     * @var array<PermissionSectionInterface>
+     * @var array<PermissionSection>
      */
-    private array $sections = []; // @phpstan-ignore property.deprecatedInterface
+    private array $sections = [];
 
-    public function addSection(PermissionSectionInterface $section): PermissionSectionsEvent // @phpstan-ignore parameter.deprecatedInterface
+    public function addSection(PermissionSection $section): void
     {
         $this->sections[] = $section;
-
-        return $this;
     }
 
     /**
-     * @return PermissionSectionInterface[]
+     * @return PermissionSection[]
      */
-    public function getSections(): array  // @phpstan-ignore return.deprecatedInterface
+    public function getSections(): array
     {
         return $this->sections;
     }

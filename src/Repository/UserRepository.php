@@ -337,6 +337,9 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
         return $qb;
     }
 
+    /**
+     * @return Pagination<User>
+     */
     public function getPagerfantaForQuery(UserQuery $query): Pagination
     {
         return new Pagination($this->getPaginatorForQuery($query), $query);

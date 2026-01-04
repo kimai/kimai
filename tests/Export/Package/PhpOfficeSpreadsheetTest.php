@@ -49,7 +49,6 @@ class PhpOfficeSpreadsheetTest extends TestCase
         $spreadsheetPackage->open($this->filename);
         $reflection = new \ReflectionClass($spreadsheetPackage);
         $property = $reflection->getProperty('filename');
-        $property->setAccessible(true);
         self::assertEquals($this->filename, $property->getValue($spreadsheetPackage));
     }
 
@@ -93,7 +92,6 @@ class PhpOfficeSpreadsheetTest extends TestCase
 
         $reflection = new \ReflectionClass($spreadsheetPackage);
         $property = $reflection->getProperty('worksheet');
-        $property->setAccessible(true);
         /** @var Worksheet $worksheet */
         $worksheet = $property->getValue($spreadsheetPackage);
 
@@ -110,7 +108,6 @@ class PhpOfficeSpreadsheetTest extends TestCase
 
         $reflection = new \ReflectionClass($spreadsheetPackage);
         $property = $reflection->getProperty('worksheet');
-        $property->setAccessible(true);
         /** @var Worksheet $worksheet */
         $worksheet = $property->getValue($spreadsheetPackage);
 

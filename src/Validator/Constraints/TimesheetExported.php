@@ -9,11 +9,15 @@
 
 namespace App\Validator\Constraints;
 
-final class TimesheetExported extends TimesheetConstraint
-{
-    public const TIMESHEET_EXPORTED = 'kimai-timesheet-exported-01';
+use App\Validator\Attribute\TimesheetConstraint;
+use Symfony\Component\Validator\Constraint;
 
-    protected const ERROR_NAMES = [
+#[TimesheetConstraint]
+final class TimesheetExported extends Constraint
+{
+    public const string TIMESHEET_EXPORTED = 'kimai-timesheet-exported-01';
+
+    protected const array ERROR_NAMES = [
         self::TIMESHEET_EXPORTED => 'This timesheet is already exported.',
     ];
 

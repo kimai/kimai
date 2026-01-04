@@ -62,14 +62,6 @@
         <source>user_profile</source>
         <target>Meu Perfil</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>Senha API</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>Repita Senha da API</target>
-      </trans-unit>
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Painel</target>
@@ -1709,10 +1701,6 @@
       <trans-unit id="8JEDuyx" resname="activity_number" xml:space="preserve" approved="no">
         <source>Activity number</source>
         <target state="translated">Numeração da atividade</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">As senhas de API estão desatualizadas: em vez disso, use tokens de API.</target>
       </trans-unit>
       <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve">
         <source>Expiry date</source>

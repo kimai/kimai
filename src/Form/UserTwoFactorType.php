@@ -37,7 +37,7 @@ final class UserTwoFactorType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new NotBlank(),
-                    new Callback([$this, 'validateCode']),
+                    new Callback(callback: $this->validateCode(...)),
                 ],
             ])
             ->add('enabled', HiddenType::class, [

@@ -29,7 +29,7 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
         $formatter = $this->model->getFormatter();
 
         $rate = $item->getRate();
-        $internalRate = $item->getInternalRate(); // @phpstan-ignore method.deprecated
+        $internalRate = $item->getInternalRate();
         $appliedRate = $item->getHourlyRate();
         $amount = $formatter->getFormattedDecimalDuration($item->getDuration());
         $description = $item->getDescription();
@@ -63,9 +63,9 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
             'entry.rate' => $formatter->getFormattedMoney($appliedRate, $currency),
             'entry.rate_nc' => $formatter->getFormattedMoney($appliedRate, $currency, false),
             'entry.rate_plain' => $appliedRate,
-            'entry.rate_internal' => $formatter->getFormattedMoney($internalRate, $currency), // @deprecated since 2.41
-            'entry.rate_internal_nc' => $formatter->getFormattedMoney($internalRate, $currency, false),  // @deprecated since 2.41
-            'entry.rate_internal_plain' => $internalRate,  // @deprecated since 2.41
+            'entry.rate_internal' => $formatter->getFormattedMoney($internalRate, $currency),
+            'entry.rate_internal_nc' => $formatter->getFormattedMoney($internalRate, $currency, false),
+            'entry.rate_internal_plain' => $internalRate,
             'entry.rate_fixed' => ($item->isFixedRate() ? $item->getFixedRate() : null),
             'entry.total' => $formatter->getFormattedMoney($rate, $currency),
             'entry.total_nc' => $formatter->getFormattedMoney($rate, $currency, false),
@@ -115,7 +115,7 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
                 'entry.activity_id' => $activity->getId(),
             ]);
 
-            foreach ($activity->getMetaFields() as $metaField) {
+            foreach ($activity->getVisibleMetaFields() as $metaField) {
                 $values = array_merge($values, [
                     'entry.activity.meta.' . $metaField->getName() => $metaField->getValue(),
                 ]);
@@ -128,7 +128,7 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
                 'entry.project_id' => $project->getId(),
             ]);
 
-            foreach ($project->getMetaFields() as $metaField) {
+            foreach ($project->getVisibleMetaFields() as $metaField) {
                 $values = array_merge($values, [
                     'entry.project.meta.' . $metaField->getName() => $metaField->getValue(),
                 ]);
@@ -141,7 +141,7 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
                 'entry.customer_id' => $customer->getId(),
             ]);
 
-            foreach ($customer->getMetaFields() as $metaField) {
+            foreach ($customer->getVisibleMetaFields() as $metaField) {
                 $values = array_merge($values, [
                     'entry.customer.meta.' . $metaField->getName() => $metaField->getValue(),
                 ]);

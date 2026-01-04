@@ -53,7 +53,6 @@ abstract class AbstractCalculatorTestCase extends TestCase
 
     protected function assertTax(CalculatorInterface $sut, int $rate): void
     {
-        self::assertEquals($rate, $sut->getVat()); // @phpstan-ignore method.deprecated
         $rows = $sut->getTaxRows();
         self::assertCount(1, $rows);
 
@@ -74,7 +73,7 @@ abstract class AbstractCalculatorTestCase extends TestCase
     {
         $customer = new Customer('foo');
         $template = new InvoiceTemplate();
-        $template->setVat(19);
+        $template->setTaxRate(19.0);
 
         $user = $this->getMockBuilder(User::class)->onlyMethods(['getId'])->disableOriginalConstructor()->getMock();
         $user->method('getId')->willReturn(1);

@@ -12,7 +12,7 @@ namespace App\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 #[\Attribute(\Attribute::TARGET_CLASS)]
-final class Timesheet extends Constraint
+final class TimesheetAll extends Constraint
 {
     public string $message = 'This timesheet has invalid settings.';
 

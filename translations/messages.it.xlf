@@ -86,14 +86,6 @@
         <source>user_profile</source>
         <target state="final">Il mio profilo</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token" approved="yes">
-        <source>api_token</source>
-        <target state="final">Password API</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat" approved="yes">
-        <source>api_token_repeat</source>
-        <target state="final">Ripeti password API</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required" approved="yes">
         <source>login_required</source>
         <target state="final">Autorizzazione mancante. Reindirizzare all'accesso?</target>
@@ -1709,10 +1701,6 @@
       <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve" approved="yes">
         <source>Project number</source>
         <target state="final">Numero progetto</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve" approved="yes">
-        <source>api_password_deprecated</source>
-        <target state="final">Le password API sono obsolete: usa invece i token API.</target>
       </trans-unit>
       <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve" approved="yes">
         <source>Expiry date</source>

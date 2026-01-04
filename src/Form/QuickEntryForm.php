@@ -110,7 +110,7 @@ final class QuickEntryForm extends AbstractType
             'allow_add' => true,
             'constraints' => [
                 new Valid(),
-                new All(['constraints' => [new QuickEntryModel()]])
+                new All(constraints: [new QuickEntryModel()])
             ],
         ]);
     }

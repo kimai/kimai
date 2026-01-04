@@ -16,7 +16,6 @@ use App\Event\PrepareUserEvent;
 use App\Form\AccessTokenForm;
 use App\Form\Model\TotpActivation;
 use App\Form\Model\UserContractModel;
-use App\Form\UserApiPasswordType;
 use App\Form\UserContractType;
 use App\Form\UserEditType;
 use App\Form\UserPasswordType;
@@ -35,8 +34,8 @@ use App\Utils\PageSetup;
 use Doctrine\Common\Collections\ArrayCollection;
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Encoding\Encoding;
-use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
-use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
+use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\RoundBlockSizeMode;
 use Endroid\QrCode\Writer\PngWriter;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Totp\TotpAuthenticatorInterface;
@@ -208,7 +207,7 @@ final class ProfileController extends AbstractController
     #[Route(path: '/{username}/api-token', name: 'user_profile_api_token', methods: ['GET', 'POST'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[IsGranted('api-token', 'profile')]
-    public function apiTokenAction(
+    public function accessTokenAction(
         #[MapEntity(mapping: ['username' => 'username'])]
         User $profile,
         Request $request,
@@ -216,22 +215,6 @@ final class ProfileController extends AbstractController
         AccessTokenRepository $accessTokenRepository
     ): Response
     {
-        $form = $this->createForm(UserApiPasswordType::class, $profile, [
-            'action' => $this->generateUrl('user_profile_api_token', ['username' => $profile->getUserIdentifier()]),
-            'method' => 'POST'
-        ]);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            @trigger_error('User ' . $profile->getUsername() . ' created deprecated API password.', E_USER_DEPRECATED);
-
-            $userService->saveUser($profile);
-
-            $this->flashSuccess('action.update.success');
-
-            return $this->redirectToRoute('user_profile_api_token', ['username' => $profile->getUserIdentifier()]);
-        }
-
         $accessTokens = $accessTokenRepository->findForUser($profile);
 
         $createdToken = null;
@@ -254,7 +237,6 @@ final class ProfileController extends AbstractController
             'access_tokens' => $accessTokens,
             'page_setup' => $this->getPageSetup($profile, 'api-token'),
             'user' => $profile,
-            'form' => $form->createView(),
         ]);
     }
 
@@ -531,16 +513,17 @@ final class ProfileController extends AbstractController
 
         $qrCodeContent = $totpAuthenticator->getQRContent($profile);
 
-        $result = Builder::create()
-            ->writer(new PngWriter())
-            ->writerOptions([])
-            ->data($qrCodeContent)
-            ->encoding(new Encoding('UTF-8'))
-            ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
-            ->size(200)
-            ->margin(0)
-            ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
-            ->build();
+        $builder = new Builder(
+            new PngWriter(),
+            [],
+            false,
+            $qrCodeContent,
+            new Encoding('UTF-8'),
+            ErrorCorrectionLevel::High,
+            200,
+            0,
+            RoundBlockSizeMode::Margin
+        );
 
         return $this->render('user/2fa.html.twig', [
             'tab' => '2fa',
@@ -548,7 +531,7 @@ final class ProfileController extends AbstractController
             'user' => $profile,
             'form' => $form->createView(),
             'deactivate' => $this->getTwoFactorDeactivationForm($profile)->createView(),
-            'qr_code' => $result,
+            'qr_code' => $builder->build(),
             'secret' => $profile->getTotpSecret(),
         ]);
     }

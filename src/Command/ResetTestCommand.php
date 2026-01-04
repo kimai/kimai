@@ -191,7 +191,6 @@ final class ResetTestCommand extends AbstractResetCommand
         foreach ($users as $items) {
             $user = $items[0];
             $user->setPassword($this->passwordHasher->hashPassword($user, UserFixtures::DEFAULT_PASSWORD));
-            $user->setApiToken($this->passwordHasher->hashPassword($user, UserFixtures::DEFAULT_API_TOKEN));
             foreach (User::WIZARDS as $wizard) {
                 $user->setWizardAsSeen($wizard);
             }

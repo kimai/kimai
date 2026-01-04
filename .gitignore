@@ -1,6 +1,5 @@
 # some hosters require a htaccess to change the PHP version
 /public/.htaccess
-/.env-*
 /.idea/
 .DS_Store
 
@@ -21,6 +20,7 @@
 /var/dev/*
 /var/data/*
 /var/cache/*
+/var/share/*
 /var/invoices*
 /var/export*
 /var/log/*
@@ -34,7 +34,6 @@
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
-.env
 /public/bundles/
 /vendor/
 ###< symfony/framework-bundle ###
@@ -45,9 +44,8 @@
 ###< phpunit/phpunit ###
 
 ###> friendsofphp/php-cs-fixer ###
-.php_cs
-.php_cs.cache
-.php-cs-fixer.cache
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
 
 ###> symfony/phpunit-bridge ###

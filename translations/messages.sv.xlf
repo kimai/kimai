@@ -62,14 +62,6 @@
         <source>user_profile</source>
         <target state="translated">Min profil</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target state="translated">API lösenord</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target state="translated">Upprepa API lösenord</target>
-      </trans-unit>
       <trans-unit id="UoOv6mx" resname="menu.homepage" xml:space="preserve">
         <source>menu.homepage</source>
         <target state="translated">Överblick</target>
@@ -1717,10 +1709,6 @@
       <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
         <source>api_token_hidden</source>
         <target state="translated">Detta är den enda gången nyckeln visas, så kopiera undan den till en säker plats innan du stänger fönstret.</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">API-lösenord är förlegade, använd API-nycklar istället.</target>
       </trans-unit>
       <trans-unit id="WwesQPU" resname="deactivate" xml:space="preserve">
         <source>Deactivate</source>

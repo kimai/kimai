@@ -10,7 +10,6 @@
 namespace App\Export;
 
 use App\Entity\MetaTableTypeInterface;
-use App\Entity\User;
 use App\Event\ActivityMetaDisplayEvent;
 use App\Event\CustomerMetaDisplayEvent;
 use App\Event\MetaDisplayEventInterface;
@@ -74,17 +73,11 @@ final class DefaultTemplate implements TemplateInterface
      */
     public function getColumns(TimesheetQuery $query): array
     {
-        // @deprecated from 2.36 - will be removed with 3.0
-        $durationFormatter = 'duration';
-        if (($user = $query->getCurrentUser()) instanceof User) {
-            $durationFormatter = $user->isExportDecimal() ? 'duration_decimal' : 'duration';
-        }
-
         $columns = [
             'date',
             'begin',
             'end',
-            $durationFormatter,
+            'duration_decimal',
             'currency',
             'rate',
             'internal_rate',

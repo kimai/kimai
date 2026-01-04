@@ -20,11 +20,9 @@ use App\Export\TemplateInterface;
 use App\Repository\Query\TimesheetQuery;
 use OpenSpout\Writer\CSV\Options;
 use OpenSpout\Writer\CSV\Writer;
-use Symfony\Component\DependencyInjection\Attribute\Exclude;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Exclude]
 final class CsvRenderer extends AbstractSpreadsheetRenderer implements ExportRendererInterface
 {
     public function __construct(

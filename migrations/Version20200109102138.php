@@ -35,7 +35,7 @@ final class Version20200109102138 extends AbstractMigration
         $customerComment->addColumn('created_by_id', 'integer', ['notnull' => true]);
         $customerComment->addColumn('created_at', 'datetime', ['notnull' => true]);
         $customerComment->addColumn('pinned', 'boolean', ['notnull' => true, 'default' => false]);
-        $customerComment->setPrimaryKey(['id']);
+        $this->addPrimaryKeyConstraint($customerComment, ['id']);
         $customerComment->addIndex(['customer_id'], 'IDX_A5B142D99395C3F3');
         $customerComment->addForeignKeyConstraint('kimai2_customers', ['customer_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_A5B142D99395C3F3');
         $customerComment->addForeignKeyConstraint('kimai2_users', ['created_by_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_A5B142D9B03A8386');
@@ -47,7 +47,7 @@ final class Version20200109102138 extends AbstractMigration
         $projectComment->addColumn('created_by_id', 'integer', ['notnull' => true]);
         $projectComment->addColumn('created_at', 'datetime', ['notnull' => true]);
         $projectComment->addColumn('pinned', 'boolean', ['notnull' => true, 'default' => false]);
-        $projectComment->setPrimaryKey(['id']);
+        $this->addPrimaryKeyConstraint($projectComment, ['id']);
         $projectComment->addIndex(['project_id'], 'IDX_29A23638166D1F9C');
         $projectComment->addForeignKeyConstraint('kimai2_projects', ['project_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_29A23638166D1F9C');
         $projectComment->addForeignKeyConstraint('kimai2_users', ['created_by_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_29A23638B03A8386');

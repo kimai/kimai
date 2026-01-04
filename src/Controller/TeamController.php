@@ -59,8 +59,7 @@ final class TeamController extends AbstractController
 
         $entries = $repository->getPagerfantaForQuery($query);
 
-        $table = new DataTable('admin_teams', $query);
-        $table->setPagination($entries);
+        $table = new DataTable('admin_teams', $query, $entries);
         $table->setSearchForm($form);
         $table->setPaginationRoute('admin_team_paginated');
         $table->setReloadEvents('kimai.teamUpdate');
@@ -101,13 +100,13 @@ final class TeamController extends AbstractController
     {
         $newTeam = clone $team;
 
-        if ($team->getName() === null) {
+        if (($name = $team->getName()) === null) {
             throw new BadRequestHttpException('Team with empty name cannot be duplicated');
         }
 
         $i = 1;
         do {
-            $newName = \sprintf('%s (%s)', $team->getName(), $i++);
+            $newName = \sprintf('%s (%s)', $name, $i++);
         } while ($this->repository->count(['name' => $newName]) > 0 && $i < 10);
         $newTeam->setName($newName);
 

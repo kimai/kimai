@@ -10,20 +10,18 @@
 namespace App\Validator\Constraints;
 
 use App\Entity\Timesheet as TimesheetEntity;
-use App\Validator\Constraints\Timesheet as TimesheetEntityConstraint;
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+use App\Validator\Constraints\TimesheetAll as TimesheetEntityConstraint;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-final class TimesheetValidator extends ConstraintValidator
+final class TimesheetAllValidator extends ConstraintValidator
 {
     /**
-     * @param TimesheetConstraint[] $constraints
+     * @param class-string[] $constraints
      */
     public function __construct(
-        #[TaggedIterator(TimesheetConstraint::class)]
-        private iterable $constraints
+        private readonly array $constraints = []
     )
     {
     }
@@ -43,7 +41,13 @@ final class TimesheetValidator extends ConstraintValidator
             $groups = [$this->context->getGroup()];
         }
 
-        foreach ($this->constraints as $innerConstraint) {
+        foreach ($this->constraints as $constraintClass) {
+            $r = new \ReflectionClass($constraintClass);
+            $innerConstraint = $r->newInstance();
+            if (!$innerConstraint instanceof Constraint) {
+                throw new \InvalidArgumentException('Attribute #[TimesheetConstraint] was applied to a non-constraint class: ' . $constraintClass);
+            }
+
             $this->context
                 ->getValidator()
                 ->inContext($this->context)

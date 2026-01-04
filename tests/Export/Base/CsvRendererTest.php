@@ -77,17 +77,17 @@ class CsvRendererTest extends AbstractRendererTestCase
         ];
 
         return [
-            ['400', '2437.12', '1947.99', 7, 6, 1, 2, 2, false, null, $en],
-            ['400', '2437.12', '1947.99', 7, 6, 1, 2, 2, true, 'de', $de]
+            ['1947.99', 7, 6, 1, 2, 2, null, $en],
+            ['1947.99', 7, 6, 1, 2, 2, 'de', $de]
         ];
     }
 
     #[DataProvider('getTestModel')]
-    public function testRender(string $totalDuration, string $totalRate, string $expectedRate, int $expectedRows, int $expectedDescriptions, int $expectedUser1, int $expectedUser2, int $expectedUser3, bool $exportDecimal, ?string $locale, array $header): void
+    public function testRender(string $expectedRate, int $expectedRows, int $expectedDescriptions, int $expectedUser1, int $expectedUser2, int $expectedUser3, ?string $locale, array $header): void
     {
         $sut = $this->getAbstractRenderer($locale);
 
-        $response = $this->render($sut, $exportDecimal);
+        $response = $this->render($sut);
         self::assertInstanceOf(BinaryFileResponse::class, $response);
 
         $file = $response->getFile();
@@ -127,8 +127,7 @@ class CsvRendererTest extends AbstractRendererTestCase
             '2019-06-16',
             '12:00',
             '12:06',
-            ($exportDecimal ? '0.11' : '0:06'),
-            //'0.11',
+            '0.11',
             'EUR',
             '0',
             '0',
@@ -163,8 +162,7 @@ class CsvRendererTest extends AbstractRendererTestCase
             '2019-06-16',
             '12:00',
             '12:06',
-            ($exportDecimal ? '0.11' : '0:06'),
-            //'0.11',
+            '0.11',
             'EUR',
             '0',
             '0',

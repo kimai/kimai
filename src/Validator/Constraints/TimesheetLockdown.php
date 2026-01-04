@@ -9,19 +9,19 @@
 
 namespace App\Validator\Constraints;
 
-final class TimesheetLockdown extends TimesheetConstraint
-{
-    public const PERIOD_LOCKED = 'kimai-timesheet-lockdown-01';
+use App\Validator\Attribute\TimesheetConstraint;
+use Symfony\Component\Validator\Constraint;
 
-    protected const ERROR_NAMES = [
+#[TimesheetConstraint]
+final class TimesheetLockdown extends Constraint
+{
+    public const string PERIOD_LOCKED = 'kimai-timesheet-lockdown-01';
+
+    protected const array ERROR_NAMES = [
         self::PERIOD_LOCKED => 'This period is locked, please choose a later date.',
     ];
 
     public string $message = 'This period is locked, please choose a later date.';
-    /**
-     * @var \DateTime|string|null
-     */
-    public \DateTime|string|null $now;
 
     public function getTargets(): string
     {
