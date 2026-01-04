@@ -310,6 +310,10 @@
         <source>allow_duplicate_number</source>
         <target state="translated">Aynı numaranın birden fazla kullanımına izin ver</target>
       </trans-unit>
+      <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="no" xml:space="preserve">
+        <source>invoice.rounding_mode</source>
+        <target state="translated">Yuvarlama modu</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
