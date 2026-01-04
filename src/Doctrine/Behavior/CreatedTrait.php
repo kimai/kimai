@@ -9,11 +9,13 @@
 
 namespace App\Doctrine\Behavior;
 
+use App\Audit\Versioned;
 use Doctrine\ORM\Mapping as ORM;
 
 trait CreatedTrait
 {
     #[ORM\Column(name: 'created_at', type: 'datetime_immutable', nullable: true)]
+    #[Versioned]
     private ?\DateTimeImmutable $createdAt = null;
 
     public function getCreatedAt(): ?\DateTimeImmutable

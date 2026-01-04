@@ -9,6 +9,8 @@
 
 namespace App\Entity;
 
+use App\Audit\Loggable;
+use App\Audit\Versioned;
 use App\Doctrine\Behavior\CreatedAt;
 use App\Doctrine\Behavior\CreatedTrait;
 use App\Export\Annotation as Exporter;
@@ -34,6 +36,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Exporter\Order(['id', 'name', 'project', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable', 'number'])]
 #[Exporter\Expose(name: 'project', label: 'project', exp: 'object.getProject() === null ? null : object.getProject().getName()')]
 #[Constraints\Activity]
+#[Loggable(ActivityMeta::class)]
 class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
 {
     use BudgetTrait;
@@ -55,6 +58,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Expose]
     #[Serializer\Groups(['Expanded'])]
     #[OA\Property(ref: '#/components/schemas/ProjectExpanded')]
+    #[Versioned]
     private ?Project $project = null;
     /**
      * Name of this activity
@@ -65,6 +69,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'name')]
+    #[Versioned]
     private ?string $name = null;
     /**
      * Description of this activity
@@ -73,6 +78,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'comment')]
+    #[Versioned]
     private ?string $comment = null;
     /**
      * Whether this activity is visible and can be selected
@@ -82,12 +88,14 @@ class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'visible', type: 'boolean')]
+    #[Versioned]
     private bool $visible = true;
     #[ORM\Column(name: 'billable', type: Types::BOOLEAN, nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'billable', type: 'boolean')]
+    #[Versioned]
     private bool $billable = true;
     /**
      * Meta fields registered with the activity
@@ -115,12 +123,14 @@ class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Team'))]
     private Collection $teams;
     #[ORM\Column(name: 'invoice_text', type: Types::TEXT, nullable: true)]
+    #[Versioned]
     private ?string $invoiceText = null;
     #[ORM\Column(name: 'number', type: Types::STRING, length: 10, nullable: true)]
     #[Assert\Length(max: 10)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'activity_number')]
+    #[Versioned]
     private ?string $number = null;
 
     public function __construct()
