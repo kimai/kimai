@@ -26,7 +26,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractRendererTestCase extends KernelTestCase
 {
-    protected function render(ExportRendererInterface $renderer, bool $exportDecimal = false): Response
+    protected function render(ExportRendererInterface $renderer): Response
     {
         $reflectionUser = new \ReflectionClass(User::class);
         $userIdProperty = $reflectionUser->getProperty('id');
@@ -143,7 +143,6 @@ abstract class AbstractRendererTestCase extends KernelTestCase
         $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5, $timesheet6];
 
         $currentUser = $this->createMock(User::class);
-        $currentUser->expects($this->any())->method('isExportDecimal')->willReturn($exportDecimal);
         $currentUser->method('getId')->willReturn(5);
 
         $query = new TimesheetQuery();

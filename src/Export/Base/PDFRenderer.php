@@ -60,18 +60,6 @@ final class PDFRenderer implements DispositionInlineInterface, ExportRendererInt
         return $this->template;
     }
 
-    protected function getOptions(TimesheetQuery $query): array
-    {
-        $decimal = false;
-        if (null !== $query->getCurrentUser()) {
-            $decimal = $query->getCurrentUser()->isExportDecimal();
-        } elseif (null !== $query->getUser()) {
-            $decimal = $query->getUser()->isExportDecimal();
-        }
-
-        return ['decimal' => $decimal];
-    }
-
     public function getPdfOptions(): array
     {
         return $this->pdfOptions;
@@ -101,14 +89,14 @@ final class PDFRenderer implements DispositionInlineInterface, ExportRendererInt
         $sandbox->enableSandbox();
         $this->twig->addExtension($sandbox);
 
-        $content = $this->twig->render($this->getTemplate(), array_merge([
+        $content = $this->twig->render($this->getTemplate(), [
             'entries' => $exportItems,
             'query' => $query,
             'summaries' => $summary,
             'budgets' => $this->calculateProjectBudget($exportItems, $query, $this->projectStatisticService),
             'decimal' => false,
             'pdfContext' => $context
-        ], $this->getOptions($query)));
+        ]);
 
         $pdfOptions = array_merge($context->getOptions(), $this->getPdfOptions());
 

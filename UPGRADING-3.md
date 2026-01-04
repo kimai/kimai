@@ -28,3 +28,5 @@ Do not use method chaining: all fluent interface, especially in Entities, are no
 - Interface `ExportRendererInterface` has new methods: `getType()`, `isInternal()`
 - Interface `ExportableItem` has new methods: `getTags()`, `getBreak()` 
 - Removed and renamed translations, most important `action.edit` => `edit`, `my.profile` => `user_profile`
+- Removed `User::isExportDecimal()`
+- Use decimal duration format in all default exports

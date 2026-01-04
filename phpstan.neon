@@ -1365,16 +1365,6 @@ parameters:
             path: src/Export/Annotation/Order.php
 
         -
-            message: "#^Method App\\\\Export\\\\Base\\\\HtmlRenderer\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\PDFRenderer\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
-
-        -
             message: "#^Method App\\\\Export\\\\Base\\\\PDFRenderer\\:\\:getPdfOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Export/Base/PDFRenderer.php

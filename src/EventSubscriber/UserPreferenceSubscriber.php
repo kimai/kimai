@@ -131,11 +131,6 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setOrder(800)
                 ->setSection('behaviour')
                 ->setType(YesNoType::class),
-
-            (new UserPreference('export_decimal', false))
-                ->setOrder(900)
-                ->setSection('behaviour')
-                ->setType(YesNoType::class),
         ];
     }
 

@@ -65,18 +65,6 @@ final class HtmlRenderer implements ExportRendererInterface
         return $event->getFields();
     }
 
-    protected function getOptions(TimesheetQuery $query): array
-    {
-        $decimal = false;
-        if (null !== $query->getCurrentUser()) {
-            $decimal = $query->getCurrentUser()->isExportDecimal();
-        } elseif (null !== $query->getUser()) {
-            $decimal = $query->getUser()->isExportDecimal();
-        }
-
-        return ['decimal' => $decimal];
-    }
-
     /**
      * @param ExportableItem[] $exportItems
      */
@@ -98,7 +86,7 @@ final class HtmlRenderer implements ExportRendererInterface
         $sandbox->enableSandbox();
         $this->twig->addExtension($sandbox);
 
-        $content = $this->twig->render($this->getTemplate(), array_merge([
+        $content = $this->twig->render($this->getTemplate(), [
             'entries' => $exportItems,
             'query' => $query,
             'summaries' => $summary,
@@ -109,7 +97,7 @@ final class HtmlRenderer implements ExportRendererInterface
             'projectMetaFields' => $projectMetaFields,
             'activityMetaFields' => $activityMetaFields,
             'userPreferences' => $userPreferences,
-        ], $this->getOptions($query)));
+        ]);
 
         $response = new Response();
         $response->setContent($content);

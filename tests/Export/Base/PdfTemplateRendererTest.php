@@ -95,7 +95,7 @@ class PdfTemplateRendererTest extends AbstractRendererTestCase
                 'date',
                 'begin',
                 'end',
-                'duration',
+                'duration_decimal',
                 'currency',
                 'rate',
                 'internal_rate',

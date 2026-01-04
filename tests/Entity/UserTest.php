@@ -45,7 +45,6 @@ class UserTest extends TestCase
         self::assertEquals(User::DEFAULT_LANGUAGE, $user->getLocale());
         self::assertFalse($user->hasTeamAssignment());
         self::assertFalse($user->canSeeAllData());
-        self::assertFalse($user->isExportDecimal());
         self::assertFalse($user->isSystemAccount());
         self::assertFalse($user->isPasswordRequestNonExpired(-1));
         self::assertFalse($user->isPasswordRequestNonExpired(0));
@@ -196,11 +195,8 @@ class UserTest extends TestCase
         $user->setPreferenceValue('test2', 'I like rain');
         self::assertEquals('I like rain', $user->getPreferenceValue('test2'));
 
-        $user->setPreferenceValue('export_decimal', true);
-        self::assertTrue($user->isExportDecimal());
-
         $prefs = $user->getPreferences();
-        self::assertCount(3, $prefs);
+        self::assertCount(2, $prefs);
 
         $preference1 = new UserPreference('_aaaaa', 'bbbbb');
         $user->addPreference($preference1);
@@ -209,10 +205,10 @@ class UserTest extends TestCase
         $user->addPreference($preference2);
 
         $prefs = $user->getPreferences();
-        self::assertCount(5, $prefs);
+        self::assertCount(4, $prefs);
 
         $visiblePrefs = $user->getVisiblePreferences();
-        self::assertCount(3, $visiblePrefs); // export_decimal and _aaaaa is skipped
+        self::assertCount(3, $visiblePrefs); // _aaaaa is skipped
         self::assertEquals([$user->getPreference('test'), $user->getPreference('test2'), $preference2], $visiblePrefs);
 
         self::assertInstanceOf(UserPreference::class, $prefs[0]);
@@ -222,7 +218,7 @@ class UserTest extends TestCase
         self::assertEquals('test2', $prefs[1]->getName());
 
         self::assertInstanceOf(UserPreference::class, $prefs[2]);
-        self::assertEquals('export_decimal', $prefs[2]->getName());
+        self::assertEquals('_aaaaa', $prefs[2]->getName());
 
         $user->setPreferences(new ArrayCollection([]));
         self::assertCount(0, $user->getPreferences());

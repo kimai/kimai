@@ -26,7 +26,7 @@ use Twig\Environment;
 #[Group('integration')]
 class PdfRendererTest extends AbstractRendererTestCase
 {
-    protected function getAbstractRenderer(bool $exportDecimal = false): PDFRenderer
+    protected function getAbstractRenderer(): PDFRenderer
     {
         $twig = $this->createMock(Environment::class);
         $converter = $this->createMock(HtmlToPdfConverter::class);

@@ -61,6 +61,8 @@ final class Version20260101010000 extends AbstractMigration
 
         $table = $schema->getTable('kimai2_timesheet');
         $table->dropColumn('category');
+
+        $this->addSql("DELETE FROM kimai2_user_preferences WHERE `name` = 'export_decimal'");
     }
 
     public function down(Schema $schema): void
