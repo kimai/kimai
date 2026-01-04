@@ -122,14 +122,6 @@
         <source>user_profile</source>
         <target>Moj profil</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>API lozinka</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>Ponovi API lozinku</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target>Nedostaje dozvola. Preusmjeriti na prijavu?</target>
@@ -1709,10 +1701,6 @@
       <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve">
         <source>Expiry date</source>
         <target state="translated">Datum isteka</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">API lozinke su zastarjele: umjesto njih koristi API tokene.</target>
       </trans-unit>
       <trans-unit id="8JEDuyx" resname="activity_number" xml:space="preserve">
         <source>Activity number</source>

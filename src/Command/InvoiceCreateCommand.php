@@ -63,7 +63,6 @@ final class InvoiceCreateCommand extends Command
             ->addOption('project', null, InputOption::VALUE_OPTIONAL, 'Comma separated list of project IDs', null)
             ->addOption('by-customer', null, InputOption::VALUE_NONE, 'If set, one invoice for each active customer in the given timerange is created')
             ->addOption('by-project', null, InputOption::VALUE_NONE, 'If set, one invoice for each active project in the given timerange is created')
-            ->addOption('set-exported', null, InputOption::VALUE_NONE, '[DEPRECATED] this flag has no meaning any more: invoiced items are always exported')
             ->addOption('template', null, InputOption::VALUE_OPTIONAL, 'Invoice template', null)
             ->addOption('search', null, InputOption::VALUE_OPTIONAL, 'Search term to filter invoice entries', null)
             ->addOption('exported', null, InputOption::VALUE_OPTIONAL, 'Exported filter for invoice entries (possible values: exported, all), by default only "not exported" items are fetched', null)
@@ -192,8 +191,6 @@ final class InvoiceCreateCommand extends Command
 
                 return Command::FAILURE;
             }
-        } elseif ($input->getOption('set-exported')) {
-            @trigger_error('The "set-exported" option of kimai:invoice:create command has no meaning anymore, it will be removed soon', E_USER_DEPRECATED);
         }
 
         // =============== VALIDATION END ===============

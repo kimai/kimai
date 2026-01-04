@@ -10,6 +10,7 @@
 namespace App;
 
 use App\DependencyInjection\AppExtension;
+use App\DependencyInjection\Compiler\ConstraintCompilerPass;
 use App\DependencyInjection\Compiler\ExportServiceCompilerPass;
 use App\DependencyInjection\Compiler\InvoiceServiceCompilerPass;
 use App\DependencyInjection\Compiler\TwigContextCompilerPass;
@@ -17,9 +18,11 @@ use App\DependencyInjection\Compiler\WidgetCompilerPass;
 use App\Ldap\FormLoginLdapFactory;
 use App\Plugin\PluginInterface;
 use App\Plugin\PluginMetadata;
+use App\Validator\Attribute\TimesheetConstraint;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Finder\Finder;
@@ -31,8 +34,8 @@ class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
-    public const PLUGIN_DIRECTORY = '/var/plugins';
-    public const CONFIG_EXTS = '.{php,yaml}';
+    public const string PLUGIN_DIRECTORY = '/var/plugins';
+    public const string CONFIG_EXTS = '.{php,yaml}';
 
     public function getCacheDir(): string
     {
@@ -49,6 +52,10 @@ class Kernel extends BaseKernel
         /** @var SecurityExtension $extension */
         $extension = $container->getExtension('security');
         $extension->addAuthenticatorFactory(new FormLoginLdapFactory());
+
+        $container->registerAttributeForAutoconfiguration(TimesheetConstraint::class, static function (ChildDefinition $definition) {
+            $definition->addResourceTag('validator.timesheet');
+        });
     }
 
     public function registerBundles(): iterable
@@ -119,6 +126,10 @@ class Kernel extends BaseKernel
 
             $meta = PluginMetadata::createFromPath($fullPath);
 
+            if (!$meta->isEnvironmentSupported($this->environment)) {
+                continue;
+            }
+
             if ($meta->getKimaiVersion() > Constants::VERSION_ID) {
                 throw new \Exception(\sprintf('Bundle "%s" requires minimum Kimai version %s, but yours is lower: %s (%s). Please update Kimai or use a lower Plugin version.', $bundleName, $meta->getKimaiVersion(), Constants::VERSION, Constants::VERSION_ID));
             }
@@ -133,8 +144,8 @@ class Kernel extends BaseKernel
     {
         $container->registerExtension(new AppExtension());
 
-        $container->setParameter('container.autowiring.strict_mode', true);
         $container->setParameter('.container.dumper.inline_class_loader', true);
+        $container->setParameter('.container.dumper.inline_factories', true);
         $confDir = $this->getProjectDir() . '/config';
 
         // using this one instead of $loader->load($confDir . '/packages/*' . self::CONFIG_EXTS, 'glob');
@@ -163,6 +174,7 @@ class Kernel extends BaseKernel
         $container->addCompilerPass(new InvoiceServiceCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new ExportServiceCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new WidgetCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
+        $container->addCompilerPass(new ConstraintCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 99);
     }
 
     private function configureRoutes(RoutingConfigurator $routes): void // @phpstan-ignore-line

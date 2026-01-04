@@ -37,9 +37,9 @@ use Symfony\Component\Validator\Constraints;
 #[OA\Tag(name: 'Project')]
 final class ProjectController extends BaseApiController
 {
-    public const GROUPS_ENTITY = ['Default', 'Entity', 'Project', 'Project_Entity'];
-    public const GROUPS_COLLECTION = ['Default', 'Collection', 'Project'];
-    public const GROUPS_RATE = ['Default', 'Entity', 'Project_Rate'];
+    private const array GROUPS_ENTITY = ['Default', 'Entity', 'Project', 'Project_Entity'];
+    private const array GROUPS_COLLECTION = ['Default', 'Collection', 'Project'];
+    private const array GROUPS_RATE = ['Default', 'Entity', 'Project_Rate'];
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,

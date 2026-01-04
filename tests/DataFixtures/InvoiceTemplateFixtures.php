@@ -43,7 +43,7 @@ class InvoiceTemplateFixtures implements TestFixture
         $template->setName('Invoice');
         $template->setTitle('Your company name');
         $template->setCustomer($customer);
-        $template->setVat(19);
+        $template->setTaxRate(19.0);
         $template->setDueDays(14);
         $template->setPaymentTerms(
             'I would like to thank you for your confidence and will gladly be there for you in the future.' .

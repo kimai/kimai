@@ -327,7 +327,6 @@ class UserControllerTest extends APIControllerBaseTestCase
             'username' => '1',  // not existing in form
             'email' => '',
             'plainPassword' => '123456', // not existing in form
-            'plainApiToken' => '123456', // not existing in form
             'language' => 'xx',
             'timezone' => 'XXX/YYY',
             'roles' => [

@@ -82,8 +82,7 @@ final class ProjectController extends AbstractController
         $dispatcher->dispatch($event);
         $metaColumns = $event->getFields();
 
-        $table = new DataTable('project_admin', $query);
-        $table->setPagination($entries);
+        $table = new DataTable('project_admin', $query, $entries);
         $table->setSearchForm($form);
         $table->setPaginationRoute('admin_project_paginated');
         $table->setReloadEvents('kimai.projectUpdate kimai.projectDelete kimai.projectTeamUpdate');

@@ -19,7 +19,7 @@ use Doctrine\Persistence\ObjectManager;
  *
  * @codeCoverageIgnore
  */
-final class AllFixtures extends Fixture implements DependentFixtureInterface
+final class AppFixtures extends Fixture implements DependentFixtureInterface
 {
     /**
      * @return array<class-string<FixtureInterface>>

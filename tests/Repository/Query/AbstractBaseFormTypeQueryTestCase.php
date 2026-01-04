@@ -41,20 +41,25 @@ abstract class AbstractBaseFormTypeQueryTestCase extends TestCase
 
     public function assertTeams(BaseFormTypeQuery $sut): void
     {
+        $reflectionTeam = new \ReflectionClass(Team::class);
+        $teamIdProperty = $reflectionTeam->getProperty('id');
+
+        $team1 = new Team('foo');
+        $teamIdProperty->setValue($team1, 1);
+        $team2 = new Team('foo');
+        $teamIdProperty->setValue($team2, 2);
+
         self::assertEmpty($sut->getTeams());
 
-        self::assertInstanceOf(BaseFormTypeQuery::class, $sut->addTeam(new Team('foo')));
+        self::assertInstanceOf(BaseFormTypeQuery::class, $sut->addTeam($team1));
         self::assertCount(1, $sut->getTeams());
 
-        $team = new Team('foo');
-        self::assertInstanceOf(BaseFormTypeQuery::class, $sut->addTeam($team));
-        self::assertCount(1, $sut->getTeams());
-        self::assertSame($team, $sut->getTeams()[0]);
+        self::assertInstanceOf(BaseFormTypeQuery::class, $sut->addTeam($team2));
+        self::assertCount(2, $sut->getTeams());
+        self::assertSame($team1, $sut->getTeams()[0]);
 
         $sut->setTeams([]);
         self::assertEmpty($sut->getTeams());
-        $sut->setTeams([new Team('foo'), new Team('foo')]);
-        self::assertCount(2, $sut->getTeams());
     }
 
     public function assertActivity(BaseFormTypeQuery $sut): void

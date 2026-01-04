@@ -35,7 +35,10 @@ class HtmlRendererTest extends AbstractRendererTestCase
             $this->createMock(Environment::class),
             new EventDispatcher(),
             $this->createMock(ProjectStatisticService::class),
-            $this->createMock(ActivityStatisticService::class)
+            $this->createMock(ActivityStatisticService::class),
+            'html',
+            'print',
+            'export/print.html.twig',
         );
 
         self::assertEquals('html', $sut->getId());
@@ -72,7 +75,10 @@ class HtmlRendererTest extends AbstractRendererTestCase
             $twig,
             new EventDispatcher(),
             $this->createMock(ProjectStatisticService::class),
-            $this->createMock(ActivityStatisticService::class)
+            $this->createMock(ActivityStatisticService::class),
+            'html',
+            'print',
+            'export/print.html.twig',
         );
 
         $response = $this->render($sut);

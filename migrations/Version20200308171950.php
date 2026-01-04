@@ -45,7 +45,7 @@ final class Version20200308171950 extends AbstractMigration
         $invoices->addUniqueIndex(['invoice_filename'], 'UNIQ_76C38E372323B33D');
         $invoices->addForeignKeyConstraint('kimai2_users', ['user_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_76C38E37A76ED395');
         $invoices->addForeignKeyConstraint('kimai2_customers', ['customer_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_76C38E379395C3F3');
-        $invoices->setPrimaryKey(['id']);
+        $this->addPrimaryKeyConstraint($invoices, ['id']);
     }
 
     public function down(Schema $schema): void

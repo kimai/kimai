@@ -12,6 +12,7 @@ namespace App\Voter;
 use App\Entity\User;
 use App\Security\RolePermissionManager;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
@@ -21,7 +22,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  */
 final class UserVoter extends Voter
 {
-    private const ALLOWED_ATTRIBUTES = [
+    private const array ALLOWED_ATTRIBUTES = [
         'access_user',
         'view',
         'edit',
@@ -58,7 +59,7 @@ final class UserVoter extends Voter
         return $subject instanceof User && $this->supportsAttribute($attribute);
     }
 
-    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $vote = null): bool
     {
         $user = $token->getUser();
 

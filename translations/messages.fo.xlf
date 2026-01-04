@@ -34,14 +34,6 @@
         <source>user_profile</source>
         <target>Mín vangi</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>API loyniorð</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>Endurtak API loyniorð</target>
-      </trans-unit>
       <trans-unit id="wBTFKFR" resname="menu.logout">
         <source>menu.logout</source>
         <target>Logga av</target>

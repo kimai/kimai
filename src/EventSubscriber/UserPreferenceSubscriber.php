@@ -70,7 +70,7 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setType(MoneyType::class)
                 ->setEnabled($enableHourlyRate)
                 ->setOptions(array_merge($hourlyRateOptions, ['label' => 'hourlyRate']))
-                ->addConstraint(new Range(['min' => 0])),
+                ->addConstraint(new Range(min: 0)),
 
             (new UserPreference(UserPreference::INTERNAL_RATE, null))
                 ->setOrder(101)
@@ -78,7 +78,7 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setType(MoneyType::class)
                 ->setEnabled($enableHourlyRate)
                 ->setOptions(array_merge($hourlyRateOptions, ['label' => 'internalRate', 'required' => false]))
-                ->addConstraint(new Range(['min' => 0])),
+                ->addConstraint(new Range(min: 0)),
 
             (new UserPreference(UserPreference::TIMEZONE, $timezone))
                 ->setOrder(200)
@@ -124,16 +124,11 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setOrder(710)
                 ->setSection('behaviour')
                 ->setOptions(['required' => false])
-                ->addConstraint(new Length(['max' => 150]))
+                ->addConstraint(new Length(max: 150))
                 ->setType(FavoriteMenuType::class),
 
             (new UserPreference('daily_stats', false))
                 ->setOrder(800)
-                ->setSection('behaviour')
-                ->setType(YesNoType::class),
-
-            (new UserPreference('export_decimal', false))
-                ->setOrder(900)
                 ->setSection('behaviour')
                 ->setType(YesNoType::class),
         ];

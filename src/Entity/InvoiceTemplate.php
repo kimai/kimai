@@ -36,12 +36,21 @@ class InvoiceTemplate implements EntityWithMetaFields
     #[Assert\Length(max: 255)]
     #[Assert\NotBlank]
     private ?string $title = null;
+    /**
+     * @deprecated since 3.0 - can be deleted in 4.0
+     */
     #[ORM\Column(name: 'company', type: Types::STRING, length: 255, nullable: true)]
     #[Assert\Length(max: 255)]
     private ?string $company = null;
+    /**
+     * @deprecated since 3.0 - can be deleted in 4.0
+     */
     #[ORM\Column(name: 'vat_id', type: Types::STRING, length: 50, nullable: true)]
     #[Assert\Length(max: 50)]
     private ?string $vatId = null;
+    /**
+     * @deprecated since 3.0 - can be deleted in 4.0
+     */
     #[ORM\Column(name: 'address', type: Types::TEXT, nullable: true)]
     private ?string $address = null;
     #[ORM\Column(name: 'contact', type: Types::TEXT, nullable: true)]
@@ -137,15 +146,7 @@ class InvoiceTemplate implements EntityWithMetaFields
 
     public function getAddress(): ?string
     {
-        return $this->customer?->getFormattedAddress() ?? $this->address;
-    }
-
-    /**
-     * @deprecated since 2.41
-     */
-    public function setAddress(?string $address): void
-    {
-        $this->address = $address;
+        return $this->customer?->getFormattedAddress() ?? $this->address; // @phpstan-ignore property.deprecated
     }
 
     public function getNumberGenerator(): string
@@ -173,6 +174,16 @@ class InvoiceTemplate implements EntityWithMetaFields
         return $this->vat;
     }
 
+    public function getTaxRate(): ?float
+    {
+        return $this->vat;
+    }
+
+    public function setTaxRate(?float $taxRate): void
+    {
+        $this->vat = $taxRate;
+    }
+
     public function setVat(?float $vat): void
     {
         $this->vat = $vat;
@@ -180,15 +191,7 @@ class InvoiceTemplate implements EntityWithMetaFields
 
     public function getCompany(): ?string
     {
-        return $this->customer?->getCompany() ?? $this->customer?->getName() ?? $this->company;
-    }
-
-    /**
-     * @deprecated since 2.41
-     */
-    public function setCompany(?string $company): void
-    {
-        $this->company = $company;
+        return $this->customer?->getCompany() ?? $this->customer?->getName() ?? $this->company; // @phpstan-ignore property.deprecated
     }
 
     public function getRenderer(): string
@@ -223,15 +226,7 @@ class InvoiceTemplate implements EntityWithMetaFields
 
     public function getVatId(): ?string
     {
-        return $this->customer?->getVatId() ?? $this->vatId;
-    }
-
-    /**
-     * @deprecated since 2.41
-     */
-    public function setVatId(?string $vatId): void
-    {
-        $this->vatId = $vatId;
+        return $this->customer?->getVatId() ?? $this->vatId; // @phpstan-ignore property.deprecated
     }
 
     public function getContact(): ?string
@@ -255,7 +250,7 @@ class InvoiceTemplate implements EntityWithMetaFields
     }
 
     /**
-     * @deprecated since 2.0
+     * deprecated - cannot be deleted, referenced in customer templates
      */
     public function isDecimalDuration(): bool
     {
@@ -273,6 +268,8 @@ class InvoiceTemplate implements EntityWithMetaFields
     }
 
     /**
+     * Allows to replace the tax rates configured in this template.
+     *
      * @param array<Tax> $taxRates
      */
     public function setTaxRates(array $taxRates): void
@@ -281,7 +278,7 @@ class InvoiceTemplate implements EntityWithMetaFields
     }
 
     /**
-     * @return Tax[]
+     * @return non-empty-array<Tax>
      */
     public function getTaxRates(): array
     {

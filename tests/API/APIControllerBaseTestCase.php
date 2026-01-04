@@ -214,7 +214,6 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
     }
 
     /**
-     * @param Response $response
      * @param array<int, string>|array<string, mixed> $failedFields
      * @param bool $extraFields test for the error "This form should not contain extra fields"
      * @param array<int, string>|array<string, mixed> $globalError
@@ -231,7 +230,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
         }
 
         if (\count($globalError) > 0) {
-            self::assertArrayHasKey('errors', $result['errors']);
+            self::assertArrayHasKey('errors', $result['errors'], 'API response has no global errors, but expected ' . \count($globalError));
             foreach ($globalError as $err) {
                 self::assertTrue(\in_array($err, $result['errors']['errors']), 'Missing global validation error: ' . $err); // @phpstan-ignore binaryOp.invalid
             }
@@ -333,18 +332,13 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
 
                 // embedded meta data
             case 'UserPreference':
-                return [
-                    'name' => 'string',
-                    'value' => '@string',
-                ];
-
             case 'CustomerMeta':
             case 'ProjectMeta':
             case 'ActivityMeta':
             case 'TimesheetMeta':
                 return [
                     'name' => 'string',
-                    'value' => 'string',
+                    'value' => '@string',
                 ];
 
                 // if a user is embedded in other objects
@@ -356,7 +350,6 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'username' => 'string',
                     'email' => 'string',
                     'enabled' => 'bool',
-                    'apiToken' => 'bool',
                     'systemAccount' => 'bool',
                     'color' => 'string',
                     'avatar' => '@string',
@@ -376,7 +369,6 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'username' => 'string',
                     'email' => 'string',
                     'enabled' => 'bool',
-                    'apiToken' => 'bool',
                     'systemAccount' => 'bool',
                     'color' => 'string',
                     'avatar' => '@string',
