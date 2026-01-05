@@ -142,9 +142,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[Assert\Length(max: 20)]
     private ?string $auth = self::AUTH_INTERNAL;
     /**
-     * This flag will be initialized in UserEnvironmentSubscriber.
-     *
-     * @internal has no database mapping as the value is calculated from a permission
+     * @internal no database mapping: the value is calculated from a permission in UserEnvironmentSubscriber
      */
     private ?bool $isAllowedToSeeAllData = null;
     #[ORM\Column(name: 'username', type: Types::STRING, length: 180, nullable: false)]
@@ -901,14 +899,14 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
-    public function setPassword(?string $password): User
+    public function setPassword(#[\SensitiveParameter] ?string $password): User
     {
         $this->password = $password;
 
         return $this;
     }
 
-    public function setPlainPassword(?string $password): User
+    public function setPlainPassword(#[\SensitiveParameter] ?string $password): User
     {
         $this->plainPassword = $password;
 
@@ -922,7 +920,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
-    public function setConfirmationToken(?string $confirmationToken): void
+    public function setConfirmationToken(#[\SensitiveParameter] ?string $confirmationToken): void
     {
         $this->confirmationToken = $confirmationToken;
     }
@@ -1123,7 +1121,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     // --------------- 2 Factor Authentication ---------------
 
-    public function setTotpSecret(?string $secret): void
+    public function setTotpSecret(#[\SensitiveParameter] ?string $secret): void
     {
         $this->totpSecret = $secret;
     }
