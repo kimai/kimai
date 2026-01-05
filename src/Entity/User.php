@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Audit\SensitiveProperty;
 use App\Export\Annotation as Exporter;
 use App\Repository\UserRepository;
 use App\Utils\StringHelper;
@@ -173,12 +174,14 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * Encrypted password. Must be persisted.
      */
     #[ORM\Column(name: 'password', type: Types::STRING, nullable: false)]
+    #[SensitiveProperty]
     private ?string $password = null;
     /**
      * Plain password. Used for model validation, not persisted.
      */
     #[Assert\NotBlank(groups: ['Registration', 'PasswordUpdate', 'UserCreate'])]
     #[Assert\Length(min: 8, max: 60, groups: ['Registration', 'PasswordUpdate', 'UserCreate', 'ResetPassword', 'ChangePassword'])]
+    #[SensitiveProperty]
     private ?string $plainPassword = null;
     #[ORM\Column(name: 'last_login', type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTime $lastLogin = null;
@@ -204,6 +207,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * TODO reduce the length, which was initially forgotten and set to 255, as this is the default for MySQL with Doctrine (see migration Version20230126002049)
      */
     #[ORM\Column(name: 'totp_secret', type: Types::STRING, length: 255, nullable: true)]
+    #[SensitiveProperty]
     private ?string $totpSecret = null;
     #[ORM\Column(name: 'totp_enabled', type: Types::BOOLEAN, nullable: false, options: ['default' => false])]
     private bool $totpEnabled = false;
