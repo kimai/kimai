@@ -29,7 +29,6 @@ services:
             - '../src/API/Model/'
             - '../src/DependencyInjection/'
             - '../src/Doctrine/Extensions/'
-            - '../src/Entity/'
             - '../src/Event/'
             - '../src/Export/Package/'
             - '../src/Export/Base/'
