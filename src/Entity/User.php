@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Audit\Loggable;
 use App\Audit\SensitiveProperty;
 use App\Export\Annotation as Exporter;
 use App\Repository\UserRepository;
@@ -50,6 +51,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Exporter\Expose(name: 'roles', label: 'roles', type: 'array', exp: 'object.getRoles()')]
 #[Exporter\Expose(name: 'active', label: 'active', type: 'boolean', exp: 'object.isEnabled()')]
 #[Constraints\User(groups: ['UserCreate', 'Registration', 'Default', 'Profile'])]
+#[Loggable(ignoredProperties: ['lastLogin'], title: 'user')]
 class User implements UserInterface, EquatableInterface, ThemeUserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
 {
     public const string ROLE_USER = 'ROLE_USER';

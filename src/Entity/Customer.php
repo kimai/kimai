@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Audit\Loggable;
 use App\Doctrine\Behavior\CreatedAt;
 use App\Doctrine\Behavior\CreatedTrait;
 use App\Export\Annotation as Exporter;
@@ -29,6 +30,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Serializer\ExclusionPolicy('all')]
 #[Exporter\Order(['id', 'name', 'company', 'number', 'vatId', 'address', 'contact', 'email', 'phone', 'mobile', 'fax', 'homepage', 'addressLine1', 'addressLine2', 'addressLine3', 'postCode', 'city', 'country', 'currency', 'timezone', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable'])]
 #[Constraints\Customer]
+#[Loggable(title: 'customer')]
 class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
 {
     public const DEFAULT_CURRENCY = 'EUR';

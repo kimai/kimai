@@ -22,6 +22,7 @@ final class Loggable
         public ?string $customFieldClass = null,
         public array $ignoredProperties = [],
         public ?string $title = null,
+        public string $translationDomain = 'messages',
     )
     {
     }
