@@ -10,7 +10,9 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\DependencyInjection\Attribute\Exclude;
 
+#[Exclude]
 interface ExportableItem
 {
     public function getId(): ?int;
