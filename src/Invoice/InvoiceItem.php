@@ -13,7 +13,9 @@ use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\User;
 use DateTime;
+use Symfony\Component\DependencyInjection\Attribute\Exclude;
 
+#[Exclude]
 final class InvoiceItem
 {
     private ?float $fixedRate = null;
