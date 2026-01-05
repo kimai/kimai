@@ -28,14 +28,14 @@ class DefaultPolicyTest extends TestCase
     {
         $sut = new DefaultPolicy();
         $sut->checkSecurity([], [], []);
-        self::assertTrue(true);
+        $this->expectNotToPerformAssertions();
     }
 
     public function testCheckPropertyAllowed(): void
     {
         $sut = new DefaultPolicy();
         $sut->checkPropertyAllowed(new \stdClass(), 'foo');
-        self::assertTrue(true);
+        $this->expectNotToPerformAssertions();
     }
 
     #[DataProvider('getCheckMethodAllowedData')]
@@ -51,15 +51,15 @@ class DefaultPolicyTest extends TestCase
         $sut->checkMethodAllowed($obj, $method);
 
         if ($expectedExceptionMessage === null) {
-            self::assertTrue(true);
+            $this->expectNotToPerformAssertions();
         }
     }
 
-    public function getCheckMethodAllowedData(): array
+    public static function getCheckMethodAllowedData(): array
     {
         return [
             [new ServerBag(), 'get', 'Tried to access server environment'],
-            [$this->createMock(SessionInterface::class), 'getId', 'Tried to access session'],
+            [self::createStub(SessionInterface::class), 'getId', 'Tried to access session'],
             [new \stdClass(), 'foo', 'Tried to access non-read method'],
             [new \stdClass(), 'setFoo', 'Tried to access non-read method'],
             [new \stdClass(), 'getFoo'],
