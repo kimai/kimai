@@ -9,25 +9,20 @@
 
 namespace App\Tests\Audit;
 
-use App\Audit\Versioned;
+use App\Audit\SensitiveProperty;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-#[CoversClass(Versioned::class)]
-class VersionedTest extends TypeTestCase
+#[CoversClass(SensitiveProperty::class)]
+class SensitivePropertyTest extends TypeTestCase
 {
-    public function testConstruct(): void
+    public function testHasCorrectAttribute(): void
     {
-        $sut = new Versioned();
-        self::assertInstanceOf(Versioned::class, $sut);
-    }
-
-    public function testHasAttributeAttributeOnLoggable(): void
-    {
-        $reflection = new \ReflectionClass(Versioned::class);
+        $sut = new SensitiveProperty();
+        $reflection = new \ReflectionClass($sut);
         /** @var array<\ReflectionAttribute<\Attribute>> $attributes */
         $attributes = array_filter($reflection->getAttributes(), fn ($attr) => $attr->getName() === \Attribute::class);
-        self::assertCount(1, $attributes, 'Versioned class should have the Attribute attribute');
+        self::assertCount(1, $attributes, 'SensitiveProperty class should have the Attribute attribute');
         $attribute = $attributes[0];
         self::assertEquals(\Attribute::TARGET_PROPERTY, $attribute->getArguments()[0]);
     }
