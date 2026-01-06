@@ -34,26 +34,26 @@ final class DefaultPolicy implements SecurityPolicyInterface
         }
 
         if ($obj instanceof SessionInterface) {
-            throw new SecurityNotAllowedPropertyError('Tried to access session', SessionInterface::class, $method);
+            throw new SecurityNotAllowedMethodError('Tried to access session', SessionInterface::class, $method);
         }
 
         $lcm = strtolower($method);
 
         if ($obj instanceof PdfContext) {
             if ($lcm !== 'setoption') {
-                throw new SecurityNotAllowedPropertyError('Tried to access forbidden method on PdfContext', PdfContext::class, $method);
+                throw new SecurityNotAllowedMethodError('Tried to access forbidden method on PdfContext', PdfContext::class, $method);
             }
 
             return;
         }
 
         if (!str_starts_with($lcm, 'has') && !str_starts_with($lcm, 'is') && !str_starts_with($lcm, 'get')) {
-            throw new SecurityNotAllowedPropertyError('Tried to access non-read method', $obj::class, $method);
+            throw new SecurityNotAllowedMethodError('Tried to access non-read method', $obj::class, $method);
         }
 
         if ($obj instanceof Request) {
             if (!str_starts_with($lcm, 'get')) {
-                throw new SecurityNotAllowedPropertyError('Tried to call setter() of app variable', AppVariable::class, $method);
+                throw new SecurityNotAllowedMethodError('Tried to call setter() of app variable', AppVariable::class, $method);
             }
 
             return;
@@ -61,7 +61,7 @@ final class DefaultPolicy implements SecurityPolicyInterface
 
         if ($obj instanceof AppVariable) {
             if (!\in_array($lcm, ['getrequest', 'getuser', 'getlocale'], true)) {
-                throw new SecurityNotAllowedPropertyError('Tried to access forbidden app variable method', User::class, $method);
+                throw new SecurityNotAllowedMethodError('Tried to access forbidden app variable method', User::class, $method);
             }
 
             return;
@@ -69,7 +69,7 @@ final class DefaultPolicy implements SecurityPolicyInterface
 
         if ($obj instanceof User) {
             if (\in_array($lcm, ['getpassword', 'gettotpsecret', 'getplainpassword', 'getconfirmationtoken', 'gettotpauthenticationconfiguration'], true)) {
-                throw new SecurityNotAllowedPropertyError('Tried to access user secrets', User::class, $method);
+                throw new SecurityNotAllowedMethodError('Tried to access user secrets', User::class, $method);
             }
         }
     }

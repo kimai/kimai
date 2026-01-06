@@ -9,15 +9,15 @@
 
 namespace App\Tests\Twig\SecurityPolicy;
 
-use App\Twig\SecurityPolicy\DefaultPolicy;
+use App\Twig\SecurityPolicy\ExportPolicy;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Twig\Sandbox\SecurityPolicyInterface;
 
-#[CoversClass(DefaultPolicy::class)]
-class DefaultPolicyTest extends AbstractPolicyTestCase
+#[CoversClass(ExportPolicy::class)]
+class ExportPolicyTest extends AbstractPolicyTestCase
 {
     protected function createPolicy(): SecurityPolicyInterface
     {
-        return new DefaultPolicy();
+        return new ExportPolicy();
     }
 }
