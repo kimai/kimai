@@ -117,6 +117,9 @@ class HtmlRenderer implements ExportRendererInterface
             'userPreferences' => $userPreferences,
         ], $this->getOptions($query)));
 
+        // allows to run in development mode, otherwise toolbar would be blocked
+        $sandbox->disableSandbox();
+
         $response = new Response();
         $response->setContent($content);
 
