@@ -15,7 +15,7 @@ use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ServerBag;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Twig\Sandbox\SecurityNotAllowedPropertyError;
+use Twig\Sandbox\SecurityNotAllowedMethodError;
 use Twig\Sandbox\SecurityPolicyInterface;
 
 /**
@@ -30,7 +30,7 @@ final class DefaultPolicy implements SecurityPolicyInterface
     public function checkMethodAllowed($obj, $method): void
     {
         if ($obj instanceof ServerBag) {
-            throw new SecurityNotAllowedPropertyError('Tried to access server environment', ServerBag::class, $method);
+            throw new SecurityNotAllowedMethodError('Tried to access server environment', ServerBag::class, $method);
         }
 
         if ($obj instanceof SessionInterface) {
