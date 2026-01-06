@@ -121,6 +121,7 @@ class HtmlRenderer implements ExportRendererInterface
         $sandbox->disableSandbox();
 
         $response = new Response();
+        $response->headers->set('Content-Type', 'text/html');
         $response->setContent($content);
 
         return $response;
