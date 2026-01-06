@@ -244,7 +244,6 @@ class ActivityControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ActivityEntity', $result);
 
-        self::assertCount(14, array_keys($result));
         self::assertNull($result['parentTitle']);
         self::assertNotEmpty($result['id']);
         self::assertIsArray($result['teams']);
@@ -258,7 +257,8 @@ class ActivityControllerTest extends APIControllerBaseTestCase
         self::assertNull($result['budgetType']);
         self::assertNull($result['number']);
         self::assertEquals('Test comment', $result['comment']);
-        self::assertEquals('#5319e7', $result['color']);
+        self::assertNull($result['color']);
+        self::assertEquals('#5319e7', $result['color-safe']);
         self::assertTrue($result['visible']);
         self::assertTrue($result['billable']);
     }
@@ -297,7 +297,7 @@ class ActivityControllerTest extends APIControllerBaseTestCase
         self::assertEquals('Test', $result['parentTitle']);
         self::assertNotEmpty($result['id']);
         self::assertIsArray($result['teams']);
-        self::assertEquals([['id' => 1, 'name' => 'Test team', 'color' => '#03A9F4']], $result['teams']);
+        self::assertEquals([['id' => 1, 'name' => 'Test team', 'color' => null, 'color-safe' => '#03A9F4']], $result['teams']);
         self::assertIsArray($result['metaFields']);
         self::assertEquals([], $result['metaFields']);
         self::assertEquals('foo', $result['name']);

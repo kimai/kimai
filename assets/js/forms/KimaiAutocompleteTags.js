@@ -24,7 +24,7 @@ export default class KimaiAutocompleteTags extends KimaiAutocomplete {
         API.get(apiUrl, {'name': query}, (data) => {
             let results = [];
             for (let item of data) {
-                results.push({text: item.name, value: item.name, color: item.color});
+                results.push({text: item.name, value: item.name, color: item['color-safe']});
             }
             callback(results);
         }, () => {
