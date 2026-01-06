@@ -121,19 +121,22 @@ class PdfRendererTest extends KernelTestCase
             __DIR__ . '/../../../templates/invoice/renderer/',
         ];
 
-        $finder = new Finder();
-        $finder
-            ->in(__DIR__ . '/../../../var/templates')
-            ->name('*.pdf.twig')
-            ->path('invoice-tpl/')
-            ->files()
-        ;
-
         $files = [];
-        foreach ($finder->getIterator() as $splFile) {
-            $filename = $splFile->getRealPath();
-            $files[] = $filename;
-            $loader->addPath(\dirname($filename) . '/', 'invoice');
+
+        $additionalTemplatesDir = __DIR__ . '/../../../var/templates';
+        if (is_dir($additionalTemplatesDir)) {
+            $finder = new Finder();
+            $finder
+                ->in($additionalTemplatesDir)
+                ->name('*.pdf.twig')
+                ->path('invoice-tpl/')
+                ->files();
+
+            foreach ($finder->getIterator() as $splFile) {
+                $filename = $splFile->getRealPath();
+                $files[] = $filename;
+                $loader->addPath(\dirname($filename) . '/', 'invoice');
+            }
         }
 
         foreach ($dirs as $dir) {
