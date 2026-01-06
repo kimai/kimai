@@ -3,7 +3,7 @@
     "app": {
       "js": [
         "/build/runtime.6c399d29.js",
-        "/build/app.9662939e.js"
+        "/build/app.307ea672.js"
       ],
       "css": [
         "/build/app.c18ba3c6.css"
@@ -12,7 +12,7 @@
     "app-rtl": {
       "js": [
         "/build/runtime.6c399d29.js",
-        "/build/app-rtl.15853b82.js"
+        "/build/app-rtl.fe7c5bf2.js"
       ],
       "css": [
         "/build/app-rtl.2003dce5.css"
@@ -21,7 +21,7 @@
     "export-pdf": {
       "js": [
         "/build/runtime.6c399d29.js",
-        "/build/export-pdf.395749ab.js"
+        "/build/export-pdf.5905454a.js"
       ],
       "css": [
         "/build/export-pdf.d8a6c23b.css"
@@ -30,7 +30,7 @@
     "invoice": {
       "js": [
         "/build/runtime.6c399d29.js",
-        "/build/invoice.42b319e4.js"
+        "/build/invoice.0217cc18.js"
       ],
       "css": [
         "/build/invoice.36018785.css"
@@ -39,7 +39,7 @@
     "invoice-pdf": {
       "js": [
         "/build/runtime.6c399d29.js",
-        "/build/invoice-pdf.26d98626.js"
+        "/build/invoice-pdf.1b6e735c.js"
       ],
       "css": [
         "/build/invoice-pdf.2b749265.css"
@@ -48,13 +48,13 @@
     "chart": {
       "js": [
         "/build/runtime.6c399d29.js",
-        "/build/chart.bafa38e7.js"
+        "/build/chart.2c85f027.js"
       ]
     },
     "calendar": {
       "js": [
         "/build/runtime.6c399d29.js",
-        "/build/calendar.b2d70caa.js"
+        "/build/calendar.cef61816.js"
       ],
       "css": [
         "/build/calendar.d757753e.css"
@@ -63,7 +63,7 @@
     "dashboard": {
       "js": [
         "/build/runtime.6c399d29.js",
-        "/build/dashboard.6ce7ac9c.js"
+        "/build/dashboard.faf42d4e.js"
       ],
       "css": [
         "/build/dashboard.b7129fa1.css"
@@ -72,7 +72,7 @@
     "highlight": {
       "js": [
         "/build/runtime.6c399d29.js",
-        "/build/highlight.13d5d50e.js"
+        "/build/highlight.718fe73d.js"
       ],
       "css": [
         "/build/highlight.98bf3927.css"
@@ -81,22 +81,22 @@
   },
   "integrity": {
     "/build/runtime.6c399d29.js": "sha384-/rm616f12czi8l/27GvWXtb3g608vJZf2XTUKxqCRI4tsa2vUHP+BW90edTok5zC",
-    "/build/app.9662939e.js": "sha384-bRL78SVI1wjTweqKeb+ZSSbA78i6By89S8/xx+55zmbOVtF1TCu3lf3pvdki5ZVJ",
+    "/build/app.307ea672.js": "sha384-XNjtkar2JbWyJQan/C6jHZAYFI9X5rPcExLeDV86FYZMPJl0vNWMh8Pa8NgXX/EB",
     "/build/app.c18ba3c6.css": "sha384-qkIgqLzngG2NchdFVImbGMU49lWlZg6Y9D0z2P0u1j2NQstDicA4KqIkkNYcpErm",
-    "/build/app-rtl.15853b82.js": "sha384-UnKKgLMu9FnRT+CFE0no/+UiUks012bYriQdUWa6f02mo6Lswl947mPybjvKL503",
+    "/build/app-rtl.fe7c5bf2.js": "sha384-UyLXlR/3/H6oFjRrIMH04PA8bAjVQ8rdVWkWoiO4LLYasg4H3UNWJ+Xh+FrYekKh",
     "/build/app-rtl.2003dce5.css": "sha384-pl8GyGo8sRRw1zLh9D42ZAvo450onfxeszZWocUUuzq70jAOwOlaoPYh/yyc20U7",
-    "/build/export-pdf.395749ab.js": "sha384-3Hjvmu4FC/0dhHnR8kyRBU7k2xMNy1lxBpGgOkrw8PxXnwyQDM8/5bQmkJbjVT1+",
+    "/build/export-pdf.5905454a.js": "sha384-AkNj018YEQJSxC1e/3jIvlh0uR5tHnlUe9ciBbHKIoRIwj7658tCLNVaT98SNFEX",
     "/build/export-pdf.d8a6c23b.css": "sha384-ztepocHE4rnGE9eKZ4kL6jTKaePUyiwiB9TjJjstjpf/ckcKg1HedrEOOk/8ElJg",
-    "/build/invoice.42b319e4.js": "sha384-xxK7sCe/ZhTjMPFPeX1xvILURxNRZz2hJHZxAGVaw9zE6TC++2/6y2eKqg8cz852",
+    "/build/invoice.0217cc18.js": "sha384-ORySQp4DBSYc7so90AAb8h5abgQtz3tdoO+Zv1uHJ2XqSPMAGtFBrb+Rdzc6sZg1",
     "/build/invoice.36018785.css": "sha384-jukM9uZ6pexDxXKgZThSxiqXimzsxzniBMHz08N9x8ryXZYkM5r/ZgaainCV0+J6",
-    "/build/invoice-pdf.26d98626.js": "sha384-gwNzQiU1y6qU/M9DPGiNW0MVZkLctEHk37sCES2X9ov+zugEaDABdkMjKBYOC9lz",
+    "/build/invoice-pdf.1b6e735c.js": "sha384-8I5YMkETBNl7wD12V/hKX2YGfwH+V6PXWsu4I+1xXXx9bDzqDhtq+S7x/jey2/Wr",
     "/build/invoice-pdf.2b749265.css": "sha384-DXXgkz2WWnrWnfBnXX5fmfPQSPb98upMnWxYKwTGYS04EhrPIWfDCutB2unIrWh7",
-    "/build/chart.bafa38e7.js": "sha384-Ays2qGKvOqs4NSeN/zJOPcrnzIEC/uYSCIkC3kN0KQye+mA5Lq7UkfjZDjulvFUX",
-    "/build/calendar.b2d70caa.js": "sha384-FS7Q9iCWHpo2Nzk0tmNvnuTbxJKLdbXFba9F6WcXfHbKFAS2Q+lW29H9Mv+ap5kA",
+    "/build/chart.2c85f027.js": "sha384-5Dm9aFCCSzlh5QY/vtU7/UrBkKt6aWnTccjljmpbQVFfzSEfFh0wUUV8qlXqyFJj",
+    "/build/calendar.cef61816.js": "sha384-qCpJrSB6fZLXT94oiWHofGbX8C0TFl86oCMTdeKWqCmNGJxABkIVo+8k19p7sGlY",
     "/build/calendar.d757753e.css": "sha384-cTmQMgHYjd2gfObFWmEUph7qQLCyXaIkneSf+bQ2mqVmZwqOB+pJOm/UYTyTjALJ",
-    "/build/dashboard.6ce7ac9c.js": "sha384-5BOoyjZx/ZKr9IbogWfT/aBRHx7XA1fePADdUpUNlSF/rqVo3taXLLcrIoaDZ+8b",
+    "/build/dashboard.faf42d4e.js": "sha384-xkM5D8wBK1sJekLI9DUQBxTjxjomfPQWWtWCo7NX03jNnFZtMv5anM0IISLWaFY0",
     "/build/dashboard.b7129fa1.css": "sha384-2nn5hLA+3YedgHYBpge62S8Losj8aoPwK9Zk9EvN1xEYatvOUQ7H3rIR2UUJAGOS",
-    "/build/highlight.13d5d50e.js": "sha384-+RqBBPIzp5YQpbBeHgVNXzHiewK1PZtizPh4in1PlBU6RcT1bDleW3QSJMDeBnPO",
+    "/build/highlight.718fe73d.js": "sha384-eHb21blXJ7SKqCFlMSxl4oblpusDif1B0Tsr2Iw1xQfUqxZxwtFwYYvMPllfw7BY",
     "/build/highlight.98bf3927.css": "sha384-YgweSwDwN0dI4DEmh478xYVw/TewJYvCO1QTbWHpaHFDPuLrZvYMR0Tc+QfFxVPE"
   }
 }

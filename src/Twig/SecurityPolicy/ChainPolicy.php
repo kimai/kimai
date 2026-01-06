@@ -16,10 +16,6 @@ final class ChainPolicy implements SecurityPolicyInterface
     /** @var array<SecurityPolicyInterface> */
     private array $policies = [];
 
-    public function __construct()
-    {
-    }
-
     public function addPolicy(SecurityPolicyInterface $policy): void
     {
         $this->policies[] = $policy;
