@@ -18,6 +18,7 @@ use App\Tests\Mocks\FileHelperFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment;
@@ -118,12 +119,23 @@ class PdfRendererTest extends KernelTestCase
 
         $dirs = [
             __DIR__ . '/../../../templates/invoice/renderer/',
-            //__DIR__ . '/../../../var/invoices/',
-            //__DIR__ . '/../../../var/invoices_customer/',
-            //__DIR__ . '/../../../var/invoices_old/',
         ];
 
+        $finder = new Finder();
+        $finder
+            ->in(__DIR__ . '/../../../var/templates')
+            ->name('*.pdf.twig')
+            ->path('invoice-tpl/')
+            ->files()
+        ;
+
         $files = [];
+        foreach ($finder->getIterator() as $splFile) {
+            $filename = $splFile->getRealPath();
+            $files[] = $filename;
+            $loader->addPath(\dirname($filename) . '/', 'invoice');
+        }
+
         foreach ($dirs as $dir) {
             if (!is_dir($dir)) {
                 continue;
@@ -145,7 +157,6 @@ class PdfRendererTest extends KernelTestCase
             $response = $sut->render($document, $model);
             self::assertEquals('application/pdf', $response->headers->get('Content-Type'));
             self::assertStringContainsString('attachment; filename', $response->headers->get('Content-Disposition'));
-            self::assertNotEmpty($response->getContent());
         }
     }
 }

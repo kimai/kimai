@@ -17,6 +17,7 @@ use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ServerBag;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\String\UnicodeString;
 use Twig\Sandbox\SecurityNotAllowedMethodError;
 use Twig\Sandbox\SecurityPolicyInterface;
 
@@ -65,6 +66,7 @@ abstract class AbstractPolicyTestCase extends TestCase
             [new \stdClass(), 'getFoo'],
             [new \stdClass(), 'hasFoo'],
             [new \stdClass(), 'isFoo'],
+            [new UnicodeString(), '__toString'],
             // Request
             [new Request(), 'get', null],
             [new Request(), 'isXmlHttpRequest', 'Tried to call setter() of app variable'],

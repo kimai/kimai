@@ -47,7 +47,7 @@ final class DefaultPolicy implements SecurityPolicyInterface
             return;
         }
 
-        if (!str_starts_with($lcm, 'has') && !str_starts_with($lcm, 'is') && !str_starts_with($lcm, 'get')) {
+        if (!str_starts_with($lcm, 'has') && !str_starts_with($lcm, 'is') && !str_starts_with($lcm, 'get') && $lcm !== '__tostring') {
             throw new SecurityNotAllowedMethodError('Tried to access non-read method', $obj::class, $method);
         }
 

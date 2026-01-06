@@ -24,6 +24,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[CoversClass(ServiceExport::class)]
@@ -63,15 +64,26 @@ class DefaultRendererTest extends AbstractRendererTestCase
         self::assertInstanceOf(HtmlRenderer::class, $renderer[3]);
 
         // make sure that the default templates do NOT violate the Twig SecurityPolicy
-        $this->render($renderer[0]);
-        $this->render($renderer[1]);
-        $this->render($renderer[2]);
-        $this->render($renderer[3]);
+        $response = $this->render($renderer[0]);
+        self::assertEquals('text/csv', $response->headers->get('Content-Type'));
+        self::assertStringContainsString('attachment; filename', $response->headers->get('Content-Disposition') ?? '');
+
+        $response = $this->render($renderer[1]);
+        self::assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type') ?? '');
+        self::assertStringContainsString('attachment; filename', $response->headers->get('Content-Disposition') ?? '');
+
+        $response = $this->render($renderer[2]);
+        self::assertEquals('application/pdf', $response->headers->get('Content-Type') ?? '');
+        self::assertStringContainsString('attachment; filename', $response->headers->get('Content-Disposition') ?? '');
+
+        $response = $this->render($renderer[3]);
+        self::assertEquals('text/html', $response->headers->get('Content-Type') ?? '');
+        // HTML is attached to the body and twig is a mock in this setupo, so we just receive an empty string
     }
 
     public function testRenderCustomTemplates(): void
     {
-        $searchDir = __DIR__ . '/../../_data/templates';
+        $searchDir = __DIR__ . '/../../../var/templates';
         if (!is_dir($searchDir)) {
             $this->expectNotToPerformAssertions();
 
@@ -109,7 +121,8 @@ class DefaultRendererTest extends AbstractRendererTestCase
         $renderers = $sut->getRenderer();
         self::assertCount(4 + \count($files), $renderers);
         foreach ($renderers as $renderer) {
-            $this->render($renderer);
+            $response = $this->render($renderer);
+            self::assertInstanceOf(Response::class, $response);
         }
     }
 }

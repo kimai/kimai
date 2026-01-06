@@ -3,7 +3,7 @@
 /.env-*
 /.idea/
 .DS_Store
-tests/_data/templates/
+var/templates/
 
 # custom apache rules e.g. to deactivate ioncube loader
 /public/.user.ini

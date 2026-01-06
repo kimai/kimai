@@ -129,8 +129,8 @@ abstract class AbstractRendererTestCase extends KernelTestCase
 
         $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5, $timesheet6];
 
-        $currentUser = $this->createMock(User::class);
-        $currentUser->expects($this->any())->method('isExportDecimal')->willReturn($exportDecimal);
+        $currentUser = new User();
+        $currentUser->setPreferenceValue('export_decimal', $exportDecimal);
 
         $query = new TimesheetQuery();
         $query->setActivities([$activity]);
