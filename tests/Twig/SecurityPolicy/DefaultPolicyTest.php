@@ -39,7 +39,7 @@ class DefaultPolicyTest extends TestCase
     }
 
     #[DataProvider('getCheckMethodAllowedData')]
-    public function testCheckMethodAllowed($obj, string $method, ?string $expectedExceptionMessage = null, ?string $expectedClass = null): void
+    public function testCheckMethodAllowed(mixed $obj, string $method, ?string $expectedExceptionMessage = null): void
     {
         $sut = new DefaultPolicy();
 
