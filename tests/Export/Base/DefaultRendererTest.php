@@ -23,6 +23,7 @@ use App\Tests\Mocks\Export\XlsxRendererFactoryMock;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Finder\Finder;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[CoversClass(ServiceExport::class)]
@@ -66,5 +67,49 @@ class DefaultRendererTest extends AbstractRendererTestCase
         $this->render($renderer[1]);
         $this->render($renderer[2]);
         $this->render($renderer[3]);
+    }
+
+    public function testRenderCustomTemplates(): void
+    {
+        $searchDir = __DIR__ . '/../../_data/templates';
+        if (!is_dir($searchDir)) {
+            $this->expectNotToPerformAssertions();
+
+            return;
+        }
+
+        $finder = new Finder();
+        $finder
+            ->in($searchDir)
+            ->name('*.twig')
+            ->path('export-tpl/')
+            ->files()
+        ;
+
+        $files = [];
+        $dirs = [];
+        foreach ($finder->getIterator() as $filename => $splFile) {
+            $files[] = $splFile->getRealPath();
+            $dir = \dirname($splFile->getRealPath());
+            $dirs[$dir] = $dir;
+        }
+        $dirs = array_keys($dirs);
+
+        if (\count($dirs) === 0) {
+            $this->expectNotToPerformAssertions();
+
+            return;
+        }
+
+        $sut = $this->createServiceExport();
+        foreach ($dirs as $dir) {
+            $sut->addDirectory($dir);
+        }
+
+        $renderers = $sut->getRenderer();
+        self::assertCount(4 + \count($files), $renderers);
+        foreach ($renderers as $renderer) {
+            $this->render($renderer);
+        }
     }
 }
