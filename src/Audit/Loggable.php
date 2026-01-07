@@ -17,6 +17,7 @@ final class Loggable
 {
     /**
      * @param class-string|null $customFieldClass
+     * @param string[] $ignoredProperties
      */
     public function __construct(
         public ?string $customFieldClass = null,
