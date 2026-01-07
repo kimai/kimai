@@ -1,7 +1,6 @@
 {% extends 'export/layout.html.twig' %}
 {% import "macros/widgets.html.twig" as widgets %}
 {% import "macros/datatables.html.twig" as tables %}
-{% import "macros/webloader.html.twig" as webloader %}
 
 {% block document_title %}{{ 'export'|trans }}{% endblock %}
 
@@ -52,147 +51,144 @@
 }) %}
 
 {% block javascripts %}
-    {{ webloader.init_frontend_loader() }}
     <script type="text/javascript">
         let initialized = false;
 
-        document.addEventListener('kimai.initialized', function(event) {
-            document.getElementById('duration-decimal').addEventListener('click', function(event) {
-                var spans = document.getElementsByClassName('duration-format');
-                for (var span of spans) {
-                    if (!event.target.checked) {
-                        if (span.dataset['duration'] !== undefined) {
-                            span.innerHTML = span.dataset['duration'];
-                        }
-                    } else {
-                        if (span.dataset['durationDecimal'] !== undefined) {
-                            span.innerHTML = span.dataset['durationDecimal'];
-                        }
+        document.getElementById('duration-decimal').addEventListener('click', function(event) {
+            var spans = document.getElementsByClassName('duration-format');
+            for (var span of spans) {
+                if (!event.target.checked) {
+                    if (span.dataset['duration'] !== undefined) {
+                        span.innerHTML = span.dataset['duration'];
+                    }
+                } else {
+                    if (span.dataset['durationDecimal'] !== undefined) {
+                        span.innerHTML = span.dataset['durationDecimal'];
                     }
                 }
-                saveVisibility();
-            });
-
-            document.getElementById('summary-by-activities').addEventListener('click', function(event) {
-                document.getElementById('summary-project').style.display = event.target.checked ? 'none' : 'table';
-                document.getElementById('summary-activity').style.display = event.target.checked ? 'table' : 'none';
-                saveVisibility();
-            });
-            document.getElementById('date-format').addEventListener('change', function(event) {
-                changedDateFormat(event.target.value, 'dateformat');
-            });
-            document.getElementById('begin-format').addEventListener('change', function(event) {
-                changedDateFormat(event.target.value, 'beginformat');
-            });
-            document.getElementById('end-format').addEventListener('change', function(event) {
-                changedDateFormat(event.target.value, 'endformat');
-            });
-            document.getElementById('summary-show').addEventListener('click', function(event) {
-                document.getElementById('export-summary').style.display = event.target.checked ? 'block' : 'none';
-                saveVisibility();
-            });
-            document.getElementById('summary-timeBudget').addEventListener('click', function(event) {
-                let cells = document.getElementsByClassName('export-timeBudget');
-                for (let columnCell of cells) {
-                    columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
-                }
-                saveVisibility();
-            });
-            document.getElementById('summary-budget').addEventListener('click', function(event) {
-                let cells = document.getElementsByClassName('export-budget');
-                for (let columnCell of cells) {
-                    columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
-                }
-                saveVisibility();
-            });
-            document.getElementById('summary-duration').addEventListener('click', function(event) {
-                let cells = document.getElementsByClassName('summary-duration');
-                for (let columnCell of cells) {
-                    columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
-                }
-                saveVisibility();
-            });
-            document.getElementById('summary-rate').addEventListener('click', function(event) {
-                let cells = document.getElementsByClassName('summary-rate');
-                for (let columnCell of cells) {
-                    columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
-                }
-                saveVisibility();
-            });
-            document.getElementById('summary-internalRate').addEventListener('click', function(event) {
-                let cells = document.getElementsByClassName('summary-internalRate');
-                for (let columnCell of cells) {
-                    columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
-                }
-                saveVisibility();
-            });
-            document.getElementById('summary-show').addEventListener('click', function(event) {
-                document.getElementById('export-summary').style.display = event.target.checked ? 'block' : 'none';
-                saveVisibility();
-            });
-            document.getElementById('records-show').addEventListener('click', function(event) {
-                document.getElementById('export-records').style.display = event.target.checked ? 'block' : 'none';
-                saveVisibility();
-            });
-
-            let columnCheckboxes = document.getElementsByClassName('column-visibility-changer');
-
-            for (let checkbox of columnCheckboxes) {
-                checkbox.addEventListener('click', function(event) {
-                    changeVisibility(event.target.name, event.target.checked);
-                });
             }
+            saveVisibility();
+        });
 
-            let editableTitles = document.querySelectorAll('[contenteditable=true]');
+        document.getElementById('summary-by-activities').addEventListener('click', function(event) {
+            document.getElementById('summary-project').style.display = event.target.checked ? 'none' : 'table';
+            document.getElementById('summary-activity').style.display = event.target.checked ? 'table' : 'none';
+            saveVisibility();
+        });
+        document.getElementById('date-format').addEventListener('change', function(event) {
+            changedDateFormat(event.target.value, 'dateformat');
+        });
+        document.getElementById('begin-format').addEventListener('change', function(event) {
+            changedDateFormat(event.target.value, 'beginformat');
+        });
+        document.getElementById('end-format').addEventListener('change', function(event) {
+            changedDateFormat(event.target.value, 'endformat');
+        });
+        document.getElementById('summary-show').addEventListener('click', function(event) {
+            document.getElementById('export-summary').style.display = event.target.checked ? 'block' : 'none';
+            saveVisibility();
+        });
+        document.getElementById('summary-timeBudget').addEventListener('click', function(event) {
+            let cells = document.getElementsByClassName('export-timeBudget');
+            for (let columnCell of cells) {
+                columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
+            }
+            saveVisibility();
+        });
+        document.getElementById('summary-budget').addEventListener('click', function(event) {
+            let cells = document.getElementsByClassName('export-budget');
+            for (let columnCell of cells) {
+                columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
+            }
+            saveVisibility();
+        });
+        document.getElementById('summary-duration').addEventListener('click', function(event) {
+            let cells = document.getElementsByClassName('summary-duration');
+            for (let columnCell of cells) {
+                columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
+            }
+            saveVisibility();
+        });
+        document.getElementById('summary-rate').addEventListener('click', function(event) {
+            let cells = document.getElementsByClassName('summary-rate');
+            for (let columnCell of cells) {
+                columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
+            }
+            saveVisibility();
+        });
+        document.getElementById('summary-internalRate').addEventListener('click', function(event) {
+            let cells = document.getElementsByClassName('summary-internalRate');
+            for (let columnCell of cells) {
+                columnCell.style.display = event.target.checked ? 'table-cell' : 'none';
+            }
+            saveVisibility();
+        });
+        document.getElementById('summary-show').addEventListener('click', function(event) {
+            document.getElementById('export-summary').style.display = event.target.checked ? 'block' : 'none';
+            saveVisibility();
+        });
+        document.getElementById('records-show').addEventListener('click', function(event) {
+            document.getElementById('export-records').style.display = event.target.checked ? 'block' : 'none';
+            saveVisibility();
+        });
 
-            for (let editable of editableTitles) {
-                editable.addEventListener('input', function(event) {
-                    if (event.target.innerText === '') {
-                        return;
+        let columnCheckboxes = document.getElementsByClassName('column-visibility-changer');
+
+        for (let checkbox of columnCheckboxes) {
+            checkbox.addEventListener('click', function(event) {
+                changeVisibility(event.target.name, event.target.checked);
+            });
+        }
+
+        let editableTitles = document.querySelectorAll('[contenteditable=true]');
+
+        for (let editable of editableTitles) {
+            editable.addEventListener('input', function(event) {
+                if (event.target.innerText === '') {
+                    return;
+                }
+                saveVisibility();
+            });
+        }
+
+        // needs to be executed as last action in the flow, after the listener were registered
+        let config = localStorage.getItem('{{ storageItemName }}');
+        if (config !== null) {
+            try {
+                config = JSON.parse(config);
+                for (const elName in config) {
+                    if (!config.hasOwnProperty(elName)) {
+                        continue;
                     }
-                    saveVisibility();
-                });
-            }
-
-            // needs to be executed as last action in the flow, after the listener were registered
-            let config = localStorage.getItem('{{ storageItemName }}');
-            if (config !== null) {
-                try {
-                    config = JSON.parse(config);
-                    for (const elName in config) {
-                        if (!config.hasOwnProperty(elName)) {
+                    let elValue = config[elName];
+                    let el = document.getElementById(elName);
+                    if (el === undefined || el === null) {
+                        el = document.getElementById('records-column-' + elName);
+                        if (el === undefined || el === null) {
                             continue;
                         }
-                        let elValue = config[elName];
-                        let el = document.getElementById(elName);
-                        if (el === undefined || el === null) {
-                            el = document.getElementById('records-column-' + elName);
-                            if (el === undefined || el === null) {
-                                continue;
-                            }
-                        }
-                        if (el.type === 'checkbox') {
-                            if (elValue !== el.checked) {
-                                el.click();
-                            }
-                        } else if (el.type === 'select-one') {
-                            if (el.value !== elValue) {
-                                el.value = elValue;
-                                el.dispatchEvent(new Event('change'));
-                            }
-                        } else if (el.isContentEditable) {
-                            el.innerText = elValue;
-                        }
                     }
-                } catch (e) {
-                    // ignore error in restoring
-                    console.log('Failed to restore settings, removing invalid settings', e);
-                    localStorage.removeItem('{{ storageItemName }}');
+                    if (el.type === 'checkbox') {
+                        if (elValue !== el.checked) {
+                            el.click();
+                        }
+                    } else if (el.type === 'select-one') {
+                        if (el.value !== elValue) {
+                            el.value = elValue;
+                            el.dispatchEvent(new Event('change'));
+                        }
+                    } else if (el.isContentEditable) {
+                        el.innerText = elValue;
+                    }
                 }
+            } catch (e) {
+                // ignore error in restoring
+                console.log('Failed to restore settings, removing invalid settings', e);
+                localStorage.removeItem('{{ storageItemName }}');
             }
+        }
 
-            initialized = true;
-        });
+        initialized = true;
 
         function changeVisibility(column, visible)
         {

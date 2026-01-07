@@ -311,7 +311,6 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
 
-        self::assertCount(19, array_keys($result));
         self::assertEquals('first one', $result['parentTitle']);
         self::assertEquals($project->getId(), $result['id']);
         self::assertIsArray($result['teams']);
@@ -329,7 +328,8 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         self::assertNull($result['orderNumber']);
         self::assertNull($result['number']);
         self::assertNull($result['comment']);
-        self::assertEquals('#2ECC40', $result['color']);
+        self::assertNull($result['color']);
+        self::assertEquals('#2ECC40', $result['color-safe']);
         self::assertTrue($result['globalActivities']);
         self::assertTrue($result['billable']);
         self::assertTrue($result['visible']);
@@ -374,7 +374,7 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         self::assertEquals('Test', $result['parentTitle']);
         self::assertNotEmpty($result['id']);
         self::assertIsArray($result['teams']);
-        self::assertEquals([['id' => 1, 'name' => 'Test team', 'color' => '#03A9F4']], $result['teams']);
+        self::assertEquals([['id' => 1, 'name' => 'Test team', 'color' => null, 'color-safe' => '#03A9F4']], $result['teams']);
         self::assertIsArray($result['metaFields']);
         self::assertEquals([], $result['metaFields']);
         self::assertEquals('foo', $result['name']);

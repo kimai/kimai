@@ -99,7 +99,11 @@ final class HtmlRenderer implements ExportRendererInterface
             'userPreferences' => $userPreferences,
         ]);
 
+        // allows to run in development mode, otherwise toolbar would be blocked
+        $sandbox->disableSandbox();
+
         $response = new Response();
+        $response->headers->set('Content-Type', 'text/html');
         $response->setContent($content);
 
         return $response;

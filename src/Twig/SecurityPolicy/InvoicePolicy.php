@@ -22,13 +22,13 @@ use Twig\Template;
  */
 final class InvoicePolicy implements SecurityPolicyInterface
 {
-    private ChainPolicy $policy;
+    private SecurityPolicyInterface $default;
+    private SecurityPolicyInterface $security;
 
     public function __construct()
     {
-        $this->policy = new ChainPolicy();
-        $this->policy->addPolicy(new DefaultPolicy());
-        $this->policy->addPolicy(new SecurityPolicy(
+        $this->default = new DefaultPolicy();
+        $this->security = new SecurityPolicy(
             ['block', 'if', 'for', 'set', 'extends', 'import'],
             [
                 // =================================================================
@@ -196,12 +196,13 @@ final class InvoicePolicy implements SecurityPolicyInterface
                 'month_names',
                 'locale_format',
             ]
-        ));
+        );
     }
 
     public function checkSecurity($tags, $filters, $functions): void
     {
-        $this->policy->checkSecurity($tags, $filters, $functions);
+        $this->default->checkSecurity($tags, $filters, $functions);
+        $this->security->checkSecurity($tags, $filters, $functions);
     }
 
     public function checkMethodAllowed($obj, $method): void
@@ -210,21 +211,20 @@ final class InvoicePolicy implements SecurityPolicyInterface
             return;
         }
 
+        $this->default->checkMethodAllowed($obj, $method);
+
         $lm = strtolower($method);
 
-        if (str_starts_with($lm, 'get') || str_starts_with($lm, 'is') || str_starts_with($lm, 'has')) {
+        if (str_starts_with($lm, 'get') || str_starts_with($lm, 'is') || str_starts_with($lm, 'has') || $lm === '__tostring') {
             return;
         }
 
-        if ($lm === '__tostring') {
-            return;
-        }
-
-        $this->policy->checkMethodAllowed($obj, $method);
+        $this->security->checkMethodAllowed($obj, $method);
     }
 
     public function checkPropertyAllowed($obj, $property): void
     {
-        $this->policy->checkPropertyAllowed($obj, $property);
+        $this->default->checkPropertyAllowed($obj, $property);
+        $this->security->checkPropertyAllowed($obj, $property);
     }
 }
