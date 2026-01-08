@@ -9,6 +9,7 @@
 
 namespace App\Twig\SecurityPolicy;
 
+use App\Entity\MetaTableTypeInterface;
 use App\Entity\User;
 use App\Pdf\PdfContext;
 use Symfony\Bridge\Twig\AppVariable;
@@ -47,8 +48,8 @@ final class DefaultPolicy implements SecurityPolicyInterface
             return;
         }
 
-        if (!str_starts_with($lcm, 'has') && !str_starts_with($lcm, 'is') && !str_starts_with($lcm, 'get') && $lcm !== '__tostring') {
-            throw new SecurityNotAllowedMethodError('Tried to access non-read method', $obj::class, $method);
+        if ($obj instanceof MetaTableTypeInterface && $lcm === 'merge') {
+            return;
         }
 
         if ($obj instanceof Request) {
@@ -65,6 +66,10 @@ final class DefaultPolicy implements SecurityPolicyInterface
             }
 
             return;
+        }
+
+        if (!str_starts_with($lcm, 'has') && !str_starts_with($lcm, 'is') && !str_starts_with($lcm, 'get') && $lcm !== '__tostring') {
+            throw new SecurityNotAllowedMethodError('Tried to access non-read method', $obj::class, $method);
         }
 
         if ($obj instanceof User) {
