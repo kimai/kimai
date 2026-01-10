@@ -2034,6 +2034,10 @@
         <source>sending_company.help</source>
         <target state="translated">Esta companhia é mostrada como o emissor na fatura. Desta, o nome, endereço, e informações de impostos serão usados.</target>
       </trans-unit>
+      <trans-unit id="uXB48Vj" resname="SEPA Credit Transfer" xml:space="preserve">
+        <source>SEPA Credit Transfer</source>
+        <target state="needs-translation">Pt br</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
