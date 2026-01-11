@@ -9,15 +9,25 @@
 
 namespace App\Validator\Constraints;
 
-final class TimesheetZeroDuration extends TimesheetConstraint
-{
-    public const ZERO_DURATION_ERROR = 'kimai-timesheet-zero-duration-01';
+use App\Validator\Attribute\TimesheetConstraint;
+use Symfony\Component\Validator\Constraint;
 
-    protected const ERROR_NAMES = [
+#[TimesheetConstraint]
+final class TimesheetZeroDuration extends Constraint
+{
+    public const string ZERO_DURATION_ERROR = 'kimai-timesheet-zero-duration-01';
+
+    protected const array ERROR_NAMES = [
         self::ZERO_DURATION_ERROR => 'Duration cannot be zero.',
     ];
 
     public string $message = 'Duration cannot be zero.';
+
+    public function __construct(?string $message = null)
+    {
+        $this->message = $message ?? $this->message;
+        parent::__construct();
+    }
 
     public function getTargets(): string
     {

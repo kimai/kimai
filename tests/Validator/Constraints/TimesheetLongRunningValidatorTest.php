@@ -56,7 +56,7 @@ class TimesheetLongRunningValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetLongRunning(['message' => 'myMessage']));
+        $this->validator->validate(new NotBlank(), new TimesheetLongRunning());
     }
 
     public function testLongRunningTriggers(): void

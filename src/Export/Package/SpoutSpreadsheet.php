@@ -35,7 +35,11 @@ class SpoutSpreadsheet implements SpreadsheetPackage
         private readonly ?string $locale = null,
     )
     {
-        $this->writer->setCreator(Constants::SOFTWARE);
+        try {
+            $this->writer->setCreator(Constants::SOFTWARE);
+        } catch (\Exception $e) {
+            // ignore, does not work in CSV
+        }
     }
 
     /**

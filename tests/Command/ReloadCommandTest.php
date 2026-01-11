@@ -26,7 +26,7 @@ class ReloadCommandTest extends KernelTestCase
         parent::setUp();
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
-        $this->application->add(new ReloadCommand(
+        $this->application->addCommand(new ReloadCommand(
             $this->application->getKernel()->getProjectDir(),
             $this->application->getKernel()->getEnvironment()
         ));

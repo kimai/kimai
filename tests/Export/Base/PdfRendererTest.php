@@ -26,7 +26,7 @@ use Twig\Environment;
 #[Group('integration')]
 class PdfRendererTest extends AbstractRendererTestCase
 {
-    protected function getAbstractRenderer(bool $exportDecimal = false): PDFRenderer
+    protected function getAbstractRenderer(): PDFRenderer
     {
         $twig = $this->createMock(Environment::class);
         $converter = $this->createMock(HtmlToPdfConverter::class);
@@ -55,17 +55,7 @@ class PdfRendererTest extends AbstractRendererTestCase
         self::assertEquals(['foo' => 'bar2'], $sut->getPdfOptions());
         $sut->setPdfOption('hello', 'world');
         self::assertEquals(['foo' => 'bar2', 'hello' => 'world'], $sut->getPdfOptions());
-        self::assertFalse($sut->isInternal());
-    }
-
-    #[Group('legacy')]
-    public function testLegacy(): void
-    {
-        $sut = $this->getAbstractRenderer();
-
-        $sut->setTemplate('some'); // @phpstan-ignore method.deprecated
-        $sut->setTitle('xxxxxx'); // @phpstan-ignore method.deprecated
-        self::assertEquals('xxxxxx', $sut->getTitle());
+        self::assertFalse($sut->isInternal()); // @phpstan-ignore staticMethod.alreadyNarrowedType
     }
 
     public function testRender(): void

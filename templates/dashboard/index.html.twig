@@ -14,6 +14,7 @@
 {% endblock %}
 
 {% block footer %}
+    {# @CloudRequired #}
     {% if 'dashboard' in app.request.attributes.get('_route') %}
         {{ parent() }}
     {% endif %}
@@ -21,17 +22,99 @@
 
 {% block main %}
 
-    {% if widgets is empty %}
-        {{ widgets.nothing_found() }}
-    {% else %}
-        <div class="row row-deck row-cards">
-        {% for widget in widgets %}
-            {% set columnSize = widget.width %}
-            <div class="col-md-{{ columnSize * 3 }}{% if columnSize <= 2 %} col-sm-{{ columnSize * 6  }}{% endif %}" id="{{ widget.id }}">
-                {{ render_widget(widget) }}
+    {% if form is defined %}
+        {{ form_start(form, {'attr': {'style': 'display: none', 'id': 'dashboard-widgets'}}) }}
+        {{ form_end(form) }}
+        <div class="offcanvas offcanvas-end" id="addSmallWidget" tabindex="-1" aria-labelledby="addSmallWidgetLabel" aria-modal="true" role="dialog">
+            <div class="offcanvas-header">
+                <h2 class="offcanvas-title" id="addSmallWidgetLabel">Add widget</h2>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-        {% endfor %}
+            <div class="offcanvas-body">
+                <div>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab assumenda ea est, eum exercitationem fugiat illum itaque laboriosam magni
+                    necessitatibus, nemo nisi numquam quae reiciendis repellat sit soluta unde. Aut!
+                </div>
+                <div class="mt-3">
+                    <button class="btn btn-primary" type="button" data-bs-dismiss="offcanvas">{{ 'action.close'|trans }}</button>
+                </div>
+            </div>
         </div>
     {% endif %}
 
+    {% if widgets is empty %}
+        {{ widgets.nothing_found() }}
+    {% else %}
+        {% set small_widgets = widgets|filter(w => w.width == 1) %}
+        {% set large_widgets = widgets|filter(w => w.width > 1) %}
+        <div class="row row-deck row-cards widget-container mb-3">
+            {% for widget in small_widgets %}
+                {% set tmpId = tabler_unique_id() %}
+                <div class="col-lg-3 col-sm-6 widget" id="widget_{{ tmpId }}" data-id="{{ tmpId }}" data-widget="{{ widget.id }}" data-options="{{ widget.options|json_encode }}">
+                    {{ render_widget(widget) }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row row-deck row-cards widget-container">
+            {% for widget in large_widgets %}
+                {% set tmpId = tabler_unique_id() %}
+                <div class="{% if widget.width == 2 and large_widgets|length > 1 %}col-lg-6 {% endif %}col-sm-12 widget" id="widget_{{ tmpId }}" data-id="{{ tmpId }}" data-widget="{{ widget.id }}" data-options="{{ widget.options|json_encode }}">
+                    {{ render_widget(widget) }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <script>
+        function setWidgetOption(element, name, value)
+        {
+            const widget = element.closest('div.widget[data-widget]');
+
+            let opts = JSON.parse(widget.dataset['options']);
+            opts[name] = value;
+            widget.dataset['options'] = JSON.stringify(opts);
+
+            saveDashboard();
+        }
+
+        function removeWidget(id)
+        {
+            document.getElementById(id).parentNode.remove();
+        }
+
+        function editDashboard()
+        {
+            const widgetContainer = document.getElementsByClassName('widget-container');
+
+            for (let c of widgetContainer) {
+                let sortable = window.kimai.getPlugin('sortable').toggle(c);
+                let cursor = (sortable) ? 'grab' : 'auto';
+                Array.from(c.getElementsByClassName('widget')).forEach(e => {
+                    e.style.cursor = cursor;
+                });
+            }
+
+            Array.from(document.getElementsByClassName('widget_view')).forEach(e => e.classList.toggle('d-none'));
+            Array.from(document.getElementsByClassName('widget_edit')).forEach(e => e.classList.toggle('d-none'));
+        }
+
+        function saveDashboard()
+        {
+            const widgetContainer = document.getElementsByClassName('widget-container');
+            const values = [];
+
+            for (let c of widgetContainer) {
+                let serializedData = c.getElementsByClassName('widget');
+
+                for (let widget of serializedData) {
+                    let widgetName = widget.dataset['widget'];
+                    let opts = JSON.parse(widget.dataset['options']);
+                    values.push({name: widgetName, options: opts});
+                }
+            }
+
+            document.getElementById('form_widgets').value = JSON.stringify(values);
+            document.getElementById('dashboard-widgets').submit();
+        }
+    </script>
 {% endblock %}

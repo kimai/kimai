@@ -9,16 +9,14 @@
 
 namespace App\Tests\Validator\Constraints;
 
-use App\Validator\Constraints\TimesheetConstraint;
 use App\Validator\Constraints\TimesheetLongRunning;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\TestCase;
 
 #[CoversClass(TimesheetLongRunning::class)]
-class TimesheetLongRunningTest extends TestCase
+class TimesheetLongRunningTest extends AbstractConstraintTestCase
 {
     public function testIsTimesheetConstraint(): void
     {
-        self::assertInstanceOf(TimesheetConstraint::class, new TimesheetLongRunning());
+        $this->assertTimesheetConstraint(new TimesheetLongRunning());
     }
 }

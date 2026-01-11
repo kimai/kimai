@@ -13,6 +13,7 @@ use App\Entity\User;
 use App\Security\RolePermissionManager;
 use App\Timesheet\TrackingModeService;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
@@ -37,7 +38,7 @@ final class QuickEntryVoter extends Voter
         return $this->supportsAttribute($attribute);
     }
 
-    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $vote = null): bool
     {
         $user = $token->getUser();
 

@@ -62,14 +62,6 @@
         <source>user_profile</source>
         <target>Profilom</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>API jelszó</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>API jelszó ismétlese</target>
-      </trans-unit>
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Kezdőlap</target>
@@ -446,67 +438,15 @@
         <source>stats.yourWorkingHours</source>
         <target state="translated">Munkaóráim</target>
       </trans-unit>
-      <trans-unit id="023M9Ta" resname="stats.amountToday">
-        <source>stats.amountToday</source>
-        <target>Mai bevétel</target>
-      </trans-unit>
-      <trans-unit id="xnJvYAE" resname="stats.amountWeek" xml:space="preserve">
-        <source>stats.amountWeek</source>
-        <target state="translated">Bevétel ezen a héten</target>
-      </trans-unit>
-      <trans-unit id="ulr3reE" resname="stats.amountMonth" xml:space="preserve">
-        <source>stats.amountMonth</source>
-        <target state="translated">Bevétel ebben a hónapban</target>
-      </trans-unit>
-      <trans-unit id="bQZyZaO" resname="stats.amountYear" xml:space="preserve">
-        <source>stats.amountYear</source>
-        <target state="translated">Bevétel ebben az évben</target>
-      </trans-unit>
       <trans-unit id="Z0fz23v" resname="stats.amountTotal">
         <source>stats.amountTotal</source>
         <target>Összes bevétel</target>
-      </trans-unit>
-      <trans-unit id="HzICegM" resname="stats.activeUsersToday">
-        <source>stats.activeUsersToday</source>
-        <target>Mai aktív felhasználók</target>
-      </trans-unit>
-      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek" xml:space="preserve">
-        <source>stats.activeUsersWeek</source>
-        <target state="translated">Aktív felhasználók ezen a héten</target>
-      </trans-unit>
-      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth" xml:space="preserve">
-        <source>stats.activeUsersMonth</source>
-        <target state="translated">Aktív felhasználók ebben a hónapban</target>
-      </trans-unit>
-      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear" xml:space="preserve">
-        <source>stats.activeUsersYear</source>
-        <target state="translated">Aktív felhasználók ebben az évben</target>
-      </trans-unit>
-      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal" xml:space="preserve">
-        <source>stats.activeUsersTotal</source>
-        <target state="translated">Összes aktív felhasználó</target>
       </trans-unit>
       <trans-unit id="lEW82ex" resname="stats.activeRecordings">
         <source>stats.activeRecordings</source>
         <target>Aktív rögzítések</target>
       </trans-unit>
-      <trans-unit id="t5eIWp8" resname="stats.userTotal" xml:space="preserve">
-        <source>stats.userTotal</source>
-        <target state="translated">Összes felhasználó</target>
-      </trans-unit>
-      <trans-unit id="Bor.76M" resname="stats.activityTotal" xml:space="preserve">
-        <source>stats.activityTotal</source>
-        <target state="translated">Összes tevékenység</target>
-      </trans-unit>
-      <trans-unit id="67uSaR3" resname="stats.projectTotal" xml:space="preserve">
-        <source>stats.projectTotal</source>
-        <target state="translated">Összes projekt</target>
-      </trans-unit>
-      <trans-unit id="tnD6aPj" resname="stats.customerTotal" xml:space="preserve">
-        <source>stats.customerTotal</source>
-        <target state="translated">Összes ügyfél</target>
-      </trans-unit>
-      <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title" xml:space="preserve">
+      <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
         <target state="translated">Számlasablon</target>
       </trans-unit>
@@ -985,10 +925,6 @@
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
         <target>Egy üzenet lett küldve a %email% címre. Ebben az üzenetben található az aktivációs link, amire kattintva aktiválhatod a fiókodat.</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>Aktív felhasználók ebben a pénzügyi évben</target>
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
@@ -1757,10 +1693,6 @@
       <trans-unit id="dru_Thv" resname="please_choose" xml:space="preserve">
         <source>please_choose</source>
         <target state="translated">Kérlek válassz</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">Az API jelszavak elavultak: kérlek használd helyettük az API tokeneket.</target>
       </trans-unit>
       <trans-unit id="y1XHR1Q" resname="address_deprecated" xml:space="preserve">
         <source>address_deprecated</source>

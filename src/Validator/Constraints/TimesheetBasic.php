@@ -9,18 +9,22 @@
 
 namespace App\Validator\Constraints;
 
-final class TimesheetBasic extends TimesheetConstraint
-{
-    public const MISSING_BEGIN_ERROR = 'kimai-timesheet-81';
-    public const END_BEFORE_BEGIN_ERROR = 'kimai-timesheet-82';
-    public const MISSING_ACTIVITY_ERROR = 'kimai-timesheet-84';
-    public const MISSING_PROJECT_ERROR = 'kimai-timesheet-85';
-    public const ACTIVITY_PROJECT_MISMATCH_ERROR = 'kimai-timesheet-86';
-    public const PROJECT_NOT_STARTED = 'kimai-timesheet-91';
-    public const PROJECT_ALREADY_ENDED = 'kimai-timesheet-92';
-    public const PROJECT_DISALLOWS_GLOBAL_ACTIVITY = 'kimai-timesheet-93';
+use App\Validator\Attribute\TimesheetConstraint;
+use Symfony\Component\Validator\Constraint;
 
-    protected const ERROR_NAMES = [
+#[TimesheetConstraint]
+final class TimesheetBasic extends Constraint
+{
+    public const string MISSING_BEGIN_ERROR = 'kimai-timesheet-81';
+    public const string END_BEFORE_BEGIN_ERROR = 'kimai-timesheet-82';
+    public const string MISSING_ACTIVITY_ERROR = 'kimai-timesheet-84';
+    public const string MISSING_PROJECT_ERROR = 'kimai-timesheet-85';
+    public const string ACTIVITY_PROJECT_MISMATCH_ERROR = 'kimai-timesheet-86';
+    public const string PROJECT_NOT_STARTED = 'kimai-timesheet-91';
+    public const string PROJECT_ALREADY_ENDED = 'kimai-timesheet-92';
+    public const string PROJECT_DISALLOWS_GLOBAL_ACTIVITY = 'kimai-timesheet-93';
+
+    protected const array ERROR_NAMES = [
         self::MISSING_BEGIN_ERROR => 'You must submit a begin date.',
         self::END_BEFORE_BEGIN_ERROR => 'End date must not be earlier then start date.',
         self::MISSING_ACTIVITY_ERROR => 'An activity needs to be selected.',

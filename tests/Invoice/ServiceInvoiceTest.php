@@ -34,6 +34,17 @@ use Twig\Environment;
 #[CoversClass(ServiceInvoice::class)]
 class ServiceInvoiceTest extends TestCase
 {
+    private function getCustomer(string $name, int $id): Customer
+    {
+        $customer = new Customer($name);
+
+        $reflectionCustomer = new \ReflectionClass(Customer::class);
+        $customerIdProperty = $reflectionCustomer->getProperty('id');
+        $customerIdProperty->setValue($customer, $id);
+
+        return $customer;
+    }
+
     private function getSut(array $paths): ServiceInvoice
     {
         $languages = [
@@ -108,7 +119,7 @@ class ServiceInvoiceTest extends TestCase
         $this->expectExceptionMessage('Cannot create invoice model without template');
 
         $query = new InvoiceQuery();
-        $query->setCustomers([new Customer('foo')]);
+        $query->setCustomers([$this->getCustomer('foo', 1)]);
 
         $sut = $this->getSut([]);
         $sut->createModel($query);
@@ -121,7 +132,7 @@ class ServiceInvoiceTest extends TestCase
         $template->setLanguage('it');
 
         $query = new InvoiceQuery();
-        $query->setCustomers([new Customer('foo')]);
+        $query->setCustomers([$this->getCustomer('foo', 1)]);
         $query->setTemplate($template);
 
         $sut = $this->getSut([]);
@@ -136,7 +147,7 @@ class ServiceInvoiceTest extends TestCase
     public function testBeginAndEndDateFallback(): void
     {
         $timezone = new \DateTimeZone('Europe/Vienna');
-        $customer = new Customer('foo');
+        $customer = $this->getCustomer('foo', 1);
         $project = new Project();
         $project->setCustomer($customer);
 
@@ -178,8 +189,10 @@ class ServiceInvoiceTest extends TestCase
         $template->setNumberGenerator('date');
         $template->setLanguage('de');
 
+        $customer = $this->getCustomer('foo', 1);
+
         $query = new InvoiceQuery();
-        $query->setCustomers([new Customer('foo'), $customer]);
+        $query->setCustomers([$customer, $customer]);
         $query->setTemplate($template);
         self::assertNull($query->getBegin());
         self::assertNull($query->getEnd());
@@ -291,7 +304,7 @@ class ServiceInvoiceTest extends TestCase
         self::assertEquals('de', $template->getLanguage());
 
         $query = new InvoiceQuery();
-        $query->setCustomers([$customer3, new Customer('tröööt'), $customer1, $customer3]);
+        $query->setCustomers([$customer3, $this->getCustomer('tröööt', 1), $customer1, $customer3]);
         $query->setTemplate($template);
         self::assertNull($query->getBegin());
         self::assertNull($query->getEnd());

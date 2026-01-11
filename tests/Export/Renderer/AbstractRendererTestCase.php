@@ -26,12 +26,25 @@ use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractRendererTestCase extends KernelTestCase
 {
-    protected function render(ExportRendererInterface $renderer, bool $exportDecimal = false): Response
+    protected function render(ExportRendererInterface $renderer): Response
     {
+        $reflectionUser = new \ReflectionClass(User::class);
+        $userIdProperty = $reflectionUser->getProperty('id');
+
+        $reflectionCustomer = new \ReflectionClass(Customer::class);
+        $customerIdProperty = $reflectionCustomer->getProperty('id');
+
+        $reflectionProject = new \ReflectionClass(Project::class);
+        $projectIdProperty = $reflectionProject->getProperty('id');
+
+        $reflectionActivity = new \ReflectionClass(Activity::class);
+        $activityIdProperty = $reflectionActivity->getProperty('id');
+
         $customer = new Customer('Customer Name');
         $customer->setNumber('A-0123456789');
         $customer->setVatId('DE-9876543210');
         $customer->setMetaField((new CustomerMeta())->setName('customer-foo')->setValue('customer-bar')->setIsVisible(true));
+        $customerIdProperty->setValue($customer, 1);
 
         $project = new Project();
         $project->setName('project name');
@@ -39,25 +52,23 @@ abstract class AbstractRendererTestCase extends KernelTestCase
         $project->setOrderNumber('ORDER-123');
         $project->setMetaField((new ProjectMeta())->setName('project-bar')->setValue('project-bar')->setIsVisible(true));
         $project->setMetaField((new ProjectMeta())->setName('project-foo2')->setValue('project-foo2')->setIsVisible(true));
+        $projectIdProperty->setValue($project, 1);
 
         $activity = new Activity();
         $activity->setName('activity description');
         $activity->setProject($project);
         $activity->setMetaField((new ActivityMeta())->setName('activity-foo')->setValue('activity-bar')->setIsVisible(true));
+        $activityIdProperty->setValue($activity, 1);
 
-        $userMethods = ['getId', 'getPreferenceValue', 'getUsername', 'getUserIdentifier', 'getAlias'];
-        $user1 = $this->getMockBuilder(User::class)->onlyMethods($userMethods)->disableOriginalConstructor()->getMock();
-        $user1->method('getId')->willReturn(1);
-        $user1->method('getPreferenceValue')->willReturn('50');
-        $user1->method('getAlias')->willReturn('Foo Bar');
-        $user1->method('getUserIdentifier')->willReturn('foo-bar');
-        $user1->method('getUsername')->willReturn('foo-bar');
+        $user1 = new User();
+        $user1->setUserIdentifier('foo-bar');
+        $user1->setAlias('Foo Bar');
+        $userIdProperty->setValue($user1, 1);
 
-        $user2 = $this->getMockBuilder(User::class)->onlyMethods($userMethods)->disableOriginalConstructor()->getMock();
-        $user2->method('getId')->willReturn(2);
-        $user2->method('getAlias')->willReturn('Hello World');
-        $user2->method('getUserIdentifier')->willReturn('hello-world');
-        $user2->method('getUsername')->willReturn('hello-world');
+        $user2 = new User();
+        $user2->setAlias('Hello World');
+        $user2->setUserIdentifier('hello-world');
+        $userIdProperty->setValue($user2, 2);
 
         $timesheet = new Timesheet();
         $timesheet->setDuration(3600);
@@ -100,6 +111,7 @@ abstract class AbstractRendererTestCase extends KernelTestCase
         $userKevin = new User();
         $userKevin->setAlias('Kevin');
         $userKevin->setUserIdentifier('kevin');
+        $userIdProperty->setValue($userKevin, 3);
 
         $timesheet5 = new Timesheet();
         $timesheet5->setDuration(400);
@@ -117,6 +129,7 @@ abstract class AbstractRendererTestCase extends KernelTestCase
         $userNivek = new User();
         $userNivek->setAlias('niveK');
         $userNivek->setUserIdentifier('nivek');
+        $userIdProperty->setValue($userNivek, 4);
 
         $timesheet6 = new Timesheet();
         $timesheet6->setDuration(400);
@@ -129,15 +142,12 @@ abstract class AbstractRendererTestCase extends KernelTestCase
 
         $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5, $timesheet6];
 
-        $currentUser = new User();
-        $currentUser->setPreferenceValue('export_decimal', $exportDecimal);
-
         $query = new TimesheetQuery();
         $query->setActivities([$activity]);
         $query->setBegin(new \DateTime());
         $query->setEnd(new \DateTime());
         $query->setProjects([$project]);
-        $query->setCurrentUser($currentUser);
+        $query->setCurrentUser(new User());
 
         return $renderer->render($entries, $query);
     }

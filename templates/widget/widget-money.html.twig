@@ -1,0 +1,85 @@
+{% embed 'dashboard/widget.html.twig' %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    {% import "macros/progressbar.html.twig" as progress %}
+    {% block box_body %}
+        {% set id = tabler_unique_id('chart_money') %}
+        {% set values = [
+            {title: 'daterangepicker.today'|trans({}, 'daterangepicker'), value: data.today, color: 'green' },
+            {title: 'daterangepicker.thisWeek'|trans({}, 'daterangepicker'), value: data.week, color: 'blue' },
+            {title: 'daterangepicker.thisMonth'|trans({}, 'daterangepicker'), value: data.month, color: 'purple' },
+            {title: 'daterangepicker.thisYear'|trans({}, 'daterangepicker'), value: data.year, color: 'yellow' },
+        ] %}
+        {% if data.financial is not null %}
+            {% set values = values|merge([
+                {title: 'daterangepicker.thisFinancialYear'|trans({}, 'daterangepicker'), value: data.financial, color: 'yellow' },
+            ]) %}
+        {% endif %}
+        <div class="row">
+            <div class="col-8">
+                <div class="chart-container" style="position: relative">
+                    <canvas class="chartjs" id="{{ id }}" style="height: {{ config('theme.chart.height') }}px; width: 100%;"></canvas>
+                </div>
+                <script>
+                    const config = {
+                        type: 'bar',
+                        data: {
+                            labels: [
+                                {% for row in data.days %}
+                                '{{ row.date|date_weekday }}',
+                                {% endfor %}
+                            ],
+                            datasets: [{
+                                axis: 'y',
+                                data: [
+                                    {% for row in data.days %}
+                                    {{ row.totalDuration|chart_duration }},
+                                    {% endfor %}
+                                ],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)',
+                                    'rgba(255, 205, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(201, 203, 207, 0.2)'
+                                ],
+                                borderWidth: 0,
+                                barThickness: 10
+                            }]
+                        },
+                        options: {
+                            maintainAspectRatio: true,
+                            responsive: true,
+                            indexAxis: 'y',
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            }
+                        }
+                    };
+
+                    document.addEventListener('{{ options.renderEvent|default('kimai.initialized') }}', function() {
+                        new Chart(
+                            document.getElementById('{{ id }}').getContext("2d"), config
+                        );
+                    });
+                </script>
+            </div>
+            <div class="col-4">
+                <ul class="p-0 m-0">
+                {% for row in values %}
+                    <li class="d-flex{% if not loop.last%} mb-2{% endif %}">
+                        <div class="d-flex w-100 flex-wrap justify-content-between gap-2">
+                            <div class="me-2">{{ row.title }}</div>
+                            <div class="fw-bold">{{ row.value|duration }}</div>
+                        </div>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+    {% endblock %}
+{% endembed %}

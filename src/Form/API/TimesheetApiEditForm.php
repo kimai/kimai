@@ -60,7 +60,6 @@ final class TimesheetApiEditForm extends TimesheetEditForm
             $builder->remove('metaFields');
         }
 
-        // TODO this is only a quick fix, see bugs reports
         if ($builder->has('duration')) {
             $builder->remove('duration');
         }
@@ -71,7 +70,6 @@ final class TimesheetApiEditForm extends TimesheetEditForm
 
         if ($builder->has('tags')) {
             $builder->remove('tags');
-            // @deprecated for BC reasons here, arrays will be supported in 2.0
             $builder->add('tags', TagsInputType::class, [
                 'required' => false,
             ]);

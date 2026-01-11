@@ -9,8 +9,8 @@
 
 namespace App\Tests\Repository\Loader;
 
-use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QueryBuilder;
 use PHPUnit\Framework\TestCase;
@@ -22,7 +22,7 @@ abstract class AbstractLoaderTestCase extends TestCase
         $em = $this->createMock(EntityManager::class);
         $qb = $this->createMock(QueryBuilder::class);
 
-        $query = $this->createMock(AbstractQuery::class);
+        $query = $this->createMock(Query::class);
         $expr = $this->createMock(Expr::class);
 
         if ($resultMock !== null) {
@@ -30,7 +30,7 @@ abstract class AbstractLoaderTestCase extends TestCase
         }
 
         $expr->expects($this->any())->method('isNotNull')->willReturn('');
-        $expr->expects($this->any())->method('in')->willReturn('');
+        $expr->expects($this->any())->method('in')->willReturn(new Expr\Func('', []));
 
         $qb->expects($this->any())->method('andWhere')->willReturnSelf();
         $qb->expects($this->any())->method('from')->willReturnSelf();

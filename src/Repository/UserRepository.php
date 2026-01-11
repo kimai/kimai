@@ -337,6 +337,9 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
         return $qb;
     }
 
+    /**
+     * @return Pagination<User>
+     */
     public function getPagerfantaForQuery(UserQuery $query): Pagination
     {
         return new Pagination($this->getPaginatorForQuery($query), $query);
@@ -345,7 +348,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
     /**
      * @return int<0, max>
      */
-    public function countUsersForQuery(UserQuery $query): int
+    private function countUsersForQuery(UserQuery $query): int
     {
         $qb = $this->getQueryBuilderForQuery($query);
         $qb

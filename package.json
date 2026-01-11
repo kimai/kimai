@@ -1,58 +1,59 @@
 {
-  "name": "kimai",
-  "homepage": "https://github.com/kimai/kimai",
-  "license": "AGPL",
-  "maintainers": [
-    {
-      "name": "Kevin Papst",
-      "url": "https://www.kevinpapst.de"
-    }
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kimai/kimai.git"
-  },
-  "scripts": {
-    "dev-server": "yarn encore dev-server",
-    "dev": "yarn encore dev",
-    "watch": "yarn encore dev --watch",
-    "lint": "yarn eslint assets/js/",
-    "build": "yarn encore production"
-  },
-  "browserslist": [
-    "defaults"
-  ],
-  "dependencies": {
-    "@babel/core": "^7",
-    "@babel/eslint-parser": "^7",
-    "@babel/plugin-syntax-dynamic-import": "^7",
-    "@babel/preset-env": "^7",
-    "@eslint/js": "^9",
-    "@fortawesome/fontawesome-free": "^6",
-    "@fullcalendar/bootstrap5": "^5",
-    "@fullcalendar/core": "^5",
-    "@fullcalendar/daygrid": "^5",
-    "@fullcalendar/google-calendar": "^5",
-    "@fullcalendar/icalendar": "^5",
-    "@fullcalendar/interaction": "^5",
-    "@fullcalendar/timegrid": "^5",
-    "@popperjs/core": "^2",
-    "@symfony/webpack-encore": "^5",
-    "@tabler/core": "1.4",
-    "bootstrap": "^5.3",
-    "chart.js": "^4",
-    "core-js": "^3",
-    "eslint": "^9",
-    "globals": "^15",
-    "gridstack": "^7",
-    "highlight.js": "^11.11.1",
-    "litepicker": "^2",
-    "luxon": "^3",
-    "sass": "^1",
-    "sass-loader": "^16",
-    "tom-select": "^2.4.3",
-    "webpack": "^5",
-    "webpack-cli": "^5"
-  },
-  "packageManager": "yarn@4.5.3"
+    "name": "kimai",
+    "homepage": "https://github.com/kimai/kimai",
+    "license": "AGPL",
+    "private": true,
+    "maintainers": [
+        {
+            "name": "Kevin Papst",
+            "url": "https://www.kevinpapst.de"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kimai/kimai.git"
+    },
+    "scripts": {
+        "dev-server": "yarn encore dev-server",
+        "dev": "yarn encore dev",
+        "watch": "yarn encore dev --watch",
+        "lint": "yarn eslint assets/js/",
+        "build": "yarn encore production"
+    },
+    "browserslist": [
+        "defaults"
+    ],
+    "dependencies": {
+        "@babel/core": "^7",
+        "@babel/eslint-parser": "^7",
+        "@babel/plugin-syntax-dynamic-import": "^7",
+        "@babel/preset-env": "^7",
+        "@eslint/js": "^9",
+        "@fortawesome/fontawesome-free": "^6",
+        "@fullcalendar/bootstrap5": "^5",
+        "@fullcalendar/core": "^5",
+        "@fullcalendar/daygrid": "^5",
+        "@fullcalendar/google-calendar": "^5",
+        "@fullcalendar/icalendar": "^5",
+        "@fullcalendar/interaction": "^5",
+        "@fullcalendar/timegrid": "^5",
+        "@popperjs/core": "^2",
+        "@symfony/webpack-encore": "^5",
+        "@tabler/core": "1.4",
+        "bootstrap": "^5.3",
+        "chart.js": "^4",
+        "core-js": "^3",
+        "eslint": "^9",
+        "globals": "^15",
+        "highlight.js": "^11",
+        "litepicker": "^2",
+        "luxon": "^3",
+        "sass": "^1",
+        "sass-loader": "^16",
+        "sortablejs": "^1.15",
+        "tom-select": "^2",
+        "webpack": "^5",
+        "webpack-cli": "^5"
+    },
+    "packageManager": "yarn@4.5.3"
 }

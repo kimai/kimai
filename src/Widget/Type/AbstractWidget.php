@@ -10,37 +10,45 @@
 namespace App\Widget\Type;
 
 use App\Entity\User;
+use App\Timesheet\DateRangeEnum;
 use App\Widget\WidgetInterface;
-use Symfony\Component\Form\Form;
 
 abstract class AbstractWidget implements WidgetInterface
 {
     private array $options = [];
     private ?User $user = null;
 
+    public function getDateRangeColor(DateRangeEnum $dateRangeEnum): string
+    {
+        return match ($dateRangeEnum) {
+            DateRangeEnum::TODAY => 'green',
+            DateRangeEnum::WEEK => 'blue',
+            DateRangeEnum::MONTH => 'purple',
+            DateRangeEnum::FINANCIAL, DateRangeEnum::YEAR => 'yellow',
+            DateRangeEnum::TOTAL => 'red',
+        };
+    }
+
+    public function getDateRangeTitle(DateRangeEnum $dateRangeEnum): string
+    {
+        return match ($dateRangeEnum) {
+            DateRangeEnum::TODAY => 'daterangepicker.today',
+            DateRangeEnum::WEEK => 'daterangepicker.thisWeek',
+            DateRangeEnum::MONTH => 'daterangepicker.thisMonth',
+            DateRangeEnum::YEAR => 'daterangepicker.thisYear',
+            DateRangeEnum::FINANCIAL => 'daterangepicker.thisFinancialYear',
+            DateRangeEnum::TOTAL => 'daterangepicker.allTime',
+        };
+    }
+
     public function getTranslationDomain(): string
     {
         return 'messages';
     }
 
-    public function hasForm(): bool
-    {
-        return false;
-    }
-
-    public function getForm(): ?Form
-    {
-        return null;
-    }
-
-    public function getHeight(): int
-    {
-        return WidgetInterface::HEIGHT_SMALL;
-    }
-
     public function getWidth(): int
     {
-        return WidgetInterface::WIDTH_HALF;
+        return WidgetInterface::WIDTH_NORMAL;
     }
 
     public function getPermissions(): array
@@ -58,22 +66,17 @@ abstract class AbstractWidget implements WidgetInterface
         return $this->user;
     }
 
-    /**
-     * @param string $name
-     * @param mixed $value
-     */
-    public function setOption(string $name, $value): void
+    public function setOption(string $name, string|bool|int|float $value): void
     {
         $this->options[$name] = $value;
     }
 
     /**
-     * @param array<string, string|bool|int|null|array<string, mixed>> $options
-     * @return array<string, string|bool|int|null|array<string, mixed>>
+     * @return array<string, string|bool|int|float>
      */
-    public function getOptions(array $options = []): array
+    public function getOptions(): array
     {
-        return array_merge($this->options, $options);
+        return $this->options;
     }
 
     public function isInternal(): bool
@@ -81,55 +84,8 @@ abstract class AbstractWidget implements WidgetInterface
         return false;
     }
 
-    protected function createDate(string $date): \DateTime
-    {
-        return new \DateTime($date, $this->getTimezone());
-    }
-
-    protected function createMonthStartDate(): \DateTime
-    {
-        return $this->createDate('first day of this month 00:00:00');
-    }
-
-    protected function createMonthEndDate(): \DateTime
-    {
-        return $this->createDate('last day of this month 23:59:59');
-    }
-
-    protected function createWeekStartDate(): \DateTime
-    {
-        return $this->createDate('monday this week 00:00:00');
-    }
-
-    protected function createWeekEndDate(): \DateTime
-    {
-        return $this->createDate('sunday this week 23:59:59');
-    }
-
-    protected function createTodayStartDate(): \DateTime
-    {
-        return $this->createDate('00:00:00');
-    }
-
-    protected function createTodayEndDate(): \DateTime
-    {
-        return $this->createDate('23:59:59');
-    }
-
-    public function getTimezone(): \DateTimeZone
-    {
-        $timezone = date_default_timezone_get();
-        if (null !== $this->user) {
-            $timezone = $this->user->getTimezone();
-        }
-
-        return new \DateTimeZone($timezone);
-    }
-
     public function getTemplateName(): string
     {
-        $name = (new \ReflectionClass($this))->getShortName();
-
-        return \sprintf('widget/widget-%s.html.twig', strtolower($name));
+        return \sprintf('widget/widget-%s.html.twig', strtolower($this->getId()));
     }
 }

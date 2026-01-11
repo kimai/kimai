@@ -36,7 +36,7 @@ final class SearchTermType extends AbstractType
                 'placeholder' => 'search',
             ],
             'constraints' => [
-                new Length(['min' => 2])
+                new Length(min: 2)
             ],
         ]);
     }

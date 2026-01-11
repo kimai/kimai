@@ -341,7 +341,7 @@ class ActivityRepository extends EntityRepository
     /**
      * @return int<0, max>
      */
-    public function countActivitiesForQuery(ActivityQuery $query): int
+    private function countActivitiesForQuery(ActivityQuery $query): int
     {
         $qb = $this->getQueryBuilderForQuery($query);
         $qb
@@ -354,6 +354,9 @@ class ActivityRepository extends EntityRepository
         return (int) $qb->getQuery()->getSingleScalarResult(); // @phpstan-ignore-line
     }
 
+    /**
+     * @return Pagination<Activity>
+     */
     public function getPagerfantaForQuery(ActivityQuery $query): Pagination
     {
         return new Pagination($this->getPaginatorForQuery($query), $query);

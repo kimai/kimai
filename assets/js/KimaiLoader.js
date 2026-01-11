@@ -43,6 +43,8 @@ import KimaiHotkeys from "./plugins/KimaiHotkeys";
 import KimaiRemoteModal from "./plugins/KimaiRemoteModal";
 import KimaiUser from "./plugins/KimaiUser";
 import KimaiAutocompleteTags from "./forms/KimaiAutocompleteTags";
+import KimaiMonthPicker from "./forms/KimaiMonthPicker";
+import KimaiSortable from "./plugins/KimaiSortable";
 
 export default class KimaiLoader {
 
@@ -76,6 +78,7 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiTeamForm());
         kimai.registerPlugin(new KimaiCopyDataForm());
         kimai.registerPlugin(new KimaiDateNowForm());
+        kimai.registerPlugin(new KimaiMonthPicker());
         kimai.registerPlugin(new KimaiForm());
         kimai.registerPlugin(new KimaiHotkeys());
 
@@ -90,6 +93,7 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiActiveRecords());
         kimai.registerPlugin(new KimaiAPILink('api-link'));
         kimai.registerPlugin(new KimaiMultiUpdateTable());
+        kimai.registerPlugin(new KimaiSortable());
         kimai.registerPlugin(new KimaiThemeInitializer());
 
         // notify all listeners that Kimai plugins can now be registered

@@ -122,14 +122,6 @@
         <source>user_profile</source>
         <target state="translated">Το Προφίλ μου</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>Διαπιστευτήριο API</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>Επανάληψη διαπιστευτηρίου API</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target>Ληγμένη συνεδρία. Ανακατεύθυνση στην οθόνη σύνδεσης;</target>
@@ -650,65 +642,13 @@
         <source>stats.yourWorkingHours</source>
         <target>Οι δικές μου ώρες εργασίας</target>
       </trans-unit>
-      <trans-unit id="023M9Ta" resname="stats.amountToday">
-        <source>stats.amountToday</source>
-        <target>Σημερινά έσοδα</target>
-      </trans-unit>
-      <trans-unit id="xnJvYAE" resname="stats.amountWeek">
-        <source>stats.amountWeek</source>
-        <target>Έσοδα τρέχουσας εβδομάδας</target>
-      </trans-unit>
-      <trans-unit id="ulr3reE" resname="stats.amountMonth">
-        <source>stats.amountMonth</source>
-        <target>Έσοδα τρέχοντος μηνός</target>
-      </trans-unit>
-      <trans-unit id="bQZyZaO" resname="stats.amountYear">
-        <source>stats.amountYear</source>
-        <target>Έσοδα τρέχοντος έτους</target>
-      </trans-unit>
       <trans-unit id="Z0fz23v" resname="stats.amountTotal">
         <source>stats.amountTotal</source>
         <target>Συνολικά έσοδα</target>
       </trans-unit>
-      <trans-unit id="HzICegM" resname="stats.activeUsersToday">
-        <source>stats.activeUsersToday</source>
-        <target>Ενεργοί χρήστες σήμερα</target>
-      </trans-unit>
-      <trans-unit id="7oP64Kh" resname="stats.activeUsersWeek">
-        <source>stats.activeUsersWeek</source>
-        <target>Ενεργοί χρήστες τρέχουσας εβδομάδας</target>
-      </trans-unit>
-      <trans-unit id="40xQ.Qt" resname="stats.activeUsersMonth">
-        <source>stats.activeUsersMonth</source>
-        <target>Ενεργοί χρήστες τρέχοντος μηνός</target>
-      </trans-unit>
-      <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
-        <source>stats.activeUsersYear</source>
-        <target>Ενεργοί χρήστες τρέχοντος έτους</target>
-      </trans-unit>
-      <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">
-        <source>stats.activeUsersTotal</source>
-        <target>Ενεργοί χρήστες έκτοτε</target>
-      </trans-unit>
       <trans-unit id="lEW82ex" resname="stats.activeRecordings">
         <source>stats.activeRecordings</source>
         <target>Ενεργές εγγραφές</target>
-      </trans-unit>
-      <trans-unit id="t5eIWp8" resname="stats.userTotal">
-        <source>stats.userTotal</source>
-        <target>Χρήστες</target>
-      </trans-unit>
-      <trans-unit id="Bor.76M" resname="stats.activityTotal">
-        <source>stats.activityTotal</source>
-        <target>Δραστηριότητες</target>
-      </trans-unit>
-      <trans-unit id="67uSaR3" resname="stats.projectTotal">
-        <source>stats.projectTotal</source>
-        <target>Έργα</target>
-      </trans-unit>
-      <trans-unit id="tnD6aPj" resname="stats.customerTotal">
-        <source>stats.customerTotal</source>
-        <target>Πελάτες</target>
       </trans-unit>
       <trans-unit id="unC5MXv" resname="stats.percentUsed">
         <source>stats.percentUsed</source>
@@ -989,10 +929,6 @@
       <trans-unit id="_YiKaOT" resname="last_record">
         <source>last_record</source>
         <target>Τελευταία καταχώρηση</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>Ενεργοί χρήστες κατά το τρέχον οικονομικό έτος</target>
       </trans-unit>
       <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
         <source>stats.amountFinancialYear</source>
@@ -1357,10 +1293,6 @@
       <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve">
         <source>booking_allow_only_work_days</source>
         <target state="translated">Να επιτρέπονται καταχωρήσεις χρόνου μόνο για τις ημέρες για τις οποίες οι αναμενόμενες ώρες ορίζονται στη σύμβαση εργασίας</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">Οι κωδικοί πρόσβασης API είναι απαρχαιωμένοι: παρακαλούμε χρησιμοποιήστε αντί αυτών τα tokens API.</target>
       </trans-unit>
       <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve">
         <source>Project number</source>
