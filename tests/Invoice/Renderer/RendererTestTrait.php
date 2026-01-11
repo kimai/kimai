@@ -84,6 +84,7 @@ trait RendererTestTrait
 
     protected function getInvoiceModel(): InvoiceModel
     {
+        $customerId = new \ReflectionProperty(Customer::class, 'id');
         $activityId = new \ReflectionProperty(Activity::class, 'id');
         $projectId = new \ReflectionProperty(Project::class, 'id');
         $userId = new \ReflectionProperty(User::class, 'id');
@@ -95,16 +96,18 @@ trait RendererTestTrait
         $user->setEmail('fantastic@four');
         $user->addPreference(new UserPreference('kitty', 'kat'));
         $user->addPreference(new UserPreference('hello', 'world'));
+        $userId->setValue($user, 120);
 
         $customer = new Customer('customer,with/special#name');
         $customer->setAddress('Foo' . PHP_EOL . 'Street' . PHP_EOL . '1111 City');
         $customer->setCurrency('EUR');
         $customer->setCountry('AT');
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
+        $customerId->setValue($customer, 120);
 
         $template = new InvoiceTemplate();
         $template->setTitle('a very *long* test invoice / template title with [ßpecial] chäracter');
-        $template->setVat(19);
+        $template->setTaxRate(19.0);
         $template->setLanguage('en');
         $template->setCustomer($customer);
 
@@ -213,6 +216,7 @@ trait RendererTestTrait
         $userKevin->setUserIdentifier('kevin');
         $userKevin->addPreference($pref1);
         $userKevin->addPreference($pref2);
+        $userId->setValue($userKevin, 123);
 
         $timesheet5 = new Timesheet();
         $timesheet5->setDuration(400);
@@ -269,6 +273,10 @@ trait RendererTestTrait
 
     protected function getInvoiceModelOneEntry(): InvoiceModel
     {
+        $customerId = new \ReflectionProperty(Customer::class, 'id');
+        $activityId = new \ReflectionProperty(Activity::class, 'id');
+        $userId = new \ReflectionProperty(User::class, 'id');
+
         $user = new User();
         $user->setUserIdentifier('one-user');
         $user->setTitle('user title');
@@ -276,15 +284,17 @@ trait RendererTestTrait
         $user->setEmail('fantastic@four');
         $user->addPreference(new UserPreference('kitty', 'kat'));
         $user->addPreference(new UserPreference('hello', 'world'));
+        $userId->setValue($user, 1);
 
         $customer = new Customer('customer,with/special#name');
         $customer->setCountry('DE');
         $customer->setCurrency('USD');
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
+        $customerId->setValue($customer, 1);
 
         $template = new InvoiceTemplate();
         $template->setTitle('a test invoice template title');
-        $template->setVat(19);
+        $template->setTaxRate(19.0);
         $template->setLanguage('it');
         $template->setCustomer($customer);
 
@@ -297,6 +307,7 @@ trait RendererTestTrait
         $activity->setName('activity description');
         $activity->setProject($project);
         $activity->setMetaField((new ActivityMeta())->setName('foo-activity')->setValue('bar-activity')->setIsVisible(true));
+        $activityId->setValue($activity, 1);
 
         $pref1 = new UserPreference('foo', 'bar');
         $pref2 = new UserPreference('mad', 123.45);

@@ -9,10 +9,7 @@
 
 namespace App\Model;
 
-/**
- * @final with 3.0
- */
-class PermissionSection implements PermissionSectionInterface // @phpstan-ignore class.implementsDeprecatedInterface
+final class PermissionSection
 {
     /** @var array<string> */
     private array $filter;

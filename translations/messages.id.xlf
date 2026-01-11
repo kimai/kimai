@@ -218,10 +218,6 @@
         <source>file</source>
         <target state="translated">Berkas</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token" xml:space="preserve">
-        <source>api_token</source>
-        <target state="translated">Kata sandi API</target>
-      </trans-unit>
       <trans-unit id="EGpYQvx" resname="help">
         <source>help</source>
         <target state="translated">Dokumentasi</target>
@@ -705,10 +701,6 @@
       <trans-unit id="loeWEWU" resname="active" xml:space="preserve">
         <source>active</source>
         <target state="translated">Aktif</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat" xml:space="preserve">
-        <source>api_token_repeat</source>
-        <target state="translated">Ulangi kata sandi API</target>
       </trans-unit>
       <trans-unit id=".372.o7" resname="login_required" xml:space="preserve">
         <source>login_required</source>
@@ -1793,10 +1785,6 @@
       <trans-unit id="rkCw7Ml" resname="last_usage" xml:space="preserve">
         <source>Last usage</source>
         <target state="translated">Penggunaan terakhir</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">Kata sandi API telah usang: sebagai gantinya, tolong gunakan token API.</target>
       </trans-unit>
       <trans-unit id="y7KtuSS" resname="hours_per_week" xml:space="preserve">
         <source>hours_per_week</source>

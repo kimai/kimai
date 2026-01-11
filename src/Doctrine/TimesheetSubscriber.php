@@ -15,7 +15,7 @@ use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Events;
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 /**
  * A listener to make sure all Timesheet entries will be calculated properly.
@@ -34,7 +34,7 @@ final class TimesheetSubscriber implements EventSubscriber, DataSubscriberInterf
      * @param CalculatorInterface[] $calculators
      */
     public function __construct(
-        #[TaggedIterator(CalculatorInterface::class)]
+        #[AutowireIterator(CalculatorInterface::class)]
         private readonly iterable $calculators
     )
     {

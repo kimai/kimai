@@ -324,8 +324,6 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-        KimaiReloadPageWidget.create('kimai.exportTemplate', true);
-
         function updateTimesheetExportState(node, id)
         {
             /** @type {KimaiAlert} */
@@ -349,6 +347,8 @@
         }
 
         document.addEventListener('kimai.initialized', function() {
+            KimaiReloadPageWidget.create('kimai.exportTemplate', true);
+
             document.addEventListener('click', function (event) {
                 const node = event.target;
                 if (node.matches('.exportBtn')) {

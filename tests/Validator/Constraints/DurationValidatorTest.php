@@ -102,9 +102,7 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
     #[DataProvider('getInvalidData')]
     public function testValidationError(string $input): void
     {
-        $constraint = new Duration([
-            'message' => 'myMessage',
-        ]);
+        $constraint = new Duration(message: 'myMessage');
 
         $this->validator->validate($input, $constraint);
 
@@ -119,9 +117,7 @@ class DurationValidatorTest extends ConstraintValidatorTestCase
     public function testValidationErrorUpperCase(string $input): void
     {
         $input = strtoupper($input);
-        $constraint = new Duration([
-            'message' => 'myMessage',
-        ]);
+        $constraint = new Duration(message: 'myMessage');
 
         $this->validator->validate($input, $constraint);
 

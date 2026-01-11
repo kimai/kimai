@@ -33,7 +33,7 @@ final class Version20250608143244 extends AbstractMigration
         $table->addColumn('columns', 'json', ['notnull' => true]);
         $table->addColumn('options', 'json', ['notnull' => true]);
 
-        $table->setPrimaryKey(['id']);
+        $this->addPrimaryKeyConstraint($table, ['id']);
         $table->addUniqueIndex(['title'], 'UNIQ_2F0CA26F2B36786B');
     }
 

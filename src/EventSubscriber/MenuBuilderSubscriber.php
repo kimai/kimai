@@ -43,12 +43,10 @@ final class MenuBuilderSubscriber implements EventSubscriberInterface
             $event->addItem($child);
         }
 
-        if ($menuEvent->getAppsMenu()->hasChildren()) { // @phpstan-ignore-line
-            $event->addItem($menuEvent->getAppsMenu()); // @phpstan-ignore-line
-        }
         if ($menuEvent->getAdminMenu()->hasChildren()) {
             $event->addItem($menuEvent->getAdminMenu());
         }
+
         if ($menuEvent->getSystemMenu()->hasChildren()) {
             $event->addItem($menuEvent->getSystemMenu());
         }

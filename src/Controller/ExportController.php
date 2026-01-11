@@ -85,20 +85,9 @@ final class ExportController extends AbstractController
 
         $buttons = [];
         foreach ($this->export->getRenderer() as $renderer) {
-            if (method_exists($renderer, 'getType')) {
-                $class = $renderer->getType();
-            } else {
-                // TODO remove me with 3.0
-                $class = \get_class($renderer);
-                $pos = strrpos($class, '\\');
-                if ($pos !== false) {
-                    $class = substr($class, $pos + 1);
-                }
-                $class = strtolower(str_replace('Renderer', '', $class));
-            }
-            $buttons[$class][$renderer->getId()] = [
+            $buttons[$renderer->getType()][$renderer->getId()] = [
                 'title' => $renderer->getTitle(),
-                'internal' => method_exists($renderer, 'isInternal') ? $renderer->isInternal() : false,
+                'internal' => $renderer->isInternal(),
             ];
         }
 

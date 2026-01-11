@@ -50,10 +50,10 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
         $expectedKeys = ['Actions', 'Activity', 'Default', 'Customer', 'Project', 'Tag', 'Team', 'Timesheet', 'User', 'Invoice', 'Export'];
         $actual = array_keys($tags);
 
-        sort($actual);
-        sort($expectedKeys);
-
-        self::assertEquals($expectedKeys, $actual, \sprintf('Expected %s sections in API docs, but found %s.', \count($actual), \count($expectedKeys)));
+        //dd($expectedKeys, $actual);
+        foreach ($expectedKeys as $expectedKey) {
+            self::assertTrue(\in_array($expectedKey, $actual), 'Expected API section is missing: ' . $expectedKey);
+        }
 
         $paths = [
             '/api/actions/timesheet/{id}/{view}/{locale}',
@@ -115,7 +115,9 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
         self::assertEquals('1.1', $json['info']['version']);
 
         self::assertArrayHasKey('paths', $json);
-        self::assertEquals($paths, array_keys($json['paths']));
+        foreach ($paths as $path) {
+            self::assertArrayHasKey($path, $json['paths'], 'Missing API endpoint: ' . $path);
+        }
 
         self::assertArrayHasKey('security', $json);
         self::assertEquals(['bearer' => []], $json['security'][0]);

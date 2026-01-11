@@ -151,7 +151,8 @@ class InvoiceTest extends AbstractEntityTestCase
 
         $template = new InvoiceTemplate();
         $template->setTitle('a test invoice template title');
-        $template->setVat(19);
+        $template->setTaxRate(19.0);
+        $template->setTaxRate(19);
         $template->setDueDays(9);
 
         $project = new Project();

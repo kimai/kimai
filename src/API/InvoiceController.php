@@ -28,8 +28,8 @@ use Symfony\Component\Validator\Constraints;
 #[OA\Tag(name: 'Invoice')]
 final class InvoiceController extends BaseApiController
 {
-    public const GROUPS_ENTITY = ['Default', 'Entity', 'Invoice', 'Invoice_Entity'];
-    public const GROUPS_COLLECTION = ['Default', 'Collection', 'Invoice'];
+    private const array GROUPS_ENTITY = ['Default', 'Entity', 'Invoice', 'Invoice_Entity'];
+    private const array GROUPS_COLLECTION = ['Default', 'Collection', 'Invoice'];
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,

@@ -23,7 +23,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: 'kimai:user:create', description: 'Create a new user')]
 final class CreateUserCommand extends AbstractUserCommand
 {
-    public function __construct(private UserService $userService)
+    public function __construct(private readonly UserService $userService)
     {
         parent::__construct();
     }
@@ -59,6 +59,12 @@ final class CreateUserCommand extends AbstractUserCommand
             $password = $input->getArgument('password');
         } else {
             $password = $this->askForPassword($input, $output);
+        }
+
+        if (!\is_string($password) || trim($password) === '') {
+            $io->error('Password must be a non-empty string');
+
+            return Command::FAILURE;
         }
 
         $role = $role ?: User::DEFAULT_ROLE;

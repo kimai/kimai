@@ -138,14 +138,6 @@
         <source>user_profile</source>
         <target>Mein Profil</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>API-Passwort</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>API-Passwort wiederholen</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target>Fehlende Berechtigung. Zur Anmeldung wechseln?</target>
@@ -1769,10 +1761,6 @@
       <trans-unit id="Z9IIn_b" resname="api_token_hidden">
         <source>api_token_hidden</source>
         <target>Dies ist das einzige Mal, dass der Token angezeigt wird! Bewahren Sie ihn gut auf und vergewissern Sie sich, dass Sie ihn notiert haben, bevor Sie dieses Fenster schließen.</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated">
-        <source>api_password_deprecated</source>
-        <target>API Passwörter sind veraltet: bitte nutzen Sie stattdessen API-Tokens.</target>
       </trans-unit>
       <trans-unit id="2qbRs28" resname="hours_per_day">
         <source>hours_per_day</source>

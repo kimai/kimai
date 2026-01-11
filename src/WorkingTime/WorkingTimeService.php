@@ -31,8 +31,6 @@ final class WorkingTimeService
 {
     private const LATEST_APPROVAL_PREF = '_latest_approval';
     private const LATEST_APPROVAL_FORMAT = 'Y-m-d H:i:s';
-    /** @var array<string, WorkingTime|null> */
-    private array $latestApprovals = [];
 
     public function __construct(
         private readonly TimesheetRepository $timesheetRepository,
@@ -57,24 +55,6 @@ final class WorkingTimeService
         $this->eventDispatcher->dispatch($summaryEvent);
 
         return $yearPerUserSummary;
-    }
-
-    /**
-     * @deprecated since 2.25.0 - kept for BC with old plugin versions
-     */
-    public function getLatestApproval(User $user): ?WorkingTime
-    {
-        if ($user->getId() === null) {
-            return null;
-        }
-
-        $key = 'u_' . $user->getId();
-
-        if (!\array_key_exists($key, $this->latestApprovals)) {
-            $this->latestApprovals[$key] = $this->workingTimeRepository->getLatestApproval($user);
-        }
-
-        return $this->latestApprovals[$key];
     }
 
     public function getLatestApprovalDate(User $user): ?\DateTimeInterface
@@ -181,7 +161,6 @@ final class WorkingTimeService
         return $year->getMonth($monthDate);
     }
 
-    // FIXME deprecated 3.0 remove $user, fetch from $month->getUser() instead
     public function approveMonth(User $user, Month $month, \DateTimeInterface $approvalDate, User $approvedBy): void
     {
         foreach ($month->getDays() as $day) {
@@ -195,7 +174,6 @@ final class WorkingTimeService
             }
 
             $workingTime->setApprovedBy($approvedBy);
-            // FIXME see calling method
             $workingTime->setApprovedAt(\DateTimeImmutable::createFromInterface($approvalDate));
             $this->workingTimeRepository->scheduleWorkingTimeUpdate($workingTime);
         }

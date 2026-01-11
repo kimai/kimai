@@ -17,8 +17,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 final class TimesheetMultiUserValidator extends ConstraintValidator
 {
     /**
-     * @param Timesheet|mixed $value
-     * @param Constraint $constraint
+     * @param MultiUserTimesheet|mixed $value
      */
     public function validate(mixed $value, Constraint $constraint): void
     {

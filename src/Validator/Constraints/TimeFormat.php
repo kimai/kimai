@@ -13,9 +13,9 @@ use Symfony\Component\Validator\Constraint;
 
 final class TimeFormat extends Constraint
 {
-    public const INVALID_FORMAT = 'kimai-time-00';
+    public const string INVALID_FORMAT = 'kimai-time-00';
 
-    protected const ERROR_NAMES = [
+    protected const array ERROR_NAMES = [
         self::INVALID_FORMAT => 'The given value is not a valid time.',
     ];
 

@@ -86,14 +86,6 @@
         <source>user_profile</source>
         <target>Thông tin của tôi</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>Mật khẩu API</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>Lặp lại mật khẩu API</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target>Thiếu sự cho phép. Chuyển hướng để đăng nhập?</target>
@@ -1721,10 +1713,6 @@
       <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve">
         <source>Expiry date</source>
         <target state="translated">Ngày hết hạn</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">Mật khẩu API đã lỗi thời: xin dùng mã API thay vào đó.</target>
       </trans-unit>
       <trans-unit id="bEXLcqN" resname="stop">
         <source>stop</source>

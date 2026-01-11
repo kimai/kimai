@@ -9,6 +9,9 @@
 
 namespace App\Doctrine\Behavior;
 
+use Symfony\Component\DependencyInjection\Attribute\Exclude;
+
+#[Exclude]
 interface ModifiedAt
 {
     public function getModifiedAt(): ?\DateTimeImmutable;

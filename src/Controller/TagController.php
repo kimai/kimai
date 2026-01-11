@@ -49,9 +49,8 @@ final class TagController extends AbstractController
         $entries = $repository->getTagCount($query);
         $multiUpdateForm = $this->getMultiUpdateForm($repository);
 
-        $table = new DataTable('admin_tags', $query);
+        $table = new DataTable('admin_tags', $query, $entries);
         $table->setSearchForm($form);
-        $table->setPagination($entries);
         $table->setPaginationRoute('tags_paginated');
         $table->setReloadEvents('kimai.tagUpdate');
         $table->setBatchForm($multiUpdateForm);

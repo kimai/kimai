@@ -582,52 +582,6 @@ class LdapManagerTest extends TestCase
         $user = $sut->hydrate($ldapEntry);
     }
 
-    #[Group('legacy')]
-    public function testHydrateWithDepercatedSetter(): void
-    {
-        $ldapConfig = [
-            'connection' => [
-                'host' => '1.1.1.1'
-            ],
-            'user' => [
-                'usernameAttribute' => 'foo',
-                'attributes' => [
-                    ['ldap_attr' => 'uid', 'user_method' => 'setUsername'], // use setUsername here for BC reasons!
-                    ['ldap_attr' => 'foo', 'user_method' => 'setAlias'],
-                    ['ldap_attr' => 'bar', 'user_method' => 'setTitle'],
-                    ['ldap_attr' => 'roles', 'user_method' => 'setRoles'],
-                    ['ldap_attr' => 'xxxxxxxx', 'user_method' => 'setAvatar'],
-                    ['ldap_attr' => 'blubXX', 'user_method' => 'setAvatar'],
-                ]
-            ],
-            'role' => [],
-        ];
-        $systemConfig = SystemConfigurationFactory::create(new TestConfigLoader([]), ['ldap' => $ldapConfig]);
-        $config = new LdapConfiguration($systemConfig);
-
-        $ldapEntry = [
-            'uid' => ['Karl-Heinz'],
-            'blub' => ['dfsdfsdf'],
-            'foo' => ['count' => 1, 0 => 'bar'],
-            'bar' => ['foo'],
-            'roles' => ['count' => 2, 0 => 'ROLE_TEAMLEAD', 1 => 'ROLE_ADMIN'],
-            'xxxxxxxx' => ['https://www.example.com'],
-            'blub1' => ['dfsdfsdf'],
-            'dn' => 'blub',
-        ];
-
-        $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create([]));
-        $user = $sut->hydrate($ldapEntry);
-
-        self::assertInstanceOf(User::class, $user);
-        self::assertEquals('Karl-Heinz', $user->getUserIdentifier());
-        self::assertEquals('bar', $user->getAlias());
-        self::assertEquals('foo', $user->getTitle());
-        self::assertEquals(['ROLE_TEAMLEAD', 'ROLE_ADMIN', 'ROLE_USER'], $user->getRoles());
-        self::assertEquals('https://www.example.com', $user->getAvatar());
-        self::assertEquals('Karl-Heinz', $user->getEmail());
-    }
-
     public function testHydrateUser(): void
     {
         $ldapConfig = [

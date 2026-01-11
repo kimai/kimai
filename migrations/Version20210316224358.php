@@ -36,7 +36,7 @@ final class Version20210316224358 extends AbstractMigration
         $bookmarks->addColumn('content', 'text', ['notnull' => true]);
         $bookmarks->addForeignKeyConstraint('kimai2_users', ['user_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_4016EF25A76ED395');
         $bookmarks->addUniqueIndex(['user_id', 'name'], 'UNIQ_4016EF25A76ED3955E237E06');
-        $bookmarks->setPrimaryKey(['id']);
+        $this->addPrimaryKeyConstraint($bookmarks, ['id']);
     }
 
     public function down(Schema $schema): void

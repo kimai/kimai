@@ -66,7 +66,7 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $this->application = new Application($kernel);
         $container = self::getContainer();
 
-        $this->application->add(new InvoiceCreateCommand(
+        $this->application->addCommand(new InvoiceCreateCommand(
             $container->get(ServiceInvoice::class), // @phpstan-ignore argument.type
             $container->get(CustomerRepository::class), // @phpstan-ignore argument.type
             $container->get(ProjectRepository::class), // @phpstan-ignore argument.type

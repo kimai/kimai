@@ -57,6 +57,12 @@ final class ChangePasswordCommand extends AbstractUserCommand
             $password = $this->askForPassword($input, $output);
         }
 
+        if (!\is_string($password) || trim($password) === '') {
+            $output->writeln('<error>Password cannot be empty</error>');
+
+            return Command::FAILURE;
+        }
+
         $user = $this->userService->findUserByUsernameOrThrowException($username);
 
         $io = new SymfonyStyle($input, $output);

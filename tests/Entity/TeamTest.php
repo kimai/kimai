@@ -267,9 +267,7 @@ class TeamTest extends TestCase
 
         $reflection = new \ReflectionClass($team);
         $property = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($team, 99);
-        $property->setAccessible(false);
         self::assertEquals(99, $team->getId());
 
         $sut = clone $team;
