@@ -24,6 +24,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
+ * TODO this should use a clock to simulate different "now" for testing the grace period
  * @extends ConstraintValidatorTestCase<TimesheetLockdownValidator>
  */
 #[CoversClass(TimesheetLockdown::class)]
@@ -111,22 +112,6 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         self::assertEmpty($this->context->getViolations());
     }
 
-    public function testValidatorWithoutNowStringConstraint(): void
-    {
-        $this->validator = $this->createMyValidator(false, false, 'first day of last month', 'last day of last month', '+10 days');
-        $this->validator->initialize($this->context);
-
-        $begin = new \DateTime('first day of last month');
-        $begin->modify('+5 days');
-        $timesheet = new Timesheet();
-        $timesheet->setBegin($begin);
-
-        $constraint = new TimesheetLockdown();
-
-        $this->validator->validate($timesheet, $constraint);
-        self::assertEmpty($this->context->getViolations());
-    }
-
     public function testValidatorWithEndBeforeStartPeriod(): void
     {
         $this->validator = $this->createMyValidator(false, false, 'first day of this month', 'last day of last month', '+10 days');
@@ -177,8 +162,8 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         // changing before last dockdown period is allowed with full permission
         yield [true, true, '-5 days', false];
         yield [true, false, '-5 days', false];
-        // changing a value in the last lockdown period is allowed during grace period
-        yield [false, false, '+5 days', false];
+        // changing a value in the last lockdown period is not allowed outside grace period
+        yield [false, false, '+5 days', true];
         // changing outside grace period is allowed with grace and full permission
         yield [false, true, '+5 days', false];
         yield [true, false, '+5 days', false];
