@@ -9,10 +9,10 @@
 
 namespace App\Audit;
 
+/**
+ * Marks a property as sensitive, so it will not be logged.
+ */
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
-final class Versioned
+final class SensitiveProperty
 {
-    public function __construct()
-    {
-    }
 }

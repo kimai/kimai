@@ -9,6 +9,8 @@
 
 namespace App\Entity;
 
+use App\Audit\Loggable;
+use App\Audit\SensitiveProperty;
 use App\Export\Annotation as Exporter;
 use App\Repository\UserRepository;
 use App\Utils\StringHelper;
@@ -49,6 +51,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Exporter\Expose(name: 'roles', label: 'roles', type: 'array', exp: 'object.getRoles()')]
 #[Exporter\Expose(name: 'active', label: 'active', type: 'boolean', exp: 'object.isEnabled()')]
 #[Constraints\User(groups: ['UserCreate', 'Registration', 'Default', 'Profile'])]
+#[Loggable(ignoredProperties: ['lastLogin'], title: 'user')]
 class User implements UserInterface, EquatableInterface, ThemeUserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
 {
     public const string ROLE_USER = 'ROLE_USER';
@@ -142,9 +145,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[Assert\Length(max: 20)]
     private ?string $auth = self::AUTH_INTERNAL;
     /**
-     * This flag will be initialized in UserEnvironmentSubscriber.
-     *
-     * @internal has no database mapping as the value is calculated from a permission
+     * @internal no database mapping: the value is calculated from a permission in UserEnvironmentSubscriber
      */
     private ?bool $isAllowedToSeeAllData = null;
     #[ORM\Column(name: 'username', type: Types::STRING, length: 180, nullable: false)]
@@ -175,12 +176,14 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * Encrypted password. Must be persisted.
      */
     #[ORM\Column(name: 'password', type: Types::STRING, nullable: false)]
+    #[SensitiveProperty]
     private ?string $password = null;
     /**
      * Plain password. Used for model validation, not persisted.
      */
     #[Assert\NotBlank(groups: ['Registration', 'PasswordUpdate', 'UserCreate'])]
     #[Assert\Length(min: 8, max: 60, groups: ['Registration', 'PasswordUpdate', 'UserCreate', 'ResetPassword', 'ChangePassword'])]
+    #[SensitiveProperty]
     private ?string $plainPassword = null;
     #[ORM\Column(name: 'last_login', type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTime $lastLogin = null;
@@ -189,6 +192,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      */
     #[ORM\Column(name: 'confirmation_token', type: Types::STRING, length: 180, unique: true, nullable: true)]
     #[Assert\Length(max: 180)]
+    #[SensitiveProperty]
     private ?string $confirmationToken = null;
     #[ORM\Column(name: 'password_requested_at', type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $passwordRequestedAt = null;
@@ -206,6 +210,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * TODO reduce the length, which was initially forgotten and set to 255, as this is the default for MySQL with Doctrine (see migration Version20230126002049)
      */
     #[ORM\Column(name: 'totp_secret', type: Types::STRING, length: 255, nullable: true)]
+    #[SensitiveProperty]
     private ?string $totpSecret = null;
     #[ORM\Column(name: 'totp_enabled', type: Types::BOOLEAN, nullable: false, options: ['default' => false])]
     private bool $totpEnabled = false;
@@ -901,14 +906,14 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
-    public function setPassword(?string $password): User
+    public function setPassword(#[\SensitiveParameter] ?string $password): User
     {
         $this->password = $password;
 
         return $this;
     }
 
-    public function setPlainPassword(?string $password): User
+    public function setPlainPassword(#[\SensitiveParameter] ?string $password): User
     {
         $this->plainPassword = $password;
 
@@ -922,7 +927,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
-    public function setConfirmationToken(?string $confirmationToken): void
+    public function setConfirmationToken(#[\SensitiveParameter] ?string $confirmationToken): void
     {
         $this->confirmationToken = $confirmationToken;
     }
@@ -1123,7 +1128,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     // --------------- 2 Factor Authentication ---------------
 
-    public function setTotpSecret(?string $secret): void
+    public function setTotpSecret(#[\SensitiveParameter] ?string $secret): void
     {
         $this->totpSecret = $secret;
     }

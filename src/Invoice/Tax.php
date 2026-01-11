@@ -7,8 +7,12 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Entity;
+namespace App\Invoice;
 
+use App\Entity\TaxType;
+use Symfony\Component\DependencyInjection\Attribute\Exclude;
+
+#[Exclude]
 final class Tax
 {
     public function __construct(

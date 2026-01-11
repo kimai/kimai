@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Audit\SensitiveProperty;
 use App\Repository\AccessTokenRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -33,6 +34,7 @@ class AccessToken
     #[ORM\Column(name: 'token', type: Types::STRING, length: 100, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 100)]
+    #[SensitiveProperty]
     private string $token;
     #[ORM\Column(name: 'name', type: Types::STRING, length: 50, nullable: false)]
     #[Assert\NotBlank]
@@ -43,7 +45,7 @@ class AccessToken
     #[ORM\Column(name: 'expires_at', type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $expiresAt = null;
 
-    public function __construct(User $user, string $token)
+    public function __construct(User $user, #[\SensitiveParameter] string $token)
     {
         $this->user = $user;
         $this->token = $token;

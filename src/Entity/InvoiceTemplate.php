@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Invoice\Tax;
 use App\Repository\InvoiceTemplateRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
