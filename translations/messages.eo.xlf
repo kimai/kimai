@@ -86,14 +86,6 @@
         <source>user_profile</source>
         <target>Mia profilo</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>API-pasvorto</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>Ripetu API-pasvorton</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target>Mankas permeso. Redirekti al ensaluto?</target>

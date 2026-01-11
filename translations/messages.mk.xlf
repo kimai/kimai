@@ -138,14 +138,6 @@
         <source>user_profile</source>
         <target state="translated">Мојот профил</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token" xml:space="preserve">
-        <source>api_token</source>
-        <target state="translated">API лозинка</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat" xml:space="preserve">
-        <source>api_token_repeat</source>
-        <target state="translated">Повтори API лозинка</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required" xml:space="preserve">
         <source>login_required</source>
         <target state="translated">Недостасува дозвола. Пренасочи кон најавување?</target>
@@ -1769,10 +1761,6 @@
       <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
         <source>api_token_hidden</source>
         <target state="translated">Ова е единствениот пат кога овој клуч ќе се прикаже! Затоа, чувајте го на безбедно и осигурајте се дека сте го копирале пред да го затворите овој прозорец.</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">API лозинките се застарени: наместо тоа користете API токени.</target>
       </trans-unit>
       <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
         <source>hours_per_day</source>

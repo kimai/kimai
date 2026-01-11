@@ -147,7 +147,7 @@ final class CustomerMonthlyProjectsRepository
         $qb
             ->select('p.id, p.name, c.id as customer_id, c.name as customer, c.currency')
             ->from(Project::class, 'p', 'p.id')
-            ->leftJoin(Customer::class, 'c', Join::WITH, 'c.id = p.customer')
+            ->leftJoin(Customer::class, 'c', Join::ON, 'c.id = p.customer')
             ->where($qb->expr()->in('p.id', ':id'))
             ->setParameter('id', array_values($projectIds))
         ;

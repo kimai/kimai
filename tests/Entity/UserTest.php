@@ -20,7 +20,6 @@ use App\Tests\Security\TestUserEntity;
 use App\WorkingTime\Mode\WorkingTimeModeDay;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -40,15 +39,12 @@ class UserTest extends TestCase
         self::assertNull($user->getAlias());
         self::assertNull($user->getId());
         self::assertNull($user->getAccountNumber());
-        self::assertNull($user->getApiToken());
-        self::assertNull($user->getPlainApiToken());
         self::assertFalse($user->hasTotpSecret());
         self::assertNull($user->getTotpSecret());
         self::assertEquals(User::DEFAULT_LANGUAGE, $user->getLanguage());
         self::assertEquals(User::DEFAULT_LANGUAGE, $user->getLocale());
         self::assertFalse($user->hasTeamAssignment());
         self::assertFalse($user->canSeeAllData());
-        self::assertFalse($user->isExportDecimal());
         self::assertFalse($user->isSystemAccount());
         self::assertFalse($user->isPasswordRequestNonExpired(-1));
         self::assertFalse($user->isPasswordRequestNonExpired(0));
@@ -65,14 +61,8 @@ class UserTest extends TestCase
         $user->setAvatar('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y');
         self::assertEquals('https://www.gravatar.com/avatar/00000000000000000000000000000000?d=retro&f=y', $user->getAvatar());
 
-        $user->setApiToken('nbvfdswe34567ujko098765rerfghbgvfcdsert');
-        self::assertEquals('nbvfdswe34567ujko098765rerfghbgvfcdsert', $user->getApiToken());
-
         $user->setTotpSecret('ertzuio878t6rtdrjfcghvjkiu87');
         self::assertEquals('ertzuio878t6rtdrjfcghvjkiu87', $user->getTotpSecret());
-
-        $user->setPlainApiToken('https://www.gravatar.com/avatar/nbvfdswe34567ujko098765rerfghbgvfcdsert');
-        self::assertEquals('https://www.gravatar.com/avatar/nbvfdswe34567ujko098765rerfghbgvfcdsert', $user->getPlainApiToken());
 
         $user->setTitle('Mr. Code Blaster');
         self::assertEquals('Mr. Code Blaster', $user->getTitle());
@@ -87,78 +77,16 @@ class UserTest extends TestCase
         self::assertNull($user->getSupervisor());
     }
 
-    /**
-     * @deprecated
-     */
-    #[Group('legacy')]
     public function testWorkContract(): void
     {
         $user = new User();
-        self::assertFalse($user->hasContractSettings());
-
-        self::assertEquals(0, $user->getWorkHoursMonday());
-        self::assertEquals(0, $user->getWorkHoursTuesday());
-        self::assertEquals(0, $user->getWorkHoursWednesday());
-        self::assertEquals(0, $user->getWorkHoursThursday());
-        self::assertEquals(0, $user->getWorkHoursFriday());
-        self::assertEquals(0, $user->getWorkHoursSaturday());
-        self::assertEquals(0, $user->getWorkHoursSunday());
         self::assertFalse($user->hasWorkHourConfiguration());
-
-        $monday = new \DateTime('2023-05-08 12:00:00', new \DateTimeZone('Europe/Berlin'));
-        $tuesday = new \DateTime('2023-05-09 12:00:00', new \DateTimeZone('Europe/Berlin'));
-        $wednesday = new \DateTime('2023-05-10 12:00:00', new \DateTimeZone('Europe/Berlin'));
-        $thursday = new \DateTime('2023-05-11 12:00:00', new \DateTimeZone('Europe/Berlin'));
-        $friday = new \DateTime('2023-05-12 12:00:00', new \DateTimeZone('Europe/Berlin'));
-        $saturday = new \DateTime('2023-05-13 12:00:00', new \DateTimeZone('Europe/Berlin'));
-        $sunday = new \DateTime('2023-05-14 12:00:00', new \DateTimeZone('Europe/Berlin'));
-
-        self::assertFalse($user->isWorkDay($monday));
-        self::assertFalse($user->isWorkDay($tuesday));
-        self::assertFalse($user->isWorkDay($wednesday));
-        self::assertFalse($user->isWorkDay($thursday));
-        self::assertFalse($user->isWorkDay($friday));
-        self::assertFalse($user->isWorkDay($saturday));
-        self::assertFalse($user->isWorkDay($sunday));
 
         $user->setWorkContractMode(WorkingTimeModeDay::ID);
 
-        $user->setWorkHoursMonday(7200);
         self::assertTrue($user->hasWorkHourConfiguration());
-        $user->setWorkHoursTuesday(7300);
-        $user->setWorkHoursWednesday(7400);
-        $user->setWorkHoursThursday(7500);
-        $user->setWorkHoursFriday(7600);
-        $user->setWorkHoursSaturday(7700);
-        $user->setWorkHoursSunday(7800);
         $user->setHolidaysPerYear(10.7);
         self::assertTrue($user->hasWorkHourConfiguration());
-        self::assertTrue($user->hasContractSettings());
-
-        self::assertEquals(7200, $user->getWorkHoursMonday());
-        self::assertEquals(7300, $user->getWorkHoursTuesday());
-        self::assertEquals(7400, $user->getWorkHoursWednesday());
-        self::assertEquals(7500, $user->getWorkHoursThursday());
-        self::assertEquals(7600, $user->getWorkHoursFriday());
-        self::assertEquals(7700, $user->getWorkHoursSaturday());
-        self::assertEquals(7800, $user->getWorkHoursSunday());
-        self::assertEquals(10.5, $user->getHolidaysPerYear());
-
-        self::assertEquals(7200, $user->getWorkHoursForDay($monday));
-        self::assertEquals(7300, $user->getWorkHoursForDay($tuesday));
-        self::assertEquals(7400, $user->getWorkHoursForDay($wednesday));
-        self::assertEquals(7500, $user->getWorkHoursForDay($thursday));
-        self::assertEquals(7600, $user->getWorkHoursForDay($friday));
-        self::assertEquals(7700, $user->getWorkHoursForDay($saturday));
-        self::assertEquals(7800, $user->getWorkHoursForDay($sunday));
-
-        self::assertTrue($user->isWorkDay($monday));
-        self::assertTrue($user->isWorkDay($tuesday));
-        self::assertTrue($user->isWorkDay($wednesday));
-        self::assertTrue($user->isWorkDay($thursday));
-        self::assertTrue($user->isWorkDay($friday));
-        self::assertTrue($user->isWorkDay($saturday));
-        self::assertTrue($user->isWorkDay($sunday));
 
         $user->setPublicHolidayGroup('10');
         self::assertEquals('10', $user->getPublicHolidayGroup());
@@ -187,7 +115,7 @@ class UserTest extends TestCase
         self::assertNull($sut->getColor());
         self::assertFalse($sut->hasColor());
 
-        $sut->setUsername('foo test 123');
+        $sut->setUserIdentifier('foo test 123');
         self::assertEquals('#a972c9', $sut->getColorSafe());
 
         $sut->setColor('#000000');
@@ -267,11 +195,8 @@ class UserTest extends TestCase
         $user->setPreferenceValue('test2', 'I like rain');
         self::assertEquals('I like rain', $user->getPreferenceValue('test2'));
 
-        $user->setPreferenceValue('export_decimal', true);
-        self::assertTrue($user->isExportDecimal());
-
         $prefs = $user->getPreferences();
-        self::assertCount(3, $prefs);
+        self::assertCount(2, $prefs);
 
         $preference1 = new UserPreference('_aaaaa', 'bbbbb');
         $user->addPreference($preference1);
@@ -280,10 +205,10 @@ class UserTest extends TestCase
         $user->addPreference($preference2);
 
         $prefs = $user->getPreferences();
-        self::assertCount(5, $prefs);
+        self::assertCount(4, $prefs);
 
         $visiblePrefs = $user->getVisiblePreferences();
-        self::assertCount(3, $visiblePrefs); // export_decimal and _aaaaa is skipped
+        self::assertCount(3, $visiblePrefs); // _aaaaa is skipped
         self::assertEquals([$user->getPreference('test'), $user->getPreference('test2'), $preference2], $visiblePrefs);
 
         self::assertInstanceOf(UserPreference::class, $prefs[0]);
@@ -293,7 +218,7 @@ class UserTest extends TestCase
         self::assertEquals('test2', $prefs[1]->getName());
 
         self::assertInstanceOf(UserPreference::class, $prefs[2]);
-        self::assertEquals('export_decimal', $prefs[2]->getName());
+        self::assertEquals('_aaaaa', $prefs[2]->getName());
 
         $user->setPreferences(new ArrayCollection([]));
         self::assertCount(0, $user->getPreferences());
@@ -465,7 +390,6 @@ class UserTest extends TestCase
         $preference = new UserPreference('test', 'foobar');
 
         $property = new \ReflectionProperty(User::class, 'preferences');
-        $property->setAccessible(true);
         $property->setValue($sut, null);
 
         // make sure that addPreference will work, even if the internal collection was set to null

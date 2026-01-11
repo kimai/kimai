@@ -29,7 +29,10 @@ final class HelpController extends AbstractController
     #[Route(path: '/locales', defaults: [], name: 'help_locales', methods: ['GET'])]
     public function helpLocale(Request $request, LocaleService $service): Response
     {
-        $table = new DataTable('help_locales', new BaseQuery());
+        $data = $this->buildLocales($request, $service);
+        $pagination = new Pagination(new ArrayAdapter($data));
+
+        $table = new DataTable('help_locales', new BaseQuery(), $pagination);
         $table->addColumn('name', ['class' => 'alwaysVisible', 'orderBy' => false]);
         $table->addColumn('description', ['class' => 'd-none', 'orderBy' => false]);
         $table->addColumn('date_format', ['class' => 'd-none w-min', 'orderBy' => false, 'title' => 'Date format']);
@@ -46,11 +49,6 @@ final class HelpController extends AbstractController
         $page = new PageSetup('help_locales');
         $page->setDataTable($table);
         $page->setActionName('help_locales');
-
-        $data = $this->buildLocales($request, $service);
-        $pagination = new Pagination(new ArrayAdapter($data));
-        $pagination->setMaxPerPage(9999);
-        $table->setPagination($pagination);
 
         return $this->render('help/index.html.twig', [
             'page_setup' => $page,

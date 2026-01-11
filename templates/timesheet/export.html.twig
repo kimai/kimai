@@ -47,7 +47,7 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>{{ 'date'|trans }}</th>
+                        <th class="text-start">{{ 'date'|trans }}</th>
                         {% if showUserColumn %}
                             <th>{{ 'username'|trans }}</th>
                         {% endif %}
@@ -55,7 +55,7 @@
                         {% for field in timesheetMetaFields %}
                             <th class="text-nowrap">{{ field.label|trans }}</th>
                         {% endfor %}
-                        <th>{{ 'hours'|trans }}</th>
+                        <th class="text-end">{{ 'hours'|trans }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -63,7 +63,7 @@
                     {% for entry in entries %}
                         {% set timeWorked = timeWorked + entry.duration %}
                         <tr>
-                            <td class="text-nowrap">{{ entry.begin|date_short }}</td>
+                            <td class="text-nowrap text-start">{{ entry.begin|date_short }}</td>
                             {% if showUserColumn %}
                                 <td>{{ entry.user.displayName }}</td>
                             {% endif %}
@@ -82,7 +82,7 @@
                             {% for field in timesheetMetaFields %}
                                 <td>{{ tables.datatable_meta_column(entry, field) }}</td>
                             {% endfor %}
-                            <td class="text-nowrap">{{ entry.duration|duration(decimal) }}</td>
+                            <td class="text-nowrap text-end">{{ entry.duration|duration(decimal) }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

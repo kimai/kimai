@@ -70,14 +70,6 @@
         <source>user_profile</source>
         <target>我的资料</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>API密码</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>再次输入API密码</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required" xml:space="preserve">
         <source>login_required</source>
         <target state="translated">未许可。重新登录？</target>
@@ -1649,10 +1641,6 @@
       <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
         <source>api_token_hidden</source>
         <target state="translated">这是该密码唯一一次显示！ 因此，请确保其安全，并确保在关闭此窗口之前已将其复制下来。</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">API 密码已过期：请改用 API 令牌。</target>
       </trans-unit>
       <trans-unit id="8JEDuyx" resname="activity_number" xml:space="preserve">
         <source>Activity number</source>

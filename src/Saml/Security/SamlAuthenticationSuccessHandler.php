@@ -14,7 +14,7 @@ use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessH
 
 final class SamlAuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
 {
-    protected $defaultOptions = [
+    protected array $defaultOptions = [ // @phpstan-ignore missingType.iterableValue
         'always_use_default_target_path' => false,
         'default_target_path' => '/',
         'login_path' => 'saml_login',

@@ -32,7 +32,6 @@ use App\Model\InvoiceDocument;
 use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
-use Doctrine\Common\Collections\ArrayCollection;
 
 trait RendererTestTrait
 {
@@ -85,6 +84,11 @@ trait RendererTestTrait
 
     protected function getInvoiceModel(): InvoiceModel
     {
+        $customerId = new \ReflectionProperty(Customer::class, 'id');
+        $activityId = new \ReflectionProperty(Activity::class, 'id');
+        $projectId = new \ReflectionProperty(Project::class, 'id');
+        $userId = new \ReflectionProperty(User::class, 'id');
+
         $user = new User();
         $user->setUserIdentifier('one-user');
         $user->setTitle('user title');
@@ -92,74 +96,71 @@ trait RendererTestTrait
         $user->setEmail('fantastic@four');
         $user->addPreference(new UserPreference('kitty', 'kat'));
         $user->addPreference(new UserPreference('hello', 'world'));
+        $userId->setValue($user, 120);
 
         $customer = new Customer('customer,with/special#name');
         $customer->setAddress('Foo' . PHP_EOL . 'Street' . PHP_EOL . '1111 City');
         $customer->setCurrency('EUR');
         $customer->setCountry('AT');
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
+        $customerId->setValue($customer, 120);
 
         $template = new InvoiceTemplate();
         $template->setTitle('a very *long* test invoice / template title with [ßpecial] chäracter');
-        $template->setVat(19);
+        $template->setTaxRate(19.0);
         $template->setLanguage('en');
         $template->setCustomer($customer);
 
         $pMeta = new ProjectMeta();
         $pMeta->setName('foo-project')->setValue('bar-project')->setIsVisible(true);
-        $project = $this->createMock(Project::class);
-        $project->method('getId')->willReturn(0);
-        $project->method('getName')->willReturn('project name');
-        $project->method('getCustomer')->willReturn($customer);
-        $project->method('getMetaFields')->willReturn(new ArrayCollection([$pMeta]));
-        $project->method('getVisibleMetaFields')->willReturn([$pMeta]);
+        $project = new Project();
+        $projectId->setValue($project, 0);
+        $project->setName('project name');
+        $project->setCustomer($customer);
+        $project->setMetaField($pMeta);
 
         $aMeta = new ActivityMeta();
         $aMeta->setName('foo-activity');
         $aMeta->setValue('bar-activity');
         $aMeta->setIsVisible(true);
-        $activity = $this->createMock(Activity::class);
-        $activity->method('getId')->willReturn(0);
-        $activity->method('getName')->willReturn('activity description');
-        $activity->method('getProject')->willReturn($project);
-        $activity->method('getMetaFields')->willReturn(new ArrayCollection([$aMeta]));
-        $activity->method('getVisibleMetaFields')->willReturn([$aMeta]);
+        $activity = new Activity();
+        $activityId->setValue($activity, 0);
+        $activity->setName('activity description');
+        $activity->setProject($project);
+        $activity->setMetaField($aMeta);
 
         $pMeta2 = new ProjectMeta();
         $pMeta2->setName('foo-project')->setValue('bar-project2')->setIsVisible(true);
-        $project2 = $this->createMock(Project::class);
-        $project2->method('getId')->willReturn(1);
-        $project2->method('getName')->willReturn('project 2 name');
-        $project2->method('getCustomer')->willReturn($customer);
-        $project2->method('getMetaFields')->willReturn(new ArrayCollection([$pMeta2]));
-        $project2->method('getVisibleMetaFields')->willReturn([$pMeta2]);
+        $project2 = new Project();
+        $projectId->setValue($project2, 1);
+        $project2->setName('project 2 name');
+        $project2->setCustomer($customer);
+        $project2->setMetaField($pMeta2);
 
         $aMeta2 = new ActivityMeta();
         $aMeta2->setName('foo-activity');
         $aMeta2->setValue('bar-activity2');
         $aMeta2->setIsVisible(true);
-        $activity2 = $this->createMock(Activity::class);
-        $activity2->method('getId')->willReturn(1);
-        $activity2->method('getName')->willReturn('activity 1 description');
-        $activity2->method('getProject')->willReturn($project2);
-        $activity2->method('getMetaFields')->willReturn(new ArrayCollection([$aMeta2]));
-        $activity2->method('getVisibleMetaFields')->willReturn([$aMeta2]);
+        $activity2 = new Activity();
+        $activityId->setValue($activity2, 1);
+        $activity2->setName('activity 1 description');
+        $activity2->setProject($project2);
+        $activity2->setMetaField($aMeta2);
 
         $pref1 = new UserPreference('foo', 'bar');
         $pref2 = new UserPreference('mad', 123.45);
-        $userMethods = ['getId', 'getPreferenceValue', 'getVisiblePreferences', 'getUsername', 'getUserIdentifier'];
-        $user1 = $this->getMockBuilder(User::class)->onlyMethods($userMethods)->disableOriginalConstructor()->getMock();
-        $user1->method('getId')->willReturn(1);
-        $user1->method('getPreferenceValue')->willReturn('50');
-        $user1->method('getUsername')->willReturn('foo-bar');
-        $user1->method('getUserIdentifier')->willReturn('foo-bar');
-        $user1->method('getVisiblePreferences')->willReturn([$pref1, $pref2]);
+        $user1 = new User();
+        $user1->setUserIdentifier('foo-bar');
+        $userId->setValue($user1, 1);
+        //$user1->method('getPreferenceValue')->willReturn('50');
+        $user1->addPreference($pref1);
+        $user1->addPreference($pref2);
 
-        $user2 = $this->createMock(User::class);
-        $user2->method('getId')->willReturn(2);
-        $user2->method('getUsername')->willReturn('hello-world');
-        $user2->method('getUserIdentifier')->willReturn('hello-world');
-        $user2->method('getVisiblePreferences')->willReturn([$pref1, $pref2]);
+        $user2 = new User();
+        $userId->setValue($user2, 2);
+        $user2->setUserIdentifier('hello-world');
+        $user2->addPreference($pref1);
+        $user2->addPreference($pref2);
 
         $timesheet = new Timesheet();
         $timesheet->setDuration(3600);
@@ -215,6 +216,7 @@ trait RendererTestTrait
         $userKevin->setUserIdentifier('kevin');
         $userKevin->addPreference($pref1);
         $userKevin->addPreference($pref2);
+        $userId->setValue($userKevin, 123);
 
         $timesheet5 = new Timesheet();
         $timesheet5->setDuration(400);
@@ -271,6 +273,10 @@ trait RendererTestTrait
 
     protected function getInvoiceModelOneEntry(): InvoiceModel
     {
+        $customerId = new \ReflectionProperty(Customer::class, 'id');
+        $activityId = new \ReflectionProperty(Activity::class, 'id');
+        $userId = new \ReflectionProperty(User::class, 'id');
+
         $user = new User();
         $user->setUserIdentifier('one-user');
         $user->setTitle('user title');
@@ -278,15 +284,17 @@ trait RendererTestTrait
         $user->setEmail('fantastic@four');
         $user->addPreference(new UserPreference('kitty', 'kat'));
         $user->addPreference(new UserPreference('hello', 'world'));
+        $userId->setValue($user, 1);
 
         $customer = new Customer('customer,with/special#name');
         $customer->setCountry('DE');
         $customer->setCurrency('USD');
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
+        $customerId->setValue($customer, 1);
 
         $template = new InvoiceTemplate();
         $template->setTitle('a test invoice template title');
-        $template->setVat(19);
+        $template->setTaxRate(19.0);
         $template->setLanguage('it');
         $template->setCustomer($customer);
 
@@ -299,15 +307,18 @@ trait RendererTestTrait
         $activity->setName('activity description');
         $activity->setProject($project);
         $activity->setMetaField((new ActivityMeta())->setName('foo-activity')->setValue('bar-activity')->setIsVisible(true));
+        $activityId->setValue($activity, 1);
 
         $pref1 = new UserPreference('foo', 'bar');
         $pref2 = new UserPreference('mad', 123.45);
-        $user1 = $this->createMock(User::class);
-        $user1->method('getId')->willReturn(1);
-        $user1->method('getPreferenceValue')->willReturn('50');
-        $user1->method('getUsername')->willReturn('foo-bar');
-        $user1->method('getUserIdentifier')->willReturn('foo-bar');
-        $user1->method('getVisiblePreferences')->willReturn([$pref1, $pref2]);
+
+        $userId = new \ReflectionProperty(User::class, 'id');
+        $user1 = new User();
+        $user1->setUserIdentifier('foo-bar');
+        $user1->addPreference($pref1);
+        $user1->addPreference($pref2);
+        $userId->setValue($user1, 1);
+        //$user1->method('getPreferenceValue')->willReturn('50');
 
         $timesheet = new Timesheet();
         $timesheet->setDuration(3600);

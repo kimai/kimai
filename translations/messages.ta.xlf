@@ -518,14 +518,6 @@
         <source>user_profile</source>
         <target state="final">தன்விவரக்குறிப்பு</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token" xml:space="preserve" approved="yes">
-        <source>api_token</source>
-        <target state="final">பநிஇ கடவுச்சொல்</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat" xml:space="preserve" approved="yes">
-        <source>api_token_repeat</source>
-        <target state="final">பநிஇ கடவுச்சொல்லை மீண்டும் இடு</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required" xml:space="preserve" approved="yes">
         <source>login_required</source>
         <target state="final">இசைவு இல்லை. திருப்பி உள்நுழை?</target>
@@ -1721,10 +1713,6 @@
       <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve" approved="no">
         <source>api_token_hidden</source>
         <target state="translated">இந்த விசை காண்பிக்கப்படும் ஒரே நேரம் இதுதான்! எனவே அதைப் பாதுகாப்பாக வைத்திருங்கள், இந்தச் சாளரத்தை மூடுவதற்கு முன்பு நீங்கள் அதை நகலெடுத்துள்ளீர்கள் என்பதை உறுதிப்படுத்திக் கொள்.</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve" approved="no">
-        <source>api_password_deprecated</source>
-        <target state="translated">பநிஇ கடவுச்சொற்கள் காலாவதியானவை: அதற்குப் பதிலாக பநிஇ கிள்ளாக்குகளைப் பயன்படுத்து.</target>
       </trans-unit>
       <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve" approved="no">
         <source>hours_per_day</source>

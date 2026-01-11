@@ -30,6 +30,10 @@ class PluginControllerTest extends AbstractControllerBaseTestCase
     public function testIndexAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $manager = new PluginManager([]);
+        self::getContainer()->set(PluginManager::class, $manager);
+
         $this->assertAccessIsGranted($client, '/admin/plugins/');
         $node = $client->getCrawler()->filter('div.alert.alert-warning');
         self::assertStringContainsString('You have no plugins installed yet', $node->text(null, true));

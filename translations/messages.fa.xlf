@@ -94,14 +94,6 @@
         <source>user_profile</source>
         <target>پروفایل من</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>پسورد API</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target state="translated">تکرار پسورد API</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target state="translated">مجوز از دست رفته است. تغییر مسیر برای ورود به سیستم؟</target>
@@ -1793,10 +1785,6 @@
       <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
         <source>api_token_hidden</source>
         <target state="translated">این تنها باری است که این کلید نمایش داده می‌شود! پس آن را در جای امنی نگه دارید و قبل از بستن این پنجره، مطمئن شوید که آن را کپی کرده‌اید.</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">رمزهای عبور API قدیمی هستند: لطفاً به جای آنها از توکن‌های API استفاده کنید.</target>
       </trans-unit>
       <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
         <source>hours_per_day</source>

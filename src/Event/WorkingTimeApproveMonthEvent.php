@@ -22,14 +22,6 @@ final class WorkingTimeApproveMonthEvent extends Event
     {
     }
 
-    /**
-     * @deprecated use getMonth()->getUser() instead)
-     */
-    public function getUser(): User
-    {
-        return $this->getMonth()->getUser();
-    }
-
     public function getMonth(): Month
     {
         return $this->month;

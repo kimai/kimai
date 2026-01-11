@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          backupGlobals="false"
          colors="true"
+         failOnNotice="true"
+         failOnWarning="true"
          bootstrap="tests/bootstrap.php"
          cacheDirectory="var/cache/phpunit/"
          displayDetailsOnTestsThatTriggerDeprecations="true"
@@ -10,59 +14,86 @@
          displayDetailsOnTestsThatTriggerNotices="true"
          displayDetailsOnTestsThatTriggerWarnings="true"
          displayDetailsOnPhpunitDeprecations="true">
-  <php>
-    <ini name="error_reporting" value="-1"/>
-    <ini name="max_execution_time" value="-1"/>
-    <ini name="date.timezone" value="UTC"/>
-    <ini name="intl.default_locale" value="en_US"/>
-    <ini name="date.timezone" value="Europe/Vienna"/>
-    <env name="KERNEL_CLASS" value="App\Kernel" force="true"/>
-    <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
-    <env name="APP_ENV" value="test" force="true"/>
-    <env name="APP_DEBUG" value="0" force="true"/>
-    <env name="APP_SECRET" value="5a79a1c866efef9ca1800f971d689f3e" force="true"/>
-    <env name="DATABASE_URL" value="mysql://kimai2_test:kimai2_test@127.0.0.1:3306/kimai2_test?charset=utf8mb4&amp;serverVersion=10.5.8-MariaDB"/>
-    <env name="CORS_ALLOW_ORIGIN" value="^https?://localhost(:[0-9]+)?$"/>
-    <env name="MAILER_URL" value="null://null"/>
-    <env name="MAILER_FROM" value="kimai@example.com"/>
-    <!--
-        REINSTALL THE TEST DATABASE, eg. AFTER CHANGING STRUCTURE!
+    <php>
+        <ini name="display_errors" value="1" />
+        <ini name="error_reporting" value="-1"/>
+        <ini name="max_execution_time" value="-1"/>
+        <ini name="date.timezone" value="UTC"/>
+        <ini name="intl.default_locale" value="en_US"/>
+        <ini name="date.timezone" value="Europe/Vienna"/>
+        <env name="KERNEL_CLASS" value="App\Kernel" force="true"/>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
+        <server name="SHELL_VERBOSITY" value="-1" />
+        <env name="APP_DEBUG" value="0" force="true"/>
+        <env name="DATABASE_URL" value="mysql://kimai2_test:kimai2_test@127.0.0.1:3306/kimai2_test?charset=utf8mb4&amp;serverVersion=10.11.15-MariaDB"/>
+        <!-- ###+ nelmio/cors-bundle ### -->
+        <env name="CORS_ALLOW_ORIGIN" value="'^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'"/>
+        <!-- ###- nelmio/cors-bundle ### -->
+        <!--
+            REINSTALL THE TEST DATABASE, eg. AFTER CHANGING STRUCTURE!
 
-        - change to "true"
-        - composer tests
-        - change back to "false"
+            - change to "true"
+            - composer tests
+            - change back to "false"
 
-        CREATE DATABASE IF NOT EXISTS `kimai2_test`;
-        CREATE USER IF NOT EXISTS `kimai2_test`@127.0.0.1;
-        ALTER USER `kimai2_test`@127.0.0.1 IDENTIFIED BY "kimai2_test";
-        GRANT execute,select,insert,update,delete,create,alter,drop,index,references ON `kimai2_test`.* TO kimai2_test@127.0.0.1;
-    -->
-    <env name="BOOTSTRAP_RESET_DATABASE" value="true"/>
-  </php>
-  <testsuites>
-    <testsuite name="Kimai">
-      <directory>tests/</directory>
-    </testsuite>
-  </testsuites>
-  <extensions>
-    <bootstrap class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
-  </extensions>
-  <source>
-    <include>
-      <directory suffix=".php">src/</directory>
-      <directory suffix=".php">templates/</directory>
-    </include>
-    <exclude>
-      <directory suffix=".php">migrations/</directory>
-      <directory suffix=".php">assets/</directory>
-      <directory suffix=".php">bin/</directory>
-      <directory suffix=".php">config/</directory>
-      <directory suffix=".php">node_modules/</directory>
-      <directory suffix=".php">public/</directory>
-      <directory suffix=".php">tests/</directory>
-      <directory suffix=".php">translations/</directory>
-      <directory suffix=".php">var/</directory>
-      <directory suffix=".php">vendor/</directory>
-    </exclude>
-  </source>
+            CREATE DATABASE IF NOT EXISTS `kimai2_test`;
+            CREATE USER IF NOT EXISTS `kimai2_test`@127.0.0.1;
+            ALTER USER `kimai2_test`@127.0.0.1 IDENTIFIED BY "kimai2_test";
+            GRANT execute,select,insert,update,delete,create,alter,drop,index,references ON `kimai2_test`.* TO kimai2_test@127.0.0.1;
+        -->
+        <env name="BOOTSTRAP_RESET_DATABASE" value="true"/>
+
+        <!-- ###+ symfony/framework-bundle ### -->
+        <env name="APP_ENV" value="test" force="true"/>
+        <env name="APP_SECRET" value="5a79a1c866efef9ca1800f971d689f3e" force="true"/>
+        <env name="APP_SHARE_DIR" value="var/share"/>
+        <!-- ###- symfony/framework-bundle ### -->
+        <!-- ###+ symfony/mailer ### -->
+        <env name="MAILER_URL" value="null://null"/>
+        <env name="MAILER_FROM" value="kimai@example.com"/>
+        <!-- ###- symfony/mailer ### -->
+
+        <!-- ###+ symfony/routing ### -->
+        <!-- Configure how to generate URLs in non-HTTP contexts, such as CLI commands. -->
+        <!-- See https://symfony.com/doc/current/routing.html#generating-urls-in-commands -->
+        <env name="DEFAULT_URI" value="http://localhost"/>
+        <!-- ###- symfony/routing ### -->
+
+        <!-- ###+ symfony/messenger ### -->
+        <!-- Choose one of the transports below -->
+        <!-- MESSENGER_TRANSPORT_DSN=amqp://guest:guest@localhost:5672/%2f/messages -->
+        <!-- MESSENGER_TRANSPORT_DSN=redis://localhost:6379/messages -->
+        <env name="MESSENGER_TRANSPORT_DSN" value="doctrine://default?auto_setup=0"/>
+        <!-- ###- symfony/messenger ### -->
+    </php>
+    <testsuites>
+        <testsuite name="Kimai">
+            <directory>tests/</directory>
+        </testsuite>
+    </testsuites>
+    <extensions>
+        <bootstrap class="Symfony\Bridge\PhpUnit\SymfonyExtension">
+            <parameter name="clock-mock-namespaces" value="App" />
+            <parameter name="dns-mock-namespaces" value="App" />
+        </bootstrap>
+        <bootstrap class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
+    </extensions>
+    <source ignoreSuppressionOfDeprecations="true" restrictNotices="true" restrictWarnings="true">
+        <include>
+            <directory suffix=".php">src/</directory>
+            <directory suffix=".php">templates/</directory>
+        </include>
+        <exclude>
+            <directory suffix=".php">migrations/</directory>
+            <directory suffix=".php">assets/</directory>
+            <directory suffix=".php">bin/</directory>
+            <directory suffix=".php">config/</directory>
+            <directory suffix=".php">node_modules/</directory>
+            <directory suffix=".php">public/</directory>
+            <directory suffix=".php">tests/</directory>
+            <directory suffix=".php">translations/</directory>
+            <directory suffix=".php">var/</directory>
+            <directory suffix=".php">vendor/</directory>
+        </exclude>
+    </source>
 </phpunit>

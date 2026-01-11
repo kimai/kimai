@@ -1,10 +1,10 @@
+{# USED WHEN EXPORTING FROM MY-/ALL TIMES #}
 {% extends 'export/pdf-layout.html.twig' %}
 {% set showRateColumn = false %}
 {% set showRateBudget = false %}
 {% set showTimeBudget = false %}
 {% set showUserColumn = true %}
 {% set showCustomerSummary = false %}
-{% set decimal = true %}
 {% set showDateTimeShort = true %}
 {% block title %}{{ 'timesheet.pdf.twig'|trans({}, 'export') }}{% endblock %}
 {% block description %}

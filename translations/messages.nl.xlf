@@ -66,14 +66,6 @@
         <source>user_profile</source>
         <target>Mijn profiel</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>API wachtwoord</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>Herhaal API wachtwoord</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target>Ontbrekende rechten. Terug naar het aanmeldscherm?</target>
@@ -1613,10 +1605,6 @@
       <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
         <source>api_token_hidden</source>
         <target state="translated">Dit is de enige keer dat deze token wordt getoond. Bewaar deze veilig voordat je dit scherm afsluit.</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">Het gebruik van API wachtworden is verouderd, gebruik in de plaats daarvan API tokens.</target>
       </trans-unit>
       <trans-unit id="7Sycs4M" resname="Importer" xml:space="preserve">
         <source>Importer</source>

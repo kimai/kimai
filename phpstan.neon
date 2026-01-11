@@ -50,16 +50,6 @@ parameters:
             path: src/API/ActivityController.php
 
         -
-            message: "#^Method App\\\\API\\\\Authentication\\\\TokenAuthenticator\\:\\:getCredentials\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/API/Authentication/TokenAuthenticator.php
-
-        -
-            message: "#^Parameter \\#2 \\$plainPassword of method Symfony\\\\Component\\\\PasswordHasher\\\\PasswordHasherInterface\\:\\:verify\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/API/Authentication/TokenAuthenticator.php
-
-        -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Customer\\:\\:getMetaField\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/API/CustomerController.php
@@ -176,11 +166,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Command\\\\AbstractUserCommand\\:\\:askForPassword\\(\\) should return string but returns mixed\\.$#"
-            count: 1
-            path: src/Command/AbstractUserCommand.php
-
-        -
-            message: "#^Parameter \\#1 \\$string of function trim expects string, string\\|null given\\.$#"
             count: 1
             path: src/Command/AbstractUserCommand.php
 
@@ -405,11 +390,6 @@ parameters:
             path: src/Command/PromoteUserCommand.php
 
         -
-            message: "#^Parameter \\#3 \\$length of function substr expects int\\|null, int\\<0, max\\>\\|false given\\.$#"
-            count: 1
-            path: src/Command/RegenerateLocalesCommand.php
-
-        -
             message: "#^Cannot call method find\\(\\) on Symfony\\\\Component\\\\Console\\\\Application\\|null\\.$#"
             count: 4
             path: src/Command/ReloadCommand.php
@@ -591,21 +571,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Configuration\\\\SystemConfiguration\\:\\:getUserDefaultTimezone\\(\\) should return string\\|null but returns bool\\|float\\|int\\|string\\|null\\.$#"
-            count: 1
-            path: src/Configuration/SystemConfiguration.php
-
-        -
-            message: "#^Method App\\\\Configuration\\\\SystemConfiguration\\:\\:offsetExists\\(\\) has parameter \\$offset with no type specified\\.$#"
-            count: 1
-            path: src/Configuration/SystemConfiguration.php
-
-        -
-            message: "#^Method App\\\\Configuration\\\\SystemConfiguration\\:\\:offsetGet\\(\\) has parameter \\$offset with no type specified\\.$#"
-            count: 1
-            path: src/Configuration/SystemConfiguration.php
-
-        -
-            message: "#^Parameter \\#1 \\$key of method App\\\\Configuration\\\\SystemConfiguration\\:\\:set\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/Configuration/SystemConfiguration.php
 
@@ -1165,17 +1130,7 @@ parameters:
             path: src/Entity/Team.php
 
         -
-            message: "#^Method App\\\\Entity\\\\Timesheet\\:\\:getCategory\\(\\) should return string but returns string\\|null\\.$#"
-            count: 1
-            path: src/Entity/Timesheet.php
-
-        -
             message: "#^Method App\\\\Entity\\\\Timesheet\\:\\:getMetaFields\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Timesheet.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Timesheet\\:\\:getTags\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/Timesheet.php
 
@@ -1251,21 +1206,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Entity\\\\User\\:\\:removeRole\\(\\) has parameter \\$role with no type specified\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:setConfirmationToken\\(\\) has parameter \\$confirmationToken with no type specified\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:setPassword\\(\\) has parameter \\$password with no type specified\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:setPlainPassword\\(\\) has parameter \\$password with no type specified\\.$#"
             count: 1
             path: src/Entity/User.php
 
@@ -1355,11 +1295,6 @@ parameters:
             path: src/Event/RevenueStatisticEvent.php
 
         -
-            message: "#^Method App\\\\Event\\\\ThemeJavascriptTranslationsEvent\\:\\:getTranslations\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Event/ThemeJavascriptTranslationsEvent.php
-
-        -
             message: "#^Parameter \\#1 \\$string of function strtolower expects string, string\\|null given\\.$#"
             count: 2
             path: src/Event/UserPreferenceEvent.php
@@ -1418,16 +1353,6 @@ parameters:
             message: "#^Method App\\\\Export\\\\Annotation\\\\Order\\:\\:__construct\\(\\) has parameter \\$order with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Export/Annotation/Order.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\HtmlRenderer\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Base/HtmlRenderer.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Base\\\\PDFRenderer\\:\\:getOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Base/PDFRenderer.php
 
         -
             message: "#^Method App\\\\Export\\\\Base\\\\PDFRenderer\\:\\:getPdfOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -1928,61 +1853,6 @@ parameters:
             message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
             count: 1
             path: src/Form/TimesheetPreCreateForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addProjectSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/AbstractToolbarForm.php
 
         -
             message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
@@ -3321,23 +3191,13 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$identifier of method App\\\\Entity\\\\User\\:\\:setUserIdentifier\\(\\) expects string, string\\|null given\\.$#"
-            count: 2
+            count: 1
             path: src/Saml/SamlProvider.php
 
         -
             message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, mixed given\\.$#"
             count: 1
             path: src/Saml/SamlProvider.php
-
-        -
-            message: "#^Property App\\\\Saml\\\\Security\\\\SamlAuthenticationFailureHandler\\:\\:\\$defaultOptions has no type specified\\.$#"
-            count: 1
-            path: src/Saml/Security/SamlAuthenticationFailureHandler.php
-
-        -
-            message: "#^Property App\\\\Saml\\\\Security\\\\SamlAuthenticationSuccessHandler\\:\\:\\$defaultOptions has no type specified\\.$#"
-            count: 1
-            path: src/Saml/Security/SamlAuthenticationSuccessHandler.php
 
         -
             message: "#^Method App\\\\Security\\\\KimaiUserProvider\\:\\:getProviders\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -3540,21 +3400,6 @@ parameters:
             path: src/Twig/LocaleFormatExtensions.php
 
         -
-            message: "#^Method App\\\\Twig\\\\PaginationExtension\\:\\:createRouteGenerator\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Twig/PaginationExtension.php
-
-        -
-            message: "#^Method App\\\\Twig\\\\PaginationExtension\\:\\:renderPagination\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Twig/PaginationExtension.php
-
-        -
-            message: "#^Method App\\\\Twig\\\\PaginationExtension\\:\\:renderPagination\\(\\) has parameter \\$pager with generic class Pagerfanta\\\\Pagerfanta but does not specify its types\\: T$#"
-            count: 1
-            path: src/Twig/PaginationExtension.php
-
-        -
             message: "#^Method App\\\\Twig\\\\Runtime\\\\ThemeExtension\\:\\:actions\\(\\) has parameter \\$payload with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Twig/Runtime/ThemeExtension.php
@@ -3590,22 +3435,12 @@ parameters:
             path: src/Utils/Color.php
 
         -
-            message: "#^Class App\\\\Utils\\\\DataTable implements generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"
-            count: 1
-            path: src/Utils/DataTable.php
-
-        -
             message: "#^Method App\\\\Utils\\\\DataTable\\:\\:addColumn\\(\\) has parameter \\$column with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Utils/DataTable.php
 
         -
             message: "#^Method App\\\\Utils\\\\DataTable\\:\\:getColumns\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Utils/DataTable.php
-
-        -
-            message: "#^Method App\\\\Utils\\\\DataTable\\:\\:getIterator\\(\\) should return Traversable\\<mixed, mixed\\> but returns Traversable\\<\\(int\\|string\\), mixed\\>\\|null\\.$#"
             count: 1
             path: src/Utils/DataTable.php
 
@@ -3750,11 +3585,6 @@ parameters:
             path: src/Utils/PageSetup.php
 
         -
-            message: "#^Class App\\\\Utils\\\\Pagination extends generic class Pagerfanta\\\\Pagerfanta but does not specify its types\\: T$#"
-            count: 1
-            path: src/Utils/Pagination.php
-
-        -
             message: "#^Parameter \\#1 \\$class of method App\\\\Utils\\\\PaginationTemplate\\:\\:linkLi\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/Utils/PaginationTemplate.php
@@ -3858,16 +3688,6 @@ parameters:
             message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
             count: 1
             path: src/Utils/ReleaseVersion.php
-
-        -
-            message: "#^Cannot access offset 'pattern' on mixed\\.$#"
-            count: 1
-            path: src/Validator/Constraints/Duration.php
-
-        -
-            message: "#^Parameter \\#1 \\$pattern of method Symfony\\\\Component\\\\Validator\\\\Constraints\\\\Regex\\:\\:__construct\\(\\) expects array\\|string\\|null, mixed given\\.$#"
-            count: 1
-            path: src/Validator/Constraints/Duration.php
 
         -
             message: "#^Parameter \\#1 \\$value \\(App\\\\Entity\\\\Team\\) of method App\\\\Validator\\\\Constraints\\\\TeamValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"

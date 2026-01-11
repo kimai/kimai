@@ -66,14 +66,6 @@
         <source>user_profile</source>
         <target state="translated">Profilim</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target state="translated">API parolası</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target state="translated">API parolasını tekrarla</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target state="translated">İzin gerekli. Oturum açma sayfasına gidilsin mi?</target>
@@ -1645,10 +1637,6 @@
       <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
         <source>api_token_hidden</source>
         <target state="translated">Bu anahtarı bundan sonra görüntüleyemeyeceksiniz! Bu yüzden onu güvende tutun ve bu pencereyi kapatmadan önce kopyaladığınızdan emin olun.</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">API parolaları artık kullanılmıyor: lütfen bunun yerine API belirteçlerini kullanın.</target>
       </trans-unit>
       <trans-unit id="WwesQPU" resname="deactivate" xml:space="preserve" approved="no">
         <source>Deactivate</source>

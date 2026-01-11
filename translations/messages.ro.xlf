@@ -86,14 +86,6 @@
         <source>user_profile</source>
         <target>Profilul meu</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>Parola API</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>Reintrodu parola API</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target>Permisiuni insuficiente. Să te redirecționez la pagina de login?</target>
@@ -1589,10 +1581,6 @@
       <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
         <source>api_token_hidden</source>
         <target state="translated">Aceasta este singura dată când această cheie va fi afișată vreodată! Așa că păstrați-l în siguranță și asigurați-vă că ați copiat-o înainte de a închide această fereastră.</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">Parolele API sunt învechite: vă rugăm să utilizați în schimb jetoane API.</target>
       </trans-unit>
       <trans-unit id="Zngu6M9" resname="status.planned" xml:space="preserve">
         <source>status.planned</source>

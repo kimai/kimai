@@ -74,14 +74,6 @@
         <source>user_profile</source>
         <target>Mój profil</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target state="translated">Hasło API</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target state="translated">Powtórz hasło API</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target state="translated">Brak uprawnień. Przekierować na stronę logowania?</target>
@@ -1645,10 +1637,6 @@
       <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve">
         <source>Expiry date</source>
         <target state="translated">Data wygaśnięcia</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">Hasła API są nieaktualne: zamiast tego użyj tokenów API.</target>
       </trans-unit>
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
         <source>absence_comment_mandatory</source>

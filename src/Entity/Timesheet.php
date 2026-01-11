@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Audit\Loggable;
 use App\Doctrine\Behavior\ModifiedAt;
 use App\Doctrine\Behavior\ModifiedTrait;
 use App\Repository\TimesheetRepository;
@@ -47,37 +48,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Serializer\VirtualProperty('ProjectAsId', exp: 'object.getProject() === null ? null : object.getProject().getId()', options: [new Serializer\SerializedName('project'), new Serializer\Type(name: 'integer'), new Serializer\Groups(['Not_Expanded'])])]
 #[Serializer\VirtualProperty('UserAsId', exp: 'object.getUser().getId()', options: [new Serializer\SerializedName('user'), new Serializer\Type(name: 'integer'), new Serializer\Groups(['Not_Expanded'])])]
 #[Serializer\VirtualProperty('TagsAsArray', exp: 'object.getTagsAsArray()', options: [new Serializer\SerializedName('tags'), new Serializer\Type(name: 'array<string>'), new Serializer\Groups(['Default'])])]
-#[Constraints\Timesheet]
-#[Constraints\TimesheetDeactivated]
+#[Constraints\TimesheetAll]
+#[Loggable(ignoredProperties: ['category', 'date'], title: 'timesheet')]
 class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
 {
     use ModifiedTrait;
 
-    /**
-     * @deprecated since 2.45
-     */
-    public const WORK = 'work';
-    /**
-     * @deprecated since 2.45
-     */
-    public const HOLIDAY = 'holiday';
-    /**
-     * @deprecated since 2.45
-     */
-    public const SICKNESS = 'sickness';
-    /**
-     * @deprecated since 2.45
-     */
-    public const PARENTAL = 'parental';
-    /**
-     * @deprecated since 2.45
-     */
-    public const OVERTIME = 'overtime';
-
-    public const BILLABLE_AUTOMATIC = 'auto';
-    public const BILLABLE_YES = 'yes';
-    public const BILLABLE_NO = 'no';
-    public const BILLABLE_DEFAULT = 'default';
+    public const string BILLABLE_AUTOMATIC = 'auto';
+    public const string BILLABLE_YES = 'yes';
+    public const string BILLABLE_NO = 'no';
+    public const string BILLABLE_DEFAULT = 'default';
 
     /**
      * Unique Timesheet ID
@@ -162,7 +142,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     #[Serializer\Groups(['Default'])]
     private ?string $description = null;
     #[ORM\Column(name: 'rate', type: Types::FLOAT, nullable: false)]
-    #[Assert\GreaterThanOrEqual(0)]
+    #[Assert\GreaterThanOrEqual(value: 0)]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -172,12 +152,12 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     #[Serializer\Groups(['Default'])]
     private ?float $internalRate = null;
     #[ORM\Column(name: 'fixed_rate', type: Types::FLOAT, nullable: true)]
-    #[Assert\GreaterThanOrEqual(0)]
+    #[Assert\GreaterThanOrEqual(value: 0)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Entity'])]
     private ?float $fixedRate = null;
     #[ORM\Column(name: 'hourly_rate', type: Types::FLOAT, nullable: true)]
-    #[Assert\GreaterThanOrEqual(0)]
+    #[Assert\GreaterThanOrEqual(value: 0)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Entity'])]
     private ?float $hourlyRate = null;
@@ -196,9 +176,6 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
      */
     #[Assert\NotNull]
     private ?string $billableMode = self::BILLABLE_DEFAULT;
-    #[ORM\Column(name: 'category', type: Types::STRING, length: 10, nullable: false, options: ['default' => 'work'])]
-    #[Assert\NotNull]
-    private ?string $category = 'work';
     /**
      * Tags
      *
@@ -432,7 +409,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     }
 
     /**
-     * @return Collection<Tag>
+     * @return Collection<int, Tag>
      */
     public function getTags(): Collection
     {
@@ -500,16 +477,7 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
 
     public function getCategory(): string
     {
-        return $this->category;
-    }
-
-    public function setCategory(string $category): Timesheet
-    {
-        @trigger_error('Timesheet::setCategory() is deprecated.', E_USER_DEPRECATED);
-
-        $this->category = $category;
-
-        return $this;
+        return 'work';
     }
 
     public function isBillable(): bool

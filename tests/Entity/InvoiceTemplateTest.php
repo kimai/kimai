@@ -13,8 +13,8 @@ use App\Entity\Customer;
 use App\Entity\CustomerMeta;
 use App\Entity\InvoiceTemplate;
 use App\Entity\InvoiceTemplateMeta;
-use App\Entity\Tax;
 use App\Entity\TaxType;
+use App\Invoice\Tax;
 use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -40,7 +40,7 @@ class InvoiceTemplateTest extends TestCase
         self::assertEquals('default', $sut->getNumberGenerator());
         self::assertEquals('default', $sut->getRenderer());
         self::assertEquals(30, $sut->getDueDays());
-        self::assertTrue($sut->isDecimalDuration()); // @phpstan-ignore method.deprecated
+        self::assertTrue($sut->isDecimalDuration());
         self::assertInstanceOf(Collection::class, $sut->getMetaFields());
         self::assertEquals(0, $sut->getMetaFields()->count());
         self::assertNull($sut->getMetaField('foo'));
@@ -101,11 +101,13 @@ class InvoiceTemplateTest extends TestCase
         $sut->setContact('hello world');
         self::assertEquals('hello world', $sut->getContact());
 
-        $sut->setVat(7.31);
-        self::assertEquals(7.31, $sut->getVat());
+        $sut->setTaxRate(17.31);
+        self::assertEquals(17.31, $sut->getTaxRate());
+        self::assertEquals(17.31, $sut->getVat());
 
-        $sut->setVatId('1234567890'); // @phpstan-ignore method.deprecated
-        self::assertEquals('1234567890', $sut->getVatId());
+        $sut->setVat(7.31);
+        self::assertEquals(7.31, $sut->getTaxRate());
+        self::assertEquals(7.31, $sut->getVat());
 
         $sut->setLanguage('de');
         self::assertEquals('de', $sut->getLanguage());
@@ -119,11 +121,9 @@ class InvoiceTemplateTest extends TestCase
         $sut->setCalculator('fooBar');
         self::assertEquals('fooBar', $sut->getCalculator());
 
-        $sut->setCompany('looney toon'); // @phpstan-ignore method.deprecated
-        self::assertEquals('looney toon', $sut->getCompany());
-
-        $sut->setAddress('acme street, 1234 looney town, rainbow'); // @phpstan-ignore method.deprecated
-        self::assertEquals('acme street, 1234 looney town, rainbow', $sut->getAddress());
+        self::assertNull($sut->getVatId());
+        self::assertNull($sut->getCompany());
+        self::assertNull($sut->getAddress());
 
         self::assertEquals($sut, clone $sut);
 
