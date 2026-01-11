@@ -20,25 +20,12 @@ abstract class AbstractWidget implements WidgetInterface
 
     public function getDateRangeColor(DateRangeEnum $dateRangeEnum): string
     {
-        return match ($dateRangeEnum) {
-            DateRangeEnum::TODAY => 'green',
-            DateRangeEnum::WEEK => 'blue',
-            DateRangeEnum::MONTH => 'purple',
-            DateRangeEnum::FINANCIAL, DateRangeEnum::YEAR => 'yellow',
-            DateRangeEnum::TOTAL => 'red',
-        };
+        return $dateRangeEnum->getColorName();
     }
 
     public function getDateRangeTitle(DateRangeEnum $dateRangeEnum): string
     {
-        return match ($dateRangeEnum) {
-            DateRangeEnum::TODAY => 'daterangepicker.today',
-            DateRangeEnum::WEEK => 'daterangepicker.thisWeek',
-            DateRangeEnum::MONTH => 'daterangepicker.thisMonth',
-            DateRangeEnum::YEAR => 'daterangepicker.thisYear',
-            DateRangeEnum::FINANCIAL => 'daterangepicker.thisFinancialYear',
-            DateRangeEnum::TOTAL => 'daterangepicker.allTime',
-        };
+        return $dateRangeEnum->getTitle();
     }
 
     public function getTranslationDomain(): string

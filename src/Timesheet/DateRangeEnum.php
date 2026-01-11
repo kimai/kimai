@@ -17,4 +17,27 @@ enum DateRangeEnum: string
     case YEAR = 'year';
     case TOTAL = 'total';
     case FINANCIAL = 'financial';
+
+    public function getColorName(): string
+    {
+        return match ($this) {
+            DateRangeEnum::TODAY => 'green',
+            DateRangeEnum::WEEK => 'blue',
+            DateRangeEnum::MONTH => 'purple',
+            DateRangeEnum::FINANCIAL, DateRangeEnum::YEAR => 'yellow',
+            DateRangeEnum::TOTAL => 'red',
+        };
+    }
+
+    public function getTitle(): string
+    {
+        return match ($this) {
+            DateRangeEnum::TODAY => 'daterangepicker.today',
+            DateRangeEnum::WEEK => 'daterangepicker.thisWeek',
+            DateRangeEnum::MONTH => 'daterangepicker.thisMonth',
+            DateRangeEnum::YEAR => 'daterangepicker.thisYear',
+            DateRangeEnum::FINANCIAL => 'daterangepicker.thisFinancialYear',
+            DateRangeEnum::TOTAL => 'daterangepicker.allTime',
+        };
+    }
 }

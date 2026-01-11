@@ -21,7 +21,7 @@ final class RevenueStatisticEvent extends Event
      */
     private array $revenue = [];
 
-    public function __construct(private ?\DateTimeInterface $begin, private ?\DateTimeInterface $end)
+    public function __construct(private readonly ?\DateTimeInterface $begin, private readonly ?\DateTimeInterface $end)
     {
     }
 
@@ -35,6 +35,9 @@ final class RevenueStatisticEvent extends Event
         return $this->end;
     }
 
+    /**
+     * @return array<string, float>
+     */
     public function getRevenue(): array
     {
         return $this->revenue;
