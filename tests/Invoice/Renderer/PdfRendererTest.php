@@ -59,7 +59,7 @@ class PdfRendererTest extends KernelTestCase
 
         /** @var FilesystemLoader $loader */
         $loader = $twig->getLoader();
-        $loader->addPath(__DIR__ . '/../templates/', 'invoice');
+        $loader->addPath($this->getInvoiceTemplatePath(), 'invoice');
 
         $sut = new PdfRenderer($twig, new MPdfConverter((new FileHelperFactory($this))->create(), $cacheDir));
         $model = $this->getInvoiceModel();
@@ -115,51 +115,54 @@ class PdfRendererTest extends KernelTestCase
 
         /** @var FilesystemLoader $loader */
         $loader = $twig->getLoader();
-        $loader->addPath(__DIR__ . '/../templates/', 'invoice');
 
         $dirs = [
-            __DIR__ . '/../../../templates/invoice/renderer/',
+            realpath($this->getInvoiceTemplatePath()),
+            realpath(__DIR__ . '/../templates/'),
+            realpath(__DIR__ . '/../../../templates/invoice/renderer/'),
+            realpath(__DIR__ . '/../../../var/invoices/'),
+            realpath(__DIR__ . '/../../../var/templates/'),
         ];
 
         $files = [];
-
-        $additionalTemplatesDir = __DIR__ . '/../../../var/templates';
-        if (is_dir($additionalTemplatesDir)) {
-            $finder = new Finder();
-            $finder
-                ->in($additionalTemplatesDir)
-                ->name('*.pdf.twig')
-                ->path('invoice-tpl/')
-                ->files();
-
-            foreach ($finder->getIterator() as $splFile) {
-                $filename = $splFile->getRealPath();
-                $files[] = $filename;
-                $loader->addPath(\dirname($filename) . '/', 'invoice');
-            }
-        }
 
         foreach ($dirs as $dir) {
             if (!is_dir($dir)) {
                 continue;
             }
-            $dir = realpath($dir);
-            $loader->addPath($dir . '/', 'invoice');
-            $found = glob($dir . '/*.pdf.twig');
-            if ($found !== false) {
-                $files = array_merge($files, $found);
+
+            $finder = new Finder();
+            $finder
+                ->in($dir)
+                ->name('*.pdf.twig')
+                ->path('invoice-tpl/')
+                ->sortByName()
+                ->files();
+
+            foreach ($finder->getIterator() as $splFile) {
+                $filename = $splFile->getRealPath();
+                if ($filename === false) {
+                    continue;
+                }
+                $dir = \dirname($filename) . '/';
+                if (!\array_key_exists($dir, $files)) {
+                    $loader->addPath($dir . '/', 'invoice');
+                }
+                $files[$dir][] = $filename;
             }
         }
 
         $sut = new PdfRenderer($twig, new MPdfConverter((new FileHelperFactory($this))->create(), $cacheDir));
         $model = $this->getInvoiceModel();
 
-        foreach ($files as $filename) {
-            $document = new InvoiceDocument(new \SplFileInfo($filename));
+        foreach ($files as $templates) {
+            foreach ($templates as $filename) {
+                $document = new InvoiceDocument(new \SplFileInfo($filename));
 
-            $response = $sut->render($document, $model);
-            self::assertEquals('application/pdf', $response->headers->get('Content-Type'));
-            self::assertStringContainsString('attachment; filename', $response->headers->get('Content-Disposition'));
+                $response = $sut->render($document, $model);
+                self::assertEquals('application/pdf', $response->headers->get('Content-Type'));
+                self::assertStringContainsString('attachment; filename', $response->headers->get('Content-Disposition'));
+            }
         }
     }
 }
