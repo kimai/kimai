@@ -598,10 +598,6 @@
         <source>Doctor</source>
         <target>حالة الخدمات</target>
       </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>الإعدادات</target>
-      </trans-unit>
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target>الإضافات</target>

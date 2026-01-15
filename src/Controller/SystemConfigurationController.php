@@ -79,7 +79,7 @@ final class SystemConfigurationController extends AbstractController
             ];
         }
 
-        $page = new PageSetup('menu.system_configuration');
+        $page = new PageSetup('settings');
         $page->setHelp('configurations.html');
 
         return $this->render('system-configuration/index.html.twig', [
@@ -105,7 +105,7 @@ final class SystemConfigurationController extends AbstractController
             ];
         }
 
-        $page = new PageSetup('menu.system_configuration');
+        $page = new PageSetup('settings');
         $page->setHelp('configurations.html');
 
         return $this->render('system-configuration/section.html.twig', [

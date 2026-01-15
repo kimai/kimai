@@ -214,10 +214,6 @@
         <source>menu.plugin</source>
         <target state="translated">Spraudņi</target>
       </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration" xml:space="preserve">
-        <source>menu.system_configuration</source>
-        <target state="translated">Iestatījumi</target>
-      </trans-unit>
       <trans-unit id="l4wviUE" resname="tags" xml:space="preserve">
         <source>tags</source>
         <target state="translated">Birkas</target>

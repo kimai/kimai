@@ -142,10 +142,6 @@
         <source>menu.plugin</source>
         <target state="final">Plugin</target>
       </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration" approved="yes">
-        <source>menu.system_configuration</source>
-        <target state="final">Impostazioni</target>
-      </trans-unit>
       <trans-unit id="l4wviUE" resname="tags" approved="yes">
         <source>tags</source>
         <target state="final">Etichette</target>

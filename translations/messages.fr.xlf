@@ -106,10 +106,6 @@
         <source>menu.plugin</source>
         <target>Extensions</target>
       </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>Paramètres</target>
-      </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
         <target>Mots-clés</target>

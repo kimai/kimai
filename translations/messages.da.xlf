@@ -122,10 +122,6 @@
         <source>menu.plugin</source>
         <target>Plugins</target>
       </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>Indstillinger</target>
-      </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
         <target>Etiketter</target>

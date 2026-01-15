@@ -110,10 +110,6 @@
         <source>menu.plugin</source>
         <target>Doplňky</target>
       </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>Nastavení</target>
-      </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
         <target>Štítky</target>

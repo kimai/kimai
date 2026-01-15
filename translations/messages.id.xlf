@@ -302,10 +302,6 @@
         <source>help.teams</source>
         <target state="translated">Batasi ketampakan bagi kelompok-kelompok yang dipilih.</target>
       </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration" xml:space="preserve">
-        <source>menu.system_configuration</source>
-        <target state="translated">Setelan</target>
-      </trans-unit>
       <trans-unit id="JGaf9IK" resname="Doctor" xml:space="preserve">
         <source>Doctor</source>
         <target state="translated">Dokter</target>

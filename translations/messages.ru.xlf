@@ -682,10 +682,6 @@
         <source>error.no_comments_found</source>
         <target state="translated">Комментариев ещё нет.</target>
       </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>Настройки</target>
-      </trans-unit>
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target state="translated">Плагины</target>

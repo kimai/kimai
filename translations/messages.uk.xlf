@@ -182,10 +182,6 @@
         <source>menu.plugin</source>
         <target state="translated">Плагіни</target>
       </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target state="translated">Налаштування</target>
-      </trans-unit>
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
         <target state="translated">За вибраними Вами фільтрами не знайдено жодного запису.</target>

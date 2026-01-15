@@ -478,10 +478,6 @@
         <source>menu.plugin</source>
         <target>Programtillegg</target>
       </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>Innstillinger</target>
-      </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
         <target>Dato</target>

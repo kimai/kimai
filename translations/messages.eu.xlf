@@ -126,10 +126,6 @@
         <source>menu.plugin</source>
         <target>Pluginak</target>
       </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>Konfigurazioa</target>
-      </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
         <target>Etiketak</target>

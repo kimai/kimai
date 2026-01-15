@@ -106,10 +106,6 @@
         <source>menu.plugin</source>
         <target>Bővítmények</target>
       </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration" xml:space="preserve">
-        <source>menu.system_configuration</source>
-        <target state="translated">Rendszerbeállítások</target>
-      </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
         <target>Címkék</target>

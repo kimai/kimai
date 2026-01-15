@@ -222,10 +222,6 @@
         <source>menu.plugin</source>
         <target>Plugins</target>
       </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>Settings</target>
-      </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
         <target>Tags</target>
@@ -1832,7 +1828,7 @@
       </trans-unit>
       <trans-unit id="zeD7Dew" resname="settings">
         <source>settings</source>
-        <target>Preferences</target>
+        <target>Settings</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter">
         <source>Filter timesheets</source>

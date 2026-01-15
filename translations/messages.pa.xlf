@@ -170,10 +170,6 @@
         <source>Project</source>
         <target state="translated">ਪ੍ਰੋਜੈਕਟ</target>
       </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target state="translated">ਸੈਟਿੰਗਾਂ</target>
-      </trans-unit>
       <trans-unit id="xUl3nXn" resname="rate">
         <source>rate</source>
         <target state="translated">ਕੀਮਤ</target>

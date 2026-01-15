@@ -110,10 +110,6 @@
         <source>menu.plugin</source>
         <target state="translated">플러그인</target>
       </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target state="translated">설정</target>
-      </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
         <target state="translated">태그</target>

@@ -194,10 +194,6 @@
         <source>menu.plugin</source>
         <target state="final">外掛程式</target>
       </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration" xml:space="preserve" approved="yes">
-        <source>menu.system_configuration</source>
-        <target state="final">設定</target>
-      </trans-unit>
       <trans-unit id="l4wviUE" resname="tags" xml:space="preserve" approved="yes">
         <source>tags</source>
         <target state="final">標籤</target>

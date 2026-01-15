@@ -682,10 +682,6 @@
         <source>menu.plugin</source>
         <target state="translated">செருகுநிரல்கள்</target>
       </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration" xml:space="preserve" approved="no">
-        <source>menu.system_configuration</source>
-        <target state="translated">அமைப்புகள்</target>
-      </trans-unit>
       <trans-unit id="l4wviUE" resname="tags" xml:space="preserve" approved="no">
         <source>tags</source>
         <target state="translated">குறிச்சொற்கள்</target>

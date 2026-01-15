@@ -262,10 +262,6 @@
         <source>duration</source>
         <target state="translated">Kestvus</target>
       </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration" xml:space="preserve">
-        <source>menu.system_configuration</source>
-        <target state="translated">Seaded</target>
-      </trans-unit>
       <trans-unit id="_t.2z4V" resname="teams" xml:space="preserve">
         <source>teams</source>
         <target state="translated">Meeskond</target>
