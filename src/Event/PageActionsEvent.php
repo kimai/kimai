@@ -176,13 +176,16 @@ class PageActionsEvent extends ThemeEvent
     }
 
     /**
-     * Link to a configuration section.
+     * Link to open a section from the System settings in a modal.
      */
     public function addSettings(string $url): void
     {
         $this->addAction('settings', ['url' => $url, 'class' => 'modal-ajax-form', 'title' => 'settings', 'accesskey' => 'h']);
     }
 
+    /**
+     * Link to a page specific configuration screen.
+     */
     public function addConfig(string $url): void
     {
         $this->addAction('settings', ['url' => $url, 'title' => 'settings']);
