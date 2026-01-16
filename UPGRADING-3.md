@@ -30,3 +30,6 @@ Do not use method chaining: all fluent interface, especially in Entities, are no
 - Removed and renamed translations, most important `action.edit` => `edit`, `my.profile` => `user_profile`
 - Removed `User::isExportDecimal()`
   - Use duration format `HH:mm` in default PDF exports
+- Replace Twig `AppVariable` with custom implementation
+  - Replace `app.request.locale` with `app.locale`
+  - Replace `app.request.attributes.get('_route')` with `app.current_route`

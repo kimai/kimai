@@ -7,17 +7,16 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Twig;
+namespace App\Twig\Runtime;
 
 use App\Entity\Bookmark;
 use App\Entity\User;
 use App\Repository\BookmarkRepository;
 use App\Utils\ProfileManager;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFunction;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Twig\Extension\RuntimeExtensionInterface;
 
-final class DatatableExtensions extends AbstractExtension
+final class DatatableExtensions implements RuntimeExtensionInterface
 {
     /**
      * @var array<string, array<string, array<string, string|bool>>>
@@ -26,16 +25,12 @@ final class DatatableExtensions extends AbstractExtension
     private array $tableNames = [];
     private ?string $prefix = null;
 
-    public function __construct(private BookmarkRepository $bookmarkRepository, private ProfileManager $profileManager)
+    public function __construct(
+        private readonly BookmarkRepository $bookmarkRepository,
+        private readonly ProfileManager $profileManager,
+        private readonly RequestStack $requestStack,
+    )
     {
-    }
-
-    public function getFunctions(): array
-    {
-        return [
-            new TwigFunction('initialize_datatable', [$this, 'initializeDatatable']),
-            new TwigFunction('datatable_column_class', [$this, 'getDatatableColumnClass']),
-        ];
     }
 
     private function getDatatableName(string $dataTable): string
@@ -47,10 +42,10 @@ final class DatatableExtensions extends AbstractExtension
         return $this->tableNames[$dataTable];
     }
 
-    public function initializeDatatable(User $user, Session $session, string $dataTable, array $defaultColumns): array
+    public function initializeDatatable(User $user, string $dataTable, array $defaultColumns): array
     {
         if ($this->prefix === null) {
-            $this->prefix = $this->profileManager->getProfileFromSession($session);
+            $this->prefix = $this->profileManager->getProfileFromSession($this->requestStack->getSession());
             $dataTable = $this->getDatatableName($dataTable);
         }
 
@@ -97,7 +92,10 @@ final class DatatableExtensions extends AbstractExtension
             $this->dataTables[$dataTable] = $columns;
         }
 
-        return $this->dataTables[$dataTable];
+        return [
+            'columns' => $this->dataTables[$dataTable],
+            'profile' => $this->prefix,
+        ];
     }
 
     public function getDatatableColumnClass(string $dataTable, string $column): string

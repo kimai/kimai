@@ -243,3 +243,7 @@ services:
 
     App\Validator\Constraints\QuickEntryTimesheetValidator:
         arguments: ['%kimai.validator_timesheet%']
+
+    App\Twig\AppVariable:
+        tags:
+            - {name: twig.global, alias: app}

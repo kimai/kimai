@@ -15,10 +15,10 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 final class ProfileManager
 {
-    public const SESSION_PROFILE = 'datatable_profile';
-    public const PROFILE_DESKTOP = 'desktop';
-    public const PROFILE_MOBILE = 'mobile';
-    public const COOKIE_PROFILE = 'K2P';
+    public const string SESSION_PROFILE = 'datatable_profile';
+    public const string PROFILE_DESKTOP = 'desktop';
+    public const string PROFILE_MOBILE = 'mobile';
+    public const string COOKIE_PROFILE = 'K2P';
 
     public function __construct()
     {
@@ -40,9 +40,6 @@ final class ProfileManager
 
     /**
      * Always returns a valid profile name (default: desktop).
-     *
-     * @param string $profile
-     * @return string
      */
     public function getProfile(string $profile): string
     {
@@ -64,9 +61,6 @@ final class ProfileManager
 
     /**
      * Always returns a valid profile name (default: desktop).
-     *
-     * @param Request $request
-     * @return string
      */
     public function getProfileFromCookie(Request $request): string
     {
@@ -77,9 +71,6 @@ final class ProfileManager
 
     /**
      * Always returns a valid profile name (default: desktop).
-     *
-     * @param Session $session
-     * @return string
      */
     public function getProfileFromSession(Session $session): string
     {

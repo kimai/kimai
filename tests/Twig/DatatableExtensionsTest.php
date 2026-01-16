@@ -10,32 +10,28 @@
 namespace App\Tests\Twig;
 
 use App\Repository\BookmarkRepository;
-use App\Twig\DatatableExtensions;
+use App\Twig\Runtime\DatatableExtensions;
 use App\Utils\ProfileManager;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
-use Twig\TwigFunction;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 #[CoversClass(DatatableExtensions::class)]
 class DatatableExtensionsTest extends TestCase
 {
-    protected function getSut(string $locale): DatatableExtensions
+    protected function getSut(): DatatableExtensions
     {
         $repository = $this->createMock(BookmarkRepository::class);
 
-        return new DatatableExtensions($repository, new ProfileManager());
+        return new DatatableExtensions($repository, new ProfileManager(), new Session());
     }
 
     public function testGetFunctions(): void
     {
-        $functions = ['initialize_datatable', 'datatable_column_class'];
-        $sut = $this->getSut('de');
-        $twigFunctions = $sut->getFunctions();
-        self::assertCount(\count($functions), $twigFunctions);
-        $i = 0;
-        foreach ($twigFunctions as $function) {
-            self::assertInstanceOf(TwigFunction::class, $function);
-            self::assertEquals($functions[$i++], $function->getName());
+        $functions = ['initializeDatatable', 'getDatatableColumnClass'];
+        $sut = $this->getSut();
+        foreach ($functions as $function) {
+            self::assertTrue(method_exists($sut, $function), 'Failed finding method: ' . $function);
         }
     }
 }

@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 {% import "macros/datatables.html.twig" as tables %}
-{% set language = app.request is not null ? app.request.locale : 'en' %}
 {% set decimal = false %}
 {% set showUserColumn = true %}
 {% if query.user %}
     {% set showUserColumn = false %}
 {% endif %}
-<html lang="{{ language }}">
+<html lang="{{ app.locale }}">
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">

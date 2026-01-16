@@ -35,7 +35,7 @@
     {% endif %}
     {% set summaryColumns = summaryColumns|merge(['rate']) %}
 {% endif %}
-<html{% if app.request is defined and app.request is not null %} lang="{{ app.request.locale }}"{% endif %}>
+<html lang="{{ app.locale }}">
 <head>
     <title>{% block document_title %}{{ 'export'|trans }}{% endblock %}</title>
 {% block styles %}
