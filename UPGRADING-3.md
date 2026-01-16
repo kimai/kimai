@@ -31,5 +31,7 @@ Do not use method chaining: all fluent interface, especially in Entities, are no
 - Removed `User::isExportDecimal()`
   - Use duration format `HH:mm` in default PDF exports
 - Replace Twig `AppVariable` with custom implementation
-  - Replace `app.request.locale` with `app.locale`
-  - Replace `app.request.attributes.get('_route')` with `app.current_route`
+  - You need to adjust your templates if you access anything else then `app.locale`, `app.user`. `app.current_route`. 
+  - Most often used: 
+    - Replace `app.request.locale` with `app.locale`
+    - Replace `app.request.attributes.get('_route')` with `app.current_route`

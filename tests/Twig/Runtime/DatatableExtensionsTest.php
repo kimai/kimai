@@ -7,14 +7,14 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Twig;
+namespace App\Tests\Twig\Runtime;
 
 use App\Repository\BookmarkRepository;
 use App\Twig\Runtime\DatatableExtensions;
 use App\Utils\ProfileManager;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 #[CoversClass(DatatableExtensions::class)]
 class DatatableExtensionsTest extends TestCase
@@ -23,7 +23,7 @@ class DatatableExtensionsTest extends TestCase
     {
         $repository = $this->createMock(BookmarkRepository::class);
 
-        return new DatatableExtensions($repository, new ProfileManager(), new Session());
+        return new DatatableExtensions($repository, new ProfileManager(), new RequestStack());
     }
 
     public function testGetFunctions(): void

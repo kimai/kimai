@@ -3345,34 +3345,24 @@ parameters:
             path: src/Twig/Context.php
 
         -
-            message: "#^Method App\\\\Twig\\\\DatatableExtensions\\:\\:checkInColumDefinition\\(\\) has parameter \\$columns with no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Twig\\\\Runtime\\\\DatatableExtensions\\:\\:checkInColumDefinition\\(\\) has parameter \\$columns with no value type specified in iterable type array\\.$#"
             count: 1
-            path: src/Twig/DatatableExtensions.php
+            path: src/Twig/Runtime/DatatableExtensions.php
 
         -
-            message: "#^Method App\\\\Twig\\\\DatatableExtensions\\:\\:getClass\\(\\) has parameter \\$class with no type specified\\.$#"
+            message: "#^Method App\\\\Twig\\\\Runtime\\\\DatatableExtensions\\:\\:getDatatableColumnClass\\(\\) should return string but returns bool\\|string\\.$#"
             count: 1
-            path: src/Twig/DatatableExtensions.php
+            path: src/Twig/Runtime/DatatableExtensions.php
 
         -
-            message: "#^Method App\\\\Twig\\\\DatatableExtensions\\:\\:getDatatableColumnClass\\(\\) should return string but returns bool\\|string\\.$#"
+            message: "#^Method App\\\\Twig\\\\Runtime\\\\DatatableExtensions\\:\\:initializeDatatable\\(\\) has parameter \\$defaultColumns with no value type specified in iterable type array\\.$#"
             count: 1
-            path: src/Twig/DatatableExtensions.php
+            path: src/Twig/Runtime/DatatableExtensions.php
 
         -
-            message: "#^Method App\\\\Twig\\\\DatatableExtensions\\:\\:initializeDatatable\\(\\) has parameter \\$defaultColumns with no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Twig\\\\Runtime\\\\DatatableExtensions\\:\\:initializeDatatable\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
-            path: src/Twig/DatatableExtensions.php
-
-        -
-            message: "#^Method App\\\\Twig\\\\DatatableExtensions\\:\\:initializeDatatable\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Twig/DatatableExtensions.php
-
-        -
-            message: "#^Property App\\\\Twig\\\\DatatableExtensions\\:\\:\\$tableNames type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Twig/DatatableExtensions.php
+            path: src/Twig/Runtime/DatatableExtensions.php
 
         -
             message: "#^Method App\\\\Twig\\\\Extensions\\:\\:replaceNewline\\(\\) has no return type specified\\.$#"

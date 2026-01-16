@@ -22,6 +22,7 @@ final class DatatableExtensions implements RuntimeExtensionInterface
      * @var array<string, array<string, array<string, string|bool>>>
      */
     private array $dataTables = [];
+    /** @var array<string, string> */
     private array $tableNames = [];
     private ?string $prefix = null;
 
@@ -167,7 +168,7 @@ final class DatatableExtensions implements RuntimeExtensionInterface
         return $newClass;
     }
 
-    private function getClass($class): string
+    private function getClass(mixed $class): string
     {
         if (\is_array($class)) {
             if (!\array_key_exists('class', $class)) {

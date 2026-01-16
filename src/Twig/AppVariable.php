@@ -9,6 +9,7 @@
 
 namespace App\Twig;
 
+use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\FlashBagAwareSessionInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -20,7 +21,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 final class AppVariable
 {
-    public function __construct(private readonly RequestStack $requestStack, private readonly TokenStorageInterface $tokenStorage)
+    public function __construct(
+        private readonly RequestStack $requestStack,
+        private readonly TokenStorageInterface $tokenStorage
+    )
     {
     }
 
@@ -36,12 +40,20 @@ final class AppVariable
 
     public function getCurrent_route(): ?string
     {
-        return $this->requestStack->getCurrentRequest()->attributes->get('_route');
+        $route = $this->requestStack->getCurrentRequest()?->attributes->get('_route');
+        if (!\is_string($route)) {
+            return null;
+        }
+
+        return $route;
     }
 
+    /**
+     * @return array<string, string[]>
+     */
     public function getFlashes(): array
     {
-        $session = $this->getSession2();
+        $session = $this->getSession();
 
         if (!$session instanceof FlashBagAwareSessionInterface) {
             return [];
@@ -50,13 +62,11 @@ final class AppVariable
         return $session->getFlashBag()->all();
     }
 
-    private function getSession2(): ?SessionInterface
+    private function getSession(): ?SessionInterface
     {
         try {
-            if (null !== $session = $this->requestStack->getSession()) {
-                return $session;
-            }
-        } catch (\RuntimeException) {
+            return $this->requestStack->getSession();
+        } catch (SessionNotFoundException) {
         }
 
         return null;
@@ -65,6 +75,8 @@ final class AppVariable
     /**
      * The request should not be exposed under any circumstance to the frontend.
      * This here is added as fallback for old customer templates still using this object.
+     *
+     * @return array{locale: string}
      */
     public function getRequest(): array
     {

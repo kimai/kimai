@@ -10,7 +10,6 @@
 namespace App\Utils;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 final class ProfileManager
@@ -72,7 +71,7 @@ final class ProfileManager
     /**
      * Always returns a valid profile name (default: desktop).
      */
-    public function getProfileFromSession(Session $session): string
+    public function getProfileFromSession(SessionInterface $session): string
     {
         $profile = $session->get(self::SESSION_PROFILE, self::PROFILE_DESKTOP);
 
