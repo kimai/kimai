@@ -60,7 +60,6 @@ jobs:
                   tags: |
                       kimai/kimai2:latest
                       kimai/kimai2:fpm
-                      kimai/kimai2:fpm-${{ env.kimai_version }}
                   push: true
 
             - name: Apache image
