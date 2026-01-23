@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ app.locale }}">
+{% from "macros/meta_fields.html.twig" import meta_field_value %}
 {% set storageItemName = 'kimai_html_export' %}
 {% set decimal = decimal|default(false) %}
 {% set columnTitles = {} %}
@@ -482,23 +483,23 @@
                                 </td>
                                 {% for id, field in timesheetMetaFields %}
                                     <td class="column-{{ 't_' ~ field.name }} text-nowrap" {% if not columns['t_' ~ field.name] %}style="display: none"{% endif %}>
-                                        {{ _self.meta_field_value(entry, field) }}
+                                        {{ meta_field_value(entry, field) }}
                                     </td>
                                 {% endfor %}
                                 {% for id, field in customerMetaFields %}
                                     <td class="column-{{ 'c_' ~ field.name }} text-nowrap" {% if not columns['c_' ~ field.name] %}style="display: none"{% endif %}>
-                                        {{ _self.meta_field_value(entry.project.customer, field) }}
+                                        {{ meta_field_value(entry.project.customer, field) }}
                                     </td>
                                 {% endfor %}
                                 {% for id, field in projectMetaFields %}
                                     <td class="column-{{ 'p_' ~ field.name }} text-nowrap" {% if not columns['p_' ~ field.name] %}style="display: none"{% endif %}>
-                                        {{ _self.meta_field_value(entry.project, field) }}
+                                        {{ meta_field_value(entry.project, field) }}
                                     </td>
                                 {% endfor %}
                                 {% for id, field in activityMetaFields %}
                                     <td class="column-{{ 'a_' ~ field.name }} text-nowrap" {% if not columns['a_' ~ field.name] %}style="display: none"{% endif %}>
                                         {% if entry.activity is not null %}
-                                            {{ _self.meta_field_value(entry.activity, field) }}
+                                            {{ meta_field_value(entry.activity, field) }}
                                         {% endif %}
                                     </td>
                                 {% endfor %}
@@ -764,62 +765,3 @@
     </script>
 </body>
 </html>
-
-{#
-    the macros were copied here from templates/macros/widgets.html.twig, to circumvent StrictPolicy issues
-    TODO find a better way to handle that, maybe use UX components
-#}
-{% macro meta_field_value(entity, field) %}
-    {% set metaField = entity.metaField(field.name) %}
-    {% if not metaField is null %}
-        {% set metaField = metaField.merge(field) %}
-        {{ _self.form_type_value(metaField.type, metaField.value, entity) }}
-    {% endif %}
-{% endmacro %}
-
-{% macro form_type_value(type, value, entity) %}
-    {% if 'DurationType' in type %}
-        {{ value|duration }}
-    {% elseif 'YesNoType' in type or 'CheckboxType' in type %}
-        {{ _self.label_boolean(value) }}
-    {% elseif 'DatePickerType' in type %}
-        {{ value|date_short }}
-    {% elseif 'DateTimePickerType' in type %}
-        {{ value|date_time }}
-    {% elseif 'CountryType' in type %}
-        {{ value|country_name }}
-    {% elseif 'CurrencyType' in type %}
-        {{ value|currency_name }}
-    {% elseif 'LanguageType' in type %}
-        {{ value|locale_name }}
-    {% elseif 'TagsType' in type %}
-        {% for tag in value|split(',') %}
-            {% if tag is not empty %}
-                <span class="badge">{{ tag }}</span>
-            {% endif %}
-        {% endfor %}
-    {% elseif 'MoneyType' in type %}
-        {% set classname = class_name(entity) %}
-        {% if entity is null %}
-            {{ value }}
-        {% elseif classname == 'App\\Entity\\Timesheet' %}
-            {{ value|money(entity.project.customer.currency) }}
-        {% elseif classname == 'App\\Entity\\Customer' %}
-            {{ value|money(entity.currency) }}
-        {% elseif classname == 'App\\Entity\\Project' %}
-            {{ value|money(entity.customer.currency) }}
-        {% elseif classname == 'App\\Entity\\Activity' and entity.project is not null %}
-            {{ value|money(entity.project.customer.currency) }}
-        {% else %}
-            {{ value }}
-        {% endif %}
-    {% elseif 'TextareaType' in type %}
-        {{ value|nl2br }}
-    {% elseif 'EmailType' in type %}
-        <a href="mailto:{{ value }}">{{ value }}</a>
-    {% elseif 'UrlType' in type %}
-        <a href="{{ value }}" target="_blank">{{ value }}</a>
-    {% else %}
-        {{ value }}
-    {% endif %}
-{% endmacro %}

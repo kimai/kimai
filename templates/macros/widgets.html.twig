@@ -338,7 +338,7 @@
         {% endfor %}
     {% elseif 'MoneyType' in type %}
         {% set classname = class_name(entity) %}
-        {% if entity is null %}
+        {% if classname is null %}
             {{ value }}
         {% elseif classname == 'App\\Entity\\Timesheet' %}
             {{ value|money(entity.project.customer.currency) }}

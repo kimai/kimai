@@ -29,7 +29,7 @@ use Twig\Sandbox\SecurityPolicyInterface;
 final class StrictPolicy implements SecurityPolicyInterface
 {
     /** @var string[] */
-    private array $allowedTags = ['block', 'if', 'for', 'set', 'macro', 'import', 'extends'];
+    private array $allowedTags = ['block', 'if', 'for', 'set', 'macro', 'import', 'extends', 'from'];
     /** @var string[] */
     private array $allowedFunctions = [
         // vendor/twig/twig/src/Extension/CoreExtension.php
@@ -47,7 +47,7 @@ final class StrictPolicy implements SecurityPolicyInterface
         // Twig/LocaleFormatExtensions.php
         'create_date', 'month_names', 'locale_format',
         // Twig/Extensions.php
-        'class_name',
+        'class_name'
     ];
     /** @var string[] */
     private array $allowedFilters = [
