@@ -2722,16 +2722,16 @@
         },
         {
             "name": "kevinpapst/tabler-bundle",
-            "version": "2.0.2",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/TablerBundle.git",
-                "reference": "6a3942ea16c97e8163bf20b9a24f4263ce6d8bd7"
+                "reference": "b608ff05a7ba77b8fc32540bca086f6d18c2761e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/6a3942ea16c97e8163bf20b9a24f4263ce6d8bd7",
-                "reference": "6a3942ea16c97e8163bf20b9a24f4263ce6d8bd7",
+                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/b608ff05a7ba77b8fc32540bca086f6d18c2761e",
+                "reference": "b608ff05a7ba77b8fc32540bca086f6d18c2761e",
                 "shasum": ""
             },
             "require": {
@@ -2781,7 +2781,7 @@
             "description": "Admin/Backend theme bundle for Symfony based on Tabler.io",
             "support": {
                 "issues": "https://github.com/kevinpapst/TablerBundle/issues",
-                "source": "https://github.com/kevinpapst/TablerBundle/tree/2.0.2"
+                "source": "https://github.com/kevinpapst/TablerBundle/tree/2.1.0"
             },
             "funding": [
                 {
@@ -2793,7 +2793,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-12-19T17:20:55+00:00"
+            "time": "2026-01-19T09:05:10+00:00"
         },
         {
             "name": "league/csv",
@@ -5305,16 +5305,16 @@
         },
         {
             "name": "spomky-labs/otphp",
-            "version": "11.4.1",
+            "version": "11.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Spomky-Labs/otphp.git",
-                "reference": "126c99b6cbbc18992cf3fba3b87931ba4e312482"
+                "reference": "2a1b503fd1c1a5c751ab3c5cd37f2d2d26ab74ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Spomky-Labs/otphp/zipball/126c99b6cbbc18992cf3fba3b87931ba4e312482",
-                "reference": "126c99b6cbbc18992cf3fba3b87931ba4e312482",
+                "url": "https://api.github.com/repos/Spomky-Labs/otphp/zipball/2a1b503fd1c1a5c751ab3c5cd37f2d2d26ab74ad",
+                "reference": "2a1b503fd1c1a5c751ab3c5cd37f2d2d26ab74ad",
                 "shasum": ""
             },
             "require": {
@@ -5359,7 +5359,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Spomky-Labs/otphp/issues",
-                "source": "https://github.com/Spomky-Labs/otphp/tree/11.4.1"
+                "source": "https://github.com/Spomky-Labs/otphp/tree/11.4.2"
             },
             "funding": [
                 {
@@ -5371,7 +5371,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2026-01-05T13:20:36+00:00"
+            "time": "2026-01-23T10:53:01+00:00"
         },
         {
             "name": "symfony/asset",
@@ -12000,16 +12000,16 @@
         },
         {
             "name": "phpstan/phpstan-symfony",
-            "version": "2.0.11",
+            "version": "2.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-symfony.git",
-                "reference": "32f0013c4aca5e875834ad1151484ea9e7a08372"
+                "reference": "a46dd92eaf15146cd932d897a272e59cd4108ce2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/32f0013c4aca5e875834ad1151484ea9e7a08372",
-                "reference": "32f0013c4aca5e875834ad1151484ea9e7a08372",
+                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/a46dd92eaf15146cd932d897a272e59cd4108ce2",
+                "reference": "a46dd92eaf15146cd932d897a272e59cd4108ce2",
                 "shasum": ""
             },
             "require": {
@@ -12065,9 +12065,9 @@
             "description": "Symfony Framework extensions and rules for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-symfony/issues",
-                "source": "https://github.com/phpstan/phpstan-symfony/tree/2.0.11"
+                "source": "https://github.com/phpstan/phpstan-symfony/tree/2.0.12"
             },
-            "time": "2026-01-22T16:44:07+00:00"
+            "time": "2026-01-23T09:04:33+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
