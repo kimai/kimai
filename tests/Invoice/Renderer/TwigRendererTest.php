@@ -95,15 +95,43 @@ class TwigRendererTest extends KernelTestCase
         /** @var FilesystemLoader $loader */
         $loader = $twig->getLoader();
 
+        $files = [];
+
         $dirs = [
             realpath($this->getInvoiceTemplatePath()),
             realpath(__DIR__ . '/../templates/'),
-            realpath(__DIR__ . '/../../../templates/invoice/renderer/'),
             realpath(__DIR__ . '/../../../var/invoices/'),
-            realpath(__DIR__ . '/../../../var/templates/'),
         ];
 
-        $files = [];
+        foreach ($dirs as $dir) {
+            if ($dir === false || !is_dir($dir)) {
+                continue;
+            }
+
+            $finder = new Finder();
+            $finder
+                ->in($dir)
+                ->name('*.html.twig')
+                ->sortByName()
+                ->files();
+
+            foreach ($finder->getIterator() as $splFile) {
+                $filename = $splFile->getRealPath();
+                if ($filename === false) {
+                    continue;
+                }
+                $dir = \dirname($filename) . '/';
+                if (!\array_key_exists($dir, $files)) {
+                    $loader->addPath($dir . '/', 'invoice');
+                }
+                $files[$dir][] = $filename;
+            }
+        }
+
+        // search for custom templates, that shall not be shipped
+        $dirs = [
+            realpath(__DIR__ . '/../../../var/templates/'),
+        ];
 
         foreach ($dirs as $dir) {
             if ($dir === false || !is_dir($dir)) {
@@ -131,18 +159,25 @@ class TwigRendererTest extends KernelTestCase
             }
         }
 
-        $sut = new TwigRenderer($twig);
-
-        $model = $this->getInvoiceModel();
+        $allFiles = [];
 
         foreach ($files as $templates) {
             foreach ($templates as $filename) {
-                $document = new InvoiceDocument(new \SplFileInfo($filename));
-
-                $response = $sut->render($document, $model);
-                self::assertEquals('text/html; charset=UTF-8', $response->headers->get('Content-Type'));
-                self::assertNotEmpty($response->getContent());
+                $allFiles[] = $filename;
             }
+        }
+
+        self::assertGreaterThanOrEqual(2, \count($allFiles));
+
+        $sut = new TwigRenderer($twig);
+        $model = $this->getInvoiceModel();
+
+        foreach ($allFiles as $filename) {
+            $document = new InvoiceDocument(new \SplFileInfo($filename));
+
+            $response = $sut->render($document, $model);
+            self::assertEquals('text/html; charset=UTF-8', $response->headers->get('Content-Type'));
+            self::assertNotEmpty($response->getContent());
         }
     }
 }
