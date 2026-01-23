@@ -106,7 +106,7 @@ class TwigRendererTest extends KernelTestCase
         $files = [];
 
         foreach ($dirs as $dir) {
-            if (!is_dir($dir)) {
+            if ($dir === false || !is_dir($dir)) {
                 continue;
             }
 
