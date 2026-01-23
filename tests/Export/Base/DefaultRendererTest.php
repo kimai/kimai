@@ -56,7 +56,10 @@ class DefaultRendererTest extends AbstractRendererTestCase
 
     public function testRenderDefaultTemplates(): void
     {
-        $sut = $this->createServiceExport();
+        /** @var Environment $twig */
+        $twig = $this->getContainer()->get(Environment::class);
+
+        $sut = $this->createServiceExport($twig);
 
         $renderer = $sut->getRenderer();
         self::assertCount(4, $renderer);

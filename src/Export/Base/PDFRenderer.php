@@ -119,6 +119,8 @@ class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
             'pdfContext' => $context
         ], $this->getOptions($query)));
 
+        $sandbox->disableSandbox();
+
         $pdfOptions = array_merge($context->getOptions(), $this->getPdfOptions());
 
         $content = $this->converter->convertToPdf($content, $pdfOptions);
