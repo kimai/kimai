@@ -118,13 +118,12 @@
                 {% endblock %}
             {% endembed %}
 
-            {% embed '@theme/embeds/card.html.twig' %}
+            {% embed '@theme/embeds/card.html.twig' with { bodyScrollable: true } %}
+                {% block box_attributes %}style="max-height: 50rem"{% endblock %}
                 {% block box_class %}card-lg{% endblock %}
-                {% block box_body_class %}markdown card-body-scrollable{% endblock %}
-                {% block box_body %}
-                    <h3>License</h3>
-                    <div style="white-space: pre">{{ license|nl2br|replace({'<br />': ''})|raw }}</div>
-                {% endblock %}
+                {% block box_body_class %}markdown{% endblock %}
+                {% block box_title %}License{% endblock %}
+                {% block box_body %}{{ license|nl2br }}{% endblock %}
             {% endembed %}
 
         </div>
