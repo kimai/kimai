@@ -1950,6 +1950,10 @@
         <source>time_off.intro</source>
         <target state="translated">Вашата сметка за работно време има баланс от %hours% часа.</target>
       </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="translated">Задача</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

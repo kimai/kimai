@@ -1990,6 +1990,10 @@
         <source>SEPA Credit Transfer</source>
         <target state="needs-translation">SEPA кредитовый перевод</target>
       </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="needs-translation">Описание</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -2050,6 +2050,10 @@
         <source>tax.note.reverse_charge</source>
         <target>Steuer zahlbar auf Reverse-Charge-Basis</target>
       </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo">
+        <source>todo</source>
+        <target>Aufgabe</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

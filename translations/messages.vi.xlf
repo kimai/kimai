@@ -1822,6 +1822,10 @@
         <source>Synchronization</source>
         <target state="translated">Đồng bộ</target>
       </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="translated">Tác vụ cần làm</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

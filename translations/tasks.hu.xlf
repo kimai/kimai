@@ -82,10 +82,6 @@
         <source>task_not_started</source>
         <target state="translated">Nem kezdődött el</target>
       </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
-        <source>task_todo</source>
-        <target state="translated">Feladat</target>
-      </trans-unit>
       <trans-unit id="taZkyYV" resname="task.help.user" xml:space="preserve" approved="no">
         <source>task.help.user</source>
         <target state="translated">Feladat hozzárendelése felhasználóhoz</target>

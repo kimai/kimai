@@ -1926,6 +1926,10 @@
         <source>City</source>
         <target state="translated">நகரம்</target>
       </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="yes">
+        <source>todo</source>
+        <target state="final">பணி</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

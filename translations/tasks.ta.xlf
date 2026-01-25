@@ -106,10 +106,6 @@
         <source>task_overdue</source>
         <target state="final">தாமதமானது</target>
       </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="yes">
-        <source>task_todo</source>
-        <target state="final">பணி</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

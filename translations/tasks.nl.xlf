@@ -98,10 +98,6 @@
         <source>task_overdue</source>
         <target state="translated">Verlopen</target>
       </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
-        <source>task_todo</source>
-        <target state="translated">Taak</target>
-      </trans-unit>
       <trans-unit id="F1_rg1R" resname="task.reopen" xml:space="preserve" approved="no">
         <source>task.reopen</source>
         <target state="translated">Heropen de taak</target>

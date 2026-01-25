@@ -2026,6 +2026,10 @@
         <source>electronic_invoice</source>
         <target state="translated">E-faktura</target>
       </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="needs-translation">Gjøremålsbeskrivelse</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

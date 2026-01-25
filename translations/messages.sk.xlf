@@ -1638,6 +1638,10 @@
         <source>vcard</source>
         <target state="translated">Vizitka</target>
       </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="needs-translation">Popis úlohy</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

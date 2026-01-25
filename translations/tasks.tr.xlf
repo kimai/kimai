@@ -46,10 +46,6 @@
         <source>task_overdue</source>
         <target state="translated">Gecikti</target>
       </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
-        <source>task_todo</source>
-        <target state="translated">Görev</target>
-      </trans-unit>
       <trans-unit id="F1_rg1R" resname="task.reopen" xml:space="preserve" approved="no">
         <source>task.reopen</source>
         <target state="translated">Görevi yeniden aç</target>

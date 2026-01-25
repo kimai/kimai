@@ -2026,6 +2026,10 @@
         <source>payment_account_name</source>
         <target state="translated">شماره شبا یا شماره کارت</target>
       </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="translated">وظیفه</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

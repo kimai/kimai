@@ -1974,6 +1974,10 @@
         <source>electronic_invoice</source>
         <target state="translated">Factura electrónica</target>
       </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="translated">Tarea</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

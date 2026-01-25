@@ -1922,6 +1922,10 @@
         <source>unlock_month.help</source>
         <target state="translated">Toto odemkne všechny dny v roce po zvoleném datu.</target>
       </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="translated">Úkol</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

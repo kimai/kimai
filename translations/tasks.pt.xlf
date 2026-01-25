@@ -94,10 +94,6 @@
         <source>task_with_estimation</source>
         <target state="translated">Com estimativa</target>
       </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
-        <source>task_todo</source>
-        <target state="translated">Tarefa</target>
-      </trans-unit>
       <trans-unit id="H.zMNfb" resname="task_started" xml:space="preserve" approved="no">
         <source>task_started</source>
         <target state="translated">Trabalho iniciado</target>

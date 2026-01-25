@@ -86,10 +86,6 @@
         <source>task_started</source>
         <target state="translated">Arbejde påbegyndt</target>
       </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
-        <source>task_todo</source>
-        <target state="translated">Opgave</target>
-      </trans-unit>
       <trans-unit id="s6YOYaU" resname="Tasks" xml:space="preserve" approved="no">
         <source>Tasks</source>
         <target state="translated">Opgaver</target>

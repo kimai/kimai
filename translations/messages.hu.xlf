@@ -1874,6 +1874,10 @@
         <source>Beta</source>
         <target state="translated">Engedélyez egy előzetes funkciót, ami még fejlesztés alatt áll.</target>
       </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="translated">Feladat</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

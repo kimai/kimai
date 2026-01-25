@@ -2018,6 +2018,10 @@
         <source>sending_company.help</source>
         <target state="translated">Esta companhia é mostrada como o emissor na fatura. Desta, o nome, endereço, e informações de impostos serão usados.</target>
       </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="translated">Tarefa</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

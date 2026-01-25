@@ -62,10 +62,6 @@
         <source>task_overdue</source>
         <target state="translated">Atrasado</target>
       </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
-        <source>task_todo</source>
-        <target state="translated">Tarefa</target>
-      </trans-unit>
       <trans-unit id="kMOottI" resname="task.widget_rows" xml:space="preserve" approved="no">
         <source>task.widget_rows</source>
         <target state="translated">Quantidade de tarefas por página na ferramenta do painel</target>

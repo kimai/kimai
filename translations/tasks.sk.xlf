@@ -106,10 +106,6 @@
         <source>task.help.tags</source>
         <target state="translated">Tieto štítky sa skopírujú do každého záznamu v časovom výkaze</target>
       </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
-        <source>task_todo</source>
-        <target state="needs-translation">Popis úlohy</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

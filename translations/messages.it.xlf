@@ -2050,6 +2050,10 @@
         <source>tax.note.reverse_charge</source>
         <target state="final">Tassa da pagare in base all'addebito inverso</target>
       </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="yes">
+        <source>todo</source>
+        <target state="final">Compito</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

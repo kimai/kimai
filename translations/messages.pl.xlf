@@ -1950,6 +1950,10 @@
         <source>Code</source>
         <target state="translated">Kod</target>
       </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="translated">Zadanie</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

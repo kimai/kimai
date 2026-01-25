@@ -30,10 +30,6 @@
         <source>task.help.estimation</source>
         <target state="final">完成任務所需的估算工時（hh:mm）</target>
       </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="yes">
-        <source>task_todo</source>
-        <target state="final">任務</target>
-      </trans-unit>
       <trans-unit id="rLKr7Zu" resname="tasks.my" xml:space="preserve" approved="yes">
         <source>tasks.my</source>
         <target state="final">我的任務</target>

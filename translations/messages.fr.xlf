@@ -2030,6 +2030,10 @@
         <source>electronic_invoice</source>
         <target state="translated">Facture électronique</target>
       </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="translated">Tâche</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

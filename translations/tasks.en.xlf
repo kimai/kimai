@@ -106,10 +106,6 @@
         <source>task_overdue</source>
         <target>Overdue</target>
       </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo">
-        <source>task_todo</source>
-        <target>Task</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

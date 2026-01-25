@@ -1938,6 +1938,10 @@
         <source>sending_company</source>
         <target state="needs-translation">Fakturaafsender</target>
       </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="translated">Opgave</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

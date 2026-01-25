@@ -6,10 +6,6 @@
         <source>Tasks</source>
         <target state="translated">Những tác vụ</target>
       </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
-        <source>task_todo</source>
-        <target state="translated">Tác vụ cần làm</target>
-      </trans-unit>
       <trans-unit id="tLV1hoP" resname="report_tasks_assigned" xml:space="preserve" approved="no">
         <source>report_tasks_assigned</source>
         <target state="translated">Tác vụ cho mỗi người dùng</target>
