@@ -2645,16 +2645,6 @@ parameters:
             path: src/Form/Type/UserPreferenceType.php
 
         -
-            message: "#^PHPDoc tag @var for variable \\$collection contains generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Form/Type/UserPreferencesCollectionType.php
-
-        -
-            message: "#^Parameter \\#1 \\$key of method Doctrine\\\\Common\\\\Collections\\\\ArrayCollection\\<\\(int\\|string\\),mixed\\>\\:\\:set\\(\\) expects \\(int\\|string\\), string\\|null given\\.$#"
-            count: 1
-            path: src/Form/Type/UserPreferencesCollectionType.php
-
-        -
             message: "#^Cannot access offset mixed on mixed\\.$#"
             count: 1
             path: src/Form/UserEditType.php

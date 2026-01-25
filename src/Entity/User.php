@@ -385,7 +385,10 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function setPreferences(iterable $preferences): User
     {
         foreach ($preferences as $preference) {
-            $p = $this->getPreference($preference->getName());
+            if (($name = $preference->getName()) === null) {
+                continue;
+            }
+            $p = $this->getPreference($name);
             if ($p === null) {
                 $this->addPreference($preference);
             } else {
