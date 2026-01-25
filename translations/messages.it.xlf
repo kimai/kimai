@@ -2054,6 +2054,10 @@
         <source>todo</source>
         <target state="final">Compito</target>
       </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="yes">
+        <source>estimation</source>
+        <target state="final">Stima del tempo</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

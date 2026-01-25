@@ -70,10 +70,6 @@
         <source>task.widget_rows</source>
         <target state="translated">Број на задачи по страница во интерактивниот елемент на контролната табла</target>
       </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
-        <source>estimation</source>
-        <target state="translated">Проценкина времето</target>
-      </trans-unit>
       <trans-unit id="ZCSPtzc" resname="task.help.estimation" xml:space="preserve" approved="no">
         <source>task.help.estimation</source>
         <target state="translated">Проценето време потребно за завршување на задачата во чч:мм</target>

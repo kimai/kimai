@@ -70,10 +70,6 @@
         <source>task.widget_rows</source>
         <target state="final">முகப்பலக நிரல் பலகையில் ஒரு பக்கத்திற்கு பணிகளின் அளவு</target>
       </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="yes">
-        <source>estimation</source>
-        <target state="final">நேர மதிப்பீடு</target>
-      </trans-unit>
       <trans-unit id="ZCSPtzc" resname="task.help.estimation" xml:space="preserve" approved="yes">
         <source>task.help.estimation</source>
         <target state="final">பணியை முடிக்க மதிப்பிடப்பட்ட தேவை நேரம் மம: நிநி இல்</target>

@@ -14,10 +14,6 @@
         <source>report_tasks_assigned</source>
         <target state="translated">Opgaver pr. bruger</target>
       </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
-        <source>estimation</source>
-        <target state="translated">Tidsestimering</target>
-      </trans-unit>
       <trans-unit id="FhEb.Hn" resname="task.help.title" xml:space="preserve" approved="no">
         <source>task.help.title</source>
         <target state="translated">Kort beskrivelse af opgaven</target>

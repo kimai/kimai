@@ -1642,6 +1642,10 @@
         <source>todo</source>
         <target state="needs-translation">Popis úlohy</target>
       </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">Časový odhad</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

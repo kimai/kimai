@@ -2054,6 +2054,10 @@
         <source>todo</source>
         <target>Aufgabe</target>
       </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation">
+        <source>estimation</source>
+        <target>Schätzung</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

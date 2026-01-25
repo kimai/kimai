@@ -70,10 +70,6 @@
         <source>task.widget_rows</source>
         <target>Amount of tasks per page in dashboard widget</target>
       </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation">
-        <source>estimation</source>
-        <target>Time estimation</target>
-      </trans-unit>
       <trans-unit id="ZCSPtzc" resname="task.help.estimation">
         <source>task.help.estimation</source>
         <target>Estimated time needed to complete the task in hh:mm</target>

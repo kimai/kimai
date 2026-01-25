@@ -70,10 +70,6 @@
         <source>task.widget_rows</source>
         <target state="translated">تعداد وظایف در هر صفحه در ویجت داشبورد</target>
       </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
-        <source>estimation</source>
-        <target state="translated">تخمین زمان</target>
-      </trans-unit>
       <trans-unit id="ZCSPtzc" resname="task.help.estimation" xml:space="preserve" approved="no">
         <source>task.help.estimation</source>
         <target state="translated">زمان تخمینی مورد نیاز برای تکمیل وظیفه بر حسب hh:mm</target>

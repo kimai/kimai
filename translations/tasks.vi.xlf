@@ -62,10 +62,6 @@
         <source>task.widget_rows</source>
         <target state="translated">Số lượng tác vụ hiển thị trên một trang trong công cụ bảng điều khiển</target>
       </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
-        <source>estimation</source>
-        <target state="translated">Thời gian dự kiến</target>
-      </trans-unit>
       <trans-unit id="ZCSPtzc" resname="task.help.estimation" xml:space="preserve" approved="no">
         <source>task.help.estimation</source>
         <target state="translated">Thời gian dự kiến cần để hoàn thành tác vụ trong hh:mm</target>

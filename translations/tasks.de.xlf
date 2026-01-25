@@ -70,10 +70,6 @@
         <source>task.widget_rows</source>
         <target>Anzahl Aufgaben pro Seite im Dashboard</target>
       </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation">
-        <source>estimation</source>
-        <target>Zeitschätzung</target>
-      </trans-unit>
       <trans-unit id="ZCSPtzc" resname="task.help.estimation">
         <source>task.help.estimation</source>
         <target>Geschätzte Dauer zur Erledigung der Aufgabe in hh:mm</target>

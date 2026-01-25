@@ -82,10 +82,6 @@
         <source>task.help.user</source>
         <target state="translated">Bu görevi bir kullanıcıya ata</target>
       </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
-        <source>estimation</source>
-        <target state="translated">Zaman tahmini</target>
-      </trans-unit>
       <trans-unit id="cu1.2JS" resname="task_not_started" xml:space="preserve" approved="no">
         <source>task_not_started</source>
         <target state="translated">Başlatılmadı</target>

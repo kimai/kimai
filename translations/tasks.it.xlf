@@ -10,10 +10,6 @@
         <source>task.help.title</source>
         <target state="final">Una breve descrizione del compito</target>
       </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="yes">
-        <source>estimation</source>
-        <target state="final">Stima del tempo</target>
-      </trans-unit>
       <trans-unit id="H.zMNfb" resname="task_started" xml:space="preserve" approved="yes">
         <source>task_started</source>
         <target state="final">Il lavoro è iniziato</target>

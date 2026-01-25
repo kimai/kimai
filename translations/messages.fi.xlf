@@ -1938,6 +1938,10 @@
         <source>Sessions</source>
         <target state="translated">Istunnot</target>
       </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation">
+        <source>estimation</source>
+        <target>Aika-arvio</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1994,6 +1994,10 @@
         <source>todo</source>
         <target state="needs-translation">Описание</target>
       </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">Оценка времени</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

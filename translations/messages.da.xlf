@@ -1942,6 +1942,10 @@
         <source>todo</source>
         <target state="translated">Opgave</target>
       </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">Tidsestimering</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

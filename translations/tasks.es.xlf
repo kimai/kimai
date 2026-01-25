@@ -34,10 +34,6 @@
         <source>task.widget_rows</source>
         <target state="translated">Cantidad de tareas por página en el widget del dashboard</target>
       </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
-        <source>estimation</source>
-        <target state="translated">Tiempo estimado</target>
-      </trans-unit>
       <trans-unit id="cu1.2JS" resname="task_not_started" xml:space="preserve" approved="no">
         <source>task_not_started</source>
         <target state="translated">Sin empezar</target>

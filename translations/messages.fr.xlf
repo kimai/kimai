@@ -2034,6 +2034,10 @@
         <source>todo</source>
         <target state="translated">Tâche</target>
       </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation">
+        <source>estimation</source>
+        <target>Estimation du temps</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
