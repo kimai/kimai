@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: ConfigurationRepository::class)]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[UniqueEntity('name')]
-#[Loggable(title: 'menu.system_configuration')]
+#[Loggable(title: 'settings')]
 class Configuration
 {
     #[ORM\Id]

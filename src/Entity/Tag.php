@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Index(columns: ['visible'])]
 #[UniqueEntity('name')]
 #[Serializer\ExclusionPolicy('all')]
-#[Loggable(title: 'tag')]
+#[Loggable(title: 'tags')]
 class Tag
 {
     /**

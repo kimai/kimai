@@ -34,7 +34,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Exporter\Order(['id', 'name', 'customer', 'orderNumber', 'orderDate', 'start', 'end', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable', 'number'])]
 #[Exporter\Expose(name: 'customer', label: 'customer', exp: 'object.getCustomer() === null ? null : object.getCustomer().getName()')]
 #[Constraints\Project]
-#[Loggable(title: 'project')]
+#[Loggable(ignoredProperties: ['createdAt'], title: 'project')]
 class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
 {
     use BudgetTrait;
