@@ -24,7 +24,7 @@ use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\CustomerQuery;
 use App\Repository\Query\ProjectQuery;
 use App\Repository\Query\TimesheetQuery;
-use App\Twig\SecurityPolicy\ExportPolicy;
+use App\Twig\SecurityPolicy\StrictPolicy;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
@@ -82,9 +82,12 @@ final class HtmlRenderer implements ExportRendererInterface
         $summary = $this->calculateSummary($exportItems);
 
         // enable basic security measures
-        $sandbox = new SandboxExtension(new ExportPolicy());
+        if (!$this->twig->hasExtension(SandboxExtension::class)) {
+            $this->twig->addExtension(new SandboxExtension(new StrictPolicy()));
+        }
+
+        $sandbox = $this->twig->getExtension(SandboxExtension::class);
         $sandbox->enableSandbox();
-        $this->twig->addExtension($sandbox);
 
         $content = $this->twig->render($this->getTemplate(), [
             'entries' => $exportItems,

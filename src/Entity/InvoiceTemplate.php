@@ -299,7 +299,7 @@ class InvoiceTemplate implements EntityWithMetaFields
     }
 
     /**
-     * @return Collection|MetaTableTypeInterface[]
+     * @return Collection<int, InvoiceTemplateMeta>
      */
     public function getMetaFields(): Collection
     {

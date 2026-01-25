@@ -2515,16 +2515,6 @@ parameters:
             path: src/Form/Type/UserPreferenceType.php
 
         -
-            message: "#^PHPDoc tag @var for variable \\$collection contains generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Form/Type/UserPreferencesCollectionType.php
-
-        -
-            message: "#^Parameter \\#1 \\$key of method Doctrine\\\\Common\\\\Collections\\\\ArrayCollection\\<\\(int\\|string\\),mixed\\>\\:\\:set\\(\\) expects \\(int\\|string\\), string\\|null given\\.$#"
-            count: 1
-            path: src/Form/Type/UserPreferencesCollectionType.php
-
-        -
             message: "#^Cannot access offset mixed on mixed\\.$#"
             count: 1
             path: src/Form/UserEditType.php
@@ -3640,59 +3630,14 @@ parameters:
             path: src/Utils/ProfileManager.php
 
         -
-            message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
+            message: "#^Cannot access offset 'pattern' on mixed\\.$#"
             count: 1
-            path: src/Utils/ReleaseVersion.php
+            path: src/Validator/Constraints/Duration.php
 
         -
-            message: "#^Cannot access offset 0 on mixed\\.$#"
+            message: "#^Parameter \\#1 \\$pattern of method Symfony\\\\Component\\\\Validator\\\\Constraints\\\\Regex\\:\\:__construct\\(\\) expects array\\|string\\|null, mixed given\\.$#"
             count: 1
-            path: src/Utils/ReleaseVersion.php
-
-        -
-            message: "#^Cannot access property \\$body on mixed\\.$#"
-            count: 1
-            path: src/Utils/ReleaseVersion.php
-
-        -
-            message: "#^Cannot access property \\$draft on mixed\\.$#"
-            count: 1
-            path: src/Utils/ReleaseVersion.php
-
-        -
-            message: "#^Cannot access property \\$html_url on mixed\\.$#"
-            count: 1
-            path: src/Utils/ReleaseVersion.php
-
-        -
-            message: "#^Cannot access property \\$prerelease on mixed\\.$#"
-            count: 1
-            path: src/Utils/ReleaseVersion.php
-
-        -
-            message: "#^Cannot access property \\$published_at on mixed\\.$#"
-            count: 1
-            path: src/Utils/ReleaseVersion.php
-
-        -
-            message: "#^Cannot access property \\$tag_name on mixed\\.$#"
-            count: 2
-            path: src/Utils/ReleaseVersion.php
-
-        -
-            message: "#^Cannot access property \\$zipball_url on mixed\\.$#"
-            count: 1
-            path: src/Utils/ReleaseVersion.php
-
-        -
-            message: "#^Method App\\\\Utils\\\\ReleaseVersion\\:\\:getReleasesFromGithub\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Utils/ReleaseVersion.php
-
-        -
-            message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
-            count: 1
-            path: src/Utils/ReleaseVersion.php
+            path: src/Validator/Constraints/Duration.php
 
         -
             message: "#^Parameter \\#1 \\$value \\(App\\\\Entity\\\\Team\\) of method App\\\\Validator\\\\Constraints\\\\TeamValidator\\:\\:validate\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Validator\\\\ConstraintValidatorInterface\\:\\:validate\\(\\)$#"
@@ -3818,8 +3763,3 @@ parameters:
             message: "#^Method App\\\\Form\\\\MultiUpdate\\\\MultiUpdateTableDTO\\:\\:setEntities\\(\\) has parameter \\$entities with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection but does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Form/MultiUpdate/MultiUpdateTableDTO.php
-
-        -
-          message: "#^Method App\\\\Entity\\\\InvoiceTemplate\\:\\:getMetaFields\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-          count: 1
-          path: src/Entity/InvoiceTemplate.php

@@ -142,12 +142,15 @@ abstract class AbstractRendererTestCase extends KernelTestCase
 
         $entries = [$timesheet, $timesheet2, $timesheet3, $timesheet4, $timesheet5, $timesheet6];
 
+        $currentUser = new User();
+        $currentUser->setUserIdentifier('foo-bar');
+
         $query = new TimesheetQuery();
         $query->setActivities([$activity]);
         $query->setBegin(new \DateTime());
         $query->setEnd(new \DateTime());
         $query->setProjects([$project]);
-        $query->setCurrentUser(new User());
+        $query->setCurrentUser($currentUser);
 
         return $renderer->render($entries, $query);
     }

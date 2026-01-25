@@ -11,7 +11,7 @@ namespace App\Tests\Twig\SecurityPolicy;
 
 use App\Entity\User;
 use App\Pdf\PdfContext;
-use App\Twig\SecurityPolicy\InvoicePolicy;
+use App\Twig\SecurityPolicy\StrictPolicy;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -23,18 +23,25 @@ use Symfony\Component\String\UnicodeString;
 use Twig\Sandbox\SecurityNotAllowedMethodError;
 use Twig\Sandbox\SecurityPolicyInterface;
 
-#[CoversClass(InvoicePolicy::class)]
-class InvoicePolicyTest extends TestCase
+#[CoversClass(StrictPolicy::class)]
+class StrictPolicyTestCase extends TestCase
 {
-    protected function createPolicy(): SecurityPolicyInterface
+    private function createPolicy(): SecurityPolicyInterface
     {
-        return new InvoicePolicy();
+        return new StrictPolicy();
     }
 
     public function testCheckSecurity(): void
     {
         $sut = $this->createPolicy();
         $sut->checkSecurity([], [], []);
+        $this->expectNotToPerformAssertions();
+    }
+
+    public function testCheckPropertyAllowed(): void
+    {
+        $sut = $this->createPolicy();
+        $sut->checkPropertyAllowed(new \stdClass(), 'foo');
         $this->expectNotToPerformAssertions();
     }
 

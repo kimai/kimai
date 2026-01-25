@@ -508,7 +508,7 @@ final class TranslationCommand extends Command
                     \sprintf('Missing english translation for key: %s in file %s', $key, $file)
                 );
             }
-            $unit->target[0] = $translations[$key];
+            $unit->target[0] = $translations[$key]; // @phpstan-ignore-line
             $unit->target['state'] = 'needs-translation';
             $foundEmpty = true;
         }

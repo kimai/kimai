@@ -26,14 +26,13 @@ use Twig\Environment;
 #[Group('integration')]
 class PdfRendererTest extends AbstractRendererTestCase
 {
-    protected function getAbstractRenderer(): PDFRenderer
+    protected function getAbstractRenderer(?Environment $environment = null): PDFRenderer
     {
-        $twig = $this->createMock(Environment::class);
         $converter = $this->createMock(HtmlToPdfConverter::class);
         $projectStatisticService = $this->createMock(ProjectStatisticService::class);
 
         return new PDFRenderer(
-            $twig,
+            $environment ?? $this->createMock(Environment::class),
             $converter,
             $projectStatisticService,
             'foo',
@@ -60,7 +59,10 @@ class PdfRendererTest extends AbstractRendererTestCase
 
     public function testRender(): void
     {
-        $sut = $this->getAbstractRenderer();
+        /** @var Environment $twig */
+        $twig = $this->getContainer()->get(Environment::class);
+
+        $sut = $this->getAbstractRenderer($twig);
 
         $response = $this->render($sut);
         self::assertInstanceOf(Response::class, $response);

@@ -39,7 +39,8 @@
                         {% elseif type == 'warning' %}
                             ALERT.warning('{{ message|trans({}, domain)|e('js') }}');
                         {% elseif type == 'success' %}
-                            ALERT.success('{{ message|trans({}, domain)|e('js') }}');
+                            // success is expected so we do not need to show messages like "saved successfully"
+                            // ALERT.success('{{ message|trans({}, domain)|e('js') }}');
                         {% else %}
                             ALERT.info('{{ message|trans({}, domain)|e('js') }}');
                         {% endif %}

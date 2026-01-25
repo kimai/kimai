@@ -17,7 +17,7 @@ use App\Pdf\PdfContext;
 use App\Pdf\PdfRendererTrait;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\TimesheetQuery;
-use App\Twig\SecurityPolicy\ExportPolicy;
+use App\Twig\SecurityPolicy\StrictPolicy;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use Twig\Extension\SandboxExtension;
@@ -85,9 +85,12 @@ final class PDFRenderer implements DispositionInlineInterface, ExportRendererInt
         $summary = $this->calculateSummary($exportItems);
 
         // enable basic security measures
-        $sandbox = new SandboxExtension(new ExportPolicy());
+        if (!$this->twig->hasExtension(SandboxExtension::class)) {
+            $this->twig->addExtension(new SandboxExtension(new StrictPolicy()));
+        }
+
+        $sandbox = $this->twig->getExtension(SandboxExtension::class);
         $sandbox->enableSandbox();
-        $this->twig->addExtension($sandbox);
 
         $content = $this->twig->render($this->getTemplate(), [
             'entries' => $exportItems,
@@ -97,6 +100,8 @@ final class PDFRenderer implements DispositionInlineInterface, ExportRendererInt
             'decimal' => false,
             'pdfContext' => $context
         ]);
+
+        $sandbox->disableSandbox();
 
         $pdfOptions = array_merge($context->getOptions(), $this->getPdfOptions());
 

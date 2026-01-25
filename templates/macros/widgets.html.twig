@@ -314,9 +314,7 @@
 {% macro form_type_value(type, value, entity) %}
     {% if 'ColorPickerType' in type or 'ColorChoiceType' in type %}
         {% if value is not empty %}
-            <span class="label-color" data-toggle="tooltip" data-placement="top" title="{{ value }}">
-                <i class="dot {{ 'dot'|icon(true) }} fa-fw" style="color:{{ value }}"></i>
-            </span>
+            {{ _self.label_color_dot('color', true, value, null, value) }}
         {% endif %}
     {% elseif 'DurationType' in type %}
         {{ value|duration }}
@@ -340,7 +338,7 @@
         {% endfor %}
     {% elseif 'MoneyType' in type %}
         {% set classname = class_name(entity) %}
-        {% if entity is null %}
+        {% if classname is null %}
             {{ value }}
         {% elseif classname == 'App\\Entity\\Timesheet' %}
             {{ value|money(entity.project.customer.currency) }}

@@ -18,10 +18,10 @@ use Twig\Environment;
 
 class HtmlRendererFactoryMock extends AbstractMockFactory
 {
-    public function create(): HtmlRendererFactory
+    public function create(?Environment $environment = null): HtmlRendererFactory
     {
         return new HtmlRendererFactory(
-            $this->createMock(Environment::class),
+            $environment ?? $this->createMock(Environment::class),
             $this->createMock(EventDispatcherInterface::class),
             $this->createMock(ProjectStatisticService::class),
             $this->createMock(ActivityStatisticService::class)

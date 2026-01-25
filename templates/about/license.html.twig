@@ -3,90 +3,51 @@
 
 {% block main %}
     <div class="row row-cards mb-3">
-        <div class="col-lg-4">
-            <div class="card">
-                <div class="card-body card_intro p-4 text-center">
 
-                    <img src="{{ asset('apple-touch-icon.png') }}" class="avatar avatar-2xl mb-3 avatar-rounded" alt="{{ constant('App\\Constants::SOFTWARE') }}">
+        <div class="col-xl-3 col-lg-2 col-1"></div>
+        <div class="col-xl-6 col-lg-8 col-10">
 
-                    <h3 class="m-0 mb-1">
-                        <a href="{{ constant('App\\Constants::HOMEPAGE') }}" target="_blank">{{ constant('App\\Constants::SOFTWARE') }}</a>
-                    </h3>
-                    <div class="text-body-secondary">
-                        {{ constant('App\\Constants::VERSION') }}
-                    </div>
-                </div>
-                <div class="d-flex">
-                    <a href="{{ ''|docu_link }}" target="_blank" class="card-btn">
-                        <i class="me-2 text-body-secondary {{ 'help'|icon(false) }}"></i>
-                        {{ 'help'|trans }}
-                    </a>
-                    <a href="{{ constant('App\\Constants::GITHUB') }}discussions" target="_blank" class="card-btn">
-                        <i class="me-2 text-body-secondary {{ 'fab fa-github'|icon(false) }}"></i>
-                        {{ 'support'|trans }}
-                    </a>
-                </div>
-                <div class="d-flex">
-                    <a href="{{ constant('App\\Constants::HOMEPAGE') }}" target="_blank" class="card-btn">
-                        <i class="me-2 text-body-secondary {{ 'home'|icon(false) }}"></i>
-                        {{ 'homepage'|trans }}
-                    </a>
-                    <a href="{{ constant('App\\Constants::HOMEPAGE') }}/donate/" target="_blank" class="card-btn">
-                        <i class="me-2 text-body-secondary {{ 'fas fa-hand-holding-heart'|icon(false) }}"></i>
-                        {{ 'donate'|trans }}
-                    </a>
-                </div>
-                <div class="card-footer">
-                    Made with ♥ by <a href="https://www.kevinpapst.de/">Kevin Papst</a> and <a href="{{ constant('App\\Constants::GITHUB') }}graphs/contributors" target="_blank">great contributors</a>.
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-8">
             {% embed '@theme/embeds/card.html.twig' %}
-                {% block box_title %}Credits{% endblock %}
-                {% block box_body_class %}credits_card{% endblock %}
+                {% block box_body_class %}card_intro p-0 text-center{% endblock %}
                 {% block box_body %}
-                    <p>
-                        The following amazing software libraries were used when creating Kimai. It wouldn't be possible without them.
-                        My biggest thanks go out to the authors 👍
-                    </p>
-                    <ul>
-                        <li>Bootstrap: <a href="https://getbootstrap.com" target="_blank">https://getbootstrap.com</a></li>
-                        <li>Chart.js: <a href="https://www.chartjs.org" target="_blank">https://www.chartjs.org</a></li>
-                        <li>Doctrine: <a href="https://www.doctrine-project.org" target="_blank">https://www.doctrine-project.org</a></li>
-                        <li>FontAwesome: <a href="https://fontawesome.com" target="_blank">https://fontawesome.com</a></li>
-                        <li>FullCalendar: <a href="https://fullcalendar.io" target="_blank">https://fullcalendar.io</a></li>
-                        <li>gridstack.js: <a href="https://gridstackjs.com" target="_blank">https://gridstackjs.com</a></li>
-                        <li>Litepicker: <a href="https://litepicker.com/" target="_blank">https://litepicker.com/</a></li>
-                        <li>Luxon: <a href="https://moment.github.io/luxon/" target="_blank">https://moment.github.io/luxon/</a></li>
-                        <li>MPDF <a href="https://mpdf.github.io" target="_blank">https://mpdf.github.io</a></li>
-                        <li>PHPOffice: <a href="https://github.com/PHPOffice" target="_blank">https://github.com/PHPOffice</a></li>
-                        <li>Symfony: <a href="https://symfony.com" target="_blank">https://symfony.com</a></li>
-                        <li>Tabler: <a href="https://tabler.io" target="_blank">https://tabler.io</a></li>
-                        <li>Tom Select: <a href="https://tom-select.js.org/" target="_blank">https://tom-select.js.org/</a></li>
-                        <li>Twig: <a href="https://twig.symfony.com" target="_blank">https://twig.symfony.com</a></li>
-                    </ul>
+                    <div class="m-4">
+                        <img src="{{ asset('apple-touch-icon.png') }}" class="avatar avatar-2xl mb-3 avatar-rounded" alt="{{ constant('App\\Constants::SOFTWARE') }}">
+                        <h3 class="m-0 mb-1">
+                            <a href="{{ constant('App\\Constants::HOMEPAGE') }}" target="_blank">{{ constant('App\\Constants::SOFTWARE') }}</a>
+                        </h3>
+                        <div class="text-body-secondary">
+                            {{ constant('App\\Constants::VERSION') }}
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <a href="{{ ''|docu_link }}" target="_blank" class="card-btn">
+                            <i class="me-2 text-body-secondary {{ 'help'|icon(false) }}"></i>
+                            {{ 'help'|trans }}
+                        </a>
+                        <a href="{{ constant('App\\Constants::GITHUB') }}discussions" target="_blank" class="card-btn">
+                            <i class="me-2 text-body-secondary {{ 'fab fa-github'|icon(false) }}"></i>
+                            {{ 'support'|trans }}
+                        </a>
+                    </div>
+                    <div class="d-flex">
+                        <a href="{{ constant('App\\Constants::HOMEPAGE') }}" target="_blank" class="card-btn">
+                            <i class="me-2 text-body-secondary {{ 'home'|icon(false) }}"></i>
+                            {{ 'homepage'|trans }}
+                        </a>
+                        <a href="{{ constant('App\\Constants::HOMEPAGE') }}/donate/" target="_blank" class="card-btn">
+                            <i class="me-2 text-body-secondary {{ 'fas fa-hand-holding-heart'|icon(false) }}"></i>
+                            {{ 'donate'|trans }}
+                        </a>
+                    </div>
                 {% endblock %}
                 {% block box_footer %}
-                    Apologies to all projects that I forgot to mention. Please feel free and send a PR to fix that!
+                    Made with ♥ by <a href="https://www.kevinpapst.de/">Kevin Papst</a> and <a href="{{ constant('App\\Constants::GITHUB') }}graphs/contributors" target="_blank">great contributors</a>.
                 {% endblock %}
             {% endembed %}
-        </div>
-    </div>
-    <div class="row row-cards mb-3">
-        <div class="col-lg-8">
-            <div class="card card-lg">
-                <div class="card-body card_license">
-                    <div class="markdown">
-                        <h3>License</h3>
-                        <div style="white-space: pre">{{ license|nl2br|replace({'<br />': ''})|raw }}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="card">
-                <div class="card-body card_details">
+
+            {% embed '@theme/embeds/card.html.twig' %}
+                {% block box_body_class %}card_details{% endblock %}
+                {% block box_body %}
                     <div class="d-flex align-items-center mb-3">
                         <div class="me-3">
                             <i class="fa-2x fas fa-balance-scale"></i>
@@ -123,13 +84,50 @@
                         <li><i class="{{ 'details'|icon(false) }} text-blue"></i> Same license</li>
                         <li><i class="{{ 'details'|icon(false) }} text-blue"></i> State changes</li>
                     </ul>
-                </div>
-                <div class="card-footer">
+                {% endblock %}
+                {% block box_footer %}
                     This is not legal advice. Learn more about this licenses at
                     <a href="https://choosealicense.com/licenses/agpl-3.0/" target="_blank">choosealicense.com</a> and
                     <a href="https://www.gnu.org/licenses/agpl-3.0.en.html" target="_blank">GNU</a>.
-                </div>
-            </div>
+                {% endblock %}
+            {% endembed %}
+
+            {% embed '@theme/embeds/card.html.twig' %}
+                {% block box_title %}Open-Source Credits{% endblock %}
+                {% block box_body_class %}credits_card{% endblock %}
+                {% block box_body %}
+                    <ul>
+                        <li>Bootstrap: <a href="https://getbootstrap.com" target="_blank">https://getbootstrap.com</a></li>
+                        <li>Chart.js: <a href="https://www.chartjs.org" target="_blank">https://www.chartjs.org</a></li>
+                        <li>Doctrine: <a href="https://www.doctrine-project.org" target="_blank">https://www.doctrine-project.org</a></li>
+                        <li>FontAwesome: <a href="https://fontawesome.com" target="_blank">https://fontawesome.com</a></li>
+                        <li>FullCalendar: <a href="https://fullcalendar.io" target="_blank">https://fullcalendar.io</a></li>
+                        <li>gridstack.js: <a href="https://gridstackjs.com" target="_blank">https://gridstackjs.com</a></li>
+                        <li>Litepicker: <a href="https://litepicker.com/" target="_blank">https://litepicker.com/</a></li>
+                        <li>Luxon: <a href="https://moment.github.io/luxon/" target="_blank">https://moment.github.io/luxon/</a></li>
+                        <li>MPDF <a href="https://mpdf.github.io" target="_blank">https://mpdf.github.io</a></li>
+                        <li>PHPOffice: <a href="https://github.com/PHPOffice" target="_blank">https://github.com/PHPOffice</a></li>
+                        <li>Symfony: <a href="https://symfony.com" target="_blank">https://symfony.com</a></li>
+                        <li>Tabler: <a href="https://tabler.io" target="_blank">https://tabler.io</a></li>
+                        <li>Tom Select: <a href="https://tom-select.js.org/" target="_blank">https://tom-select.js.org/</a></li>
+                        <li>Twig: <a href="https://twig.symfony.com" target="_blank">https://twig.symfony.com</a></li>
+                    </ul>
+                {% endblock %}
+                {% block box_footer %}
+                    These software libraries were used when creating Kimai. It wouldn't be possible without them and their authors. Thanks to all of you 👍
+                {% endblock %}
+            {% endembed %}
+
+            {% embed '@theme/embeds/card.html.twig' %}
+                {% block box_class %}card-lg{% endblock %}
+                {% block box_body_class %}markdown card-body-scrollable{% endblock %}
+                {% block box_body %}
+                    <h3>License</h3>
+                    <div style="white-space: pre">{{ license|nl2br|replace({'<br />': ''})|raw }}</div>
+                {% endblock %}
+            {% endembed %}
+
         </div>
+        <div class="col-xl-3 col-lg-2 col-1"></div>
     </div>
 {% endblock %}

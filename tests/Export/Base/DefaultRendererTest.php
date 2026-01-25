@@ -26,6 +26,8 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 #[CoversClass(ServiceExport::class)]
 #[CoversClass(CsvRenderer::class)]
@@ -35,7 +37,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 #[Group('integration')]
 class DefaultRendererTest extends AbstractRendererTestCase
 {
-    private function createServiceExport(): ServiceExport
+    private function createServiceExport(?Environment $environment = null): ServiceExport
     {
         $repository = $this->createMock(ExportTemplateRepository::class);
         $repository->expects($this->once())->method('findAll')->willReturn([]);
@@ -43,8 +45,8 @@ class DefaultRendererTest extends AbstractRendererTestCase
 
         return new ServiceExport(
             $this->createMock(EventDispatcherInterface::class),
-            (new HtmlRendererFactoryMock($this))->create(),
-            (new PdfRendererFactoryMock($this))->create(),
+            (new HtmlRendererFactoryMock($this))->create($environment),
+            (new PdfRendererFactoryMock($this))->create($environment),
             (new CsvRendererFactoryMock($this))->create(),
             (new XlsxRendererFactoryMock($this))->create(),
             $repository,
@@ -54,7 +56,10 @@ class DefaultRendererTest extends AbstractRendererTestCase
 
     public function testRenderDefaultTemplates(): void
     {
-        $sut = $this->createServiceExport();
+        /** @var Environment $twig */
+        $twig = $this->getContainer()->get(Environment::class);
+
+        $sut = $this->createServiceExport($twig);
 
         $renderer = $sut->getRenderer();
         self::assertCount(4, $renderer);
@@ -98,12 +103,21 @@ class DefaultRendererTest extends AbstractRendererTestCase
             ->files()
         ;
 
+        /** @var Environment $twig */
+        $twig = $this->getContainer()->get(Environment::class);
+
+        /** @var FilesystemLoader $loader */
+        $loader = $twig->getLoader();
+
         $files = [];
         $dirs = [];
         foreach ($finder->getIterator() as $filename => $splFile) {
             $files[] = $splFile->getRealPath();
             $dir = \dirname($splFile->getRealPath());
-            $dirs[$dir] = $dir;
+            if (!\array_key_exists($dir, $dirs)) {
+                $dirs[$dir] = $dir;
+                $loader->addPath($dir . '/', 'export');
+            }
         }
         $dirs = array_keys($dirs);
 
@@ -113,7 +127,7 @@ class DefaultRendererTest extends AbstractRendererTestCase
             return;
         }
 
-        $sut = $this->createServiceExport();
+        $sut = $this->createServiceExport($twig);
         foreach ($dirs as $dir) {
             $sut->addDirectory($dir);
         }

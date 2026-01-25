@@ -158,7 +158,7 @@
                                                     {{ btnTitle }}
                                                     {% if allowCreate and cfg.internal %}
                                                         <span class="dropdown-action modal-ajax-form open-edit ps-2 ms-auto" data-href="{{ path('export_template_edit', {exportTemplate: id}) }}">{{ icon('edit') }}</span>
-                                                        <span class="dropdown-action api-link text-red dd-ts-trash text-danger ms-2" href="{{ path('delete_export_template', {id: id}) }}" data-event="kimai.exportTemplate" data-method="DELETE" data-question="confirm.delete" data-msg-error="action.delete.error" data-msg-success="action.delete.success">{{ icon('delete') }}</span>
+                                                        <span class="dropdown-action api-link text-red dd-ts-trash text-danger ms-2" href="{{ path('delete_export_template', {id: id}) }}" data-event="kimai.exportTemplate" data-method="DELETE" data-question="confirm.delete" data-msg-error="action.delete.error">{{ icon('delete') }}</span>
                                                     {% endif %}
                                                 </a>
                                             {% endfor %}
