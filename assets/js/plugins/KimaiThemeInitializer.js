@@ -42,7 +42,7 @@ export default class KimaiThemeInitializer extends KimaiPlugin {
             }
 
             // at which element we append the loading screen
-            let container = 'body';
+            let container = 'div.page-wrapper';
             if (event.detail !== undefined && event.detail !== null) {
                 container = event.detail;
             }

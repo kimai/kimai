@@ -1,12 +1,9 @@
 <!DOCTYPE html>
-{% import "macros/datatables.html.twig" as tables %}
-{% set language = app.request is not null ? app.request.locale : 'en' %}
-{% set decimal = false %}
 {% set showUserColumn = true %}
 {% if query.user %}
     {% set showUserColumn = false %}
 {% endif %}
-<html lang="{{ language }}">
+<html lang="{{ app.locale }}">
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -79,10 +76,11 @@
                                 {{ 'customer'|trans }}: {{ entry.project.customer.name }}
                             </span>
                             </td>
+                            {% from "macros/meta_fields.html.twig" import meta_field_value %}
                             {% for field in timesheetMetaFields %}
-                                <td>{{ tables.datatable_meta_column(entry, field) }}</td>
+                                <td>{{ meta_field_value(entry, field) }}</td>
                             {% endfor %}
-                            <td class="text-nowrap">{{ entry.duration|duration(decimal) }}</td>
+                            <td class="text-nowrap">{{ entry.duration|duration }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -96,7 +94,7 @@
                             <th></th>
                         {% endfor %}
                         <th>{{ 'invoice.total_working_time'|trans }}</th>
-                        <th class="text-nowrap">{{ timeWorked|duration(decimal) }}</th>
+                        <th class="text-nowrap">{{ timeWorked|duration }}</th>
                     </tr>
                     </tfoot>
                 </table>

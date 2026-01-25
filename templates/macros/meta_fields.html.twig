@@ -1,0 +1,42 @@
+
+{% macro meta_field_value(entity, field) %}
+    {% set metaField = entity.metaField(field.name) %}
+    {% if not metaField is null %}
+        {% set metaField = metaField.merge(field) %}
+        {% set type = metaField.type %}
+        {% set value = metaField.value %}
+        {% if 'DurationType' in type %}
+            {{ value|duration }}
+        {% elseif 'YesNoType' in type or 'CheckboxType' in type %}
+            {{ value ? ('yes'|trans) : ('no'|trans) }}
+        {% elseif 'DatePickerType' in type %}
+            {{ value|date_short }}
+        {% elseif 'DateTimePickerType' in type %}
+            {{ value|date_time }}
+        {% elseif 'CountryType' in type %}
+            {{ value|country_name }}
+        {% elseif 'CurrencyType' in type %}
+            {{ value|currency_name }}
+        {% elseif 'LanguageType' in type %}
+            {{ value|locale_name }}
+        {% elseif 'MoneyType' in type %}
+            {% set classname = class_name(entity) %}
+            {% if classname == 'App\\Entity\\Timesheet' %}
+                {{ value|money(entity.project.customer.currency) }}
+            {% elseif classname == 'App\\Entity\\Customer' %}
+                {{ value|money(entity.currency) }}
+            {% elseif classname == 'App\\Entity\\Project' %}
+                {{ value|money(entity.customer.currency) }}
+            {% elseif classname == 'App\\Entity\\Activity' and entity.project is not null %}
+                {{ value|money(entity.project.customer.currency) }}
+            {% else %}
+                {{ value }}
+            {% endif %}
+        {% elseif 'TextareaType' in type %}
+            {{ value|nl2br }}
+        {% else %}
+            {# EmailType, UrlType, TagsType, ColorPickerType, ColorChoiceType #}
+            {{ value }}
+        {% endif %}
+    {% endif %}
+{% endmacro %}

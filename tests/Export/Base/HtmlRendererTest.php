@@ -25,10 +25,10 @@ use Twig\Environment;
 #[Group('integration')]
 class HtmlRendererTest extends AbstractRendererTestCase
 {
-    protected function getAbstractRenderer(): HtmlRenderer
+    protected function getAbstractRenderer(?Environment $environment = null): HtmlRenderer
     {
         return new HtmlRenderer(
-            $this->createMock(Environment::class),
+            $environment ?? $this->createMock(Environment::class),
             $this->createMock(EventDispatcherInterface::class),
             $this->createMock(ProjectStatisticService::class),
             $this->createMock(ActivityStatisticService::class),
@@ -60,7 +60,10 @@ class HtmlRendererTest extends AbstractRendererTestCase
 
     public function testRender(): void
     {
-        $sut = $this->getAbstractRenderer();
+        /** @var Environment $twig */
+        $twig = $this->getContainer()->get(Environment::class);
+
+        $sut = $this->getAbstractRenderer($twig);
 
         $response = $this->render($sut);
         self::assertInstanceOf(Response::class, $response);

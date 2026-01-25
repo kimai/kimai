@@ -55,7 +55,7 @@ abstract class AbstractUserPeriodControllerTestCase extends AbstractControllerBa
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $this->importReportingFixture(User::ROLE_SUPER_ADMIN);
         $this->assertAccessIsGranted($client, \sprintf('%s?user=%s&date=12999119191&sumType=%s', $this->getReportUrl(), $user, $dataType));
-        self::assertStringContainsString(\sprintf('<div class="card-body %s', $this->getBoxId()), $client->getResponse()->getContent());
+        self::assertStringContainsString(\sprintf('<div class="card-body p-0 %s', $this->getBoxId()), $client->getResponse()->getContent());
         $option = $client->getCrawler()->filterXPath("//select[@id='user']/option[@selected]");
         self::assertEquals($user, $option->attr('value'));
         $cell = $client->getCrawler()->filterXPath("//th[contains(@class, 'reportDataTypeTitle')]");
@@ -90,7 +90,7 @@ abstract class AbstractUserPeriodControllerTestCase extends AbstractControllerBa
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->importReportingFixture(User::ROLE_USER);
         $this->assertAccessIsGranted($client, \sprintf('%s?date=12999119191', $this->getReportUrl()));
-        self::assertStringContainsString(\sprintf('<div class="card-body %s', $this->getBoxId()), $client->getResponse()->getContent());
+        self::assertStringContainsString(\sprintf('<div class="card-body p-0 %s', $this->getBoxId()), $client->getResponse()->getContent());
         $select = $client->getCrawler()->filterXPath("//select[@id='user']");
         self::assertEquals(0, $select->count());
         $cell = $client->getCrawler()->filterXPath("//th[contains(@class, 'reportDataTypeTitle')]");

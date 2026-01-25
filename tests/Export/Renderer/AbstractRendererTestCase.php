@@ -131,6 +131,7 @@ abstract class AbstractRendererTestCase extends KernelTestCase
 
         $currentUser = new User();
         $currentUser->setPreferenceValue('export_decimal', $exportDecimal);
+        $currentUser->setUserIdentifier('foo-bar');
 
         $query = new TimesheetQuery();
         $query->setActivities([$activity]);
