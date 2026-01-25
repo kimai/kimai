@@ -22,6 +22,7 @@ class PageActionsEvent extends ThemeEvent
 {
     private int $divider = 0;
     private ?string $locale = null;
+    private ?object $item = null;
 
     /**
      * @param array<mixed> $payload
@@ -32,10 +33,17 @@ class PageActionsEvent extends ThemeEvent
         if (!\array_key_exists('actions', $payload)) {
             $payload['actions'] = [];
         }
+
         // only for BC reasons, do not access it directly!
         if (!\array_key_exists('view', $payload)) {
             $payload['view'] = $view;
         }
+
+        if (\array_key_exists('item', $payload)) {
+            $this->item = $payload['item'];
+            unset($payload['item']);
+        }
+
         parent::__construct($user, $payload);
     }
 
@@ -227,5 +235,13 @@ class PageActionsEvent extends ThemeEvent
     public function setLocale(?string $locale): void
     {
         $this->locale = $locale;
+    }
+
+    /**
+     * Returns null for "listing" pages.
+     */
+    public function getItem(): object|null
+    {
+        return $this->item;
     }
 }
