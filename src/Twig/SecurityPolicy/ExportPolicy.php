@@ -9,19 +9,7 @@
 
 namespace App\Twig\SecurityPolicy;
 
-use App\Entity\MetaTableTypeInterface;
-use App\Entity\User;
-use App\Pdf\PdfContext;
-use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Component\DependencyInjection\Attribute\Exclude;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\ServerBag;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\String\UnicodeString;
-use Twig\Sandbox\SecurityNotAllowedFilterError;
-use Twig\Sandbox\SecurityNotAllowedFunctionError;
-use Twig\Sandbox\SecurityNotAllowedMethodError;
-use Twig\Sandbox\SecurityNotAllowedTagError;
 use Twig\Sandbox\SecurityPolicyInterface;
 
 /**
