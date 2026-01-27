@@ -2066,6 +2066,34 @@
         <source>tax.note.reverse_charge</source>
         <target>Steuer zahlbar auf Reverse-Charge-Basis</target>
       </trans-unit>
+      <trans-unit id="wts001" resname="working_time_calc">
+        <source>working_time_calc</source>
+        <target>Arbeitszeitberechnung</target>
+      </trans-unit>
+      <trans-unit id="wts002" resname="working_time_calc.enabled">
+        <source>working_time_calc.enabled</source>
+        <target>Alternative Arbeitszeitberechnung</target>
+      </trans-unit>
+      <trans-unit id="wts003" resname="working_time_calc.enabled.help">
+        <source>working_time_calc.enabled.help</source>
+        <target>Standard: Kimai summiert die Dauer aller Buchungen pro Tag (kann bei parallelen Tätigkeiten zu Doppelzählung führen). Alternativ: Berechnet Arbeitszeit als Zeitspanne von erster Startzeit bis letzter Endzeit des Tages.</target>
+      </trans-unit>
+      <trans-unit id="wts004" resname="working_time_calc.gap_tolerance">
+        <source>working_time_calc.gap_tolerance</source>
+        <target>Lücken-Toleranz (Minuten)</target>
+      </trans-unit>
+      <trans-unit id="wts005" resname="working_time_calc.gap_tolerance.help">
+        <source>working_time_calc.gap_tolerance.help</source>
+        <target>Kleine Lücken zwischen Zeiteinträgen werden ignoriert und die Einträge als zusammenhängend betrachtet. Standard: 3 Minuten.</target>
+      </trans-unit>
+      <trans-unit id="wts006" resname="working_time_calc.max_duration">
+        <source>working_time_calc.max_duration</source>
+        <target>Max. Aufgabendauer (Stunden)</target>
+      </trans-unit>
+      <trans-unit id="wts007" resname="working_time_calc.max_duration.help">
+        <source>working_time_calc.max_duration.help</source>
+        <target>Einzelne Zeiteinträge, die länger dauern, werden nicht in die Arbeitszeitberechnung einbezogen. Standard: 16 Stunden.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -90,6 +90,7 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
             ['form[name=system_configuration_form_theme]', $this->createUrl('/admin/system-config/update/theme')],
             ['form[name=system_configuration_form_calendar]', $this->createUrl('/admin/system-config/update/calendar')],
             ['form[name=system_configuration_form_branding]', $this->createUrl('/admin/system-config/update/branding')],
+            ['form[name=system_configuration_form_working_time_calc]', $this->createUrl('/admin/system-config/update/working_time_calc')],
         ];
     }
 
