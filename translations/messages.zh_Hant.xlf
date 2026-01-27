@@ -834,8 +834,8 @@
         <source>export.document_title</source>
         <target state="final">支出清單</target>
       </trans-unit>
-      <trans-unit id="ulYFDIo" resname="button.ods" xml:space="preserve" approved="yes">
-        <source>button.ods</source>
+      <trans-unit id="lmUO63g" resname="ods" xml:space="preserve" approved="yes">
+        <source>ods</source>
         <target state="final">ODS</target>
       </trans-unit>
       <trans-unit id="3WHV.yf" resname="activated" xml:space="preserve" approved="yes">
@@ -1314,8 +1314,8 @@
         <source>Deactivated</source>
         <target state="final">已停用</target>
       </trans-unit>
-      <trans-unit id="W_TXvSi" resname="button.csv" xml:space="preserve" approved="yes">
-        <source>button.csv</source>
+      <trans-unit id="U7ubCzi" resname="csv" xml:space="preserve" approved="yes">
+        <source>csv</source>
         <target state="final">CSV</target>
       </trans-unit>
       <trans-unit id="wwrREDg" resname="pagination" xml:space="preserve" approved="yes">
@@ -1446,12 +1446,12 @@
         <source>Apps</source>
         <target state="final">應用程式</target>
       </trans-unit>
-      <trans-unit id="aAa5uRR" resname="button.pdf" xml:space="preserve" approved="yes">
-        <source>button.pdf</source>
+      <trans-unit id="w1sh1so" resname="pdf" xml:space="preserve" approved="yes">
+        <source>pdf</source>
         <target state="final">PDF</target>
       </trans-unit>
-      <trans-unit id="X70dwP8" resname="button.print" xml:space="preserve" approved="yes">
-        <source>button.print</source>
+      <trans-unit id="zpU6DrC" resname="print" xml:space="preserve" approved="yes">
+        <source>print</source>
         <target state="final">列印</target>
       </trans-unit>
       <trans-unit id="Zif614Q" resname="add_user.label" xml:space="preserve" approved="yes">
@@ -1602,8 +1602,8 @@
         <source>dashboard.edit_mode</source>
         <target state="final">您可以拖放小工具以重新排列。新增小工具時會儲存未套用的更動。</target>
       </trans-unit>
-      <trans-unit id="vC2IsaP" resname="button.xlsx" xml:space="preserve" approved="yes">
-        <source>button.xlsx</source>
+      <trans-unit id="HJgLIry" resname="xlsx" xml:space="preserve" approved="yes">
+        <source>xlsx</source>
         <target state="final">Excel</target>
       </trans-unit>
       <trans-unit id="dru_Thv" resname="please_choose" xml:space="preserve" approved="yes">
@@ -1897,6 +1897,10 @@
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve" approved="no">
         <source>Filter timesheets</source>
         <target state="needs-translation">篩選工時單</target>
+      </trans-unit>
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve" approved="yes">
+        <source>Timesheet</source>
+        <target state="final">工時單</target>
       </trans-unit>
     </body>
   </file>

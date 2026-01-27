@@ -27,7 +27,7 @@ final class XlsxRendererFactory
 
     public function createDefault(): XlsxRenderer
     {
-        $template = new DefaultTemplate($this->eventDispatcher, 'xlsx');
+        $template = new DefaultTemplate($this->eventDispatcher, 'xlsx', 'en', 'xlsx');
 
         return new XlsxRenderer($this->converter, $this->translator, $template);
     }

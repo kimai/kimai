@@ -25,7 +25,7 @@ final class HtmlRendererFactory
     ) {
     }
 
-    public function create(string $id, string $template): HtmlRenderer
+    public function create(string $id, string $template, string $title = 'print'): HtmlRenderer
     {
         return new HtmlRenderer(
             $this->twig,
@@ -33,7 +33,7 @@ final class HtmlRendererFactory
             $this->projectStatisticService,
             $this->activityStatisticService,
             $id,
-            'print',
+            $title,
             $template
         );
     }

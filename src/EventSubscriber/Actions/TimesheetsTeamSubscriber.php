@@ -35,7 +35,7 @@ final class TimesheetsTeamSubscriber extends AbstractActionsSubscriber
 
         if ($this->isGranted('export_other_timesheet')) {
             foreach ($this->serviceExport->getTimesheetExporter() as $exporter) {
-                $event->addActionToSubmenu('export', $exporter->getId(), ['url' => $this->path('admin_timesheet_export', ['exporter' => $exporter->getId()]), 'class' => 'toolbar-action', 'title' => 'button.' . $exporter->getId(), 'translation_domain' => 'messages']);
+                $event->addActionToSubmenu('export', $exporter->getId(), ['url' => $this->path('admin_timesheet_export', ['exporter' => $exporter->getId()]), 'class' => 'toolbar-action', 'title' => $exporter->getTitle()]);
             }
         }
     }

@@ -1126,8 +1126,8 @@
         <source>invoice_form.title</source>
         <target state="translated">Buat Faktur</target>
       </trans-unit>
-      <trans-unit id="vC2IsaP" resname="button.xlsx" xml:space="preserve">
-        <source>button.xlsx</source>
+      <trans-unit id="HJgLIry" resname="xlsx" xml:space="preserve">
+        <source>xlsx</source>
         <target state="translated">Excel</target>
       </trans-unit>
       <trans-unit id="ohNu8DK" resname="due_days" xml:space="preserve">
@@ -1414,8 +1414,8 @@
         <source>invoices</source>
         <target state="translated">Faktur</target>
       </trans-unit>
-      <trans-unit id="W_TXvSi" resname="button.csv" xml:space="preserve">
-        <source>button.csv</source>
+      <trans-unit id="U7ubCzi" resname="csv" xml:space="preserve">
+        <source>csv</source>
         <target state="translated">CSV</target>
       </trans-unit>
       <trans-unit id="Uvo1CbP" resname="status.pending" xml:space="preserve">
@@ -1494,8 +1494,8 @@
         <source>Importer</source>
         <target state="translated">Pengimpor</target>
       </trans-unit>
-      <trans-unit id="ulYFDIo" resname="button.ods" xml:space="preserve">
-        <source>button.ods</source>
+      <trans-unit id="lmUO63g" resname="ods" xml:space="preserve">
+        <source>ods</source>
         <target state="translated">ODS</target>
       </trans-unit>
       <trans-unit id="86KyrKO" resname="invoice.subtotal" xml:space="preserve">
@@ -1562,12 +1562,12 @@
         <source>stats.projectTotal</source>
         <target state="translated">Proyek</target>
       </trans-unit>
-      <trans-unit id="X70dwP8" resname="button.print" xml:space="preserve">
-        <source>button.print</source>
+      <trans-unit id="zpU6DrC" resname="print" xml:space="preserve">
+        <source>print</source>
         <target state="translated">Cetak</target>
       </trans-unit>
-      <trans-unit id="aAa5uRR" resname="button.pdf" xml:space="preserve">
-        <source>button.pdf</source>
+      <trans-unit id="w1sh1so" resname="pdf" xml:space="preserve">
+        <source>pdf</source>
         <target state="translated">PDF</target>
       </trans-unit>
       <trans-unit id="zPcx3O_" resname="invoice_print" xml:space="preserve">
@@ -2041,6 +2041,10 @@
       <trans-unit id="jcT9Og6" resname="payment_account_number" xml:space="preserve" approved="no">
         <source>payment_account_name</source>
         <target state="translated">Nomor IBAN atau nomor kartu</target>
+      </trans-unit>
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
+        <source>Timesheet</source>
+        <target state="translated">Lembar Waktu</target>
       </trans-unit>
     </body>
   </file>

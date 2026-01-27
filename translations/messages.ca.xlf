@@ -1094,20 +1094,20 @@
         <source>preview</source>
         <target state="translated">Previsualització</target>
       </trans-unit>
-      <trans-unit id="X70dwP8" resname="button.print" xml:space="preserve">
-        <source>button.print</source>
+      <trans-unit id="zpU6DrC" resname="print" xml:space="preserve">
+        <source>print</source>
         <target state="translated">Imprimeix</target>
       </trans-unit>
-      <trans-unit id="W_TXvSi" resname="button.csv" xml:space="preserve">
-        <source>button.csv</source>
+      <trans-unit id="U7ubCzi" resname="csv" xml:space="preserve">
+        <source>csv</source>
         <target state="translated">CSV</target>
       </trans-unit>
-      <trans-unit id="aAa5uRR" resname="button.pdf" xml:space="preserve">
-        <source>button.pdf</source>
+      <trans-unit id="w1sh1so" resname="pdf" xml:space="preserve">
+        <source>pdf</source>
         <target state="translated">PDF</target>
       </trans-unit>
-      <trans-unit id="vC2IsaP" resname="button.xlsx" xml:space="preserve">
-        <source>button.xlsx</source>
+      <trans-unit id="HJgLIry" resname="xlsx" xml:space="preserve">
+        <source>xlsx</source>
         <target state="translated">Excel</target>
       </trans-unit>
       <trans-unit id="zPcx3O_" resname="invoice_print" xml:space="preserve">
@@ -1186,8 +1186,8 @@
         <source>invoice.service_date</source>
         <target state="translated">Data de servei</target>
       </trans-unit>
-      <trans-unit id="ulYFDIo" resname="button.ods" xml:space="preserve">
-        <source>button.ods</source>
+      <trans-unit id="lmUO63g" resname="ods" xml:space="preserve">
+        <source>ods</source>
         <target state="translated">ODS</target>
       </trans-unit>
       <trans-unit id="BAkWQqr" resname="total_rate" xml:space="preserve">
@@ -2065,6 +2065,10 @@
       <trans-unit id="hi31a3v" resname="tax.note.reverse_charge" xml:space="preserve">
         <source>tax.note.reverse_charge</source>
         <target state="translated">Impost a pagar en règim d’inversió del subjecte passiu</target>
+      </trans-unit>
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
+        <source>Timesheet</source>
+        <target state="translated">Registre d'hores</target>
       </trans-unit>
     </body>
   </file>

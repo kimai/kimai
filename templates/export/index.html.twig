@@ -124,17 +124,13 @@
                         <div class="btn-group me-auto" id="export-buttons" role="group">
                             {% set allowCreate = is_granted('create_export_template') %}
                             {% for type, group in buttons %}
-                                {% set btnTitle = ('button.' ~ type)|trans %}
-                                {% if btnTitle == ('button.' ~ type) %}
-                                    {% set btnTitle = type|trans  %}
+                                {% if type == 'html' %}
+                                    {% set type = 'print' %}
                                 {% endif %}
+                                {% set btnTitle = type|trans %}
                                 {% if group|length == 1 %}
                                     {% for id, cfg in group %}
                                         {% set title = cfg.title %}
-                                        {% set btnTitle2 = ('button.' ~ title)|trans %}
-                                        {% if btnTitle2 != ('button.' ~ title) %}
-                                            {% set btnTitle = btnTitle2 %}
-                                        {% endif %}
                                         <button type="button" id="export-{{ id }}-button" class="btn btn-primary startExportBtn" data-type="{{ id }}">
                                             {{ btnTitle }}
                                         </button>
@@ -146,13 +142,9 @@
                                         </button>
                                         <div class="dropdown-menu">
                                             {% for id, cfg in group %}
-                                                {% set title = cfg.title %}
-                                                {% set btnTitle = id|trans({}, 'export') %}
-                                                {% if btnTitle == id %}
-                                                    {% set btnTitle = title|trans %}
-                                                {% endif %}
-                                                {% if btnTitle == id %}
-                                                    {% set btnTitle = id|split('.')|first|replace({'-': ' ', '_': ' '})|split(' ')|map(t => t|capitalize)|join(' ') %}
+                                                {% set btnTitle = (cfg.title)|trans %}
+                                                {% if loop.first %}
+                                                    {% set btnTitle = 'default'|trans %}
                                                 {% endif %}
                                                 <a href="#" class="dropdown-item startExportBtn" data-type="{{ id }}">
                                                     {{ btnTitle }}
