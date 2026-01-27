@@ -2070,6 +2070,10 @@
         <source>Timesheet</source>
         <target>Timesheet</target>
       </trans-unit>
+      <trans-unit id="6w8kS.m" resname="user_access_all">
+        <source>user_access_all</source>
+        <target>Allow access for all users</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

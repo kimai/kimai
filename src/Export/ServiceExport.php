@@ -180,12 +180,24 @@ final class ServiceExport
      */
     public function getTimesheetExporter(): array
     {
+        // TODO 3.0 cache the result, as this is one extra database query on the timesheet pages
         $exporter = [
             $this->pdfRendererFactory->create('pdf', '@export/timesheet.pdf.twig'),
             $this->xlsxRendererFactory->createDefault(),
             $this->csvRendererFactory->createDefault(),
             $this->htmlRendererFactory->create('print', 'timesheet/export.html.twig'),
         ];
+
+        foreach ($this->exportTemplateRepository->findAll() as $template) {
+            if (!$template->isAvailableForAll()) {
+                continue;
+            }
+            try {
+                $exporter[] = $this->createTemplateFromExportTemplate($template);
+            } catch (\Exception $exception) {
+                $this->logger->error('Unknown export template type: ' . $template->getRenderer());
+            }
+        }
 
         return array_merge($this->timesheetExporter, $exporter);
     }
