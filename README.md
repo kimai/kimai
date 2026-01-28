@@ -8,7 +8,7 @@
     <a href="https://packagist.org/packages/kimai/kimai"><img alt="Latest stable version" src="https://poser.pugx.org/kimai/kimai/v/stable"></a>
 </p>
 
-<h1 align="center">Kimai - time-tracker</h1>
+<h1 align="center">Kimai<br>#1 Open-Source Time-Tracker</h1>
 
 Kimai is a professional grade time-tracking application, free and open-source. 
 It handles use-cases of freelancers as well as companies with dozens or hundreds of users. 
