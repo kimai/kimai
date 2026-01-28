@@ -8,6 +8,7 @@
     <a href="https://packagist.org/packages/kimai/kimai"><img alt="Latest stable version" src="https://poser.pugx.org/kimai/kimai/v/stable"></a>
     <a href="https://www.gnu.org/licenses/agpl-3.0.en.html"><img alt="License" src="https://poser.pugx.org/kimai/kimai/license"></a>
     <a href="https://phpc.social/@kimai" rel="me"><img alt="Mastodon" src="https://img.shields.io/badge/toot-%40kimai-8c8dff"></a>
+    <a href="https://hosted.weblate.org/engage/kimai/"><img src="https://hosted.weblate.org/widget/kimai/svg-badge.svg" alt="Translation status" /></a>
 </p>
 
 <h1 align="center">Kimai - time-tracker</h1>
@@ -26,6 +27,7 @@ and so much more.
 - [Home](https://www.kimai.org) — Kimai project homepage
 - [Blog](https://www.kimai.org/blog/) — Read the latest news
 - [Documentation](https://www.kimai.org/documentation/) — Learn how to use Kimai
+- [Translation](https://hosted.weblate.org/engage/kimai/) — Translate Kimai into your language
 
 ### Requirements
 
