@@ -87,7 +87,7 @@
 {% endblock %}
 
 {% block footer %}
-    {% if 'dashboard' in app.request.attributes.get('_route') %}
+    {% if 'dashboard' in app.current_route %}
         {{ parent() }}
     {% endif %}
 {% endblock %}

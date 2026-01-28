@@ -9,8 +9,8 @@
 
 namespace App\Entity;
 
+use App\Audit\Loggable;
 use App\Form\Type\YesNoType;
-use App\WorkingTime\Calculator\WorkingTimeCalculatorDay;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
@@ -25,6 +25,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[Serializer\ExclusionPolicy('all')]
+#[Loggable(ignoredProperties: ['user'], title: 'user')]
 class UserPreference
 {
     public const HOURLY_RATE = 'hourly_rate';
@@ -34,20 +35,6 @@ class UserPreference
     public const LOCALE = 'locale';
     public const TIMEZONE = 'timezone';
     public const FIRST_WEEKDAY = 'first_weekday';
-    /** @deprecated since 2.22*/
-    public const WORK_HOURS_MONDAY = WorkingTimeCalculatorDay::WORK_HOURS_MONDAY;
-    /** @deprecated since 2.22*/
-    public const WORK_HOURS_TUESDAY = WorkingTimeCalculatorDay::WORK_HOURS_TUESDAY;
-    /** @deprecated since 2.22*/
-    public const WORK_HOURS_WEDNESDAY = WorkingTimeCalculatorDay::WORK_HOURS_WEDNESDAY;
-    /** @deprecated since 2.22*/
-    public const WORK_HOURS_THURSDAY = WorkingTimeCalculatorDay::WORK_HOURS_THURSDAY;
-    /** @deprecated since 2.22*/
-    public const WORK_HOURS_FRIDAY = WorkingTimeCalculatorDay::WORK_HOURS_FRIDAY;
-    /** @deprecated since 2.22*/
-    public const WORK_HOURS_SATURDAY = WorkingTimeCalculatorDay::WORK_HOURS_SATURDAY;
-    /** @deprecated since 2.22*/
-    public const WORK_HOURS_SUNDAY = WorkingTimeCalculatorDay::WORK_HOURS_SUNDAY;
     public const PUBLIC_HOLIDAY_GROUP = 'public_holiday_group';
     public const HOLIDAYS_PER_YEAR = 'holidays';
     public const WORK_CONTRACT_TYPE = 'work_contract_type';

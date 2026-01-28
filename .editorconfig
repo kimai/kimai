@@ -1,23 +1,17 @@
-; top-most EditorConfig file
+# editorconfig.org
+
 root = true
 
-; Unix-style newlines
 [*]
-end_of_line = lf
 charset = utf-8
-
-[*.php]
-indent_style = space
+end_of_line = lf
 indent_size = 4
-
-[*.twig]
 indent_style = space
-indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
 
-[*.yaml]
-indent_style = space
-indent_size = 4
+[{compose.yaml,compose.*.yaml}]
+indent_size = 2
 
-[*.yml]
-indent_style = space
-indent_size = 4
+[*.md]
+trim_trailing_whitespace = false

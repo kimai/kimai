@@ -66,14 +66,6 @@
         <source>user_profile</source>
         <target>Mi perfil</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>Contraseña de API</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>Repetir contraseña de API</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target>Sin permisos. ¿Volver al inicio de sesión?</target>
@@ -125,10 +117,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target>Complementos</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>Configuración</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
@@ -1714,10 +1702,6 @@
         <source>Expiry date</source>
         <target state="translated">Vencimiento</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">Las contraseñas de la API están obsoletas: en su lugar, utilice los tokens de la API.</target>
-      </trans-unit>
       <trans-unit id="rkCw7Ml" resname="last_usage" xml:space="preserve">
         <source>Last usage</source>
         <target state="translated">Usado por última vez</target>
@@ -1989,6 +1973,14 @@
       <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve">
         <source>electronic_invoice</source>
         <target state="translated">Factura electrónica</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="translated">Tarea</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">Tiempo estimado</target>
       </trans-unit>
     </body>
   </file>

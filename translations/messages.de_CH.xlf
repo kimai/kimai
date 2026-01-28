@@ -14,14 +14,6 @@
         <source>menu.homepage</source>
         <target state="translated">Dashboard</target>
       </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>API-Passwort wiederholen</target>
-      </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>API-Passwort</target>
-      </trans-unit>
       <trans-unit id="WMJwy8r" resname="invoice_tax_number">
         <source>invoice_tax_number</source>
         <target>Mehrwertsteuer-ID-Nr.:</target>
@@ -797,10 +789,6 @@
       <trans-unit id="JGaf9IK" resname="Doctor">
         <source>Doctor</source>
         <target>Doktor</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>Einstellungen</target>
       </trans-unit>
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
@@ -1874,10 +1862,6 @@
         <source>api_token_hidden</source>
         <target state="translated">Dies ist das einzige Mal, dass der Token angezeigt wird! Bewahren Sie ihn gut auf und vergewissern Sie sich, dass Sie ihn notiert haben, bevor Sie dieses Fenster schliessen.</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">API Passwörter sind veraltet: bitte nutzen Sie stattdessen API-Tokens.</target>
-      </trans-unit>
       <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
         <source>hours_per_day</source>
         <target state="translated">Stunden pro Tag</target>
@@ -1965,6 +1949,14 @@
       <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve">
         <source>Code</source>
         <target state="translated">Code</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="translated">Aufgabe</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">Schätzung</target>
       </trans-unit>
     </body>
   </file>

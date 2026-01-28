@@ -86,14 +86,6 @@
         <source>user_profile</source>
         <target>Min profil</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>API-passord</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>Gjenta API-passord</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target state="translated">Manglende tillatelse. Videresend til innlogging?</target>
@@ -485,10 +477,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target>Programtillegg</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>Innstillinger</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
@@ -1870,10 +1858,6 @@
         <source>api_token_hidden</source>
         <target state="translated">Dette er den eneste gangen nøkkelen vil vises! Oppbevar den trygt og sørg for at du har kopiert den før du lukker vinduet.</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">API-passord er foreldet: vennligst bruk API-nøkler i stedet.</target>
-      </trans-unit>
       <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
         <source>hours_per_day</source>
         <target state="translated">Timer pr. dag</target>
@@ -2041,6 +2025,14 @@
       <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve" approved="no">
         <source>electronic_invoice</source>
         <target state="translated">E-faktura</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="needs-translation">Gjøremålsbeskrivelse</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">Tidsestimat</target>
       </trans-unit>
     </body>
   </file>

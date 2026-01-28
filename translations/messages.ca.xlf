@@ -166,14 +166,6 @@
         <source>user_profile</source>
         <target state="translated">El meu perfil</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token" xml:space="preserve">
-        <source>api_token</source>
-        <target state="translated">Contrasenya de l'API</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat" xml:space="preserve">
-        <source>api_token_repeat</source>
-        <target state="translated">Repeteix la contrasenya de l'API</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required" xml:space="preserve">
         <source>login_required</source>
         <target state="translated">Permís absent. Redirigir a l'inici de sessió?</target>
@@ -257,10 +249,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin" xml:space="preserve">
         <source>menu.plugin</source>
         <target state="translated">Complements</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration" xml:space="preserve">
-        <source>menu.system_configuration</source>
-        <target state="translated">Configuració</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags" xml:space="preserve">
         <source>tags</source>
@@ -1770,10 +1758,6 @@
         <source>api_token_hidden</source>
         <target state="translated">Aquesta és l'única vegada que es mostrarà aquesta clau! Guardeu-la de manera segura i assegureu-vos d'haver-la copiat abans de tancar aquesta finestra.</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">Les contrasenyes de l'API estan obsoletes: utilitzeu tokens de l'API en el seu lloc.</target>
-      </trans-unit>
       <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
         <source>hours_per_day</source>
         <target state="translated">Hores per dia</target>
@@ -2065,6 +2049,14 @@
       <trans-unit id="hi31a3v" resname="tax.note.reverse_charge" xml:space="preserve">
         <source>tax.note.reverse_charge</source>
         <target state="translated">Impost a pagar en règim d’inversió del subjecte passiu</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="translated">Tasca</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">Estimació de temps</target>
       </trans-unit>
     </body>
   </file>

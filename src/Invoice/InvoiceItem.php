@@ -13,15 +13,14 @@ use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\User;
 use DateTime;
+use Symfony\Component\DependencyInjection\Attribute\Exclude;
 
+#[Exclude]
 final class InvoiceItem
 {
     private ?float $fixedRate = null;
     private ?float $hourlyRate = null;
     private float $rate = 0.00;
-    /**
-     * @deprecated since 2.41 - internal rate is not needed in invoices
-     */
     private float $rateInternal = 0.00;
     private float $amount = 0.00;
     private ?string $description = null;
@@ -134,17 +133,11 @@ final class InvoiceItem
         return $this;
     }
 
-    /**
-     * @deprecated since 2.41 - internal rate is not needed in invoices
-     */
     public function getInternalRate(): float
     {
         return $this->rateInternal;
     }
 
-    /**
-     * @deprecated since 2.41 - internal rate is not needed in invoices
-     */
     public function setInternalRate(float $rateInternal): InvoiceItem
     {
         $this->rateInternal = $rateInternal;

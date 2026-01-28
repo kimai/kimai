@@ -86,14 +86,6 @@
         <source>user_profile</source>
         <target>הפרופיל שלי</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>סיסמת API</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>אימות סיסמת API</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target>חסרה הרשאה. להפנות לכניסה למערכת?</target>
@@ -145,10 +137,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target>תוספות</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>הגדרות</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
@@ -1718,10 +1706,6 @@
         <source>Last usage</source>
         <target state="translated">שימוש אחרון</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">השימוש בסיסמאות API הופסק: נא להשתמש באסימוני API במקום.</target>
-      </trans-unit>
       <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
         <source>api_token_hidden</source>
         <target state="translated">זאת הפעם היחידה שהמפתח הזה יוצג אי־פעם! לכן כדאי לוודא שהוא שמור בבטחה ושהוא הועתק כראוי בטרם סגירת החלון הזה.</target>
@@ -2045,6 +2029,14 @@
       <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve" approved="yes">
         <source>electronic_invoice</source>
         <target state="final">חשבונית דיגיטלית</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="translated">משימה</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">הערכת זמן</target>
       </trans-unit>
     </body>
   </file>

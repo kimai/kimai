@@ -86,14 +86,6 @@
         <source>user_profile</source>
         <target state="final">Il mio profilo</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token" approved="yes">
-        <source>api_token</source>
-        <target state="final">Password API</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat" approved="yes">
-        <source>api_token_repeat</source>
-        <target state="final">Ripeti password API</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required" approved="yes">
         <source>login_required</source>
         <target state="final">Autorizzazione mancante. Reindirizzare all'accesso?</target>
@@ -149,10 +141,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin" approved="yes">
         <source>menu.plugin</source>
         <target state="final">Plugin</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration" approved="yes">
-        <source>menu.system_configuration</source>
-        <target state="final">Impostazioni</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags" approved="yes">
         <source>tags</source>
@@ -1710,10 +1698,6 @@
         <source>Project number</source>
         <target state="final">Numero progetto</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve" approved="yes">
-        <source>api_password_deprecated</source>
-        <target state="final">Le password API sono obsolete: usa invece i token API.</target>
-      </trans-unit>
       <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve" approved="yes">
         <source>Expiry date</source>
         <target state="final">Data di scadenza</target>
@@ -2065,6 +2049,14 @@
       <trans-unit id="hi31a3v" resname="tax.note.reverse_charge" xml:space="preserve" approved="yes">
         <source>tax.note.reverse_charge</source>
         <target state="final">Tassa da pagare in base all'addebito inverso</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="yes">
+        <source>todo</source>
+        <target state="final">Compito</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="yes">
+        <source>estimation</source>
+        <target state="final">Stima del tempo</target>
       </trans-unit>
     </body>
   </file>

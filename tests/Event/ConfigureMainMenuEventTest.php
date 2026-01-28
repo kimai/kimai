@@ -12,23 +12,11 @@ namespace App\Tests\Event;
 use App\Event\ConfigureMainMenuEvent;
 use App\Utils\MenuItemModel;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(ConfigureMainMenuEvent::class)]
 class ConfigureMainMenuEventTest extends TestCase
 {
-    /**
-     * @deprecated
-     */
-    #[Group('legacy')]
-    public function testLegacy(): void
-    {
-        $sut = new ConfigureMainMenuEvent();
-
-        self::assertEquals('apps', $sut->getAppsMenu()->getIdentifier());
-    }
-
     public function testGetterAndSetter(): void
     {
         $sut = new ConfigureMainMenuEvent();

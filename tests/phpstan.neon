@@ -262,16 +262,6 @@ parameters:
             path: API/TeamControllerTest.php
 
         -
-            message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
-            count: 1
-            path: API/TimesheetControllerTest.php
-
-        -
-            message: "#^Cannot access offset 0 on mixed\\.$#"
-            count: 1
-            path: API/TimesheetControllerTest.php
-
-        -
             message: "#^Cannot call method getDescription\\(\\) on App\\\\Entity\\\\Timesheet\\|null\\.$#"
             count: 1
             path: API/TimesheetControllerTest.php
@@ -293,11 +283,6 @@ parameters:
 
         -
             message: "#^Cannot call method isExported\\(\\) on App\\\\Entity\\\\Timesheet\\|null\\.$#"
-            count: 1
-            path: API/TimesheetControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#"
             count: 1
             path: API/TimesheetControllerTest.php
 
@@ -703,7 +688,7 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$hashedPassword of method Symfony\\\\Component\\\\PasswordHasher\\\\PasswordHasherInterface\\:\\:verify\\(\\) expects string, string\\|null given\\.$#"
-            count: 8
+            count: 4
             path: Controller/ProfileControllerTest.php
 
         -
@@ -723,16 +708,6 @@ parameters:
 
         -
             message: "#^Cannot call method getValue\\(\\) on array\\<array\\<Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\>\\|Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\>\\|Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\.$#"
-            count: 2
-            path: Controller/ProjectControllerTest.php
-
-        -
-            message: "#^Cannot call method setEnd\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 2
-            path: Controller/ProjectControllerTest.php
-
-        -
-            message: "#^Cannot call method setMetaField\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
             count: 2
             path: Controller/ProjectControllerTest.php
 
@@ -763,16 +738,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Controller\\\\ProjectControllerTest\\:\\:testValidationForCreateAction\\(\\) has parameter \\$validationFields with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Controller/ProjectControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$entity of method Doctrine\\\\ORM\\\\EntityManager\\:\\:persist\\(\\) expects object, App\\\\Entity\\\\Project\\|null given\\.$#"
-            count: 2
-            path: Controller/ProjectControllerTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$project of method App\\\\Entity\\\\Team\\:\\:addProject\\(\\) expects App\\\\Entity\\\\Project, App\\\\Entity\\\\Project\\|null given\\.$#"
             count: 1
             path: Controller/ProjectControllerTest.php
 
@@ -1347,11 +1312,6 @@ parameters:
             path: Form/Type/DurationTypeTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\QuickEntryTimesheetTypeTest\\:\\:getExtensions\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Form/Type/QuickEntryTimesheetTypeTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\QuickEntryTimesheetTypeTest\\:\\:getTestData\\(\\) has no return type specified\\.$#"
             count: 1
             path: Form/Type/QuickEntryTimesheetTypeTest.php
@@ -1800,16 +1760,6 @@ parameters:
             message: "#^Parameter \\#1 \\$invoiceItems of method App\\\\Repository\\\\TimesheetInvoiceItemRepository\\:\\:setExported\\(\\) expects array\\<App\\\\Entity\\\\ExportableItem\\>, array\\<int, App\\\\Entity\\\\Activity\\|App\\\\Entity\\\\Timesheet\\|stdClass\\|null\\> given\\.$#"
             count: 1
             path: Repository/TimesheetInvoiceItemRepositoryTest.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on mixed\\.$#"
-            count: 2
-            path: Repository/TimesheetRepositoryTest.php
-
-        -
-            message: "#^Cannot call method getName\\(\\) on mixed\\.$#"
-            count: 2
-            path: Repository/TimesheetRepositoryTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Saml\\\\SamlProviderTest\\:\\:getSamlProvider\\(\\) has parameter \\$mapping with no value type specified in iterable type array\\.$#"
@@ -2635,29 +2585,3 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\UserDurationYearTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Widget/Type/UserDurationYearTest.php
-        -
-          message: '''
-                    #^Access to constant on deprecated class App\\Timesheet\\Util\:
-                    use RateCalculatorMode instead$#
-                '''
-          identifier: classConstant.deprecatedClass
-          count: 1
-          path: Timesheet/UtilTest.php
-
-        -
-          message: '''
-                    #^Call to method calculateRate\(\) of deprecated class App\\Timesheet\\Util\:
-                    use RateCalculatorMode instead$#
-                '''
-          identifier: staticMethod.deprecatedClass
-          count: 2
-          path: Timesheet/UtilTest.php
-
-        -
-          message: '''
-                    #^Call to method decimalizeDuration\(\) of deprecated class App\\Timesheet\\Util\:
-                    use RateCalculatorMode instead$#
-                '''
-          identifier: staticMethod.deprecatedClass
-          count: 1
-          path: Timesheet/UtilTest.php

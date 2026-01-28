@@ -46,14 +46,6 @@
         <source>user_profile</source>
         <target>ملفي</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>كلمة مرور API</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>كرر كلمة مرور API</target>
-      </trans-unit>
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>لوحة القيادة</target>
@@ -605,10 +597,6 @@
       <trans-unit id="JGaf9IK" resname="Doctor">
         <source>Doctor</source>
         <target>حالة الخدمات</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>الإعدادات</target>
       </trans-unit>
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
@@ -1890,10 +1878,6 @@
         <source>Expiry date</source>
         <target state="translated">تاريخ انتهاء الصلاحية</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">كلمات مرور واجهة برمجة التطبيقات (API) قديمة: يُرجى استخدام رموز واجهة برمجة التطبيقات (API) بدلاً من ذلك.</target>
-      </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf" xml:space="preserve">
         <source>completed_month_pdf</source>
         <target state="translated">ملف PDF الشهر المنتهي</target>
@@ -1965,6 +1949,14 @@
       <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve">
         <source>Code</source>
         <target state="translated">الرمز</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="needs-translation">وصف المهمة</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">الوقت التقديري</target>
       </trans-unit>
     </body>
   </file>

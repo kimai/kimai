@@ -54,7 +54,7 @@ final class InvoiceModelIssuerHydrator implements InvoiceModelHydrator
             $prefix . 'buyer_reference' => $customer->getBuyerReference() ?? '',
         ];
 
-        foreach ($customer->getMetaFields() as $metaField) {
+        foreach ($customer->getVisibleMetaFields() as $metaField) {
             $values = array_merge($values, [
                 $prefix . 'meta.' . $metaField->getName() => $metaField->getValue(),
             ]);

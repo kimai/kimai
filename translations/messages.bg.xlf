@@ -134,14 +134,6 @@
         <source>user_profile</source>
         <target state="translated">Моят профил</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token" xml:space="preserve">
-        <source>api_token</source>
-        <target state="translated">API парола</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat" xml:space="preserve">
-        <source>api_token_repeat</source>
-        <target state="translated">Повторете паролата за API</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required" xml:space="preserve">
         <source>login_required</source>
         <target state="translated">Липсва разрешение. Пренасочване към вход?</target>
@@ -217,10 +209,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin" xml:space="preserve">
         <source>menu.plugin</source>
         <target state="translated">Приставки</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration" xml:space="preserve">
-        <source>menu.system_configuration</source>
-        <target state="translated">Настройки</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags" xml:space="preserve">
         <source>tags</source>
@@ -1658,10 +1646,6 @@
         <source>api_token_hidden</source>
         <target state="translated">Това е единственият път, когато този ключ някога ще бъде показан! Затова го пазете и се уверете, че сте го копирали преди затварянето на този прозорец.</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">Паролите на API са остарели: моля, използвайте вместо това API маркери.</target>
-      </trans-unit>
       <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
         <source>hours_per_day</source>
         <target state="translated">Часове на ден</target>
@@ -1965,6 +1949,14 @@
       <trans-unit id="DA1.Ln_" resname="time_off.intro" xml:space="preserve">
         <source>time_off.intro</source>
         <target state="translated">Вашата сметка за работно време има баланс от %hours% часа.</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="translated">Задача</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">Оценка на времето</target>
       </trans-unit>
     </body>
   </file>

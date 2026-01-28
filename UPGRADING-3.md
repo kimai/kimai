@@ -11,16 +11,27 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 **!! This release requires minimum PHP version 8.4 !!**
 
+### Rename .env
+
+Rename your file `.env` to `.env.local` or even better: move all variables to your webserver/container environment.
+
 ### Developer
 
-Do not use method chaining: all fluent interface, especially in Entities, are no longer supported. 
+Do not use method chaining: all fluent interface, especially in Entities, are no longer supported.
 
-Removed translations:
-- `action.edit`: use `edit` instead
-- `my.profile`: use `user_profile` instead
-- `stats.userAmountToday`: use `` instead
-- `stats.userAmountWeek`: use `` instead
-- `stats.userAmountMonth`: use `` instead
-- `stats.userAmountYear`: use `` instead
-- `stats.userAmountTotal`: use `` instead
-- `update_multiple`
+- Require PHP 8.4
+- Bump to Symfony 7.4
+- Removed old API token `X-AUTH-USER` and `X-AUTH-TOKEN`
+- Removed `TimesheetConstraint` - use a normal `Constraint` as base class and attach the `#[App\Validator\Attribute\TimesheetConstraint]` attribute 
+- Removed `ProjectConstraint` - use a `FormExtension` and attach your custom constraints 
+- Interface `MetaTableTypeInterface` has new methods: `getSection()`, `setSection()`
+- Interface `ExportRendererInterface` has new methods: `getType()`, `isInternal()`
+- Interface `ExportableItem` has new methods: `getTags()`, `getBreak()` 
+- Removed and renamed translations, most important `action.edit` => `edit`, `my.profile` => `user_profile`
+- Removed `User::isExportDecimal()`
+  - Use duration format `HH:mm` in default PDF exports
+- Replace Twig `AppVariable` with custom implementation
+  - You need to adjust your templates if you access anything else then `app.locale`, `app.user`. `app.current_route`. 
+  - Most often used: 
+    - Replace `app.request.locale` with `app.locale`
+    - Replace `app.request.attributes.get('_route')` with `app.current_route`

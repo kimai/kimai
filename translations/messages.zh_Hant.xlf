@@ -130,14 +130,6 @@
         <source>user_profile</source>
         <target state="final">我的資訊</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token" xml:space="preserve" approved="yes">
-        <source>api_token</source>
-        <target state="final">API 密碼</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat" xml:space="preserve" approved="yes">
-        <source>api_token_repeat</source>
-        <target state="final">再次輸入 API 密碼</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required" xml:space="preserve" approved="yes">
         <source>login_required</source>
         <target state="final">權限不足。要移至登入頁面嗎？</target>
@@ -201,10 +193,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin" xml:space="preserve" approved="yes">
         <source>menu.plugin</source>
         <target state="final">外掛程式</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration" xml:space="preserve" approved="yes">
-        <source>menu.system_configuration</source>
-        <target state="final">設定</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags" xml:space="preserve" approved="yes">
         <source>tags</source>
@@ -1726,10 +1714,6 @@
         <source>user_identifier</source>
         <target state="final">使用者 ID</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve" approved="yes">
-        <source>api_password_deprecated</source>
-        <target state="final">API 密碼已過時：請改用 API token。</target>
-      </trans-unit>
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve" approved="yes">
         <source>absence_comment_mandatory</source>
         <target state="final">缺勤：備註欄是必填欄位</target>
@@ -1897,6 +1881,14 @@
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve" approved="no">
         <source>Filter timesheets</source>
         <target state="needs-translation">篩選工時單</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="yes">
+        <source>todo</source>
+        <target state="final">任務</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="yes">
+        <source>estimation</source>
+        <target state="final">工時估算</target>
       </trans-unit>
     </body>
   </file>

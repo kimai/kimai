@@ -62,14 +62,6 @@
         <source>user_profile</source>
         <target>Profilom</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>API jelszó</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>API jelszó ismétlese</target>
-      </trans-unit>
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Kezdőlap</target>
@@ -113,10 +105,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target>Bővítmények</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration" xml:space="preserve">
-        <source>menu.system_configuration</source>
-        <target state="translated">Rendszerbeállítások</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
@@ -1758,10 +1746,6 @@
         <source>please_choose</source>
         <target state="translated">Kérlek válassz</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">Az API jelszavak elavultak: kérlek használd helyettük az API tokeneket.</target>
-      </trans-unit>
       <trans-unit id="y1XHR1Q" resname="address_deprecated" xml:space="preserve">
         <source>address_deprecated</source>
         <target state="translated">Ez a mező hamarosan eltávolításra kerül. Kérlek írd át a címet, hogy továbbra is érvényes számlák generálódjanak (pl. e-számlázás céljából).</target>
@@ -1889,6 +1873,14 @@
       <trans-unit id="cDOQMYv" resname="Beta" xml:space="preserve">
         <source>Beta</source>
         <target state="translated">Engedélyez egy előzetes funkciót, ami még fejlesztés alatt áll.</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="translated">Feladat</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">Időbecslés</target>
       </trans-unit>
     </body>
   </file>

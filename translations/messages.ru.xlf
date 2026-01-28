@@ -46,14 +46,6 @@
         <source>user_profile</source>
         <target state="translated">Мой профиль</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target state="translated">Пароль API</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target state="translated">Повторите пароль API</target>
-      </trans-unit>
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target state="translated">Информпанель</target>
@@ -689,10 +681,6 @@
       <trans-unit id="hlu4iX5" resname="error.no_comments_found">
         <source>error.no_comments_found</source>
         <target state="translated">Комментариев ещё нет.</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>Настройки</target>
       </trans-unit>
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
@@ -1866,10 +1854,6 @@
         <source>unlock_month.help</source>
         <target state="translated">Это разблокирует все дни года после выбранной даты.</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">Пароли API устарели: вместо них используйте токены API.</target>
-      </trans-unit>
       <trans-unit id="7p_pFHl" resname="work_days" xml:space="preserve">
         <source>work_days</source>
         <target state="translated">Рабочие дни</target>
@@ -2005,6 +1989,14 @@
       <trans-unit id="uXB48Vj" resname="SEPA Credit Transfer" xml:space="preserve">
         <source>SEPA Credit Transfer</source>
         <target state="needs-translation">SEPA кредитовый перевод</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="needs-translation">Описание</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">Оценка времени</target>
       </trans-unit>
     </body>
   </file>

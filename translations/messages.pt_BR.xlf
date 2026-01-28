@@ -62,14 +62,6 @@
         <source>user_profile</source>
         <target>Meu Perfil</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>Senha API</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>Repita Senha da API</target>
-      </trans-unit>
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Painel</target>
@@ -113,10 +105,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target>Plugins</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>Configurações</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
@@ -1710,10 +1698,6 @@
         <source>Activity number</source>
         <target state="translated">Numeração da atividade</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">As senhas de API estão desatualizadas: em vez disso, use tokens de API.</target>
-      </trans-unit>
       <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve">
         <source>Expiry date</source>
         <target state="translated">Data de vencimento</target>
@@ -2033,6 +2017,14 @@
       <trans-unit id="BmDRYT." resname="sending_company.help" xml:space="preserve">
         <source>sending_company.help</source>
         <target state="translated">Esta companhia é mostrada como o emissor na fatura. Desta, o nome, endereço, e informações de impostos serão usados.</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="translated">Tarefa</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">Estimativa de tempo</target>
       </trans-unit>
     </body>
   </file>

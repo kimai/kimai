@@ -26,17 +26,11 @@ use App\Repository\Query\ProjectQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Twig\SecurityPolicy\StrictPolicy;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\DependencyInjection\Attribute\Exclude;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use Twig\Extension\SandboxExtension;
 
-/**
- * TODO 3.0 remove default values from constructor parameters and make class final
- * @final
- */
-#[Exclude]
-class HtmlRenderer implements ExportRendererInterface
+final class HtmlRenderer implements ExportRendererInterface
 {
     use RendererTrait;
 
@@ -45,13 +39,13 @@ class HtmlRenderer implements ExportRendererInterface
         protected readonly EventDispatcherInterface $dispatcher,
         private readonly ProjectStatisticService $projectStatisticService,
         private readonly ActivityStatisticService $activityStatisticService,
-        private string $id = 'html', // deprecated default parameter - TODO 3.0
-        private readonly string $title = 'print', // deprecated default parameter - TODO 3.0
-        private string $template = 'export/print.html.twig', // deprecated default parameter - TODO 3.0
+        private string $id,
+        private readonly string $title,
+        private string $template,
     ) {
     }
 
-    public function isInternal(): bool
+    public function isInternal(): false
     {
         return false;
     }
@@ -69,18 +63,6 @@ class HtmlRenderer implements ExportRendererInterface
         $this->dispatcher->dispatch($event);
 
         return $event->getFields();
-    }
-
-    protected function getOptions(TimesheetQuery $query): array
-    {
-        $decimal = false;
-        if (null !== $query->getCurrentUser()) {
-            $decimal = $query->getCurrentUser()->isExportDecimal();
-        } elseif (null !== $query->getUser()) {
-            $decimal = $query->getUser()->isExportDecimal();
-        }
-
-        return ['decimal' => $decimal];
     }
 
     /**
@@ -107,7 +89,7 @@ class HtmlRenderer implements ExportRendererInterface
         $sandbox = $this->twig->getExtension(SandboxExtension::class);
         $sandbox->enableSandbox();
 
-        $content = $this->twig->render($this->getTemplate(), array_merge([
+        $content = $this->twig->render($this->getTemplate(), [
             'entries' => $exportItems,
             'query' => $query,
             'summaries' => $summary,
@@ -118,7 +100,7 @@ class HtmlRenderer implements ExportRendererInterface
             'projectMetaFields' => $projectMetaFields,
             'activityMetaFields' => $activityMetaFields,
             'userPreferences' => $userPreferences,
-        ], $this->getOptions($query)));
+        ]);
 
         // allows to run in development mode, otherwise toolbar would be blocked
         $sandbox->disableSandbox();
@@ -133,22 +115,6 @@ class HtmlRenderer implements ExportRendererInterface
     protected function getTemplate(): string
     {
         return $this->template;
-    }
-
-    /**
-     * @deprecated since 2.40.0
-     */
-    public function setTemplate(string $filename): void
-    {
-        $this->template = '@export/' . $filename;
-    }
-
-    /**
-     * @deprecated since 2.40.0
-     */
-    public function setId(string $id): void
-    {
-        $this->id = $id;
     }
 
     public function getId(): string

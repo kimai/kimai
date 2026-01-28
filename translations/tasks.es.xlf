@@ -14,10 +14,6 @@
         <source>task.start</source>
         <target state="translated">Empezar a procesar</target>
       </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
-        <source>task_todo</source>
-        <target state="translated">Tarea</target>
-      </trans-unit>
       <trans-unit id="XD7TZh7" resname="task.stop" xml:space="preserve" approved="no">
         <source>task.stop</source>
         <target state="translated">Pausar el procesamiento</target>
@@ -37,10 +33,6 @@
       <trans-unit id="kMOottI" resname="task.widget_rows" xml:space="preserve" approved="no">
         <source>task.widget_rows</source>
         <target state="translated">Cantidad de tareas por página en el widget del dashboard</target>
-      </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
-        <source>estimation</source>
-        <target state="translated">Tiempo estimado</target>
       </trans-unit>
       <trans-unit id="cu1.2JS" resname="task_not_started" xml:space="preserve" approved="no">
         <source>task_not_started</source>

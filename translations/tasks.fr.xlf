@@ -70,10 +70,6 @@
         <source>task.widget_rows</source>
         <target>Nombre de tâches par page dans le Dashboard</target>
       </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation">
-        <source>estimation</source>
-        <target>Estimation du temps</target>
-      </trans-unit>
       <trans-unit id="ZCSPtzc" resname="task.help.estimation">
         <source>task.help.estimation</source>
         <target>Temps estimé pour terminer la tâche en hh:mm</target>
@@ -105,10 +101,6 @@
       <trans-unit id="ZwdUYYa" resname="task_overdue">
         <source>task_overdue</source>
         <target>Périmée</target>
-      </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
-        <source>task_todo</source>
-        <target state="translated">Tâche</target>
       </trans-unit>
     </body>
   </file>

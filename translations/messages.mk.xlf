@@ -138,14 +138,6 @@
         <source>user_profile</source>
         <target state="translated">Мојот профил</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token" xml:space="preserve">
-        <source>api_token</source>
-        <target state="translated">API лозинка</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat" xml:space="preserve">
-        <source>api_token_repeat</source>
-        <target state="translated">Повтори API лозинка</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required" xml:space="preserve">
         <source>login_required</source>
         <target state="translated">Недостасува дозвола. Пренасочи кон најавување?</target>
@@ -229,10 +221,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin" xml:space="preserve">
         <source>menu.plugin</source>
         <target state="translated">Приклучоци</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration" xml:space="preserve">
-        <source>menu.system_configuration</source>
-        <target state="translated">Поставки</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags" xml:space="preserve">
         <source>tags</source>
@@ -1770,10 +1758,6 @@
         <source>api_token_hidden</source>
         <target state="translated">Ова е единствениот пат кога овој клуч ќе се прикаже! Затоа, чувајте го на безбедно и осигурајте се дека сте го копирале пред да го затворите овој прозорец.</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">API лозинките се застарени: наместо тоа користете API токени.</target>
-      </trans-unit>
       <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
         <source>hours_per_day</source>
         <target state="translated">Часови на ден</target>
@@ -2045,6 +2029,14 @@
       <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve">
         <source>electronic_invoice</source>
         <target state="translated">Е-фактура</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="translated">Задача</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">Проценкина времето</target>
       </trans-unit>
     </body>
   </file>

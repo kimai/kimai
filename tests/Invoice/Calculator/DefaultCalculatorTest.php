@@ -36,7 +36,7 @@ class DefaultCalculatorTest extends AbstractCalculatorTestCase
         $date = new \DateTime();
         $customer = new Customer('foo');
         $template = new InvoiceTemplate();
-        $template->setVat(19);
+        $template->setTaxRate(19.0);
 
         $timesheet = new Timesheet();
         $timesheet->setDescription('foo 1');

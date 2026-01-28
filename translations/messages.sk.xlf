@@ -74,14 +74,6 @@
         <source>user_profile</source>
         <target>Môj profil</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>API heslo</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>Zopakujte API heslo</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target>Nedostatočné oprávnenia. Presmerovať na prihlásenie?</target>
@@ -133,10 +125,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target>Doplnky</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target state="translated">Nastavenie</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
@@ -1649,6 +1637,14 @@
       <trans-unit id="pJzNT.n" resname="vcard">
         <source>vcard</source>
         <target state="translated">Vizitka</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="needs-translation">Popis úlohy</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">Časový odhad</target>
       </trans-unit>
     </body>
   </file>

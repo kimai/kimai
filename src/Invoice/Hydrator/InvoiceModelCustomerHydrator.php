@@ -32,7 +32,7 @@ final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
 
         $values = [
             $prefix . 'id' => $customer->getId(),
-            $prefix . 'address' => $customer->getFormattedAddress() ?? '', // deprecated since 2.44
+            $prefix . 'address' => $customer->getFormattedAddress() ?? '', // deprecated - cannot be deleted, referenced in customer templates
             $prefix . 'address_line1' => $customer->getAddressLine1() ?? '',
             $prefix . 'address_line2' => $customer->getAddressLine2() ?? '',
             $prefix . 'address_line3' => $customer->getAddressLine3() ?? '',
@@ -41,7 +41,7 @@ final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
             $prefix . 'name' => $customer->getName() ?? '',
             $prefix . 'contact' => $customer->getContact() ?? '',
             $prefix . 'company' => $customer->getCompany() ?? '',
-            $prefix . 'vat' => $customer->getVatId() ?? '', // deprecated since 2.0.15
+            $prefix . 'vat' => $customer->getVatId() ?? '', // deprecated - cannot be deleted, referenced in customer templates
             $prefix . 'vat_id' => $customer->getVatId() ?? '',
             $prefix . 'number' => $customer->getNumber() ?? '',
             $prefix . 'country' => $country,
@@ -63,7 +63,7 @@ final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
             $values = array_merge($values, $this->getBudgetValues($prefix, $statistic, $model));
         }
 
-        foreach ($customer->getMetaFields() as $metaField) {
+        foreach ($customer->getVisibleMetaFields() as $metaField) {
             $values = array_merge($values, [
                 $prefix . 'meta.' . $metaField->getName() => $metaField->getValue(),
             ]);

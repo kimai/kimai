@@ -122,14 +122,6 @@
         <source>user_profile</source>
         <target>Moj profil</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>API lozinka</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>Ponovi API lozinku</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target>Nedostaje dozvola. Preusmjeriti na prijavu?</target>
@@ -193,10 +185,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target state="translated">Dodaci</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>Postavke</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
@@ -1710,10 +1698,6 @@
         <source>Expiry date</source>
         <target state="translated">Datum isteka</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">API lozinke su zastarjele: umjesto njih koristi API tokene.</target>
-      </trans-unit>
       <trans-unit id="8JEDuyx" resname="activity_number" xml:space="preserve">
         <source>Activity number</source>
         <target state="translated">Broj aktivnosti</target>
@@ -2045,6 +2029,14 @@
       <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve" approved="no">
         <source>electronic_invoice</source>
         <target state="translated">E-račun</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="translated">Zadatak</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">Procjena vremena</target>
       </trans-unit>
     </body>
   </file>

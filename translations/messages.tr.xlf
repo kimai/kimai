@@ -66,14 +66,6 @@
         <source>user_profile</source>
         <target state="translated">Profilim</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target state="translated">API parolası</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target state="translated">API parolasını tekrarla</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target state="translated">İzin gerekli. Oturum açma sayfasına gidilsin mi?</target>
@@ -125,10 +117,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target state="translated">Eklentiler</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target state="translated">Tercihler</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
@@ -1722,10 +1710,6 @@
         <source>api_token_hidden</source>
         <target state="translated">Bu anahtarı bundan sonra görüntüleyemeyeceksiniz! Bu yüzden onu güvende tutun ve bu pencereyi kapatmadan önce kopyaladığınızdan emin olun.</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">API parolaları artık kullanılmıyor: lütfen bunun yerine API belirteçlerini kullanın.</target>
-      </trans-unit>
       <trans-unit id="WwesQPU" resname="deactivate" xml:space="preserve" approved="no">
         <source>Deactivate</source>
         <target state="translated">Devre dışı bırak</target>
@@ -2045,6 +2029,14 @@
       <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve">
         <source>electronic_invoice</source>
         <target state="translated">E-Fatura</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="translated">Görev</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">Zaman tahmini</target>
       </trans-unit>
     </body>
   </file>

@@ -13,7 +13,7 @@ use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use App\Repository\Query\InvoiceQuery;
 use App\Timesheet\RateCalculator\RateCalculatorMode;
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 final class InvoiceModelFactory
 {
@@ -23,9 +23,9 @@ final class InvoiceModelFactory
      */
     public function __construct(
         private readonly RateCalculatorMode $rateCalculatorMode,
-        #[TaggedIterator(InvoiceModelHydrator::class)]
+        #[AutowireIterator(InvoiceModelHydrator::class)]
         private readonly iterable $modelHydrators,
-        #[TaggedIterator(InvoiceItemHydrator::class)]
+        #[AutowireIterator(InvoiceItemHydrator::class)]
         private readonly iterable $itemHydrators,
     ) {
     }

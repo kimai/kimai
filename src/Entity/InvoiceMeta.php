@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Audit\Loggable;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -18,6 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[Serializer\ExclusionPolicy('all')]
+#[Loggable(ignoredProperties: ['invoice'], title: 'invoices')]
 class InvoiceMeta implements MetaTableTypeInterface
 {
     use MetaTableTypeTrait;

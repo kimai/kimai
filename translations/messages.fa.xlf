@@ -94,14 +94,6 @@
         <source>user_profile</source>
         <target>پروفایل من</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>پسورد API</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target state="translated">تکرار پسورد API</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target state="translated">مجوز از دست رفته است. تغییر مسیر برای ورود به سیستم؟</target>
@@ -305,10 +297,6 @@
       <trans-unit id="JGaf9IK" resname="Doctor">
         <source>Doctor</source>
         <target>دکتر</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>تنظیمات</target>
       </trans-unit>
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
@@ -1870,10 +1858,6 @@
         <source>api_token_hidden</source>
         <target state="translated">این تنها باری است که این کلید نمایش داده می‌شود! پس آن را در جای امنی نگه دارید و قبل از بستن این پنجره، مطمئن شوید که آن را کپی کرده‌اید.</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">رمزهای عبور API قدیمی هستند: لطفاً به جای آنها از توکن‌های API استفاده کنید.</target>
-      </trans-unit>
       <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
         <source>hours_per_day</source>
         <target state="translated">ساعت در روز</target>
@@ -2041,6 +2025,14 @@
       <trans-unit id="jcT9Og6" resname="payment_account_number" xml:space="preserve" approved="no">
         <source>payment_account_name</source>
         <target state="translated">شماره شبا یا شماره کارت</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="translated">وظیفه</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">تخمین زمان</target>
       </trans-unit>
     </body>
   </file>

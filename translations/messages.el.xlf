@@ -122,14 +122,6 @@
         <source>user_profile</source>
         <target state="translated">Το Προφίλ μου</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>Διαπιστευτήριο API</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>Επανάληψη διαπιστευτηρίου API</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target>Ληγμένη συνεδρία. Ανακατεύθυνση στην οθόνη σύνδεσης;</target>
@@ -185,10 +177,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target>Πρόσθετα</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>Ρυθμίσεις</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
@@ -1357,10 +1345,6 @@
       <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve">
         <source>booking_allow_only_work_days</source>
         <target state="translated">Να επιτρέπονται καταχωρήσεις χρόνου μόνο για τις ημέρες για τις οποίες οι αναμενόμενες ώρες ορίζονται στη σύμβαση εργασίας</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">Οι κωδικοί πρόσβασης API είναι απαρχαιωμένοι: παρακαλούμε χρησιμοποιήστε αντί αυτών τα tokens API.</target>
       </trans-unit>
       <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve">
         <source>Project number</source>

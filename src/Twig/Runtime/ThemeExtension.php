@@ -14,7 +14,6 @@ use App\Constants;
 use App\Entity\User;
 use App\Event\PageActionsEvent;
 use App\Event\ThemeEvent;
-use App\Event\ThemeJavascriptTranslationsEvent;
 use App\Utils\Color;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -56,16 +55,29 @@ final class ThemeExtension implements RuntimeExtensionInterface
 
     public function getJavascriptTranslations(): array
     {
-        $event = new ThemeJavascriptTranslationsEvent(); // @phpstan-ignore new.deprecatedClass
+        $translations = [
+            'confirm' => ['confirm', 'messages'],
+            'cancel' => ['cancel', 'messages'],
+            'close' => ['action.close', 'messages'],
+            'timesheet.start.success' => ['timesheet.start.success', 'flashmessages'],
+            'timesheet.start.error' => ['timesheet.start.error', 'flashmessages'],
+            'timesheet.stop.success' => ['timesheet.stop.success', 'flashmessages'],
+            'timesheet.stop.error' => ['timesheet.stop.error', 'flashmessages'],
+            'action.update.success' => ['action.update.success', 'flashmessages'],
+            'action.update.error' => ['action.update.error', 'flashmessages'],
+            'action.delete.success' => ['action.delete.success', 'flashmessages'],
+            'action.delete.error' => ['action.delete.error', 'flashmessages'],
+            'confirm.delete' => ['confirm.delete', 'messages'],
+            'delete' => ['delete', 'messages'],
+            'login.required' => ['login_required', 'messages'],
+            'modal.dirty' => ['modal.dirty', 'messages'],
+            'select.search.notfound' => ['search.no_results', 'messages'],
+            'select.search.create' => ['select.add_new', 'messages'],
+        ];
 
-        $this->eventDispatcher->dispatch($event);
-
-        $all = [];
-        foreach ($event->getTranslations() as $key => $translation) { // @phpstan-ignore method.deprecatedClass
-            $all[$key] = $this->translator->trans($translation[0], [], $translation[1]);
-        }
-
-        return $all;
+        return array_map(function ($translation) {
+            return $this->translator->trans($translation[0], [], $translation[1]);
+        }, $translations);
     }
 
     public function getProgressbarClass(float $percent, ?bool $reverseColors = false): string

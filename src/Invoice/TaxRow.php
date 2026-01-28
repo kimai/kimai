@@ -9,8 +9,9 @@
 
 namespace App\Invoice;
 
-use App\Entity\Tax;
+use Symfony\Component\DependencyInjection\Attribute\Exclude;
 
+#[Exclude]
 final class TaxRow
 {
     public function __construct(

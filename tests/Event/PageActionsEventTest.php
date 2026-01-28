@@ -33,10 +33,15 @@ class PageActionsEventTest extends TestCase
         self::assertEquals([], $sut->getActions());
         self::assertEquals(['actions' => [], 'view' => 'bar'], $sut->getPayload());
         self::assertNull($sut->getLocale());
+        self::assertNull($sut->getItem());
 
-        $sut = new PageActionsEvent($user, ['hello' => 'world'], 'foo', 'bar');
+        $item = new User();
+
+        $sut = new PageActionsEvent($user, ['hello' => 'world', 'item' => $item], 'foo', 'bar');
         self::assertSame($user, $sut->getUser());
         self::assertEquals([], $sut->getActions());
+        self::assertNotNull($sut->getItem());
+        self::assertInstanceOf(User::class, $sut->getItem());
         self::assertEquals(['hello' => 'world', 'actions' => [], 'view' => 'bar'], $sut->getPayload());
     }
 

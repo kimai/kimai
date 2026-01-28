@@ -258,14 +258,11 @@ final class Configuration implements ConfigurationInterface
                     ->arrayPrototype()
                         ->children()
                             ->arrayNode('days')
-                                ->requiresAtLeastOneElement()
                                 ->useAttributeAsKey('key')
-                                ->isRequired()
                                 ->scalarPrototype()->end()
                                 ->defaultValue([])
                             ->end()
                             ->floatNode('factor')
-                                ->isRequired()
                                 ->defaultValue(1)
                                 ->validate()
                                     ->ifTrue(function ($value) {
@@ -650,7 +647,6 @@ final class Configuration implements ConfigurationInterface
                         ->useAttributeAsKey('key')
                         ->isRequired()
                         ->scalarPrototype()->end()
-                        ->defaultValue([])
                     ->end()
                 ->end()
                 ->arrayNode('maps')
@@ -660,7 +656,6 @@ final class Configuration implements ConfigurationInterface
                         ->useAttributeAsKey('key')
                         ->isRequired()
                         ->scalarPrototype()->end()
-                        ->defaultValue([])
                     ->end()
                 ->end()
                 ->arrayNode('roles')
@@ -669,7 +664,6 @@ final class Configuration implements ConfigurationInterface
                     ->arrayPrototype()
                         ->isRequired()
                         ->scalarPrototype()->end()
-                        ->defaultValue([])
                     ->end()
                     ->defaultValue([
                         'ROLE_USER' => [],

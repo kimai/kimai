@@ -46,10 +46,6 @@
         <source>task_overdue</source>
         <target state="translated">Gecikti</target>
       </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
-        <source>task_todo</source>
-        <target state="translated">Görev</target>
-      </trans-unit>
       <trans-unit id="F1_rg1R" resname="task.reopen" xml:space="preserve" approved="no">
         <source>task.reopen</source>
         <target state="translated">Görevi yeniden aç</target>
@@ -85,10 +81,6 @@
       <trans-unit id="taZkyYV" resname="task.help.user" xml:space="preserve" approved="no">
         <source>task.help.user</source>
         <target state="translated">Bu görevi bir kullanıcıya ata</target>
-      </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
-        <source>estimation</source>
-        <target state="translated">Zaman tahmini</target>
       </trans-unit>
       <trans-unit id="cu1.2JS" resname="task_not_started" xml:space="preserve" approved="no">
         <source>task_not_started</source>

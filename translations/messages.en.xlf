@@ -138,14 +138,6 @@
         <source>user_profile</source>
         <target>My profile</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>API password</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>Repeat API password</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target>Missing permission. Redirect to login?</target>
@@ -229,10 +221,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target>Plugins</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>Settings</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
@@ -1770,10 +1758,6 @@
         <source>api_token_hidden</source>
         <target>This is the only time this key will ever be displayed! So keep it safe and make sure you've copied it down before closing this window.</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated">
-        <source>api_password_deprecated</source>
-        <target>API passwords are outdated: please use API tokens instead.</target>
-      </trans-unit>
       <trans-unit id="2qbRs28" resname="hours_per_day">
         <source>hours_per_day</source>
         <target>Hours per day</target>
@@ -1844,7 +1828,7 @@
       </trans-unit>
       <trans-unit id="zeD7Dew" resname="settings">
         <source>settings</source>
-        <target>Preferences</target>
+        <target>Settings</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter">
         <source>Filter timesheets</source>
@@ -2065,6 +2049,14 @@
       <trans-unit id="hi31a3v" resname="tax.note.reverse_charge">
         <source>tax.note.reverse_charge</source>
         <target>Tax to be paid on reverse charge basis</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo">
+        <source>todo</source>
+        <target>Task</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation">
+        <source>estimation</source>
+        <target>Estimation</target>
       </trans-unit>
     </body>
   </file>
