@@ -162,4 +162,72 @@
         {% endblock %}
     {% endembed %}
 
+    {% set opcache_warning = not opcache['enabled'] %}
+    {% embed '@theme/embeds/collapsible.html.twig' with {open: opcache_warning, boxtype: (opcache_warning ? 'danger' : 'success')} %}
+        {% block title %}OPCache{% endblock %}
+        {% block body_class %}p-0{% endblock %}
+        {% block body %}
+            {% import "macros/widgets.html.twig" as widgets %}
+            {% if opcache_warning %}
+                {{ widgets.alert('danger', 'Could not detect an active OPCache. This will significantly impact the performance of Kimai.') }}
+            {% endif %}
+            {% if opcache['status'] is iterable %}
+            <table class="table table-hover">
+                <tr>
+                    <th class="text-nowrap w-min">Opcache Enabled</th>
+                    <td class="text-break">{{ widgets.label_boolean(opcache['enabled']) }}</td>
+                </tr>
+                <tr>
+                    <th class="text-nowrap w-min">Opcache Full</th>
+                    <td class="text-break">{{ widgets.label_boolean(opcache['status']['cache_full']) }}</td>
+                </tr>
+                <tr>
+                    <th class="text-nowrap w-min">Memory Used</th>
+                    <td class="text-break">{{ (opcache['status']['memory_usage']['used_memory'] / 1024 / 1024)|number_format(2) }} MB</td>
+                </tr>
+                <tr>
+                    <th class="text-nowrap w-min">Memory Free</th>
+                    <td class="text-break">{{ (opcache['status']['memory_usage']['free_memory'] / 1024 / 1024)|number_format(2) }} MB</td>
+                </tr>
+                <tr>
+                    <th class="text-nowrap w-min">Interned-Strings Used</th>
+                    <td class="text-break">{{ (opcache['status']['interned_strings_usage']['used_memory'] / 1024 / 1024)|number_format(2) }} MB</td>
+                </tr>
+                <tr>
+                    <th class="text-nowrap w-min">Interned-Strings Free</th>
+                    <td class="text-break">{{ (opcache['status']['interned_strings_usage']['free_memory'] / 1024 / 1024)|number_format(2) }} MB</td>
+                </tr>
+                <tr>
+                    <th class="text-nowrap w-min">Cached Scripts</th>
+                    <td class="text-break">{{ opcache['status']['opcache_statistics']['num_cached_scripts'] }}</td>
+                </tr>
+                <tr>
+                    <th class="text-nowrap w-min">Cached Keys</th>
+                    <td class="text-break">{{ opcache['status']['opcache_statistics']['num_cached_keys'] }}</td>
+                </tr>
+                <tr>
+                    <th class="text-nowrap w-min">Max Keys</th>
+                    <td class="text-break">{{ opcache['status']['opcache_statistics']['max_cached_keys'] }}</td>
+                </tr>
+                <tr>
+                    <th class="text-nowrap w-min">Hit Rate</th>
+                    <td class="text-break">{{ opcache['status']['opcache_statistics']['opcache_hit_rate']|number_format(2) }}</td>
+                </tr>
+                <tr>
+                    <th class="text-nowrap w-min">Jit enabled</th>
+                    <td class="text-break">{{ widgets.label_boolean(opcache['status']['jit']['enabled']) }}</td>
+                </tr>
+                <tr>
+                    <th class="text-nowrap w-min">Buffer Size</th>
+                    <td class="text-break">{{ (opcache['status']['jit']['buffer_size'] / 1024 / 1024)|number_format(2) }} MB</td>
+                </tr>
+                <tr>
+                    <th class="text-nowrap w-min">Buffer Free</th>
+                    <td class="text-break">{{ (opcache['status']['jit']['buffer_free'] / 1024 / 1024)|number_format(2) }} MB</td>
+                </tr>
+            </table>
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+
 {% endblock %}
