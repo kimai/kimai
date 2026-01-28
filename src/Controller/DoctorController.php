@@ -113,6 +113,9 @@ final class DoctorController extends AbstractController
         ]);
     }
 
+    /**
+     * @return array{enabled: bool, status: false|array<mixed>}
+     */
     private function getOpcacheConfiguration(): array
     {
         $status = \function_exists('opcache_get_status') ? opcache_get_status() : false;
