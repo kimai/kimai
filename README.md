@@ -6,9 +6,6 @@
     <a href="https://github.com/kimai/kimai/actions"><img alt="CI Status" src="https://github.com/kimai/kimai/actions/workflows/testing.yaml/badge.svg"></a>
     <a href="https://codecov.io/gh/kimai/kimai"><img alt="Code Coverage" src="https://codecov.io/gh/kimai/kimai/branch/main/graph/badge.svg"></a>
     <a href="https://packagist.org/packages/kimai/kimai"><img alt="Latest stable version" src="https://poser.pugx.org/kimai/kimai/v/stable"></a>
-    <a href="https://www.gnu.org/licenses/agpl-3.0.en.html"><img alt="License" src="https://poser.pugx.org/kimai/kimai/license"></a>
-    <a href="https://phpc.social/@kimai" rel="me"><img alt="Mastodon" src="https://img.shields.io/badge/toot-%40kimai-8c8dff"></a>
-    <a href="https://hosted.weblate.org/engage/kimai/"><img src="https://hosted.weblate.org/widget/kimai/svg-badge.svg" alt="Translation status" /></a>
 </p>
 
 <h1 align="center">Kimai - time-tracker</h1>
@@ -27,7 +24,6 @@ and so much more.
 - [Home](https://www.kimai.org) — Kimai project homepage
 - [Blog](https://www.kimai.org/blog/) — Read the latest news
 - [Documentation](https://www.kimai.org/documentation/) — Learn how to use Kimai
-- [Translation](https://hosted.weblate.org/engage/kimai/) — Translate Kimai into your language
 
 ### Requirements
 
@@ -73,6 +69,7 @@ The best way to start is to [open a new issue](https://github.com/kimai/kimai/is
 In case you want to contribute, but you wouldn't know how, here are some suggestions:
 
 - Spread the word: Please [write a testimonial for our Wall of love](https://love.kimai.org), vote for Kimai on any software platform, you can toot or tweet about it, share it on LinkedIn, Reddit and any other social media platform!
+- [Translate Kimai into your language](https://hosted.weblate.org/engage/kimai/), or help to improve the existing translations, many languages look for a contributor
 - Answer questions: You know the answer to another user's problem? Share your knowledge.
 - Something can be done better? An essential feature is missing? Create a feature request.
 - Report bugs makes Kimai better for everyone.
@@ -80,6 +77,12 @@ In case you want to contribute, but you wouldn't know how, here are some suggest
 - Sponsor the project: free software costs money to create!
 
 There is one simple rule in our "Code of conduct": Don't be an ass!
+
+## Follow Kimai
+
+- Mastodon: [@kimai](https://phpc.social/@kimai)
+- Youtube: [@kimai_org](https://www.youtube.com/@kimai_org)
+- LinkedIn: [@kimai-org](https://www.linkedin.com/company/kimai-org/)
 
 ### Credits
 
