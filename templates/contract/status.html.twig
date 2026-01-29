@@ -172,6 +172,9 @@
                                         {% if addon.visibleDuration > 0 %}
                                             {% set statusTitle = statusTitle ~ ' (' ~ addon.visibleDuration|duration(decimal) ~ ')' %}
                                         {% endif %}
+                                        {% if addon.getAttribute('comment') is not null %}
+                                            {% set statusTitle = statusTitle ~ ': ' ~ addon.getAttribute('comment') %}
+                                        {% endif %}
                                         {% if not loop.last %}
                                             {% set statusTitle = statusTitle ~ ', ' %}
                                         {% endif %}
