@@ -59,6 +59,6 @@ final class UserDurationYear extends AbstractCounterYear
 
     protected function getFinancialYearTitle(): string
     {
-        return 'stats.durationFinancialYear';
+        return 'stats.userDurationYear';
     }
 }
