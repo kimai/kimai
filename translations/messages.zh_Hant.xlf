@@ -1890,9 +1890,9 @@
         <source>create-timesheet-multiuser</source>
         <target state="final">用於多位使用者</target>
       </trans-unit>
-      <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve" approved="yes">
-        <source>settings</source>
-        <target state="final">偏好設定</target>
+      <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve" approved="no">
+        <source>Settings</source>
+        <target state="needs-translation">偏好設定</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve" approved="no">
         <source>Filter timesheets</source>

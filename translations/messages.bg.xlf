@@ -1731,8 +1731,8 @@
         <target state="translated">Профил</target>
       </trans-unit>
       <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
-        <source>settings</source>
-        <target state="translated">Предпочитания</target>
+        <source>Settings</source>
+        <target state="needs-translation">Предпочитания</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>

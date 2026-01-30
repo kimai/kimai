@@ -128,19 +128,19 @@
       </trans-unit>
       <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target state="needs-translation">Sufit: początek, koniec i długość (czas trwania) będą zaokrąglane w górę</target>
+        <target state="translated">Początek, koniec i długość (czas trwania) będą zaokrąglane w górę</target>
       </trans-unit>
       <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target state="needs-translation">Najbliższe: matematyczne zaokrąglanie do najbliższej wartości</target>
+        <target state="translated">Matematyczne zaokrąglanie do najbliższej wartości</target>
       </trans-unit>
       <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target state="needs-translation">Standard: początek będzie zaokrąglany w dół, koniec i długość (czas trwania) w górę</target>
+        <target state="translated">Początek będzie zaokrąglany w dół, koniec i długość (czas trwania) w górę</target>
       </trans-unit>
       <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target state="needs-translation">W dół: początek, koniec i długość (czas trwania) będą zaokrąglane w dół</target>
+        <target state="translated">Początek, koniec i długość (czas trwania) będą zaokrąglane w dół</target>
       </trans-unit>
       <trans-unit id="6CSB6iM" resname="first_weekday">
         <source>first_weekday</source>
@@ -309,6 +309,10 @@
       <trans-unit id="jj1NmKW" resname="allow_duplicate_number" xml:space="preserve">
         <source>allow_duplicate_number</source>
         <target state="translated">Zezwalaj na wielokrotne użycie tego samego numeru</target>
+      </trans-unit>
+      <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="no" xml:space="preserve">
+        <source>invoice.rounding_mode</source>
+        <target state="translated">Tryb zaokrąglenia</target>
       </trans-unit>
     </body>
   </file>

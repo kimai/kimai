@@ -1339,8 +1339,8 @@
         <target state="translated">Cuti Pribadi (Melebihi waktu lembur)</target>
       </trans-unit>
       <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
-        <source>settings</source>
-        <target state="translated">Preferensi</target>
+        <source>Settings</source>
+        <target state="needs-translation">Preferensi</target>
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>

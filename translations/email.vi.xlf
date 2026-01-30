@@ -54,6 +54,42 @@ Please review them at: %url%</source>
 
 Vui lòng xét duyệt tại: %url%</target>
       </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="translated">Quyền cấp phép đã được yêu cầu:%user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="translated">Quyền cấp phép cho %user% đã được yêu cầu
+
+%list%
+
+Hãy xem qua tại:%url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">Yêu cầu của bạn đã bị từ chối</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">Yêu cầu xác thực của bạn đã bị từ chối bởi %created_by%
+
+%list%
+
+Vui lòng xem qua yêu cầu của bạn tại: %url%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Yêu cầu của bạn đã được chấp nhận</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="translated">Yêu cầu của bạn đã được chấp nhận bởi %created_by%
+
+%list%
+
+Bạn có thể tất cả truy vấn của bạn tại: %url%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
