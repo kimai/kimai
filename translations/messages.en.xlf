@@ -2066,6 +2066,34 @@
         <source>tax.note.reverse_charge</source>
         <target>Tax to be paid on reverse charge basis</target>
       </trans-unit>
+      <trans-unit id="wts001" resname="working_time_calc">
+        <source>working_time_calc</source>
+        <target>Working time calculation</target>
+      </trans-unit>
+      <trans-unit id="wts002" resname="working_time_calc.enabled">
+        <source>working_time_calc.enabled</source>
+        <target>Alternative working time calculation</target>
+      </trans-unit>
+      <trans-unit id="wts003" resname="working_time_calc.enabled.help">
+        <source>working_time_calc.enabled.help</source>
+        <target>Default: Kimai sums up the duration of all bookings per day (may cause double counting for parallel activities). Alternative: Calculates working time as time span from first start to last end of the day.</target>
+      </trans-unit>
+      <trans-unit id="wts004" resname="working_time_calc.gap_tolerance">
+        <source>working_time_calc.gap_tolerance</source>
+        <target>Gap tolerance (minutes)</target>
+      </trans-unit>
+      <trans-unit id="wts005" resname="working_time_calc.gap_tolerance.help">
+        <source>working_time_calc.gap_tolerance.help</source>
+        <target>Small gaps between time entries are ignored and entries are considered connected. Default: 3 minutes.</target>
+      </trans-unit>
+      <trans-unit id="wts006" resname="working_time_calc.max_duration">
+        <source>working_time_calc.max_duration</source>
+        <target>Max. task duration (hours)</target>
+      </trans-unit>
+      <trans-unit id="wts007" resname="working_time_calc.max_duration.help">
+        <source>working_time_calc.max_duration.help</source>
+        <target>Individual time entries exceeding this duration are excluded from working time calculation. Default: 16 hours.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
