@@ -1675,8 +1675,8 @@
         <target>الملف الشخصي</target>
       </trans-unit>
       <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
-        <source>settings</source>
-        <target state="translated">التفضيلات</target>
+        <source>Settings</source>
+        <target state="needs-translation">التفضيلات</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
