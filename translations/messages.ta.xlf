@@ -88,7 +88,7 @@
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve" approved="no">
         <source>stats.durationFinancialYear</source>
-        <target state="needs-translation">இந்தப் பொருள் ஆண்டு வேலை நேரம்</target>
+        <target state="translated">நிதியாண்டு</target>
       </trans-unit>
       <trans-unit id="DXcvOMM" resname="stats.userDurationWeek" xml:space="preserve" approved="no">
         <source>stats.userDurationWeek</source>
@@ -1867,8 +1867,8 @@
         <target state="translated">தன்விவரம்</target>
       </trans-unit>
       <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve" approved="no">
-        <source>settings</source>
-        <target state="translated">விருப்பத்தேர்வுகள்</target>
+        <source>Settings</source>
+        <target state="needs-translation">விருப்பத்தேர்வுகள்</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve" approved="no">
         <source>Filter timesheets</source>
@@ -1941,6 +1941,42 @@
       <trans-unit id="EaYsI0E" resname="city" xml:space="preserve">
         <source>City</source>
         <target state="translated">நகரம்</target>
+      </trans-unit>
+      <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
+        <source>sending_company</source>
+        <target state="translated">விலைப்பட்டியல் வழங்குபவர்</target>
+      </trans-unit>
+      <trans-unit id="Uzll0ps" resname="Customer portal" xml:space="preserve">
+        <source>Customer portal</source>
+        <target state="translated">வாடிக்கையாளர் தளம்</target>
+      </trans-unit>
+      <trans-unit id="eV6j76Q" resname="font" xml:space="preserve">
+        <source>font</source>
+        <target state="translated">எழுத்துரு</target>
+      </trans-unit>
+      <trans-unit id="4toQj2M" resname="Cash" xml:space="preserve">
+        <source>Cash</source>
+        <target state="translated">பணம்</target>
+      </trans-unit>
+      <trans-unit id="cWZZc6D" resname="Cheque" xml:space="preserve">
+        <source>Cheque</source>
+        <target state="translated">காசோலை</target>
+      </trans-unit>
+      <trans-unit id="xZzzKxM" resname="orientation" xml:space="preserve">
+        <source>Orientation</source>
+        <target state="translated">நோக்குநிலை</target>
+      </trans-unit>
+      <trans-unit id="nPJWKwW" resname="payment_type" xml:space="preserve">
+        <source>payment_type</source>
+        <target state="translated">கட்டண வகை</target>
+      </trans-unit>
+      <trans-unit id="_Ep8Ogx" resname="buyerReference" xml:space="preserve">
+        <source>buyerReference</source>
+        <target state="translated">வாங்குபவர் குறிப்பு</target>
+      </trans-unit>
+      <trans-unit id="TJQbc0a" resname="Payment To Bank Account" xml:space="preserve">
+        <source>Payment To Bank Account</source>
+        <target state="translated">வங்கி கணக்கிற்கு பணம் செலுத்து</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve" approved="yes">
         <source>Timesheet</source>

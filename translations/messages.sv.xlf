@@ -122,7 +122,7 @@
         <source>error.no_entries_found</source>
         <target state="translated">Inga poster hittades baserat på dina valda filter.</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
         <target state="translated">Datum</target>
       </trans-unit>
@@ -1664,7 +1664,7 @@
       </trans-unit>
       <trans-unit id="uqv2Lrv" resname="user_identifier.help" xml:space="preserve">
         <source>user_identifier.help</source>
-        <target state="translated">Ett unikt ID som används för autentisering och vid export av data</target>
+        <target state="translated">Ett unikt användar-ID som används för autentisering och vid export av data</target>
       </trans-unit>
       <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
         <source>Sickness of a relative</source>
@@ -1766,8 +1766,8 @@
         <source>profile-stats</source>
         <target state="translated">Statistik</target>
       </trans-unit>
-      <trans-unit id="zeD7Dew" resname="settings">
-        <source>settings</source>
+      <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
+        <source>Settings</source>
         <target state="translated">Inställningar</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
@@ -2045,6 +2045,26 @@
       <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve">
         <source>electronic_invoice</source>
         <target state="translated">E-faktura</target>
+      </trans-unit>
+      <trans-unit id="QnN_ONc" resname="invoice_tax_type" xml:space="preserve">
+        <source>invoice_tax_type</source>
+        <target state="translated">Skattestatus</target>
+      </trans-unit>
+      <trans-unit id="Mi7y8Q3" resname="tax.type.exempt" xml:space="preserve">
+        <source>tax.type.exempt</source>
+        <target state="translated">Undantagen</target>
+      </trans-unit>
+      <trans-unit id="lU1Njcy" resname="tax.type.standard" xml:space="preserve">
+        <source>tax.type.standard</source>
+        <target state="translated">Skattepliktig</target>
+      </trans-unit>
+      <trans-unit id="E470U8W" resname="tax.type.reverse" xml:space="preserve">
+        <source>tax.type.reverse</source>
+        <target state="translated">Omvänd skattskyldighet</target>
+      </trans-unit>
+      <trans-unit id="hi31a3v" resname="tax.note.reverse_charge" xml:space="preserve">
+        <source>tax.note.reverse_charge</source>
+        <target state="translated">Skatt att betala enligt omvänd skattskyldighet</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>Timesheet</source>

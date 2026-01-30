@@ -1430,9 +1430,9 @@
         <source>profile-stats</source>
         <target state="translated">پروفایل</target>
       </trans-unit>
-      <trans-unit id="zeD7Dew" resname="settings">
-        <source>settings</source>
-        <target state="translated">ترجیحات</target>
+      <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
+        <source>Settings</source>
+        <target state="needs-translation">ترجیحات</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
@@ -2041,6 +2041,18 @@
       <trans-unit id="jcT9Og6" resname="payment_account_number" xml:space="preserve" approved="no">
         <source>payment_account_name</source>
         <target state="translated">شماره شبا یا شماره کارت</target>
+      </trans-unit>
+      <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve">
+        <source>electronic_invoice</source>
+        <target state="translated">فاکتور الکترونیکی</target>
+      </trans-unit>
+      <trans-unit id="QnN_ONc" resname="invoice_tax_type" xml:space="preserve">
+        <source>invoice_tax_type</source>
+        <target state="translated">وضعیت مالیاتی</target>
+      </trans-unit>
+      <trans-unit id="lU1Njcy" resname="tax.type.standard" xml:space="preserve">
+        <source>tax.type.standard</source>
+        <target state="translated">مشمول مالیات</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>Timesheet</source>

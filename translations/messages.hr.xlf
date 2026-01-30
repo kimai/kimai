@@ -218,9 +218,9 @@
         <source>error.too_many_entries</source>
         <target>Zahtjev se nije mogao obraditi, pronađeno je previše rezultata.</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
-        <target>Datum</target>
+        <target state="translated">Datum</target>
       </trans-unit>
       <trans-unit id="BHk4pZ3" resname="starttime">
         <source>starttime</source>
@@ -834,9 +834,9 @@
         <source>invoice.number</source>
         <target>Broj računa</target>
       </trans-unit>
-      <trans-unit id="86KyrKO" resname="invoice.subtotal">
+      <trans-unit id="86KyrKO" resname="invoice.subtotal" xml:space="preserve">
         <source>invoice.subtotal</source>
-        <target>Ukupno bez PDV- a</target>
+        <target state="translated">Iznos bez PDV- a</target>
       </trans-unit>
       <trans-unit id="EO57yXg" resname="invoice.tax">
         <source>invoice.tax</source>
@@ -1782,9 +1782,9 @@
         <source>profile-stats</source>
         <target>Profil</target>
       </trans-unit>
-      <trans-unit id="zeD7Dew" resname="settings">
-        <source>settings</source>
-        <target>Postavke</target>
+      <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
+        <source>Settings</source>
+        <target state="translated">Postavke</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
@@ -2045,6 +2045,26 @@
       <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve" approved="no">
         <source>electronic_invoice</source>
         <target state="translated">E-račun</target>
+      </trans-unit>
+      <trans-unit id="QnN_ONc" resname="invoice_tax_type" xml:space="preserve">
+        <source>invoice_tax_type</source>
+        <target state="translated">Stanje poreza</target>
+      </trans-unit>
+      <trans-unit id="Mi7y8Q3" resname="tax.type.exempt" xml:space="preserve">
+        <source>tax.type.exempt</source>
+        <target state="translated">Oslobođeno</target>
+      </trans-unit>
+      <trans-unit id="lU1Njcy" resname="tax.type.standard" xml:space="preserve">
+        <source>tax.type.standard</source>
+        <target state="translated">Oporezivo</target>
+      </trans-unit>
+      <trans-unit id="hi31a3v" resname="tax.note.reverse_charge" xml:space="preserve">
+        <source>tax.note.reverse_charge</source>
+        <target state="translated">Porez se plaća prema načelu prijenosa porezne obveze</target>
+      </trans-unit>
+      <trans-unit id="E470U8W" resname="tax.type.reverse" xml:space="preserve">
+        <source>tax.type.reverse</source>
+        <target state="translated">Prijenos porezne obveze</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
         <source>Timesheet</source>

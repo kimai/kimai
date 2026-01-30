@@ -166,9 +166,9 @@
         <source>error.no_comments_found</source>
         <target>לא נרשמו הערות עדיין.</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve" approved="yes">
         <source>date</source>
-        <target>תאריך</target>
+        <target state="final">תאריך</target>
       </trans-unit>
       <trans-unit id="BHk4pZ3" resname="starttime">
         <source>starttime</source>
@@ -494,9 +494,9 @@
         <source>alias</source>
         <target>שם</target>
       </trans-unit>
-      <trans-unit id="qvIyBkY" resname="title">
+      <trans-unit id="qvIyBkY" resname="title" xml:space="preserve">
         <source>title</source>
-        <target state="translated">תפקיד</target>
+        <target state="translated">כותרת</target>
       </trans-unit>
       <trans-unit id="h7voece" resname="avatar">
         <source>avatar</source>
@@ -1814,9 +1814,9 @@
         <source>profile-stats</source>
         <target>פרופיל</target>
       </trans-unit>
-      <trans-unit id="zeD7Dew" resname="settings">
-        <source>settings</source>
-        <target>העדפות</target>
+      <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve" approved="yes">
+        <source>Settings</source>
+        <target state="final">הגדרות</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve" approved="yes">
         <source>Filter timesheets</source>

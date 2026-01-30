@@ -782,9 +782,9 @@
         <source>user</source>
         <target state="translated">Користувач</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve" approved="yes">
         <source>date</source>
-        <target state="translated">Дата</target>
+        <target state="final">Дата</target>
       </trans-unit>
       <trans-unit id="pO8wS6Q" resname="language">
         <source>language</source>
@@ -890,9 +890,9 @@
         <source>currency</source>
         <target state="translated">Валюта</target>
       </trans-unit>
-      <trans-unit id="qvIyBkY" resname="title">
+      <trans-unit id="qvIyBkY" resname="title" xml:space="preserve" approved="yes">
         <source>title</source>
-        <target state="translated">Титул</target>
+        <target state="final">Назва</target>
       </trans-unit>
       <trans-unit id="h7voece" resname="avatar">
         <source>avatar</source>
@@ -1010,9 +1010,9 @@
         <source>invoice.total_working_time</source>
         <target state="translated">Загальна тривалість</target>
       </trans-unit>
-      <trans-unit id="Q9ykNhO" resname="invoice.signature_customer">
+      <trans-unit id="Q9ykNhO" resname="invoice.signature_customer" xml:space="preserve" approved="yes">
         <source>invoice.signature_customer</source>
-        <target state="translated">Підтвердження: Дата / ПІБ клієнта / Підпис</target>
+        <target state="final">Підтвердження: Дата / ПІБ клієнта / Підпис</target>
       </trans-unit>
       <trans-unit id="3tegKgk" resname="orderNumber">
         <source>orderNumber</source>
@@ -1022,9 +1022,9 @@
         <source>invoice_tax_number</source>
         <target state="translated">Свід.ПДВ №:</target>
       </trans-unit>
-      <trans-unit id="9p2KQag" resname="invoice.signature_user">
+      <trans-unit id="9p2KQag" resname="invoice.signature_user" xml:space="preserve" approved="yes">
         <source>invoice.signature_user</source>
-        <target state="translated">Підтвердження: Дата / ПІБ консультанта / Підпис</target>
+        <target state="final">Підтвердження: Дата / ПІБ консультанта / Підпис</target>
       </trans-unit>
       <trans-unit id="PHJwR4w" resname="status.paid">
         <source>status.paid</source>
@@ -1818,9 +1818,9 @@
         <source>profile-stats</source>
         <target state="translated">Профиль</target>
       </trans-unit>
-      <trans-unit id="zeD7Dew" resname="settings">
-        <source>settings</source>
-        <target state="translated">Параметри</target>
+      <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
+        <source>Settings</source>
+        <target state="translated">Налаштування</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
@@ -2045,6 +2045,26 @@
       <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve" approved="no">
         <source>electronic_invoice</source>
         <target state="translated">Е-Рахунок-фактура</target>
+      </trans-unit>
+      <trans-unit id="QnN_ONc" resname="invoice_tax_type" xml:space="preserve" approved="yes">
+        <source>invoice_tax_type</source>
+        <target state="final">Податковий статус</target>
+      </trans-unit>
+      <trans-unit id="Mi7y8Q3" resname="tax.type.exempt" xml:space="preserve">
+        <source>tax.type.exempt</source>
+        <target state="translated">Звільнено</target>
+      </trans-unit>
+      <trans-unit id="lU1Njcy" resname="tax.type.standard" xml:space="preserve" approved="yes">
+        <source>tax.type.standard</source>
+        <target state="final">Підлягає оподаткуванню</target>
+      </trans-unit>
+      <trans-unit id="E470U8W" resname="tax.type.reverse" xml:space="preserve" approved="yes">
+        <source>tax.type.reverse</source>
+        <target state="final">Зворотне нарахування</target>
+      </trans-unit>
+      <trans-unit id="hi31a3v" resname="tax.note.reverse_charge" xml:space="preserve" approved="yes">
+        <source>tax.note.reverse_charge</source>
+        <target state="final">Податок сплачується на основі зворотного нарахування</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>Timesheet</source>

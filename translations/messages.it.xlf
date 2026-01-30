@@ -170,7 +170,7 @@
         <source>error.no_comments_found</source>
         <target state="final">Non sono stati ancora pubblicati commenti.</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date" approved="yes">
+      <trans-unit id="DodjLNR" resname="date" approved="yes" xml:space="preserve">
         <source>date</source>
         <target state="final">Data</target>
       </trans-unit>
@@ -518,7 +518,7 @@
         <source>alias</source>
         <target state="final">Nome</target>
       </trans-unit>
-      <trans-unit id="qvIyBkY" resname="title" approved="yes">
+      <trans-unit id="qvIyBkY" resname="title" approved="yes" xml:space="preserve">
         <source>title</source>
         <target state="final">Titolo</target>
       </trans-unit>
@@ -1818,9 +1818,9 @@
         <source>profile-stats</source>
         <target state="final">Profilo</target>
       </trans-unit>
-      <trans-unit id="zeD7Dew" resname="settings" approved="yes">
-        <source>settings</source>
-        <target state="final">Preferenze</target>
+      <trans-unit id="zeD7Dew" resname="settings" approved="yes" xml:space="preserve">
+        <source>Settings</source>
+        <target state="final">Impostazioni</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" approved="yes" xml:space="preserve">
         <source>Filter timesheets</source>

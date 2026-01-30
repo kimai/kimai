@@ -1843,8 +1843,8 @@
         <target state="translated">Perfil</target>
       </trans-unit>
       <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
-        <source>settings</source>
-        <target state="translated">Preferències</target>
+        <source>Settings</source>
+        <target state="needs-translation">Preferències</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
