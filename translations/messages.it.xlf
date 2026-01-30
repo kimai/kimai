@@ -690,24 +690,24 @@
         <source>preview</source>
         <target state="final">Anteprima</target>
       </trans-unit>
-      <trans-unit id="X70dwP8" resname="button.print" approved="yes">
-        <source>button.print</source>
+      <trans-unit id="zpU6DrC" resname="print" approved="yes">
+        <source>print</source>
         <target state="final">Stampa</target>
       </trans-unit>
-      <trans-unit id="W_TXvSi" resname="button.csv" approved="yes">
-        <source>button.csv</source>
+      <trans-unit id="U7ubCzi" resname="csv" approved="yes">
+        <source>csv</source>
         <target state="final">CSV</target>
       </trans-unit>
-      <trans-unit id="vC2IsaP" resname="button.xlsx" approved="yes">
-        <source>button.xlsx</source>
+      <trans-unit id="HJgLIry" resname="xlsx" approved="yes">
+        <source>xlsx</source>
         <target state="final">Excel</target>
       </trans-unit>
-      <trans-unit id="aAa5uRR" resname="button.pdf" approved="yes">
-        <source>button.pdf</source>
+      <trans-unit id="w1sh1so" resname="pdf" approved="yes">
+        <source>pdf</source>
         <target state="final">PDF</target>
       </trans-unit>
-      <trans-unit id="ulYFDIo" resname="button.ods" approved="yes">
-        <source>button.ods</source>
+      <trans-unit id="lmUO63g" resname="ods" approved="yes">
+        <source>ods</source>
         <target state="final">ODS</target>
       </trans-unit>
       <trans-unit id="zPcx3O_" resname="invoice_print" approved="yes">
@@ -2065,6 +2065,10 @@
       <trans-unit id="hi31a3v" resname="tax.note.reverse_charge" xml:space="preserve" approved="yes">
         <source>tax.note.reverse_charge</source>
         <target state="final">Tassa da pagare in base all'addebito inverso</target>
+      </trans-unit>
+      <trans-unit id="lt2Y2LO" resname="timesheet" approved="yes">
+        <source>Timesheet</source>
+        <target state="final">Foglio di presenza</target>
       </trans-unit>
     </body>
   </file>

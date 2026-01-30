@@ -1282,24 +1282,24 @@
         <source>preview</source>
         <target state="translated">முன்னோட்டம்</target>
       </trans-unit>
-      <trans-unit id="X70dwP8" resname="button.print" xml:space="preserve" approved="no">
-        <source>button.print</source>
+      <trans-unit id="zpU6DrC" resname="print" xml:space="preserve" approved="no">
+        <source>print</source>
         <target state="translated">அச்சிடுக</target>
       </trans-unit>
-      <trans-unit id="W_TXvSi" resname="button.csv" xml:space="preserve" approved="no">
-        <source>button.csv</source>
+      <trans-unit id="U7ubCzi" resname="csv" xml:space="preserve" approved="no">
+        <source>csv</source>
         <target state="translated">கபிம</target>
       </trans-unit>
-      <trans-unit id="vC2IsaP" resname="button.xlsx" xml:space="preserve" approved="no">
-        <source>button.xlsx</source>
+      <trans-unit id="HJgLIry" resname="xlsx" xml:space="preserve" approved="no">
+        <source>xlsx</source>
         <target state="translated">எக்செல்</target>
       </trans-unit>
-      <trans-unit id="aAa5uRR" resname="button.pdf" xml:space="preserve" approved="no">
-        <source>button.pdf</source>
+      <trans-unit id="w1sh1so" resname="pdf" xml:space="preserve" approved="no">
+        <source>pdf</source>
         <target state="translated">பிடிஎஃப்</target>
       </trans-unit>
-      <trans-unit id="ulYFDIo" resname="button.ods" xml:space="preserve" approved="no">
-        <source>button.ods</source>
+      <trans-unit id="lmUO63g" resname="ods" xml:space="preserve" approved="no">
+        <source>ods</source>
         <target state="translated">ஓடிஎச்</target>
       </trans-unit>
       <trans-unit id="zPcx3O_" resname="invoice_print" xml:space="preserve" approved="yes">
@@ -1977,6 +1977,10 @@
       <trans-unit id="TJQbc0a" resname="Payment To Bank Account" xml:space="preserve">
         <source>Payment To Bank Account</source>
         <target state="translated">வங்கி கணக்கிற்கு பணம் செலுத்து</target>
+      </trans-unit>
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve" approved="yes">
+        <source>Timesheet</source>
+        <target state="final">நேரத்தாள்</target>
       </trans-unit>
     </body>
   </file>

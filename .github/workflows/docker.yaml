@@ -73,6 +73,7 @@ jobs:
                   target: prod
                   platforms: linux/amd64,linux/arm64
                   tags: |
+                      kimai/kimai2:stable
                       kimai/kimai2:apache
                       kimai/kimai2:apache-${{ env.kimai_version }}
                   push: true

@@ -6,7 +6,7 @@
 {% set showCustomerSummary = false %}
 {% set decimal = true %}
 {% set showDateTimeShort = true %}
-{% block title %}{{ 'timesheet.pdf.twig'|trans({}, 'export') }}{% endblock %}
+{% block title %}{{ 'timesheet'|trans }}{% endblock %}
 {% block description %}
     {% if entry.description is not empty %}
         {{ entry.description|desc2html }}

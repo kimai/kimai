@@ -35,7 +35,7 @@ final class CsvRendererFactory
 
     public function createDefault(): CsvRenderer
     {
-        $template = new DefaultTemplate($this->eventDispatcher, 'csv');
+        $template = new DefaultTemplate($this->eventDispatcher, 'csv', 'en', 'csv');
 
         return new CsvRenderer($this->converter, $this->translator, $template);
     }
