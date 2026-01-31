@@ -2074,6 +2074,14 @@
         <source>user_access_all</source>
         <target>Zugriff für alle Benutzer erlauben</target>
       </trans-unit>
+      <trans-unit id="DbF_j60" resname="count_as_expected_time">
+        <source>count_as_expected_time</source>
+        <target>Als erwartete Stunden zählen: %type%</target>
+      </trans-unit>
+      <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help">
+        <source>count_as_expected_time_help</source>
+        <target>Wenn diese Option aktiviert ist, wird %type% als gearbeitete Stunden auf die erwarteten täglichen Stunden angerechnet. Wenn diese Option deaktiviert ist, werden die erwarteten Stunden für diese Tage auf 0 gesetzt. Beide Einstellungen sorgen für ein ausgeglichenes Stundenkonto, wirken sich jedoch unterschiedlich auf die Gesamtzahlen des Monats aus.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

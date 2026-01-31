@@ -2074,6 +2074,14 @@
         <source>user_access_all</source>
         <target>Allow access for all users</target>
       </trans-unit>
+      <trans-unit id="DbF_j60" resname="count_as_expected_time">
+        <source>count_as_expected_time</source>
+        <target>Count as expected hours: %type%</target>
+      </trans-unit>
+      <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help">
+        <source>count_as_expected_time_help</source>
+        <target>When enabled, %type% will count as worked hours towards the expected daily hours. When disabled, the expected hours for these days will be set to 0. Both settings maintain a neutral balance but affect monthly totals differently.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
