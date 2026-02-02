@@ -46,6 +46,23 @@
         {% elseif data.customer != totalCurrency %}
             {% set totalCurrency = null %}
         {% endif %}
+        {% set customerTotalsDuration = {} %}
+        {% set customerTotalsInternalRate = {} %}
+        {% set customerTotalsRate = {} %}
+        {% for column in period.dateTimes %}
+            {% set dateKey = column|report_date %}
+            {% set customerTotalsDuration = customerTotalsDuration|merge({(dateKey): 0}) %}
+            {% set customerTotalsInternalRate = customerTotalsInternalRate|merge({(dateKey): 0}) %}
+            {% set customerTotalsRate = customerTotalsRate|merge({(dateKey): 0}) %}
+        {% endfor %}
+        {% for project in data.projects %}
+            {% for column in project.data.data %}
+                {% set dateKey = column.date|report_date %}
+                {% set customerTotalsDuration = customerTotalsDuration|merge({(dateKey): (customerTotalsDuration[dateKey] + column.duration)}) %}
+                {% set customerTotalsInternalRate = customerTotalsInternalRate|merge({(dateKey): (customerTotalsInternalRate[dateKey] + column.internalRate)}) %}
+                {% set customerTotalsRate = customerTotalsRate|merge({(dateKey): (customerTotalsRate[dateKey] + column.rate)}) %}
+            {% endfor %}
+        {% endfor %}
         <tr class="summary">
             <td>{{ widgets.label_customer(data.customer) }}</td>
             <td class="text-center total">
@@ -59,7 +76,18 @@
                 {% endif %}
                 {% if with_links %}</a>{% endif %}
             </td>
-            <td colspan="{{ columns }}"></td>
+            {% for column in period.dateTimes %}
+                {% set dateKey = column|report_date %}
+                <td class="text-nowrap text-center day-total {% block column_classes_customer_total %}{% endblock %}">
+                    {% if dataType == 'rate' %}
+                        <strong>{{ customerTotalsRate[dateKey]|money(currency) }}</strong>
+                    {% elseif dataType == 'internalRate' %}
+                        <strong>{{ customerTotalsInternalRate[dateKey]|money(currency) }}</strong>
+                    {% else %}
+                        <strong>{{ customerTotalsDuration[dateKey]|duration(decimal) }}</strong>
+                    {% endif %}
+                </td>
+            {% endfor %}
         </tr>
         {% for project in data.projects %}
             {% set absoluteDuration = absoluteDuration + project.duration %}
