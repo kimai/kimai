@@ -1,0 +1,13 @@
+{#
+    Day cell content for the working time overview (icon + text).
+    @see contract/status.html.twig
+
+    Plugins can override this template to customize the entire day rendering,
+    e.g. to wrap content in a link.
+
+    Available variables: day, user, decimal, style, hasTooltip, now
+#}
+{%- if (day.workingTime.expectedTime != 0 or day.workingTime.actualTime != 0 or day.hasAddons()) and (now > day.day or day.workingTime.actualTime > 0) -%}
+    {%- include 'contract/_status_day_icon.html.twig' with {style: style, hasTooltip: hasTooltip} only -%}
+    {%- include 'contract/_status_day_content.html.twig' with {day: day, user: user, decimal: decimal} only -%}
+{%- endif -%}
