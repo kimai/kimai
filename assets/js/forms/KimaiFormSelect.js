@@ -73,6 +73,8 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
                 // remove remaining characters from input after selecting an item
                 this.setTextboxValue('');
             },
+            // close dropdown after selection (fixes #5716)
+            closeAfterSelect: true,
             lockOptgroupOrder: true,
             allowEmptyOption: !isRequired,
             hidePlaceholder: false,
