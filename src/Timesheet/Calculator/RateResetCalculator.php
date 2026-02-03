@@ -23,6 +23,13 @@ final class RateResetCalculator implements CalculatorInterface
             }
         }
 
+        // if the record already has a manually set rate (fixedRate or hourlyRate),
+        // preserve it when project/activity/user changes - the user explicitly set
+        // this rate before and chose not to change it (see GitHub issue #5735)
+        if ($record->getFixedRate() !== null || $record->getHourlyRate() !== null) {
+            return;
+        }
+
         // if no manual rate changed was applied:
         // check if a field changed, that is relevant for the rate calculation
         // reset all rates, because most users do not even see their rates and would not be able
