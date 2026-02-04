@@ -34,6 +34,11 @@ final class RateService implements RateServiceInterface
             return new Rate(0.00, 0.00);
         }
 
+        $customerFactor = 1.0;
+        if ($record->getProject() !== null && $record->getProject()->getCustomer() !== null) {
+            $customerFactor = $record->getProject()->getCustomer()->getRateFactor();
+        }
+
         $fixedRate = $record->getFixedRate();
         $hourlyRate = $record->getHourlyRate();
         $fixedInternalRate = null;
@@ -56,11 +61,13 @@ final class RateService implements RateServiceInterface
         }
 
         if (null !== $fixedRate) {
+            $factoredFixedRate = $fixedRate * $customerFactor;
             if (null === $fixedInternalRate) {
                 $fixedInternalRate = (float) $record->getUser()->getPreferenceValue(UserPreference::INTERNAL_RATE, $fixedRate, false);
             }
+            $factoredInternalRate = $fixedInternalRate * $customerFactor;
 
-            return new Rate($fixedRate, $fixedInternalRate, null, $fixedRate);
+            return new Rate($factoredFixedRate, $factoredInternalRate, null, $factoredFixedRate);
         }
 
         // user preferences => fallback if nothing else was configured
@@ -72,11 +79,7 @@ final class RateService implements RateServiceInterface
             $internalRate = (float) $record->getUser()->getPreferenceValue(UserPreference::INTERNAL_RATE, $hourlyRate, false);
         }
 
-        $factor = $this->getRateFactor($record);
-
-        if ($record->getProject() !== null && $record->getProject()->getCustomer() !== null) {
-            $factor *= $record->getProject()->getCustomer()->getRateFactor();
-        }
+        $factor = $this->getRateFactor($record) * $customerFactor;
 
         $factoredHourlyRate = $hourlyRate * $factor;
         $factoredInternalRate = $internalRate * $factor;
