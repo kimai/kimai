@@ -13,6 +13,7 @@ use App\Form\Type\DatePickerType;
 use App\Form\Type\InvoiceTemplateType;
 use App\Repository\Query\InvoiceQuery;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -41,6 +42,14 @@ final class InvoiceToolbarForm extends AbstractType
             'required' => true,
         ]);
         $this->addTemplateChoice($builder);
+        $builder->add('overheadDisplay', ChoiceType::class, [
+            'label' => 'label.overhead_display',
+            'required' => true,
+            'choices' => [
+                'label.overhead_integrated' => InvoiceQuery::OVERHEAD_INTEGRATED,
+                'label.overhead_separate' => InvoiceQuery::OVERHEAD_SEPARATE,
+            ],
+        ]);
     }
 
     protected function addTemplateChoice(FormBuilderInterface $builder): void

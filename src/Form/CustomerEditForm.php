@@ -17,6 +17,7 @@ use App\Form\Type\TimezoneType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -140,6 +141,15 @@ class CustomerEditForm extends AbstractType
             ])
             ->add('timezone', TimezoneType::class, [
                 'label' => 'timezone',
+            ])
+            ->add('rateFactor', NumberType::class, [
+                'label' => 'rate_factor',
+                'required' => true,
+                'scale' => 4,
+                'help' => 'help.rate_factor_customer',
+                'attr' => [
+                    'step' => 0.0001,
+                ],
             ])
             ->add('invoiceText', TextareaType::class, [
                 'label' => 'invoiceText',

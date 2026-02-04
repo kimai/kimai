@@ -120,6 +120,10 @@
                     </tr>
                 {% endif %}
                 {% if is_granted('details', customer) %}
+                    <tr>
+                        <th>{{ 'rate_factor'|trans }}</th>
+                        <td>{{ customer.rateFactor|number_format(4) }}</td>
+                    </tr>
                     {% if customer.number is not empty %}
                         <tr>
                             <th>{{ 'number'|trans }}</th>

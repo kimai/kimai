@@ -27,7 +27,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: CustomerRepository::class)]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[Serializer\ExclusionPolicy('all')]
-#[Exporter\Order(['id', 'name', 'company', 'number', 'vatId', 'address', 'contact', 'email', 'phone', 'mobile', 'fax', 'homepage', 'addressLine1', 'addressLine2', 'addressLine3', 'postCode', 'city', 'country', 'currency', 'timezone', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable'])]
+#[Exporter\Order(['id', 'name', 'company', 'number', 'vatId', 'address', 'contact', 'email', 'phone', 'mobile', 'fax', 'homepage', 'addressLine1', 'addressLine2', 'addressLine3', 'postCode', 'city', 'country', 'currency', 'timezone', 'budget', 'timeBudget', 'budgetType', 'color', 'rateFactor', 'visible', 'comment', 'billable'])]
 #[Constraints\Customer]
 class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
 {
@@ -68,6 +68,13 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'visible', type: 'boolean')]
     private bool $visible = true;
+    #[ORM\Column(name: 'rate_factor', type: Types::FLOAT, nullable: false, options: ['default' => 1.0])]
+    #[Assert\NotNull]
+    #[Assert\GreaterThanOrEqual(0.0)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'rate_factor', type: 'decimal')]
+    private float $rateFactor = 1.0000;
     #[ORM\Column(name: 'billable', type: Types::BOOLEAN, nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
     #[Serializer\Expose]
@@ -609,6 +616,16 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     public function setBuyerReference(?string $buyerReference): void
     {
         $this->buyerReference = $buyerReference;
+    }
+
+    public function getRateFactor(): float
+    {
+        return $this->rateFactor;
+    }
+
+    public function setRateFactor(float $rateFactor): void
+    {
+        $this->rateFactor = $rateFactor;
     }
 
     public function __toString(): string
