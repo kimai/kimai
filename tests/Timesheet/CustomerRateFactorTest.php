@@ -27,6 +27,7 @@ class CustomerRateFactorTest extends TestCase
             new UserPreference(UserPreference::HOURLY_RATE, $hourlyRate),
             new UserPreference(UserPreference::INTERNAL_RATE, $internalRate),
         ]);
+
         return $user;
     }
 
@@ -64,6 +65,7 @@ class CustomerRateFactorTest extends TestCase
     {
         $customer = new Customer('Test Customer');
         $customer->setRateFactor(2.0);
+        $customer->setRateFactorFixedRate(true);
 
         $project = new Project();
         $project->setCustomer($customer);
@@ -85,9 +87,38 @@ class CustomerRateFactorTest extends TestCase
         $rate = $sut->calculate($record);
 
         // Fixed 50 EUR * 2.0 Factor = 100 EUR
-        self::assertEquals(100.0, $rate->getRate(), 'Fixed rate should be multiplied by customer factor');
+        self::assertEquals(100.0, $rate->getRate(), 'Fixed rate should be multiplied by customer factor when enabled');
     }
-    
+
+    public function testCalculateDoesNotApplyCustomerFactorToFixedRateWhenDisabled(): void
+    {
+        $customer = new Customer('Test Customer');
+        $customer->setRateFactor(2.0);
+        $customer->setRateFactorFixedRate(false);
+
+        $project = new Project();
+        $project->setCustomer($customer);
+
+        $activity = new Activity();
+        $activity->setProject($project);
+
+        $record = new Timesheet();
+        $record->setUser($this->getTestUser());
+        $record->setActivity($activity);
+        $record->setProject($project);
+        $record->setFixedRate(50.0);
+        $record->setEnd(new \DateTime());
+        $record->setDuration(3600);
+
+        $factory = new RateServiceFactory($this);
+        $sut = $factory->create();
+
+        $rate = $sut->calculate($record);
+
+        // Fixed 50 EUR should stay 50 EUR
+        self::assertEquals(50.0, $rate->getRate(), 'Fixed rate should NOT be multiplied by customer factor when disabled');
+    }
+
     public function testCalculateWithDefaultFactor(): void
     {
         $customer = new Customer('Test Customer');

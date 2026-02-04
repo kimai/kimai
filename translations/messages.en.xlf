@@ -2086,6 +2086,10 @@
         <source>rate_factor</source>
         <target>Rate factor</target>
       </trans-unit>
+      <trans-unit id="label.rate_factor_fixed_rate" resname="label.rate_factor_fixed_rate">
+        <source>label.rate_factor_fixed_rate</source>
+        <target>Apply rate factor to fixed rates</target>
+      </trans-unit>
       <trans-unit id="help.rate_factor_customer" resname="help.rate_factor_customer">
         <source>help.rate_factor_customer</source>
         <target>Factor to be multiplied with all calculated rates for this customer (e.g. 1.48 for 48% surcharge)</target>

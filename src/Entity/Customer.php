@@ -75,6 +75,12 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'rate_factor', type: 'decimal')]
     private float $rateFactor = 1.0000;
+    #[ORM\Column(name: 'rate_factor_fixed_rate', type: Types::BOOLEAN, nullable: false, options: ['default' => true])]
+    #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'rate_factor_fixed_rate', type: 'boolean')]
+    private bool $rateFactorFixedRate = true;
     #[ORM\Column(name: 'billable', type: Types::BOOLEAN, nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
     #[Serializer\Expose]
@@ -626,6 +632,16 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     public function setRateFactor(float $rateFactor): void
     {
         $this->rateFactor = $rateFactor;
+    }
+
+    public function isRateFactorFixedRate(): bool
+    {
+        return $this->rateFactorFixedRate;
+    }
+
+    public function setRateFactorFixedRate(bool $rateFactorFixedRate): void
+    {
+        $this->rateFactorFixedRate = $rateFactorFixedRate;
     }
 
     public function __toString(): string

@@ -2086,6 +2086,10 @@
         <source>rate_factor</source>
         <target>Preisfaktor</target>
       </trans-unit>
+      <trans-unit id="label.rate_factor_fixed_rate" resname="label.rate_factor_fixed_rate">
+        <source>label.rate_factor_fixed_rate</source>
+        <target>Preisfaktor auf Festpreise anwenden</target>
+      </trans-unit>
       <trans-unit id="help.rate_factor_customer" resname="help.rate_factor_customer">
         <source>help.rate_factor_customer</source>
         <target>Faktor, mit dem alle berechneten Preise für diesen Kunden multipliziert werden (z. B. 1,48 für 48% Aufschlag)</target>

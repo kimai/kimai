@@ -61,11 +61,16 @@ final class RateService implements RateServiceInterface
         }
 
         if (null !== $fixedRate) {
-            $factoredFixedRate = $fixedRate * $customerFactor;
+            $appliedFactor = $customerFactor;
+            if ($record->getProject() !== null && $record->getProject()->getCustomer() !== null && !$record->getProject()->getCustomer()->isRateFactorFixedRate()) {
+                $appliedFactor = 1.0;
+            }
+
+            $factoredFixedRate = $fixedRate * $appliedFactor;
             if (null === $fixedInternalRate) {
                 $fixedInternalRate = (float) $record->getUser()->getPreferenceValue(UserPreference::INTERNAL_RATE, $fixedRate, false);
             }
-            $factoredInternalRate = $fixedInternalRate * $customerFactor;
+            $factoredInternalRate = $fixedInternalRate * $appliedFactor;
 
             return new Rate($factoredFixedRate, $factoredInternalRate, null, $factoredFixedRate);
         }
