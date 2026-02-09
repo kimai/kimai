@@ -1,0 +1,93 @@
+#!/usr/bin/env php
+<?php
+
+/*
+ * This file is part of the Kimai time-tracking app.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/**
+ * Discovers and runs PHPUnit test suites for all installed Kimai plugins.
+ *
+ * Before each plugin suite, this script establishes a clean baseline:
+ * - Clears the test cache with all plugins loaded, so the Symfony
+ *   container is compiled correctly (APP_DEBUG=0 won't detect stale
+ *   containers from previous core test runs)
+ *
+ * Each plugin's bootstrap.php is responsible for its own schema needs
+ * (e.g. doctrine:schema:update for plugin-specific tables).
+ *
+ * Usage:
+ *   bin/test-plugins [phpunit-args]
+ *   bin/test-plugins --filter testSomething
+ *   bin/test-plugins --stop-on-failure
+ */
+
+$projectDir = dirname(__DIR__);
+$pluginsDir = $projectDir . '/var/plugins';
+$phpunit = $projectDir . '/vendor/bin/phpunit';
+$console = $projectDir . '/bin/console';
+
+if (!is_dir($pluginsDir)) {
+    echo "No plugins directory found.\n";
+    exit(0);
+}
+
+// Discover testable plugins: *Bundle with phpunit.xml and without .disabled
+$pluginNames = [];
+$testable = [];
+
+foreach (glob($pluginsDir . '/*Bundle', GLOB_ONLYDIR) ?: [] as $dir) {
+    $name = basename($dir);
+
+    if (file_exists($dir . '/.disabled')) {
+        continue;
+    }
+
+    $pluginNames[] = $name;
+
+    if (file_exists($dir . '/phpunit.xml') && is_dir($dir . '/Tests/')) {
+        $testable[] = ['name' => $name, 'config' => $dir . '/phpunit.xml', 'tests' => $dir . '/Tests/'];
+    }
+}
+
+if (count($testable) === 0) {
+    echo "No testable plugins found (need phpunit.xml + Tests/ directory).\n";
+    exit(0);
+}
+
+$pluginList = implode(',', $pluginNames);
+$extraArgs = array_slice($argv, 1);
+$extraArgsStr = implode(' ', array_map('escapeshellarg', $extraArgs));
+
+$exitCode = 0;
+
+foreach ($testable as $plugin) {
+    // Clean baseline: clear test cache with all plugins loaded so the
+    // Symfony container is compiled with the correct bundle registrations
+    passthru(sprintf(
+        'APP_ENV=test APP_DEBUG=0 LOAD_PLUGINS_IN_TEST=%s php %s cache:clear --no-warmup --env=test --quiet',
+        escapeshellarg($pluginList),
+        escapeshellarg($console)
+    ));
+
+    echo "\n=== Running tests for {$plugin['name']} ===\n\n";
+
+    $command = sprintf(
+        '%s -c %s %s %s',
+        escapeshellarg($phpunit),
+        escapeshellarg($plugin['config']),
+        escapeshellarg($plugin['tests']),
+        $extraArgsStr
+    );
+
+    passthru($command, $result);
+
+    if ($result !== 0) {
+        $exitCode = $result;
+    }
+}
+
+exit($exitCode);
