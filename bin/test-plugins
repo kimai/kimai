@@ -21,6 +21,7 @@
  *
  * Usage:
  *   bin/test-plugins [phpunit-args]
+ *   bin/test-plugins --plugin RemoteWorkBundle
  *   bin/test-plugins --filter testSomething
  *   bin/test-plugins --stop-on-failure
  */
@@ -33,6 +34,18 @@ $console = $projectDir . '/bin/console';
 if (!is_dir($pluginsDir)) {
     echo "No plugins directory found.\n";
     exit(0);
+}
+
+// Parse --plugin option (consume before passing remaining args to PHPUnit)
+$onlyPlugin = null;
+$extraArgs = [];
+
+for ($i = 1; $i < $argc; $i++) {
+    if ($argv[$i] === '--plugin' && isset($argv[$i + 1])) {
+        $onlyPlugin = $argv[++$i];
+    } else {
+        $extraArgs[] = $argv[$i];
+    }
 }
 
 // Discover testable plugins: *Bundle with phpunit.xml and without .disabled
@@ -53,13 +66,21 @@ foreach (glob($pluginsDir . '/*Bundle', GLOB_ONLYDIR) ?: [] as $dir) {
     }
 }
 
+if ($onlyPlugin !== null) {
+    $testable = array_values(array_filter($testable, fn ($p) => $p['name'] === $onlyPlugin));
+
+    if (count($testable) === 0) {
+        echo "Plugin '{$onlyPlugin}' not found or has no tests.\n";
+        exit(1);
+    }
+}
+
 if (count($testable) === 0) {
     echo "No testable plugins found (need phpunit.xml + Tests/ directory).\n";
     exit(0);
 }
 
 $pluginList = implode(',', $pluginNames);
-$extraArgs = array_slice($argv, 1);
 $extraArgsStr = implode(' ', array_map('escapeshellarg', $extraArgs));
 
 $exitCode = 0;
