@@ -68,6 +68,21 @@ class Kernel extends BaseKernel
         }
 
         if ($this->environment === 'test') {
+            $loadPlugins = $_ENV['LOAD_PLUGINS_IN_TEST'] ?? $_SERVER['LOAD_PLUGINS_IN_TEST'] ?? '';
+            if (!\is_string($loadPlugins)) {
+                return;
+            }
+            if ($loadPlugins === '') {
+                return;
+            }
+            $allowed = array_map('trim', explode(',', $loadPlugins));
+            foreach ($this->getBundleClasses() as $plugin) {
+                $name = (new \ReflectionClass($plugin))->getShortName();
+                if (\in_array($name, $allowed, true)) {
+                    yield $plugin;
+                }
+            }
+
             return;
         }
 

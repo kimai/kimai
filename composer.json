@@ -193,6 +193,7 @@
         "tests": "vendor/bin/phpunit tests/",
         "tests-unit": "vendor/bin/phpunit --exclude-group integration tests/",
         "tests-integration": "vendor/bin/phpunit --group integration tests/",
+        "tests-plugins": "bin/test-plugins",
         "phpstan": [
             "@phpstan-src",
             "@phpstan-tests"
