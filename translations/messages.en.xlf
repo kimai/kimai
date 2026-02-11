@@ -2094,6 +2094,14 @@
         <source>help.rate_factor_customer</source>
         <target>Factor to be multiplied with all calculated rates for this customer (e.g. 1.48 for 48% surcharge)</target>
       </trans-unit>
+      <trans-unit id="help.rate_factor_project" resname="help.rate_factor_project">
+        <source>help.rate_factor_project</source>
+        <target>Factor for this project. If empty, the customer's factor will be used.</target>
+      </trans-unit>
+      <trans-unit id="inherited" resname="inherited">
+        <source>inherited</source>
+        <target>Inherited</target>
+      </trans-unit>
       <trans-unit id="label.overhead_display" resname="label.overhead_display">
         <source>label.overhead_display</source>
         <target>Overhead display</target>
@@ -2108,7 +2116,7 @@
       </trans-unit>
       <trans-unit id="label.overhead_row_description" resname="label.overhead_row_description">
         <source>label.overhead_row_description</source>
-        <target>Overhead from customer rate factor</target>
+        <target>Overhead from rate factor</target>
       </trans-unit>
     </body>
   </file>
