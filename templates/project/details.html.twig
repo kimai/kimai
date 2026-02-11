@@ -128,6 +128,18 @@
                         </td>
                     </tr>
                 {% endif %}
+                <tr>
+                    <th>{{ 'rate_factor'|trans }}</th>
+                    <td colspan="3">
+                        {{ project.getEffectiveRateFactor()|number_format(4) }}
+                        {% if project.getRateFactor() is null %}
+                            <span class="badge bg-blue text-blue-fg">{{ 'inherited'|trans }}</span>
+                        {% endif %}
+                        {% if project.isEffectiveRateFactorFixedRate() %}
+                            <span class="badge bg-green text-green-fg">{{ 'label.rate_factor_fixed_rate'|trans }}</span>
+                        {% endif %}
+                    </td>
+                </tr>
                 {% for metaField in project.visibleMetaFields|filter(field => field.defined)|sort((a, b) => a.order <=> b.order) %}
                     <tr>
                         <th>{{ metaField.label|trans }}</th>

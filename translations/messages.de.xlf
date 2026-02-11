@@ -2094,6 +2094,14 @@
         <source>help.rate_factor_customer</source>
         <target>Faktor, mit dem alle berechneten Preise für diesen Kunden multipliziert werden (z. B. 1,48 für 48% Aufschlag)</target>
       </trans-unit>
+      <trans-unit id="help.rate_factor_project" resname="help.rate_factor_project">
+        <source>help.rate_factor_project</source>
+        <target>Faktor für dieses Projekt. Falls leer, wird der Faktor des Kunden verwendet.</target>
+      </trans-unit>
+      <trans-unit id="inherited" resname="inherited">
+        <source>inherited</source>
+        <target>Vererbt</target>
+      </trans-unit>
       <trans-unit id="label.overhead_display" resname="label.overhead_display">
         <source>label.overhead_display</source>
         <target>Overhead-Darstellung</target>
@@ -2108,7 +2116,7 @@
       </trans-unit>
       <trans-unit id="label.overhead_row_description" resname="label.overhead_row_description">
         <source>label.overhead_row_description</source>
-        <target>Overhead durch Kunden-Preisfaktor</target>
+        <target>Overhead durch Preisfaktor</target>
       </trans-unit>
     </body>
   </file>

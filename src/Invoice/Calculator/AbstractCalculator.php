@@ -42,10 +42,13 @@ abstract class AbstractCalculator
         if (\count($this->cached) === 0) {
             $overheadDisplay = $this->model->getQuery()?->getOverheadDisplay() ?? InvoiceQuery::OVERHEAD_INTEGRATED;
             $isSeparate = $overheadDisplay === InvoiceQuery::OVERHEAD_SEPARATE;
-            $customerFactor = $this->model->getCustomer()->getRateFactor();
             $totalOverhead = 0.00;
-
             foreach ($this->calculateEntries() as $entry) {
+                $rateFactor = $this->model->getCustomer()->getRateFactor();
+                if ($entry->getProject() !== null) {
+                    $rateFactor = $entry->getProject()->getEffectiveRateFactor();
+                }
+
                 if (!$entry->isFixedRate() && $entry->getHourlyRate() !== null && $entry->getHourlyRate() > 0) {
                     $entry->setDuration($this->model->getRateCalculatorMode()->roundDuration($entry->getDuration()));
                     // when merging many entries, we might run into rounding issues
@@ -53,15 +56,15 @@ abstract class AbstractCalculator
                     $entry->setRate($this->model->getRateCalculatorMode()->calculateRate($entry->getHourlyRate(), $entry->getDuration()));
                 }
 
-                if ($isSeparate && $customerFactor > 1.0) {
+                if ($isSeparate && $rateFactor > 1.0) {
                     $fullRate = $entry->getRate();
-                    $baseRate = round($fullRate / $customerFactor, 2);
+                    $baseRate = round($fullRate / $rateFactor, 2);
                     $overhead = $fullRate - $baseRate;
 
                     $entry->setRate($baseRate);
                     // Adjust hourly rate for display if not fixed
                     if (!$entry->isFixedRate() && $entry->getHourlyRate() !== null) {
-                        $entry->setHourlyRate(round($entry->getHourlyRate() / $customerFactor, 2));
+                        $entry->setHourlyRate(round($entry->getHourlyRate() / $rateFactor, 2));
                     }
                     if ($entry->isFixedRate() && $entry->getFixedRate() !== null) {
                         $entry->setFixedRate($baseRate);
@@ -80,6 +83,24 @@ abstract class AbstractCalculator
                 $overheadItem->setDescription('label.overhead_row_description');
                 $overheadItem->setFixedRate($totalOverhead);
                 $overheadItem->setType('overhead');
+
+                // Ensure the overhead item has a date and project, so templates and hydrators don't crash
+                if (\count($this->cached) > 0) {
+                    $firstEntry = $this->cached[0];
+                    if ($firstEntry->getBegin() !== null) {
+                        $overheadItem->setBegin($firstEntry->getBegin());
+                    }
+                    if ($firstEntry->getEnd() !== null) {
+                        $overheadItem->setEnd($firstEntry->getEnd());
+                    }
+                    if ($overheadItem->getProject() === null && $firstEntry->getProject() !== null) {
+                        $overheadItem->setProject($firstEntry->getProject());
+                    }
+                }
+
+                if ($this->model->getQuery() !== null && $this->model->getQuery()->getProject() !== null) {
+                    $overheadItem->setProject($this->model->getQuery()->getProject());
+                }
                 $this->cached[] = $overheadItem;
             }
         }
