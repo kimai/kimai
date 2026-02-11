@@ -97,6 +97,7 @@ tabler:
         off: fas fa-toggle-off
         on: fas fa-toggle-on
         other: fas fa-file-alt
+        parental: fas fa-baby-carriage
         password: fas fa-key
         pause: fas fa-pause
         pause-small: far fa-pause-circle
@@ -123,6 +124,7 @@ tabler:
         search: fas fa-search
         settings: fas fa-cog
         sickness: fas fa-prescription-bottle-medical
+        sickness_child: fas fa-prescription-bottle-medical
         shop: fas fa-shopping-cart
         spinner: fas fa-spinner
         start: fas fa-play
@@ -137,6 +139,7 @@ tabler:
         time-off: fas fa-couch
         trash: far fa-trash-alt
         unlocked: fas fa-unlock-alt
+        unpaid_vacation: fas fa-umbrella-beach
         upload: fas fa-upload
         user: fas fa-user
         users: fas fa-user-friends
