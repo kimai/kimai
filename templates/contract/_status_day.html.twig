@@ -8,6 +8,6 @@
     Available variables: day, user, decimal, style, hasTooltip, now
 #}
 {%- if (day.workingTime.expectedTime != 0 or day.workingTime.actualTime != 0 or day.hasAddons()) and (now > day.day or day.workingTime.actualTime > 0) -%}
-    {%- include 'contract/_status_day_icon.html.twig' with {style: style, hasTooltip: hasTooltip} only -%}
+    {%- include 'contract/_status_day_icon.html.twig' with {day: day, style: style, hasTooltip: hasTooltip} only -%}
     {%- include 'contract/_status_day_content.html.twig' with {day: day, user: user, decimal: decimal} only -%}
 {%- endif -%}
