@@ -36,6 +36,7 @@ class WorkingTime
     #[ORM\Column(name: 'expected', type: Types::INTEGER, nullable: false)]
     #[Assert\NotNull]
     private int $expectedTime = 0;
+    private ?int $originalExpectedTime = null;
     #[ORM\Column(name: 'actual', type: Types::INTEGER, nullable: false)]
     #[Assert\NotNull]
     private int $actualTime = 0;
@@ -75,6 +76,29 @@ class WorkingTime
     public function setExpectedTime(int $expectedTime): void
     {
         $this->expectedTime = $expectedTime;
+    }
+
+    public function getOriginalExpectedTime(): int
+    {
+        if ($this->originalExpectedTime === null) {
+            $this->originalExpectedTime = $this->expectedTime;
+        }
+
+        return $this->originalExpectedTime;
+    }
+
+    public function halveExpectedTime(): int
+    {
+        $reduceBy = ($this->getOriginalExpectedTime() / 2);
+
+        $this->expectedTime = $this->expectedTime - $reduceBy;
+
+        return $reduceBy;
+    }
+
+    public function emptyExpectedTime(): void
+    {
+        $this->expectedTime = 0;
     }
 
     public function getActualTime(): int
