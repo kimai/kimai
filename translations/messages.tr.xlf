@@ -638,9 +638,9 @@
         <source>invoice.service_date</source>
         <target state="translated">Servis tarihi</target>
       </trans-unit>
-      <trans-unit id="zzjZXJx" resname="amount">
+      <trans-unit id="zzjZXJx" resname="amount" xml:space="preserve">
         <source>amount</source>
-        <target state="translated">Mİktar</target>
+        <target state="translated">Miktar</target>
       </trans-unit>
       <trans-unit id="BAkWQqr" resname="total_rate">
         <source>total_rate</source>
@@ -1816,7 +1816,7 @@
       </trans-unit>
       <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
         <source>Settings</source>
-        <target state="needs-translation">Ayarlar</target>
+        <target state="translated">Ayarlar</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
@@ -2069,6 +2069,18 @@
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>Timesheet</source>
         <target>Zaman çizelgesi</target>
+      </trans-unit>
+      <trans-unit id="6w8kS.m" resname="user_access_all" xml:space="preserve">
+        <source>user_access_all</source>
+        <target state="translated">Tüm kullanıcıların erişmesine izin ver</target>
+      </trans-unit>
+      <trans-unit id="DbF_j60" resname="count_as_expected_time" xml:space="preserve">
+        <source>count_as_expected_time</source>
+        <target state="translated">Beklenmiş saatler olarak say: %type%</target>
+      </trans-unit>
+      <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
+        <source>count_as_expected_time_help</source>
+        <target state="translated">Etkinleştirildiğinde, %type% beklenen günlük saatlere çalışılmış saat olarak sayılır. Devre dışı bırakıldığında ise bu günler için beklenen saatler 0 olarak ayarlanır. Her iki ayar da süreyi nötr tutar, ancak aylık toplamları farklı şekilde etkiler.</target>
       </trans-unit>
     </body>
   </file>

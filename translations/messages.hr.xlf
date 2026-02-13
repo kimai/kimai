@@ -2070,6 +2070,18 @@
         <source>Timesheet</source>
         <target state="translated">Vremenska tablica</target>
       </trans-unit>
+      <trans-unit id="6w8kS.m" resname="user_access_all" xml:space="preserve">
+        <source>user_access_all</source>
+        <target state="translated">Dozvoli pristup svim korisnicima</target>
+      </trans-unit>
+      <trans-unit id="DbF_j60" resname="count_as_expected_time" xml:space="preserve">
+        <source>count_as_expected_time</source>
+        <target state="translated">Broji kao očekivane sate: %type%</target>
+      </trans-unit>
+      <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
+        <source>count_as_expected_time_help</source>
+        <target state="translated">Kada je aktivirano, %type% će se računati kao odrađeni sati u odnosu na očekivane dnevne sate. Kada je aktivirano, očekivani sati za te dane će se postaviti na 0. Obje postavke održavaju neutralnu ravnotežu, ali različito utječu na mjesečne ukupne iznose.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

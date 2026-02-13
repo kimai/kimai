@@ -2070,6 +2070,18 @@
         <source>Timesheet</source>
         <target state="translated">Tidrapport</target>
       </trans-unit>
+      <trans-unit id="6w8kS.m" resname="user_access_all" xml:space="preserve">
+        <source>user_access_all</source>
+        <target state="translated">Tillåt åtkomst för alla användare</target>
+      </trans-unit>
+      <trans-unit id="DbF_j60" resname="count_as_expected_time" xml:space="preserve">
+        <source>count_as_expected_time</source>
+        <target state="translated">Räkna som förväntade timmar: %type%</target>
+      </trans-unit>
+      <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
+        <source>count_as_expected_time_help</source>
+        <target state="translated">När det är aktiverat räknas %type% som arbetade timmar mot de förväntade dagliga timmarna. När det är inaktiverat sätts de förväntade timmarna för dessa dagar till 0. Båda inställningarna ger ett neutralt saldo men påverkar månadssummorna på olika sätt.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -230,9 +230,9 @@
         <source>Support</source>
         <target state="translated">Dukungan</target>
       </trans-unit>
-      <trans-unit id="mz4ieCN" resname="donate">
+      <trans-unit id="mz4ieCN" resname="donate" xml:space="preserve">
         <source>donate</source>
-        <target state="translated">Menyumbang</target>
+        <target state="translated">Donasi</target>
       </trans-unit>
       <trans-unit id="UI6nPeP" resname="invoice_number_generator">
         <source>invoice_number_generator</source>
@@ -908,7 +908,7 @@
       </trans-unit>
       <trans-unit id="E7G60OF" resname="Allowed character: A-Z and _" xml:space="preserve">
         <source>Allowed character: A-Z and _ (min. 5 uppercase characters)</source>
-        <target state="translated">Karakter yang diperbolehkan: AZ dan _ (minimal 5 karakter huruf besar)</target>
+        <target state="translated">Karakter yang diperbolehkan: A-Z dan _ (min. 5 karakter huruf besar)</target>
       </trans-unit>
       <trans-unit id="XKTzhQz" resname="version" xml:space="preserve">
         <source>version</source>
@@ -940,7 +940,7 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
         <source>default</source>
-        <target state="translated">Bawaan</target>
+        <target state="translated">Default</target>
       </trans-unit>
       <trans-unit id="On18MKP" resname="plugin.installed" xml:space="preserve">
         <source>plugin.installed</source>
@@ -1340,7 +1340,7 @@
       </trans-unit>
       <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
         <source>Settings</source>
-        <target state="needs-translation">Preferensi</target>
+        <target state="translated">Pengaturan</target>
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
@@ -2044,7 +2044,43 @@
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
         <source>Timesheet</source>
-        <target state="translated">Lembar Waktu</target>
+        <target state="translated">Lembar waktu</target>
+      </trans-unit>
+      <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve">
+        <source>electronic_invoice</source>
+        <target state="translated">Faktur Elektronik</target>
+      </trans-unit>
+      <trans-unit id="QnN_ONc" resname="invoice_tax_type" xml:space="preserve">
+        <source>invoice_tax_type</source>
+        <target state="translated">Status pajak</target>
+      </trans-unit>
+      <trans-unit id="Mi7y8Q3" resname="tax.type.exempt" xml:space="preserve">
+        <source>tax.type.exempt</source>
+        <target state="translated">Bebas pajak</target>
+      </trans-unit>
+      <trans-unit id="lU1Njcy" resname="tax.type.standard" xml:space="preserve">
+        <source>tax.type.standard</source>
+        <target state="translated">Kena pajak</target>
+      </trans-unit>
+      <trans-unit id="E470U8W" resname="tax.type.reverse" xml:space="preserve">
+        <source>tax.type.reverse</source>
+        <target state="translated">Pajak tanggungan pembeli</target>
+      </trans-unit>
+      <trans-unit id="hi31a3v" resname="tax.note.reverse_charge" xml:space="preserve">
+        <source>tax.note.reverse_charge</source>
+        <target state="translated">Pajak yang harus dibayar berdasarkan mekanisme pajak tanggungan pembeli</target>
+      </trans-unit>
+      <trans-unit id="6w8kS.m" resname="user_access_all" xml:space="preserve">
+        <source>user_access_all</source>
+        <target state="translated">Izinkan akses untuk semua pengguna</target>
+      </trans-unit>
+      <trans-unit id="DbF_j60" resname="count_as_expected_time" xml:space="preserve">
+        <source>count_as_expected_time</source>
+        <target state="translated">Hitung sebagai jam kerja yang diharapkan: %type%</target>
+      </trans-unit>
+      <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
+        <source>count_as_expected_time_help</source>
+        <target state="translated">Jika diaktifkan, %type% akan dihitung sebagai jam kerja untuk memenuhi jam kerja harian yang diharapkan. Jika dinonaktifkan, jam kerja yang diharapkan untuk hari-hari ini akan ditetapkan ke 0. Kedua pengaturan ini menjaga keseimbangan netral tetapi memengaruhi total bulanan secara berbeda.</target>
       </trans-unit>
     </body>
   </file>
