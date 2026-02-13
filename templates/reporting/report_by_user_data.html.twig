@@ -79,12 +79,14 @@
             {% for column in period.dateTimes %}
                 {% set dateKey = column|report_date %}
                 <td class="text-nowrap text-center day-total {% block column_classes_customer_total %}{% endblock %}">
-                    {% if dataType == 'rate' %}
-                        <strong>{{ customerTotalsRate[dateKey]|money(currency) }}</strong>
-                    {% elseif dataType == 'internalRate' %}
-                        <strong>{{ customerTotalsInternalRate[dateKey]|money(currency) }}</strong>
-                    {% else %}
-                        <strong>{{ customerTotalsDuration[dateKey]|duration(decimal) }}</strong>
+                    {% if customerTotalsRate[dateKey] > 0 or customerTotalsInternalRate[dateKey] > 0 or customerTotalsDuration[dateKey] > 0 %}
+                        {% if dataType == 'rate' %}
+                            <strong>{{ customerTotalsRate[dateKey]|money(currency) }}</strong>
+                        {% elseif dataType == 'internalRate' %}
+                            <strong>{{ customerTotalsInternalRate[dateKey]|money(currency) }}</strong>
+                        {% else %}
+                            <strong>{{ customerTotalsDuration[dateKey]|duration(decimal) }}</strong>
+                        {% endif %}
                     {% endif %}
                 </td>
             {% endfor %}
