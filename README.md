@@ -28,7 +28,7 @@ and so much more.
 ### Requirements
 
 - PHP 8.1.3 minimum with support for 8.2, 8.3, 8.4, 8.5
-- MariaDB / MySQL in their oldest maintained LTS release, currently MariaDB >= [10.6](https://endoflife.date/mariadb) or MySQL >= [8.4](https://endoflife.date/mysql)
+- MariaDB / MySQL: oldest maintained LTS release (MariaDB >= [10.6](https://endoflife.date/mariadb) or MySQL >= [8.4](https://endoflife.date/mysql)) or newer
 - A webserver and subdomain (subdirectory is not supported)
 - PHP extensions: `gd`, `intl`, `json`, `mbstring`, `pdo`, `tokenizer`, `xml`, `xsl`, `zip`
 
