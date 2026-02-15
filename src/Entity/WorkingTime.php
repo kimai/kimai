@@ -76,19 +76,27 @@ class WorkingTime
     public function setExpectedTime(int $expectedTime): void
     {
         $this->expectedTime = $expectedTime;
+        $this->storeOriginalExpectedTime();
     }
 
-    public function getOriginalExpectedTime(): int
+    public function storeOriginalExpectedTime(): void
     {
         if ($this->originalExpectedTime === null) {
             $this->originalExpectedTime = $this->expectedTime;
         }
+    }
+
+    public function getOriginalExpectedTime(): int
+    {
+        $this->storeOriginalExpectedTime();
 
         return $this->originalExpectedTime;
     }
 
     public function halveExpectedTime(): int
     {
+        $this->storeOriginalExpectedTime();
+
         $reduceBy = ($this->getOriginalExpectedTime() / 2);
 
         $this->expectedTime = $this->expectedTime - $reduceBy;
@@ -98,6 +106,8 @@ class WorkingTime
 
     public function emptyExpectedTime(): void
     {
+        $this->storeOriginalExpectedTime();
+
         $this->expectedTime = 0;
     }
 
