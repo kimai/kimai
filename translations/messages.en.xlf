@@ -2082,6 +2082,42 @@
         <source>count_as_expected_time_help</source>
         <target>When enabled, %type% will count as worked hours towards the expected daily hours. When disabled, the expected hours for these days will be set to 0. Both settings maintain a neutral balance but affect monthly totals differently.</target>
       </trans-unit>
+      <trans-unit id="rate_factor" resname="rate_factor">
+        <source>rate_factor</source>
+        <target>Rate factor</target>
+      </trans-unit>
+      <trans-unit id="label.rate_factor_fixed_rate" resname="label.rate_factor_fixed_rate">
+        <source>label.rate_factor_fixed_rate</source>
+        <target>Apply rate factor to fixed rates</target>
+      </trans-unit>
+      <trans-unit id="help.rate_factor_customer" resname="help.rate_factor_customer">
+        <source>help.rate_factor_customer</source>
+        <target>Factor to be multiplied with all calculated rates for this customer (e.g. 1.48 for 48% surcharge)</target>
+      </trans-unit>
+      <trans-unit id="help.rate_factor_project" resname="help.rate_factor_project">
+        <source>help.rate_factor_project</source>
+        <target>Factor for this project. If empty, the customer's factor will be used.</target>
+      </trans-unit>
+      <trans-unit id="inherited" resname="inherited">
+        <source>inherited</source>
+        <target>Inherited</target>
+      </trans-unit>
+      <trans-unit id="label.overhead_display" resname="label.overhead_display">
+        <source>label.overhead_display</source>
+        <target>Overhead display</target>
+      </trans-unit>
+      <trans-unit id="label.overhead_integrated" resname="label.overhead_integrated">
+        <source>label.overhead_integrated</source>
+        <target>Integrated in each entry</target>
+      </trans-unit>
+      <trans-unit id="label.overhead_separate" resname="label.overhead_separate">
+        <source>label.overhead_separate</source>
+        <target>Show separately</target>
+      </trans-unit>
+      <trans-unit id="label.overhead_row_description" resname="label.overhead_row_description">
+        <source>label.overhead_row_description</source>
+        <target>Overhead from rate factor</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -19,9 +19,13 @@ use App\Entity\Project;
  */
 class InvoiceQuery extends TimesheetQuery
 {
+    public const OVERHEAD_INTEGRATED = 'integrated';
+    public const OVERHEAD_SEPARATE = 'separate';
+
     private ?InvoiceTemplate $template = null;
     private ?\DateTime $invoiceDate = null;
     private bool $allowTemplateOverwrite = true;
+    private string $overheadDisplay = self::OVERHEAD_SEPARATE;
 
     public function __construct()
     {
@@ -110,5 +114,20 @@ class InvoiceQuery extends TimesheetQuery
     public function setAllowTemplateOverwrite(bool $allowTemplateOverwrite): void
     {
         $this->allowTemplateOverwrite = $allowTemplateOverwrite;
+    }
+
+    public function getOverheadDisplay(): string
+    {
+        return $this->overheadDisplay;
+    }
+
+    public function setOverheadDisplay(string $overheadDisplay): void
+    {
+        $this->overheadDisplay = $overheadDisplay;
+    }
+
+    public function isSeparateOverhead(): bool
+    {
+        return $this->overheadDisplay === self::OVERHEAD_SEPARATE;
     }
 }

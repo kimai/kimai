@@ -175,6 +175,22 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'project_number')]
     private ?string $number = null;
+    /**
+     * Project specific rate factor, if null the customer rate factor is used
+     */
+    #[ORM\Column(name: 'rate_factor', type: Types::FLOAT, nullable: true)]
+    #[Assert\GreaterThanOrEqual(0)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    private ?float $rateFactor = null;
+    /**
+     * Whether the rate factor is applied to fixed rates
+     */
+    #[ORM\Column(name: 'rate_factor_fixed_rate', type: Types::BOOLEAN, nullable: false, options: ['default' => true])]
+    #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    private bool $rateFactorFixedRate = true;
 
     public function __construct()
     {
@@ -472,6 +488,52 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     public function getNumber(): ?string
     {
         return $this->number;
+    }
+
+    public function getRateFactor(): ?float
+    {
+        return $this->rateFactor;
+    }
+
+    public function setRateFactor(?float $rateFactor): void
+    {
+        $this->rateFactor = $rateFactor;
+    }
+
+    public function isRateFactorFixedRate(): bool
+    {
+        return $this->rateFactorFixedRate;
+    }
+
+    public function setRateFactorFixedRate(bool $rateFactorFixedRate): void
+    {
+        $this->rateFactorFixedRate = $rateFactorFixedRate;
+    }
+
+    public function getEffectiveRateFactor(): float
+    {
+        if ($this->rateFactor !== null) {
+            return $this->rateFactor;
+        }
+
+        if ($this->customer !== null) {
+            return $this->customer->getRateFactor();
+        }
+
+        return 1.0;
+    }
+
+    public function isEffectiveRateFactorFixedRate(): bool
+    {
+        if ($this->rateFactor !== null) {
+            return $this->rateFactorFixedRate;
+        }
+
+        if ($this->customer !== null) {
+            return $this->customer->isRateFactorFixedRate();
+        }
+
+        return true;
     }
 
     public function __toString(): string

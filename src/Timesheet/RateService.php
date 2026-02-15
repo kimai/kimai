@@ -34,6 +34,13 @@ final class RateService implements RateServiceInterface
             return new Rate(0.00, 0.00);
         }
 
+        $rateFactor = 1.0;
+        $isFixedRateApplied = true;
+        if ($record->getProject() !== null) {
+            $rateFactor = $record->getProject()->getEffectiveRateFactor();
+            $isFixedRateApplied = $record->getProject()->isEffectiveRateFactorFixedRate();
+        }
+
         $fixedRate = $record->getFixedRate();
         $hourlyRate = $record->getHourlyRate();
         $fixedInternalRate = null;
@@ -56,11 +63,18 @@ final class RateService implements RateServiceInterface
         }
 
         if (null !== $fixedRate) {
+            $appliedFactor = $rateFactor;
+            if (!$isFixedRateApplied) {
+                $appliedFactor = 1.0;
+            }
+
+            $factoredFixedRate = $fixedRate * $appliedFactor;
             if (null === $fixedInternalRate) {
                 $fixedInternalRate = (float) $record->getUser()->getPreferenceValue(UserPreference::INTERNAL_RATE, $fixedRate, false);
             }
+            $factoredInternalRate = $fixedInternalRate * $appliedFactor;
 
-            return new Rate($fixedRate, $fixedInternalRate, null, $fixedRate);
+            return new Rate($factoredFixedRate, $factoredInternalRate, null, $factoredFixedRate);
         }
 
         // user preferences => fallback if nothing else was configured
@@ -72,11 +86,7 @@ final class RateService implements RateServiceInterface
             $internalRate = (float) $record->getUser()->getPreferenceValue(UserPreference::INTERNAL_RATE, $hourlyRate, false);
         }
 
-        $factor = 1.00;
-        // do not apply once a value was calculated - see https://github.com/kimai/kimai/issues/1988
-        if ($record->getFixedRate() === null && $record->getHourlyRate() === null) {
-            $factor = $this->getRateFactor($record);
-        }
+        $factor = $this->getRateFactor($record) * $rateFactor;
 
         $factoredHourlyRate = $hourlyRate * $factor;
         $factoredInternalRate = $internalRate * $factor;
