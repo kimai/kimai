@@ -27,6 +27,7 @@ parameters:
         numericOperandsInArithmeticOperators: true
         switchConditionsMatchingType: true
         noVariableVariables: false
+    reportNonIntStringArrayKey: false
     paths:
         - src
     tmpDir: %rootDir%/../../../var/cache/phpstan

@@ -90,7 +90,7 @@ class WorkingTime
     {
         $this->storeOriginalExpectedTime();
 
-        return $this->originalExpectedTime;
+        return $this->originalExpectedTime ?? 0;
     }
 
     public function halveExpectedTime(): int
