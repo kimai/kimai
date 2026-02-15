@@ -682,9 +682,9 @@
         <source>parental</source>
         <target>Elternzeit</target>
       </trans-unit>
-      <trans-unit id="MQKiG33" resname="profile.preferences">
+      <trans-unit id="MQKiG33" resname="profile.preferences" xml:space="preserve" approved="yes">
         <source>profile.preferences</source>
-        <target>Einstellungen</target>
+        <target state="final">Einstellungen</target>
       </trans-unit>
       <trans-unit id="j4Kd9N1" resname="calendar_initial_view">
         <source>calendar_initial_view</source>
@@ -886,9 +886,9 @@
         <source>stats.workingTimeWeek</source>
         <target>Kalenderwoche %week%</target>
       </trans-unit>
-      <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
+      <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort" xml:space="preserve" approved="yes">
         <source>stats.workingTimeWeekShort</source>
-        <target>KW %week%</target>
+        <target state="final">KW %week%</target>
       </trans-unit>
       <trans-unit id="JIKNAYP" approved="yes" resname="stats.workingTimeMonth">
         <source>stats.workingTimeMonth</source>
@@ -1842,13 +1842,13 @@
         <source>profile-stats</source>
         <target>Profil</target>
       </trans-unit>
-      <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
+      <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve" approved="yes">
         <source>Settings</source>
-        <target state="needs-translation">Einstellungen</target>
+        <target state="final">Einstellungen</target>
       </trans-unit>
-      <trans-unit id="anCjtwe" resname="timesheet.filter">
+      <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve" approved="yes">
         <source>Filter timesheets</source>
-        <target>Stundenzettel</target>
+        <target state="final">Stundenzettel</target>
       </trans-unit>
       <trans-unit id="b1pgNOd" resname="copy">
         <source>copy</source>
@@ -2066,9 +2066,9 @@
         <source>tax.note.reverse_charge</source>
         <target>Steuer zahlbar auf Reverse-Charge-Basis</target>
       </trans-unit>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve" approved="yes">
         <source>Timesheet</source>
-        <target>Stundennachweis</target>
+        <target state="final">Stundenzettel</target>
       </trans-unit>
       <trans-unit id="6w8kS.m" resname="user_access_all">
         <source>user_access_all</source>

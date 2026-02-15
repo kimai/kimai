@@ -2070,6 +2070,18 @@
         <source>Timesheet</source>
         <target>Feuille de temps</target>
       </trans-unit>
+      <trans-unit id="6w8kS.m" resname="user_access_all" xml:space="preserve">
+        <source>user_access_all</source>
+        <target state="translated">Permettre l'accès à tous les utilisateurs</target>
+      </trans-unit>
+      <trans-unit id="DbF_j60" resname="count_as_expected_time" xml:space="preserve">
+        <source>count_as_expected_time</source>
+        <target state="translated">Comptez comme heures prévues : %type%</target>
+      </trans-unit>
+      <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
+        <source>count_as_expected_time_help</source>
+        <target state="translated">Lorsque activé, %type% comptera comme heures travaillées les heures quotidiennes attendues. En cas de désactivation, les heures prévues pour ces jours seront fixées à 0. Les deux paramètres maintiennent un équilibre neutre mais affectent les totaux mensuels différemment.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

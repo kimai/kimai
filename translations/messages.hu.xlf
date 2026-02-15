@@ -1894,6 +1894,30 @@
         <source>Timesheet</source>
         <target state="translated">Munkaidő-nyilvántartás</target>
       </trans-unit>
+      <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
+        <source>complete_month.help</source>
+        <target state="translated">Ezzel az év összes napja a kiválasztott dátum előtt zárolásra kerül. A felhasználó a zárolt időszakra vonatkozóan nem tud többé időpontokat létrehozni vagy szerkeszteni.</target>
+      </trans-unit>
+      <trans-unit id="mhOe3Iy" resname="unlock_month.help" xml:space="preserve">
+        <source>unlock_month.help</source>
+        <target state="translated">Ezzel a kiválasztott dátum utáni összes nap feloldásra kerül.</target>
+      </trans-unit>
+      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured" xml:space="preserve">
+        <source>work_times_should.none_configured</source>
+        <target state="translated">A munkaszerződés beállításokban ennek a felhasználónak nem lett megadva célóra.</target>
+      </trans-unit>
+      <trans-unit id="8yqaKzX" resname="confirmed_by_at" xml:space="preserve">
+        <source>confirmed_by_at</source>
+        <target state="translated">Jóváhagyva %user%-tól ekkor %date%</target>
+      </trans-unit>
+      <trans-unit id="wZRRqg0" resname="manual_bookings" xml:space="preserve">
+        <source>manual_bookings</source>
+        <target state="translated">Kézi foglalások</target>
+      </trans-unit>
+      <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro" xml:space="preserve">
+        <source>manual_bookings.work_contract_intro</source>
+        <target state="translated">A kézi foglalások utólag nem módosíthatók sem törölhetők!</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

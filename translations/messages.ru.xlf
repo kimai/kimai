@@ -1952,7 +1952,7 @@
       </trans-unit>
       <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
         <source>sending_company</source>
-        <target state="needs-translation">Отправитель счета-фактуры</target>
+        <target state="translated">Выставитель счета-фактуры</target>
       </trans-unit>
       <trans-unit id="Uzll0ps" resname="Customer portal" xml:space="preserve">
         <source>Customer portal</source>
@@ -2004,7 +2004,7 @@
       </trans-unit>
       <trans-unit id="uXB48Vj" resname="SEPA Credit Transfer" xml:space="preserve">
         <source>SEPA Credit Transfer</source>
-        <target state="needs-translation">SEPA кредитовый перевод</target>
+        <target state="translated">Кредитный перевод SEPA</target>
       </trans-unit>
       <trans-unit id="4toQj2M" resname="Cash" xml:space="preserve">
         <source>Cash</source>
@@ -2041,6 +2041,14 @@
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>Timesheet</source>
         <target state="translated">Табель рабочего времени</target>
+      </trans-unit>
+      <trans-unit id="s42A2gm" resname="SEPA Direct Debit" xml:space="preserve">
+        <source>SEPA Direct Debit</source>
+        <target state="translated">Прямой дебет SEPA</target>
+      </trans-unit>
+      <trans-unit id="jMvh7bn" resname="Credit Transfer" xml:space="preserve">
+        <source>Credit Transfer</source>
+        <target state="translated">Кредитный перевод</target>
       </trans-unit>
     </body>
   </file>

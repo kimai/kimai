@@ -30,17 +30,17 @@
         <source>confirm.delete</source>
         <target state="translated">Ви дійсно хочете це видалити?</target>
       </trans-unit>
-      <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
+      <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm" xml:space="preserve">
         <source>admin_entity.delete_confirm</source>
-        <target state="translated">Ці дані також будуть видалені! Як варіант, можете вибрати запис, куди будуть перенесені всі дані:</target>
+        <target state="translated">Ці дані теж буде видалено! Або виберіть запис, куди все перенести:</target>
       </trans-unit>
-      <trans-unit id="COyxNde" resname="delete.not_in_use">
+      <trans-unit id="COyxNde" resname="delete.not_in_use" xml:space="preserve">
         <source>delete.not_in_use</source>
-        <target state="translated">Цей пункт можна спокійно видаляти.</target>
+        <target state="translated">Цей елемент можна безпечно видалити.</target>
       </trans-unit>
-      <trans-unit id=".0CFrRV" resname="upload">
+      <trans-unit id=".0CFrRV" resname="upload" xml:space="preserve">
         <source>upload</source>
-        <target state="translated">Завантажити</target>
+        <target state="translated">Вивантажити</target>
       </trans-unit>
       <trans-unit id="JBkykGe" resname="search">
         <source>search</source>
@@ -54,21 +54,21 @@
         <source>set_as_default</source>
         <target state="translated">Зберегти налаштування як обране для пошуку</target>
       </trans-unit>
-      <trans-unit id="1o0.9vf" resname="asc">
+      <trans-unit id="1o0.9vf" resname="asc" xml:space="preserve">
         <source>asc</source>
-        <target state="translated">Висхідний</target>
+        <target state="translated">Сортування за зростанням</target>
       </trans-unit>
-      <trans-unit id="l4ZOh4." resname="desc">
+      <trans-unit id="l4ZOh4." resname="desc" xml:space="preserve">
         <source>desc</source>
-        <target state="translated">Спадний</target>
+        <target state="translated">Спадаюче сортування</target>
       </trans-unit>
-      <trans-unit id="VSo_gmO" resname="orderBy">
+      <trans-unit id="VSo_gmO" resname="orderBy" xml:space="preserve">
         <source>orderBy</source>
-        <target state="translated">Впорядкувати за</target>
+        <target state="translated">Сортувати за</target>
       </trans-unit>
-      <trans-unit id="J258iS6" resname="update_multiple">
+      <trans-unit id="J258iS6" resname="update_multiple" xml:space="preserve">
         <source>update_multiple</source>
-        <target state="translated">%action% %count% запис(и)</target>
+        <target state="translated">Дія «%action%» торкнеться %count% записів.</target>
       </trans-unit>
       <trans-unit id="OTDmccn" resname="attachments">
         <source>attachments</source>
@@ -86,17 +86,17 @@
         <source>sum.total</source>
         <target state="translated">Всього</target>
       </trans-unit>
-      <trans-unit id="fVA3M2x" resname="choice_pattern">
+      <trans-unit id="fVA3M2x" resname="choice_pattern" xml:space="preserve">
         <source>Display of entries in selection lists</source>
-        <target state="translated">Показ записів у списках відбору</target>
+        <target state="translated">Відображення записів у списках вибору</target>
       </trans-unit>
       <trans-unit id="XohImNo" resname="password" approved="yes">
         <source>Password</source>
         <target state="final">Пароль</target>
       </trans-unit>
-      <trans-unit id="hLEZkoC" resname="password_repeat">
+      <trans-unit id="hLEZkoC" resname="password_repeat" xml:space="preserve">
         <source>password_repeat</source>
-        <target state="translated">Повторіть пароль</target>
+        <target state="translated">Підтвердження пароля</target>
       </trans-unit>
       <trans-unit id="ACcM9j_" resname="logout">
         <source>logout</source>
@@ -106,17 +106,17 @@
         <source>user_profile</source>
         <target state="translated">Мій профіль</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
+      <trans-unit id="T4nAM7X" resname="api_token" xml:space="preserve">
         <source>api_token</source>
-        <target state="translated">Пароль API</target>
+        <target state="translated">API‑токен</target>
       </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
+      <trans-unit id="aq59Sk8" resname="api_token_repeat" xml:space="preserve">
         <source>api_token_repeat</source>
-        <target state="translated">Повторіть пароль API</target>
+        <target state="translated">Підтвердження API‑токена</target>
       </trans-unit>
-      <trans-unit id=".372.o7" resname="login_required">
+      <trans-unit id=".372.o7" resname="login_required" xml:space="preserve">
         <source>login_required</source>
-        <target state="translated">Відсутній дозвіл. Перенаправити на вхід?</target>
+        <target state="translated">Поле логіна обов’язкове для заповнення. Перенаправити?</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve" approved="yes">
         <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
@@ -124,11 +124,11 @@
       </trans-unit>
       <trans-unit id="UoOv6mx" resname="menu.homepage" xml:space="preserve">
         <source>menu.homepage</source>
-        <target state="translated">Табло</target>
+        <target state="translated">Головна</target>
       </trans-unit>
-      <trans-unit id="wvvYSw_" resname="menu.admin">
+      <trans-unit id="wvvYSw_" resname="menu.admin" xml:space="preserve">
         <source>menu.admin</source>
-        <target state="translated">Адміністрування</target>
+        <target state="translated">Адмінпанель</target>
       </trans-unit>
       <trans-unit id="6OKwCUB" resname="menu.system">
         <source>menu.system</source>
@@ -140,7 +140,7 @@
       </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting" xml:space="preserve">
         <source>menu.reporting</source>
-        <target state="translated">Звітнiсть</target>
+        <target state="translated">Звіти</target>
       </trans-unit>
       <trans-unit id="IeshU90" resname="customers">
         <source>customers</source>
@@ -148,27 +148,27 @@
       </trans-unit>
       <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
         <source>Time Tracking</source>
-        <target state="translated">Облік часу</target>
+        <target state="translated">Трекер часу</target>
       </trans-unit>
-      <trans-unit id="PyZ8KrQ" resname="confirm">
+      <trans-unit id="PyZ8KrQ" resname="confirm" xml:space="preserve">
         <source>confirm</source>
-        <target state="translated">Погодити</target>
+        <target state="translated">Підтвердити</target>
       </trans-unit>
       <trans-unit id="I3TZF5S" resname="cancel">
         <source>cancel</source>
         <target state="translated">Скасувати</target>
       </trans-unit>
-      <trans-unit id="DUDrvjk" resname="remove_default">
+      <trans-unit id="DUDrvjk" resname="remove_default" xml:space="preserve">
         <source>remove_default</source>
-        <target state="translated">Видалити обране в пошуку</target>
+        <target state="translated">Прибрати з обраного</target>
       </trans-unit>
-      <trans-unit id="0M_Gylq" resname="rates.empty">
+      <trans-unit id="0M_Gylq" resname="rates.empty" xml:space="preserve">
         <source>rates.empty</source>
-        <target state="translated">Розцінки ще не додано.</target>
+        <target state="translated">Жодних цін не вказано.</target>
       </trans-unit>
-      <trans-unit id="XP5zkiN" resname="modal.dirty">
+      <trans-unit id="XP5zkiN" resname="modal.dirty" xml:space="preserve">
         <source>modal.dirty</source>
-        <target state="translated">Форма змінилася. Будь ласка, натисніть "Зберегти" для збереження змін або "Закрити" для їх скасування.</target>
+        <target state="translated">Є незбережені зміни. Натисніть «Зберегти» або «Закрити».</target>
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve" approved="yes">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
@@ -180,7 +180,7 @@
       </trans-unit>
       <trans-unit id="YkyVVAY" resname="activities" xml:space="preserve">
         <source>activities</source>
-        <target state="translated">Види діяльності</target>
+        <target state="translated">Активності</target>
       </trans-unit>
       <trans-unit id="fftM9nd" resname="users">
         <source>users</source>
@@ -198,13 +198,13 @@
         <source>error.no_entries_found</source>
         <target state="translated">За вибраними Вами фільтрами не знайдено жодного запису.</target>
       </trans-unit>
-      <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
+      <trans-unit id="XQ2.pq2" resname="error.too_many_entries" xml:space="preserve">
         <source>error.too_many_entries</source>
-        <target state="translated">Запит обробити не вдалося. Було знайдено дуже багато результатів.</target>
+        <target state="translated">Запит не вдалося обробити. Знайдено надто багато результатів.</target>
       </trans-unit>
-      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+      <trans-unit id="GzWKgBk" resname="error.directory_missing" xml:space="preserve">
         <source>The directory “%dir%” does not exist and could not be created.</source>
-        <target state="translated">Каталог "%dir%" не існує і створити його не вдалося.</target>
+        <target state="translated">Каталог “%dir%” не існує або його неможливо створити.</target>
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
@@ -770,9 +770,9 @@
         <source>endtime</source>
         <target state="translated">Кінець</target>
       </trans-unit>
-      <trans-unit id="hlu4iX5" resname="error.no_comments_found">
+      <trans-unit id="hlu4iX5" resname="error.no_comments_found" xml:space="preserve">
         <source>error.no_comments_found</source>
-        <target state="translated">Коментарів ще не було.</target>
+        <target state="translated">Коментарів ще не додано.</target>
       </trans-unit>
       <trans-unit id="yqea9Nt" resname="duration">
         <source>duration</source>
@@ -1070,29 +1070,29 @@
         <source>delete_warning.short_stats</source>
         <target state="translated">Зараз існує %records% записів, загальна тривалість яких складає %duration%.</target>
       </trans-unit>
-      <trans-unit id="fQ3Prt4" resname="security.unlock.title">
+      <trans-unit id="fQ3Prt4" resname="security.unlock.title" xml:space="preserve">
         <source>security.unlock.title</source>
-        <target state="translated">Розблокувати обліковий запис</target>
+        <target state="translated">Розблокування облікового запису</target>
       </trans-unit>
-      <trans-unit id="853W5Iu" resname="security.unlock.button">
+      <trans-unit id="853W5Iu" resname="security.unlock.button" xml:space="preserve">
         <source>security.unlock.button</source>
         <target state="translated">Розблокувати</target>
       </trans-unit>
-      <trans-unit id="ebTjBb9" resname="my_times">
+      <trans-unit id="ebTjBb9" resname="my_times" xml:space="preserve">
         <source>my_times</source>
-        <target state="translated">Мої записи</target>
+        <target state="translated">Мій час</target>
       </trans-unit>
-      <trans-unit id="yxQop43" resname="all_times">
+      <trans-unit id="yxQop43" resname="all_times" xml:space="preserve">
         <source>all_times</source>
-        <target state="translated">Усі записи</target>
+        <target state="translated">Увесь час</target>
       </trans-unit>
       <trans-unit id="_t.2z4V" resname="teams">
         <source>teams</source>
         <target state="translated">Команди</target>
       </trans-unit>
-      <trans-unit id="JGaf9IK" resname="Doctor">
+      <trans-unit id="JGaf9IK" resname="Doctor" xml:space="preserve">
         <source>Doctor</source>
-        <target state="translated">Діагностика</target>
+        <target state="translated">Лікар</target>
       </trans-unit>
       <trans-unit id="aOJITgv" resname="help.invoiceText">
         <source>help.invoiceText</source>
@@ -1114,9 +1114,9 @@
         <source>action.delete</source>
         <target state="translated">Видалити</target>
       </trans-unit>
-      <trans-unit id="nqEYrfk" resname="security.unlock.intro">
+      <trans-unit id="nqEYrfk" resname="security.unlock.intro" xml:space="preserve">
         <source>security.unlock.intro</source>
-        <target state="translated">Для повного доступу напишіть, будь ласка, пароль</target>
+        <target state="translated">Введіть пароль для повного доступу</target>
       </trans-unit>
       <trans-unit id="AeMGtJO" resname="help.visible">
         <source>help.visible</source>
@@ -1142,9 +1142,9 @@
         <source>api_password.intro</source>
         <target state="translated">Тут ви можете керувати токенами API, які використовуються для автентифікації вашого додатку в Kimai.</target>
       </trans-unit>
-      <trans-unit id="Eq2E_Rd" resname="menu.apps">
+      <trans-unit id="Eq2E_Rd" resname="menu.apps" xml:space="preserve">
         <source>Apps</source>
-        <target state="translated">Застосунки</target>
+        <target state="translated">Додатки</target>
       </trans-unit>
       <trans-unit id="hPY2VcD" resname="profile.2fa_intro">
         <source>profile.2fa_intro</source>
@@ -2069,6 +2069,18 @@
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>Timesheet</source>
         <target state="translated">Табель робочого часу</target>
+      </trans-unit>
+      <trans-unit id="6w8kS.m" resname="user_access_all" xml:space="preserve">
+        <source>user_access_all</source>
+        <target state="translated">Дозволити доступ усім користувачам</target>
+      </trans-unit>
+      <trans-unit id="DbF_j60" resname="count_as_expected_time" xml:space="preserve">
+        <source>count_as_expected_time</source>
+        <target state="translated">Зарахувати як очікувані години: %type%</target>
+      </trans-unit>
+      <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
+        <source>count_as_expected_time_help</source>
+        <target state="translated">Якщо ввімкнено, %type% зараховуватиметься як відпрацьовані години в межах очікуваної денної норми. Якщо вимкнено - очікувані години для цих днів буде встановлено в 0. Обидва варіанти зберігають нейтральний баланс, але по‑різному впливають на місячні підсумки.</target>
       </trans-unit>
     </body>
   </file>

@@ -256,7 +256,7 @@
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
-        <target state="translated">Kuupöev</target>
+        <target state="translated">Kuupäev</target>
       </trans-unit>
       <trans-unit id="BHk4pZ3" resname="starttime" xml:space="preserve">
         <source>starttime</source>

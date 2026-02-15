@@ -2070,6 +2070,18 @@
         <source>Timesheet</source>
         <target state="final">Foglio di presenza</target>
       </trans-unit>
+      <trans-unit id="6w8kS.m" resname="user_access_all" xml:space="preserve" approved="yes">
+        <source>user_access_all</source>
+        <target state="final">Consenti accesso a tutti gli utenti</target>
+      </trans-unit>
+      <trans-unit id="DbF_j60" resname="count_as_expected_time" xml:space="preserve" approved="yes">
+        <source>count_as_expected_time</source>
+        <target state="final">Conta come ore previste: %type%</target>
+      </trans-unit>
+      <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve" approved="yes">
+        <source>count_as_expected_time_help</source>
+        <target state="final">Se abilitato, %type% verrà conteggiato come ore lavorate ai fini delle ore giornaliere previste. Se disabilitato, le ore previste per questi giorni saranno impostate su 0. Entrambe le impostazioni mantengono un saldo neutro, ma influiscono sui totali mensili in modo diverso.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

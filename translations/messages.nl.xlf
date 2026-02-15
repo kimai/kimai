@@ -782,13 +782,13 @@
         <source>user_permissions.title</source>
         <target>Gebruikersrechten</target>
       </trans-unit>
-      <trans-unit id="mflwMcX" resname="rates.title">
+      <trans-unit id="mflwMcX" resname="rates.title" xml:space="preserve" approved="yes">
         <source>rates.title</source>
-        <target>Kosten</target>
+        <target state="final">Prijs</target>
       </trans-unit>
-      <trans-unit id="0M_Gylq" resname="rates.empty">
+      <trans-unit id="0M_Gylq" resname="rates.empty" xml:space="preserve" approved="yes">
         <source>rates.empty</source>
-        <target state="translated">Er zijn nog geen kosten geconfigureerd.</target>
+        <target state="final">Er zijn nog geen prijzen opgegeven.</target>
       </trans-unit>
       <trans-unit id="5ofAsOs" resname="internalRate">
         <source>internalRate</source>

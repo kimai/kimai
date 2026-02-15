@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
-        <target state="translated">Kuupöev</target>
+        <target state="translated">Kuupäev</target>
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
         <source>user</source>
