@@ -12,6 +12,8 @@ namespace App\WorkingTime\Model;
 final class DayAddon
 {
     private bool $billable = true;
+    private ?string $rendererBlock = null;
+    private ?string $rendererInclude = null;
     /** @var array<string, mixed> */
     private array $attributes = [];
 
@@ -52,6 +54,24 @@ final class DayAddon
     public function getType(): ?string
     {
         return $this->type;
+    }
+
+    public function getRendererBlock(): ?string
+    {
+        return $this->rendererBlock;
+    }
+
+    public function getRendererInclude(): ?string
+    {
+        return $this->rendererInclude;
+    }
+
+    public function setRenderer(string $block, string $include): self
+    {
+        $this->rendererBlock = $block;
+        $this->rendererInclude = $include;
+
+        return $this;
     }
 
     /**
