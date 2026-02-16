@@ -1,0 +1,96 @@
+{% extends 'reporting/layout.html.twig' %}
+{% import "macros/datatables.html.twig" as tables %}
+
+{% set availableColumns = {
+    'name':          {'class': 'alwaysVisible'},
+} %}
+{% if is_granted('budget_time', 'activity') %}
+    {% set availableColumns = availableColumns|merge({
+        'timeBudget':    {'class': 'd-none d-md-table-cell', 'title': 'timeBudget'|trans},
+    }) %}
+{% endif %}
+{% if is_granted('budget_money', 'activity') %}
+    {% set availableColumns = availableColumns|merge({
+        'budget':        {'class': 'd-none d-md-table-cell', 'title': 'budget'|trans},
+    }) %}
+{% endif %}
+{% set availableColumns = availableColumns|merge({
+    'durationTotal':    {'class': 'text-end hw-min w-min', 'title': 'stats.durationTotal'|trans, 'columnClass': 'w-min'},
+    'actions':          {'class': 'actions alwaysVisible'},
+}) %}
+{% set tableName = tableName|default('activity_view_reporting') %}
+{% set skipColumns = skipColumns is defined ? skipColumns : {} %}
+{% set columns = {} %}
+{% for name, config in availableColumns %}
+    {% if name not in skipColumns %}
+        {% set columns = columns|merge({(name): config}) %}
+    {% endif %}
+{% endfor %}
+
+{% block main_before %}
+    {{ tables.data_table_column_modal(tableName, columns) }}
+{% endblock %}
+
+{% block report %}
+
+    {% set hasData = entries|length > 0 %}
+
+    {% embed '@theme/embeds/card.html.twig' %}
+        {% import "macros/progressbar.html.twig" as progress %}
+        {% import "macros/widgets.html.twig" as widgets %}
+        {% import "macros/datatables.html.twig" as tables %}
+        {% import "activity/actions.html.twig" as activityActions %}
+        {% block box_body_class %}{{ tableName }}-box {% if hasData %}p-0{% endif %}{% endblock %}
+        {% block box_body %}
+            {% if not hasData %}
+                {{ widgets.nothing_found() }}
+            {% else %}
+                {{ tables.datatable_header(tableName, columns, null, {boxClass: ''}) }}
+
+                {% for id, mapping in entries|sort((a, b) => a.name <=> b.name) %}
+                    {% if mapping.project is not null %}
+                    <tr class="summary">
+                        <td colspan="{{ columns|length }}">
+                                {{ widgets.label_customer(mapping.project) }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% for entry in mapping.activities|sort((a, b) => a.activity.name <=> b.activity.name) %}
+                        {% set activity = entry.activity %}
+                        {% set project = activity.project %}
+                        {% set budgetStats = entry.getBudgetStatisticModel() %}
+                        {% set currency = null %}
+                        {% if project is not null %}
+                            {% set currency = project.customer.currency %}
+                        {% endif %}
+                        <tr {{ widgets.activity_row_attr(activity, now) }}>
+                        {% for name, column_config in columns %}
+                            <td class="{{ tables.data_table_column_class(tableName, columns, name) }}">
+                            {% if name == 'name' %}
+                                {{ widgets.label_activity(activity) }}
+                            {% elseif name == 'durationTotal' %}
+                                {{ entry.durationTotal|duration }}
+                            {% elseif name == 'timeBudget' %}
+                                {% if budgetStats.hasTimeBudget() and is_granted('time', activity) %}
+                                    {{ progress.progressbar_timebudget(budgetStats) }}
+                                {% endif %}
+                            {% elseif name == 'budget' %}
+                                {% if activity.hasBudget() and is_granted('budget', activity) %}
+                                    {{ progress.progressbar_budget(budgetStats, currency) }}
+                                {% endif %}
+                            {% elseif name == 'comment' %}
+                                {{ activity.comment }}
+                            {% elseif name == 'actions' %}
+                                {{ activityActions.activity(activity, 'custom') }}
+                            {% endif %}
+                            </td>
+                        {% endfor %}
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+                {{ tables.data_table_footer(entries) }}
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}
