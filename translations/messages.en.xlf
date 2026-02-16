@@ -954,9 +954,49 @@
         <source>stats.userDurationTotal</source>
         <target>My working hours total</target>
       </trans-unit>
+      <trans-unit resname="stats.userDurationBillableToday" id="QJAw3w2">
+        <source>stats.userDurationBillableToday</source>
+        <target>My billable working hours today</target>
+      </trans-unit>
+      <trans-unit resname="stats.userDurationBillableWeek" id="l5iPgk8">
+        <source>stats.userDurationBillableWeek</source>
+        <target>My billable working hours this week</target>
+      </trans-unit>
+      <trans-unit resname="stats.userDurationBillableMonth" id="pHBswGh">
+        <source>stats.userDurationBillableMonth</source>
+        <target>My billable working hours this month</target>
+      </trans-unit>
+      <trans-unit resname="stats.userDurationBillableYear" id=".76YQr1">
+        <source>stats.userDurationBillableYear</source>
+        <target>My billable working hours this year</target>
+      </trans-unit>
+      <trans-unit resname="stats.userDurationBillableTotal" id="iZ7Lkg1">
+        <source>stats.userDurationBillableTotal</source>
+        <target>My total billable working hours</target>
+      </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
         <target>My working hours</target>
+      </trans-unit>
+      <trans-unit resname="stats.userBillableToday" id="1p_huF.">
+        <source>stats.userBillableToday</source>
+        <target>My billable hours today in percent</target>
+      </trans-unit>
+      <trans-unit resname="stats.userBillableWeek" id="eOz4S86">
+        <source>stats.userBillableWeek</source>
+        <target>My billable hours this week in percent</target>
+      </trans-unit>
+      <trans-unit resname="stats.userBillableMonth" id="q6b7sbE">
+        <source>stats.userBillableMonth</source>
+        <target>My billable hours this month in percent</target>
+      </trans-unit>
+      <trans-unit resname="stats.userBillableYear" id="vfBFk1z">
+        <source>stats.userBillableYear</source>
+        <target>My billable hours this year in percent</target>
+      </trans-unit>
+      <trans-unit resname="stats.userBillableTotal" id="zhCZg39">
+        <source>stats.userBillableTotal</source>
+        <target>My total billable hours in percent</target>
       </trans-unit>
       <trans-unit id="023M9Ta" resname="stats.amountToday">
         <source>stats.amountToday</source>
