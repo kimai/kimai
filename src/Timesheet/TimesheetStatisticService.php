@@ -96,13 +96,14 @@ final class TimesheetStatisticService
 
     /**
      * @internal only for core development
-     * @param DateTimeInterface $begin
-     * @param DateTimeInterface $end
-     * @param User[] $users
      * @return array
      */
-    public function getDailyStatisticsGrouped(DateTimeInterface $begin, DateTimeInterface $end, array $users): array
+    public function getDailyStatisticsGrouped(TimesheetStatisticQuery $query): array
     {
+        $begin = $query->getBegin();
+        $end = $query->getEnd();
+        $users = $query->getUsers();
+
         $stats = [];
         $usersById = [];
 
@@ -173,11 +174,14 @@ final class TimesheetStatisticService
 
     /**
      * @internal only for core development
-     * @param User[] $users
      * @return array
      */
-    public function getMonthlyStatisticsGrouped(DateTimeInterface $begin, DateTimeInterface $end, array $users): array
+    public function getMonthlyStatisticsGrouped(TimesheetStatisticQuery $query): array
     {
+        $begin = $query->getBegin();
+        $end = $query->getEnd();
+        $users = $query->getUsers();
+
         $stats = [];
         $usersById = [];
 

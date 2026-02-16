@@ -17,6 +17,7 @@ use App\Model\DateStatisticInterface;
 use App\Model\MonthlyStatistic;
 use App\Reporting\YearByUser\YearByUser;
 use App\Reporting\YearByUser\YearByUserForm;
+use App\Repository\Query\TimesheetStatisticQuery;
 use DateTime;
 use DateTimeInterface;
 use PhpOffice\PhpSpreadsheet\Reader\Html;
@@ -125,7 +126,7 @@ final class UserYearController extends AbstractUserReportController
 
     protected function getStatisticDataRaw(DateTimeInterface $begin, DateTimeInterface $end, User $user): array
     {
-        return $this->statisticService->getMonthlyStatisticsGrouped($begin, $end, [$user]);
+        return $this->statisticService->getMonthlyStatisticsGrouped(new TimesheetStatisticQuery($begin, $end, [$user]));
     }
 
     protected function createStatisticModel(DateTimeInterface $begin, DateTimeInterface $end, User $user): DateStatisticInterface
