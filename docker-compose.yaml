@@ -1,0 +1,37 @@
+volumes:
+    db-dev:
+
+services:
+    db-dev:
+        image: mariadb:lts
+        environment:
+            - MARIADB_DATABASE=kimai
+            - MARIADB_USER=kimai
+            - MARIADB_PASSWORD=kimai
+            - MARIADB_RANDOM_ROOT_PASSWORD=1
+        volumes:
+            - db-dev:/var/lib/mysql
+        healthcheck:
+            test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+            start_period: 10s
+            interval: 10s
+            timeout: 5s
+            retries: 3
+
+    kimai-dev:
+        image: kimai
+        working_dir: /opt/kimai/
+        build:
+            dockerfile: Dockerfile
+            context: .
+            target: dev
+        pull_policy: build
+        user: ${UID:-1000}:${GID:-1000}
+        environment:
+            - APP_ENV=dev
+            - DATABASE_URL=mysql://kimai:kimai@db-dev:3306/kimai?charset=utf8&serverVersion=5.7
+        volumes:
+            - ./:/opt/kimai/
+        depends_on:
+            db-dev:
+                condition: service_healthy
