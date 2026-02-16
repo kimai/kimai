@@ -7,8 +7,6 @@
 {% endblock %}
 
 {% block main %}
-<style>.tooltip-dayaddon .tooltip-comment { display: block; text-align: left; }</style>
-
     {% if not withWorkHourConfiguration %}
         {% set warningMsg %}
             {{ 'work_times_should.none_configured'|trans }}
@@ -165,19 +163,42 @@
                                 {% elseif day.workingTime.expectedTime == 0 and day.workingTime.actualTime > 0 and now > day.day %}
                                     {% set style = 'unexpected' %}
                                 {% endif %}
-                                {% set statusTooltip = null %}
+                                {% set statusTitle = null %}
+                                {% set useHtmlTooltip = day.getAddons()|filter(a => a.rendererBlock is not null)|length > 0 %}
                                 {% if day.hasAddons() %}
                                     {% for addon in day.getAddons() %}
                                         {% set style = addon.type ?? style %}
-                                        {% set addonTooltip = include('contract/_status_day_tooltip.html.twig', {addon: addon, decimal: decimal}, with_context=false) %}
-                                        {% set statusTooltip = (statusTooltip ?? '') ~ addonTooltip|trim %}
+                                        {% if addon.rendererInclude is not null and addon.rendererBlock is not null and block(addon.rendererBlock ~ '_tooltip', addon.rendererInclude) is defined %}
+                                            {% set statusTitle = (statusTitle ?? '') ~ block(addon.rendererBlock ~ '_tooltip', addon.rendererInclude)|trim %}
+                                        {% else %}
+                                            {% set statusTitle = (statusTitle ?? '') ~ (addon.title|trans) %}
+                                            {% if addon.visibleDuration > 0 %}
+                                                {% set statusTitle = statusTitle ~ ' (' ~ addon.visibleDuration|duration(decimal) ~ ')' %}
+                                            {% endif %}
+                                        {% endif %}
                                         {% if not loop.last %}
-                                            {% set statusTooltip = statusTooltip ~ ', ' %}
+                                            {% set statusTitle = statusTitle ~ ', ' %}
                                         {% endif %}
                                     {% endfor %}
                                 {% endif %}
-                                <td class="text-end contractDay text-nowrap{% if style is not null %} bg-{{ style }}{% endif %}"{% if statusTooltip is not null %} data-toggle="tooltip" data-bs-html="true" data-bs-custom-class="tooltip-dayaddon" data-placement="top" title="{{ statusTooltip|e('html_attr') }}"{% endif %}>
-                                    {% include 'contract/_status_day.html.twig' with {day: day, user: user, decimal: decimal, style: style, hasTooltip: statusTooltip is not null, now: now} only %}
+                                <td class="text-end contractDay text-nowrap{% if style is not null %} bg-{{ style }}{% endif %}"{% if statusTitle is not null %} data-toggle="tooltip"{% if useHtmlTooltip %} data-bs-html="true"{% endif %} data-placement="top" title="{{ statusTitle }}"{% endif %}>
+                                    {% if (day.workingTime.expectedTime != 0 or day.workingTime.actualTime != 0 or day.hasAddons()) and (now > day.day or day.workingTime.actualTime > 0) %}
+                                        {% for addon in day.getAddons() %}
+                                            {% if addon.rendererInclude is not null and addon.rendererBlock is not null and block(addon.rendererBlock, addon.rendererInclude) is defined %}
+                                                {{ block(addon.rendererBlock, addon.rendererInclude) }}
+                                            {% elseif addon.type is not null and statusTitle is not null %}
+                                                <i class="{{ addon.type|icon }} fa-xs"></i>
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% set dayRange = day.day|report_date ~ ' - ' ~ day.day|report_date %}
+                                        <a href="{{ path(user == app.user ? 'timesheet' : 'admin_timesheet', user == app.user ? {'daterange': dayRange} : {'users[]': user.id, 'daterange': dayRange}) }}" class="text-inherit">
+                                        {% if day.workingTime.expectedTime == 0 and day.workingTime.actualTime == 0 %}
+                                            --:--
+                                        {% else %}
+                                            {{ work_times_result(day.workingTime.expectedTime, day.workingTime.actualTime, decimal) }}
+                                        {% endif %}
+                                        </a>
+                                    {% endif %}
                                 </td>
                                 {% set dayCount = dayCount + 1 %}
                             {% endfor %}
