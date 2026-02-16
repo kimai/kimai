@@ -10,15 +10,19 @@
 namespace App\Timesheet;
 
 use App\Entity\User;
+use App\Event\TimesheetStatisticsQueryEvent;
 use App\Model\DailyStatistic;
 use App\Model\MonthlyStatistic;
 use App\Repository\Query\TimesheetStatisticQuery;
 use App\Repository\TimesheetRepository;
-use DateTimeInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 final class TimesheetStatisticService
 {
-    public function __construct(private readonly TimesheetRepository $repository)
+    public function __construct(
+        private readonly TimesheetRepository $repository,
+        private readonly EventDispatcherInterface $eventDispatcher
+    )
     {
     }
 
@@ -71,6 +75,8 @@ final class TimesheetStatisticService
                 ->setParameter('project', $project)
             ;
         }
+
+        $this->eventDispatcher->dispatch(new TimesheetStatisticsQueryEvent($qb));
 
         $results = $qb->getQuery()->getResult();
 
@@ -137,6 +143,8 @@ final class TimesheetStatisticService
             ->addGroupBy('user')
             ->addGroupBy('billable')
         ;
+
+        $this->eventDispatcher->dispatch(new TimesheetStatisticsQueryEvent($qb));
 
         $results = $qb->getQuery()->getResult();
 
@@ -217,6 +225,8 @@ final class TimesheetStatisticService
             ->addGroupBy('user')
             ->addGroupBy('billable')
         ;
+
+        $this->eventDispatcher->dispatch(new TimesheetStatisticsQueryEvent($qb));
 
         $results = $qb->getQuery()->getResult();
 
@@ -314,6 +324,8 @@ final class TimesheetStatisticService
                 ->setParameter('project', $project)
             ;
         }
+
+        $this->eventDispatcher->dispatch(new TimesheetStatisticsQueryEvent($qb));
 
         $results = $qb->getQuery()->getResult();
 
