@@ -8,7 +8,7 @@
         {% set currency = activity.project.customer.currency %}
     {% endif %}
 
-    {% embed '@theme/embeds/card.html.twig' %}
+    {% embed '@theme/embeds/card.html.twig' with {fullsize: true} %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% import "customer/actions.html.twig" as customerActions %}
         {% import "project/actions.html.twig" as projectActions %}
@@ -21,7 +21,6 @@
                 {{ widgets.card_tool_button('edit', {'class': 'modal-ajax-form open-edit', 'title': 'edit', 'url': path('admin_activity_edit', {'id': activity.id})}) }}
             {% endif %}
         {% endblock %}
-        {% block box_body_class %}p-0{% endblock %}
         {% block box_body %}
             {% if activity.comment is not empty %}
                 <div class="comment p-3">

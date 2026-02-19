@@ -104,13 +104,12 @@
         {% if entries is empty %}
             {{ widgets.nothing_found() }}
         {% else %}
-            {% embed '@theme/embeds/card.html.twig' %}
+            {% embed '@theme/embeds/card.html.twig' with {fullsize: true}  %}
                 {% import "macros/widgets.html.twig" as widgets %}
                 {% block box_title %}
                     {{ 'preview'|trans }}
                 {% endblock %}
                 {% block box_attributes %}id="preview_export"{% endblock %}
-                {% block box_body_class %}p-0{% endblock %}
                 {% block box_footer %}
                     {% if showMarkAsExportedButton %}
                     <div class="d-flex">

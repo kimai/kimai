@@ -1,13 +1,12 @@
 {% set timeBudgetVisible = is_granted('time', entity) %}
 {% set durationTrans = entity.isMonthlyBudget() ? 'stats.durationMonth' : 'stats.workingTime' %}
 {% if timeBudgetVisible %}
-    {% embed '@theme/embeds/card.html.twig' %}
+    {% embed '@theme/embeds/card.html.twig' with {fullsize: true}  %}
         {% import "macros/progressbar.html.twig" as progress %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_title %}
             {{ 'timeBudget'|trans }} {% if entity.isMonthlyBudget() %}({{ 'budgetType_month'|trans }}){% endif %}
         {% endblock %}
-        {% block box_body_class %}p-0{% endblock %}
         {% block box_attributes %}id="time_budget_box"{% endblock %}
         {% block box_body %}
             <div class="row">
@@ -59,13 +58,12 @@
     {% endembed %}
 {% endif %}
 {% if is_granted('budget', entity) %}
-    {% embed '@theme/embeds/card.html.twig' %}
+    {% embed '@theme/embeds/card.html.twig' with {fullsize: true}  %}
         {% import "macros/progressbar.html.twig" as progress %}
         {% import "macros/widgets.html.twig" as widgets %}
         {% block box_title %}
             {{ 'budget'|trans }} {% if entity.isMonthlyBudget() %}({{ 'budgetType_month'|trans }}){% endif %}
         {% endblock %}
-        {% block box_body_class %}p-0{% endblock %}
         {% block box_attributes %}id="budget_box"{% endblock %}
         {% block box_body %}
             <div class="row">
