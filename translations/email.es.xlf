@@ -2,13 +2,13 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="es" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
+      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer" xml:space="preserve">
         <source>automated_email_dont_answer</source>
-        <target state="translated">Este es un correo electrónico generado automáticamente. Por favor, no responda, la dirección no será leída.</target>
+        <target state="translated">Este es un correo-e auto-generado. Por favor, no responda, la dirección no será leída.</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject">
+      <trans-unit id="pjr3FDv" resname="registration.subject" xml:space="preserve">
         <source>registration.subject</source>
-        <target state="translated">activa tu cuenta</target>
+        <target state="translated">Activa tu cuenta</target>
       </trans-unit>
       <trans-unit id="QtcznHC" resname="registration.title">
         <source>registration.title</source>
@@ -38,9 +38,9 @@
         <source>Don't worry, Kimai will help you create a new one!</source>
         <target state="translated">Este enlace solo será válido durante los próximos 15 minutos.</target>
       </trans-unit>
-      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject">
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
         <source>absence_created_supervisor_subject</source>
-        <target state="translated">Nueva ausencia | %user% | %type%</target>
+        <target state="translated">Nueva ausencia: %user% (%type%)</target>
       </trans-unit>
       <trans-unit id="wwLx._J" resname="absence_created_supervisor_message" xml:space="preserve">
         <source>A new absence was created for %user%.
@@ -48,7 +48,7 @@
 %list%
 
 Please review them at: %url%</source>
-        <target state="translated">Se ha creado una nueva ausencia para %user%.
+        <target state="translated">Se ha creado una ausencia nueva para %user%.
 
 %list%
 
