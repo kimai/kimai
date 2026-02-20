@@ -71,6 +71,13 @@ final class ParsedownExtension extends Parsedown
      */
     protected function inlineUrl($Excerpt): ?array
     {
+        $block = parent::inlineUrl($Excerpt);
+
+        if (\is_array($block) && isset($block['element']['attributes']) && \is_array($block['element']['attributes'])) {
+            $block['element']['attributes']['target'] = '_blank';
+        }
+
+        return $block;
         if ($this->urlsLinked !== true or !isset($Excerpt['text'][2]) or $Excerpt['text'][2] !== '/') {
             return null;
         }
@@ -86,7 +93,6 @@ final class ParsedownExtension extends Parsedown
                     'text' => $url,
                     'attributes' => [
                         'href' => $url,
-                        'target' => '_blank'
                     ],
                 ],
             ];
