@@ -44,61 +44,17 @@ final class ParsedownExtension extends Parsedown
     ];
 
     /**
-     * Overwritten to add support for file:///
-     */
-    protected $safeLinksWhitelist = [
-        'file:///',
-        'http://',
-        'https://',
-        'ftp://',
-        'ftps://',
-        'mailto:',
-        'data:image/png;base64,',
-        'data:image/gif;base64,',
-        'data:image/jpeg;base64,',
-        'irc:',
-        'ircs:',
-        'git:',
-        'ssh:',
-        'news:',
-        'steam:',
-    ];
-
-    /**
-     * Overwritten:
-     * - added support for file:///
-     * - open links in new windows
+     * Overwritten to open links in new windows
      */
     protected function inlineUrl($Excerpt): ?array
     {
         $block = parent::inlineUrl($Excerpt);
 
-        if (\is_array($block) && isset($block['element']['attributes']) && \is_array($block['element']['attributes'])) {
+        if (isset($block['element']['attributes']) && \is_array($block['element']['attributes'])) {
             $block['element']['attributes']['target'] = '_blank';
         }
 
         return $block;
-        if ($this->urlsLinked !== true or !isset($Excerpt['text'][2]) or $Excerpt['text'][2] !== '/') {
-            return null;
-        }
-
-        if (preg_match('/\b(https?:[\/]{2}|file:[\/]{3})[^\s<]+\b\/*/ui', $Excerpt['context'], $matches, PREG_OFFSET_CAPTURE)) {
-            $url = $matches[0][0];
-
-            return [
-                'extent' => \strlen($matches[0][0]),
-                'position' => $matches[0][1],
-                'element' => [
-                    'name' => 'a',
-                    'text' => $url,
-                    'attributes' => [
-                        'href' => $url,
-                    ],
-                ],
-            ];
-        }
-
-        return null;
     }
 
     protected function blockTable($Line, ?array $Block = null) // @phpstan-ignore missingType.return,missingType.iterableValue,missingType.parameter
