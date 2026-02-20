@@ -3801,11 +3801,6 @@ parameters:
             path: src/Utils/ParsedownExtension.php
 
         -
-            message: "#^Property App\\\\Utils\\\\ParsedownExtension\\:\\:\\$safeLinksWhitelist has no type specified\\.$#"
-            count: 1
-            path: src/Utils/ParsedownExtension.php
-
-        -
             message: "#^Parameter \\#1 \\$profile of method App\\\\Utils\\\\ProfileManager\\:\\:getProfile\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/Utils/ProfileManager.php
