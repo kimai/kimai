@@ -7,9 +7,8 @@
     {% if plugins|length == 0 %}
         {{ widgets.callout('warning', 'plugin.none_installed'|trans({}, 'plugins')) }}
     {% else %}
-        {% embed '@theme/embeds/card.html.twig' %}
+        {% embed '@theme/embeds/card.html.twig' with {fullsize: true}  %}
             {% block box_title %}{{ 'plugin.installed'|trans }}{% endblock %}
-            {% block box_body_class %}p-0{% endblock %}
             {% block box_body %}
                 {% set columns = {
                     'name': {'class': 'alwaysVisible w-25'},
@@ -46,10 +45,9 @@
     {% endif %}
 
     {% if extensions|length > 0 %}
-        {% embed '@theme/embeds/card.html.twig' %}
+        {% embed '@theme/embeds/card.html.twig' with {fullsize: true}  %}
             {% from "macros/widgets.html.twig" import card_tool_button %}
             {% block box_title %}{{ 'plugin.marketplace'|trans({}, 'plugins') }}{% endblock %}
-            {% block box_body_class %}p-0{% endblock %}
             {% block box_tools %}
                 {{ card_tool_button('shop', {'title': 'shop', 'translation_domain': 'plugins', 'target': '_blank', 'url': constant('App\\Constants::HOMEPAGE') ~ '/store/', 'icon': false, 'class': 'btn-primary'}) }}
             {% endblock %}

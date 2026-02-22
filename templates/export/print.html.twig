@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ app.locale }}">
-{% from "macros/meta_fields.html.twig" import meta_field_value %}
+{% from "macros/meta_fields.html.twig" import meta_field_value, form_type_value %}
 {% set storageItemName = 'kimai_html_export' %}
 {% set decimal = decimal|default(false) %}
 {% set columnTitles = {} %}
@@ -507,7 +507,7 @@
                                     <td class="column-{{ 'u_' ~ field.name }} text-nowrap" {% if not columns['u_' ~ field.name] %}style="display: none"{% endif %}>
                                         {% set metaField = entry.user.preference(field.name) %}
                                         {% if not metaField is null and metaField.value is not null and metaField.value is not empty %}
-                                            {{ _self.form_type_value(field.type, metaField.value, entry.user) }}
+                                            {{ form_type_value(field.type, metaField.value, entry.user) }}
                                         {% endif %}
                                     </td>
                                 {% endfor %}
