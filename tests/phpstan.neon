@@ -1347,22 +1347,7 @@ parameters:
             path: Form/Type/DurationTypeTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\QuickEntryTimesheetTypeTest\\:\\:getExtensions\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Form/Type/QuickEntryTimesheetTypeTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\QuickEntryTimesheetTypeTest\\:\\:getTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Form/Type/QuickEntryTimesheetTypeTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\QuickEntryTimesheetTypeTest\\:\\:testSubmitValidData\\(\\) has parameter \\$expectedDuration with no type specified\\.$#"
-            count: 1
-            path: Form/Type/QuickEntryTimesheetTypeTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Form\\\\Type\\\\QuickEntryTimesheetTypeTest\\:\\:testSubmitValidData\\(\\) has parameter \\$value with no type specified\\.$#"
             count: 1
             path: Form/Type/QuickEntryTimesheetTypeTest.php
 
