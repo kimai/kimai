@@ -1902,6 +1902,14 @@
         <source>Timesheet</source>
         <target state="final">工時單</target>
       </trans-unit>
+      <trans-unit id="mhOe3Iy" resname="unlock_month.help" xml:space="preserve">
+        <source>unlock_month.help</source>
+        <target state="translated">此設定將解鎖所選日期之後的所有日曆日。</target>
+      </trans-unit>
+      <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="no">
+        <source>Unlock month</source>
+        <target state="translated">解鎖月份</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

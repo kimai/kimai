@@ -18,9 +18,9 @@
         <source>service-date</source>
         <target>Autónomo</target>
       </trans-unit>
-      <trans-unit id="7mEUv6C" resname="help.upload">
+      <trans-unit id="7mEUv6C" resname="help.upload" xml:space="preserve">
         <source>help.upload</source>
-        <target state="translated">Atención: Los archivos existentes serán sobrescritos. Los tipos de archivo permitidos son: %extensions%.</target>
+        <target state="translated">Atención: los archivos existentes serán sobrescritos. Los tipos de archivo concedidos son: %extensions%.</target>
       </trans-unit>
       <trans-unit id="E5BwZHT" resname="programmatic">
         <source>programmatic</source>

@@ -606,9 +606,9 @@
         <source>stats.workingTimeMonth</source>
         <target state="translated">%month% %year%</target>
       </trans-unit>
-      <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
+      <trans-unit id="lfSTZGe" resname="stats.workingTimeToday" xml:space="preserve">
         <source>stats.workingTimeToday</source>
-        <target state="translated">Сегодня (%day%)</target>
+        <target state="translated">Сегодня, %day%</target>
       </trans-unit>
       <trans-unit id="XKTzhQz" resname="version">
         <source>version</source>
@@ -822,13 +822,13 @@
         <source>unit_price</source>
         <target>Цена</target>
       </trans-unit>
-      <trans-unit id="JnUFsNi" resname="stats.workingTimeYear">
+      <trans-unit id="JnUFsNi" resname="stats.workingTimeYear" xml:space="preserve">
         <source>stats.workingTimeYear</source>
-        <target state="translated">Весь год (%year%)</target>
+        <target state="translated">Весь год %year%</target>
       </trans-unit>
       <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek" xml:space="preserve">
         <source>stats.workingTimeWeek</source>
-        <target state="translated">Календарная неделя (%week%)</target>
+        <target state="translated">Календарная неделя %week%</target>
       </trans-unit>
       <trans-unit id="EJDS9HY" resname="vat_id">
         <source>vat_id</source>
@@ -970,13 +970,13 @@
         <source>stats.workingTimeFinancialYear</source>
         <target>Финансовый год</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target>Письмо отправлено на %email%. Чтобы активировать аккаунт, нажмите на ссылку в тексте письма.</target>
+      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve">
+        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
+        <target state="translated">Письмо было отправлено на %email%. Чтобы активировать аккаунт, нажмите на ссылку в тексте письма.</target>
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
-        <target state="translated">Вам было отправлено письмо со ссылкой для сброса пароля. Примечание: Вы можете запросить новый пароль только один раз в %tokenLifetime% часов. Если вы не получили письмо, проверьте папку «Спам» или повторите попытку.</target>
+        <target state="translated">Вам было отправлено письмо с ссылкой для сброса пароля. Примечание: Вы можете запросить новый пароль только один раз в %tokenLifetime% часов. Если вы не получили письмо, проверьте папку «Спам» или повторите попытку.</target>
       </trans-unit>
       <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>
@@ -1050,13 +1050,13 @@
         <source>stats.percentUsed_month</source>
         <target>%percent%% использовано в этом месяце</target>
       </trans-unit>
-      <trans-unit id="tvV0NhL" resname="delete_warning.short_stats">
+      <trans-unit id="tvV0NhL" resname="delete_warning.short_stats" xml:space="preserve">
         <source>delete_warning.short_stats</source>
-        <target>В настоящее время существует %records% записей учета времени, общая длительность которых составляет %duration%.</target>
+        <target state="needs-translation">В настоящее время существует %records% записей учета времени, общая длительность которых составляет %duration%.</target>
       </trans-unit>
-      <trans-unit id="W92QGbY" resname="export.warn_result_amount">
+      <trans-unit id="W92QGbY" resname="export.warn_result_amount" xml:space="preserve">
         <source>export.warn_result_amount</source>
-        <target>%count% результатов в поиске. Если экспорт не удается, вам необходимо сузить область поиска.</target>
+        <target state="needs-translation">Ваш поиск дал %count% результатов. Если экспорт не удается, вам необходимо уменьшить область поиска.</target>
       </trans-unit>
       <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month">
         <source>stats.percentUsedLeft_month</source>
@@ -1352,7 +1352,7 @@
       </trans-unit>
       <trans-unit id="8yqaKzX" resname="confirmed_by_at" xml:space="preserve">
         <source>confirmed_by_at</source>
-        <target state="translated">%user% подтвердил в %date%</target>
+        <target state="translated">Подтверждено %user% %date%</target>
       </trans-unit>
       <trans-unit id="wZRRqg0" resname="manual_bookings">
         <source>manual_bookings</source>
@@ -2049,6 +2049,38 @@
       <trans-unit id="jMvh7bn" resname="Credit Transfer" xml:space="preserve">
         <source>Credit Transfer</source>
         <target state="translated">Кредитный перевод</target>
+      </trans-unit>
+      <trans-unit id="Wnb_qF0" resname="Direct Debit" xml:space="preserve">
+        <source>Direct Debit</source>
+        <target state="translated">Прямой дебет</target>
+      </trans-unit>
+      <trans-unit id="Mi7y8Q3" resname="tax.type.exempt" xml:space="preserve">
+        <source>tax.type.exempt</source>
+        <target state="translated">Исключено</target>
+      </trans-unit>
+      <trans-unit id="lU1Njcy" resname="tax.type.standard" xml:space="preserve">
+        <source>tax.type.standard</source>
+        <target state="translated">Облагаемое налогом</target>
+      </trans-unit>
+      <trans-unit id="E470U8W" resname="tax.type.reverse" xml:space="preserve">
+        <source>tax.type.reverse</source>
+        <target state="translated">Возврат налогового обязательства</target>
+      </trans-unit>
+      <trans-unit id="hi31a3v" resname="tax.note.reverse_charge" xml:space="preserve">
+        <source>tax.note.reverse_charge</source>
+        <target state="translated">Налог облагается обратным начислением</target>
+      </trans-unit>
+      <trans-unit id="6w8kS.m" resname="user_access_all" xml:space="preserve">
+        <source>user_access_all</source>
+        <target state="translated">Разрешить доступ всем пользователям</target>
+      </trans-unit>
+      <trans-unit id="DbF_j60" resname="count_as_expected_time" xml:space="preserve">
+        <source>count_as_expected_time</source>
+        <target state="translated">Считать как ожидаемые часы: %type%</target>
+      </trans-unit>
+      <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
+        <source>count_as_expected_time_help</source>
+        <target state="translated">При активации, %type% учтётся в рабочие часы в расчёте ожидаемых дневных часов. При отключении, ожидаемые часы для этих дней будут обнулены. Обе настройки сохраняют нейтральный баланс, но по-разному влияют на месячные итоги.</target>
       </trans-unit>
     </body>
   </file>

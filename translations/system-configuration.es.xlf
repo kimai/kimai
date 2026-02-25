@@ -6,9 +6,9 @@
         <source>theme</source>
         <target>Tema</target>
       </trans-unit>
-      <trans-unit id="mPRUBFX" resname="theme.markdown_content">
+      <trans-unit id="mPRUBFX" resname="theme.markdown_content" xml:space="preserve">
         <source>theme.markdown_content</source>
-        <target>Permitir formato markdown en descripciones y comentarios</target>
+        <target state="translated">Conceder formato markdown en descripciones y comentarios</target>
       </trans-unit>
       <trans-unit id="FaGqoTT" resname="timesheet.mode">
         <source>timesheet.mode</source>
@@ -126,9 +126,9 @@
         <source>rounding</source>
         <target>Redondeo de tiempos</target>
       </trans-unit>
-      <trans-unit id="en0.Ahu" resname="theme.branding.company">
+      <trans-unit id="en0.Ahu" resname="theme.branding.company" xml:space="preserve">
         <source>theme.branding.company</source>
-        <target>Empresa</target>
+        <target state="translated">Nombre de empresa</target>
       </trans-unit>
       <trans-unit id="RLgv62J" resname="timesheet.rules.lockdown_grace_period">
         <source>timesheet.rules.lockdown_grace_period</source>

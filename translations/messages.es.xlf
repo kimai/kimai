@@ -234,9 +234,9 @@
         <source>team</source>
         <target>Equipo</target>
       </trans-unit>
-      <trans-unit id="evFI7nW" resname="teamlead">
+      <trans-unit id="evFI7nW" resname="teamlead" xml:space="preserve">
         <source>teamlead</source>
-        <target>Supervisor</target>
+        <target state="translated">Líder de equipo</target>
       </trans-unit>
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
@@ -426,9 +426,9 @@
         <source>alias</source>
         <target>Nombre</target>
       </trans-unit>
-      <trans-unit id="qvIyBkY" resname="title">
+      <trans-unit id="qvIyBkY" resname="title" xml:space="preserve">
         <source>title</source>
-        <target>Puesto</target>
+        <target state="translated">Título</target>
       </trans-unit>
       <trans-unit id="h7voece" resname="avatar">
         <source>avatar</source>
@@ -454,9 +454,9 @@
         <source>ROLE_ADMIN</source>
         <target>Administrador</target>
       </trans-unit>
-      <trans-unit id="yttGLAB" resname="ROLE_TEAMLEAD">
+      <trans-unit id="yttGLAB" resname="ROLE_TEAMLEAD" xml:space="preserve">
         <source>ROLE_TEAMLEAD</source>
-        <target>Supervisor</target>
+        <target state="translated">Líder de equipo</target>
       </trans-unit>
       <trans-unit id="rvO5ZXf" resname="ROLE_USER">
         <source>ROLE_USER</source>
@@ -550,9 +550,9 @@
         <source>stats.percentUsed</source>
         <target state="translated">%percent%% utilizado</target>
       </trans-unit>
-      <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft">
+      <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft" xml:space="preserve">
         <source>stats.percentUsedLeft</source>
-        <target state="translated">%percent%% usado (%left% aún está abierto)</target>
+        <target state="translated">%percent%% utilizado (%left% aún está abierto)</target>
       </trans-unit>
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title">
         <source>admin_invoice_template.title</source>
@@ -780,7 +780,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple" xml:space="preserve">
         <source>update_multiple</source>
-        <target state="translated">¿Entradas %action% %count% ?</target>
+        <target state="translated">%action% %count% apuntes</target>
       </trans-unit>
       <trans-unit id="Uvo1CbP" resname="status.pending">
         <source>status.pending</source>
@@ -798,9 +798,9 @@
         <source>stats.workingTimeYear</source>
         <target state="translated">Todo el año %year%</target>
       </trans-unit>
-      <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek">
+      <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek" xml:space="preserve">
         <source>stats.workingTimeWeek</source>
-        <target state="translated">Semana del calendario %week%</target>
+        <target state="translated">Semana %week% del calendario</target>
       </trans-unit>
       <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
@@ -1010,13 +1010,13 @@
         <source>export.warn_result_amount</source>
         <target state="translated">Su búsqueda conduce a %count% resultados. Si la exportación falla, debe reducir aún más su búsqueda.</target>
       </trans-unit>
-      <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month">
+      <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month" xml:space="preserve">
         <source>stats.percentUsedLeft_month</source>
-        <target state="translated">%percent%% usado (%left% todavía está abierto este mes)</target>
+        <target state="translated">%percent%% utilizado (%left% todavía está abierto este mes)</target>
       </trans-unit>
-      <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
+      <trans-unit id="xN7MfSA" resname="stats.percentUsed_month" xml:space="preserve">
         <source>stats.percentUsed_month</source>
-        <target state="translated">%percent%% usado este mes</target>
+        <target state="translated">%percent%% utilizado este mes</target>
       </trans-unit>
       <trans-unit id="Nx9_QiO" resname="revenue">
         <source>revenue</source>
@@ -1034,9 +1034,9 @@
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="final">Se ha enviado un correo electrónico. Contiene un enlace en el que debes hacer clic para restablecer tu contraseña. Nota: Sólo puedes solicitar una nueva contraseña una vez en un plazo de %tokenLifetime% horas. Si no recibes un correo electrónico, comprueba tu carpeta de correo no deseado o inténtalo de nuevo.</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
+      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve">
         <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="translated">Se ha enviado un correo electrónico a %email%. Contiene un enlace en el que debe hacer clic para activar su cuenta.</target>
+        <target state="translated">Se ha enviado un correo electrónico a %email%. Contiene un enlace en el que debe pulsar para activar su cuenta.</target>
       </trans-unit>
       <trans-unit id="EwPAaws" resname="type">
         <source>type</source>
@@ -1102,9 +1102,9 @@
         <source>includeBudgetType_full</source>
         <target state="translated">Mostrar entradas con presupuesto «ciclo de vida»</target>
       </trans-unit>
-      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
+      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached" xml:space="preserve">
         <source>invoice_document.max_reached</source>
-        <target state="translated">Se alcanzó la cantidad máxima de %max% documentos de factura. Puede agregar más después de eliminar uno.</target>
+        <target state="translated">Se alcanzó la cantidad máxima de %max% documentos de factura. Puede agregar más tras retirar uno.</target>
       </trans-unit>
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
         <source>stats.workingTimeWeekShort</source>
@@ -1182,9 +1182,9 @@
         <source>help.invoiceTemplate_customer</source>
         <target state="translated">Las facturas para este cliente se generan por defecto con esta plantilla. Se puede cambiar durante la generación de la factura si es necesario.</target>
       </trans-unit>
-      <trans-unit id="wwrREDg" resname="pagination">
+      <trans-unit id="wwrREDg" resname="pagination" xml:space="preserve">
         <source>pagination</source>
-        <target state="translated">Muestra las entradas %start% a %end% de %total%.</target>
+        <target state="translated">Muestra los apuntes %start% a %end% del %total%.</target>
       </trans-unit>
       <trans-unit id="1MfS6X5" resname="remove_filter" xml:space="preserve">
         <source>remove_filter</source>
@@ -1342,13 +1342,13 @@
         <source>api_password.missing_title</source>
         <target state="translated">No se puede usar la API de la aplicación</target>
       </trans-unit>
-      <trans-unit id="wYcx0So" resname="search.no_results">
+      <trans-unit id="wYcx0So" resname="search.no_results" xml:space="preserve">
         <source>search.no_results</source>
-        <target state="translated">No se han encontrado resultados para "%input%"</target>
+        <target state="translated">No se han encontrado resultados para «%input%»</target>
       </trans-unit>
-      <trans-unit id="biHjm0h" resname="select.add_new">
+      <trans-unit id="biHjm0h" resname="select.add_new" xml:space="preserve">
         <source>select.add_new</source>
-        <target state="translated">Crear uno nuevo con el nombre "%input%"</target>
+        <target state="translated">Crear uno nuevo con el nombre «%input%»</target>
       </trans-unit>
       <trans-unit id="dru_Thv" resname="please_choose">
         <source>please_choose</source>
@@ -1526,9 +1526,9 @@
         <source>public_holiday</source>
         <target state="translated">Día festivo</target>
       </trans-unit>
-      <trans-unit id="5buBUCm" resname="receive_from">
+      <trans-unit id="5buBUCm" resname="receive_from" xml:space="preserve">
         <source>receive_from</source>
-        <target state="translated">Recibir de %name%</target>
+        <target state="translated">Recibir desde %name%</target>
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
@@ -1538,9 +1538,9 @@
         <source>supervisor</source>
         <target state="translated">Supervisor</target>
       </trans-unit>
-      <trans-unit id="8yqaKzX" resname="confirmed_by_at">
+      <trans-unit id="8yqaKzX" resname="confirmed_by_at" xml:space="preserve">
         <source>confirmed_by_at</source>
-        <target state="translated">Confimado por %user% el %date%</target>
+        <target state="translated">Confirmado por %user% el %date%</target>
       </trans-unit>
       <trans-unit id="Eml59KV" resname="day_half">
         <source>day_half</source>
@@ -1700,7 +1700,7 @@
       </trans-unit>
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
         <source>absence_comment_mandatory</source>
-        <target state="translated">Ausencia: El comentario es obligatorio.</target>
+        <target state="translated">Ausencia: El comentario es un campo obligatorio</target>
       </trans-unit>
       <trans-unit id="tfOjLNp" resname="project_number" xml:space="preserve">
         <source>Project number</source>
@@ -1820,7 +1820,7 @@
       </trans-unit>
       <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
         <source>Settings</source>
-        <target state="needs-translation">Preferencias</target>
+        <target state="translated">Ajustes</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
@@ -1944,7 +1944,7 @@
       </trans-unit>
       <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
         <source>sending_company</source>
-        <target state="needs-translation">Remitente de la factura</target>
+        <target state="translated">Remitente de factura</target>
       </trans-unit>
       <trans-unit id="rD4oQRR" resname="postcode" xml:space="preserve">
         <source>Postcode</source>
@@ -1993,6 +1993,94 @@
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>Timesheet</source>
         <target state="translated">Parte de horas</target>
+      </trans-unit>
+      <trans-unit id="BmDRYT." resname="sending_company.help" xml:space="preserve">
+        <source>sending_company.help</source>
+        <target state="translated">Esta empresa se muestra como el emisor en la factura. Será utilizada la información de nombre, dirección e imposición.</target>
+      </trans-unit>
+      <trans-unit id="PciSBv9" resname="address_row" xml:space="preserve">
+        <source>address_row</source>
+        <target state="translated">Línea %row%</target>
+      </trans-unit>
+      <trans-unit id="_Ep8Ogx" resname="buyerReference" xml:space="preserve">
+        <source>buyerReference</source>
+        <target state="translated">Referencia de comprador</target>
+      </trans-unit>
+      <trans-unit id="nPJWKwW" resname="payment_type" xml:space="preserve">
+        <source>payment_type</source>
+        <target state="translated">Tipo abonante</target>
+      </trans-unit>
+      <trans-unit id="uXB48Vj" resname="SEPA Credit Transfer" xml:space="preserve">
+        <source>SEPA Credit Transfer</source>
+        <target state="translated">Transferencia Crediticia SEPA</target>
+      </trans-unit>
+      <trans-unit id="s42A2gm" resname="SEPA Direct Debit" xml:space="preserve">
+        <source>SEPA Direct Debit</source>
+        <target state="translated">Débito Directo SEPA</target>
+      </trans-unit>
+      <trans-unit id="4toQj2M" resname="Cash" xml:space="preserve">
+        <source>Cash</source>
+        <target state="translated">Efectivo</target>
+      </trans-unit>
+      <trans-unit id="cWZZc6D" resname="Cheque" xml:space="preserve">
+        <source>Cheque</source>
+        <target state="translated">Cheque</target>
+      </trans-unit>
+      <trans-unit id="jMvh7bn" resname="Credit Transfer" xml:space="preserve">
+        <source>Credit Transfer</source>
+        <target state="translated">Transferencia Crediticia</target>
+      </trans-unit>
+      <trans-unit id="TJQbc0a" resname="Payment To Bank Account" xml:space="preserve">
+        <source>Payment To Bank Account</source>
+        <target state="translated">Abonación a Cuenta Bancaria</target>
+      </trans-unit>
+      <trans-unit id=".UIt099" resname="Card Payment" xml:space="preserve">
+        <source>Card Payment</source>
+        <target state="translated">Abonación por Tarjeta</target>
+      </trans-unit>
+      <trans-unit id="Wnb_qF0" resname="Direct Debit" xml:space="preserve">
+        <source>Direct Debit</source>
+        <target state="translated">Débito Directo</target>
+      </trans-unit>
+      <trans-unit id="rIdfGxM" resname="payment_account_name" xml:space="preserve">
+        <source>payment_account_name</source>
+        <target state="translated">Cuenta o titular de tarjeta</target>
+      </trans-unit>
+      <trans-unit id="jcT9Og6" resname="payment_account_number" xml:space="preserve">
+        <source>payment_account_name</source>
+        <target state="translated">Número IBAN o tarjeta</target>
+      </trans-unit>
+      <trans-unit id="QnN_ONc" resname="invoice_tax_type" xml:space="preserve">
+        <source>invoice_tax_type</source>
+        <target state="translated">Estado impositivo</target>
+      </trans-unit>
+      <trans-unit id="Mi7y8Q3" resname="tax.type.exempt" xml:space="preserve">
+        <source>tax.type.exempt</source>
+        <target state="translated">Exención</target>
+      </trans-unit>
+      <trans-unit id="lU1Njcy" resname="tax.type.standard" xml:space="preserve">
+        <source>tax.type.standard</source>
+        <target state="translated">Imponible</target>
+      </trans-unit>
+      <trans-unit id="E470U8W" resname="tax.type.reverse" xml:space="preserve">
+        <source>tax.type.reverse</source>
+        <target state="translated">Cargo inverso</target>
+      </trans-unit>
+      <trans-unit id="hi31a3v" resname="tax.note.reverse_charge" xml:space="preserve">
+        <source>tax.note.reverse_charge</source>
+        <target state="translated">Impuesto a pagar en régimen de inversión del sujeto pasivo</target>
+      </trans-unit>
+      <trans-unit id="6w8kS.m" resname="user_access_all" xml:space="preserve">
+        <source>user_access_all</source>
+        <target state="translated">Conceder acceso a todos los usuarios</target>
+      </trans-unit>
+      <trans-unit id="DbF_j60" resname="count_as_expected_time" xml:space="preserve">
+        <source>count_as_expected_time</source>
+        <target state="translated">Cuenta como horas esperadas: %type%</target>
+      </trans-unit>
+      <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
+        <source>count_as_expected_time_help</source>
+        <target state="translated">Al habilitar esta opción, %type% se contabilizará como horas trabajadas para las horas diarias esperadas. Al deshabilitarla, las horas esperadas para estos días se establecerán en 0. Ambas opciones mantienen un saldo neutral, pero afectan los totales mensuales de forma diferente.</target>
       </trans-unit>
     </body>
   </file>

@@ -66,9 +66,9 @@
         <source>The budget is completely used.</source>
         <target state="translated">El presupuesto se ha agotado. Del %budget% disponible, el %used% se ha reservado hasta ahora, el %free% aún puede utilizarse.</target>
       </trans-unit>
-      <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded.">
+      <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded." xml:space="preserve">
         <source>Maximum duration of {{ value }} hours exceeded.</source>
-        <target state="translated">Un número máximo {{ value }} de horas son permitidas.</target>
+        <target state="translated">Un {{ value }} máximo de horas permitidas.</target>
       </trans-unit>
       <trans-unit id="dcPei9G" resname="Sorry, the budget is used up.">
         <source>Sorry, the budget is used up.</source>
