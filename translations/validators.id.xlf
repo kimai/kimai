@@ -18,6 +18,154 @@
         <source>The username is already used.</source>
         <target state="translated">Nama pengguna sudah digunakan.</target>
       </trans-unit>
+      <trans-unit id="ekO5eXI" resname="An equal username is already used." xml:space="preserve">
+        <source>An equal username is already used.</source>
+        <target state="translated">Nama pengguna yang sama sudah digunakan.</target>
+      </trans-unit>
+      <trans-unit id="INlaCgW" resname="An equal email is already used." xml:space="preserve">
+        <source>An equal e-mail address is already in use.</source>
+        <target state="translated">Alamat email yang sama sudah digunakan.</target>
+      </trans-unit>
+      <trans-unit id="IkNxbBI" resname="This value is not a valid role." xml:space="preserve">
+        <source>This value is not a valid role.</source>
+        <target state="translated">Nilai ini bukan peran yang valid.</target>
+      </trans-unit>
+      <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
+        <source>The end date must not be earlier than the start date.</source>
+        <target state="translated">Tanggal akhir tidak boleh lebih awal dari tanggal mulai.</target>
+      </trans-unit>
+      <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future." xml:space="preserve">
+        <source>The begin date cannot be in the future.</source>
+        <target state="translated">Tanggal mulai tidak boleh di masa depan.</target>
+      </trans-unit>
+      <trans-unit id="Jz1y3yB" resname="Duration cannot be zero." xml:space="preserve">
+        <source>Duration cannot be zero.</source>
+        <target state="translated">Durasi kosong tidak diperbolehkan.</target>
+      </trans-unit>
+      <trans-unit id="1V6BsD_" resname="You must select at least one user or team." xml:space="preserve">
+        <source>You must select at least one user or team.</source>
+        <target state="translated">Anda harus memilih setidaknya satu pengguna atau tim.</target>
+      </trans-unit>
+      <trans-unit id="yDlKSRw" resname="This invoice document cannot be used, please rename the file and upload it again." xml:space="preserve">
+        <source>This invoice document cannot be used. Please rename the file and upload it again.</source>
+        <target state="translated">Dokumen faktur ini tidak dapat digunakan. Harap ubah nama file dan unggah lagi.</target>
+      </trans-unit>
+      <trans-unit id="0o.pH3X" resname="This period is locked, please choose a later date." xml:space="preserve">
+        <source>This period is locked. Please choose a later date.</source>
+        <target state="translated">Periode ini terkunci. Harap pilih tanggal yang lebih lama.</target>
+      </trans-unit>
+      <trans-unit id="u2wjm2i" resname="You already have an entry for this time." xml:space="preserve">
+        <source>You already have an entry for this time.</source>
+        <target state="translated">Anda sudah memiliki entri untuk waktu ini.</target>
+      </trans-unit>
+      <trans-unit id="VJSZSD0" resname="The given value is not a valid time." xml:space="preserve">
+        <source>The given value is not a valid time.</source>
+        <target state="translated">Nilai yang diberikan bukan waktu yang valid.</target>
+      </trans-unit>
+      <trans-unit id="1oKCOa5" resname="The budget is completely used." xml:space="preserve">
+        <source>The budget is completely used.</source>
+        <target state="translated">Anggaran telah habis. Dari anggaran yang tersedia %budget%, %used% telah dibukukan sejauh ini, %free% masih dapat digunakan.</target>
+      </trans-unit>
+      <trans-unit id="dcPei9G" resname="Sorry, the budget is used up." xml:space="preserve">
+        <source>Sorry, the budget is used up.</source>
+        <target state="translated">Maaf, anggaran telah habis.</target>
+      </trans-unit>
+      <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded." xml:space="preserve">
+        <source>Maximum duration of {{ value }} hours exceeded.</source>
+        <target state="translated">Maksimal {{ value }} jam diperbolehkan.</target>
+      </trans-unit>
+      <trans-unit id="to1Q85W" resname="An activity needs to be selected." xml:space="preserve">
+        <source>An activity needs to be selected.</source>
+        <target state="translated">Aktivitas perlu dipilih.</target>
+      </trans-unit>
+      <trans-unit id="rHd9_aA" resname="A project needs to be selected." xml:space="preserve">
+        <source>A project needs to be selected.</source>
+        <target state="translated">Proyek perlu dipilih.</target>
+      </trans-unit>
+      <trans-unit id="mjlH0la" resname="This timesheet is already exported." xml:space="preserve">
+        <source>This timesheet is already exported.</source>
+        <target state="translated">Lembar waktu ini sudah diekspor.</target>
+      </trans-unit>
+      <trans-unit id="gSAwscA" resname="Validation Failed" xml:space="preserve">
+        <source>Validation Failed</source>
+        <target state="translated">Terjadi masalah saat menyimpan.</target>
+      </trans-unit>
+      <trans-unit id="7HYTefs" resname="Cannot stop running timesheet" xml:space="preserve">
+        <source>Cannot stop running timesheet</source>
+        <target state="translated">Anda memiliki catatan waktu aktif yang tidak dapat dihentikan secara otomatis.</target>
+      </trans-unit>
+      <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token." xml:space="preserve">
+        <source>The given code is not the correct TOTP token.</source>
+        <target state="translated">Kode yang diberikan bukan token TOTP yang benar.</target>
+      </trans-unit>
+      <trans-unit id="7mqg3TC" resname="This value is not a valid role name." xml:space="preserve">
+        <source>This value is not a valid role name.</source>
+        <target state="translated">Ini bukan nama yang valid untuk peran pengguna.</target>
+      </trans-unit>
+      <trans-unit id="ZObikpA" resname="This absence type is not known." xml:space="preserve">
+        <source>This absence type is not known.</source>
+        <target state="translated">Jenis ketidakhadiran ini tidak diketahui.</target>
+      </trans-unit>
+      <trans-unit id="0ULsHQA" resname="The chosen date is not a working day." xml:space="preserve">
+        <source>The chosen date is not a working day.</source>
+        <target state="translated">Tanggal yang dipilih bukan hari kerja.</target>
+      </trans-unit>
+      <trans-unit id="N21br.P" resname="The chosen date is already locked." xml:space="preserve">
+        <source>The chosen date is already locked.</source>
+        <target state="translated">Tanggal yang dipilih sudah terkunci.</target>
+      </trans-unit>
+      <trans-unit id="6H84TMs" resname="An absence must be assigned to a user." xml:space="preserve">
+        <source>An absence must be assigned to a user.</source>
+        <target state="translated">Ketidakhadiran harus ditetapkan kepada pengguna.</target>
+      </trans-unit>
+      <trans-unit id="nLcihCc" resname="An absence must have a date." xml:space="preserve">
+        <source>An absence must have a date.</source>
+        <target state="translated">Ketidakhadiran harus memiliki tanggal.</target>
+      </trans-unit>
+      <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
+        <source>An absence cannot be booked before your first working day.</source>
+        <target state="translated">Ketidakhadiran tidak dapat dibukukan sebelum hari kerja pertama.</target>
+      </trans-unit>
+      <trans-unit id="IN37g5N" resname="Not enough holidays left." xml:space="preserve">
+        <source>Not enough holidays left.</source>
+        <target state="translated">Cuti tidak cukup.</target>
+      </trans-unit>
+      <trans-unit id="ByeEMxW" resname="You do not have enough overtime, remaining are {{ value }}." xml:space="preserve">
+        <source>You do not have enough overtime, remaining are {{ value }}.</source>
+        <target state="translated">Anda tidak memiliki cukup lembur, tersisa {{ value }}.</target>
+      </trans-unit>
+      <trans-unit id="DiaaRa1" resname="You cannot have two absences of this type at one day." xml:space="preserve">
+        <source>You cannot have two absences of this type at one day.</source>
+        <target state="translated">Anda tidak dapat memiliki dua ketidakhadiran dari jenis ini pada satu hari.</target>
+      </trans-unit>
+      <trans-unit id="kSBiyaF" resname="This is a public holiday, booking not allowed." xml:space="preserve">
+        <source>This is a public holiday, booking not allowed.</source>
+        <target state="translated">Ini adalah hari libur nasional, pembukuan tidak diperbolehkan.</target>
+      </trans-unit>
+      <trans-unit id="c2B6.lW" resname="You can book a maximum of {{ value }} days at once." xml:space="preserve">
+        <source>You can book a maximum of {{ value }} days at once.</source>
+        <target state="translated">Anda dapat membukukan maksimal {{ value }} hari sekaligus, Anda saat ini memilih {{ selected }}.</target>
+      </trans-unit>
+      <trans-unit id="BztgSSP" resname="The period of absence must not extend beyond the turn of the year." xml:space="preserve">
+        <source>The period of absence must not extend beyond the turn of the year.</source>
+        <target state="translated">Periode ketidakhadiran tidak boleh melampaui pergantian tahun.</target>
+      </trans-unit>
+      <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form." xml:space="preserve">
+        <source>The CSRF token is invalid. Please try to resubmit the form.</source>
+        <target state="translated">Harap coba kirim ulang formulir. Jika masalah berlanjut, muat ulang peramban Anda.</target>
+      </trans-unit>
+      <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day." xml:space="preserve">
+        <source>An absence cannot be booked after the last working day.</source>
+        <target state="translated">Ketidakhadiran tidak dapat dibukukan setelah hari kerja terakhir.</target>
+      </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target state="translated">Periode yang dipilih tidak dapat dikunci: permintaan ketidakhadiran yang belum dikonfirmasi masih tertunda.</target>
+      </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
+        <source>Duration cannot be negative.</source>
+        <target state="translated">Durasi tidak boleh negatif.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -26,6 +26,10 @@
         <source>daterangepicker.thisYear</source>
         <target state="translated">올해</target>
       </trans-unit>
+      <trans-unit id="AY_E9UR" resname="daterangepicker.thisYearUntilNow" xml:space="preserve">
+        <source>This year — until today</source>
+        <target state="translated">올해 — 오늘까지</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

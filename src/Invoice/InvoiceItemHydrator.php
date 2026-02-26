@@ -9,6 +9,9 @@
 
 namespace App\Invoice;
 
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
+
+#[AutoconfigureTag]
 interface InvoiceItemHydrator
 {
     public function setInvoiceModel(InvoiceModel $model): void;

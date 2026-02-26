@@ -1026,24 +1026,24 @@
         <source>preview</source>
         <target state="translated">Преглед</target>
       </trans-unit>
-      <trans-unit id="X70dwP8" resname="button.print" xml:space="preserve">
-        <source>button.print</source>
+      <trans-unit id="zpU6DrC" resname="print" xml:space="preserve">
+        <source>print</source>
         <target state="translated">Печат</target>
       </trans-unit>
-      <trans-unit id="W_TXvSi" resname="button.csv" xml:space="preserve">
-        <source>button.csv</source>
+      <trans-unit id="U7ubCzi" resname="csv" xml:space="preserve">
+        <source>csv</source>
         <target state="translated">CSV</target>
       </trans-unit>
-      <trans-unit id="vC2IsaP" resname="button.xlsx" xml:space="preserve">
-        <source>button.xlsx</source>
+      <trans-unit id="HJgLIry" resname="xlsx" xml:space="preserve">
+        <source>xlsx</source>
         <target state="translated">Excel</target>
       </trans-unit>
-      <trans-unit id="aAa5uRR" resname="button.pdf" xml:space="preserve">
-        <source>button.pdf</source>
+      <trans-unit id="w1sh1so" resname="pdf" xml:space="preserve">
+        <source>pdf</source>
         <target state="translated">Pdf</target>
       </trans-unit>
-      <trans-unit id="ulYFDIo" resname="button.ods" xml:space="preserve">
-        <source>button.ods</source>
+      <trans-unit id="lmUO63g" resname="ods" xml:space="preserve">
+        <source>ods</source>
         <target state="translated">ODS</target>
       </trans-unit>
       <trans-unit id="zPcx3O_" resname="invoice_print" xml:space="preserve">
@@ -1731,8 +1731,8 @@
         <target state="translated">Профил</target>
       </trans-unit>
       <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
-        <source>settings</source>
-        <target state="translated">Предпочитания</target>
+        <source>Settings</source>
+        <target state="needs-translation">Предпочитания</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
@@ -1965,6 +1965,10 @@
       <trans-unit id="DA1.Ln_" resname="time_off.intro" xml:space="preserve">
         <source>time_off.intro</source>
         <target state="translated">Вашата сметка за работно време има баланс от %hours% часа.</target>
+      </trans-unit>
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
+        <source>Timesheet</source>
+        <target state="translated">Работно време</target>
       </trans-unit>
     </body>
   </file>

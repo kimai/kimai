@@ -376,14 +376,24 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     }
 
     /**
+     * This method is called from the "edit user preferences" form.
+     * Therefor it just merges the values for existing preferences and adds new ones.
+     * But it will NOT remove existing preferences or replace the underlying collection.
+     *
      * @param iterable<UserPreference> $preferences
      */
     public function setPreferences(iterable $preferences): User
     {
-        $this->preferences = new ArrayCollection();
-
         foreach ($preferences as $preference) {
-            $this->addPreference($preference);
+            if (($name = $preference->getName()) === null) {
+                continue;
+            }
+            $p = $this->getPreference($name);
+            if ($p === null) {
+                $this->addPreference($preference);
+            } else {
+                $p->setValue($preference->getValue());
+            }
         }
 
         return $this;

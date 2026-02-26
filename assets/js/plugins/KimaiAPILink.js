@@ -73,6 +73,7 @@ export default class KimaiAPILink extends KimaiPlugin {
         const ALERT = this.getContainer().getPlugin('alert');
         const successHandle = () => {
             EVENTS.trigger(eventName);
+            document.dispatchEvent(new CustomEvent('kimai.reloadedContent'));
             if (attributes['msgSuccess'] !== undefined) {
                 ALERT.success(attributes['msgSuccess']);
             }
@@ -82,6 +83,7 @@ export default class KimaiAPILink extends KimaiPlugin {
             if (attributes['msgError'] !== undefined) {
                 message = attributes['msgError'];
             }
+            document.dispatchEvent(new CustomEvent('kimai.reloadedContent'));
             API.handleError(message, error);
         };
 
@@ -89,6 +91,8 @@ export default class KimaiAPILink extends KimaiPlugin {
         if (attributes['payload'] !== undefined) {
             data = attributes['payload'];
         }
+
+        document.dispatchEvent(new CustomEvent('kimai.reloadContent'));
 
         if (method === 'PATCH') {
             API.patch(url, data, successHandle, errorHandle);

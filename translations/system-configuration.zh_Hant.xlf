@@ -116,15 +116,15 @@
       </trans-unit>
       <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve" approved="no">
         <source>Ceil</source>
-        <target state="needs-translation">無條件進位：開始、結束時間與持續時長將無條件進位</target>
+        <target state="translated">開始、結束時間與持續時長將無條件進位</target>
       </trans-unit>
       <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve" approved="no">
         <source>Closest</source>
-        <target state="needs-translation">四捨五入：取最近整數</target>
+        <target state="translated">將四捨五入至最接近數值</target>
       </trans-unit>
       <trans-unit id="IbERy.5" resname="Default" xml:space="preserve" approved="no">
         <source>Default</source>
-        <target state="needs-translation">標準：開始時間將無條件捨去，結束時間與持續時長則將無條件進位</target>
+        <target state="translated">開始時間將無條件捨去，結束時間與持續時長則將無條件進位</target>
       </trans-unit>
       <trans-unit id="UTurPF1" resname="invoice.number_format" xml:space="preserve" approved="yes">
         <source>invoice.number_format</source>
@@ -132,7 +132,7 @@
       </trans-unit>
       <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve" approved="no">
         <source>Floor</source>
-        <target state="needs-translation">無條件捨去：開始、結束時間與持續時長將無條件捨去</target>
+        <target state="translated">開始、結束時間與持續時長將無條件捨去</target>
       </trans-unit>
       <trans-unit id="6CSB6iM" resname="first_weekday" xml:space="preserve" approved="yes">
         <source>first_weekday</source>
@@ -309,6 +309,10 @@
       <trans-unit id="9efN4Oc" resname="calendar.dragdrop_data" xml:space="preserve" approved="yes">
         <source>Copies data when adding via drag and drop</source>
         <target state="final">透過拖放新增項目時複製原項目資料</target>
+      </trans-unit>
+      <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="no" xml:space="preserve">
+        <source>invoice.rounding_mode</source>
+        <target state="translated">四捨五入模式</target>
       </trans-unit>
     </body>
   </file>

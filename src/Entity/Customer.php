@@ -231,7 +231,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Assert\Length(max: 50)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
-    #[Exporter\Expose(label: 'buyer_reference')]
+    #[Exporter\Expose(label: 'buyerReference')]
     private ?string $buyerReference = null;
 
     public function __construct(string $name)

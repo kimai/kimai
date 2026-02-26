@@ -280,7 +280,7 @@ zip 12345 looney toon', $sut->getFormattedAddress());
             ['visible', 'boolean'],
             ['comment', 'string'],
             ['billable', 'boolean'],
-            ['buyer_reference', 'string'],
+            ['buyerReference', 'string'],
         ];
 
         self::assertCount(\count($expected), $columns);

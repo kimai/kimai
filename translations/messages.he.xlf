@@ -166,9 +166,9 @@
         <source>error.no_comments_found</source>
         <target>לא נרשמו הערות עדיין.</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve" approved="yes">
         <source>date</source>
-        <target>תאריך</target>
+        <target state="final">תאריך</target>
       </trans-unit>
       <trans-unit id="BHk4pZ3" resname="starttime">
         <source>starttime</source>
@@ -494,9 +494,9 @@
         <source>alias</source>
         <target>שם</target>
       </trans-unit>
-      <trans-unit id="qvIyBkY" resname="title">
+      <trans-unit id="qvIyBkY" resname="title" xml:space="preserve">
         <source>title</source>
-        <target state="translated">תפקיד</target>
+        <target state="translated">כותרת</target>
       </trans-unit>
       <trans-unit id="h7voece" resname="avatar">
         <source>avatar</source>
@@ -650,24 +650,24 @@
         <source>preview</source>
         <target>תצוגה מקדימה</target>
       </trans-unit>
-      <trans-unit id="X70dwP8" resname="button.print">
-        <source>button.print</source>
+      <trans-unit id="zpU6DrC" resname="print">
+        <source>print</source>
         <target>הדפסה</target>
       </trans-unit>
-      <trans-unit id="W_TXvSi" resname="button.csv">
-        <source>button.csv</source>
+      <trans-unit id="U7ubCzi" resname="csv">
+        <source>csv</source>
         <target>CSV</target>
       </trans-unit>
-      <trans-unit id="vC2IsaP" resname="button.xlsx">
-        <source>button.xlsx</source>
+      <trans-unit id="HJgLIry" resname="xlsx">
+        <source>xlsx</source>
         <target>Excel</target>
       </trans-unit>
-      <trans-unit id="aAa5uRR" resname="button.pdf">
-        <source>button.pdf</source>
+      <trans-unit id="w1sh1so" resname="pdf">
+        <source>pdf</source>
         <target>PDF</target>
       </trans-unit>
-      <trans-unit id="ulYFDIo" resname="button.ods">
-        <source>button.ods</source>
+      <trans-unit id="lmUO63g" resname="ods">
+        <source>ods</source>
         <target>ODS</target>
       </trans-unit>
       <trans-unit id="zPcx3O_" resname="invoice_print">
@@ -1814,9 +1814,9 @@
         <source>profile-stats</source>
         <target>פרופיל</target>
       </trans-unit>
-      <trans-unit id="zeD7Dew" resname="settings">
-        <source>settings</source>
-        <target>העדפות</target>
+      <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve" approved="yes">
+        <source>Settings</source>
+        <target state="final">הגדרות</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve" approved="yes">
         <source>Filter timesheets</source>
@@ -2045,6 +2045,10 @@
       <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve" approved="yes">
         <source>electronic_invoice</source>
         <target state="final">חשבונית דיגיטלית</target>
+      </trans-unit>
+      <trans-unit id="lt2Y2LO" resname="timesheet">
+        <source>Timesheet</source>
+        <target>גיליון שעות</target>
       </trans-unit>
     </body>
   </file>

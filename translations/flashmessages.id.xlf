@@ -6,13 +6,53 @@
         <source>warning</source>
         <target state="translated">Peringatan</target>
       </trans-unit>
-      <trans-unit id="WmrEP_5" resname="timesheet.stop.success">
+      <trans-unit id="WmrEP_5" resname="timesheet.stop.success" xml:space="preserve">
         <source>timesheet.stop.success</source>
-        <target state="translated">Perekaman waktu dihentikan</target>
+        <target state="translated">Pencatatan waktu telah dihentikan</target>
       </trans-unit>
       <trans-unit id="NPBnpK_" resname="timesheet.stop.error" xml:space="preserve">
         <source>timesheet.stop.error</source>
-        <target state="translated">Perekaman waktu tidak dapat dihentikan</target>
+        <target state="translated">Pencatatan waktu tidak dapat dihentikan</target>
+      </trans-unit>
+      <trans-unit id="CCUoZga" resname="timesheet.start.success" xml:space="preserve">
+        <source>timesheet.start.success</source>
+        <target state="translated">Pencatatan waktu telah dimulai</target>
+      </trans-unit>
+      <trans-unit id="3w9tuox" resname="timesheet.start.error" xml:space="preserve">
+        <source>timesheet.start.error</source>
+        <target state="translated">Pencatatan waktu tidak dapat dimulai</target>
+      </trans-unit>
+      <trans-unit id="kPINWEK" resname="timesheet.locked.warning" xml:space="preserve">
+        <source>timesheet.locked.warning</source>
+        <target state="translated">Anda sedang mengedit catatan yang telah diekspor</target>
+      </trans-unit>
+      <trans-unit id="72Ih8zO" resname="action.update.success" xml:space="preserve">
+        <source>action.update.success</source>
+        <target state="translated">Perubahan tersimpan</target>
+      </trans-unit>
+      <trans-unit id="xeu1LSy" resname="action.update.error" xml:space="preserve">
+        <source>action.update.error</source>
+        <target state="translated">Perubahan tidak dapat disimpan: %reason%</target>
+      </trans-unit>
+      <trans-unit id="YV50HDB" resname="action.delete.success" xml:space="preserve">
+        <source>action.delete.success</source>
+        <target state="translated">Entri telah dihapus</target>
+      </trans-unit>
+      <trans-unit id="mW91Tmb" resname="action.delete.error" xml:space="preserve">
+        <source>action.delete.error</source>
+        <target state="translated">Entri tidak dapat dihapus: %reason%</target>
+      </trans-unit>
+      <trans-unit id="B_cz49z" resname="invoice.first_template" xml:space="preserve">
+        <source>invoice.first_template</source>
+        <target state="translated">Harap buat templat faktur terlebih dahulu</target>
+      </trans-unit>
+      <trans-unit id="wejAEcR" resname="action.upload.error" xml:space="preserve">
+        <source>action.upload.error</source>
+        <target state="translated">File tidak dapat diunggah atau disimpan: %reason%</target>
+      </trans-unit>
+      <trans-unit resname="action.csrf.error" id="bOE_q5R" xml:space="preserve">
+        <source>action.csrf.error</source>
+        <target state="translated">Tindakan tidak dapat dilakukan: token keamanan tidak valid.</target>
       </trans-unit>
     </body>
   </file>

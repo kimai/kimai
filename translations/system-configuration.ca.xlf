@@ -310,6 +310,10 @@
         <source>copy_teams_on_create</source>
         <target state="translated">Hereta els equips de l'usuari connectat en crear noves entrades</target>
       </trans-unit>
+      <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="no" xml:space="preserve">
+        <source>invoice.rounding_mode</source>
+        <target state="translated">Mode d’arrodoniment</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

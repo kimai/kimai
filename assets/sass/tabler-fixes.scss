@@ -49,3 +49,11 @@ fieldset.form-fieldset > legend {
         color: var(--tblr-body-color);
     }
 }
+
+/* Highlighted text is not visible - https://github.com/tabler/tabler/issues/2603 */
+[data-bs-theme=dark] {
+    ::selection,
+    .text-selected {
+        background-color: var(--#{$prefix}primary);
+    }
+}

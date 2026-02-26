@@ -50,9 +50,9 @@ Please review them at: %url%</source>
 
 Kérjük, tekintse át a következő címen: %url%</target>
       </trans-unit>
-      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject">
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
         <source>absence_created_supervisor_subject</source>
-        <target state="translated">Új távollét | %user% | %type%</target>
+        <target state="translated">Új távollét: %user% (%type%)</target>
       </trans-unit>
       <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
         <source>approval_requested_subject</source>

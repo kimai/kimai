@@ -38,6 +38,7 @@ abstract class AbstractMetaEntityTestCase extends TestCase
         self::assertFalse($sut->isVisible());
         self::assertFalse($sut->isRequired());
         self::assertEquals(0, $sut->getOrder());
+        self::assertNull($sut->getSection());
     }
 
     public function testSetterAndGetter(): void
@@ -83,6 +84,11 @@ abstract class AbstractMetaEntityTestCase extends TestCase
         $entity = $this->getEntity();
         self::assertInstanceOf(MetaTableTypeInterface::class, $sut->setEntity($entity));
         self::assertSame($entity, $sut->getEntity());
+
+        $sut->setSection('foo');
+        self::assertEquals('foo', $sut->getSection());
+        $sut->setSection(null);
+        self::assertNull($sut->getSection());
     }
 
     public function testMerge(): void
@@ -90,18 +96,19 @@ abstract class AbstractMetaEntityTestCase extends TestCase
         $entity1 = $this->getEntity();
         $entity2 = $this->getEntity();
         $meta1 = $this->getMetaEntity();
-        $meta1
-            ->setName('foo')
-            ->setValue('bar')
-            ->setType('blub')
-            ->setEntity($entity1)
-            ->setConstraints([new NotNull()])
-            ->setOptions(['foo' => 'bar', 'bar' => 'foo'])
-        ;
+        $meta1->setName('foo');
+        $meta1->setValue('bar');
+        $meta1->setType('blub');
+        $meta1->setEntity($entity1);
+        $meta1->setConstraints([new NotNull()]);
+        $meta1->setOptions(['foo' => 'bar', 'bar' => 'foo']);
+        $meta1->setSection('hello');
+
         self::assertEquals('foo', $meta1->getName());
         self::assertEquals('bar', $meta1->getValue());
         self::assertEquals('blub', $meta1->getType());
         self::assertEquals('foo', $meta1->getLabel());
+        self::assertEquals('hello', $meta1->getSection());
         self::assertFalse($meta1->isRequired());
         self::assertFalse($meta1->isVisible());
         self::assertSame($entity1, $meta1->getEntity());
@@ -109,18 +116,17 @@ abstract class AbstractMetaEntityTestCase extends TestCase
         self::assertCount(2, $meta1->getOptions());
 
         $meta2 = $this->getMetaEntity();
-        $meta2
-            ->setName('foo2')
-            ->setLabel('TRALALA')
-            ->setValue('bar2')
-            ->setType('blub2')
-            ->setEntity($entity2)
-            ->setIsRequired(true)
-            ->setIsVisible(true)
-            ->setOrder(93)
-            ->setConstraints([new NotBlank(), new Length(['min' => 1])])
-            ->setOptions(['foo1' => 'bar1'])
-        ;
+        $meta2->setName('foo2');
+        $meta2->setLabel('TRALALA');
+        $meta2->setValue('bar2');
+        $meta2->setType('blub2');
+        $meta2->setSection('world');
+        $meta2->setEntity($entity2);
+        $meta2->setIsRequired(true);
+        $meta2->setIsVisible(true);
+        $meta2->setOrder(93);
+        $meta2->setConstraints([new NotBlank(), new Length(['min' => 1])]);
+        $meta2->setOptions(['foo1' => 'bar1']);
 
         self::assertInstanceOf(MetaTableTypeInterface::class, $meta1->merge($meta2));
 
@@ -128,6 +134,7 @@ abstract class AbstractMetaEntityTestCase extends TestCase
         self::assertEquals('bar', $meta1->getValue());
         self::assertEquals('blub2', $meta1->getType());
         self::assertEquals('TRALALA', $meta1->getLabel());
+        self::assertEquals('world', $meta1->getSection());
         self::assertEquals(93, $meta1->getOrder());
         self::assertTrue($meta1->isRequired());
         self::assertTrue($meta1->isVisible());

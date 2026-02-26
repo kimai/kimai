@@ -1,0 +1,33 @@
+:root {
+    --kimai-public-holiday: var(--tblr-lime);
+    --kimai-holiday: var(--tblr-green);
+    --kimai-sickness: var(--tblr-yellow);
+    --kimai-time-off: var(--tblr-blue);
+    --kimai-other: var(--tblr-purple);
+
+    --kimai-public-holiday-bg: var(--tblr-lime-lt);
+    --kimai-holiday-bg: var(--tblr-green-lt);
+    --kimai-sickness-bg: var(--tblr-yellow-lt);
+    --kimai-time-off-bg: var(--tblr-blue-lt);
+    --kimai-other-bg: var(--tblr-purple-lt);
+
+    --kimai-unexpected-bg: var(--tblr-pink-lt);
+    --kimai-missing-bg: var(--tblr-pink-lt);
+    --kimai-weekend-bg: var(--tblr-bg-surface-tertiary);
+}
+
+.public-holiday { color: var(--kimai-public-holiday); }
+.holiday { color: var(--kimai-holiday); }
+.sickness { color: var(--kimai-sickness); }
+.time-off { color: var(--kimai-time-off); }
+.other { color: var(--kimai-other); }
+
+.bg-public-holiday{ background-color: var(--kimai-public-holiday-bg); --tblr-table-bg: var(--kimai-public-holiday-bg); i.fas{ color: var(--kimai-public-holiday); } };
+.bg-holiday { background-color: var(--kimai-holiday-bg); --tblr-table-bg: var(--kimai-holiday-bg); i.fas{ color: var(--kimai-holiday); } };
+.bg-sickness { background-color: var(--kimai-sickness-bg); --tblr-table-bg: var(--kimai-sickness-bg); i.fas{ color: var(--kimai-sickness); } };
+.bg-time-off { background-color: var(--kimai-time-off-bg); --tblr-table-bg: var(--kimai-time-off-bg); i.fas{ color: var(--kimai-time-off); } };
+.bg-other { background-color: var(--kimai-other-bg); --tblr-table-bg: var(--kimai-other-bg); i.fas{ color: var(--kimai-other); } };
+
+.bg-unexpected { background-color: var(--kimai-unexpected-bg); --tblr-table-bg: var(--kimai-unexpected-bg); };
+.bg-missing { background-color: var(--kimai-missing-bg); --tblr-table-bg: var(--kimai-missing-bg); };
+.bg-weekend { background-color: var(--kimai-weekend-bg); --tblr-table-bg: var(--kimai-weekend-bg); };

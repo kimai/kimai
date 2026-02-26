@@ -294,9 +294,6 @@ class UserTest extends TestCase
 
         self::assertInstanceOf(UserPreference::class, $prefs[2]);
         self::assertEquals('export_decimal', $prefs[2]->getName());
-
-        $user->setPreferences(new ArrayCollection([]));
-        self::assertCount(0, $user->getPreferences());
     }
 
     public function testDisplayName(): void

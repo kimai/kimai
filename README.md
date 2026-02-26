@@ -6,11 +6,9 @@
     <a href="https://github.com/kimai/kimai/actions"><img alt="CI Status" src="https://github.com/kimai/kimai/actions/workflows/testing.yaml/badge.svg"></a>
     <a href="https://codecov.io/gh/kimai/kimai"><img alt="Code Coverage" src="https://codecov.io/gh/kimai/kimai/branch/main/graph/badge.svg"></a>
     <a href="https://packagist.org/packages/kimai/kimai"><img alt="Latest stable version" src="https://poser.pugx.org/kimai/kimai/v/stable"></a>
-    <a href="https://www.gnu.org/licenses/agpl-3.0.en.html"><img alt="License" src="https://poser.pugx.org/kimai/kimai/license"></a>
-    <a href="https://phpc.social/@kimai" rel="me"><img alt="Mastodon" src="https://img.shields.io/badge/toot-%40kimai-8c8dff"></a>
 </p>
 
-<h1 align="center">Kimai - time-tracker</h1>
+<h1 align="center">Kimai<br>#1 Open-Source Time-Tracker</h1>
 
 Kimai is a professional grade time-tracking application, free and open-source. 
 It handles use-cases of freelancers as well as companies with dozens or hundreds of users. 
@@ -29,8 +27,8 @@ and so much more.
 
 ### Requirements
 
-- PHP 8.1.3 minimum (support for PHP 8.2, 8.3, 8.4)
-- MariaDB or MySQL
+- PHP 8.1.3 minimum with support for 8.2, 8.3, 8.4, 8.5
+- MariaDB / MySQL: oldest maintained LTS release (MariaDB >= [10.6](https://endoflife.date/mariadb) or MySQL >= [8.4](https://endoflife.date/mysql)) or newer
 - A webserver and subdomain (subdirectory is not supported)
 - PHP extensions: `gd`, `intl`, `json`, `mbstring`, `pdo`, `tokenizer`, `xml`, `xsl`, `zip`
 
@@ -44,7 +42,7 @@ and so much more.
 
 There are more documented ways for [on-premise hosting](https://www.kimai.org/documentation/chapter-on-premise.html). 
 
-And if you don't want to host Kimai, you can use [the Cloud version](https://www.kimai.cloud/) of it.
+And if you don't want to host Kimai, you can use the [Cloud version](https://www.kimai.cloud/) of it.
 
 ### Updating Kimai
 
@@ -71,6 +69,7 @@ The best way to start is to [open a new issue](https://github.com/kimai/kimai/is
 In case you want to contribute, but you wouldn't know how, here are some suggestions:
 
 - Spread the word: Please [write a testimonial for our Wall of love](https://love.kimai.org), vote for Kimai on any software platform, you can toot or tweet about it, share it on LinkedIn, Reddit and any other social media platform!
+- [Translate Kimai into your language](https://hosted.weblate.org/engage/kimai/), or help to improve the existing translations, many languages look for a contributor
 - Answer questions: You know the answer to another user's problem? Share your knowledge.
 - Something can be done better? An essential feature is missing? Create a feature request.
 - Report bugs makes Kimai better for everyone.
@@ -78,6 +77,12 @@ In case you want to contribute, but you wouldn't know how, here are some suggest
 - Sponsor the project: free software costs money to create!
 
 There is one simple rule in our "Code of conduct": Don't be an ass!
+
+## Follow Kimai
+
+- Mastodon: [@kimai](https://phpc.social/@kimai)
+- Youtube: [@kimai_org](https://www.youtube.com/@kimai_org)
+- LinkedIn: [@kimai-org](https://www.linkedin.com/company/kimai-org/)
 
 ### Credits
 

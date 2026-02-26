@@ -108,8 +108,28 @@ final class DoctorController extends AbstractController
             'logLines' => $logLines,
             'logSize' => $this->getLogSize(),
             'composer' => $this->getComposerPackages(),
-            'release' => $latestRelease
+            'release' => $latestRelease,
+            'opcache' => $this->getOpcacheConfiguration()
         ]);
+    }
+
+    /**
+     * @return array{enabled: bool, status: false|array<mixed>}
+     */
+    private function getOpcacheConfiguration(): array
+    {
+        $status = \function_exists('opcache_get_status') ? opcache_get_status() : false;
+
+        $enabled = \is_array($status) && $status['opcache_enabled'];
+
+        if ($enabled && \array_key_exists('scripts', $status)) {
+            unset($status['scripts']);
+        }
+
+        return [
+            'enabled' => $enabled,
+            'status' => $status,
+        ];
     }
 
     /**
@@ -264,7 +284,12 @@ final class DoctorController extends AbstractController
             'sys_temp_dir',
             'date.timezone',
             'session.gc_maxlifetime',
-            'disable_functions'
+            'disable_functions',
+            'opcache.enable',
+            'opcache.memory_consumption',
+            'opcache.interned_strings_buffer',
+            'opcache.max_accelerated_files',
+            'opcache.validate_timestamps',
         ];
 
         $settings = [];

@@ -310,6 +310,10 @@
         <source>allow_duplicate_number</source>
         <target state="translated">Dozvoli višestruko korištenje istog broja</target>
       </trans-unit>
+      <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="no" xml:space="preserve">
+        <source>invoice.rounding_mode</source>
+        <target state="translated">Modus zaokruživanja</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

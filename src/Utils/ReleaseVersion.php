@@ -21,10 +21,7 @@ final class ReleaseVersion
     /**
      * Get all releases from GitHub.
      *
-     * @throws \Exception
-     * @return array|null
-     * @return array<string, array{'version': string, 'date': \DateTimeInterface, 'url': string, 'download': string, 'content': string}>
-     * @return array
+     * @return array<string, array{'version': non-empty-string, 'date': \DateTimeInterface, 'url': non-empty-string, 'download': non-empty-string, 'content': string}>
      */
     private function getReleasesFromGithub(): array
     {
@@ -41,19 +38,24 @@ final class ReleaseVersion
         $context = stream_context_create($opts);
 
         $releases = file_get_contents('https://api.github.com/repos/' . Constants::GITHUB_REPO . '/releases', false, $context);
-        $releases = json_decode($releases);
-
-        if (!isset($releases[0])) {
-            throw new \Exception('API error - no release found at GitHub repository: ' . Constants::GITHUB_REPO);
+        if ($releases === false) {
+            throw new \Exception('Could not load releases from GitHub repository: ' . Constants::GITHUB_REPO);
         }
+        /** @var array<string, array{url: non-empty-string, html_url: non-empty-string, tag_name: non-empty-string, name: non-empty-string, draft: bool, immutable: bool, prerelease: bool, created_at: non-empty-string, updated_at: non-empty-string, published_at: non-empty-string, zipball_url: non-empty-string, body: string}> $releases */
+        $releases = json_decode($releases, true);
+
+        if ($releases === false) {
+            throw new \Exception('Failed parsing release found at GitHub repository: ' . Constants::GITHUB_REPO);
+        }
+
         $parsed = [];
         foreach ($releases as $release) {
-            if ($release->draft || $release->prerelease) {
+            if ($release['draft'] || $release['prerelease']) {
                 continue;
             }
 
             try {
-                $normalized = $versionParser->normalize($release->tag_name);
+                $normalized = $versionParser->normalize($release['tag_name']);
             } catch (\UnexpectedValueException $e) {
                 continue;
             }
@@ -62,19 +64,19 @@ final class ReleaseVersion
                 continue;
             }
 
-            $date = $release->published_at;
+            $date = $release['published_at'];
             try {
                 $date = new \DateTimeImmutable($date);
             } catch (\Exception $ex) {
-                // can be ignored, we return a string
+                continue;
             }
 
             $parsed[$normalized] = [
-                'version' => $release->tag_name,
+                'version' => $release['tag_name'],
                 'date' => $date,
-                'url' => $release->html_url,
-                'download' => $release->zipball_url,
-                'content' => $release->body,
+                'url' => $release['html_url'],
+                'download' => $release['zipball_url'],
+                'content' => $release['body'],
             ];
         }
         $versions = Semver::rsort(array_keys($parsed));

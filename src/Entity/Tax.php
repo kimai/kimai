@@ -13,8 +13,10 @@ final class Tax
 {
     public function __construct(
         private readonly TaxType $type,
-        private readonly string $name = 'VAT',
-        private readonly float $rate = 0.0,
+        private readonly float $rate,
+        private readonly string $name,
+        private readonly bool $show,
+        private readonly ?string $note,
     )
     {
     }
@@ -32,5 +34,15 @@ final class Tax
     public function getRate(): float
     {
         return $this->rate;
+    }
+
+    public function isShow(): bool
+    {
+        return $this->rate > 0.0 || $this->show;
+    }
+
+    public function getNote(): ?string
+    {
+        return $this->note;
     }
 }

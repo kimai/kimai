@@ -2,6 +2,22 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-Hant" datatype="plaintext" original="validators.en.xlf">
     <body>
+      <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form." xml:space="preserve">
+        <source>The CSRF token is invalid. Please try to resubmit the form.</source>
+        <target state="translated">請嘗試重新提交表單。若問題仍持續發生，請重新整理瀏覽器頁面。</target>
+      </trans-unit>
+      <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day." xml:space="preserve">
+        <source>An absence cannot be booked after the last working day.</source>
+        <target state="translated">缺勤時段申請不得遲於最終工作日。</target>
+      </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target state="needs-translation">無法鎖定所選期間：尚有待確認的缺勤申請。</target>
+      </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
+        <source>Duration cannot be negative.</source>
+        <target state="translated">持續時長不得為負值。</target>
+      </trans-unit>
     </body>
   </file>
   <file original="validators.en.xlf" source-language="en" target-language="zh-Hant" datatype="plaintext">
@@ -24,7 +40,7 @@
       </trans-unit>
       <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve" approved="no">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="needs-translation">不能在您的第一個工作日之前預定缺勤時間。</target>
+        <target state="needs-translation">缺勤時段申請不得早於首個工作日。</target>
       </trans-unit>
       <trans-unit id="IN37g5N" resname="Not enough holidays left." xml:space="preserve" approved="yes">
         <source>Not enough holidays left.</source>
@@ -112,7 +128,7 @@
       </trans-unit>
       <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve" approved="no">
         <source>The end date must not be earlier than the start date.</source>
-        <target state="needs-translation">結束日期不能早於開始日期。</target>
+        <target state="translated">結束日期不能早於開始日期。</target>
       </trans-unit>
       <trans-unit id="Jz1y3yB" resname="Duration cannot be zero." xml:space="preserve" approved="yes">
         <source>Duration cannot be zero.</source>

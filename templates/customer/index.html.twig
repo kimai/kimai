@@ -17,8 +17,8 @@
         {{ entry.vatId }}
     {% elseif column == 'contact' %}
         {{ entry.contact }}
-    {% elseif column == 'address' %}
-        {{ entry.address }}
+    {% elseif column == 'city' %}
+        {{ entry.postcode }} {{ entry.city }}
     {% elseif column == 'country' %}
         {{ entry.country|country_name }}
     {% elseif column == 'currency' %}

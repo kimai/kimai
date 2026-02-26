@@ -13,7 +13,7 @@ use App\Invoice\InvoiceModel;
 use App\Invoice\RendererInterface;
 use App\Model\InvoiceDocument;
 use App\Twig\LocaleFormatExtensions;
-use App\Twig\SecurityPolicy\InvoicePolicy;
+use App\Twig\SecurityPolicy\StrictPolicy;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Twig\Environment;
@@ -64,7 +64,7 @@ abstract class AbstractTwigRenderer implements RendererInterface
         }
 
         if (!$twig->hasExtension(SandboxExtension::class)) {
-            $twig->addExtension(new SandboxExtension(new InvoicePolicy()));
+            $twig->addExtension(new SandboxExtension(new StrictPolicy()));
         }
 
         $sandbox = $twig->getExtension(SandboxExtension::class);

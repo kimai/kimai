@@ -56,7 +56,7 @@
                         <td class="actions">
                             <div class="btn-group">
                                 <a href="{{ path(edit_route, {'id': entity.id, 'rate': rate.id}) }}" class="modal-ajax-form btn btn-icon">{{ icon('edit', true) }}</a>
-                                <a href="{{ path(delete_route, {'id': entity.id, 'rateId': rate.id}) }}" class="btn btn-icon api-link" data-question="confirm.delete" data-event="kimai.rateUpdate kimai.rateDelete" data-method="DELETE" data-msg-error="action.delete.error" data-msg-success="action.delete.success">{{ icon('delete', true) }}</a>
+                                <a href="{{ path(delete_route, {'id': entity.id, 'rateId': rate.id}) }}" class="btn btn-icon api-link" data-question="confirm.delete" data-event="kimai.rateUpdate kimai.rateDelete" data-method="DELETE" data-msg-error="action.delete.error">{{ icon('delete', true) }}</a>
                             </div>
                         </td>
                     </tr>

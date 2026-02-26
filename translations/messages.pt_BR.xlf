@@ -4,23 +4,23 @@
     <body>
       <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
         <source>Time Tracking</source>
-        <target state="needs-translation">Acompanhamento de tempo</target>
+        <target state="needs-translation">Controle de tempo</target>
       </trans-unit>
       <trans-unit id="inmIkP6" resname="yes" xml:space="preserve">
         <source>yes</source>
-        <target state="needs-translation">Sim</target>
+        <target state="translated">Sim</target>
       </trans-unit>
       <trans-unit id="k5Apjz_" resname="no" xml:space="preserve">
         <source>no</source>
-        <target state="needs-translation">Não</target>
+        <target state="translated">Não</target>
       </trans-unit>
       <trans-unit id=".3dyBTq" resname="both" xml:space="preserve">
         <source>Both</source>
-        <target state="needs-translation">Ambos</target>
+        <target state="translated">Ambos</target>
       </trans-unit>
       <trans-unit id="KLIuHvt" resname="This is a mandatory field" xml:space="preserve">
         <source>This is a mandatory field</source>
-        <target state="needs-translation">Obrigatório</target>
+        <target state="translated">Obrigatório</target>
       </trans-unit>
       <trans-unit id="_ohHsMM" resname="create">
         <source>create</source>
@@ -386,9 +386,9 @@
         <source>alias</source>
         <target>Nome</target>
       </trans-unit>
-      <trans-unit id="qvIyBkY" resname="title">
+      <trans-unit id="qvIyBkY" resname="title" xml:space="preserve">
         <source>title</source>
-        <target>Título</target>
+        <target state="translated">Título</target>
       </trans-unit>
       <trans-unit id="h7voece" resname="avatar">
         <source>avatar</source>
@@ -514,24 +514,24 @@
         <source>invoices</source>
         <target>Faturas</target>
       </trans-unit>
-      <trans-unit id="X70dwP8" resname="button.print">
-        <source>button.print</source>
+      <trans-unit id="zpU6DrC" resname="print">
+        <source>print</source>
         <target>Imprimir</target>
       </trans-unit>
-      <trans-unit id="W_TXvSi" resname="button.csv">
-        <source>button.csv</source>
+      <trans-unit id="U7ubCzi" resname="csv">
+        <source>csv</source>
         <target>CSV</target>
       </trans-unit>
-      <trans-unit id="vC2IsaP" resname="button.xlsx">
-        <source>button.xlsx</source>
+      <trans-unit id="HJgLIry" resname="xlsx">
+        <source>xlsx</source>
         <target>Excel</target>
       </trans-unit>
-      <trans-unit id="aAa5uRR" resname="button.pdf">
-        <source>button.pdf</source>
+      <trans-unit id="w1sh1so" resname="pdf">
+        <source>pdf</source>
         <target>PDF</target>
       </trans-unit>
-      <trans-unit id="ulYFDIo" resname="button.ods">
-        <source>button.ods</source>
+      <trans-unit id="lmUO63g" resname="ods">
+        <source>ods</source>
         <target>ODS</target>
       </trans-unit>
       <trans-unit id="zPcx3O_" resname="invoice_print">
@@ -1112,7 +1112,7 @@
       </trans-unit>
       <trans-unit id="U_D.NIy" resname="automatic" xml:space="preserve">
         <source>automatic</source>
-        <target state="needs-translation">Automático</target>
+        <target state="translated">Automático</target>
       </trans-unit>
       <trans-unit id="OJ.wI1U" resname="invoiceText">
         <source>invoiceText</source>
@@ -1818,9 +1818,9 @@
         <source>profile-stats</source>
         <target>Perfil</target>
       </trans-unit>
-      <trans-unit id="zeD7Dew" resname="settings">
-        <source>settings</source>
-        <target>Preferências</target>
+      <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
+        <source>Settings</source>
+        <target state="translated">Configurações</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
@@ -2004,7 +2004,7 @@
       </trans-unit>
       <trans-unit id="jMvh7bn" resname="Credit Transfer" xml:space="preserve">
         <source>Credit Transfer</source>
-        <target state="needs-translation">Transferência de Crédito</target>
+        <target state="translated">Transferência de Crédito</target>
       </trans-unit>
       <trans-unit id="xZzzKxM" resname="orientation" xml:space="preserve">
         <source>Orientation</source>
@@ -2016,7 +2016,7 @@
       </trans-unit>
       <trans-unit id="cDOQMYv" resname="Beta" xml:space="preserve">
         <source>Beta</source>
-        <target state="needs-translation">Habilita um recurso de pré-visualização que ainda estiver em desenvolvimento.</target>
+        <target state="translated">Habilita um recurso de prévia que ainda está em desenvolvimento.</target>
       </trans-unit>
       <trans-unit id="Uzll0ps" resname="Customer portal" xml:space="preserve">
         <source>Customer portal</source>
@@ -2033,6 +2033,42 @@
       <trans-unit id="BmDRYT." resname="sending_company.help" xml:space="preserve">
         <source>sending_company.help</source>
         <target state="translated">Esta companhia é mostrada como o emissor na fatura. Desta, o nome, endereço, e informações de impostos serão usados.</target>
+      </trans-unit>
+      <trans-unit id="uXB48Vj" resname="SEPA Credit Transfer" xml:space="preserve">
+        <source>SEPA Credit Transfer</source>
+        <target state="needs-translation">Transferência de Crédito SEPA</target>
+      </trans-unit>
+      <trans-unit id="_Ep8Ogx" resname="buyerReference" xml:space="preserve">
+        <source>buyerReference</source>
+        <target state="translated">Referência do comprador</target>
+      </trans-unit>
+      <trans-unit id="s42A2gm" resname="SEPA Direct Debit" xml:space="preserve">
+        <source>SEPA Direct Debit</source>
+        <target state="needs-translation">Débito direto SEPA</target>
+      </trans-unit>
+      <trans-unit id="QnN_ONc" resname="invoice_tax_type" xml:space="preserve">
+        <source>invoice_tax_type</source>
+        <target state="translated">Situação fiscal</target>
+      </trans-unit>
+      <trans-unit id="Mi7y8Q3" resname="tax.type.exempt" xml:space="preserve">
+        <source>tax.type.exempt</source>
+        <target state="translated">Isentar</target>
+      </trans-unit>
+      <trans-unit id="lU1Njcy" resname="tax.type.standard" xml:space="preserve">
+        <source>tax.type.standard</source>
+        <target state="translated">Tributável</target>
+      </trans-unit>
+      <trans-unit id="E470U8W" resname="tax.type.reverse" xml:space="preserve">
+        <source>tax.type.reverse</source>
+        <target state="translated">Cobrança reversa</target>
+      </trans-unit>
+      <trans-unit id="hi31a3v" resname="tax.note.reverse_charge" xml:space="preserve">
+        <source>tax.note.reverse_charge</source>
+        <target state="translated">Imposto a ser pago sob o regime de cobrança reversa</target>
+      </trans-unit>
+      <trans-unit id="lt2Y2LO" resname="timesheet">
+        <source>Timesheet</source>
+        <target>Planilha de horários</target>
       </trans-unit>
     </body>
   </file>

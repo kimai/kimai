@@ -9,33 +9,34 @@
 
 namespace App\Twig\SecurityPolicy;
 
+use Symfony\Component\DependencyInjection\Attribute\Exclude;
 use Twig\Sandbox\SecurityPolicyInterface;
 
 /**
- * Represents the security policy for custom Twig export templates.
+ * @deprecated since 2.47.0 - use StrictPolicy instead
  */
+#[Exclude]
 final class ExportPolicy implements SecurityPolicyInterface
 {
-    private ChainPolicy $policy;
+    private SecurityPolicyInterface $securityPolicy;
 
     public function __construct()
     {
-        $this->policy = new ChainPolicy();
-        $this->policy->addPolicy(new DefaultPolicy());
+        $this->securityPolicy = new StrictPolicy();
     }
 
     public function checkSecurity($tags, $filters, $functions): void
     {
-        $this->policy->checkSecurity($tags, $filters, $functions);
+        $this->securityPolicy->checkSecurity($tags, $filters, $functions);
     }
 
     public function checkMethodAllowed($obj, $method): void
     {
-        $this->policy->checkMethodAllowed($obj, $method);
+        $this->securityPolicy->checkMethodAllowed($obj, $method);
     }
 
     public function checkPropertyAllowed($obj, $property): void
     {
-        $this->policy->checkPropertyAllowed($obj, $property);
+        $this->securityPolicy->checkPropertyAllowed($obj, $property);
     }
 }
