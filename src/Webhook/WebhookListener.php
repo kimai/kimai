@@ -9,6 +9,7 @@
 
 namespace App\Webhook;
 
+use App\Configuration\SystemConfiguration;
 use App\Event\ActivityCreatePostEvent;
 use App\Event\ActivityDeleteEvent;
 use App\Event\ActivityUpdatePostEvent;
@@ -30,14 +31,31 @@ use App\Event\UserCreatePostEvent;
 use App\Event\UserDeletePostEvent;
 use App\Event\UserUpdatePostEvent;
 use App\Webhook\Attribute\AsWebhook;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Contracts\EventDispatcher\Event;
 
 final class WebhookListener implements EventSubscriberInterface
 {
-    public function __construct(private readonly WebhookService $webhookService)
-    {
+    private const KNOWN_ENTITY_TYPES = [
+        'timesheet',
+        'customer',
+        'project',
+        'activity',
+        'invoice',
+        'user',
+        'team',
+    ];
+
+    private readonly ExpressionLanguage $expressionLanguage;
+
+    public function __construct(
+        private readonly WebhookService $webhookService,
+        private readonly SystemConfiguration $systemConfiguration,
+        private readonly LoggerInterface $logger
+    ) {
+        $this->expressionLanguage = new ExpressionLanguage();
     }
 
     public static function getSubscribedEvents(): array
@@ -79,15 +97,36 @@ final class WebhookListener implements EventSubscriberInterface
             return;
         }
 
-        if (!$this->webhookService->hasWebhook($attribute->name)) {
+        if (!$this->isEventEnabled($attribute->name)) {
             return;
         }
 
-        $expressionLanguage = new ExpressionLanguage();
-        $parsed = $expressionLanguage->parse($attribute->payload, ['object']);
+        if (!$this->webhookService->isConfigured()) {
+            return;
+        }
+
+        $parsed = $this->expressionLanguage->parse($attribute->payload, ['object']);
         $payload = $parsed->getNodes()->evaluate([], ['object' => $event]);
 
         $this->webhookService->trigger($attribute->name, $payload);
+    }
+
+    private function isEventEnabled(string $eventName): bool
+    {
+        $parts = explode('.', $eventName);
+        if (\count($parts) < 2) {
+            return false;
+        }
+
+        $entityType = $parts[0];
+
+        if (!\in_array($entityType, self::KNOWN_ENTITY_TYPES, true)) {
+            return false;
+        }
+
+        $configKey = 'webhook.events.' . $entityType;
+
+        return (bool) $this->systemConfiguration->find($configKey);
     }
 
     private function findAttribute(Event $event): ?AsWebhook
@@ -102,6 +141,10 @@ final class WebhookListener implements EventSubscriberInterface
                 return new AsWebhook($args['name'], $args['description'], $args['payload']);
             }
         } catch (\Exception $ex) {
+            $this->logger->warning('Failed to read webhook attribute from event {event}: {message}', [
+                'event' => $event::class,
+                'message' => $ex->getMessage(),
+            ]);
         }
 
         return null;
