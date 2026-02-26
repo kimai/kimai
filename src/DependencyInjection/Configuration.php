@@ -85,6 +85,35 @@ final class Configuration implements ConfigurationInterface
         return $node;
     }
 
+    private function getWebhookNode(): ArrayNodeDefinition
+    {
+        $builder = new TreeBuilder('webhook');
+        /** @var ArrayNodeDefinition $node */
+        $node = $builder->getRootNode();
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+            ->scalarNode('endpoint_url')->defaultValue('')->end()
+            ->scalarNode('secret_token')->defaultValue('')->end()
+            ->arrayNode('events')
+            ->addDefaultsIfNotSet()
+            ->children()
+            ->booleanNode('timesheet')->defaultTrue()->end()
+            ->booleanNode('customer')->defaultTrue()->end()
+            ->booleanNode('project')->defaultTrue()->end()
+            ->booleanNode('activity')->defaultTrue()->end()
+            ->booleanNode('invoice')->defaultTrue()->end()
+            ->booleanNode('user')->defaultTrue()->end()
+            ->booleanNode('team')->defaultTrue()->end()
+            ->end()
+            ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
     private function getQuickEntryNode(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('quick_entry');
