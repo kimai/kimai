@@ -301,7 +301,8 @@ final class TimesheetService
         }
 
         $activeEntries = array_reverse($activeEntries);
-        $needsStop = \count($activeEntries) - $hardLimit;
+        // +1 because the new timesheet is not yet persisted and not in $activeEntries
+        $needsStop = \count($activeEntries) - $hardLimit + 1;
         $counter = 0;
 
         foreach ($activeEntries as $activeEntry) {

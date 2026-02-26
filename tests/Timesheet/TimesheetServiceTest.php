@@ -138,6 +138,28 @@ class TimesheetServiceTest extends TestCase
         $sut->saveTimesheet($newTimesheet);
     }
 
+    public function testSaveNewTimesheetStopsOldestWhenAtHardLimit(): void
+    {
+        $authorizationChecker = $this->createMock(AuthorizationCheckerInterface::class);
+        $authorizationChecker->expects($this->once())->method('isGranted')->willReturn(true);
+
+        $activeEntry = $this->createMock(Timesheet::class);
+        $activeEntry->method('getId')->willReturn(1);
+        $activeEntry->method('getBegin')->willReturn(new \DateTime());
+        $activeEntry->expects($this->once())->method('setBegin');
+        $activeEntry->expects($this->once())->method('setEnd');
+
+        $newTimesheet = new Timesheet();
+
+        // hard_limit=1, one active entry already running → must be stopped
+        $repository = $this->createMock(TimesheetRepository::class);
+        $repository->method('getActiveEntries')->willReturn([$activeEntry]);
+
+        $sut = $this->getSut($authorizationChecker, null, null, $repository);
+
+        $sut->saveTimesheet($newTimesheet);
+    }
+
     public function testSaveNewTimesheetFixesTimezone(): void
     {
         $user = new User();
