@@ -1,20 +1,41 @@
-{% set active_timesheets = active_timesheets(app.user) %}
-{% set hasActiveRecords = active_timesheets is not empty %}
-{% if not hasActiveRecords %}
-    {# fake entry, because at least one html template node is needed #}
-    {% set active_timesheets = [{'id': '000', 'begin': null, 'activity': {'name': ''}, 'project': {'name': '', 'customer': {'name': ''}}}] %}
-{% endif %}
-<div class="nav-item d-flex me-1 ticktac">
+{% set allTimesheets = active_timesheets(app.user) %}
+{% set timesheets = ticktack_entries(app.user) %}
+{% set hard_limit = timesheet_hard_limit() %}
+{% set excludes = ticktack_excludes() %}
+{% set activeCount = allTimesheets|length %}
+{% set fakeEntry = {'id': '000', 'begin': null, 'activity': {'name': ''}, 'project': {'name': '', 'customer': {'name': ''}, 'colorSafe': ''}} %}
+<div class="nav-item d-flex me-1 ticktac" data-hard-limit="{{ hard_limit }}"
+     data-stop-label="{{ 'timesheet.stop'|trans }}"
+     {% if excludes|length > 0 %}data-exclude="{{ excludes|json_encode|e('html_attr') }}"{% endif %}>
     <div class="btn-list">
-        {% set entry = active_timesheets[0] %}
-        <div class="ticktac-menu" data-api="{{ path('active_timesheet') }}" data-href="{{ path('stop_timesheet', {'id' : '000'}) }}" style="{% if not hasActiveRecords %}display:none{% endif %}">
-            <a title="{{ 'timesheet.stop'|trans }}" data-replacer="url" class="api-link ticktac-running ticktac-stop btn btn-default btn-icon px-sm-2" href="#" data-href="{{ path('stop_timesheet', {'id' : entry.id}) }}" data-event="kimai.timesheetStop kimai.timesheetUpdate" data-method="PATCH" data-msg-error="timesheet.stop.error" data-msg-success="timesheet.stop.success"{% if hasActiveRecords %} accesskey="s"{% endif %}>
-                <i class="text-red {{ 'stop-small'|icon(false) }} me-0 me-sm-1"></i>
-                <span class="d-none d-sm-block" data-replacer="duration" data-title="true" data-since="{{ entry.begin is null ? '' : entry.begin|date_format(constant('DATE_ISO8601')) }}">{{ entry is iterable ? 0|duration : entry|duration }}</span>
-            </a>
-        </div>
-        <div class="ticktac-menu-empty" style="{% if hasActiveRecords %}display:none{% endif %}">
-            <a title="{{ 'timesheet.start'|trans }}" href="{{ path('timesheet_create') }}" class="modal-ajax-form ticktac-start btn btn-default btn-icon px-sm-2" accesskey="n">
+        {% for i in 0..hard_limit-1 %}
+            {% set entry = timesheets[i] is defined ? timesheets[i] : fakeEntry %}
+            {% set isActive = timesheets[i] is defined %}
+            <div class="ticktac-menu" data-api="{{ path('active_timesheet') }}"
+                 data-href="{{ path('stop_timesheet', {'id': '000'}) }}"
+                 style="{% if not isActive %}display:none{% endif %}">
+                <a title="{{ isActive and entry.project.name ? 'timesheet.stop'|trans ~ ': ' ~ entry.project.name : 'timesheet.stop'|trans }}"
+                   data-replacer="url" class="api-link ticktac-running ticktac-stop btn btn-default btn-icon px-sm-2"
+                   href="#" data-href="{{ path('stop_timesheet', {'id': entry.id}) }}"
+                   data-event="kimai.timesheetStop kimai.timesheetUpdate" data-method="PATCH"
+                   data-msg-error="timesheet.stop.error" data-msg-success="timesheet.stop.success"
+                   {% if i == 0 and isActive %} accesskey="s"{% endif %}>
+                    <i class="text-red {{ 'stop-small'|icon(false) }} me-0 me-sm-1"></i>
+                    <span class="d-sm-none" data-replacer="color"
+                          style="position:absolute;top:2px;right:2px;width:7px;height:7px;border-radius:50%;background-color:{{ entry.project.colorSafe }}"></span>
+                    <span class="d-none d-sm-block" data-replacer="duration"
+                          {% if i == 0 %}data-title="true"{% endif %}
+                          data-since="{{ entry.begin is null ? '' : entry.begin|date_format(constant('DATE_ISO8601')) }}">
+                        {{ entry is iterable ? 0|duration : entry|duration }}
+                    </span>
+                </a>
+            </div>
+        {% endfor %}
+        {# Start button — visible when entries < hard_limit #}
+        <div class="ticktac-menu-empty" style="{% if activeCount >= hard_limit %}display:none{% endif %}">
+            <a title="{{ 'timesheet.start'|trans }}" href="{{ path('timesheet_create') }}"
+               class="modal-ajax-form ticktac-start btn btn-default btn-icon px-sm-2"
+               {% if activeCount == 0 %}accesskey="n"{% endif %}>
                 <i class="text-green {{ 'start'|icon(false) }} me-0 me-sm-1"></i>
                 <span class="d-none d-sm-block">{{ 0|duration }}</span>
             </a>

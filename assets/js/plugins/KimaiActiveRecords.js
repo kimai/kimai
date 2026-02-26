@@ -123,37 +123,51 @@ export default class KimaiActiveRecords extends KimaiPlugin {
      */
     _setEntries(entries)
     {
-        const hasEntries = entries.length > 0;
+        for (const ticktac of document.querySelectorAll('.ticktac')) {
+            const hardLimit = parseInt(ticktac.dataset.hardLimit) || 1;
+            const stopLabel = ticktac.dataset.stopLabel || '';
+            const excludes = JSON.parse(ticktac.dataset.exclude || '[]');
+            const menus = ticktac.querySelectorAll(this._selector);
+            const emptyMenu = ticktac.querySelector(this._selectorEmpty);
 
-        // these contain the "start" button
-        for (let menuEmpty of document.querySelectorAll(this._selectorEmpty)) {
-            menuEmpty.style.display = !hasEntries ? 'inline-block' : 'none';
-        }
+            // filter out entries managed by plugins (via data-exclude rules)
+            const displayEntries = excludes.length > 0
+                ? entries.filter(entry => !excludes.some(rule =>
+                    Object.keys(rule).every(key => entry[key] && entry[key].id === rule[key])
+                ))
+                : entries;
 
-        // and they contain the "stop" button
-        for (let menu of document.querySelectorAll(this._selector)) {
-            menu.style.display = hasEntries ? 'inline-block' : 'none';
-            if (!hasEntries) {
-                // make sure that template entries in the menu are removed, otherwise they
-                // might still be shown in the browsers title
-                for (let record of menu.querySelectorAll('[data-since]')) {
-                    record.dataset['since'] = '';
-                }
-            }
-
-            const stop = menu.querySelector('.ticktac-stop');
-
-            if (!hasEntries) {
+            // fill active slots and show them
+            displayEntries.forEach((entry, i) => {
+                if (i >= menus.length) return;
+                menus[i].style.display = 'inline-block';
+                this._replaceInNode(menus[i], entry);
+                const stop = menus[i].querySelector('.ticktac-stop');
                 if (stop) {
-                    stop.accesskey = null;
+                    stop.title = entry.project.name
+                        ? stopLabel + ': ' + entry.project.name
+                        : stopLabel;
+                    stop.accessKey = (i === 0) ? 's' : '';
                 }
-                continue;
+            });
+
+            // hide unused slots and clear data-since
+            for (let i = displayEntries.length; i < menus.length; i++) {
+                menus[i].style.display = 'none';
+                for (const r of menus[i].querySelectorAll('[data-since]')) {
+                    r.dataset.since = '';
+                }
             }
 
-            if (stop) {
-                stop.accesskey = 's';
+            // start button: visible when total entries < hardLimit
+            if (emptyMenu) {
+                emptyMenu.style.display = entries.length < hardLimit
+                    ? 'inline-block' : 'none';
+                const startLink = emptyMenu.querySelector('.ticktac-start');
+                if (startLink) {
+                    startLink.accessKey = entries.length === 0 ? 'n' : '';
+                }
             }
-            this._replaceInNode(menu, entries[0]);
         }
 
         this._updateDuration();
@@ -178,6 +192,8 @@ export default class KimaiActiveRecords extends KimaiPlugin {
                 link.innerText = timesheet.project.name;
             } else if (replacerName === 'customer') {
                 link.innerText = timesheet.project.customer.name;
+            } else if (replacerName === 'color') {
+                link.style.backgroundColor = timesheet.project['color-safe'] || '';
             } else if (replacerName === 'duration') {
                 link.dataset['since'] = timesheet.begin;
                 link.innerText = date.formatDuration(timesheet.duration);
