@@ -57,6 +57,8 @@ export default class KimaiAutocomplete extends KimaiFormTomselectPlugin {
                     // remove remaining characters from input after selecting an item
                     this.setTextboxValue('');
                 },
+                // close dropdown after selection (fixes #5716)
+                closeAfterSelect: true,
                 // if there are more than 500, they need to be found by "typing"
                 maxOptions: 500,
                 // the autocomplete is ONLY used, when the user can create tags
