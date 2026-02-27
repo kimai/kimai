@@ -159,13 +159,13 @@ export default class KimaiActiveRecords extends KimaiPlugin {
                 }
             }
 
-            // start button: visible when total entries < hardLimit
+            // start button: visible when displayed entries < available slots
             if (emptyMenu) {
-                emptyMenu.style.display = entries.length < hardLimit
+                emptyMenu.style.display = displayEntries.length < menus.length
                     ? 'inline-block' : 'none';
                 const startLink = emptyMenu.querySelector('.ticktac-start');
                 if (startLink) {
-                    startLink.accessKey = entries.length === 0 ? 'n' : '';
+                    startLink.accessKey = displayEntries.length === 0 ? 'n' : '';
                 }
             }
         }
