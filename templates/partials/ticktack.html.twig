@@ -8,7 +8,8 @@
      data-stop-label="{{ 'timesheet.stop'|trans }}"
      {% if excludes|length > 0 %}data-exclude="{{ excludes|json_encode|e('html_attr') }}"{% endif %}>
     <div class="btn-list">
-        {% for i in 0..hard_limit-1 %}
+        {% set ticktack_slots = hard_limit - excludes|length %}
+        {% for i in 0..ticktack_slots-1 %}
             {% set entry = timesheets[i] is defined ? timesheets[i] : fakeEntry %}
             {% set isActive = timesheets[i] is defined %}
             <div class="ticktac-menu" data-api="{{ path('active_timesheet') }}"
@@ -31,8 +32,8 @@
                 </a>
             </div>
         {% endfor %}
-        {# Start button — visible when entries < hard_limit #}
-        <div class="ticktac-menu-empty" style="{% if activeCount >= hard_limit %}display:none{% endif %}">
+        {# Start button — visible when displayed entries < ticktack slots #}
+        <div class="ticktac-menu-empty" style="{% if timesheets|length >= ticktack_slots %}display:none{% endif %}">
             <a title="{{ 'timesheet.start'|trans }}" href="{{ path('timesheet_create') }}"
                class="modal-ajax-form ticktac-start btn btn-default btn-icon px-sm-2"
                {% if activeCount == 0 %}accesskey="n"{% endif %}>
