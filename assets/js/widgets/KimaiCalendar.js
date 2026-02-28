@@ -195,7 +195,7 @@ export default class KimaiCalendar {
                 if (!this.isKimaiSource(unmountInfo.event)) {
                     return;
                 }
-                const popover = Popover.getInstance(unmountInfo.element);
+                const popover = Popover.getInstance(unmountInfo.el);
                 if (popover !== null) {
                     popover.dispose();
                 }
