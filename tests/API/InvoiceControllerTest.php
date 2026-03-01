@@ -178,7 +178,7 @@ class InvoiceControllerTest extends APIControllerBaseTestCase
         $repository = $em->getRepository(Team::class);
         $repository->saveTeam($team);
 
-        $this->request($client, '/api/invoices/' . $invoice->getId(), 'GET', $query);
+        $this->request($client, '/api/invoices', 'GET', $query);
         $this->assertApiResponseAccessDenied($client->getResponse());
     }
 }
