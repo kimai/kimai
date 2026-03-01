@@ -18,6 +18,7 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use OpenApi\Attributes as OA;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -76,6 +77,9 @@ final class InvoiceController extends BaseApiController
         /** @var array<int> $customers */
         $customers = $paramFetcher->get('customers');
         foreach ($customerRepository->findByIds(array_unique($customers)) as $customer) {
+            if (!$this->isGranted('access', $customer)) {
+                throw $this->createAccessDeniedException('Cannot access Customer: ' . $customer->getId());
+            }
             $query->addCustomer($customer);
         }
 
@@ -90,6 +94,7 @@ final class InvoiceController extends BaseApiController
      * Fetch invoice
      */
     #[IsGranted('view_invoice')]
+    #[IsGranted(new Expression("is_granted('access', subject.getCustomer())"), 'invoice')]
     #[OA\Response(response: 200, description: 'Returns one invoice', content: new OA\JsonContent(ref: '#/components/schemas/Invoice'))]
     #[Route(methods: ['GET'], path: '/{id}', name: 'get_invoice', requirements: ['id' => '\d+'])]
     public function getAction(Invoice $invoice): Response

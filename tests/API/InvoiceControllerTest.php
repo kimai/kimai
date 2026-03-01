@@ -9,8 +9,11 @@
 
 namespace App\Tests\API;
 
+use App\Entity\Customer;
 use App\Entity\Invoice;
+use App\Entity\Team;
 use App\Entity\User;
+use App\Repository\TeamRepository;
 use App\Tests\DataFixtures\InvoiceFixtures;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -122,5 +125,60 @@ class InvoiceControllerTest extends APIControllerBaseTestCase
     public function testNotFound(): void
     {
         $this->assertEntityNotFound(User::ROLE_USER, '/api/invoices/' . PHP_INT_MAX);
+    }
+
+    public function testDownloadRespectsCustomerPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $invoices = $this->importInvoiceFixtures(1, [Invoice::STATUS_NEW]);
+        $invoice = $invoices[0];
+        $customer = $invoice->getCustomer();
+        self::assertInstanceOf(Customer::class, $customer);
+
+        $this->assertAccessIsGranted($client, '/api/invoices/' . $invoice->getId());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('Invoice', $result);
+
+        $team = new Team('foo');
+        $team->addTeamlead($this->getUserByRole(User::ROLE_ADMIN));
+        $team->addCustomer($customer);
+
+        $em = $this->getEntityManager();
+        /** @var TeamRepository $repository */
+        $repository = $em->getRepository(Team::class);
+        $repository->saveTeam($team);
+
+        $this->assertApiAccessDenied($client, '/api/invoices/' . $invoice->getId());
+    }
+
+    public function testCollectionRespectsCustomerPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $invoices = $this->importInvoiceFixtures(1, [Invoice::STATUS_NEW]);
+        $invoice = $invoices[0];
+        $customer = $invoice->getCustomer();
+        self::assertInstanceOf(Customer::class, $customer);
+
+        $query = ['customers' => [$customer->getId()]];
+        $this->assertAccessIsGranted($client, '/api/invoices', 'GET', $query);
+
+        $team = new Team('foo');
+        $team->addTeamlead($this->getUserByRole(User::ROLE_ADMIN));
+        $team->addCustomer($customer);
+
+        $em = $this->getEntityManager();
+        /** @var TeamRepository $repository */
+        $repository = $em->getRepository(Team::class);
+        $repository->saveTeam($team);
+
+        $this->request($client, '/api/invoices/' . $invoice->getId(), 'GET', $query);
+        $this->assertApiResponseAccessDenied($client->getResponse());
     }
 }
