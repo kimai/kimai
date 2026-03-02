@@ -95,6 +95,8 @@
 {% block navbar_start %}
     {% if app.user is not null and is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         {% block navbar_extensions %}{% endblock %}
+        {% set event = trigger(constant('App\\Event\\ThemeEvent::TOOLBAR_PINNED')) %}
+        {{ event.content|raw }}
         {% if is_granted('create_own_timesheet') %}
             {% include 'partials/ticktack.html.twig' %}
         {% endif %}
