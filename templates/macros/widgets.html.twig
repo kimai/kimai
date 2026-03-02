@@ -93,7 +93,11 @@
 {% endmacro %}
 
 {% macro label_user(user) %}
-    {{ _self.label_color(user.displayName, user.color|colorize(user.displayName)) }}
+    {% if user is null %}
+        -
+    {% else %}
+        {{ _self.label_color(user.displayName, user.color|colorize(user.displayName)) }}
+    {% endif %}
 {% endmacro %}
 
 {% macro label_team(team) %}
@@ -138,49 +142,62 @@
     options = {'inherit': true}
 #}
 {% macro label_activity(activity, options) %}
-    {% set inherit = options.inherit ?? true %}
-    {% set isVisible = activity.visible %}
-    {% set color = activity.color %}
-    {% if color is empty and inherit and activity.project is not null %}
-        {% set color = activity.project.color ?? activity.project.customer.color %}
-    {% endif %}
-    {% if color is empty %}
-        {% set color = color|colorize(activity.name) %}
-    {% endif %}
-    {% if isVisible and not activity.project is null %}
-        {% set isVisible = activity.project.visible %}
-        {% if isVisible and not activity.project.customer is null %}
-            {% set isVisible = activity.project.customer.visible %}
+    {% if activity is null %}
+        -
+    {% else %}
+        {% set inherit = options.inherit ?? true %}
+        {% set isVisible = activity.visible %}
+        {% set color = activity.color %}
+        {% if color is empty and inherit and activity.project is not null %}
+            {% set color = activity.project.color ?? activity.project.customer.color %}
         {% endif %}
+        {% if color is empty %}
+            {% set color = color|colorize(activity.name) %}
+        {% endif %}
+        
+        {% if isVisible and not activity.project is null %}
+            {% set isVisible = activity.project.visible %}
+            {% if isVisible and not activity.project.customer is null %}
+                {% set isVisible = activity.project.customer.visible %}
+            {% endif %}
+        {% endif %}
+        {{ _self.label_color_dot('activity', isVisible, activity.name, null, color) }}
     {% endif %}
-    {{ _self.label_color_dot('activity', isVisible, activity.name, null, color) }}
 {% endmacro %}
 
 {#
     options = {'inherit': true}
 #}
 {% macro label_project(project, options) %}
-    {% set inherit = options.inherit ?? true %}
-    {% set isVisible = false %}
-    {% if project.visible and project.customer.visible %}
-        {% set isVisible = true %}
+    {% if project is null %}
+        -
+    {% else %}
+        {% set inherit = options.inherit ?? true %}
+        {% set isVisible = false %}
+        {% if project.visible and project.customer.visible %}
+            {% set isVisible = true %}
+        {% endif %}
+        {% set color = project.color %}
+        {% if color is empty and inherit %}
+            {% set color = project.customer.color %}
+        {% endif %}
+        {% if color is empty %}
+            {% set color = color|colorize(project.name) %}
+        {% endif %}
+        {{ _self.label_color_dot('project', isVisible, project.name, null, color) }}
     {% endif %}
-    {% set color = project.color %}
-    {% if color is empty and inherit %}
-        {% set color = project.customer.color %}
-    {% endif %}
-    {% if color is empty %}
-        {% set color = color|colorize(project.name) %}
-    {% endif %}
-    {{ _self.label_color_dot('project', isVisible, project.name, null, color) }}
 {% endmacro %}
 
 {% macro label_customer(customer) %}
-    {% set color = customer.color %}
-    {% if color is empty %}
-        {% set color = color|colorize(customer.name) %}
+    {% if customer is null %}
+        -
+    {% else %}
+        {% set color = customer.color %}
+        {% if color is empty %}
+            {% set color = color|colorize(customer.name) %}
+        {% endif %}
+        {{ _self.label_color_dot('customer', customer.visible, customer.name, null, color) }}
     {% endif %}
-    {{ _self.label_color_dot('customer', customer.visible, customer.name, null, color) }}
 {% endmacro %}
 
 {# Use for list views and the main column (if the entity has something like a name) #}

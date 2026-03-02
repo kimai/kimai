@@ -2082,6 +2082,42 @@
         <source>count_as_expected_time_help</source>
         <target>Wenn diese Option aktiviert ist, wird %type% als gearbeitete Stunden auf die erwarteten täglichen Stunden angerechnet. Wenn diese Option deaktiviert ist, werden die erwarteten Stunden für diese Tage auf 0 gesetzt. Beide Einstellungen sorgen für ein ausgeglichenes Stundenkonto, wirken sich jedoch unterschiedlich auf die Gesamtzahlen des Monats aus.</target>
       </trans-unit>
+      <trans-unit id="rate_factor" resname="rate_factor">
+        <source>rate_factor</source>
+        <target>Preisfaktor</target>
+      </trans-unit>
+      <trans-unit id="label.rate_factor_fixed_rate" resname="label.rate_factor_fixed_rate">
+        <source>label.rate_factor_fixed_rate</source>
+        <target>Preisfaktor auf Festpreise anwenden</target>
+      </trans-unit>
+      <trans-unit id="help.rate_factor_customer" resname="help.rate_factor_customer">
+        <source>help.rate_factor_customer</source>
+        <target>Faktor, mit dem alle berechneten Preise für diesen Kunden multipliziert werden (z. B. 1,48 für 48% Aufschlag)</target>
+      </trans-unit>
+      <trans-unit id="help.rate_factor_project" resname="help.rate_factor_project">
+        <source>help.rate_factor_project</source>
+        <target>Faktor für dieses Projekt. Falls leer, wird der Faktor des Kunden verwendet.</target>
+      </trans-unit>
+      <trans-unit id="inherited" resname="inherited">
+        <source>inherited</source>
+        <target>Vererbt</target>
+      </trans-unit>
+      <trans-unit id="label.overhead_display" resname="label.overhead_display">
+        <source>label.overhead_display</source>
+        <target>Overhead-Darstellung</target>
+      </trans-unit>
+      <trans-unit id="label.overhead_integrated" resname="label.overhead_integrated">
+        <source>label.overhead_integrated</source>
+        <target>In jedem Eintrag enthalten</target>
+      </trans-unit>
+      <trans-unit id="label.overhead_separate" resname="label.overhead_separate">
+        <source>label.overhead_separate</source>
+        <target>Getrennt ausweisen</target>
+      </trans-unit>
+      <trans-unit id="label.overhead_row_description" resname="label.overhead_row_description">
+        <source>label.overhead_row_description</source>
+        <target>Overhead durch Preisfaktor</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
