@@ -954,9 +954,49 @@
         <source>stats.userDurationTotal</source>
         <target>Meine Arbeitszeit gesamt</target>
       </trans-unit>
+      <trans-unit resname="stats.userDurationBillableToday" id="QJAw3w2">
+        <source>stats.userDurationBillableToday</source>
+        <target>Meine abrechenbaren Stunden heute</target>
+      </trans-unit>
+      <trans-unit resname="stats.userDurationBillableWeek" id="l5iPgk8">
+        <source>stats.userDurationBillableToday</source>
+        <target>Meine abrechenbaren Stunden diese Woche</target>
+      </trans-unit>
+      <trans-unit resname="stats.userDurationBillableMonth" id="pHBswGh">
+        <source>stats.userDurationBillableMonth</source>
+        <target>Meine abrechenbaren Stunden diesen Monat</target>
+      </trans-unit>
+      <trans-unit resname="stats.userDurationBillableYear" id=".76YQr1">
+        <source>stats.userDurationBillableYear</source>
+        <target>Meine abrechenbaren Stunden dieses Jahr</target>
+      </trans-unit>
+      <trans-unit resname="stats.userDurationBillableTotal" id="iZ7Lkg1">
+        <source>stats.userDurationBillableToday</source>
+        <target>Meine totalen abrechenbaren Stunden</target>
+      </trans-unit>
       <trans-unit id="IFOLMgp" resname="stats.yourWorkingHours">
         <source>stats.yourWorkingHours</source>
         <target>Meine Arbeitszeiten</target>
+      </trans-unit>
+      <trans-unit resname="stats.userBillableToday" id="1p_huF.">
+        <source>stats.userBillableToday</source>
+        <target>Meine abrechenbaren Stunden heute in Prozent</target>
+      </trans-unit>
+      <trans-unit resname="stats.userBillableWeek" id="eOz4S86">
+        <source>stats.userBillableWeek</source>
+        <target>Meine abrechenbaren Stunden diese Woche in Prozent</target>
+      </trans-unit>
+      <trans-unit resname="stats.userBillableMonth" id="q6b7sbE">
+        <source>stats.userBillableMonth</source>
+        <target>Meine abrechenbaren Stunden diesen Monat in Prozent</target>
+      </trans-unit>
+      <trans-unit resname="stats.userBillableYear" id="vfBFk1z">
+        <source>stats.userBillableYear</source>
+        <target>Meine abrechenbaren Stunden dieses Jahr in Prozent</target>
+      </trans-unit>
+      <trans-unit resname="stats.userBillableTotal" id="zhCZg39">
+        <source>stats.userBillableTotal</source>
+        <target>Meine totalen abrechenbaren Stunden in Prozent</target>
       </trans-unit>
       <trans-unit id="023M9Ta" resname="stats.amountToday">
         <source>stats.amountToday</source>
