@@ -41,6 +41,12 @@ final class ReportingService
                 $event->addReport(new Report('yearly_users_list', 'report_yearly_users', 'report_yearly_users', 'users'));
             }
 
+            if ($this->security->isGranted('report:activity')) {
+                if ($viewOther) {
+                    $event->addReport(new Report('activity_view', 'report_activity_view', 'report_activity_view', 'activity'));
+                }
+            }
+
             if ($this->security->isGranted('report:project')) {
                 if ($this->security->isGranted('details', 'project')) {
                     $event->addReport(new Report('project_details', 'report_project_details', 'report_project_details', 'project'));
