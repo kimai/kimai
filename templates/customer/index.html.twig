@@ -21,6 +21,8 @@
         {{ entry.postcode }} {{ entry.city }}
     {% elseif column == 'country' %}
         {{ entry.country|country_name }}
+    {% elseif column == 'language' %}
+        {% if entry.language is not empty %}{{ entry.language|locale_name }}{% endif %}
     {% elseif column == 'currency' %}
         {{ entry.currency|currency_name }}
     {% elseif column == 'phone' %}

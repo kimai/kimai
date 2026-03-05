@@ -595,6 +595,7 @@ final class Configuration implements ConfigurationInterface
         $node
             ->addDefaultsIfNotSet()
             ->children()
+                ->scalarNode('language')->defaultValue(Customer::DEFAULT_LANGUAGE)->end()
                 ->scalarNode('choice_pattern')
                     ->defaultValue(CustomerHelper::PATTERN_NAME)
                 ->end()
