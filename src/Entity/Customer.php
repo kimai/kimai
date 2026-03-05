@@ -27,7 +27,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: CustomerRepository::class)]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[Serializer\ExclusionPolicy('all')]
-#[Exporter\Order(['id', 'name', 'company', 'number', 'vatId', 'address', 'contact', 'email', 'phone', 'mobile', 'fax', 'homepage', 'addressLine1', 'addressLine2', 'addressLine3', 'postCode', 'city', 'country', 'currency', 'timezone', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable'])]
+#[Exporter\Order(['id', 'name', 'company', 'number', 'vatId', 'address', 'contact', 'email', 'phone', 'mobile', 'fax', 'homepage', 'addressLine1', 'addressLine2', 'addressLine3', 'postCode', 'city', 'country', 'currency', 'timezone', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable', 'invoiceEmail', 'buyerReference'])]
 #[Constraints\Customer]
 class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
 {
@@ -227,6 +227,15 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Groups(['Customer_Entity'])]
     #[Exporter\Expose(label: 'city')]
     private ?string $city = null;
+    /**
+     * Invoice email
+     */
+    #[ORM\Column(name: 'invoice_email', type: Types::STRING, length: 75, nullable: true)]
+    #[Assert\Length(max: 75)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Customer_Entity'])]
+    #[Exporter\Expose(label: 'invoice_email')]
+    private ?string $invoiceEmail = null;
     #[ORM\Column(name: 'buyer_reference', type: Types::STRING, length: 50, nullable: true)]
     #[Assert\Length(max: 50)]
     #[Serializer\Expose]
@@ -599,6 +608,16 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     public function setCity(?string $city): void
     {
         $this->city = $city;
+    }
+
+    public function getInvoiceEmail(): ?string
+    {
+        return $this->invoiceEmail;
+    }
+
+    public function setInvoiceEmail(?string $invoiceEmail): void
+    {
+        $this->invoiceEmail = $invoiceEmail;
     }
 
     public function getBuyerReference(): ?string

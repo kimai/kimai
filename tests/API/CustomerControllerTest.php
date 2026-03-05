@@ -260,6 +260,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertEquals('test@example.com', $result['email']);
         self::assertNull($result['homepage']);
         self::assertEquals('Europe/Berlin', $result['timezone']);
+        self::assertNull($result['invoiceEmail']);
         self::assertNull($result['buyerReference']);
         self::assertNull($result['color']);
         self::assertEquals('#5319e7', $result['color-safe']);
@@ -299,6 +300,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
             'homepage' => 'https://www.example.com/',
             'timezone' => 'Europe/Berlin',
             'invoiceText' => 'Some random text, pay fast please!',
+            'invoiceEmail' => 'invoice@example.com',
             'buyerReference' => 'REF-0123456789',
             'color' => '#ff0000',
             'visible' => true,
@@ -342,6 +344,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertEquals('admin@example.com', $result['email']);
         self::assertEquals('https://www.example.com/', $result['homepage']);
         self::assertEquals('Europe/Berlin', $result['timezone']);
+        self::assertEquals('invoice@example.com', $result['invoiceEmail']);
         self::assertEquals('REF-0123456789', $result['buyerReference']);
         self::assertEquals('#ff0000', $result['color']);
         self::assertTrue($result['visible']);
