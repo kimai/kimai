@@ -24,9 +24,6 @@
                     {{ form_row(form.number) }}
                 </div>
                 <div class="col-md-4">
-                    {{ form_row(form.vatId) }}
-                </div>
-                <div class="col-md-4">
                     {{ form_row(form.currency) }}
                 </div>
             </div>
@@ -133,6 +130,9 @@
                 {% import "macros/form_helper.html.twig" as form_helper %}
                 {% block title %}{{ 'invoices'|trans }}{% endblock %}
                 {% block body %}
+                    {% if form.vatId is defined %}
+                        {{ form_row(form.vatId) }}
+                    {% endif %}
                     {% if form.buyerReference is defined %}
                         {{ form_row(form.buyerReference) }}
                     {% endif %}
