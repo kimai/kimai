@@ -512,6 +512,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'addressLine3' => '@string',
                     'city' => '@string',
                     'postCode' => '@string',
+                    'invoiceEmail' => '@string',
                     'buyerReference' => '@string',
                     // only available in the entity itself
                     'address' => '@string', // deprecated, do not expose in collection

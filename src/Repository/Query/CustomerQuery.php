@@ -29,7 +29,8 @@ class CustomerQuery extends BaseQuery implements VisibilityInterface
         'vat_id',
         'budget',
         'timeBudget',
-        'visible'
+        'visible',
+        'invoice_email',
     ];
 
     private ?string $country = null;

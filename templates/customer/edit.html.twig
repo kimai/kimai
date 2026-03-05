@@ -133,6 +133,9 @@
                 {% import "macros/form_helper.html.twig" as form_helper %}
                 {% block title %}{{ 'invoices'|trans }}{% endblock %}
                 {% block body %}
+                    {% if form.invoiceEmail is defined %}
+                        {{ form_row(form.invoiceEmail) }}
+                    {% endif %}
                     {% if form.buyerReference is defined %}
                         {{ form_row(form.buyerReference) }}
                     {% endif %}
