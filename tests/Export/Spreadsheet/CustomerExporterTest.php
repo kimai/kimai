@@ -53,6 +53,7 @@ class CustomerExporterTest extends TestCase
         $customer->setMetaField((new CustomerMeta())->setName('hidden meta')->setValue('will not be seen')->setIsVisible(false));
         $customer->setMetaField((new CustomerMeta())->setName('bar meta')->setValue('is happening')->setIsVisible(true));
         $customer->setCountry('AT');
+        $customer->setLanguage('en');
         $customer->setAddressLine1('1234 Main Road');
         $customer->setAddressLine2('Third Floor');
         $customer->setAddressLine3('Golden Office Tower');
@@ -84,6 +85,7 @@ class CustomerExporterTest extends TestCase
         self::assertEquals('MT 543.6', $worksheet->getCell([++$i, 2])->getValue()); // postcode
         self::assertEquals('Acme City', $worksheet->getCell([++$i, 2])->getValue()); // city
         self::assertEquals('AT', $worksheet->getCell([++$i, 2])->getValue()); // country
+        self::assertEquals('en', $worksheet->getCell([++$i, 2])->getValue()); // language
         self::assertEquals('EUR', $worksheet->getCell([++$i, 2])->getValue()); // currency
         self::assertEquals(null, $worksheet->getCell([++$i, 2])->getValue()); // timezone
         self::assertEquals('123456.789', $worksheet->getCell([++$i, 2])->getValue()); // budget
