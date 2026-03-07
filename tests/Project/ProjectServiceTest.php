@@ -173,7 +173,7 @@ class ProjectServiceTest extends TestCase
     }
 
     #[DataProvider('getTestData')]
-    public function testProjectNumber(string $format, int|string $expected): void
+    public function testProjectNumber(string $format, int|string|callable $expected): void
     {
         $configuration = SystemConfigurationFactory::createStub([
             'project' => [
@@ -185,62 +185,57 @@ class ProjectServiceTest extends TestCase
         $sut = $this->getSut(null, null, $configuration);
         $project = $sut->createNewProject();
 
+        if (\is_callable($expected)) {
+            $expected = $expected();
+        }
+
         self::assertEquals((string) $expected, $project->getNumber());
     }
 
     /**
-     * @return array<int, array<int, string|\DateTime|int>>
+     * @return array<int, array<int, string|int|callable>>
      */
     public static function getTestData(): array
     {
-        $dateTime = new \DateTime();
-
-        $yearLong = (int) $dateTime->format('Y');
-        $yearShort = (int) $dateTime->format('y');
-        $monthLong = $dateTime->format('m');
-        $monthShort = (int) $dateTime->format('n');
-        $dayLong = $dateTime->format('d');
-        $dayShort = (int) $dateTime->format('j');
-
         return [
             // simple tests for single calls
             ['{pc,1}', '2'],
             ['{pc,2}', '02'],
             ['{pc,3}', '002'],
             ['{pc,4}', '0002'],
-            ['{Y}', $yearLong],
-            ['{y}', $yearShort],
-            ['{M}', $monthLong],
-            ['{m}', $monthShort],
-            ['{D}', $dayLong],
-            ['{d}', $dayShort],
+            ['{Y}', function () { return (int) (new \DateTime())->format('Y'); }],
+            ['{y}', function () { return (int) (new \DateTime())->format('y'); }],
+            ['{M}', function () { return (new \DateTime())->format('m'); }],
+            ['{m}', function () { return (int) (new \DateTime())->format('n'); }],
+            ['{D}', function () { return (new \DateTime())->format('d'); }],
+            ['{d}', function () { return (int) (new \DateTime())->format('j'); }],
             // number formatting (not testing the lower case versions, as the tests might break depending on the date)
-            ['{Y,6}', '00' . $yearLong],
-            ['{M,3}', '0' . $monthLong],
-            ['{D,3}', '0' . $dayLong],
+            ['{Y,6}', function () { return '00' . (int) (new \DateTime())->format('Y'); }],
+            ['{M,3}', function () { return '0' . (new \DateTime())->format('m'); }],
+            ['{D,3}', function () { return '0' . (new \DateTime())->format('d'); }],
             // increment dates
-            ['{YY}', $yearLong + 1],
-            ['{YY+1}', $yearLong + 1],
-            ['{YY+2}', $yearLong + 2],
-            ['{YY+3}', $yearLong + 3],
-            ['{YY-1}', $yearLong - 1],
-            ['{YY-2}', $yearLong - 2],
-            ['{YY-3}', $yearLong - 3],
-            ['{yy}', $yearShort + 1],
-            ['{yy+1}', $yearShort + 1],
-            ['{yy+2}', $yearShort + 2],
-            ['{yy+3}', $yearShort + 3],
-            ['{yy-1}', $yearShort - 1],
-            ['{yy-2}', $yearShort - 2],
-            ['{yy-3}', $yearShort - 3],
-            ['{MM}', $monthShort + 1], // cast to int removes leading zero
-            ['{MM+1}', $monthShort + 1], // cast to int removes leading zero
-            ['{MM+2}', $monthShort + 2], // cast to int removes leading zero
-            ['{MM+3}', $monthShort + 3], // cast to int removes leading zero
-            ['{DD}', $dayShort + 1], // cast to int removes leading zero
-            ['{DD+1}', $dayShort + 1], // cast to int removes leading zero
-            ['{DD+2}', $dayShort + 2], // cast to int removes leading zero
-            ['{DD+3}', $dayShort + 3], // cast to int removes leading zero
+            ['{YY}', function () { return (int) (new \DateTime())->format('Y') + 1; }],
+            ['{YY+1}', function () { return (int) (new \DateTime())->format('Y') + 1; }],
+            ['{YY+2}', function () { return (int) (new \DateTime())->format('Y') + 2; }],
+            ['{YY+3}', function () { return (int) (new \DateTime())->format('Y') + 3; }],
+            ['{YY-1}', function () { return (int) (new \DateTime())->format('Y') - 1; }],
+            ['{YY-2}', function () { return (int) (new \DateTime())->format('Y') - 2; }],
+            ['{YY-3}', function () { return (int) (new \DateTime())->format('Y') - 3; }],
+            ['{yy}', function () { return (int) (new \DateTime())->format('y') + 1; }],
+            ['{yy+1}', function () { return (int) (new \DateTime())->format('y') + 1; }],
+            ['{yy+2}', function () { return (int) (new \DateTime())->format('y') + 2; }],
+            ['{yy+3}', function () { return (int) (new \DateTime())->format('y') + 3; }],
+            ['{yy-1}', function () { return (int) (new \DateTime())->format('y') - 1; }],
+            ['{yy-2}', function () { return (int) (new \DateTime())->format('y') - 2; }],
+            ['{yy-3}', function () { return (int) (new \DateTime())->format('y') - 3; }],
+            ['{MM}', function () { return (int) (new \DateTime())->format('n') + 1; }], // cast to int removes leading zero
+            ['{MM+1}', function () { return (int) (new \DateTime())->format('n') + 1; }], // cast to int removes leading zero
+            ['{MM+2}', function () { return (int) (new \DateTime())->format('n') + 2; }], // cast to int removes leading zero
+            ['{MM+3}', function () { return (int) (new \DateTime())->format('n') + 3; }], // cast to int removes leading zero
+            ['{DD}', function () { return (int) (new \DateTime())->format('j') + 1; }], // cast to int removes leading zero
+            ['{DD+1}', function () { return (int) (new \DateTime())->format('j') + 1; }], // cast to int removes leading zero
+            ['{DD+2}', function () { return (int) (new \DateTime())->format('j') + 2; }], // cast to int removes leading zero
+            ['{DD+3}', function () { return (int) (new \DateTime())->format('j') + 3; }], // cast to int removes leading zero
         ];
     }
 }
