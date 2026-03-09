@@ -103,6 +103,14 @@ services:
             $permissionNames: '%kimai.permission_names%'
 
     # ================================================================================
+    # OIDC Services
+    # ================================================================================
+    App\Oidc\OidcProvider:
+        arguments:
+            $userProvider: '@security.user.provider.concrete.kimai_internal'
+            $configuration: '@App\Configuration\OidcConfigurationInterface'
+
+    # ================================================================================
     # SAML Services
     # ================================================================================
     App\Saml\SamlProvider:
