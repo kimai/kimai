@@ -47,6 +47,23 @@
 {% endblock %}
 
 {% block login_social_auth %}
+    {% if oidc_config.isActivated() %}
+        {% if kimai_config.loginFormActive %}
+            <div class="hr-text">{{ 'or'|trans({}, 'TablerBundle') }}</div>
+        {% endif %}
+        <div class="card-body">
+            <div class="row">
+                {% if not kimai_config.loginFormActive %}
+                    <h2 class="card-title text-center mb-4">{{ block('login_box_msg') }}</h2>
+                {% endif %}
+                <div class="col text-center">
+                    <a href="{{ path('oidc_login') }}" id="social-login-button" tabindex="50" class="btn btn-white w-50">
+                        {{ oidc_config.getTitle()|trans }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
     {% if saml_config.isActivated() %}
         {% if kimai_config.loginFormActive %}
             <div class="hr-text">{{ 'or'|trans({}, 'TablerBundle') }}</div>

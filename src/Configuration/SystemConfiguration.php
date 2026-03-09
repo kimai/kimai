@@ -159,7 +159,12 @@ final class SystemConfiguration
             return true;
         }
 
-        // if SAML is active, the login form can be deactivated
+        // if OIDC is active, the login form cannot be deactivated
+        if (!$this->isOidcActive()) {
+            return true;
+        }
+
+        // if SAML is active, the login form cannot be deactivated
         if (!$this->isSamlActive()) {
             return true;
         }
@@ -193,6 +198,44 @@ final class SystemConfiguration
         }
 
         return (bool) $this->find('user.password_reset');
+    }
+
+    public function isOidcActive(): bool
+    {
+        return (bool) $this->find('oidc.activate');
+    }
+
+    public function getOidcTitle(): string
+    {
+        return (string) $this->find('oidc.title');
+    }
+
+    public function getOidcProviderUrl(): string
+    {
+        return (string) $this->find('oidc.provider_url');
+    }
+
+    public function getOidcClientId(): string
+    {
+        return (string) $this->find('oidc.client_id');
+    }
+
+    public function getOidcClientSecret(): string
+    {
+        return (string) $this->find('oidc.client_secret');
+    }
+
+    public function isOidcRolesResetOnLogin(): bool
+    {
+        return (bool) $this->find('oidc.roles.resetOnLogin');
+    }
+
+    /**
+     * @return array<int, array<'oidc'|'kimai', string>>
+     */
+    public function getOidcRolesMapping(): array
+    {
+        return $this->findArray('oidc.roles.mapping');
     }
 
     public function isSamlActive(): bool
