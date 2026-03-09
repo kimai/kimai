@@ -104,6 +104,7 @@ class UserVoterTest extends AbstractVoterTestCase
         return [
           [User::AUTH_LDAP, VoterInterface::ACCESS_DENIED],
           [User::AUTH_INTERNAL, VoterInterface::ACCESS_GRANTED],
+          [User::AUTH_OIDC, VoterInterface::ACCESS_DENIED],
           [User::AUTH_SAML, VoterInterface::ACCESS_DENIED],
         ];
     }
