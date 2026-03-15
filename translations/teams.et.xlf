@@ -14,6 +14,26 @@
         <source>team.visibility_global</source>
         <target state="translated">Nähtav kõigile, sest ühtegi meeskonda pole veel valitud.</target>
       </trans-unit>
+      <trans-unit id="hlIIRjb" resname="team.visibility_restricted" xml:space="preserve">
+        <source>team.visibility_restricted</source>
+        <target state="translated">Nähtav ainult järgmistele tiimidele ja kõigile administraatoritele.</target>
+      </trans-unit>
+      <trans-unit id="sx7AVYH" resname="team.project_visibility_inherited" xml:space="preserve">
+        <source>team.project_visibility_inherited</source>
+        <target state="translated">Projektil on piiratud ligipääs, kuna kliendile on määratud tiimiõigused.</target>
+      </trans-unit>
+      <trans-unit id="FC4DW27" resname="team.activity_visibility_inherited" xml:space="preserve">
+        <source>team.activity_visibility_inherited</source>
+        <target state="translated">Tegevusel on piiratud ligipääs, kuna projektile ja/või kliendile on määratud tiimiõigused.</target>
+      </trans-unit>
+      <trans-unit id="cZEIdcu" resname="team.create_default" xml:space="preserve">
+        <source>team.create_default</source>
+        <target state="translated">Loo ligipääsu piiramiseks uus tiim</target>
+      </trans-unit>
+      <trans-unit id="6g81kYY" approved="no" resname="team.member" xml:space="preserve">
+        <source>team.member</source>
+        <target state="translated">Liige</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

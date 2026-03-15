@@ -1532,7 +1532,7 @@
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
-        <target state="translated">Has utilizado %used% de tus %days% días disponibles de vacaciones.</target>
+        <target state="translated">Has presentado %used% de tus %days% días de vacaciones disponibles.</target>
       </trans-unit>
       <trans-unit id="CDTC1gc" resname="supervisor">
         <source>supervisor</source>
@@ -1574,9 +1574,9 @@
         <source>append</source>
         <target state="translated">Adjuntar</target>
       </trans-unit>
-      <trans-unit id="u4lbYD5" resname="public_holiday.group">
+      <trans-unit id="u4lbYD5" resname="public_holiday.group" xml:space="preserve">
         <source>public_holiday.group</source>
-        <target state="translated">grupo de vacaciones</target>
+        <target state="translated">Grupo de vacaciones</target>
       </trans-unit>
       <trans-unit id=".wmq_rT" resname="force_password_change">
         <source>force_password_change</source>

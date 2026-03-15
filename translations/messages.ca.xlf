@@ -1844,7 +1844,7 @@
       </trans-unit>
       <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
         <source>Settings</source>
-        <target state="needs-translation">Preferències</target>
+        <target state="translated">Preferències</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
@@ -2069,6 +2069,18 @@
       <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
         <source>Timesheet</source>
         <target state="translated">Registre d'hores</target>
+      </trans-unit>
+      <trans-unit id="6w8kS.m" resname="user_access_all" xml:space="preserve">
+        <source>user_access_all</source>
+        <target state="translated">Permet accés a tots els usuaris</target>
+      </trans-unit>
+      <trans-unit id="DbF_j60" resname="count_as_expected_time" xml:space="preserve">
+        <source>count_as_expected_time</source>
+        <target state="translated">Comptar com hores esperades: %type%</target>
+      </trans-unit>
+      <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
+        <source>count_as_expected_time_help</source>
+        <target state="translated">Quan estigui habilitat, %type% comptarà com a hores treballades cap a les hores diàries previstes. Quan estigui desactivat, les hores previstes per a aquests dies s’establiran en 0. Ambdues configuracions mantenen un equilibri neutre, però afecten els totals mensuals de manera diferent.</target>
       </trans-unit>
     </body>
   </file>
