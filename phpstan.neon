@@ -41,10 +41,6 @@ parameters:
         allowNullablePropertyForRequiredField: true
     symfony:
         containerXmlPath: %rootDir%/../../../var/cache/dev/App_KernelDevDebugContainer.xml
-    disallowedFunctionCalls:
-        - function: 'var_dump()'
-        - function: 'dump()'
-        - function: 'dd()'
     ignoreErrors:
         - identifier: offsetAccess.notFound
         - '#^Method .*\(\) has parameter \$builder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'

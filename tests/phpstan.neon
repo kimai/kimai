@@ -18,10 +18,6 @@ parameters:
     treatPhpDocTypesAsCertain: false
     doctrine:
         objectManagerLoader: %rootDir%/../../../tests/phpstan-doctrine.php
-    disallowedFunctionCalls:
-      - function: 'var_dump()'
-      - function: 'dump()'
-      - function: 'dd()'
     ignoreErrors:
         - identifier: missingType.iterableValue
 
