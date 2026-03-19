@@ -136,7 +136,6 @@
                     FETCHER.fetch(url, options)
                         .then(response => {
                             response.json().then(json => {
-                                kimai.getPlugin('alert').success('action.update.success');
                                 linkElement.classList.toggle('permOn');
                                 linkElement.classList.toggle('permOff');
                                 toggleLabel(linkElement, !isActive);
