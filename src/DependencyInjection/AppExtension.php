@@ -99,7 +99,7 @@ final class AppExtension extends Extension
             foreach (range(0, $iterator->getDepth()) as $depth) {
                 $keys[] = $iterator->getSubIterator($depth)->key();
             }
-            $newConfig[implode('.', $keys)] = $value;
+            $newConfig[implode('.', $keys)] = $value; // @phpstan-ignore argument.type
         }
 
         $container->setParameter('kimai.config', $newConfig);

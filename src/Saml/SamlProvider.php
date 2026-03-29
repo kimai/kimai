@@ -150,7 +150,7 @@ final class SamlProvider
         }
 
         if (!empty($results)) {
-            return implode(' ', $results);
+            return implode(' ', $results); // @phpstan-ignore argument.type
         }
 
         return null;

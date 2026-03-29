@@ -1666,11 +1666,6 @@ parameters:
             path: src/Form/Extension/SelectWithApiDataExtension.php
 
         -
-            message: "#^Parameter \\#1 \\$name of method Symfony\\\\Component\\\\Routing\\\\Generator\\\\UrlGeneratorInterface\\:\\:generate\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/Form/Extension/SelectWithApiDataExtension.php
-
-        -
             message: "#^Property App\\\\Form\\\\Helper\\\\ActivityHelper\\:\\:\\$pattern \\(string\\|null\\) does not accept bool\\|float\\|int\\|string\\|null\\.$#"
             count: 1
             path: src/Form/Helper/ActivityHelper.php
