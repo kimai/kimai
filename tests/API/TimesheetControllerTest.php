@@ -212,7 +212,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
 
     public function testGetCollectionWithQuery(): void
     {
-        $modifiedAfter = new \DateTime('-1 hour');
+        $modifiedAfter = new \DateTime('-20 hour');
         $begin = new \DateTime('first day of this month');
         $begin->setTime(0, 0, 0);
         $end = new \DateTime('last day of this month');
@@ -222,8 +222,8 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
             'customers' => ['1'],
             'projects' => ['1'],
             'activities' => ['1'],
-            'page' => 2,
-            'size' => 4,
+            'page' => '2',
+            'size' => '4',
             'order' => 'DESC',
             'orderBy' => 'rate',
             'active' => 0,
