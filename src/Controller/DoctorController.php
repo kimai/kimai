@@ -165,7 +165,7 @@ final class DoctorController extends AbstractController
             return ['Failed parsing composer.json' => false];
         }
 
-        if (!\array_key_exists('required', $composer)) {
+        if (!\array_key_exists('require', $composer)) {
             return ['Missing requirements in composer.json' => false];
         }
 
