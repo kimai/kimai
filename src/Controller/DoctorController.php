@@ -27,19 +27,6 @@ use Symfony\Contracts\Cache\ItemInterface;
 final class DoctorController extends AbstractController
 {
     /**
-     * Required PHP extensions for Kimai.
-     */
-    public const REQUIRED_EXTENSIONS = [
-        'intl',
-        'json',
-        'mbstring',
-        'pdo',
-        'xml',
-        'xsl',
-        'zip',
-    ];
-
-    /**
      * Directories which need to be writable by the webserver.
      */
     public const DIRECTORIES_WRITABLE = [
@@ -168,9 +155,27 @@ final class DoctorController extends AbstractController
      */
     private function getLoadedExtensions(): array
     {
+        $json = file_get_contents(__DIR__ . '/../../composer.json');
+        if ($json === false) {
+            return ['Failed loading composer.json' => false];
+        }
+
+        $composer = json_decode($json, true);
+        if (!\is_array($composer)) {
+            return ['Failed parsing composer.json' => false];
+        }
+
+        if (!\array_key_exists('required', $composer)) {
+            return ['Missing requirements in composer.json' => false];
+        }
+
         $results = [];
 
-        foreach (self::REQUIRED_EXTENSIONS as $extName) {
+        foreach ($composer['require'] as $name => $version) {
+            if (!str_starts_with($name, 'ext-')) {
+                continue;
+            }
+            $extName = str_replace('ext-', '', $name);
             $results[$extName] = false;
             if (\extension_loaded($extName)) {
                 $results[$extName] = true;
