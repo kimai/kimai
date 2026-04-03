@@ -105,7 +105,8 @@ final class DoctorController extends AbstractController
      */
     private function getOpcacheConfiguration(): array
     {
-        $status = \function_exists('opcache_get_status') ? opcache_get_status() : false;
+        $known = \function_exists('opcache_get_status');
+        $status = $known ? opcache_get_status() : false;
 
         $enabled = \is_array($status) && $status['opcache_enabled'];
 
@@ -114,6 +115,7 @@ final class DoctorController extends AbstractController
         }
 
         return [
+            'unknown' => !$known,
             'enabled' => $enabled,
             'status' => $status,
         ];
