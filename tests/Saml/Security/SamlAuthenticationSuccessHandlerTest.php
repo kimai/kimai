@@ -22,12 +22,37 @@ use Symfony\Component\Security\Http\HttpUtils;
 #[CoversClass(SamlAuthenticationSuccessHandler::class)]
 class SamlAuthenticationSuccessHandlerTest extends TestCase
 {
+    public function testRelayStateWithInvalidHost(): void
+    {
+        $handler = new SamlAuthenticationSuccessHandler(new HttpUtils($this->getUrlGenerator()));
+        $response = $handler->onAuthenticationSuccess($this->getRequest('http://example.com/sso/login', 'https://localhost/relayed'), $this->getSamlToken());
+        self::assertInstanceOf(RedirectResponse::class, $response);
+        $target = $response->getTargetUrl();
+        $expected = 'http://example.com/';
+        self::assertEquals($expected, $target);
+        self::assertTrue($response->isRedirect($target));
+    }
+
     public function testRelayState(): void
     {
         $handler = new SamlAuthenticationSuccessHandler(new HttpUtils($this->getUrlGenerator()));
-        $response = $handler->onAuthenticationSuccess($this->getRequest('/sso/login', 'http://localhost/relayed'), $this->getSamlToken());
+        $response = $handler->onAuthenticationSuccess($this->getRequest('/sso/login', '/relayed'), $this->getSamlToken());
         self::assertInstanceOf(RedirectResponse::class, $response);
-        self::assertTrue($response->isRedirect('http://localhost/relayed'));
+        $target = $response->getTargetUrl();
+        $expected = 'http://localhost/relayed';
+        self::assertEquals($expected, $target);
+        self::assertTrue($response->isRedirect($target));
+    }
+
+    public function testRelayStateWithFullUrls(): void
+    {
+        $handler = new SamlAuthenticationSuccessHandler(new HttpUtils($this->getUrlGenerator()));
+        $response = $handler->onAuthenticationSuccess($this->getRequest('http://example.com/sso/login', 'http://example.com/relayed/123'), $this->getSamlToken());
+        self::assertInstanceOf(RedirectResponse::class, $response);
+        $target = $response->getTargetUrl();
+        $expected = 'http://example.com/relayed/123';
+        self::assertEquals($expected, $target);
+        self::assertTrue($response->isRedirect($target));
     }
 
     public function testWithoutRelayState(): void
@@ -71,7 +96,7 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
             $params['RelayState'] = $relayState;
         }
 
-        return Request::create($path, 'get', $params);
+        return Request::create($path, 'post', $params);
     }
 
     private function getSamlToken(): SamlToken
