@@ -26,14 +26,15 @@ export default class KimaiEscape extends KimaiPlugin {
             return '';
         }
 
-        const tagsToReplace = {
+        const charToReplace = {
             '&': '&amp;',
             '<': '&lt;',
             '>': '&gt;',
+            '"': '&quot;',
         };
 
-        return title.replace(/[&<>]/g, function(tag) {
-            return tagsToReplace[tag] || tag;
+        return title.replace(/[&<>"]/g, function(tag) {
+            return charToReplace[tag] || tag;
         });
     }
 }
