@@ -43,7 +43,7 @@ class SystemConfigurationFactory
             $keys = [];
             foreach (range(0, $iterator->getDepth()) as $depth) {
                 $key = $iterator->getSubIterator($depth)->key();
-                if (!\is_string($key)) {
+                if (!\is_scalar($key)) {
                     continue;
                 }
                 $keys[] = $key;
