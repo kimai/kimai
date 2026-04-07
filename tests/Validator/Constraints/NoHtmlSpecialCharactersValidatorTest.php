@@ -52,7 +52,7 @@ class NoHtmlSpecialCharactersValidatorTest extends ConstraintValidatorTestCase
     }
 
     #[DataProvider('getValidTestData')]
-    public function testValidInput(mixed $data): void
+    public function testValidInput(string|null $data): void
     {
         $this->validator = $this->createValidator();
         $this->validator->initialize($this->context);
@@ -72,7 +72,7 @@ class NoHtmlSpecialCharactersValidatorTest extends ConstraintValidatorTestCase
     }
 
     #[DataProvider('getInvalidTestData')]
-    public function testInvalidInput(mixed $data): void
+    public function testInvalidInput(string|null $data): void
     {
         $this->validator = $this->createValidator();
         $this->validator->initialize($this->context);

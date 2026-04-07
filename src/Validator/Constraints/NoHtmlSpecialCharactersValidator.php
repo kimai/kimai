@@ -15,10 +15,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class NoHtmlSpecialCharactersValidator extends ConstraintValidator
 {
-    /**
-     * @param string|null $value
-     * @param Constraint $constraint
-     */
     public function validate(mixed $value, Constraint $constraint): void
     {
         if (!($constraint instanceof NoHtmlSpecialCharacters)) {
