@@ -24,7 +24,9 @@ final class SamlAuthenticationSuccessHandler extends DefaultAuthenticationSucces
 
     protected function determineTargetUrl(Request $request): string
     {
-        $relayState = $request->request->get('RelayState');
+        // see https://docs.oasis-open.org/security/saml/v2.0/saml-bindings-2.0-os.pdf
+        // if using the Deflate encoding, RelayState will be submitted using the query
+        $relayState = $request->request->get('RelayState', $request->query->get('RelayState'));
 
         if (\is_string($relayState)) {
             $values = parse_url($relayState);
