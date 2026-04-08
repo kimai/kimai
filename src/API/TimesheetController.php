@@ -482,8 +482,7 @@ final class TimesheetController extends BaseApiController
 
         $copy = $paramFetcher->get('copy');
         if ($copy === 'all') {
-            $copyTimesheet->setHourlyRate($timesheet->getHourlyRate());
-            $copyTimesheet->setFixedRate($timesheet->getFixedRate());
+            // we do NOT copy rates, as those should always be calculated from the configured settings
             $copyTimesheet->setDescription($timesheet->getDescription());
             $copyTimesheet->setBillable($timesheet->isBillable());
 
