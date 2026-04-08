@@ -32,6 +32,7 @@ final class NoHtmlSpecialCharactersValidator extends ConstraintValidator
         ) {
             $this->context->buildViolation(NoHtmlSpecialCharacters::getErrorName(NoHtmlSpecialCharacters::SPECIAL_CHARACTERS_FOUND))
                 ->setTranslationDomain('validators')
+                ->setParameter('{{ chars }}', '< " >')
                 ->setCode(NoHtmlSpecialCharacters::SPECIAL_CHARACTERS_FOUND)
                 ->addViolation();
         }

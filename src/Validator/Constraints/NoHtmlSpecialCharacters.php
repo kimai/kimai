@@ -17,10 +17,10 @@ final class NoHtmlSpecialCharacters extends Constraint
     public const SPECIAL_CHARACTERS_FOUND = 'kimai-html-character-001';
 
     protected const ERROR_NAMES = [
-        self::SPECIAL_CHARACTERS_FOUND => 'Found disallowed HTML characters.',
+        self::SPECIAL_CHARACTERS_FOUND => 'These characters are not allowed: {{ chars }}',
     ];
 
-    public string $message = 'Found disallowed HTML characters.';
+    public string $message = 'These characters are not allowed: {{ chars }}';
 
     public function getTargets(): string
     {
