@@ -36,7 +36,7 @@
       </trans-unit>
       <trans-unit id="8f61k.L" resname="daterangepicker.thisMonth" xml:space="preserve">
         <source>daterangepicker.thisMonth</source>
-        <target state="needs-translation">Этот  месяц</target>
+        <target state="translated">Этот месяц</target>
       </trans-unit>
       <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth" xml:space="preserve">
         <source>daterangepicker.lastMonth</source>

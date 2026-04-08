@@ -38,9 +38,9 @@
         <source>price</source>
         <target state="final">விலை</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date" xml:space="preserve" approved="yes">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve" approved="no">
         <source>date</source>
-        <target state="final">திகதி</target>
+        <target state="translated">திகதி</target>
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user" xml:space="preserve" approved="yes">
         <source>user</source>

@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="QtcznHC" resname="registration.title" xml:space="preserve">
         <source>registration.title</source>
-        <target state="needs-translation">Добродојде %username%</target>
+        <target state="translated">Добродојде %username%</target>
       </trans-unit>
       <trans-unit id="YMLel3P" resname="registration.button" xml:space="preserve">
         <source>registration.button</source>

@@ -734,9 +734,9 @@
         <source>Created</source>
         <target state="translated">உருவாக்கப்பட்டது</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date" xml:space="preserve" approved="yes">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve" approved="no">
         <source>date</source>
-        <target state="final">திகதி</target>
+        <target state="translated">திகதி</target>
       </trans-unit>
       <trans-unit id="BHk4pZ3" resname="starttime" xml:space="preserve" approved="no">
         <source>starttime</source>
@@ -1676,7 +1676,7 @@
       </trans-unit>
       <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve" approved="no">
         <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
-        <target state="needs-translation">நோய், மருத்துவரின் வருகை, நெருங்கிய உறவினர்களின் கவனிப்பு போன்றவை.</target>
+        <target state="translated">வேலை செய்ய இயலாமை, மருத்துவ ரீதியாக தேவையான சந்திப்புகள், கவனிப்பு விடுப்பு போன்றவை.</target>
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve" approved="no">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
@@ -1868,7 +1868,7 @@
       </trans-unit>
       <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve" approved="no">
         <source>Settings</source>
-        <target state="needs-translation">விருப்பத்தேர்வுகள்</target>
+        <target state="translated">அமைப்புகள்</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve" approved="no">
         <source>Filter timesheets</source>
@@ -1981,6 +1981,106 @@
       <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve" approved="yes">
         <source>Timesheet</source>
         <target state="final">நேரத்தாள்</target>
+      </trans-unit>
+      <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="no">
+        <source>Unlock month</source>
+        <target state="translated">திறக்கும் மாதம்</target>
+      </trans-unit>
+      <trans-unit id="mhOe3Iy" resname="unlock_month.help" xml:space="preserve">
+        <source>unlock_month.help</source>
+        <target state="translated">இது தேர்ந்தெடுக்கப்பட்ட தேதிக்குப் பிறகு ஆண்டின் அனைத்து நாட்களையும் திறக்கும்.</target>
+      </trans-unit>
+      <trans-unit id="y1XHR1Q" resname="address_deprecated" xml:space="preserve">
+        <source>address_deprecated</source>
+        <target state="translated">இந்தப் புலம் விரைவில் அகற்றப்படும். செல்லுபடியாகும் விலைப்பட்டியல்களைத் தொடர்ந்து உருவாக்க முகவரியை மாற்றவும் (எ.கா. மின் விலைப்பட்டியல்).</target>
+      </trans-unit>
+      <trans-unit id="BmDRYT." resname="sending_company.help" xml:space="preserve">
+        <source>sending_company.help</source>
+        <target state="translated">இந்த நிறுவனம் விலைப்பட்டியலில் வழங்குபவராகக் காட்டப்பட்டுள்ளது. பெயர், முகவரி மற்றும் வரி விவரங்கள் பயன்படுத்தப்படும்.</target>
+      </trans-unit>
+      <trans-unit id="cDOQMYv" resname="Beta" xml:space="preserve">
+        <source>Beta</source>
+        <target state="translated">இன்னும் உருவாக்கத்தில் இருக்கும் முன்னோட்ட அம்சத்தை இயக்குகிறது.</target>
+      </trans-unit>
+      <trans-unit id="UcWoKWo" resname="portrait" xml:space="preserve">
+        <source>Portrait</source>
+        <target state="translated">உருவப்படம்</target>
+      </trans-unit>
+      <trans-unit id="rLlV34K" resname="landscape" xml:space="preserve">
+        <source>Landscape</source>
+        <target state="translated">நிலப்பரப்பு</target>
+      </trans-unit>
+      <trans-unit id="UZUFKZg" resname="remaining_budget" xml:space="preserve">
+        <source>remaining_budget</source>
+        <target state="translated">மீதமுள்ள பட்செட்</target>
+      </trans-unit>
+      <trans-unit id="PciSBv9" resname="address_row" xml:space="preserve">
+        <source>address_row</source>
+        <target state="translated">வரி %row%</target>
+      </trans-unit>
+      <trans-unit id="uXB48Vj" resname="SEPA Credit Transfer" xml:space="preserve">
+        <source>SEPA Credit Transfer</source>
+        <target state="translated">SEPA கடன் பரிமாற்றம்</target>
+      </trans-unit>
+      <trans-unit id="s42A2gm" resname="SEPA Direct Debit" xml:space="preserve">
+        <source>SEPA Direct Debit</source>
+        <target state="translated">SEPA நேரடி டெபிட்</target>
+      </trans-unit>
+      <trans-unit id="jMvh7bn" resname="Credit Transfer" xml:space="preserve">
+        <source>Credit Transfer</source>
+        <target state="translated">கடன் பரிமாற்றம்</target>
+      </trans-unit>
+      <trans-unit id=".UIt099" resname="Card Payment" xml:space="preserve">
+        <source>Card Payment</source>
+        <target state="translated">அட்டை கட்டணம்</target>
+      </trans-unit>
+      <trans-unit id="Wnb_qF0" resname="Direct Debit" xml:space="preserve">
+        <source>Direct Debit</source>
+        <target state="translated">நேரடி பற்று</target>
+      </trans-unit>
+      <trans-unit id="rIdfGxM" resname="payment_account_name" xml:space="preserve">
+        <source>payment_account_name</source>
+        <target state="translated">கணக்கு அல்லது அட்டை வைத்திருப்பவர்</target>
+      </trans-unit>
+      <trans-unit id="jcT9Og6" resname="payment_account_number" xml:space="preserve">
+        <source>payment_account_name</source>
+        <target state="translated">இபான் அல்லது அட்டை எண்</target>
+      </trans-unit>
+      <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve">
+        <source>electronic_invoice</source>
+        <target state="translated">மின் விலைப்பட்டியல்</target>
+      </trans-unit>
+      <trans-unit id="QnN_ONc" resname="invoice_tax_type" xml:space="preserve">
+        <source>invoice_tax_type</source>
+        <target state="translated">வரி நிலை</target>
+      </trans-unit>
+      <trans-unit id="Mi7y8Q3" resname="tax.type.exempt" xml:space="preserve">
+        <source>tax.type.exempt</source>
+        <target state="translated">விலக்கு</target>
+      </trans-unit>
+      <trans-unit id="lU1Njcy" resname="tax.type.standard" xml:space="preserve">
+        <source>tax.type.standard</source>
+        <target state="translated">வரி விதிக்கக்கூடியது</target>
+      </trans-unit>
+      <trans-unit id="E470U8W" resname="tax.type.reverse" xml:space="preserve">
+        <source>tax.type.reverse</source>
+        <target state="translated">தலைகீழ் கட்டணம்</target>
+      </trans-unit>
+      <trans-unit id="hi31a3v" resname="tax.note.reverse_charge" xml:space="preserve">
+        <source>tax.note.reverse_charge</source>
+        <target state="translated">ரிவர்ச் சார்ச் அடிப்படையில் செலுத்த வேண்டிய வரி</target>
+      </trans-unit>
+      <trans-unit id="6w8kS.m" resname="user_access_all" xml:space="preserve">
+        <source>user_access_all</source>
+        <target state="translated">அனைத்து பயனர்களுக்கும் அணுகலை அனுமதிக்கவும்</target>
+      </trans-unit>
+      <trans-unit id="DbF_j60" resname="count_as_expected_time" xml:space="preserve">
+        <source>count_as_expected_time</source>
+        <target state="translated">எதிர்பார்க்கப்படும் மணிநேரத்தை எண்ணுங்கள்: %type%</target>
+      </trans-unit>
+      <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
+        <source>count_as_expected_time_help</source>
+        <target state="translated">இயக்கப்பட்டால், %type% என்பது எதிர்பார்க்கப்படும் நாள்தோறும் மணிநேரத்தை நோக்கி வேலை நேரமாக கணக்கிடப்படும். முடக்கப்பட்டால், இந்த நாட்களில் எதிர்பார்க்கப்படும் மணிநேரம் 0 ஆக அமைக்கப்படும். இரண்டு அமைப்புகளும் நடுநிலை சமநிலையை பராமரிக்கின்றன, ஆனால் மாதாந்திர மொத்தத்தை வித்தியாசமாக பாதிக்கும்.</target>
       </trans-unit>
     </body>
   </file>
