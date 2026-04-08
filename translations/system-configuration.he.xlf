@@ -310,6 +310,10 @@
         <source>allow_duplicate_number</source>
         <target state="translated">לאפשר מגוון שימושים לאותו המספר</target>
       </trans-unit>
+      <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="yes" xml:space="preserve">
+        <source>invoice.rounding_mode</source>
+        <target state="final">מצב עיגול</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

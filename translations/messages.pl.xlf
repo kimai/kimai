@@ -2070,6 +2070,18 @@
         <source>Timesheet</source>
         <target state="translated">Ewidencja pomiarów</target>
       </trans-unit>
+      <trans-unit id="6w8kS.m" resname="user_access_all" xml:space="preserve">
+        <source>user_access_all</source>
+        <target state="translated">Zezwól na dostęp dla wszystkich użytkowników</target>
+      </trans-unit>
+      <trans-unit id="DbF_j60" resname="count_as_expected_time" xml:space="preserve">
+        <source>count_as_expected_time</source>
+        <target state="translated">Licz jako oczekiwane godziny: %type%</target>
+      </trans-unit>
+      <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
+        <source>count_as_expected_time_help</source>
+        <target state="translated">Gdy włączone, %type% liczy się do przepracowanych godzin. Gdy wyłączone, oczekiwane godziny ustawiane są na 0. Obie opcje neutralne, różnią się wpływem na sumę miesięczną.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

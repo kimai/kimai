@@ -162,9 +162,9 @@
         <source>security.unlock.title</source>
         <target>Konto entsperren</target>
       </trans-unit>
-      <trans-unit id="nqEYrfk" resname="security.unlock.intro">
+      <trans-unit id="nqEYrfk" resname="security.unlock.intro" xml:space="preserve" approved="yes">
         <source>security.unlock.intro</source>
-        <target>Bitte Passwort eingeben für vollen Zugriff</target>
+        <target state="final">Für vollen Zugriff bitte Passwort eingeben</target>
       </trans-unit>
       <trans-unit id="853W5Iu" resname="security.unlock.button">
         <source>security.unlock.button</source>
@@ -242,9 +242,9 @@
         <source>Doctor</source>
         <target>Doktor</target>
       </trans-unit>
-      <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
+      <trans-unit id="Vz3Igj3" resname="error.no_entries_found" xml:space="preserve" approved="yes">
         <source>error.no_entries_found</source>
-        <target>Anhand ihrer ausgewählten Filter wurden keine Einträge gefunden.</target>
+        <target state="final">Anhand Ihrer ausgewählten Filter wurden keine Einträge gefunden.</target>
       </trans-unit>
       <trans-unit id="hlu4iX5" resname="error.no_comments_found">
         <source>error.no_comments_found</source>
@@ -254,9 +254,9 @@
         <source>error.too_many_entries</source>
         <target>Die Anfrage konnte nicht verarbeitet werden. Es wurden zu viele Ergebnisse gefunden.</target>
       </trans-unit>
-      <trans-unit id="GzWKgBk" resname="error.directory_missing">
+      <trans-unit id="GzWKgBk" resname="error.directory_missing" xml:space="preserve" approved="yes">
         <source>The directory “%dir%” does not exist and could not be created.</source>
-        <target>Das Verzeichnis „%dir%“ existiert nicht und konnte auch nicht erstellt werden.</target>
+        <target state="final">Das Verzeichnis „%dir%“ existiert nicht und konnte nicht erstellt werden.</target>
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
@@ -430,9 +430,9 @@
         <source>billable</source>
         <target>Abrechenbar</target>
       </trans-unit>
-      <trans-unit id="oq1jcSQ" resname="help.billable">
+      <trans-unit id="oq1jcSQ" resname="help.billable" xml:space="preserve" approved="yes">
         <source>help.billable</source>
-        <target>Falls die Einstellung aus ist, werden alle zukünftig erfassten Zeiteinträge als "nicht abrechenbar" markiert.</target>
+        <target state="final">Falls die Einstellung aus ist, werden alle zukünftig erfassten Zeiteinträge als „nicht abrechenbar“ markiert.</target>
       </trans-unit>
       <trans-unit id="Kw3N1AA" resname="actions">
         <source>actions</source>
@@ -590,9 +590,9 @@
         <source>login.2fa_label</source>
         <target>Bestätigungscode</target>
       </trans-unit>
-      <trans-unit id="Z34ZpjK" resname="profile.api-token">
+      <trans-unit id="Z34ZpjK" resname="profile.api-token" xml:space="preserve" approved="yes">
         <source>profile.api-token</source>
-        <target>API Zugang</target>
+        <target state="final">API-Zugang</target>
       </trans-unit>
       <trans-unit id="ygtTz8." resname="profile.roles">
         <source>profile.roles</source>
@@ -622,9 +622,9 @@
         <source>unlock_month.help</source>
         <target>Dadurch werden alle Tage des Jahres nach dem ausgewählten Datum entsperrt.</target>
       </trans-unit>
-      <trans-unit id="eWmotjb" resname="completed_month_pdf" xml:space="preserve">
+      <trans-unit id="eWmotjb" resname="completed_month_pdf" xml:space="preserve" approved="yes">
         <source>completed_month_pdf</source>
-        <target state="translated">Monatsabschluss PDF</target>
+        <target state="final">Monatsabschluss PDF</target>
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note">
         <source>completed_month_pdf_note</source>
@@ -710,9 +710,9 @@
         <source>notifications.welcome</source>
         <target>Vielen Dank, dass Sie Benachrichtigungen zugestimmt haben!</target>
       </trans-unit>
-      <trans-unit id="BrOQ92O" resname="notifications.denied">
-        <source>notifications.denied</source>
-        <target>Sie haben Benachrichtigungen abgelehnt. Lesen Sie bitte in der Dokumentation ihres Browsers nach, wie Sie diese aktivieren können.</target>
+      <trans-unit id="BrOQ92O" resname="notifications.denied" xml:space="preserve" approved="yes">
+        <source>You have rejected notifications. Please refer to your web-browser documentation to find out how to turn them on.</source>
+        <target state="final">Sie haben Benachrichtigungen abgelehnt. Lesen Sie bitte in der Dokumentation Ihres Browsers nach, wie Sie diese aktivieren können.</target>
       </trans-unit>
       <trans-unit id="pcfRcZ4" resname="month">
         <source>month</source>
@@ -730,25 +730,25 @@
         <source>daily_stats</source>
         <target>Tägliche Statistiken im Timesheet anzeigen</target>
       </trans-unit>
-      <trans-unit id="dherSTU" resname="export_decimal">
+      <trans-unit id="dherSTU" resname="export_decimal" xml:space="preserve" approved="yes">
         <source>export_decimal</source>
-        <target>Dezimal Format für Export nutzen</target>
+        <target state="final">Dezimalformat für Export nutzen</target>
       </trans-unit>
-      <trans-unit id="7zptTeh" resname="update_browser_title">
+      <trans-unit id="7zptTeh" resname="update_browser_title" xml:space="preserve" approved="yes">
         <source>update_browser_title</source>
-        <target>Browser Titel aktualisieren</target>
+        <target state="final">Browsertitel aktualisieren</target>
       </trans-unit>
       <trans-unit id="UVJ5Die" resname="calendar">
         <source>calendar</source>
         <target>Kalender</target>
       </trans-unit>
-      <trans-unit id="Xyjr.V." resname="project_start">
+      <trans-unit id="Xyjr.V." resname="project_start" xml:space="preserve" approved="yes">
         <source>project_start</source>
-        <target>Projekt Start</target>
+        <target state="final">Projekt-Start</target>
       </trans-unit>
-      <trans-unit id="TBWoUYf" resname="project_end">
+      <trans-unit id="TBWoUYf" resname="project_end" xml:space="preserve" approved="yes">
         <source>project_end</source>
-        <target>Projekt Ende</target>
+        <target state="final">Projekt-Ende</target>
       </trans-unit>
       <trans-unit id="tfOjLNp" resname="project_number">
         <source>Project number</source>
@@ -842,13 +842,13 @@
         <source>roles</source>
         <target>Rolle</target>
       </trans-unit>
-      <trans-unit id="ZlZ20pG" resname="user_permissions.title">
+      <trans-unit id="ZlZ20pG" resname="user_permissions.title" xml:space="preserve" approved="yes">
         <source>user_permissions.title</source>
-        <target>Benutzer Berechtigungen</target>
+        <target state="final">Benutzerberechtigungen</target>
       </trans-unit>
-      <trans-unit id="G.GEdlk" resname="user_role.title">
+      <trans-unit id="G.GEdlk" resname="user_role.title" xml:space="preserve" approved="yes">
         <source>user_role.title</source>
-        <target>Benutzer Rolle</target>
+        <target state="final">Benutzerrolle</target>
       </trans-unit>
       <trans-unit id="E7G60OF" resname="Allowed character: A-Z and _">
         <source>Allowed character: A-Z and _</source>
@@ -870,9 +870,9 @@
         <source>ROLE_ADMIN</source>
         <target>Administrator</target>
       </trans-unit>
-      <trans-unit id="yttGLAB" resname="ROLE_TEAMLEAD">
+      <trans-unit id="yttGLAB" resname="ROLE_TEAMLEAD" xml:space="preserve" approved="yes">
         <source>ROLE_TEAMLEAD</source>
-        <target>Teamleiter</target>
+        <target state="final">Teamleiter</target>
       </trans-unit>
       <trans-unit id="rvO5ZXf" resname="ROLE_USER">
         <source>ROLE_USER</source>
@@ -1478,9 +1478,9 @@
         <source>team.configure_teamlead.help</source>
         <target>Die selektierten bzw. hervorgehobenen Benutzer sind Teamleiter.</target>
       </trans-unit>
-      <trans-unit id="yNWIi5U" resname="default_value_new">
+      <trans-unit id="yNWIi5U" resname="default_value_new" xml:space="preserve" approved="yes">
         <source>default_value_new</source>
-        <target>Standardwert für neue Einträge</target>
+        <target state="final">Standardwerte für neue Einträge</target>
       </trans-unit>
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
@@ -1494,9 +1494,9 @@
         <source>Updated</source>
         <target>Aktualisiert</target>
       </trans-unit>
-      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached">
+      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached" xml:space="preserve" approved="yes">
         <source>invoice_document.max_reached</source>
-        <target>Maximale Anzahl von %max% Rechnungsdokumenten erreicht. Um weitere hinzufügen müssen Sie zunächst eins löschen.</target>
+        <target state="final">Maximale Anzahl von %max% Rechnungsdokumenten erreicht. Um weitere hinzuzufügen müssen Sie zunächst eins löschen.</target>
       </trans-unit>
       <trans-unit id="wwrREDg" resname="pagination">
         <source>pagination</source>
@@ -1518,13 +1518,13 @@
         <source>api_password.missing_title</source>
         <target>API kann nicht genutzt werden</target>
       </trans-unit>
-      <trans-unit id="wYcx0So" resname="search.no_results">
+      <trans-unit id="wYcx0So" resname="search.no_results" xml:space="preserve" approved="yes">
         <source>search.no_results</source>
-        <target>Kein Ergebnis gefunden für "%input%"</target>
+        <target state="final">Kein Ergebnis gefunden für „%input%“</target>
       </trans-unit>
-      <trans-unit id="biHjm0h" resname="select.add_new">
+      <trans-unit id="biHjm0h" resname="select.add_new" xml:space="preserve" approved="yes">
         <source>select.add_new</source>
-        <target>Neu erstellen mit dem Namen "%input%"</target>
+        <target state="final">Neu erstellen mit dem Namen „%input%“</target>
       </trans-unit>
       <trans-unit id="dru_Thv" resname="please_choose">
         <source>please_choose</source>
@@ -1586,13 +1586,13 @@
         <source>receive_from</source>
         <target>Empfangen von %name%</target>
       </trans-unit>
-      <trans-unit id="fWuGTog" resname="public_holiday">
+      <trans-unit id="fWuGTog" resname="public_holiday" xml:space="preserve" approved="yes">
         <source>public_holiday</source>
-        <target>Feiertag</target>
+        <target state="final">Gesetzlicher Feiertag</target>
       </trans-unit>
-      <trans-unit id="zlmddHB" resname="public_holidays">
+      <trans-unit id="zlmddHB" resname="public_holidays" xml:space="preserve" approved="yes">
         <source>public_holidays</source>
-        <target>Feiertage</target>
+        <target state="final">Gesetzliche Feiertage</target>
       </trans-unit>
       <trans-unit id="u4lbYD5" resname="public_holiday.group">
         <source>public_holiday.group</source>
@@ -1714,9 +1714,9 @@
         <source>unpaid_vacation</source>
         <target>Unbezahlter Urlaub</target>
       </trans-unit>
-      <trans-unit id="q59lI2y" resname="user_identifier">
+      <trans-unit id="q59lI2y" resname="user_identifier" xml:space="preserve" approved="yes">
         <source>user_identifier</source>
-        <target>Benutzer ID</target>
+        <target state="final">Benutzer-ID</target>
       </trans-unit>
       <trans-unit id="uqv2Lrv" resname="user_identifier.help">
         <source>user_identifier.help</source>
@@ -1730,9 +1730,9 @@
         <source>Support</source>
         <target state="final">Support</target>
       </trans-unit>
-      <trans-unit id="mz4ieCN" resname="donate">
+      <trans-unit id="mz4ieCN" resname="donate" xml:space="preserve" approved="yes">
         <source>donate</source>
-        <target>Spende</target>
+        <target state="final">Spenden</target>
       </trans-unit>
       <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
         <source>invoice_number_generator.date</source>
@@ -1770,9 +1770,9 @@
         <source>api_token_hidden</source>
         <target>Dies ist das einzige Mal, dass der Token angezeigt wird! Bewahren Sie ihn gut auf und vergewissern Sie sich, dass Sie ihn notiert haben, bevor Sie dieses Fenster schließen.</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated">
+      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve" approved="yes">
         <source>api_password_deprecated</source>
-        <target>API Passwörter sind veraltet: bitte nutzen Sie stattdessen API-Tokens.</target>
+        <target state="final">API-Passwörter sind veraltet: bitte nutzen Sie stattdessen API-Tokens.</target>
       </trans-unit>
       <trans-unit id="2qbRs28" resname="hours_per_day">
         <source>hours_per_day</source>
