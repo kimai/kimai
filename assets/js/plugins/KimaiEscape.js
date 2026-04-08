@@ -10,6 +10,7 @@
  */
 
 import KimaiPlugin from "../KimaiPlugin";
+import DOMPurify from "dompurify";
 
 export default class KimaiEscape extends KimaiPlugin {
 
@@ -36,5 +37,13 @@ export default class KimaiEscape extends KimaiPlugin {
         return title.replace(/[&<>"]/g, function(tag) {
             return charToReplace[tag] || tag;
         });
+    }
+
+    /**
+     * @param {string} html
+     * @returns {string}
+     */
+    sanitize(html) {
+        return DOMPurify.sanitize(html);
     }
 }

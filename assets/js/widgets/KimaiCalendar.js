@@ -663,7 +663,7 @@ export default class KimaiCalendar {
             }
         }
 
-        return `
+        return escaper.sanitize(`
             <div class="calendar-entry">
                 <ul>
                     <li>` + this.options['translations']['customer'] + `: ` + escaper.escapeForHtml(eventObj.customer) + `</li>
@@ -672,7 +672,7 @@ export default class KimaiCalendar {
                 </ul>` +
                 (eventObj.description !== null || eventObj.tags.length > 0 ? '<hr>' : '') +
                 (eventObj.description ? '<div>' + escaper.escapeForHtml(eventObj.description) + '</div>' : '') + tags + `
-            </div>`;
+            </div>`);
     }
 
     /**
