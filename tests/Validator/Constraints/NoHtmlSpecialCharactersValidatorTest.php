@@ -79,8 +79,9 @@ class NoHtmlSpecialCharactersValidatorTest extends ConstraintValidatorTestCase
 
         $this->validator->validate($data, new NoHtmlSpecialCharacters());
 
-        $this->buildViolation('Found disallowed HTML characters.')
+        $this->buildViolation('These characters are not allowed: {{ chars }}')
             ->setCode(NoHtmlSpecialCharacters::SPECIAL_CHARACTERS_FOUND)
+            ->setParameter('{{ chars }}', '< " >')
             ->assertRaised();
     }
 }
