@@ -43,6 +43,17 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
         };
     }
 
+    protected function getAuthenticatedUserId(string $role = User::ROLE_USER): int
+    {
+        return match ($role) {
+            User::ROLE_SUPER_ADMIN => 6,
+            User::ROLE_ADMIN => 5,
+            User::ROLE_TEAMLEAD => 4,
+            User::ROLE_USER => 2,
+            default => throw new \Exception(\sprintf('Unknown role "%s"', $role)),
+        };
+    }
+
     protected function createUrl(string $url): string
     {
         return '/' . ltrim($url, '/');

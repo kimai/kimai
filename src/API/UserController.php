@@ -240,12 +240,14 @@ final class UserController extends BaseApiController
     {
         $event = new PrepareUserEvent($profile, false);
         $dispatcher->dispatch($event);
+        $dirty = false;
 
         foreach ($request->request->all() as $preference) {
             // why is this not handled by FosRestBundle ?
             if (!\is_array($preference)) {
                 throw new BadRequestHttpException('Invalid request, array expected');
             }
+
             if (!\array_key_exists('name', $preference) || !\array_key_exists('value', $preference)) {
                 throw new BadRequestHttpException('Missing required parameter "name" or "value"');
             }
@@ -257,10 +259,17 @@ final class UserController extends BaseApiController
                 throw $this->createNotFoundException(\sprintf('Unknown custom-field "%s" requested', $name));
             }
 
+            if (!$meta->isEnabled()) {
+                throw $this->createAccessDeniedException('User tried to update preference: ' . $name);
+            }
+
             $meta->setValue($value);
+            $dirty = true;
         }
 
-        $this->repository->saveUser($profile);
+        if ($dirty) {
+            $this->repository->saveUser($profile);
+        }
 
         $view = new View($profile, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
