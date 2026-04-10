@@ -236,7 +236,7 @@ final class UserController extends BaseApiController
     #[OA\Parameter(name: 'id', in: 'path', description: 'User ID to set the custom-field value for', required: true)]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(type: 'array', items: new OA\Items(new Model(type: UserPreference::class))))]
     #[Route(methods: ['PATCH'], path: '/{id}/preferences', requirements: ['id' => '\d+'])]
-    public function updateUserPreference(User $profile, Request $request, EventDispatcherInterface $dispatcher): Response
+    public function updateUserPreference(User $profile, Request $request, EventDispatcherInterface $dispatcher, UserService $userService): Response
     {
         $event = new PrepareUserEvent($profile, false);
         $dispatcher->dispatch($event);
@@ -255,6 +255,8 @@ final class UserController extends BaseApiController
             $name = $preference['name'];
             $value = $preference['value'];
 
+            // TODO allow to update preferences that are used internally but not registered via PrepareUserEvent
+
             if (null === ($meta = $profile->getPreference($name))) {
                 throw $this->createNotFoundException(\sprintf('Unknown custom-field "%s" requested', $name));
             }
@@ -268,7 +270,7 @@ final class UserController extends BaseApiController
         }
 
         if ($dirty) {
-            $this->repository->saveUser($profile);
+            $userService->saveUser($profile);
         }
 
         $view = new View($profile, 200);
