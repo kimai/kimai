@@ -11,12 +11,16 @@ namespace App\Export\Package\CellFormatter;
 
 final class ArrayFormatter implements CellFormatterInterface
 {
+    /**
+     * @param mixed|array<int, string> $value
+     * @return mixed
+     */
     public function formatValue(mixed $value): mixed
     {
         if (!\is_array($value)) {
             throw new \InvalidArgumentException('Only arrays are supported');
         }
 
-        return implode(', ', $value);
+        return implode(', ', $value); // @phpstan-ignore argument.type
     }
 }

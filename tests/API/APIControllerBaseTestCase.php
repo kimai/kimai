@@ -43,6 +43,17 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
         };
     }
 
+    protected function getAuthenticatedUserId(string $role = User::ROLE_USER): int
+    {
+        return match ($role) {
+            User::ROLE_SUPER_ADMIN => 6,
+            User::ROLE_ADMIN => 5,
+            User::ROLE_TEAMLEAD => 4,
+            User::ROLE_USER => 2,
+            default => throw new \Exception(\sprintf('Unknown role "%s"', $role)),
+        };
+    }
+
     protected function createUrl(string $url): string
     {
         return '/' . ltrim($url, '/');
@@ -215,7 +226,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
 
     /**
      * @param Response $response
-     * @param array<int, string>|array<string, mixed> $failedFields
+     * @param array<int, string>|array<string, string> $failedFields
      * @param bool $extraFields test for the error "This form should not contain extra fields"
      * @param array<int, string>|array<string, mixed> $globalError
      */
@@ -793,6 +804,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                                 self::assertIsString($subResult);
                             } else {
                                 self::assertIsArray($subResult);
+                                self::assertIsString($value['type']);
 
                                 if ($value['type'][0] === '@') {
                                     if (empty($result[$key])) {
@@ -807,6 +819,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                         break;
 
                     case 'object':
+                        self::assertIsString($value['type']);
                         if ($value['type'][0] === '@') {
                             if (empty($result[$key])) {
                                 break;

@@ -87,7 +87,7 @@ final class TimesheetFixtures implements TestFixture
      * @param string|\DateTime $date
      * @return TimesheetFixtures
      */
-    public function setStartDate($date): TimesheetFixtures
+    public function setStartDate(string|\DateTime $date): TimesheetFixtures
     {
         if (!($date instanceof \DateTime)) {
             $date = new \DateTime($date);
@@ -313,8 +313,8 @@ final class TimesheetFixtures implements TestFixture
         }
 
         $start = clone $this->startDate;
-        $start->modify("+ $i days");
-        $start->modify('+ ' . rand(1, 172800) . ' seconds'); // up to 2 days
+        $start = $start->modify("+ $i days");
+        $start = $start->modify('+ ' . rand(1, 172800) . ' seconds'); // up to 2 days
 
         return $start;
     }

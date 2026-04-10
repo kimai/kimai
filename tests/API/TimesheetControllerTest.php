@@ -35,13 +35,21 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
     /**
      * @return Timesheet[]
      */
-    protected function importFixtureForUser(string $role, int $amount = 10): array
+    protected function importFixtureForUser(User|string $user, int $amount = 10): array
     {
-        $fixture = new TimesheetFixtures($this->getUserByRole($role), $amount);
+        if (\is_string($user)) {
+            $role = $user;
+            $user = $this->getUserByRole($role);
+        }
+
+        $start = DateTimeFactory::createByUser($user)->createDateTime('first day of this month');
+        $start = $start->setTime(0, 0, 1);
+
+        $fixture = new TimesheetFixtures($user, $amount);
         $fixture->setFixedRate(true);
         $fixture->setHourlyRate(true);
         $fixture->setAllowEmptyDescriptions(false);
-        $fixture->setStartDate((new \DateTime('first day of this month'))->setTime(0, 0, 1));
+        $fixture->setStartDate($start);
 
         return $this->importFixture($fixture);
     }
@@ -212,18 +220,25 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
 
     public function testGetCollectionWithQuery(): void
     {
-        $modifiedAfter = new \DateTime('-1 hour');
-        $begin = new \DateTime('first day of this month');
-        $begin->setTime(0, 0, 0);
-        $end = new \DateTime('last day of this month');
-        $end->setTime(23, 59, 59);
+        $role = User::ROLE_USER;
+        $client = $this->getClientForAuthenticatedUser($role);
+        $user = $this->getUserByRole($role);
+        $factory = DateTimeFactory::createByUser($user);
+
+        $begin = $factory->createDateTime('first day of this month');
+        $begin = $begin->setTime(0, 0, 1);
+
+        $end = $factory->createDateTime('last day of this month');
+        $end = $end->setTime(23, 59, 59);
+
+        $modifiedAfter = $factory->createDateTime('-20 hour');
 
         $query = [
             'customers' => ['1'],
             'projects' => ['1'],
             'activities' => ['1'],
-            'page' => 2,
-            'size' => 4,
+            'page' => '2',
+            'size' => '4',
             'order' => 'DESC',
             'orderBy' => 'rate',
             'active' => 0,
@@ -233,8 +248,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
             'exported' => 0,
         ];
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importFixtureForUser(User::ROLE_USER, 22);
+        $this->importFixtureForUser($user, 22);
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
         $content = $client->getResponse()->getContent();
         self::assertIsString($content);
@@ -250,11 +264,6 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
 
     public function testGetCollectionWithQueryFailsWith404OnOutOfRangedPage(): void
     {
-        $begin = new \DateTime('first day of this month');
-        $begin->setTime(0, 0, 0);
-        $end = new \DateTime('last day of this month');
-        $end->setTime(23, 59, 59);
-
         $query = [
             'page' => 19,
             'size' => 50,
@@ -268,10 +277,16 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
 
     public function testGetCollectionWithSingleParamsQuery(): void
     {
-        $begin = new \DateTime('first day of this month');
-        $begin->setTime(0, 0, 0);
-        $end = new \DateTime('last day of this month');
-        $end->setTime(23, 59, 59);
+        $role = User::ROLE_USER;
+        $client = $this->getClientForAuthenticatedUser($role);
+        $user = $this->getUserByRole($role);
+        $factory = DateTimeFactory::createByUser($user);
+
+        $begin = $factory->create('first day of this month');
+        $begin = $begin->setTime(0, 0, 1);
+
+        $end = $factory->create('last day of this month');
+        $end = $end->setTime(23, 59, 59);
 
         $query = [
             'customer' => '1',
@@ -287,8 +302,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
             'exported' => 0,
         ];
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importFixtureForUser(User::ROLE_USER);
+        $this->importFixtureForUser($user);
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
         $content = $client->getResponse()->getContent();
         self::assertIsString($content);
@@ -303,19 +317,23 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
 
     public function testExportedFilter(): void
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importFixtureForUser(User::ROLE_USER);
+        $role = User::ROLE_USER;
+        $client = $this->getClientForAuthenticatedUser($role);
+        $user = $this->getUserByRole($role);
+        $factory = DateTimeFactory::createByUser($user);
+        $this->importFixtureForUser($user);
 
-        $fixture = new TimesheetFixtures($this->getUserByRole(User::ROLE_USER), 7);
+        $fixture = new TimesheetFixtures($user, 7);
         $fixture->setExported(true);
         $fixture->setStartDate(new \DateTime('first day of this month'));
         $fixture->setAllowEmptyDescriptions(false);
         $this->importFixture($fixture);
 
-        $begin = new \DateTime('first day of this month');
-        $begin->setTime(0, 0, 0);
-        $end = new \DateTime('last day of this month');
-        $end->setTime(23, 59, 59);
+        $begin = $factory->create('first day of this month');
+        $begin = $begin->setTime(0, 0, 1);
+
+        $end = $factory->create('last day of this month');
+        $end = $end->setTime(23, 59, 59);
 
         $query = [
             'page' => 1,

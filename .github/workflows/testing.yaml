@@ -25,7 +25,7 @@ jobs:
         steps:
 
             -   name: Clone Kimai
-                uses: actions/checkout@v4
+                uses: actions/checkout@v6
                 with:
                     persist-credentials: false
 
@@ -47,7 +47,7 @@ jobs:
                 run: echo "composer_cache_directory=$(composer config cache-dir)" >> $GITHUB_ENV
 
             -   name: Cache Composer dependencies
-                uses: actions/cache@v4
+                uses: actions/cache@v5
                 with:
                     path: "${{ env.composer_cache_directory }}"
                     key: ${{ runner.os }}-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
@@ -104,7 +104,7 @@ jobs:
 
             -   name: Upload code coverage
                 if: matrix.php == '8.5'
-                uses: codecov/codecov-action@v5
+                uses: codecov/codecov-action@v6
                 with:
                     token: ${{ secrets.CODECOV_TOKEN }}
                     files: ./coverage.xml

@@ -10,6 +10,8 @@
 namespace App\Voter;
 
 use App\Entity\Activity;
+use App\Entity\Customer;
+use App\Entity\Project;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Security\RolePermissionManager;
@@ -33,6 +35,7 @@ final class ActivityVoter extends Voter
         'time',
         'delete',
         'permissions',
+        'access',
     ];
 
     public function __construct(private readonly RolePermissionManager $permissionManager)
@@ -54,12 +57,49 @@ final class ActivityVoter extends Voter
         return $subject instanceof Activity && $this->supportsAttribute($attribute);
     }
 
+    private function checkTeamPermission(Activity|Project|Customer $subject, User $user): bool
+    {
+        if ($user->canSeeAllData()) {
+            return true;
+        }
+
+        if ($subject instanceof Activity && $subject->getProject() !== null) {
+            if (!$this->checkTeamPermission($subject->getProject(), $user)) {
+                return false;
+            }
+        }
+
+        if ($subject instanceof Project && $subject->getCustomer() !== null) {
+            if (!$this->checkTeamPermission($subject->getCustomer(), $user)) {
+                return false;
+            }
+        }
+
+        if ($subject->getTeams()->count() === 0) {
+            return true;
+        }
+
+        foreach ($subject->getTeams() as $team) {
+            if ($user->isInTeam($team)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
 
         if (!$user instanceof User) {
             return false;
+        }
+
+        // this is a virtual permission, only meant to be used by developer
+        // it checks if access to the given activity is potentially possible
+        if ($attribute === 'access') {
+            return $this->checkTeamPermission($subject, $user);
         }
 
         if ($this->permissionManager->hasRolePermission($user, $attribute . '_activity')) {

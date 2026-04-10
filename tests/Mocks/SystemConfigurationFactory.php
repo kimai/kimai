@@ -42,7 +42,11 @@ class SystemConfigurationFactory
         foreach ($iterator as $value) {
             $keys = [];
             foreach (range(0, $iterator->getDepth()) as $depth) {
-                $keys[] = $iterator->getSubIterator($depth)->key();
+                $key = $iterator->getSubIterator($depth)->key();
+                if (!\is_scalar($key)) {
+                    continue;
+                }
+                $keys[] = $key;
             }
             $newConfig[implode('.', $keys)] = $value;
         }

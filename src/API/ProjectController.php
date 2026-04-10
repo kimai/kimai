@@ -85,15 +85,14 @@ final class ProjectController extends BaseApiController
 
         /** @var array<int> $customers */
         $customers = $paramFetcher->get('customers');
-        $customer = $paramFetcher->get('customer');
-        if (\is_string($customer) && $customer !== '') {
-            $customers[] = $customer;
+        $cu = $paramFetcher->get('customer');
+        if (\is_string($cu) && $cu !== '') {
+            $customers[] = $cu;
         }
 
-        foreach (array_unique($customers) as $customerId) {
-            $customer = $customerRepository->find($customerId);
-            if ($customer === null) {
-                throw $this->createNotFoundException('Unknown customer: ' . $customerId);
+        foreach ($customerRepository->findByIds(array_unique($customers)) as $customer) {
+            if (!$this->isGranted('access', $customer)) {
+                throw $this->createAccessDeniedException('Cannot access Customer: ' . $customer->getId());
             }
             $query->addCustomer($customer);
         }

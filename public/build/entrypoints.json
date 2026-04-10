@@ -3,7 +3,7 @@
     "app": {
       "js": [
         "/build/runtime.684e9f6d.js",
-        "/build/app.41748d55.js"
+        "/build/app.f0f8091d.js"
       ],
       "css": [
         "/build/app.99ea4166.css"
@@ -54,7 +54,7 @@
     "calendar": {
       "js": [
         "/build/runtime.684e9f6d.js",
-        "/build/calendar.7e3186b2.js"
+        "/build/calendar.13247e65.js"
       ],
       "css": [
         "/build/calendar.d757753e.css"
@@ -81,7 +81,7 @@
   },
   "integrity": {
     "/build/runtime.684e9f6d.js": "sha384-suKiEX2de4fdNqQzdYbUd6osp4AepD9FiMXl+1QdvgMW9dcQqUWQNQasf3KWzwLr",
-    "/build/app.41748d55.js": "sha384-iVPHnOXYjVDuq8567h8I3U2gl5SCV3mNMFNQCJdgMiNuFMZ4KO7PXOLanjgcGzTt",
+    "/build/app.f0f8091d.js": "sha384-F6UUWeiIwbFffkZMRmbczLyw5tuOvtUNLuX1/iY6ZfncN1vYGSgalEumAp4HXFvX",
     "/build/app.99ea4166.css": "sha384-OF0ozOygdShRhEacN7Tb8YtDSXABczVqjmXRYQjX1YGTmuRQMNCipFTqzHd9IyCH",
     "/build/app-rtl.15853b82.js": "sha384-UnKKgLMu9FnRT+CFE0no/+UiUks012bYriQdUWa6f02mo6Lswl947mPybjvKL503",
     "/build/app-rtl.16262d9a.css": "sha384-CjN7UFkBszmM9k6xfN8LWH79IOsgpVTwwHoffvAOc04j9+y904uDw/Y+LnSQmrDj",
@@ -92,7 +92,7 @@
     "/build/invoice-pdf.26d98626.js": "sha384-gwNzQiU1y6qU/M9DPGiNW0MVZkLctEHk37sCES2X9ov+zugEaDABdkMjKBYOC9lz",
     "/build/invoice-pdf.2b749265.css": "sha384-DXXgkz2WWnrWnfBnXX5fmfPQSPb98upMnWxYKwTGYS04EhrPIWfDCutB2unIrWh7",
     "/build/chart.56f16a68.js": "sha384-SWnYjAbZ8OWEvTP+IZfGuBMWJIcH9OZWLYQ4p38KMPmqfufsc2zhzqWkALO3mCBO",
-    "/build/calendar.7e3186b2.js": "sha384-umm2cw67dX5I6+PJ+PpNuHwWgKDJc+r2MmpN8az3dtAqUGa3N9ZGHD0SHc7xfFVB",
+    "/build/calendar.13247e65.js": "sha384-8b3wBuxn8m2FsxLMtbIpZTg1SGBX9b+0dYRTnF63mGQfcXhRGHKtUs5REwVyhYiP",
     "/build/calendar.d757753e.css": "sha384-cTmQMgHYjd2gfObFWmEUph7qQLCyXaIkneSf+bQ2mqVmZwqOB+pJOm/UYTyTjALJ",
     "/build/dashboard.9708ae5e.js": "sha384-QN7XIQuxFZu76sHVrgdpZL81+Q2VTwcgF3aI2CnpwYZiMoPbzrcTGfPL3RDy696t",
     "/build/dashboard.b7129fa1.css": "sha384-2nn5hLA+3YedgHYBpge62S8Losj8aoPwK9Zk9EvN1xEYatvOUQ7H3rIR2UUJAGOS",

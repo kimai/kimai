@@ -24,11 +24,38 @@ final class SamlAuthenticationSuccessHandler extends DefaultAuthenticationSucces
 
     protected function determineTargetUrl(Request $request): string
     {
+        // see https://docs.oasis-open.org/security/saml/v2.0/saml-bindings-2.0-os.pdf
+        // if using the Deflate encoding, RelayState will be submitted using the query
         $relayState = $request->request->get('RelayState', $request->query->get('RelayState'));
-        if (\is_scalar($relayState)) {
-            $relayState = (string) $relayState;
-            if ($relayState !== $this->httpUtils->generateUri($request, (string) $this->options['login_path'])) {
-                return $relayState;
+
+        if (\is_string($relayState)) {
+            $values = parse_url($relayState);
+
+            // we use only the path part of the URL to prevent external redirects
+            $path = null;
+            if (\is_array($values) && \array_key_exists('path', $values)) {
+                $path = $values['path'];
+            }
+
+            if (\is_string($path)
+                && $path !== ''
+                && str_starts_with($path, '/')
+                && !str_starts_with($path, '//')
+                && !str_contains($path, '\\')
+            ) {
+                $target = $this->httpUtils->generateUri($request, $path);
+                $loginUrl = $this->httpUtils->generateUri($request, (string) $this->options['login_path']);
+
+                if (\array_key_exists('scheme', $values) && str_starts_with($values['scheme'], 'http')) {
+                    if (\array_key_exists('host', $values) && !str_starts_with($target, $values['scheme'] . '://' . $values['host'])) {
+                        $target = null;
+                    }
+                }
+
+                // make sure that the login URL is not the target, which would be an endless loop for the user
+                if ($target !== null && $target !== $loginUrl) {
+                    return $target;
+                }
             }
         }
 

@@ -31,7 +31,7 @@ class DebugRendererTest extends TestCase
     }
 
     #[DataProvider('getTestModel')]
-    public function testRender(callable $invoiceModel, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3, $hasProject, $metaFields = []): void
+    public function testRender(callable $invoiceModel, string $expectedRate, int $expectedRows, int $expectedDescriptions, int $expectedUser1, int $expectedUser2, int $expectedUser3, bool $hasProject, array $metaFields = []): void
     {
         /** @var InvoiceModel $model */
         $model = $invoiceModel($this);
@@ -67,10 +67,12 @@ class DebugRendererTest extends TestCase
 
         $this->assertModelStructure($data['model'], \count($model->getQuery()->getProjects()), \count($model->getQuery()->getActivities()));
         $rows = $data['entries'];
+        self::assertIsArray($rows);
         self::assertEquals($expectedRows, \count($rows));
 
         $i = 0;
         foreach ($rows as $row) {
+            self::assertIsArray($row);
             $meta = isset($metaFields[$i]) ? $metaFields[$i++] : [];
             $this->assertEntryStructure($row, $meta);
         }

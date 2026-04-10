@@ -126,45 +126,42 @@ final class TimesheetController extends BaseApiController
 
         /** @var array<int> $customers */
         $customers = $paramFetcher->get('customers');
-        $customer = $paramFetcher->get('customer');
-        if (\is_string($customer) && $customer !== '') {
-            $customers[] = $customer;
+        $cu = $paramFetcher->get('customer');
+        if (\is_string($cu) && $cu !== '') {
+            $customers[] = $cu;
         }
 
-        foreach (array_unique($customers) as $customerId) {
-            $customer = $customerRepository->find($customerId);
-            if ($customer === null) {
-                throw $this->createNotFoundException('Unknown customer: ' . $customerId);
+        foreach ($customerRepository->findByIds(array_unique($customers)) as $customer) {
+            if (!$this->isGranted('access', $customer)) {
+                throw $this->createAccessDeniedException('Cannot access Customer: ' . $customer->getId());
             }
             $query->addCustomer($customer);
         }
 
         /** @var array<int> $projects */
         $projects = $paramFetcher->get('projects');
-        $project = $paramFetcher->get('project');
-        if (\is_string($project) && $project !== '') {
-            $projects[] = $project;
+        $pr = $paramFetcher->get('project');
+        if (\is_string($pr) && $pr !== '') {
+            $projects[] = $pr;
         }
 
-        foreach (array_unique($projects) as $projectId) {
-            $project = $projectRepository->find($projectId);
-            if ($project === null) {
-                throw $this->createNotFoundException('Unknown project: ' . $project);
+        foreach ($projectRepository->findByIds(array_unique($projects)) as $project) {
+            if (!$this->isGranted('access', $project)) {
+                throw $this->createAccessDeniedException('Cannot access Project: ' . $project->getId());
             }
             $query->addProject($project);
         }
 
         /** @var array<int> $activities */
         $activities = $paramFetcher->get('activities');
-        $activity = $paramFetcher->get('activity');
-        if (\is_string($activity) && $activity !== '') {
-            $activities[] = $activity;
+        $ac = $paramFetcher->get('activity');
+        if (\is_string($ac) && $ac !== '') {
+            $activities[] = $ac;
         }
 
-        foreach (array_unique($activities) as $activityId) {
-            $activity = $activityRepository->find($activityId);
-            if ($activity === null) {
-                throw $this->createNotFoundException('Unknown activity: ' . $activity);
+        foreach ($activityRepository->findByIds(array_unique($activities)) as $activity) {
+            if (!$this->isGranted('access', $activity)) {
+                throw $this->createAccessDeniedException('Cannot access Activity: ' . $activity->getId());
             }
             $query->addActivity($activity);
         }
@@ -234,7 +231,6 @@ final class TimesheetController extends BaseApiController
         }
 
         $data = $this->repository->getPagerfantaForQuery($query);
-
         $view = new View($data, 200);
 
         $full = $paramFetcher->get('full');
@@ -486,8 +482,7 @@ final class TimesheetController extends BaseApiController
 
         $copy = $paramFetcher->get('copy');
         if ($copy === 'all') {
-            $copyTimesheet->setHourlyRate($timesheet->getHourlyRate());
-            $copyTimesheet->setFixedRate($timesheet->getFixedRate());
+            // we do NOT copy rates, as those should always be calculated from the configured settings
             $copyTimesheet->setDescription($timesheet->getDescription());
             $copyTimesheet->setBillable($timesheet->isBillable());
 

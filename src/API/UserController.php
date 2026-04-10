@@ -236,16 +236,18 @@ final class UserController extends BaseApiController
     #[OA\Parameter(name: 'id', in: 'path', description: 'User ID to set the custom-field value for', required: true)]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(type: 'array', items: new OA\Items(new Model(type: UserPreference::class))))]
     #[Route(methods: ['PATCH'], path: '/{id}/preferences', requirements: ['id' => '\d+'])]
-    public function updateUserPreference(User $profile, Request $request, EventDispatcherInterface $dispatcher): Response
+    public function updateUserPreference(User $profile, Request $request, EventDispatcherInterface $dispatcher, UserService $userService): Response
     {
         $event = new PrepareUserEvent($profile, false);
         $dispatcher->dispatch($event);
+        $dirty = false;
 
         foreach ($request->request->all() as $preference) {
             // why is this not handled by FosRestBundle ?
             if (!\is_array($preference)) {
                 throw new BadRequestHttpException('Invalid request, array expected');
             }
+
             if (!\array_key_exists('name', $preference) || !\array_key_exists('value', $preference)) {
                 throw new BadRequestHttpException('Missing required parameter "name" or "value"');
             }
@@ -253,14 +255,23 @@ final class UserController extends BaseApiController
             $name = $preference['name'];
             $value = $preference['value'];
 
+            // TODO allow to update preferences that are used internally but not registered via PrepareUserEvent
+
             if (null === ($meta = $profile->getPreference($name))) {
                 throw $this->createNotFoundException(\sprintf('Unknown custom-field "%s" requested', $name));
             }
 
+            if (!$meta->isEnabled()) {
+                throw $this->createAccessDeniedException('User tried to update preference: ' . $name);
+            }
+
             $meta->setValue($value);
+            $dirty = true;
         }
 
-        $this->repository->saveUser($profile);
+        if ($dirty) {
+            $userService->saveUser($profile);
+        }
 
         $view = new View($profile, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);

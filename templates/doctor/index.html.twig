@@ -163,13 +163,18 @@
     {% endembed %}
 
     {% set opcache_warning = not opcache['enabled'] %}
-    {% embed '@theme/embeds/collapsible.html.twig' with {open: opcache_warning, boxtype: (opcache_warning ? 'danger' : 'success')} %}
+    {% set opcache_unknown = opcache['unknown'] %}
+    {% embed '@theme/embeds/collapsible.html.twig' with {open: opcache_warning, boxtype: (opcache_warning ? (opcache_unknown ? 'warning' : 'danger') : 'success')} %}
         {% block title %}OPCache{% endblock %}
         {% block body_class %}p-0{% endblock %}
         {% block body %}
             {% import "macros/widgets.html.twig" as widgets %}
             {% if opcache_warning %}
-                {{ widgets.alert('danger', 'Could not detect an active OPCache. This will significantly impact the performance of Kimai.') }}
+                {% if opcache['unknown'] %}
+                    {{ widgets.alert('warning', 'Could not detect OPCache status. Using shared hosting? Talk to your hoster to find out if it is activated.') }}
+                {% else %}
+                    {{ widgets.alert('danger', 'Could not detect an active OPCache. This will significantly impact the performance of Kimai.') }}
+                {% endif %}
             {% endif %}
             {% if opcache['status'] is iterable %}
             <table class="table table-hover">

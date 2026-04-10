@@ -631,11 +631,13 @@ class TimesheetRepository extends EntityRepository
 
         if ($query->hasProjects()) {
             $qb->andWhere($qb->expr()->in('t.project', ':project'))
-                ->setParameter('project', $query->getProjectIds());
-        } elseif ($query->hasCustomers()) {
+                ->setParameter('project', $query->getProjects());
+        }
+
+        if ($query->hasCustomers()) {
             $requiresCustomer = true;
             $qb->andWhere($qb->expr()->in('p.customer', ':customer'))
-                ->setParameter('customer', $query->getCustomerIds());
+                ->setParameter('customer', $query->getCustomers());
         }
 
         $tags = $query->getTags();

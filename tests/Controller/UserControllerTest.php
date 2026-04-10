@@ -238,11 +238,11 @@ class UserControllerTest extends AbstractControllerBaseTestCase
                 // invalid fields: username, password_second, email, enabled
                 [
                     'user_create' => [
-                        'username' => '',
-                        'plainPassword' => ['first' => 'sdfsdf123'],
+                        'username' => '', // empty
+                        'plainPassword' => ['first' => 'sdfsdf123'], // missing second
                         'alias' => 'ycvyxcb',
                         'title' => '34rtwrtewrt',
-                        'email' => '',
+                        'email' => '', // empty email
                     ]
                 ],
                 [
@@ -251,15 +251,15 @@ class UserControllerTest extends AbstractControllerBaseTestCase
                     '#user_create_email',
                 ]
             ],
-            // invalid fields: username, password, email, enabled
+            // invalid fields: username, password, email
             [
                 [
                     'user_create' => [
-                        'username' => 'x',
-                        'plainPassword' => ['first' => 'sdfsdf123', 'second' => 'sdfxxxxxxx'],
-                        'alias' => 'ycvyxcb',
-                        'title' => '34rtwrtewrt',
-                        'email' => 'ydfbvsdfgs',
+                        'username' => 'x', // too short
+                        'plainPassword' => ['first' => 'sdfsdf123', 'second' => 'sdfxxxxxxx'], // do not match
+                        'alias' => 'Boo',
+                        'title' => 'Foo',
+                        'email' => 'ydfbvsdfgs', // invalid email
                     ]
                 ],
                 [
@@ -281,6 +281,22 @@ class UserControllerTest extends AbstractControllerBaseTestCase
                 ],
                 [
                     '#user_create_plainPassword_first',
+                ]
+            ],
+            // invalid fields: alias (special chars), title (special chars, too long)
+            [
+                [
+                    'user_create' => [
+                        'username' => 'test1231',
+                        'plainPassword' => ['first' => 'A-Real-Password.1', 'second' => 'A-Real-Password.1'],
+                        'alias' => '""ycvyx<cb""',
+                        'title' => 'sdfgsdfgsd fgsdf "<34rtwrtewrt>" gsdfg sdfg sdfg sdfg sdfg sdfg sdfg sdfgsdfgsd fgsdf gsdfgsgsdfgsdfgsdfgsdfg sdfg sdfg sdfg sdfg sdfg sdfgsdfgsd fgsdf gsdfgsgsdfgsdfgsdfg', // special chars + too long
+                        'email' => 'ydfbvsdfgs@example.com',
+                    ]
+                ],
+                [
+                    '#user_create_alias',
+                    '#user_create_title',
                 ]
             ],
         ];
