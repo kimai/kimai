@@ -25,15 +25,17 @@ final class NoSpecialCharactersValidator extends ConstraintValidator
             return;
         }
 
-        if (str_contains($value, '<') // XSS
-            || str_contains($value, '>') // XSS
-            || str_contains($value, '"') // XSS
-            || str_contains($value, '=') // DDE
-            // there are many family names that use the ' (like O'Hara), so we cannot forbid them
-        ) {
+        $found = [];
+        foreach ($constraint->characters as $character) {
+            if (str_contains($value, $character)) {
+                $found[] = $character;
+            }
+        }
+
+        if (count($found) > 0) {
             $this->context->buildViolation(NoSpecialCharacters::getErrorName(NoSpecialCharacters::SPECIAL_CHARACTERS_FOUND))
                 ->setTranslationDomain('validators')
-                ->setParameter('{{ chars }}', '< " > =')
+                ->setParameter('{{ chars }}', implode(' ', $constraint->characters))
                 ->setCode(NoSpecialCharacters::SPECIAL_CHARACTERS_FOUND)
                 ->addViolation();
         }

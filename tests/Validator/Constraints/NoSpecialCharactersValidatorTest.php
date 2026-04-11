@@ -82,7 +82,7 @@ class NoSpecialCharactersValidatorTest extends ConstraintValidatorTestCase
 
         $this->buildViolation('These characters are not allowed: {{ chars }}')
             ->setCode(NoSpecialCharacters::SPECIAL_CHARACTERS_FOUND)
-            ->setParameter('{{ chars }}', '< " > =')
+            ->setParameter('{{ chars }}', '< > " =')
             ->assertRaised();
     }
 }
