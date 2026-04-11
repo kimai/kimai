@@ -219,7 +219,9 @@ final class TeamController extends BaseApiController
     }
 
     /**
-     * Grant team access to customer
+     * Grant customer access
+     *
+     * The team is granted access to the customer.
      */
     #[IsGranted('edit_team')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Adds a new customer to a team.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
@@ -242,7 +244,9 @@ final class TeamController extends BaseApiController
     }
 
     /**
-     * Revoke customer access from team
+     * Revoke customer access
+     *
+     * This removes access to the customer from the team.
      */
     #[IsGranted('edit_team')]
     #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Removes a customer from the team.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
@@ -265,7 +269,9 @@ final class TeamController extends BaseApiController
     }
 
     /**
-     * Grant team access to project
+     * Grant project access
+     *
+     * The team is granted access to the project.
      */
     #[IsGranted('edit_team')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Adds a new project to a team.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
@@ -288,7 +294,9 @@ final class TeamController extends BaseApiController
     }
 
     /**
-     * Revoke project access from team
+     * Revoke project access
+     *
+     * This removes access to the project from the team.
      */
     #[IsGranted('edit_team')]
     #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Removes a project from the team.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
@@ -311,7 +319,9 @@ final class TeamController extends BaseApiController
     }
 
     /**
-     * Grant team access to activity
+     * Grant activity access
+     *
+     * The team is granted access to the activity.
      */
     #[IsGranted('edit_team')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Adds a new activity to a team.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
@@ -334,7 +344,9 @@ final class TeamController extends BaseApiController
     }
 
     /**
-     * Revoke activity access from team
+     * Revoke activity access
+     *
+     * This removes access to the activity from the team.
      */
     #[IsGranted('edit_team')]
     #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Removes a activity from the team.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
