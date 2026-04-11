@@ -20,9 +20,9 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 /**
  * @extends ConstraintValidatorTestCase<NoHtmlSpecialCharactersValidator>
  */
-#[CoversClass(NoHtmlSpecialCharacters::class)]
-#[CoversClass(NoHtmlSpecialCharactersValidator::class)]
-class NoHtmlSpecialCharactersValidatorTest extends ConstraintValidatorTestCase
+#[CoversClass(NoSpecialCharacters::class)]
+#[CoversClass(NoSpecialCharactersValidator::class)]
+class NoSpecialCharactersValidatorTest extends ConstraintValidatorTestCase
 {
     protected function createValidator(): NoHtmlSpecialCharactersValidator
     {

@@ -12,7 +12,7 @@ namespace App\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
-final class NoHtmlSpecialCharacters extends Constraint
+final class NoSpecialCharacters extends Constraint
 {
     public const SPECIAL_CHARACTERS_FOUND = 'kimai-html-character-001';
 

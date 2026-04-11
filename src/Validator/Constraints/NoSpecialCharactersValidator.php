@@ -13,27 +13,28 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-final class NoHtmlSpecialCharactersValidator extends ConstraintValidator
+final class NoSpecialCharactersValidator extends ConstraintValidator
 {
     public function validate(mixed $value, Constraint $constraint): void
     {
-        if (!($constraint instanceof NoHtmlSpecialCharacters)) {
-            throw new UnexpectedTypeException($constraint, NoHtmlSpecialCharacters::class);
+        if (!($constraint instanceof NoSpecialCharacters)) {
+            throw new UnexpectedTypeException($constraint, NoSpecialCharacters::class);
         }
 
-        if (!\is_string($value)) {
+        if (!\is_string($value) || $value === '') {
             return;
         }
 
-        if (str_contains($value, '<')
-            || str_contains($value, '>')
-            || str_contains($value, '"')
+        if (str_contains($value, '<') // XSS
+            || str_contains($value, '>') // XSS
+            || str_contains($value, '"') // XSS
+            || str_contains($value, '=') // DDE
             // there are many family names that use the ' (like O'Hara), so we cannot forbid them
         ) {
-            $this->context->buildViolation(NoHtmlSpecialCharacters::getErrorName(NoHtmlSpecialCharacters::SPECIAL_CHARACTERS_FOUND))
+            $this->context->buildViolation(NoSpecialCharacters::getErrorName(NoSpecialCharacters::SPECIAL_CHARACTERS_FOUND))
                 ->setTranslationDomain('validators')
-                ->setParameter('{{ chars }}', '< " >')
-                ->setCode(NoHtmlSpecialCharacters::SPECIAL_CHARACTERS_FOUND)
+                ->setParameter('{{ chars }}', '< " > =')
+                ->setCode(NoSpecialCharacters::SPECIAL_CHARACTERS_FOUND)
                 ->addViolation();
         }
     }
