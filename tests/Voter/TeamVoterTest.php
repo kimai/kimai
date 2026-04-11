@@ -21,7 +21,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 class TeamVoterTest extends AbstractVoterTestCase
 {
     #[DataProvider('getTestData')]
-    public function testVote(User $user, $subject, $attribute, $result): void
+    public function testVote(User $user, mixed $subject, string $attribute, int $result): void
     {
         $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(TeamVoter::class);
