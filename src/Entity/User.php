@@ -103,7 +103,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[Exporter\Expose(label: 'title')]
     private ?string $title = null;
     /**
-     * URL to the user avatar, will be auto-generated if empty
+     * URL to the user avatar
      */
     #[ORM\Column(name: 'avatar', type: Types::STRING, length: 255, nullable: true)]
     #[Assert\Url]
