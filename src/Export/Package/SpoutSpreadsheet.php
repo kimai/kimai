@@ -111,8 +111,8 @@ class SpoutSpreadsheet implements SpreadsheetPackage
         $tmp = [];
         $i = 0;
         foreach ($columns as $column) {
-            if (!$isTotalsRow && is_string($column)) {
-                $tmp[] = new StringCell($column, $style);;
+            if (!$isTotalsRow && \is_string($column)) {
+                $tmp[] = new StringCell($column, $style);
             } else {
                 $tmp[] = Cell::fromValue($column, $this->styles[$i++]); // @phpstan-ignore argument.type
             }
