@@ -29,7 +29,7 @@ class ContractExtensionsTest extends TestCase
 
     public function testDefinedMethods(): void
     {
-        self::assertCount(1, $this->getSut()->getTests());
+        self::assertCount(2, $this->getSut()->getTests());
         self::assertCount(0, $this->getSut()->getFilters());
         self::assertCount(0, $this->getSut()->getFunctions());
     }
@@ -38,6 +38,7 @@ class ContractExtensionsTest extends TestCase
     {
         $filters = [
             'work_day',
+            'working_day',
         ];
         $i = 0;
 
