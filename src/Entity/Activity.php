@@ -60,6 +60,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
      * Name of this activity
      */
     #[ORM\Column(name: 'name', type: Types::STRING, length: 150, nullable: false)]
+    #[Constraints\NoSpecialCharacters]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 150)]
     #[Serializer\Expose]

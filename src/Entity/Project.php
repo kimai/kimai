@@ -63,6 +63,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
      * Project name
      */
     #[ORM\Column(name: 'name', type: Types::STRING, length: 150, nullable: false)]
+    #[Constraints\NoSpecialCharacters]
     #[Assert\NotNull]
     #[Assert\Length(min: 2, max: 150)]
     #[Serializer\Expose]
