@@ -106,6 +106,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * URL to the user avatar, will be auto-generated if empty
      */
     #[ORM\Column(name: 'avatar', type: Types::STRING, length: 255, nullable: true)]
+    #[Assert\Url]
     #[Assert\Length(max: 255, groups: ['Profile'])]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
