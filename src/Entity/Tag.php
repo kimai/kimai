@@ -27,7 +27,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Tag
 {
     /**
-     * Internal Tag ID
+     * Tag ID
      */
     #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[ORM\Id]
@@ -36,7 +36,7 @@ class Tag
     #[Serializer\Groups(['Default'])]
     private ?int $id = null;
     /**
-     * The tag name cannot contain the character: " < > = ,
+     * Tag name cannot contain the character: " < > = ,
      */
     #[ORM\Column(name: 'name', type: Types::STRING, length: 100, nullable: false)]
     #[Constraints\NoSpecialCharacters]
