@@ -63,6 +63,13 @@ final class TeamVoter extends Voter
                 if (!$user->isAdmin() && !$user->isSuperAdmin() && !$user->isTeamleadOf($subject)) {
                     return false;
                 }
+                break;
+
+            case 'view':
+                if ($user->canSeeAllData()) {
+                    return true;
+                }
+                break;
         }
 
         return $this->permissionManager->hasRolePermission($user, $attribute . '_team');
