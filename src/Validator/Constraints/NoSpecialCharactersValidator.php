@@ -32,7 +32,7 @@ final class NoSpecialCharactersValidator extends ConstraintValidator
             }
         }
 
-        if (count($found) > 0) {
+        if (\count($found) > 0) {
             $this->context->buildViolation(NoSpecialCharacters::getErrorName(NoSpecialCharacters::SPECIAL_CHARACTERS_FOUND))
                 ->setTranslationDomain('validators')
                 ->setParameter('{{ chars }}', implode(' ', $constraint->characters))
