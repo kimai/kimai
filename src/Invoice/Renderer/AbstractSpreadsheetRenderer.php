@@ -67,10 +67,6 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
                     continue;
                 }
                 $replacer = null;
-                $firstReplacerPos = stripos($value, '${');
-                if ($firstReplacerPos === false) {
-                    continue;
-                }
 
                 if (stripos($value, '${entry.') !== false) {
                     if ($sheetValues === false && isset($entries[$entryRow])) {
@@ -94,13 +90,14 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
                     if (stripos($value, $searchKey) === false) {
                         continue;
                     }
-                    if (\is_string($content) && str_starts_with($content, '=')) {
+                    // we ONLY check if the given replacer content contains a formula character
+                    if (\is_string($content) && \in_array($content[0], ['=', '-', '+', '@', "\t", "\r"])) {
                         $contentLooksLikeFormula = true;
                     }
                     $value = str_replace($searchKey, $content ?? '', $value);
                 }
 
-                if ($contentLooksLikeFormula && $firstReplacerPos === 0) {
+                if ($contentLooksLikeFormula) {
                     // see https://github.com/kimai/kimai/pull/2054
                     $cell->setValueExplicit($value, DataType::TYPE_STRING);
                 } else {
