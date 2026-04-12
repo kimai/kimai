@@ -20,6 +20,7 @@ final class NoSpecialCharacters extends Constraint
         self::SPECIAL_CHARACTERS_FOUND => 'These characters are not allowed: {{ chars }}',
     ];
 
+    /** @var string[] */
     public array $characters = [
         '<', // XSS
         '>', // XSS
@@ -29,6 +30,9 @@ final class NoSpecialCharacters extends Constraint
 
     public string $message = 'These characters are not allowed: {{ chars }}';
 
+    /**
+     * @param string[]|null $character
+     */
     public function __construct(
         mixed $options = null,
         ?string $message = null,
