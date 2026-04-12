@@ -177,6 +177,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[Serializer\Groups(['Default'])]
     private ?string $email = null;
     #[ORM\Column(name: 'account', type: Types::STRING, length: 30, nullable: true)]
+    #[Constraints\NoSpecialCharacters]
     #[Assert\Length(max: 30)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]

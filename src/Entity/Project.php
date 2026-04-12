@@ -171,6 +171,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Groups(['Default'])]
     private bool $globalActivities = true;
     #[ORM\Column(name: 'number', type: Types::STRING, length: 10, nullable: true)]
+    #[Constraints\NoSpecialCharacters]
     #[Assert\Length(max: 10)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]

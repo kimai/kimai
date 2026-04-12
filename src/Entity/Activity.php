@@ -118,6 +118,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[ORM\Column(name: 'invoice_text', type: Types::TEXT, nullable: true)]
     private ?string $invoiceText = null;
     #[ORM\Column(name: 'number', type: Types::STRING, length: 10, nullable: true)]
+    #[Constraints\NoSpecialCharacters]
     #[Assert\Length(max: 10)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
