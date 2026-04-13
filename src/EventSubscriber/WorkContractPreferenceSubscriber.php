@@ -10,161 +10,70 @@
 namespace App\EventSubscriber;
 
 use App\Entity\UserPreference;
-use App\Event\UserPreferenceEvent;
-use App\Form\Type\DurationType;
+use App\Event\RegisterUserPreferencesEvent;
 use App\WorkingTime\Calculator\WorkingTimeCalculatorDay;
-use App\WorkingTime\Mode\WorkingTimeModeFactory;
 use App\WorkingTime\Mode\WorkingTimeModeNone;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
-use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 
 final class WorkContractPreferenceSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private WorkingTimeModeFactory $modeFactory, private AuthorizationCheckerInterface $voter)
-    {
-    }
-
     public static function getSubscribedEvents(): array
     {
         return [
-            UserPreferenceEvent::class => ['onUserPreference', 100]
+            RegisterUserPreferencesEvent::class => ['onRegisterUserPreferences', 100]
         ];
     }
 
-    public function onUserPreference(UserPreferenceEvent $event): void
+    public function onRegisterUserPreferences(RegisterUserPreferencesEvent $event): void
     {
         $user = $event->getUser();
-        $canEditContract = $this->voter->isGranted('contract', $user);
 
-        $durationConstraints = [
-            new GreaterThanOrEqual(0),
-            new LessThanOrEqual(86400),
-        ];
-
-        $modes = [];
-        foreach ($this->modeFactory->getAll() as $mode) {
-            $modes[$mode->getName()] = $mode->getId();
+        if (null === $user->getPreference(UserPreference::WORK_CONTRACT_TYPE)) {
+            $user->addPreference(new UserPreference(UserPreference::WORK_CONTRACT_TYPE, WorkingTimeModeNone::ID));
         }
 
-        $event->addPreference(
-            (new UserPreference(UserPreference::WORK_CONTRACT_TYPE, WorkingTimeModeNone::ID))
-                ->setOrder(2000)
-                ->setSection('work_contract')
-                ->setType(ChoiceType::class)
-                ->setEnabled($canEditContract)
-                ->setOptions(['choices' => $modes, 'label' => 'work_hours_mode'])
-        );
+        if (null === $user->getPreference(WorkingTimeCalculatorDay::WORK_HOURS_MONDAY)) {
+            $user->addPreference(new UserPreference(WorkingTimeCalculatorDay::WORK_HOURS_MONDAY, 0));
+        }
 
-        $event->addPreference(
-            (new UserPreference(WorkingTimeCalculatorDay::WORK_HOURS_MONDAY, 0))
-                ->setOrder(2010)
-                ->setSection('work_contract')
-                ->setType(DurationType::class)
-                ->setEnabled($canEditContract)
-                ->setConstraints($durationConstraints)
-                ->setOptions(['label' => 'Monday'])
-        );
+        if (null === $user->getPreference(WorkingTimeCalculatorDay::WORK_HOURS_TUESDAY)) {
+            $user->addPreference(new UserPreference(WorkingTimeCalculatorDay::WORK_HOURS_TUESDAY, 0));
+        }
 
-        $event->addPreference(
-            (new UserPreference(WorkingTimeCalculatorDay::WORK_HOURS_TUESDAY, 0))
-                ->setOrder(2020)
-                ->setSection('work_contract')
-                ->setType(DurationType::class)
-                ->setEnabled($canEditContract)
-                ->setConstraints($durationConstraints)
-                ->setOptions(['label' => 'Tuesday'])
-        );
+        if (null === $user->getPreference(WorkingTimeCalculatorDay::WORK_HOURS_WEDNESDAY)) {
+            $user->addPreference(new UserPreference(WorkingTimeCalculatorDay::WORK_HOURS_WEDNESDAY, 0));
+        }
 
-        $event->addPreference(
-            (new UserPreference(WorkingTimeCalculatorDay::WORK_HOURS_WEDNESDAY, 0))
-                ->setOrder(2030)
-                ->setSection('work_contract')
-                ->setType(DurationType::class)
-                ->setEnabled($canEditContract)
-                ->setConstraints($durationConstraints)
-                ->setOptions(['label' => 'Wednesday'])
-        );
+        if (null === $user->getPreference(WorkingTimeCalculatorDay::WORK_HOURS_THURSDAY)) {
+            $user->addPreference(new UserPreference(WorkingTimeCalculatorDay::WORK_HOURS_THURSDAY, 0));
+        }
 
-        $event->addPreference(
-            (new UserPreference(WorkingTimeCalculatorDay::WORK_HOURS_THURSDAY, 0))
-                ->setOrder(2040)
-                ->setSection('work_contract')
-                ->setType(DurationType::class)
-                ->setEnabled($canEditContract)
-                ->setConstraints($durationConstraints)
-                ->setOptions(['label' => 'Thursday'])
-        );
+        if (null === $user->getPreference(WorkingTimeCalculatorDay::WORK_HOURS_FRIDAY)) {
+            $user->addPreference(new UserPreference(WorkingTimeCalculatorDay::WORK_HOURS_FRIDAY, 0));
+        }
 
-        $event->addPreference(
-            (new UserPreference(WorkingTimeCalculatorDay::WORK_HOURS_FRIDAY, 0))
-                ->setOrder(2050)
-                ->setSection('work_contract')
-                ->setType(DurationType::class)
-                ->setEnabled($canEditContract)
-                ->setConstraints($durationConstraints)
-                ->setOptions(['label' => 'Friday'])
-        );
+        if (null === $user->getPreference(WorkingTimeCalculatorDay::WORK_HOURS_SATURDAY)) {
+            $user->addPreference(new UserPreference(WorkingTimeCalculatorDay::WORK_HOURS_SATURDAY, 0));
+        }
 
-        $event->addPreference(
-            (new UserPreference(WorkingTimeCalculatorDay::WORK_HOURS_SATURDAY, 0))
-                ->setOrder(2060)
-                ->setSection('work_contract')
-                ->setType(DurationType::class)
-                ->setEnabled($canEditContract)
-                ->setConstraints($durationConstraints)
-                ->setOptions(['label' => 'Saturday'])
-        );
+        if (null === $user->getPreference(WorkingTimeCalculatorDay::WORK_HOURS_SUNDAY)) {
+            $user->addPreference(new UserPreference(WorkingTimeCalculatorDay::WORK_HOURS_SUNDAY, 0));
+        }
 
-        $event->addPreference(
-            (new UserPreference(WorkingTimeCalculatorDay::WORK_HOURS_SUNDAY, 0))
-                ->setOrder(2070)
-                ->setSection('work_contract')
-                ->setType(DurationType::class)
-                ->setEnabled($canEditContract)
-                ->setConstraints($durationConstraints)
-                ->setOptions(['label' => 'Sunday'])
-        );
+        if (null === $user->getPreference(UserPreference::PUBLIC_HOLIDAY_GROUP)) {
+            $user->addPreference(new UserPreference(UserPreference::PUBLIC_HOLIDAY_GROUP, null));
+        }
 
-        $event->addPreference(
-            (new UserPreference(UserPreference::PUBLIC_HOLIDAY_GROUP, null))
-                ->setOrder(2080)
-                ->setSection('work_contract')
-                ->setType(ChoiceType::class)
-                ->setEnabled($canEditContract)
-                ->setOptions(['required' => false, 'label' => 'public_holiday_group'])
-        );
+        if (null === $user->getPreference(UserPreference::HOLIDAYS_PER_YEAR)) {
+            $user->addPreference(new UserPreference(UserPreference::HOLIDAYS_PER_YEAR, 0.0));
+        }
 
-        $event->addPreference(
-            (new UserPreference(UserPreference::HOLIDAYS_PER_YEAR, 0.0))
-                ->setOrder(2090)
-                ->setSection('work_contract')
-                ->setType(NumberType::class)
-                ->setEnabled($canEditContract)
-                ->setConstraints([new GreaterThanOrEqual(0)])
-                ->setOptions(['label' => 'holidays', 'required' => false])
-        );
+        if (null === $user->getPreference('work_start_day')) {
+            $user->addPreference(new UserPreference('work_start_day', null));
+        }
 
-        $event->addPreference(
-            (new UserPreference('work_start_day', null))
-                ->setOrder(2100)
-                ->setSection('work_contract')
-                ->setType(DateType::class)
-                ->setEnabled($canEditContract)
-                ->setOptions(['required' => false, 'label' => 'work_start_day'])
-        );
-
-        $event->addPreference(
-            (new UserPreference('work_last_day', null))
-                ->setOrder(2110)
-                ->setSection('work_contract')
-                ->setType(DateType::class)
-                ->setEnabled($canEditContract)
-                ->setOptions(['required' => false, 'label' => 'work_last_day'])
-        );
+        if (null === $user->getPreference('work_last_day')) {
+            $user->addPreference(new UserPreference('work_last_day', null));
+        }
     }
 }
