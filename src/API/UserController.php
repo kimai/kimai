@@ -255,8 +255,6 @@ final class UserController extends BaseApiController
             $name = $preference['name'];
             $value = $preference['value'];
 
-            // TODO allow to update preferences that are used internally but not registered via PrepareUserEvent
-
             if (null === ($meta = $profile->getPreference($name))) {
                 throw $this->createNotFoundException(\sprintf('Unknown custom-field "%s" requested', $name));
             }
