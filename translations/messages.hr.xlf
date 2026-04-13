@@ -522,9 +522,9 @@
         <source>company</source>
         <target>Ime poduzeća</target>
       </trans-unit>
-      <trans-unit id="fFErSLq" resname="vat">
+      <trans-unit id="fFErSLq" resname="vat" xml:space="preserve">
         <source>vat</source>
-        <target>PDV</target>
+        <target state="translated">Porez</target>
       </trans-unit>
       <trans-unit id="EJDS9HY" resname="vat_id">
         <source>vat_id</source>
@@ -836,11 +836,11 @@
       </trans-unit>
       <trans-unit id="86KyrKO" resname="invoice.subtotal" xml:space="preserve">
         <source>invoice.subtotal</source>
-        <target state="translated">Iznos bez PDV- a</target>
+        <target state="translated">Iznos bez poreza</target>
       </trans-unit>
-      <trans-unit id="EO57yXg" resname="invoice.tax">
+      <trans-unit id="EO57yXg" resname="invoice.tax" xml:space="preserve">
         <source>invoice.tax</source>
-        <target>PDV</target>
+        <target state="translated">Porez</target>
       </trans-unit>
       <trans-unit id="N68vyvo" resname="invoice.total">
         <source>invoice.total</source>
@@ -1314,9 +1314,9 @@
         <source>help.globalActivity</source>
         <target state="translated">Ako ne odabereš projekt, ova aktivnost postaje globalna i može se kombinirati s bilo kojim projektom. Ako odabereš projekt, aktivnost se može koristiti samo s tim projektom. Postavka se kasnije ne može promijeniti.</target>
       </trans-unit>
-      <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer">
+      <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer" xml:space="preserve">
         <source>help.invoiceTemplate_customer</source>
-        <target state="translated">Računi za ovog klijenta se standardno generiraju pomoću ovog predloška. Po potrebi se može promijeniti tijekom generiranja računa.</target>
+        <target state="translated">Računi za ovu mušteriju se standardno generiraju pomoću ovog predloška. Po potrebi se može promijeniti tijekom generiranja računa.</target>
       </trans-unit>
       <trans-unit id="Fkrev.q" resname="help.globalActivities">
         <source>help.globalActivities</source>
@@ -1482,9 +1482,9 @@
         <source>completed_month_pdf</source>
         <target state="translated">PDF završenog mjeseca</target>
       </trans-unit>
-      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
+      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured" xml:space="preserve">
         <source>work_times_should.none_configured</source>
-        <target state="translated">U postavkama ugovora o radu nisu konfigurirani ciljani sati za ovog korisnika.</target>
+        <target state="translated">U postavkama radnog ugovora nisu konfigurirani ciljani sati za ovog korisnika.</target>
       </trans-unit>
       <trans-unit id="t1r372x" resname="invisible">
         <source>invisible</source>
@@ -1736,7 +1736,7 @@
       </trans-unit>
       <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve">
         <source>booking_allow_only_work_days</source>
-        <target state="translated">Dozvoli unose vremena samo za dane za koje je predviđeno radno vrijeme definirano ugovorom o radu</target>
+        <target state="translated">Dozvoli unose vremena samo za dane za koje je predviđeno radno vrijeme definirano radnim ugovorom</target>
       </trans-unit>
       <trans-unit id="dOIWgOr" resname="approve" xml:space="preserve">
         <source>approve</source>
@@ -1868,7 +1868,7 @@
       </trans-unit>
       <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
         <source>hours_per_day</source>
-        <target state="translated">Sata na dan</target>
+        <target state="translated">Sati na dan</target>
       </trans-unit>
       <trans-unit id="2pbkbn_" resname="work_hours_mode" xml:space="preserve">
         <source>work_hours_mode</source>
@@ -1884,7 +1884,7 @@
       </trans-unit>
       <trans-unit id="y7KtuSS" resname="hours_per_week" xml:space="preserve">
         <source>hours_per_week</source>
-        <target state="translated">Sata na tjedan</target>
+        <target state="translated">Sati na tjedan</target>
       </trans-unit>
       <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve">
         <source>reject</source>
@@ -1908,7 +1908,7 @@
       </trans-unit>
       <trans-unit id="07e8ywS" resname="hours_per_month" xml:space="preserve">
         <source>hours_per_month</source>
-        <target state="translated">Sata na mjesec</target>
+        <target state="translated">Sati na mjesec</target>
       </trans-unit>
       <trans-unit id="0jvo0RQ" resname="profit" xml:space="preserve">
         <source>profit</source>
