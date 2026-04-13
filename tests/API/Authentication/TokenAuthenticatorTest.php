@@ -41,7 +41,7 @@ class TokenAuthenticatorTest extends TestCase
         return new TokenAuthenticator(
             $userProvider,
             $passwordHasherFactory,
-            new RateLimiterFactory(['id' => 'foo', 'policy' => 'sliding_window'], new InMemoryStorage()),
+            new RateLimiterFactory(['id' => 'foo', 'policy' => 'fixed_window', 'limit' => 10, 'interval' => '1 minute'], new InMemoryStorage()),
             new RequestStack(),
         );
     }
