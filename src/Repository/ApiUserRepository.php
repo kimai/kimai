@@ -16,6 +16,9 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * @deprecated since 2.54 - see https://www.kimai.org/en/blog/2026/removing-api-passwords
+ */
 class ApiUserRepository implements UserLoaderInterface, PasswordUpgraderInterface
 {
     public function __construct(private readonly UserRepository $userRepository)

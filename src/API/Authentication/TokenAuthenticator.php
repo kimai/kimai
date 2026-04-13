@@ -28,6 +28,9 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\CustomCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 
+/**
+ * @deprecated since 2.54 - see https://www.kimai.org/en/blog/2026/removing-api-passwords
+ */
 final class TokenAuthenticator extends AbstractAuthenticator
 {
     public const HEADER_USERNAME = 'X-AUTH-USER';
