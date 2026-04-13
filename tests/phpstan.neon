@@ -2382,26 +2382,6 @@ parameters:
             path: Voter/RolePermissionVoterTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TeamVoterTest\\:\\:getTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Voter/TeamVoterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TeamVoterTest\\:\\:testVote\\(\\) has parameter \\$attribute with no type specified\\.$#"
-            count: 1
-            path: Voter/TeamVoterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TeamVoterTest\\:\\:testVote\\(\\) has parameter \\$result with no type specified\\.$#"
-            count: 1
-            path: Voter/TeamVoterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TeamVoterTest\\:\\:testVote\\(\\) has parameter \\$subject with no type specified\\.$#"
-            count: 1
-            path: Voter/TeamVoterTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:assertVote\\(\\) has parameter \\$attribute with no type specified\\.$#"
             count: 1
             path: Voter/TimesheetVoterTest.php

@@ -24,7 +24,6 @@ final class TeamVoter extends Voter
      * support rules based on the given $subject (here: Team)
      */
     private const ALLOWED_ATTRIBUTES = [
-        'view',
         'edit',
         'delete',
     ];
@@ -52,24 +51,13 @@ final class TeamVoter extends Voter
     {
         $user = $token->getUser();
 
-        if (!$user instanceof User) {
+        if (!$user instanceof User || !($subject instanceof Team)) {
             return false;
         }
 
-        switch ($attribute) {
-            case 'edit':
-            case 'delete':
-                // changing existing teams should be limited to admins and teamleads
-                if (!$user->isAdmin() && !$user->isSuperAdmin() && !$user->isTeamleadOf($subject)) {
-                    return false;
-                }
-                break;
-
-            case 'view':
-                if ($user->canSeeAllData()) {
-                    return true;
-                }
-                break;
+        // changing existing teams should be limited to admins and teamleads
+        if (!$user->isAdmin() && !$user->isSuperAdmin() && !$user->isTeamleadOf($subject)) {
+            return false;
         }
 
         return $this->permissionManager->hasRolePermission($user, $attribute . '_team');
