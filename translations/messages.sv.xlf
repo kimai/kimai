@@ -298,9 +298,9 @@
         <source>profile.roles</source>
         <target state="translated">Roller</target>
       </trans-unit>
-      <trans-unit id="MQKiG33" resname="profile.preferences">
+      <trans-unit id="MQKiG33" resname="profile.preferences" xml:space="preserve">
         <source>profile.preferences</source>
-        <target state="translated">Inställningar</target>
+        <target state="translated">Preferenser</target>
       </trans-unit>
       <trans-unit id="j4Kd9N1" resname="calendar_initial_view">
         <source>calendar_initial_view</source>
