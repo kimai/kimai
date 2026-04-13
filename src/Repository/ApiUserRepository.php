@@ -11,6 +11,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -23,7 +24,11 @@ class ApiUserRepository implements UserLoaderInterface, PasswordUpgraderInterfac
 
     public function loadUserByIdentifier(string $identifier): ?UserInterface
     {
-        return $this->userRepository->loadUserByIdentifier($identifier);
+        try {
+            return $this->userRepository->loadUserByIdentifier($identifier);
+        } catch (UserNotFoundException $ex) {
+            return null;
+        }
     }
 
     public function upgradePassword(PasswordAuthenticatedUserInterface|UserInterface $user, string $newHashedPassword): void
