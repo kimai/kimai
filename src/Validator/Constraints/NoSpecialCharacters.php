@@ -12,7 +12,7 @@ namespace App\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
-final class NoHtmlSpecialCharacters extends Constraint
+final class NoSpecialCharacters extends Constraint
 {
     public const SPECIAL_CHARACTERS_FOUND = 'kimai-html-character-001';
 
@@ -20,7 +20,31 @@ final class NoHtmlSpecialCharacters extends Constraint
         self::SPECIAL_CHARACTERS_FOUND => 'These characters are not allowed: {{ chars }}',
     ];
 
+    /** @var string[] */
+    public array $characters = [
+        '<', // XSS
+        '>', // XSS
+        '"', // XSS
+        '=', // DDE
+    ];
+
     public string $message = 'These characters are not allowed: {{ chars }}';
+
+    /**
+     * @param string[]|null $character
+     */
+    public function __construct(
+        mixed $options = null,
+        ?string $message = null,
+        ?array $character = null,
+        ?array $groups = null,
+        mixed $payload = null
+    )
+    {
+        parent::__construct($options, $groups, $payload);
+        $this->message = $message ?? $this->message;
+        $this->characters = $character ?? $this->characters;
+    }
 
     public function getTargets(): string
     {

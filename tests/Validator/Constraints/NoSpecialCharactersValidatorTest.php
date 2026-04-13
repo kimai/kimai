@@ -9,8 +9,8 @@
 
 namespace App\Tests\Validator\Constraints;
 
-use App\Validator\Constraints\NoHtmlSpecialCharacters;
-use App\Validator\Constraints\NoHtmlSpecialCharactersValidator;
+use App\Validator\Constraints\NoSpecialCharacters;
+use App\Validator\Constraints\NoSpecialCharactersValidator;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -18,15 +18,15 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @extends ConstraintValidatorTestCase<NoHtmlSpecialCharactersValidator>
+ * @extends ConstraintValidatorTestCase<NoSpecialCharactersValidator>
  */
-#[CoversClass(NoHtmlSpecialCharacters::class)]
-#[CoversClass(NoHtmlSpecialCharactersValidator::class)]
-class NoHtmlSpecialCharactersValidatorTest extends ConstraintValidatorTestCase
+#[CoversClass(NoSpecialCharacters::class)]
+#[CoversClass(NoSpecialCharactersValidator::class)]
+class NoSpecialCharactersValidatorTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator(): NoHtmlSpecialCharactersValidator
+    protected function createValidator(): NoSpecialCharactersValidator
     {
-        return new NoHtmlSpecialCharactersValidator();
+        return new NoSpecialCharactersValidator();
     }
 
     public function testConstraintIsInvalid(): void
@@ -38,7 +38,7 @@ class NoHtmlSpecialCharactersValidatorTest extends ConstraintValidatorTestCase
 
     public function testGetTargets(): void
     {
-        $constraint = new NoHtmlSpecialCharacters();
+        $constraint = new NoSpecialCharacters();
         self::assertEquals('property', $constraint->getTargets());
     }
 
@@ -47,7 +47,7 @@ class NoHtmlSpecialCharactersValidatorTest extends ConstraintValidatorTestCase
         return [
             [''],
             [null],
-            ['asdf-.,123!§$%&/()=?`4567\'890ß'],
+            ['asdf-.,123!§$%&/()?`4567\'890ß'],
         ];
     }
 
@@ -57,7 +57,7 @@ class NoHtmlSpecialCharactersValidatorTest extends ConstraintValidatorTestCase
         $this->validator = $this->createValidator();
         $this->validator->initialize($this->context);
 
-        $this->validator->validate($data, new NoHtmlSpecialCharacters());
+        $this->validator->validate($data, new NoSpecialCharacters());
 
         $this->assertNoViolation();
     }
@@ -68,6 +68,7 @@ class NoHtmlSpecialCharactersValidatorTest extends ConstraintValidatorTestCase
             ['Test" onclick="alert(1)"'],
             ['Test><a href=#>Foo</a>'],
             ['Test" broken string'],
+            ['I am not = allowed'],
         ];
     }
 
@@ -77,11 +78,11 @@ class NoHtmlSpecialCharactersValidatorTest extends ConstraintValidatorTestCase
         $this->validator = $this->createValidator();
         $this->validator->initialize($this->context);
 
-        $this->validator->validate($data, new NoHtmlSpecialCharacters());
+        $this->validator->validate($data, new NoSpecialCharacters());
 
         $this->buildViolation('These characters are not allowed: {{ chars }}')
-            ->setCode(NoHtmlSpecialCharacters::SPECIAL_CHARACTERS_FOUND)
-            ->setParameter('{{ chars }}', '< " >')
+            ->setCode(NoSpecialCharacters::SPECIAL_CHARACTERS_FOUND)
+            ->setParameter('{{ chars }}', '< > " =')
             ->assertRaised();
     }
 }

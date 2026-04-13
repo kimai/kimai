@@ -45,6 +45,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Exporter\Expose(label: 'id', type: 'integer')]
     private ?int $id = null;
     #[ORM\Column(name: 'name', type: Types::STRING, length: 150, nullable: false)]
+    #[Constraints\NoSpecialCharacters]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 150)]
     #[Serializer\Expose]
@@ -52,6 +53,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Exporter\Expose(label: 'name')]
     private ?string $name = null;
     #[ORM\Column(name: 'number', type: Types::STRING, length: 50, nullable: true)]
+    #[Constraints\NoSpecialCharacters]
     #[Assert\Length(max: 50)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]

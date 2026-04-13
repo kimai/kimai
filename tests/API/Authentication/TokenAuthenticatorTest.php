@@ -16,8 +16,11 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\PasswordHasher\PasswordHasherInterface;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\RateLimiter\Storage\InMemoryStorage;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
@@ -35,7 +38,12 @@ class TokenAuthenticatorTest extends TestCase
         $passwordHasher->method('verify')->willReturn($verify);
         $passwordHasherFactory->method('getPasswordHasher')->willReturn($passwordHasher);
 
-        return new TokenAuthenticator($userProvider, $passwordHasherFactory);
+        return new TokenAuthenticator(
+            $userProvider,
+            $passwordHasherFactory,
+            new RateLimiterFactory(['id' => 'foo', 'policy' => 'fixed_window', 'limit' => 10, 'interval' => '1 minute'], new InMemoryStorage()),
+            new RequestStack(),
+        );
     }
 
     public function testSupports(): void
