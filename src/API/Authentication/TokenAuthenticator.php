@@ -81,10 +81,12 @@ final class TokenAuthenticator extends AbstractAuthenticator
 
         $checkCredentials = function (?string $presentedPassword, User $user) {
             if ('' === $presentedPassword) {
+                $this->rateLimitInvalidLogin();
                 throw new BadCredentialsException('The presented password cannot be empty.');
             }
 
             if (null === $user->getApiToken()) {
+                $this->rateLimitInvalidLogin();
                 throw new BadCredentialsException('The user has no activated API account.');
             }
 
@@ -92,6 +94,7 @@ final class TokenAuthenticator extends AbstractAuthenticator
                 return true;
             }
 
+            $this->rateLimitInvalidLogin();
             throw new BadCredentialsException('The presented password is invalid.');
         };
 
@@ -115,18 +118,23 @@ final class TokenAuthenticator extends AbstractAuthenticator
         $user = $this->userProvider->loadUserByIdentifier($identifier);
 
         if ($user === null) {
-            $limiter = $this->oldApiTokensLimiter->create($this->requestStack->getMainRequest()?->getClientIp());
-            $limit = $limiter->consume();
-
-            if (false === $limit->isAccepted()) {
-                throw new BadRequestHttpException('Too many API requests with invalid username. Possible attack?');
-            }
-
             // we could use usleep(500000); to slow down potential attacks, but using a hashing makes timing attacks more difficult
             $this->passwordHasherFactory->getPasswordHasher(User::class)->verify('$2y$13$vwn35gUbbivoS75wcByBzObCNjX4vwkBihbdXQuK23HzK1R6J5WKW', uniqid());
+
+            $this->rateLimitInvalidLogin();
         }
 
         return $user;
+    }
+
+    private function rateLimitInvalidLogin(): void
+    {
+        $limiter = $this->oldApiTokensLimiter->create($this->requestStack->getMainRequest()?->getClientIp());
+        $limit = $limiter->consume();
+
+        if (false === $limit->isAccepted()) {
+            throw new BadRequestHttpException('Too many API requests with invalid username. Possible attack?');
+        }
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
