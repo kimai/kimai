@@ -54,6 +54,7 @@ final class Configuration implements ConfigurationInterface
                 ->append($this->getDefaultsNode())
                 ->append($this->getPermissionsNode())
                 ->append($this->getLdapNode())
+                ->append($this->getOidcNode())
                 ->append($this->getSamlNode())
                 ->append($this->getQuickEntryNode())
                 ->append($this->getActivityNode())
@@ -801,6 +802,75 @@ final class Configuration implements ConfigurationInterface
                     return $v['activate'] && empty($v['user']['baseDn']);
                 })
                 ->thenInvalid('The "ldap.user.baseDn" config must be set if LDAP is activated.')
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    private function getOidcNode(): ArrayNodeDefinition
+    {
+        $builder = new TreeBuilder('oidc');
+        /** @var ArrayNodeDefinition $node */
+        $node = $builder->getRootNode();
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->booleanNode('activate')
+                    ->defaultFalse()
+                ->end()
+                ->scalarNode('title')
+                    ->defaultValue('Login with OIDC')
+                ->end()
+                ->scalarNode('provider_url')
+                    ->defaultValue('')
+                ->end()
+                ->scalarNode('client_id')
+                    ->defaultValue('')
+                ->end()
+                ->scalarNode('client_secret')
+                    ->defaultValue('')
+                ->end()
+                ->arrayNode('roles')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode('resetOnLogin')
+                            ->defaultTrue()
+                        ->end()
+                        ->arrayNode('mapping')
+                            ->defaultValue([])
+                            ->arrayPrototype()
+                                ->children()
+                                    ->scalarNode('oidc')->isRequired()->cannotBeEmpty()->end()
+                                    ->scalarNode('kimai')->isRequired()->cannotBeEmpty()->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+            ->validate()
+                ->ifTrue(static function ($v) {
+                    if (true !== $v['activate']) {
+                        // Fine if not activated
+                        return false;
+                    } else {
+                        // provider_url is required
+                        if (!$v['provider_url']) {
+                            return true;
+                        }
+                        // client_id is required
+                        if (!$v['client_id']) {
+                            return true;
+                        }
+                        // client_secret is required
+                        if (!$v['client_secret']) {
+                            return true;
+                        }
+                    }
+                })
+                ->thenInvalid('You need to configure a OIDC provider_url, client_id, and client_secret.')
             ->end()
         ;
 

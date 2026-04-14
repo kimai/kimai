@@ -3271,6 +3271,71 @@ parameters:
             path: src/Repository/TimesheetRepository.php
 
         -
+            message: "#^Property App\\\\Oidc\\\\Security\\\\OidcAuthenticationFailureHandler\\:\\:\\$defaultOptions has no type specified\\.$#"
+            count: 1
+            path: src/Oidc/Security/OidcAuthenticationFailureHandler.php
+
+        -
+            message: "#^Property App\\\\Oidc\\\\Security\\\\OidcAuthenticationSuccessHandler\\:\\:\\$defaultOptions has no type specified\\.$#"
+            count: 1
+            path: src/Oidc/Security/OidcAuthenticationSuccessHandler.php
+
+        -
+            message: "#^Parameter \\#1 \\$userIdentifier of method App\\\\Oidc\\\\OidcLoginAttributes\\:\\:setUserIdentifier\\(\\) expects string\\|null, mixed given\\.$#"
+            count: 1
+            path: src/Oidc/OidcAuthenticator.php
+
+        -
+            message: "#^Parameter \\#1 \\$userIdentifier of class Symfony\\\\Component\\\\Security\\\\Http\\\\Authenticator\\\\Passport\\\\Badge\\\\UserBadge constructor expects string, mixed given\\.$#"
+            count: 1
+            path: src/Oidc/OidcAuthenticator.php
+
+        -
+            message: "#^Method App\\\\Oidc\\\\OidcLoginAttributes\\:\\:getAttributes\\(\\) return type has no value type specified in iterable type array\\.$#"
+            count: 1
+            path: src/Oidc/OidcLoginAttributes.php
+
+        -
+            message: "#^Method App\\\\Oidc\\\\OidcLoginAttributes\\:\\:setAttributes\\(\\) has parameter \\$attributes with no value type specified in iterable type array\\.$#"
+            count: 1
+            path: src/Oidc/OidcLoginAttributes.php
+
+        -
+            message: "#^Property App\\\\Oidc\\\\OidcLoginAttributes\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#"
+            count: 1
+            path: src/Oidc/OidcLoginAttributes.php
+
+        -
+            message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
+            count: 1
+            path: src/Oidc/OidcProvider.php
+
+        -
+            message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, mixed given\\.$#"
+            count: 1
+            path: src/Oidc/OidcProvider.php
+
+        -
+            message: "#^Parameter \\#1 \\$alias of method App\\\\Entity\\\\User\\:\\:setAlias\\(\\) expects string\\|null, mixed given\\.$#"
+            count: 1
+            path: src/Oidc/OidcProvider.php
+
+        -
+            message: "#^Parameter \\#1 \\$email of method App\\\\Entity\\\\User\\:\\:setEmail\\(\\) expects string\\|null, mixed given\\.$#"
+            count: 1
+            path: src/Oidc/OidcProvider.php
+
+        -
+            message: "#^Parameter \\#1 \\$avatar of method App\\\\Entity\\\\User\\:\\:setAvatar\\(\\) expects string\\|null, mixed given\\.$#"
+            count: 1
+            path: src/Oidc/OidcProvider.php
+
+        -
+            message: "#^Parameter \\#1 \\$identifier of method App\\\\Entity\\\\User\\:\\:setUserIdentifier\\(\\) expects string, string\\|null given\\.$#"
+            count: 1
+            path: src/Oidc/OidcProvider.php
+
+        -
             message: "#^Parameter \\#1 \\$message of class Symfony\\\\Component\\\\Security\\\\Core\\\\Exception\\\\AuthenticationException constructor expects string, string\\|null given\\.$#"
             count: 1
             path: src/Saml/SamlAuthenticator.php
