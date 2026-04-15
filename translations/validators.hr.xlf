@@ -166,6 +166,10 @@
         <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
         <target state="translated">Odabrano razdoblje se ne može zaključati: nepotvrđeni zahtjevi za izostanak su u tijeku.</target>
       </trans-unit>
+      <trans-unit id="EDEDQtZ" resname="These characters are not allowed: {{ chars }}" xml:space="preserve">
+        <source>These characters are not allowed: {{ chars }}</source>
+        <target state="translated">Sljedeći znakovi nisu dopušteni: {{ chars }}</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
