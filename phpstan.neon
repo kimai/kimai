@@ -2996,11 +2996,6 @@ parameters:
             path: src/Model/Statistic/Day.php
 
         -
-            message: "#^Parameter \\#1 \\$string of function str_pad expects string, int\\|string given\\.$#"
-            count: 1
-            path: src/Model/Statistic/Month.php
-
-        -
             message: "#^Method App\\\\Pdf\\\\PdfContext\\:\\:getOption\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Pdf/PdfContext.php
