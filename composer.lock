@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4f02c81fc72ab3bd887f6e8cf1361757",
+    "content-hash": "81e3162783fcc7f01c10601aeb09b48f",
     "packages": [
         {
             "name": "azuyalabs/yasumi",
@@ -3871,32 +3871,31 @@
         },
         {
             "name": "pagerfanta/pagerfanta",
-            "version": "v3.8.0",
+            "version": "v4.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BabDev/Pagerfanta.git",
-                "reference": "a07c84296e491add39d103b812129de77610c33b"
+                "reference": "72881e6839330b2961c574b3b4b20d409d6a0955"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BabDev/Pagerfanta/zipball/a07c84296e491add39d103b812129de77610c33b",
-                "reference": "a07c84296e491add39d103b812129de77610c33b",
+                "url": "https://api.github.com/repos/BabDev/Pagerfanta/zipball/72881e6839330b2961c574b3b4b20d409d6a0955",
+                "reference": "72881e6839330b2961c574b3b4b20d409d6a0955",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "php": "^7.4 || ^8.0",
-                "symfony/deprecation-contracts": "^2.1 || ^3.0",
-                "symfony/polyfill-php80": "^1.15"
+                "php": "^8.1",
+                "symfony/deprecation-contracts": "^2.1 || ^3.0"
             },
             "conflict": {
                 "doctrine/collections": "<1.8",
-                "doctrine/dbal": "<3.1",
-                "doctrine/mongodb-odm": "<2.2.2",
-                "doctrine/orm": "<2.8",
-                "doctrine/phpcr-odm": "<1.5",
-                "ruflin/elastica": "<6.0",
-                "solarium/solarium": "<5.0",
+                "doctrine/dbal": "<3.5",
+                "doctrine/mongodb-odm": "<2.4",
+                "doctrine/orm": "<2.14",
+                "doctrine/phpcr-odm": "<1.7",
+                "ruflin/elastica": "<7.3",
+                "solarium/solarium": "<6.2",
                 "twig/twig": "<2.13"
             },
             "replace": {
@@ -3911,22 +3910,21 @@
                 "pagerfanta/twig": "self.version"
             },
             "require-dev": {
-                "dg/bypass-finals": "^1.3",
-                "doctrine/cache": "^1.11 || ^2.0",
-                "doctrine/collections": "^1.8 || ^2.0",
-                "doctrine/dbal": "^3.1",
-                "doctrine/mongodb-odm": "^2.2.2",
-                "doctrine/orm": "^2.8",
-                "doctrine/phpcr-odm": "^1.5",
-                "jackalope/jackalope-doctrine-dbal": "^1.7.4",
-                "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "1.9.14",
-                "phpstan/phpstan-phpunit": "1.3.3",
-                "phpunit/phpunit": "9.6.7 || 10.1.0",
-                "rector/rector": "0.15.12",
-                "ruflin/elastica": "^6.0 || ^7.0",
-                "solarium/solarium": "^5.0 || ^6.0",
-                "symfony/cache": "^5.4 || ^6.0",
+                "dg/bypass-finals": "^1.9",
+                "doctrine/collections": "^1.8 || ^2.0 || ^3.0",
+                "doctrine/dbal": "^3.5 || ^4.0",
+                "doctrine/mongodb-odm": "^2.4",
+                "doctrine/orm": "^2.14 || ^3.0",
+                "doctrine/phpcr-odm": "^1.7 || ^2.0",
+                "jackalope/jackalope-doctrine-dbal": "^1.9 || ^2.0",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan": "2.1.36",
+                "phpstan/phpstan-phpunit": "2.0.11",
+                "phpunit/phpunit": "10.5.60",
+                "rector/rector": "2.3.4",
+                "ruflin/elastica": "^7.3 || ^8.0",
+                "solarium/solarium": "^6.2",
+                "symfony/cache": "^5.4 || ^6.4 || ^7.3 || ^8.0",
                 "twig/twig": "^2.13 || ^3.0"
             },
             "suggest": {
@@ -3962,7 +3960,7 @@
             ],
             "support": {
                 "issues": "https://github.com/BabDev/Pagerfanta/issues",
-                "source": "https://github.com/BabDev/Pagerfanta/tree/v3.8.0"
+                "source": "https://github.com/BabDev/Pagerfanta/tree/v4.8.0"
             },
             "funding": [
                 {
@@ -3970,7 +3968,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-04-15T16:39:36+00:00"
+            "time": "2026-01-22T13:58:52+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
@@ -8014,16 +8012,16 @@
         },
         {
             "name": "symfony/polyfill-php83",
-            "version": "v1.33.0",
+            "version": "v1.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php83.git",
-                "reference": "17f6f9a6b1735c0f163024d959f700cfbc5155e5"
+                "reference": "3600c2cb22399e25bb226e4a135ce91eeb2a6149"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php83/zipball/17f6f9a6b1735c0f163024d959f700cfbc5155e5",
-                "reference": "17f6f9a6b1735c0f163024d959f700cfbc5155e5",
+                "url": "https://api.github.com/repos/symfony/polyfill-php83/zipball/3600c2cb22399e25bb226e4a135ce91eeb2a6149",
+                "reference": "3600c2cb22399e25bb226e4a135ce91eeb2a6149",
                 "shasum": ""
             },
             "require": {
@@ -8070,7 +8068,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php83/tree/v1.33.0"
+                "source": "https://github.com/symfony/polyfill-php83/tree/v1.36.0"
             },
             "funding": [
                 {
@@ -8090,20 +8088,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-07-08T02:45:35+00:00"
+            "time": "2026-04-10T17:25:58+00:00"
         },
         {
             "name": "symfony/polyfill-php84",
-            "version": "v1.33.0",
+            "version": "v1.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php84.git",
-                "reference": "d8ced4d875142b6a7426000426b8abc631d6b191"
+                "reference": "88486db2c389b290bf87ff1de7ebc1e13e42bb06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php84/zipball/d8ced4d875142b6a7426000426b8abc631d6b191",
-                "reference": "d8ced4d875142b6a7426000426b8abc631d6b191",
+                "url": "https://api.github.com/repos/symfony/polyfill-php84/zipball/88486db2c389b290bf87ff1de7ebc1e13e42bb06",
+                "reference": "88486db2c389b290bf87ff1de7ebc1e13e42bb06",
                 "shasum": ""
             },
             "require": {
@@ -8150,7 +8148,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php84/tree/v1.33.0"
+                "source": "https://github.com/symfony/polyfill-php84/tree/v1.36.0"
             },
             "funding": [
                 {
@@ -8170,7 +8168,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-06-24T13:30:11+00:00"
+            "time": "2026-04-10T18:47:49+00:00"
         },
         {
             "name": "symfony/process",
@@ -11275,6 +11273,75 @@
             "time": "2025-12-03T15:47:21+00:00"
         },
         {
+            "name": "ergebnis/agent-detector",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ergebnis/agent-detector.git",
+                "reference": "5b654a9f1ff8a5d2ce6a57568df5ae8801c87f64"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ergebnis/agent-detector/zipball/5b654a9f1ff8a5d2ce6a57568df5ae8801c87f64",
+                "reference": "5b654a9f1ff8a5d2ce6a57568df5ae8801c87f64",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~7.4.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0 || ~8.6.0"
+            },
+            "require-dev": {
+                "ergebnis/composer-normalize": "^2.50.0",
+                "ergebnis/license": "^2.7.0",
+                "ergebnis/php-cs-fixer-config": "^6.60.2",
+                "ergebnis/phpstan-rules": "^2.13.1",
+                "ergebnis/phpunit-slow-test-detector": "^2.24.0",
+                "ergebnis/rector-rules": "^1.16.0",
+                "fakerphp/faker": "^1.24.1",
+                "infection/infection": "^0.26.6",
+                "phpstan/extension-installer": "^1.4.3",
+                "phpstan/phpstan": "^2.1.46",
+                "phpstan/phpstan-deprecation-rules": "^2.0.4",
+                "phpstan/phpstan-phpunit": "^2.0.16",
+                "phpstan/phpstan-strict-rules": "^2.0.10",
+                "phpunit/phpunit": "^9.6.34",
+                "rector/rector": "^2.4.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.0-dev"
+                },
+                "composer-normalize": {
+                    "indent-size": 2,
+                    "indent-style": "space"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ergebnis\\AgentDetector\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andreas Möller",
+                    "email": "am@localheinz.com",
+                    "homepage": "https://localheinz.com"
+                }
+            ],
+            "description": "Provides a detector for detecting the presence of an agent.",
+            "homepage": "https://github.com/ergebnis/agent-detector",
+            "support": {
+                "issues": "https://github.com/ergebnis/agent-detector/issues",
+                "security": "https://github.com/ergebnis/agent-detector/blob/main/.github/SECURITY.md",
+                "source": "https://github.com/ergebnis/agent-detector"
+            },
+            "time": "2026-04-10T13:45:13+00:00"
+        },
+        {
             "name": "evenement/evenement",
             "version": "v3.0.2",
             "source": {
@@ -11447,22 +11514,23 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.94.2",
+            "version": "v3.95.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "7787ceff91365ba7d623ec410b8f429cdebb4f63"
+                "reference": "a9727678fbd12997f1d9de8f4a37824ed9df1065"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/7787ceff91365ba7d623ec410b8f429cdebb4f63",
-                "reference": "7787ceff91365ba7d623ec410b8f429cdebb4f63",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/a9727678fbd12997f1d9de8f4a37824ed9df1065",
+                "reference": "a9727678fbd12997f1d9de8f4a37824ed9df1065",
                 "shasum": ""
             },
             "require": {
                 "clue/ndjson-react": "^1.3",
                 "composer/semver": "^3.4",
                 "composer/xdebug-handler": "^3.0.5",
+                "ergebnis/agent-detector": "^1.1.1",
                 "ext-filter": "*",
                 "ext-hash": "*",
                 "ext-json": "*",
@@ -11487,18 +11555,18 @@
                 "symfony/stopwatch": "^5.4.45 || ^6.4.24 || ^7.0 || ^8.0"
             },
             "require-dev": {
-                "facile-it/paraunit": "^1.3.1 || ^2.7.1",
-                "infection/infection": "^0.32.3",
-                "justinrainbow/json-schema": "^6.6.4",
+                "facile-it/paraunit": "^1.3.1 || ^2.8.0",
+                "infection/infection": "^0.32.6",
+                "justinrainbow/json-schema": "^6.8.0",
                 "keradus/cli-executor": "^2.3",
                 "mikey179/vfsstream": "^1.6.12",
                 "php-coveralls/php-coveralls": "^2.9.1",
-                "php-cs-fixer/phpunit-constraint-isidenticalstring": "^1.7",
-                "php-cs-fixer/phpunit-constraint-xmlmatchesxsd": "^1.7",
-                "phpunit/phpunit": "^9.6.34 || ^10.5.63 || ^11.5.51",
+                "php-cs-fixer/phpunit-constraint-isidenticalstring": "^1.8",
+                "php-cs-fixer/phpunit-constraint-xmlmatchesxsd": "^1.8",
+                "phpunit/phpunit": "^9.6.34 || ^10.5.63 || ^11.5.55",
                 "symfony/polyfill-php85": "^1.33",
-                "symfony/var-dumper": "^5.4.48 || ^6.4.32 || ^7.4.4 || ^8.0.4",
-                "symfony/yaml": "^5.4.45 || ^6.4.30 || ^7.4.1 || ^8.0.1"
+                "symfony/var-dumper": "^5.4.48 || ^6.4.32 || ^7.4.4 || ^8.0.8",
+                "symfony/yaml": "^5.4.45 || ^6.4.30 || ^7.4.1 || ^8.0.8"
             },
             "suggest": {
                 "ext-dom": "For handling output formats in XML",
@@ -11539,7 +11607,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.94.2"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.95.1"
             },
             "funding": [
                 {
@@ -11547,7 +11615,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-20T16:13:53+00:00"
+            "time": "2026-04-12T17:00:09+00:00"
         },
         {
             "name": "masterminds/html5",
@@ -11736,11 +11804,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.1.46",
+            "version": "2.1.48",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a193923fc2d6325ef4e741cf3af8c3e8f54dbf25",
-                "reference": "a193923fc2d6325ef4e741cf3af8c3e8f54dbf25",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/231397213efb7c0a066ee024b5c3c87f2d3adfa0",
+                "reference": "231397213efb7c0a066ee024b5c3c87f2d3adfa0",
                 "shasum": ""
             },
             "require": {
@@ -11785,7 +11853,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-04-01T09:25:14+00:00"
+            "time": "2026-04-15T20:24:19+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
