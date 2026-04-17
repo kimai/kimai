@@ -17,6 +17,7 @@ use App\Form\Type\InvoiceLabelType;
 use App\Form\Type\TeamType;
 use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -104,6 +105,19 @@ class ProjectEditForm extends AbstractType
             ->add('globalActivities', YesNoType::class, [
                 'label' => 'globalActivities',
                 'help' => 'help.globalActivities'
+            ])
+            ->add('rateFactor', NumberType::class, [
+                'label' => 'rate_factor',
+                'required' => false,
+                'scale' => 4,
+                'help' => 'help.rate_factor_project',
+                'attr' => [
+                    'step' => 0.0001,
+                ],
+            ])
+            ->add('rateFactorFixedRate', YesNoType::class, [
+                'label' => 'label.rate_factor_fixed_rate',
+                'required' => false,
             ])
         ;
 

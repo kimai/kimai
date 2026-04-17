@@ -112,8 +112,8 @@ final class InvoiceController extends AbstractController
             ];
 
             $forms[] = $this->createFormWithName('customer_' . $customer->getId(), FormType::class, $values, [
-                    'csrf_protection' => false,
-                ])
+                'csrf_protection' => false,
+            ])
                 ->add('template', InvoiceTemplateType::class)
                 ->add('invoiceDate', DatePickerType::class, [
                     'required' => true,
@@ -133,11 +133,12 @@ final class InvoiceController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/preview/{customer}/{token}', name: 'invoice_preview', methods: ['GET'])]
+    #[Route(path: '/preview/{customer}', name: 'invoice_preview', methods: ['GET'])]
     #[IsGranted('create_invoice')]
     #[IsGranted('access', 'customer')]
-    public function previewAction(Customer $customer, string $token, Request $request, ServiceInvoice $service): Response
+    public function previewAction(Customer $customer, Request $request, ServiceInvoice $service): Response
     {
+        $token = $request->query->get('token');
         if (!$this->isCsrfTokenValid('invoice.preview', $token)) {
             $this->flashError('action.csrf.error');
 
@@ -171,11 +172,12 @@ final class InvoiceController extends AbstractController
         return $this->redirectToRoute('invoice');
     }
 
-    #[Route(path: '/save-invoice/{customer}/{token}', name: 'invoice_create', methods: ['GET'])]
+    #[Route(path: '/save-invoice/{customer}', name: 'invoice_create', methods: ['GET'])]
     #[IsGranted('create_invoice')]
     #[IsGranted('access', 'customer')]
-    public function createInvoiceAction(Customer $customer, string $token, Request $request, CustomerRepository $customerRepository, ServiceInvoice $service): Response
+    public function createInvoiceAction(Customer $customer, Request $request, CustomerRepository $customerRepository, ServiceInvoice $service): Response
     {
+        $token = $request->query->get('token');
         if (!$this->isCsrfTokenValid('invoice.create', $token)) {
             $this->flashError('action.csrf.error');
 
@@ -215,11 +217,12 @@ final class InvoiceController extends AbstractController
         return $this->redirectToRoute('invoice');
     }
 
-    #[Route(path: '/change-status/{id}/{status}/{token}', name: 'admin_invoice_status', methods: ['GET', 'POST'])]
+    #[Route(path: '/change-status/{id}/{status}', name: 'admin_invoice_status', methods: ['GET', 'POST'])]
     #[IsGranted('create_invoice')]
     #[IsGranted(new Expression("is_granted('access', subject.getCustomer())"), 'invoice')]
-    public function changeStatusAction(Invoice $invoice, string $status, string $token, Request $request, CsrfTokenManagerInterface $csrfTokenManager, ServiceInvoice $service): Response
+    public function changeStatusAction(Invoice $invoice, string $status, Request $request, CsrfTokenManagerInterface $csrfTokenManager, ServiceInvoice $service): Response
     {
+        $token = $request->query->get('token');
         if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.status', $token))) {
             $this->flashError('action.csrf.error');
 
@@ -278,11 +281,12 @@ final class InvoiceController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/delete/{id}/{token}', name: 'admin_invoice_delete', methods: ['GET'])]
+    #[Route(path: '/delete/{id}', name: 'admin_invoice_delete', methods: ['GET'])]
     #[IsGranted('delete_invoice')]
     #[IsGranted(new Expression("is_granted('access', subject.getCustomer())"), 'invoice')]
-    public function deleteInvoiceAction(Invoice $invoice, string $token, CsrfTokenManagerInterface $csrfTokenManager, ServiceInvoice $service): Response
+    public function deleteInvoiceAction(Invoice $invoice, Request $request, CsrfTokenManagerInterface $csrfTokenManager, ServiceInvoice $service): Response
     {
+        $token = $request->query->get('token');
         if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.status', $token))) {
             $this->flashError('action.csrf.error');
 
@@ -593,10 +597,11 @@ final class InvoiceController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/document/{id}/delete/{token}', name: 'invoice_document_delete', methods: ['GET', 'POST'])]
+    #[Route(path: '/document/{id}/delete', name: 'invoice_document_delete', methods: ['GET', 'POST'])]
     #[IsGranted('manage_invoice_template')]
-    public function deleteDocument(string $id, string $token, CsrfTokenManagerInterface $csrfTokenManager, InvoiceDocumentRepository $documentRepository, InvoiceTemplateRepository $templateRepository): Response
+    public function deleteDocument(string $id, Request $request, CsrfTokenManagerInterface $csrfTokenManager, InvoiceDocumentRepository $documentRepository, InvoiceTemplateRepository $templateRepository): Response
     {
+        $token = $request->query->get('token');
         $document = $documentRepository->findByName($id);
         if ($document === null) {
             throw $this->createNotFoundException();
@@ -663,11 +668,12 @@ final class InvoiceController extends AbstractController
         return $this->renderTemplateForm($template, $request, $templateRepository);
     }
 
-    #[Route(path: '/template/{id}/delete/{csrfToken}', name: 'admin_invoice_template_delete', methods: ['GET', 'POST'])]
+    #[Route(path: '/template/{id}/delete', name: 'admin_invoice_template_delete', methods: ['GET', 'POST'])]
     #[IsGranted('manage_invoice_template')]
-    public function deleteTemplate(InvoiceTemplate $template, string $csrfToken, CsrfTokenManagerInterface $csrfTokenManager, InvoiceTemplateRepository $templateRepository): Response
+    public function deleteTemplate(InvoiceTemplate $template, Request $request, CsrfTokenManagerInterface $csrfTokenManager, InvoiceTemplateRepository $templateRepository): Response
     {
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.delete_template', $csrfToken))) {
+        $token = $request->query->get('token');
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.delete_template', $token))) {
             $this->flashError('action.csrf.error');
 
             return $this->redirectToRoute('admin_invoice_template');

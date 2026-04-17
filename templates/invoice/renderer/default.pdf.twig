@@ -108,31 +108,101 @@ mpdf-->
             <tr>
                 <th class="first"><strong>{{ 'date'|trans }}</strong></th>
                 <th><strong>{{ 'description'|trans }}</strong></th>
-                <th class="text-right"><strong>{{ 'unit_price'|trans }}</strong></th>
                 <th class="text-right"><strong>{{ 'amount'|trans }}</strong></th>
+                <th class="text-right"><strong>{{ 'unit_price'|trans }}</strong></th>
                 <th class="last text-right"><strong>{{ 'total_rate'|trans }}</strong></th>
             </tr>
         </thead>
         <tbody>
-        {% for invoiceLineItem in entries %}
-            <!-- CONTENT_PART -->
-            <tr>
-                <td nowrap class="first text-nowrap">{{ invoiceLineItem['entry.begin'] }}</td>
-                <td>
-                    {% if invoiceLineItem['entry.description'] is not empty %}
-                        {{ invoiceLineItem['entry.description']|nl2br }}
-                    {% else %}
-                        {% if invoiceLineItem['entry.activity'] is defined %}
-                            {{ invoiceLineItem['entry.activity'] }} /
-                        {% endif %}
-                        {{ invoiceLineItem['entry.project'] }}
+            {% set currentSection = null %}
+            {% set currentActivity = null %}
+            {% set subtotalLabor = 0 %}
+            {% set subtotalExpense = 0 %}
+
+            {% for invoiceLineItem in entries %}
+                {% set itemType = invoiceLineItem['entry.type'] %}
+                {% set itemSection = (itemType == 'expense' ? 'expense' : (itemType == 'overhead' ? 'overhead' : 'labor')) %}
+
+                {# --- Subtotal Logic --- #}
+                {% if currentSection != itemSection %}
+                    {% if currentSection == 'expense' %}
+                        <tr>
+                            <td colspan="4" class="text-right"><strong>{{ 'invoice.subtotal'|trans }} {{ 'Ausgaben' }}</strong></td>
+                            <td class="last text-right"><strong>{{ subtotalExpense|money(invoice['invoice.currency']) }}</strong></td>
+                        </tr>
+                    {% elseif currentSection == 'labor' %}
+                         <tr>
+                            <td colspan="4" class="text-right"><strong>{{ 'invoice.subtotal'|trans }} {{ 'Arbeitsstunden' }}</strong></td>
+                            <td class="last text-right"><strong>{{ subtotalLabor|money(invoice['invoice.currency']) }}</strong></td>
+                        </tr>
                     {% endif %}
-                </td>
-                <td nowrap class="text-nowrap text-right">{{ invoiceLineItem['entry.rate'] }}</td>
-                <td nowrap class="text-nowrap text-right">{{ invoiceLineItem['entry.amount'] }}</td>
-                <td nowrap class="last text-nowrap text-right">{{ invoiceLineItem['entry.total'] }}</td>
-            </tr>
-        {% endfor %}
+                    
+                    {% set currentSection = itemSection %}
+                    
+                     {# Header for new Section #}
+                    {% if currentSection == 'expense' %}
+                        <tr><td colspan="5" style="background-color: #eee; font-weight: bold;">{{ 'Ausgaben' }}</td></tr>
+                        {% set currentActivity = null %} 
+                    {% elseif currentSection == 'labor' %}
+                        <tr><td colspan="5" style="background-color: #eee; font-weight: bold;">{{ 'Leistungen' }}</td></tr>
+                    {% endif %}
+                {% endif %}
+
+                {# --- Accumulate Subtotals --- #}
+                {% if itemSection == 'expense' %}
+                    {% set subtotalExpense = subtotalExpense + invoiceLineItem['entry.total_plain'] %}
+                {% elseif itemSection == 'labor' %}
+                    {% set subtotalLabor = subtotalLabor + invoiceLineItem['entry.total_plain'] %}
+                {% endif %}
+
+                {# --- Activity Grouping (Header) --- #}
+                {% if itemSection == 'labor' %}
+                    {% set activityName = invoiceLineItem['entry.activity']|default(invoiceLineItem['entry.project']) %}
+                    {% if currentActivity != activityName %}
+                        <tr>
+                            <td colspan="5" style="font-weight: bold; border-bottom: 1px solid #ccc;">
+                                {{ activityName }}
+                            </td>
+                        </tr>
+                        {% set currentActivity = activityName %}
+                    {% endif %}
+                {% endif %}
+
+                {# --- Entry Row --- #}
+                <tr>
+                    <td nowrap class="first text-nowrap">
+                        {{ invoiceLineItem['entry.begin'] }}
+                        {% if invoiceLineItem['entry.end'] is defined and invoiceLineItem['entry.end'] is not empty and invoiceLineItem['entry.begin'] != invoiceLineItem['entry.end'] %}
+                            - {{ invoiceLineItem['entry.end'] }}
+                        {% endif %}
+                    </td>
+                    <td {% if itemSection == 'labor' %}style="padding-left: 20px;"{% endif %}>
+                        {% if itemSection == 'expense' %}
+                            {{ invoiceLineItem['entry.category'] }}
+                        {% elseif invoiceLineItem['entry.description'] is not empty %}
+                            {{ invoiceLineItem['entry.description']|nl2br }}
+                        {% else %}
+                             {{ invoiceLineItem['entry.activity'] }}
+                        {% endif %}
+                    </td>
+                    <td nowrap class="text-nowrap text-right">{{ invoiceLineItem['entry.amount'] }}</td>
+                    <td nowrap class="text-nowrap text-right">{{ invoiceLineItem['entry.rate'] }}</td>
+                    <td nowrap class="last text-nowrap text-right">{{ invoiceLineItem['entry.total'] }}</td>
+                </tr>
+            {% endfor %}
+
+            {# --- Final Subtotal for last block --- #}
+            {% if currentSection == 'expense' %}
+                <tr>
+                    <td colspan="4" class="text-right"><strong>{{ 'invoice.subtotal'|trans }} {{ 'Ausgaben' }}</strong></td>
+                    <td class="last text-right"><strong>{{ subtotalExpense|money(invoice['invoice.currency']) }}</strong></td>
+                </tr>
+            {% elseif currentSection == 'labor' %}
+                 <tr>
+                    <td colspan="4" class="text-right"><strong>{{ 'invoice.subtotal'|trans }} {{ 'Arbeitsstunden' }}</strong></td>
+                    <td class="last text-right"><strong>{{ subtotalLabor|money(invoice['invoice.currency']) }}</strong></td>
+                </tr>
+            {% endif %}
         </tbody>
         <tfoot>
             <tr>
