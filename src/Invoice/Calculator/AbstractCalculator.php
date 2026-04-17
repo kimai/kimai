@@ -49,6 +49,10 @@ abstract class AbstractCalculator
                     $rateFactor = $entry->getProject()->getEffectiveRateFactor();
                 }
 
+                if ($entry->getType() === 'expense') {
+                    $rateFactor = 1.0;
+                }
+
                 if (!$entry->isFixedRate() && $entry->getHourlyRate() !== null && $entry->getHourlyRate() > 0) {
                     $entry->setDuration($this->model->getRateCalculatorMode()->roundDuration($entry->getDuration()));
                     // when merging many entries, we might run into rounding issues
@@ -80,7 +84,7 @@ abstract class AbstractCalculator
                 $overheadItem = new InvoiceItem();
                 $overheadItem->setRate($totalOverhead);
                 $overheadItem->setAmount($totalOverhead);
-                $overheadItem->setDescription('label.overhead_row_description');
+                $overheadItem->setDescription('Overhead (aus Satz-Faktor)');
                 $overheadItem->setFixedRate($totalOverhead);
                 $overheadItem->setType('overhead');
 

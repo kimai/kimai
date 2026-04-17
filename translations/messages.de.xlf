@@ -2116,7 +2116,7 @@
       </trans-unit>
       <trans-unit id="label.overhead_row_description" resname="label.overhead_row_description">
         <source>label.overhead_row_description</source>
-        <target>Overhead durch Preisfaktor</target>
+        <target>Overhead (aus Satz-Faktor)</target>
       </trans-unit>
     </body>
   </file>

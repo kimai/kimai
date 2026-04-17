@@ -136,8 +136,8 @@
                                 </td>
                                 <td class="w-min text-center actions alwaysVisible">
                                     {% for attrs in [{'class': 'd-inline-flex d-md-none'}, {'icon': false, 'class': 'd-none d-md-inline-flex'}] %}
-                                    {{ widgets.action_button('print', {'url': '#', 'onclick': 'return singleInvoice(this, true)', 'title': 'preview'|trans, 'target': '_blank', 'attr': {'data-customer': model.customer.id, 'data-href': path('invoice_preview', {'customer': model.customer.id, 'token': csrf_token('invoice.preview')})}}|merge(attrs)) }}
-                                    {{ widgets.action_button('invoice', {'url': '#', 'onclick': 'return singleInvoice(this, false)', 'title': 'action.save'|trans, 'attr': {'data-customer': model.customer.id, 'data-href': path('invoice_create', {'customer': model.customer.id, 'token': csrf_token('invoice.create')})}}|merge(attrs), 'primary') }}
+                                    {{ widgets.action_button('print', {'url': '#', 'onclick': 'return singleInvoice(this, true)', 'title': 'preview'|trans, 'target': '_blank', 'attr': {'data-customer': model.customer.id, 'data-token': csrf_token('invoice.preview'), 'data-href': path('invoice_preview', {'customer': model.customer.id})}}|merge(attrs)) }}
+                                    {{ widgets.action_button('invoice', {'url': '#', 'onclick': 'return singleInvoice(this, false)', 'title': 'action.save'|trans, 'attr': {'data-customer': model.customer.id, 'data-token': csrf_token('invoice.create'), 'data-href': path('invoice_create', {'customer': model.customer.id})}}|merge(attrs), 'primary') }}
                                     {% endfor %}
                                 </td>
                             </tr>
@@ -229,7 +229,7 @@
             const template = document.getElementById(formName + '_template').value;
             const date = document.getElementById(formName + '_invoiceDate').value;
             const formPlugin = kimai.getPlugin('form');
-            const overwrites = {'customers[]': link.dataset['customer'], 'template': template, 'invoiceDate': date};
+            const overwrites = {'customers[]': link.dataset['customer'], 'template': template, 'invoiceDate': date, 'token': link.dataset['token']};
             const uri = formPlugin.convertFormDataToQueryString(document.getElementById('{{ formId }}'), overwrites);
             const invoiceUrl = link.dataset['href'] + '?' + uri;
 
