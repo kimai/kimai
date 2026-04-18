@@ -132,10 +132,14 @@ function update_kimai() {
 
 function install_plugins() {
     # detect if there are additional plugins that we need to install
-    packages="$($KIMAI_PHP bin/console kimai:plugin --composer)"
-    export PACKAGES=$packages
-    if [ -n "$PACKAGES" ]; then
-        run_composer require "$PACKAGES" || exit 1
+    local packages_output
+    local -a packages
+
+    packages_output="$($KIMAI_PHP bin/console kimai:plugin --composer)"
+    read -r -a packages <<< "$packages_output"
+
+    if [[ ${#packages[@]} -gt 0 ]]; then
+        run_composer require "${packages[@]}" || exit 1
         $KIMAI_PHP bin/console kimai:plugins --install
     fi
 }
