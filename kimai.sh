@@ -135,12 +135,19 @@ function install_plugins() {
     local packages_output
     local -a packages
 
-    packages_output="$($KIMAI_PHP bin/console kimai:plugin --composer)"
+    if ! packages_output="$($KIMAI_PHP bin/console kimai:plugin --composer)"; then
+        echo "Failed loading plugin list from kimai:plugin --composer"
+        exit 1
+    fi
+
     read -r -a packages <<< "$packages_output"
 
     if [[ ${#packages[@]} -gt 0 ]]; then
+        verbose "Installing Composer plugins: ${packages[*]}"
         run_composer require "${packages[@]}" || exit 1
-        $KIMAI_PHP bin/console kimai:plugins --install
+        $KIMAI_PHP bin/console kimai:plugins --install || exit 1
+    else
+        verbose "No Composer plugins detected."
     fi
 }
 
@@ -212,7 +219,7 @@ if [[ -n $1 ]]; then
     elif [ "$1" == 'permission' ]; then
         set_permission
         exit
-    elif [ "$1" == 'plugins' ]; then
+    elif [ "$1" == 'plugins' ] || [ "$1" == 'plugin' ]; then
         install_plugins
         exit
     elif [ "$1" == 'cache' ]; then
@@ -230,7 +237,7 @@ echo ""
 echo "$0 update            - Update Kimai to the latest version"
 echo "$0 update <version>  - Update Kimai to the given version <version>"
 echo "$0 permission        - Fix file permissions"
-echo "$0 plugins           - Install plugins from var/packages/*.zip"
+echo "$0 plugin[s]         - Install available plugins from var/packages/*.zip"
 echo "$0 cache             - Clear application cache"
 echo ""
 echo "Append -v anywhere in the command to enable verbose output"
