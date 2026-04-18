@@ -144,7 +144,7 @@ function install_plugins() {
 
     if [[ ${#packages[@]} -gt 0 ]]; then
         verbose "Installing Composer plugins: ${packages[*]}"
-        run_composer require "${packages[@]}" || exit 1
+        run_composer require "${packages[@]} --update-no-dev --optimize-autoloader" || exit 1
         $KIMAI_PHP bin/console kimai:plugins --install || exit 1
     else
         verbose "No Composer plugins detected."
