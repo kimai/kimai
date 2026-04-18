@@ -79,12 +79,13 @@ function confirm_update() {
 
 function update_kimai() {
     if [[ "$1" == "latest" ]]; then
-        if ! command -v curl >/dev/null 2>&1 || ! command -v grep >/dev/null 2>&1 || ! command -v sed >/dev/null 2>&1; then
-            echo "we could not detect the latest kimai version due to missing commands: curl, grep, sed"
+        if ! command -v sort >/dev/null 2>&1 || ! command -v tail >/dev/null 2>&1; then
+            echo "we could not detect the latest kimai version due to missing commands: sort, tail"
             exit 1
         fi
 
-        export VERSION="$(curl --silent "https://api.github.com/repos/kimai/kimai/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')"
+        git fetch --tags
+        export VERSION="$(git tag --list | sort -V | tail -n 1)"
         if [ -z "$VERSION" ]; then
             echo "Failed loading Kimai version"
             exit 1
