@@ -65,13 +65,46 @@ function run_composer() {
     fi
 }
 
+function confirm_update() {
+    local version="$1"
+    local answer
+
+    echo "About to update Kimai to version ${version}."
+    read -r -p "Continue? [y/N] " answer
+    if [[ ! "${answer}" =~ ^[Yy]([Ee][Ss])?$ ]]; then
+        echo "Update cancelled."
+        exit 1
+    fi
+}
+
 function update_kimai() {
-    if [[ "$1" =~ ^([0-9]+\.){2,3}[0-9]+$ ]]; then
+    if [[ "$1" == "latest" ]]; then
+        if ! command -v curl >/dev/null 2>&1 || ! command -v grep >/dev/null 2>&1 || ! command -v sed >/dev/null 2>&1; then
+            echo "we could not detect the latest kimai version due to missing commands: curl, grep, sed"
+            exit 1
+        fi
+
+        export VERSION="$(curl --silent "https://api.github.com/repos/kimai/kimai/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')"
+        if [ -z "$VERSION" ]; then
+            echo "Failed loading Kimai version"
+            exit 1
+        fi
+    elif [[ "$1" =~ ^([0-9]+\.){2,3}[0-9]+$ ]]; then
         export VERSION=$1
     else
         echo "You need to supply a full Kimai version like: \"2.24.0\""
         exit 1
     fi
+
+    git fetch --tags
+
+    if ! git rev-parse --verify --quiet "refs/tags/$VERSION" >/dev/null; then
+        echo "Requested Kimai version does not exist: $VERSION"
+        exit 1
+    fi
+
+    confirm_update "$VERSION"
+
     git checkout -- composer.json
     git checkout -- composer.lock
     git checkout -- symfony.lock
@@ -83,7 +116,7 @@ function update_kimai() {
 
     rm -rf var/sessions/ 2>&1
     flush_cache
-    git fetch --tags
+
     git checkout "$VERSION"
     run_composer install --no-dev --optimize-autoloader || exit 1
 
@@ -189,7 +222,8 @@ fi
 echo ""
 echo "This script has the following sub-commands:"
 echo ""
-echo "$0 update <version>  - Install Kimai version <version>"
+echo "$0 update            - Update Kimai to the latest version"
+echo "$0 update <version>  - Update Kimai to the given version <version>"
 echo "$0 permission        - Fix file permissions"
 echo "$0 plugins           - Install plugins from var/packages/*.zip"
 echo "$0 cache             - Clear application cache"
