@@ -24,6 +24,8 @@ and so much more.
 - [Home](https://www.kimai.org) — Kimai project homepage
 - [Blog](https://www.kimai.org/blog/) — Read the latest news
 - [Documentation](https://www.kimai.org/documentation/) — Learn how to use Kimai
+- [Newsletter](https://www.kimai.org/en/newsletter) - Subscribe and get notified about new releases and important updates
+
 
 ### Requirements
 
