@@ -480,6 +480,115 @@
     {% endfor %}
 {%- endblock meta_fields_collection_widget %}
 
+{%- block webhook_endpoints_widget -%}
+    {%- set container_id = id ~ '_container' -%}
+    {%- set max = max_endpoints|default(10) -%}
+    <div class="webhook-endpoints" id="{{ container_id }}"
+         data-prototype="{{ form_widget(prototype, {'row_attr': {'class': 'webhook-endpoint-row card mb-3'}})|e('html_attr') }}"
+         data-prototype-name="{{ prototype.vars.name|e('html_attr') }}"
+         data-index="{{ form.children|length }}"
+         data-max="{{ max }}">
+        {% for child in form.children %}
+            <div class="webhook-endpoint-row card mb-3">
+                <div class="card-body">
+                    <div class="d-flex justify-content-end mb-2">
+                        <button type="button" class="btn btn-sm btn-outline-danger webhook-endpoint-remove">
+                            <i class="fas fa-trash"></i> {{ 'webhook.endpoint.remove'|trans({}, 'system-configuration') }}
+                        </button>
+                    </div>
+                    {{ form_widget(child) }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <button type="button" class="btn btn-primary webhook-endpoint-add" data-container="#{{ container_id }}">
+        <i class="fas fa-plus"></i> {{ 'webhook.endpoint.add'|trans({}, 'system-configuration') }}
+    </button>
+    <small class="text-muted ms-2 webhook-endpoints-count">
+        <span class="webhook-endpoints-count-value">{{ form.children|length }}</span>
+        / {{ max }}
+    </small>
+
+    <script>
+    (function () {
+        'use strict';
+        var container = document.getElementById({{ container_id|json_encode|raw }});
+        if (!container || container.dataset.webhookBound === '1') { return; }
+        container.dataset.webhookBound = '1';
+
+        var addBtn = document.querySelector('.webhook-endpoint-add[data-container="#' + container.id + '"]');
+        var countEl = container.parentNode && container.parentNode.querySelector('.webhook-endpoints-count-value');
+        var max = parseInt(container.dataset.max, 10) || 10;
+        var removeLabel = {{ 'webhook.endpoint.remove'|trans({}, 'system-configuration')|json_encode|raw }};
+
+        function updateCount() {
+            var count = container.querySelectorAll('.webhook-endpoint-row').length;
+            if (countEl) { countEl.textContent = count; }
+            if (addBtn) { addBtn.disabled = count >= max; }
+        }
+
+        function renderPrototype(index) {
+            var proto = container.dataset.prototype;
+            var protoName = container.dataset.prototypeName || '__name__';
+            var re = new RegExp(protoName, 'g');
+            return proto.replace(re, index);
+        }
+
+        function wrapWithRemove(row) {
+            // The prototype ships the inner fields only; wrap them in a row card with a remove button.
+            if (row.classList.contains('webhook-endpoint-row')) { return row; }
+            var wrapper = document.createElement('div');
+            wrapper.className = 'webhook-endpoint-row card mb-3';
+            var body = document.createElement('div');
+            body.className = 'card-body';
+            var toolbar = document.createElement('div');
+            toolbar.className = 'd-flex justify-content-end mb-2';
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'btn btn-sm btn-outline-danger webhook-endpoint-remove';
+            // Build icon + label via DOM APIs (never innerHTML) so a malicious
+            // translation string can't inject HTML into the admin's browser.
+            var icon = document.createElement('i');
+            icon.className = 'fas fa-trash';
+            btn.appendChild(icon);
+            btn.appendChild(document.createTextNode(' ' + removeLabel));
+            toolbar.appendChild(btn);
+            body.appendChild(toolbar);
+            body.appendChild(row);
+            wrapper.appendChild(body);
+            return wrapper;
+        }
+
+        function addRow() {
+            var index = parseInt(container.dataset.index, 10) || 0;
+            if (container.querySelectorAll('.webhook-endpoint-row').length >= max) { return; }
+            var html = renderPrototype(index).trim();
+            var tmp = document.createElement('div');
+            tmp.innerHTML = html;
+            var node = tmp.firstElementChild;
+            if (!node) { return; }
+            var wrapped = wrapWithRemove(node);
+            container.appendChild(wrapped);
+            container.dataset.index = String(index + 1);
+            updateCount();
+        }
+
+        function onClick(e) {
+            var addTarget = e.target.closest && e.target.closest('.webhook-endpoint-add');
+            var rmTarget = e.target.closest && e.target.closest('.webhook-endpoint-remove');
+            if (addTarget && addTarget === addBtn) { e.preventDefault(); addRow(); return; }
+            if (rmTarget && container.contains(rmTarget)) {
+                e.preventDefault();
+                var row = rmTarget.closest('.webhook-endpoint-row');
+                if (row) { row.remove(); updateCount(); }
+            }
+        }
+        document.addEventListener('click', onClick);
+        updateCount();
+    })();
+    </script>
+{%- endblock webhook_endpoints_widget -%}
+
 {% block form_help_content -%}
     {%- if help_translation_domain is defined and help_translation_domain is not null -%}
         {%- set translation_domain = help_translation_domain -%}

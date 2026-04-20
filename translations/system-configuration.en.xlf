@@ -318,49 +318,61 @@
         <source>webhook</source>
         <target>Webhooks</target>
       </trans-unit>
-      <trans-unit id="wh_url" resname="webhook.endpoint_url">
-        <source>webhook.endpoint_url</source>
-        <target>Endpoint URL</target>
+      <trans-unit id="wh_eps" resname="webhook.endpoints">
+        <source>webhook.endpoints</source>
+        <target>Endpoints</target>
       </trans-unit>
-      <trans-unit id="wh_sec" resname="webhook.secret_token">
-        <source>webhook.secret_token</source>
-        <target>Secret Token</target>
+      <trans-unit id="wh_eps_help" resname="help.webhook.endpoints">
+        <source>help.webhook.endpoints</source>
+        <target><![CDATA[Outgoing webhook endpoints. Each row delivers POST notifications for the selected event types. A secret signs the request via Symfony's webhook transport so receivers can verify origin; leave the secret blank for an <em>unsigned</em> endpoint (a plain POST — use only where the receiver proves origin another way, e.g. IP allowlist on a trusted network). Raise the endpoint cap via <code>kimai.webhook.max_endpoints</code> in <code>config/packages/local.yaml</code>. Secrets are stored in plaintext in <code>kimai2_configuration</code>, consistent with Kimai's other sensitive config values (LDAP, SAML) — restrict DB access accordingly.]]></target>
       </trans-unit>
-      <trans-unit id="wh_url_help" resname="help.webhook.endpoint_url">
-        <source>help.webhook.endpoint_url</source>
-        <target>The URL that will receive POST requests when events occur (e.g. timesheet entries created, updated, or stopped; customers, projects, and activities changed)</target>
+      <trans-unit id="wh_ep_url" resname="webhook.endpoint.url">
+        <source>webhook.endpoint.url</source>
+        <target>URL</target>
       </trans-unit>
-      <trans-unit id="wh_sec_help" resname="help.webhook.secret_token">
-        <source>help.webhook.secret_token</source>
-        <target>Used to sign webhook payloads so your receiver can verify they came from Kimai</target>
+      <trans-unit id="wh_ep_secret" resname="webhook.endpoint.secret">
+        <source>webhook.endpoint.secret</source>
+        <target>Secret (optional; blank = unsigned)</target>
       </trans-unit>
-      <trans-unit id="wh_ev_ts" resname="webhook.events.timesheet">
+      <trans-unit id="wh_ep_events" resname="webhook.endpoint.events">
+        <source>webhook.endpoint.events</source>
+        <target>Events</target>
+      </trans-unit>
+      <trans-unit id="wh_ep_add" resname="webhook.endpoint.add">
+        <source>webhook.endpoint.add</source>
+        <target>Add endpoint</target>
+      </trans-unit>
+      <trans-unit id="wh_ep_remove" resname="webhook.endpoint.remove">
+        <source>webhook.endpoint.remove</source>
+        <target>Remove</target>
+      </trans-unit>
+      <trans-unit id="wh_ev_timesheet" resname="webhook.events.timesheet">
         <source>webhook.events.timesheet</source>
-        <target>Timesheet events (created, updated, stopped)</target>
+        <target>Timesheet</target>
       </trans-unit>
-      <trans-unit id="wh_ev_cu" resname="webhook.events.customer">
+      <trans-unit id="wh_ev_customer" resname="webhook.events.customer">
         <source>webhook.events.customer</source>
-        <target>Customer events (created, updated, deleted)</target>
+        <target>Customer</target>
       </trans-unit>
-      <trans-unit id="wh_ev_pr" resname="webhook.events.project">
+      <trans-unit id="wh_ev_project" resname="webhook.events.project">
         <source>webhook.events.project</source>
-        <target>Project events (created, updated, deleted)</target>
+        <target>Project</target>
       </trans-unit>
-      <trans-unit id="wh_ev_ac" resname="webhook.events.activity">
+      <trans-unit id="wh_ev_activity" resname="webhook.events.activity">
         <source>webhook.events.activity</source>
-        <target>Activity events (created, updated, deleted)</target>
+        <target>Activity</target>
       </trans-unit>
-      <trans-unit id="wh_ev_in" resname="webhook.events.invoice">
+      <trans-unit id="wh_ev_invoice" resname="webhook.events.invoice">
         <source>webhook.events.invoice</source>
-        <target>Invoice events (created, deleted)</target>
+        <target>Invoice</target>
       </trans-unit>
-      <trans-unit id="wh_ev_us" resname="webhook.events.user">
+      <trans-unit id="wh_ev_user" resname="webhook.events.user">
         <source>webhook.events.user</source>
-        <target>User events (created, updated, deleted)</target>
+        <target>User</target>
       </trans-unit>
-      <trans-unit id="wh_ev_te" resname="webhook.events.team">
+      <trans-unit id="wh_ev_team" resname="webhook.events.team">
         <source>webhook.events.team</source>
-        <target>Team events (created, updated, deleted)</target>
+        <target>Team</target>
       </trans-unit>
     </body>
   </file>

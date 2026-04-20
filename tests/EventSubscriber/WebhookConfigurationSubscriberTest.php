@@ -11,6 +11,7 @@ namespace App\Tests\EventSubscriber;
 
 use App\Event\SystemConfigurationEvent;
 use App\EventSubscriber\WebhookConfigurationSubscriber;
+use App\Form\Type\WebhookEndpointsType;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -22,8 +23,10 @@ class WebhookConfigurationSubscriberTest extends TestCase
         $events = WebhookConfigurationSubscriber::getSubscribedEvents();
         self::assertArrayHasKey(SystemConfigurationEvent::class, $events);
         $methodName = $events[SystemConfigurationEvent::class][0];
-        self::assertIsString($methodName);
-        self::assertTrue(method_exists(WebhookConfigurationSubscriber::class, $methodName));
+        self::assertTrue(
+            method_exists(WebhookConfigurationSubscriber::class, $methodName),
+            \sprintf('Declared handler method %s must exist on the subscriber.', $methodName)
+        );
     }
 
     public function testOnSystemConfiguration(): void
@@ -40,17 +43,16 @@ class WebhookConfigurationSubscriberTest extends TestCase
         self::assertEquals('system-configuration', $config->getTranslationDomain());
 
         $fields = $config->getConfiguration();
-        self::assertCount(9, $fields); // endpoint_url, secret_token, + 7 event checkboxes
+        self::assertCount(1, $fields);
 
-        $fieldNames = array_map(fn ($f) => $f->getName(), $fields);
-        self::assertContains('webhook.endpoint_url', $fieldNames);
-        self::assertContains('webhook.secret_token', $fieldNames);
-        self::assertContains('webhook.events.timesheet', $fieldNames);
-        self::assertContains('webhook.events.customer', $fieldNames);
-        self::assertContains('webhook.events.project', $fieldNames);
-        self::assertContains('webhook.events.activity', $fieldNames);
-        self::assertContains('webhook.events.invoice', $fieldNames);
-        self::assertContains('webhook.events.user', $fieldNames);
-        self::assertContains('webhook.events.team', $fieldNames);
+        $endpoints = $fields[0];
+        self::assertEquals('webhook.endpoints', $endpoints->getName());
+        self::assertEquals(WebhookEndpointsType::class, $endpoints->getType());
+        self::assertFalse($endpoints->isRequired());
+
+        $options = $endpoints->getOptions();
+        self::assertArrayHasKey('help', $options);
+        self::assertEquals('help.webhook.endpoints', $options['help']);
+        self::assertTrue($options['help_html']);
     }
 }

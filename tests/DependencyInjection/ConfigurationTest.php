@@ -420,17 +420,9 @@ class ConfigurationTest extends TestCase
                 'financial_year' => null,
             ],
             'webhook' => [
-                'endpoint_url' => '',
-                'secret_token' => '',
-                'events' => [
-                    'timesheet' => true,
-                    'customer' => true,
-                    'project' => true,
-                    'activity' => true,
-                    'invoice' => true,
-                    'user' => true,
-                    'team' => true,
-                ],
+                'endpoints' => '[]',
+                'max_endpoints' => 10,
+                'allow_private_network' => false,
             ],
             'quick_entry' => [
                 'recent_activities' => 5,

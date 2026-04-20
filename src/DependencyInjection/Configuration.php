@@ -94,20 +94,9 @@ final class Configuration implements ConfigurationInterface
         $node
             ->addDefaultsIfNotSet()
             ->children()
-            ->scalarNode('endpoint_url')->defaultValue('')->end()
-            ->scalarNode('secret_token')->defaultValue('')->end()
-            ->arrayNode('events')
-            ->addDefaultsIfNotSet()
-            ->children()
-            ->booleanNode('timesheet')->defaultTrue()->end()
-            ->booleanNode('customer')->defaultTrue()->end()
-            ->booleanNode('project')->defaultTrue()->end()
-            ->booleanNode('activity')->defaultTrue()->end()
-            ->booleanNode('invoice')->defaultTrue()->end()
-            ->booleanNode('user')->defaultTrue()->end()
-            ->booleanNode('team')->defaultTrue()->end()
-            ->end()
-            ->end()
+                ->scalarNode('endpoints')->defaultValue('[]')->end()
+                ->integerNode('max_endpoints')->defaultValue(10)->end()
+                ->booleanNode('allow_private_network')->defaultFalse()->end()
             ->end()
         ;
 

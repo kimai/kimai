@@ -9,7 +9,6 @@
 
 namespace App\Webhook;
 
-use App\Configuration\SystemConfiguration;
 use App\Event\ActivityCreatePostEvent;
 use App\Event\ActivityDeleteEvent;
 use App\Event\ActivityUpdatePostEvent;
@@ -38,21 +37,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class WebhookListener implements EventSubscriberInterface
 {
-    private const KNOWN_ENTITY_TYPES = [
-        'timesheet',
-        'customer',
-        'project',
-        'activity',
-        'invoice',
-        'user',
-        'team',
-    ];
-
     private readonly ExpressionLanguage $expressionLanguage;
 
     public function __construct(
         private readonly WebhookService $webhookService,
-        private readonly SystemConfiguration $systemConfiguration,
         private readonly LoggerInterface $logger
     ) {
         $this->expressionLanguage = new ExpressionLanguage();
@@ -97,10 +85,6 @@ final class WebhookListener implements EventSubscriberInterface
             return;
         }
 
-        if (!$this->isEventEnabled($attribute->name)) {
-            return;
-        }
-
         if (!$this->webhookService->isConfigured()) {
             return;
         }
@@ -109,24 +93,6 @@ final class WebhookListener implements EventSubscriberInterface
         $payload = $parsed->getNodes()->evaluate([], ['object' => $event]);
 
         $this->webhookService->trigger($attribute->name, $payload);
-    }
-
-    private function isEventEnabled(string $eventName): bool
-    {
-        $parts = explode('.', $eventName);
-        if (\count($parts) < 2) {
-            return false;
-        }
-
-        $entityType = $parts[0];
-
-        if (!\in_array($entityType, self::KNOWN_ENTITY_TYPES, true)) {
-            return false;
-        }
-
-        $configKey = 'webhook.events.' . $entityType;
-
-        return (bool) $this->systemConfiguration->find($configKey);
     }
 
     private function findAttribute(Event $event): ?AsWebhook

@@ -38,6 +38,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
+use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Contracts\EventDispatcher\Event;
@@ -51,7 +52,6 @@ class WebhookListenerTest extends TestCase
 
         self::assertCount(20, $events);
 
-        // verify all 20 events are registered
         self::assertArrayHasKey(ActivityCreatePostEvent::class, $events);
         self::assertArrayHasKey(ActivityDeleteEvent::class, $events);
         self::assertArrayHasKey(ActivityUpdatePostEvent::class, $events);
@@ -90,6 +90,9 @@ class WebhookListenerTest extends TestCase
         }
     }
 
+    /**
+     * @param array<string, mixed> $settings
+     */
     private function createListener(array $settings, ?MessageBusInterface $bus = null, ?SerializerInterface $serializer = null): WebhookListener
     {
         $configLoader = $this->createMock(ConfigLoaderInterface::class);
@@ -106,9 +109,22 @@ class WebhookListenerTest extends TestCase
             $bus->method('dispatch')->willReturn(new Envelope(new \stdClass()));
         }
 
-        $webhookService = new WebhookService($systemConfig, $serializer, $bus);
+        $webhookService = new WebhookService($systemConfig, $serializer, $bus, new NullLogger(), new MockHttpClient());
 
-        return new WebhookListener($webhookService, $systemConfig, new NullLogger());
+        return new WebhookListener($webhookService, new NullLogger());
+    }
+
+    /**
+     * @param list<array{url: string, secret?: string, events: list<string>}> $endpoints
+     * @return array<string, mixed>
+     */
+    private function settings(array $endpoints): array
+    {
+        return [
+            'webhook.endpoints' => json_encode($endpoints, \JSON_THROW_ON_ERROR),
+            'webhook.max_endpoints' => 10,
+            'webhook.allow_private_network' => true,
+        ];
     }
 
     /**
@@ -127,7 +143,7 @@ class WebhookListenerTest extends TestCase
     }
 
     #[DataProvider('getEventsByEntityType')]
-    public function testEventNotFiredWhenDisabled(string $entityType, Event $event): void
+    public function testEventNotFiredWhenEntityNotSubscribed(string $entityType, Event $event): void
     {
         $serializer = $this->createMock(SerializerInterface::class);
         $serializer->expects(self::never())->method('toArray');
@@ -135,17 +151,15 @@ class WebhookListenerTest extends TestCase
         $bus = $this->createMock(MessageBusInterface::class);
         $bus->expects(self::never())->method('dispatch');
 
-        $listener = $this->createListener([
-            'webhook.endpoint_url' => 'https://example.com/webhook',
-            'webhook.secret_token' => 'secret',
-            'webhook.events.' . $entityType => false,
-        ], $bus, $serializer);
+        $listener = $this->createListener($this->settings([
+            ['url' => 'https://example.com/webhook', 'secret' => 'secret', 'events' => ['__other__']],
+        ]), $bus, $serializer);
 
         $listener->triggerWebhook($event);
     }
 
     #[DataProvider('getEventsByEntityType')]
-    public function testEventFiredWhenEnabled(string $entityType, Event $event): void
+    public function testEventFiredWhenEntitySubscribed(string $entityType, Event $event): void
     {
         $serializer = $this->createMock(SerializerInterface::class);
         $serializer->expects(self::once())->method('toArray')->willReturn(['id' => 1]);
@@ -153,16 +167,14 @@ class WebhookListenerTest extends TestCase
         $bus = $this->createMock(MessageBusInterface::class);
         $bus->expects(self::once())->method('dispatch')->willReturn(new Envelope(new \stdClass()));
 
-        $listener = $this->createListener([
-            'webhook.endpoint_url' => 'https://example.com/webhook',
-            'webhook.secret_token' => 'secret',
-            'webhook.events.' . $entityType => true,
-        ], $bus, $serializer);
+        $listener = $this->createListener($this->settings([
+            ['url' => 'https://example.com/webhook', 'secret' => 'secret', 'events' => [$entityType]],
+        ]), $bus, $serializer);
 
         $listener->triggerWebhook($event);
     }
 
-    public function testNoWebhookFiredWhenEndpointUrlEmpty(): void
+    public function testNoWebhookFiredWhenNotConfigured(): void
     {
         $serializer = $this->createMock(SerializerInterface::class);
         $serializer->expects(self::never())->method('toArray');
@@ -170,11 +182,7 @@ class WebhookListenerTest extends TestCase
         $bus = $this->createMock(MessageBusInterface::class);
         $bus->expects(self::never())->method('dispatch');
 
-        $listener = $this->createListener([
-            'webhook.endpoint_url' => '',
-            'webhook.secret_token' => '',
-            'webhook.events.timesheet' => true,
-        ], $bus, $serializer);
+        $listener = $this->createListener($this->settings([]), $bus, $serializer);
 
         $event = new TimesheetCreatePostEvent(new \App\Entity\Timesheet());
         $listener->triggerWebhook($event);
