@@ -83,7 +83,7 @@ final class WebhookService
 
         $result = [];
         foreach ($this->parseEndpoints() as $index => $endpoint) {
-            if (!\in_array($entityType, $endpoint['events'], true)) {
+            if (!$this->endpointMatches($endpoint['events'], $name, $entityType)) {
                 continue;
             }
             $config = new WebhookConfiguration(
@@ -97,6 +97,26 @@ final class WebhookService
         }
 
         return $result;
+    }
+
+    /**
+     * An endpoint fires for an event when the stored `events` array contains
+     * EITHER the full event name (`timesheet.created`) OR the entity-level
+     * shorthand (`timesheet`, meaning "all actions for this entity").
+     *
+     * The shorthand exists because:
+     *  - pr-5840 stored subscriptions as entity-level booleans, and the
+     *    migration preserves that intent by writing `["timesheet"]` instead
+     *    of enumerating every action;
+     *  - CLI / yaml administrators can subscribe to "everything for this
+     *    entity" without having to list every action explicitly.
+     *
+     * @param array<int, string> $subscribed
+     */
+    private function endpointMatches(array $subscribed, string $fullEventName, string $entityType): bool
+    {
+        return \in_array($fullEventName, $subscribed, true)
+            || \in_array($entityType, $subscribed, true);
     }
 
     /**

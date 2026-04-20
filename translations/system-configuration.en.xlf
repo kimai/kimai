@@ -346,34 +346,54 @@
         <source>webhook.endpoint.remove</source>
         <target>Remove</target>
       </trans-unit>
-      <trans-unit id="wh_ev_timesheet" resname="webhook.events.timesheet">
-        <source>webhook.events.timesheet</source>
+      <trans-unit id="wh_en_timesheet" resname="webhook.entity.timesheet">
+        <source>webhook.entity.timesheet</source>
         <target>Timesheet</target>
       </trans-unit>
-      <trans-unit id="wh_ev_customer" resname="webhook.events.customer">
-        <source>webhook.events.customer</source>
+      <trans-unit id="wh_en_customer" resname="webhook.entity.customer">
+        <source>webhook.entity.customer</source>
         <target>Customer</target>
       </trans-unit>
-      <trans-unit id="wh_ev_project" resname="webhook.events.project">
-        <source>webhook.events.project</source>
+      <trans-unit id="wh_en_project" resname="webhook.entity.project">
+        <source>webhook.entity.project</source>
         <target>Project</target>
       </trans-unit>
-      <trans-unit id="wh_ev_activity" resname="webhook.events.activity">
-        <source>webhook.events.activity</source>
+      <trans-unit id="wh_en_activity" resname="webhook.entity.activity">
+        <source>webhook.entity.activity</source>
         <target>Activity</target>
       </trans-unit>
-      <trans-unit id="wh_ev_invoice" resname="webhook.events.invoice">
-        <source>webhook.events.invoice</source>
+      <trans-unit id="wh_en_invoice" resname="webhook.entity.invoice">
+        <source>webhook.entity.invoice</source>
         <target>Invoice</target>
       </trans-unit>
-      <trans-unit id="wh_ev_user" resname="webhook.events.user">
-        <source>webhook.events.user</source>
+      <trans-unit id="wh_en_user" resname="webhook.entity.user">
+        <source>webhook.entity.user</source>
         <target>User</target>
       </trans-unit>
-      <trans-unit id="wh_ev_team" resname="webhook.events.team">
-        <source>webhook.events.team</source>
+      <trans-unit id="wh_en_team" resname="webhook.entity.team">
+        <source>webhook.entity.team</source>
         <target>Team</target>
       </trans-unit>
+      <trans-unit id="wh_ev_ts_c" resname="webhook.event.timesheet.created"><source>webhook.event.timesheet.created</source><target>Created</target></trans-unit>
+      <trans-unit id="wh_ev_ts_u" resname="webhook.event.timesheet.updated"><source>webhook.event.timesheet.updated</source><target>Updated</target></trans-unit>
+      <trans-unit id="wh_ev_ts_s" resname="webhook.event.timesheet.stopped"><source>webhook.event.timesheet.stopped</source><target>Stopped</target></trans-unit>
+      <trans-unit id="wh_ev_cu_c" resname="webhook.event.customer.created"><source>webhook.event.customer.created</source><target>Created</target></trans-unit>
+      <trans-unit id="wh_ev_cu_u" resname="webhook.event.customer.updated"><source>webhook.event.customer.updated</source><target>Updated</target></trans-unit>
+      <trans-unit id="wh_ev_cu_d" resname="webhook.event.customer.deleted"><source>webhook.event.customer.deleted</source><target>Deleted</target></trans-unit>
+      <trans-unit id="wh_ev_pr_c" resname="webhook.event.project.created"><source>webhook.event.project.created</source><target>Created</target></trans-unit>
+      <trans-unit id="wh_ev_pr_u" resname="webhook.event.project.updated"><source>webhook.event.project.updated</source><target>Updated</target></trans-unit>
+      <trans-unit id="wh_ev_pr_d" resname="webhook.event.project.deleted"><source>webhook.event.project.deleted</source><target>Deleted</target></trans-unit>
+      <trans-unit id="wh_ev_ac_c" resname="webhook.event.activity.created"><source>webhook.event.activity.created</source><target>Created</target></trans-unit>
+      <trans-unit id="wh_ev_ac_u" resname="webhook.event.activity.updated"><source>webhook.event.activity.updated</source><target>Updated</target></trans-unit>
+      <trans-unit id="wh_ev_ac_d" resname="webhook.event.activity.deleted"><source>webhook.event.activity.deleted</source><target>Deleted</target></trans-unit>
+      <trans-unit id="wh_ev_in_c" resname="webhook.event.invoice.created"><source>webhook.event.invoice.created</source><target>Created</target></trans-unit>
+      <trans-unit id="wh_ev_in_d" resname="webhook.event.invoice.deleted"><source>webhook.event.invoice.deleted</source><target>Deleted</target></trans-unit>
+      <trans-unit id="wh_ev_us_c" resname="webhook.event.user.created"><source>webhook.event.user.created</source><target>Created</target></trans-unit>
+      <trans-unit id="wh_ev_us_u" resname="webhook.event.user.updated"><source>webhook.event.user.updated</source><target>Updated</target></trans-unit>
+      <trans-unit id="wh_ev_us_d" resname="webhook.event.user.deleted"><source>webhook.event.user.deleted</source><target>Deleted</target></trans-unit>
+      <trans-unit id="wh_ev_te_c" resname="webhook.event.team.created"><source>webhook.event.team.created</source><target>Created</target></trans-unit>
+      <trans-unit id="wh_ev_te_u" resname="webhook.event.team.updated"><source>webhook.event.team.updated</source><target>Updated</target></trans-unit>
+      <trans-unit id="wh_ev_te_d" resname="webhook.event.team.deleted"><source>webhook.event.team.deleted</source><target>Deleted</target></trans-unit>
     </body>
   </file>
 </xliff>

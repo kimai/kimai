@@ -126,6 +126,61 @@ class WebhookServiceTest extends TestCase
         self::assertEquals('b', $configuration->getSecret());
     }
 
+    public function testFindEventsByNameMatchesFullEventName(): void
+    {
+        // Endpoint subscribes to timesheet.created ONLY — timesheet.updated
+        // on the same entity must NOT fire to it.
+        $service = $this->createService($this->settings([
+            ['url' => 'https://creates.example.com', 'secret' => 's', 'events' => ['timesheet.created']],
+            ['url' => 'https://updates.example.com', 'secret' => 's', 'events' => ['timesheet.updated']],
+        ]));
+
+        $created = $service->findEventsByName('timesheet.created');
+        self::assertCount(1, $created);
+        self::assertSame('https://creates.example.com', $created[0]->getConfiguration()->getUrl());
+
+        $updated = $service->findEventsByName('timesheet.updated');
+        self::assertCount(1, $updated);
+        self::assertSame('https://updates.example.com', $updated[0]->getConfiguration()->getUrl());
+
+        $stopped = $service->findEventsByName('timesheet.stopped');
+        self::assertCount(0, $stopped, 'Neither endpoint subscribed to timesheet.stopped');
+    }
+
+    public function testFindEventsByNameTreatsEntityNameAsShorthandForAllActions(): void
+    {
+        // Entity-level shorthand is kept so (a) the data-preserving migration
+        // from pr-5840's entity-only toggles continues to Just Work, and
+        // (b) CLI/yaml admins don't have to enumerate every action.
+        $service = $this->createService($this->settings([
+            ['url' => 'https://all-ts.example.com', 'secret' => 's', 'events' => ['timesheet']],
+        ]));
+
+        foreach (['timesheet.created', 'timesheet.updated', 'timesheet.stopped'] as $name) {
+            $events = $service->findEventsByName($name);
+            self::assertCount(1, $events, "entity shorthand must match {$name}");
+            self::assertSame('https://all-ts.example.com', $events[0]->getConfiguration()->getUrl());
+        }
+
+        $customer = $service->findEventsByName('customer.created');
+        self::assertCount(0, $customer, 'timesheet shorthand must not match customer events');
+    }
+
+    public function testFindEventsByNameMixesShorthandAndExplicit(): void
+    {
+        $service = $this->createService($this->settings([
+            ['url' => 'https://all-ts.example.com', 'secret' => 's', 'events' => ['timesheet']],
+            ['url' => 'https://only-created.example.com', 'secret' => 's', 'events' => ['timesheet.created']],
+        ]));
+
+        $created = $service->findEventsByName('timesheet.created');
+        self::assertCount(2, $created, 'both shorthand and explicit endpoints must fire on timesheet.created');
+
+        $updated = $service->findEventsByName('timesheet.updated');
+        self::assertCount(1, $updated, 'only the shorthand endpoint fires on timesheet.updated');
+        self::assertSame('https://all-ts.example.com', $updated[0]->getConfiguration()->getUrl());
+    }
+
     public function testFindEventsByNameReturnsAllMatchingEndpoints(): void
     {
         $service = $this->createService($this->settings([

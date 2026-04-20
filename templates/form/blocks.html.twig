@@ -12,7 +12,8 @@
             {% if form.vars.choices|length != form.children|length %}
                 {% for name, choices in form.vars.choices %}
                     <fieldset class="form-fieldset">
-                        <legend>{{ name }}</legend>
+                        {# Group label key is a translation id when choice_translation_domain is set; fall back to the raw name otherwise. #}
+                        <legend>{{ choice_translation_domain is same as(false) ? name : name|trans({}, choice_translation_domain) }}</legend>
                     {% for key, choice in choices %}
                         {{- form_widget(form[key]) -}}
                         {{- form_label(form[key]) -}}

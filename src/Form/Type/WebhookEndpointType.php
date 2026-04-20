@@ -23,28 +23,53 @@ use Symfony\Component\Validator\Constraints\Url;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
- * Renders a single webhook endpoint row: URL, secret, and a list of event
- * types the endpoint is subscribed to.
+ * Renders a single webhook endpoint row: URL, secret, and a list of events
+ * the endpoint is subscribed to.
  *
- * The URL field is additionally SSRF-hardened: by default, submitted URLs
- * that resolve to private/loopback/link-local IPs are rejected so an admin
- * can't aim the dispatcher at the cloud-metadata endpoint
- * (169.254.169.254), at localhost, or into RFC1918 ranges. Set
- * `kimai.webhook.allow_private_network: true` in
- * `config/packages/local.yaml` to permit those for legitimate
- * intra-network webhook receivers.
+ * Events are per-action, not per-entity — receivers can subscribe to
+ * `timesheet.created` without also receiving `timesheet.updated`. The
+ * authoritative list of firing events comes from `#[AsWebhook]`
+ * attributes on Kimai's domain event classes; this type ships a
+ * hand-maintained mirror grouped by entity so the UI can render
+ * `<optgroup>`-style grouped checkboxes. Adding a new `#[AsWebhook]`
+ * event requires adding it here too — no reflection at form-build time
+ * because attribute scanning all 20+ event classes per request is
+ * overkill for a config page.
+ *
+ * The URL field is SSRF-hardened: by default, URLs that resolve to
+ * private/loopback/link-local IPs are rejected so an admin can't aim
+ * the dispatcher at the cloud-metadata endpoint (169.254.169.254) or
+ * into RFC1918 ranges. Set `kimai.webhook.allow_private_network: true`
+ * in `config/packages/local.yaml` to permit those for legitimate
+ * intra-network receivers.
  */
 final class WebhookEndpointType extends AbstractType
 {
-    public const ENTITY_TYPES = [
-        'timesheet',
-        'customer',
-        'project',
-        'activity',
-        'invoice',
-        'user',
-        'team',
+    /**
+     * Every dispatched event grouped by entity, in display order. Keep in
+     * sync with the `#[AsWebhook(name: ...)]` values on domain events.
+     *
+     * @var array<string, array<int, string>>
+     */
+    public const EVENT_CATALOG = [
+        'timesheet' => ['timesheet.created', 'timesheet.updated', 'timesheet.stopped'],
+        'customer' => ['customer.created', 'customer.updated', 'customer.deleted'],
+        'project' => ['project.created', 'project.updated', 'project.deleted'],
+        'activity' => ['activity.created', 'activity.updated', 'activity.deleted'],
+        'invoice' => ['invoice.created', 'invoice.deleted'],
+        'user' => ['user.created', 'user.updated', 'user.deleted'],
+        'team' => ['team.created', 'team.updated', 'team.deleted'],
     ];
+
+    /**
+     * Entity keys in `EVENT_CATALOG` — also accepted as legacy shorthand
+     * in the stored `events` array, meaning "all actions for this entity".
+     * Kept so the data-preserving migration from the pr-5840 schema (which
+     * had entity-level toggles only) doesn't need to re-expand, and so
+     * admins who hand-edit the stored config via CLI don't have to
+     * enumerate every action.
+     */
+    public const ENTITY_TYPES = ['timesheet', 'customer', 'project', 'activity', 'invoice', 'user', 'team'];
 
     /**
      * CIDR ranges blocked by default. Covers:
@@ -77,9 +102,16 @@ final class WebhookEndpointType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        // Choice label → value map, grouped by entity. Symfony's ChoiceType
+        // renders nested-array choices as <optgroup> in selects and as
+        // grouped checkbox sections in expanded mode.
         $eventChoices = [];
-        foreach (self::ENTITY_TYPES as $entity) {
-            $eventChoices['webhook.events.' . $entity] = $entity;
+        foreach (self::EVENT_CATALOG as $entity => $events) {
+            $groupLabel = 'webhook.entity.' . $entity;
+            $eventChoices[$groupLabel] = [];
+            foreach ($events as $event) {
+                $eventChoices[$groupLabel]['webhook.event.' . $event] = $event;
+            }
         }
 
         $builder
@@ -108,6 +140,7 @@ final class WebhookEndpointType extends AbstractType
                 'expanded' => true,
                 'required' => false,
                 'translation_domain' => 'system-configuration',
+                'choice_translation_domain' => 'system-configuration',
             ])
         ;
     }
