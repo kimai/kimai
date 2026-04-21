@@ -14,8 +14,11 @@ use App\Entity\ExportableItem;
 use App\Entity\Invoice;
 use App\Event\InvoiceCreatedEvent;
 use App\Event\InvoiceDeleteEvent;
+use App\Event\InvoiceMetaDefinitionEvent;
 use App\Event\InvoicePostRenderEvent;
 use App\Event\InvoicePreRenderEvent;
+use App\Event\InvoiceUpdatePostEvent;
+use App\Event\InvoiceUpdatePreEvent;
 use App\Export\Base\DispositionInlineInterface;
 use App\Model\InvoiceDocument;
 use App\Repository\InvoiceDocumentRepository;
@@ -53,7 +56,8 @@ final class ServiceInvoice
         private readonly FileHelper $fileHelper,
         private readonly InvoiceRepository $invoiceRepository,
         private readonly LocaleService $formatter,
-        private readonly InvoiceModelFactory $invoiceModelFactory
+        private readonly InvoiceModelFactory $invoiceModelFactory,
+        private readonly EventDispatcherInterface $dispatcher
     ) {
     }
 
@@ -252,7 +256,7 @@ final class ServiceInvoice
                 throw new \InvalidArgumentException('Unknown invoice status');
         }
 
-        $this->invoiceRepository->saveInvoice($invoice);
+        $this->saveInvoice($invoice);
     }
 
     /**
@@ -344,7 +348,7 @@ final class ServiceInvoice
                 if (!$invoice->getCustomer()->hasInvoiceTemplate()) {
                     $invoice->getCustomer()->setInvoiceTemplate($model->getTemplate());
                 }
-                $this->invoiceRepository->saveInvoice($invoice);
+                $this->saveInvoice($invoice);
 
                 $this->markEntriesAsExported($model->getEntries());
                 $dispatcher->dispatch(new InvoiceCreatedEvent($invoice, $model));
@@ -535,5 +539,17 @@ final class ServiceInvoice
         }
 
         return $models;
+    }
+
+    public function saveInvoice(Invoice $invoice): void
+    {
+        $this->dispatcher->dispatch(new InvoiceUpdatePreEvent($invoice));
+        $this->invoiceRepository->saveInvoice($invoice);
+        $this->dispatcher->dispatch(new InvoiceUpdatePostEvent($invoice));
+    }
+
+    public function loadMetaFields(Invoice $invoice): void
+    {
+        $this->dispatcher->dispatch(new InvoiceMetaDefinitionEvent($invoice));
     }
 }

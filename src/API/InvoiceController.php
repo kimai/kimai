@@ -10,6 +10,7 @@
 namespace App\API;
 
 use App\Entity\Invoice;
+use App\Invoice\ServiceInvoice;
 use App\Repository\CustomerRepository;
 use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceArchiveQuery;
@@ -18,8 +19,8 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use OpenApi\Attributes as OA;
-use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints;
@@ -93,12 +94,45 @@ final class InvoiceController extends BaseApiController
     /**
      * Fetch invoice
      */
-    #[IsGranted('view_invoice')]
-    #[IsGranted(new Expression("is_granted('access', subject.getCustomer())"), 'invoice')]
+    #[IsGranted('view_invoice', 'invoice')]
     #[OA\Response(response: 200, description: 'Returns one invoice', content: new OA\JsonContent(ref: '#/components/schemas/Invoice'))]
     #[Route(methods: ['GET'], path: '/{id}', name: 'get_invoice', requirements: ['id' => '\d+'])]
     public function getAction(Invoice $invoice): Response
     {
+        $view = new View($invoice, 200);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Update invoice custom-field
+     */
+    #[IsGranted('edit_invoice', 'invoice')]
+    #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/Invoice'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Invoice ID to set the meta-field value for', required: true)]
+    #[Route(methods: ['PATCH'], path: '/{id}/meta', requirements: ['id' => '\d+'])]
+    #[Rest\RequestParam(name: 'name', strict: true, nullable: false, description: 'The meta-field name')]
+    #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
+    public function metaAction(Invoice $invoice, ParamFetcherInterface $paramFetcher, ServiceInvoice $invoiceService): Response
+    {
+        $invoiceService->loadMetaFields($invoice);
+
+        $name = $paramFetcher->get('name');
+        $value = $paramFetcher->get('value');
+
+        if (!\is_string($name)) {
+            throw new BadRequestHttpException('Name must be a string');
+        }
+
+        if (null === ($meta = $invoice->getMetaField($name))) {
+            throw $this->createNotFoundException('Unknown meta-field requested');
+        }
+
+        $meta->setValue($value);
+
+        $invoiceService->saveInvoice($invoice);
+
         $view = new View($invoice, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 

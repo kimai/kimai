@@ -29,6 +29,7 @@ use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use App\Utils\FileHelper;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Twig\Environment;
 
 #[CoversClass(ServiceInvoice::class)]
@@ -45,7 +46,14 @@ class ServiceInvoiceTest extends TestCase
         $repo = new InvoiceDocumentRepository($paths);
         $invoiceRepo = $this->createMock(InvoiceRepository::class);
 
-        return new ServiceInvoice($repo, new FileHelper(realpath(__DIR__ . '/../../var/data/')), $invoiceRepo, $formattings, (new InvoiceModelFactoryFactory($this))->create());
+        return new ServiceInvoice(
+            $repo,
+            new FileHelper(realpath(__DIR__ . '/../../var/data/')),
+            $invoiceRepo,
+            $formattings,
+            (new InvoiceModelFactoryFactory($this))->create(),
+            $this->createMock(EventDispatcherInterface::class)
+        );
     }
 
     public function testInvalidExceptionOnChangeState(): void

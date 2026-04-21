@@ -13,17 +13,16 @@ use App\Entity\Invoice;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**
- * This event can be used, to dynamically add meta-fields to invoices.
- *
- * Do not use directly, call ServiceInvoice::loadMetaFields() instead.
+ * Triggered right before an invoice is saved.
+ * This event is triggered for new and updated invoices.
  */
-final class InvoiceMetaDefinitionEvent extends Event
+final class InvoiceUpdatePreEvent extends Event
 {
     public function __construct(private readonly Invoice $invoice)
     {
     }
 
-    public function getEntity(): Invoice
+    public function getInvoice(): Invoice
     {
         return $this->invoice;
     }
