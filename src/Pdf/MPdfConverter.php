@@ -126,7 +126,10 @@ final class MPdfConverter implements HtmlToPdfConverter
                 if (!\is_array($entry)) {
                     return [];
                 }
-                unset($entry['path']);
+
+                if (\array_key_exists('path', $entry)) {
+                    unset($entry['path']);
+                }
 
                 return $entry;
             }, $associatedFiles);
