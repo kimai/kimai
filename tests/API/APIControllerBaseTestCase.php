@@ -136,7 +136,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
         ]);
     }
 
-    protected function assertEntityNotFoundForPatch(string $role, string $url, array $data): void
+    protected function assertEntityNotFoundForPatch(HttpKernelBrowser|string $role, string $url, array $data): void
     {
         $this->assertExceptionForPatchAction($role, $url, $data, [
             'code' => Response::HTTP_NOT_FOUND,
@@ -152,17 +152,17 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
         ]);
     }
 
-    protected function assertExceptionForDeleteAction(string $role, string $url, array $data, array $expectedErrors): void
+    protected function assertExceptionForDeleteAction(HttpKernelBrowser|string $role, string $url, array $data, array $expectedErrors): void
     {
         $this->assertExceptionForRole($role, $url, 'DELETE', $data, $expectedErrors);
     }
 
-    protected function assertExceptionForPatchAction(string $role, string $url, array $data, array $expectedErrors): void
+    protected function assertExceptionForPatchAction(HttpKernelBrowser|string $role, string $url, array $data, array $expectedErrors): void
     {
         $this->assertExceptionForRole($role, $url, 'PATCH', $data, $expectedErrors);
     }
 
-    protected function assertExceptionForPostAction(string $role, string $url, array $data, array $expectedErrors): void
+    protected function assertExceptionForPostAction(HttpKernelBrowser|string $role, string $url, array $data, array $expectedErrors): void
     {
         $this->assertExceptionForRole($role, $url, 'POST', $data, $expectedErrors);
     }
@@ -180,9 +180,9 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
         self::assertEquals($expectedErrors, json_decode($response->getContent(), true));
     }
 
-    protected function assertExceptionForRole(string $role, string $url, string $method, array $data, array $expectedErrors): void
+    protected function assertExceptionForRole(HttpKernelBrowser|string $role, string $url, string $method, array $data, array $expectedErrors): void
     {
-        $client = $this->getClientForAuthenticatedUser($role);
+        $client = ($role instanceof HttpKernelBrowser) ? $role : $this->getClientForAuthenticatedUser($role);
         $this->assertExceptionForMethod($client, $url, $method, $data, $expectedErrors);
     }
 
@@ -350,6 +350,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'value' => '@string',
                 ];
 
+            case 'InvoiceMeta':
             case 'CustomerMeta':
             case 'ProjectMeta':
             case 'ActivityMeta':
