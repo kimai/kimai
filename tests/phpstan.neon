@@ -1668,7 +1668,7 @@ parameters:
 
         -
             message: "#^Parameter \\#2 \\$cacheDirectory of class App\\\\Pdf\\\\MPdfConverter constructor expects string, array\\|bool\\|float\\|int\\|string\\|null given\\.$#"
-            count: 1
+            count: 2
             path: Pdf/MPdfConverterTest.php
 
         -
