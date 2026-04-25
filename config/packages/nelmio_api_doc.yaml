@@ -67,5 +67,7 @@ nelmio_api_doc:
         swagger_ui_config: []
         # https://redocly.com/docs/redoc/config/
         redocly_config: []
+        # https://scalar.com/products/api-references/configuration
+        scalar_config: []
         # https://docs.stoplight.io/docs/elements/b074dc47b2826-elements-configuration-options
         stoplight_config: { basePath: '/api/doc', router: 'memory', logo: '/touch-icon-192x192.png', hideInternal: true }

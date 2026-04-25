@@ -2507,11 +2507,6 @@ parameters:
             path: Widget/Type/MoreTest.php
 
         -
-            message: "#^Cannot access offset 'financialBegin' on mixed\\.$#"
-            count: 2
-            path: Widget/Type/PaginatedWorkingTimeChartTest.php
-
-        -
             message: "#^Parameter \\#2 \\$array of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertArrayHasKey\\(\\) expects array\\|ArrayAccess, mixed given\\.$#"
             count: 2
             path: Widget/Type/PaginatedWorkingTimeChartTest.php

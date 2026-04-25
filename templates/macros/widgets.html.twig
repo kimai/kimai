@@ -1,3 +1,23 @@
+{%- macro duration(timesheet, options) -%}
+    <span
+    {%- if options and options.title is defined %} data-replacer="duration" data-title="true"{% endif -%}
+    {%- if not timesheet.end %} data-since="{{ timesheet.begin is null ? '' : timesheet.begin.format(constant('DATE_ISO8601')) }}"{% endif -%}
+    {# TODO calculate break and add as data-duration #}
+    class="duration {% if options and options.class is defined %} {{ options.class }}{% endif %}">
+    {{- timesheet.begin is null ? 0|duration : timesheet|duration -}}
+    </span>
+{% endmacro %}
+
+{%- macro duration_seconds(seconds, options) -%}
+    <span
+    {%- if options and options.title is defined %} data-replacer="duration" data-title="true" {% endif -%}
+    {%- if options and options.active is defined and options.active %} data-since="{{ create_date('- '~seconds~' seconds').format(constant('DATE_ISO8601')) }}" {% endif -%}
+    {# TODO calculate break and add as data-duration #}
+    class="duration {% if options and options.class is defined %} {{ options.class }}{% endif %}">
+    {{- seconds|duration -}}
+    </span>
+{% endmacro %}
+
 {%- macro search_filter(route, options) -%}
     {% set opts = {'performSearch': 1} %}
     {% if options.begin is defined and options.end is defined %}

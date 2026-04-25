@@ -8,6 +8,15 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
+## [2.56.0](https://github.com/kimai/kimai/releases/tag/2.56.0)
+
+The required minimum PHP version is now 8.2, read https://www.php.net/supported-versions.php
+
+If you are still using PHP 8.1, please be aware it is EOL and does not receive any security updates.
+
+If you have to upgrade to a newer version, do yourself the favor and upgrade directly to PHP 8.5.
+The requirement for 8.2 is an intermediate solution for the near future, and the requirement will be raised to 8.5 rather sooner than later. 
+
 ## [2.0.30](https://github.com/kimai/kimai/releases/tag/2.0.30)
 
 The `DATABASE_URL` in your environment settings (e.g. [.env](https://github.com/kimai/kimai/issues/4246), [docker-compose.yaml](https://github.com/tobybatch/kimai2/issues/531) or webserver config)
