@@ -120,6 +120,16 @@ final class MPdfConverter implements HtmlToPdfConverter
         $mpdf->creator = Constants::SOFTWARE;
 
         if (\count($associatedFiles) > 0) {
+            // remove "path" so mPDF will not use file_get_contents() on local files
+            // callers must pre-read and pass the bytes via "content"
+            $associatedFiles = array_map(static function ($entry): array {
+                if (!\is_array($entry)) {
+                    return [];
+                }
+                unset($entry['path']);
+
+                return $entry;
+            }, $associatedFiles);
             $mpdf->SetAssociatedFiles($associatedFiles);
         }
 
