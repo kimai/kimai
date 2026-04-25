@@ -15,7 +15,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 /**
  * This event can be used, to dynamically add meta-fields to invoices.
  *
- * Do not use directly, call ServiceInvoice::loadMetaFields() instead.
+ * Do not use directly, call InvoiceService::loadMetaFields() instead.
  */
 final class InvoiceMetaDefinitionEvent extends Event
 {

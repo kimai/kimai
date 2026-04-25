@@ -1569,17 +1569,17 @@ parameters:
         -
             message: "#^Cannot call method getTotal\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
             count: 4
-            path: Invoice/ServiceInvoiceTest.php
+            path: Invoice/InvoiceServiceTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\ServiceInvoiceTest\\:\\:getSut\\(\\) has parameter \\$paths with no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\Invoice\\\\InvoiceServiceTest\\:\\:getSut\\(\\) has parameter \\$paths with no value type specified in iterable type array\\.$#"
             count: 1
-            path: Invoice/ServiceInvoiceTest.php
+            path: Invoice/InvoiceServiceTest.php
 
         -
             message: "#^Parameter \\#1 \\$dataDir of class App\\\\Utils\\\\FileHelper constructor expects string, string\\|false given\\.$#"
             count: 1
-            path: Invoice/ServiceInvoiceTest.php
+            path: Invoice/InvoiceServiceTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Ldap\\\\LdapManagerTest\\:\\:getLdapManager\\(\\) has no return type specified\\.$#"

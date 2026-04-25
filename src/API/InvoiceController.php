@@ -10,7 +10,7 @@
 namespace App\API;
 
 use App\Entity\Invoice;
-use App\Invoice\ServiceInvoice;
+use App\Invoice\InvoiceService;
 use App\Repository\CustomerRepository;
 use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceArchiveQuery;
@@ -114,7 +114,7 @@ final class InvoiceController extends BaseApiController
     #[Route(methods: ['PATCH'], path: '/{id}/meta', requirements: ['id' => '\d+'])]
     #[Rest\RequestParam(name: 'name', strict: true, nullable: false, description: 'The meta-field name')]
     #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
-    public function metaAction(Invoice $invoice, ParamFetcherInterface $paramFetcher, ServiceInvoice $invoiceService): Response
+    public function metaAction(Invoice $invoice, ParamFetcherInterface $paramFetcher, InvoiceService $invoiceService): Response
     {
         $invoiceService->loadMetaFields($invoice);
 

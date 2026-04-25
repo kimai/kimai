@@ -18,6 +18,7 @@ use App\Entity\Timesheet;
 use App\Invoice\Calculator\DefaultCalculator;
 use App\Invoice\InvoiceItemRepositoryInterface;
 use App\Invoice\InvoiceModel;
+use App\Invoice\InvoiceService;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Invoice\Renderer\TwigRenderer;
 use App\Invoice\ServiceInvoice;
@@ -32,10 +33,11 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Twig\Environment;
 
-#[CoversClass(ServiceInvoice::class)]
-class ServiceInvoiceTest extends TestCase
+#[CoversClass(InvoiceService::class)]
+#[CoversClass(ServiceInvoice::class)] // @phpstan-ignore-line
+class InvoiceServiceTest extends TestCase
 {
-    private function getSut(array $paths): ServiceInvoice
+    private function getSut(array $paths): InvoiceService
     {
         $languages = [
             'en' => LocaleService::DEFAULT_SETTINGS
@@ -46,7 +48,7 @@ class ServiceInvoiceTest extends TestCase
         $repo = new InvoiceDocumentRepository($paths);
         $invoiceRepo = $this->createMock(InvoiceRepository::class);
 
-        return new ServiceInvoice(
+        return new InvoiceService(
             $repo,
             new FileHelper(realpath(__DIR__ . '/../../var/data/')),
             $invoiceRepo,
