@@ -357,22 +357,12 @@ parameters:
             path: Command/ExportCreateCommandTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:importFixture\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:assertCommandErrors\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: Command/InvoiceCreateCommandTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:createInvoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:importFixture\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Command/InvoiceCreateCommandTest.php
 
@@ -523,11 +513,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:assertHasValidationError\\(\\) has parameter \\$formData with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Controller/AbstractControllerBaseTestCase.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:importFixture\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Controller/AbstractControllerBaseTestCase.php
 
@@ -990,11 +975,6 @@ parameters:
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 3
             path: Controller/WidgetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\DataFixtures\\\\TestFixture\\:\\:load\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: DataFixtures/TestFixture.php
 
         -
             message: "#^Cannot access offset 'foo\\-bundle\\.bar' on array\\|bool\\|float\\|int\\|string\\|null\\.$#"
@@ -1569,17 +1549,17 @@ parameters:
         -
             message: "#^Cannot call method getTotal\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
             count: 4
-            path: Invoice/ServiceInvoiceTest.php
+            path: Invoice/InvoiceServiceTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\ServiceInvoiceTest\\:\\:getSut\\(\\) has parameter \\$paths with no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\Invoice\\\\InvoiceServiceTest\\:\\:getSut\\(\\) has parameter \\$paths with no value type specified in iterable type array\\.$#"
             count: 1
-            path: Invoice/ServiceInvoiceTest.php
+            path: Invoice/InvoiceServiceTest.php
 
         -
             message: "#^Parameter \\#1 \\$dataDir of class App\\\\Utils\\\\FileHelper constructor expects string, string\\|false given\\.$#"
             count: 1
-            path: Invoice/ServiceInvoiceTest.php
+            path: Invoice/InvoiceServiceTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Ldap\\\\LdapManagerTest\\:\\:getLdapManager\\(\\) has no return type specified\\.$#"
@@ -1698,11 +1678,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Repository\\\\AbstractRepositoryTestCase\\:\\:getEntityManager\\(\\) should return Doctrine\\\\Persistence\\\\ObjectManager but returns Doctrine\\\\Persistence\\\\ObjectManager\\|null\\.$#"
-            count: 1
-            path: Repository/AbstractRepositoryTestCase.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\AbstractRepositoryTestCase\\:\\:importFixture\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Repository/AbstractRepositoryTestCase.php
 

@@ -9,6 +9,10 @@
 
 namespace App\Tests\Security;
 
+use App\Entity\Activity;
+use App\Entity\Customer;
+use App\Entity\Project;
+use App\Entity\Team;
 use App\Entity\User;
 use App\Repository\RolePermissionRepository;
 use App\Security\RolePermissionManager;
@@ -114,5 +118,168 @@ class RolePermissionManagerTest extends TestCase
         // the next two are a special case, which might never be falsified by the database
         self::assertTrue($sut->hasPermission('ROLE_SUPER_ADMIN', 'role_permissions'));
         self::assertTrue($sut->hasPermission('ROLE_SUPER_ADMIN', 'view_user'));
+    }
+
+    public function testCheckTeamAccessCustomerAllowsUsersWithGlobalAccess(): void
+    {
+        $sut = $this->createSut();
+        $customer = new Customer('Acme');
+        $customer->addTeam(new Team('Support'));
+
+        $user = new User();
+        self::assertFalse($sut->checkTeamAccessCustomer($customer, $user));
+        $user->initCanSeeAllData(true);
+        self::assertTrue($sut->checkTeamAccessCustomer($customer, $user));
+    }
+
+    public function testCheckTeamAccessCustomerAllowsAccessWithoutAssignedTeams(): void
+    {
+        $sut = $this->createSut();
+
+        self::assertTrue($sut->checkTeamAccessCustomer(new Customer('Acme'), new User()));
+    }
+
+    public function testCheckTeamAccessCustomerRequiresMembershipForAssignedTeams(): void
+    {
+        $sut = $this->createSut();
+        $customer = new Customer('Acme');
+        $team = new Team('Support');
+        $customer->addTeam($team);
+
+        $user = new User();
+        self::assertFalse($sut->checkTeamAccessCustomer($customer, new User()));
+
+        self::assertFalse($sut->checkTeamAccessCustomer($customer, $user));
+        $team->addUser($user);
+        self::assertTrue($sut->checkTeamAccessCustomer($customer, $user));
+    }
+
+    public function testCheckTeamAccessProjectDeniesAccessIfCustomerIsDenied(): void
+    {
+        $sut = $this->createSut();
+        $customer = new Customer('Acme');
+        $customerTeam = new Team('Customer team');
+        $customer->addTeam($customerTeam);
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $projectTeam = new Team('Project team');
+        $project->addTeam($projectTeam);
+
+        $user = new User();
+        $projectTeam->addUser($user);
+
+        self::assertFalse($sut->checkTeamAccessProject($project, $user));
+    }
+
+    public function testCheckTeamAccessProjectAllowsUsersWithGlobalAccess(): void
+    {
+        $sut = $this->createSut();
+        $customer = new Customer('Acme');
+        $customer->addTeam(new Team('Customer team'));
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam(new Team('Project team'));
+
+        $user = new User();
+        self::assertFalse($sut->checkTeamAccessProject($project, $user));
+        $user->initCanSeeAllData(true);
+        self::assertTrue($sut->checkTeamAccessProject($project, $user));
+    }
+
+    public function testCheckTeamAccessProjectAllowsMatchingProjectTeamAfterCustomerAccess(): void
+    {
+        $sut = $this->createSut();
+        $customer = new Customer('Acme');
+        $customerTeam = new Team('Customer team');
+        $customer->addTeam($customerTeam);
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $projectTeam = new Team('Project team');
+        $project->addTeam($projectTeam);
+
+        $user = new User();
+        $customerTeam->addUser($user);
+        $projectTeam->addUser($user);
+
+        self::assertTrue($sut->checkTeamAccessProject($project, $user));
+    }
+
+    public function testCheckTeamAccessActivityDeniesAccessIfProjectIsDenied(): void
+    {
+        $sut = $this->createSut();
+        $customer = new Customer('Acme');
+        $customerTeam = new Team('Customer team');
+        $customer->addTeam($customerTeam);
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $projectTeam = new Team('Project team');
+        $project->addTeam($projectTeam);
+
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activityTeam = new Team('Activity team');
+        $activity->addTeam($activityTeam);
+
+        $user = new User();
+        $activityTeam->addUser($user);
+
+        self::assertFalse($sut->checkTeamAccessActivity($activity, $user));
+    }
+
+    public function testCheckTeamAccessActivityAllowsUsersWithGlobalAccess(): void
+    {
+        $sut = $this->createSut();
+        $customer = new Customer('Acme');
+        $customer->addTeam(new Team('Customer team'));
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam(new Team('Project team'));
+
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activity->addTeam(new Team('Activity team'));
+
+        $user = new User();
+        self::assertFalse($sut->checkTeamAccessActivity($activity, $user));
+        $user->initCanSeeAllData(true);
+        self::assertTrue($sut->checkTeamAccessActivity($activity, $user));
+    }
+
+    public function testCheckTeamAccessActivityAllowsMatchingActivityTeamAfterProjectAccess(): void
+    {
+        $sut = $this->createSut();
+        $customer = new Customer('Acme');
+        $customerTeam = new Team('Customer team');
+        $customer->addTeam($customerTeam);
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $projectTeam = new Team('Project team');
+        $project->addTeam($projectTeam);
+
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activityTeam = new Team('Activity team');
+        $activity->addTeam($activityTeam);
+
+        $user = new User();
+        $customerTeam->addUser($user);
+        $projectTeam->addUser($user);
+        $activityTeam->addUser($user);
+
+        self::assertTrue($sut->checkTeamAccessActivity($activity, $user));
+    }
+
+    private function createSut(): RolePermissionManager
+    {
+        $repository = $this->getMockBuilder(RolePermissionRepository::class)->onlyMethods(['getAllAsArray'])->disableOriginalConstructor()->getMock();
+        $repository->method('getAllAsArray')->willReturn([]);
+
+        return new RolePermissionManager(new PermissionService($repository, new ArrayAdapter()), [], []);
     }
 }

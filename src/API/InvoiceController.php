@@ -10,6 +10,8 @@
 namespace App\API;
 
 use App\Entity\Invoice;
+use App\Entity\InvoiceMeta;
+use App\Invoice\InvoiceService;
 use App\Repository\CustomerRepository;
 use App\Repository\InvoiceRepository;
 use App\Repository\Query\InvoiceArchiveQuery;
@@ -17,9 +19,11 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
-use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints;
@@ -93,12 +97,55 @@ final class InvoiceController extends BaseApiController
     /**
      * Fetch invoice
      */
-    #[IsGranted('view_invoice')]
-    #[IsGranted(new Expression("is_granted('access', subject.getCustomer())"), 'invoice')]
+    #[IsGranted('view_invoice', 'invoice')]
     #[OA\Response(response: 200, description: 'Returns one invoice', content: new OA\JsonContent(ref: '#/components/schemas/Invoice'))]
     #[Route(methods: ['GET'], path: '/{id}', name: 'get_invoice', requirements: ['id' => '\d+'])]
     public function getAction(Invoice $invoice): Response
     {
+        $view = new View($invoice, 200);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Update invoice custom-fields
+     */
+    #[IsGranted('edit_invoice', 'invoice')]
+    #[OA\Response(response: 200, description: 'Sets the value of configured custom-fields. You cannot create unknown custom-fields.', content: new OA\JsonContent(ref: '#/components/schemas/Invoice'))]
+    #[OA\Parameter(name: 'id', description: 'Invoice ID to set the custom-fields for', in: 'path', required: true)]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(type: 'array', items: new OA\Items(new Model(type: InvoiceMeta::class))))]
+    #[Route(path: '/{id}/custom-fields', requirements: ['id' => '\d+'], methods: ['PATCH'])]
+    public function updateMetaFields(Invoice $invoice, Request $request, InvoiceService $invoiceService): Response
+    {
+        $invoiceService->loadMetaFields($invoice);
+        $dirty = false;
+
+        foreach ($request->request->all() as $preference) {
+            // why is this not handled by FosRestBundle ?
+            if (!\is_array($preference)) {
+                throw new BadRequestHttpException('Invalid request, array expected');
+            }
+
+            if (!\array_key_exists('name', $preference) || !\array_key_exists('value', $preference)) {
+                throw new BadRequestHttpException('Missing required parameter "name" or "value"');
+            }
+
+            $name = $preference['name'];
+            $value = $preference['value'];
+
+            if (null === ($meta = $invoice->getMetaField($name))) {
+                throw $this->createNotFoundException(\sprintf('Unknown custom-field "%s" requested', $name));
+            }
+
+            $meta->setValue($value);
+            $dirty = true;
+        }
+
+        if ($dirty) {
+            $invoiceService->saveInvoice($invoice);
+        }
+
         $view = new View($invoice, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 

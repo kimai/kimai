@@ -136,7 +136,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
         ]);
     }
 
-    protected function assertEntityNotFoundForPatch(string $role, string $url, array $data): void
+    protected function assertEntityNotFoundForPatch(HttpKernelBrowser|string $role, string $url, array $data): void
     {
         $this->assertExceptionForPatchAction($role, $url, $data, [
             'code' => Response::HTTP_NOT_FOUND,
@@ -152,17 +152,17 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
         ]);
     }
 
-    protected function assertExceptionForDeleteAction(string $role, string $url, array $data, array $expectedErrors): void
+    protected function assertExceptionForDeleteAction(HttpKernelBrowser|string $role, string $url, array $data, array $expectedErrors): void
     {
         $this->assertExceptionForRole($role, $url, 'DELETE', $data, $expectedErrors);
     }
 
-    protected function assertExceptionForPatchAction(string $role, string $url, array $data, array $expectedErrors): void
+    protected function assertExceptionForPatchAction(HttpKernelBrowser|string $role, string $url, array $data, array $expectedErrors): void
     {
         $this->assertExceptionForRole($role, $url, 'PATCH', $data, $expectedErrors);
     }
 
-    protected function assertExceptionForPostAction(string $role, string $url, array $data, array $expectedErrors): void
+    protected function assertExceptionForPostAction(HttpKernelBrowser|string $role, string $url, array $data, array $expectedErrors): void
     {
         $this->assertExceptionForRole($role, $url, 'POST', $data, $expectedErrors);
     }
@@ -180,9 +180,9 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
         self::assertEquals($expectedErrors, json_decode($response->getContent(), true));
     }
 
-    protected function assertExceptionForRole(string $role, string $url, string $method, array $data, array $expectedErrors): void
+    protected function assertExceptionForRole(HttpKernelBrowser|string $role, string $url, string $method, array $data, array $expectedErrors): void
     {
-        $client = $this->getClientForAuthenticatedUser($role);
+        $client = ($role instanceof HttpKernelBrowser) ? $role : $this->getClientForAuthenticatedUser($role);
         $this->assertExceptionForMethod($client, $url, $method, $data, $expectedErrors);
     }
 
@@ -321,7 +321,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'total' => 'float',
                     'vat' => 'float',
                     'overdue' => 'bool',
-                    'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'],
+                    'metaFields' => ['result' => 'array', 'type' => 'InvoiceMeta'],
                 ];
 
             case 'PageActionItem':
@@ -350,6 +350,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'value' => '@string',
                 ];
 
+            case 'InvoiceMeta':
             case 'CustomerMeta':
             case 'ProjectMeta':
             case 'ActivityMeta':
@@ -630,7 +631,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'number' => '@string',
                     'color' => '@string',
                     'color-safe' => 'string',
-                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'], // since 2.45
+                    'metaFields' => ['result' => 'array', 'type' => 'ActivityMeta'], // since 2.45
                     'comment' => '@string',
                 ];
 
@@ -644,7 +645,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'number' => '@string',
                     'color' => '@string',
                     'color-safe' => 'string',
-                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'], // since 2.45
+                    'metaFields' => ['result' => 'array', 'type' => 'ActivityMeta'], // since 2.45
                     'comment' => '@string',
                 ];
 
@@ -659,7 +660,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'number' => '@string',
                     'color' => '@string',
                     'color-safe' => 'string',
-                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
+                    'metaFields' => ['result' => 'array', 'type' => 'ActivityMeta'],
                     'comment' => '@string',
                     'parentTitle' => '@string',
                     'teams' => ['result' => 'array', 'type' => 'Team'],
@@ -676,7 +677,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'number' => '@string',
                     'color' => '@string',
                     'color-safe' => 'string',
-                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
+                    'metaFields' => ['result' => 'array', 'type' => 'ActivityMeta'],
                     'comment' => '@string',
                     'parentTitle' => '@string',
                     'teams' => ['result' => 'array', 'type' => 'Team'],
