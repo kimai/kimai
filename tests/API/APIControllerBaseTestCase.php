@@ -321,7 +321,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'total' => 'float',
                     'vat' => 'float',
                     'overdue' => 'bool',
-                    'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'],
+                    'metaFields' => ['result' => 'array', 'type' => 'InvoiceMeta'],
                 ];
 
             case 'PageActionItem':
@@ -630,7 +630,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'number' => '@string',
                     'color' => '@string',
                     'color-safe' => 'string',
-                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'], // since 2.45
+                    'metaFields' => ['result' => 'array', 'type' => 'ActivityMeta'], // since 2.45
                     'comment' => '@string',
                 ];
 
@@ -644,7 +644,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'number' => '@string',
                     'color' => '@string',
                     'color-safe' => 'string',
-                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'], // since 2.45
+                    'metaFields' => ['result' => 'array', 'type' => 'ActivityMeta'], // since 2.45
                     'comment' => '@string',
                 ];
 
@@ -659,7 +659,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'number' => '@string',
                     'color' => '@string',
                     'color-safe' => 'string',
-                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
+                    'metaFields' => ['result' => 'array', 'type' => 'ActivityMeta'],
                     'comment' => '@string',
                     'parentTitle' => '@string',
                     'teams' => ['result' => 'array', 'type' => 'Team'],
@@ -676,7 +676,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'number' => '@string',
                     'color' => '@string',
                     'color-safe' => 'string',
-                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
+                    'metaFields' => ['result' => 'array', 'type' => 'ActivityMeta'],
                     'comment' => '@string',
                     'parentTitle' => '@string',
                     'teams' => ['result' => 'array', 'type' => 'Team'],
