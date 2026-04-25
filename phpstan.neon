@@ -3436,11 +3436,6 @@ parameters:
             path: src/Twig/Configuration.php
 
         -
-            message: "#^Parameter \\#1 \\$callback of function call_user_func expects callable\\(\\)\\: mixed, array\\{App\\\\Configuration\\\\SystemConfiguration, mixed\\} given\\.$#"
-            count: 1
-            path: src/Twig/Configuration.php
-
-        -
             message: "#^Parameter \\#1 \\$string of function strtolower expects string, string\\|null given\\.$#"
             count: 2
             path: src/Twig/Context.php

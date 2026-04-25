@@ -48,12 +48,12 @@
 
 {% block login_social_auth %}
     {% if saml_config.isActivated() %}
-        {% if kimai_config.loginFormActive %}
+        {% if config('loginFormActive') %}
             <div class="hr-text">{{ 'or'|trans({}, 'TablerBundle') }}</div>
         {% endif %}
         <div class="card-body">
             <div class="row">
-                {% if not kimai_config.loginFormActive %}
+                {% if not config('loginFormActive') %}
                     <h2 class="card-title text-center mb-4">{{ block('login_box_msg') }}</h2>
                 {% endif %}
                 <div class="col text-center">
@@ -75,25 +75,25 @@
 {% endblock %}
 
 {% block login_box %}
-    {% if kimai_config.loginFormActive %}
+    {% if config('loginFormActive') %}
         {{ parent() }}
     {% endif %}
 {% endblock %}
 
 {% block login_form %}
-    {% if kimai_config.loginFormActive %}
+    {% if config('loginFormActive') %}
         {{ parent() }}
     {% endif %}
 {% endblock %}
 
 {% block password_forgotten %}
-    {% if kimai_config.passwordResetActive %}
+    {% if config('passwordResetActive') %}
         {{ parent() }}
     {% endif %}
 {% endblock %}
 
 {% block registration %}
-    {% if kimai_config.selfRegistrationActive %}
+    {% if config('selfRegistrationActive') %}
         {{ parent() }}
     {% endif %}
 {% endblock %}
