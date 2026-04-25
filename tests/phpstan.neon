@@ -1997,11 +1997,6 @@ parameters:
             path: TranslationsTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\ContextTest\\:\\:getDefaultSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Twig/ContextTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Twig\\\\ContextTest\\:\\:getSut\\(\\) has parameter \\$headers with no value type specified in iterable type array\\.$#"
             count: 1
             path: Twig/ContextTest.php

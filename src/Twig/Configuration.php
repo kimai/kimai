@@ -11,23 +11,26 @@ namespace App\Twig;
 
 use App\Configuration\SystemConfiguration;
 use App\Constants;
+use Twig\Environment;
 use Twig\Extension\AbstractExtension;
+use Twig\Extension\SandboxExtension;
+use Twig\Sandbox\SecurityError;
 use Twig\TwigFunction;
 
 final class Configuration extends AbstractExtension
 {
-    public function __construct(private SystemConfiguration $configuration)
+    public function __construct(private readonly SystemConfiguration $configuration)
     {
     }
 
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('config', [$this, 'get']),
+            new TwigFunction('config', $this->get(...), ['needs_environment' => true]),
         ];
     }
 
-    public function get(string $name)
+    public function get(Environment $environment, string $name)
     {
         switch ($name) {
             case 'chart-class':
@@ -48,6 +51,17 @@ final class Configuration extends AbstractExtension
             case 'theme.branding.logo':
             case 'theme.branding.company':
                 return $this->configuration->find($name);
+        }
+
+        if (str_starts_with($name, 'saml.') || str_starts_with($name, 'ldap.')) {
+            throw new SecurityError(\sprintf('Templates cannot access security configuration %s.', $name));
+        }
+
+        if ($environment->hasExtension(SandboxExtension::class)) {
+            $sandbox = $environment->getExtension(SandboxExtension::class);
+            if ($sandbox->isSandboxed()) {
+                throw new SecurityError('Sandboxed template tried to access configuration key: ' . $name);
+            }
         }
 
         $checks = ['is' . $name, 'get' . $name, 'has' . $name, $name];
