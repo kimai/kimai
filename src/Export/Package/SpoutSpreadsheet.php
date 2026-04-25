@@ -36,7 +36,6 @@ class SpoutSpreadsheet implements SpreadsheetPackage
         private readonly ?string $locale = null,
     )
     {
-        $this->writer->setCreator(Constants::SOFTWARE);
     }
 
     /**
@@ -138,6 +137,10 @@ class SpoutSpreadsheet implements SpreadsheetPackage
 
     public function save(): void
     {
+        if ($this->writer instanceof XLSXWriter) {
+            $this->writer->setCreator(Constants::SOFTWARE);
+        }
+
         $this->writer->close();
     }
 }
