@@ -10,8 +10,6 @@
 namespace App\Tests\Twig;
 
 use App\Configuration\SystemConfiguration;
-use App\Tests\Configuration\TestConfigLoader;
-use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Twig\Context;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -24,9 +22,6 @@ class ContextTest extends TestCase
 {
     protected function getSut(array $settings, array $headers = []): Context
     {
-        $loader = new TestConfigLoader([]);
-        $config = SystemConfigurationFactory::create($loader, ['theme' => $settings]);
-
         $stack = new RequestStack();
         $request = new Request();
         foreach ($headers as $name => $value) {
@@ -34,13 +29,13 @@ class ContextTest extends TestCase
         }
         $stack->push($request);
 
-        return new Context($config, $stack);
+        return new Context($stack);
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
-    protected function getDefaultSettings()
+    protected function getDefaultSettings(): array
     {
         return [
             'show_about' => true,
