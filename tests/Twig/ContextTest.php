@@ -77,4 +77,22 @@ class ContextTest extends TestCase
         $sut = $this->getSut($this->getDefaultSettings(), ['X-Requested-With' => 'Kimai']);
         self::assertTrue($sut->isJavascriptRequest());
     }
+
+    public function testDeprecatedGetBrandingAlwaysReturnsNull(): void
+    {
+        $sut = $this->getSut($this->getDefaultSettings());
+
+        $previousHandler = set_error_handler(static function (int $type, string $message): true {
+            self::assertSame(E_USER_DEPRECATED, $type);
+            self::assertSame('Use config() instead of "kimai_context" to access system configurations', $message);
+
+            return true;
+        });
+
+        try {
+            self::assertNull($sut->getBranding('legacyAccess', []));
+        } finally {
+            restore_error_handler();
+        }
+    }
 }
