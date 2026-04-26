@@ -79,7 +79,7 @@ class ConfigurationTest extends TestCase
         self::assertInstanceOf(TwigFunction::class, $functions[0]);
         self::assertSame('config', $functions[0]->getName());
 
-        $environment = $this->createEnvironment(['template' => '{{ config(\'theme.branding.company\') }}']);
+        $environment = $this->createEnvironment(['template' => '{{ config("theme.branding.company") }}']);
         $environment->addExtension($sut);
 
         self::assertSame('Acme Inc.', $environment->render('template'));
@@ -105,9 +105,9 @@ class ConfigurationTest extends TestCase
 
     public static function provideSandboxAllowedTemplates(): iterable
     {
-        yield 'avatar urls' => ['{{ config(\'themeAllowAvatarUrls\') ? \'1\' : \'0\' }}', '1'];
-        yield 'branding logo' => ['{{ config(\'theme.branding.logo\') }}', 'logo.png'];
-        yield 'branding company' => ['{{ config(\'theme.branding.company\') }}', 'Acme Inc.'];
+        yield 'avatar urls' => ['{{ config("themeAllowAvatarUrls") ? "1" : "0" }}', '1'];
+        yield 'branding logo' => ['{{ config("theme.branding.logo") }}', 'logo.png'];
+        yield 'branding company' => ['{{ config("theme.branding.company") }}', 'Acme Inc.'];
     }
 
     #[DataProvider('provideSandboxAllowedTemplates')]
@@ -140,7 +140,7 @@ class ConfigurationTest extends TestCase
 
     public function testSandboxRejectsNonWhitelistedConfigAccess(): void
     {
-        $environment = $this->createEnvironment(['template' => '{{ config(\'showAbout\') ? \'1\' : \'0\' }}'], true);
+        $environment = $this->createEnvironment(['template' => '{{ config("showAbout") ? "1" : "0" }}'], true);
         $environment->addExtension($this->createExtension($this->getDefaultSettings()));
 
         $this->expectException(SecurityError::class);
