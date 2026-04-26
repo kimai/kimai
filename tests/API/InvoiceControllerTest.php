@@ -15,13 +15,17 @@ use App\Entity\Team;
 use App\Entity\User;
 use App\Repository\TeamRepository;
 use App\Tests\DataFixtures\InvoiceFixtures;
+use App\Tests\Mocks\InvoiceTestMetaFieldSubscriberMock;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\Response;
 
 #[Group('integration')]
 class InvoiceControllerTest extends APIControllerBaseTestCase
 {
     /**
-     * @return Invoice[]
+     * @param int<1, 999> $amount
+     * @return non-empty-array<Invoice>
      */
     protected function importInvoiceFixtures(int $amount, ?array $status = null): array
     {
@@ -120,6 +124,8 @@ class InvoiceControllerTest extends APIControllerBaseTestCase
 
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('Invoice', $result);
+        self::assertArrayHasKey('metaFields', $result);
+        self::assertCount(0, $result['metaFields']);
     }
 
     public function testNotFound(): void
@@ -180,5 +186,96 @@ class InvoiceControllerTest extends APIControllerBaseTestCase
 
         $this->request($client, '/api/invoices', 'GET', $query);
         $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    // ------------------------------------- [META FIELDS] -------------------------------------
+
+    public function testUpdateInvoiceMetaFieldsThrowsNotFound(): void
+    {
+        $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/invoices/42/custom-fields', []);
+    }
+
+    public function testUpdateInvoiceMetaFieldsThrowsExceptionOnWrongStructure(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+
+        $this->assertExceptionForPatchAction($client, '/api/invoices/' . $id . '/custom-fields', ['name' => 'X', 'value' => 'X'], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
+    public function testUpdateInvoiceMetaFieldsThrowsExceptionOnMissingName(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+
+        $this->assertExceptionForPatchAction($client, '/api/invoices/' . $id . '/custom-fields', [['value' => 'X']], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
+    public function testUpdateInvoiceMetaFieldsThrowsExceptionOnMissingValue(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+
+        $this->assertExceptionForPatchAction($client, '/api/invoices/' . $id . '/custom-fields', [['name' => 'X']], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
+    public function testUpdateInvoiceMetaFieldsThrowsExceptionOnMissingMetafield(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+
+        $this->assertExceptionForPatchAction($client, '/api/invoices/' . $id . '/custom-fields', [['name' => 'X', 'value' => 'Y']], [
+            'code' => Response::HTTP_NOT_FOUND,
+            'message' => 'Not Found'
+        ]);
+    }
+
+    public function testUpdateInvoiceMetaFields(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $invoices = $this->importInvoiceFixtures(1);
+        $id = $invoices[0]->getId();
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new InvoiceTestMetaFieldSubscriberMock());
+
+        $data = [
+            [
+                'name' => 'metatestmock',
+                'value' => 'another,testing,bar'
+            ],
+            [
+                'name' => 'foobar',
+                'value' => 13081978
+            ],
+        ];
+        $this->request($client, '/api/invoices/' . $id . '/custom-fields', 'PATCH', [], (string) json_encode($data));
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('Invoice', $result);
+        self::assertArrayHasKey('metaFields', $result);
+        // only visible should be returned
+        self::assertCount(1, $result['metaFields']);
+        self::assertEquals(['name' => 'metatestmock', 'value' => 'another,testing,bar'], $result['metaFields'][0]);
+
+        $em = $this->getEntityManager();
+        /** @var Invoice $invoice */
+        $invoice = $em->getRepository(Invoice::class)->find($id);
+        self::assertEquals('another,testing,bar', $invoice->getMetaField('metatestmock')?->getValue());
+        self::assertEquals(13081978, $invoice->getMetaField('foobar')?->getValue());
     }
 }

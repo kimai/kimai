@@ -9,7 +9,6 @@
 
 namespace App\Voter;
 
-use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Team;
 use App\Entity\User;
@@ -58,31 +57,6 @@ final class ProjectVoter extends Voter
         return $subject instanceof Project && $this->supportsAttribute($attribute);
     }
 
-    private function checkTeamPermission(Project|Customer $subject, User $user): bool
-    {
-        if ($user->canSeeAllData()) {
-            return true;
-        }
-
-        if ($subject instanceof Project && $subject->getCustomer() !== null) {
-            if (!$this->checkTeamPermission($subject->getCustomer(), $user)) {
-                return false;
-            }
-        }
-
-        if ($subject->getTeams()->count() === 0) {
-            return true;
-        }
-
-        foreach ($subject->getTeams() as $team) {
-            if ($user->isInTeam($team)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
@@ -94,7 +68,7 @@ final class ProjectVoter extends Voter
         // this is a virtual permission, only meant to be used by developer
         // it checks if access to the given project is potentially possible
         if ($attribute === 'access') {
-            return $this->checkTeamPermission($subject, $user);
+            return $this->permissionManager->checkTeamAccessProject($subject, $user);
         }
 
         if ($this->permissionManager->hasRolePermission($user, $attribute . '_project')) {

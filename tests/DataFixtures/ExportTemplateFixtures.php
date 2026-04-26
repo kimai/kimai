@@ -12,6 +12,9 @@ namespace App\Tests\DataFixtures;
 use App\Entity\ExportTemplate;
 use Doctrine\Persistence\ObjectManager;
 
+/**
+ * @implements TestFixture<ExportTemplate>
+ */
 final class ExportTemplateFixtures implements TestFixture
 {
     /**

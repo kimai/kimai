@@ -15,12 +15,12 @@ use App\Invoice\Calculator\ShortInvoiceCalculator;
 use App\Invoice\Calculator\UserInvoiceCalculator;
 use App\Invoice\CalculatorInterface;
 use App\Invoice\InvoiceItemRepositoryInterface;
+use App\Invoice\InvoiceService;
 use App\Invoice\NumberGenerator\ConfigurableNumberGenerator;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Invoice\NumberGeneratorInterface;
 use App\Invoice\Renderer\DocxRenderer;
 use App\Invoice\RendererInterface;
-use App\Invoice\ServiceInvoice;
 use App\Repository\TimesheetInvoiceItemRepository;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -34,8 +34,8 @@ class InvoiceServiceCompilerPassTest extends TestCase
     {
         $container = new ContainerBuilder();
 
-        $definition = new Definition(ServiceInvoice::class);
-        $container->setDefinition(ServiceInvoice::class, $definition);
+        $definition = new Definition(InvoiceService::class);
+        $container->setDefinition(InvoiceService::class, $definition);
 
         $renderers = [DocxRenderer::class];
         foreach ($renderers as $renderer) {
@@ -66,7 +66,7 @@ class InvoiceServiceCompilerPassTest extends TestCase
         $sut = new InvoiceServiceCompilerPass();
         $sut->process($container);
 
-        $definition = $container->findDefinition(ServiceInvoice::class);
+        $definition = $container->findDefinition(InvoiceService::class);
         $methods = $definition->getMethodCalls();
 
         self::assertCount(7, $methods);

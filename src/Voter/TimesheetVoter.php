@@ -131,18 +131,15 @@ final class TimesheetVoter extends Voter
                 return false;
         }
 
-        $permission .= '_';
-
-        // extend me for "team" support later on
         if ($subject->getUser()?->getId() === $user->getId()) {
-            $permission .= 'own';
-        } else {
-            $permission .= 'other';
+            return $this->permissionManager->hasRolePermission($user, $permission . '_own_timesheet');
         }
 
-        $permission .= '_timesheet';
+        if (!$this->permissionManager->checkTeamAccessTimesheet($subject, $user)) {
+            return false;
+        }
 
-        return $this->permissionManager->hasRolePermission($user, $permission);
+        return $this->permissionManager->hasRolePermission($user, $permission . '_other_timesheet');
     }
 
     private function canStart(Timesheet $timesheet): bool

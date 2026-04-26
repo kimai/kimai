@@ -95,12 +95,12 @@ class UserEditType extends AbstractType
                 'label' => 'active',
                 'help' => 'active.help'
             ]);
-
-            $builder->add('systemAccount', YesNoType::class, [
-                'label' => 'system_account',
-                'help' => 'system_account.help',
-            ]);
         }
+
+        $builder->add('systemAccount', YesNoType::class, [
+            'label' => 'system_account',
+            'help' => 'system_account.help',
+        ]);
 
         if ($options['include_supervisor']) {
             $builder->add('supervisor', UserType::class, [

@@ -232,10 +232,10 @@ final class UserController extends BaseApiController
      * Update user preferences
      */
     #[IsGranted('edit', 'profile')]
-    #[OA\Response(response: 200, description: 'Sets the value of a consifgured preference. You cannot create unknown preferences: if the given name is not configured, an exception will be raised.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
-    #[OA\Parameter(name: 'id', in: 'path', description: 'User ID to set the custom-field value for', required: true)]
+    #[OA\Response(response: 200, description: 'Sets the value of a configured preference. You cannot create unknown or updated disabled preferences.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
+    #[OA\Parameter(name: 'id', description: 'User ID to set the custom-field value for', in: 'path', required: true)]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(type: 'array', items: new OA\Items(new Model(type: UserPreference::class))))]
-    #[Route(methods: ['PATCH'], path: '/{id}/preferences', requirements: ['id' => '\d+'])]
+    #[Route(path: '/{id}/preferences', requirements: ['id' => '\d+'], methods: ['PATCH'])]
     public function updateUserPreference(User $profile, Request $request, EventDispatcherInterface $dispatcher, UserService $userService): Response
     {
         $event = new PrepareUserEvent($profile, false);

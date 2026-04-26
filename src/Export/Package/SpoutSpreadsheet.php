@@ -36,7 +36,6 @@ class SpoutSpreadsheet implements SpreadsheetPackage
         private readonly ?string $locale = null,
     )
     {
-        $this->writer->setCreator(Constants::SOFTWARE);
     }
 
     /**
@@ -112,7 +111,7 @@ class SpoutSpreadsheet implements SpreadsheetPackage
         $i = 0;
         foreach ($columns as $column) {
             if (!$isTotalsRow && \is_string($column)) {
-                $tmp[] = new StringCell($column, $style);
+                $tmp[] = new StringCell($column, $this->styles[$i++]);
             } else {
                 $tmp[] = Cell::fromValue($column, $this->styles[$i++]); // @phpstan-ignore argument.type
             }
@@ -138,6 +137,10 @@ class SpoutSpreadsheet implements SpreadsheetPackage
 
     public function save(): void
     {
+        if ($this->writer instanceof XLSXWriter) {
+            $this->writer->setCreator(Constants::SOFTWARE);
+        }
+
         $this->writer->close();
     }
 }

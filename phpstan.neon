@@ -2823,62 +2823,42 @@ parameters:
         -
             message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
             count: 1
-            path: src/Invoice/ServiceInvoice.php
+            path: src/Invoice/InvoiceService.php
 
         -
             message: "#^Cannot call method hasInvoiceTemplate\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
-            path: src/Invoice/ServiceInvoice.php
+            path: src/Invoice/InvoiceService.php
 
         -
             message: "#^Cannot call method setBegin\\(\\) on App\\\\Repository\\\\Query\\\\InvoiceQuery\\|null\\.$#"
             count: 1
-            path: src/Invoice/ServiceInvoice.php
+            path: src/Invoice/InvoiceService.php
 
         -
             message: "#^Cannot call method setEnd\\(\\) on App\\\\Repository\\\\Query\\\\InvoiceQuery\\|null\\.$#"
             count: 1
-            path: src/Invoice/ServiceInvoice.php
+            path: src/Invoice/InvoiceService.php
 
         -
             message: "#^Cannot call method setInvoiceTemplate\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
-            path: src/Invoice/ServiceInvoice.php
+            path: src/Invoice/InvoiceService.php
 
         -
             message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, int\\|null given\\.$#"
             count: 1
-            path: src/Invoice/ServiceInvoice.php
-
-        -
-            message: "#^Parameter \\#1 \\$string1 of function strcmp expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Invoice/ServiceInvoice.php
+            path: src/Invoice/InvoiceService.php
 
         -
             message: "#^Parameter \\#2 \\$locale of class App\\\\Invoice\\\\DefaultInvoiceFormatter constructor expects string, string\\|null given\\.$#"
             count: 1
-            path: src/Invoice/ServiceInvoice.php
-
-        -
-            message: "#^Parameter \\#2 \\$string of function explode expects string, string\\|null given\\.$#"
-            count: 2
-            path: src/Invoice/ServiceInvoice.php
-
-        -
-            message: "#^Parameter \\#2 \\$string2 of function strcmp expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Invoice/ServiceInvoice.php
+            path: src/Invoice/InvoiceService.php
 
         -
             message: "#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, iterable\\<App\\\\Entity\\\\ExportableItem\\> given\\.$#"
             count: 1
-            path: src/Invoice/ServiceInvoice.php
-
-        -
-            message: "#^Property App\\\\Invoice\\\\ServiceInvoice\\:\\:\\$invoiceItemRepositories type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Invoice/ServiceInvoice.php
+            path: src/Invoice/InvoiceService.php
 
         -
             message: "#^Generator expects value type Symfony\\\\Component\\\\HttpKernel\\\\Bundle\\\\BundleInterface, object given\\.$#"
@@ -2994,11 +2974,6 @@ parameters:
             message: "#^Property App\\\\Model\\\\Statistic\\\\Day\\:\\:\\$details type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Model/Statistic/Day.php
-
-        -
-            message: "#^Parameter \\#1 \\$string of function str_pad expects string, int\\|string given\\.$#"
-            count: 1
-            path: src/Model/Statistic/Month.php
 
         -
             message: "#^Method App\\\\Pdf\\\\PdfContext\\:\\:getOption\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -3457,11 +3432,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Twig\\\\Configuration\\:\\:get\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: src/Twig/Configuration.php
-
-        -
-            message: "#^Parameter \\#1 \\$callback of function call_user_func expects callable\\(\\)\\: mixed, array\\{App\\\\Configuration\\\\SystemConfiguration, mixed\\} given\\.$#"
             count: 1
             path: src/Twig/Configuration.php
 

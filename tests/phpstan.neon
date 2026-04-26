@@ -357,22 +357,12 @@ parameters:
             path: Command/ExportCreateCommandTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Command\\\\ExportCreateCommandTest\\:\\:importFixture\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Command/ExportCreateCommandTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:assertCommandErrors\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: Command/InvoiceCreateCommandTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:createInvoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Command/InvoiceCreateCommandTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Command\\\\InvoiceCreateCommandTest\\:\\:importFixture\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Command/InvoiceCreateCommandTest.php
 
@@ -523,11 +513,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:assertHasValidationError\\(\\) has parameter \\$formData with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Controller/AbstractControllerBaseTestCase.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:importFixture\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Controller/AbstractControllerBaseTestCase.php
 
@@ -990,11 +975,6 @@ parameters:
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 3
             path: Controller/WidgetControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\DataFixtures\\\\TestFixture\\:\\:load\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: DataFixtures/TestFixture.php
 
         -
             message: "#^Cannot access offset 'foo\\-bundle\\.bar' on array\\|bool\\|float\\|int\\|string\\|null\\.$#"
@@ -1569,17 +1549,17 @@ parameters:
         -
             message: "#^Cannot call method getTotal\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
             count: 4
-            path: Invoice/ServiceInvoiceTest.php
+            path: Invoice/InvoiceServiceTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Invoice\\\\ServiceInvoiceTest\\:\\:getSut\\(\\) has parameter \\$paths with no value type specified in iterable type array\\.$#"
+            message: "#^Method App\\\\Tests\\\\Invoice\\\\InvoiceServiceTest\\:\\:getSut\\(\\) has parameter \\$paths with no value type specified in iterable type array\\.$#"
             count: 1
-            path: Invoice/ServiceInvoiceTest.php
+            path: Invoice/InvoiceServiceTest.php
 
         -
             message: "#^Parameter \\#1 \\$dataDir of class App\\\\Utils\\\\FileHelper constructor expects string, string\\|false given\\.$#"
             count: 1
-            path: Invoice/ServiceInvoiceTest.php
+            path: Invoice/InvoiceServiceTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Ldap\\\\LdapManagerTest\\:\\:getLdapManager\\(\\) has no return type specified\\.$#"
@@ -1688,7 +1668,7 @@ parameters:
 
         -
             message: "#^Parameter \\#2 \\$cacheDirectory of class App\\\\Pdf\\\\MPdfConverter constructor expects string, array\\|bool\\|float\\|int\\|string\\|null given\\.$#"
-            count: 1
+            count: 2
             path: Pdf/MPdfConverterTest.php
 
         -
@@ -1698,11 +1678,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Tests\\\\Repository\\\\AbstractRepositoryTestCase\\:\\:getEntityManager\\(\\) should return Doctrine\\\\Persistence\\\\ObjectManager but returns Doctrine\\\\Persistence\\\\ObjectManager\\|null\\.$#"
-            count: 1
-            path: Repository/AbstractRepositoryTestCase.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\AbstractRepositoryTestCase\\:\\:importFixture\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Repository/AbstractRepositoryTestCase.php
 
@@ -2020,11 +1995,6 @@ parameters:
             message: "#^Cannot access property \\$file on SimpleXMLElement\\|false\\.$#"
             count: 4
             path: TranslationsTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Twig\\\\ContextTest\\:\\:getDefaultSettings\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Twig/ContextTest.php
 
         -
             message: "#^Method App\\\\Tests\\\\Twig\\\\ContextTest\\:\\:getSut\\(\\) has parameter \\$headers with no value type specified in iterable type array\\.$#"
@@ -2402,21 +2372,6 @@ parameters:
             path: Voter/RolePermissionVoterTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:assertVote\\(\\) has parameter \\$attribute with no type specified\\.$#"
-            count: 1
-            path: Voter/TimesheetVoterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:assertVote\\(\\) has parameter \\$result with no type specified\\.$#"
-            count: 1
-            path: Voter/TimesheetVoterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:assertVote\\(\\) has parameter \\$subject with no type specified\\.$#"
-            count: 1
-            path: Voter/TimesheetVoterTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:getLockDownTestData\\(\\) has no return type specified\\.$#"
             count: 1
             path: Voter/TimesheetVoterTest.php
@@ -2505,11 +2460,6 @@ parameters:
             message: "#^Method App\\\\Tests\\\\Widget\\\\Type\\\\MoreTest\\:\\:getDefaultOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Widget/Type/MoreTest.php
-
-        -
-            message: "#^Cannot access offset 'financialBegin' on mixed\\.$#"
-            count: 2
-            path: Widget/Type/PaginatedWorkingTimeChartTest.php
 
         -
             message: "#^Parameter \\#2 \\$array of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertArrayHasKey\\(\\) expects array\\|ArrayAccess, mixed given\\.$#"
