@@ -31,7 +31,7 @@ class TimesheetVoterTest extends AbstractVoterTestCase
         return $this->getLockdownVoter();
     }
 
-    protected function assertVote(User $user, $subject, $attribute, $result): void
+    private function assertVote(User $user, Timesheet $subject, string $attribute, int $result): void
     {
         $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(TimesheetVoter::class);
@@ -39,28 +39,27 @@ class TimesheetVoterTest extends AbstractVoterTestCase
         self::assertEquals($result, $sut->vote($token, $subject, [$attribute]));
     }
 
-    public function testVote(): void
+    #[DataProvider('getTestData')]
+    public function testVote(User $user, Timesheet $subject, string $attribute, int $result): void
     {
-        foreach ($this->getTestData() as $row) {
-            $this->assertVote($row[0], $row[1], $row[2], $row[3]);
-        }
+        $this->assertVote($user, $subject, $attribute, $result);
     }
 
-    public function getTestData()
+    public static function getTestData()
     {
-        $user0 = $this->getTestUser(0, 'unknown');
-        $user1 = $this->getTestUser(1, User::ROLE_USER);
-        $user2 = $this->getTestUser(2, User::ROLE_TEAMLEAD);
-        $user3 = $this->getTestUser(3, User::ROLE_ADMIN);
-        $user4 = $this->getTestUser(4, User::ROLE_SUPER_ADMIN);
+        $user0 = self::getTestUser(0, 'unknown');
+        $user1 = self::getTestUser(1, User::ROLE_USER);
+        $user2 = self::getTestUser(2, User::ROLE_TEAMLEAD);
+        $user3 = self::getTestUser(3, User::ROLE_ADMIN);
+        $user4 = self::getTestUser(4, User::ROLE_SUPER_ADMIN);
 
-        $timesheet1 = $this->getTimesheet($user1);
-        $timesheet2 = $this->getTimesheet($user2);
-        $timesheet3 = $this->getTimesheet($user3);
-        $timesheet4 = $this->getTimesheet($user4);
-        $timesheet5 = $this->getTimesheet($user2);
+        $timesheet1 = self::getTimesheet($user1);
+        $timesheet2 = self::getTimesheet($user2);
+        $timesheet3 = self::getTimesheet($user3);
+        $timesheet4 = self::getTimesheet($user4);
+        $timesheet5 = self::getTimesheet($user2);
         $timesheet5->setExported(true);
-        $timesheet6 = $this->getTimesheet($user1);
+        $timesheet6 = self::getTimesheet($user1);
         $timesheet6->getActivity()?->setVisible(false);
 
         $result = VoterInterface::ACCESS_GRANTED;
@@ -97,7 +96,7 @@ class TimesheetVoterTest extends AbstractVoterTestCase
     #[DataProvider('getLockDownTestData')]
     public function testWithLockdown(string $permission, int $expected, string $beginModifier, string $lockdownBegin, string $lockdownEnd, ?string $lockdownGrace): void
     {
-        $user = $this->getTestUser(1, User::ROLE_USER);
+        $user = self::getTestUser(1, User::ROLE_USER);
 
         $begin = new \DateTime('now');
         $begin->modify($beginModifier);
@@ -125,16 +124,16 @@ class TimesheetVoterTest extends AbstractVoterTestCase
 
     public function testSpecialCases(): void
     {
-        $user1 = $this->getTestUser(1, User::ROLE_USER);
-        $user2 = $this->getTestUser(2, User::ROLE_TEAMLEAD);
-        $user3 = $this->getTestUser(3, User::ROLE_ADMIN);
-        $user4 = $this->getTestUser(4, User::ROLE_SUPER_ADMIN);
+        $user1 = self::getTestUser(1, User::ROLE_USER);
+        $user2 = self::getTestUser(2, User::ROLE_TEAMLEAD);
+        $user3 = self::getTestUser(3, User::ROLE_ADMIN);
+        $user4 = self::getTestUser(4, User::ROLE_SUPER_ADMIN);
 
         // unknown attribute
-        $timesheet = $this->getTimesheet($user3);
+        $timesheet = self::getTimesheet($user3);
         $this->assertVote($user3, $timesheet, 'edit2', VoterInterface::ACCESS_ABSTAIN);
 
-        $timesheet = $this->getTimesheet($user2);
+        $timesheet = self::getTimesheet($user2);
         $timesheet->setExported(true);
         // edit exported timesheet disallowed for teamleads
         $this->assertVote($user2, $timesheet, 'edit', VoterInterface::ACCESS_DENIED);
@@ -144,17 +143,17 @@ class TimesheetVoterTest extends AbstractVoterTestCase
         $this->assertVote($user4, $timesheet, 'delete', VoterInterface::ACCESS_GRANTED);
 
         // hidden activities might not be started
-        $timesheet = $this->getTimesheet($user1);
+        $timesheet = self::getTimesheet($user1);
         $timesheet->getActivity()?->setVisible(false);
         $this->assertVote($user2, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
 
         // hidden projects might not be started
-        $timesheet = $this->getTimesheet($user1);
+        $timesheet = self::getTimesheet($user1);
         $timesheet->getProject()?->setVisible(false);
         $this->assertVote($user2, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
 
         // hidden customers might not be started
-        $timesheet = $this->getTimesheet($user1);
+        $timesheet = self::getTimesheet($user1);
         $timesheet->getProject()?->getCustomer()?->setVisible(false);
         $this->assertVote($user2, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
         // cannot start timesheet without activity
@@ -169,38 +168,34 @@ class TimesheetVoterTest extends AbstractVoterTestCase
         $this->assertVote($user2, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
     }
 
-    protected function getTimesheet($user): Timesheet
+    private static function getTimesheet($user): Timesheet
     {
-        $timesheet = new Timesheet();
-        $timesheet->setUser($user);
-
         $activity = new Activity();
         $project = new Project();
+        $customer = new Customer('foo');
         $activity->setProject($project);
+        $project->setCustomer($customer);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($user);
         $timesheet->setProject($project);
         $timesheet->setActivity($activity);
-        $customer = new Customer('foo');
-        $project->setCustomer($customer);
 
         return $timesheet;
     }
 
-    /**
-     * @param int $id
-     * @param string $role
-     * @return User
-     */
-    protected function getTestUser(int $id, string $role): User
+    private static function getTestUser(int $id, string $role): User
     {
-        $user = $this->createMock(User::class);
+        $user = self::createStub(User::class);
         $user->method('getId')->willReturn($id);
         $user->method('getRoles')->willReturn([$role]);
+        $user->method('getTeams')->willReturn([]);
         $user->method('getTimezone')->willReturn(date_default_timezone_get());
 
         return $user;
     }
 
-    protected function getLockdownVoter(?string $lockdownBegin = null, ?string $lockdownEnd = null, ?string $lockdownGrace = null): TimesheetVoter
+    private function getLockdownVoter(?string $lockdownBegin = null, ?string $lockdownEnd = null, ?string $lockdownGrace = null): TimesheetVoter
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
         $config = SystemConfigurationFactory::create($loader, [

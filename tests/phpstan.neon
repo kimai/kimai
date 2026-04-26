@@ -2372,21 +2372,6 @@ parameters:
             path: Voter/RolePermissionVoterTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:assertVote\\(\\) has parameter \\$attribute with no type specified\\.$#"
-            count: 1
-            path: Voter/TimesheetVoterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:assertVote\\(\\) has parameter \\$result with no type specified\\.$#"
-            count: 1
-            path: Voter/TimesheetVoterTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:assertVote\\(\\) has parameter \\$subject with no type specified\\.$#"
-            count: 1
-            path: Voter/TimesheetVoterTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Voter\\\\TimesheetVoterTest\\:\\:getLockDownTestData\\(\\) has no return type specified\\.$#"
             count: 1
             path: Voter/TimesheetVoterTest.php
