@@ -16,8 +16,10 @@ use App\Entity\User;
 use App\Repository\TeamRepository;
 use App\Tests\DataFixtures\InvoiceFixtures;
 use App\Tests\Mocks\InvoiceTestMetaFieldSubscriberMock;
+use App\Utils\FileHelper;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 #[Group('integration')]
@@ -133,7 +135,7 @@ class InvoiceControllerTest extends APIControllerBaseTestCase
         $this->assertEntityNotFound(User::ROLE_USER, '/api/invoices/' . PHP_INT_MAX);
     }
 
-    public function testDownloadRespectsCustomerPermission(): void
+    public function testGetEntityRespectsCustomerPermission(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
@@ -161,6 +163,71 @@ class InvoiceControllerTest extends APIControllerBaseTestCase
         $repository->saveTeam($team);
 
         $this->assertApiAccessDenied($client, '/api/invoices/' . $invoice->getId());
+    }
+
+    public function testDownload(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $invoice = $this->importInvoiceFixtures(1)[0];
+        $filename = $invoice->getInvoiceFilename() . '.pdf';
+        $invoice->setFilename($filename);
+
+        $em = $this->getEntityManager();
+        $em->persist($invoice);
+        $em->flush();
+
+        /** @var FileHelper $fileHelper */
+        $fileHelper = $this->getPrivateService(FileHelper::class);
+        $path = $fileHelper->getDataDirectory('invoices') . $filename;
+        file_put_contents($path, '%PDF-1.4 test');
+
+        try {
+            $this->assertAccessIsGranted($client, '/api/invoices/' . $invoice->getId() . '/download');
+
+            $response = $client->getResponse();
+            self::assertInstanceOf(BinaryFileResponse::class, $response);
+            self::assertEquals('application/pdf', $response->headers->get('Content-Type'));
+            self::assertStringContainsString('attachment; filename=' . $filename, $response->headers->get('Content-Disposition') ?? '');
+        } finally {
+            $fileHelper->removeFile($path);
+        }
+    }
+
+    public function testDownloadRespectsCustomerPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $invoice = $this->importInvoiceFixtures(1, [Invoice::STATUS_NEW])[0];
+        $filename = $invoice->getInvoiceFilename() . '.pdf';
+        $invoice->setFilename($filename);
+
+        $em = $this->getEntityManager();
+        $em->persist($invoice);
+        $em->flush();
+
+        /** @var FileHelper $fileHelper */
+        $fileHelper = $this->getPrivateService(FileHelper::class);
+        $path = $fileHelper->getDataDirectory('invoices') . $filename;
+        file_put_contents($path, '%PDF-1.4 test');
+
+        try {
+            $this->assertAccessIsGranted($client, '/api/invoices/' . $invoice->getId() . '/download');
+
+            $customer = $invoice->getCustomer();
+            self::assertInstanceOf(Customer::class, $customer);
+
+            $team = new Team('foo');
+            $team->addTeamlead($this->getUserByRole(User::ROLE_ADMIN));
+            $team->addCustomer($customer);
+
+            /** @var TeamRepository $repository */
+            $repository = $em->getRepository(Team::class);
+            $repository->saveTeam($team);
+
+            $this->assertApiAccessDenied($client, '/api/invoices/' . $invoice->getId() . '/download');
+        } finally {
+            $fileHelper->removeFile($path);
+        }
     }
 
     public function testCollectionRespectsCustomerPermission(): void
