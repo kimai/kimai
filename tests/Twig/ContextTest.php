@@ -90,7 +90,7 @@ class ContextTest extends TestCase
         });
 
         try {
-            self::assertNull($sut->getBranding('legacyAccess', []));
+            self::assertNull($sut->getBranding('legacyAccess'));
         } finally {
             restore_error_handler();
         }
