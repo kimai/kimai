@@ -14,6 +14,7 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Tag;
+use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
@@ -1512,5 +1513,388 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         /** @var Timesheet $timesheet */
         $timesheet = $em->getRepository(Timesheet::class)->find($id);
         self::assertEquals('another,testing,bar', $timesheet->getMetaField('metatestmock')->getValue());
+    }
+
+    // ------------------------------------------------------------------
+    // CVE-2024-29200 / GHSA-cj3c-5xpm-cx94 — per-record IDOR regression suite.
+    //
+    // The list endpoint fix (TimesheetRepository::addPermissionCriteria) covers
+    // GET /api/timesheets only. The per-record routes load a Timesheet by id
+    // and rely entirely on TimesheetVoter for authorisation. Previously
+    // the voter only asked "is this the caller's own entry?" — so a teamlead
+    // with view_other_timesheet could read, mutate or delete any timesheet by
+    // id, regardless of team scope. These tests pin the new team-scoped
+    // behaviour (RolePermissionManager::checkTeamAccessTimesheet) on every
+    // affected route.
+    // ------------------------------------------------------------------
+
+    public function testCveIdorTeamleadCannotReachAnyPerRecordRouteWhenCustomerTeamRestricts(): void
+    {
+        // Direct reproduction of the security advisory's PoC. The customer
+        // belongs to a team the teamlead is not in; the timesheet owner is
+        // a different user; the teamlead must be denied on every per-record
+        // route, not just on GET /api/timesheets.
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+
+        $ownerTeam = new Team('owner team');
+        $ownerTeam->addUser($owner);
+        $em->persist($ownerTeam);
+
+        $customerTeam = new Team('customer team');
+        $customerTeam->addUser($owner);
+        $em->persist($customerTeam);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [$customerTeam], running: false);
+        $id = $timesheet->getId();
+        self::assertIsInt($id);
+
+        // 1) GET /api/timesheets/{id}
+        $this->assertApiAccessDenied($client, '/api/timesheets/' . $id);
+
+        // 2) PATCH /api/timesheets/{id}
+        $patch = json_encode(['description' => 'HIJACKED_BY_BOB']);
+        self::assertIsString($patch);
+        $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], $patch);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        // 3) PATCH /api/timesheets/{id}/stop  and  4) GET .../stop
+        $this->request($client, '/api/timesheets/' . $id . '/stop', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+        $this->request($client, '/api/timesheets/' . $id . '/stop', 'GET');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        // 5) PATCH /api/timesheets/{id}/restart  and  6) GET .../restart
+        $this->request($client, '/api/timesheets/' . $id . '/restart', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+        $this->request($client, '/api/timesheets/' . $id . '/restart', 'GET');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        // 7) PATCH /api/timesheets/{id}/duplicate
+        $this->request($client, '/api/timesheets/' . $id . '/duplicate', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        // 8) PATCH /api/timesheets/{id}/export
+        $this->request($client, '/api/timesheets/' . $id . '/export', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        // 9) PATCH /api/timesheets/{id}/meta
+        $meta = json_encode(['name' => 'metatestmock', 'value' => 'pwned']);
+        self::assertIsString($meta);
+        $this->request($client, '/api/timesheets/' . $id . '/meta', 'PATCH', [], $meta);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        // 10) DELETE /api/timesheets/{id}  — verified last because it is destructive.
+        $this->request($client, '/api/timesheets/' . $id, 'DELETE');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        // The timesheet must still be in the database after every attempted attack.
+        self::assertNotNull(
+            $this->getEntityManager()->getRepository(Timesheet::class)->find($id),
+            'PoC: DELETE leaked through and the row was removed from the database.'
+        );
+    }
+
+    public function testCveIdorTeamleadAsPlainMemberOfOwnerTeamCannotReachAnyPerRecordRoute(): void
+    {
+        // No customer/project/activity team restriction — only the owner is in
+        // a team. The teamlead is a plain member of that same team. Plain
+        // membership must NOT be enough to reach a foreign user's timesheet
+        // via per-record routes (RolePermissionManager::checkTeamLeadAccess).
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+
+        $sharedTeam = new Team('shared');
+        $sharedTeam->addUser($owner);
+        $sharedTeam->addUser($teamlead); // plain member, not addTeamlead()
+        $em->persist($sharedTeam);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [], running: false);
+        $id = $timesheet->getId();
+        self::assertIsInt($id);
+
+        $this->assertApiAccessDenied($client, '/api/timesheets/' . $id);
+
+        $patch = json_encode(['description' => 'HIJACKED_BY_BOB']);
+        self::assertIsString($patch);
+        $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], $patch);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->request($client, '/api/timesheets/' . $id . '/stop', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->request($client, '/api/timesheets/' . $id . '/restart', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->request($client, '/api/timesheets/' . $id . '/duplicate', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->request($client, '/api/timesheets/' . $id . '/export', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $meta = json_encode(['name' => 'metatestmock', 'value' => 'pwned']);
+        self::assertIsString($meta);
+        $this->request($client, '/api/timesheets/' . $id . '/meta', 'PATCH', [], $meta);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->request($client, '/api/timesheets/' . $id, 'DELETE');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    public function testTeamleadOfOwnerTeamCanAccessTimesheetOnPerRecordRoutes(): void
+    {
+        // Positive control: when the teamlead is actually the teamlead of the
+        // owner's team and there is no customer/project/activity restriction,
+        // they pass the new team gate.
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+
+        $sharedTeam = new Team('shared');
+        $sharedTeam->addUser($owner);
+        $sharedTeam->addTeamlead($teamlead);
+        $em->persist($sharedTeam);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [], running: false);
+        $id = $timesheet->getId();
+        self::assertIsInt($id);
+
+        // GET — read access succeeds.
+        $this->assertAccessIsGranted($client, '/api/timesheets/' . $id);
+
+        // PATCH — mutation succeeds.
+        $patch = json_encode(['description' => 'edited by teamlead']);
+        self::assertIsString($patch);
+        $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], $patch);
+        self::assertTrue($client->getResponse()->isSuccessful(), 'PATCH should succeed when teamlead is teamlead of owner team');
+
+        // /duplicate — succeeds (project + activity visible).
+        $this->request($client, '/api/timesheets/' . $id . '/duplicate', 'PATCH');
+        self::assertTrue($client->getResponse()->isSuccessful(), 'duplicate should succeed for legitimate teamlead');
+
+        // /export — succeeds, ROLE_TEAMLEAD has edit_export_other_timesheet.
+        $this->request($client, '/api/timesheets/' . $id . '/export', 'PATCH');
+        self::assertTrue($client->getResponse()->isSuccessful(), 'export should succeed for legitimate teamlead');
+    }
+
+    public function testCustomerTeamRestrictionStillBlocksLegitimateTeamleadOfOwnerTeam(): void
+    {
+        // Even with the teamlead being the teamlead of the owner's team, the
+        // customer-level team gate must still apply. A teamlead may not bypass
+        // a customer's team restriction just because they happen to lead the
+        // owner's team.
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+
+        $ownerTeam = new Team('owner team');
+        $ownerTeam->addUser($owner);
+        $ownerTeam->addTeamlead($teamlead);
+        $em->persist($ownerTeam);
+
+        // Customer team has only the owner; the teamlead is NOT a member.
+        $customerTeam = new Team('customer team');
+        $customerTeam->addUser($owner);
+        $em->persist($customerTeam);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [$customerTeam], running: false);
+        $id = $timesheet->getId();
+        self::assertIsInt($id);
+
+        $this->assertApiAccessDenied($client, '/api/timesheets/' . $id);
+
+        $patch = json_encode(['description' => 'should not work']);
+        self::assertIsString($patch);
+        $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], $patch);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->request($client, '/api/timesheets/' . $id, 'DELETE');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    public function testOwnerCanAlwaysAccessOwnTimesheetEvenWithRestrictiveTeams(): void
+    {
+        // Owner short-circuit: the team gate must NOT apply when the caller is
+        // also the timesheet's user. Even a customer team locked to other
+        // users plus an owner-only team must not prevent self-access.
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+
+        $customerTeam = new Team('customer team excluding owner');
+        // owner is NOT a member of the customer team — checkTeamAccessProject
+        // would normally deny. Owner short-circuit must bypass it.
+        $em->persist($customerTeam);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [$customerTeam], running: false);
+        $id = $timesheet->getId();
+        self::assertIsInt($id);
+
+        $this->assertAccessIsGranted($client, '/api/timesheets/' . $id);
+
+        $patch = json_encode(['description' => 'self edit']);
+        self::assertIsString($patch);
+        $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], $patch);
+        self::assertTrue($client->getResponse()->isSuccessful(), 'Owner must be able to edit own timesheet');
+    }
+
+    public function testSuperAdminCanAccessTimesheetDespiteRestrictiveTeams(): void
+    {
+        // canSeeAllData via isSuperAdmin() — bypasses every team gate, on
+        // every per-record route.
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+
+        $ownerTeam = new Team('owner team');
+        $ownerTeam->addUser($owner);
+        $em->persist($ownerTeam);
+
+        $customerTeam = new Team('customer team excluding super admin');
+        $customerTeam->addUser($owner);
+        $em->persist($customerTeam);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [$customerTeam], running: false);
+        $id = $timesheet->getId();
+        self::assertIsInt($id);
+
+        $this->assertAccessIsGranted($client, '/api/timesheets/' . $id);
+
+        $patch = json_encode(['description' => 'super admin edit']);
+        self::assertIsString($patch);
+        $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], $patch);
+        self::assertTrue($client->getResponse()->isSuccessful(), 'SUPER_ADMIN must be able to edit any timesheet');
+
+        $this->request($client, '/api/timesheets/' . $id, 'DELETE');
+        self::assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
+    }
+
+    public function testCveIdorOnRunningTimesheetStopRoutesAreBlocked(): void
+    {
+        // /stop targets a running timesheet. Verifies that even when the route
+        // would otherwise be functional, the team gate denies access.
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+
+        $customerTeam = new Team('customer team');
+        $customerTeam->addUser($owner);
+        $em->persist($customerTeam);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [$customerTeam], running: true);
+        $id = $timesheet->getId();
+        self::assertIsInt($id);
+        self::assertNull($timesheet->getEnd(), 'sanity: timesheet must be running for /stop');
+
+        $this->request($client, '/api/timesheets/' . $id . '/stop', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->request($client, '/api/timesheets/' . $id . '/stop', 'GET');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        // Confirm side-effect-free: timesheet must still be running.
+        $em->clear();
+        $reloaded = $em->getRepository(Timesheet::class)->find($id);
+        self::assertInstanceOf(Timesheet::class, $reloaded);
+        self::assertNull($reloaded->getEnd(), '/stop must not have stopped the timesheet behind the team gate');
+    }
+
+    public function testTeamleadFromUnrelatedTeamCannotAccessTimesheetById(): void
+    {
+        // Mirrors the "bob-from-TeamB attacks alice-in-TeamA" PoC from the
+        // advisory: both users have teams, but those teams are completely
+        // unrelated. The attacker happens to be a teamlead of his own team.
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+
+        $teamA = new Team('TeamA — owner only');
+        $teamA->addUser($owner);
+
+        $teamB = new Team('TeamB — attacker only');
+        $teamB->addTeamlead($teamlead);
+
+        $customerTeam = new Team('customer team — TeamA scope');
+        $customerTeam->addUser($owner);
+
+        $em->persist($teamA);
+        $em->persist($teamB);
+        $em->persist($customerTeam);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [$customerTeam], running: false);
+        $id = $timesheet->getId();
+        self::assertIsInt($id);
+
+        $this->assertApiAccessDenied($client, '/api/timesheets/' . $id);
+
+        $patch = json_encode(['description' => 'HIJACKED_BY_BOB']);
+        self::assertIsString($patch);
+        $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], $patch);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->request($client, '/api/timesheets/' . $id, 'DELETE');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        // Description must not have been mutated.
+        $em->clear();
+        $reloaded = $em->getRepository(Timesheet::class)->find($id);
+        self::assertInstanceOf(Timesheet::class, $reloaded);
+        self::assertSame('ALICE_SECRET', $reloaded->getDescription(), 'PATCH leaked through and rewrote the description.');
+    }
+
+    /**
+     * @param list<Team> $customerTeams teams to attach to the customer (= the project's customer)
+     */
+    private function persistRestrictedTimesheet(User $owner, array $customerTeams, bool $running): Timesheet
+    {
+        $em = $this->getEntityManager();
+
+        $customer = new Customer('CVE-2024-29200 customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone(self::TEST_TIMEZONE);
+        $customer->setVisible(true);
+        foreach ($customerTeams as $team) {
+            $customer->addTeam($team);
+        }
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('CVE-2024-29200 project');
+        $project->setCustomer($customer);
+        $project->setVisible(true);
+        $em->persist($project);
+
+        $activity = new Activity();
+        $activity->setName('CVE-2024-29200 activity');
+        $activity->setProject($project);
+        $activity->setVisible(true);
+        $em->persist($activity);
+
+        // Flush the catalog entities first so they have ids before any Doctrine
+        // subscriber tries to query them while persisting the timesheet
+        // (RateService re-loads the activity inside the timesheet onFlush hook).
+        $em->flush();
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+        $timesheet->setBegin(new \DateTime('-2 hours'));
+        $timesheet->setDescription('ALICE_SECRET');
+        if (!$running) {
+            $end = new \DateTime('-1 hour');
+            $timesheet->setEnd($end);
+            $timesheet->setDuration(3600);
+        }
+        $em->persist($timesheet);
+        $em->flush();
+
+        return $timesheet;
     }
 }
