@@ -13,6 +13,7 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Team;
+use App\Entity\Timesheet;
 use App\Entity\User;
 use App\User\PermissionService;
 use Doctrine\Common\Collections\Collection;
@@ -115,20 +116,42 @@ final class RolePermissionManager
     }
 
     /**
-     * @param Collection<int, Team> $teams
+     * @param array<int, Team>|Collection<int, Team> $teams
      */
-    private function checkTeamAccess(Collection $teams, User $user): bool
+    private function checkTeamAccess(Collection|array $teams, User $user): bool
     {
         if ($user->canSeeAllData()) {
             return true;
         }
 
-        if ($teams->count() === 0) {
+        if (\count($teams) === 0) {
             return true;
         }
 
         foreach ($teams as $team) {
             if ($user->isInTeam($team)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param array<int, Team>|Collection<int, Team> $teams
+     */
+    private function checkTeamLeadAccess(Collection|array $teams, User $user): bool
+    {
+        if ($user->canSeeAllData()) {
+            return true;
+        }
+
+        if (\count($teams) === 0) {
+            return true;
+        }
+
+        foreach ($teams as $team) {
+            if ($user->isTeamleadOf($team)) {
                 return true;
             }
         }
@@ -157,5 +180,22 @@ final class RolePermissionManager
         }
 
         return $this->checkTeamAccess($activity->getTeams(), $user);
+    }
+
+    public function checkTeamAccessTimesheet(Timesheet $timesheet, User $user): bool
+    {
+        if ($user->getId() !== null && $user->getId() === $timesheet->getUser()?->getId()) {
+            return true;
+        }
+
+        if ($timesheet->getProject() !== null && !$this->checkTeamAccessProject($timesheet->getProject(), $user)) {
+            return false;
+        }
+
+        if ($timesheet->getActivity() !== null && !$this->checkTeamAccessActivity($timesheet->getActivity(), $user)) {
+            return false;
+        }
+
+        return $this->checkTeamLeadAccess($timesheet->getUser()?->getTeams() ?? [], $user);
     }
 }

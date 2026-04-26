@@ -583,7 +583,7 @@ class LdapManagerTest extends TestCase
     }
 
     #[Group('legacy')]
-    public function testHydrateWithDepercatedSetter(): void
+    public function testHydrateWithDeprecatedSetter(): void
     {
         $ldapConfig = [
             'connection' => [
