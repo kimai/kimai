@@ -13,6 +13,7 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Team;
+use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Repository\RolePermissionRepository;
 use App\Security\RolePermissionManager;
@@ -273,6 +274,548 @@ class RolePermissionManagerTest extends TestCase
         $activityTeam->addUser($user);
 
         self::assertTrue($sut->checkTeamAccessActivity($activity, $user));
+    }
+
+    public function testCheckTeamAccessTimesheetGrantsAccessForOwner(): void
+    {
+        $sut = $this->createSut();
+
+        $owner = new User();
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+
+        self::assertTrue($sut->checkTeamAccessTimesheet($timesheet, $owner));
+    }
+
+    public function testCheckTeamAccessTimesheetGrantsForOwnerEvenWithBlockingTeams(): void
+    {
+        $sut = $this->createSut();
+
+        $owner = self::userWithId(42);
+        $customer = new Customer('Acme');
+        $customer->addTeam(new Team('Customer team'));
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam(new Team('Project team'));
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activity->addTeam(new Team('Activity team'));
+
+        $ownerTeam = new Team('Owner team');
+        $ownerTeam->addUser($owner);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        // Owner is not in any of the customer/project/activity teams and is only
+        // a member (not teamlead) of his own team — must still be granted access
+        self::assertTrue($sut->checkTeamAccessTimesheet($timesheet, $owner));
+    }
+
+    public function testCheckTeamAccessTimesheetGrantsForDifferentInstancesWithSameId(): void
+    {
+        $sut = $this->createSut();
+
+        $owner = self::userWithId(42);
+        $requester = self::userWithId(42);
+        // Make sure the requester does not pass via canSeeAllData or team membership.
+        self::assertNotSame($owner, $requester);
+
+        $customer = new Customer('Acme');
+        $customer->addTeam(new Team('Customer team'));
+        $project = new Project();
+        $project->setCustomer($customer);
+        $activity = new Activity();
+        $activity->setProject($project);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        self::assertTrue($sut->checkTeamAccessTimesheet($timesheet, $requester));
+    }
+
+    public function testCheckTeamAccessTimesheetGrantsForCanSeeAllData(): void
+    {
+        $sut = $this->createSut();
+
+        $owner = self::userWithId(1);
+        $ownerTeam = new Team('Owner team');
+        $ownerTeam->addUser($owner);
+
+        $customer = new Customer('Acme');
+        $customer->addTeam(new Team('Customer team'));
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam(new Team('Project team'));
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activity->addTeam(new Team('Activity team'));
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        $requester = self::userWithId(2);
+        $requester->initCanSeeAllData(true);
+
+        self::assertTrue($sut->checkTeamAccessTimesheet($timesheet, $requester));
+    }
+
+    public function testCheckTeamAccessTimesheetGrantsForCanSeeAllDataWithEmptyTimesheet(): void
+    {
+        $sut = $this->createSut();
+
+        $requester = self::userWithId(2);
+        $requester->initCanSeeAllData(true);
+
+        $timesheet = new Timesheet();
+
+        self::assertTrue($sut->checkTeamAccessTimesheet($timesheet, $requester));
+    }
+
+    public function testCheckTeamAccessTimesheetDeniesWhenCustomerTeamRestricts(): void
+    {
+        $sut = $this->createSut();
+
+        $owner = self::userWithId(1);
+        $requester = self::userWithId(2);
+
+        $customer = new Customer('Acme');
+        $customer->addTeam(new Team('Customer team'));
+
+        $project = new Project();
+        $project->setCustomer($customer);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+
+        // Even if requester would be a teamlead of the timesheet user's team, the
+        // customer gate must still deny.
+        $ownerTeam = new Team('Owner team');
+        $ownerTeam->addUser($owner);
+        $ownerTeam->addTeamlead($requester);
+
+        self::assertFalse($sut->checkTeamAccessTimesheet($timesheet, $requester));
+    }
+
+    public function testCheckTeamAccessTimesheetDeniesWhenProjectTeamRestricts(): void
+    {
+        $sut = $this->createSut();
+
+        $owner = self::userWithId(1);
+        $requester = self::userWithId(2);
+
+        $project = new Project();
+        $project->setCustomer(new Customer('Acme'));
+        $project->addTeam(new Team('Project team'));
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+
+        self::assertFalse($sut->checkTeamAccessTimesheet($timesheet, $requester));
+    }
+
+    public function testCheckTeamAccessTimesheetDeniesWhenCustomerOkButProjectRestricts(): void
+    {
+        $sut = $this->createSut();
+
+        $owner = self::userWithId(1);
+        $requester = self::userWithId(2);
+
+        $customer = new Customer('Acme');
+        $customerTeam = new Team('Customer team');
+        $customer->addTeam($customerTeam);
+        $customerTeam->addUser($requester);
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam(new Team('Project team'));
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+
+        self::assertFalse($sut->checkTeamAccessTimesheet($timesheet, $requester));
+    }
+
+    public function testCheckTeamAccessTimesheetPassesProjectGateWithoutTeams(): void
+    {
+        $sut = $this->createSut();
+
+        $owner = self::userWithId(1);
+        $requester = self::userWithId(2);
+
+        // No customer team, no project team -> project gate is permissive.
+        $project = new Project();
+        $project->setCustomer(new Customer('Acme'));
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+
+        // Owner has no teams -> teamlead gate is permissive too.
+        self::assertTrue($sut->checkTeamAccessTimesheet($timesheet, $requester));
+    }
+
+    public function testCheckTeamAccessTimesheetDeniesWhenActivityTeamRestricts(): void
+    {
+        $sut = $this->createSut();
+
+        $owner = self::userWithId(1);
+        $requester = self::userWithId(2);
+
+        $project = new Project();
+        $project->setCustomer(new Customer('Acme'));
+
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activity->addTeam(new Team('Activity team'));
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        self::assertFalse($sut->checkTeamAccessTimesheet($timesheet, $requester));
+    }
+
+    public function testCheckTeamAccessTimesheetPassesActivityGateWithoutTeams(): void
+    {
+        $sut = $this->createSut();
+
+        $owner = self::userWithId(1);
+        $requester = self::userWithId(2);
+
+        $project = new Project();
+        $project->setCustomer(new Customer('Acme'));
+
+        $activity = new Activity();
+        $activity->setProject($project);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        self::assertTrue($sut->checkTeamAccessTimesheet($timesheet, $requester));
+    }
+
+    public function testCheckTeamAccessTimesheetActivityChainsThroughItsProjectAndCustomer(): void
+    {
+        // checkTeamAccessActivity walks activity -> project -> customer. Even when
+        // the timesheet's project gate already passed, the activity must re-pass
+        // its own project's customer gate.
+        $sut = $this->createSut();
+
+        $owner = self::userWithId(1);
+        $requester = self::userWithId(2);
+
+        // Timesheet's own project is unrestricted.
+        $timesheetProject = new Project();
+        $timesheetProject->setCustomer(new Customer('Acme'));
+
+        // Activity is wired to a different project whose customer locks out the requester.
+        $blockedCustomer = new Customer('Blocked');
+        $blockedCustomer->addTeam(new Team('Blocked customer team'));
+        $activityProject = new Project();
+        $activityProject->setCustomer($blockedCustomer);
+
+        $activity = new Activity();
+        $activity->setProject($activityProject);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($timesheetProject);
+        $timesheet->setActivity($activity);
+
+        self::assertFalse($sut->checkTeamAccessTimesheet($timesheet, $requester));
+    }
+
+    public function testCheckTeamAccessTimesheetGrantsWhenTimesheetUserHasNoTeams(): void
+    {
+        $sut = $this->createSut();
+
+        $owner = self::userWithId(1);
+        $requester = self::userWithId(2);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+
+        // Owner has no team memberships -> teamlead gate returns true.
+        self::assertSame([], $owner->getTeams());
+        self::assertTrue($sut->checkTeamAccessTimesheet($timesheet, $requester));
+    }
+
+    public function testCheckTeamAccessTimesheetDeniesPlainMemberOfTimesheetUserTeam(): void
+    {
+        // Headline behaviour: plain team membership is NOT enough — the requester
+        // must be a teamlead.
+        $sut = $this->createSut();
+
+        $owner = self::userWithId(1);
+        $requester = self::userWithId(2);
+
+        $sharedTeam = new Team('Shared');
+        $sharedTeam->addUser($owner);
+        $sharedTeam->addUser($requester);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+
+        self::assertTrue($requester->isInTeam($sharedTeam));
+        self::assertFalse($requester->isTeamleadOf($sharedTeam));
+        self::assertFalse($sut->checkTeamAccessTimesheet($timesheet, $requester));
+    }
+
+    public function testCheckTeamAccessTimesheetGrantsTeamleadOfTimesheetUserTeam(): void
+    {
+        $sut = $this->createSut();
+
+        $owner = self::userWithId(1);
+        $requester = self::userWithId(2);
+
+        $sharedTeam = new Team('Shared');
+        $sharedTeam->addUser($owner);
+        $sharedTeam->addTeamlead($requester);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+
+        self::assertTrue($requester->isTeamleadOf($sharedTeam));
+        self::assertTrue($sut->checkTeamAccessTimesheet($timesheet, $requester));
+    }
+
+    public function testCheckTeamAccessTimesheetGrantsTeamleadOfOneOfMultipleTeams(): void
+    {
+        $sut = $this->createSut();
+
+        $owner = self::userWithId(1);
+        $requester = self::userWithId(2);
+
+        $teamA = new Team('A');
+        $teamB = new Team('B');
+        $teamA->addUser($owner);
+        $teamB->addUser($owner);
+        $teamA->addUser($requester);
+        $teamB->addTeamlead($requester);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+
+        self::assertTrue($sut->checkTeamAccessTimesheet($timesheet, $requester));
+    }
+
+    public function testCheckTeamAccessTimesheetDeniesWhenTeamleadOfNoneOfMultipleTeams(): void
+    {
+        $sut = $this->createSut();
+
+        $owner = self::userWithId(1);
+        $requester = self::userWithId(2);
+
+        $teamA = new Team('A');
+        $teamB = new Team('B');
+        $teamA->addUser($owner);
+        $teamB->addUser($owner);
+        $teamA->addUser($requester);
+        $teamB->addUser($requester);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+
+        self::assertFalse($sut->checkTeamAccessTimesheet($timesheet, $requester));
+    }
+
+    public function testCheckTeamAccessTimesheetDeniesWhenTeamleadOfUnrelatedTeam(): void
+    {
+        $sut = $this->createSut();
+
+        $owner = self::userWithId(1);
+        $requester = self::userWithId(2);
+
+        $ownerTeam = new Team('Owner team');
+        $ownerTeam->addUser($owner);
+
+        $unrelatedTeam = new Team('Unrelated');
+        $unrelatedTeam->addTeamlead($requester);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+
+        self::assertFalse($requester->isInTeam($ownerTeam));
+        self::assertFalse($requester->isTeamleadOf($ownerTeam));
+        self::assertFalse($sut->checkTeamAccessTimesheet($timesheet, $requester));
+    }
+
+    public function testCheckTeamAccessTimesheetGrantsWhenTimesheetUserIsNullAndNoProjectActivity(): void
+    {
+        // Documents current behaviour: an orphaned timesheet (no user) bypasses
+        // the teamlead gate because getTeams() ?? [] is empty.
+        $sut = $this->createSut();
+
+        $requester = self::userWithId(2);
+        $timesheet = new Timesheet();
+
+        self::assertNull($timesheet->getUser());
+        self::assertTrue($sut->checkTeamAccessTimesheet($timesheet, $requester));
+    }
+
+    public function testCheckTeamAccessTimesheetDeniesWhenTimesheetUserNullButProjectRestricts(): void
+    {
+        $sut = $this->createSut();
+
+        $requester = self::userWithId(2);
+
+        $project = new Project();
+        $project->setCustomer(new Customer('Acme'));
+        $project->addTeam(new Team('Project team'));
+
+        $timesheet = new Timesheet();
+        $timesheet->setProject($project);
+
+        self::assertFalse($sut->checkTeamAccessTimesheet($timesheet, $requester));
+    }
+
+    public function testCheckTeamAccessTimesheetGrantsWithoutProjectAndActivityWhenTeamlead(): void
+    {
+        $sut = $this->createSut();
+
+        $owner = self::userWithId(1);
+        $requester = self::userWithId(2);
+
+        $sharedTeam = new Team('Shared');
+        $sharedTeam->addUser($owner);
+        $sharedTeam->addTeamlead($requester);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+
+        self::assertNull($timesheet->getProject());
+        self::assertNull($timesheet->getActivity());
+        self::assertTrue($sut->checkTeamAccessTimesheet($timesheet, $requester));
+    }
+
+    public function testCheckTeamAccessTimesheetGrantsFullChainAsMemberAndTeamlead(): void
+    {
+        $sut = $this->createSut();
+
+        $owner = self::userWithId(1);
+        $requester = self::userWithId(2);
+
+        $customer = new Customer('Acme');
+        $customerTeam = new Team('Customer team');
+        $customer->addTeam($customerTeam);
+        $customerTeam->addUser($requester);
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $projectTeam = new Team('Project team');
+        $project->addTeam($projectTeam);
+        $projectTeam->addUser($requester);
+
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activityTeam = new Team('Activity team');
+        $activity->addTeam($activityTeam);
+        $activityTeam->addUser($requester);
+
+        $ownerTeam = new Team('Owner team');
+        $ownerTeam->addUser($owner);
+        $ownerTeam->addTeamlead($requester);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        self::assertTrue($sut->checkTeamAccessTimesheet($timesheet, $requester));
+    }
+
+    public function testCheckTeamAccessTimesheetDeniesFullChainMissingActivityTeam(): void
+    {
+        $sut = $this->createSut();
+
+        $owner = self::userWithId(1);
+        $requester = self::userWithId(2);
+
+        $customer = new Customer('Acme');
+        $customerTeam = new Team('Customer team');
+        $customer->addTeam($customerTeam);
+        $customerTeam->addUser($requester);
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $projectTeam = new Team('Project team');
+        $project->addTeam($projectTeam);
+        $projectTeam->addUser($requester);
+
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activity->addTeam(new Team('Activity team')); // requester missing
+
+        $ownerTeam = new Team('Owner team');
+        $ownerTeam->addUser($owner);
+        $ownerTeam->addTeamlead($requester);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        self::assertFalse($sut->checkTeamAccessTimesheet($timesheet, $requester));
+    }
+
+    public function testCheckTeamAccessTimesheetDeniesFullChainOnlyMemberNotTeamlead(): void
+    {
+        $sut = $this->createSut();
+
+        $owner = self::userWithId(1);
+        $requester = self::userWithId(2);
+
+        $customer = new Customer('Acme');
+        $customerTeam = new Team('Customer team');
+        $customer->addTeam($customerTeam);
+        $customerTeam->addUser($requester);
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $projectTeam = new Team('Project team');
+        $project->addTeam($projectTeam);
+        $projectTeam->addUser($requester);
+
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activityTeam = new Team('Activity team');
+        $activity->addTeam($activityTeam);
+        $activityTeam->addUser($requester);
+
+        $ownerTeam = new Team('Owner team');
+        $ownerTeam->addUser($owner);
+        $ownerTeam->addUser($requester); // plain member only
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        self::assertFalse($sut->checkTeamAccessTimesheet($timesheet, $requester));
+    }
+
+    private static function userWithId(int $id): User
+    {
+        $user = new User();
+        $reflection = new \ReflectionClass($user);
+        $property = $reflection->getProperty('id');
+        $property->setAccessible(true);
+        $property->setValue($user, $id);
+
+        return $user;
     }
 
     private function createSut(): RolePermissionManager
