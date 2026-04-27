@@ -424,7 +424,7 @@
       </trans-unit>
       <trans-unit id="LIOnolg" resname="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Schreibe deine Nachricht …</target>
+        <target>Schreibe deine Nachricht…</target>
       </trans-unit>
       <trans-unit id="aVwNQcX" resname="billable">
         <source>billable</source>
@@ -1993,6 +1993,10 @@
       <trans-unit id="PciSBv9" resname="address_row">
         <source>address_row</source>
         <target>Zeile %row%</target>
+      </trans-unit>
+      <trans-unit id="nlJ2pW2" resname="invoice_email">
+        <source>invoice_email</source>
+        <target>Rechnungs-E-Mail-Adresse</target>
       </trans-unit>
       <trans-unit id="_Ep8Ogx" resname="buyerReference">
         <source>buyerReference</source>
