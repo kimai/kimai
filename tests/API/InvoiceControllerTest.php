@@ -193,6 +193,14 @@ class InvoiceControllerTest extends APIControllerBaseTestCase
         }
     }
 
+    public function testDownloadIsSecure(): void
+    {
+        $client = $this->getClientForAuthenticatedUser();
+        $invoices = $this->importInvoiceFixtures(1);
+
+        $this->assertApiAccessDenied($client, '/api/invoices/' . $invoices[0]->getId() . '/download');
+    }
+
     public function testDownloadRespectsCustomerPermission(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
