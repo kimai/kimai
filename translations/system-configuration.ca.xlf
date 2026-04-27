@@ -2,33 +2,33 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ca" datatype="plaintext" original="system-configuration.en.xlf">
     <body>
-      <trans-unit id="PLggHn." resname="theme" xml:space="preserve">
+      <trans-unit id="PLggHn." resname="theme" xml:space="preserve" approved="yes">
         <source>theme</source>
-        <target state="translated">Tema</target>
+        <target state="final">Tema</target>
       </trans-unit>
-      <trans-unit id="mPRUBFX" resname="theme.markdown_content" xml:space="preserve">
+      <trans-unit id="mPRUBFX" resname="theme.markdown_content" xml:space="preserve" approved="yes">
         <source>theme.markdown_content</source>
-        <target state="translated">Permetre format "Markdown" en descripcions i comentaris</target>
+        <target state="final">Permetre format "Markdown" en descripcions i comentaris</target>
       </trans-unit>
-      <trans-unit id="SnkW0Pk" resname="theme.avatar_url" xml:space="preserve">
+      <trans-unit id="SnkW0Pk" resname="theme.avatar_url" xml:space="preserve" approved="yes">
         <source>theme.avatar_url</source>
-        <target state="translated">Permetre l'ús d'URLs per a les imatges de perfil</target>
+        <target state="final">Permetre l'ús d'URLs per a les imatges de perfil</target>
       </trans-unit>
-      <trans-unit id="FaGqoTT" resname="timesheet.mode" xml:space="preserve">
+      <trans-unit id="FaGqoTT" resname="timesheet.mode" xml:space="preserve" approved="yes">
         <source>timesheet.mode</source>
-        <target state="translated">Mode seguiment de temps</target>
+        <target state="final">Mode seguiment de temps</target>
       </trans-unit>
-      <trans-unit id="A11vhSN" resname="timesheet.mode_default" xml:space="preserve">
+      <trans-unit id="A11vhSN" resname="timesheet.mode_default" xml:space="preserve" approved="yes">
         <source>timesheet.mode_default</source>
-        <target state="translated">[Per defecte] Els temps inicial i final poden ser editats</target>
+        <target state="final">[Per defecte] Els temps inicial i final poden ser editats</target>
       </trans-unit>
-      <trans-unit id="CJZhtYx" resname="timesheet.mode_duration_fixed_begin" approved="no" xml:space="preserve">
+      <trans-unit id="CJZhtYx" resname="timesheet.mode_duration_fixed_begin" approved="yes" xml:space="preserve">
         <source>[Duration] configurable fixed start-time, only duration can be changed</source>
-        <target state="translated">[Durada] temps d'inici fix, només es pot canviar la durada</target>
+        <target state="final">[Durada] temps d'inici fix, només es pot canviar la durada</target>
       </trans-unit>
-      <trans-unit id="3tlkqJC" resname="timesheet.mode_punch" xml:space="preserve">
+      <trans-unit id="3tlkqJC" resname="timesheet.mode_punch" xml:space="preserve" approved="yes">
         <source>timesheet.mode_punch</source>
-        <target state="translated">[Control horari] l'usuari pot iniciar i aturar registres, però no pot editar les hores ni la durada</target>
+        <target state="final">[Control horari] l'usuari pot iniciar i aturar registres, però no pot editar les hores ni la durada</target>
       </trans-unit>
       <trans-unit id="k4pl27g" resname="timesheet.rules.allow_future_times" xml:space="preserve">
         <source>timesheet.rules.allow_future_times</source>
@@ -222,9 +222,9 @@
         <source>allow_duplicate_number</source>
         <target state="translated">Permet la utilització del mateix número diversos cops</target>
       </trans-unit>
-      <trans-unit id="IZY5kqL" resname="allowed_replacer" xml:space="preserve">
+      <trans-unit id="IZY5kqL" resname="allowed_replacer" xml:space="preserve" approved="yes">
         <source>allowed_replacer</source>
-        <target state="translated">Substitució permesa: %replacer%</target>
+        <target state="final">Substitució permesa: %replacer%</target>
       </trans-unit>
       <trans-unit id="6CSB6iM" resname="first_weekday" xml:space="preserve">
         <source>first_weekday</source>
