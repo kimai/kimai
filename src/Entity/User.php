@@ -483,6 +483,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->getFirstDayOfWeek() === 'sunday';
     }
 
+    public function isFirstDayOfWeekSaturday(): bool
+    {
+        return $this->getFirstDayOfWeek() === 'saturday';
+    }
+
     public function getFirstDayOfWeek(): string
     {
         return $this->getPreferenceValue(UserPreference::FIRST_WEEKDAY, User::DEFAULT_FIRST_WEEKDAY, false);
