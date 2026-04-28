@@ -49,6 +49,11 @@ class AccessToken
         $this->token = $token;
     }
 
+    public static function createForUser(User $user): self
+    {
+        return new self($user, substr(bin2hex(random_bytes(100)), 0, 25));
+    }
+
     public function getId(): ?int
     {
         return $this->id;

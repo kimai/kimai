@@ -341,6 +341,107 @@ class UserControllerTest extends APIControllerBaseTestCase
         $this->assertApiCallValidationError($response, ['email', 'language', 'timezone', 'roles'], true);
     }
 
+    // ------------------------------------- [API TOKEN] -------------------------------------
+
+    public function testPostApiTokenIsSecure(): void
+    {
+        $this->assertRequestIsSecured(self::createClient(), '/api/users/1/api-token', 'POST');
+    }
+
+    public function testPostApiToken(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->request($client, '/api/users/6/api-token', 'POST', [], (string) json_encode(['name' => 'My API token']));
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertArrayHasKey('id', $result);
+        self::assertArrayHasKey('name', $result);
+        self::assertArrayHasKey('token', $result);
+        self::assertArrayHasKey('expiresAt', $result);
+        self::assertEquals('My API token', $result['name']);
+        self::assertNotEmpty($result['token']);
+        self::assertNull($result['expiresAt']);
+    }
+
+    public function testPostApiTokenWithExpiresAt(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $data = [
+            'name' => 'Expiring token',
+            'expiresAt' => '2099-01-01T00:00:00+00:00',
+        ];
+        $this->request($client, '/api/users/6/api-token', 'POST', [], (string) json_encode($data));
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertEquals('Expiring token', $result['name']);
+        self::assertNotEmpty($result['token']);
+        self::assertEquals('2099-01-01T00:00:00+00:00', $result['expiresAt']);
+    }
+
+    public function testPostApiTokenTrimsName(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->request($client, '/api/users/6/api-token', 'POST', [], (string) json_encode(['name' => '  Trimmed  ']));
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertEquals('Trimmed', $result['name']);
+    }
+
+    public function testPostApiTokenWithMissingName(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertBadRequest($client, '/api/users/6/api-token', 'POST');
+    }
+
+    public function testPostApiTokenWithEmptyName(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertExceptionForMethod($client, '/api/users/6/api-token', 'POST', ['name' => '   '], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request',
+        ]);
+    }
+
+    public function testPostApiTokenWithInvalidExpiresAt(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertExceptionForMethod($client, '/api/users/6/api-token', 'POST', [
+            'name' => 'foo',
+            'expiresAt' => 'not-a-date',
+        ], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request',
+        ]);
+    }
+
+    public function testPostApiTokenForUnknownUser(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertEntityNotFoundForPost($client, '/api/users/255/api-token', ['name' => 'foo']);
+    }
+
+    public function testPostApiTokenForOtherUserIsDeniedToRegularUser(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->request($client, '/api/users/6/api-token', 'POST', [], (string) json_encode(['name' => 'foo']));
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
     // ------------------------------------- [USER PREFERENCES] -------------------------------------
 
     public function testUpdateUserPreferenceThrowsNotFound(): void
