@@ -12,6 +12,10 @@ namespace App\WorkingTime\Model;
 final class DayAddon
 {
     private bool $billable = true;
+    private ?string $rendererBlock = null;
+    private ?string $rendererInclude = null;
+    /** @var array<string, mixed> */
+    private array $attributes = [];
 
     public function __construct(
         private readonly string $title,
@@ -50,5 +54,56 @@ final class DayAddon
     public function getType(): ?string
     {
         return $this->type;
+    }
+
+    public function getRendererBlock(): ?string
+    {
+        return $this->rendererBlock;
+    }
+
+    public function getRendererInclude(): ?string
+    {
+        return $this->rendererInclude;
+    }
+
+    public function setRenderer(string $block, string $include): self
+    {
+        $this->rendererBlock = $block;
+        $this->rendererInclude = $include;
+
+        return $this;
+    }
+
+    /**
+     * Set a custom attribute for plugin-specific data.
+     *
+     * Example attributes:
+     * - 'comment': Additional text to display in tooltip
+     * - 'half_day': Boolean flag for half-day entries
+     * - 'approval_status': Status like 'pending', 'approved', 'rejected'
+     */
+    public function setAttribute(string $key, mixed $value): self
+    {
+        $this->attributes[$key] = $value;
+
+        return $this;
+    }
+
+    public function getAttribute(string $key, mixed $default = null): mixed
+    {
+        return $this->attributes[$key] ?? $default;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getAttributes(): array
+    {
+        return $this->attributes;
+    }
+
+    public function hasAttribute(string $key): bool
+    {
+        return \array_key_exists($key, $this->attributes);
     }
 }
