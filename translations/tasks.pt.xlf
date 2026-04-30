@@ -78,10 +78,6 @@
         <source>task.widget_rows</source>
         <target state="translated">Quantidade de tarefas por página na ferramenta do painel</target>
       </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
-        <source>estimation</source>
-        <target state="translated">Estimativa de tempo</target>
-      </trans-unit>
       <trans-unit id="zJvuPBv" resname="task.help.tags" xml:space="preserve" approved="no">
         <source>task.help.tags</source>
         <target state="translated">Estas etiquetas serão copiadas para cada registo de quadro de horários</target>
@@ -93,10 +89,6 @@
       <trans-unit id="kgA8TVH" resname="task_with_estimation" xml:space="preserve" approved="no">
         <source>task_with_estimation</source>
         <target state="translated">Com estimativa</target>
-      </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
-        <source>task_todo</source>
-        <target state="translated">Tarefa</target>
       </trans-unit>
       <trans-unit id="H.zMNfb" resname="task_started" xml:space="preserve" approved="no">
         <source>task_started</source>

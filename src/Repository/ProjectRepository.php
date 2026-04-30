@@ -344,6 +344,9 @@ class ProjectRepository extends EntityRepository
         return (int) $qb->getQuery()->getSingleScalarResult(); // @phpstan-ignore-line
     }
 
+    /**
+     * @return Pagination<Project>
+     */
     public function getPagerfantaForQuery(ProjectQuery $query): Pagination
     {
         return new Pagination($this->getPaginatorForQuery($query), $query);

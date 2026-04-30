@@ -31,7 +31,7 @@ class TimesheetStopAllCommandTest extends KernelTestCase
         parent::setUp();
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
-        $this->application->add(new TimesheetStopAllCommand($service));
+        $this->application->addCommand(new TimesheetStopAllCommand($service));
     }
 
     public function testCommandName(): void

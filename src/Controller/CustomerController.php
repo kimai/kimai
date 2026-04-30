@@ -78,8 +78,7 @@ final class CustomerController extends AbstractController
         $dispatcher->dispatch($event);
         $metaColumns = $event->getFields();
 
-        $table = new DataTable('customer_admin', $query);
-        $table->setPagination($entries);
+        $table = new DataTable('customer_admin', $query, $entries);
         $table->setSearchForm($form);
         $table->setPaginationRoute('admin_customer_paginated');
         $table->setReloadEvents('kimai.customerUpdate kimai.customerDelete kimai.customerTeamUpdate');

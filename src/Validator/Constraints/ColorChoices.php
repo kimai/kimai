@@ -13,10 +13,10 @@ use Symfony\Component\Validator\Constraint;
 
 final class ColorChoices extends Constraint
 {
-    public const COLOR_CHOICES_ERROR = 'ui5hffg-dsfef3-1234-5678-2g8jkfr56d84';
-    public const COLOR_CHOICES_NAME_ERROR = 'ui5hffg-dsfef3-1234-5679-2g8jkfr56d84';
+    public const string COLOR_CHOICES_ERROR = 'ui5hffg-dsfef3-1234-5678-2g8jkfr56d84';
+    public const string COLOR_CHOICES_NAME_ERROR = 'ui5hffg-dsfef3-1234-5679-2g8jkfr56d84';
 
-    protected const ERROR_NAMES = [
+    protected const array ERROR_NAMES = [
         self::COLOR_CHOICES_ERROR => 'COLOR_CHOICES_ERROR',
         self::COLOR_CHOICES_NAME_ERROR => 'COLOR_CHOICES_NAME_ERROR',
     ];

@@ -33,7 +33,7 @@ final class Version20240214061246 extends AbstractMigration
         $accessTokens->addColumn('last_usage', 'datetime_immutable', ['notnull' => false, 'default' => null]);
         $accessTokens->addColumn('expires_at', 'datetime_immutable', ['notnull' => false, 'default' => null]);
 
-        $accessTokens->setPrimaryKey(['id']);
+        $this->addPrimaryKeyConstraint($accessTokens, ['id']);
 
         $accessTokens->addIndex(['user_id'], 'IDX_6FB0DB1EA76ED395');
         $accessTokens->addUniqueIndex(['token'], 'UNIQ_6FB0DB1E5F37A13B');

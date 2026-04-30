@@ -31,7 +31,7 @@ final class Version20191108151534 extends AbstractMigration
         $roles = $schema->createTable('kimai2_roles');
         $roles->addColumn('id', 'integer', ['autoincrement' => true, 'notnull' => true]);
         $roles->addColumn('name', 'string', ['notnull' => true, 'length' => 50]);
-        $roles->setPrimaryKey(['id']);
+        $this->addPrimaryKeyConstraint($roles, ['id']);
         $roles->addUniqueIndex(['name'], 'roles_name');
 
         $rolePermissions = $schema->createTable('kimai2_roles_permissions');
@@ -39,7 +39,7 @@ final class Version20191108151534 extends AbstractMigration
         $rolePermissions->addColumn('role_id', 'integer', ['length' => 11, 'notnull' => true]);
         $rolePermissions->addColumn('permission', 'string', ['notnull' => true, 'length' => 50]);
         $rolePermissions->addColumn('allowed', 'boolean', ['notnull' => true, 'default' => false]);
-        $rolePermissions->setPrimaryKey(['id']);
+        $this->addPrimaryKeyConstraint($rolePermissions, ['id']);
         $rolePermissions->addUniqueIndex(['role_id', 'permission'], 'role_permission');
         $rolePermissions->addForeignKeyConstraint('kimai2_roles', ['role_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_D263A3B8D60322AC');
     }

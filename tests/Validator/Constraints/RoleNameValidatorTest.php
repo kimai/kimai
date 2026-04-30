@@ -64,7 +64,7 @@ class RoleNameValidatorTest extends ConstraintValidatorTestCase
 
     public function testNullIsInvalid(): void
     {
-        $this->validator->validate(null, new RoleName(['message' => 'myMessage']));
+        $this->validator->validate(null, new RoleName(message: 'myMessage'));
 
         $this->buildViolation('myMessage')
             ->setParameter('{{ value }}', 'null')
@@ -99,9 +99,7 @@ class RoleNameValidatorTest extends ConstraintValidatorTestCase
     #[DataProvider('getInvalidRoleNames')]
     public function testValidationError(string|int $role): void
     {
-        $constraint = new RoleName([
-            'message' => 'myMessage',
-        ]);
+        $constraint = new RoleName(message: 'myMessage');
 
         $this->validator->validate($role, $constraint);
 

@@ -33,7 +33,7 @@ final class Version20200725213424 extends AbstractMigration
         $activityTeams->addColumn('team_id', 'integer', ['length' => 11, 'notnull' => true]);
         $activityTeams->addForeignKeyConstraint('kimai2_activities', ['activity_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_986998DA81C06096');
         $activityTeams->addForeignKeyConstraint('kimai2_teams', ['team_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_986998DA296CD8AE');
-        $activityTeams->setPrimaryKey(['activity_id', 'team_id']);
+        $this->addPrimaryKeyConstraint($activityTeams, ['activity_id', 'team_id']);
     }
 
     public function down(Schema $schema): void

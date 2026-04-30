@@ -31,10 +31,6 @@ use Symfony\Component\Intl\Locales;
 final class RegenerateLocalesCommand extends Command
 {
     /**
-     * @var string[]
-     */
-    private array $rtlLocales = ['ar', 'fa', 'he'];
-    /**
      * new locales were added here, to shrink the list a little bit
      * this can be removed in the future, if there will ever be the need for it
      *
@@ -172,14 +168,6 @@ final class RegenerateLocalesCommand extends Command
             // format the year always with 4 letters - ISO-8601
             $settings['date'] = str_replace('yy', 'y', $settings['date']);
 
-            // make sure that sub-locales of a RTL language are also flagged as RTL
-            $rtlLocale = $locale;
-            if (substr_count($rtlLocale, '_') === 1) {
-                $rtlLocale = substr($rtlLocale, 0, strpos($rtlLocale, '_'));
-            }
-
-            $settings['rtl'] = \in_array($rtlLocale, $this->rtlLocales, true);
-
             // pre-fill all formats with the default locale settings
             $appLocales[$locale] = $settings;
 
@@ -205,9 +193,6 @@ final class RegenerateLocalesCommand extends Command
                 continue;
             }
             if ($setting['translation'] === true) {
-                continue;
-            }
-            if ($baseLocaleSettings['rtl'] !== $setting['rtl']) {
                 continue;
             }
             $removableDuplicates[] = $locale;

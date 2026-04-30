@@ -9,7 +9,6 @@
 
 namespace App\Tests\Export;
 
-use App\Entity\User;
 use App\Export\DefaultTemplate;
 use App\Repository\Query\TimesheetQuery;
 use App\Tests\Mocks\MetaFieldColumnSubscriberMock;
@@ -33,7 +32,7 @@ class DefaultTemplateTest extends TestCase
             'date',
             'begin',
             'end',
-            'duration',
+            'duration_decimal',
             'currency',
             'rate',
             'internal_rate',
@@ -59,7 +58,7 @@ class DefaultTemplateTest extends TestCase
         self::assertEquals($columns, $template->getColumns(new TimesheetQuery()));
     }
 
-    public function testFullConstructorWithDecimalDurationAndMetaColumns(): void
+    public function testFullConstructorWithMetaColumns(): void
     {
         $dispatcher = new EventDispatcher();
         $dispatcher->addSubscriber(new MetaFieldColumnSubscriberMock());
@@ -69,11 +68,6 @@ class DefaultTemplateTest extends TestCase
         self::assertEquals('world', $template->getTitle());
         self::assertNull($template->getLocale());
         self::assertEquals([], $template->getOptions());
-
-        $user = new User();
-        $user->setPreferenceValue('export_decimal', true);
-        $query = new TimesheetQuery();
-        $query->setCurrentUser($user);
 
         $columns = [
             'date',
@@ -109,6 +103,6 @@ class DefaultTemplateTest extends TestCase
             'activity.meta.activity-foo',
             'user.meta.mypref',
         ];
-        self::assertEquals($columns, $template->getColumns($query));
+        self::assertEquals($columns, $template->getColumns(new TimesheetQuery()));
     }
 }

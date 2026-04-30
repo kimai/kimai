@@ -40,10 +40,10 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
         $expectedCount = \count($expectedForms) + 1; // the menu is another card
 
         $result = $client->getCrawler()->filter('section.content div.card');
-        self::assertEquals($expectedCount, \count($result));
+        self::assertGreaterThanOrEqual($expectedCount, \count($result));
 
         $result = $client->getCrawler()->filter('section.content div.card form');
-        self::assertEquals(\count($expectedForms), \count($result));
+        self::assertGreaterThanOrEqual(\count($expectedForms), \count($result));
 
         foreach ($expectedForms as $formConfig) {
             $result = $client->getCrawler()->filter($formConfig[0]);

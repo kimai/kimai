@@ -31,7 +31,7 @@ final class Version20200524142042 extends AbstractMigration
         $sessions->addColumn('data', 'blob', ['length' => 65535, 'notnull' => true]);
         $sessions->addColumn('time', 'integer', ['unsigned' => true, 'notnull' => true]);
         $sessions->addColumn('lifetime', 'integer', ['unsigned' => true, 'notnull' => true]);
-        $sessions->setPrimaryKey(['id']);
+        $this->addPrimaryKeyConstraint($sessions, ['id']);
     }
 
     public function down(Schema $schema): void

@@ -78,10 +78,6 @@
         <source>tasks.my</source>
         <target state="translated">Мої завдання</target>
       </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
-        <source>task_todo</source>
-        <target state="translated">Завдання</target>
-      </trans-unit>
       <trans-unit id="WCaBimL" resname="task.help.end" xml:space="preserve" approved="no">
         <source>task.help.end</source>
         <target state="translated">Завдання потрібно виконати до цієї дати</target>
@@ -105,10 +101,6 @@
       <trans-unit id="ZCSPtzc" resname="task.help.estimation" xml:space="preserve" approved="no">
         <source>task.help.estimation</source>
         <target state="translated">Орієнтовний час, необхідний для виконання завдання в hh:mm</target>
-      </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
-        <source>estimation</source>
-        <target state="translated">Оцінка часу</target>
       </trans-unit>
     </body>
   </file>

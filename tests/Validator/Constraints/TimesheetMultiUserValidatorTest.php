@@ -40,7 +40,7 @@ class TimesheetMultiUserValidatorTest extends ConstraintValidatorTestCase
     {
         $timesheet = new MultiUserTimesheet();
 
-        $this->validator->validate($timesheet, new TimesheetMultiUser(['message' => 'myMessage']));
+        $this->validator->validate($timesheet, new TimesheetMultiUser(message: 'myMessage'));
 
         $this->buildViolation('You must select at least one user or team.')
             ->atPath('property.path.users')

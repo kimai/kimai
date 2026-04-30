@@ -69,31 +69,26 @@ class AppExtensionTest extends TestCase
                 'en' => [
                     'date' => 'M/d/y',
                     'time' => 'h:mm a',
-                    'rtl' => false,
                     'translation' => true,
                 ],
                 'de' => [
                     'date' => 'dd.MM.y',
                     'time' => 'HH:mm',
-                    'rtl' => false,
                     'translation' => true,
                 ],
                 'he' => [
                     'date' => 'd.M.y',
                     'time' => 'HH:mm',
-                    'rtl' => true,
                     'translation' => true,
                 ],
                 'tr' => [
                     'date' => 'd.MM.y',
                     'time' => 'HH:mm',
-                    'rtl' => false,
                     'translation' => true,
                 ],
                 'zh_CN' => [
                     'date' => 'y/M/d',
                     'time' => 'HH:mm',
-                    'rtl' => false,
                     'translation' => true,
                 ],
             ],

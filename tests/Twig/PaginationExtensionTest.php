@@ -63,9 +63,9 @@ class PaginationExtensionTest extends TestCase
         $sut = $this->getSut();
 
         $values = array_fill(0, 151, 'blub');
-        $pagerfanta = new Pagination(new ArrayAdapter($values));
-        $pagerfanta->setMaxPerPage(10);
-        $result = $sut->renderPagination($pagerfanta, [
+        $pagination = new Pagination(new ArrayAdapter($values));
+        $pagination->setMaxPerPage(10);
+        $result = $sut->renderPagination($pagination, [
             'css_container_class' => 'pagination pagination-sm inline',
             'routeName' => 'project_activities',
             'routeParams' => ['id' => 137]
@@ -97,9 +97,9 @@ class PaginationExtensionTest extends TestCase
         $sut = $this->getSut();
 
         $values = array_fill(0, 151, 'blub');
-        $pagerfanta = new Pagination(new ArrayAdapter($values));
-        $pagerfanta->setMaxPerPage(10);
-        $result = $sut->renderPagination($pagerfanta, [
+        $pagination = new Pagination(new ArrayAdapter($values));
+        $pagination->setMaxPerPage(10);
+        $result = $sut->renderPagination($pagination, [
             'css_container_class' => 'pagination pagination-sm inline',
             'routeName' => 'project_activities',
             'routeParams' => ['id' => 137]
@@ -112,8 +112,8 @@ class PaginationExtensionTest extends TestCase
         $sut = $this->getSut();
 
         $values = array_fill(0, 151, 'blub');
-        $pagerfanta = new Pagination(new ArrayAdapter($values));
-        $result = $sut->renderPagination($pagerfanta, [
+        $pagination = new Pagination(new ArrayAdapter($values));
+        $result = $sut->renderPagination($pagination, [
             'css_container_class' => 'pagination pagination-sm inline',
             'routeName' => 'project_activities',
             'routeParams' => ['id' => 137]
@@ -135,8 +135,8 @@ class PaginationExtensionTest extends TestCase
         $sut = $this->getSut();
 
         $values = array_fill(0, 151, 'blub');
-        $pagerfanta = new Pagination(new ArrayAdapter($values));
-        $result = $sut->renderPagination($pagerfanta, [
+        $pagination = new Pagination(new ArrayAdapter($values));
+        $result = $sut->renderPagination($pagination, [
             'css_container_class' => 'pagination pagination-sm inline',
             'routeParams' => ['id' => 137]
         ]);

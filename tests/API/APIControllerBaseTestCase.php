@@ -225,8 +225,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
     }
 
     /**
-     * @param Response $response
-     * @param array<int, string>|array<string, string> $failedFields
+     * @param array<int, string>|array<string, mixed> $failedFields
      * @param bool $extraFields test for the error "This form should not contain extra fields"
      * @param array<int, string>|array<string, mixed> $globalError
      */
@@ -242,7 +241,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
         }
 
         if (\count($globalError) > 0) {
-            self::assertArrayHasKey('errors', $result['errors']);
+            self::assertArrayHasKey('errors', $result['errors'], 'API response has no global errors, but expected ' . \count($globalError));
             foreach ($globalError as $err) {
                 self::assertTrue(\in_array($err, $result['errors']['errors']), 'Missing global validation error: ' . $err); // @phpstan-ignore binaryOp.invalid
             }
@@ -276,6 +275,10 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                 }
             }
 
+            if (!\is_string($fieldName)) {
+                $this->fail('Invalid field name given');
+            }
+
             while (stripos($fieldName, '.') !== false) {
                 $parts = explode('.', $fieldName);
                 $tmp = array_shift($parts);
@@ -288,7 +291,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
             }
 
             self::assertIsString($fieldName);
-            self::assertArrayHasKey($fieldName, $data, \sprintf('Could not find validation error for field "%s" in list: %s', $fieldName, implode(', ', $failedFields)));
+            self::assertArrayHasKey($fieldName, $data, \sprintf('Could not find validation error for field "%s" in list: %s', $fieldName, implode(', ', array_keys($failedFields))));
             self::assertArrayHasKey('errors', $data[$fieldName], \sprintf('Field %s has no validation problem', $fieldName));
             foreach ($messages as $i => $message) {
                 self::assertEquals($message, $data[$fieldName]['errors'][$i]);
@@ -346,11 +349,6 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
 
                 // embedded meta data
             case 'UserPreference':
-                return [
-                    'name' => 'string',
-                    'value' => '@string',
-                ];
-
             case 'InvoiceMeta':
             case 'CustomerMeta':
             case 'ProjectMeta':
@@ -358,7 +356,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
             case 'TimesheetMeta':
                 return [
                     'name' => 'string',
-                    'value' => 'string',
+                    'value' => '@string',
                 ];
 
                 // if a user is embedded in other objects
@@ -370,7 +368,6 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'username' => 'string',
                     'email' => 'string',
                     'enabled' => 'bool',
-                    'apiToken' => 'bool',
                     'systemAccount' => 'bool',
                     'color' => '@string',
                     'color-safe' => 'string',
@@ -391,7 +388,6 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'username' => 'string',
                     'email' => 'string',
                     'enabled' => 'bool',
-                    'apiToken' => 'bool',
                     'systemAccount' => 'bool',
                     'color' => '@string',
                     'color-safe' => 'string',

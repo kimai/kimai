@@ -30,7 +30,7 @@ final class InvoiceModelUserHydrator implements InvoiceModelHydrator
             'user.display' => $user->getDisplayName(),
         ];
 
-        foreach ($user->getPreferences() as $metaField) {
+        foreach ($user->getVisiblePreferences() as $metaField) {
             $values = array_merge($values, [
                 'user.meta.' . $metaField->getName() => $metaField->getValue(),
             ]);

@@ -106,15 +106,7 @@
         <source>user_profile</source>
         <target state="translated">Мій профіль</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token" xml:space="preserve">
-        <source>api_token</source>
-        <target state="translated">API‑токен</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat" xml:space="preserve">
-        <source>api_token_repeat</source>
-        <target state="translated">Підтвердження API‑токена</target>
-      </trans-unit>
-      <trans-unit id=".372.o7" resname="login_required" xml:space="preserve">
+      <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target state="translated">Поле логіна обов’язкове для заповнення. Перенаправити?</target>
       </trans-unit>
@@ -189,10 +181,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin" xml:space="preserve">
         <source>menu.plugin</source>
         <target state="translated">Плагіни</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target state="translated">Налаштування</target>
       </trans-unit>
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
@@ -1718,10 +1706,6 @@
         <source>Last usage</source>
         <target state="translated">Останнє використання</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">Паролі API застаріли: будь ласка, використовуйте токени API.</target>
-      </trans-unit>
       <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
         <source>hours_per_day</source>
         <target state="translated">Годин на день</target>
@@ -2081,6 +2065,14 @@
       <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
         <source>count_as_expected_time_help</source>
         <target state="translated">Якщо ввімкнено, %type% зараховуватиметься як відпрацьовані години в межах очікуваної денної норми. Якщо вимкнено - очікувані години для цих днів буде встановлено в 0. Обидва варіанти зберігають нейтральний баланс, але по‑різному впливають на місячні підсумки.</target>
+      </trans-unit>
+        <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+            <target state="translated">Завдання</target>
+      </trans-unit>
+        <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+            <target state="translated">Оцінка часу</target>
       </trans-unit>
     </body>
   </file>

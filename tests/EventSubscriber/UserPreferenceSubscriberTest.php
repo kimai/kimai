@@ -34,7 +34,6 @@ class UserPreferenceSubscriberTest extends TestCase
         'calendar_initial_view',
         'login_initial_view',
         'daily_stats',
-        'export_decimal',
         'favorite_routes',
     ];
 

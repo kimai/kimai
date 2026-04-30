@@ -33,7 +33,7 @@ class InvoiceModelIssuerHydratorTest extends TestCase
         $this->assertModelStructure($result);
 
         self::assertEquals([
-            'issuer.id' => null,
+            'issuer.id' => 120,
             'issuer.address' => "Foo\nStreet\n1111 City",
             'issuer.address_line1' => '',
             'issuer.address_line2' => '',

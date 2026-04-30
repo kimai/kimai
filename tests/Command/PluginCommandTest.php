@@ -43,7 +43,7 @@ class PluginCommandTest extends KernelTestCase
         $projectDirectory = __DIR__ . '/../../';
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
-        $this->application->add(new PluginCommand(new PluginManager($plugins), new PackageManager($projectDirectory), $projectDirectory));
+        $this->application->addCommand(new PluginCommand(new PluginManager($plugins), new PackageManager($projectDirectory), $projectDirectory));
 
         $command = $this->application->find('kimai:plugins');
         $commandTester = new CommandTester($command);

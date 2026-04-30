@@ -26,7 +26,6 @@ class WorkingTimeApproveMonthEventTest extends TestCase
 
         $sut = new WorkingTimeApproveMonthEvent($approvalMonth, $approver);
 
-        self::assertSame($user, $sut->getUser()); // @phpstan-ignore method.deprecated
         self::assertSame($approvalMonth, $sut->getMonth());
         self::assertSame($approver, $sut->getApprovedBy());
     }

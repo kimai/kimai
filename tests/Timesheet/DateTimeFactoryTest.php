@@ -77,6 +77,17 @@ class DateTimeFactoryTest extends TestCase
 
     public function testGetEndOfMonth(): void
     {
+        $expected = new DateTime('2024-08-13', new DateTimeZone(self::TEST_TIMEZONE));
+        $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
+        $dateTime = $sut->getEndOfMonth($expected);
+        self::assertEquals(23, $dateTime->format('H'));
+        self::assertEquals(59, $dateTime->format('i'));
+        self::assertEquals(59, $dateTime->format('s'));
+        self::assertEquals('31', $dateTime->format('d'));
+        self::assertEquals('08', $dateTime->format('m'));
+        self::assertEquals('2024', $dateTime->format('Y'));
+        self::assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
+
         $expected = new DateTime('last day of this month', new DateTimeZone(self::TEST_TIMEZONE));
         $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
         $dateTime = $sut->getEndOfMonth();

@@ -169,11 +169,6 @@ final class LockdownService
     /**
      * Does not check if the current user is allowed to edit timesheets in lockdown situations.
      * This needs to be performed earlier by yourself (see TimesheetVoter or LockdownValidator).
-     *
-     * @param Timesheet $timesheet
-     * @param \DateTimeInterface $now
-     * @param bool $allowEditInGracePeriod
-     * @return bool
      */
     public function isEditable(Timesheet $timesheet, \DateTimeInterface $now, bool $allowEditInGracePeriod = false): bool
     {

@@ -26,10 +26,6 @@
         <source>security.unlock.button</source>
         <target state="translated">ਅਨਲੌਕ</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target state="translated">API ਪਾਸਵਰਡ</target>
-      </trans-unit>
       <trans-unit id="IeshU90" resname="customers">
         <source>customers</source>
         <target state="translated">ਗਾਹਕ</target>
@@ -122,10 +118,6 @@
         <source>projects</source>
         <target state="translated">ਪ੍ਰਾਜੈਕਟਾਂ</target>
       </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target state="translated">API ਪਾਸਵਰਡ ਦੁਬਾਰਾ</target>
-      </trans-unit>
       <trans-unit id="PyZ8KrQ" resname="confirm">
         <source>confirm</source>
         <target state="translated">ਪੁਸ਼ਟੀ ਕਰੋ</target>
@@ -177,10 +169,6 @@
       <trans-unit id="JEIQ5IQ" resname="project">
         <source>Project</source>
         <target state="translated">ਪ੍ਰੋਜੈਕਟ</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target state="translated">ਸੈਟਿੰਗਾਂ</target>
       </trans-unit>
       <trans-unit id="xUl3nXn" resname="rate">
         <source>rate</source>

@@ -35,10 +35,23 @@ abstract class AbstractRendererTestCase extends KernelTestCase
 {
     protected function render(ExportRendererInterface $renderer): Response
     {
+        $reflectionUser = new \ReflectionClass(User::class);
+        $userIdProperty = $reflectionUser->getProperty('id');
+
+        $reflectionCustomer = new \ReflectionClass(Customer::class);
+        $customerIdProperty = $reflectionCustomer->getProperty('id');
+
+        $reflectionProject = new \ReflectionClass(Project::class);
+        $projectIdProperty = $reflectionProject->getProperty('id');
+
+        $reflectionActivity = new \ReflectionClass(Activity::class);
+        $activityIdProperty = $reflectionActivity->getProperty('id');
+
         $customer = new Customer('Customer Name');
         $customer->setNumber('A-0123456789');
         $customer->setVatId('DE-9876543210');
         $customer->setMetaField((new CustomerMeta())->setName('customer-foo')->setValue('customer-bar')->setIsVisible(true));
+        $customerIdProperty->setValue($customer, 1);
 
         $project = new Project();
         $project->setName('project name');
@@ -46,11 +59,13 @@ abstract class AbstractRendererTestCase extends KernelTestCase
         $project->setOrderNumber('ORDER-123');
         $project->setMetaField((new ProjectMeta())->setName('project-bar')->setValue('project-bar')->setIsVisible(true));
         $project->setMetaField((new ProjectMeta())->setName('project-foo2')->setValue('project-foo2')->setIsVisible(true));
+        $projectIdProperty->setValue($project, 1);
 
         $activity = new Activity();
         $activity->setName('activity description');
         $activity->setProject($project);
         $activity->setMetaField((new ActivityMeta())->setName('activity-foo')->setValue('activity-bar')->setIsVisible(true));
+        $activityIdProperty->setValue($activity, 1);
 
         $userMethods = ['getId', 'getPreferenceValue', 'getUsername', 'getUserIdentifier'];
         $user1 = $this->getMockBuilder(User::class)->onlyMethods($userMethods)->disableOriginalConstructor()->getMock();
@@ -103,6 +118,7 @@ abstract class AbstractRendererTestCase extends KernelTestCase
 
         $user = new User();
         $user->setUserIdentifier('kevin');
+        $userIdProperty->setValue($user, 12);
 
         $timesheet5 = new Timesheet();
         $timesheet5->setDuration(400);

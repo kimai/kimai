@@ -97,7 +97,10 @@ class ServiceExportTest extends TestCase
             $this->createMock(Environment::class),
             new EventDispatcher(),
             $this->createMock(ProjectStatisticService::class),
-            $this->createMock(ActivityStatisticService::class)
+            $this->createMock(ActivityStatisticService::class),
+            'html',
+            'print',
+            'export/print.html.twig',
         );
         $sut->addRenderer($renderer);
 
@@ -116,7 +119,9 @@ class ServiceExportTest extends TestCase
             new EventDispatcher(),
             $this->createMock(ProjectStatisticService::class),
             $this->createMock(ActivityStatisticService::class),
-            'print'
+            'print',
+            'print',
+            'export/print.html.twig',
         );
         $sut->addTimesheetExporter($exporter);
 

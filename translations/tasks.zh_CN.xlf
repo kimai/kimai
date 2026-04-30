@@ -78,10 +78,6 @@
         <source>task.help.team</source>
         <target state="translated">将此任务分配给团队</target>
       </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
-        <source>estimation</source>
-        <target state="translated">时间估计</target>
-      </trans-unit>
       <trans-unit id="zJvuPBv" resname="task.help.tags" xml:space="preserve" approved="no">
         <source>task.help.tags</source>
         <target state="translated">这些标签将被复制到每个时间表记录中</target>
@@ -101,10 +97,6 @@
       <trans-unit id="H.zMNfb" resname="task_started" xml:space="preserve" approved="no">
         <source>task_started</source>
         <target state="translated">工作开始</target>
-      </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
-        <source>task_todo</source>
-        <target state="translated">任务</target>
       </trans-unit>
       <trans-unit id="ZwdUYYa" resname="task_overdue" xml:space="preserve" approved="no">
         <source>task_overdue</source>

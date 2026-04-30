@@ -34,7 +34,7 @@ class InvoiceModelCustomerHydratorTest extends TestCase
         $this->assertModelStructure($result);
 
         self::assertEquals([
-            'customer.id' => null,
+            'customer.id' => 120,
             'customer.address' => "Foo\nStreet\n1111 City",
             'customer.address_line1' => '',
             'customer.address_line2' => '',

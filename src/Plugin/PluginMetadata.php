@@ -19,6 +19,8 @@ class PluginMetadata
     private string $homepage;
     private string $description;
     private string $name;
+    /** @var array<string> */
+    private array $skipEnvs = [];
 
     public static function createFromPath(string $path): self
     {
@@ -67,6 +69,10 @@ class PluginMetadata
             throw new \Exception('Bundle defines an invalid Kimai minimum version in extra.kimai.require. Please provide an integer as in Constants::VERSION_ID.');
         }
 
+        if (\array_key_exists('skip-envs', $json['extra']['kimai']) && !\is_array($json['extra']['kimai']['skip-envs'])) {
+            throw new \Exception('Bundle defines an invalid skip-envs setting. Please provide an array of environment strings that should be ignored.');
+        }
+
         $meta = new self();
 
         $meta->package = $json['name'] ?? '';
@@ -77,6 +83,10 @@ class PluginMetadata
 
         // the version field is required if we use composer to install a plugin via var/packages/
         $meta->version = $json['extra']['kimai']['version'] ?? ($json['version'] ?? 'unknown');
+
+        if (\array_key_exists('skip-envs', $json['extra']['kimai'])) {
+            $meta->skipEnvs = $json['extra']['kimai']['skip-envs'];
+        }
 
         return $meta;
     }
@@ -111,5 +121,10 @@ class PluginMetadata
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function isEnvironmentSupported(string $environment): bool
+    {
+        return !\in_array($environment, $this->skipEnvs, true);
     }
 }

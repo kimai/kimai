@@ -29,7 +29,7 @@ class PrepareUserEventSubscriberMock implements EventSubscriberInterface
     {
         $definition = (new UserPreference('metatestmock'))
             ->setType(TextType::class)
-            ->addConstraint(new Length(['max' => 200]))
+            ->addConstraint(new Length(max: 200))
             ->setEnabled(true);
 
         $event->getUser()->addPreference($definition);

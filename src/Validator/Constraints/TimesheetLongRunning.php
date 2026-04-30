@@ -9,12 +9,16 @@
 
 namespace App\Validator\Constraints;
 
-final class TimesheetLongRunning extends TimesheetConstraint
-{
-    public const LONG_RUNNING = 'kimai-timesheet-long-running-01';
-    public const MAXIMUM = 'kimai-timesheet-long-running-02';
+use App\Validator\Attribute\TimesheetConstraint;
+use Symfony\Component\Validator\Constraint;
 
-    protected const ERROR_NAMES = [
+#[TimesheetConstraint]
+final class TimesheetLongRunning extends Constraint
+{
+    public const string LONG_RUNNING = 'kimai-timesheet-long-running-01';
+    public const string MAXIMUM = 'kimai-timesheet-long-running-02';
+
+    protected const array ERROR_NAMES = [
         self::LONG_RUNNING => 'TIMESHEET_LONG_RUNNING',
         self::MAXIMUM => 'MAXIMUM',
     ];

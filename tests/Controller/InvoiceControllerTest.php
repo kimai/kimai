@@ -35,16 +35,12 @@ class InvoiceControllerTest extends AbstractControllerBaseTestCase
 
     private function clearInvoiceFiles(): void
     {
-        $path = __DIR__ . '/../_data/invoices/';
-
-        if (is_dir($path)) {
-            $files = glob($path . '*');
-            if ($files === false) {
-                return;
-            }
-            foreach ($files as $file) {
-                unlink($file);
-            }
+        $files = glob(__DIR__ . '/../_data/invoices*/*');
+        if ($files === false) {
+            return;
+        }
+        foreach ($files as $file) {
+            unlink($file);
         }
     }
 

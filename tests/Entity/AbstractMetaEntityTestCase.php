@@ -70,12 +70,12 @@ abstract class AbstractMetaEntityTestCase extends TestCase
         self::assertInstanceOf(MetaTableTypeInterface::class, $sut->setOrder(7));
         self::assertEquals(7, $sut->getOrder());
 
-        self::assertInstanceOf(MetaTableTypeInterface::class, $sut->addConstraint(new Length(['max' => 10])));
-        self::assertInstanceOf(MetaTableTypeInterface::class, $sut->addConstraint(new NotNull([])));
-        self::assertInstanceOf(MetaTableTypeInterface::class, $sut->addConstraint(new NotBlank([])));
+        self::assertInstanceOf(MetaTableTypeInterface::class, $sut->addConstraint(new Length(max: 10)));
+        self::assertInstanceOf(MetaTableTypeInterface::class, $sut->addConstraint(new NotNull()));
+        self::assertInstanceOf(MetaTableTypeInterface::class, $sut->addConstraint(new NotBlank()));
         self::assertCount(3, $sut->getConstraints());
 
-        self::assertInstanceOf(MetaTableTypeInterface::class, $sut->setConstraints([new Length(['min' => 2])]));
+        self::assertInstanceOf(MetaTableTypeInterface::class, $sut->setConstraints([new Length(min: 2)]));
         self::assertCount(1, $sut->getConstraints());
 
         self::assertInstanceOf(MetaTableTypeInterface::class, $sut->setOptions(['foo' => 'bar']));
@@ -125,7 +125,7 @@ abstract class AbstractMetaEntityTestCase extends TestCase
         $meta2->setIsRequired(true);
         $meta2->setIsVisible(true);
         $meta2->setOrder(93);
-        $meta2->setConstraints([new NotBlank(), new Length(['min' => 1])]);
+        $meta2->setConstraints([new NotBlank(), new Length(min: 1)]);
         $meta2->setOptions(['foo1' => 'bar1']);
 
         self::assertInstanceOf(MetaTableTypeInterface::class, $meta1->merge($meta2));

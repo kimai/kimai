@@ -78,10 +78,6 @@
         <source>task.widget_rows</source>
         <target state="translated">Antal uppgifter per sida i instrumentpanelswidgeten</target>
       </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
-        <source>estimation</source>
-        <target state="translated">Tidsuppskattning</target>
-      </trans-unit>
       <trans-unit id="ZCSPtzc" resname="task.help.estimation" xml:space="preserve" approved="no">
         <source>task.help.estimation</source>
         <target state="translated">Uppskattad tid som behövs för att slutföra uppgiften tt:mm</target>
@@ -105,10 +101,6 @@
       <trans-unit id="H.zMNfb" resname="task_started" xml:space="preserve" approved="no">
         <source>task_started</source>
         <target state="translated">Arbetet började</target>
-      </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
-        <source>task_todo</source>
-        <target state="translated">Uppgift</target>
       </trans-unit>
     </body>
   </file>

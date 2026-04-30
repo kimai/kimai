@@ -1,4 +1,4 @@
-<html lang="{{ locale ?? app.request.locale }}">
+<html lang="{{ locale ?? app.locale }}">
 {% set title = (template.options.name ?? 'export.document_title')|trans %}
 {# show the generation date of the PDF #}
 {% set now = create_date('now', app.user) %}

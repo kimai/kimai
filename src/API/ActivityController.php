@@ -35,9 +35,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[OA\Tag(name: 'Activity')]
 final class ActivityController extends BaseApiController
 {
-    public const GROUPS_ENTITY = ['Default', 'Entity', 'Activity', 'Activity_Entity'];
-    public const GROUPS_COLLECTION = ['Default', 'Collection', 'Activity'];
-    public const GROUPS_RATE = ['Default', 'Entity', 'Activity_Rate'];
+    private const array GROUPS_ENTITY = ['Default', 'Entity', 'Activity', 'Activity_Entity'];
+    private const array GROUPS_COLLECTION = ['Default', 'Collection', 'Activity'];
+    private const array GROUPS_RATE = ['Default', 'Entity', 'Activity_Rate'];
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,

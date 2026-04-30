@@ -9,7 +9,7 @@
 
 namespace App\Plugin;
 
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 final class PluginManager
 {
@@ -22,7 +22,7 @@ final class PluginManager
      * @param iterable<PluginInterface> $bundles
      */
     public function __construct(
-        #[TaggedIterator(PluginInterface::class)]
+        #[AutowireIterator(PluginInterface::class)]
         private readonly iterable $bundles
     )
     {

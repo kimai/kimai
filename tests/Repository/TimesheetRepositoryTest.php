@@ -40,13 +40,6 @@ class TimesheetRepositoryTest extends AbstractRepositoryTestCase
         self::assertFalse($query->hasQueryHint(TimesheetQueryHint::CUSTOMER_META_FIELDS));
         self::assertFalse($query->hasQueryHint(TimesheetQueryHint::PROJECT_META_FIELDS));
         self::assertFalse($query->hasQueryHint(TimesheetQueryHint::ACTIVITY_META_FIELDS));
-
-        $result = $repository->getTimesheetsForQuery($query, true);
-
-        self::assertTrue($query->hasQueryHint(TimesheetQueryHint::CUSTOMER_META_FIELDS));
-        self::assertTrue($query->hasQueryHint(TimesheetQueryHint::PROJECT_META_FIELDS));
-        self::assertTrue($query->hasQueryHint(TimesheetQueryHint::ACTIVITY_META_FIELDS));
-        self::assertIsArray($result);
     }
 
     public function testSave(): void
@@ -108,9 +101,15 @@ class TimesheetRepositoryTest extends AbstractRepositoryTestCase
         $repository->save($timesheet);
         self::assertNotNull($timesheet->getId());
         self::assertEquals(2, $timesheet->getTags()->count());
-        self::assertEquals('Travel', $timesheet->getTags()->get(0)->getName());
-        self::assertNotNull($timesheet->getTags()->get(0)->getId());
-        self::assertEquals('Picture', $timesheet->getTags()->get(1)->getName());
-        self::assertNotNull($timesheet->getTags()->get(1)->getId());
+
+        $tag = $timesheet->getTags()->get(0);
+        self::assertInstanceOf(Tag::class, $tag);
+        self::assertEquals('Travel', $tag->getName());
+        self::assertNotNull($tag->getId());
+
+        $tag = $timesheet->getTags()->get(1);
+        self::assertInstanceOf(Tag::class, $tag);
+        self::assertEquals('Picture', $tag->getName());
+        self::assertNotNull($tag->getId());
     }
 }

@@ -30,7 +30,7 @@ jobs:
             - name: Determine version
               run: |
                   input="${{ github.event.inputs.kimai_tag }}"
-                  
+
                   # Determine between manual trigger and release event
                   if [ -z "$input" ]; then
                       echo "Using release tag: ${{ github.event.release.tag_name }}"
@@ -44,7 +44,7 @@ jobs:
                     echo "Invalid version number: $version"
                     exit 1
                   fi
-                  
+
                   echo "kimai_version=$version" >> $GITHUB_ENV
 
             - name: FPM image

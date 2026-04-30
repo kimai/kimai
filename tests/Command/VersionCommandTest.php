@@ -30,7 +30,7 @@ class VersionCommandTest extends KernelTestCase
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
 
-        $this->application->add(new VersionCommand());
+        $this->application->addCommand(new VersionCommand());
     }
 
     #[DataProvider('getTestData')]

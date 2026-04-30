@@ -77,19 +77,6 @@
             </table>
         {% endif %}
 
-        {% embed '@theme/embeds/collapsible.html.twig' with {id: 'activity_invoice_settings'} %}
-            {% import "macros/widgets.html.twig" as widgets %}
-            {% block title %}{{ 'password'|trans }}{% endblock %}
-            {% block box_class %}mt-3{% endblock %}
-            {% block body %}
-            {{ widgets.alert('danger', 'api_password_deprecated'|trans) }}
-            {{ form_start(form) }}
-                {{ form_widget(form) }}
-                <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
-            {{ form_end(form) }}
-            {% endblock %}
-        {% endembed %}
-
     </div>
 {% endblock %}
 

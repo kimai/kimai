@@ -133,8 +133,8 @@ final class TimesheetTeamController extends TimesheetAbstractController
 
                 return $this->redirectToRoute($this->getTimesheetRoute());
             } catch (\Exception $ex) {
-                // FIXME I guess this will save timesheets for some users, but then fail only for single users
-                // FIXME we should run in a transaction or disallow to create running timesheets
+                // this might save timesheets for some users, but then fail only for single users
+                // if this ever raises a problem: run in a transaction or disallow to create running timesheets
                 $this->handleFormUpdateException($ex, $createForm);
             }
         }

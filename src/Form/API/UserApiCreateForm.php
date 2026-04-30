@@ -34,19 +34,6 @@ final class UserApiCreateForm extends UserCreateType
             ],
         ]);
 
-        if ($builder->has('plainApiToken')) {
-            $builder->remove('plainApiToken');
-        }
-
-        $builder->add('plainApiToken', PasswordType::class, [
-            'required' => false,
-            'label' => 'api_token',
-            'documentation' => [
-                'type' => 'string',
-                'description' => 'Plain API token',
-            ],
-        ]);
-
         if ($options['include_roles']) {
             $builder->add('roles', UserRoleType::class, [
                 'label' => 'roles',

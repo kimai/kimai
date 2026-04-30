@@ -70,10 +70,6 @@
         <source>task.widget_rows</source>
         <target>Tehtävien määrä per sivu ohjauspaneelin widgetissä</target>
       </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation">
-        <source>estimation</source>
-        <target>Aika-arvio</target>
-      </trans-unit>
       <trans-unit id="ZCSPtzc" resname="task.help.estimation">
         <source>task.help.estimation</source>
         <target>Arvioitu aika tehtävän suorittamiseen muodossa hh:mm</target>

@@ -72,6 +72,10 @@ final class CustomerSubscriber extends AbstractActionsSubscriber
             $event->addActionToSubmenu('filter', 'timesheet', ['title' => 'timesheet.filter', 'url' => $this->path('admin_timesheet', ['customers[]' => $customer->getId()])]);
         }
 
+        if ($this->isGranted('view_invoice')) {
+            $event->addActionToSubmenu('filter', 'invoice', ['title' => 'invoices', 'url' => $this->path('admin_invoice_list', ['customers[]' => $customer->getId()])]);
+        }
+
         if ($event->hasSubmenu('filter')) {
             $event->addDivider();
         }

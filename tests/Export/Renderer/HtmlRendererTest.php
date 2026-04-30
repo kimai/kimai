@@ -16,12 +16,7 @@ use App\Export\Base\RendererTrait;
 use App\Project\ProjectStatisticService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
-use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Twig\Environment;
 
 #[CoversClass(RendererTrait::class)]
@@ -35,7 +30,10 @@ class HtmlRendererTest extends AbstractRendererTestCase
             $this->createMock(Environment::class),
             new EventDispatcher(),
             $this->createMock(ProjectStatisticService::class),
-            $this->createMock(ActivityStatisticService::class)
+            $this->createMock(ActivityStatisticService::class),
+            'html',
+            'print',
+            'export/print.html.twig',
         );
 
         self::assertEquals('html', $sut->getId());
@@ -53,26 +51,15 @@ class HtmlRendererTest extends AbstractRendererTestCase
         $user->method('isAdmin')->willReturn(false);
         $user->method('isSuperAdmin')->willReturn(false);
         $user->method('getTimezone')->willReturn('America/Edmonton');
-        $token = $this->createMock(TokenInterface::class);
-        $token->expects($this->any())->method('getUser')->willReturn($user);
-
-        $tokenStorage = new TokenStorage();
-        $tokenStorage->setToken($token);
-        /** @var AppVariable $app */
-        $app = $twig->getGlobals()['app'];
-        $twig->addGlobal('app', $app);
-        $app->setTokenStorage($tokenStorage);
-        /** @var RequestStack $stack */
-        $stack = self::getContainer()->get('request_stack');
-        $request = new Request();
-        $request->setLocale('en');
-        $stack->push($request);
 
         $sut = new HtmlRenderer(
             $twig,
             new EventDispatcher(),
             $this->createMock(ProjectStatisticService::class),
-            $this->createMock(ActivityStatisticService::class)
+            $this->createMock(ActivityStatisticService::class),
+            'html',
+            'print',
+            'export/print.html.twig',
         );
 
         $response = $this->render($sut);

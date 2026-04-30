@@ -38,7 +38,7 @@ class UserInvoiceCalculatorTest extends AbstractCalculatorTestCase
     {
         $customer = new Customer('foo');
         $template = new InvoiceTemplate();
-        $template->setVat(19);
+        $template->setTaxRate(19.0);
 
         $activity = new Activity();
         $activity->setName('activity description');

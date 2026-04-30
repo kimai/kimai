@@ -29,7 +29,7 @@ class PdfRendererFactoryTest extends TestCase
 
         self::assertInstanceOf(PDFRenderer::class, $renderer);
         self::assertEquals('foo', $renderer->getId());
-        self::assertFalse($renderer->isInternal());
+        self::assertFalse($renderer->isInternal()); // @phpstan-ignore staticMethod.alreadyNarrowedType
     }
 
     public function testCreateFromTemplate(): void
@@ -42,6 +42,6 @@ class PdfRendererFactoryTest extends TestCase
 
         self::assertInstanceOf(PdfTemplateRenderer::class, $renderer);
         self::assertEquals('foo', $renderer->getId());
-        self::assertTrue($renderer->isInternal());
+        self::assertTrue($renderer->isInternal()); // @phpstan-ignore staticMethod.alreadyNarrowedType
     }
 }
