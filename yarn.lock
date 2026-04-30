@@ -2056,7 +2056,7 @@ __metadata:
 "@types/trusted-types@npm:^2.0.7":
   version: 2.0.7
   resolution: "@types/trusted-types@npm:2.0.7"
-  checksum: 10c0/4c4855f10de7c6c135e0d32ce462419d8abbbc33713b31d294596c0cc34ae1fa6112a2f9da729c8f7a20707782b0d69da3b1f8df6645b0366d08825ca1522e0c
+  checksum: 10/8e4202766a65877efcf5d5a41b7dd458480b36195e580a3b1085ad21e948bc417d55d6f8af1fd2a7ad008015d4117d5fdfe432731157da3c68678487174e4ba3
   languageName: node
   linkType: hard
 
@@ -3283,7 +3283,7 @@ __metadata:
   dependenciesMeta:
     "@types/trusted-types":
       optional: true
-  checksum: 10c0/097c14a21a3f6cb95beded9ecd255f7c3512c42767b048390c747b0fe35736f6a71e02320fc50a9ac2be645834b463e4760915d595d502a56452daf339d0ea9c
+  checksum: 10/4cc9c539ed7136d46c6577613b8e20871c2b6165db01dfbd2a3c11c75f9e339c496ac6519a1c3190115def8cadae3720bef0417fc43fa28802c7407bab174da9
   languageName: node
   linkType: hard
 
@@ -3860,7 +3860,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"highlight.js@npm:^11":
+"highlight.js@npm:^11.11.1":
   version: 11.11.1
   resolution: "highlight.js@npm:11.11.1"
   checksum: 10/205272f12f2c8ab1760452a75c58b043b11129cf3a5d2a9c0c90d43993580d0f5c385a73a4b8aba197eef20c0ec37d64000e6b35c4ed5991324f4c2dc78f4e43
@@ -4278,12 +4278,12 @@ __metadata:
     eslint: "npm:^9"
     globals: "npm:^15"
     gridstack: "npm:^7"
-    highlight.js: "npm:^11"
+    highlight.js: "npm:^11.11.1"
     litepicker: "npm:^2"
     luxon: "npm:^3"
     sass: "npm:^1"
     sass-loader: "npm:^16"
-    tom-select: "npm:^2"
+    tom-select: "npm:^2.4.3"
     webpack: "npm:^5"
     webpack-cli: "npm:^5"
   languageName: unknown
@@ -6095,13 +6095,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tom-select@npm:^2":
-  version: 2.4.3
-  resolution: "tom-select@npm:2.4.3"
+"tom-select@npm:^2.4.3":
+  version: 2.6.0
+  resolution: "tom-select@npm:2.6.0"
   dependencies:
     "@orchidjs/sifter": "npm:^1.1.0"
     "@orchidjs/unicode-variants": "npm:^1.1.2"
-  checksum: 10/f2321eb8099186c45e015d812aa4943a0311fb56012f62a3a8a8b7cbd2a862771d67320272bc431efef0afe56838715b9039904085aab1b43d954ff8aee729d8
+  checksum: 10/d9554c2e3bd786bf6af9388886890061adfa7568bb8b44cf1fbd0b9893795a53fe9a4a61a30eeffeac1be314d0c4fd9ef4d748300c9ff61bd07ae822e0e521d4
   languageName: node
   linkType: hard
 
