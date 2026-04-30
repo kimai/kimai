@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "php": "8.4.*||8.5.*",
+        "php": "8.5.*",
         "ext-gd": "*",
         "ext-intl": "*",
         "ext-json": "*",
@@ -118,7 +118,7 @@
         },
         "optimize-autoloader": true,
         "platform": {
-            "php": "8.4.4"
+            "php": "8.5"
         },
         "preferred-install": {
             "*": "dist"
