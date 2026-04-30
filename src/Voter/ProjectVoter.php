@@ -36,6 +36,7 @@ final class ProjectVoter extends Voter
         'permissions',
         'comments',
         'details',
+        'access',
     ];
 
     public function __construct(private readonly RolePermissionManager $permissionManager)
@@ -63,6 +64,12 @@ final class ProjectVoter extends Voter
 
         if (!$user instanceof User) {
             return false;
+        }
+
+        // this is a virtual permission, only meant to be used by developer
+        // it checks if access to the given project is potentially possible
+        if ($attribute === 'access') {
+            return $this->permissionManager->checkTeamAccessProject($subject, $user);
         }
 
         if ($this->permissionManager->hasRolePermission($user, $attribute . '_project')) {

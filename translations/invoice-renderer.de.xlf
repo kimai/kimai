@@ -2,41 +2,41 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="invoice-renderer.en.xlf">
     <body>
-      <trans-unit id="hOcTt2G" resname="invoice_renderer">
+      <trans-unit id="hOcTt2G" resname="invoice_renderer" xml:space="preserve" approved="yes">
         <source>invoice_renderer</source>
-        <target>Rechnungsvorlage</target>
+        <target state="final">Rechnungsvorlage</target>
       </trans-unit>
-      <trans-unit id="7mEUv6C" resname="help.upload">
+      <trans-unit id="7mEUv6C" resname="help.upload" xml:space="preserve" approved="yes">
         <source>help.upload</source>
-        <target state="translated">Achtung: existierende Dateien werden überschrieben. Erlaubte Dateitypen sind: %extensions%.</target>
+        <target state="final">Achtung: existierende Dateien werden überschrieben. Erlaubte Dateitypen sind: %extensions%.</target>
       </trans-unit>
-      <trans-unit id="22pt8Gs" resname="download_invoice_renderer">
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer" xml:space="preserve" approved="yes">
         <source>download_invoice_renderer</source>
-        <target state="translated">Sie können weitere Vorlagen hier herunterladen</target>
+        <target state="final">Sie können hier weitere Vorlagen herunterladen</target>
       </trans-unit>
-      <trans-unit id="E5BwZHT" resname="programmatic">
+      <trans-unit id="E5BwZHT" resname="programmatic" xml:space="preserve" approved="yes">
         <source>programmatic</source>
-        <target>Zur Weiterverarbeitung</target>
+        <target state="final">Zur Weiterverarbeitung</target>
       </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice">
+      <trans-unit id="Utbj3k_" resname="invoice" xml:space="preserve" approved="yes">
         <source>invoice</source>
-        <target>Rechnung</target>
+        <target state="final">Rechnung</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default" xml:space="preserve" approved="yes">
         <source>Invoice</source>
         <target state="final">Rechnung</target>
       </trans-unit>
-      <trans-unit id="mC2ePrm" resname="text">
+      <trans-unit id="mC2ePrm" resname="text" xml:space="preserve" approved="yes">
         <source>text</source>
-        <target>Text</target>
+        <target state="final">Text</target>
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve" approved="yes">
         <source>timesheet</source>
         <target state="final">Stundenzettel</target>
       </trans-unit>
-      <trans-unit id="m1UyfD9" resname="service-date">
-        <source>service-date</source>
-        <target>Leistungsdatum</target>
+      <trans-unit id="m1UyfD9" resname="service-date" xml:space="preserve" approved="yes">
+        <source>Single service date</source>
+        <target state="final">Leistungsdatum</target>
       </trans-unit>
     </body>
   </file>

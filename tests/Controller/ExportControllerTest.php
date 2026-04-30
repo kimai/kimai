@@ -105,7 +105,7 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         // assert export type buttons are available
         $expected = [
             'csv' => 'csv',
-            'html' => 'html',
+            'print' => 'html',
             'pdf' => 'pdf',
             'xlsx' => 'xlsx'
         ];
@@ -162,7 +162,7 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         // assert export type buttons are available
         $expected = [
             'csv' => 'csv',
-            'html' => 'html',
+            'print' => 'html',
             'pdf' => 'pdf',
             'xlsx' => 'xlsx'
         ];
@@ -227,7 +227,7 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
 
         // don't add daterange to make sure the current month is the default range
         $client->submit($form, [
-            'renderer' => 'html',
+            'renderer' => 'print',
             'markAsExported' => 1
         ]);
 

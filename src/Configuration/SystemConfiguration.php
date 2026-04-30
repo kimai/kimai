@@ -91,7 +91,6 @@ final class SystemConfiguration
             $array = &$replaced;
             while (\count($keys) > 1) {
                 $search = array_shift($keys);
-                /* @phpstan-ignore-next-line  */
                 if (!\array_key_exists($search, $array) || !\is_array($array[$search])) {
                     $array[$search] = [];
                 }

@@ -2,6 +2,14 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="zh-Hant" datatype="plaintext" original="kiosk.en.xlf">
     <body>
-      </body>
+      <trans-unit id="3349h0x" resname="Kiosk" xml:space="preserve" approved="no">
+        <source>Kiosk</source>
+        <target state="translated">資訊站模式</target>
+      </trans-unit>
+      <trans-unit id="TcGAXSA" resname="kiosk.login" xml:space="preserve" approved="no">
+        <source>kiosk.login</source>
+        <target state="translated">登入畫面</target>
+      </trans-unit>
+    </body>
   </file>
 </xliff>

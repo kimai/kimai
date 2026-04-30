@@ -47,6 +47,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Exporter\Expose(label: 'id', type: 'integer')]
     private ?int $id = null;
     #[ORM\Column(name: 'name', type: Types::STRING, length: 150, nullable: false)]
+    #[Constraints\NoSpecialCharacters]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 150)]
     #[Serializer\Expose]
@@ -54,6 +55,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Exporter\Expose(label: 'name')]
     private ?string $name = null;
     #[ORM\Column(name: 'number', type: Types::STRING, length: 50, nullable: true)]
+    #[Constraints\NoSpecialCharacters]
     #[Assert\Length(max: 50)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -143,6 +145,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
      * Contact email
      */
     #[ORM\Column(name: 'email', type: Types::STRING, length: 75, nullable: true)]
+    #[Assert\Email(mode: 'html5')]
     #[Assert\Length(max: 75)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
@@ -150,6 +153,8 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     private ?string $email = null;
     #[ORM\Column(name: 'homepage', type: Types::STRING, length: 100, nullable: true)]
     #[Assert\Length(max: 100)]
+    #[Assert\Url]
+    #[Assert\NoSuspiciousCharacters]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'homepage')]

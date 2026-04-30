@@ -412,7 +412,8 @@ class ConfigurationTest extends TestCase
                 ],
                 'mapping' => [],
                 'connection' => [
-                    'organization' => []
+                    'organization' => [],
+                    'cleanupLongRelayState' => false
                 ],
                 'provider' => 'default',
             ],

@@ -220,11 +220,24 @@ class ActivityControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result);
         self::assertNotEmpty($result);
         self::assertEquals(5, \count($result));
+
         self::assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('ActivityCollection', $result[0]);
-        self::assertEquals($imports[0]->getId(), $result[4]['project']);
-        self::assertEquals($imports[1]->getId(), $result[3]['project']);
+
+        self::assertIsArray($result[2]);
+        self::assertApiResponseTypeStructure('ActivityCollection', $result[2]);
+        self::assertArrayHasKey('project', $result[2]);
         self::assertEquals($imports[1]->getId(), $result[2]['project']);
+
+        self::assertIsArray($result[3]);
+        self::assertApiResponseTypeStructure('ActivityCollection', $result[3]);
+        self::assertArrayHasKey('project', $result[3]);
+        self::assertEquals($imports[1]->getId(), $result[3]['project']);
+
+        self::assertIsArray($result[4]);
+        self::assertApiResponseTypeStructure('ActivityCollection', $result[4]);
+        self::assertArrayHasKey('project', $result[4]);
+        self::assertEquals($imports[0]->getId(), $result[4]['project']);
     }
 
     public function testGetEntityIsSecure(): void

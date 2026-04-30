@@ -21,7 +21,7 @@ class ParsedownExtensionTest extends TestCase
     public function testTableContainsCssClasses(): void
     {
         $sut = new ParsedownExtension();
-        $html = $sut->parse('
+        $html = $sut->text('
 | Item | Price |
 |---|---|
 | Something | $ 472,78 |
@@ -34,7 +34,7 @@ class ParsedownExtensionTest extends TestCase
     public function testHeaderIsNotConverted(): void
     {
         $sut = new ParsedownExtension();
-        $html = $sut->parse('
+        $html = $sut->text('
 # Foo
         ');
         self::assertEquals('<p># Foo</p>', $html);

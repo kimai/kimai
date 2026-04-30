@@ -171,6 +171,7 @@ class TeamControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('TeamEntity', $result);
         self::assertNotEmpty($result['id']);
+        self::assertIsArray($result['members']);
         self::assertCount(3, $result['members']);
         self::assertIsNumeric($updateId);
 
@@ -182,18 +183,23 @@ class TeamControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result['members']);
         self::assertCount(3, $result['members']);
 
+        self::assertIsArray($result['members'][0]);
+        self::assertTrue($result['members'][0]['teamlead']);
+        self::assertIsArray($result['members'][0]['user']);
+        self::assertEquals(2, $result['members'][0]['user']['id']);
+        self::assertEquals('john_user', $result['members'][0]['user']['username']);
+
         self::assertIsArray($result['members'][1]);
         self::assertFalse($result['members'][1]['teamlead']);
+        self::assertIsArray($result['members'][1]['user']);
         self::assertEquals(1, $result['members'][1]['user']['id']);
         self::assertEquals('clara_customer', $result['members'][1]['user']['username']);
 
+        self::assertIsArray($result['members'][2]);
         self::assertTrue($result['members'][2]['teamlead']);
+        self::assertIsArray($result['members'][2]['user']);
         self::assertEquals(4, $result['members'][2]['user']['id']);
         self::assertEquals('tony_teamlead', $result['members'][2]['user']['username']);
-
-        self::assertTrue($result['members'][0]['teamlead']);
-        self::assertEquals(2, $result['members'][0]['user']['id']);
-        self::assertEquals('john_user', $result['members'][0]['user']['username']);
     }
 
     public function testPatchActionWithValidationErrors(): void
@@ -380,6 +386,7 @@ class TeamControllerTest extends APIControllerBaseTestCase
         $result = json_decode($client->getResponse()->getContent(), true);
         self::assertIsArray($result);
         self::assertIsNumeric($result['id']);
+        self::assertIsArray($result['customers']);
         self::assertCount(0, $result['customers']);
 
         $this->request($client, '/api/teams/' . $result['id'] . '/customers/1', 'POST');
@@ -422,6 +429,7 @@ class TeamControllerTest extends APIControllerBaseTestCase
         $result = json_decode($client->getResponse()->getContent(), true);
         self::assertIsArray($result);
         self::assertIsNumeric($result['id']);
+        self::assertIsArray($result['customers']);
         self::assertCount(1, $result['customers']);
 
         // cannot add existing customer
@@ -445,6 +453,7 @@ class TeamControllerTest extends APIControllerBaseTestCase
         $result = json_decode($client->getResponse()->getContent(), true);
         self::assertIsArray($result);
         self::assertIsNumeric($result['id']);
+        self::assertIsArray($result['customers']);
         self::assertCount(0, $result['customers']);
 
         // add customer
@@ -453,6 +462,7 @@ class TeamControllerTest extends APIControllerBaseTestCase
         $result = json_decode($client->getResponse()->getContent(), true);
         self::assertIsArray($result);
         self::assertIsNumeric($result['id']);
+        self::assertIsArray($result['customers']);
         self::assertCount(1, $result['customers']);
 
         $this->request($client, '/api/teams/' . $result['id'] . '/customers/1', 'DELETE');
@@ -515,6 +525,7 @@ class TeamControllerTest extends APIControllerBaseTestCase
         $result = json_decode($client->getResponse()->getContent(), true);
         self::assertIsArray($result);
         self::assertIsNumeric($result['id']);
+        self::assertIsArray($result['projects']);
         self::assertCount(0, $result['projects']);
         $this->request($client, '/api/teams/' . $result['id'] . '/projects/1', 'POST');
         self::assertTrue($client->getResponse()->isSuccessful());
@@ -558,6 +569,7 @@ class TeamControllerTest extends APIControllerBaseTestCase
         $result = json_decode($client->getResponse()->getContent(), true);
         self::assertIsArray($result);
         self::assertIsNumeric($result['id']);
+        self::assertIsArray($result['projects']);
         self::assertCount(1, $result['projects']);
 
         // cannot add existing project
@@ -581,6 +593,7 @@ class TeamControllerTest extends APIControllerBaseTestCase
         $result = json_decode($client->getResponse()->getContent(), true);
         self::assertIsArray($result);
         self::assertIsNumeric($result['id']);
+        self::assertIsArray($result['projects']);
         self::assertCount(0, $result['projects']);
 
         // add project
@@ -590,6 +603,7 @@ class TeamControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result);
         self::assertIsArray($result['projects']);
         self::assertCount(1, $result['projects']);
+        self::assertIsInt($result['id']);
 
         $this->request($client, '/api/teams/' . $result['id'] . '/projects/1', 'DELETE');
         self::assertTrue($client->getResponse()->isSuccessful());
@@ -649,6 +663,7 @@ class TeamControllerTest extends APIControllerBaseTestCase
         $result = json_decode($client->getResponse()->getContent(), true);
         self::assertIsArray($result);
         self::assertIsNumeric($result['id']);
+        self::assertIsArray($result['activities']);
         self::assertCount(0, $result['activities']);
         $this->request($client, '/api/teams/' . $result['id'] . '/activities/1', 'POST');
         self::assertTrue($client->getResponse()->isSuccessful());
@@ -690,6 +705,7 @@ class TeamControllerTest extends APIControllerBaseTestCase
         $result = json_decode($client->getResponse()->getContent(), true);
         self::assertIsArray($result);
         self::assertIsNumeric($result['id']);
+        self::assertIsArray($result['activities']);
         self::assertCount(1, $result['activities']);
 
         // cannot add existing activity
@@ -714,6 +730,7 @@ class TeamControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result);
         self::assertIsArray($result['activities']);
         self::assertCount(0, $result['activities']);
+        self::assertIsInt($result['id']);
 
         // add activity
         $this->request($client, '/api/teams/' . $result['id'] . '/activities/1', 'POST');
@@ -721,6 +738,7 @@ class TeamControllerTest extends APIControllerBaseTestCase
         $result = json_decode($client->getResponse()->getContent(), true);
         self::assertIsArray($result);
         self::assertIsNumeric($result['id']);
+        self::assertIsArray($result['activities']);
         self::assertCount(1, $result['activities']);
 
         $this->request($client, '/api/teams/' . $result['id'] . '/activities/1', 'DELETE');

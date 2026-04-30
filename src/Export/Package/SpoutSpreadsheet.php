@@ -11,6 +11,7 @@ namespace App\Export\Package;
 
 use App\Constants;
 use OpenSpout\Common\Entity\Cell;
+use OpenSpout\Common\Entity\Cell\StringCell;
 use OpenSpout\Common\Entity\Row;
 use OpenSpout\Common\Entity\Style\Border;
 use OpenSpout\Common\Entity\Style\BorderPart;
@@ -35,11 +36,6 @@ class SpoutSpreadsheet implements SpreadsheetPackage
         private readonly ?string $locale = null,
     )
     {
-        try {
-            $this->writer->setCreator(Constants::SOFTWARE);
-        } catch (\Exception $e) {
-            // ignore, does not work in CSV
-        }
     }
 
     /**
@@ -102,7 +98,8 @@ class SpoutSpreadsheet implements SpreadsheetPackage
         $style->setShouldWrapText(false);
         $style->setShouldShrinkToFit(true);
 
-        if (\array_key_exists('totals', $options) && $options['totals'] === true) {
+        $isTotalsRow = \array_key_exists('totals', $options) && $options['totals'] === true;
+        if ($isTotalsRow) {
             if ($this->writer instanceof CSVWriter) {
                 return;
             }
@@ -113,7 +110,11 @@ class SpoutSpreadsheet implements SpreadsheetPackage
         $tmp = [];
         $i = 0;
         foreach ($columns as $column) {
-            $tmp[] = Cell::fromValue($column, $this->styles[$i++]); // @phpstan-ignore argument.type
+            if (!$isTotalsRow && \is_string($column)) {
+                $tmp[] = new StringCell($column, $this->styles[$i++]);
+            } else {
+                $tmp[] = Cell::fromValue($column, $this->styles[$i++]); // @phpstan-ignore argument.type
+            }
         }
 
         $this->writer->addRow(new Row($tmp, $style));
@@ -136,6 +137,10 @@ class SpoutSpreadsheet implements SpreadsheetPackage
 
     public function save(): void
     {
+        if ($this->writer instanceof XLSXWriter) {
+            $this->writer->setCreator(Constants::SOFTWARE);
+        }
+
         $this->writer->close();
     }
 }

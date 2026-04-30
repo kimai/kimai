@@ -72,15 +72,14 @@ final class ActivityController extends BaseApiController
 
         /** @var array<int> $projects */
         $projects = $paramFetcher->get('projects');
-        $project = $paramFetcher->get('project');
-        if (\is_string($project) && $project !== '') {
-            $projects[] = $project;
+        $pr = $paramFetcher->get('project');
+        if (\is_string($pr) && $pr !== '') {
+            $projects[] = $pr;
         }
 
-        foreach (array_unique($projects) as $projectId) {
-            $project = $projectRepository->find($projectId);
-            if ($project === null) {
-                throw $this->createNotFoundException('Unknown project: ' . $projectId);
+        foreach ($projectRepository->findByIds(array_unique($projects)) as $project) {
+            if (!$this->isGranted('access', $project)) {
+                throw $this->createAccessDeniedException('Cannot access Project: ' . $project->getId());
             }
             $query->addProject($project);
         }

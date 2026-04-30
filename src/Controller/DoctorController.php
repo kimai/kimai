@@ -27,19 +27,6 @@ use Symfony\Contracts\Cache\ItemInterface;
 final class DoctorController extends AbstractController
 {
     /**
-     * Required PHP extensions for Kimai.
-     */
-    public const REQUIRED_EXTENSIONS = [
-        'intl',
-        'json',
-        'mbstring',
-        'pdo',
-        'xml',
-        'xsl',
-        'zip',
-    ];
-
-    /**
      * Directories which need to be writable by the webserver.
      */
     public const DIRECTORIES_WRITABLE = [
@@ -108,8 +95,30 @@ final class DoctorController extends AbstractController
             'logLines' => $logLines,
             'logSize' => $this->getLogSize(),
             'composer' => $this->getComposerPackages(),
-            'release' => $latestRelease
+            'release' => $latestRelease,
+            'opcache' => $this->getOpcacheConfiguration()
         ]);
+    }
+
+    /**
+     * @return array{enabled: bool, status: false|array<mixed>}
+     */
+    private function getOpcacheConfiguration(): array
+    {
+        $known = \function_exists('opcache_get_status');
+        $status = $known ? opcache_get_status() : false;
+
+        $enabled = \is_array($status) && $status['opcache_enabled'];
+
+        if ($enabled && \array_key_exists('scripts', $status)) {
+            unset($status['scripts']);
+        }
+
+        return [
+            'unknown' => !$known,
+            'enabled' => $enabled,
+            'status' => $status,
+        ];
     }
 
     /**
@@ -148,9 +157,27 @@ final class DoctorController extends AbstractController
      */
     private function getLoadedExtensions(): array
     {
+        $json = file_get_contents(__DIR__ . '/../../composer.json');
+        if ($json === false) {
+            return ['Failed loading composer.json' => false];
+        }
+
+        $composer = json_decode($json, true);
+        if (!\is_array($composer)) {
+            return ['Failed parsing composer.json' => false];
+        }
+
+        if (!\array_key_exists('require', $composer)) {
+            return ['Missing requirements in composer.json' => false];
+        }
+
         $results = [];
 
-        foreach (self::REQUIRED_EXTENSIONS as $extName) {
+        foreach ($composer['require'] as $name => $version) {
+            if (!str_starts_with($name, 'ext-')) {
+                continue;
+            }
+            $extName = str_replace('ext-', '', $name);
             $results[$extName] = false;
             if (\extension_loaded($extName)) {
                 $results[$extName] = true;
@@ -264,7 +291,12 @@ final class DoctorController extends AbstractController
             'sys_temp_dir',
             'date.timezone',
             'session.gc_maxlifetime',
-            'disable_functions'
+            'disable_functions',
+            'opcache.enable',
+            'opcache.memory_consumption',
+            'opcache.interned_strings_buffer',
+            'opcache.max_accelerated_files',
+            'opcache.validate_timestamps',
         ];
 
         $settings = [];

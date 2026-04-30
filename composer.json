@@ -32,7 +32,7 @@
         "doctrine/orm": "^3.0",
         "easybill/zugferd-php": "^2.1",
         "endroid/qr-code": "^6.0",
-        "friendsofsymfony/rest-bundle": "3.9.0-beta1",
+        "friendsofsymfony/rest-bundle": "^3.9",
         "gedmo/doctrine-extensions": "^3.6",
         "horstoeko/zugferd": "^1.0",
         "horstoeko/zugferdublbridge": "^1.0",

@@ -32,6 +32,9 @@ class ContextTest extends TestCase
         return new Context($stack);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getDefaultSettings(): array
     {
         return [

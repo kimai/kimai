@@ -84,6 +84,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      */
     #[ORM\Column(name: 'alias', type: Types::STRING, length: 60, nullable: true)]
     #[Assert\Length(max: 60)]
+    #[Constraints\NoSpecialCharacters]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'alias')]
@@ -99,14 +100,16 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      */
     #[ORM\Column(name: 'title', type: Types::STRING, length: 50, nullable: true)]
     #[Assert\Length(max: 50)]
+    #[Constraints\NoSpecialCharacters]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'title')]
     private ?string $title = null;
     /**
-     * URL to the user avatar, will be auto-generated if empty
+     * URL to the user avatar
      */
     #[ORM\Column(name: 'avatar', type: Types::STRING, length: 255, nullable: true)]
+    #[Assert\Url]
     #[Assert\Length(max: 255, groups: ['Profile'])]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -152,6 +155,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[Assert\NotBlank(groups: ['Registration', 'UserCreate', 'Profile'])]
     #[Assert\Regex(pattern: '/\//', match: false, groups: ['Registration', 'UserCreate', 'Profile'])]
     #[Assert\Length(min: 2, max: 64, groups: ['Registration', 'UserCreate', 'Profile'])]
+    #[Constraints\NoSpecialCharacters]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?string $username = null;
@@ -163,6 +167,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[Serializer\Groups(['Default'])]
     private ?string $email = null;
     #[ORM\Column(name: 'account', type: Types::STRING, length: 30, nullable: true)]
+    #[Constraints\NoSpecialCharacters]
     #[Assert\Length(max: 30)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]

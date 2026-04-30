@@ -14,6 +14,14 @@
         <source>Buy now</source>
         <target state="translated">Beli sekarang</target>
       </trans-unit>
+      <trans-unit id="jZAB0yx" resname="shop" xml:space="preserve">
+        <source>Plugin Shop</source>
+        <target state="translated">Ekstensi lainnya</target>
+      </trans-unit>
+      <trans-unit id="aNvGEaj" resname="update_available" xml:space="preserve">
+        <source>Update available</source>
+        <target state="translated">Pembaruan tersedia: %version%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

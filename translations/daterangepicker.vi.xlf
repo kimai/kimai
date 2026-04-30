@@ -42,6 +42,10 @@
         <source>daterangepicker.lastMonth</source>
         <target state="translated">Tháng trước</target>
       </trans-unit>
+      <trans-unit id="mgJ2Z7M" resname="daterangepicker.thisFinancialYear" xml:space="preserve">
+        <source>daterangepicker.thisFinancialYear</source>
+        <target state="translated">Năm tài chính hiện tại</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -70,21 +70,7 @@ final class CustomerVoter extends Voter
         // this is a virtual permission, only meant to be used by developer
         // it checks if access to the given customer is potentially possible
         if ($attribute === 'access') {
-            if ($subject->getTeams()->count() === 0) {
-                return true;
-            }
-
-            foreach ($subject->getTeams() as $team) {
-                if ($user->isInTeam($team)) {
-                    return true;
-                }
-            }
-
-            if ($user->canSeeAllData()) {
-                return true;
-            }
-
-            return false;
+            return $this->permissionManager->checkTeamAccessCustomer($subject, $user);
         }
 
         if ($this->permissionManager->hasRolePermission($user, $attribute . '_customer')) {

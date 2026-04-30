@@ -590,4 +590,14 @@ class LocaleFormatExtensionsTest extends TestCase
         self::assertEquals('34.29', $sut->durationChart(123456));
         self::assertEquals('-34.29', $sut->durationChart(-123456));
     }
+
+    public function testDateWeekday(): void
+    {
+        $dateTime = new \DateTimeImmutable('2026-08-13 08:00:00 Europe/Berlin');
+
+        $sut = $this->getSut('en', $this->localeEn);
+        self::assertEquals('Thu 13', $sut->dateWeekday($dateTime));
+        self::assertEquals('Thu#-#13', $sut->dateWeekday($dateTime, '#-#'));
+        self::assertEquals('Thu<br>13', $sut->dateWeekday($dateTime, '<br>'));
+    }
 }

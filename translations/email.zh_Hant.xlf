@@ -54,6 +54,42 @@ Please review them at: %url%</source>
 
 請在此審核：%url%</target>
       </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="translated">待核准: %user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="translated">已為 %user% 提交審核請求。
+
+%list%
+
+請至以下連結審閱：%url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">您的請求已被拒絕</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">您的請求已獲批准</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="translated">您的請求已獲 %created_by% 核准。
+
+%list%
+
+您可於以下連結查閱所有相關紀錄：%url%</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">您的授權請求已被 %created_by% 拒絕。
+
+%list%
+
+請至以下連結檢視您的請求：%url%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

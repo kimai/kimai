@@ -356,7 +356,7 @@
       </trans-unit>
       <trans-unit id="Fm.kwVn" resname="profile.first_entry" xml:space="preserve">
         <source>profile.first_entry</source>
-        <target state="needs-translation">Làm việc từ</target>
+        <target state="translated">Ngày làm việc đầu tiên</target>
       </trans-unit>
       <trans-unit id="xEYQXPy" resname="profile.settings">
         <source>profile.settings</source>
@@ -634,24 +634,24 @@
         <source>preview</source>
         <target>Xem trước</target>
       </trans-unit>
-      <trans-unit id="X70dwP8" resname="button.print">
-        <source>button.print</source>
+      <trans-unit id="zpU6DrC" resname="print">
+        <source>print</source>
         <target>In</target>
       </trans-unit>
-      <trans-unit id="W_TXvSi" resname="button.csv">
-        <source>button.csv</source>
+      <trans-unit id="U7ubCzi" resname="csv">
+        <source>csv</source>
         <target>CSV</target>
       </trans-unit>
-      <trans-unit id="vC2IsaP" resname="button.xlsx">
-        <source>button.xlsx</source>
+      <trans-unit id="HJgLIry" resname="xlsx">
+        <source>xlsx</source>
         <target>Excel</target>
       </trans-unit>
-      <trans-unit id="aAa5uRR" resname="button.pdf">
-        <source>button.pdf</source>
+      <trans-unit id="w1sh1so" resname="pdf">
+        <source>pdf</source>
         <target>PDF</target>
       </trans-unit>
-      <trans-unit id="ulYFDIo" resname="button.ods">
-        <source>button.ods</source>
+      <trans-unit id="lmUO63g" resname="ods">
+        <source>ods</source>
         <target>ODS</target>
       </trans-unit>
       <trans-unit id="zPcx3O_" resname="invoice_print">
@@ -1288,7 +1288,7 @@
       </trans-unit>
       <trans-unit id="IRzPWmL" resname="login.2fa_intro" xml:space="preserve">
         <source>login.2fa_intro</source>
-        <target state="needs-translation">Vui lòng nhập mã xác minh để đăng nhập.</target>
+        <target state="translated">Vui lòng nhập mã xác minh để hoàn tất đăng nhập.</target>
       </trans-unit>
       <trans-unit id="7_d7IB3" resname="evaluation" xml:space="preserve">
         <source>evaluation</source>
@@ -1296,7 +1296,7 @@
       </trans-unit>
       <trans-unit id="31dFXhR" resname="work_times_is" xml:space="preserve">
         <source>work_times_is</source>
-        <target state="needs-translation">Giờ làm việc thực tế</target>
+        <target state="translated">Giờ làm việc thực tế</target>
       </trans-unit>
       <trans-unit id="s9NPI3v" resname="work_times_should.none_configured" xml:space="preserve">
         <source>work_times_should.none_configured</source>
@@ -1448,7 +1448,7 @@
       </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
-        <target state="needs-translation">Số giờ làm việc mong đợi</target>
+        <target state="translated">Số giờ làm việc mong đợi</target>
       </trans-unit>
       <trans-unit id="FxwWVFI" resname="help.globalActivity" xml:space="preserve">
         <source>help.globalActivity</source>
@@ -1620,7 +1620,7 @@
       </trans-unit>
       <trans-unit id="LDsHBXd" resname="modal.columns.label" xml:space="preserve">
         <source>modal.columns.label</source>
-        <target state="needs-translation">Cột</target>
+        <target state="translated">Cột</target>
       </trans-unit>
       <trans-unit id="aGk9Aqt" resname="desktop" xml:space="preserve">
         <source>desktop</source>
@@ -1628,7 +1628,7 @@
       </trans-unit>
       <trans-unit id="W8XQTkJ" resname="complete_month.help" xml:space="preserve">
         <source>complete_month.help</source>
-        <target state="needs-translation">Lựa chọn này sẽ khóa tất cả ngày trong năm trước ngày chốt. Người dùng sẽ không thể tạo mới hay sửa giờ công trong giai đoạn đã chốt.</target>
+        <target state="translated">Lựa chọn này sẽ khóa tất cả ngày trong năm trước ngày chốt. Người dùng sẽ không thể tạo mới hay sửa giờ công trong giai đoạn đã chốt.</target>
       </trans-unit>
       <trans-unit id="AXr_aHI" resname="completed_month_pdf_note" xml:space="preserve">
         <source>completed_month_pdf_note</source>
@@ -1738,9 +1738,9 @@
         <source>profile-stats</source>
         <target>Hồ sơ</target>
       </trans-unit>
-      <trans-unit id="zeD7Dew" resname="settings">
-        <source>settings</source>
-        <target state="translated">Tùy chỉnh</target>
+      <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
+        <source>Settings</source>
+        <target state="needs-translation">Tùy chỉnh</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
@@ -1822,13 +1822,37 @@
         <source>Synchronization</source>
         <target state="translated">Đồng bộ</target>
       </trans-unit>
-      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
-        <source>todo</source>
-        <target state="translated">Tác vụ cần làm</target>
+      <trans-unit id="lt2Y2LO" resname="timesheet">
+        <source>Timesheet</source>
+        <target state="translated">Bảng chấm công</target>
       </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+      <trans-unit id="wv3n.FT" resname="dashboard.edit_mode" xml:space="preserve">
+        <source>dashboard.edit_mode</source>
+        <target state="translated">Bạn có thể sắp xếp lại các widget bằng cách kéo thả. Thêm widget mới sẽ lưu vào thay đổi đang chờ lưu.</target>
+      </trans-unit>
+      <trans-unit id="rlJLVNm" resname="append" xml:space="preserve">
+        <source>append</source>
+        <target state="translated">Bổ sung</target>
+      </trans-unit>
+      <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="no">
+        <source>Unlock month</source>
+        <target state="translated">Hủy chốt tháng</target>
+      </trans-unit>
+      <trans-unit id="mhOe3Iy" resname="unlock_month.help" xml:space="preserve">
+        <source>unlock_month.help</source>
+        <target state="translated">Việc này sẽ hủy chốt tất cả các ngày của năm sau ngày được chọn.</target>
+      </trans-unit>
+      <trans-unit id="wZRRqg0" resname="manual_bookings" xml:space="preserve">
+        <source>manual_bookings</source>
+        <target state="translated">Đặt lịch thủ công</target>
+      </trans-unit>
+        <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+            <target state="translated">Tác vụ cần làm</target>
+      </trans-unit>
+        <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
         <source>estimation</source>
-        <target state="translated">Thời gian dự kiến</target>
+            <target state="translated">Thời gian dự kiến</target>
       </trans-unit>
     </body>
   </file>

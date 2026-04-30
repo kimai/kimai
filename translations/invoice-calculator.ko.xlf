@@ -50,6 +50,10 @@
         <source>date_user</source>
         <target state="translated">날짜 및 사용자</target>
       </trans-unit>
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help" xml:space="preserve">
+        <source>invoice_calculator.help</source>
+        <target state="translated">명세서 항목을 묶을 기준을 선택해 주세요</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

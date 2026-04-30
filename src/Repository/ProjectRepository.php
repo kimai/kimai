@@ -40,7 +40,7 @@ use Doctrine\ORM\QueryBuilder;
 class ProjectRepository extends EntityRepository
 {
     /**
-     * @param int[] $projectIds
+     * @param array<int, string|int> $projectIds
      * @return array<Project>
      */
     public function findByIds(array $projectIds): array

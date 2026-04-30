@@ -26,9 +26,9 @@
         <source>project</source>
         <target state="translated">Проєкт</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve" approved="yes">
         <source>date</source>
-        <target state="translated">Дата</target>
+        <target state="final">Дата</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly">
         <source>weekly</source>

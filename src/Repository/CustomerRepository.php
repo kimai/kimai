@@ -37,7 +37,7 @@ use Doctrine\ORM\QueryBuilder;
 class CustomerRepository extends EntityRepository
 {
     /**
-     * @param int[] $customerIDs
+     * @param array<int, string|int> $customerIDs
      * @return array<Customer>
      */
     public function findByIds(array $customerIDs): array

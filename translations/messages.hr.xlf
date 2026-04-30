@@ -206,9 +206,9 @@
         <source>error.too_many_entries</source>
         <target>Zahtjev se nije mogao obraditi, pronađeno je previše rezultata.</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
-        <target>Datum</target>
+        <target state="translated">Datum</target>
       </trans-unit>
       <trans-unit id="BHk4pZ3" resname="starttime">
         <source>starttime</source>
@@ -510,9 +510,9 @@
         <source>company</source>
         <target>Ime poduzeća</target>
       </trans-unit>
-      <trans-unit id="fFErSLq" resname="vat">
+      <trans-unit id="fFErSLq" resname="vat" xml:space="preserve">
         <source>vat</source>
-        <target>PDV</target>
+        <target state="translated">Porez</target>
       </trans-unit>
       <trans-unit id="EJDS9HY" resname="vat_id">
         <source>vat_id</source>
@@ -766,24 +766,24 @@
         <source>preview</source>
         <target>Pregled</target>
       </trans-unit>
-      <trans-unit id="X70dwP8" resname="button.print">
-        <source>button.print</source>
+      <trans-unit id="zpU6DrC" resname="print">
+        <source>print</source>
         <target>Ispiši</target>
       </trans-unit>
-      <trans-unit id="W_TXvSi" resname="button.csv">
-        <source>button.csv</source>
+      <trans-unit id="U7ubCzi" resname="csv">
+        <source>csv</source>
         <target>CSV</target>
       </trans-unit>
-      <trans-unit id="vC2IsaP" resname="button.xlsx">
-        <source>button.xlsx</source>
+      <trans-unit id="HJgLIry" resname="xlsx">
+        <source>xlsx</source>
         <target>Excel</target>
       </trans-unit>
-      <trans-unit id="aAa5uRR" resname="button.pdf">
-        <source>button.pdf</source>
+      <trans-unit id="w1sh1so" resname="pdf">
+        <source>pdf</source>
         <target>PDF</target>
       </trans-unit>
-      <trans-unit id="ulYFDIo" resname="button.ods">
-        <source>button.ods</source>
+      <trans-unit id="lmUO63g" resname="ods">
+        <source>ods</source>
         <target>ODS</target>
       </trans-unit>
       <trans-unit id="zPcx3O_" resname="invoice_print">
@@ -822,13 +822,13 @@
         <source>invoice.number</source>
         <target>Broj računa</target>
       </trans-unit>
-      <trans-unit id="86KyrKO" resname="invoice.subtotal">
+      <trans-unit id="86KyrKO" resname="invoice.subtotal" xml:space="preserve">
         <source>invoice.subtotal</source>
-        <target>Ukupno bez PDV- a</target>
+        <target state="translated">Iznos bez poreza</target>
       </trans-unit>
-      <trans-unit id="EO57yXg" resname="invoice.tax">
+      <trans-unit id="EO57yXg" resname="invoice.tax" xml:space="preserve">
         <source>invoice.tax</source>
-        <target>PDV</target>
+        <target state="translated">Porez</target>
       </trans-unit>
       <trans-unit id="N68vyvo" resname="invoice.total">
         <source>invoice.total</source>
@@ -1302,9 +1302,9 @@
         <source>help.globalActivity</source>
         <target state="translated">Ako ne odabereš projekt, ova aktivnost postaje globalna i može se kombinirati s bilo kojim projektom. Ako odabereš projekt, aktivnost se može koristiti samo s tim projektom. Postavka se kasnije ne može promijeniti.</target>
       </trans-unit>
-      <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer">
+      <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer" xml:space="preserve">
         <source>help.invoiceTemplate_customer</source>
-        <target state="translated">Računi za ovog klijenta se standardno generiraju pomoću ovog predloška. Po potrebi se može promijeniti tijekom generiranja računa.</target>
+        <target state="translated">Računi za ovu mušteriju se standardno generiraju pomoću ovog predloška. Po potrebi se može promijeniti tijekom generiranja računa.</target>
       </trans-unit>
       <trans-unit id="Fkrev.q" resname="help.globalActivities">
         <source>help.globalActivities</source>
@@ -1470,9 +1470,9 @@
         <source>completed_month_pdf</source>
         <target state="translated">PDF završenog mjeseca</target>
       </trans-unit>
-      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
+      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured" xml:space="preserve">
         <source>work_times_should.none_configured</source>
-        <target state="translated">U postavkama ugovora o radu nisu konfigurirani ciljani sati za ovog korisnika.</target>
+        <target state="translated">U postavkama radnog ugovora nisu konfigurirani ciljani sati za ovog korisnika.</target>
       </trans-unit>
       <trans-unit id="t1r372x" resname="invisible">
         <source>invisible</source>
@@ -1720,7 +1720,7 @@
       </trans-unit>
       <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve">
         <source>booking_allow_only_work_days</source>
-        <target state="translated">Dozvoli unose vremena samo za dane za koje je predviđeno radno vrijeme definirano ugovorom o radu</target>
+        <target state="translated">Dozvoli unose vremena samo za dane za koje je predviđeno radno vrijeme definirano radnim ugovorom</target>
       </trans-unit>
       <trans-unit id="dOIWgOr" resname="approve" xml:space="preserve">
         <source>approve</source>
@@ -1766,9 +1766,9 @@
         <source>profile-stats</source>
         <target>Profil</target>
       </trans-unit>
-      <trans-unit id="zeD7Dew" resname="settings">
-        <source>settings</source>
-        <target>Postavke</target>
+      <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
+        <source>Settings</source>
+        <target state="translated">Postavke</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
@@ -1852,7 +1852,7 @@
       </trans-unit>
       <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
         <source>hours_per_day</source>
-        <target state="translated">Sata na dan</target>
+        <target state="translated">Sati na dan</target>
       </trans-unit>
       <trans-unit id="2pbkbn_" resname="work_hours_mode" xml:space="preserve">
         <source>work_hours_mode</source>
@@ -1868,7 +1868,7 @@
       </trans-unit>
       <trans-unit id="y7KtuSS" resname="hours_per_week" xml:space="preserve">
         <source>hours_per_week</source>
-        <target state="translated">Sata na tjedan</target>
+        <target state="translated">Sati na tjedan</target>
       </trans-unit>
       <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve">
         <source>reject</source>
@@ -1892,7 +1892,7 @@
       </trans-unit>
       <trans-unit id="07e8ywS" resname="hours_per_month" xml:space="preserve">
         <source>hours_per_month</source>
-        <target state="translated">Sata na mjesec</target>
+        <target state="translated">Sati na mjesec</target>
       </trans-unit>
       <trans-unit id="0jvo0RQ" resname="profit" xml:space="preserve">
         <source>profit</source>
@@ -2030,13 +2030,49 @@
         <source>electronic_invoice</source>
         <target state="translated">E-račun</target>
       </trans-unit>
-      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
-        <source>todo</source>
-        <target state="translated">Zadatak</target>
+      <trans-unit id="QnN_ONc" resname="invoice_tax_type" xml:space="preserve">
+        <source>invoice_tax_type</source>
+        <target state="translated">Stanje poreza</target>
       </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+      <trans-unit id="Mi7y8Q3" resname="tax.type.exempt" xml:space="preserve">
+        <source>tax.type.exempt</source>
+        <target state="translated">Oslobođeno</target>
+      </trans-unit>
+      <trans-unit id="lU1Njcy" resname="tax.type.standard" xml:space="preserve">
+        <source>tax.type.standard</source>
+        <target state="translated">Oporezivo</target>
+      </trans-unit>
+      <trans-unit id="hi31a3v" resname="tax.note.reverse_charge" xml:space="preserve">
+        <source>tax.note.reverse_charge</source>
+        <target state="translated">Porez se plaća prema načelu prijenosa porezne obveze</target>
+      </trans-unit>
+      <trans-unit id="E470U8W" resname="tax.type.reverse" xml:space="preserve">
+        <source>tax.type.reverse</source>
+        <target state="translated">Prijenos porezne obveze</target>
+      </trans-unit>
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
+        <source>Timesheet</source>
+        <target state="translated">Vremenska tablica</target>
+      </trans-unit>
+      <trans-unit id="6w8kS.m" resname="user_access_all" xml:space="preserve">
+        <source>user_access_all</source>
+        <target state="translated">Dozvoli pristup svim korisnicima</target>
+      </trans-unit>
+      <trans-unit id="DbF_j60" resname="count_as_expected_time" xml:space="preserve">
+        <source>count_as_expected_time</source>
+        <target state="translated">Broji kao očekivane sate: %type%</target>
+      </trans-unit>
+      <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
+        <source>count_as_expected_time_help</source>
+        <target state="translated">Kada je aktivirano, %type% će se računati kao odrađeni sati u odnosu na očekivane dnevne sate. Kada je aktivirano, očekivani sati za te dane će se postaviti na 0. Obje postavke održavaju neutralnu ravnotežu, ali različito utječu na mjesečne ukupne iznose.</target>
+      </trans-unit>
+        <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+            <target state="translated">Zadatak</target>
+      </trans-unit>
+        <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
         <source>estimation</source>
-        <target state="translated">Procjena vremena</target>
+            <target state="translated">Procjena vremena</target>
       </trans-unit>
     </body>
   </file>

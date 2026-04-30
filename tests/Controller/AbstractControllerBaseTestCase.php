@@ -315,6 +315,7 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
         $crawler = $client->request('GET', $this->createUrl($url));
         $form = $crawler->filter($formSelector)->form();
         if ($disableValidation) {
+            // needed for setting invalid values e.g. in dropdowns
             $form->disableValidation();
         }
         $result = $client->submit($form, $formData);
@@ -325,7 +326,13 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
         self::assertEquals(
             \count($fieldNames),
             \count($validationErrors),
-            \sprintf('Expected %s validation errors, found %s', \count($fieldNames), \count($validationErrors))
+            \sprintf(
+                'Expected %s validation errors, found %s. Expected: %s. Found: %s.',
+                \count($fieldNames),
+                \count($validationErrors),
+                implode(',', $fieldNames),
+                implode(',', $validationErrors->extract(['_text']))
+            )
         );
 
         foreach ($fieldNames as $name) {

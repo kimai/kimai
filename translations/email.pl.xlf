@@ -32,11 +32,11 @@
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="needs-translation">Zresetuj swoje hasło</target>
+        <target state="translated">Zaloguj się</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="needs-translation">… zapomniałeś hasła? Nie martw się, Kimai pomoże Ci stworzyć nowe:</target>
+        <target state="translated">Link będzie ważny przez 15 najbliższych minut</target>
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
         <source>absence_created_supervisor_subject</source>
@@ -53,6 +53,42 @@ Please review them at: %url%</source>
 %list%
 
 Prosimy o zapoznanie się z nią na stronie: %url%</target>
+      </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="translated">Wniosek o zatwierdzenie: %user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="translated">Wysłano prośbę o zatwierdzenie dla %user%.
+
+%list%
+
+Proszę zapoznać się z nimi pod adresem: %url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">Twoja prośba została odrzucona</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">Twoja prośba o autoryzację została odrzucona przez %created_by%.
+
+%list%
+
+Proszę sprawdzić swoje wnioski pod adresem: %url%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Twój wniosek został zaakceptowany</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="translated">Twój wniosek został zaakceptowany przez %created_by%.
+
+%list%
+
+Wszystkie zapytania można znaleźć pod adresem: %url%</target>
       </trans-unit>
     </body>
   </file>

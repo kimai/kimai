@@ -256,6 +256,18 @@ class ExportTemplate
         return \is_string($font) ? $font : null;
     }
 
+    public function isAvailableForAll(): bool
+    {
+        $isAllowed = $this->getOption('user_access', false);
+
+        return \is_bool($isAllowed) ? $isAllowed : false;
+    }
+
+    public function setAvailableForAll(bool $userAccess): void
+    {
+        $this->setOption('user_access', $userAccess);
+    }
+
     public function __toString(): string
     {
         return $this->title ?? 'New';

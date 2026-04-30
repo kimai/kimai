@@ -38,6 +38,18 @@
         <source>Don't worry, Kimai will help you create a new one!</source>
         <target state="needs-translation">… επομένως ξεχάσατε τον κωδικό σας; Μην ανησυχείτε: Το Kimai θα σας βοηθήσει να δημιουργήσετε ένα νέο:</target>
       </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">Η αίτηση εξουσιοδότησής σας απορρίφθηκε από τον/την %created_by%
+
+%list%
+
+Παρακαλούμε ελέγξτε τα αιτήματά σας στο:%url%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Το αίτημα σας έχει εγκριθεί</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

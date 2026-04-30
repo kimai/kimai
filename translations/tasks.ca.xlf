@@ -5,33 +5,33 @@
       <!-- Reports -->
       <!-- Actions -->
       <!-- Application -->
-      <trans-unit id="tLV1hoP" resname="report_tasks_assigned" xml:space="preserve" approved="no">
+      <trans-unit id="tLV1hoP" resname="report_tasks_assigned" xml:space="preserve" approved="yes">
         <source>report_tasks_assigned</source>
-        <target state="translated">Tasques per usuari</target>
+        <target state="final">Tasques per usuari</target>
       </trans-unit>
-      <trans-unit id="8c0YWZm" resname="report_tasks_teams" xml:space="preserve" approved="no">
+      <trans-unit id="8c0YWZm" resname="report_tasks_teams" xml:space="preserve" approved="yes">
         <source>report_tasks_teams</source>
-        <target state="translated">Tasques d'Equip</target>
+        <target state="final">Tasques d'Equip</target>
       </trans-unit>
-      <trans-unit id="XjAwhoV" resname="task.start" xml:space="preserve" approved="no">
+      <trans-unit id="XjAwhoV" resname="task.start" xml:space="preserve" approved="yes">
         <source>task.start</source>
-        <target state="translated">Processar</target>
+        <target state="final">Processar</target>
       </trans-unit>
-      <trans-unit id="XD7TZh7" resname="task.stop" xml:space="preserve" approved="no">
+      <trans-unit id="XD7TZh7" resname="task.stop" xml:space="preserve" approved="yes">
         <source>task.stop</source>
-        <target state="translated">Pausa processament</target>
+        <target state="final">Pausa processament</target>
       </trans-unit>
-      <trans-unit id="sG_9DvK" resname="task.assign" xml:space="preserve" approved="no">
+      <trans-unit id="sG_9DvK" resname="task.assign" xml:space="preserve" approved="yes">
         <source>task.assign</source>
-        <target state="translated">Assignar-me</target>
+        <target state="final">Assignar-me</target>
       </trans-unit>
-      <trans-unit id="qLewfPg" resname="task.unassign" xml:space="preserve" approved="no">
+      <trans-unit id="qLewfPg" resname="task.unassign" xml:space="preserve" approved="yes">
         <source>task.unassign</source>
-        <target state="translated">Alliberar tasca</target>
+        <target state="final">Alliberar tasca</target>
       </trans-unit>
-      <trans-unit id="F1_rg1R" resname="task.reopen" xml:space="preserve" approved="no">
+      <trans-unit id="F1_rg1R" resname="task.reopen" xml:space="preserve" approved="yes">
         <source>task.reopen</source>
-        <target state="translated">Reobre tasca</target>
+        <target state="final">Reobre tasca</target>
       </trans-unit>
       <trans-unit id="duBK63z" resname="task.close" xml:space="preserve" approved="no">
         <source>task.close</source>

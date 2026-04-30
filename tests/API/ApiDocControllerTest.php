@@ -32,6 +32,7 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
         self::assertStringContainsString('const config = {"basePath":"/api/doc","router":"memory","logo":"/touch-icon-192x192.png","hideInternal":true};', $content);
         $results = preg_match('/docs\.apiDescriptionDocument\ \=\ (.*)\.spec;/', $content, $matches);
         self::assertNotFalse($results);
+        self::assertArrayHasKey(1, $matches);
         $swaggerJson = json_decode($matches[1], true);
         self::assertIsArray($swaggerJson);
         self::assertArrayHasKey('spec', $swaggerJson);
@@ -75,6 +76,8 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
             '/api/export/{id}',
             '/api/invoices',
             '/api/invoices/{id}',
+            '/api/invoices/{id}/custom-fields',
+            '/api/invoices/{id}/download',
             '/api/projects',
             '/api/projects/{id}',
             '/api/projects/{id}/meta',

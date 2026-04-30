@@ -158,28 +158,35 @@
                             </td>
                             {% set dayCount = 0 %}
                             {% for day in month.days %}
-                                {% set class = 'text-end contractDay text-nowrap' %}
-                                {% if day.workingTime.expectedTime == 0 %}
-                                    {% set class = class ~ ' weekend' %}
-                                {% endif %}
+                                {% set style = null %}
                                 {% if day.workingTime.expectedTime > 0 and day.workingTime.actualTime == 0 and now > day.day %}
-                                    {% set class = class ~ ' bg-orange-lt' %}
+                                    {% set style = 'missing' %}
                                 {% elseif day.workingTime.expectedTime == 0 and day.workingTime.actualTime > 0 and now > day.day %}
-                                    {% set class = class ~ ' bg-yellow-lt' %}
+                                    {% set style = 'unexpected' %}
                                 {% endif %}
-                                <td class="{{ class }}">
-                                    {% if (day.workingTime.expectedTime != 0 or day.workingTime.actualTime != 0) and (now > day.day or day.workingTime.actualTime > 0) %}
-                                        {% if day.hasAddons() %}
-                                            {% set statusTitle = '' %}
-                                            {% for addon in day.getAddons() %}
-                                                {% set statusTitle = statusTitle ~ (addon.title|trans) ~ ' (' ~ addon.visibleDuration|duration(decimal) ~ ')' %}
-                                                {% if not loop.last %}
-                                                    {% set statusTitle = statusTitle ~ ', ' %}
-                                                {% endif %}
-                                            {% endfor %}
-                                            <span class="status-dot status-azure" data-toggle="tooltip" data-placement="top" title="{{ statusTitle }}"></span>
+                                {% set statusTitle = null %}
+                                {% if day.hasAddons() %}
+                                    {% for addon in day.getAddons() %}
+                                        {% set style = addon.type ?? style %}
+                                        {% set statusTitle = (statusTitle ?? '') ~ (addon.title|trans) %}
+                                        {% if addon.visibleDuration > 0 %}
+                                            {% set statusTitle = statusTitle ~ ' (' ~ addon.visibleDuration|duration(decimal) ~ ')' %}
                                         {% endif %}
-                                        {{ work_times_result(day.workingTime.expectedTime, day.workingTime.actualTime, decimal) }}
+                                        {% if not loop.last %}
+                                            {% set statusTitle = statusTitle ~ ', ' %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                                <td class="text-end contractDay text-nowrap{% if style is not null %} bg-{{ style }}{% endif %}"{% if statusTitle is not null %} data-toggle="tooltip" data-placement="top" title="{{ statusTitle }}"{% endif %}>
+                                    {% if (day.workingTime.expectedTime != 0 or day.workingTime.actualTime != 0 or day.hasAddons()) and (now > day.day or day.workingTime.actualTime > 0) %}
+                                        {% if style is not null and statusTitle is not null %}
+                                            <i class="{{ style|icon }} fa-xs"></i>
+                                        {% endif %}
+                                        {% if day.workingTime.expectedTime == 0 and day.workingTime.actualTime == 0 %}
+                                            --:--
+                                        {% else %}
+                                            {{ work_times_result(day.workingTime.expectedTime, day.workingTime.actualTime, decimal) }}
+                                        {% endif %}
                                     {% endif %}
                                 </td>
                                 {% set dayCount = dayCount + 1 %}

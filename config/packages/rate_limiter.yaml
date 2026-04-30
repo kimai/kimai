@@ -1,5 +1,10 @@
 framework:
     rate_limiter:
+        old_api_tokens:
+            policy: 'fixed_window'
+            limit: 5
+            interval: '1 minute'
+            lock_factory: null
         session_prediction:
             policy: 'fixed_window'
             limit: 250

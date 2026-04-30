@@ -34,6 +34,7 @@ final class ActivityVoter extends Voter
         'time',
         'delete',
         'permissions',
+        'access',
     ];
 
     public function __construct(private readonly RolePermissionManager $permissionManager)
@@ -61,6 +62,12 @@ final class ActivityVoter extends Voter
 
         if (!$user instanceof User) {
             return false;
+        }
+
+        // this is a virtual permission, only meant to be used by developer
+        // it checks if access to the given activity is potentially possible
+        if ($attribute === 'access') {
+            return $this->permissionManager->checkTeamAccessActivity($subject, $user);
         }
 
         if ($this->permissionManager->hasRolePermission($user, $attribute . '_activity')) {

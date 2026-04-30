@@ -33,8 +33,9 @@ final class TeamType extends AbstractType
                 return $team->getName();
             },
             'documentation' => [
-                'type' => 'integer',
-                'description' => 'Team ID',
+                'type' => 'array',
+                'items' => ['type' => 'integer', 'description' => 'Team IDs'],
+                'description' => 'Array of Team IDs',
             ],
         ]);
 

@@ -10,6 +10,7 @@
 namespace App\Export;
 
 use App\Entity\ExportableItem;
+use App\Entity\ExportTemplate;
 use App\Event\ExportItemsQueryEvent;
 use App\Export\Renderer\CsvRendererFactory;
 use App\Export\Renderer\HtmlRendererFactory;
@@ -74,6 +75,15 @@ final class ServiceExport
         $this->renderer[] = $renderer;
     }
 
+    private function filenameToTitle(string $title): string
+    {
+        if (str_contains($title, '.')) {
+            $title = explode('.', $title)[0];
+        }
+
+        return str_replace(['-', '_'], ' ', $title);
+    }
+
     /**
      * @return ExportRendererInterface[]
      */
@@ -82,32 +92,15 @@ final class ServiceExport
         $renderer = [
             $this->csvRendererFactory->createDefault(),
             $this->xlsxRendererFactory->createDefault(),
-            $this->pdfRendererFactory->create('pdf', 'export/pdf-layout.html.twig', 'default'),
-            $this->htmlRendererFactory->create('html', 'export/print.html.twig'),
+            $this->pdfRendererFactory->create('pdf', 'export/pdf-layout.html.twig', 'pdf'),
+            $this->htmlRendererFactory->create('print', 'export/print.html.twig'),
         ];
 
         foreach ($this->exportTemplateRepository->findAll() as $template) {
-            $tpl = new Template((string) $template->getId(), $template->getTitle()); // @phpstan-ignore argument.type
-            $tpl->setColumns($template->getColumns());
-            $tpl->setLocale($template->getLanguage());
-            $tpl->setOptions($template->getOptions());
-
-            switch ($template->getRenderer()) {
-                case 'csv':
-                    $renderer[] = $this->csvRendererFactory->create($tpl);
-                    break;
-
-                case 'xlsx':
-                    $renderer[] = $this->xlsxRendererFactory->create($tpl);
-                    break;
-
-                case 'pdf':
-                    $renderer[] = $this->pdfRendererFactory->createFromTemplate($tpl);
-                    break;
-
-                default:
-                    $this->logger->error('Unknown export template type: ' . $template->getRenderer());
-                    break;
+            try {
+                $renderer[] = $this->createTemplateFromExportTemplate($template);
+            } catch (\Exception $exception) {
+                $this->logger->error('Unknown export template type: ' . $template->getRenderer());
             }
         }
 
@@ -124,7 +117,7 @@ final class ServiceExport
                         continue;
                     }
 
-                    $renderer[] = $this->htmlRendererFactory->create($tplName, '@export/' . $tplName);
+                    $renderer[] = $this->htmlRendererFactory->create($tplName, '@export/' . $tplName, $this->filenameToTitle($tplName));
                 }
             }
 
@@ -136,12 +129,34 @@ final class ServiceExport
                         continue;
                     }
 
-                    $renderer[] = $this->pdfRendererFactory->create($tplName, '@export/' . $tplName);
+                    $renderer[] = $this->pdfRendererFactory->create($tplName, '@export/' . $tplName, $this->filenameToTitle($tplName));
                 }
             }
         }
 
         return array_merge($this->renderer, $renderer);
+    }
+
+    private function createTemplateFromExportTemplate(ExportTemplate $template): ExportRendererInterface
+    {
+        $tpl = new Template((string) $template->getId(), $template->getTitle()); // @phpstan-ignore argument.type
+        $tpl->setColumns($template->getColumns());
+        $tpl->setLocale($template->getLanguage());
+        $tpl->setOptions($template->getOptions());
+
+        switch ($template->getRenderer()) {
+            case 'csv':
+                return $this->csvRendererFactory->create($tpl);
+
+            case 'xlsx':
+                return $this->xlsxRendererFactory->create($tpl);
+
+            case 'pdf':
+                return $this->pdfRendererFactory->createFromTemplate($tpl);
+
+            default:
+                throw new \Exception('Unknown export template type: ' . $template->getRenderer());
+        }
     }
 
     public function getRendererById(string $id): ?ExportRendererInterface
@@ -165,12 +180,24 @@ final class ServiceExport
      */
     public function getTimesheetExporter(): array
     {
+        // TODO 3.0 cache the result, as this is one extra database query on the timesheet pages
         $exporter = [
             $this->pdfRendererFactory->create('pdf', '@export/timesheet.pdf.twig'),
             $this->xlsxRendererFactory->createDefault(),
             $this->csvRendererFactory->createDefault(),
             $this->htmlRendererFactory->create('print', 'timesheet/export.html.twig'),
         ];
+
+        foreach ($this->exportTemplateRepository->findAll() as $template) {
+            if (!$template->isAvailableForAll()) {
+                continue;
+            }
+            try {
+                $exporter[] = $this->createTemplateFromExportTemplate($template);
+            } catch (\Exception $exception) {
+                $this->logger->error('Unknown export template type: ' . $template->getRenderer());
+            }
+        }
 
         return array_merge($this->timesheetExporter, $exporter);
     }

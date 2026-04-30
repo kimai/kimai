@@ -90,14 +90,13 @@
     {% endif %}
 
     {% if models|length > 0 %}
-        {% embed '@theme/embeds/card.html.twig' %}
+        {% embed '@theme/embeds/card.html.twig' with {fullsize: true}  %}
             {% import "macros/widgets.html.twig" as widgets %}
             {% import "macros/datatables.html.twig" as tables %}
             {% block box_title %}
                 {{ 'preview'|trans }}
             {% endblock %}
             {% block box_attributes %}id="invoice_customer_forms"{% endblock %}
-            {% block box_body_class %}p-0{% endblock %}
             {% block box_body %}
                 <table class="table dataTable">
                     <thead>

@@ -166,6 +166,10 @@
         <source>Duration cannot be negative.</source>
         <target state="final">La durata non può essere negativa.</target>
       </trans-unit>
+      <trans-unit id="EDEDQtZ" resname="These characters are not allowed: {{ chars }}" xml:space="preserve" approved="yes">
+        <source>These characters are not allowed: {{ chars }}</source>
+        <target state="final">I seguenti caratteri non sono consentiti: {{ chars }}</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

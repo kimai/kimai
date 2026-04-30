@@ -13,7 +13,12 @@ final class DayAddon
 {
     private bool $billable = true;
 
-    public function __construct(private string $title, private int $duration, private int $visibleDuration)
+    public function __construct(
+        private readonly string $title,
+        private readonly int $duration,
+        private readonly int $visibleDuration,
+        private readonly ?string $type = null
+    )
     {
     }
 
@@ -40,5 +45,10 @@ final class DayAddon
     public function getVisibleDuration(): int
     {
         return $this->visibleDuration;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
     }
 }

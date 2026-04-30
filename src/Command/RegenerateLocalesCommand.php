@@ -48,7 +48,7 @@ final class RegenerateLocalesCommand extends Command
      *
      * @var string[]
      */
-    private array $skipLocale = ['ca', 'et'];
+    private array $skipLocale = ['et', 'lv', 'mk'];
 
     public function __construct(
         private readonly string $projectDirectory,
