@@ -902,11 +902,6 @@ parameters:
             path: Controller/UserControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\UserControllerTest\\:\\:getValidationTestData\\(\\) has no return type specified\\.$#"
-            count: 1
-            path: Controller/UserControllerTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Controller\\\\UserControllerTest\\:\\:testValidationForCreateAction\\(\\) has parameter \\$formData with no value type specified in iterable type array\\.$#"
             count: 1
             path: Controller/UserControllerTest.php

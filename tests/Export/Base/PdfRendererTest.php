@@ -37,7 +37,7 @@ class PdfRendererTest extends AbstractRendererTestCase
             $projectStatisticService,
             'foo',
             'bar',
-            'export/print.html.twig'
+            'export/pdf-layout.html.twig'
         );
     }
 

@@ -1,12 +1,10 @@
-# some hosters require a htaccess to change the PHP version
-/public/.htaccess
-/.idea/
+.idea/
 .DS_Store
 var/templates/
-
+config/reference.php
 
 # custom apache rules e.g. to deactivate ioncube loader
-/public/.user.ini
+public/.user.ini
 
 # for symfony local webserver
 /php.ini

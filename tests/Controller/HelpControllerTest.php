@@ -19,6 +19,6 @@ class HelpControllerTest extends AbstractControllerBaseTestCase
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/help/locales');
-        $this->assertDataTableRowCount($client, 'datatable_help_locales', 290);
+        $this->assertDataTableRowCount($client, 'datatable_help_locales', 297);
     }
 }

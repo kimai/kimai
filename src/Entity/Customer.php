@@ -153,7 +153,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     private ?string $email = null;
     #[ORM\Column(name: 'homepage', type: Types::STRING, length: 100, nullable: true)]
     #[Assert\Length(max: 100)]
-    #[Assert\Url]
+    #[Assert\Url(requireTld: true)]
     #[Assert\NoSuspiciousCharacters]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]

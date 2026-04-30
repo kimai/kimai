@@ -56,20 +56,6 @@ class HtmlRendererTest extends AbstractRendererTestCase
         $user->method('isAdmin')->willReturn(false);
         $user->method('isSuperAdmin')->willReturn(false);
         $user->method('getTimezone')->willReturn('America/Edmonton');
-        $token = $this->createMock(TokenInterface::class);
-        $token->expects($this->any())->method('getUser')->willReturn($user);
-
-        $tokenStorage = new TokenStorage();
-        $tokenStorage->setToken($token);
-        /** @var AppVariable $app */
-        $app = $twig->getGlobals()['app'];
-        $twig->addGlobal('app', $app);
-        $app->setTokenStorage($tokenStorage);
-        /** @var RequestStack $stack */
-        $stack = self::getContainer()->get('request_stack');
-        $request = new Request();
-        $request->setLocale('en');
-        $stack->push($request);
 
         $sut = new HtmlRenderer(
             $twig,

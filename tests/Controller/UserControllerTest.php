@@ -231,7 +231,7 @@ class UserControllerTest extends AbstractControllerBaseTestCase
         );
     }
 
-    public static function getValidationTestData()
+    public static function getValidationTestData(): array
     {
         return [
             [
@@ -266,6 +266,7 @@ class UserControllerTest extends AbstractControllerBaseTestCase
                     '#user_create_username',
                     '#user_create_plainPassword_first',
                     '#user_create_email',
+                    '#user_create_email', // TODO this should only happen once
                 ]
             ],
             // invalid fields: password (too short)
