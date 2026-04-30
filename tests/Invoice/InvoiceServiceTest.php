@@ -21,7 +21,6 @@ use App\Invoice\InvoiceModel;
 use App\Invoice\InvoiceService;
 use App\Invoice\NumberGenerator\DateNumberGenerator;
 use App\Invoice\Renderer\TwigRenderer;
-use App\Invoice\ServiceInvoice;
 use App\Model\InvoiceDocument;
 use App\Repository\InvoiceDocumentRepository;
 use App\Repository\InvoiceRepository;
@@ -34,7 +33,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Twig\Environment;
 
 #[CoversClass(InvoiceService::class)]
-#[CoversClass(ServiceInvoice::class)] // @phpstan-ignore-line
 class InvoiceServiceTest extends TestCase
 {
     private function getCustomer(string $name, int $id): Customer
