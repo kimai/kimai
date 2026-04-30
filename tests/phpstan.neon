@@ -28,26 +28,6 @@ parameters:
             message: "#^PHPDoc tag @var with type App\\\\(.*) is not subtype of native type PHPUnit\\\\Framework\\\\MockObject\\\\MockObject\\.$#"
 
         -
-            identifier: classConstant.deprecatedClass
-            count: 2
-            path: API/Authentication/TokenAuthenticatorTest.php
-
-        -
-            identifier: new.deprecatedClass
-            count: 1
-            path: API/Authentication/TokenAuthenticatorTest.php
-
-        -
-            identifier: return.deprecatedClass
-            count: 1
-            path: API/Authentication/TokenAuthenticatorTest.php
-
-        -
-            identifier: method.deprecatedClass
-            count: 13
-            path: API/Authentication/TokenAuthenticatorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:assertApiException\\(\\) has parameter \\$expectedErrors with no value type specified in iterable type array\\.$#"
             count: 1
             path: API/APIControllerBaseTestCase.php

@@ -275,6 +275,10 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                 }
             }
 
+            if (!\is_string($fieldName)) {
+                $this->fail('Invalid field name given');
+            }
+
             while (stripos($fieldName, '.') !== false) {
                 $parts = explode('.', $fieldName);
                 $tmp = array_shift($parts);
@@ -287,7 +291,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
             }
 
             self::assertIsString($fieldName);
-            self::assertArrayHasKey($fieldName, $data, \sprintf('Could not find validation error for field "%s" in list: %s', $fieldName, implode(', ', $failedFields)));
+            self::assertArrayHasKey($fieldName, $data, \sprintf('Could not find validation error for field "%s" in list: %s', $fieldName, implode(', ', array_keys($failedFields))));
             self::assertArrayHasKey('errors', $data[$fieldName], \sprintf('Field %s has no validation problem', $fieldName));
             foreach ($messages as $i => $message) {
                 self::assertEquals($message, $data[$fieldName]['errors'][$i]);
