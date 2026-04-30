@@ -50,9 +50,9 @@
         <source>upload</source>
         <target>Prenesi</target>
       </trans-unit>
-      <trans-unit id="JBkykGe" resname="search">
+      <trans-unit id="JBkykGe" resname="search" xml:space="preserve">
         <source>search</source>
-        <target state="translated">Pretraga</target>
+        <target state="translated">Pretraži</target>
       </trans-unit>
       <trans-unit id="8W_TZI0" resname="searchTerm">
         <source>searchTerm</source>
@@ -402,9 +402,9 @@
         <source>end</source>
         <target>Do</target>
       </trans-unit>
-      <trans-unit id="iNOVZRh" resname="daterange">
+      <trans-unit id="iNOVZRh" resname="daterange" xml:space="preserve">
         <source>daterange</source>
-        <target>Vremenski raspon</target>
+        <target state="translated">Razdoblje</target>
       </trans-unit>
       <trans-unit id="UbnqJLn" resname="modal.columns.title">
         <source>modal.columns.title</source>
