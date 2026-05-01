@@ -17,9 +17,9 @@ Rename your file `.env` to `.env.local` or even better: move all variables to yo
 
 ### Developer
 
-Do not use method chaining: all fluent interface, especially in Entities, are no longer supported.
+Do not use method chaining: fluent interfaces, especially in Entities, are no longer supported. If they still exist, only for BC, but there is no BC promise and they can change at any time.
 
-- Require PHP 8.4
+- Require PHP 8.5
 - Bump to Symfony 7.4
 - Removed old API token `X-AUTH-USER` and `X-AUTH-TOKEN`
 - Removed `TimesheetConstraint` - use a normal `Constraint` as base class and attach the `#[App\Validator\Attribute\TimesheetConstraint]` attribute 

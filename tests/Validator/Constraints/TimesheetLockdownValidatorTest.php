@@ -24,7 +24,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * TODO this should use a clock to simulate different "now" for testing the grace period
  * @extends ConstraintValidatorTestCase<TimesheetLockdownValidator>
  */
 #[CoversClass(TimesheetLockdown::class)]
@@ -140,6 +139,8 @@ class TimesheetLockdownValidatorTest extends ConstraintValidatorTestCase
         $timesheet->setBegin($begin);
 
         $constraint = new TimesheetLockdown();
+        // TODO verify if this test fails in the future, if so: this was $now before
+        $constraint->now = 'tenth day this month 00:00:00';
 
         $this->validator->validate($timesheet, $constraint);
 

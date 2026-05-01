@@ -22,6 +22,7 @@ final class TimesheetLockdown extends Constraint
     ];
 
     public string $message = 'This period is locked, please choose a later date.';
+    public string $now = 'now';
 
     public function getTargets(): string
     {
