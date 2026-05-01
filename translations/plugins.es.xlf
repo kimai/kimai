@@ -14,9 +14,9 @@
         <source>Plugin Shop</source>
         <target state="translated">Más extensiones</target>
       </trans-unit>
-      <trans-unit id="zVtBsSo" resname="plugin.marketplace">
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace" xml:space="preserve">
         <source>Available plugins</source>
-        <target state="translated">Plugins disponibles</target>
+        <target state="translated">Complementos disponibles</target>
       </trans-unit>
       <trans-unit id="aNvGEaj" resname="update_available" xml:space="preserve">
         <source>Update available</source>

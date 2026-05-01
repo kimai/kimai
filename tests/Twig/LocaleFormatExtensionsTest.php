@@ -48,7 +48,7 @@ class LocaleFormatExtensionsTest extends TestCase
     }
 
     /**
-     * @param array<string, array{'date': string, 'time': string, 'rtl': bool, 'translation': bool}> $languageSettings
+     * @param array<string, array{'date': string, 'time': string, 'translation': bool}> $languageSettings
      */
     private function getSut(string $locale, array $languageSettings): LocaleFormatExtensions
     {
@@ -589,5 +589,15 @@ class LocaleFormatExtensionsTest extends TestCase
         $sut = $this->getSut('en', $this->localeEn);
         self::assertEquals('34.29', $sut->durationChart(123456));
         self::assertEquals('-34.29', $sut->durationChart(-123456));
+    }
+
+    public function testDateWeekday(): void
+    {
+        $dateTime = new \DateTimeImmutable('2026-08-13 08:00:00 Europe/Berlin');
+
+        $sut = $this->getSut('en', $this->localeEn);
+        self::assertEquals('Thu 13', $sut->dateWeekday($dateTime));
+        self::assertEquals('Thu#-#13', $sut->dateWeekday($dateTime, '#-#'));
+        self::assertEquals('Thu<br>13', $sut->dateWeekday($dateTime, '<br>'));
     }
 }

@@ -15,6 +15,7 @@ use Faker\Factory;
 
 /**
  * Defines the sample data to load in during controller tests.
+ * @implements TestFixture<Invoice>
  */
 class InvoiceFixtures implements TestFixture
 {

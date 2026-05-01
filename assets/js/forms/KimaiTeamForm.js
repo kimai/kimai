@@ -83,7 +83,7 @@ export default class KimaiTeamForm extends KimaiFormPlugin {
         prototype.dataset['widgetCounter'] = (++counter).toString();
 
         const temp = document.createElement('div');
-        temp.innerHTML = newWidget;
+        temp.innerHTML = ESCAPER.sanitize(newWidget);
         temp.querySelector('input[type=hidden]').value = option.value;
 
         const newNode = temp.firstElementChild;

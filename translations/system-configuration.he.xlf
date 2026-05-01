@@ -230,10 +230,6 @@
         <source>user_auth_password_reset</source>
         <target>שכחתי סיסמה</target>
       </trans-unit>
-      <trans-unit id="C26_mL7" resname="user_auth_registration">
-        <source>user_auth_registration</source>
-        <target>רישום משתמשים</target>
-      </trans-unit>
       <trans-unit id="BGHQ8YO" resname="user_auth_login">
         <source>user_auth_login</source>
         <target>טופס כניסה</target>
@@ -309,6 +305,10 @@
       <trans-unit id="jj1NmKW" resname="allow_duplicate_number" xml:space="preserve">
         <source>allow_duplicate_number</source>
         <target state="translated">לאפשר מגוון שימושים לאותו המספר</target>
+      </trans-unit>
+      <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="yes" xml:space="preserve">
+        <source>invoice.rounding_mode</source>
+        <target state="final">מצב עיגול</target>
       </trans-unit>
     </body>
   </file>

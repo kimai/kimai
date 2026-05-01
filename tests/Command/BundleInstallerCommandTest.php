@@ -35,7 +35,7 @@ class BundleInstallerCommandTest extends KernelTestCase
         $this->application = new Application($kernel);
         $command = new $className();
         self::assertInstanceOf(AbstractBundleInstallerCommand::class, $command);
-        $this->application->add($command);
+        $this->application->addCommand($command);
 
         return $this->application->find('kimai:bundle:test:install');
     }
@@ -77,7 +77,7 @@ class BundleInstallerCommandTest extends KernelTestCase
     {
         $command = $this->getCommand(InstallerWithAssetsCommand::class);
 
-        $this->application->add(new FakeCommand('assets:install', 0, null));
+        $this->application->addCommand(new FakeCommand('assets:install', 0, null));
 
         $commandTester = new CommandTester($command);
         $commandTester->execute(['command' => $command->getName()]);
@@ -91,7 +91,7 @@ class BundleInstallerCommandTest extends KernelTestCase
     {
         $command = $this->getCommand(InstallerWithAssetsCommand::class);
 
-        $this->application->add(new FakeCommand('assets:install', 1, null));
+        $this->application->addCommand(new FakeCommand('assets:install', 1, null));
 
         $commandTester = new CommandTester($command);
         $commandTester->execute(['command' => $command->getName()]);

@@ -70,8 +70,6 @@ export default class KimaiCalendar {
         const DATES = this.kimai.getPlugin('date');
         /** @type {KimaiAjaxModalForm} MODAL */
         const MODAL = this.kimai.getPlugin('modal');
-        /** @type {KimaiAlert} ALERT */
-        const ALERT = this.kimai.getPlugin('alert');
 
         // Instead of using "buttonIcons" the theme needs to be adjusted directly
         // https://fullcalendar.io/docs/buttonIcons
@@ -197,7 +195,7 @@ export default class KimaiCalendar {
                 if (!this.isKimaiSource(unmountInfo.event)) {
                     return;
                 }
-                const popover = Popover.getInstance(unmountInfo.element);
+                const popover = Popover.getInstance(unmountInfo.el);
                 if (popover !== null) {
                     popover.dispose();
                 }
@@ -282,6 +280,7 @@ export default class KimaiCalendar {
                 droppable: true,
                 // drop function handles external draggable events
                 drop: (dropInfo) => {
+                    document.dispatchEvent(new CustomEvent('kimai.reloadContent'));
                     const entry = dropInfo.draggedEl;
                     const source = entry.parentElement;
                     let data = JSON.parse(entry.dataset.entry);
@@ -324,7 +323,7 @@ export default class KimaiCalendar {
                             (result) => {
                                 const newItem = this.convertSourceForCalendar(result);
                                 this.getCalendar().addEvent(newItem, true);
-                                ALERT.success('action.update.success');
+                                document.dispatchEvent(new CustomEvent('kimai.reloadedContent'));
                             }
                         );
                     } else {
@@ -334,7 +333,7 @@ export default class KimaiCalendar {
                             (result) => {
                                 const newItem = this.convertSourceForCalendar(result);
                                 this.getCalendar().addEvent(newItem, true);
-                                ALERT.success('action.update.success');
+                                document.dispatchEvent(new CustomEvent('kimai.reloadedContent'));
                             }
                         );
                     }
@@ -664,7 +663,7 @@ export default class KimaiCalendar {
             }
         }
 
-        return `
+        return escaper.sanitize(`
             <div class="calendar-entry">
                 <ul>
                     <li>` + this.options['translations']['customer'] + `: ` + escaper.escapeForHtml(eventObj.customer) + `</li>
@@ -673,7 +672,7 @@ export default class KimaiCalendar {
                 </ul>` +
                 (eventObj.description !== null || eventObj.tags.length > 0 ? '<hr>' : '') +
                 (eventObj.description ? '<div>' + escaper.escapeForHtml(eventObj.description) + '</div>' : '') + tags + `
-            </div>`;
+            </div>`);
     }
 
     /**
@@ -703,8 +702,6 @@ export default class KimaiCalendar {
 
         /** @type {KimaiAPI} API */
         const API = this.kimai.getPlugin('api');
-        /** @type {KimaiAlert} ALERT */
-        const ALERT = this.kimai.getPlugin('alert');
         /** @type {KimaiDateUtils} DATE */
         const DATES = this.kimai.getPlugin('date');
 
@@ -716,11 +713,14 @@ export default class KimaiCalendar {
             payload.end = null;
         }
 
+        document.dispatchEvent(new CustomEvent('kimai.reloadContent'));
+
         const updateUrl = this.options.url.update(event.id);
         API.patch(updateUrl, JSON.stringify(payload), () => {
-            ALERT.success('action.update.success');
+            document.dispatchEvent(new CustomEvent('kimai.reloadedContent'));
         }, (error) => {
             eventArg.revert();
+            document.dispatchEvent(new CustomEvent('kimai.reloadedContent'));
             API.handleError('action.update.error', error);
         });
     }

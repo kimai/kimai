@@ -10,15 +10,19 @@
 namespace App\Timesheet;
 
 use App\Entity\User;
+use App\Event\TimesheetStatisticsQueryEvent;
 use App\Model\DailyStatistic;
 use App\Model\MonthlyStatistic;
 use App\Repository\Query\TimesheetStatisticQuery;
 use App\Repository\TimesheetRepository;
-use DateTimeInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 final class TimesheetStatisticService
 {
-    public function __construct(private readonly TimesheetRepository $repository)
+    public function __construct(
+        private readonly TimesheetRepository $repository,
+        private readonly EventDispatcherInterface $eventDispatcher
+    )
     {
     }
 
@@ -72,6 +76,8 @@ final class TimesheetStatisticService
             ;
         }
 
+        $this->eventDispatcher->dispatch(new TimesheetStatisticsQueryEvent($qb));
+
         $results = $qb->getQuery()->getResult();
 
         foreach ($results as $row) {
@@ -96,13 +102,14 @@ final class TimesheetStatisticService
 
     /**
      * @internal only for core development
-     * @param DateTimeInterface $begin
-     * @param DateTimeInterface $end
-     * @param User[] $users
      * @return array
      */
-    public function getDailyStatisticsGrouped(DateTimeInterface $begin, DateTimeInterface $end, array $users): array
+    public function getDailyStatisticsGrouped(TimesheetStatisticQuery $query): array
     {
+        $begin = $query->getBegin();
+        $end = $query->getEnd();
+        $users = $query->getUsers();
+
         $stats = [];
         $usersById = [];
 
@@ -136,6 +143,8 @@ final class TimesheetStatisticService
             ->addGroupBy('user')
             ->addGroupBy('billable')
         ;
+
+        $this->eventDispatcher->dispatch(new TimesheetStatisticsQueryEvent($qb));
 
         $results = $qb->getQuery()->getResult();
 
@@ -173,11 +182,14 @@ final class TimesheetStatisticService
 
     /**
      * @internal only for core development
-     * @param User[] $users
      * @return array
      */
-    public function getMonthlyStatisticsGrouped(DateTimeInterface $begin, DateTimeInterface $end, array $users): array
+    public function getMonthlyStatisticsGrouped(TimesheetStatisticQuery $query): array
     {
+        $begin = $query->getBegin();
+        $end = $query->getEnd();
+        $users = $query->getUsers();
+
         $stats = [];
         $usersById = [];
 
@@ -213,6 +225,8 @@ final class TimesheetStatisticService
             ->addGroupBy('user')
             ->addGroupBy('billable')
         ;
+
+        $this->eventDispatcher->dispatch(new TimesheetStatisticsQueryEvent($qb));
 
         $results = $qb->getQuery()->getResult();
 
@@ -310,6 +324,8 @@ final class TimesheetStatisticService
                 ->setParameter('project', $project)
             ;
         }
+
+        $this->eventDispatcher->dispatch(new TimesheetStatisticsQueryEvent($qb));
 
         $results = $qb->getQuery()->getResult();
 

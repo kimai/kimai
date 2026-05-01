@@ -49,11 +49,8 @@ final class ProjectService
     public function createNewProject(?Customer $customer = null): Project
     {
         $project = new Project();
-        $project->setNumber($this->calculateNextProjectNumber());
-
-        if ($customer !== null) {
-            $project->setCustomer($customer);
-        }
+        $project->setCustomer($customer);
+        $project->setNumber($this->calculateNextProjectNumber($customer));
 
         $this->loadMetaFields($project);
         $this->dispatcher->dispatch(new ProjectCreateEvent($project));
@@ -64,16 +61,13 @@ final class ProjectService
     public function saveProject(Project $project, ?Context $context = null): Project
     {
         if ($project->isNew()) {
-            return $this->saveNewProject($project, $context); // @phpstan-ignore method.deprecated
+            return $this->saveNewProject($project, $context);
         } else {
-            return $this->updateProject($project); // @phpstan-ignore method.deprecated
+            return $this->updateProject($project);
         }
     }
 
-    /**
-     * @deprecated since 2.35 - use saveProject() instead
-     */
-    public function saveNewProject(Project $project, ?Context $context = null): Project
+    private function saveNewProject(Project $project, ?Context $context = null): Project
     {
         if (null !== $project->getId()) {
             throw new InvalidArgumentException('Cannot create project, already persisted');
@@ -114,9 +108,6 @@ final class ProjectService
         }
     }
 
-    /**
-     * @deprecated since 2.35 - use saveProject() instead
-     */
     public function updateProject(Project $project): Project
     {
         $this->validateProject($project);
@@ -142,7 +133,7 @@ final class ProjectService
         return $this->repository->findOneBy(['number' => $number]);
     }
 
-    public function calculateNextProjectNumber(): ?string
+    public function calculateNextProjectNumber(?Customer $customer = null): ?string
     {
         $format = $this->configuration->find('project.number_format');
         if (empty($format) || !\is_string($format)) {
@@ -152,7 +143,13 @@ final class ProjectService
         // we cannot use max(number) because a varchar column returns unexpected results
         $start = $this->repository->countProject();
         $i = 0;
-        $createDate = new \DateTimeImmutable();
+
+        $timezone = $customer?->getTimezone();
+        if ($timezone === null && null === ($timezone = $this->configuration->getCustomerDefaultTimezone())) {
+            $timezone = date_default_timezone_get();
+        }
+
+        $createDate = new \DateTimeImmutable('now', new \DateTimeZone($timezone));
 
         do {
             $start++;

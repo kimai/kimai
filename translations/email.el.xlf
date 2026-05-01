@@ -6,22 +6,6 @@
         <source>automated_email_dont_answer</source>
         <target>Αυτό είναι ένα αυτοματοποιημένο e-mail. Παρακαλούμε μην απαντήσετε, το περιεχόμενο δεν θα αναγνωσθεί.</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject">
-        <source>registration.subject</source>
-        <target>Ενεργοποίηση του λογαριασμού σας</target>
-      </trans-unit>
-      <trans-unit id="QtcznHC" resname="registration.title">
-        <source>registration.title</source>
-        <target>Καλώς όρισες %username%</target>
-      </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button">
-        <source>registration.button</source>
-        <target>Ενεργοποίηση λογαριασμού</target>
-      </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target>Εγγραφήκατε στο λογισμικό παρακολούθησης χρόνου Kimai με το e-mail %email%. Παρακαλούμε ενεργοποιήσετε τον λογαριασμό σας εντός μερικών ωρών, προτού λήξει ο σύνδεσμος.</target>
-      </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
         <target state="needs-translation">Επαναφορά του κωδικού σας</target>
@@ -37,6 +21,18 @@
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
         <target state="needs-translation">… επομένως ξεχάσατε τον κωδικό σας; Μην ανησυχείτε: Το Kimai θα σας βοηθήσει να δημιουργήσετε ένα νέο:</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">Η αίτηση εξουσιοδότησής σας απορρίφθηκε από τον/την %created_by%
+
+%list%
+
+Παρακαλούμε ελέγξτε τα αιτήματά σας στο:%url%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Το αίτημα σας έχει εγκριθεί</target>
       </trans-unit>
     </body>
   </file>

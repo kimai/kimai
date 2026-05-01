@@ -22,7 +22,7 @@ use Twig\Environment;
 
 class PdfRendererFactoryMock extends AbstractMockFactory
 {
-    public function create(): PdfRendererFactory
+    public function create(?Environment $environment = null): PdfRendererFactory
     {
         $converter = new ColumnConverter(
             $this->createMock(EventDispatcherInterface::class),
@@ -31,7 +31,7 @@ class PdfRendererFactoryMock extends AbstractMockFactory
         );
 
         return new PdfRendererFactory(
-            $this->createMock(Environment::class),
+            $environment ?? $this->createMock(Environment::class),
             $this->createMock(HtmlToPdfConverter::class),
             $this->createMock(ProjectStatisticService::class),
             $this->createMock(LocaleSwitcher::class),

@@ -327,7 +327,6 @@ class UserControllerTest extends APIControllerBaseTestCase
             'username' => '1',  // not existing in form
             'email' => '',
             'plainPassword' => '123456', // not existing in form
-            'plainApiToken' => '123456', // not existing in form
             'language' => 'xx',
             'timezone' => 'XXX/YYY',
             'roles' => [
@@ -402,5 +401,51 @@ class UserControllerTest extends APIControllerBaseTestCase
         $user = $em->getRepository(User::class)->find(1);
         self::assertEquals('another,testing,bar', $user->getPreferenceValue('metatestmock'));
         self::assertEquals('another,testing,bar', $user->getPreferenceValue('metatestmock'));
+    }
+
+    public function testUpdateUserPreferenceWithEnabledPreference(): void
+    {
+        $role = User::ROLE_SUPER_ADMIN;
+        $id = $this->getAuthenticatedUserId($role);
+        $client = $this->getClientForAuthenticatedUser($role);
+
+        $em = $this->getEntityManager();
+        /** @var User $user */
+        $user = $em->getRepository(User::class)->find($id);
+        self::assertEquals(46, $user->getPreferenceValue('hourly_rate'));
+
+        $data = [
+            [
+                'name' => 'hourly_rate',
+                'value' => 99
+            ]
+        ];
+        $this->request($client, '/api/users/' . $id . '/preferences', 'PATCH', [], (string) json_encode($data));
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        /** @var User $user */
+        $user = $em->getRepository(User::class)->find($id);
+        self::assertEquals(99, $user->getPreferenceValue('hourly_rate'));
+    }
+
+    public function testUpdateUserPreferenceWithDisabledPreference(): void
+    {
+        $role = User::ROLE_USER;
+        $id = $this->getAuthenticatedUserId($role);
+        $client = $this->getClientForAuthenticatedUser($role);
+
+        $em = $this->getEntityManager();
+        /** @var User $user */
+        $user = $em->getRepository(User::class)->find($id);
+        self::assertEquals(82, $user->getPreferenceValue('hourly_rate'));
+
+        $data = [
+            [
+                'name' => 'hourly_rate',
+                'value' => 99
+            ]
+        ];
+        $this->request($client, '/api/users/' . $id . '/preferences', 'PATCH', [], (string) json_encode($data));
+        self::assertApiResponseAccessDenied($client->getResponse());
     }
 }

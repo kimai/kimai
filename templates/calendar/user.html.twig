@@ -55,8 +55,7 @@
         {% endif %}
 
         <div class="col-xs-12 {% if hasTwoColumns %}col-md-8 col-lg-9 col-print-12{% endif %}">
-            {% embed '@theme/embeds/card.html.twig' %}
-                {% block box_body_class %}p-0{% endblock %}
+            {% embed '@theme/embeds/card.html.twig' with {fullsize: true}  %}
                 {% block box_body %}
                     <div id="timesheet_calendar"></div>
                 {% endblock %}
@@ -213,7 +212,7 @@
                         return '{{ path(editRoute, {id: '-XX-'}) }}'.replace('-XX-', timesheetId);
                     },
                     actions: (timesheetId) => {
-                        return '{{ path('get_timesheet_actions', {id: 1, 'view': 'calendar', 'locale': (app.request.locale)}) }}'.replace('1', timesheetId);
+                        return '{{ path('get_timesheet_actions', {id: 1, 'view': 'calendar', 'locale': (app.locale)}) }}'.replace('1', timesheetId);
                     },
                 },
                 preparePayloadForUpdate: (data) => {

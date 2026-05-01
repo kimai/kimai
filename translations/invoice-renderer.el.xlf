@@ -26,13 +26,17 @@
         <source>text</source>
         <target state="translated">Κείμενο</target>
       </trans-unit>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
         <source>timesheet</source>
-        <target state="translated">Φύλλο Χρονικών καταγραφών</target>
+        <target state="translated">Φύλλο κατανομής χρόνου</target>
       </trans-unit>
       <trans-unit id="m1UyfD9" resname="service-date">
         <source>service-date</source>
         <target state="translated">Ημερομηνία μεμονωμένης εξυπηρέτησης</target>
+      </trans-unit>
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer" xml:space="preserve">
+        <source>download_invoice_renderer</source>
+        <target state="translated">Μπορείτε να κατεβάσετε περισσότερα έγγραφα εδώ</target>
       </trans-unit>
     </body>
   </file>

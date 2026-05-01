@@ -13,7 +13,7 @@ use App\Command\InvoiceCreateCommand;
 use App\DataFixtures\UserFixtures;
 use App\Entity\Customer;
 use App\Entity\Project;
-use App\Invoice\ServiceInvoice;
+use App\Invoice\InvoiceService;
 use App\Repository\CustomerRepository;
 use App\Repository\InvoiceTemplateRepository;
 use App\Repository\ProjectRepository;
@@ -66,8 +66,8 @@ class InvoiceCreateCommandTest extends KernelTestCase
         $this->application = new Application($kernel);
         $container = self::getContainer();
 
-        $this->application->add(new InvoiceCreateCommand(
-            $container->get(ServiceInvoice::class), // @phpstan-ignore argument.type
+        $this->application->addCommand(new InvoiceCreateCommand(
+            $container->get(InvoiceService::class), // @phpstan-ignore argument.type
             $container->get(CustomerRepository::class), // @phpstan-ignore argument.type
             $container->get(ProjectRepository::class), // @phpstan-ignore argument.type
             $container->get(InvoiceTemplateRepository::class), // @phpstan-ignore argument.type

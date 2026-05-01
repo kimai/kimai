@@ -1,3 +1,4 @@
+{# THIS IS THE DEFAULT PDF EXPORT TEMPLATE I NO CUSTOM ONE WAS DEFINED #}
 {% set showUserColumn = showUserColumn ?? true %}
 {% set showInternalRate = showInternalRate ?? false %}
 {% set showRateColumn = showRateColumn ?? is_granted('view_rate_other_timesheet') %}
@@ -34,7 +35,7 @@
     {% endif %}
     {% set summaryColumns = summaryColumns|merge(['rate']) %}
 {% endif %}
-<html{% if app.request is defined and app.request is not null %} lang="{{ app.request.locale }}"{% endif %}>
+<html lang="{{ app.locale }}">
 <head>
     <title>{% block document_title %}{{ 'export'|trans }}{% endblock %}</title>
 {% block styles %}

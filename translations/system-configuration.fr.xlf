@@ -226,10 +226,6 @@
         <source>user_auth_password_reset</source>
         <target>Mot de passe oublié</target>
       </trans-unit>
-      <trans-unit id="C26_mL7" resname="user_auth_registration">
-        <source>user_auth_registration</source>
-        <target>Enregistrement de l'utilisateur</target>
-      </trans-unit>
       <trans-unit id="BGHQ8YO" resname="user_auth_login">
         <source>user_auth_login</source>
         <target>Formulaire de connexion</target>
@@ -309,6 +305,10 @@
       <trans-unit id="IZY5kqL" resname="allowed_replacer" xml:space="preserve">
         <source>allowed_replacer</source>
         <target state="translated">Remplacement autorisé : %replacer%</target>
+      </trans-unit>
+      <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="no" xml:space="preserve">
+        <source>invoice.rounding_mode</source>
+        <target state="translated">Mode d'arrondi</target>
       </trans-unit>
     </body>
   </file>

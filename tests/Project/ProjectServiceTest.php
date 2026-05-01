@@ -182,8 +182,10 @@ class ProjectServiceTest extends TestCase
             ]
         ]);
 
+        $customer = new Customer('foo');
+        $customer->setTimezone('UTC');
         $sut = $this->getSut(null, null, $configuration);
-        $project = $sut->createNewProject();
+        $project = $sut->createNewProject($customer);
 
         self::assertEquals((string) $expected, $project->getNumber());
     }
@@ -193,7 +195,7 @@ class ProjectServiceTest extends TestCase
      */
     public static function getTestData(): array
     {
-        $dateTime = new \DateTime();
+        $dateTime = new \DateTime('now', new \DateTimeZone('UTC'));
 
         $yearLong = (int) $dateTime->format('Y');
         $yearShort = (int) $dateTime->format('y');

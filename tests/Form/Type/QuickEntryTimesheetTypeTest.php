@@ -15,13 +15,17 @@ use App\Form\Type\QuickEntryTimesheetType;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Form\FormExtensionInterface;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 #[CoversClass(QuickEntryTimesheetType::class)]
 class QuickEntryTimesheetTypeTest extends TypeTestCase
 {
-    protected function getExtensions()
+    /**
+     * @return FormExtensionInterface[]
+     */
+    protected function getExtensions(): array
     {
         $auth = $this->createMock(Security::class);
         $auth->method('getUser')->willReturn(new User());
@@ -36,18 +40,19 @@ class QuickEntryTimesheetTypeTest extends TypeTestCase
 
     public static function getTestData()
     {
-        yield [4.5, 16200];
-        yield ['4,5', 16200];
-        yield ['4:30', 16200];
-        yield ['4h30m', 16200];
+        yield [4.5, 0, 16200];
+        yield ['4,5', 0, 16200];
+        yield ['4:30', 0, 16200];
+        yield ['4h30m', 0, 16200];
+        yield ['4h30m', 1800, 16200]; // it is important, that the duration does not change with breaks
     }
 
     #[DataProvider('getTestData')]
-    public function testSubmitValidData($value, $expectedDuration): void
+    public function testSubmitValidData(string|float $value, int $break, int $expectedDuration): void
     {
         $data = ['duration' => $value];
 
-        $model = $this->createDefaultModel();
+        $model = $this->createDefaultModel($expectedDuration, $break);
 
         $form = $this->factory->create(QuickEntryTimesheetType::class, $model);
 
@@ -56,16 +61,19 @@ class QuickEntryTimesheetTypeTest extends TypeTestCase
         self::assertTrue($form->isSynchronized());
         self::assertEquals($expectedDuration, $model->getDuration());
         self::assertEquals($expectedDuration, $model->getDuration(true));
+        self::assertEquals($break, $model->getBreak());
     }
 
-    private function createDefaultModel(): Timesheet
+    private function createDefaultModel(int $duration = 0, int $break = 0): Timesheet
     {
         $begin = new \DateTime('2020-02-15 12:30:00');
         $end = new \DateTime('2020-02-15 14:00:00');
 
         $model = new Timesheet();
         $model->setBegin($begin);
+        //$model->setDuration($duration);
         $model->setEnd($end);
+        $model->setBreak($break);
 
         return $model;
     }

@@ -54,9 +54,9 @@
         <source>The entered passwords don't match.</source>
         <target>הסיסמאות שהוקלדו אינן תואמות.</target>
       </trans-unit>
-      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team.">
+      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team." xml:space="preserve" approved="yes">
         <source>At least one team leader must be assigned to the team.</source>
-        <target>יש להקצות לצוות מוביל אחד לפחות.</target>
+        <target state="final">יש להקצות לצוות מוביל אחד לפחות.</target>
       </trans-unit>
       <trans-unit id="INlaCgW" resname="An equal email is already used.">
         <source>An equal email is already used.</source>

@@ -9,16 +9,25 @@
 
 namespace App\Tests\API;
 
+use App\Entity\Customer;
 use App\Entity\Invoice;
+use App\Entity\Team;
 use App\Entity\User;
+use App\Repository\TeamRepository;
 use App\Tests\DataFixtures\InvoiceFixtures;
+use App\Tests\Mocks\InvoiceTestMetaFieldSubscriberMock;
+use App\Utils\FileHelper;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 #[Group('integration')]
 class InvoiceControllerTest extends APIControllerBaseTestCase
 {
     /**
-     * @return Invoice[]
+     * @param int<1, 999> $amount
+     * @return non-empty-array<Invoice>
      */
     protected function importInvoiceFixtures(int $amount, ?array $status = null): array
     {
@@ -117,10 +126,231 @@ class InvoiceControllerTest extends APIControllerBaseTestCase
 
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('Invoice', $result);
+        self::assertArrayHasKey('metaFields', $result);
+        self::assertCount(0, $result['metaFields']);
     }
 
     public function testNotFound(): void
     {
         $this->assertEntityNotFound(User::ROLE_USER, '/api/invoices/' . PHP_INT_MAX);
+    }
+
+    public function testGetEntityRespectsCustomerPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $invoices = $this->importInvoiceFixtures(1, [Invoice::STATUS_NEW]);
+        $invoice = $invoices[0];
+        $customer = $invoice->getCustomer();
+        self::assertInstanceOf(Customer::class, $customer);
+
+        $this->assertAccessIsGranted($client, '/api/invoices/' . $invoice->getId());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('Invoice', $result);
+
+        $team = new Team('foo');
+        $team->addTeamlead($this->getUserByRole(User::ROLE_ADMIN));
+        $team->addCustomer($customer);
+
+        $em = $this->getEntityManager();
+        /** @var TeamRepository $repository */
+        $repository = $em->getRepository(Team::class);
+        $repository->saveTeam($team);
+
+        $this->assertApiAccessDenied($client, '/api/invoices/' . $invoice->getId());
+    }
+
+    public function testDownload(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $invoice = $this->importInvoiceFixtures(1)[0];
+        $filename = $invoice->getInvoiceFilename() . '.pdf';
+        $invoice->setFilename($filename);
+
+        $em = $this->getEntityManager();
+        $em->persist($invoice);
+        $em->flush();
+
+        /** @var FileHelper $fileHelper */
+        $fileHelper = $this->getPrivateService(FileHelper::class);
+        $path = $fileHelper->getDataDirectory('invoices') . $filename;
+        file_put_contents($path, '%PDF-1.4 test');
+
+        try {
+            $this->assertAccessIsGranted($client, '/api/invoices/' . $invoice->getId() . '/download');
+
+            $response = $client->getResponse();
+            self::assertInstanceOf(BinaryFileResponse::class, $response);
+            self::assertEquals('application/pdf', $response->headers->get('Content-Type'));
+            self::assertStringContainsString('attachment; filename=' . $filename, $response->headers->get('Content-Disposition') ?? '');
+        } finally {
+            $fileHelper->removeFile($path);
+        }
+    }
+
+    public function testDownloadIsSecure(): void
+    {
+        $client = $this->getClientForAuthenticatedUser();
+        $invoices = $this->importInvoiceFixtures(1);
+
+        $this->assertApiAccessDenied($client, '/api/invoices/' . $invoices[0]->getId() . '/download');
+    }
+
+    public function testDownloadRespectsCustomerPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $invoice = $this->importInvoiceFixtures(1, [Invoice::STATUS_NEW])[0];
+        $filename = $invoice->getInvoiceFilename() . '.pdf';
+        $invoice->setFilename($filename);
+
+        $em = $this->getEntityManager();
+        $em->persist($invoice);
+        $em->flush();
+
+        /** @var FileHelper $fileHelper */
+        $fileHelper = $this->getPrivateService(FileHelper::class);
+        $path = $fileHelper->getDataDirectory('invoices') . $filename;
+        file_put_contents($path, '%PDF-1.4 test');
+
+        try {
+            $this->assertAccessIsGranted($client, '/api/invoices/' . $invoice->getId() . '/download');
+
+            $customer = $invoice->getCustomer();
+            self::assertInstanceOf(Customer::class, $customer);
+
+            $team = new Team('foo');
+            $team->addTeamlead($this->getUserByRole(User::ROLE_ADMIN));
+            $team->addCustomer($customer);
+
+            /** @var TeamRepository $repository */
+            $repository = $em->getRepository(Team::class);
+            $repository->saveTeam($team);
+
+            $this->assertApiAccessDenied($client, '/api/invoices/' . $invoice->getId() . '/download');
+        } finally {
+            $fileHelper->removeFile($path);
+        }
+    }
+
+    public function testCollectionRespectsCustomerPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $invoices = $this->importInvoiceFixtures(1, [Invoice::STATUS_NEW]);
+        $invoice = $invoices[0];
+        $customer = $invoice->getCustomer();
+        self::assertInstanceOf(Customer::class, $customer);
+
+        $query = ['customers' => [$customer->getId()]];
+        $this->assertAccessIsGranted($client, '/api/invoices', 'GET', $query);
+
+        $team = new Team('foo');
+        $team->addTeamlead($this->getUserByRole(User::ROLE_ADMIN));
+        $team->addCustomer($customer);
+
+        $em = $this->getEntityManager();
+        /** @var TeamRepository $repository */
+        $repository = $em->getRepository(Team::class);
+        $repository->saveTeam($team);
+
+        $this->request($client, '/api/invoices', 'GET', $query);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    // ------------------------------------- [META FIELDS] -------------------------------------
+
+    public function testUpdateInvoiceMetaFieldsThrowsNotFound(): void
+    {
+        $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/invoices/42/custom-fields', []);
+    }
+
+    public function testUpdateInvoiceMetaFieldsThrowsExceptionOnWrongStructure(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+
+        $this->assertExceptionForPatchAction($client, '/api/invoices/' . $id . '/custom-fields', ['name' => 'X', 'value' => 'X'], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
+    public function testUpdateInvoiceMetaFieldsThrowsExceptionOnMissingName(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+
+        $this->assertExceptionForPatchAction($client, '/api/invoices/' . $id . '/custom-fields', [['value' => 'X']], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
+    public function testUpdateInvoiceMetaFieldsThrowsExceptionOnMissingValue(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+
+        $this->assertExceptionForPatchAction($client, '/api/invoices/' . $id . '/custom-fields', [['name' => 'X']], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
+    public function testUpdateInvoiceMetaFieldsThrowsExceptionOnMissingMetafield(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+
+        $this->assertExceptionForPatchAction($client, '/api/invoices/' . $id . '/custom-fields', [['name' => 'X', 'value' => 'Y']], [
+            'code' => Response::HTTP_NOT_FOUND,
+            'message' => 'Not Found'
+        ]);
+    }
+
+    public function testUpdateInvoiceMetaFields(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $invoices = $this->importInvoiceFixtures(1);
+        $id = $invoices[0]->getId();
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new InvoiceTestMetaFieldSubscriberMock());
+
+        $data = [
+            [
+                'name' => 'metatestmock',
+                'value' => 'another,testing,bar'
+            ],
+            [
+                'name' => 'foobar',
+                'value' => 13081978
+            ],
+        ];
+        $this->request($client, '/api/invoices/' . $id . '/custom-fields', 'PATCH', [], (string) json_encode($data));
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('Invoice', $result);
+        self::assertArrayHasKey('metaFields', $result);
+        // only visible should be returned
+        self::assertCount(1, $result['metaFields']);
+        self::assertEquals(['name' => 'metatestmock', 'value' => 'another,testing,bar'], $result['metaFields'][0]);
+
+        $em = $this->getEntityManager();
+        /** @var Invoice $invoice */
+        $invoice = $em->getRepository(Invoice::class)->find($id);
+        self::assertEquals('another,testing,bar', $invoice->getMetaField('metatestmock')?->getValue());
+        self::assertEquals(13081978, $invoice->getMetaField('foobar')?->getValue());
     }
 }

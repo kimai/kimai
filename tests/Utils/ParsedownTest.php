@@ -19,7 +19,7 @@ class ParsedownTest extends TestCase
     public function testTableContainsCssClasses(): void
     {
         $sut = new Parsedown();
-        $html = $sut->parse('
+        $html = $sut->text('
 | Item | Price |
 |---|---|
 | Something | $ 472,78 |
@@ -32,7 +32,7 @@ class ParsedownTest extends TestCase
     public function testHeaderContainsId(): void
     {
         $sut = new Parsedown();
-        $html = $sut->parse('
+        $html = $sut->text('
 # Foo
         ');
         self::assertEquals('<h1 id="foo">Foo</h1>', $html);
@@ -41,7 +41,7 @@ class ParsedownTest extends TestCase
     public function testHeaderContainsIdDoesNotDuplicate(): void
     {
         $sut = new Parsedown();
-        $html = $sut->parse('
+        $html = $sut->text('
 # Foo
 # Foo
 # Foo

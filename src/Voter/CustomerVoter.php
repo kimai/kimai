@@ -14,6 +14,7 @@ use App\Entity\Team;
 use App\Entity\User;
 use App\Security\RolePermissionManager;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
@@ -26,7 +27,7 @@ final class CustomerVoter extends Voter
     /**
      * supported attributes/rules based on the given customer
      */
-    private const ALLOWED_ATTRIBUTES = [
+    private const array ALLOWED_ATTRIBUTES = [
         'view',
         'create',
         'edit',
@@ -58,7 +59,7 @@ final class CustomerVoter extends Voter
         return $subject instanceof Customer && $this->supportsAttribute($attribute);
     }
 
-    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $vote = null): bool
     {
         $user = $token->getUser();
 
@@ -69,21 +70,7 @@ final class CustomerVoter extends Voter
         // this is a virtual permission, only meant to be used by developer
         // it checks if access to the given customer is potentially possible
         if ($attribute === 'access') {
-            if ($subject->getTeams()->count() === 0) {
-                return true;
-            }
-
-            foreach ($subject->getTeams() as $team) {
-                if ($user->isInTeam($team)) {
-                    return true;
-                }
-            }
-
-            if ($user->canSeeAllData()) {
-                return true;
-            }
-
-            return false;
+            return $this->permissionManager->checkTeamAccessCustomer($subject, $user);
         }
 
         if ($this->permissionManager->hasRolePermission($user, $attribute . '_customer')) {

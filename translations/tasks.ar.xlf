@@ -78,10 +78,6 @@
         <source>task_overdue</source>
         <target state="translated">متأخر</target>
       </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
-        <source>estimation</source>
-        <target state="translated">الوقت التقديري</target>
-      </trans-unit>
       <trans-unit id="agwwK.J" resname="task_no_estimation" xml:space="preserve" approved="no">
         <source>task_no_estimation</source>
         <target state="translated">بدون وقت تقديري</target>
@@ -89,10 +85,6 @@
       <trans-unit id="cu1.2JS" resname="task_not_started" xml:space="preserve" approved="no">
         <source>task_not_started</source>
         <target state="translated">لم يبدأ</target>
-      </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
-        <source>task_todo</source>
-        <target state="needs-translation">وصف المهمة</target>
       </trans-unit>
       <trans-unit id="XjAwhoV" resname="task.start" xml:space="preserve" approved="no">
         <source>task.start</source>

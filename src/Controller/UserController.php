@@ -64,8 +64,7 @@ final class UserController extends AbstractController
         $event = new UserPreferenceDisplayEvent(UserPreferenceDisplayEvent::USERS);
         $this->dispatcher->dispatch($event);
 
-        $table = new DataTable('user_admin', $query);
-        $table->setPagination($entries);
+        $table = new DataTable('user_admin', $query, $entries);
         $table->setSearchForm($form);
         $table->setPaginationRoute('admin_user_paginated');
         $table->setReloadEvents('kimai.userUpdate');

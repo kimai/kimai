@@ -105,11 +105,7 @@
             &dash;
         {% endif %}
     {% elseif column == 'duration' %}
-        {% if entry.end %}
-            {{ entry.duration|duration }}
-        {% else %}
-            <i data-since="{{ entry.begin.format(constant('DATE_ISO8601')) }}">{{ entry|duration }}</i>
-        {% endif %}
+        {{ widgets.duration(entry) }}
     {% elseif column == 'break' %}
         {{ entry.break|duration }}
     {% elseif column == 'hourlyRate' %}

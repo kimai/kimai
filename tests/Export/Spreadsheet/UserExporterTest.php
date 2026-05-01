@@ -32,7 +32,6 @@ class UserExporterTest extends TestCase
         $user = new User();
         $user->setAccountNumber('F-747864');
         $user->setUserIdentifier('test user');
-        $user->setAvatar('Lorem Ipsum');
         $user->setTimezone('Europe/Berlin');
         $user->setColor('#ececec');
         $user->setAlias('Another name');

@@ -11,6 +11,13 @@ namespace App\Tests\Mocks;
 
 use App\Activity\ActivityStatisticService;
 use App\Customer\CustomerStatisticService;
+use App\Invoice\Hydrator\InvoiceItemDefaultHydrator;
+use App\Invoice\Hydrator\InvoiceModelActivityHydrator;
+use App\Invoice\Hydrator\InvoiceModelCustomerHydrator;
+use App\Invoice\Hydrator\InvoiceModelDefaultHydrator;
+use App\Invoice\Hydrator\InvoiceModelIssuerHydrator;
+use App\Invoice\Hydrator\InvoiceModelProjectHydrator;
+use App\Invoice\Hydrator\InvoiceModelUserHydrator;
 use App\Invoice\InvoiceModelFactory;
 use App\Project\ProjectStatisticService;
 use App\Timesheet\RateCalculator\DecimalRateCalculator;
@@ -25,8 +32,19 @@ class InvoiceModelFactoryFactory extends AbstractMockFactory
         $projectStatistic = $this->getMockBuilder(ProjectStatisticService::class)->disableOriginalConstructor()->getMock();
         /** @var ActivityStatisticService $activityStatistic */
         $activityStatistic = $this->getMockBuilder(ActivityStatisticService::class)->disableOriginalConstructor()->getMock();
-        $rateMode = new DecimalRateCalculator();
 
-        return new InvoiceModelFactory($customerStatistic, $projectStatistic, $activityStatistic, $rateMode);
+        $modelHydrators = [
+            new InvoiceModelDefaultHydrator(),
+            new InvoiceModelCustomerHydrator($customerStatistic),
+            new InvoiceModelIssuerHydrator(),
+            new InvoiceModelProjectHydrator($projectStatistic),
+            new InvoiceModelActivityHydrator($activityStatistic),
+            new InvoiceModelUserHydrator(),
+        ];
+        $itemHydrators = [
+            new InvoiceItemDefaultHydrator(),
+        ];
+
+        return new InvoiceModelFactory(new DecimalRateCalculator(), $modelHydrators, $itemHydrators);
     }
 }

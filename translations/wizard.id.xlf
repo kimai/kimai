@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="id" datatype="plaintext" original="wizard.en.xlf">
     <body>
-      <trans-unit id="9XidDHG" resname="wizard.intro.title">
+      <trans-unit id="9XidDHG" resname="wizard.intro.title" xml:space="preserve">
         <source>wizard.intro.title</source>
-        <target state="translated">Selamat Datang di Kimai</target>
+        <target state="translated">Selamat datang di Kimai</target>
       </trans-unit>
       <trans-unit id="X0ws5mu" resname="wizard.intro.description">
         <source>wizard.intro.description</source>
@@ -12,11 +12,31 @@
       </trans-unit>
       <trans-unit id="FCMK0ph" resname="wizard.separator" xml:space="preserve">
         <source>wizard.separator</source>
-        <target state="translated">Pengaturan anda</target>
+        <target state="translated">Pengaturan Anda</target>
       </trans-unit>
       <trans-unit id="8_e6ApF" resname="wizard.profile.title" xml:space="preserve">
         <source>wizard.profile.title</source>
-        <target state="translated">Profil anda</target>
+        <target state="translated">Profil Anda</target>
+      </trans-unit>
+      <trans-unit id="Mo1506M" resname="wizard.profile.description" xml:space="preserve">
+        <source>wizard.profile.description</source>
+        <target state="translated">Beberapa pengaturan dasar untuk mempermudah pekerjaan Anda dengan Kimai.</target>
+      </trans-unit>
+      <trans-unit id="7Vipfs7" resname="wizard.password.title" xml:space="preserve">
+        <source>wizard.password.title</source>
+        <target state="translated">Kata sandi Anda</target>
+      </trans-unit>
+      <trans-unit id="zlNbbUg" resname="wizard.password.description" xml:space="preserve">
+        <source>wizard.password.description</source>
+        <target state="translated">Harap masukkan kata sandi baru Anda, yang akan digunakan untuk masuk mulai sekarang.</target>
+      </trans-unit>
+      <trans-unit id="8p.2pXa" resname="wizard.done.title" xml:space="preserve">
+        <source>wizard.done.title</source>
+        <target state="translated">Selamat</target>
+      </trans-unit>
+      <trans-unit id="k1SzMuI" resname="wizard.done.description" xml:space="preserve">
+        <source>wizard.done.description</source>
+        <target state="translated">Pengaturan paling penting sekarang sudah selesai. Ada banyak lagi yang dapat Anda sesuaikan nanti di profil pengguna Anda.</target>
       </trans-unit>
     </body>
   </file>

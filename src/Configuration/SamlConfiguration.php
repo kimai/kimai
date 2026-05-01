@@ -11,7 +11,7 @@ namespace App\Configuration;
 
 final class SamlConfiguration implements SamlConfigurationInterface
 {
-    public function __construct(private SystemConfiguration $configuration)
+    public function __construct(private readonly SystemConfiguration $configuration)
     {
     }
 
@@ -53,5 +53,10 @@ final class SamlConfiguration implements SamlConfigurationInterface
     public function getConnection(): array
     {
         return $this->configuration->getSamlConnection();
+    }
+
+    public function cleanupLongRelayState(): bool
+    {
+        return (bool) $this->configuration->find('saml.connection.cleanupLongRelayState');
     }
 }

@@ -59,7 +59,7 @@ class TimesheetOverlappingValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetOverlapping(['message' => 'myMessage']));
+        $this->validator->validate(new NotBlank(), new TimesheetOverlapping());
     }
 
     public function testOverlappingDisallowedWithRecords(): void
@@ -70,7 +70,7 @@ class TimesheetOverlappingValidatorTest extends ConstraintValidatorTestCase
         $timesheet->setBegin($begin);
         $timesheet->setEnd($end);
 
-        $this->validator->validate($timesheet, new TimesheetOverlapping(['message' => 'myMessage']));
+        $this->validator->validate($timesheet, new TimesheetOverlapping());
 
         $this->buildViolation('You already have an entry for this time.')
             ->atPath('property.path.begin_date')
@@ -89,7 +89,7 @@ class TimesheetOverlappingValidatorTest extends ConstraintValidatorTestCase
         $timesheet->setBegin($begin);
         $timesheet->setEnd($end);
 
-        $this->validator->validate($timesheet, new TimesheetOverlapping(['message' => 'myMessage']));
+        $this->validator->validate($timesheet, new TimesheetOverlapping());
         self::assertEmpty($this->context->getViolations());
     }
 
@@ -104,7 +104,7 @@ class TimesheetOverlappingValidatorTest extends ConstraintValidatorTestCase
         $timesheet->setBegin($begin);
         $timesheet->setEnd($end);
 
-        $this->validator->validate($timesheet, new TimesheetOverlapping(['message' => 'myMessage']));
+        $this->validator->validate($timesheet, new TimesheetOverlapping());
         self::assertEmpty($this->context->getViolations());
     }
 
@@ -119,7 +119,7 @@ class TimesheetOverlappingValidatorTest extends ConstraintValidatorTestCase
         $timesheet->setBegin($begin);
         $timesheet->setEnd($end);
 
-        $this->validator->validate($timesheet, new TimesheetOverlapping(['message' => 'myMessage']));
+        $this->validator->validate($timesheet, new TimesheetOverlapping());
         self::assertEmpty($this->context->getViolations());
     }
 }

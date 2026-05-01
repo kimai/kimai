@@ -6,22 +6,6 @@
         <source>automated_email_dont_answer</source>
         <target>Acesta este un email generat automat. Te rog să nu răspunzi pentru că nu va fi citit de nimeni.</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject">
-        <source>registration.subject</source>
-        <target>Activează-ți contul</target>
-      </trans-unit>
-      <trans-unit id="QtcznHC" resname="registration.title">
-        <source>registration.title</source>
-        <target>Bine ai venit %username%</target>
-      </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button">
-        <source>registration.button</source>
-        <target>Activează-ți contul</target>
-      </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target>Te-ai înscris la Kimai time-tracker cu adresa de e-mail %email%. Vă rugăm să vă activați contul în următoarele câteva ore, înainte ca link-ul să expire.</target>
-      </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
         <target state="needs-translation">Resetează-ți parola</target>

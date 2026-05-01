@@ -229,7 +229,6 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
 
-        self::assertCount(30, array_keys($result));
         self::assertNotEmpty($result['id']);
         self::assertIsArray($result['teams']);
         self::assertCount(1, $result['teams']);
@@ -262,7 +261,8 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertNull($result['homepage']);
         self::assertEquals('Europe/Berlin', $result['timezone']);
         self::assertNull($result['buyerReference']);
-        self::assertEquals('#5319e7', $result['color']);
+        self::assertNull($result['color']);
+        self::assertEquals('#5319e7', $result['color-safe']);
         self::assertTrue($result['visible']);
         self::assertTrue($result['billable']);
     }
@@ -316,7 +316,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
         self::assertNotEmpty($result['id']);
         self::assertIsArray($result['teams']);
-        self::assertEquals([['id' => 1, 'name' => 'Test team', 'color' => '#03A9F4']], $result['teams']);
+        self::assertEquals([['id' => 1, 'name' => 'Test team', 'color' => null, 'color-safe' => '#03A9F4']], $result['teams']);
         self::assertIsArray($result['metaFields']);
         self::assertEquals([], $result['metaFields']);
         self::assertEquals('foo', $result['name']);

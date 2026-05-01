@@ -58,30 +58,10 @@ final class Configuration implements ConfigurationInterface
                 ->append($this->getQuickEntryNode())
                 ->append($this->getActivityNode())
                 ->append($this->getProjectNode())
-                ->append($this->getFeaturesNode())
             ->end()
         ->end();
 
         return $treeBuilder;
-    }
-
-    private function getFeaturesNode(): ArrayNodeDefinition
-    {
-        $builder = new TreeBuilder('features');
-        /** @var ArrayNodeDefinition $node */
-        $node = $builder->getRootNode();
-
-        $node
-            ->addDefaultsIfNotSet()
-                ->children()
-                    // this feature was deactivated in order to deprecate/remove it in the future, very likely not necessary for anyone
-                    ->integerNode('user_registration')
-                ->defaultFalse()
-                ->end()
-            ->end()
-        ;
-
-        return $node;
     }
 
     private function getQuickEntryNode(): ArrayNodeDefinition
@@ -258,14 +238,11 @@ final class Configuration implements ConfigurationInterface
                     ->arrayPrototype()
                         ->children()
                             ->arrayNode('days')
-                                ->requiresAtLeastOneElement()
                                 ->useAttributeAsKey('key')
-                                ->isRequired()
                                 ->scalarPrototype()->end()
                                 ->defaultValue([])
                             ->end()
                             ->floatNode('factor')
-                                ->isRequired()
                                 ->defaultValue(1)
                                 ->validate()
                                     ->ifTrue(function ($value) {
@@ -556,9 +533,6 @@ final class Configuration implements ConfigurationInterface
                 ->booleanNode('login')
                     ->defaultTrue()
                 ->end()
-                ->booleanNode('registration')
-                    ->defaultFalse()
-                ->end()
                 ->booleanNode('password_reset')
                     ->defaultTrue()
                 ->end()
@@ -650,7 +624,6 @@ final class Configuration implements ConfigurationInterface
                         ->useAttributeAsKey('key')
                         ->isRequired()
                         ->scalarPrototype()->end()
-                        ->defaultValue([])
                     ->end()
                 ->end()
                 ->arrayNode('maps')
@@ -660,7 +633,6 @@ final class Configuration implements ConfigurationInterface
                         ->useAttributeAsKey('key')
                         ->isRequired()
                         ->scalarPrototype()->end()
-                        ->defaultValue([])
                     ->end()
                 ->end()
                 ->arrayNode('roles')
@@ -669,7 +641,6 @@ final class Configuration implements ConfigurationInterface
                     ->arrayPrototype()
                         ->isRequired()
                         ->scalarPrototype()->end()
-                        ->defaultValue([])
                     ->end()
                     ->defaultValue([
                         'ROLE_USER' => [],
@@ -862,6 +833,9 @@ final class Configuration implements ConfigurationInterface
                         ->scalarNode('baseurl')->end()
                         ->booleanNode('strict')->end()
                         ->booleanNode('debug')->end()
+                        ->booleanNode('cleanupLongRelayState')
+                            ->defaultFalse()
+                        ->end()
                         ->arrayNode('idp')
                             ->children()
                                 ->scalarNode('entityId')->end()

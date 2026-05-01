@@ -19,6 +19,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+use Symfony\Component\Security\Core\User\InMemoryUser;
 
 #[CoversClass(ActivityVoter::class)]
 class ActivityVoterTest extends AbstractVoterTestCase
@@ -165,5 +166,147 @@ class ActivityVoterTest extends AbstractVoterTestCase
         $activity->setProject($project);
 
         $this->assertVote($user, $activity, 'edit', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testAccessGrantedWhenAllChainsHaveNoTeams(): void
+    {
+        $project = new Project();
+        $project->setCustomer(new Customer('foo'));
+
+        $activity = new Activity();
+        $activity->setProject($project);
+
+        $this->assertVote(new User(), $activity, 'access', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testAccessGrantedWhenActivityHasNoProject(): void
+    {
+        // checkTeamAccessActivity() skips the project chain when activity->getProject() is null.
+        $activity = new Activity();
+
+        $this->assertVote(new User(), $activity, 'access', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testAccessGrantedForCanSeeAllDataDespiteRestrictiveChain(): void
+    {
+        $customer = new Customer('foo');
+        $customer->addTeam(new Team('customerTeam'));
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam(new Team('projectTeam'));
+
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activity->addTeam(new Team('activityTeam'));
+
+        $user = new User();
+        $user->initCanSeeAllData(true);
+
+        $this->assertVote($user, $activity, 'access', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testAccessGrantedAsMemberOfFullChain(): void
+    {
+        $customerTeam = new Team('customerTeam');
+        $customer = new Customer('foo');
+        $customer->addTeam($customerTeam);
+
+        $projectTeam = new Team('projectTeam');
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam($projectTeam);
+
+        $activityTeam = new Team('activityTeam');
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activity->addTeam($activityTeam);
+
+        $user = new User();
+        $customerTeam->addUser($user);
+        $projectTeam->addUser($user);
+        $activityTeam->addUser($user);
+
+        $this->assertVote($user, $activity, 'access', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testAccessDeniedWhenCustomerTeamBlocks(): void
+    {
+        $customer = new Customer('foo');
+        $customer->addTeam(new Team('customerTeam'));
+
+        $project = new Project();
+        $project->setCustomer($customer);
+
+        $activity = new Activity();
+        $activity->setProject($project);
+
+        $this->assertVote(new User(), $activity, 'access', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testAccessDeniedWhenProjectTeamBlocks(): void
+    {
+        $customerTeam = new Team('customerTeam');
+        $customer = new Customer('foo');
+        $customer->addTeam($customerTeam);
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam(new Team('projectTeam'));
+
+        $activity = new Activity();
+        $activity->setProject($project);
+
+        $user = new User();
+        $customerTeam->addUser($user);
+
+        $this->assertVote($user, $activity, 'access', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testAccessDeniedWhenActivityTeamBlocks(): void
+    {
+        $customerTeam = new Team('customerTeam');
+        $customer = new Customer('foo');
+        $customer->addTeam($customerTeam);
+
+        $projectTeam = new Team('projectTeam');
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam($projectTeam);
+
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activity->addTeam(new Team('activityTeam'));
+
+        $user = new User();
+        $customerTeam->addUser($user);
+        $projectTeam->addUser($user);
+
+        $this->assertVote($user, $activity, 'access', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testAccessDeniedWhenActivityTeamsExistAndUserOnlyInUnrelatedTeam(): void
+    {
+        $project = new Project();
+        $project->setCustomer(new Customer('foo'));
+
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activity->addTeam(new Team('activityTeam'));
+
+        $unrelated = new Team('unrelated');
+        $user = new User();
+        $unrelated->addUser($user);
+
+        $this->assertVote($user, $activity, 'access', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testAccessDeniedForNonUserToken(): void
+    {
+        $activity = new Activity();
+        $token = new UsernamePasswordToken(new InMemoryUser('anon', null), 'bar', []);
+        $sut = $this->getVoter(ActivityVoter::class);
+
+        self::assertEquals(VoterInterface::ACCESS_DENIED, $sut->vote($token, $activity, ['access']));
     }
 }

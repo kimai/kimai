@@ -226,10 +226,6 @@
         <source>user_auth_password_reset</source>
         <target>Parolayı unuttum</target>
       </trans-unit>
-      <trans-unit id="C26_mL7" resname="user_auth_registration">
-        <source>user_auth_registration</source>
-        <target>Kullanıcı kaydı</target>
-      </trans-unit>
       <trans-unit id="BGHQ8YO" resname="user_auth_login">
         <source>user_auth_login</source>
         <target>Oturum açma formu</target>
@@ -309,6 +305,10 @@
       <trans-unit id="jj1NmKW" resname="allow_duplicate_number" xml:space="preserve" approved="no">
         <source>allow_duplicate_number</source>
         <target state="translated">Aynı numaranın birden fazla kullanımına izin ver</target>
+      </trans-unit>
+      <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="no" xml:space="preserve">
+        <source>invoice.rounding_mode</source>
+        <target state="translated">Yuvarlama modu</target>
       </trans-unit>
     </body>
   </file>

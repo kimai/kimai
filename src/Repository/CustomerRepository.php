@@ -37,7 +37,7 @@ use Doctrine\ORM\QueryBuilder;
 class CustomerRepository extends EntityRepository
 {
     /**
-     * @param int[] $customerIDs
+     * @param array<int, string|int> $customerIDs
      * @return array<Customer>
      */
     public function findByIds(array $customerIDs): array
@@ -217,6 +217,9 @@ class CustomerRepository extends EntityRepository
         return $qb;
     }
 
+    /**
+     * @return Pagination<Customer>
+     */
     public function getPagerfantaForQuery(CustomerQuery $query): Pagination
     {
         return new Pagination($this->getPaginatorForQuery($query), $query);

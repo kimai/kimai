@@ -26,6 +26,6 @@ final class ArrayFormatter implements CellFormatterInterface
             throw new \InvalidArgumentException('Unsupported value given, only array is supported');
         }
 
-        $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), implode(';', $value));
+        $sheet->setCellValue(CellAddress::fromColumnAndRow($column, $row), implode(';', $value)); // @phpstan-ignore argument.type
     }
 }

@@ -236,6 +236,7 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
         /** @var EntityManager $em */
         $em = $this->getEntityManager();
         $project = $em->find(Project::class, 1);
+        self::assertInstanceOf(Project::class, $project);
         $project->setMetaField((new ProjectMeta())->setName('foo')->setValue('bar'));
         $project->setEnd(new \DateTime());
         $em->persist($project);
@@ -276,6 +277,7 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
         /** @var EntityManager $em */
         $em = $this->getEntityManager();
         $project = $em->find(Project::class, 1);
+        self::assertInstanceOf(Project::class, $project);
         $project->setMetaField((new ProjectMeta())->setName('foo')->setValue('bar'));
         $project->setEnd(new \DateTime());
         $em->persist($project);

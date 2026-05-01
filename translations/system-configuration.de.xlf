@@ -202,9 +202,9 @@
         <source>invoice.number_format</source>
         <target state="translated">Rechnungsnummer-Format</target>
       </trans-unit>
-      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve" approved="yes">
+      <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve" approved="no">
         <source>customer.number_format</source>
-        <target state="final">Kundennummer Format</target>
+        <target state="translated">Kundennummer-Format</target>
       </trans-unit>
       <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number">
         <source>customer.allow_duplicate_number</source>
@@ -257,10 +257,6 @@
       <trans-unit id="BGHQ8YO" resname="user_auth_login">
         <source>user_auth_login</source>
         <target>Anmeldeformular</target>
-      </trans-unit>
-      <trans-unit id="C26_mL7" resname="user_auth_registration">
-        <source>user_auth_registration</source>
-        <target>Benutzerregistrierung</target>
       </trans-unit>
       <trans-unit id="5RSshEN" resname="user_auth_password_reset">
         <source>user_auth_password_reset</source>

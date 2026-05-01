@@ -26,17 +26,17 @@
         <source>report_inactive_project</source>
         <target>Ανενεργά έργα</target>
       </trans-unit>
-      <trans-unit id="518eY_l" resname="report_project_details">
+      <trans-unit id="518eY_l" resname="report_project_details" xml:space="preserve">
         <source>report_project_details</source>
-        <target>Λεπτομέρειες Έργου</target>
+        <target state="translated">Λεπτομέρειες έργου</target>
       </trans-unit>
       <trans-unit id="VD98UBN" resname="report_yearly_users">
         <source>report_yearly_users</source>
         <target>Ετήσια προβολή για όλους τους χρήστες</target>
       </trans-unit>
-      <trans-unit id="BQAsynV" resname="report_project_daterange">
+      <trans-unit id="BQAsynV" resname="report_project_daterange" xml:space="preserve">
         <source>report_project_daterange</source>
-        <target>Μηνιαία Αναφορά</target>
+        <target state="translated">Μηνιαία αναφορά</target>
       </trans-unit>
       <trans-unit id="3JLmvfB" resname="report_user_year">
         <source>report_user_year</source>
@@ -45,6 +45,10 @@
       <trans-unit id="8RaUHlW" resname="report_customer_monthly_projects">
         <source>report_customer_monthly_projects</source>
         <target state="translated">Έργα ανά μήνα, δραστηριότητα και χρήστη</target>
+      </trans-unit>
+      <trans-unit id="Yz_lySk" resname="report_customer_view" xml:space="preserve">
+        <source>report_customer_view</source>
+        <target state="translated">Επισκόπηση πελατών</target>
       </trans-unit>
     </body>
   </file>

@@ -46,4 +46,7 @@ interface SamlConfigurationInterface
     public function isRolesResetOnLogin(): bool;
 
     public function getConnection(): array;
+
+    // TODO 3.0 activate me
+    //public function cleanupLongRelayState(): bool;
 }

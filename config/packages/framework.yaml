@@ -37,6 +37,9 @@ framework:
     php_errors:
         log: true
 
+    property_info:
+        with_constructor_extractor: true
+
     mailer:
         dsn: '%env(MAILER_URL)%'
 

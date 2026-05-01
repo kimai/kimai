@@ -6,9 +6,9 @@
         <source>warning</source>
         <target>Atención</target>
       </trans-unit>
-      <trans-unit id="WmrEP_5" resname="timesheet.stop.success">
+      <trans-unit id="WmrEP_5" resname="timesheet.stop.success" xml:space="preserve">
         <source>timesheet.stop.success</source>
-        <target>El registro de tiempo ha sido detenido</target>
+        <target state="translated">El registro de hora ha sido detenido</target>
       </trans-unit>
       <trans-unit id="NPBnpK_" resname="timesheet.stop.error">
         <source>timesheet.stop.error</source>

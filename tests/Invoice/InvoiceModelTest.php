@@ -30,7 +30,6 @@ class InvoiceModelTest extends TestCase
         self::assertNotNull($sut->getQuery());
 
         self::assertFalse($sut->isPreview());
-        self::assertFalse($sut->isHideZeroTax());
         self::assertNull($sut->getCalculator());
         self::assertEmpty($sut->getEntries());
         self::assertIsArray($sut->getEntries());
@@ -45,9 +44,7 @@ class InvoiceModelTest extends TestCase
         self::assertEquals([], $sut->getOptions());
 
         $sut->setPreview(true);
-        $sut->setHideZeroTax(true);
         self::assertTrue($sut->isPreview());
-        self::assertTrue($sut->isHideZeroTax());
     }
 
     public function testEmptyObjectThrowsExceptionOnNumberGenerator(): void

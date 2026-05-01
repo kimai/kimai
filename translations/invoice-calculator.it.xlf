@@ -30,7 +30,7 @@
         <source>project</source>
         <target state="final">Progetto</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date" approved="yes">
+      <trans-unit id="DodjLNR" resname="date" approved="yes" xml:space="preserve">
         <source>date</source>
         <target state="final">Data</target>
       </trans-unit>

@@ -43,6 +43,17 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
         };
     }
 
+    protected function getAuthenticatedUserId(string $role = User::ROLE_USER): int
+    {
+        return match ($role) {
+            User::ROLE_SUPER_ADMIN => 6,
+            User::ROLE_ADMIN => 5,
+            User::ROLE_TEAMLEAD => 4,
+            User::ROLE_USER => 2,
+            default => throw new \Exception(\sprintf('Unknown role "%s"', $role)),
+        };
+    }
+
     protected function createUrl(string $url): string
     {
         return '/' . ltrim($url, '/');
@@ -125,7 +136,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
         ]);
     }
 
-    protected function assertEntityNotFoundForPatch(string $role, string $url, array $data): void
+    protected function assertEntityNotFoundForPatch(HttpKernelBrowser|string $role, string $url, array $data): void
     {
         $this->assertExceptionForPatchAction($role, $url, $data, [
             'code' => Response::HTTP_NOT_FOUND,
@@ -141,17 +152,17 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
         ]);
     }
 
-    protected function assertExceptionForDeleteAction(string $role, string $url, array $data, array $expectedErrors): void
+    protected function assertExceptionForDeleteAction(HttpKernelBrowser|string $role, string $url, array $data, array $expectedErrors): void
     {
         $this->assertExceptionForRole($role, $url, 'DELETE', $data, $expectedErrors);
     }
 
-    protected function assertExceptionForPatchAction(string $role, string $url, array $data, array $expectedErrors): void
+    protected function assertExceptionForPatchAction(HttpKernelBrowser|string $role, string $url, array $data, array $expectedErrors): void
     {
         $this->assertExceptionForRole($role, $url, 'PATCH', $data, $expectedErrors);
     }
 
-    protected function assertExceptionForPostAction(string $role, string $url, array $data, array $expectedErrors): void
+    protected function assertExceptionForPostAction(HttpKernelBrowser|string $role, string $url, array $data, array $expectedErrors): void
     {
         $this->assertExceptionForRole($role, $url, 'POST', $data, $expectedErrors);
     }
@@ -169,9 +180,9 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
         self::assertEquals($expectedErrors, json_decode($response->getContent(), true));
     }
 
-    protected function assertExceptionForRole(string $role, string $url, string $method, array $data, array $expectedErrors): void
+    protected function assertExceptionForRole(HttpKernelBrowser|string $role, string $url, string $method, array $data, array $expectedErrors): void
     {
-        $client = $this->getClientForAuthenticatedUser($role);
+        $client = ($role instanceof HttpKernelBrowser) ? $role : $this->getClientForAuthenticatedUser($role);
         $this->assertExceptionForMethod($client, $url, $method, $data, $expectedErrors);
     }
 
@@ -214,7 +225,6 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
     }
 
     /**
-     * @param Response $response
      * @param array<int, string>|array<string, mixed> $failedFields
      * @param bool $extraFields test for the error "This form should not contain extra fields"
      * @param array<int, string>|array<string, mixed> $globalError
@@ -231,7 +241,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
         }
 
         if (\count($globalError) > 0) {
-            self::assertArrayHasKey('errors', $result['errors']);
+            self::assertArrayHasKey('errors', $result['errors'], 'API response has no global errors, but expected ' . \count($globalError));
             foreach ($globalError as $err) {
                 self::assertTrue(\in_array($err, $result['errors']['errors']), 'Missing global validation error: ' . $err); // @phpstan-ignore binaryOp.invalid
             }
@@ -265,6 +275,10 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                 }
             }
 
+            if (!\is_string($fieldName)) {
+                $this->fail('Invalid field name given');
+            }
+
             while (stripos($fieldName, '.') !== false) {
                 $parts = explode('.', $fieldName);
                 $tmp = array_shift($parts);
@@ -277,7 +291,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
             }
 
             self::assertIsString($fieldName);
-            self::assertArrayHasKey($fieldName, $data, \sprintf('Could not find validation error for field "%s" in list: %s', $fieldName, implode(', ', $failedFields)));
+            self::assertArrayHasKey($fieldName, $data, \sprintf('Could not find validation error for field "%s" in list: %s', $fieldName, implode(', ', array_keys($failedFields))));
             self::assertArrayHasKey('errors', $data[$fieldName], \sprintf('Field %s has no validation problem', $fieldName));
             foreach ($messages as $i => $message) {
                 self::assertEquals($message, $data[$fieldName]['errors'][$i]);
@@ -304,13 +318,14 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'user' => ['result' => 'object', 'type' => '@User'],
                     'dueDays' => 'int',
                     'invoiceNumber' => 'string',
+                    'invoiceFilename' => 'string',
                     'paymentDate' => '@datetime',
                     'status' => 'string',
                     'tax' => 'float',
                     'total' => 'float',
                     'vat' => 'float',
                     'overdue' => 'bool',
-                    'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'],
+                    'metaFields' => ['result' => 'array', 'type' => 'InvoiceMeta'],
                 ];
 
             case 'PageActionItem':
@@ -327,24 +342,21 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                 return [
                     'id' => 'int',
                     'name' => 'string',
-                    'color' => 'string',
+                    'color' => '@string',
+                    'color-safe' => 'string',
                     'visible' => 'bool',
                 ];
 
                 // embedded meta data
             case 'UserPreference':
-                return [
-                    'name' => 'string',
-                    'value' => '@string',
-                ];
-
+            case 'InvoiceMeta':
             case 'CustomerMeta':
             case 'ProjectMeta':
             case 'ActivityMeta':
             case 'TimesheetMeta':
                 return [
                     'name' => 'string',
-                    'value' => 'string',
+                    'value' => '@string',
                 ];
 
                 // if a user is embedded in other objects
@@ -356,9 +368,9 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'username' => 'string',
                     'email' => 'string',
                     'enabled' => 'bool',
-                    'apiToken' => 'bool',
                     'systemAccount' => 'bool',
-                    'color' => 'string',
+                    'color' => '@string',
+                    'color-safe' => 'string',
                     'avatar' => '@string',
                     'alias' => '@string',
                     'accountNumber' => '@string',
@@ -376,9 +388,9 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'username' => 'string',
                     'email' => 'string',
                     'enabled' => 'bool',
-                    'apiToken' => 'bool',
                     'systemAccount' => 'bool',
-                    'color' => 'string',
+                    'color' => '@string',
+                    'color-safe' => 'string',
                     'avatar' => '@string',
                     'alias' => '@string',
                     'accountNumber' => '@string',
@@ -402,7 +414,8 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                 return [
                     'id' => 'int',
                     'name' => 'string',
-                    'color' => 'string',
+                    'color' => '@string',
+                    'color-safe' => 'string',
                 ];
 
                 // explicitly requested team
@@ -410,7 +423,8 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                 return [
                     'id' => 'int',
                     'name' => 'string',
-                    'color' => 'string',
+                    'color' => '@string',
+                    'color-safe' => 'string',
                     'members' => ['result' => 'array', 'type' => 'TeamMember'],
                     // TODO more info in entity than in collection
                     'customers' => ['result' => 'array', 'type' => '@Customer'],
@@ -439,7 +453,8 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'name' => 'string',
                     'visible' => 'bool',
                     'billable' => 'bool',
-                    'color' => 'string',
+                    'color' => '@string',
+                    'color-safe' => 'string',
                     'number' => '@string',
                     'comment' => '@string',
                     'currency' => 'string',
@@ -460,7 +475,8 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'name' => 'string',
                     'visible' => 'boolean',
                     'billable' => 'bool',
-                    'color' => 'string',
+                    'color' => '@string',
+                    'color-safe' => 'string',
                     'number' => '@string',
                     'comment' => '@string',
                     'currency' => 'string',
@@ -482,7 +498,8 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'name' => 'string',
                     'visible' => 'bool',
                     'billable' => 'bool',
-                    'color' => 'string',
+                    'color' => '@string',
+                    'color-safe' => 'string',
                     'number' => '@string',
                     'comment' => '@string',
                     'currency' => 'string',
@@ -519,7 +536,8 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'name' => 'string',
                     'visible' => 'bool',
                     'billable' => 'bool',
-                    'color' => 'string',
+                    'color' => '@string',
+                    'color-safe' => 'string',
                     'customer' => 'int',
                     'number' => '@string',
                     'orderNumber' => '@string',
@@ -538,7 +556,8 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'name' => 'string',
                     'visible' => 'bool',
                     'billable' => 'bool',
-                    'color' => 'string',
+                    'color' => '@string',
+                    'color-safe' => 'string',
                     'customer' => ['result' => 'object', 'type' => 'Customer'],
                     'number' => '@string',
                     'orderNumber' => '@string',
@@ -557,7 +576,8 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'name' => 'string',
                     'visible' => 'bool',
                     'billable' => 'bool',
-                    'color' => 'string',
+                    'color' => '@string',
+                    'color-safe' => 'string',
                     'customer' => 'int',
                     'number' => '@string',
                     'orderNumber' => '@string',
@@ -578,7 +598,8 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'name' => 'string',
                     'visible' => 'bool',
                     'billable' => 'bool',
-                    'color' => 'string',
+                    'color' => '@string',
+                    'color-safe' => 'string',
                     'customer' => 'int',
                     'number' => '@string',
                     'orderNumber' => '@string',
@@ -605,8 +626,9 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'billable' => 'bool',
                     'project' => '@int',
                     'number' => '@string',
-                    'color' => 'string',
-                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'], // since 2.45
+                    'color' => '@string',
+                    'color-safe' => 'string',
+                    'metaFields' => ['result' => 'array', 'type' => 'ActivityMeta'], // since 2.45
                     'comment' => '@string',
                 ];
 
@@ -618,8 +640,9 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'billable' => 'bool',
                     'project' => ['result' => 'object', 'type' => '@ProjectExpanded'],
                     'number' => '@string',
-                    'color' => 'string',
-                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'], // since 2.45
+                    'color' => '@string',
+                    'color-safe' => 'string',
+                    'metaFields' => ['result' => 'array', 'type' => 'ActivityMeta'], // since 2.45
                     'comment' => '@string',
                 ];
 
@@ -632,8 +655,9 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'billable' => 'bool',
                     'project' => '@int',
                     'number' => '@string',
-                    'color' => 'string',
-                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
+                    'color' => '@string',
+                    'color-safe' => 'string',
+                    'metaFields' => ['result' => 'array', 'type' => 'ActivityMeta'],
                     'comment' => '@string',
                     'parentTitle' => '@string',
                     'teams' => ['result' => 'array', 'type' => 'Team'],
@@ -648,8 +672,9 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'billable' => 'bool',
                     'project' => '@int',
                     'number' => '@string',
-                    'color' => 'string',
-                    'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
+                    'color' => '@string',
+                    'color-safe' => 'string',
+                    'metaFields' => ['result' => 'array', 'type' => 'ActivityMeta'],
                     'comment' => '@string',
                     'parentTitle' => '@string',
                     'teams' => ['result' => 'array', 'type' => 'Team'],
@@ -777,6 +802,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                                 self::assertIsString($subResult);
                             } else {
                                 self::assertIsArray($subResult);
+                                self::assertIsString($value['type']);
 
                                 if ($value['type'][0] === '@') {
                                     if (empty($result[$key])) {
@@ -791,6 +817,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                         break;
 
                     case 'object':
+                        self::assertIsString($value['type']);
                         if ($value['type'][0] === '@') {
                             if (empty($result[$key])) {
                                 break;

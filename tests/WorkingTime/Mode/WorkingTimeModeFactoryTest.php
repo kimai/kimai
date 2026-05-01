@@ -44,7 +44,7 @@ class WorkingTimeModeFactoryTest extends TestCase
         $sut = new WorkingTimeModeFactory($modes, $logger);
 
         $user = new User();
-        $user->setUsername('foo-bar');
+        $user->setUserIdentifier('bar');
         $user->setWorkContractMode('foo');
         self::assertInstanceOf(WorkingTimeModeNone::class, $sut->getModeForUser($user));
     }

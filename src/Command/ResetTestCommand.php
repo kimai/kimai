@@ -147,7 +147,6 @@ final class ResetTestCommand extends AbstractResetCommand
         $userSuperAdmin->setPreferenceValue(UserPreference::HOURLY_RATE, 46);
         $userSuperAdmin->setRegisteredAt(new \DateTime('2018-02-06 23:28:57'));
         $userSuperAdmin->setTitle('Super Administrator');
-        $userSuperAdmin->setAvatar('/bundles/avanzuadmintheme/img/avatar.png');
         $userSuperAdmin->setEnabled(true);
         $userSuperAdmin->setRoles(['ROLE_SUPER_ADMIN']);
         $userSuperAdmin->setUserIdentifier(UserFixtures::USERNAME_SUPER_ADMIN);
@@ -191,7 +190,6 @@ final class ResetTestCommand extends AbstractResetCommand
         foreach ($users as $items) {
             $user = $items[0];
             $user->setPassword($this->passwordHasher->hashPassword($user, UserFixtures::DEFAULT_PASSWORD));
-            $user->setApiToken($this->passwordHasher->hashPassword($user, UserFixtures::DEFAULT_API_TOKEN));
             foreach (User::WIZARDS as $wizard) {
                 $user->setWizardAsSeen($wizard);
             }

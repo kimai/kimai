@@ -96,6 +96,7 @@ export default class KimaiPlugin {
     }
 
     /**
+     * @deprecated use the plugin directly
      * @param {string} title
      * @returns {string}
      */

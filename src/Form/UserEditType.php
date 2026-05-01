@@ -31,7 +31,7 @@ class UserEditType extends AbstractType
 {
     use ColorTrait;
 
-    public function __construct(private SystemConfiguration $configuration)
+    public function __construct(private readonly SystemConfiguration $configuration)
     {
     }
 
@@ -95,12 +95,12 @@ class UserEditType extends AbstractType
                 'label' => 'active',
                 'help' => 'active.help'
             ]);
-
-            $builder->add('systemAccount', YesNoType::class, [
-                'label' => 'system_account',
-                'help' => 'system_account.help',
-            ]);
         }
+
+        $builder->add('systemAccount', YesNoType::class, [
+            'label' => 'system_account',
+            'help' => 'system_account.help',
+        ]);
 
         if ($options['include_supervisor']) {
             $builder->add('supervisor', UserType::class, [
@@ -122,7 +122,7 @@ class UserEditType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'validation_groups' => ['Profile'],
+            'validation_groups' => ['Profile', 'Default'],
             'data_class' => User::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',

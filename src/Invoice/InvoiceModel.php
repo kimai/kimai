@@ -9,20 +9,10 @@
 
 namespace App\Invoice;
 
-use App\Activity\ActivityStatisticService;
-use App\Customer\CustomerStatisticService;
 use App\Entity\Customer;
 use App\Entity\ExportableItem;
 use App\Entity\InvoiceTemplate;
 use App\Entity\User;
-use App\Invoice\Hydrator\InvoiceItemDefaultHydrator;
-use App\Invoice\Hydrator\InvoiceModelActivityHydrator;
-use App\Invoice\Hydrator\InvoiceModelCustomerHydrator;
-use App\Invoice\Hydrator\InvoiceModelDefaultHydrator;
-use App\Invoice\Hydrator\InvoiceModelIssuerHydrator;
-use App\Invoice\Hydrator\InvoiceModelProjectHydrator;
-use App\Invoice\Hydrator\InvoiceModelUserHydrator;
-use App\Project\ProjectStatisticService;
 use App\Repository\Query\InvoiceQuery;
 use App\Timesheet\RateCalculator\RateCalculatorMode;
 use Symfony\Component\DependencyInjection\Attribute\Exclude;
@@ -43,7 +33,6 @@ final class InvoiceModel
     private ?NumberGeneratorInterface $generator = null;
     private \DateTimeInterface $invoiceDate;
     private ?User $user = null;
-    private InvoiceFormatter $formatter;
     /**
      * @var InvoiceModelHydrator[]
      */
@@ -53,7 +42,6 @@ final class InvoiceModel
      */
     private array $itemHydrator = [];
     private ?string $invoiceNumber = null;
-    private bool $hideZeroTax = false;
     private bool $isPreview = false;
     /**
      * @var array<string, string|array<string|int, mixed>|null|bool|int|float>
@@ -64,24 +52,13 @@ final class InvoiceModel
      * @internal use InvoiceModelFactory
      */
     public function __construct(
-        InvoiceFormatter $formatter,
-        CustomerStatisticService $customerStatistic,
-        ProjectStatisticService $projectStatistic,
-        ActivityStatisticService $activityStatistic,
+        private InvoiceFormatter $formatter,
         private readonly Customer $customer,
         private readonly InvoiceTemplate $template,
         private readonly RateCalculatorMode $rateCalculatorMode
     )
     {
         $this->invoiceDate = new \DateTimeImmutable();
-        $this->formatter = $formatter;
-        $this->addModelHydrator(new InvoiceModelDefaultHydrator());
-        $this->addModelHydrator(new InvoiceModelCustomerHydrator($customerStatistic));
-        $this->addModelHydrator(new InvoiceModelIssuerHydrator());
-        $this->addModelHydrator(new InvoiceModelProjectHydrator($projectStatistic));
-        $this->addModelHydrator(new InvoiceModelActivityHydrator($activityStatistic));
-        $this->addModelHydrator(new InvoiceModelUserHydrator());
-        $this->addItemHydrator(new InvoiceItemDefaultHydrator());
     }
 
     /**
@@ -274,14 +251,14 @@ final class InvoiceModel
         return $values;
     }
 
+    /**
+     * deprecated - cannot be deleted, used in customer invoice templates
+     */
     public function isHideZeroTax(): bool
     {
-        return $this->hideZeroTax;
-    }
+        @trigger_error('isHideZeroTax() is deprecated, access tax_rows in your invoice template instead', E_USER_DEPRECATED);
 
-    public function setHideZeroTax(bool $hideZeroTax): void
-    {
-        $this->hideZeroTax = $hideZeroTax;
+        return !$this->getTemplate()->getTaxRates()[0]->isShow();
     }
 
     public function isPreview(): bool

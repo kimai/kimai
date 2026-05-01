@@ -10,6 +10,7 @@
  */
 
 import KimaiPlugin from "../KimaiPlugin";
+import DOMPurify from "dompurify";
 
 export default class KimaiEscape extends KimaiPlugin {
 
@@ -26,14 +27,23 @@ export default class KimaiEscape extends KimaiPlugin {
             return '';
         }
 
-        const tagsToReplace = {
+        const charToReplace = {
             '&': '&amp;',
             '<': '&lt;',
             '>': '&gt;',
+            '"': '&quot;',
         };
 
-        return title.replace(/[&<>]/g, function(tag) {
-            return tagsToReplace[tag] || tag;
+        return title.replace(/[&<>"]/g, function(tag) {
+            return charToReplace[tag] || tag;
         });
+    }
+
+    /**
+     * @param {string} html
+     * @returns {string}
+     */
+    sanitize(html) {
+        return DOMPurify.sanitize(html);
     }
 }

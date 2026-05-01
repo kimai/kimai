@@ -9,7 +9,9 @@
 
 namespace App\Entity;
 
+use App\Audit\Loggable;
 use App\Repository\TagRepository;
+use App\Validator\Constraints as Constraints;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
@@ -23,10 +25,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Index(columns: ['visible'])]
 #[UniqueEntity('name')]
 #[Serializer\ExclusionPolicy('all')]
+#[Loggable(title: 'tags')]
 class Tag
 {
     /**
-     * Internal Tag ID
+     * Tag ID
      */
     #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[ORM\Id]
@@ -35,9 +38,10 @@ class Tag
     #[Serializer\Groups(['Default'])]
     private ?int $id = null;
     /**
-     * The tag name
+     * Tag name cannot contain the character: " < > = ,
      */
     #[ORM\Column(name: 'name', type: Types::STRING, length: 100, nullable: false)]
+    #[Constraints\NoSpecialCharacters]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 100, normalizer: 'trim')]
     #[Assert\Regex(pattern: '/,/', message: 'Tag name cannot contain comma', match: false)]
@@ -51,10 +55,6 @@ class Tag
     private bool $visible = true;
 
     use ColorTrait;
-
-    public function __construct()
-    {
-    }
 
     public function getId(): ?int
     {

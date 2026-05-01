@@ -42,14 +42,14 @@ class UserValidatorTest extends ConstraintValidatorTestCase
 
     public function testNullIsValid(): void
     {
-        $this->validator->validate(null, new User(['message' => 'myMessage'])); // @phpstan-ignore argument.type
+        $this->validator->validate(null, new User(message: 'myMessage')); // @phpstan-ignore argument.type
 
         $this->assertNoViolation();
     }
 
     public function testNonUserIsValid(): void
     {
-        $this->validator->validate(new TestUserEntity(), new User(['message' => 'myMessage'])); // @phpstan-ignore argument.type
+        $this->validator->validate(new TestUserEntity(), new User(message: 'myMessage')); // @phpstan-ignore argument.type
 
         $this->assertNoViolation();
     }
@@ -59,7 +59,7 @@ class UserValidatorTest extends ConstraintValidatorTestCase
         $user = new UserEntity();
         $user->setUserIdentifier('foo');
         $user->setEmail('test');
-        $this->validator->validate($user, new User(['message' => 'myMessage']));
+        $this->validator->validate($user, new User(message: 'myMessage'));
 
         $this->assertNoViolation();
     }
@@ -70,7 +70,7 @@ class UserValidatorTest extends ConstraintValidatorTestCase
         $user->setUserIdentifier('foo');
         $user->setEmail('foo@example.com');
 
-        $this->validator->validate($user, new User(['message' => 'myMessage']));
+        $this->validator->validate($user, new User(message: 'myMessage'));
 
         $this->assertNoViolation();
     }

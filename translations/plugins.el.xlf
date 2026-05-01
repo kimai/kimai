@@ -6,6 +6,10 @@
         <source>plugin.none_installed</source>
         <target>Δεν έχετε εγκαταστήσει πρόσθετα, ακόμη.</target>
       </trans-unit>
+      <trans-unit id="zVtBsSo" resname="plugin.marketplace" xml:space="preserve">
+        <source>Available plugins</source>
+        <target state="translated">Διαθέσιμα πρόσθετα</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

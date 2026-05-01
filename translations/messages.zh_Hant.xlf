@@ -130,21 +130,9 @@
         <source>user_profile</source>
         <target state="final">我的資訊</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token" xml:space="preserve" approved="yes">
-        <source>api_token</source>
-        <target state="final">API 密碼</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat" xml:space="preserve" approved="yes">
-        <source>api_token_repeat</source>
-        <target state="final">再次輸入 API 密碼</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required" xml:space="preserve" approved="yes">
         <source>login_required</source>
         <target state="final">權限不足。要移至登入頁面嗎？</target>
-      </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve" approved="yes">
-        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="final">已傳送電子郵件到 %email%。您必須點選郵件中的啟用鏈結才能啟用您的帳號。</target>
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve" approved="yes">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
@@ -201,10 +189,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin" xml:space="preserve" approved="yes">
         <source>menu.plugin</source>
         <target state="final">外掛程式</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration" xml:space="preserve" approved="yes">
-        <source>menu.system_configuration</source>
-        <target state="final">設定</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags" xml:space="preserve" approved="yes">
         <source>tags</source>
@@ -834,8 +818,8 @@
         <source>export.document_title</source>
         <target state="final">支出清單</target>
       </trans-unit>
-      <trans-unit id="ulYFDIo" resname="button.ods" xml:space="preserve" approved="yes">
-        <source>button.ods</source>
+      <trans-unit id="lmUO63g" resname="ods" xml:space="preserve" approved="yes">
+        <source>ods</source>
         <target state="final">ODS</target>
       </trans-unit>
       <trans-unit id="3WHV.yf" resname="activated" xml:space="preserve" approved="yes">
@@ -1314,8 +1298,8 @@
         <source>Deactivated</source>
         <target state="final">已停用</target>
       </trans-unit>
-      <trans-unit id="W_TXvSi" resname="button.csv" xml:space="preserve" approved="yes">
-        <source>button.csv</source>
+      <trans-unit id="U7ubCzi" resname="csv" xml:space="preserve" approved="yes">
+        <source>csv</source>
         <target state="final">CSV</target>
       </trans-unit>
       <trans-unit id="wwrREDg" resname="pagination" xml:space="preserve" approved="yes">
@@ -1446,12 +1430,12 @@
         <source>Apps</source>
         <target state="final">應用程式</target>
       </trans-unit>
-      <trans-unit id="aAa5uRR" resname="button.pdf" xml:space="preserve" approved="yes">
-        <source>button.pdf</source>
+      <trans-unit id="w1sh1so" resname="pdf" xml:space="preserve" approved="yes">
+        <source>pdf</source>
         <target state="final">PDF</target>
       </trans-unit>
-      <trans-unit id="X70dwP8" resname="button.print" xml:space="preserve" approved="yes">
-        <source>button.print</source>
+      <trans-unit id="zpU6DrC" resname="print" xml:space="preserve" approved="yes">
+        <source>print</source>
         <target state="final">列印</target>
       </trans-unit>
       <trans-unit id="Zif614Q" resname="add_user.label" xml:space="preserve" approved="yes">
@@ -1602,8 +1586,8 @@
         <source>dashboard.edit_mode</source>
         <target state="final">您可以拖放小工具以重新排列。新增小工具時會儲存未套用的更動。</target>
       </trans-unit>
-      <trans-unit id="vC2IsaP" resname="button.xlsx" xml:space="preserve" approved="yes">
-        <source>button.xlsx</source>
+      <trans-unit id="HJgLIry" resname="xlsx" xml:space="preserve" approved="yes">
+        <source>xlsx</source>
         <target state="final">Excel</target>
       </trans-unit>
       <trans-unit id="dru_Thv" resname="please_choose" xml:space="preserve" approved="yes">
@@ -1725,10 +1709,6 @@
       <trans-unit id="q59lI2y" resname="user_identifier" xml:space="preserve" approved="yes">
         <source>user_identifier</source>
         <target state="final">使用者 ID</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve" approved="yes">
-        <source>api_password_deprecated</source>
-        <target state="final">API 密碼已過時：請改用 API token。</target>
       </trans-unit>
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve" approved="yes">
         <source>absence_comment_mandatory</source>
@@ -1890,13 +1870,33 @@
         <source>create-timesheet-multiuser</source>
         <target state="final">用於多位使用者</target>
       </trans-unit>
-      <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve" approved="yes">
-        <source>settings</source>
-        <target state="final">偏好設定</target>
+      <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve" approved="no">
+        <source>Settings</source>
+        <target state="needs-translation">偏好設定</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve" approved="no">
         <source>Filter timesheets</source>
         <target state="needs-translation">篩選工時單</target>
+      </trans-unit>
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve" approved="yes">
+        <source>Timesheet</source>
+        <target state="final">工時單</target>
+      </trans-unit>
+      <trans-unit id="mhOe3Iy" resname="unlock_month.help" xml:space="preserve">
+        <source>unlock_month.help</source>
+        <target state="translated">此設定將解鎖所選日期之後的所有日曆日。</target>
+      </trans-unit>
+      <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="no">
+        <source>Unlock month</source>
+        <target state="translated">解鎖月份</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="yes">
+        <source>todo</source>
+            <target state="final">任務</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="yes">
+        <source>estimation</source>
+            <target state="final">工時估算</target>
       </trans-unit>
     </body>
   </file>

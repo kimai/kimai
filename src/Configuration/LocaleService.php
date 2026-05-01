@@ -17,7 +17,6 @@ final class LocaleService
     public const DEFAULT_SETTINGS = [
         'date' => 'dd.MM.y',
         'time' => 'H:mm',
-        'rtl' => false,
         'translation' => false,
     ];
 
@@ -89,7 +88,7 @@ final class LocaleService
 
     public function isRightToLeft(string $locale): bool
     {
-        return (bool) $this->getConfig('rtl', $locale);
+        return locale_is_right_to_left($locale);
     }
 
     public function isTranslated(string $locale): bool

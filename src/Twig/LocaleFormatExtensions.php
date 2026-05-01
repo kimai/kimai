@@ -44,7 +44,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
             // cannot be deleted right now, needs to be kept for invoice and export templates
             new TwigFilter('date_full', [$this, 'dateTime'], ['deprecation_info' => new DeprecatedCallableInfo('Kimai', '2.0', 'date_time')]),
             new TwigFilter('date_format', [$this, 'dateFormat']),
-            new TwigFilter('date_weekday', [$this, 'dateWeekday']),
+            new TwigFilter('date_weekday', [$this, 'dateWeekday'], ['is_safe' => ['html']]),
             new TwigFilter('time', [$this, 'time']),
             new TwigFilter('duration', [$this, 'duration']),
             new TwigFilter('chart_duration', [$this, 'durationChart']),
@@ -144,9 +144,9 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         return (string) $this->getFormatter()->dateFormat($date, $format);
     }
 
-    public function dateWeekday(\DateTimeInterface $date): string
+    public function dateWeekday(\DateTimeInterface $date, string $spacer = ' '): string
     {
-        return $this->dayName($date, true) . ' ' . $this->getFormatter()->dateFormat($date, 'd');
+        return $this->dayName($date, true) . $spacer . $this->getFormatter()->dateFormat($date, 'd');
     }
 
     public function time(\DateTimeInterface|string|null $date): string

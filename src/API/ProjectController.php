@@ -37,9 +37,9 @@ use Symfony\Component\Validator\Constraints;
 #[OA\Tag(name: 'Project')]
 final class ProjectController extends BaseApiController
 {
-    public const GROUPS_ENTITY = ['Default', 'Entity', 'Project', 'Project_Entity'];
-    public const GROUPS_COLLECTION = ['Default', 'Collection', 'Project'];
-    public const GROUPS_RATE = ['Default', 'Entity', 'Project_Rate'];
+    private const array GROUPS_ENTITY = ['Default', 'Entity', 'Project', 'Project_Entity'];
+    private const array GROUPS_COLLECTION = ['Default', 'Collection', 'Project'];
+    private const array GROUPS_RATE = ['Default', 'Entity', 'Project_Rate'];
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
@@ -85,15 +85,14 @@ final class ProjectController extends BaseApiController
 
         /** @var array<int> $customers */
         $customers = $paramFetcher->get('customers');
-        $customer = $paramFetcher->get('customer');
-        if (\is_string($customer) && $customer !== '') {
-            $customers[] = $customer;
+        $cu = $paramFetcher->get('customer');
+        if (\is_string($cu) && $cu !== '') {
+            $customers[] = $cu;
         }
 
-        foreach (array_unique($customers) as $customerId) {
-            $customer = $customerRepository->find($customerId);
-            if ($customer === null) {
-                throw $this->createNotFoundException('Unknown customer: ' . $customerId);
+        foreach ($customerRepository->findByIds(array_unique($customers)) as $customer) {
+            if (!$this->isGranted('access', $customer)) {
+                throw $this->createAccessDeniedException('Cannot access Customer: ' . $customer->getId());
             }
             $query->addCustomer($customer);
         }

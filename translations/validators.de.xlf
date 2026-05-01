@@ -166,6 +166,10 @@
         <source>Duration cannot be negative.</source>
         <target state="translated">Die Dauer darf nicht negativ sein.</target>
       </trans-unit>
+      <trans-unit id="EDEDQtZ" resname="These characters are not allowed: {{ chars }}">
+        <source>These characters are not allowed: {{ chars }}</source>
+        <target>Die folgenden Zeichen sind nicht erlaubt: {{ chars }}</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

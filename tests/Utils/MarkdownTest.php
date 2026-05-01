@@ -33,7 +33,7 @@ class MarkdownTest extends TestCase
             asdfasdfa</p>
             <pre><code>ssdfsdf</code></pre>
             <p><a href="http://example.com/foo-bar.html" target="_blank">http://example.com/foo-bar.html</a><br />
-            <a href="file:///home/kimai/images/beautiful-flower.png" target="_blank">file:///home/kimai/images/beautiful-flower.png</a></p>
+            file:///home/kimai/images/beautiful-flower.png</p>
             <p>sdfsdf <a href="#test-1">asdfasdf</a> asdfasdf</p>
             <p># test<br />
             aasdfasdf<br />

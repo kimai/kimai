@@ -9,8 +9,14 @@
 
 namespace App\Security;
 
+use App\Entity\Activity;
+use App\Entity\Customer;
+use App\Entity\Project;
+use App\Entity\Team;
+use App\Entity\Timesheet;
 use App\Entity\User;
 use App\User\PermissionService;
+use Doctrine\Common\Collections\Collection;
 
 final class RolePermissionManager
 {
@@ -107,5 +113,89 @@ final class RolePermissionManager
     public function getPermissions(): array
     {
         return array_keys($this->permissionNames);
+    }
+
+    /**
+     * @param array<int, Team>|Collection<int, Team> $teams
+     */
+    private function checkTeamAccess(Collection|array $teams, User $user): bool
+    {
+        if ($user->canSeeAllData()) {
+            return true;
+        }
+
+        if (\count($teams) === 0) {
+            return true;
+        }
+
+        foreach ($teams as $team) {
+            if ($user->isInTeam($team)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param array<int, Team>|Collection<int, Team> $teams
+     */
+    private function checkTeamLeadAccess(Collection|array $teams, User $user): bool
+    {
+        if ($user->canSeeAllData()) {
+            return true;
+        }
+
+        if (\count($teams) === 0) {
+            return true;
+        }
+
+        foreach ($teams as $team) {
+            if ($user->isTeamleadOf($team)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function checkTeamAccessCustomer(Customer $customer, User $user): bool
+    {
+        return $this->checkTeamAccess($customer->getTeams(), $user);
+    }
+
+    public function checkTeamAccessProject(Project $project, User $user): bool
+    {
+        if ($project->getCustomer() !== null && !$this->checkTeamAccessCustomer($project->getCustomer(), $user)) {
+            return false;
+        }
+
+        return $this->checkTeamAccess($project->getTeams(), $user);
+    }
+
+    public function checkTeamAccessActivity(Activity $activity, User $user): bool
+    {
+        if ($activity->getProject() !== null && !$this->checkTeamAccessProject($activity->getProject(), $user)) {
+            return false;
+        }
+
+        return $this->checkTeamAccess($activity->getTeams(), $user);
+    }
+
+    public function checkTeamAccessTimesheet(Timesheet $timesheet, User $user): bool
+    {
+        if ($user->getId() !== null && $user->getId() === $timesheet->getUser()?->getId()) {
+            return true;
+        }
+
+        if ($timesheet->getProject() !== null && !$this->checkTeamAccessProject($timesheet->getProject(), $user)) {
+            return false;
+        }
+
+        if ($timesheet->getActivity() !== null && !$this->checkTeamAccessActivity($timesheet->getActivity(), $user)) {
+            return false;
+        }
+
+        return $this->checkTeamLeadAccess($timesheet->getUser()?->getTeams() ?? [], $user);
     }
 }

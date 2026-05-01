@@ -36,7 +36,7 @@ class ListUserCommandTest extends KernelTestCase
 
         $kernel = self::bootKernel();
         $application = new Application($kernel);
-        $application->add(new ListUserCommand($repository));
+        $application->addCommand(new ListUserCommand($repository));
 
         $command = $application->find('kimai:user:list');
         $commandTester = new CommandTester($command);

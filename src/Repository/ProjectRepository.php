@@ -40,7 +40,7 @@ use Doctrine\ORM\QueryBuilder;
 class ProjectRepository extends EntityRepository
 {
     /**
-     * @param int[] $projectIds
+     * @param array<int, string|int> $projectIds
      * @return array<Project>
      */
     public function findByIds(array $projectIds): array
@@ -344,6 +344,9 @@ class ProjectRepository extends EntityRepository
         return (int) $qb->getQuery()->getSingleScalarResult(); // @phpstan-ignore-line
     }
 
+    /**
+     * @return Pagination<Project>
+     */
     public function getPagerfantaForQuery(ProjectQuery $query): Pagination
     {
         return new Pagination($this->getPaginatorForQuery($query), $query);

@@ -6,10 +6,6 @@
         <source>reset.button</source>
         <target state="translated">登入</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject" xml:space="preserve" approved="yes">
-        <source>registration.subject</source>
-        <target state="final">啟用您的帳號</target>
-      </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve" approved="no">
         <source>reset.subject</source>
         <target state="translated">登入 Kimai</target>
@@ -17,18 +13,6 @@
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve" approved="no">
         <source>Forgot your password?</source>
         <target state="translated">登入您的帳號</target>
-      </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button" xml:space="preserve" approved="yes">
-        <source>registration.button</source>
-        <target state="final">啟用您的帳號</target>
-      </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro" xml:space="preserve" approved="yes">
-        <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
-        <target state="final">您在 Kimai 工時追蹤工具所註冊的電子信箱地址為 %email%。鏈結將於數小時內失效，請於鏈結失效前點選以啟用您的帳號。</target>
-      </trans-unit>
-      <trans-unit id="QtcznHC" resname="registration.title" xml:space="preserve" approved="yes">
-        <source>registration.title</source>
-        <target state="final">歡迎 %username%</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve" approved="no">
         <source>Don't worry, Kimai will help you create a new one!</source>
@@ -53,6 +37,42 @@ Please review them at: %url%</source>
 %list%
 
 請在此審核：%url%</target>
+      </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="translated">待核准: %user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="translated">已為 %user% 提交審核請求。
+
+%list%
+
+請至以下連結審閱：%url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">您的請求已被拒絕</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">您的請求已獲批准</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="translated">您的請求已獲 %created_by% 核准。
+
+%list%
+
+您可於以下連結查閱所有相關紀錄：%url%</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">您的授權請求已被 %created_by% 拒絕。
+
+%list%
+
+請至以下連結檢視您的請求：%url%</target>
       </trans-unit>
     </body>
   </file>

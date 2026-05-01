@@ -38,10 +38,10 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[OA\Tag(name: 'User')]
 final class UserController extends BaseApiController
 {
-    public const GROUPS_ENTITY = ['Default', 'Entity', 'User', 'User_Entity'];
-    public const GROUPS_FORM = ['Default', 'Entity', 'User', 'User_Entity'];
-    public const GROUPS_COLLECTION = ['Default', 'Collection', 'User'];
-    public const GROUPS_COLLECTION_FULL = ['Default', 'Collection', 'User', 'User_Entity'];
+    private const array GROUPS_ENTITY = ['Default', 'Entity', 'User', 'User_Entity'];
+    private const array GROUPS_FORM = ['Default', 'Entity', 'User', 'User_Entity'];
+    private const array GROUPS_COLLECTION = ['Default', 'Collection', 'User'];
+    private const array GROUPS_COLLECTION_FULL = ['Default', 'Collection', 'User', 'User_Entity'];
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
@@ -209,7 +209,7 @@ final class UserController extends BaseApiController
     #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Success if the token could be deleted.')])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The API token ID to remove', required: true)]
     #[Route(methods: ['DELETE'], path: '/api-token/{id}', name: 'delete_api_token', requirements: ['id' => '\d+'])]
-    public function deleteApiToken(AccessToken $accessToken, AccessTokenRepository $accessTokenRepository): Response
+    public function deleteAccessToken(AccessToken $accessToken, AccessTokenRepository $accessTokenRepository): Response
     {
         $user = $this->getUser();
         if (!$this->isGranted('api-token', $user)) {
@@ -232,20 +232,22 @@ final class UserController extends BaseApiController
      * Update user preferences
      */
     #[IsGranted('edit', 'profile')]
-    #[OA\Response(response: 200, description: 'Sets the value of a consifgured preference. You cannot create unknown preferences: if the given name is not configured, an exception will be raised.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
-    #[OA\Parameter(name: 'id', in: 'path', description: 'User ID to set the custom-field value for', required: true)]
+    #[OA\Response(response: 200, description: 'Sets the value of a configured preference. You cannot create unknown or updated disabled preferences.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
+    #[OA\Parameter(name: 'id', description: 'User ID to set the custom-field value for', in: 'path', required: true)]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(type: 'array', items: new OA\Items(new Model(type: UserPreference::class))))]
-    #[Route(methods: ['PATCH'], path: '/{id}/preferences', requirements: ['id' => '\d+'])]
-    public function updateUserPreference(User $profile, Request $request, EventDispatcherInterface $dispatcher): Response
+    #[Route(path: '/{id}/preferences', requirements: ['id' => '\d+'], methods: ['PATCH'])]
+    public function updateUserPreference(User $profile, Request $request, EventDispatcherInterface $dispatcher, UserService $userService): Response
     {
         $event = new PrepareUserEvent($profile, false);
         $dispatcher->dispatch($event);
+        $dirty = false;
 
         foreach ($request->request->all() as $preference) {
             // why is this not handled by FosRestBundle ?
             if (!\is_array($preference)) {
                 throw new BadRequestHttpException('Invalid request, array expected');
             }
+
             if (!\array_key_exists('name', $preference) || !\array_key_exists('value', $preference)) {
                 throw new BadRequestHttpException('Missing required parameter "name" or "value"');
             }
@@ -253,14 +255,23 @@ final class UserController extends BaseApiController
             $name = $preference['name'];
             $value = $preference['value'];
 
+            // TODO allow to update preferences that are used internally but not registered via PrepareUserEvent
+
             if (null === ($meta = $profile->getPreference($name))) {
                 throw $this->createNotFoundException(\sprintf('Unknown custom-field "%s" requested', $name));
             }
 
+            if (!$meta->isEnabled()) {
+                throw $this->createAccessDeniedException('User tried to update preference: ' . $name);
+            }
+
             $meta->setValue($value);
+            $dirty = true;
         }
 
-        $this->repository->saveUser($profile);
+        if ($dirty) {
+            $userService->saveUser($profile);
+        }
 
         $view = new View($profile, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);

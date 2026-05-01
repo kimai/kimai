@@ -8,6 +8,7 @@
         'back': path('admin_customer')
     } %}
     {% embed formEditTemplate with formOptions %}
+        {% import "macros/form_helper.html.twig" as form_helper %}
         {% block form_body %}
             <div class="row">
                 <div class="col-md-9">
@@ -75,11 +76,10 @@
                 </div>
             </div>
             {% endif %}
-            {% if form.metaFields is defined and form.metaFields is not empty %}
-                {{ form_row(form.metaFields) }}
-            {% endif %}
+            {{ form_helper.metafields(form, null) }}
             {% embed '@theme/embeds/collapsible.html.twig' with {id: 'customer_address_settings'} %}
                 {% import "macros/widgets.html.twig" as widgets %}
+                {% import "macros/form_helper.html.twig" as form_helper %}
                 {% block title %}{{ 'address'|trans }}{% endblock %}
                 {% block body %}
                     <div class="row">
@@ -125,11 +125,12 @@
                             {{ form_row(form.timezone) }}
                         </div>
                     </div>
-
+                    {{ form_helper.metafields(form, 'address') }}
                 {% endblock %}
             {% endembed %}
             {% embed '@theme/embeds/collapsible.html.twig' with {id: 'customer_invoice_settings'} %}
                 {% import "macros/widgets.html.twig" as widgets %}
+                {% import "macros/form_helper.html.twig" as form_helper %}
                 {% block title %}{{ 'invoices'|trans }}{% endblock %}
                 {% block body %}
                     {% if form.buyerReference is defined %}
@@ -141,6 +142,7 @@
                     {% if form.invoiceText is defined %}
                         {{ form_row(form.invoiceText) }}
                     {% endif %}
+                    {{ form_helper.metafields(form, 'invoice') }}
                 {% endblock %}
             {% endembed %}
             <div class="row">

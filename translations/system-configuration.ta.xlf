@@ -258,10 +258,6 @@
         <source>user_auth_login</source>
         <target state="translated">உள்நுழைவு படிவம்</target>
       </trans-unit>
-      <trans-unit id="C26_mL7" resname="user_auth_registration" xml:space="preserve">
-        <source>user_auth_registration</source>
-        <target state="translated">பயனர் பதிவு</target>
-      </trans-unit>
       <trans-unit id="5RSshEN" resname="user_auth_password_reset" xml:space="preserve">
         <source>user_auth_password_reset</source>
         <target state="translated">கடவுச்சொல்லை மறந்துவிட்டேன்</target>
@@ -309,6 +305,10 @@
       <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no" xml:space="preserve">
         <source>copy_teams_on_create</source>
         <target state="translated">புதிய உள்ளீடுகளை உருவாக்கும்போது உள்நுழைந்த பயனரிடமிருந்து குழுக்களை எடுத்துக் கொள்ளுங்கள்</target>
+      </trans-unit>
+      <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="no" xml:space="preserve">
+        <source>invoice.rounding_mode</source>
+        <target state="translated">வட்டமிடும் பயன்முறை</target>
       </trans-unit>
     </body>
   </file>

@@ -39,6 +39,7 @@ class Team
      * Team name
      */
     #[ORM\Column(name: 'name', type: Types::STRING, length: 100, nullable: false)]
+    #[Constraints\NoSpecialCharacters]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 100)]
     #[Serializer\Expose]

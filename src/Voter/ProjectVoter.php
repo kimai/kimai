@@ -14,6 +14,7 @@ use App\Entity\Team;
 use App\Entity\User;
 use App\Security\RolePermissionManager;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
@@ -26,7 +27,7 @@ final class ProjectVoter extends Voter
     /**
      * support rules based on the given project
      */
-    private const ALLOWED_ATTRIBUTES = [
+    private const array ALLOWED_ATTRIBUTES = [
         'view',
         'edit',
         'budget',
@@ -35,6 +36,7 @@ final class ProjectVoter extends Voter
         'permissions',
         'comments',
         'details',
+        'access',
     ];
 
     public function __construct(private readonly RolePermissionManager $permissionManager)
@@ -56,12 +58,18 @@ final class ProjectVoter extends Voter
         return $subject instanceof Project && $this->supportsAttribute($attribute);
     }
 
-    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $vote = null): bool
     {
         $user = $token->getUser();
 
         if (!$user instanceof User) {
             return false;
+        }
+
+        // this is a virtual permission, only meant to be used by developer
+        // it checks if access to the given project is potentially possible
+        if ($attribute === 'access') {
+            return $this->permissionManager->checkTeamAccessProject($subject, $user);
         }
 
         if ($this->permissionManager->hasRolePermission($user, $attribute . '_project')) {

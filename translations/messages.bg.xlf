@@ -134,14 +134,6 @@
         <source>user_profile</source>
         <target state="translated">Моят профил</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token" xml:space="preserve">
-        <source>api_token</source>
-        <target state="translated">API парола</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat" xml:space="preserve">
-        <source>api_token_repeat</source>
-        <target state="translated">Повторете паролата за API</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required" xml:space="preserve">
         <source>login_required</source>
         <target state="translated">Липсва разрешение. Пренасочване към вход?</target>
@@ -217,10 +209,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin" xml:space="preserve">
         <source>menu.plugin</source>
         <target state="translated">Приставки</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration" xml:space="preserve">
-        <source>menu.system_configuration</source>
-        <target state="translated">Настройки</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags" xml:space="preserve">
         <source>tags</source>
@@ -1026,24 +1014,24 @@
         <source>preview</source>
         <target state="translated">Преглед</target>
       </trans-unit>
-      <trans-unit id="X70dwP8" resname="button.print" xml:space="preserve">
-        <source>button.print</source>
+      <trans-unit id="zpU6DrC" resname="print" xml:space="preserve">
+        <source>print</source>
         <target state="translated">Печат</target>
       </trans-unit>
-      <trans-unit id="W_TXvSi" resname="button.csv" xml:space="preserve">
-        <source>button.csv</source>
+      <trans-unit id="U7ubCzi" resname="csv" xml:space="preserve">
+        <source>csv</source>
         <target state="translated">CSV</target>
       </trans-unit>
-      <trans-unit id="vC2IsaP" resname="button.xlsx" xml:space="preserve">
-        <source>button.xlsx</source>
+      <trans-unit id="HJgLIry" resname="xlsx" xml:space="preserve">
+        <source>xlsx</source>
         <target state="translated">Excel</target>
       </trans-unit>
-      <trans-unit id="aAa5uRR" resname="button.pdf" xml:space="preserve">
-        <source>button.pdf</source>
+      <trans-unit id="w1sh1so" resname="pdf" xml:space="preserve">
+        <source>pdf</source>
         <target state="translated">Pdf</target>
       </trans-unit>
-      <trans-unit id="ulYFDIo" resname="button.ods" xml:space="preserve">
-        <source>button.ods</source>
+      <trans-unit id="lmUO63g" resname="ods" xml:space="preserve">
+        <source>ods</source>
         <target state="translated">ODS</target>
       </trans-unit>
       <trans-unit id="zPcx3O_" resname="invoice_print" xml:space="preserve">
@@ -1658,10 +1646,6 @@
         <source>api_token_hidden</source>
         <target state="translated">Това е единственият път, когато този ключ някога ще бъде показан! Затова го пазете и се уверете, че сте го копирали преди затварянето на този прозорец.</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">Паролите на API са остарели: моля, използвайте вместо това API маркери.</target>
-      </trans-unit>
       <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
         <source>hours_per_day</source>
         <target state="translated">Часове на ден</target>
@@ -1731,8 +1715,8 @@
         <target state="translated">Профил</target>
       </trans-unit>
       <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
-        <source>settings</source>
-        <target state="translated">Предпочитания</target>
+        <source>Settings</source>
+        <target state="needs-translation">Предпочитания</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
@@ -1858,10 +1842,6 @@
         <source>update_multiple</source>
         <target state="translated">%action% %count% записи</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve">
-        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="translated">Изпратен е имейл на %email%. Той съдържа линк, върху който трябва да кликнете, за да активирате акаунта си.</target>
-      </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="no" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="translated">Изпратен ви е имейл с линк за нулиране на паролата ви. Забележка: Можете да заявите нова парола само веднъж на всеки %tokenLifetime% часа. Ако не получите имейла, моля, проверете папката си за спам или опитайте отново.</target>
@@ -1965,6 +1945,18 @@
       <trans-unit id="DA1.Ln_" resname="time_off.intro" xml:space="preserve">
         <source>time_off.intro</source>
         <target state="translated">Вашата сметка за работно време има баланс от %hours% часа.</target>
+      </trans-unit>
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
+        <source>Timesheet</source>
+        <target state="translated">Работно време</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+            <target state="translated">Задача</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+            <target state="translated">Оценка на времето</target>
       </trans-unit>
     </body>
   </file>

@@ -2,37 +2,37 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ca" datatype="plaintext" original="invoice-renderer.en.xlf">
     <body>
-      <trans-unit id="hOcTt2G" resname="invoice_renderer" xml:space="preserve">
+      <trans-unit id="hOcTt2G" resname="invoice_renderer" xml:space="preserve" approved="yes">
         <source>invoice_renderer</source>
-        <target state="translated">Plantilla de factura</target>
+        <target state="final">Plantilla de factura</target>
       </trans-unit>
-      <trans-unit id="7mEUv6C" resname="help.upload" xml:space="preserve">
+      <trans-unit id="7mEUv6C" resname="help.upload" xml:space="preserve" approved="yes">
         <source>help.upload</source>
-        <target state="translated">Atenció: els fitxers existents se sobreescriuran. Els tipus de fitxer permesos són: %extensions%.</target>
+        <target state="final">Atenció: els fitxers existents se sobreescriuran. Els tipus de fitxer permesos són: %extensions%.</target>
       </trans-unit>
-      <trans-unit id="22pt8Gs" resname="download_invoice_renderer" xml:space="preserve">
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer" xml:space="preserve" approved="yes">
         <source>download_invoice_renderer</source>
-        <target state="translated">Pots descarregar més plantilles aquí</target>
+        <target state="final">Pots descarregar més plantilles aquí</target>
       </trans-unit>
-      <trans-unit id="E5BwZHT" resname="programmatic" xml:space="preserve">
+      <trans-unit id="E5BwZHT" resname="programmatic" xml:space="preserve" approved="yes">
         <source>programmatic</source>
-        <target state="translated">Per a processar</target>
+        <target state="final">Per a processar</target>
       </trans-unit>
-      <trans-unit id="Utbj3k_" resname="invoice" xml:space="preserve">
+      <trans-unit id="Utbj3k_" resname="invoice" xml:space="preserve" approved="yes">
         <source>invoice</source>
-        <target state="translated">Factura</target>
+        <target state="final">Factura</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default" xml:space="preserve" approved="no">
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve" approved="yes">
         <source>Invoice</source>
-        <target state="translated">Factura</target>
+        <target state="final">Factura</target>
       </trans-unit>
-      <trans-unit id="mC2ePrm" resname="text" xml:space="preserve">
+      <trans-unit id="mC2ePrm" resname="text" xml:space="preserve" approved="yes">
         <source>text</source>
-        <target state="translated">Text</target>
+        <target state="final">Text</target>
       </trans-unit>
-      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve" approved="yes">
         <source>timesheet</source>
-        <target state="translated">Registre d'hores</target>
+        <target state="final">Registre d'hores</target>
       </trans-unit>
       <trans-unit id="m1UyfD9" resname="service-date" approved="no" xml:space="preserve">
         <source>Single service date</source>

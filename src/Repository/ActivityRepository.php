@@ -37,7 +37,7 @@ use Doctrine\ORM\QueryBuilder;
 class ActivityRepository extends EntityRepository
 {
     /**
-     * @param int[] $activityIds
+     * @param array<int, string|int> $activityIds
      * @return array<Activity>
      */
     public function findByIds(array $activityIds): array
@@ -354,6 +354,9 @@ class ActivityRepository extends EntityRepository
         return (int) $qb->getQuery()->getSingleScalarResult(); // @phpstan-ignore-line
     }
 
+    /**
+     * @return Pagination<Activity>
+     */
     public function getPagerfantaForQuery(ActivityQuery $query): Pagination
     {
         return new Pagination($this->getPaginatorForQuery($query), $query);

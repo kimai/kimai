@@ -6,22 +6,6 @@
         <source>automated_email_dont_answer</source>
         <target>Ceci est un courriel généré automatiquement. Merci de ne pas répondre ; l’adresse ne sera pas lue.</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject">
-        <source>registration.subject</source>
-        <target>Activer votre compte</target>
-      </trans-unit>
-      <trans-unit id="QtcznHC" resname="registration.title">
-        <source>registration.title</source>
-        <target>Bienvenue %username%</target>
-      </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button">
-        <source>registration.button</source>
-        <target>Activez votre compte</target>
-      </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target>Vous vous êtes inscrit·e sur Kimai avec le courriel %email%. Veuillez activer votre compte dans les prochaines heures, avant que le lien expire.</target>
-      </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
         <target state="translated">Se connecter à Kimai</target>
@@ -32,7 +16,7 @@
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="translated">Connectez-vous</target>
+        <target state="translated">Se connecter</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>

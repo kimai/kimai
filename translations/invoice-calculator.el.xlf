@@ -38,6 +38,14 @@
         <source>price</source>
         <target state="translated">Τιμή: μια καταχώριση ανά τιμή</target>
       </trans-unit>
+      <trans-unit id="oRa0mkz" resname="activity_user" xml:space="preserve">
+        <source>activity_user</source>
+        <target state="translated">Δραστηριότητα και χρήστης</target>
+      </trans-unit>
+      <trans-unit id="0l1P9cz" resname="date_user" xml:space="preserve">
+        <source>date_user</source>
+        <target state="translated">Ημερομηνία και χρήστης</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

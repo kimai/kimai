@@ -38,15 +38,9 @@ final class TeamController extends AbstractController
     {
     }
 
-    /**
-     * @param TeamRepository $repository
-     * @param Request $request
-     * @param int $page
-     * @return Response
-     */
     #[Route(path: '/', defaults: ['page' => 1], name: 'admin_team', methods: ['GET'])]
     #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'admin_team_paginated', methods: ['GET'])]
-    public function listTeams(TeamRepository $repository, Request $request, $page): Response
+    public function listTeams(int $page, TeamRepository $repository, Request $request): Response
     {
         $query = new TeamQuery();
         $query->setPage($page);
@@ -59,8 +53,7 @@ final class TeamController extends AbstractController
 
         $entries = $repository->getPagerfantaForQuery($query);
 
-        $table = new DataTable('admin_teams', $query);
-        $table->setPagination($entries);
+        $table = new DataTable('admin_teams', $query, $entries);
         $table->setSearchForm($form);
         $table->setPaginationRoute('admin_team_paginated');
         $table->setReloadEvents('kimai.teamUpdate');
@@ -81,10 +74,6 @@ final class TeamController extends AbstractController
         ]);
     }
 
-    /**
-     * @param Request $request
-     * @return Response
-     */
     #[Route(path: '/create', name: 'admin_team_create', methods: ['GET', 'POST'])]
     #[IsGranted('create_team')]
     public function createTeam(Request $request): Response
@@ -101,13 +90,13 @@ final class TeamController extends AbstractController
     {
         $newTeam = clone $team;
 
-        if ($team->getName() === null) {
+        if (($name = $team->getName()) === null) {
             throw new BadRequestHttpException('Team with empty name cannot be duplicated');
         }
 
         $i = 1;
         do {
-            $newName = \sprintf('%s (%s)', $team->getName(), $i++);
+            $newName = \sprintf('%s (%s)', $name, $i++);
         } while ($this->repository->count(['name' => $newName]) > 0 && $i < 10);
         $newTeam->setName($newName);
 

@@ -25,9 +25,17 @@ final class WeekDaysType extends AbstractType
     {
         $builder->addModelTransformer(new CallbackTransformer(
             function ($weekdays): array {
+                if ($weekdays === null) {
+                    return [];
+                }
+
                 return explode(',', $weekdays);
             },
             function ($weekdays): string {
+                if ($weekdays === null) {
+                    return '';
+                }
+
                 return implode(',', $weekdays);
             }
         ));

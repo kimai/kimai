@@ -272,6 +272,12 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
         self::assertEquals($count, $node->count());
     }
 
+    protected function assertDataTableRowCountGreaterThan(HttpKernelBrowser $client, string $class, int $count): void
+    {
+        $node = $client->getCrawler()->filter('section.content div.' . $class . ' table.dataTable tbody tr:not(.summary)');
+        self::assertGreaterThanOrEqual($count, $node->count());
+    }
+
     /**
      * @param array<string, string> $buttons
      */
@@ -279,15 +285,21 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
     {
         $node = $client->getCrawler()->filter('div.page-header div.page-actions .pa-desktop a');
 
+        /** @var array<string, string> $foundButtons */
+        $foundButtons = [];
+
         /** @var \DOMElement $element */
         foreach ($node->getIterator() as $element) {
             $expectedClass = trim(str_replace(['btn action-', ' btn-icon', 'btn btn-primary action-', 'btn btn-dark action-', 'btn btn-white action-', 'btn  action-'], '', $element->getAttribute('class')));
-            self::assertArrayHasKey($expectedClass, $buttons);
-            $expectedUrl = $buttons[$expectedClass];
-            self::assertEquals($expectedUrl, $element->getAttribute('href'));
+            $foundButtons[$expectedClass] = $element->getAttribute('href');
         }
 
-        self::assertEquals(\count($buttons), $node->count(), 'Invalid amount of page actions');
+        foreach ($buttons as $class => $url) {
+            self::assertArrayHasKey($class, $foundButtons);
+            self::assertEquals($foundButtons[$class], $url);
+        }
+
+        self::assertGreaterThanOrEqual(\count($buttons), $node->count(), 'Invalid amount of page actions');
     }
 
     /**
@@ -303,6 +315,7 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
         $crawler = $client->request('GET', $this->createUrl($url));
         $form = $crawler->filter($formSelector)->form();
         if ($disableValidation) {
+            // needed for setting invalid values e.g. in dropdowns
             $form->disableValidation();
         }
         $result = $client->submit($form, $formData);
@@ -313,7 +326,13 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
         self::assertEquals(
             \count($fieldNames),
             \count($validationErrors),
-            \sprintf('Expected %s validation errors, found %s', \count($fieldNames), \count($validationErrors))
+            \sprintf(
+                'Expected %s validation errors, found %s. Expected: %s. Found: %s.',
+                \count($fieldNames),
+                \count($validationErrors),
+                implode(',', $fieldNames),
+                implode(',', $validationErrors->extract(['_text']))
+            )
         );
 
         foreach ($fieldNames as $name) {

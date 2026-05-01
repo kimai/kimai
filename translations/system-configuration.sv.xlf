@@ -90,10 +90,6 @@
         <source>user_auth_password_reset</source>
         <target>Glömt lösenord</target>
       </trans-unit>
-      <trans-unit id="C26_mL7" resname="user_auth_registration">
-        <source>user_auth_registration</source>
-        <target>Användarregistrering</target>
-      </trans-unit>
       <trans-unit id="EFY6GmX" resname="theme.color_choices">
         <source>theme.color_choices</source>
         <target>Tillåt färger</target>
