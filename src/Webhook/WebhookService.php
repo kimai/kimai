@@ -44,6 +44,9 @@ final class WebhookService
         }
     }
 
+    /**
+     * @return WebhookEvent[]
+     */
     public function findEventsByName(string $name): array
     {
         $url = 'TODO';

@@ -13,5 +13,9 @@ use Symfony\Component\Serializer\SerializerInterface as BaseSerializerInterface;
 
 interface SerializerInterface extends BaseSerializerInterface
 {
+    /**
+     * @param array<string, mixed> $context
+     * @return array<string, mixed>
+     */
     public function toArray(mixed $data, array $context = []): array;
 }

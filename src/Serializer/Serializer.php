@@ -21,10 +21,13 @@ class Serializer implements SerializerInterface
     {
     }
 
+    /**
+     * @param array<string, mixed> $context
+     */
     private function prepareContext(Context $jmsContext, array $context = []): void
     {
         $groups = ['Default'];
-        if (\array_key_exists('groups', $context)) {
+        if (\array_key_exists('groups', $context) && \is_array($context['groups'])) {
             $groups = $context['groups'];
         }
 
@@ -32,6 +35,10 @@ class Serializer implements SerializerInterface
         $jmsContext->enableMaxDepthChecks();
     }
 
+    /**
+     * @param array<string, mixed> $context
+     * @return array<string, mixed>
+     */
     public function toArray(mixed $data, array $context = []): array
     {
         $jmsContext = SerializationContext::create();
@@ -43,7 +50,7 @@ class Serializer implements SerializerInterface
 
         $json = $this->serializer->serialize($data, 'json', $jmsContext);
 
-        return json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+        return json_decode($json, true, 512, JSON_THROW_ON_ERROR); // @phpstan-ignore return.type
     }
 
     public function serialize(mixed $data, string $format, array $context = []): string
@@ -54,8 +61,15 @@ class Serializer implements SerializerInterface
         return $this->serializer->serialize($data, $format, $jmsContext);
     }
 
+    /**
+     * @param array<string, mixed> $context
+     */
     public function deserialize(mixed $data, string $type, string $format, array $context = []): mixed
     {
+        if (!\is_string($data)) {
+            throw new \InvalidArgumentException('Cannot deserialize data. Expected string, got "' . \gettype($data) . '"');
+        }
+
         $jmsContext = DeserializationContext::create();
         $this->prepareContext($jmsContext, $context);
 
