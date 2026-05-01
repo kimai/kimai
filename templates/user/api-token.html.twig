@@ -10,13 +10,13 @@
                     {{ 'api_password.intro'|trans }}
                 </p>
                 <p>
-                    <strong>URL</strong>: {{ url('api.swagger_ui', {}, false)|replace({'/doc': ''}) }}
+                    <strong>URL</strong>: {{ url('api.documentation', {}, false)|replace({'/doc': ''}) }}
                 </p>
             </div>
 
             <div class="col-12 col-md-6 text-md-end">
                 <a class="btn action-create modal-ajax-form" href="{{ path('user_profile_access_token', {'username': user.userIdentifier}) }}">{{ icon('create', true) }} {{ 'create'|trans }}</a>
-                <a class="btn" target="_blank" href="{{ path('api.swagger_ui') }}">{{ icon('documentation', true) }} Swagger Docs</a>
+                <a class="btn" target="_blank" href="{{ path('api.documentation') }}">{{ icon('documentation', true) }} Swagger Docs</a>
                 <a class="btn" target="_blank" href="{{ 'rest-api.html'|docu_link }}">{{ icon('help', true) }} {{ 'help'|trans }}</a>
             </div>
         </div>

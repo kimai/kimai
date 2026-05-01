@@ -15,11 +15,17 @@ controllers:
     defaults:
         _locale: '%locale%'
 
-api.swagger_ui:
+api.documentation:
     path: /api/doc
     methods: GET
     defaults:
         _controller: nelmio_api_doc.controller.stoplight
+
+api.scalar:
+    path: /api/doc-scalar
+    methods: GET
+    defaults:
+        _controller: nelmio_api_doc.controller.scalar
 
 api:
     resource: ../src/API/
