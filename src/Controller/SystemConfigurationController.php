@@ -259,10 +259,6 @@ final class SystemConfigurationController extends AbstractController
                     ->setLabel('user_auth_login')
                     ->setTranslationDomain('system-configuration')
                     ->setType(YesNoType::class),
-                (new Configuration('user.registration'))
-                    ->setLabel('user_auth_registration')
-                    ->setTranslationDomain('system-configuration')
-                    ->setType(YesNoType::class),
                 (new Configuration('user.password_reset'))
                     ->setTranslationDomain('system-configuration')
                     ->setLabel('user_auth_password_reset')
@@ -278,11 +274,6 @@ final class SystemConfigurationController extends AbstractController
                     ->setConstraints([new NotNull(), new GreaterThanOrEqual(value: 60)])
                     ->setType(IntegerType::class),
             ]);
-
-        $allowRegistration = $this->systemConfiguration->find('features.user_registration');
-        if ($allowRegistration === false) {
-            $authentication->getConfigurationByName('user.registration')?->setEnabled(false);
-        }
 
         if (!$this->systemConfiguration->isSamlActive()) {
             $authentication->getConfigurationByName('user.login')?->setEnabled(false);

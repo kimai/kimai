@@ -6,22 +6,6 @@
         <source>automated_email_dont_answer</source>
         <target>Dette er en auto-generert e-post. Ikke svar, siden ingen av disse leses.</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject">
-        <source>registration.subject</source>
-        <target>Aktiver kontoen din</target>
-      </trans-unit>
-      <trans-unit id="QtcznHC" resname="registration.title">
-        <source>registration.title</source>
-        <target>Velkommen %username%</target>
-      </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button">
-        <source>registration.button</source>
-        <target>Aktiver kontoen din</target>
-      </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target>Du har registrert deg på Kimai-tidssporer med e-posten %email%. Aktiver kontoen din i løpet av de neste timene før lenken utløper.</target>
-      </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
         <target state="needs-translation">Tilbakestill passordet</target>

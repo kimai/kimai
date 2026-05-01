@@ -1026,10 +1026,6 @@
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="translated">Un email a fost trimis cu un link pentru resetarea parolei tale. Notă: Poți solicita o nouă parolă doar o dată la fiecare %tokenLifetime% ore. Dacă nu primești email-ul, te rugăm să verifici folderul de spam sau să încerci din nou.</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target>A fost trimis un e-mail la %email%. Acesta conține un link de activare pe care trebuie să faceți clic pentru a vă activa contul.</target>
-      </trans-unit>
       <trans-unit id="DUDrvjk" resname="remove_default">
         <source>remove_default</source>
         <target>Ștergeți favoritele de căutare</target>
@@ -2006,7 +2002,7 @@
         <source>Timesheet</source>
         <target>Fișă de pontaj</target>
       </trans-unit>
-        <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
         <source>estimation</source>
             <target state="translated">Estimarea timpului</target>
       </trans-unit>

@@ -6,22 +6,6 @@
         <source>automated_email_dont_answer</source>
         <target>Este é um e-mail gerado automaticamente. Não responda, o endereço não será lido.</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject">
-        <source>registration.subject</source>
-        <target>Ative a sua conta</target>
-      </trans-unit>
-      <trans-unit id="QtcznHC" resname="registration.title">
-        <source>registration.title</source>
-        <target>Bem-vindo %username%</target>
-      </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button">
-        <source>registration.button</source>
-        <target>Ative a sua conta</target>
-      </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target>Você se inscreveu no rastreador de tempo Kimai com o e-mail %email%. ative a sua conta nas próximas horas, antes que o link expire.</target>
-      </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
         <target state="translated">Faça login no Kimai</target>

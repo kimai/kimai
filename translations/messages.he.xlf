@@ -982,10 +982,6 @@
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="final">נשלחה הודעה בדוא״ל עם קישור שלחיצה עליו תאפס את הסיסמה שלך. לתשומת ליבך: ניתן לבקש סיסמה חדשה אחת כל %tokenLifetime% שעות. אם לא קיבלת הודעה בדוא״ל מוטב לבדוק בתיקיית הספאם שלך או לנסות שוב.</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>E-mail containing a clickable activation link to activate your account sent to %email%.</source>
-        <target state="translated">הודעה שמכילה קישור לחיץ להפעלת החשבון שלך נשלחה בדוא״ל אל %email%.</target>
-      </trans-unit>
       <trans-unit id="vpqPF8v" resname="last_record_before">
         <source>last_record_before</source>
         <target>אין הזמנת שעה מאז</target>
@@ -2066,11 +2062,11 @@
         <source>count_as_expected_time_help</source>
         <target state="final">כשהאפשרות פעילה, %type% תחושבנה כשעות עבודה כחלק משעות צפי העבודה היומיות. כשהאפשרות כבויה, שעות הצפי לימים האלה תוגדרנה ל־0. שתי ההגדרות מחזיקות מאזן נייטרלי אבל משפיעות על הסכומים החודשיים בצורות שונות.</target>
       </trans-unit>
-        <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
         <source>todo</source>
             <target state="translated">משימה</target>
       </trans-unit>
-        <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
         <source>estimation</source>
             <target state="translated">הערכת זמן</target>
       </trans-unit>

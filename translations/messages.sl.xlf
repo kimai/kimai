@@ -10,10 +10,6 @@
         <source>Contact</source>
         <target state="needs-translation">Contact</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="translated">E-poštno sporočilo je bilo poslano na %email%. Vsebuje povezavo, ki jo morate klikniti, da aktivirate svoj račun.</target>
-      </trans-unit>
       <trans-unit id="l4ZOh4." resname="desc">
         <source>desc</source>
         <target state="translated">Sestopanje</target>

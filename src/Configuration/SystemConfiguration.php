@@ -134,15 +134,6 @@ final class SystemConfiguration
         return (bool) $this->find('user.login');
     }
 
-    public function isSelfRegistrationActive(): bool
-    {
-        if (!$this->isLoginFormActive()) {
-            return false;
-        }
-
-        return (bool) $this->find('user.registration');
-    }
-
     public function getPasswordResetTokenLifetime(): int
     {
         return (int) $this->find('user.password_reset_token_ttl');

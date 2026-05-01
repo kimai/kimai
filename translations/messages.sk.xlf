@@ -882,10 +882,6 @@
         <source>upload</source>
         <target>Nahrať</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target>E -mail bol odoslaný na adresu %email%. Obsahuje aktivačný odkaz, na ktorý musíte kliknúť, aby ste si aktivovali účet.</target>
-      </trans-unit>
       <trans-unit id="XP5zkiN" resname="modal.dirty">
         <source>modal.dirty</source>
         <target>Formulár bol zmenený. Prosím kliknite "Uložiť" pre uloženie zmien alebo "Zatvoriť" pre zrušenie.</target>
@@ -1642,11 +1638,11 @@
         <source>Timesheet</source>
         <target state="translated">Pracovný výkaz</target>
       </trans-unit>
-        <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
         <source>todo</source>
             <target state="needs-translation">Popis úlohy</target>
       </trans-unit>
-        <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
         <source>estimation</source>
             <target state="translated">Časový odhad</target>
       </trans-unit>

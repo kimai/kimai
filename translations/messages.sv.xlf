@@ -1010,10 +1010,6 @@
         <source>stats.amountFinancialYear</source>
         <target>Intäkter detta räkenskapsåret</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target>Ett mejl har skickats till %email%. Det innehåller en aktiveringslänk som du måste klicka för att aktivera kontot.</target>
-      </trans-unit>
       <trans-unit id="1c0EQaz" resname="profile.registration_date">
         <source>profile.registration_date</source>
         <target>Registrerad</target>
@@ -2066,11 +2062,11 @@
         <source>count_as_expected_time_help</source>
         <target state="translated">När det är aktiverat räknas %type% som arbetade timmar mot de förväntade dagliga timmarna. När det är inaktiverat sätts de förväntade timmarna för dessa dagar till 0. Båda inställningarna ger ett neutralt saldo men påverkar månadssummorna på olika sätt.</target>
       </trans-unit>
-        <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
         <source>todo</source>
             <target state="translated">Uppgift</target>
       </trans-unit>
-        <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
         <source>estimation</source>
             <target state="translated">Tidsuppskattning</target>
       </trans-unit>

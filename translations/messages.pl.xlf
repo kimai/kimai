@@ -970,10 +970,6 @@
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="translated">Wysłano wiadomość email z linkiem umożliwiającym zresetowanie hasła. Uwaga: o nowe hasło możesz poprosić tylko raz na %tokenLifetime% godzin. Jeśli nie otrzymasz wiadomości email, sprawdź folder ze spamem lub spróbuj ponownie.</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target state="translated">Email został wysłany do %email%. Zawiera link aktywacyjny który musisz kliknąć, aby aktywować swoje konto.</target>
-      </trans-unit>
       <trans-unit id="O5w1jzb" resname="file">
         <source>file</source>
         <target state="translated">Pliki</target>
@@ -2066,11 +2062,11 @@
         <source>count_as_expected_time_help</source>
         <target state="translated">Gdy włączone, %type% liczy się do przepracowanych godzin. Gdy wyłączone, oczekiwane godziny ustawiane są na 0. Obie opcje neutralne, różnią się wpływem na sumę miesięczną.</target>
       </trans-unit>
-        <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
         <source>todo</source>
             <target state="translated">Zadanie</target>
       </trans-unit>
-        <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
         <source>estimation</source>
             <target state="translated">Szacowany czas</target>
       </trans-unit>

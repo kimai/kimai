@@ -1006,10 +1006,6 @@
         <source>stats.workingTimeFinancialYear</source>
         <target>Geschäftsjahr</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target>Eine E-Mail wurde an %email% gesendet. Diese enthält einen Link, den Sie anklicken müssen, um Ihr Benutzerkonto zu bestätigen.</target>
-      </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="translated">Eine E-Mail mit einem Link zum Zurücksetzen des Passworts wurde an Sie gesendet. Hinweis: Ein neues Passwort kann nur alle %tokenLifetime% Stunden angefordert werden. Wenn Sie die E-Mail nicht erhalten haben, überprüfen Sie bitte Ihren Spam-Ordner oder versuchen Sie es erneut.</target>
@@ -1954,11 +1950,11 @@
         <source>Timesheet</source>
         <target state="translated">Stundenzettel</target>
       </trans-unit>
-        <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
         <source>todo</source>
             <target state="translated">Aufgabe</target>
       </trans-unit>
-        <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
         <source>estimation</source>
             <target state="translated">Schätzung</target>
       </trans-unit>

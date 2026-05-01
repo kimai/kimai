@@ -1010,10 +1010,6 @@
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="translated">Un courriel a été envoyé. Suivez le lien s'y trouvant pour réinitialiser votre mot de passe. Remarque : Vous ne pouvez demander un nouveau mot de passe qu'une fois toutes les %tokenLifetime% heures. Si vous ne recevez pas de courriel, vérifiez vos spams ou réessayez.</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target>Un courriel a été envoyé à %email%. Il contient un lien d'activation sur lequel vous devez cliquer pour activer votre compte.</target>
-      </trans-unit>
       <trans-unit id="Nx9_QiO" resname="revenue">
         <source>revenue</source>
         <target>Revenus</target>
@@ -2066,14 +2062,14 @@
         <source>count_as_expected_time_help</source>
         <target state="translated">Lorsque activé, %type% comptera comme heures travaillées les heures quotidiennes attendues. En cas de désactivation, les heures prévues pour ces jours seront fixées à 0. Les deux paramètres maintiennent un équilibre neutre mais affectent les totaux mensuels différemment.</target>
       </trans-unit>
-        <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
         <source>todo</source>
             <target state="translated">Tâche</target>
       </trans-unit>
-        <trans-unit id="tt.jOEH" resname="estimation">
-            <source>estimation</source>
-            <target>Estimation du temps</target>
-        </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation">
+        <source>estimation</source>
+        <target>Estimation du temps</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

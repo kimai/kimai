@@ -35,3 +35,4 @@ Do not use method chaining: fluent interfaces, especially in Entities, are no lo
   - Most often used: 
     - Replace `app.request.locale` with `app.locale`
     - Replace `app.request.attributes.get('_route')` with `app.current_route`
+- Removed deprecated `self-registration` to harden security

@@ -226,10 +226,6 @@
         <source>user_auth_password_reset</source>
         <target>Esqueci a senha</target>
       </trans-unit>
-      <trans-unit id="C26_mL7" resname="user_auth_registration">
-        <source>user_auth_registration</source>
-        <target>Registro de usuário</target>
-      </trans-unit>
       <trans-unit id="BGHQ8YO" resname="user_auth_login">
         <source>user_auth_login</source>
         <target>Formulário de login</target>

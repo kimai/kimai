@@ -990,10 +990,6 @@
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="translated">Parolanızı sıfırlamak için bir bağlantı içeren bir e-posta gönderildi. Not: %tokenLifetime% saat içinde yalnızca bir kez yeni bir parola talep edebilirsiniz. E-posta almazsanız, lütfen spam klasörünüze bakın veya tekrar deneyin.</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>E-mail containing a clickable activation link to activate your account sent to %email%.</source>
-        <target state="translated">Hesabınızı etkinleştirmek için tıklanabilir bir etkinleştirme bağlantısı içeren e-posta %email% adresine gönderildi.</target>
-      </trans-unit>
       <trans-unit id="Nx9_QiO" resname="revenue">
         <source>revenue</source>
         <target>Kazançlar</target>
@@ -2066,11 +2062,11 @@
         <source>count_as_expected_time_help</source>
         <target state="translated">Etkinleştirildiğinde, %type% beklenen günlük saatlere çalışılmış saat olarak sayılır. Devre dışı bırakıldığında ise bu günler için beklenen saatler 0 olarak ayarlanır. Her iki ayar da süreyi nötr tutar, ancak aylık toplamları farklı şekilde etkiler.</target>
       </trans-unit>
-        <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
         <source>todo</source>
             <target state="translated">Görev</target>
       </trans-unit>
-        <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
         <source>estimation</source>
             <target state="translated">Zaman tahmini</target>
       </trans-unit>

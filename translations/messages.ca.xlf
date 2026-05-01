@@ -170,10 +170,6 @@
         <source>login_required</source>
         <target state="translated">Permís absent. Redirigir a l'inici de sessió?</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve" approved="yes">
-        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="final">S'ha enviat un correu electrònic a %email%. Conté un enllaç que heu de fer clic per activar el vostre compte.</target>
-      </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="yes" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="final">S'ha enviat un correu electrònic amb un enllaç per restablir la vostra contrasenya. Nota: Només podeu sol·licitar una nova contrasenya una vegada cada %tokenLifetime% hores. Si no rebeu el correu electrònic, comproveu la vostra carpeta de correu brossa o torneu-ho a intentar.</target>
@@ -2066,11 +2062,11 @@
         <source>count_as_expected_time_help</source>
         <target state="translated">Quan estigui habilitat, %type% comptarà com a hores treballades cap a les hores diàries previstes. Quan estigui desactivat, les hores previstes per a aquests dies s’establiran en 0. Ambdues configuracions mantenen un equilibri neutre, però afecten els totals mensuals de manera diferent.</target>
       </trans-unit>
-        <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
         <source>todo</source>
             <target state="translated">Tasca</target>
       </trans-unit>
-        <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
         <source>estimation</source>
             <target state="translated">Estimació de temps</target>
       </trans-unit>
