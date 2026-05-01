@@ -48,7 +48,7 @@ final class TimesheetLockdownValidator extends ConstraintValidator
             return;
         }
 
-        $now = new \DateTimeImmutable('now', $timesheetStart->getTimezone());
+        $now = new \DateTimeImmutable($constraint->now, $timesheetStart->getTimezone());
 
         $allowEditInGracePeriod = false;
         if ($this->security->getUser() !== null && $this->security->isGranted('lockdown_grace_timesheet')) {
