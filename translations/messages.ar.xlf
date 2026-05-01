@@ -978,10 +978,6 @@
         <source>Display of entries in selection lists</source>
         <target state="translated">عرض الإدخالات في قوائم الاختيار</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target state="translated">تم إرسال بريد إلكتروني إلى %email% يحتوي على رابط تنشيط يجب النقر فوقه لتنشيط حسابك.</target>
-      </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
         <target state="translated">الدليل "%dir%" محمي ضد الكتابة.</target>
@@ -2046,11 +2042,11 @@
         <source>user_access_all</source>
         <target state="translated">السماح بالوصول لجميع المستخدمين</target>
       </trans-unit>
-        <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
         <source>todo</source>
             <target state="needs-translation">وصف المهمة</target>
       </trans-unit>
-        <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
         <source>estimation</source>
             <target state="translated">الوقت التقديري</target>
       </trans-unit>

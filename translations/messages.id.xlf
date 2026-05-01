@@ -86,10 +86,6 @@
         <source>stats.workingTimeMonth</source>
         <target state="translated">%month% %year%</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve">
-        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="translated">Sebuah surel telah dikirimkan ke %email%. Surel ini berisi tautan yang harus Anda klik untuk mengaktifkan akun Anda.</target>
-      </trans-unit>
       <trans-unit id="yQRveje" resname="description">
         <source>description</source>
         <target state="translated">Deskripsi</target>

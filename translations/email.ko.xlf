@@ -6,22 +6,6 @@
         <source>automated_email_dont_answer</source>
         <target>이것은 자동 생성된 이메일입니다. 주소는 읽히지 않으니, 회신하지 마십시오.</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject">
-        <source>registration.subject</source>
-        <target>사용자 계정 활성화</target>
-      </trans-unit>
-      <trans-unit id="QtcznHC" resname="registration.title">
-        <source>registration.title</source>
-        <target>%username%님 환영합니다</target>
-      </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button">
-        <source>registration.button</source>
-        <target>사용자 계정 활성화</target>
-      </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target>이메일 %email%로 Kimai 시간 트래커에 등록했습니다. 이제 링크가 만료되기 전에 사용자 계정을 활성화해야합니다.</target>
-      </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
         <target state="needs-translation">사용자 비밀번호 재설정</target>

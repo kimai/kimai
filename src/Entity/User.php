@@ -50,7 +50,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Exporter\Expose(name: 'last_login', label: 'lastLogin', type: 'datetime', exp: 'object.getLastLogin()')]
 #[Exporter\Expose(name: 'roles', label: 'roles', type: 'array', exp: 'object.getRoles()')]
 #[Exporter\Expose(name: 'active', label: 'active', type: 'boolean', exp: 'object.isEnabled()')]
-#[Constraints\User(groups: ['UserCreate', 'Registration', 'Default', 'Profile'])]
+#[Constraints\User(groups: ['UserCreate', 'Default', 'Profile'])]
 #[Loggable(ignoredProperties: ['lastLogin'], title: 'user')]
 class User implements UserInterface, EquatableInterface, ThemeUserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
 {
@@ -152,17 +152,17 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      */
     private ?bool $isAllowedToSeeAllData = null;
     #[ORM\Column(name: 'username', type: Types::STRING, length: 180, nullable: false)]
-    #[Assert\NotBlank(groups: ['Registration', 'UserCreate', 'Profile'])]
-    #[Assert\Regex(pattern: '/\//', match: false, groups: ['Registration', 'UserCreate', 'Profile'])]
-    #[Assert\Length(min: 2, max: 64, groups: ['Registration', 'UserCreate', 'Profile'])]
+    #[Assert\NotBlank(groups: ['UserCreate', 'Profile'])]
+    #[Assert\Regex(pattern: '/\//', match: false, groups: ['UserCreate', 'Profile'])]
+    #[Assert\Length(min: 2, max: 64, groups: ['UserCreate', 'Profile'])]
     #[Constraints\NoSpecialCharacters]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?string $username = null;
     #[ORM\Column(name: 'email', type: Types::STRING, length: 180, nullable: false)]
-    #[Assert\NotBlank(groups: ['Registration', 'UserCreate', 'Profile'])]
+    #[Assert\NotBlank(groups: ['UserCreate', 'Profile'])]
     #[Assert\Length(min: 2, max: 180)]
-    #[Assert\Email(mode: 'html5', groups: ['Registration', 'UserCreate', 'Profile'])]
+    #[Assert\Email(mode: 'html5', groups: ['UserCreate', 'Profile'])]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?string $email = null;
@@ -186,19 +186,12 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     /**
      * Plain password. Used for model validation, not persisted.
      */
-    #[Assert\NotBlank(groups: ['Registration', 'PasswordUpdate', 'UserCreate'])]
-    #[Assert\Length(min: 8, max: 60, groups: ['Registration', 'PasswordUpdate', 'UserCreate', 'ResetPassword', 'ChangePassword'])]
+    #[Assert\NotBlank(groups: ['PasswordUpdate', 'UserCreate'])]
+    #[Assert\Length(min: 8, max: 60, groups: ['PasswordUpdate', 'UserCreate', 'ResetPassword', 'ChangePassword'])]
     #[SensitiveProperty]
     private ?string $plainPassword = null;
     #[ORM\Column(name: 'last_login', type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTime $lastLogin = null;
-    /**
-     * Random string sent to the user email address in order to verify it.
-     */
-    #[ORM\Column(name: 'confirmation_token', type: Types::STRING, length: 180, unique: true, nullable: true)]
-    #[Assert\Length(max: 180)]
-    #[SensitiveProperty]
-    private ?string $confirmationToken = null;
     #[ORM\Column(name: 'password_requested_at', type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $passwordRequestedAt = null;
     /**
@@ -842,11 +835,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->lastLogin;
     }
 
-    public function getConfirmationToken(): ?string
-    {
-        return $this->confirmationToken;
-    }
-
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -940,11 +928,6 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         $this->lastLogin = $time;
 
         return $this;
-    }
-
-    public function setConfirmationToken(#[\SensitiveParameter] ?string $confirmationToken): void
-    {
-        $this->confirmationToken = $confirmationToken;
     }
 
     public function markPasswordRequested(): void

@@ -134,10 +134,6 @@
         <source>login_required</source>
         <target state="translated">Nav piekļuves tiesību. Vai vēlaties pāriet uz pieteikšanās lapu?</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve">
-        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="translated">Uz %email% ir nosūtīts e-pasts. Tajā ir saite, uz kuru jāuzklikšķina, lai aktivizētu savu kontu.</target>
-      </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="no" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="translated">E-pasts ar saiti paroles atiestatīšanai ir nosūtīts. Ņemiet vērā: jaunu paroli var pieprasīt tikai reizi %tokenLifetime% stundās. Ja e-pastu nesaņemat, pārbaudiet surogātpasta (Spam) mapi vai mēģiniet vēlreiz.</target>

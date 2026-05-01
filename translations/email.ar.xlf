@@ -6,22 +6,6 @@
         <source>automated_email_dont_answer</source>
         <target>هذا بريد آلي. رجاء لاترد، بريدك لن يقرء.</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject">
-        <source>registration.subject</source>
-        <target>فعل حسابك</target>
-      </trans-unit>
-      <trans-unit id="QtcznHC" resname="registration.title">
-        <source>registration.title</source>
-        <target>مرحبا %username%</target>
-      </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button">
-        <source>registration.button</source>
-        <target>فعل حسابك</target>
-      </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target state="translated">لقد قمت بالتسجيل في متتبع الوقت Kimai بالبريد الإلكتروني%email%. يرجى تفعيل حسابك في الساعات القليلة القادمة ، قبل انتهاء صلاحية الرابط.</target>
-      </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
         <target state="translated">تسجيل الدخول إلى Kimai</target>

@@ -978,10 +978,6 @@
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="translated">已发送一封内含重置密码链接的电子邮件。注意：您只能每隔 %tokenLifetime% 小时申请一次新密码。如果您没有收到电子邮件，请检查您的垃圾邮件文件夹或重试。</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target state="translated">一封电子邮件已发送至 %email%。它包含一个激活链接，您必须单击该链接才能激活您的账户。</target>
-      </trans-unit>
       <trans-unit id="O5w1jzb" resname="file">
         <source>file</source>
         <target>文件</target>
@@ -1954,11 +1950,11 @@
         <source>Timesheet</source>
         <target state="translated">时间表</target>
       </trans-unit>
-        <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
         <source>todo</source>
             <target state="translated">任务</target>
       </trans-unit>
-        <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
         <source>estimation</source>
             <target state="translated">时间估计</target>
       </trans-unit>

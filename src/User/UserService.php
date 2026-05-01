@@ -89,7 +89,7 @@ class UserService
             throw new InvalidArgumentException('Cannot create user, already persisted');
         }
 
-        $this->validateUser($user, ['Registration', 'UserCreate']);
+        $this->validateUser($user, ['UserCreate']);
 
         $this->hashPassword($user);
         $user->setPlainPassword(null);
@@ -158,16 +158,6 @@ class UserService
     public function findUserByDisplayName(string $name): ?User
     {
         return $this->repository->findOneBy(['alias' => $name]);
-    }
-
-    public function findUserByConfirmationToken(string $token): ?User
-    {
-        return $this->repository->findOneBy(['confirmationToken' => $token]);
-    }
-
-    public function generateSecurityToken(): string
-    {
-        return rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
     }
 
     private function hashPassword(User $user): void

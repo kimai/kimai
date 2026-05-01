@@ -870,10 +870,6 @@
         <source>action.add</source>
         <target>Legg aftrat</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target>Ein teldupostur er sendur til %email%. Telduposturin inniheldur eina leinkju, ið tú skalt trýsta á, fyri at virkna tína kontu.</target>
-      </trans-unit>
       <trans-unit id="f8oNzSP" resname="quick_entry.title">
         <source>quick_entry.title</source>
         <target>Vikuarbeiðistímar</target>

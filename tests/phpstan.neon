@@ -807,21 +807,6 @@ parameters:
             path: Controller/Security/SecurityControllerTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\Security\\\\SelfRegistrationControllerTest\\:\\:testRegisterActionWithValidationProblems\\(\\) has parameter \\$formData with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Controller/Security/SelfRegistrationControllerTest.php
-
-        -
-            message: "#^Method App\\\\Tests\\\\Controller\\\\Security\\\\SelfRegistrationControllerTest\\:\\:testRegisterActionWithValidationProblems\\(\\) has parameter \\$validationFields with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: Controller/Security/SelfRegistrationControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
-            count: 17
-            path: Controller/Security/SelfRegistrationControllerTest.php
-
-        -
             message: "#^Cannot call method getValue\\(\\) on array\\<array\\<Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\>\\|Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\>\\|Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\.$#"
             count: 2
             path: Controller/TagControllerTest.php

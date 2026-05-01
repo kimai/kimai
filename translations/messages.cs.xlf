@@ -1054,10 +1054,6 @@
         <source>remove_default</source>
         <target>Smazat oblíbené vyhledávání</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve">
-        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="translated">Aktivační e-mail byl odeslán na adresu %email%. E-mail obsahuje aktivační odkaz, na který musíte kliknout pro aktivaci účtu.</target>
-      </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="translated">Byl vám zaslán e-mail s odkazem na obnovení hesla. Poznámka: O nové heslo můžete požádat pouze jednou za %tokenLifetime% hodin. Pokud e-mail neobdržíte, zkontrolujte složku se spamem nebo to zkuste znovu.</target>
@@ -1946,11 +1942,11 @@
         <source>tax.type.standard</source>
         <target state="translated">Danitelné</target>
       </trans-unit>
-        <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
         <source>todo</source>
             <target state="translated">Úkol</target>
       </trans-unit>
-        <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
         <source>estimation</source>
             <target state="translated">Časový odhad</target>
       </trans-unit>

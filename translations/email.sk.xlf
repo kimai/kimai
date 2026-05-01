@@ -6,22 +6,6 @@
         <source>automated_email_dont_answer</source>
         <target>Toto je automaticky generovaný email. Prosím neodpovedajte na neho, adresa nebude prečítaná.</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject">
-        <source>registration.subject</source>
-        <target>Aktivujte Vaše konto</target>
-      </trans-unit>
-      <trans-unit id="QtcznHC" resname="registration.title">
-        <source>registration.title</source>
-        <target>Vitajte %username%</target>
-      </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button">
-        <source>registration.button</source>
-        <target>Aktivujte Váš prístup</target>
-      </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target>Prihlásili ste sa do Kimai sledovanie času s emailom %email%. Teraz si musíte Váš účet aktivovať v priebeh niekoľkých hodín predtým než vyprší platnosť linku.</target>
-      </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
         <target state="needs-translation">Resetujte si heslo</target>

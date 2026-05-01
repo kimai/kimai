@@ -446,10 +446,6 @@
         <source>modal.dirty</source>
         <target state="translated">Skjemaet har endret seg. Vennligst trykk "Lagre" for å lagre endringene eller "Lukk" for å avbryte.</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target state="translated">En e-post har blitt sendt til %email%. Den inneholder en aktiveringslenke du må klikke på for å aktivere kontoen din.</target>
-      </trans-unit>
       <trans-unit id="ypVQO7o" resname="menu.reporting">
         <source>menu.reporting</source>
         <target>Rapportering</target>
@@ -2030,11 +2026,11 @@
         <source>Timesheet</source>
         <target>Timeseddel</target>
       </trans-unit>
-        <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
         <source>todo</source>
             <target state="needs-translation">Gjøremålsbeskrivelse</target>
       </trans-unit>
-        <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
         <source>estimation</source>
             <target state="translated">Tidsestimat</target>
       </trans-unit>

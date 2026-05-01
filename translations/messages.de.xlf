@@ -142,10 +142,6 @@
         <source>login_required</source>
         <target>Fehlende Berechtigung. Zur Anmeldung wechseln?</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target>Eine E-Mail wurde an %email% gesendet. Sie enthält einen Link, den Sie anklicken müssen, um Ihr Benutzerkonto zu bestätigen.</target>
-      </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve" approved="yes">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="final">Eine E-Mail mit einem Link zum Zurücksetzen des Passworts wurde an Sie gesendet. Hinweis: Ein neues Passwort kann nur alle %tokenLifetime% Stunden angefordert werden. Wenn Sie die E-Mail nicht erhalten haben, überprüfen Sie bitte Ihren Spam-Ordner oder versuchen Sie es erneut.</target>
@@ -2066,14 +2062,14 @@
         <source>count_as_expected_time_help</source>
         <target>Wenn diese Option aktiviert ist, wird %type% als gearbeitete Stunden auf die erwarteten täglichen Stunden angerechnet. Wenn diese Option deaktiviert ist, werden die erwarteten Stunden für diese Tage auf 0 gesetzt. Beide Einstellungen sorgen für ein ausgeglichenes Stundenkonto, wirken sich jedoch unterschiedlich auf die Gesamtzahlen des Monats aus.</target>
       </trans-unit>
-        <trans-unit id="YC_uWA9" resname="todo">
-            <source>todo</source>
-            <target>Aufgabe</target>
-        </trans-unit>
-        <trans-unit id="tt.jOEH" resname="estimation">
-            <source>estimation</source>
-            <target>Schätzung</target>
-        </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo">
+        <source>todo</source>
+        <target>Aufgabe</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation">
+        <source>estimation</source>
+        <target>Schätzung</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

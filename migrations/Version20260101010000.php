@@ -53,6 +53,7 @@ final class Version20260101010000 extends AbstractMigration
 
         $table = $schema->getTable('kimai2_users');
         $table->dropColumn('api_token');
+        $table->dropColumn('confirmation_token');
 
         $column = $table->getColumn('roles');
         $column->setType(Type::getType(Types::JSON));
@@ -63,6 +64,7 @@ final class Version20260101010000 extends AbstractMigration
         $table->dropColumn('category');
 
         $this->addSql("DELETE FROM kimai2_user_preferences WHERE `name` = 'export_decimal'");
+        $this->addSql("DELETE FROM kimai2_configuration WHERE `name` = 'user.registration'");
     }
 
     public function down(Schema $schema): void
@@ -100,6 +102,8 @@ final class Version20260101010000 extends AbstractMigration
 
         $usersTable = $schema->getTable('kimai2_users');
         $usersTable->addColumn('api_token', 'string', ['length' => 255, 'notnull' => false, 'default' => null]);
+        $usersTable->addColumn('confirmation_token', 'string', ['length' => 180, 'notnull' => false, 'default' => null]);
+        $usersTable->addUniqueIndex(['confirmation_token'], 'UNIQ_B9AC5BCEC05FB297');
     }
 
     public function isTransactional(): bool

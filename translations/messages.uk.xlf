@@ -110,10 +110,6 @@
         <source>login_required</source>
         <target state="translated">Поле логіна обов’язкове для заповнення. Перенаправити?</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve" approved="yes">
-        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="final">На адресу %email% надісланий лист. У ньому міститься посилання для активації, за яким потрібно перейти для активації Вашого облікового запису.</target>
-      </trans-unit>
       <trans-unit id="UoOv6mx" resname="menu.homepage" xml:space="preserve">
         <source>menu.homepage</source>
         <target state="translated">Головна</target>
@@ -2066,11 +2062,11 @@
         <source>count_as_expected_time_help</source>
         <target state="translated">Якщо ввімкнено, %type% зараховуватиметься як відпрацьовані години в межах очікуваної денної норми. Якщо вимкнено - очікувані години для цих днів буде встановлено в 0. Обидва варіанти зберігають нейтральний баланс, але по‑різному впливають на місячні підсумки.</target>
       </trans-unit>
-        <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
         <source>todo</source>
             <target state="translated">Завдання</target>
       </trans-unit>
-        <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
         <source>estimation</source>
             <target state="translated">Оцінка часу</target>
       </trans-unit>

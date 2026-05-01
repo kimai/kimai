@@ -790,10 +790,6 @@
         <source>error.no_comments_found</source>
         <target state="translated">投稿されたコメントはありません。</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="translated">%email%へメールが送られました。アカウントを承認するにはメール中のリンクをクリックしてください。</target>
-      </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target state="translated">"%dir%"ディレクトリは存在しないため、作ることが出来ませんでした。</target>

@@ -954,10 +954,6 @@
         <source>searchTerm</source>
         <target>Zoekterm</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="translated">Een mail is verstuurd naar %email%. Deze bevat een activatielink om uw account te activeren.</target>
-      </trans-unit>
       <trans-unit id="DUDrvjk" resname="remove_default">
         <source>remove_default</source>
         <target>Verwijder favoriete zoekopdracht</target>
@@ -1954,11 +1950,11 @@
         <source>Timesheet</source>
         <target state="translated">Tijdrooster</target>
       </trans-unit>
-        <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
         <source>todo</source>
             <target state="translated">Taak</target>
       </trans-unit>
-        <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
         <source>estimation</source>
             <target state="translated">Geschatte tijd</target>
       </trans-unit>

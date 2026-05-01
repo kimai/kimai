@@ -602,10 +602,6 @@
         <source>error.too_many_entries</source>
         <target state="translated">கோரிக்கையைச் செயலாக்க முடியவில்லை. பல முடிவுகள் காணப்பட்டன.</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve" approved="yes">
-        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="final">ஒரு %email%க்கு மின்னஞ்சல் அனுப்பப்பட்டுள்ளது. உங்கள் கணக்கைச் செயல்படுத்த நீங்கள் சொடுக்கு செய்ய வேண்டிய இணைப்பு இதில் உள்ளது.</target>
-      </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="yes" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="final">உங்கள் கடவுச்சொல்லை மீட்டமைக்க இணைப்புடன் மின்னஞ்சல் அனுப்பப்பட்டுள்ளது. குறிப்பு: ஒவ்வொரு %tokenLifetime% மணிநேரங்களுக்கும் ஒரு முறை மட்டுமே புதிய கடவுச்சொல்லை கோர முடியும். நீங்கள் மின்னஞ்சலைப் பெறவில்லை என்றால், தயவுசெய்து உங்கள் பழுதான கோப்புறையைச் சரிபார்க்கவும் அல்லது மீண்டும் முயற்சிக்கவும்.</target>
@@ -2066,11 +2062,11 @@
         <source>count_as_expected_time_help</source>
         <target state="translated">இயக்கப்பட்டால், %type% என்பது எதிர்பார்க்கப்படும் நாள்தோறும் மணிநேரத்தை நோக்கி வேலை நேரமாக கணக்கிடப்படும். முடக்கப்பட்டால், இந்த நாட்களில் எதிர்பார்க்கப்படும் மணிநேரம் 0 ஆக அமைக்கப்படும். இரண்டு அமைப்புகளும் நடுநிலை சமநிலையை பராமரிக்கின்றன, ஆனால் மாதாந்திர மொத்தத்தை வித்தியாசமாக பாதிக்கும்.</target>
       </trans-unit>
-        <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="yes">
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="yes">
         <source>todo</source>
             <target state="final">பணி</target>
       </trans-unit>
-        <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="yes">
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="yes">
         <source>estimation</source>
             <target state="final">நேர மதிப்பீடு</target>
       </trans-unit>

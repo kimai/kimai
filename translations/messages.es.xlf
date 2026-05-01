@@ -1022,10 +1022,6 @@
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="final">Se ha enviado un correo electrónico. Contiene un enlace en el que debes hacer clic para restablecer tu contraseña. Nota: Sólo puedes solicitar una nueva contraseña una vez en un plazo de %tokenLifetime% horas. Si no recibes un correo electrónico, comprueba tu carpeta de correo no deseado o inténtalo de nuevo.</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve">
-        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="translated">Se ha enviado un correo electrónico a %email%. Contiene un enlace en el que debe pulsar para activar su cuenta.</target>
-      </trans-unit>
       <trans-unit id="EwPAaws" resname="type">
         <source>type</source>
         <target>Tipo</target>
@@ -2066,11 +2062,11 @@
         <source>count_as_expected_time_help</source>
         <target state="translated">Al habilitar esta opción, %type% se contabilizará como horas trabajadas para las horas diarias esperadas. Al deshabilitarla, las horas esperadas para estos días se establecerán en 0. Ambas opciones mantienen un saldo neutral, pero afectan los totales mensuales de forma diferente.</target>
       </trans-unit>
-        <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
         <source>todo</source>
             <target state="translated">Tarea</target>
       </trans-unit>
-        <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
         <source>estimation</source>
             <target state="translated">Tiempo estimado</target>
       </trans-unit>
