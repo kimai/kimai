@@ -19,13 +19,13 @@ api.documentation:
     path: /api/doc
     methods: GET
     defaults:
-        _controller: nelmio_api_doc.controller.stoplight
+        _controller: nelmio_api_doc.controller.scalar
 
-api.scalar:
+api.stoplight:
     path: /api/doc-scalar
     methods: GET
     defaults:
-        _controller: nelmio_api_doc.controller.scalar
+        _controller: nelmio_api_doc.controller.stoplight
 
 api:
     resource: ../src/API/
