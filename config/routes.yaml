@@ -21,12 +21,6 @@ api.documentation:
     defaults:
         _controller: nelmio_api_doc.controller.scalar
 
-api.stoplight:
-    path: /api/doc-scalar
-    methods: GET
-    defaults:
-        _controller: nelmio_api_doc.controller.stoplight
-
 api:
     resource: ../src/API/
     type: attribute
