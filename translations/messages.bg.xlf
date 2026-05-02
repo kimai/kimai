@@ -1414,10 +1414,6 @@
         <source>api_password.intro</source>
         <target state="translated">Тук можете да управлявате вашите API жетони, които се използват за удостоверяване на вашето приложение към Kimai.</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title" xml:space="preserve">
-        <source>api_password.missing_title</source>
-        <target state="translated">API не може да се използва</target>
-      </trans-unit>
       <trans-unit id="dru_Thv" resname="please_choose" xml:space="preserve">
         <source>please_choose</source>
         <target state="translated">Моля, изберете</target>

@@ -1318,10 +1318,6 @@
         <source>api_password.intro</source>
         <target state="translated">در اینجا می توانید توکن های API خود را که برای احراز هویت برنامه شما در Kimai استفاده می شود، مدیریت کنید.</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
-        <source>api_password.missing_title</source>
-        <target state="translated">API قابل استفاده نیست</target>
-      </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
         <target state="translated">هیچ نتیجه ای برای "%input%" یافت نشد</target>

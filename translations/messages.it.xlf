@@ -1358,10 +1358,6 @@
         <source>api_password.intro</source>
         <target state="final">Qui puoi gestire i tuoi token API, che vengono usati per autenticare la tua applicazione su Kimai.</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title" approved="yes">
-        <source>api_password.missing_title</source>
-        <target state="final">Non è possibile usare l'API</target>
-      </trans-unit>
       <trans-unit id="dru_Thv" resname="please_choose" approved="yes">
         <source>please_choose</source>
         <target state="final">Fai la tua scelta</target>

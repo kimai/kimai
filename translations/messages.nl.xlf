@@ -1242,10 +1242,6 @@
         <source>notifications.welcome</source>
         <target state="translated">Bedankt dat u instemt met meldingen!</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
-        <source>api_password.missing_title</source>
-        <target state="translated">API kan niet gebruikt worden</target>
-      </trans-unit>
       <trans-unit id="biHjm0h" resname="select.add_new">
         <source>select.add_new</source>
         <target state="translated">Maak een nieuwe met de naam "%input%"</target>

@@ -1246,10 +1246,6 @@
         <source>team.configure_teamlead.help</source>
         <target state="translated">המשתמשים הנבחרים / מסומנים הם מובילי צוותים.</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
-        <source>api_password.missing_title</source>
-        <target state="translated">אי אפשר להשתמש ב־API</target>
-      </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
         <target state="translated">לא נמצאו רשומות עבור „%input%”</target>

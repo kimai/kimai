@@ -1366,10 +1366,6 @@
         <source>api_password.intro</source>
         <target state="translated">Zde můžete spravovat své API tokeny, které se používají k autentizaci vaší aplikace pro Kimai.</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
-        <source>api_password.missing_title</source>
-        <target state="translated">API nelze použít</target>
-      </trans-unit>
       <trans-unit id="WbT2QLP" resname="extended_settings">
         <source>extended_settings</source>
         <target state="translated">Rozšířená nastavení</target>

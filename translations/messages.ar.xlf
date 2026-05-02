@@ -1234,10 +1234,6 @@
         <source>api_password.intro</source>
         <target state="translated">يتم استخدام كلمة مرور واجهة برمجة التطبيقات للاتصال بين Kimai وتطبيقاتك.</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
-        <source>api_password.missing_title</source>
-        <target state="translated">لا يمكن استخدام واجهة برمجة التطبيقات</target>
-      </trans-unit>
       <trans-unit id="ZZaqTEr" resname="no_activity">
         <source>no_activity</source>
         <target state="translated">بدون نشاط</target>

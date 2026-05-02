@@ -1314,10 +1314,6 @@
         <source>skin.dark</source>
         <target state="translated">Koyu</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
-        <source>api_password.missing_title</source>
-        <target state="translated">API kullanılamıyor</target>
-      </trans-unit>
       <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
         <target state="translated">Burada, uygulamanız ile Kimai arasında kimlik doğrulaması yapmak için kullanılan API belirteçlerinizi yönetebilirsiniz.</target>
