@@ -1310,10 +1310,6 @@
         <source>skin.dark</source>
         <target state="translated">黑色</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
-        <source>api_password.missing_title</source>
-        <target state="translated">无法使用 API</target>
-      </trans-unit>
       <trans-unit id="5kFod8o" resname="team.configure_teamlead.help">
         <source>team.configure_teamlead.help</source>
         <target state="translated">选定/突出显示的用户是团队负责人。</target>

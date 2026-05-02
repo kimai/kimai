@@ -1286,10 +1286,6 @@
         <source>api_password.intro</source>
         <target state="translated">Ici, vous pouvez gérer vos jetons d'API, utilisés pour authentifier votre application auprès de Kimai.</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
-        <source>api_password.missing_title</source>
-        <target state="translated">L'API ne peut pas être utilisée</target>
-      </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
         <target state="translated">Aucun résultat trouvé pour "%input%"</target>

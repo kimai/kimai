@@ -1390,10 +1390,6 @@
         <source>team.configure_teamlead.help</source>
         <target state="translated">Người dùng được chọn là trưởng nhóm.</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title" xml:space="preserve">
-        <source>api_password.missing_title</source>
-        <target state="translated">Không thể dùng API</target>
-      </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results" xml:space="preserve">
         <source>search.no_results</source>
         <target state="translated">Không tìm thấy kết quả cho "%input%"</target>

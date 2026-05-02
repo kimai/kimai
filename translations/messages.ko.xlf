@@ -1490,10 +1490,6 @@
         <source>includeWithBudget</source>
         <target state="translated">예산으로 항목 표시</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title" xml:space="preserve">
-        <source>api_password.missing_title</source>
-        <target state="translated">API는 사용될 수 없습니다</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

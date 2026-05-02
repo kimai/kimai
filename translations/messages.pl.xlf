@@ -1306,10 +1306,6 @@
         <source>no_activity</source>
         <target state="translated">Bez aktywności</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
-        <source>api_password.missing_title</source>
-        <target state="translated">Nie można użyć interfejsu API</target>
-      </trans-unit>
       <trans-unit id="Uu8YvYV" resname="deactivated">
         <source>Deactivated</source>
         <target state="translated">Dezaktywowane</target>

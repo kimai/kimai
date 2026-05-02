@@ -1326,10 +1326,6 @@
         <source>skin.dark</source>
         <target state="translated">Mörkt</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
-        <source>api_password.missing_title</source>
-        <target state="translated">API kan inte användas</target>
-      </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
         <target state="translated">Inga resultat hittades för "%input%"</target>

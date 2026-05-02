@@ -1914,10 +1914,6 @@
         <source>Updated</source>
         <target state="translated">Ενημερωμένο</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title" xml:space="preserve">
-        <source>api_password.missing_title</source>
-        <target state="translated">Το API δεν μπορεί να χρησιμοποιηθεί</target>
-      </trans-unit>
       <trans-unit id="EaYsI0E" resname="city" xml:space="preserve">
         <source>City</source>
         <target state="translated">Πόλη</target>

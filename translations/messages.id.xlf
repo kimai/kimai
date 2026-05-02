@@ -1126,10 +1126,6 @@
         <source>includeNoWork</source>
         <target state="translated">Munculkan entri tanpa pemesanan</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title" xml:space="preserve">
-        <source>api_password.missing_title</source>
-        <target state="translated">API tidak dapat digunakan</target>
-      </trans-unit>
       <trans-unit id="Uu8YvYV" resname="deactivated" xml:space="preserve">
         <source>Deactivated</source>
         <target state="translated">Ternonaktifkan</target>

@@ -1318,10 +1318,6 @@
         <source>api_password.intro</source>
         <target state="translated">Aqui você pode gerenciar os seus tokens API, que são usados para autenticar o seu aplicativo no Kimai.</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
-        <source>api_password.missing_title</source>
-        <target state="translated">A API não pode ser usada</target>
-      </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
         <target state="translated">Nenhum resultado foi encontrado para "%input%"</target>

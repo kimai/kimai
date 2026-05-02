@@ -1322,10 +1322,6 @@
         <source>skin.dark</source>
         <target state="translated">Oscuro</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title" xml:space="preserve">
-        <source>api_password.missing_title</source>
-        <target state="translated">No se puede usar la API de la aplicación</target>
-      </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results" xml:space="preserve">
         <source>search.no_results</source>
         <target state="translated">No se han encontrado resultados para «%input%»</target>

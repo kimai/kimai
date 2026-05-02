@@ -1098,10 +1098,6 @@
         <source>pagination</source>
         <target state="translated">Zobraziť položky %start% až %end% z %total%.</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
-        <source>api_password.missing_title</source>
-        <target state="translated">API sa nedá použiť</target>
-      </trans-unit>
       <trans-unit id="95DUED0" resname="send_to">
         <source>send_to</source>
         <target state="translated">Poslať %name%</target>

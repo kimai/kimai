@@ -1262,10 +1262,6 @@
         <source>skin.dark</source>
         <target state="translated">Tamna</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
-        <source>api_password.missing_title</source>
-        <target state="translated">API se ne može koristiti</target>
-      </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
         <target state="translated">Nema rezultata za „%input%”</target>

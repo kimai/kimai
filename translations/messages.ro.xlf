@@ -1682,10 +1682,6 @@
         <source>Contact</source>
         <target state="translated">Contact</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title" xml:space="preserve">
-        <source>api_password.missing_title</source>
-        <target state="translated">API-ul nu poate fi folosit</target>
-      </trans-unit>
       <trans-unit id="WwesQPU" resname="deactivate" xml:space="preserve">
         <source>Deactivate</source>
         <target state="translated">Dezactivați</target>

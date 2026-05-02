@@ -1570,10 +1570,6 @@
         <source>skin.dark</source>
         <target state="translated">Тёмный</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title" xml:space="preserve">
-        <source>api_password.missing_title</source>
-        <target state="translated">API не можзет быть использован</target>
-      </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales" xml:space="preserve">
         <source>help_locales</source>
         <target state="translated">Здесь даны примеры правил форматирование для поддерживаемых языков</target>

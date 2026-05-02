@@ -1146,10 +1146,6 @@
         <source>stats.userDurationMonth</source>
         <target state="translated">Mine arbeidstimer denne måneden</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
-        <source>api_password.missing_title</source>
-        <target state="translated">API kan ikke brukes</target>
-      </trans-unit>
       <trans-unit id="ojfv7Jl" resname="invoice_form.title">
         <source>invoice_form.title</source>
         <target state="translated">Opprett faktura</target>

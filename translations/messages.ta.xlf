@@ -1574,10 +1574,6 @@
         <source>api_password.intro</source>
         <target state="translated">உங்கள் பயன்பாட்டைக் கிமாய்க்கு அங்கீகரிக்கப் பயன்படும் உங்கள் பநிஇ கிள்ளாக்குகளை இங்கே நிர்வகிக்கலாம்.</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title" xml:space="preserve" approved="no">
-        <source>api_password.missing_title</source>
-        <target state="translated">பநிஇ ஐப் பயன்படுத்த முடியாது</target>
-      </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results" xml:space="preserve" approved="no">
         <source>search.no_results</source>
         <target state="translated">"%input%" க்கு முடிவுகள் எதுவும் கிடைக்கவில்லை</target>
