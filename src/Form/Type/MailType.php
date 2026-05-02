@@ -20,9 +20,10 @@ final class MailType extends AbstractType
     {
         $resolver->setDefaults([
             'label' => 'email',
-            'constraints' => [
-                new Email(mode: 'html5')
-            ],
+            // no constraint by default, because the validation should be triggered
+            // by a constraint on the entity, otherwise the error shows up twice
+            // see User::$email or Customer::$email
+            // the test UserControllerTest::testValidationForCreateAction() otherwise fails
         ]);
     }
 
