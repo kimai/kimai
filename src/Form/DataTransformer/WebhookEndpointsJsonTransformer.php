@@ -85,11 +85,8 @@ final class WebhookEndpointsJsonTransformer implements DataTransformerInterface
                 continue;
             }
             $url = \is_string($row['url'] ?? null) ? trim($row['url']) : '';
-            if ($url === '') {
-                continue;
-            }
             $secret = \is_string($row['secret'] ?? null) ? $row['secret'] : '';
-            if ($secret === '') {
+            if ($url === '' || $secret === '') {
                 continue;
             }
             $normalized[] = [
