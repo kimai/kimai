@@ -22,6 +22,7 @@ use App\Form\Type\CustomerTypePatternType;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\DateTimeTextType;
 use App\Form\Type\DayTimeType;
+use App\Form\Type\InitialViewType;
 use App\Form\Type\MinuteIncrementType;
 use App\Form\Type\ProjectTypePatternType;
 use App\Form\Type\RoundingModeType;
@@ -537,6 +538,11 @@ final class SystemConfigurationController extends AbstractController
                     (new Configuration('defaults.user.theme'))
                         ->setLabel('skin')
                         ->setType(SkinType::class)
+                        ->setOptions(['help' => 'default_value_new']),
+                    (new Configuration('defaults.user.homepage'))
+                        ->setLabel('login_initial_view')
+                        ->setType(InitialViewType::class)
+                        ->setValue($this->systemConfiguration->getUserDefaultHomepage())
                         ->setOptions(['help' => 'default_value_new']),
                     (new Configuration('theme.avatar_url'))
                         ->setRequired(false)

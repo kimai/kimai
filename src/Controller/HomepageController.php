@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Configuration\LocaleService;
+use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Event\ConfigureMainMenuEvent;
 use App\Repository\UserRepository;
@@ -26,10 +27,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
 final class HomepageController extends AbstractController
 {
-    public const DEFAULT_ROUTE = 'timesheet';
-
     #[Route(path: '', defaults: [], name: 'homepage', methods: ['GET'])]
-    public function homepage(Request $request, LocaleService $service, EventDispatcherInterface $eventDispatcher, UserRepository $userRepository): Response
+    public function homepage(Request $request, LocaleService $service, EventDispatcherInterface $eventDispatcher, UserRepository $userRepository, SystemConfiguration $systemConfiguration): Response
     {
         $user = $this->getUser();
         $userLanguage = $user->getLanguage();
@@ -64,8 +63,8 @@ final class HomepageController extends AbstractController
             $routes[] = [$userRoute, User::DEFAULT_LANGUAGE];
         }
 
-        $routes[] = [self::DEFAULT_ROUTE, $userLanguage];
-        $routes[] = [self::DEFAULT_ROUTE, $requestLanguage];
+        $routes[] = [$systemConfiguration->getUserDefaultHomepage(), $userLanguage];
+        $routes[] = [$systemConfiguration->getUserDefaultHomepage(), $requestLanguage];
 
         foreach ($routes as $routeSettings) {
             $route = $routeSettings[0];
@@ -83,6 +82,6 @@ final class HomepageController extends AbstractController
             }
         }
 
-        return $this->redirectToRoute(self::DEFAULT_ROUTE, ['_locale' => User::DEFAULT_LANGUAGE]);
+        return $this->redirectToRoute($systemConfiguration->getUserDefaultHomepage(), ['_locale' => User::DEFAULT_LANGUAGE]);
     }
 }
