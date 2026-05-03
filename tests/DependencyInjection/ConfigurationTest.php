@@ -419,6 +419,11 @@ class ConfigurationTest extends TestCase
             'company' => [
                 'financial_year' => null,
             ],
+            'webhook' => [
+                'endpoints' => '[]',
+                'max_endpoints' => 5,
+                'allow_private_network' => false,
+            ],
             'quick_entry' => [
                 'recent_activities' => 5,
                 'recent_activity_weeks' => null,
