@@ -14,11 +14,14 @@ use App\DependencyInjection\Compiler\ConstraintCompilerPass;
 use App\DependencyInjection\Compiler\ExportServiceCompilerPass;
 use App\DependencyInjection\Compiler\InvoiceServiceCompilerPass;
 use App\DependencyInjection\Compiler\TwigContextCompilerPass;
+use App\DependencyInjection\Compiler\WebhookCompilerPass;
+use App\DependencyInjection\Compiler\WebhookEventAliasCompilerPass;
 use App\DependencyInjection\Compiler\WidgetCompilerPass;
 use App\Ldap\FormLoginLdapFactory;
 use App\Plugin\PluginInterface;
 use App\Plugin\PluginMetadata;
 use App\Validator\Attribute\TimesheetConstraint;
+use App\Webhook\Attribute\AsWebhook;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -55,6 +58,10 @@ class Kernel extends BaseKernel
 
         $container->registerAttributeForAutoconfiguration(TimesheetConstraint::class, static function (ChildDefinition $definition) {
             $definition->addResourceTag('validator.timesheet');
+        });
+
+        $container->registerAttributeForAutoconfiguration(AsWebhook::class, static function (ChildDefinition $definition) {
+            $definition->addResourceTag('webhook.event');
         });
     }
 
@@ -175,6 +182,8 @@ class Kernel extends BaseKernel
         $container->addCompilerPass(new ExportServiceCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new WidgetCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -1000);
         $container->addCompilerPass(new ConstraintCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 99);
+        $container->addCompilerPass(new WebhookEventAliasCompilerPass());
+        $container->addCompilerPass(new WebhookCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 99);
     }
 
     private function configureRoutes(RoutingConfigurator $routes): void // @phpstan-ignore-line

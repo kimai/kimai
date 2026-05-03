@@ -468,7 +468,7 @@
         ]
     },
     "symfony/messenger": {
-        "version": "6.4",
+        "version": "7.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -611,12 +611,12 @@
         }
     },
     "symfony/webhook": {
-        "version": "6.4",
+        "version": "7.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
-            "version": "6.3",
-            "ref": "0bc853a74c98e448116ba53e118a7b6b3cdf9a03"
+            "version": "7.3",
+            "ref": "b70844963dc84e9a99b94ae552efe691d74b087f"
         },
         "files": [
             "config/routes/webhook.yaml"

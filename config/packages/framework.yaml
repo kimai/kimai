@@ -47,6 +47,11 @@ framework:
         email_validation_mode: html5
         enable_attributes: true
 
+    http_client:
+        default_options:
+            headers: {'X-Powered-By': 'Kimai'}
+            max_redirects: 3
+
 when@dev:
     framework:
         mailer:
