@@ -100,7 +100,7 @@ final class WebhookEndpointType extends AbstractType
                 'default_protocol' => 'https',
                 'constraints' => [
                     new NotBlank(message: 'Endpoint URL must not be empty.'),
-                    new Url(message: 'Endpoint URL must be a valid https URL.', protocols: ['http', 'https']),
+                    new Url(message: 'Endpoint URL must be a valid https URL.', protocols: ['http', 'https'], requireTld: false),
                     new Callback($this->validateUrlNotPrivate(...)),
                 ],
                 'attr' => ['placeholder' => 'https://example.com/webhook'],

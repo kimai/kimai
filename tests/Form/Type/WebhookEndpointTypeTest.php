@@ -19,6 +19,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -198,8 +199,9 @@ class WebhookEndpointTypeTest extends TestCase
 
     /**
      * @param class-string[] $events
+     * @return FormInterface<WebhookEndpointType>
      */
-    private function createForm(array $events): \Symfony\Component\Form\FormInterface
+    private function createForm(array $events): FormInterface
     {
         $translator = $this->createMock(TranslatorInterface::class);
         $translator->method('trans')->willReturnArgument(0);
@@ -218,7 +220,7 @@ class WebhookEndpointTypeTest extends TestCase
             ->addType($type)
             ->getFormFactory();
 
-        return $factory->create(WebhookEndpointType::class);
+        return $factory->create(WebhookEndpointType::class); // @phpstan-ignore return.type
     }
 
     public function testFormHasUrlSecretAndEventsFields(): void
@@ -260,6 +262,8 @@ class WebhookEndpointTypeTest extends TestCase
         $form = $this->createForm([CustomerCreatePostEvent::class]);
 
         $choices = $form->get('events')->getConfig()->getOption('choices');
+        self::assertIsArray($choices);
+        self::assertArrayHasKey('customer', $choices);
 
         self::assertSame(
             ['Created (Triggered after a customer was created)' => 'customer.created'],
