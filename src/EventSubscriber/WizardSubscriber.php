@@ -9,6 +9,7 @@
 
 namespace App\EventSubscriber;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -23,7 +24,8 @@ class WizardSubscriber implements EventSubscriberInterface
     public function __construct(
         private UrlGeneratorInterface $urlGenerator,
         private AuthorizationCheckerInterface $security,
-        private TokenStorageInterface $storage
+        private TokenStorageInterface $storage,
+        private SystemConfiguration $systemConfiguration
     ) {
     }
 
@@ -60,6 +62,10 @@ class WizardSubscriber implements EventSubscriberInterface
         }
 
         if (!$this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return;
+        }
+
+        if (!$this->systemConfiguration->isWizardActive()) {
             return;
         }
 
