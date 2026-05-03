@@ -105,6 +105,17 @@ class SystemConfigurationTest extends TestCase
                     'company' => 'Acme Corp.',
                 ],
             ],
+            'webhook' => [
+                'endpoints' => '[]',
+                'max_endpoints' => 5,
+                'allow_private_network' => false,
+            ],
+            'user' => [
+                'password_reset' => true,
+                'login' => true,
+                'password_reset_retry_ttl' => 3600,
+                'password_reset_token_ttl' => 86400,
+            ],
         ];
     }
 
@@ -260,5 +271,13 @@ class SystemConfigurationTest extends TestCase
         self::assertEquals(0, $sut->getTimesheetDefaultRoundingBegin());
         self::assertEquals(10, $sut->getTimesheetIncrementDuration());
         self::assertEquals(5, $sut->getTimesheetIncrementMinutes());
+    }
+
+    public function testMethods(): void
+    {
+        $sut = $this->getSut($this->getDefaultSettings(), $this->getDefaultLoaderSettings());
+        self::assertFalse($sut->isWebhookPrivateNetworkAllowed());
+        self::assertEquals(5, $sut->getMaxWebhookEndpoints());
+        self::assertEquals(86400, $sut->getPasswordResetTokenLifetime());
     }
 }
