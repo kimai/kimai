@@ -65,7 +65,7 @@ class WizardSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if (!$this->systemConfiguration->isWizardActive()) {
+        if (!$this->systemConfiguration->isUserWizardActive()) {
             return;
         }
 
