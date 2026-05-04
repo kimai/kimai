@@ -49,7 +49,8 @@ framework:
 
     http_client:
         default_options:
-            headers: {'X-Powered-By': 'Kimai'}
+            headers:
+                'User-Agent': 'Kimai %kimai.version%'
             max_redirects: 3
 
 when@dev:
