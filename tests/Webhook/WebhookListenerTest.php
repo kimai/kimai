@@ -32,6 +32,8 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Uid\Factory\MockUuidFactory;
+use Symfony\Component\Uid\Factory\UuidFactory;
 use Symfony\Contracts\EventDispatcher\Event;
 
 #[CoversClass(WebhookListener::class)]
@@ -63,7 +65,7 @@ class WebhookListenerTest extends TestCase
             $bus->method('dispatch')->willReturn(new Envelope(new \stdClass()));
         }
 
-        $webhookService = new WebhookService($systemConfig, $serializer, $bus, new NullLogger());
+        $webhookService = new WebhookService($systemConfig, $serializer, $bus, new MockUuidFactory(['1234567890']), new NullLogger());
 
         return new WebhookListener($webhookService);
     }

@@ -14,6 +14,7 @@ use App\Serializer\SerializerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\RemoteEvent\RemoteEvent;
+use Symfony\Component\Uid\Factory\UuidFactory;
 use Symfony\Component\Webhook\Messenger\SendWebhookMessage;
 use Symfony\Component\Webhook\Subscriber;
 use Symfony\Contracts\Service\ResetInterface;
@@ -29,6 +30,7 @@ final class WebhookService implements ResetInterface
         private readonly SystemConfiguration $systemConfiguration,
         private readonly SerializerInterface $serializer,
         private readonly MessageBusInterface $bus,
+        private readonly UuidFactory $uuidFactory,
         private readonly LoggerInterface $logger,
     ) {
     }
@@ -161,6 +163,6 @@ final class WebhookService implements ResetInterface
 
     private function generateEventId(string $name): string
     {
-        return $name . '_' . bin2hex(random_bytes(8));
+        return $this->uuidFactory->create()->toString();
     }
 }

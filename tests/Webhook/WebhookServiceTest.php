@@ -21,6 +21,7 @@ use Psr\Log\NullLogger;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\RemoteEvent\RemoteEvent;
+use Symfony\Component\Uid\Factory\MockUuidFactory;
 use Symfony\Component\Webhook\Messenger\SendWebhookMessage;
 
 #[CoversClass(WebhookService::class)]
@@ -51,8 +52,12 @@ class WebhookServiceTest extends TestCase
         }
 
         $logger ??= new NullLogger();
+        $uuidFactory = new MockUuidFactory([
+            'd9e7a184-5d5b-11ea-a62a-3499710062d0',
+            '90067ce4-f083-47d2-a0f4-c47359de0f97',
+        ]);
 
-        return new WebhookService($systemConfig, $serializer, $bus, $logger);
+        return new WebhookService($systemConfig, $serializer, $bus, $uuidFactory, $logger);
     }
 
     /**
@@ -170,11 +175,13 @@ class WebhookServiceTest extends TestCase
         $systemConfig = new SystemConfiguration($configLoader, $this->settings([
             ['url' => 'https://a.example.com', 'secret' => 's', 'events' => ['timesheet']],
         ]));
+        $uuidFactory = new MockUuidFactory(['1234567890', 'abcdefghi', 'jklmnopq', '0987654321']);
 
         $service = new WebhookService(
             $systemConfig,
             $this->createMock(SerializerInterface::class),
             $this->createMock(MessageBusInterface::class),
+            $uuidFactory,
             new NullLogger(),
         );
 
