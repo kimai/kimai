@@ -499,3 +499,105 @@
         {%- endif -%}
     {%- endif -%}
 {%- endblock form_help_content %}
+
+{%- block webhook_endpoints_widget -%}
+    {%- set container_id = id ~ '_container' -%}
+    {%- set max = max_endpoints|default(10) -%}
+    <div class="webhook-endpoints" id="{{ container_id }}"
+         data-prototype="{{ form_widget(prototype, {'row_attr': {'class': 'webhook-endpoint-row card mb-3'}})|e('html_attr') }}"
+         data-prototype-name="{{ prototype.vars.name|e('html_attr') }}"
+         data-index="{{ form.children|length }}"
+         data-max="{{ max }}">
+        {% for child in form.children %}
+            <div class="webhook-endpoint-row card mb-3">
+                <div class="card-body">
+                    <div class="d-flex justify-content-end mb-2">
+                        <button type="button" class="btn btn-sm btn-outline-danger webhook-endpoint-remove">
+                            {{ 'delete'|trans }}
+                        </button>
+                    </div>
+                    {{ form_widget(child) }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <button type="button" class="btn webhook-endpoint-add" data-container="#{{ container_id }}">
+        <i class="icon fas fa-plus"></i> {{ 'create'|trans }}
+    </button>
+    <small class="text-muted ms-2">
+        <span class="webhook-endpoints-count-value">{{ form.children|length }}</span> / {{ max }}
+    </small>
+
+    <script>
+        (function () {
+            var container = document.getElementById({{ container_id|json_encode|raw }});
+            if (!container || container.dataset.webhookBound === '1') { return; }
+            container.dataset.webhookBound = '1';
+
+            var addBtn = document.querySelector('.webhook-endpoint-add[data-container="#' + container.id + '"]');
+            var countEl = container.parentNode && container.parentNode.querySelector('.webhook-endpoints-count-value');
+            var max = parseInt(container.dataset.max, 10) || 10;
+            var removeLabel = {{ 'delete'|trans|json_encode|raw }};
+
+            function updateCount() {
+                var count = container.querySelectorAll('.webhook-endpoint-row').length;
+                if (countEl) { countEl.textContent = count; }
+                if (addBtn) { addBtn.disabled = count >= max; }
+            }
+
+            function renderPrototype(index) {
+                var proto = container.dataset.prototype;
+                var protoName = container.dataset.prototypeName || '__name__';
+                var re = new RegExp(protoName, 'g');
+                return proto.replace(re, index);
+            }
+
+            function wrapWithRemove(row) {
+                // The prototype ships the inner fields only; wrap them in a row card with a remove button.
+                if (row.classList.contains('webhook-endpoint-row')) { return row; }
+                var wrapper = document.createElement('div');
+                wrapper.className = 'webhook-endpoint-row card mb-3';
+                var body = document.createElement('div');
+                body.className = 'card-body';
+                var toolbar = document.createElement('div');
+                toolbar.className = 'd-flex justify-content-end mb-2';
+                var btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'btn btn-sm btn-outline-danger webhook-endpoint-remove';
+                btn.appendChild(document.createTextNode(' ' + removeLabel));
+                toolbar.appendChild(btn);
+                body.appendChild(toolbar);
+                body.appendChild(row);
+                wrapper.appendChild(body);
+                return wrapper;
+            }
+
+            function addRow() {
+                var index = parseInt(container.dataset.index, 10) || 0;
+                if (container.querySelectorAll('.webhook-endpoint-row').length >= max) { return; }
+                var html = renderPrototype(index).trim();
+                var tmp = document.createElement('div');
+                tmp.innerHTML = html;
+                var node = tmp.firstElementChild;
+                if (!node) { return; }
+                var wrapped = wrapWithRemove(node);
+                container.appendChild(wrapped);
+                container.dataset.index = String(index + 1);
+                updateCount();
+            }
+
+            function onClick(e) {
+                var addTarget = e.target.closest && e.target.closest('.webhook-endpoint-add');
+                var rmTarget = e.target.closest && e.target.closest('.webhook-endpoint-remove');
+                if (addTarget && addTarget === addBtn) { e.preventDefault(); addRow(); return; }
+                if (rmTarget && container.contains(rmTarget)) {
+                    e.preventDefault();
+                    var row = rmTarget.closest('.webhook-endpoint-row');
+                    if (row) { row.remove(); updateCount(); }
+                }
+            }
+            document.addEventListener('click', onClick);
+            updateCount();
+        })();
+    </script>
+{%- endblock webhook_endpoints_widget -%}

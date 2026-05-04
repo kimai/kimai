@@ -10,16 +10,18 @@
 namespace App\DependencyInjection;
 
 use App\Configuration\LocaleService;
+use App\Constants;
 use App\Kernel;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\Intl\Locales;
 
 /**
  * This class that loads and manages the Kimai configuration and container parameter.
  */
-final class AppExtension extends Extension
+final class AppExtension extends Extension implements PrependExtensionInterface
 {
     public function load(array $configs, ContainerBuilder $container): void
     {
@@ -213,5 +215,10 @@ final class AppExtension extends Extension
     public function getAlias(): string
     {
         return 'kimai';
+    }
+
+    public function prepend(ContainerBuilder $container)
+    {
+        $container->setParameter('kimai.version', Constants::VERSION);
     }
 }

@@ -58,10 +58,29 @@ final class Configuration implements ConfigurationInterface
                 ->append($this->getQuickEntryNode())
                 ->append($this->getActivityNode())
                 ->append($this->getProjectNode())
+                ->append($this->getWebhookNode())
             ->end()
         ->end();
 
         return $treeBuilder;
+    }
+
+    private function getWebhookNode(): ArrayNodeDefinition
+    {
+        $builder = new TreeBuilder('webhook');
+        /** @var ArrayNodeDefinition $node */
+        $node = $builder->getRootNode();
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->scalarNode('endpoints')->defaultValue('[]')->end()
+                ->integerNode('max_endpoints')->defaultValue(5)->end()
+                ->booleanNode('allow_private_network')->defaultFalse()->end()
+            ->end()
+        ;
+
+        return $node;
     }
 
     private function getQuickEntryNode(): ArrayNodeDefinition

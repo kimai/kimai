@@ -29,7 +29,6 @@ services:
             - '../src/API/Model/'
             - '../src/DependencyInjection/'
             - '../src/Doctrine/Extensions/'
-            - '../src/Event/'
             - '../src/Export/Package/'
             - '../src/Export/Base/'
             - '../src/Form/Model/'
@@ -247,3 +246,13 @@ services:
     App\Twig\AppVariable:
         tags:
             - {name: twig.global, alias: app}
+
+    App\Form\Type\WebhookEndpointType:
+        arguments:
+            $events: '%kimai.webhook_events%'
+
+    App\Webhook\WebhookTransport:
+        arguments: ['@http_client', '@webhook.headers_configurator', '@webhook.body_configurator.json', '@webhook.signer']
+
+    webhook.transport:
+        alias: App\Webhook\WebhookTransport
