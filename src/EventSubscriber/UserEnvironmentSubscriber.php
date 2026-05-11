@@ -12,6 +12,7 @@ namespace App\EventSubscriber;
 use App\Entity\User;
 use App\Twig\LocaleFormatExtensions;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -19,6 +20,8 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class UserEnvironmentSubscriber implements EventSubscriberInterface
 {
+    private ?string $userLocale = null;
+
     public function __construct(
         private readonly TokenStorageInterface $tokenStorage,
         private readonly AuthorizationCheckerInterface $auth,
@@ -31,7 +34,25 @@ final class UserEnvironmentSubscriber implements EventSubscriberInterface
     {
         return [
             KernelEvents::REQUEST => ['prepareEnvironment', -100],
+            KernelEvents::FINISH_REQUEST => ['restoreLocale', -20],
         ];
+    }
+
+    public function restoreLocale(FinishRequestEvent $event): void
+    {
+        if ($event->isMainRequest()) {
+            return;
+        }
+
+        if ($this->userLocale === null) {
+            return;
+        }
+
+        // LocaleSwitcher (called by LocaleAwareListener) overwrites \Locale::getDefault() with the URL
+        // locale during sub-requests. Restore both the PHP default and the Twig formatter locale to
+        // the user's formatting locale that was saved during the main request.
+        \Locale::setDefault($this->userLocale);
+        $this->localeFormatExtensions->setLocale($this->userLocale);
     }
 
     public function prepareEnvironment(RequestEvent $event): void
@@ -55,6 +76,7 @@ final class UserEnvironmentSubscriber implements EventSubscriberInterface
         }
 
         // the locale is primarily used for formatting values, so we depend on the user locale if available
+        $this->userLocale = $locale;
         \Locale::setDefault($locale);
         $this->localeFormatExtensions->setLocale($locale);
     }
