@@ -89,6 +89,9 @@ class TeamRepository extends EntityRepository
         return $qb;
     }
 
+    /**
+     * @return Pagination<Team>
+     */
     public function getPagerfantaForQuery(TeamQuery $query): Pagination
     {
         return new Pagination($this->getPaginatorForQuery($query), $query);

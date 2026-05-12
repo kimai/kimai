@@ -42,7 +42,7 @@ class DateInvoiceCalculatorTest extends AbstractCalculatorTestCase
         $date = new DateTime();
         $customer = new Customer('foo');
         $template = new InvoiceTemplate();
-        $template->setVat(19);
+        $template->setTaxRate(19.0);
 
         $user = $this->getMockBuilder(User::class)->onlyMethods(['getId'])->disableOriginalConstructor()->getMock();
         $user->method('getId')->willReturn(1);

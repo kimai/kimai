@@ -91,7 +91,7 @@ abstract class AbstractSpreadsheetRenderer extends AbstractRenderer
                         continue;
                     }
                     // we ONLY check if the given replacer content contains a formula character
-                    if (\is_string($content) && \in_array($content[0], ['=', '-', '+', '@', "\t", "\r"])) {
+                    if (\is_string($content) && mb_strlen($content) > 0 && \in_array($content[0], ['=', '-', '+', '@', "\t", "\r"])) {
                         $contentLooksLikeFormula = true;
                     }
                     $value = str_replace($searchKey, $content ?? '', $value);

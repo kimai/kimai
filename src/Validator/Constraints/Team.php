@@ -14,9 +14,9 @@ use Symfony\Component\Validator\Constraint;
 #[\Attribute(\Attribute::TARGET_CLASS)]
 final class Team extends Constraint
 {
-    public const MISSING_TEAMLEAD = 'kimai-team-001';
+    public const string MISSING_TEAMLEAD = 'kimai-team-001';
 
-    protected const ERROR_NAMES = [
+    protected const array ERROR_NAMES = [
         self::MISSING_TEAMLEAD => 'At least one team leader must be assigned to the team.',
     ];
 

@@ -3,7 +3,7 @@
 
 {% block main %}
     {% set can_edit = is_granted('edit', activity) %}
-    {% set currency = null %}
+    {% set currency = config('defaultCurrency') %}
     {% if activity.project is not null %}
         {% set currency = activity.project.customer.currency %}
     {% endif %}
@@ -93,10 +93,6 @@
     {% endif %}
 
     {% if stats is not null %}
-        {% set currency = config('customerDefaultCurrency') %}
-        {% if activity.project is not null %}
-            {% set currency = activity.project.customer.currency %}
-        {% endif %}
         {{ include('embeds/budgets.html.twig', {'entity': activity, 'stats': stats, 'currency': currency}) }}
     {% endif %}
 

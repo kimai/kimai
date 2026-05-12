@@ -6,22 +6,6 @@
         <source>automated_email_dont_answer</source>
         <target state="translated">Tämä on automaattisesti generoitu sähköposti. Älä vastaa tähän, koska osoitteeseen lähetettyjä viestejä ei lueta.</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject">
-        <source>registration.subject</source>
-        <target state="translated">Aktivoi tunnuksesi</target>
-      </trans-unit>
-      <trans-unit id="QtcznHC" resname="registration.title">
-        <source>registration.title</source>
-        <target state="translated">Tervetuloa %username%</target>
-      </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button">
-        <source>registration.button</source>
-        <target state="translated">Aktivoi tunnuksesi</target>
-      </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target state="translated">Olet rekisteröitynyt Kimai työajan-seurantaan sähköpostiosoitteella %email%. Nyt sinun tulee aktivoida tunnuksesi seuraavien tuntien aikana, ennen kuin linkki vanhenee.</target>
-      </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
         <target state="needs-translation">Resetoi salasanasi</target>

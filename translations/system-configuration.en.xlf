@@ -258,10 +258,6 @@
         <source>user_auth_login</source>
         <target>Login form</target>
       </trans-unit>
-      <trans-unit id="C26_mL7" resname="user_auth_registration">
-        <source>user_auth_registration</source>
-        <target>User registration</target>
-      </trans-unit>
       <trans-unit id="5RSshEN" resname="user_auth_password_reset">
         <source>user_auth_password_reset</source>
         <target>Forgot password</target>

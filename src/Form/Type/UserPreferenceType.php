@@ -51,7 +51,7 @@ final class UserPreferenceType extends AbstractType
                 }
 
                 if (\in_array($preference->getType(), [TextType::class, TextareaType::class])) {
-                    $constraints[] = new Length(['max' => 255]);
+                    $constraints[] = new Length(max: 255);
                 }
 
                 if (\in_array($preference->getType(), [CheckboxType::class, YesNoType::class])) {

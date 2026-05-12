@@ -59,7 +59,7 @@ class SamlConfigurationTest extends TestCase
         self::assertEquals([], $sut->getRolesMapping());
         self::assertEquals('', $sut->getRolesAttribute());
         self::assertEquals([], $sut->getAttributeMapping());
-        self::assertFalse($sut->isRolesResetOnLogin());
+        self::assertTrue($sut->isRolesResetOnLogin());
     }
 
     public function testDefaultSettings(): void

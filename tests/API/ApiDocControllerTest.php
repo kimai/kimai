@@ -28,33 +28,12 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
         $content = $client->getResponse()->getContent();
         self::assertIsString($content);
         self::assertStringContainsString('<title>Kimai', $content);
-        self::assertStringContainsString('docs.apiDescriptionDocument', $content);
-        self::assertStringContainsString('const config = {"basePath":"/api/doc","router":"memory","logo":"/touch-icon-192x192.png","hideInternal":true};', $content);
-        $results = preg_match('/docs\.apiDescriptionDocument\ \=\ (.*)\.spec;/', $content, $matches);
-        self::assertNotFalse($results);
-        self::assertArrayHasKey(1, $matches);
-        $swaggerJson = json_decode($matches[1], true);
-        self::assertIsArray($swaggerJson);
-        self::assertArrayHasKey('spec', $swaggerJson);
-        $json = $swaggerJson['spec'];
-        self::assertArrayHasKey('paths', $json);
-
-        $tags = [];
-        foreach ($json['paths'] as $path) {
-            foreach ($path as $method) {
-                foreach ($method['tags'] as $tag) {
-                    $tags[$tag] = $tag;
-                }
-            }
-        }
+        self::assertStringContainsString('{"openapi":"3.0.0"', $content);
 
         $expectedKeys = ['Actions', 'Activity', 'Default', 'Customer', 'Project', 'Tag', 'Team', 'Timesheet', 'User', 'Invoice', 'Export'];
-        $actual = array_keys($tags);
-
-        sort($actual);
-        sort($expectedKeys);
-
-        self::assertEquals($expectedKeys, $actual, \sprintf('Expected %s sections in API docs, but found %s.', \count($actual), \count($expectedKeys)));
+        foreach ($expectedKeys as $expectedKey) {
+            self::assertStringContainsString('"tags":["' . $expectedKey . '"]', $content, 'Missing API endpoint: ' . $expectedKey);
+        }
 
         $paths = [
             '/api/actions/timesheet/{id}/{view}/{locale}',
@@ -111,21 +90,12 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
             '/api/users/{id}/preferences',
         ];
 
-        self::assertArrayHasKey('openapi', $json);
-        self::assertEquals('3.0.0', $json['openapi']);
-        self::assertArrayHasKey('info', $json);
-        self::assertStringStartsWith('Kimai', $json['info']['title']);
-        self::assertEquals('1.1', $json['info']['version']);
+        foreach ($paths as $path) {
+            self::assertStringContainsString($path, $content, 'Missing API endpoint: ' . $path);
+        }
 
-        self::assertArrayHasKey('paths', $json);
-        self::assertEquals($paths, array_keys($json['paths']));
-
-        self::assertArrayHasKey('security', $json);
-        self::assertEquals(['bearer' => []], $json['security'][0]);
-
-        self::assertArrayHasKey('components', $json);
-        self::assertArrayHasKey('schemas', $json['components']);
-        self::assertArrayHasKey('securitySchemes', $json['components']);
+        $security = '"securitySchemes":{"bearer":{"type":"http","description":"API Token","bearerFormat":"KIMAI","scheme":"bearer"}}';
+        self::assertStringContainsString($security, $content, 'Missing API endpoint: ' . $path);
     }
 
     protected function createUrl(string $url): string

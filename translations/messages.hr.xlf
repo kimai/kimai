@@ -122,21 +122,9 @@
         <source>user_profile</source>
         <target>Moj profil</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>API lozinka</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>Ponovi API lozinku</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target>Nedostaje dozvola. Preusmjeriti na prijavu?</target>
-      </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="translated">Poslan je e-mail na %email%. Sadrži poveznicu koju moraš pritisnuti za aktiviranje računa.</target>
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
@@ -193,10 +181,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target state="translated">Dodaci</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>Postavke</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
@@ -1278,10 +1262,6 @@
         <source>skin.dark</source>
         <target state="translated">Tamna</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
-        <source>api_password.missing_title</source>
-        <target state="translated">API se ne može koristiti</target>
-      </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
         <target state="translated">Nema rezultata za „%input%”</target>
@@ -1710,10 +1690,6 @@
         <source>Expiry date</source>
         <target state="translated">Datum isteka</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">API lozinke su zastarjele: umjesto njih koristi API tokene.</target>
-      </trans-unit>
       <trans-unit id="8JEDuyx" resname="activity_number" xml:space="preserve">
         <source>Activity number</source>
         <target state="translated">Broj aktivnosti</target>
@@ -2081,6 +2057,14 @@
       <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
         <source>count_as_expected_time_help</source>
         <target state="translated">Kada je aktivirano, %type% će se računati kao odrađeni sati u odnosu na očekivane dnevne sate. Kada je aktivirano, očekivani sati za te dane će se postaviti na 0. Obje postavke održavaju neutralnu ravnotežu, ali različito utječu na mjesečne ukupne iznose.</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+            <target state="translated">Zadatak</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+            <target state="translated">Procjena vremena</target>
       </trans-unit>
     </body>
   </file>

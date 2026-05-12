@@ -10,7 +10,8 @@
 namespace App\Twig\Runtime;
 
 use Endroid\QrCode\Builder\Builder;
-use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelMedium;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\Writer\PngWriter;
 use Twig\Extension\RuntimeExtensionInterface;
 
@@ -27,13 +28,15 @@ final class QrCodeExtension implements RuntimeExtensionInterface
      */
     public function qrCodeDataUriFunction(string $data, array $writerOptions = []): string
     {
-        return Builder::create()
-            ->writer(new PngWriter())
-            ->writerOptions($writerOptions)
-            ->data($data)
-            // if this causes errors at some point and needs to be configurable, keep this default!
-            ->errorCorrectionLevel(new ErrorCorrectionLevelMedium())
-            ->build()
-            ->getDataUri();
+        $builder = new Builder(
+            new PngWriter(),
+            [],
+            false,
+            $data,
+            new Encoding('UTF-8'),
+            ErrorCorrectionLevel::Medium,
+        );
+
+        return $builder->build()->getDataUri();
     }
 }

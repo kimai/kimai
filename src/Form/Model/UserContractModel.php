@@ -17,7 +17,7 @@ final class UserContractModel
     {
     }
 
-    public function __isset(string $name): bool
+    public function __isset(string $name): true
     {
         return true;
     }

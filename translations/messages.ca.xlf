@@ -166,21 +166,9 @@
         <source>user_profile</source>
         <target state="translated">El meu perfil</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token" xml:space="preserve">
-        <source>api_token</source>
-        <target state="translated">Contrasenya de l'API</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat" xml:space="preserve">
-        <source>api_token_repeat</source>
-        <target state="translated">Repeteix la contrasenya de l'API</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required" xml:space="preserve">
         <source>login_required</source>
         <target state="translated">Permís absent. Redirigir a l'inici de sessió?</target>
-      </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve" approved="yes">
-        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="final">S'ha enviat un correu electrònic a %email%. Conté un enllaç que heu de fer clic per activar el vostre compte.</target>
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="yes" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
@@ -257,10 +245,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin" xml:space="preserve">
         <source>menu.plugin</source>
         <target state="translated">Complements</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration" xml:space="preserve">
-        <source>menu.system_configuration</source>
-        <target state="translated">Configuració</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags" xml:space="preserve">
         <source>tags</source>
@@ -1522,10 +1506,6 @@
         <source>api_password.intro</source>
         <target state="translated">Aquí podeu gestionar els vostres tokens API, que s'utilitzen per autenticar la vostra aplicació a Kimai.</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title" xml:space="preserve">
-        <source>api_password.missing_title</source>
-        <target state="translated">No es pot utilitzar l'API</target>
-      </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results" xml:space="preserve" approved="yes">
         <source>search.no_results</source>
         <target state="final">No s'han trobat resultats per a "%input%"</target>
@@ -1769,10 +1749,6 @@
       <trans-unit id="Z9IIn_b" resname="api_token_hidden" xml:space="preserve">
         <source>api_token_hidden</source>
         <target state="translated">Aquesta és l'única vegada que es mostrarà aquesta clau! Guardeu-la de manera segura i assegureu-vos d'haver-la copiat abans de tancar aquesta finestra.</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">Les contrasenyes de l'API estan obsoletes: utilitzeu tokens de l'API en el seu lloc.</target>
       </trans-unit>
       <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
         <source>hours_per_day</source>
@@ -2081,6 +2057,14 @@
       <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
         <source>count_as_expected_time_help</source>
         <target state="translated">Quan estigui habilitat, %type% comptarà com a hores treballades cap a les hores diàries previstes. Quan estigui desactivat, les hores previstes per a aquests dies s’establiran en 0. Ambdues configuracions mantenen un equilibri neutre, però afecten els totals mensuals de manera diferent.</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+            <target state="translated">Tasca</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+            <target state="translated">Estimació de temps</target>
       </trans-unit>
     </body>
   </file>

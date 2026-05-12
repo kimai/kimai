@@ -48,7 +48,7 @@ class LocaleFormatExtensionsTest extends TestCase
     }
 
     /**
-     * @param array<string, array{'date': string, 'time': string, 'rtl': bool, 'translation': bool}> $languageSettings
+     * @param array<string, array{'date': string, 'time': string, 'translation': bool}> $languageSettings
      */
     private function getSut(string $locale, array $languageSettings): LocaleFormatExtensions
     {

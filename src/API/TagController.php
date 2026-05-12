@@ -27,9 +27,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[OA\Tag(name: 'Tag')]
 final class TagController extends BaseApiController
 {
-    public const GROUPS_COLLECTION = ['Default', 'Collection', 'Tag'];
-    public const GROUPS_ENTITY = ['Default', 'Entity', 'Tag'];
-    public const GROUPS_FORM = ['Default', 'Entity', 'Tag'];
+    private const array GROUPS_COLLECTION = ['Default', 'Collection', 'Tag'];
+    private const array GROUPS_ENTITY = ['Default', 'Entity', 'Tag'];
+    private const array GROUPS_FORM = ['Default', 'Entity', 'Tag'];
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
@@ -39,9 +39,9 @@ final class TagController extends BaseApiController
     }
 
     /**
-     * Deprecated: Fetch tags as strings
+     * Fetch tags as strings
      */
-    #[OA\Response(response: 200, description: 'DEPRECATED: Returns existing tags as string array', content: new OA\JsonContent(type: 'array', items: new OA\Items(type: 'string')))]
+    #[OA\Response(response: 200, description: 'Returns existing tags as string array', content: new OA\JsonContent(type: 'array', items: new OA\Items(type: 'string')))]
     #[OA\Get(x: ['internal' => true])]
     #[Route(methods: ['GET'], name: 'get_tags')]
     #[Rest\QueryParam(name: 'name', strict: true, nullable: true, description: 'Search term to filter tag list')]

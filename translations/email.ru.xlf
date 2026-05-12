@@ -6,22 +6,6 @@
         <source>automated_email_dont_answer</source>
         <target>Это автоматически сгенерированное письмо. Пожалуйста, не отвечайте на него, ответ не будет прочитан.</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject">
-        <source>registration.subject</source>
-        <target>Активируйте свою учетную запись</target>
-      </trans-unit>
-      <trans-unit id="QtcznHC" resname="registration.title">
-        <source>registration.title</source>
-        <target>Добро пожаловать, %username%</target>
-      </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button">
-        <source>registration.button</source>
-        <target>Активируйте свою учетную запись</target>
-      </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target>Вы зарегистрировались в Kimai time-tracker с электронным адресом %email%. Пожалуйста, активируйте свою учетную запись в течение нескольких часов, пока ссылка не истекла.</target>
-      </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
         <target state="translated">Зайти через Kimai</target>

@@ -75,8 +75,7 @@ final class ActivityController extends AbstractController
         $dispatcher->dispatch($event);
         $metaColumns = $event->getFields();
 
-        $table = new DataTable('activity_admin', $query);
-        $table->setPagination($entries);
+        $table = new DataTable('activity_admin', $query, $entries);
         $table->setSearchForm($form);
         $table->setPaginationRoute('admin_activity_paginated');
         $table->setReloadEvents('kimai.activityUpdate kimai.activityDelete kimai.activityTeamUpdate');

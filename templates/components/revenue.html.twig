@@ -1,0 +1,20 @@
+{% embed 'dashboard/widget-small.html.twig' with {fullsize: true} %}
+    {% import "macros/progressbar.html.twig" as progress %}
+    {% from 'macros/widgets.html.twig' import label %}
+    {% block box_body %}
+        {% set values = data.value %}
+        {% if values is empty %}
+            {% set values = {(null): 0.00} %}
+        {% endif %}
+        <table class="w-100 mt-3">
+            <tr>
+                <td>{{ data.title|trans({}, 'daterangepicker') }}</td>
+                <td class="text-end">
+                    {% for currency, revenue in values %}
+                        {{ label(revenue|money(currency|default(options.currency|default(null))), data.color) }}
+                    {% endfor %}
+                </td>
+            </tr>
+        </table>
+    {% endblock %}
+{% endembed %}

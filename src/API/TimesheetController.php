@@ -47,11 +47,11 @@ use Symfony\Component\Validator\Constraints;
 #[OA\Tag(name: 'Timesheet')]
 final class TimesheetController extends BaseApiController
 {
-    public const GROUPS_ENTITY = ['Default', 'Entity', 'Timesheet', 'Timesheet_Entity', 'Not_Expanded'];
-    public const GROUPS_ENTITY_FULL = ['Default', 'Entity', 'Timesheet', 'Timesheet_Entity', 'Expanded'];
-    public const GROUPS_FORM = ['Default', 'Entity', 'Timesheet', 'Not_Expanded'];
-    public const GROUPS_COLLECTION = ['Default', 'Collection', 'Timesheet', 'Not_Expanded'];
-    public const GROUPS_COLLECTION_FULL = ['Default', 'Collection', 'Timesheet', 'Expanded'];
+    private const array GROUPS_ENTITY = ['Default', 'Entity', 'Timesheet', 'Timesheet_Entity', 'Not_Expanded'];
+    private const array GROUPS_ENTITY_FULL = ['Default', 'Entity', 'Timesheet', 'Timesheet_Entity', 'Expanded'];
+    private const array GROUPS_FORM = ['Default', 'Entity', 'Timesheet', 'Not_Expanded'];
+    private const array GROUPS_COLLECTION = ['Default', 'Collection', 'Timesheet', 'Not_Expanded'];
+    private const array GROUPS_COLLECTION_FULL = ['Default', 'Collection', 'Timesheet', 'Expanded'];
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,

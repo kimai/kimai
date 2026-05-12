@@ -14,15 +14,15 @@ use Symfony\Component\Validator\Constraint;
 #[\Attribute(\Attribute::TARGET_CLASS)]
 final class TimesheetMultiUpdate extends Constraint
 {
-    public const MISSING_ACTIVITY_ERROR = 'ts-multi-update-84';
-    public const MISSING_PROJECT_ERROR = 'ts-multi-update-85';
-    public const ACTIVITY_PROJECT_MISMATCH_ERROR = 'ts-multi-update-86';
-    public const DISABLED_ACTIVITY_ERROR = 'ts-multi-update-87';
-    public const DISABLED_PROJECT_ERROR = 'ts-multi-update-88';
-    public const DISABLED_CUSTOMER_ERROR = 'ts-multi-update-89';
-    public const HOURLY_RATE_FIXED_RATE = 'ts-multi-update-90';
+    public const string MISSING_ACTIVITY_ERROR = 'ts-multi-update-84';
+    public const string MISSING_PROJECT_ERROR = 'ts-multi-update-85';
+    public const string ACTIVITY_PROJECT_MISMATCH_ERROR = 'ts-multi-update-86';
+    public const string DISABLED_ACTIVITY_ERROR = 'ts-multi-update-87';
+    public const string DISABLED_PROJECT_ERROR = 'ts-multi-update-88';
+    public const string DISABLED_CUSTOMER_ERROR = 'ts-multi-update-89';
+    public const string HOURLY_RATE_FIXED_RATE = 'ts-multi-update-90';
 
-    protected const ERROR_NAMES = [
+    protected const array ERROR_NAMES = [
         self::MISSING_ACTIVITY_ERROR => 'You need to choose an activity, if the project should be changed.',
         self::MISSING_PROJECT_ERROR => 'A project needs to be selected.',
         self::ACTIVITY_PROJECT_MISMATCH_ERROR => 'Project mismatch: chosen project does not match the activity project.',
@@ -33,6 +33,12 @@ final class TimesheetMultiUpdate extends Constraint
     ];
 
     public string $message = 'This form has invalid settings.';
+
+    public function __construct(?string $message = null)
+    {
+        $this->message = $message ?? $this->message;
+        parent::__construct();
+    }
 
     public function getTargets(): string
     {

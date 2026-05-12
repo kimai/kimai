@@ -15,6 +15,7 @@ use App\Form\Model\MultiUserTimesheet;
 use App\Security\RolePermissionManager;
 use App\Timesheet\LockdownService;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
@@ -24,20 +25,20 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  */
 final class TimesheetVoter extends Voter
 {
-    public const VIEW = 'view';
-    public const START = 'start';
-    public const STOP = 'stop';
-    public const EDIT = 'edit';
-    public const DELETE = 'delete';
-    public const EXPORT = 'export';
-    public const VIEW_RATE = 'view_rate';
-    public const EDIT_RATE = 'edit_rate';
-    public const EDIT_EXPORT = 'edit_export';
+    public const string VIEW = 'view';
+    public const string START = 'start';
+    public const string STOP = 'stop';
+    public const string EDIT = 'edit';
+    public const string DELETE = 'delete';
+    public const string EXPORT = 'export';
+    public const string VIEW_RATE = 'view_rate';
+    public const string EDIT_RATE = 'edit_rate';
+    public const string EDIT_EXPORT = 'edit_export';
 
     /**
      * support rules based on the given $subject (here: Timesheet)
      */
-    private const ALLOWED_ATTRIBUTES = [
+    private const array ALLOWED_ATTRIBUTES = [
         self::VIEW,
         self::START,
         self::STOP,
@@ -78,7 +79,7 @@ final class TimesheetVoter extends Voter
         return $subject instanceof Timesheet && $this->supportsAttribute($attribute);
     }
 
-    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $vote = null): bool
     {
         $user = $token->getUser();
 

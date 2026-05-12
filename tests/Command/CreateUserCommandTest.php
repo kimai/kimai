@@ -31,10 +31,10 @@ class CreateUserCommandTest extends KernelTestCase
         parent::setUp();
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
-        $container = self::$kernel->getContainer();
+        $container = self::getContainer();
         /** @var UserService $userService */
         $userService = $container->get(UserService::class);
-        $this->application->add(new CreateUserCommand($userService));
+        $this->application->addCommand(new CreateUserCommand($userService));
     }
 
     public function testCreateUserFailsForShortPassword(): void
@@ -52,7 +52,7 @@ class CreateUserCommandTest extends KernelTestCase
         $output = $commandTester->getDisplay();
         self::assertStringContainsString('[OK] Success! Created user: MyTestUser', $output);
 
-        $container = self::$kernel->getContainer();
+        $container = self::getContainer();
         /** @var Registry $doctrine */
         $doctrine = $container->get('doctrine');
         /** @var UserRepository $userRepository */
@@ -76,13 +76,19 @@ class CreateUserCommandTest extends KernelTestCase
         return $commandTester;
     }
 
-    public function testUserWithEmptyFieldsTriggersValidationProblem(): void
+    public function testUserWithEmptyPasswordTriggersValidationProblem(): void
     {
         $commandTester = $this->createUser('xx', '', 'ROLE_USER', '');
         $output = $commandTester->getDisplay();
+        self::assertStringContainsString('[ERROR] Password must be a non-empty string', $output);
+    }
+
+    public function testUserWithEmptyFieldsTriggersValidationProblem(): void
+    {
+        $commandTester = $this->createUser('xx', '', 'ROLE_USER', '1');
+        $output = $commandTester->getDisplay();
         self::assertStringContainsString('[ERROR] email: This value should not be blank', $output);
-        self::assertStringContainsString('[ERROR] plainPassword: This value should not be blank', $output);
-        self::assertStringContainsString('[ERROR] plainPassword: This value is too short.', $output);
+        self::assertStringContainsString('[ERROR] plainPassword: This value is too short. It should have 8 characters or', $output);
     }
 
     public function testUserAlreadyExisting(): void

@@ -30,7 +30,7 @@ class TimesheetTestMetaFieldSubscriberMock implements EventSubscriberInterface
         $definition = (new TimesheetMeta())
             ->setName('metatestmock')
             ->setType(TextType::class)
-            ->addConstraint(new Length(['max' => 200]))
+            ->addConstraint(new Length(max: 200))
             ->setIsVisible(true);
 
         $event->getEntity()->setMetaField($definition);

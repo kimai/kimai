@@ -14,9 +14,9 @@ use Symfony\Component\Validator\Constraint;
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
 final class ExportRenderer extends Constraint
 {
-    public const UNKNOWN_TYPE = 'kimai-export-type-00';
+    public const string UNKNOWN_TYPE = 'kimai-export-type-00';
 
-    protected const ERROR_NAMES = [
+    protected const array ERROR_NAMES = [
         self::UNKNOWN_TYPE => 'Unknown exporter type.',
     ];
 

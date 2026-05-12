@@ -62,14 +62,6 @@
         <source>user_profile</source>
         <target>プロフィール</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>API パスワード</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>API パスワード（再入力）</target>
-      </trans-unit>
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>ダッシュボード</target>
@@ -113,10 +105,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target>プラグイン</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>設定</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
@@ -801,10 +789,6 @@
       <trans-unit id="hlu4iX5" resname="error.no_comments_found">
         <source>error.no_comments_found</source>
         <target state="translated">投稿されたコメントはありません。</target>
-      </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="translated">%email%へメールが送られました。アカウントを承認するにはメール中のリンクをクリックしてください。</target>
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
