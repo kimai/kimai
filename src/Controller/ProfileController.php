@@ -181,7 +181,7 @@ final class ProfileController extends AbstractController
         AccessTokenRepository $accessTokenRepository
     ): Response
     {
-        $accessToken = AccessToken::createForUser($profile);
+        $accessToken = new AccessToken($profile);
 
         $form = $this->createForm(AccessTokenForm::class, $accessToken, [
             'action' => $this->generateUrl('user_profile_access_token', ['username' => $profile->getUserIdentifier()]),

@@ -43,15 +43,10 @@ class AccessToken
     #[ORM\Column(name: 'expires_at', type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $expiresAt = null;
 
-    public function __construct(User $user, string $token)
+    public function __construct(User $user, ?string $token = null)
     {
         $this->user = $user;
-        $this->token = $token;
-    }
-
-    public static function createForUser(User $user): self
-    {
-        return new self($user, substr(bin2hex(random_bytes(100)), 0, 25));
+        $this->token = $token ?? substr(bin2hex(random_bytes(100)), 0, 25);
     }
 
     public function getId(): ?int

@@ -240,7 +240,7 @@ final class UserController extends BaseApiController
             throw new BadRequestHttpException('Missing required parameter "name"');
         }
 
-        $accessToken = AccessToken::createForUser($profile);
+        $accessToken = new AccessToken($profile);
         $accessToken->setName(trim($name));
 
         $expiresAt = $request->request->get('expiresAt');
