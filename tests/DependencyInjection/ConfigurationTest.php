@@ -365,6 +365,7 @@ class ConfigurationTest extends TestCase
                     'timezone' => null,
                     'language' => 'en',
                     'theme' => 'auto',
+                    'homepage' => 'timesheet',
                 ],
             ],
             'permissions' => [

@@ -49,6 +49,7 @@ final class HomepageController extends AbstractController
         }
 
         $routes = [];
+        $defaultRoute = $systemConfiguration->getUserDefaultHomepage();
 
         $userRoute = $user->getPreferenceValue('login_initial_view');
         if (\is_string($userRoute)) {
@@ -63,8 +64,8 @@ final class HomepageController extends AbstractController
             $routes[] = [$userRoute, User::DEFAULT_LANGUAGE];
         }
 
-        $routes[] = [$systemConfiguration->getUserDefaultHomepage(), $userLanguage];
-        $routes[] = [$systemConfiguration->getUserDefaultHomepage(), $requestLanguage];
+        $routes[] = [$defaultRoute, $userLanguage];
+        $routes[] = [$defaultRoute, $requestLanguage];
 
         foreach ($routes as $routeSettings) {
             $route = $routeSettings[0];
@@ -82,6 +83,6 @@ final class HomepageController extends AbstractController
             }
         }
 
-        return $this->redirectToRoute($systemConfiguration->getUserDefaultHomepage(), ['_locale' => User::DEFAULT_LANGUAGE]);
+        return $this->redirectToRoute($defaultRoute, ['_locale' => User::DEFAULT_LANGUAGE]);
     }
 }
