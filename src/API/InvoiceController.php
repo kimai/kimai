@@ -151,4 +151,39 @@ final class InvoiceController extends BaseApiController
 
         return $this->viewHandler->handle($view);
     }
+
+    /**
+     * Download invoice
+     */
+    #[IsGranted('view_invoice', 'invoice')]
+    #[OA\Response(
+        response: 200,
+        description: 'Downloads the invoice document as an attachment. The content type depends on the configured invoice renderer.',
+        headers: [
+            new OA\Header(header: 'Content-Disposition', description: 'Attachment filename', schema: new OA\Schema(type: 'string')),
+        ],
+        content: [
+            new OA\MediaType(mediaType: 'application/pdf', schema: new OA\Schema(type: 'string', format: 'binary')),
+            new OA\MediaType(mediaType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', schema: new OA\Schema(type: 'string', format: 'binary')),
+            new OA\MediaType(mediaType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', schema: new OA\Schema(type: 'string', format: 'binary')),
+            new OA\MediaType(mediaType: 'application/vnd.oasis.opendocument.spreadsheet', schema: new OA\Schema(type: 'string', format: 'binary')),
+            new OA\MediaType(mediaType: 'text/html', schema: new OA\Schema(type: 'string')),
+            new OA\MediaType(mediaType: 'application/xml', schema: new OA\Schema(type: 'string')),
+            new OA\MediaType(mediaType: 'text/xml', schema: new OA\Schema(type: 'string')),
+            new OA\MediaType(mediaType: 'application/octet-stream', schema: new OA\Schema(type: 'string', format: 'binary')),
+        ]
+    )]
+    #[Route(path: '/{id}/download', name: 'download_invoice', requirements: ['id' => '\d+'], methods: ['GET'])]
+    public function downloadAction(Invoice $invoice, InvoiceService $service): Response
+    {
+        $file = $service->getInvoiceFile($invoice);
+
+        if (null === $file) {
+            throw $this->createNotFoundException(
+                \sprintf('Invoice file could not be found for invoice ID "%s"', $invoice->getId())
+            );
+        }
+
+        return $this->file($file->getRealPath(), $file->getBasename());
+    }
 }

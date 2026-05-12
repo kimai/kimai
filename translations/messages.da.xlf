@@ -1958,6 +1958,10 @@
         <source>Timesheet</source>
         <target state="translated">Timeoverblik</target>
       </trans-unit>
+      <trans-unit id="UcWoKWo" resname="portrait" xml:space="preserve">
+        <source>Portrait</source>
+        <target state="translated">Portræt</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -18,57 +18,57 @@
         <source>donate</source>
         <target state="translated">Donar</target>
       </trans-unit>
-      <trans-unit id="inmIkP6" resname="yes" xml:space="preserve">
+      <trans-unit id="inmIkP6" resname="yes" xml:space="preserve" approved="yes">
         <source>yes</source>
-        <target state="translated">Sí</target>
+        <target state="final">Sí</target>
       </trans-unit>
-      <trans-unit id="k5Apjz_" resname="no" xml:space="preserve">
+      <trans-unit id="k5Apjz_" resname="no" xml:space="preserve" approved="yes">
         <source>no</source>
-        <target state="translated">No</target>
+        <target state="final">No</target>
       </trans-unit>
-      <trans-unit id="KLIuHvt" resname="This is a mandatory field" xml:space="preserve">
+      <trans-unit id="KLIuHvt" resname="This is a mandatory field" xml:space="preserve" approved="yes">
         <source>This is a mandatory field</source>
-        <target state="translated">Obligatori</target>
+        <target state="final">Obligatori</target>
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm" xml:space="preserve">
         <source>admin_entity.delete_confirm</source>
         <target state="translated">Aquestes dades també s'esborraran! Alternativament, podeu seleccionar una entrada a la qual es transferiran totes les dades:</target>
       </trans-unit>
-      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve" approved="yes">
         <source>Time Tracking</source>
-        <target state="translated">Control de temps</target>
+        <target state="final">Control de temps</target>
       </trans-unit>
-      <trans-unit id="_ohHsMM" resname="create" xml:space="preserve">
+      <trans-unit id="_ohHsMM" resname="create" xml:space="preserve" approved="yes">
         <source>create</source>
-        <target state="translated">Crear</target>
+        <target state="final">Crear</target>
       </trans-unit>
-      <trans-unit id=".3dyBTq" resname="both" approved="no" xml:space="preserve">
+      <trans-unit id=".3dyBTq" resname="both" approved="yes" xml:space="preserve">
         <source>Both</source>
-        <target state="translated">Tots dos</target>
+        <target state="final">Tots dos</target>
       </trans-unit>
-      <trans-unit id="U_D.NIy" resname="automatic" xml:space="preserve">
+      <trans-unit id="U_D.NIy" resname="automatic" xml:space="preserve" approved="yes">
         <source>automatic</source>
-        <target state="translated">Automàtic</target>
+        <target state="final">Automàtic</target>
       </trans-unit>
       <trans-unit id="DYHuW58" resname="confirm.delete" xml:space="preserve">
         <source>confirm.delete</source>
         <target state="translated">Confirmeu que voleu eliminar-lo?</target>
       </trans-unit>
-      <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve" approved="yes">
         <source>User</source>
-        <target state="translated">Usuari</target>
+        <target state="final">Usuari</target>
       </trans-unit>
-      <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve">
+      <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve" approved="yes">
         <source>activity</source>
-        <target state="translated">Activitat</target>
+        <target state="final">Activitat</target>
       </trans-unit>
-      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve" approved="yes">
         <source>Project</source>
-        <target state="translated">Projecte</target>
+        <target state="final">Projecte</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve" approved="yes">
         <source>date</source>
-        <target state="translated">Data</target>
+        <target state="final">Data</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use" xml:space="preserve">
         <source>delete.not_in_use</source>
@@ -122,9 +122,9 @@
         <source>orderBy</source>
         <target state="translated">Ordena per</target>
       </trans-unit>
-      <trans-unit id="J258iS6" resname="update_multiple" xml:space="preserve">
+      <trans-unit id="J258iS6" resname="update_multiple" xml:space="preserve" approved="yes">
         <source>update_multiple</source>
-        <target state="translated">%action% %count% registres</target>
+        <target state="final">%action% %count% registres</target>
       </trans-unit>
       <trans-unit id="OTDmccn" resname="attachments" xml:space="preserve">
         <source>attachments</source>
@@ -178,13 +178,13 @@
         <source>login_required</source>
         <target state="translated">Permís absent. Redirigir a l'inici de sessió?</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve">
+      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve" approved="yes">
         <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="translated">S'ha enviat un correu electrònic a %email%. Conté un enllaç que heu de fer clic per activar el vostre compte.</target>
+        <target state="final">S'ha enviat un correu electrònic a %email%. Conté un enllaç que heu de fer clic per activar el vostre compte.</target>
       </trans-unit>
-      <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="no" xml:space="preserve">
+      <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="yes" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
-        <target state="translated">S'ha enviat un correu electrònic amb un enllaç per restablir la vostra contrasenya. Nota: Només podeu sol·licitar una nova contrasenya una vegada cada %tokenLifetime% hores. Si no rebeu el correu electrònic, comproveu la vostra carpeta de correu brossa o torneu-ho a intentar.</target>
+        <target state="final">S'ha enviat un correu electrònic amb un enllaç per restablir la vostra contrasenya. Nota: Només podeu sol·licitar una nova contrasenya una vegada cada %tokenLifetime% hores. Si no rebeu el correu electrònic, comproveu la vostra carpeta de correu brossa o torneu-ho a intentar.</target>
       </trans-unit>
       <trans-unit id="fQ3Prt4" resname="security.unlock.title" xml:space="preserve">
         <source>security.unlock.title</source>
@@ -658,9 +658,9 @@
         <source>work_times_is</source>
         <target state="translated">Hores treballades</target>
       </trans-unit>
-      <trans-unit id="8yqaKzX" resname="confirmed_by_at" xml:space="preserve">
+      <trans-unit id="8yqaKzX" resname="confirmed_by_at" xml:space="preserve" approved="yes">
         <source>confirmed_by_at</source>
-        <target state="translated">Confirmat per %user% el %date%</target>
+        <target state="final">Confirmat per %user% el %date%</target>
       </trans-unit>
       <trans-unit id="wZRRqg0" resname="manual_bookings" xml:space="preserve">
         <source>manual_bookings</source>
@@ -698,9 +698,9 @@
         <source>login_initial_view</source>
         <target state="translated">Vista inicial després d'iniciar la sessió</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve" approved="yes">
         <source>default</source>
-        <target state="translated">Per defecte</target>
+        <target state="final">Per defecte</target>
       </trans-unit>
       <trans-unit id="tKZKI2Z" resname="action.reset" xml:space="preserve">
         <source>action.reset</source>
@@ -822,9 +822,9 @@
         <source>currency</source>
         <target state="translated">Moneda</target>
       </trans-unit>
-      <trans-unit id="qvIyBkY" resname="title" xml:space="preserve">
+      <trans-unit id="qvIyBkY" resname="title" xml:space="preserve" approved="yes">
         <source>title</source>
-        <target state="translated">Títol</target>
+        <target state="final">Títol</target>
       </trans-unit>
       <trans-unit id="h7voece" resname="avatar" xml:space="preserve">
         <source>avatar</source>
@@ -886,25 +886,25 @@
         <source>ROLE_USER</source>
         <target state="translated">Usuari</target>
       </trans-unit>
-      <trans-unit id="lfSTZGe" resname="stats.workingTimeToday" xml:space="preserve">
+      <trans-unit id="lfSTZGe" resname="stats.workingTimeToday" xml:space="preserve" approved="yes">
         <source>stats.workingTimeToday</source>
-        <target state="translated">Avui, %day%</target>
+        <target state="final">Avui, %day%</target>
       </trans-unit>
-      <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek" xml:space="preserve">
+      <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek" xml:space="preserve" approved="yes">
         <source>stats.workingTimeWeek</source>
-        <target state="translated">Setmana %week% del calendari</target>
+        <target state="final">Setmana %week% del calendari</target>
       </trans-unit>
-      <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort" xml:space="preserve">
+      <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort" xml:space="preserve" approved="yes">
         <source>stats.workingTimeWeekShort</source>
-        <target state="translated">Setmana %week%</target>
+        <target state="final">Setmana %week%</target>
       </trans-unit>
-      <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth" xml:space="preserve">
+      <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth" xml:space="preserve" approved="yes">
         <source>stats.workingTimeMonth</source>
-        <target state="translated">%month% %year%</target>
+        <target state="final">%month% %year%</target>
       </trans-unit>
-      <trans-unit id="JnUFsNi" resname="stats.workingTimeYear" xml:space="preserve">
+      <trans-unit id="JnUFsNi" resname="stats.workingTimeYear" xml:space="preserve" approved="yes">
         <source>stats.workingTimeYear</source>
-        <target state="translated">Tot l'any %year%</target>
+        <target state="final">Tot l'any %year%</target>
       </trans-unit>
       <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear" xml:space="preserve">
         <source>stats.workingTimeFinancialYear</source>
@@ -1054,21 +1054,21 @@
         <source>stats.customerTotal</source>
         <target state="translated">Clients</target>
       </trans-unit>
-      <trans-unit id="unC5MXv" resname="stats.percentUsed" xml:space="preserve">
+      <trans-unit id="unC5MXv" resname="stats.percentUsed" xml:space="preserve" approved="yes">
         <source>stats.percentUsed</source>
-        <target state="translated">%percent%% utilitzat</target>
+        <target state="final">%percent%% utilitzat</target>
       </trans-unit>
-      <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft" xml:space="preserve">
+      <trans-unit id="HkjvwLc" resname="stats.percentUsedLeft" xml:space="preserve" approved="yes">
         <source>stats.percentUsedLeft</source>
-        <target state="translated">%percent%% utilitzat (%left% estan oberts)</target>
+        <target state="final">%percent%% utilitzat (%left% estan oberts)</target>
       </trans-unit>
-      <trans-unit id="xN7MfSA" resname="stats.percentUsed_month" xml:space="preserve">
+      <trans-unit id="xN7MfSA" resname="stats.percentUsed_month" xml:space="preserve" approved="yes">
         <source>stats.percentUsed_month</source>
-        <target state="translated">%percent%% utilitzat aquest mes</target>
+        <target state="final">%percent%% utilitzat aquest mes</target>
       </trans-unit>
-      <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month" xml:space="preserve">
+      <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month" xml:space="preserve" approved="yes">
         <source>stats.percentUsedLeft_month</source>
-        <target state="translated">%percent%% utilitzat (%left% estan oberts aquest mes)</target>
+        <target state="final">%percent%% utilitzat (%left% estan oberts aquest mes)</target>
       </trans-unit>
       <trans-unit id="Oq.KtC6" resname="admin_invoice_template.title" xml:space="preserve">
         <source>admin_invoice_template.title</source>
@@ -1286,9 +1286,9 @@
         <source>reject</source>
         <target state="translated">Refusar</target>
       </trans-unit>
-      <trans-unit id="crrlEUA" resname="preview.skipped_rows" xml:space="preserve">
+      <trans-unit id="crrlEUA" resname="preview.skipped_rows" xml:space="preserve" approved="yes">
         <source>Skipped preview of %rows% more rows …</source>
-        <target state="translated">S'ha omès la previsualització de %rows% files més …</target>
+        <target state="final">S'ha omès la previsualització de %rows% files més …</target>
       </trans-unit>
       <trans-unit id="1GruCMx" resname="export" xml:space="preserve">
         <source>export</source>
@@ -1314,17 +1314,17 @@
         <source>export.summary</source>
         <target state="translated">Sumari</target>
       </trans-unit>
-      <trans-unit id="ElDyzrx" resname="export.page_of" xml:space="preserve">
+      <trans-unit id="ElDyzrx" resname="export.page_of" xml:space="preserve" approved="yes">
         <source>export.page_of</source>
-        <target state="translated">Pàgina %page% de %pages%</target>
+        <target state="final">Pàgina %page% de %pages%</target>
       </trans-unit>
       <trans-unit id="vKY0tof" resname="export.date_copyright" xml:space="preserve">
         <source>export.date_copyright</source>
         <target state="translated">Creat a %date% amb %kimai%</target>
       </trans-unit>
-      <trans-unit id="W92QGbY" resname="export.warn_result_amount" xml:space="preserve">
+      <trans-unit id="W92QGbY" resname="export.warn_result_amount" xml:space="preserve" approved="yes">
         <source>export.warn_result_amount</source>
-        <target state="translated">La vostra cerca ha retornat %count% resultats. Si l'exportació falla, heu de fer-la més específica.</target>
+        <target state="final">La vostra cerca ha retornat %count% resultats. Si l'exportació falla, heu de fer-la més específica.</target>
       </trans-unit>
       <trans-unit id="EwPAaws" resname="type" xml:space="preserve">
         <source>type</source>
@@ -1470,9 +1470,9 @@
         <source>budgetType_full</source>
         <target state="translated">Cicle de vida</target>
       </trans-unit>
-      <trans-unit id="tvV0NhL" resname="delete_warning.short_stats" xml:space="preserve">
+      <trans-unit id="tvV0NhL" resname="delete_warning.short_stats" xml:space="preserve" approved="yes">
         <source>delete_warning.short_stats</source>
-        <target state="translated">Actualment existeixen %records% registres de temps, que sumen una durada total de %duration%.</target>
+        <target state="final">Actualment existeixen %records% registres de temps, que sumen una durada total de %duration%.</target>
       </trans-unit>
       <trans-unit id="Zif614Q" resname="add_user.label" xml:space="preserve">
         <source>add_user.label</source>
@@ -1502,13 +1502,13 @@
         <source>Updated</source>
         <target state="translated">Actualitzat</target>
       </trans-unit>
-      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached" xml:space="preserve">
+      <trans-unit id="nlwMf5w" resname="invoice_document.max_reached" xml:space="preserve" approved="yes">
         <source>invoice_document.max_reached</source>
-        <target state="translated">S'ha assolit la quantitat màxima de %max% documents de factura. Podeu afegir-ne més després de n'eliminar un.</target>
+        <target state="final">S'ha assolit la quantitat màxima de %max% documents de factura. Podeu afegir-ne més després de n'eliminar un.</target>
       </trans-unit>
-      <trans-unit id="wwrREDg" resname="pagination" xml:space="preserve">
+      <trans-unit id="wwrREDg" resname="pagination" xml:space="preserve" approved="yes">
         <source>pagination</source>
-        <target state="translated">Mostrar entrades %start% a %end% de %total%.</target>
+        <target state="final">Mostrar entrades %start% a %end% de %total%.</target>
       </trans-unit>
       <trans-unit id="mjKOAgQ" resname="skin.light" xml:space="preserve">
         <source>skin.light</source>
@@ -1526,13 +1526,13 @@
         <source>api_password.missing_title</source>
         <target state="translated">No es pot utilitzar l'API</target>
       </trans-unit>
-      <trans-unit id="wYcx0So" resname="search.no_results" xml:space="preserve">
+      <trans-unit id="wYcx0So" resname="search.no_results" xml:space="preserve" approved="yes">
         <source>search.no_results</source>
-        <target state="translated">No s'han trobat resultats per a "%input%"</target>
+        <target state="final">No s'han trobat resultats per a "%input%"</target>
       </trans-unit>
-      <trans-unit id="biHjm0h" resname="select.add_new" xml:space="preserve">
+      <trans-unit id="biHjm0h" resname="select.add_new" xml:space="preserve" approved="yes">
         <source>select.add_new</source>
-        <target state="translated">Crear-ne un de nou amb el nom "%input%"</target>
+        <target state="final">Crear-ne un de nou amb el nom "%input%"</target>
       </trans-unit>
       <trans-unit id="dru_Thv" resname="please_choose" xml:space="preserve">
         <source>please_choose</source>
@@ -1590,9 +1590,9 @@
         <source>send_to</source>
         <target state="translated">Enviar a %name%</target>
       </trans-unit>
-      <trans-unit id="5buBUCm" resname="receive_from" xml:space="preserve">
+      <trans-unit id="5buBUCm" resname="receive_from" xml:space="preserve" approved="yes">
         <source>receive_from</source>
-        <target state="translated">Rebre de %name%</target>
+        <target state="final">Rebre de %name%</target>
       </trans-unit>
       <trans-unit id="fWuGTog" resname="public_holiday" xml:space="preserve">
         <source>public_holiday</source>
@@ -1638,13 +1638,13 @@
         <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
         <target state="translated">Incapacitat per treballar, cites mèdiques necessàries, permís de cura, etc.</target>
       </trans-unit>
-      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
+      <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve" approved="yes">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
-        <target state="translated">Heu sol·licitat %used% dels vostres %days% dies de vacances disponibles fins ara.</target>
+        <target state="final">Heu sol·licitat %used% dels vostres %days% dies de vacances disponibles fins ara.</target>
       </trans-unit>
-      <trans-unit id="DA1.Ln_" resname="time_off.intro" xml:space="preserve">
+      <trans-unit id="DA1.Ln_" resname="time_off.intro" xml:space="preserve" approved="yes">
         <source>time_off.intro</source>
-        <target state="translated">El vostre compte de temps de treball té un saldo de %hours% hores.</target>
+        <target state="final">El vostre compte de temps de treball té un saldo de %hours% hores.</target>
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
@@ -2050,9 +2050,9 @@
         <source>invoice_tax_type</source>
         <target state="translated">Estat fiscal</target>
       </trans-unit>
-      <trans-unit id="Mi7y8Q3" resname="tax.type.exempt" xml:space="preserve">
+      <trans-unit id="Mi7y8Q3" resname="tax.type.exempt" xml:space="preserve" approved="yes">
         <source>tax.type.exempt</source>
-        <target state="translated">Exempt</target>
+        <target state="final">Exempt/a</target>
       </trans-unit>
       <trans-unit id="lU1Njcy" resname="tax.type.standard" xml:space="preserve">
         <source>tax.type.standard</source>
@@ -2066,9 +2066,9 @@
         <source>tax.note.reverse_charge</source>
         <target state="translated">Impost a pagar en règim d’inversió del subjecte passiu</target>
       </trans-unit>
-      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve" approved="yes">
         <source>Timesheet</source>
-        <target state="translated">Registre d'hores</target>
+        <target state="final">Registre d'hores</target>
       </trans-unit>
       <trans-unit id="6w8kS.m" resname="user_access_all" xml:space="preserve">
         <source>user_access_all</source>

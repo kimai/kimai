@@ -3646,11 +3646,6 @@ parameters:
             path: src/Utils/JavascriptFormatConverter.php
 
         -
-            message: "#^Cannot call method format\\(\\) on NumberFormatter\\|null\\.$#"
-            count: 1
-            path: src/Utils/LocaleFormatter.php
-
-        -
             message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"
             count: 1
             path: src/Utils/LocaleFormatter.php
