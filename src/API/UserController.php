@@ -223,18 +223,10 @@ final class UserController extends BaseApiController
         ]
     ))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'User ID to create the token for', required: true)]
+    #[IsGranted('api-token', 'profile')]
     #[Route(methods: ['POST'], path: '/{id}/api-token', name: 'post_api_token', requirements: ['id' => '\d+'])]
     public function postApiToken(User $profile, Request $request, AccessTokenRepository $accessTokenRepository): Response
     {
-        $user = $this->getUser();
-        if (!$this->isGranted('api-token', $user)) {
-            throw $this->createAccessDeniedException('User has no access to API tokens');
-        }
-
-        if (!$this->isGranted('api-token', $profile)) {
-            throw $this->createAccessDeniedException('You are not allowed to create API tokens for this user');
-        }
-
         $name = $request->request->get('name');
         if (!\is_string($name) || trim($name) === '') {
             throw new BadRequestHttpException('Missing required parameter "name"');
