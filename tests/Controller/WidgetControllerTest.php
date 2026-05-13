@@ -26,8 +26,13 @@ class WidgetControllerTest extends AbstractControllerBaseTestCase
         $this->assertAccessIsGranted($client, '/widgets/working-time/2020/1');
 
         $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+
         self::assertStringContainsString('id="PaginatedWorkingTimeChartBox"', $content);
         self::assertStringContainsString('myChart = new Chart', $content);
+        self::assertStringContainsString('Daily hours', $content);
+        self::assertStringContainsString('Weekly hours', $content);
+        self::assertStringContainsString('period=month', $content);
         self::assertStringContainsString("KimaiPaginatedBoxWidget.create('#PaginatedWorkingTimeChartBox');", $content);
     }
 }

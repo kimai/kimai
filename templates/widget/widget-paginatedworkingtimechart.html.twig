@@ -7,40 +7,59 @@
         id="PaginatedWorkingTimeChartBox" data-href="#" data-reload=""
     {% endblock %}
     {% block box_tools %}
-        {% set prevYear = options.year %}
-        {% set prevWeek = options.week %}
-        {% set nextYear = options.year %}
-        {% set nextWeek = options.week %}
-        {% if options.week == 1 %}
-            {% set prevYear = prevYear - 1 %}
-            {% set prevWeek = data.lastWeekInLastYear %}
-        {% else %}
-            {% set prevWeek = prevWeek - 1 %}
-        {% endif %}
-        {% if options.week == data.lastWeekInYear %}
-            {% set nextYear = nextYear + 1 %}
-            {% set nextWeek = 1 %}
-        {% else %}
-            {% set nextWeek = nextWeek + 1 %}
-        {% endif %}
-        {{ action_cardtoolbutton('left', {'title': 'stats.workingTimeWeekShort'|trans({'%week%': (prevWeek ~ '/' ~ prevYear)}), 'class': 'pagination-link', 'onclick': 'myChart.destroy()', 'url': path('widgets_working_time_chart', {'year': prevYear, 'week': prevWeek})}) }}
-        {{ action_cardtoolbutton('right', {'title': 'stats.workingTimeWeekShort'|trans({'%week%': (nextWeek ~ '/' ~ nextYear)}), 'class': 'pagination-link', 'onclick': 'myChart.destroy()', 'url': path('widgets_working_time_chart', {'year': nextYear, 'week': nextWeek})}) }}
+        {% set destroyChart = "if (typeof myChart !== 'undefined' && myChart !== null) { myChart.destroy(); }" %}
+        {{ action_cardtoolbutton('left', {'title': 'stats.workingTimePrevious'|trans, 'class': 'pagination-link', 'onclick': destroyChart, 'url': path('widgets_working_time_chart', data.previous)}) }}
+        {{ action_cardtoolbutton('right', {'title': 'stats.workingTimeNext'|trans, 'class': 'pagination-link', 'onclick': destroyChart, 'url': path('widgets_working_time_chart', data.next)}) }}
     {% endblock %}
     {% block box_body %}
+        {% set destroyChart = "if (typeof myChart !== 'undefined' && myChart !== null) { myChart.destroy(); }" %}
+        <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+            <div class="btn-group btn-group-sm" role="group" aria-label="{{ 'stats.workingTimePeriod'|trans }}">
+                {% for period in data.periods %}
+                    <a href="{{ path('widgets_working_time_chart', period.routeOptions) }}" onclick="{{ destroyChart }}" class="btn btn-outline-secondary pagination-link{% if period.active %} active{% endif %}">
+                        {{ period.label|trans }}
+                    </a>
+                {% endfor %}
+            </div>
+            <div class="btn-group btn-group-sm" role="group" aria-label="{{ 'stats.workingTimeGrouping'|trans }}">
+                {% for grouping in data.groupings %}
+                    <a href="{{ path('widgets_working_time_chart', grouping.routeOptions) }}" onclick="{{ destroyChart }}" class="btn btn-outline-secondary pagination-link{% if grouping.active %} active{% endif %}">
+                        {{ grouping.label|trans }}
+                    </a>
+                {% endfor %}
+            </div>
+            {% if data.period == 'custom' %}
+                <form method="get" action="{{ path('widgets_working_time_chart', {'year': data.date|date_format('o'), 'week': data.date|date_format('W')}) }}" class="d-flex flex-wrap align-items-center gap-2 ms-sm-auto pagination-form">
+                    <input type="hidden" name="period" value="custom">
+                    <input type="hidden" name="groupBy" value="{{ data.groupBy }}">
+                    <input type="hidden" name="type" value="{{ data.type }}">
+                    <input type="hidden" name="date" value="{{ data.date|date_format('Y-m-d') }}">
+                    <div class="input-group input-group-sm w-auto">
+                        <span class="input-group-text">{{ 'begin'|trans }}</span>
+                        <input type="date" name="begin" value="{{ data.begin|date_format('Y-m-d') }}" class="form-control">
+                    </div>
+                    <div class="input-group input-group-sm w-auto">
+                        <span class="input-group-text">{{ 'end'|trans }}</span>
+                        <input type="date" name="end" value="{{ data.end|date_format('Y-m-d') }}" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-sm">{{ 'filter'|trans }}</button>
+                </form>
+            {% endif %}
+        </div>
         {{ render_widget('DailyWorkingTimeChart', options|merge({'begin': data.begin, 'end': data.end})) }}
     {% endblock %}
     {% block box_footer %}
         <div class="row">
             <div class="col-sm-3 col-xs-6 mt-1 mb-2 mb-md-0">
                 <div class="text-center">
-                    <h5 class="mb-1">{{ data.day|duration }}</h5>
-                    <span>{{ 'stats.workingTimeToday'|trans({'%day%': 'now'|date_short}) }}</span>
+                    <h5 class="mb-1">{{ data.current|duration }}</h5>
+                    <span>{{ 'stats.workingTimeSelectedRange'|trans({'%begin%': data.begin|date_short, '%end%': data.end|date_short}) }}</span>
                 </div>
             </div>
             <div class="col-sm-3 col-xs-6 mt-1 mb-2 mb-md-0">
                 <div class="text-center">
-                    <h5 class="mb-1">{{ data.week|duration }}</h5>
-                    <span>{{ 'stats.workingTimeWeek'|trans({'%week%': data.begin|date_format('W')}) }}</span>
+                    <h5 class="mb-1">{{ data.day|duration }}</h5>
+                    <span>{{ 'stats.workingTimeToday'|trans({'%day%': 'now'|date_short}) }}</span>
                 </div>
             </div>
             <div class="col-sm-3 col-xs-6 mt-1 mb-2 mb-md-0">
