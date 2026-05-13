@@ -3871,11 +3871,6 @@ parameters:
             path: src/Widget/Type/AbstractWidgetType.php
 
         -
-            message: "#^Method App\\\\Widget\\\\Type\\\\PaginatedWorkingTimeChart\\:\\:getLastWeekInYear\\(\\) has parameter \\$year with no type specified\\.$#"
-            count: 1
-            path: src/Widget/Type/PaginatedWorkingTimeChart.php
-
-        -
             message: "#^Strict comparison using \\!\\=\\= between App\\\\Entity\\\\User and null will always evaluate to true\\.$#"
             count: 1
             path: src/Widget/Type/PaginatedWorkingTimeChart.php

@@ -906,6 +906,58 @@
         <source>Working hours</source>
         <target state="final">Working hours</target>
       </trans-unit>
+      <trans-unit id="WTChartPrevious" resname="stats.workingTimePrevious">
+        <source>stats.workingTimePrevious</source>
+        <target>Previous range</target>
+      </trans-unit>
+      <trans-unit id="WTChartNext" resname="stats.workingTimeNext">
+        <source>stats.workingTimeNext</source>
+        <target>Next range</target>
+      </trans-unit>
+      <trans-unit id="WTChartPeriod" resname="stats.workingTimePeriod">
+        <source>stats.workingTimePeriod</source>
+        <target>Time period</target>
+      </trans-unit>
+      <trans-unit id="WTChartGrouping" resname="stats.workingTimeGrouping">
+        <source>stats.workingTimeGrouping</source>
+        <target>Hour grouping</target>
+      </trans-unit>
+      <trans-unit id="WTChartPeriodWeek" resname="stats.workingTimePeriodWeek">
+        <source>stats.workingTimePeriodWeek</source>
+        <target>Week</target>
+      </trans-unit>
+      <trans-unit id="WTChartPeriodMonth" resname="stats.workingTimePeriodMonth">
+        <source>stats.workingTimePeriodMonth</source>
+        <target>Month</target>
+      </trans-unit>
+      <trans-unit id="WTChartPeriodQuarter" resname="stats.workingTimePeriodQuarter">
+        <source>stats.workingTimePeriodQuarter</source>
+        <target>Quarter</target>
+      </trans-unit>
+      <trans-unit id="WTChartPeriodYear" resname="stats.workingTimePeriodYear">
+        <source>stats.workingTimePeriodYear</source>
+        <target>Year</target>
+      </trans-unit>
+      <trans-unit id="WTChartPeriodYtd" resname="stats.workingTimePeriodYtd">
+        <source>stats.workingTimePeriodYtd</source>
+        <target>YTD</target>
+      </trans-unit>
+      <trans-unit id="WTChartPeriodCustom" resname="stats.workingTimePeriodCustom">
+        <source>stats.workingTimePeriodCustom</source>
+        <target>Custom</target>
+      </trans-unit>
+      <trans-unit id="WTChartGroupDay" resname="stats.workingTimeGroupDay">
+        <source>stats.workingTimeGroupDay</source>
+        <target>Daily hours</target>
+      </trans-unit>
+      <trans-unit id="WTChartGroupWeek" resname="stats.workingTimeGroupWeek">
+        <source>stats.workingTimeGroupWeek</source>
+        <target>Weekly hours</target>
+      </trans-unit>
+      <trans-unit id="WTChartSelectedRange" resname="stats.workingTimeSelectedRange">
+        <source>stats.workingTimeSelectedRange</source>
+        <target>%begin% - %end%</target>
+      </trans-unit>
       <trans-unit id="Nx9_QiO" resname="revenue">
         <source>revenue</source>
         <target>Revenue</target>
