@@ -148,7 +148,7 @@ final class Configuration implements ConfigurationInterface
                     ->defaultValue(ActivityHelper::PATTERN_NAME)
                 ->end()
                 ->booleanNode('allow_inline_create')
-                    ->defaultValue(false)
+                    ->defaultValue(true)
                 ->end()
                 ->scalarNode('number_format')
                     ->defaultValue('{ac,4}')

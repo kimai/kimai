@@ -131,11 +131,10 @@ class TimesheetEditForm extends AbstractType
         // TODO pre-select if only one exists
         $this->addProject($builder, $isNew, $project, $customer);
 
-        // TODO make creation possible
-        //$allowCreate = (bool) $this->systemConfiguration->find('activity.allow_inline_create');
+        // Enable inline creation of activities
         $this->addActivity($builder, $activity, $project, [
-            'allow_create' => false,
-            // 'allow_create' => $allowCreate && $options['create_activity'],
+            'allow_create' => true,
+            'api_data' => ['create' => 'post_activity'],
         ]);
 
         $descriptionOptions = ['required' => false];
@@ -460,7 +459,7 @@ class TimesheetEditForm extends AbstractType
             'include_exported' => false,
             'include_billable' => true,
             'include_rate' => true,
-            'create_activity' => false,
+            'create_activity' => (bool) $this->systemConfiguration->find('activity.allow_inline_create'),
             'docu_chapter' => 'timesheet.html',
             'method' => 'POST',
             'date_format' => null,
