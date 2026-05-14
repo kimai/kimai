@@ -37,7 +37,7 @@ final class InvoiceModelProjectHydrator implements InvoiceModelHydrator
             }
         }
 
-        $counter = count($projects);
+        $counter = \count($projects);
 
         $values = [
             'project._counter' => $counter,
