@@ -149,4 +149,36 @@ class PaginatedWorkingTimeChartTest extends TestCase
         self::assertSame('2020-02-07', $previous['begin']);
         self::assertSame('2020-02-13', $next['begin']);
     }
+
+    public function testGetDataWithHistoricalAnchorKeepsAnchorForYtdPeriodLink(): void
+    {
+        $repository = $this->createMock(TimesheetRepository::class);
+        $repository->method('getDurationForTimeRange')->willReturn(0);
+
+        $configuration = SystemConfigurationFactory::createStub(['company' => ['financial_year' => null]]);
+
+        $sut = new PaginatedWorkingTimeChart($repository, $configuration);
+        $sut->setUser(new User());
+
+        $data = $sut->getData($sut->getOptions([
+            'period' => 'year',
+            'date' => '2024-05-15',
+        ]));
+
+        $ytdPeriod = null;
+        foreach ($data['periods'] as $period) {
+            if ($period['period'] === 'ytd') {
+                $ytdPeriod = $period;
+                break;
+            }
+        }
+
+        if ($ytdPeriod === null) {
+            self::fail('Could not find YTD period option');
+        }
+
+        self::assertSame('ytd', $ytdPeriod['routeOptions']['period']);
+        self::assertSame(2024, $ytdPeriod['routeOptions']['year']);
+        self::assertSame('2024-05-15', $ytdPeriod['routeOptions']['date']);
+    }
 }

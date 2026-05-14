@@ -339,7 +339,7 @@ final class PaginatedWorkingTimeChart extends AbstractWidget
      * @param array<string, string|bool|int|null|array<string, mixed>> $options
      * @return list<array{period: string, label: string, active: bool, routeOptions: array<string, string|int>}>
      */
-    private function getPeriodOptions(array $options, DateTimeInterface $anchor, DateTimeInterface $begin, DateTimeInterface $end, DateTimeInterface $today): array
+    private function getPeriodOptions(array $options, DateTimeInterface $anchor, DateTimeInterface $begin, DateTimeInterface $end): array
     {
         $labels = [
             'week' => 'stats.workingTimePeriodWeek',
@@ -357,7 +357,6 @@ final class PaginatedWorkingTimeChart extends AbstractWidget
             $periodOptions['period'] = $period;
             $periodAnchor = match ($period) {
                 'custom' => $begin,
-                'ytd' => $today,
                 default => $anchor,
             };
 
@@ -456,7 +455,7 @@ final class PaginatedWorkingTimeChart extends AbstractWidget
             'type' => $this->getTypeOption($options),
             'previous' => $navigation['previous'],
             'next' => $navigation['next'],
-            'periods' => $this->getPeriodOptions($options, $anchor, $begin, $end, $dayBegin),
+            'periods' => $this->getPeriodOptions($options, $anchor, $begin, $end),
             'groupings' => $this->getGroupingOptions($options, $anchor, $begin, $end),
             'current' => $this->repository->getDurationForTimeRange($begin, $end, $user),
             'day' => $this->repository->getDurationForTimeRange($dayBegin, $dayEnd, $user),
