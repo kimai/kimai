@@ -2711,11 +2711,6 @@ parameters:
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
 
         -
-            message: "#^Parameter \\#1 \\$date of method App\\\\Invoice\\\\InvoiceFormatter\\:\\:getFormattedDateTime\\(\\) expects DateTimeInterface, DateTime\\|null given\\.$#"
-            count: 2
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
             message: "#^Method App\\\\Invoice\\\\Hydrator\\\\InvoiceModelProjectHydrator\\:\\:getBudgetValues\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelProjectHydrator.php

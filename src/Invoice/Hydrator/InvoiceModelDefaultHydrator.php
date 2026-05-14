@@ -174,29 +174,15 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             }
         }
 
-        $entries = $model->getEntries();
-        $min = null;
-        $max = null;
+        $period = $model->getInvoicePeriod();
+        $min = $period->getStart();
+        $max = $period->getEnd();
 
-        foreach ($entries as $entry) {
-            if ($min === null || $min->getBegin() > $entry->getBegin()) {
-                $min = $entry;
-            }
-
-            if ($max === null || $max->getBegin() < $entry->getBegin()) {
-                $max = $entry;
-            }
-        }
-
-        if ($min !== null && $max !== null) {
-            $values = array_merge($values, [
-                'invoice.first' => $formatter->getFormattedDateTime($min->getBegin()),
-                'invoice.first_process' => $min->getBegin()?->format(self::DATE_PROCESS_FORMAT), // since 2.14
-                'invoice.last' => $formatter->getFormattedDateTime($max->getEnd()),
-                'invoice.last_process' => $max->getEnd()?->format(self::DATE_PROCESS_FORMAT), // since 2.14
-            ]);
-        }
-
-        return $values;
+        return array_merge($values, [
+            'invoice.first' => $formatter->getFormattedDateTime($min),
+            'invoice.first_process' => $min->format(self::DATE_PROCESS_FORMAT), // since 2.14
+            'invoice.last' => $formatter->getFormattedDateTime($max),
+            'invoice.last_process' => $max->format(self::DATE_PROCESS_FORMAT), // since 2.14
+        ]);
     }
 }

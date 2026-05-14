@@ -100,6 +100,28 @@ final class InvoiceModel
         return $this->entries;
     }
 
+    public function getInvoicePeriod(): InvoicePeriod
+    {
+        $min = null;
+        $max = null;
+
+        foreach ($this->getEntries() as $entry) {
+            if ($min === null || $min > $entry->getBegin()) {
+                $min = $entry->getBegin();
+            }
+
+            if ($max === null || $max < $entry->getEnd()) {
+                $max = $entry->getEnd();
+            }
+        }
+
+        if ($min === null || $max === null) {
+            throw new \Exception('Invoices need at least one entry.');
+        }
+
+        return new InvoicePeriod($min, $max);
+    }
+
     /**
      * @param ExportableItem[] $entries
      * @return InvoiceModel

@@ -13,15 +13,20 @@ use App\Entity\Customer;
 use App\Entity\InvoiceTemplate;
 use App\Invoice\Calculator\DefaultCalculator;
 use App\Invoice\InvoiceModel;
+use App\Invoice\InvoicePeriod;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\NumberGenerator\IncrementingNumberGenerator;
+use App\Tests\Invoice\Renderer\RendererTestTrait;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(InvoiceModel::class)]
+#[CoversClass(InvoicePeriod::class)]
 class InvoiceModelTest extends TestCase
 {
+    use RendererTestTrait;
+
     public function testEmptyObject(): void
     {
         $formatter = new DebugFormatter();
@@ -118,5 +123,26 @@ class InvoiceModelTest extends TestCase
         $dueDate = $sut->getDueDate();
         $expected = new \DateTimeImmutable('2022-06-06');
         self::assertEquals($expected->format('Y-m-d'), $dueDate->format('Y-m-d'));
+    }
+
+    public function testGetInvoicePeriod(): void
+    {
+        $sut = $this->getInvoiceModel();
+
+        $period = $sut->getInvoicePeriod();
+
+        self::assertSame('2020-08-12 18:00:00', $period->getStart()->format('Y-m-d H:i:s'));
+        self::assertSame('2021-03-12 12:17:40', $period->getEnd()->format('Y-m-d H:i:s'));
+    }
+
+    public function testGetInvoicePeriodThrowsWithoutEntries(): void
+    {
+        $formatter = new DebugFormatter();
+        $sut = (new InvoiceModelFactoryFactory($this))->create()->createModel($formatter, new Customer('foo'), new InvoiceTemplate(), new InvoiceQuery());
+
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Invoices need at least one entry.');
+
+        $sut->getInvoicePeriod();
     }
 }
