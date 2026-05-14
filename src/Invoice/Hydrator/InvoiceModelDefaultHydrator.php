@@ -181,8 +181,12 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
         return array_merge($values, [
             'invoice.first' => $formatter->getFormattedDateTime($min),
             'invoice.first_process' => $min->format(self::DATE_PROCESS_FORMAT), // since 2.14
+            'invoice.first_month' => $formatter->getFormattedMonthName($min), // since 2.57
+            'invoice.first_year' => $min->format('Y'), // since 2.57
             'invoice.last' => $formatter->getFormattedDateTime($max),
             'invoice.last_process' => $max->format(self::DATE_PROCESS_FORMAT), // since 2.14
+            'invoice.last_month' => $formatter->getFormattedMonthName($max), // since 2.57
+            'invoice.last_year' => $max->format('Y'), // since 2.57
         ]);
     }
 }

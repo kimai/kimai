@@ -104,8 +104,12 @@ class DebugRendererTest extends TestCase
             'invoice.total_time',
             'invoice.duration_decimal',
             'invoice.first',
+            'invoice.first_month',
+            'invoice.first_year',
             'invoice.first_process',
             'invoice.last',
+            'invoice.last_month',
+            'invoice.last_year',
             'invoice.last_process',
             'invoice.total',
             'invoice.total_nc',
@@ -210,6 +214,7 @@ class DebugRendererTest extends TestCase
             'user.meta.hello',
             'user.meta.kitty',
             'testFromModelHydrator',
+            'project._counter',
         ];
 
         if ($activityCounter === 1) {
