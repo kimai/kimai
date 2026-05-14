@@ -33,6 +33,10 @@ final class EncoreExtension implements RuntimeExtensionInterface, ServiceSubscri
 
     public function getEncoreEntryCssSource(string $packageName): string
     {
+        if (!\in_array($packageName, ['invoice', 'invoice-pdf', 'export-pdf'])) {
+            throw new RuntimeError('Unknown CSS package requested: ' . $packageName);
+        }
+
         $lookup = $this->container->get(EntrypointLookupInterface::class);
         $files = $lookup->getCssFiles($packageName);
 
