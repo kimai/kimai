@@ -644,6 +644,8 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     /**
      * Use this function to check if the current user can read data from the given user.
+     *
+     * @deprecated since 2.57 use RolePermissionManager::checkUserAccess() or is_granted('access_user', user)
      */
     public function canSeeUser(User $user): bool
     {
@@ -651,7 +653,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             return true;
         }
 
-        if ($this->canSeeAllData()) {
+        if ($this->isSuperAdmin() || $this->canSeeAllData()) {
             return true;
         }
 
@@ -667,7 +669,19 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             return true;
         }
 
+        // special case: the requested user is in no team and the current user is a teamlead.
+        // this configuration is likely in new installations with small teams, and
+        // it is allowed for teamleads to see other users data by definition
+        if ($this->hasTeamleadRole() && $user->isRegularUserOnly()) {
+            return \count($user->getTeams()) === 0;
+        }
+
         return false;
+    }
+
+    public function isRegularUserOnly(): bool
+    {
+        return $this->getRoles() === [static::DEFAULT_ROLE];
     }
 
     /**

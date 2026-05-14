@@ -132,6 +132,68 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
     }
 
+    public function testGetCollectionForOtherUserDeniedWhenTeamleadIsOnlyPlainMemberOfOwnerTeam(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+
+        $sharedTeam = new Team('timesheet-list-shared');
+        $sharedTeam->addUser($owner);
+        $sharedTeam->addUser($teamlead);
+        $em->persist($sharedTeam);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [], running: false);
+        $ownerId = $owner->getId();
+        self::assertIsInt($ownerId);
+        self::assertNotNull($timesheet->getId());
+
+        $this->request($client, '/api/timesheets', 'GET', ['user' => (string) $ownerId]);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->request($client, '/api/timesheets', 'GET', ['users' => [(string) $ownerId]]);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    public function testGetCollectionForOtherUserAllowedWhenTeamleadOfOwnerTeam(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+
+        $sharedTeam = new Team('timesheet-list-teamlead');
+        $sharedTeam->addUser($owner);
+        $sharedTeam->addTeamlead($teamlead);
+        $em->persist($sharedTeam);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [], running: false);
+        $ownerId = $owner->getId();
+        self::assertIsInt($ownerId);
+        self::assertNotNull($timesheet->getId());
+
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', ['user' => (string) $ownerId]);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertCount(1, $result);
+        self::assertIsArray($result[0]);
+        self::assertSame($ownerId, $result[0]['user']);
+
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', ['users' => [(string) $ownerId]]);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertCount(1, $result);
+        self::assertIsArray($result[0]);
+        self::assertSame($ownerId, $result[0]['user']);
+    }
+
     public function testGetCollectionForAllUserIsSecure(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);

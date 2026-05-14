@@ -113,6 +113,9 @@ final class TimesheetController extends BaseApiController
 
             if (!$seeAll) {
                 foreach ($userRepository->findByIds($users) as $user) {
+                    if (!$this->isGranted('access_user', $user)) {
+                        throw $this->createAccessDeniedException('Cannot access user: ' . $user->getId());
+                    }
                     $query->addUser($user);
                 }
             }
