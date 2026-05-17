@@ -2,13 +2,13 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve" approved="yes">
         <source>Time Tracking</source>
-        <target state="translated">Zeiterfassung</target>
+        <target state="final">Zeiterfassung</target>
       </trans-unit>
-      <trans-unit id="inmIkP6" resname="yes">
+      <trans-unit id="inmIkP6" resname="yes" xml:space="preserve" approved="yes">
         <source>yes</source>
-        <target>Ja</target>
+        <target state="final">Ja</target>
       </trans-unit>
       <trans-unit id="k5Apjz_" resname="no">
         <source>no</source>
