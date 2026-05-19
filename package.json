@@ -51,7 +51,7 @@
     "luxon": "^3.7.2",
     "sass": "^1.99.0",
     "sass-loader": "^16.0.8",
-    "tom-select": "^2.6.0",
+    "tom-select": "2.5.2",
     "webpack": "^5.106.2",
     "webpack-cli": "^5.1.4"
   },

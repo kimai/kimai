@@ -3823,7 +3823,7 @@ __metadata:
     luxon: "npm:^3.7.2"
     sass: "npm:^1.99.0"
     sass-loader: "npm:^16.0.8"
-    tom-select: "npm:^2.6.0"
+    tom-select: "npm:2.5.2"
     webpack: "npm:^5.106.2"
     webpack-cli: "npm:^5.1.4"
   languageName: unknown
@@ -5354,13 +5354,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tom-select@npm:^2.6.0":
-  version: 2.6.0
-  resolution: "tom-select@npm:2.6.0"
+"tom-select@npm:2.5.2":
+  version: 2.5.2
+  resolution: "tom-select@npm:2.5.2"
   dependencies:
     "@orchidjs/sifter": "npm:^1.1.0"
     "@orchidjs/unicode-variants": "npm:^1.1.2"
-  checksum: 10c0/02ddfd834ecfd20d8eba32785b81be89ab581cbba51db0e428e02a18b638ed615ff08119eae5c100872a97abb7c27901e841564d7cda7de2f0427f23f69e361b
+  checksum: 10c0/4522747956fbbd585473e55359e7e763bcfa9b3e16963e2e61d49241132fc6bf30fdceaa75c083b88c6f718fbb84f3d3291b1cdcc9d62fd2d8b1553693e24977
   languageName: node
   linkType: hard
 
