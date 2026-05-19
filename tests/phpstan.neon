@@ -2082,11 +2082,6 @@ parameters:
             path: Twig/LocaleFormatExtensionsTest.php
 
         -
-            message: "#^Parameter \\#1 \\$timezoneId of function date_default_timezone_set expects string, string\\|null given\\.$#"
-            count: 1
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
             message: "#^Property App\\\\Tests\\\\Twig\\\\LocaleFormatExtensionsTest\\:\\:\\$localeDe type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Twig/LocaleFormatExtensionsTest.php
