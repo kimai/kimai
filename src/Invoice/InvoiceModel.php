@@ -115,8 +115,12 @@ final class InvoiceModel
             }
         }
 
-        if ($min === null || $max === null) {
-            throw new \Exception('Invoices need at least one entry.');
+        if ($min === null) {
+            $min = $this->getQuery()?->getBegin() ?? $this->invoiceDate;
+        }
+
+        if ($max === null) {
+            $max = $this->getQuery()?->getEnd() ?? $this->invoiceDate;
         }
 
         return new InvoicePeriod($min, $max);
