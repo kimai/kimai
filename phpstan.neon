@@ -1641,21 +1641,6 @@ parameters:
             path: src/Form/CustomerEditForm.php
 
         -
-            message: "#^Class App\\\\Form\\\\DataTransformer\\\\SearchTermTransformer implements generic interface Symfony\\\\Component\\\\Form\\\\DataTransformerInterface but does not specify its types\\: T, R$#"
-            count: 1
-            path: src/Form/DataTransformer/SearchTermTransformer.php
-
-        -
-            message: "#^Parameter \\#1 \\$searchTerm \\(App\\\\Utils\\\\SearchTerm\\|null\\) of method App\\\\Form\\\\DataTransformer\\\\SearchTermTransformer\\:\\:transform\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<mixed,mixed\\>\\:\\:transform\\(\\)$#"
-            count: 1
-            path: src/Form/DataTransformer/SearchTermTransformer.php
-
-        -
-            message: "#^Parameter \\#1 \\$searchTerm \\(string\\|null\\) of method App\\\\Form\\\\DataTransformer\\\\SearchTermTransformer\\:\\:reverseTransform\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<mixed,mixed\\>\\:\\:reverseTransform\\(\\)$#"
-            count: 1
-            path: src/Form/DataTransformer/SearchTermTransformer.php
-
-        -
             message: "#^Parameter \\#1 \\$value \\(array\\<string\\>\\) of method App\\\\Form\\\\DataTransformer\\\\StringToArrayTransformer\\:\\:transform\\(\\) should be contravariant with parameter \\$value \\(array\\|null\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<array,string\\>\\:\\:transform\\(\\)$#"
             count: 1
             path: src/Form/DataTransformer/StringToArrayTransformer.php
@@ -1709,11 +1694,6 @@ parameters:
             message: "#^Method App\\\\Form\\\\Model\\\\SystemConfiguration\\:\\:getTranslation\\(\\) should return string but returns string\\|null\\.$#"
             count: 1
             path: src/Form/Model/SystemConfiguration.php
-
-        -
-            message: "#^PHPDoc tag @var for variable \\$repository contains generic class Doctrine\\\\ORM\\\\EntityRepository but does not specify its types\\: TEntityClass$#"
-            count: 1
-            path: src/Form/MultiUpdate/MultiUpdateTable.php
 
         -
             message: "#^Cannot access offset 'customer' on mixed\\.$#"
@@ -2549,16 +2529,6 @@ parameters:
             message: "#^Method App\\\\Form\\\\Type\\\\ActivityType\\:\\:groupBy\\(\\) has parameter \\$key with no type specified\\.$#"
             count: 1
             path: src/Form/Type/ActivityType.php
-
-        -
-            message: "#^Class App\\\\Form\\\\Type\\\\ColorChoiceType implements generic interface Symfony\\\\Component\\\\Form\\\\DataTransformerInterface but does not specify its types\\: T, R$#"
-            count: 1
-            path: src/Form/Type/ColorChoiceType.php
-
-        -
-            message: "#^Class App\\\\Form\\\\Type\\\\ColorPickerType implements generic interface Symfony\\\\Component\\\\Form\\\\DataTransformerInterface but does not specify its types\\: T, R$#"
-            count: 1
-            path: src/Form/Type/ColorPickerType.php
 
         -
             message: "#^Method App\\\\Form\\\\Type\\\\CustomerType\\:\\:getChoiceAttributes\\(\\) has parameter \\$key with no type specified\\.$#"
