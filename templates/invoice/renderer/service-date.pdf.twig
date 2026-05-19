@@ -74,14 +74,18 @@ mpdf-->
             <td class="text-right">
                 {% set classLeft = 'text-left' %}
                 {% set classRight = 'text-right text-nowrap padding-left' %}
-                <table style="width: 240px">
+                <table style="width: 270px">
                     <tr>
                         <td class="{{ classLeft }}">{{ 'date'|trans }}</td>
                         <td class="{{ classRight }}">{{ invoice['invoice.date'] }}</td>
                     </tr>
                     <tr>
                         <td class="{{ classLeft }}">{{ 'invoice.service_date'|trans }}</td>
-                        <td class="{{ classRight }}">{{ invoice['query.end_month'] }} {{ invoice['query.end_year'] }}</td>
+                        <td class="{{ classRight }}">
+                            {{ invoice['invoice.first_month'] }} {{ invoice['invoice.first_year'] }}
+                            &ndash;
+                            {{ invoice['invoice.last_month'] }} {{ invoice['invoice.last_year'] }}
+                        </td>
                     </tr>
                     <tr>
                         <td class="{{ classLeft }}">{{ 'invoice.number'|trans }}</td>
