@@ -85,13 +85,12 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
             sortField:[{field: '$order'}, {field: '$score'}],
             // required so it works in table.responsive, but requires z-index 1056, because bootstrap modal would otherwise hide it
             dropdownParent: 'body',
-        };
-
-        let render = {
             onOptionAdd: (value) => {
                 node.dispatchEvent(new CustomEvent('create', {detail: {'value': value}}));
-            },
+            }
         };
+
+        let render = {};
 
         const rendererType = (node.dataset['renderer'] !== undefined) ? node.dataset['renderer'] : 'default';
         options.render = {...render, ...this.getRenderer(rendererType)};
