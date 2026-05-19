@@ -25,6 +25,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 #[Group('integration')]
 class TimesheetControllerTest extends APIControllerBaseTestCase
@@ -727,6 +728,39 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $this->assertApiCallValidationError($client->getResponse(), ['project']);
     }
 
+    public function testPostActionRejectsTeamRestrictedVisibleProjectOutsideUsersScope(): void
+    {
+        $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $owner = $this->getUserByRole(User::ROLE_USER);
+        [$restrictedProject] = $this->createTeamRestrictedProjectFixture('post');
+        $globalActivity = $this->getEntityManager()->getRepository(Activity::class)->find(1);
+        self::assertInstanceOf(Activity::class, $globalActivity);
+        self::assertNull($globalActivity->getProject(), 'Sanity check: fixture activity 1 must stay global for the POST PoC.');
+
+        $this->assertProjectIsHiddenFromApi($client, $restrictedProject);
+
+        $data = [
+            'activity' => $globalActivity->getId(),
+            'project' => $restrictedProject->getId(),
+            'begin' => ($dateTime->createDateTime('-8 hours'))->format(self::DATE_FORMAT),
+            'end' => ($dateTime->createDateTime())->format(self::DATE_FORMAT),
+            'description' => 'GHSA-vrr2-create-attempt',
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets', 'POST', [], $json);
+        $this->assertApiCallValidationError($client->getResponse(), ['project' => 'The selected choice is invalid.']);
+
+        self::assertSame(
+            0,
+            $this->getEntityManager()->getRepository(Timesheet::class)->count([
+                'user' => $owner,
+                'description' => 'GHSA-vrr2-create-attempt',
+            ])
+        );
+    }
+
     // check for activity, as this is a required field. It will not be included in the select, as it is
     // already filtered within the repository due to the hidden flag
     public function testPostActionWithInvisibleActivity(): void
@@ -913,6 +947,46 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertEquals(25200, $result['duration']);
         self::assertEquals('foo', $result['description']);
         self::assertFalse($result['billable']);
+    }
+
+    public function testPatchActionRejectsReassigningOwnTimesheetToTeamRestrictedVisibleProject(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $owner = $this->getUserByRole(User::ROLE_USER);
+        $em = $this->getEntityManager();
+
+        $allowedProject = $em->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $allowedProject);
+        $globalActivity = $em->getRepository(Activity::class)->find(1);
+        self::assertInstanceOf(Activity::class, $globalActivity);
+        self::assertNull($globalActivity->getProject(), 'Sanity check: fixture activity 1 must stay global for the PATCH PoC.');
+
+        $timesheet = $this->persistFinishedTimesheet($owner, $allowedProject, $globalActivity, 'GHSA-vrr2-patch-baseline');
+        [$restrictedProject] = $this->createTeamRestrictedProjectFixture('patch');
+
+        $this->assertProjectIsHiddenFromApi($client, $restrictedProject);
+
+        $json = json_encode(['project' => $restrictedProject->getId()]);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $timesheet->getId(), 'PATCH', [], $json);
+        $this->assertApiCallValidationError($client->getResponse(), ['project' => 'The selected choice is invalid.']);
+
+        $em->clear();
+        $reloaded = $em->getRepository(Timesheet::class)->find($timesheet->getId());
+        self::assertInstanceOf(Timesheet::class, $reloaded);
+        self::assertSame($allowedProject->getId(), $reloaded->getProject()?->getId());
+
+        $this->request($client, '/api/timesheets/' . $timesheet->getId(), 'GET', ['full' => 'true']);
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        self::assertSame($allowedProject->getId(), $result['project']);
+        self::assertNotSame($restrictedProject->getId(), $result['project']);
     }
 
     public function testPatchActionWithInvalidUser(): void
@@ -1954,6 +2028,72 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
             $timesheet->setEnd($end);
             $timesheet->setDuration(3600);
         }
+        $em->persist($timesheet);
+        $em->flush();
+
+        return $timesheet;
+    }
+
+    /**
+     * @return array{0: Project, 1: Activity}
+     */
+    private function createTeamRestrictedProjectFixture(string $suffix): array
+    {
+        $em = $this->getEntityManager();
+
+        $restrictedTeam = new Team('GHSA-vrr2 team ' . $suffix);
+        $restrictedTeam->addUser($this->getUserByRole(User::ROLE_TEAMLEAD));
+        $em->persist($restrictedTeam);
+
+        $customer = new Customer('GHSA-vrr2 customer ' . $suffix);
+        $customer->setCountry('DE');
+        $customer->setCurrency('CHF');
+        $customer->setTimezone(self::TEST_TIMEZONE);
+        $customer->setVisible(true);
+        $customer->addTeam($restrictedTeam);
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('GHSA-vrr2 project ' . $suffix);
+        $project->setCustomer($customer);
+        $project->setVisible(true);
+        $em->persist($project);
+
+        $activity = new Activity();
+        $activity->setName('GHSA-vrr2 activity ' . $suffix);
+        $activity->setProject($project);
+        $activity->setVisible(true);
+        $em->persist($activity);
+
+        $em->flush();
+
+        return [$project, $activity];
+    }
+
+    private function assertProjectIsHiddenFromApi(HttpKernelBrowser $client, Project $project): void
+    {
+        $this->assertAccessIsGranted($client, '/api/projects');
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertNotContains($project->getId(), array_column($result, 'id'));
+    }
+
+    private function persistFinishedTimesheet(User $owner, Project $project, Activity $activity, string $description): Timesheet
+    {
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+        $timesheet->setBegin(new \DateTime('-2 hours'));
+        $timesheet->setEnd(new \DateTime('-1 hour'));
+        $timesheet->setDuration(3600);
+        $timesheet->setDescription($description);
+
+        $em = $this->getEntityManager();
         $em->persist($timesheet);
         $em->flush();
 
