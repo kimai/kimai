@@ -28,6 +28,7 @@ final class FavoriteController extends AbstractController
 
     #[Route(path: '/timesheet/add/{id}', name: 'favorites_timesheets_add', methods: ['GET'])]
     #[IsGranted('start_own_timesheet')]
+    #[IsGranted('is_owner', 'timesheet')]
     public function add(Timesheet $timesheet, FavoriteRecordService $favoriteRecordService): Response
     {
         $favoriteRecordService->addFavorite($timesheet);
@@ -37,6 +38,7 @@ final class FavoriteController extends AbstractController
 
     #[Route(path: '/timesheet/remove/{id}', name: 'favorites_timesheets_remove', methods: ['GET'])]
     #[IsGranted('start_own_timesheet')]
+    #[IsGranted('is_owner', 'timesheet')]
     public function remove(Timesheet $timesheet, FavoriteRecordService $favoriteRecordService): Response
     {
         $favoriteRecordService->removeFavorite($timesheet);

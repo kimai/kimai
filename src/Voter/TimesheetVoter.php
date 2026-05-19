@@ -48,7 +48,8 @@ final class TimesheetVoter extends Voter
         self::EDIT_RATE,
         self::EDIT_EXPORT,
         'edit_billable',
-        'duplicate'
+        'duplicate',
+        'is_owner',
     ];
 
     private ?bool $lockdownGrace = null;
@@ -89,6 +90,9 @@ final class TimesheetVoter extends Voter
         $permission = '';
 
         switch ($attribute) {
+            case 'is_owner':
+                return (!$subject instanceof MultiUserTimesheet) && $user === $subject->getUser();
+
             case self::START:
                 if (!$this->canStart($subject)) {
                     return false;
