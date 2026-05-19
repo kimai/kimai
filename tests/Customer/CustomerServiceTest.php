@@ -169,7 +169,7 @@ class CustomerServiceTest extends TestCase
      */
     public static function getTestData(): array
     {
-        $dateTime = new \DateTime('now', new \DateTimeZone('Europe/Vienna'));
+        $dateTime = new \DateTime();
 
         $yearLong = (int) $dateTime->format('Y');
         $yearShort = (int) $dateTime->format('y');
