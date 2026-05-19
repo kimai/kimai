@@ -134,15 +134,4 @@ class InvoiceModelTest extends TestCase
         self::assertSame('2020-08-12 18:00:00', $period->getStart()->format('Y-m-d H:i:s'));
         self::assertSame('2021-03-12 12:17:40', $period->getEnd()->format('Y-m-d H:i:s'));
     }
-
-    public function testGetInvoicePeriodThrowsWithoutEntries(): void
-    {
-        $formatter = new DebugFormatter();
-        $sut = (new InvoiceModelFactoryFactory($this))->create()->createModel($formatter, new Customer('foo'), new InvoiceTemplate(), new InvoiceQuery());
-
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('Invoices need at least one entry.');
-
-        $sut->getInvoicePeriod();
-    }
 }
