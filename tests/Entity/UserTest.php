@@ -771,9 +771,7 @@ class UserTest extends TestCase
         self::assertTrue($user->isPasswordRequestNonExpired(3600));
         self::assertTrue($user->isPasswordRequestNonExpired(7200));
 
-        $before = date_default_timezone_get();
-        date_default_timezone_set('America/Los_Angeles');
-        date_default_timezone_set($before);
+        $user->setTimezone('America/Los_Angeles');
 
         self::assertTrue($user->isPasswordRequestNonExpired(3600));
         self::assertTrue($user->isPasswordRequestNonExpired(7200));
