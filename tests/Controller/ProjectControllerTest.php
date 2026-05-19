@@ -15,10 +15,13 @@ use App\Entity\ActivityRate;
 use App\Entity\Project;
 use App\Entity\ProjectMeta;
 use App\Entity\ProjectRate;
+use App\Entity\Role;
+use App\Entity\RolePermission;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\ActivityFixtures;
+use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
@@ -419,6 +422,32 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
 
         $node = $client->getCrawler()->filter('div.card#activity_list_box .card-body table tbody tr');
         self::assertEquals(5, $node->count());
+    }
+
+    public function testCreateWithCustomerActionDeniesUserWithoutEditCustomerPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
+
+        $customer = $this->importFixture(new CustomerFixtures(1))[0];
+
+        $em = $this->getEntityManager();
+
+        $role = (new Role())->setName('TEST_CREATE_PROJECT_ONLY');
+        $permission = (new RolePermission())->setRole($role)->setPermission('create_project')->setAllowed(true);
+
+        $roleName = $role->getName();
+        self::assertNotNull($roleName);
+        $user->addRole($roleName);
+
+        $em->persist($role);
+        $em->persist($permission);
+        $em->persist($user);
+        $em->flush();
+
+        $this->request($client, '/admin/project/create/' . $customer->getId());
+
+        $this->assertAccessDenied($client);
     }
 
     public function testCreateAction(): void

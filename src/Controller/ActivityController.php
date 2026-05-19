@@ -235,6 +235,7 @@ final class ActivityController extends AbstractController
 
     #[Route(path: '/create/{project}', name: 'admin_activity_create_with_project', methods: ['GET', 'POST'])]
     #[IsGranted('create_activity')]
+    #[IsGranted('edit', 'project')]
     public function createWithProjectAction(Project $project, Request $request, ActivityService $activityService, SystemConfiguration $configuration): Response
     {
         return $this->createActivity($request, $activityService, $configuration, $project);

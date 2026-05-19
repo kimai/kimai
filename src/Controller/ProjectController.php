@@ -161,6 +161,7 @@ final class ProjectController extends AbstractController
 
     #[Route(path: '/create/{customer}', name: 'admin_project_create_with_customer', methods: ['GET', 'POST'])]
     #[IsGranted('create_project')]
+    #[IsGranted('edit', 'customer')]
     public function createWithCustomerAction(Request $request, Customer $customer, ProjectService $projectService, SystemConfiguration $configuration): Response
     {
         return $this->createProject($request, $projectService, $configuration, $customer);
