@@ -289,7 +289,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $factory = DateTimeFactory::createByUser($user);
 
         $begin = $factory->createDateTime('first day of this month');
-        $begin = $begin->setTime(0, 0, 1);
+        $begin = $begin->setTime(0, 0, 0);
 
         $end = $factory->createDateTime('last day of this month');
         $end = $end->setTime(23, 59, 59);
@@ -346,7 +346,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $factory = DateTimeFactory::createByUser($user);
 
         $begin = $factory->create('first day of this month');
-        $begin = $begin->setTime(0, 0, 1);
+        $begin = $begin->setTime(0, 0, 0);
 
         $end = $factory->create('last day of this month');
         $end = $end->setTime(23, 59, 59);
@@ -388,12 +388,12 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
 
         $fixture = new TimesheetFixtures($user, 7);
         $fixture->setExported(true);
-        $fixture->setStartDate(new \DateTime('first day of this month'));
+        $fixture->setStartDate($factory->createDateTime('first day of this month 00:00:01'));
         $fixture->setAllowEmptyDescriptions(false);
         $this->importFixture($fixture);
 
         $begin = $factory->create('first day of this month');
-        $begin = $begin->setTime(0, 0, 1);
+        $begin = $begin->setTime(0, 0, 0);
 
         $end = $factory->create('last day of this month');
         $end = $end->setTime(23, 59, 59);
