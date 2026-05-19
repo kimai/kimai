@@ -123,7 +123,10 @@ final class InvoiceModel
             $max = $this->getQuery()?->getEnd() ?? $this->invoiceDate;
         }
 
-        return new InvoicePeriod($min, $max);
+        return new InvoicePeriod(
+            \DateTimeImmutable::createFromInterface($min),
+            \DateTimeImmutable::createFromInterface($max)
+        );
     }
 
     /**
