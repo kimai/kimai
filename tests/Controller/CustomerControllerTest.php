@@ -12,6 +12,7 @@ namespace App\Tests\Controller;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
 use App\Entity\CustomerMeta;
+use App\Entity\CustomerRate;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\CustomerFixtures;
@@ -173,6 +174,24 @@ class CustomerControllerTest extends AbstractControllerBaseTestCase
         $node = $client->getCrawler()->filter('div.card#customer_rates_box table.dataTable tbody tr:not(.summary)');
         self::assertEquals(1, $node->count());
         self::assertStringContainsString('123.45', $node->text(null, true));
+    }
+
+    public function testEditRateActionDeniesForeignRate(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $customer = $this->importFixture(new CustomerFixtures(1))[0];
+        $rate = new CustomerRate();
+        $rate->setCustomer($customer);
+        $rate->setRate(123.45);
+
+        $em = $this->getEntityManager();
+        $em->persist($rate);
+        $em->flush();
+
+        $this->request($client, '/admin/customer/1/rate/' . $rate->getId());
+
+        $this->assertAccessDenied($client);
     }
 
     public function testAddCommentAction(): void

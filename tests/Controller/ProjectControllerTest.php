@@ -212,6 +212,24 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
         $this->assertAddRate($client, 123.45, 1);
     }
 
+    public function testEditRateActionDeniesForeignRate(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $project = $this->importFixture(new ProjectFixtures(1))[0];
+        $rate = new ProjectRate();
+        $rate->setProject($project);
+        $rate->setRate(123.45);
+
+        $em = $this->getEntityManager();
+        $em->persist($rate);
+        $em->flush();
+
+        $this->request($client, '/admin/project/1/rate/' . $rate->getId());
+
+        $this->assertAccessDenied($client);
+    }
+
     public function assertAddRate(HttpKernelBrowser $client, $rate, $projectId): void
     {
         $this->assertAccessIsGranted($client, '/admin/project/' . $projectId . '/rate');

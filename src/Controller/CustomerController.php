@@ -371,6 +371,10 @@ final class CustomerController extends AbstractController
     #[IsGranted('edit', 'customer')]
     public function editRateAction(Customer $customer, CustomerRate $rate, Request $request, CustomerRateRepository $repository): Response
     {
+        if ($rate->getCustomer() !== $customer) {
+            throw $this->createAccessDeniedException('Trying to edit rate and customer that do not belong together.');
+        }
+
         return $this->rateFormAction($customer, $rate, $request, $repository, $this->generateUrl('admin_customer_rate_edit', ['id' => $customer->getId(), 'rate' => $rate->getId()]));
     }
 

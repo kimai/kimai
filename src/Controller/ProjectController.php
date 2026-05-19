@@ -394,6 +394,10 @@ final class ProjectController extends AbstractController
     #[IsGranted('edit', 'project')]
     public function editRateAction(Project $project, ProjectRate $rate, Request $request, ProjectRateRepository $repository): Response
     {
+        if ($rate->getProject() !== $project) {
+            throw $this->createAccessDeniedException('Trying to edit rate and project that do not belong together.');
+        }
+
         return $this->rateFormAction($project, $rate, $request, $repository, $this->generateUrl('admin_project_rate_edit', ['id' => $project->getId(), 'rate' => $rate->getId()]));
     }
 
