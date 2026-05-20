@@ -82,8 +82,10 @@ mpdf-->
                     <tr>
                         <td class="{{ classLeft }}">{{ 'invoice.service_date'|trans }}</td>
                         <td class="{{ classRight }}">
+                            {% if invoice['invoice.first_month'] != invoice['invoice.last_month'] or invoice['invoice.first_year'] != invoice['invoice.last_year'] %}
                             {{ invoice['invoice.first_month'] }} {{ invoice['invoice.first_year'] }}
                             &ndash;
+                            {% endif %}
                             {{ invoice['invoice.last_month'] }} {{ invoice['invoice.last_year'] }}
                         </td>
                     </tr>
