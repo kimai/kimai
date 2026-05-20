@@ -85,6 +85,7 @@ There is one simple rule in our "Code of conduct": Don't be an ass!
 - Mastodon: [@kimai](https://phpc.social/@kimai)
 - Youtube: [@kimai_org](https://www.youtube.com/@kimai_org)
 - LinkedIn: [@kimai-org](https://www.linkedin.com/company/kimai-org/)
+- Reddit: [r/kimai](https://www.reddit.com/r/kimai/)
 
 ### Credits
 
