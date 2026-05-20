@@ -165,6 +165,11 @@ final class PermissionController extends AbstractController
             'manager' => $this->manager,
             'system_roles' => $roleService->getSystemRoles(),
             'always_apply_superadmin' => array_keys(RolePermissionManager::SUPER_ADMIN_PERMISSIONS),
+            'deactivated' => [
+                User::ROLE_USER => ['impersonate_user'],
+                User::ROLE_TEAMLEAD => ['impersonate_user'],
+                User::ROLE_ADMIN => ['impersonate_user'],
+            ],
         ]);
     }
 
@@ -239,6 +244,10 @@ final class PermissionController extends AbstractController
 
         if (!$this->manager->isRegisteredPermission($name)) {
             throw $this->createNotFoundException('Unknown permission: ' . $name);
+        }
+
+        if ($name === 'impersonate_user' && $role->getName() !== User::ROLE_SUPER_ADMIN) {
+            throw $this->createAccessDeniedException(\sprintf('Impersonation cannot be activated for role "%s"', $role->getName()));
         }
 
         if (false === $value && $role->getName() === User::ROLE_SUPER_ADMIN && \array_key_exists($name, RolePermissionManager::SUPER_ADMIN_PERMISSIONS)) {

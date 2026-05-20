@@ -106,9 +106,8 @@ kimai:
             LOCKDOWN: ['lockdown_grace_timesheet','lockdown_override_timesheet']
             REPORTING: ['view_reporting','view_other_reporting','project_reporting','customer_reporting']
             EVERYONE: ['api_access','hours_own_profile']
-            # permissions which are deactivated, as these features are hidden for now
-            # brave users can try to activate them and be surprised what happens
-            REGISTER_BETA: []
+            # permissions that exist, but are not assigned by default to anyone
+            NO_ONE: ['impersonate_user']
         # mapping a "role name" to an array of "set names"
         maps:
             ROLE_USER: ['TIMESHEET','PROFILE', 'EVERYONE']
