@@ -189,6 +189,10 @@ final class ActivityController extends AbstractController
     #[IsGranted('edit', 'activity')]
     public function editRateAction(Activity $activity, ActivityRate $rate, Request $request, ActivityRateRepository $repository): Response
     {
+        if ($rate->getActivity() !== $activity) {
+            throw $this->createAccessDeniedException('Trying to edit rate and activity that do not belong together.');
+        }
+
         return $this->rateFormAction($activity, $rate, $request, $repository, $this->generateUrl('admin_activity_rate_edit', ['id' => $activity->getId(), 'rate' => $rate->getId()]));
     }
 
@@ -231,6 +235,7 @@ final class ActivityController extends AbstractController
 
     #[Route(path: '/create/{project}', name: 'admin_activity_create_with_project', methods: ['GET', 'POST'])]
     #[IsGranted('create_activity')]
+    #[IsGranted('edit', 'project')]
     public function createWithProjectAction(Project $project, Request $request, ActivityService $activityService, SystemConfiguration $configuration): Response
     {
         return $this->createActivity($request, $activityService, $configuration, $project);

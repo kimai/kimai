@@ -33,6 +33,7 @@ class InvoiceModelProjectHydratorTest extends TestCase
     public function assertModelStructure(array $model): void
     {
         $keys = [
+            'project._counter',
             'project.id',
             'project.name',
             'project.comment',

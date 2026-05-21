@@ -16,6 +16,7 @@ use App\Entity\Project;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Form\Model\MultiUserTimesheet;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\LockdownService;
 use App\Voter\TimesheetVoter;
@@ -167,6 +168,62 @@ class TimesheetVoterTest extends AbstractVoterTestCase
         $timesheet = new Timesheet();
         $timesheet->setUser($user2)->setActivity(new Activity());
         $this->assertVote($user2, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testIsOwnerGrantedForOwnTimesheet(): void
+    {
+        // is_owner bypasses the RolePermissionManager entirely: a user with no
+        // role/permissions at all must still be recognised as the owner.
+        $owner = self::getUser(1, 'unknown');
+
+        $timesheet = self::getTimesheet($owner);
+
+        $this->assertVote($owner, $timesheet, 'is_owner', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testIsOwnerDeniedForOtherUsersTimesheet(): void
+    {
+        $owner = self::getUser(1, User::ROLE_USER);
+        $other = self::getUser(2, User::ROLE_SUPER_ADMIN);
+
+        $timesheet = self::getTimesheet($owner);
+
+        // even a super admin is not the *owner* of someone else's timesheet
+        $this->assertVote($other, $timesheet, 'is_owner', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testIsOwnerUsesObjectIdentityNotId(): void
+    {
+        // The is_owner branch compares with strict identity ($user === $subject->getUser()),
+        // not by id like the permission-based branches. Two distinct User instances that
+        // share the same id are therefore NOT considered the same owner.
+        $tokenUser = self::getUser(1, User::ROLE_USER);
+        $timesheetUser = self::getUser(1, User::ROLE_USER);
+
+        $timesheet = self::getTimesheet($timesheetUser);
+
+        $this->assertVote($tokenUser, $timesheet, 'is_owner', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testIsOwnerDeniedWhenTimesheetHasNoUser(): void
+    {
+        $user = self::getUser(1, User::ROLE_USER);
+
+        $timesheet = new Timesheet();
+
+        $this->assertVote($user, $timesheet, 'is_owner', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testIsOwnerDeniedForMultiUserTimesheetEvenWhenSameUser(): void
+    {
+        // A MultiUserTimesheet is explicitly excluded from being "owned",
+        // regardless of the assigned user.
+        $owner = self::getUser(1, User::ROLE_USER);
+
+        $timesheet = new MultiUserTimesheet();
+        $timesheet->setUser($owner);
+
+        $this->assertVote($owner, $timesheet, 'is_owner', VoterInterface::ACCESS_DENIED);
     }
 
     private static function getTimesheet($user): Timesheet

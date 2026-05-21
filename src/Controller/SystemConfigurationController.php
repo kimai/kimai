@@ -277,6 +277,9 @@ final class SystemConfigurationController extends AbstractController
                     ->setLabel('user_auth_password_reset_token_ttl')
                     ->setConstraints([new NotNull(), new GreaterThanOrEqual(['value' => 60])])
                     ->setType(IntegerType::class),
+                (new Configuration('user.theme'))
+                    ->setLabel('skin')
+                    ->setType(SkinType::class),
             ]);
 
         $allowRegistration = $this->systemConfiguration->find('features.user_registration');

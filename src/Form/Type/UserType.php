@@ -135,7 +135,7 @@ final class UserType extends AbstractType
                 return $a->getDisplayName() <=> $b->getDisplayName();
             });
 
-            return array_values($userById);
+            return $userById;
         });
     }
 

@@ -287,7 +287,7 @@ final class LocaleFormatter
             try {
                 $date = new \DateTimeImmutable($date);
             } catch (Exception $ex) {
-                return $date;
+                return null;
             }
         }
 
