@@ -587,16 +587,6 @@ parameters:
             path: Controller/CustomerControllerTest.php
 
         -
-            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|null given\\.$#"
-            count: 2
-            path: Controller/CustomerControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$url of method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:request\\(\\) expects string, string\\|null given\\.$#"
-            count: 2
-            path: Controller/CustomerControllerTest.php
-
-        -
             message: "#^Parameter \\#1 \\$project of method App\\\\Entity\\\\Team\\:\\:addProject\\(\\) expects App\\\\Entity\\\\Project, App\\\\Entity\\\\Project\\|null given\\.$#"
             count: 1
             path: Controller/ExportControllerTest.php
@@ -784,16 +774,6 @@ parameters:
         -
             message: "#^Parameter \\#1 \\$projects of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\>, array\\<int, App\\\\Entity\\\\Project\\|null\\> given\\.$#"
             count: 1
-            path: Controller/ProjectControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|null given\\.$#"
-            count: 2
-            path: Controller/ProjectControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$url of method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:request\\(\\) expects string, string\\|null given\\.$#"
-            count: 2
             path: Controller/ProjectControllerTest.php
 
         -

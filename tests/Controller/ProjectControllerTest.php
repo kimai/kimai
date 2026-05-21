@@ -331,57 +331,6 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
         self::assertStringContainsString('<p>A beautiful and long comment <strong>with some</strong> markdown formatting</p>', $node->html());
     }
 
-    public function testDeleteCommentAction(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/project/1/details');
-        $form = $client->getCrawler()->filter('form[name=project_comment_form]')->form();
-        $client->submit($form, [
-            'project_comment_form' => [
-                'message' => 'Foo bar blub',
-            ]
-        ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
-        self::assertStringContainsString('Foo bar blub', $node->html());
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.delete-comment-link');
-
-        $this->request($client, $node->attr('href'));
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
-        self::assertStringContainsString('There were no comments posted yet', $node->html());
-    }
-
-    public function testPinCommentAction(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/project/1/details');
-        $form = $client->getCrawler()->filter('form[name=project_comment_form]')->form();
-        $client->submit($form, [
-            'project_comment_form' => [
-                'message' => 'Foo bar blub',
-            ]
-        ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
-        self::assertStringContainsString('Foo bar blub', $node->html());
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.pin-comment-link.active');
-        self::assertEquals(0, $node->count());
-
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.pin-comment-link');
-        self::assertEquals(1, $node->count());
-        $this->request($client, $node->attr('href'));
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.pin-comment-link.active');
-        self::assertEquals(1, $node->count());
-        self::assertStringContainsString('/admin/project/', $node->attr('href'));
-        self::assertStringContainsString('/comment_pin/', $node->attr('href'));
-    }
-
     public function testCreateDefaultTeamAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);

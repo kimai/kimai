@@ -30,8 +30,7 @@ final class CommentApiForm extends AbstractType
         $builder->add('message', TextareaType::class, [
             'label' => false,
             'documentation' => [
-                'default' => false,
-                'description' => 'The actual comment (markdown supported)'
+                'description' => 'The actual comment (markdown is supported)'
             ],
         ]);
     }
