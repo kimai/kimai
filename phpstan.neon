@@ -43,7 +43,9 @@ parameters:
         containerXmlPath: %rootDir%/../../../var/cache/dev/App_KernelDevDebugContainer.xml
     ignoreErrors:
         - identifier: offsetAccess.notFound
-        - '#^Method .*\(\) has parameter \$builder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'
+        - message: '#^Method .*\(\) has parameter \$builder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'
+        - message: '#^Call to deprecated method setApiToken\(\) of class App\\Entity\\User#'
+        - message: '#^Call to deprecated method getPlainApiToken\(\) of class App\\Entity\\User#'
 
         -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Activity\\:\\:getMetaField\\(\\) expects string, mixed given\\.$#"
