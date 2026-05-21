@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="flashmessages.en.xlf">
     <body>
-      <trans-unit id="S9k1S7Z" resname="warning">
+      <trans-unit id="S9k1S7Z" resname="warning" xml:space="preserve" approved="yes">
         <source>warning</source>
-        <target>Warnung</target>
+        <target state="final">Warnung</target>
       </trans-unit>
       <trans-unit id="WmrEP_5" resname="timesheet.stop.success">
         <source>timesheet.stop.success</source>

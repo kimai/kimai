@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="invoice-calculator.en.xlf">
     <body>
-      <trans-unit id="MviRJeB" resname="invoice_calculator">
+      <trans-unit id="MviRJeB" resname="invoice_calculator" xml:space="preserve" approved="yes">
         <source>invoice_calculator</source>
-        <target>Gruppierung der Rechnungszeilen</target>
+        <target state="final">Gruppierung der Rechnungszeilen</target>
       </trans-unit>
       <trans-unit id="KWX.j1b" resname="invoice_calculator.help">
         <source>invoice_calculator.help</source>

@@ -42,9 +42,9 @@
         <source>Maximum duration of {{ value }} hours exceeded.</source>
         <target>O máximo de {{ value }} hora(s) permitida(s).</target>
       </trans-unit>
-      <trans-unit id="S14XECA" resname="The username is already used.">
+      <trans-unit id="S14XECA" resname="The username is already used." xml:space="preserve">
         <source>The username is already used.</source>
-        <target>O nome de usuário já está em uso.</target>
+        <target state="translated">O nome de usuário já está em uso.</target>
       </trans-unit>
       <trans-unit id="6u6oCwB" resname="The email is already used.">
         <source>The email is already used.</source>
@@ -161,6 +161,14 @@
       <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
         <source>Duration cannot be negative.</source>
         <target state="translated">A duração não pode ser negativa.</target>
+      </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target state="translated">O período selecionado não pode ser bloqueado: existem pedidos de ausência não confirmados pendentes.</target>
+      </trans-unit>
+      <trans-unit id="EDEDQtZ" resname="These characters are not allowed: {{ chars }}" xml:space="preserve">
+        <source>These characters are not allowed: {{ chars }}</source>
+        <target state="translated">Os seguintes caracteres não são permitidos: {{ chars }}</target>
       </trans-unit>
     </body>
   </file>
