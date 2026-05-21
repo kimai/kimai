@@ -191,7 +191,7 @@ final class ActivityController extends BaseApiController
      * Delete activity
      *
      * [DANGER] This will also delete ALL linked timesheets.
-     * Do you want to use `PATCH` instead and mark it as inactive with `{visible: false}` instead?
+     * Do you want to use `PATCH` instead and mark it as inactive with `{visible: false}`?
      */
     #[IsGranted('delete', 'activity')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Delete one activity')])]

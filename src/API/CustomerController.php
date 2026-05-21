@@ -182,7 +182,7 @@ final class CustomerController extends BaseApiController
      * Delete customer
      *
      * [DANGER] This will also delete ALL linked projects, project activities and timesheets.
-     * Do you want to use `PATCH` instead and mark it as inactive with `{visible: false}` instead?
+     * Do you want to use `PATCH` instead and mark it as inactive with `{visible: false}`?
      */
     #[IsGranted('delete', 'customer')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Delete one customer')])]

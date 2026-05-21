@@ -238,7 +238,7 @@ final class ProjectController extends BaseApiController
      * Delete project
      *
      * [DANGER] This will also delete ALL linked activities and timesheets.
-     * Do you want to use `PATCH` instead and mark it as inactive with `{visible: false}` instead?
+     * Do you want to use `PATCH` instead and mark it as inactive with `{visible: false}`?
      */
     #[IsGranted('delete', 'project')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Delete one project')])]
