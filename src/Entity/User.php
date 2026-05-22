@@ -113,11 +113,13 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     private ?string $avatar = null;
     /**
      * API token (password) for this user
+     * @deprecated since 2.55
      */
     #[ORM\Column(name: 'api_token', type: Types::STRING, length: 255, nullable: true)]
     private ?string $apiToken = null;
     /**
      * @internal to be set via form, must not be persisted
+     * @deprecated since 2.55
      */
     #[Assert\NotBlank(groups: ['ApiTokenUpdate'])]
     #[Assert\Length(min: 8, max: 60, groups: ['ApiTokenUpdate'])]
@@ -298,11 +300,17 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
+    /**
+     * @deprecated since 2.57
+     */
     public function getApiToken(): ?string
     {
         return $this->apiToken;
     }
 
+    /**
+     * @deprecated since 2.57
+     */
     public function setApiToken(?string $apiToken): User
     {
         $this->apiToken = $apiToken;
@@ -316,16 +324,23 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[Serializer\VirtualProperty]
     #[Serializer\SerializedName('apiToken')]
     #[Serializer\Groups(['Default'])]
+    #[OA\Property(description: 'DEPRECATED - switch to API tokens instead', deprecated: true)]
     public function hasApiToken(): bool
     {
         return $this->apiToken !== null;
     }
 
+    /**
+     * @deprecated since 2.57
+     */
     public function getPlainApiToken(): ?string
     {
         return $this->plainApiToken;
     }
 
+    /**
+     * @deprecated since 2.57
+     */
     public function setPlainApiToken(?string $plainApiToken): User
     {
         $this->plainApiToken = $plainApiToken;
@@ -644,6 +659,8 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     /**
      * Use this function to check if the current user can read data from the given user.
+     *
+     * @deprecated since 2.57 use RolePermissionManager::checkUserAccess() or is_granted('access_user', user)
      */
     public function canSeeUser(User $user): bool
     {
@@ -651,7 +668,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             return true;
         }
 
-        if ($this->canSeeAllData()) {
+        if ($this->isSuperAdmin() || $this->canSeeAllData()) {
             return true;
         }
 
@@ -667,7 +684,19 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             return true;
         }
 
+        // special case: the requested user is in no team and the current user is a teamlead.
+        // this configuration is likely in new installations with small teams, and
+        // it is allowed for teamleads to see other users data by definition
+        if ($this->hasTeamleadRole() && $user->isRegularUserOnly()) {
+            return \count($user->getTeams()) === 0;
+        }
+
         return false;
+    }
+
+    public function isRegularUserOnly(): bool
+    {
+        return $this->getRoles() === [static::DEFAULT_ROLE];
     }
 
     /**
@@ -837,7 +866,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function eraseCredentials(): void
     {
         $this->plainPassword = null;
-        $this->plainApiToken = null;
+        $this->plainApiToken = null; // @phpstan-ignore property.deprecated
     }
 
     public function hasUsername(): bool

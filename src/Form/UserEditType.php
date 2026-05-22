@@ -97,11 +97,6 @@ class UserEditType extends AbstractType
             ]);
         }
 
-        $builder->add('systemAccount', YesNoType::class, [
-            'label' => 'system_account',
-            'help' => 'system_account.help',
-        ]);
-
         if ($options['include_supervisor']) {
             $builder->add('supervisor', UserType::class, [
                 'required' => false,
@@ -111,6 +106,11 @@ class UserEditType extends AbstractType
         }
 
         if ($options['include_password_reset']) {
+            $builder->add('systemAccount', YesNoType::class, [
+                'label' => 'system_account',
+                'help' => 'system_account.help',
+            ]);
+
             $builder->add('requiresPasswordReset', YesNoType::class, [
                 'label' => 'force_password_change',
                 'help' => 'force_password_change_help',

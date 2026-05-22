@@ -161,6 +161,7 @@ final class ProjectController extends AbstractController
 
     #[Route(path: '/create/{customer}', name: 'admin_project_create_with_customer', methods: ['GET', 'POST'])]
     #[IsGranted('create_project')]
+    #[IsGranted('edit', 'customer')]
     public function createWithCustomerAction(Request $request, Customer $customer, ProjectService $projectService, SystemConfiguration $configuration): Response
     {
         return $this->createProject($request, $projectService, $configuration, $customer);
@@ -198,29 +199,6 @@ final class ProjectController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{id}/comment_delete/{token}', name: 'project_comment_delete', methods: ['GET'])]
-    #[IsGranted(new Expression("is_granted('edit', subject.getProject()) and is_granted('comments', subject.getProject())"), 'comment')]
-    public function deleteCommentAction(ProjectComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
-    {
-        $projectId = $comment->getProject()->getId();
-
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('comment.delete', $token))) {
-            $this->flashError('action.csrf.error');
-
-            return $this->redirectToRoute('project_details', ['id' => $projectId]);
-        }
-
-        $csrfTokenManager->refreshToken('comment.delete');
-
-        try {
-            $this->repository->deleteComment($comment);
-        } catch (\Exception $ex) {
-            $this->flashDeleteException($ex);
-        }
-
-        return $this->redirectToRoute('project_details', ['id' => $projectId]);
-    }
-
     #[Route(path: '/{id}/comment_add', name: 'project_comment_add', methods: ['POST'])]
     #[IsGranted('comments', 'project')]
     public function addCommentAction(Project $project, Request $request): Response
@@ -239,30 +217,6 @@ final class ProjectController extends AbstractController
         }
 
         return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
-    }
-
-    #[Route(path: '/{id}/comment_pin/{token}', name: 'project_comment_pin', methods: ['GET'])]
-    #[IsGranted(new Expression("is_granted('edit', subject.getProject()) and is_granted('comments', subject.getProject())"), 'comment')]
-    public function pinCommentAction(ProjectComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
-    {
-        $projectId = $comment->getProject()->getId();
-
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('comment.pin', $token))) {
-            $this->flashError('action.csrf.error');
-
-            return $this->redirectToRoute('project_details', ['id' => $projectId]);
-        }
-
-        $csrfTokenManager->refreshToken('comment.pin');
-
-        $comment->setPinned(!$comment->isPinned());
-        try {
-            $this->repository->saveComment($comment);
-        } catch (\Exception $ex) {
-            $this->flashUpdateException($ex);
-        }
-
-        return $this->redirectToRoute('project_details', ['id' => $projectId]);
     }
 
     #[Route(path: '/{id}/create_team', name: 'project_team_create', methods: ['GET'])]
@@ -394,6 +348,10 @@ final class ProjectController extends AbstractController
     #[IsGranted('edit', 'project')]
     public function editRateAction(Project $project, ProjectRate $rate, Request $request, ProjectRateRepository $repository): Response
     {
+        if ($rate->getProject() !== $project) {
+            throw $this->createAccessDeniedException('Trying to edit rate and project that do not belong together.');
+        }
+
         return $this->rateFormAction($project, $rate, $request, $repository, $this->generateUrl('admin_project_rate_edit', ['id' => $project->getId(), 'rate' => $rate->getId()]));
     }
 

@@ -10,8 +10,8 @@
 namespace App\Tests\Controller;
 
 use App\Entity\Customer;
-use App\Entity\CustomerComment;
 use App\Entity\CustomerMeta;
+use App\Entity\CustomerRate;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\CustomerFixtures;
@@ -175,6 +175,24 @@ class CustomerControllerTest extends AbstractControllerBaseTestCase
         self::assertStringContainsString('123.45', $node->text(null, true));
     }
 
+    public function testEditRateActionDeniesForeignRate(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $customer = $this->importFixture(new CustomerFixtures(1))[0];
+        $rate = new CustomerRate();
+        $rate->setCustomer($customer);
+        $rate->setRate(123.45);
+
+        $em = $this->getEntityManager();
+        $em->persist($rate);
+        $em->flush();
+
+        $this->request($client, '/admin/customer/1/rate/' . $rate->getId());
+
+        $this->assertAccessDenied($client);
+    }
+
     public function testAddCommentAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
@@ -196,78 +214,6 @@ class CustomerControllerTest extends AbstractControllerBaseTestCase
         $this->assertAccessIsGranted($client, '/admin/customer/1/details');
         $node = $client->getCrawler()->filter('div.card#comments_box .direct-chat-text');
         self::assertStringContainsString('<p>A beautiful and short comment <strong>with some</strong> markdown formatting</p>', $node->html());
-    }
-
-    public function testDeleteCommentAction(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/customer/1/details');
-        $form = $client->getCrawler()->filter('form[name=customer_comment_form]')->form();
-        $client->submit($form, [
-            'customer_comment_form' => [
-                'message' => 'Blah foo bar',
-            ]
-        ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
-        $client->followRedirect();
-
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
-        self::assertStringContainsString('Blah foo bar', $node->html());
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.delete-comment-link');
-
-        $this->request($client, $node->attr('href'));
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
-        self::assertStringContainsString('There were no comments posted yet', $node->html());
-    }
-
-    public function testDeleteCommentActionWithoutToken(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/customer/1/details');
-        $form = $client->getCrawler()->filter('form[name=customer_comment_form]')->form();
-        $client->submit($form, [
-            'customer_comment_form' => [
-                'message' => 'Blah foo bar',
-            ]
-        ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
-        $client->followRedirect();
-
-        $comments = $this->getEntityManager()->getRepository(CustomerComment::class)->findAll();
-        $id = $comments[0]->getId();
-
-        $this->request($client, '/admin/customer/' . $id . '/comment_delete');
-
-        $this->assertRouteNotFound($client);
-    }
-
-    public function testPinCommentAction(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/customer/1/details');
-        $form = $client->getCrawler()->filter('form[name=customer_comment_form]')->form();
-        $client->submit($form, [
-            'customer_comment_form' => [
-                'message' => 'Blah foo bar',
-            ]
-        ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
-        self::assertStringContainsString('Blah foo bar', $node->html());
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.pin-comment-link.active');
-        self::assertEquals(0, $node->count());
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.pin-comment-link');
-        self::assertEquals(1, $node->count());
-        $this->request($client, $node->attr('href'));
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.pin-comment-link.active');
-        self::assertEquals(1, $node->count());
-        self::assertStringContainsString('/admin/customer/', $node->attr('href'));
-        self::assertStringContainsString('/comment_pin/', $node->attr('href'));
     }
 
     public function testCreateDefaultTeamAction(): void

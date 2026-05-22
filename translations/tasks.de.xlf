@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="tasks.en.xlf">
     <body>
-      <trans-unit id="tLV1hoP" resname="report_tasks_assigned">
+      <trans-unit id="tLV1hoP" resname="report_tasks_assigned" xml:space="preserve" approved="yes">
         <source>report_tasks_assigned</source>
-        <target>Aufgaben pro Benutzer</target>
+        <target state="final">Aufgaben pro Benutzer</target>
       </trans-unit>
       <trans-unit id="8c0YWZm" resname="report_tasks_teams" xml:space="preserve" approved="no">
         <source>report_tasks_teams</source>

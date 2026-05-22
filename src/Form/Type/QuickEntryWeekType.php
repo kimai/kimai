@@ -90,7 +90,11 @@ final class QuickEntryWeekType extends AbstractType
                 }
             }
 
-            $event->getForm()->add('activity', ActivityType::class, $activityOptions);
+            // exported entries cause the dropdown to be deactivated
+            // we need to make sure to fetch the info before the field is replaced
+            // see https://github.com/kimai/kimai/issues/5642
+            $disabled = $event->getForm()->get('activity')->isDisabled();
+            $event->getForm()->add('activity', ActivityType::class, array_merge(['disabled' => $disabled], $activityOptions));
         };
         $builder->addEventListener(FormEvents::PRE_SUBMIT, $activityPreSubmitFunction);
 
