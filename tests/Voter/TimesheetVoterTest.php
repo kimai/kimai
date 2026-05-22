@@ -653,6 +653,99 @@ class TimesheetVoterTest extends AbstractVoterTestCase
         $this->assertVote($requester, $timesheet, 'view', VoterInterface::ACCESS_GRANTED);
     }
 
+    /**
+     * Reproduces GHSA-c6w6-57jj-62vh.
+     *
+     * After a user loses team access to a project, "restart" (start) and
+     * "duplicate" must NOT be allowed on one of their own historical timesheets:
+     * both operations derive a brand-new record from the old entry and would
+     * therefore create a new write under the now-unauthorized project/activity.
+     *
+     * The "_own_timesheet" branch in the voter currently short-circuits before
+     * checkTeamAccess*() runs, so this test FAILS on vulnerable code (the voter
+     * returns ACCESS_GRANTED) and documents the expected secure behaviour.
+     */
+    public function testStartAndDuplicateDeniedAfterProjectAccessRevoked(): void
+    {
+        $owner = self::getUser(1, User::ROLE_USER);
+
+        // The project is now restricted to a team the owner is NOT a member of.
+        // This is the post-revocation state from the advisory's PoC.
+        $restrictedTeam = new Team('restricted after revocation');
+
+        $customer = new Customer('Acme');
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam($restrictedTeam);
+
+        $activity = new Activity();
+        $activity->setProject($project);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        $this->assertVote($owner, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
+        $this->assertVote($owner, $timesheet, 'duplicate', VoterInterface::ACCESS_DENIED);
+    }
+
+    /**
+     * Reproduces GHSA-c6w6-57jj-62vh for activity-level restriction.
+     *
+     * Even if the project is unrestricted, a restricted activity (a team the
+     * owner is no longer in) must block restart/duplicate.
+     */
+    public function testStartAndDuplicateDeniedAfterActivityAccessRevoked(): void
+    {
+        $owner = self::getUser(1, User::ROLE_USER);
+
+        $customer = new Customer('Acme');
+        $project = new Project();
+        $project->setCustomer($customer);
+
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activity->addTeam(new Team('restricted after revocation'));
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        $this->assertVote($owner, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
+        $this->assertVote($owner, $timesheet, 'duplicate', VoterInterface::ACCESS_DENIED);
+    }
+
+    /**
+     * Positive control for GHSA-c6w6-57jj-62vh: when the owner still has team
+     * access to the project and activity, restart/duplicate stay allowed.
+     * Guards the fix against over-restriction.
+     */
+    public function testStartAndDuplicateGrantedWhenOwnerStillHasProjectAccess(): void
+    {
+        $owner = self::getUser(1, User::ROLE_USER);
+
+        $team = new Team('still a member');
+        $team->addUser($owner);
+
+        $customer = new Customer('Acme');
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam($team);
+
+        $activity = new Activity();
+        $activity->setProject($project);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        $this->assertVote($owner, $timesheet, 'start', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($owner, $timesheet, 'duplicate', VoterInterface::ACCESS_GRANTED);
+    }
+
     private static function getTimesheetFor(User $owner, ?Team $customerTeam = null, ?Team $projectTeam = null, ?Team $activityTeam = null): Timesheet
     {
         $customer = new Customer('Acme');
