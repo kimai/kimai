@@ -1561,8 +1561,6 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         // PATCH + GET .../restart
         $this->request($client, '/api/timesheets/' . $id . '/restart', 'PATCH');
         $this->assertApiResponseAccessDenied($client->getResponse());
-        $this->request($client, '/api/timesheets/' . $id . '/restart', 'GET');
-        $this->assertApiResponseAccessDenied($client->getResponse());
 
         // PATCH .../duplicate
         $this->request($client, '/api/timesheets/' . $id . '/duplicate', 'PATCH');
@@ -1763,17 +1761,17 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], $patch);
         $this->assertApiResponseAccessDenied($client->getResponse());
 
-        // 3) PATCH /api/timesheets/{id}/stop  and  4) GET .../stop
+        // 3) PATCH /api/timesheets/{id}/stop is access-denied; 4) GET .../stop is no longer routable
         $this->request($client, '/api/timesheets/' . $id . '/stop', 'PATCH');
         $this->assertApiResponseAccessDenied($client->getResponse());
         $this->request($client, '/api/timesheets/' . $id . '/stop', 'GET');
-        $this->assertApiResponseAccessDenied($client->getResponse());
+        self::assertEquals(Response::HTTP_METHOD_NOT_ALLOWED, $client->getResponse()->getStatusCode());
 
-        // 5) PATCH /api/timesheets/{id}/restart  and  6) GET .../restart
+        // 5) PATCH /api/timesheets/{id}/restart is access-denied; 6) GET .../restart is no longer routable
         $this->request($client, '/api/timesheets/' . $id . '/restart', 'PATCH');
         $this->assertApiResponseAccessDenied($client->getResponse());
         $this->request($client, '/api/timesheets/' . $id . '/restart', 'GET');
-        $this->assertApiResponseAccessDenied($client->getResponse());
+        self::assertEquals(Response::HTTP_METHOD_NOT_ALLOWED, $client->getResponse()->getStatusCode());
 
         // 7) PATCH /api/timesheets/{id}/duplicate
         $this->request($client, '/api/timesheets/' . $id . '/duplicate', 'PATCH');
@@ -1999,7 +1997,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $this->assertApiResponseAccessDenied($client->getResponse());
 
         $this->request($client, '/api/timesheets/' . $id . '/stop', 'GET');
-        $this->assertApiResponseAccessDenied($client->getResponse());
+        self::assertEquals(Response::HTTP_METHOD_NOT_ALLOWED, $client->getResponse()->getStatusCode());
 
         // Confirm side-effect-free: timesheet must still be running.
         $em->clear();
