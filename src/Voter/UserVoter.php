@@ -75,7 +75,7 @@ final class UserVoter extends Voter
         }
 
         if ($attribute === 'access_user') {
-            return $user->canSeeUser($subject);
+            return $this->permissionManager->checkUserAccess($subject, $user);
         }
 
         if ($attribute === 'view_team_member') {

@@ -43,7 +43,9 @@ class LocaleFormatExtensionsTest extends TestCase
 
     protected function tearDown(): void
     {
-        date_default_timezone_set($this->oldTimezone);
+        if ($this->oldTimezone !== null) {
+            date_default_timezone_set($this->oldTimezone);
+        }
         $this->oldTimezone = null;
     }
 

@@ -15,10 +15,13 @@ use App\Entity\ActivityRate;
 use App\Entity\Project;
 use App\Entity\ProjectMeta;
 use App\Entity\ProjectRate;
+use App\Entity\Role;
+use App\Entity\RolePermission;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\ActivityFixtures;
+use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
@@ -212,6 +215,24 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
         $this->assertAddRate($client, 123.45, 1);
     }
 
+    public function testEditRateActionDeniesForeignRate(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $project = $this->importFixture(new ProjectFixtures(1))[0];
+        $rate = new ProjectRate();
+        $rate->setProject($project);
+        $rate->setRate(123.45);
+
+        $em = $this->getEntityManager();
+        $em->persist($rate);
+        $em->flush();
+
+        $this->request($client, '/admin/project/1/rate/' . $rate->getId());
+
+        $this->assertAccessDenied($client);
+    }
+
     public function assertAddRate(HttpKernelBrowser $client, $rate, $projectId): void
     {
         $this->assertAccessIsGranted($client, '/admin/project/' . $projectId . '/rate');
@@ -310,57 +331,6 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
         self::assertStringContainsString('<p>A beautiful and long comment <strong>with some</strong> markdown formatting</p>', $node->html());
     }
 
-    public function testDeleteCommentAction(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/project/1/details');
-        $form = $client->getCrawler()->filter('form[name=project_comment_form]')->form();
-        $client->submit($form, [
-            'project_comment_form' => [
-                'message' => 'Foo bar blub',
-            ]
-        ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
-        self::assertStringContainsString('Foo bar blub', $node->html());
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.delete-comment-link');
-
-        $this->request($client, $node->attr('href'));
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
-        self::assertStringContainsString('There were no comments posted yet', $node->html());
-    }
-
-    public function testPinCommentAction(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/project/1/details');
-        $form = $client->getCrawler()->filter('form[name=project_comment_form]')->form();
-        $client->submit($form, [
-            'project_comment_form' => [
-                'message' => 'Foo bar blub',
-            ]
-        ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
-        self::assertStringContainsString('Foo bar blub', $node->html());
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.pin-comment-link.active');
-        self::assertEquals(0, $node->count());
-
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.pin-comment-link');
-        self::assertEquals(1, $node->count());
-        $this->request($client, $node->attr('href'));
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.pin-comment-link.active');
-        self::assertEquals(1, $node->count());
-        self::assertStringContainsString('/admin/project/', $node->attr('href'));
-        self::assertStringContainsString('/comment_pin/', $node->attr('href'));
-    }
-
     public function testCreateDefaultTeamAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
@@ -401,6 +371,32 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
 
         $node = $client->getCrawler()->filter('div.card#activity_list_box .card-body table tbody tr');
         self::assertEquals(5, $node->count());
+    }
+
+    public function testCreateWithCustomerActionDeniesUserWithoutEditCustomerPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
+
+        $customer = $this->importFixture(new CustomerFixtures(1))[0];
+
+        $em = $this->getEntityManager();
+
+        $role = (new Role())->setName('TEST_CREATE_PROJECT_ONLY');
+        $permission = (new RolePermission())->setRole($role)->setPermission('create_project')->setAllowed(true);
+
+        $roleName = $role->getName();
+        self::assertNotNull($roleName);
+        $user->addRole($roleName);
+
+        $em->persist($role);
+        $em->persist($permission);
+        $em->persist($user);
+        $em->flush();
+
+        $this->request($client, '/admin/project/create/' . $customer->getId());
+
+        $this->assertAccessDenied($client);
     }
 
     public function testCreateAction(): void

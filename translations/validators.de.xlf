@@ -2,13 +2,13 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="validators.en.xlf">
     <body>
-      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team.">
+      <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team." xml:space="preserve" approved="yes">
         <source>At least one team leader must be assigned to the team.</source>
-        <target>Dem Team muss mindestens ein Teamleiter zugeordnet werden.</target>
+        <target state="final">Dem Team muss mindestens ein Teamleiter zugeordnet werden.</target>
       </trans-unit>
-      <trans-unit id="6WAG.Xj" resname="The entered passwords don't match.">
+      <trans-unit id="6WAG.Xj" resname="The entered passwords don't match." xml:space="preserve" approved="yes">
         <source>The entered passwords don't match.</source>
-        <target>Die Passwörter stimmen nicht überein.</target>
+        <target state="final">Die Passwörter stimmen nicht überein.</target>
       </trans-unit>
       <trans-unit id="6u6oCwB" resname="The email is already used.">
         <source>The email is already used.</source>
