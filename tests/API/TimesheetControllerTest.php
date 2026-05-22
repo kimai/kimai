@@ -1528,6 +1528,74 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/timesheets/11/duplicate', []);
     }
 
+    // ------------------------------------------------------------------
+    // GHSA-c6w6-57jj-62vh — restart/duplicate after project access revocation.
+    //
+    // "restart" and "duplicate" derive a NEW timesheet from a historical
+    // entry the user still owns. Once the user's team access to the underlying
+    // project/activity is revoked, neither operation may create a new record
+    // under it. The data write itself is already blocked by
+    // TimesheetTeamAccessValidator (since 2.57); these tests additionally pin
+    // that the TimesheetVoter denies the request at the authorization layer —
+    // a clean 403, not an incidental 400 from downstream validation.
+    // ------------------------------------------------------------------
+
+    public function testRestartAndDuplicateDeniedAfterProjectAccessRevoked(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+
+        // The customer is restricted to a team the user is NOT a member of:
+        // the user's access to this project/activity has been revoked, but
+        // their historical timesheet still references it.
+        $revokedTeam = new Team('GHSA-c6w6 team without access');
+        $em->persist($revokedTeam);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [$revokedTeam], running: false);
+        $id = $timesheet->getId();
+        self::assertIsInt($id);
+
+        $before = $this->getEntityManager()->getRepository(Timesheet::class)->count([]);
+
+        // PATCH + GET .../restart
+        $this->request($client, '/api/timesheets/' . $id . '/restart', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+        $this->request($client, '/api/timesheets/' . $id . '/restart', 'GET');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        // PATCH .../duplicate
+        $this->request($client, '/api/timesheets/' . $id . '/duplicate', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        // No new record may have been persisted under the revoked project.
+        $after = $this->getEntityManager()->getRepository(Timesheet::class)->count([]);
+        self::assertSame($before, $after, 'restart/duplicate leaked through and created a new timesheet under the revoked project');
+    }
+
+    public function testRestartAndDuplicateAllowedWhenUserStillHasProjectAccess(): void
+    {
+        // Positive control: as long as the user still has team access to the
+        // project/activity, restart and duplicate keep working.
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+
+        $team = new Team('GHSA-c6w6 team with access');
+        $team->addUser($owner);
+        $em->persist($team);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [$team], running: false);
+        $id = $timesheet->getId();
+        self::assertIsInt($id);
+
+        $this->request($client, '/api/timesheets/' . $id . '/restart', 'PATCH');
+        self::assertTrue($client->getResponse()->isSuccessful(), 'restart must succeed while the user still has project access');
+
+        $this->request($client, '/api/timesheets/' . $id . '/duplicate', 'PATCH');
+        self::assertTrue($client->getResponse()->isSuccessful(), 'duplicate must succeed while the user still has project access');
+    }
+
     public function testExportAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
