@@ -72,7 +72,9 @@ security:
 
             login_link:
                 check_route: link_login_check
-                signature_properties: ['id']
+                # 'password' binds the HMAC signature to the password hash, so a
+                # link becomes invalid as soon as the user changes the password
+                signature_properties: ['id', 'password']
                 lifetime: 900
                 max_uses: 3
 
