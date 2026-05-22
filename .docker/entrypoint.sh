@@ -83,6 +83,31 @@ function prepareKimai() {
   echo "Kimai is ready"
 }
 
+function ensureAppSecret() {
+  # GHSA-jr9p-4h4j-6c58
+  # Make sure the container never runs with the publicly-known default APP_SECRET.
+  # If the user provided their own value (via -e APP_SECRET=...) it is kept untouched.
+  # Otherwise a unique secret is generated once and persisted below var/data, which
+  # is the directory mounted as a named volume in the documented Docker setup, so it
+  # stays stable across container restarts and re-creations.
+  local SECRET_FILE=/opt/kimai/var/data/.appsecret
+
+  if [ -n "$APP_SECRET" ] && [ "$APP_SECRET" != "change_this_to_something_unique" ]; then
+    return
+  fi
+
+  if [ -s "$SECRET_FILE" ]; then
+    APP_SECRET=$(cat "$SECRET_FILE")
+    echo "APP_SECRET: using persisted auto-generated secret"
+  else
+    mkdir -p "$(dirname "$SECRET_FILE")"
+    APP_SECRET=$(php -r 'echo bin2hex(random_bytes(32));')
+    ( umask 077 && echo "$APP_SECRET" > "$SECRET_FILE" )
+    echo "APP_SECRET: generated a new unique secret, persisted to var/data volume"
+  fi
+  export APP_SECRET
+}
+
 function runServer() {
   # Just while I'm fixing things
   /opt/kimai/bin/console kimai:reload --env="$APP_ENV"
@@ -98,5 +123,6 @@ function runServer() {
 
 waitForDB
 handleStartup
+ensureAppSecret
 prepareKimai
 runServer
