@@ -192,19 +192,6 @@ class TimesheetVoterTest extends AbstractVoterTestCase
         $this->assertVote($other, $timesheet, 'is_owner', VoterInterface::ACCESS_DENIED);
     }
 
-    public function testIsOwnerUsesObjectIdentityNotId(): void
-    {
-        // The is_owner branch compares with strict identity ($user === $subject->getUser()),
-        // not by id like the permission-based branches. Two distinct User instances that
-        // share the same id are therefore NOT considered the same owner.
-        $tokenUser = self::getUser(1, User::ROLE_USER);
-        $timesheetUser = self::getUser(1, User::ROLE_USER);
-
-        $timesheet = self::getTimesheet($timesheetUser);
-
-        $this->assertVote($tokenUser, $timesheet, 'is_owner', VoterInterface::ACCESS_DENIED);
-    }
-
     public function testIsOwnerDeniedWhenTimesheetHasNoUser(): void
     {
         $user = self::getUser(1, User::ROLE_USER);

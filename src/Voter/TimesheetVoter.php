@@ -83,7 +83,7 @@ final class TimesheetVoter extends Voter
     {
         $user = $token->getUser();
 
-        if (!($user instanceof User)) {
+        if (!($user instanceof User) || $user->getId() === null) {
             return false;
         }
 
@@ -91,7 +91,7 @@ final class TimesheetVoter extends Voter
 
         switch ($attribute) {
             case 'is_owner':
-                return (!$subject instanceof MultiUserTimesheet) && $user === $subject->getUser();
+                return (!$subject instanceof MultiUserTimesheet) && $user->getId() === $subject->getUser()?->getId();
 
             case self::START:
                 if (!$this->canStart($user, $subject)) {
