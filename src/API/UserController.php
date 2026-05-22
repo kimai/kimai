@@ -13,6 +13,7 @@ use App\Entity\AccessToken;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
+use App\Form\API\AccessTokenApiCreateForm;
 use App\Form\API\UserApiCreateForm;
 use App\Form\API\UserApiEditForm;
 use App\Repository\AccessTokenRepository;
@@ -203,55 +204,30 @@ final class UserController extends BaseApiController
 
     /**
      * Create API token
-     *
-     * Creates a new API token for the given user. The plain token is only visible in this response.
      */
-    #[OA\Post(description: 'Creates a new API token for the given user and returns it. The plain token is only visible in this response.')]
-    #[OA\RequestBody(required: true, content: new OA\JsonContent(
-        required: ['name'],
-        properties: [
-            new OA\Property(property: 'name', type: 'string', description: 'A name to identify this token', example: 'My API token'),
-            new OA\Property(property: 'expiresAt', type: 'string', format: 'date-time', description: 'Optional expiration date', example: '2027-01-01T00:00:00+00:00'),
-        ]
-    ))]
-    #[OA\Response(response: 200, description: 'Returns the created API token including the plain text token value.', content: new OA\JsonContent(
-        properties: [
-            new OA\Property(property: 'id', type: 'integer'),
-            new OA\Property(property: 'name', type: 'string'),
-            new OA\Property(property: 'token', type: 'string', description: 'The plain text token — store it now, it cannot be retrieved later'),
-            new OA\Property(property: 'expiresAt', type: 'string', format: 'date-time', nullable: true),
-        ]
-    ))]
-    #[OA\Parameter(name: 'id', in: 'path', description: 'User ID to create the token for', required: true)]
     #[IsGranted('api-token', 'profile')]
+    #[OA\Post(description: 'Creates a new API token and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created API token', content: new OA\JsonContent(ref: '#/components/schemas/AccessTokenEntity'))])]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/AccessTokenCreateForm'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'User ID to create the token for', required: true)]
     #[Route(methods: ['POST'], path: '/{id}/api-token', name: 'post_api_token', requirements: ['id' => '\d+'])]
     public function postApiToken(User $profile, Request $request, AccessTokenRepository $accessTokenRepository): Response
     {
-        $name = $request->request->get('name');
-        if (!\is_string($name) || trim($name) === '') {
-            throw new BadRequestHttpException('Missing required parameter "name"');
-        }
-
         $accessToken = new AccessToken($profile);
-        $accessToken->setName(trim($name));
 
-        $expiresAt = $request->request->get('expiresAt');
-        if (\is_string($expiresAt) && $expiresAt !== '') {
-            try {
-                $accessToken->setExpiresAt(new \DateTimeImmutable($expiresAt));
-            } catch (\Exception) {
-                throw new BadRequestHttpException('Invalid date format for "expiresAt"');
-            }
+        $form = $this->createForm(AccessTokenApiCreateForm::class, $accessToken);
+        $form->submit($request->request->all());
+
+        if ($form->isValid()) {
+            $accessTokenRepository->saveAccessToken($accessToken);
+
+            $view = new View($accessToken, Response::HTTP_OK);
+            $view->getContext()->setGroups(self::GROUPS_ENTITY);
+
+            return $this->viewHandler->handle($view);
         }
 
-        $accessTokenRepository->saveAccessToken($accessToken);
-
-        $view = new View([
-            'id' => $accessToken->getId(),
-            'name' => $accessToken->getName(),
-            'token' => $accessToken->getToken(),
-            'expiresAt' => $accessToken->getExpiresAt()?->format(\DateTimeInterface::ATOM),
-        ], Response::HTTP_OK);
+        $view = new View($form);
+        $view->getContext()->setGroups(self::GROUPS_FORM);
 
         return $this->viewHandler->handle($view);
     }

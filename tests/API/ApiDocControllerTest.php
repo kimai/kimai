@@ -107,6 +107,7 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
             '/api/users',
             '/api/users/{id}',
             '/api/users/me',
+            '/api/users/{id}/api-token',
             '/api/users/api-token/{id}',
             '/api/users/{id}/preferences',
         ];

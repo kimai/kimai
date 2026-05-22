@@ -359,10 +359,8 @@ class UserControllerTest extends APIControllerBaseTestCase
         $result = json_decode($content, true);
 
         self::assertIsArray($result);
-        self::assertArrayHasKey('id', $result);
-        self::assertArrayHasKey('name', $result);
-        self::assertArrayHasKey('token', $result);
-        self::assertArrayHasKey('expiresAt', $result);
+        self::assertApiResponseTypeStructure('AccessTokenEntity', $result);
+        self::assertNotEmpty($result['id']);
         self::assertEquals('My API token', $result['name']);
         self::assertNotEmpty($result['token']);
         self::assertNull($result['expiresAt']);
@@ -373,7 +371,7 @@ class UserControllerTest extends APIControllerBaseTestCase
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
         $data = [
             'name' => 'Expiring token',
-            'expiresAt' => '2099-01-01T00:00:00+00:00',
+            'expiresAt' => '2099-01-01T00:00:00',
         ];
         $this->request($client, '/api/users/6/api-token', 'POST', [], (string) json_encode($data));
         self::assertTrue($client->getResponse()->isSuccessful());
@@ -383,50 +381,20 @@ class UserControllerTest extends APIControllerBaseTestCase
         $result = json_decode($content, true);
 
         self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('AccessTokenEntity', $result);
         self::assertEquals('Expiring token', $result['name']);
         self::assertNotEmpty($result['token']);
-        self::assertEquals('2099-01-01T00:00:00+00:00', $result['expiresAt']);
+        self::assertEquals((new \DateTime('2099-01-01T00:00:00'))->format('Y-m-d\TH:i:sO'), $result['expiresAt']);
     }
 
-    public function testPostApiTokenTrimsName(): void
+    public function testPostApiTokenWithValidationErrors(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
-        $this->request($client, '/api/users/6/api-token', 'POST', [], (string) json_encode(['name' => '  Trimmed  ']));
-        self::assertTrue($client->getResponse()->isSuccessful());
-
-        $content = $client->getResponse()->getContent();
-        self::assertIsString($content);
-        $result = json_decode($content, true);
-
-        self::assertIsArray($result);
-        self::assertEquals('Trimmed', $result['name']);
-    }
-
-    public function testPostApiTokenWithMissingName(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
-        $this->assertBadRequest($client, '/api/users/6/api-token', 'POST');
-    }
-
-    public function testPostApiTokenWithEmptyName(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
-        $this->assertExceptionForMethod($client, '/api/users/6/api-token', 'POST', ['name' => '   '], [
-            'code' => Response::HTTP_BAD_REQUEST,
-            'message' => 'Bad Request',
-        ]);
-    }
-
-    public function testPostApiTokenWithInvalidExpiresAt(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
-        $this->assertExceptionForMethod($client, '/api/users/6/api-token', 'POST', [
-            'name' => 'foo',
-            'expiresAt' => 'not-a-date',
-        ], [
-            'code' => Response::HTTP_BAD_REQUEST,
-            'message' => 'Bad Request',
-        ]);
+        $this->request($client, '/api/users/6/api-token', 'POST', [], (string) json_encode([
+            'name' => '',
+            'expiresAt' => '2000-01-01T00:00:00',
+        ]));
+        $this->assertApiCallValidationError($client->getResponse(), ['name', 'expiresAt']);
     }
 
     public function testPostApiTokenForUnknownUser(): void
