@@ -100,12 +100,8 @@ final class MarkdownExtension implements RuntimeExtensionInterface
     /**
      * Transforms the given Markdown content into HTML
      */
-    public function markdownToHtml(string $content, bool $full = true): string
+    public function markdownToHtml(string $content): string
     {
-        if (!$full) {
-            return $this->markdown->toHtml($content);
-        }
-
         return $this->markdown->withFullMarkdownSupport($content);
     }
 }
