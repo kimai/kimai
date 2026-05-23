@@ -9,6 +9,7 @@
 
 namespace App\EventSubscriber;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -23,7 +24,8 @@ class WizardSubscriber implements EventSubscriberInterface
     public function __construct(
         private UrlGeneratorInterface $urlGenerator,
         private AuthorizationCheckerInterface $security,
-        private TokenStorageInterface $storage
+        private TokenStorageInterface $storage,
+        private SystemConfiguration $systemConfiguration
     ) {
     }
 
@@ -63,6 +65,15 @@ class WizardSubscriber implements EventSubscriberInterface
             return;
         }
 
+        if ($user->requiresPasswordReset()) {
+            $response = new RedirectResponse($this->urlGenerator->generate('wizard', ['wizard' => 'password']));
+            $event->setResponse($response);
+        }
+
+        if ($user->isRegularUserOnly() && !$this->systemConfiguration->isUserWizardActive()) {
+            return;
+        }
+
         foreach (User::WIZARDS as $wizard) {
             if (!$user->hasSeenWizard($wizard)) {
                 $response = new RedirectResponse($this->urlGenerator->generate('wizard', ['wizard' => $wizard]));
@@ -70,11 +81,6 @@ class WizardSubscriber implements EventSubscriberInterface
 
                 return;
             }
-        }
-
-        if ($user->requiresPasswordReset()) {
-            $response = new RedirectResponse($this->urlGenerator->generate('wizard', ['wizard' => 'password']));
-            $event->setResponse($response);
         }
     }
 }

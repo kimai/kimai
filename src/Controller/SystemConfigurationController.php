@@ -546,6 +546,10 @@ final class SystemConfigurationController extends AbstractController
                         ->setLabel('theme.avatar_url')
                         ->setType(YesNoType::class)
                         ->setTranslationDomain('system-configuration'),
+                    (new Configuration('user.wizard'))
+                        ->setLabel('user_auth_wizard')
+                        ->setType(YesNoType::class)
+                        ->setTranslationDomain('system-configuration'),
                 ]),
             (new SystemConfigurationModel('theme'))
                 ->setConfiguration([
