@@ -43,7 +43,7 @@ class WizardControllerTest extends AbstractControllerBaseTestCase
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
-        $this->setSystemConfiguration('user.wizard', '0');
+        $this->setSystemConfiguration('user.wizard', false);
 
         $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
         $user->setPreferenceValue('__wizards__', null);

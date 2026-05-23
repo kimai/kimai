@@ -128,7 +128,7 @@ class SystemConfigurationTest extends TestCase
             (new Configuration())->setName('timesheet.markdown_content')->setValue('1'),
             (new Configuration())->setName('timesheet.default_begin')->setValue('07:00'),
             (new Configuration())->setName('timesheet.active_entries.hard_limit')->setValue('7'),
-            (new Configuration())->setName('user.wizard')->setValue('0'),
+            (new Configuration())->setName('user.wizard')->setValue(false),
         ];
     }
 

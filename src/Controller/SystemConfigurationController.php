@@ -549,7 +549,6 @@ final class SystemConfigurationController extends AbstractController
                     (new Configuration('user.wizard'))
                         ->setLabel('user_auth_wizard')
                         ->setType(YesNoType::class)
-                        ->setValue(true)
                         ->setTranslationDomain('system-configuration'),
                 ]),
             (new SystemConfigurationModel('theme'))
