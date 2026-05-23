@@ -273,7 +273,7 @@ parameters:
 
         -
             message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
-            count: 23
+            count: 25
             path: API/TeamControllerTest.php
 
         -

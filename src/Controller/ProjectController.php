@@ -37,7 +37,6 @@ use App\Repository\Query\TeamQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\Query\VisibilityInterface;
 use App\Repository\TeamRepository;
-use App\User\TeamService;
 use App\Utils\Context;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
@@ -46,7 +45,6 @@ use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -214,34 +212,6 @@ final class ProjectController extends AbstractController
             } catch (\Exception $ex) {
                 $this->flashUpdateException($ex);
             }
-        }
-
-        return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
-    }
-
-    #[Route(path: '/{id}/create_team', name: 'project_team_create', methods: ['GET'])]
-    #[IsGranted('create_team')]
-    #[IsGranted('permissions', 'project')]
-    public function createDefaultTeamAction(Project $project, TeamService $teamService): Response
-    {
-        $name = $project->getName();
-        if ($name === null) {
-            throw new BadRequestHttpException('Cannot create default team for project with empty name: ' . $project->getId());
-        }
-
-        $defaultTeam = $teamService->findTeamByName($name);
-
-        if (null === $defaultTeam) {
-            $defaultTeam = $teamService->createNewTeam($name);
-        }
-
-        $defaultTeam->addTeamlead($this->getUser());
-        $defaultTeam->addProject($project);
-
-        try {
-            $teamService->saveTeam($defaultTeam);
-        } catch (\Exception $ex) {
-            $this->flashUpdateException($ex);
         }
 
         return $this->redirectToRoute('project_details', ['id' => $project->getId()]);

@@ -159,7 +159,7 @@
     {% if teams is not null %}
         {% set options = {'teams': teams, 'team': team} %}
         {% if is_granted('permissions', customer) %}
-            {% set options = options|merge({'route_create': path('customer_team_create', {'id': customer.id}), 'route_edit': path('admin_customer_permissions', {'id': customer.id})}) %}
+            {% set options = options|merge({'route_create': path('post_customer_team', {'id': customer.id}), 'route_edit': path('admin_customer_permissions', {'id': customer.id})}) %}
         {% endif %}
         {{ include('embeds/teams.html.twig', options) }}
     {% endif %}
