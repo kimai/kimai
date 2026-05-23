@@ -32,6 +32,19 @@ class MarkdownExtensionTest extends TestCase
         );
     }
 
+    public function testMarkdownToHtmlNotFull(): void
+    {
+        $loader = $this->createMock(ConfigLoaderInterface::class);
+        $config = SystemConfigurationFactory::create($loader, ['timesheet' => ['markdown_content' => true]]);
+        $sut = new MarkdownExtension(new Markdown(), $config);
+        self::assertEquals('<p><em>test</em></p>', $sut->markdownToHtml('*test*', false));
+        self::assertEquals('<p># foobar</p>', $sut->markdownToHtml('# foobar', false));
+        self::assertEquals(
+            '<p><a href="javascript%3Aalert(`XSS`)">XSS</a></p>',
+            $sut->markdownToHtml('[XSS](javascript:alert(`XSS`))')
+        );
+    }
+
     public function testTimesheetContent(): void
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);

@@ -17,6 +17,20 @@ class Parsedown extends \Parsedown
     /** @var array<string> */
     private array $ids = [];
 
+    /**
+     * Overwritten to open links in new windows
+     */
+    protected function inlineUrl($Excerpt): ?array // @phpstan-ignore missingType.parameter,missingType.iterableValue
+    {
+        $block = parent::inlineUrl($Excerpt);
+
+        if (isset($block['element']['attributes']) && \is_array($block['element']['attributes'])) {
+            $block['element']['attributes']['target'] = '_blank';
+        }
+
+        return $block;
+    }
+
     protected function blockHeader($Line)
     {
         $block = parent::blockHeader($Line);
@@ -83,5 +97,43 @@ class Parsedown extends \Parsedown
         $Block['element']['attributes']['class'] = 'table table-striped table-vcenter';
 
         return $Block;
+    }
+
+    /**
+     * Markdown image syntax `![alt](url)` is rewritten to a link `<a href="url">alt</a>`.
+     *
+     * Rationale: emitting `<img src="url">` would cause downstream renderers
+     * (e.g. mPDF on the server, browsers in the UI) to automatically fetch
+     * the remote URL. For server-side renderers this is a server-side request
+     * forgery vector; in the UI it is a tracking/privacy issue. Hand-written
+     * `<img>` in Twig templates (custom invoice templates etc.) is not
+     * affected — only images derived from Markdown input are neutralised
+     * here. The resulting `<a href>` is still passed through Parsedown's
+     * `safeLinksWhitelist` filtering when safe-mode is enabled.
+     *
+     * @see https://github.com/kimai/kimai/security/advisories/GHSA-pj8j-p4g4-4vw8
+     */
+    protected function inlineImage($Excerpt): ?array // @phpstan-ignore missingType.parameter,missingType.iterableValue
+    {
+        $Image = parent::inlineImage($Excerpt);
+
+        if ($Image === null) {
+            return null;
+        }
+
+        $src = $Image['element']['attributes']['src'] ?? '';
+        $alt = $Image['element']['attributes']['alt'] ?? '';
+
+        $Image['element'] = [
+            'name' => 'a',
+            'text' => $alt !== '' ? $alt : $src,
+            'attributes' => [
+                'href' => $src,
+                'rel' => 'noopener noreferrer',
+                'target' => '_blank',
+            ],
+        ];
+
+        return $Image;
     }
 }

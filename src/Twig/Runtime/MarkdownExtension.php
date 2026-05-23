@@ -17,7 +17,10 @@ final class MarkdownExtension implements RuntimeExtensionInterface
 {
     private ?bool $markdownEnabled = null;
 
-    public function __construct(private Markdown $markdown, private SystemConfiguration $configuration)
+    public function __construct(
+        private readonly Markdown $markdown,
+        private readonly SystemConfiguration $configuration
+    )
     {
     }
 
@@ -32,10 +35,6 @@ final class MarkdownExtension implements RuntimeExtensionInterface
 
     /**
      * Transforms entity and user comments (customer, project, activity ...) into HTML.
-     *
-     * @param string|null $content
-     * @param bool $fullLength
-     * @return string
      */
     public function commentContent(?string $content, bool $fullLength = true): string
     {
@@ -58,10 +57,6 @@ final class MarkdownExtension implements RuntimeExtensionInterface
 
     /**
      * Transforms the entities comment (customer, project, activity ...) into a one-liner.
-     *
-     * @param string|null $content
-     * @param bool $fullLength
-     * @return string
      */
     public function commentOneLiner(?string $content, bool $fullLength = true): string
     {
@@ -88,9 +83,6 @@ final class MarkdownExtension implements RuntimeExtensionInterface
 
     /**
      * Transforms the timesheet description content into HTML.
-     *
-     * @param string|null $content
-     * @return string
      */
     public function timesheetContent(?string $content): string
     {
@@ -107,12 +99,13 @@ final class MarkdownExtension implements RuntimeExtensionInterface
 
     /**
      * Transforms the given Markdown content into HTML
-     *
-     * @param string $content
-     * @return string
      */
-    public function markdownToHtml(string $content): string
+    public function markdownToHtml(string $content, bool $full = true): string
     {
+        if (!$full) {
+            return $this->markdown->toHtml($content);
+        }
+
         return $this->markdown->withFullMarkdownSupport($content);
     }
 }
