@@ -1,5 +1,3 @@
-// Hint: if something doesn't work as expected: yarn upgrade --latest
-
 const Encore = require('@symfony/webpack-encore');
 
 Encore
