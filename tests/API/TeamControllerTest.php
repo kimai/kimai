@@ -804,7 +804,9 @@ class TeamControllerTest extends APIControllerBaseTestCase
         $role = (new Role())->setName($roleName);
         $permission = (new RolePermission())->setRole($role)->setPermission('edit_team')->setAllowed(true);
         $em->persist($role);
-        self::getContainer()->get(PermissionService::class)->saveRolePermission($permission);
+        $p = self::getContainer()->get(PermissionService::class);
+        self::assertInstanceOf(PermissionService::class, $p);
+        $p->saveRolePermission($permission);
 
         $attacker = $this->getUserByName(UserFixtures::USERNAME_TEAMLEAD);
         $attacker->addRole($roleName);
@@ -1028,7 +1030,7 @@ class TeamControllerTest extends APIControllerBaseTestCase
         // either a hard 403 or a validation rejection of the members field is acceptable;
         // any 2xx that ends with the target attached to the team is the security failure.
         self::assertFalse(
-            $response->isSuccessful() && \str_contains((string) $response->getContent(), '"id"'),
+            $response->isSuccessful() && str_contains((string) $response->getContent(), '"id"'),
             'PATCH /api/teams must not silently attach an out-of-scope user via the members array.'
         );
 
@@ -1059,7 +1061,9 @@ class TeamControllerTest extends APIControllerBaseTestCase
         $role = (new Role())->setName($roleName);
         $permission = (new RolePermission())->setRole($role)->setPermission('create_team')->setAllowed(true);
         $em->persist($role);
-        self::getContainer()->get(PermissionService::class)->saveRolePermission($permission);
+        $p = self::getContainer()->get(PermissionService::class);
+        self::assertInstanceOf(PermissionService::class, $p);
+        $p->saveRolePermission($permission);
 
         $attacker = $this->getUserByName(UserFixtures::USERNAME_TEAMLEAD);
         $attacker->addRole($roleName);
