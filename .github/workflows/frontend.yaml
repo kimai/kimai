@@ -1,0 +1,35 @@
+name: Frontend
+on:
+    pull_request: null
+    push:
+        branches:
+            - main
+jobs:
+    frontend:
+        runs-on: ubuntu-latest
+
+        name: Frontend verification
+        steps:
+
+            -   name: Clone Kimai
+                uses: actions/checkout@v6
+                with:
+                    persist-credentials: false
+
+            -   name: Setup PNPM
+                uses: pnpm/action-setup@v6
+                with:
+                    run_install: false
+
+            -   name: Setup Node.js
+                uses: actions/setup-node@v6
+                with:
+                    node-version: 24
+                    cache: pnpm
+                    cache-dependency-path: pnpm-lock.yaml
+
+            -   name: Install frontend dependencies
+                run: pnpm install --frozen-lockfile --ignore-scripts
+
+            -   name: Check for security issues in frontend dependencies
+                run: pnpm audit
