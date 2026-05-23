@@ -16,7 +16,7 @@ jobs:
                 with:
                     persist-credentials: false
 
-            -   name: Setup pnpm
+            -   name: Setup PNPM
                 uses: pnpm/action-setup@v6
                 with:
                     run_install: false
