@@ -65,22 +65,6 @@ class WizardSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if ($user->isRegularUserOnly() && !$this->systemConfiguration->isUserWizardActive()) {
-            return;
-        }
-
-        foreach (User::WIZARDS as $wizard) {
-            if (!$user->hasSeenWizard($wizard)) {
-                $response = new RedirectResponse($this->urlGenerator->generate('wizard', ['wizard' => $wizard]));
-                $event->setResponse($response);
-
-                return;
-            }
-        }
-
-        if ($user->requiresPasswordReset()) {
-            $response = new RedirectResponse($this->urlGenerator->generate('wizard', ['wizard' => 'password']));
-            $event->setResponse($response);
         if ($user->requiresPasswordReset()) {
             $response = new RedirectResponse($this->urlGenerator->generate('wizard', ['wizard' => 'password']));
             $event->setResponse($response);
