@@ -9,9 +9,16 @@
 
 namespace App\Tests\API;
 
+use App\DataFixtures\UserFixtures;
+use App\Entity\Activity;
+use App\Entity\Customer;
+use App\Entity\Project;
+use App\Entity\Role;
+use App\Entity\RolePermission;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Tests\DataFixtures\TeamFixtures;
+use App\User\PermissionService;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -777,5 +784,331 @@ class TeamControllerTest extends APIControllerBaseTestCase
 
         // cannot remove activity
         $this->assertBadRequest($client, '/api/teams/' . $result['id'] . '/activities/1', 'DELETE');
+    }
+
+    /**
+     * Sets up tony_teamlead so that he has the `edit_team` permission via a
+     * dedicated test role, and makes him the teamlead of a fresh team.
+     *
+     * This simulates an installation that lets teamleads manage their own
+     * teams. The permission is routed through PermissionService so the shared
+     * cache is invalidated and the request kernel sees the new permission.
+     *
+     * @return Team the team the attacker is teamlead of
+     */
+    private function prepareAttackerTeamleadWithEditTeam(string $suffix): Team
+    {
+        $em = $this->getEntityManager();
+
+        $roleName = 'TEST_EDIT_TEAM_' . $suffix;
+        $role = (new Role())->setName($roleName);
+        $permission = (new RolePermission())->setRole($role)->setPermission('edit_team')->setAllowed(true);
+        $em->persist($role);
+        self::getContainer()->get(PermissionService::class)->saveRolePermission($permission);
+
+        $attacker = $this->getUserByName(UserFixtures::USERNAME_TEAMLEAD);
+        $attacker->addRole($roleName);
+        $em->persist($attacker);
+
+        $attackerTeam = new Team('GHSA-xv4r attacker team ' . $suffix);
+        $attackerTeam->addTeamlead($attacker);
+        $em->persist($attackerTeam);
+
+        $em->flush();
+
+        return $attackerTeam;
+    }
+
+    /**
+     * Regression test for GHSA-xv4r-4885-gwpg.
+     *
+     * A teamlead with edit_team permission must not be able to add a user
+     * that falls outside their authorized management scope by calling the
+     * member-assignment API directly. The frontend hides those users; the
+     * backend has to enforce the same boundary.
+     */
+    public function testPostMemberActionDeniesUserOutsideTeamleadScope(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $attackerTeam = $this->prepareAttackerTeamleadWithEditTeam('GHSA_XV4R_MEMBER');
+
+        // target user is in a separate team that the attacker has no role in,
+        // and the target is not a "regular-user-only without any teams" (which
+        // would otherwise be visible to any teamlead).
+        $target = $this->getUserByName(UserFixtures::USERNAME_USER);
+        $isolatedTeam = new Team('GHSA-xv4r isolated team');
+        $isolatedTeam->addUser($target);
+        $isolatedTeam->addTeamlead($this->getUserByRole(User::ROLE_SUPER_ADMIN));
+        $em->persist($isolatedTeam);
+        $em->flush();
+
+        $teamId = $attackerTeam->getId();
+        $targetId = $target->getId();
+        self::assertIsInt($teamId);
+        self::assertIsInt($targetId);
+
+        $this->request($client, '/api/teams/' . $teamId . '/members/' . $targetId, 'POST');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        // verify the relation was NOT persisted
+        $em->clear();
+        $reloaded = $em->getRepository(Team::class)->find($teamId);
+        self::assertInstanceOf(Team::class, $reloaded);
+        self::assertFalse($reloaded->hasUser($target));
+    }
+
+    /**
+     * Regression test for GHSA-xv4r-4885-gwpg.
+     *
+     * The teamlead must not be able to attach an activity that they cannot
+     * view in the first place, even when they may edit the team.
+     */
+    public function testPostActivityActionDeniesActivityOutsideTeamleadScope(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $attackerTeam = $this->prepareAttackerTeamleadWithEditTeam('GHSA_XV4R_ACTIVITY');
+
+        // activity is created without any team relation that the attacker is part of
+        $customer = new Customer('GHSA-xv4r activity customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('GHSA-xv4r activity project');
+        $project->setCustomer($customer);
+        $em->persist($project);
+
+        $activity = new Activity();
+        $activity->setName('GHSA-xv4r out-of-scope activity');
+        $activity->setProject($project);
+        $em->persist($activity);
+
+        $em->flush();
+
+        $teamId = $attackerTeam->getId();
+        $activityId = $activity->getId();
+        self::assertIsInt($teamId);
+        self::assertIsInt($activityId);
+
+        $this->request($client, '/api/teams/' . $teamId . '/activities/' . $activityId, 'POST');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $em->clear();
+        $reloaded = $em->getRepository(Team::class)->find($teamId);
+        self::assertInstanceOf(Team::class, $reloaded);
+        $reloadedActivity = $em->getRepository(Activity::class)->find($activityId);
+        self::assertInstanceOf(Activity::class, $reloadedActivity);
+        self::assertFalse($reloaded->hasActivity($reloadedActivity));
+    }
+
+    /**
+     * Regression test for GHSA-xv4r-4885-gwpg (postCustomerAction variant).
+     *
+     * A teamlead with edit_team permission must not be able to grant their
+     * team access to a customer that they cannot view themselves. The bug
+     * pattern is identical to the postActivityAction variant.
+     */
+    public function testPostCustomerActionDeniesCustomerOutsideTeamleadScope(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $attackerTeam = $this->prepareAttackerTeamleadWithEditTeam('GHSA_XV4R_CUSTOMER');
+
+        // customer has no team relation to the attacker -> attacker has no view permission on it
+        $customer = new Customer('GHSA-xv4r out-of-scope customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $em->persist($customer);
+        $em->flush();
+
+        $teamId = $attackerTeam->getId();
+        $customerId = $customer->getId();
+        self::assertIsInt($teamId);
+        self::assertIsInt($customerId);
+
+        $this->request($client, '/api/teams/' . $teamId . '/customers/' . $customerId, 'POST');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $em->clear();
+        $reloaded = $em->getRepository(Team::class)->find($teamId);
+        self::assertInstanceOf(Team::class, $reloaded);
+        $reloadedCustomer = $em->getRepository(Customer::class)->find($customerId);
+        self::assertInstanceOf(Customer::class, $reloadedCustomer);
+        self::assertFalse($reloaded->hasCustomer($reloadedCustomer));
+    }
+
+    /**
+     * Regression test for GHSA-xv4r-4885-gwpg (postProjectAction variant).
+     *
+     * A teamlead with edit_team permission must not be able to grant their
+     * team access to a project that they cannot view themselves.
+     */
+    public function testPostProjectActionDeniesProjectOutsideTeamleadScope(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $attackerTeam = $this->prepareAttackerTeamleadWithEditTeam('GHSA_XV4R_PROJECT');
+
+        $customer = new Customer('GHSA-xv4r project customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('GHSA-xv4r out-of-scope project');
+        $project->setCustomer($customer);
+        $em->persist($project);
+        $em->flush();
+
+        $teamId = $attackerTeam->getId();
+        $projectId = $project->getId();
+        self::assertIsInt($teamId);
+        self::assertIsInt($projectId);
+
+        $this->request($client, '/api/teams/' . $teamId . '/projects/' . $projectId, 'POST');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $em->clear();
+        $reloaded = $em->getRepository(Team::class)->find($teamId);
+        self::assertInstanceOf(Team::class, $reloaded);
+        $reloadedProject = $em->getRepository(Project::class)->find($projectId);
+        self::assertInstanceOf(Project::class, $reloadedProject);
+        self::assertFalse($reloaded->hasProject($reloadedProject));
+    }
+
+    /**
+     * Regression test for GHSA-xv4r-4885-gwpg (patchAction variant).
+     *
+     * The PATCH /api/teams/{id} endpoint takes a `members` array and replaces
+     * the team's membership. A teamlead with edit_team permission must not be
+     * able to attach an out-of-scope user this way.
+     */
+    public function testPatchActionDeniesAddingOutOfScopeMember(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $attackerTeam = $this->prepareAttackerTeamleadWithEditTeam('GHSA_XV4R_PATCH');
+
+        $attacker = $this->getUserByName(UserFixtures::USERNAME_TEAMLEAD);
+        $attackerId = $attacker->getId();
+        self::assertIsInt($attackerId);
+
+        // target user kept out of attacker's reach
+        $target = $this->getUserByName(UserFixtures::USERNAME_USER);
+        $isolatedTeam = new Team('GHSA-xv4r isolated team patch');
+        $isolatedTeam->addUser($target);
+        $isolatedTeam->addTeamlead($this->getUserByRole(User::ROLE_SUPER_ADMIN));
+        $em->persist($isolatedTeam);
+        $em->flush();
+
+        $teamId = $attackerTeam->getId();
+        $targetId = $target->getId();
+        self::assertIsInt($teamId);
+        self::assertIsInt($targetId);
+
+        $payload = [
+            'name' => 'GHSA-xv4r patch team',
+            'members' => [
+                ['user' => $attackerId, 'teamlead' => true],
+                ['user' => $targetId, 'teamlead' => false],
+            ],
+        ];
+
+        $this->request($client, '/api/teams/' . $teamId, 'PATCH', [], json_encode($payload));
+
+        $response = $client->getResponse();
+        // either a hard 403 or a validation rejection of the members field is acceptable;
+        // any 2xx that ends with the target attached to the team is the security failure.
+        self::assertFalse(
+            $response->isSuccessful() && \str_contains((string) $response->getContent(), '"id"'),
+            'PATCH /api/teams must not silently attach an out-of-scope user via the members array.'
+        );
+
+        $em->clear();
+        $reloaded = $em->getRepository(Team::class)->find($teamId);
+        self::assertInstanceOf(Team::class, $reloaded);
+        self::assertFalse(
+            $reloaded->hasUser($target),
+            'Out-of-scope user must not have been added to the team via PATCH.'
+        );
+    }
+
+    /**
+     * Regression test for GHSA-xv4r-4885-gwpg (postAction variant).
+     *
+     * The POST /api/teams endpoint accepts a `members` array. A user whose
+     * role grants `create_team` but not `view_all_data` must not be able to
+     * create a team with members they cannot manage. This covers the
+     * non-admin "team creator" role configuration.
+     */
+    public function testPostActionDeniesCreatingTeamWithOutOfScopeMember(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        // grant create_team to a custom role and attach it to tony_teamlead
+        $roleName = 'TEST_CREATE_TEAM_GHSA_XV4R';
+        $role = (new Role())->setName($roleName);
+        $permission = (new RolePermission())->setRole($role)->setPermission('create_team')->setAllowed(true);
+        $em->persist($role);
+        self::getContainer()->get(PermissionService::class)->saveRolePermission($permission);
+
+        $attacker = $this->getUserByName(UserFixtures::USERNAME_TEAMLEAD);
+        $attacker->addRole($roleName);
+        $em->persist($attacker);
+
+        $attackerId = $attacker->getId();
+        self::assertIsInt($attackerId);
+
+        // target user is unreachable for the attacker
+        $target = $this->getUserByName(UserFixtures::USERNAME_USER);
+        $isolatedTeam = new Team('GHSA-xv4r isolated team create');
+        $isolatedTeam->addUser($target);
+        $isolatedTeam->addTeamlead($this->getUserByRole(User::ROLE_SUPER_ADMIN));
+        $em->persist($isolatedTeam);
+        $em->flush();
+
+        $targetId = $target->getId();
+        self::assertIsInt($targetId);
+
+        $payload = [
+            'name' => 'GHSA-xv4r created team',
+            'members' => [
+                ['user' => $attackerId, 'teamlead' => true],
+                ['user' => $targetId, 'teamlead' => false],
+            ],
+        ];
+
+        $this->request($client, '/api/teams', 'POST', [], json_encode($payload));
+
+        $response = $client->getResponse();
+        $body = (string) $response->getContent();
+
+        // success body would contain the new id and the target as a member -> security failure
+        if ($response->isSuccessful()) {
+            $decoded = json_decode($body, true);
+            self::assertIsArray($decoded);
+            $memberIds = [];
+            if (\is_array($decoded['members'] ?? null)) {
+                foreach ($decoded['members'] as $entry) {
+                    if (\is_array($entry) && \is_array($entry['user'] ?? null) && isset($entry['user']['id'])) {
+                        $memberIds[] = $entry['user']['id'];
+                    }
+                }
+            }
+            self::assertNotContains(
+                $targetId,
+                $memberIds,
+                'POST /api/teams must not silently accept an out-of-scope user in the members array.'
+            );
+        }
     }
 }

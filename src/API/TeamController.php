@@ -170,6 +170,7 @@ final class TeamController extends BaseApiController
      * Add team member
      */
     #[IsGranted('edit', 'team')]
+    #[IsGranted('access_user', 'member')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Adds a new user to a team.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The team which will receive the new member', required: true)]
     #[OA\Parameter(name: 'userId', in: 'path', description: 'The team member to add (User ID)', required: true)]
@@ -224,6 +225,7 @@ final class TeamController extends BaseApiController
      * The team is granted access to the customer.
      */
     #[IsGranted('edit', 'team')]
+    #[IsGranted('view', 'customer')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the team including the customer', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The team that is granted access', required: true)]
     #[OA\Parameter(name: 'customerId', in: 'path', description: 'The customer to grant acecess to (Customer ID)', required: true)]
@@ -274,6 +276,7 @@ final class TeamController extends BaseApiController
      * The team is granted access to the project.
      */
     #[IsGranted('edit', 'team')]
+    #[IsGranted('view', 'project')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the team including the project', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The team that is granted access', required: true)]
     #[OA\Parameter(name: 'projectId', in: 'path', description: 'The project to grant acecess to (Project ID)', required: true)]
@@ -324,6 +327,7 @@ final class TeamController extends BaseApiController
      * The team is granted access to the activity.
      */
     #[IsGranted('edit', 'team')]
+    #[IsGranted('view', 'activity')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the team including the activity', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The team that is granted access', required: true)]
     #[OA\Parameter(name: 'activityId', in: 'path', description: 'The activity to grant acecess to (Activity ID)', required: true)]
