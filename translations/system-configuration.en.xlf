@@ -14,6 +14,10 @@
         <source>theme.avatar_url</source>
         <target>Allow the use of URLs for avatar images</target>
       </trans-unit>
+      <trans-unit id="uf2_qIW" resname="user_auth_wizard">
+        <source>user_auth_wizard</source>
+        <target>Show setup wizard for new users</target>
+      </trans-unit>
       <trans-unit id="FaGqoTT" resname="timesheet.mode">
         <source>timesheet.mode</source>
         <target>Timetracking mode</target>

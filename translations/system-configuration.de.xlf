@@ -14,6 +14,10 @@
         <source>theme.avatar_url</source>
         <target state="translated">Erlaube die Nutzung von URLs für Avatarbilder</target>
       </trans-unit>
+      <trans-unit id="uf2_qIW" resname="user_auth_wizard">
+        <source>user_auth_wizard</source>
+        <target>Einrichtungsassistent für neue Benutzer anzeigen</target>
+      </trans-unit>
       <trans-unit id="FaGqoTT" resname="timesheet.mode" xml:space="preserve">
         <source>timesheet.mode</source>
         <target state="translated">Zeiterfassungs-Modus</target>
