@@ -22,10 +22,10 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class WizardSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private UrlGeneratorInterface $urlGenerator,
-        private AuthorizationCheckerInterface $security,
-        private TokenStorageInterface $storage,
-        private SystemConfiguration $systemConfiguration
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly AuthorizationCheckerInterface $security,
+        private readonly TokenStorageInterface $storage,
+        private readonly SystemConfiguration $systemConfiguration
     ) {
     }
 
@@ -50,7 +50,7 @@ class WizardSubscriber implements EventSubscriberInterface
 
         $uri = $event->getRequest()->getRequestUri();
 
-        // never require 2FA on API calls
+        // never trigger wizard on API calls
         if (str_starts_with($uri, '/api/') || stripos($uri, '/register/') !== false || stripos($uri, '/wizard/') !== false) {
             return;
         }
@@ -68,6 +68,8 @@ class WizardSubscriber implements EventSubscriberInterface
         if ($user->requiresPasswordReset()) {
             $response = new RedirectResponse($this->urlGenerator->generate('wizard', ['wizard' => 'password']));
             $event->setResponse($response);
+
+            return;
         }
 
         if ($user->isRegularUserOnly() && !$this->systemConfiguration->isUserWizardActive()) {
