@@ -1,4 +1,4 @@
-name: Tests
+name: Frontend
 on:
     pull_request: null
     push:
@@ -8,7 +8,7 @@ jobs:
     frontend:
         runs-on: ubuntu-latest
 
-        name: Frontend
+        name: Frontend verification
         steps:
 
             -   name: Clone Kimai
@@ -16,15 +16,17 @@ jobs:
                 with:
                     persist-credentials: false
 
+            -   name: Setup pnpm
+                uses: pnpm/action-setup@v6
+                with:
+                    run_install: false
+
             -   name: Setup Node.js
                 uses: actions/setup-node@v6
                 with:
                     node-version: 24
                     cache: pnpm
                     cache-dependency-path: pnpm-lock.yaml
-
-            -   name: Enable Corepack
-                run: corepack enable
 
             -   name: Install frontend dependencies
                 run: pnpm install --frozen-lockfile --ignore-scripts
