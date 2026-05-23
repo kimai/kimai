@@ -33,7 +33,9 @@ final class UserEnvironmentSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::REQUEST => ['prepareEnvironment', -100],
+            // runs as first one in Kimai, to make sure we use the correct locales for rendering
+            KernelEvents::REQUEST => ['prepareEnvironment', -10],
+            // don't know why do we use -20
             KernelEvents::FINISH_REQUEST => ['restoreLocale', -20],
         ];
     }

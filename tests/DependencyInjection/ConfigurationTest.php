@@ -412,6 +412,7 @@ class ConfigurationTest extends TestCase
             'user' => [
                 'registration' => false,
                 'password_reset' => true,
+                'wizard' => true,
                 'login' => true,
                 'password_reset_retry_ttl' => 3600,
                 'password_reset_token_ttl' => 86400,

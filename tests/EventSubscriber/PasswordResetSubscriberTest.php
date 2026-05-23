@@ -10,8 +10,8 @@
 namespace App\Tests\EventSubscriber;
 
 use App\Entity\User;
+use App\EventSubscriber\PasswordResetSubscriber;
 use App\EventSubscriber\WizardSubscriber;
-use App\Tests\Mocks\SystemConfigurationFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -26,12 +26,20 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[CoversClass(WizardSubscriber::class)]
-class WizardSubscriberTest extends TestCase
+#[CoversClass(PasswordResetSubscriber::class)]
+class PasswordResetSubscriberTest extends TestCase
 {
     public function testGetSubscribedEvents(): void
     {
-        self::assertEquals([KernelEvents::REQUEST => ['onKernelRequest', -30]], WizardSubscriber::getSubscribedEvents());
+        self::assertEquals([KernelEvents::REQUEST => ['onKernelRequest', -20]], PasswordResetSubscriber::getSubscribedEvents());
+    }
+
+    public function testPasswordResetHasHigherPriorityThanWizardSubscriber(): void
+    {
+        self::assertGreaterThan(
+            WizardSubscriber::getSubscribedEvents()[KernelEvents::REQUEST][1],
+            PasswordResetSubscriber::getSubscribedEvents()[KernelEvents::REQUEST][1]
+        );
     }
 
     public function testOnKernelRequestIgnoresSubRequest(): void
@@ -41,7 +49,7 @@ class WizardSubscriberTest extends TestCase
         $storage = $this->createMock(TokenStorageInterface::class);
         $storage->expects($this->never())->method('getToken');
 
-        $sut = new WizardSubscriber($urlGenerator, $security, $storage, SystemConfigurationFactory::createStub());
+        $sut = new PasswordResetSubscriber($urlGenerator, $security, $storage);
         $event = $this->createRequestEvent('/dashboard', false);
 
         $sut->onKernelRequest($event);
@@ -58,7 +66,7 @@ class WizardSubscriberTest extends TestCase
         $storage = $this->createMock(TokenStorageInterface::class);
         $storage->expects($this->once())->method('getToken')->willReturn(null);
 
-        $sut = new WizardSubscriber($urlGenerator, $security, $storage, SystemConfigurationFactory::createStub());
+        $sut = new PasswordResetSubscriber($urlGenerator, $security, $storage);
         $event = $this->createRequestEvent('/dashboard');
 
         $sut->onKernelRequest($event);
@@ -89,7 +97,7 @@ class WizardSubscriberTest extends TestCase
         $storage = $this->createMock(TokenStorageInterface::class);
         $storage->expects($this->once())->method('getToken')->willReturn($token);
 
-        $sut = new WizardSubscriber($urlGenerator, $security, $storage, SystemConfigurationFactory::createStub());
+        $sut = new PasswordResetSubscriber($urlGenerator, $security, $storage);
         $event = $this->createRequestEvent($uri);
 
         $sut->onKernelRequest($event);
@@ -109,11 +117,7 @@ class WizardSubscriberTest extends TestCase
         $storage = $this->createMock(TokenStorageInterface::class);
         $storage->expects($this->once())->method('getToken')->willReturn($token);
 
-        $sut = new WizardSubscriber($urlGenerator, $security, $storage, SystemConfigurationFactory::createStub([
-            'user' => [
-                'wizard' => true,
-            ]
-        ]));
+        $sut = new PasswordResetSubscriber($urlGenerator, $security, $storage);
         $event = $this->createRequestEvent('/dashboard');
 
         $sut->onKernelRequest($event);
@@ -133,11 +137,7 @@ class WizardSubscriberTest extends TestCase
         $storage = $this->createMock(TokenStorageInterface::class);
         $storage->expects($this->once())->method('getToken')->willReturn($token);
 
-        $sut = new WizardSubscriber($urlGenerator, $security, $storage, SystemConfigurationFactory::createStub([
-            'user' => [
-                'wizard' => true,
-            ]
-        ]));
+        $sut = new PasswordResetSubscriber($urlGenerator, $security, $storage);
         $event = $this->createRequestEvent('/dashboard');
 
         $sut->onKernelRequest($event);
@@ -145,9 +145,10 @@ class WizardSubscriberTest extends TestCase
         self::assertNull($event->getResponse());
     }
 
-    public function testOnKernelRequestIgnoresWizardForRegularUserIfDisabled(): void
+    public function testOnKernelRequestIgnoresUserWithoutPasswordReset(): void
     {
         $user = new User();
+        $user->setEnabled(true);
         $token = $this->createUserToken($user);
 
         $urlGenerator = $this->createMock(UrlGeneratorInterface::class);
@@ -159,11 +160,7 @@ class WizardSubscriberTest extends TestCase
         $storage = $this->createMock(TokenStorageInterface::class);
         $storage->expects($this->once())->method('getToken')->willReturn($token);
 
-        $sut = new WizardSubscriber($urlGenerator, $security, $storage, SystemConfigurationFactory::createStub([
-            'user' => [
-                'wizard' => false,
-            ]
-        ]));
+        $sut = new PasswordResetSubscriber($urlGenerator, $security, $storage);
         $event = $this->createRequestEvent('/dashboard');
 
         $sut->onKernelRequest($event);
@@ -171,18 +168,19 @@ class WizardSubscriberTest extends TestCase
         self::assertNull($event->getResponse());
     }
 
-    public function testOnKernelRequestRedirectsToFirstUnseenWizard(): void
+    public function testOnKernelRequestRedirectsToPasswordWizard(): void
     {
         $user = new User();
-        $user->setWizardAsSeen('intro');
+        $user->setEnabled(true);
+        $user->setRequiresPasswordReset();
         $token = $this->createUserToken($user);
 
         $urlGenerator = $this->createMock(UrlGeneratorInterface::class);
         $urlGenerator
             ->expects($this->once())
             ->method('generate')
-            ->with('wizard', ['wizard' => 'profile'])
-            ->willReturn('/wizard/profile');
+            ->with('wizard', ['wizard' => 'password'])
+            ->willReturn('/wizard/password');
 
         $security = $this->createMock(AuthorizationCheckerInterface::class);
         $security->expects($this->once())->method('isGranted')->with('IS_AUTHENTICATED_FULLY')->willReturn(true);
@@ -190,18 +188,14 @@ class WizardSubscriberTest extends TestCase
         $storage = $this->createMock(TokenStorageInterface::class);
         $storage->expects($this->once())->method('getToken')->willReturn($token);
 
-        $sut = new WizardSubscriber($urlGenerator, $security, $storage, SystemConfigurationFactory::createStub([
-            'user' => [
-                'wizard' => true,
-            ]
-        ]));
+        $sut = new PasswordResetSubscriber($urlGenerator, $security, $storage);
         $event = $this->createRequestEvent('/dashboard');
 
         $sut->onKernelRequest($event);
 
         $response = $event->getResponse();
         self::assertInstanceOf(RedirectResponse::class, $response);
-        self::assertSame('/wizard/profile', $response->headers->get('Location'));
+        self::assertSame('/wizard/password', $response->headers->get('Location'));
     }
 
     private function createUserToken(User $user): TokenInterface

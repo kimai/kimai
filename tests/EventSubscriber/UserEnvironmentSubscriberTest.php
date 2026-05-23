@@ -45,7 +45,7 @@ class UserEnvironmentSubscriberTest extends TestCase
     public function testGetSubscribedEvents(): void
     {
         self::assertEquals([
-            KernelEvents::REQUEST => ['prepareEnvironment', -100],
+            KernelEvents::REQUEST => ['prepareEnvironment', -10],
             KernelEvents::FINISH_REQUEST => ['restoreLocale', -20],
         ], UserEnvironmentSubscriber::getSubscribedEvents());
     }

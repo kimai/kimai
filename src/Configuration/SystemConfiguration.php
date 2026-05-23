@@ -370,6 +370,11 @@ final class SystemConfiguration
         return $this->getDefaultCurrency();
     }
 
+    public function isUserWizardActive(): bool
+    {
+        return (bool) $this->find('user.wizard');
+    }
+
     // ========== Timesheet configurations ==========
     /*
         public function getTimesheetBreakWarningDuration(): int
