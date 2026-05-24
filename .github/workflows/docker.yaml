@@ -9,6 +9,8 @@ on:
     release:
         types: [released]
 
+permissions: {}
+
 jobs:
     build:
         runs-on: ubuntu-latest

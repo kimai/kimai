@@ -1,12 +1,14 @@
 name: 'Website update'
 on:
-  workflow_dispatch:
-    inputs:
-      kimai_version:
-        description: 'Kimai version for the website'
-        required: true
-  release:
-    types: [released]
+    workflow_dispatch:
+        inputs:
+            kimai_version:
+                description: 'Kimai version for the website'
+                required: true
+    release:
+        types: [released]
+
+permissions: {}
 
 jobs:
   build:

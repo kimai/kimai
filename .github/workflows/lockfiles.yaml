@@ -5,11 +5,12 @@ on:
         branches:
             - main
 
-permissions:
-    pull-requests: read
+permissions: {}
 
 jobs:
     lockfiles:
+        permissions:
+            pull-requests: read # read the PR author
         runs-on: ubuntu-latest
         name: Verify lock file integrity
         steps:

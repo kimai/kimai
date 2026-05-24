@@ -5,13 +5,10 @@ on:
         branches:
             - main
 
-permissions:
-    contents: read
+permissions: {}
 
 jobs:
     correct_repository:
-        permissions:
-            contents: none
         runs-on: ubuntu-latest
         steps:
             - name: fail on fork
@@ -20,8 +17,8 @@ jobs:
 
     update_release_draft:
         permissions:
-            contents: write # for release-drafter/release-drafter to create a github release
-            pull-requests: read
+            contents: write # to create a github release draft
+            pull-requests: read # to identify changes that occurred
         needs: correct_repository
         runs-on: ubuntu-latest
         steps:
