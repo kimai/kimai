@@ -199,7 +199,7 @@ final class RolePermissionManager
         return $this->checkTeamLeadAccess($timesheet->getUser()?->getTeams() ?? [], $user);
     }
 
-    public function checkUserAccess(User $subject, User $user): bool
+    public function checkUserAccess(User $subject, User $user, bool $onlyEnabled = true): bool
     {
         if ($subject->getId() === $user->getId()) {
             return true;
@@ -209,10 +209,12 @@ final class RolePermissionManager
             return true;
         }
 
-        if (!$subject->isEnabled()) {
+        if ($onlyEnabled && !$subject->isEnabled()) {
             return false;
         }
 
+        // system accounts are used for admins or API-only accounts
+        // and should not be accessed by less-privileged users (e.g. teamleads)
         if (!$user->isSystemAccount() && $subject->isSystemAccount()) {
             return false;
         }

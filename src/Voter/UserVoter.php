@@ -62,11 +62,7 @@ final class UserVoter extends Voter
     {
         $user = $token->getUser();
 
-        if (!($user instanceof User)) {
-            return false;
-        }
-
-        if (!($subject instanceof User)) {
+        if (!($user instanceof User) || !($subject instanceof User)) {
             return false;
         }
 
@@ -111,15 +107,14 @@ final class UserVoter extends Voter
 
         $permission = $attribute;
 
-        // extend me for "team" support later on
         if ($subject->getId() === $user->getId()) {
-            $permission .= '_own';
-        } else {
-            $permission .= '_other';
+            return $this->permissionManager->hasRolePermission($user, $permission . '_own_profile');
         }
 
-        $permission .= '_profile';
+        if (!$this->permissionManager->hasRolePermission($user, $permission . '_other_profile')) {
+            return false;
+        }
 
-        return $this->permissionManager->hasRolePermission($user, $permission);
+        return $this->permissionManager->checkUserAccess($subject, $user, false);
     }
 }
