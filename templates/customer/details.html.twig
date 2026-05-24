@@ -132,6 +132,12 @@
                         </tr>
                     {% endif %}
                 {% endif %}
+                {% if customer.invoiceEmail is not empty %}
+                    <tr>
+                        <th>{{ 'invoice_email'|trans }}</th>
+                        <td><a href="mailto:{{ customer.invoiceEmail }}">{{ customer.invoiceEmail }}</a></td>
+                    </tr>
+                {% endif %}
                 {% for metaField in customer.visibleMetaFields|filter(field => field.defined)|sort((a, b) => a.order <=> b.order) %}
                     <tr>
                         <th>{{ metaField.label|trans }}</th>
