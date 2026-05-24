@@ -110,6 +110,11 @@ services:
             $userProvider: '@security.user.provider.concrete.kimai_internal'
             $configuration: '@App\Configuration\OidcConfigurationInterface'
 
+    App\Oidc\OidcDiscovery:
+        arguments:
+            $httpClient: '@http_client'
+            $cache: '@cache.app'
+
     # ================================================================================
     # SAML Services
     # ================================================================================

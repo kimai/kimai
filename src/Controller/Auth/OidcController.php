@@ -10,25 +10,21 @@
 namespace App\Controller\Auth;
 
 use App\Configuration\OidcConfigurationInterface;
-use App\Oidc\OidcClientFactory;
+use App\Oidc\OidcDiscovery;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Http\SecurityRequestAttributes;
-use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 #[Route(path: '/oidc')]
 final class OidcController extends AbstractController
 {
-    use TargetPathTrait;
-
     public function __construct(
-        private readonly OidcClientFactory $clientFactory,
+        private readonly OidcDiscovery $discovery,
         private readonly OidcConfigurationInterface $oidcConfiguration,
-    )
-    {
+    ) {
     }
 
     #[Route(path: '/login', name: 'oidc_login')]
@@ -38,32 +34,31 @@ final class OidcController extends AbstractController
             throw $this->createNotFoundException('OIDC deactivated');
         }
 
+        $state = bin2hex(random_bytes(16));
+        $nonce = bin2hex(random_bytes(16));
+
         $session = $request->getSession();
-        $authErrorKey = SecurityRequestAttributes::AUTHENTICATION_ERROR;
+        $session->set('oidc.state', $state);
+        $session->set('oidc.nonce', $nonce);
 
-        $error = null;
-
-        if ($request->attributes->has($authErrorKey)) {
-            $error = $request->attributes->get($authErrorKey);
-        } elseif ($session->has($authErrorKey)) {
-            $error = $session->get($authErrorKey);
-            $session->remove($authErrorKey);
+        $scopes = ['openid', 'email', 'profile'];
+        if ($this->oidcConfiguration->getRolesMapping()) {
+            $scopes[] = 'groups';
         }
 
-        if ($error !== null) {
-            if (\is_object($error) && method_exists($error, 'getMessage')) {
-                $error = $error->getMessage();
-            }
-            throw new \RuntimeException($error);
-        }
+        $params = [
+            'response_type' => 'code',
+            'client_id' => $this->oidcConfiguration->getClientId(),
+            'redirect_uri' => $this->generateUrl('oidc_callback', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            'scope' => implode(' ', $scopes),
+            'state' => $state,
+            'nonce' => $nonce,
+        ];
 
-        $redirectTarget = $this->generateUrl('oidc_callback', [], UrlGeneratorInterface::ABSOLUTE_URL);
+        $authorizationUrl = $this->discovery->getAuthorizationEndpoint();
+        $separator = str_contains($authorizationUrl, '?') ? '&' : '?';
 
-        $client = $this->clientFactory->create();
-        $client->setRedirectURL($redirectTarget);
-        $client->authenticate();
-
-        return new Response();
+        return new RedirectResponse($authorizationUrl . $separator . http_build_query($params));
     }
 
     #[Route(path: '/callback', name: 'oidc_callback')]
