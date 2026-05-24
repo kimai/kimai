@@ -1,18 +1,24 @@
 name: Tests
+
 on:
     pull_request: null
     push:
         branches:
             - main
 
+concurrency:
+    group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+    cancel-in-progress: true
+
 permissions: {}
 
 jobs:
     integration:
+        name: Integration (${{ matrix.php }})
         runs-on: ubuntu-latest
         services:
             mysql:
-                image: mysql:latest
+                image: mysql@sha256:c36050afdca850f23cef85703f84c7531a5ae155a11b5ee1c60acb09937c4084 # 8.4.9
                 env:
                     MYSQL_ALLOW_EMPTY_PASSWORD: false
                     MYSQL_ROOT_PASSWORD: kimai
@@ -24,16 +30,15 @@ jobs:
             matrix:
                 php: ['8.2', '8.3', '8.4', '8.5']
 
-        name: Integration (${{ matrix.php }})
         steps:
 
             -   name: Clone Kimai
-                uses: actions/checkout@v6
+                uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
                 with:
                     persist-credentials: false
 
             -   name: Setup PHP
-                uses: shivammathur/setup-php@v2
+                uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # v2.37.1
                 with:
                     php-version: ${{ matrix.php }}
                     coverage: pcov
@@ -50,7 +55,7 @@ jobs:
                 run: echo "composer_cache_directory=$(composer config cache-dir)" >> $GITHUB_ENV
 
             -   name: Cache Composer dependencies
-                uses: actions/cache@v5
+                uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
                 with:
                     path: "${{ env.composer_cache_directory }}"
                     key: ${{ runner.os }}-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
@@ -80,6 +85,7 @@ jobs:
                 run: composer require laminas/laminas-ldap
 
             -   name: Setup problem matchers (for PHPUnit)
+                # zizmor: ignore[template-injection] coming from the https://github.com/marketplace/actions/setup-php-action
                 run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
             -   name: Run quick unit-tests
@@ -107,7 +113,7 @@ jobs:
 
             -   name: Upload code coverage
                 if: matrix.php == '8.5'
-                uses: codecov/codecov-action@v6
+                uses: codecov/codecov-action@e79a6962e0d4c0c17b229090214935d2e33f8354 # v6.0.1
                 with:
                     token: ${{ secrets.CODECOV_TOKEN }}
                     files: ./coverage.xml
