@@ -20,9 +20,33 @@ jobs:
         name: Docker images
         runs-on: ubuntu-latest
         steps:
+            - name: Determine version
+              env:
+                  GITHUB_EVENT_INPUTS_KIMAI_TAG: ${{ github.event.inputs.kimai_tag }}
+                  GITHUB_EVENT_RELEASE_TAG_NAME: ${{ github.event.release.tag_name }}
+              run: |
+                  input="${GITHUB_EVENT_INPUTS_KIMAI_TAG}"
+
+                  # Determine between manual trigger and release event
+                  if [ -z "$input" ]; then
+                      echo "Using release tag: ${GITHUB_EVENT_RELEASE_TAG_NAME}"
+                      version="${GITHUB_EVENT_RELEASE_TAG_NAME}"
+                  else
+                      echo "Using tag provided: $input"
+                      version="$input"
+                  fi
+
+                  if [[ ! $version =~ ^2\.(0|[1-9]*)(0?)\.(0|[0-9]*)(0?)$ ]]; then
+                    echo "Invalid version number: $version"
+                    exit 1
+                  fi
+
+                  echo "kimai_version=$version" >> $GITHUB_ENV
+
             - name: Checkout code
               uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
               with:
+                  ref: ${{ env.kimai_version }}
                   persist-credentials: false
 
             - name: Install buildx
@@ -33,29 +57,6 @@ jobs:
               with:
                   username: ${{secrets.DOCKERHUB_USERNAME}}
                   password: ${{secrets.DOCKERHUB_PASSWORD}}
-
-            - name: Determine version
-              env:
-                  GITHUB_EVENT_INPUTS_KIMAI_TAG: ${{ github.event.inputs.kimai_tag }}
-                  GITHUB_EVENT_RELEASE_TAG_NAME: ${{ github.event.release.tag_name }}
-              run: |
-                  input="${GITHUB_EVENT_INPUTS_KIMAI_TAG}"
-                  
-                  # Determine between manual trigger and release event
-                  if [ -z "$input" ]; then
-                      echo "Using release tag: ${GITHUB_EVENT_RELEASE_TAG_NAME}"
-                      version="${GITHUB_EVENT_RELEASE_TAG_NAME}"
-                  else
-                      echo "Using tag provided: $input"
-                      version="$input"
-                  fi
-                  
-                  if [[ ! $version =~ ^2\.(0|[1-9]*)(0?)\.(0|[0-9]*)(0?)$ ]]; then
-                    echo "Invalid version number: $version"
-                    exit 1
-                  fi
-                  
-                  echo "kimai_version=$version" >> $GITHUB_ENV
 
             # TODO 3.0 remove kimai/kimai2:apache and kimai/kimai2:apache-<version>
             - name: Apache image
