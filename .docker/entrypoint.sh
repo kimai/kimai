@@ -90,9 +90,16 @@ function ensureAppSecret() {
   # Otherwise a unique secret is generated once and persisted below var/data, which
   # is the directory mounted as a named volume in the documented Docker setup, so it
   # stays stable across container restarts and re-creations.
+  #
+  # Disable xtrace around all reads/writes of APP_SECRET so the secret never appears
+  # in container logs. The braces around `set +x` keep the disable command itself
+  # from being traced.
+  { set +x; } 2>/dev/null
+
   local SECRET_FILE=/opt/kimai/var/data/.appsecret
 
   if [ -n "$APP_SECRET" ] && [ "$APP_SECRET" != "change_this_to_something_unique" ]; then
+    set -x
     return
   fi
 
@@ -106,6 +113,8 @@ function ensureAppSecret() {
     echo "APP_SECRET: generated a new unique secret, persisted to var/data volume"
   fi
   export APP_SECRET
+
+  set -x
 }
 
 function runServer() {
