@@ -97,6 +97,14 @@ function ensureAppSecret() {
   { set +x; } 2>/dev/null
 
   local SECRET_FILE=/opt/kimai/var/data/.appsecret
+  local ENV_LOCAL=/opt/kimai/.env.local
+
+  # Always remove any prior .env.local before deciding which secret applies.
+  # This prevents a stale auto-generated value from lingering after a user
+  # later sets APP_SECRET via docker env / compose. It is regenerated below
+  # in the auto-secret path; in the user-provided path it stays absent so
+  # the real env var remains the single source of truth.
+  rm -f "$ENV_LOCAL"
 
   if [ -n "$APP_SECRET" ] && [ "$APP_SECRET" != "change_this_to_something_unique" ]; then
     set -x
@@ -110,9 +118,22 @@ function ensureAppSecret() {
     mkdir -p "$(dirname "$SECRET_FILE")"
     APP_SECRET=$(php -r 'echo bin2hex(random_bytes(32));')
     ( umask 077 && echo "$APP_SECRET" > "$SECRET_FILE" )
+    chown "$USER_ID:$GROUP_ID" "$SECRET_FILE"
     echo "APP_SECRET: generated a new unique secret, persisted to var/data volume"
   fi
   export APP_SECRET
+
+  # Mirror the resolved secret into .env.local so Symfony's Dotenv picks up
+  # the right value when commands are run via `docker exec` (which does not
+  # inherit the entrypoint's exported env). .env.local is Symfony's official
+  # override file and is loaded before .env. Rewritten on every container
+  # start; the source of truth is the persisted SECRET_FILE above.
+  ( umask 077 && echo "APP_SECRET=$APP_SECRET" > "$ENV_LOCAL" )
+  # The PHP runtime (apache/php-fpm) runs as $USER_ID:$GROUP_ID and must be
+  # able to read .env.local; the entrypoint itself runs as root, so the file
+  # would otherwise be 0600 root:root and unreadable to the web user, causing
+  # Symfony's Dotenv to throw PathException at boot.
+  chown "$USER_ID:$GROUP_ID" "$ENV_LOCAL"
 
   set -x
 }
