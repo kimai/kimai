@@ -18,6 +18,7 @@ use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityQuery;
+use App\User\TeamService;
 use App\Utils\SearchTerm;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -27,6 +28,7 @@ use OpenApi\Attributes as OA;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -305,6 +307,41 @@ final class ActivityController extends BaseApiController
 
         $view = new View($rate, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_RATE);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Create team for activity
+     *
+     * If a team with the activity's name already exists, it is reused.
+     * The current user is added as teamlead (if not already), and the activity is bound to the team.
+     */
+    #[IsGranted('create_team')]
+    #[IsGranted('permissions', 'activity')]
+    #[OA\Post(description: 'Creates (or reuses) a default team named after the activity, makes the current user a teamlead, and binds the activity to that team. Calling this multiple times is safe and will not create duplicate teams or bindings.', responses: [new OA\Response(response: 200, description: 'Returns the team', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
+    #[OA\Parameter(name: 'id', description: 'The activity to create a default team for', in: 'path', required: true)]
+    #[Route(path: '/{id}/team', name: 'post_activity_team', requirements: ['id' => '\d+'], methods: ['POST'])]
+    public function postDefaultTeamAction(Activity $activity, TeamService $teamService): Response
+    {
+        $name = $activity->getName();
+        if ($name === null || $name === '') {
+            throw new BadRequestHttpException('Cannot create default team for activity with empty name: ' . $activity->getId());
+        }
+
+        $team = $teamService->findTeamByName($name);
+
+        if ($team === null) {
+            $team = $teamService->createNewTeam($name);
+        }
+
+        $team->addTeamlead($this->getUser());
+        $team->addActivity($activity);
+
+        $teamService->saveTeam($team);
+
+        $view = new View($team, Response::HTTP_OK);
+        $view->getContext()->setGroups(TeamController::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }

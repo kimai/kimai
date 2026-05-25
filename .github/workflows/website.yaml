@@ -1,42 +1,52 @@
 name: 'Website update'
+
 on:
-  workflow_dispatch:
-    inputs:
-      kimai_version:
-        description: 'Kimai version for the website'
-        required: true
-  release:
-    types: [released]
+    workflow_dispatch:
+        inputs:
+            kimai_version:
+                description: 'Kimai version for the website'
+                required: true
+    release:
+        types: [released]
+
+concurrency:
+    group: update-website
+    cancel-in-progress: true
+
+permissions: {}
 
 jobs:
-  build:
-    name: Trigger version update for website
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Determine Version"
-        run: |
-          input="${{ github.event.inputs.kimai_version }}"
+    build:
+        name: Trigger version update for website
+        runs-on: ubuntu-latest
+        steps:
+            - name: "Determine Version"
+              env:
+                  GITHUB_EVENT_INPUTS_KIMAI_VERSION: ${{ github.event.inputs.kimai_version }}
+                  GITHUB_EVENT_RELEASE_TAG_NAME: ${{ github.event.release.tag_name }}
+              run: |
+                  input="${GITHUB_EVENT_INPUTS_KIMAI_VERSION}"
+                  
+                  # Determine between manual trigger and release event
+                  if [ -z "$input" ]; then
+                      echo "No input provided, using release tag"
+                      version="${GITHUB_EVENT_RELEASE_TAG_NAME}"
+                  else
+                      echo "Using input provided: $input"
+                      version="$input"
+                  fi
+                  
+                  echo "kimai_version=$version" >> $GITHUB_ENV
+                  
+                  if [[ ! $version =~ ^2\.(0|[1-9]*)(0?)\.(0|[0-9]*)(0?)$ ]]; then
+                    echo "Invalid version number: $version"
+                    exit 1
+                  fi
 
-          # Determine between manual trigger and release event
-          if [ -z "$input" ]; then
-              echo "No input provided, using release tag"
-              version="${{ github.event.release.tag_name }}"
-          else
-              echo "Using input provided: $input"
-              version="$input"
-          fi
-
-          echo "kimai_version=$version" >> $GITHUB_ENV
-
-          if [[ ! $version =~ ^2\.(0|[1-9]*)(0?)\.(0|[0-9]*)(0?)$ ]]; then
-            echo "Invalid version number: $version"
-            exit 1
-          fi
-
-      - name: Emit repository_dispatch
-        uses: peter-evans/repository-dispatch@v4
-        with:
-          token: ${{ secrets.WEBSITE_ACCESS_TOKEN }}
-          repository: kimai/www.kimai.org
-          event-type: kimai_release
-          client-payload: '{"kimai_version": "${{ env.kimai_version }}"}'
+            - name: Emit repository_dispatch
+              uses: peter-evans/repository-dispatch@28959ce8df70de7be546dd1250a005dd32156697 # v4.0.1
+              with:
+                  token: ${{ secrets.WEBSITE_ACCESS_TOKEN }}
+                  repository: kimai/www.kimai.org
+                  event-type: kimai_release
+                  client-payload: '{"kimai_version": "${{ env.kimai_version }}"}'

@@ -859,6 +859,90 @@ class RolePermissionManagerTest extends TestCase
         self::assertFalse($sut->checkUserAccess($subject, $requester));
     }
 
+    public function testCheckUserAccessAllowsDisabledSubjectWhenOnlyEnabledIsFalse(): void
+    {
+        $sut = $this->createSut();
+
+        $subject = self::userWithId(1);
+        $subject->setEnabled(false);
+
+        $requester = self::userWithId(2);
+        $team = new Team('Support');
+        $team->addUser($subject);
+        $team->addTeamlead($requester);
+
+        // with $onlyEnabled = true (default) the disabled flag denies access
+        self::assertFalse($sut->checkUserAccess($subject, $requester));
+        // with $onlyEnabled = false the disabled flag is ignored and the teamlead path grants access
+        self::assertTrue($sut->checkUserAccess($subject, $requester, false));
+    }
+
+    public function testCheckUserAccessOnlyEnabledFalseStillRequiresAccessPath(): void
+    {
+        // disabling the "enabled" check must not bypass the rest of the access logic:
+        // a requester without team relation must still be denied.
+        $sut = $this->createSut();
+
+        $subject = self::userWithId(1);
+        $subject->setEnabled(false);
+        (new Team('Subject team'))->addUser($subject);
+
+        $requester = self::userWithId(2);
+        $requester->setRoles([User::ROLE_TEAMLEAD]);
+
+        self::assertFalse($sut->checkUserAccess($subject, $requester, false));
+    }
+
+    public function testCheckUserAccessOnlyEnabledFalseStillBlocksSystemAccountSubject(): void
+    {
+        // the system-account guard sits below the "enabled" check, so it must still
+        // apply when $onlyEnabled = false.
+        $sut = $this->createSut();
+
+        $subject = self::userWithId(1);
+        $subject->setEnabled(false);
+        $subject->setSystemAccount(true);
+
+        $requester = self::userWithId(2);
+        $team = new Team('Support');
+        $team->addUser($subject);
+        $team->addTeamlead($requester);
+
+        self::assertFalse($sut->checkUserAccess($subject, $requester, false));
+    }
+
+    public function testCheckUserAccessOnlyEnabledFalseGrantsAdminFallbackForDisabledTeamlessUser(): void
+    {
+        $sut = $this->createSut();
+
+        $subject = self::userWithId(1);
+        $subject->setEnabled(false);
+
+        $requester = self::userWithId(2);
+        $requester->setRoles([User::ROLE_ADMIN]);
+
+        self::assertTrue($subject->isRegularUserOnly());
+        self::assertSame([], $subject->getTeams());
+        self::assertFalse($sut->checkUserAccess($subject, $requester));
+        self::assertTrue($sut->checkUserAccess($subject, $requester, false));
+    }
+
+    public function testCheckUserAccessOnlyEnabledFalseStillGrantsSuperAdmin(): void
+    {
+        // super-admin / canSeeAllData is decided before the "enabled" check,
+        // so the result must not change with the flag.
+        $sut = $this->createSut();
+
+        $subject = self::userWithId(1);
+        $subject->setEnabled(false);
+
+        $requester = self::userWithId(2);
+        $requester->setSuperAdmin(true);
+
+        self::assertTrue($sut->checkUserAccess($subject, $requester));
+        self::assertTrue($sut->checkUserAccess($subject, $requester, false));
+    }
+
     public function testCheckUserAccessDeniesSystemAccountForNonSystemRequester(): void
     {
         $sut = $this->createSut();

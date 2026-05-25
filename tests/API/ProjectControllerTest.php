@@ -983,4 +983,49 @@ class ProjectControllerTest extends APIControllerBaseTestCase
 
         self::assertNull($this->getEntityManager()->getRepository(ProjectComment::class)->find($commentId));
     }
+
+    public function testPostDefaultTeamAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $this->request($client, '/api/projects/1/team', 'POST');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
+        self::assertIsNumeric($result['id']);
+        $teamId = $result['id'];
+
+        self::assertIsArray($result['members']);
+        self::assertCount(1, $result['members']);
+        self::assertIsArray($result['members'][0]);
+        self::assertArrayHasKey('teamlead', $result['members'][0]);
+        self::assertTrue($result['members'][0]['teamlead']);
+
+        // idempotent
+        $this->request($client, '/api/projects/1/team', 'POST');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        self::assertSame($teamId, $result['id']);
+        self::assertIsArray($result['members']);
+        self::assertCount(1, $result['members']);
+    }
+
+    public function testPostDefaultTeamActionIsSecure(): void
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/api/projects/1/team', 'POST');
+    }
+
+    public function testPostDefaultTeamActionNotFound(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertEntityNotFoundForPost($client, '/api/projects/' . PHP_INT_MAX . '/team');
+    }
 }
