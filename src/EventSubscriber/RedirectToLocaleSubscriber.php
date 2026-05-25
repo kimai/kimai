@@ -57,11 +57,16 @@ final class RedirectToLocaleSubscriber implements EventSubscriberInterface
             return;
         }
 
+        $preferredLanguage = null;
+
         if (null !== ($token = $this->storage->getToken())) {
-            /** @var User $user */
             $user = $token->getUser();
-            $preferredLanguage = $user->getLanguage();
-        } else {
+            if ($user instanceof User) {
+                $preferredLanguage = $user->getLanguage();
+            }
+        }
+
+        if ($preferredLanguage === null){
             $allLanguages = $this->localeService->getTranslatedLocales();
 
             // Add the default locale at the first position of the array, because getPreferredLanguage()
@@ -71,7 +76,7 @@ final class RedirectToLocaleSubscriber implements EventSubscriberInterface
             $preferredLanguage = $request->getPreferredLanguage(array_unique($allLanguages));
         }
 
-        $response = new RedirectResponse($this->urlGenerator->generate('homepage', ['_locale' => $preferredLanguage]));
+        $response = new RedirectResponse($this->urlGenerator->generate('homepage', ['_locale' => $preferredLanguage ?? 'en']));
         $event->setResponse($response);
     }
 }
