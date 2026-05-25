@@ -55,8 +55,9 @@ function handleStartup() {
     pwconv
   fi
 
+  PHP_RUN_USER=$(id -nu "$USER_ID")
   if [ -e /use_apache ]; then
-    export APACHE_RUN_USER=$(id -nu "$USER_ID")
+    export APACHE_RUN_USER=$PHP_RUN_USER
     # This doesn't _exactly_ run as the specified GID, it runs as the GID of the specified user but WTF
     export APACHE_RUN_GROUP=$(id -ng "$USER_ID")
     export APACHE_PID_FILE=/var/run/apache2/apache2.pid
@@ -73,11 +74,15 @@ function handleStartup() {
   fi
 }
 
+function console() {
+	su -s /bin/bash -c "/opt/kimai/bin/console $*" "$PHP_RUN_USER"
+}
+
 function prepareKimai() {
   # These are idempotent, so we can run them on every start-up
-  /opt/kimai/bin/console -n kimai:install
+  console -n kimai:install
   if [ ! -z "$ADMINPASS" ] && [ ! -a "$ADMINMAIL" ]; then
-    /opt/kimai/bin/console kimai:user:create admin "$ADMINMAIL" ROLE_SUPER_ADMIN "$ADMINPASS"
+    console kimai:user:create admin "$ADMINMAIL" ROLE_SUPER_ADMIN "$ADMINPASS"
   fi
   echo "$KIMAI" > /opt/kimai/var/installed
   echo "Kimai is ready"
@@ -85,7 +90,7 @@ function prepareKimai() {
 
 function runServer() {
   # Just while I'm fixing things
-  /opt/kimai/bin/console kimai:reload --env="$APP_ENV"
+  console kimai:reload --env="$APP_ENV"
   chown -R $USER_ID:$GROUP_ID /opt/kimai/var
   if [ -e /use_apache ]; then
     exec /usr/sbin/apache2 -D FOREGROUND
