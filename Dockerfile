@@ -260,7 +260,11 @@ COPY .docker/dbtest.php /dbtest.php
 COPY .docker/entrypoint.sh /entrypoint.sh
 
 ENV DATABASE_URL="mysql://kimai:kimai@127.0.0.1:3306/kimai?charset=utf8mb4&serverVersion=8.3"
-ENV APP_SECRET=change_this_to_something_unique
+# APP_SECRET is intentionally not set here. The entrypoint resolves it (user-provided
+# via -e APP_SECRET=... wins; otherwise a unique value is generated and persisted to
+# the var/data volume and mirrored into .env.local). Setting it as a Dockerfile ENV
+# would create a real env var that always wins over .env*, breaking `docker exec`
+# console invocations.
 # The default container name for nginx is nginx
 ENV TRUSTED_PROXIES=nginx,localhost,127.0.0.1
 ENV MAILER_FROM=kimai@example.com
