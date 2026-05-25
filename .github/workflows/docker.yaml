@@ -71,6 +71,7 @@ jobs:
                   tags: |
                       kimai/kimai2:stable
                       kimai/kimai2:apache
+                      kimai/kimai2:2
                       kimai/kimai2:${{ env.kimai_version }}
                   push: true
 
