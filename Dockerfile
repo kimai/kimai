@@ -24,8 +24,9 @@
 
 # Source base, one of: fpm, apache
 ARG BASE="fpm"
-# Kimai branch/tag to run
-ARG KIMAI="main"
+# Kimai version label (used for OCI labels and the KIMAI env var inside the image).
+# The actual source is read from the local build context, not fetched by version.
+ARG KIMAI="dev"
 # Timezone for images
 ARG TIMEZONE="Europe/Berlin"
 
@@ -218,20 +219,6 @@ COPY --from=php-ext-intl /usr/local/lib/php/extensions/no-debug-non-zts-20230831
 COPY --from=php-ext-opcache /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini  /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
 ###########################
-# fetch Kimai sources
-###########################
-
-FROM alpine:latest AS git-prod
-ARG KIMAI
-ARG TIMEZONE
-# the convention in the Kimai repository is: tags are always version numbers, branch names always start with a letter
-# if the KIMAI variable starts with a number (e.g. 2.24.0) we assume its a tag, otherwise its a branch
-RUN [[ $KIMAI =~ ^[0-9] ]] && export REF='tags' || export REF='heads' && \
-    wget -O "/opt/kimai.tar.gz" "https://github.com/kimai/kimai/archive/refs/${REF}/${KIMAI}.tar.gz" && \
-    tar -xpzf /opt/kimai.tar.gz -C /opt/ && \
-    mv /opt/kimai-${KIMAI} /opt/kimai
-
-###########################
 # global base build
 ###########################
 
@@ -287,15 +274,15 @@ CMD [ "/entrypoint.sh" ]
 
 # development build
 FROM base AS dev
-# copy kimai develop source
-COPY --from=git-prod --chown=www-data:www-data /opt/kimai /opt/kimai
+# copy kimai source from local build context (see .dockerignore for what is excluded)
+COPY --chown=www-data:www-data . /opt/kimai
 COPY .docker /assets
 # do the composer deps installation
 RUN \
     export COMPOSER_HOME=/composer && \
     composer --no-ansi install --working-dir=/opt/kimai --optimize-autoloader && \
-    composer --no-ansi clearcache && \
     composer --no-ansi require --working-dir=/opt/kimai laminas/laminas-ldap && \
+    composer --no-ansi clearcache && \
     cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini && \
     chown -R www-data:www-data /opt/kimai /usr/local/etc/php/php.ini && \
     mkdir -p /opt/kimai/var/logs && chmod 777 /opt/kimai/var/logs && \
@@ -308,8 +295,8 @@ ENV memory_limit=512M
 
 # the "prod" stage (production build) is configured as last stage in the file, as this is the default target in BuildKit
 FROM base AS prod
-# copy kimai production source
-COPY --from=git-prod --chown=www-data:www-data /opt/kimai /opt/kimai
+# copy kimai source from local build context (see .dockerignore for what is excluded)
+COPY --chown=www-data:www-data . /opt/kimai
 COPY .docker /assets
 # do the composer deps installation
 RUN \
