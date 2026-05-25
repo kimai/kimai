@@ -70,9 +70,8 @@ jobs:
                   platforms: linux/amd64,linux/arm64
                   tags: |
                       kimai/kimai2:stable
-                      kimai/kimai2:${{ env.kimai_version }}
                       kimai/kimai2:apache
-                      kimai/kimai2:apache-${{ env.kimai_version }}
+                      kimai/kimai2:${{ env.kimai_version }}
                   push: true
 
             # TODO 3.0 remove the deprecated FPM build
