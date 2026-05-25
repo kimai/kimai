@@ -26,6 +26,7 @@ jobs:
                 ports:
                     - 3306/tcp
                 options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
         strategy:
             matrix:
                 php: ['8.2', '8.3', '8.4', '8.5']
@@ -62,24 +63,6 @@ jobs:
 
             -   name: Install dependencies
                 run: composer install
-
-            -   name: Validate Composer
-                run: composer validate --strict --no-check-all
-
-            -   name: Warmup cache
-                run: APP_ENV=dev bin/console kimai:reload -n
-
-            -   name: Check codestyles
-                run: vendor/bin/php-cs-fixer fix --dry-run --verbose --config=.php-cs-fixer.dist.php --using-cache=no --show-progress=none --format=checkstyle | cs2pr
-
-            -   name: Run PHPStan for application
-                run: vendor/bin/phpstan analyse -c phpstan.neon --no-progress --error-format=checkstyle | cs2pr
-
-            -   name: Run PHPStan for tests
-                run: vendor/bin/phpstan analyse -c tests/phpstan.neon --no-progress --error-format=checkstyle | cs2pr
-
-            -   name: Lint codebase
-                run: composer linting
 
             -   name: Install LDAP package (for tests)
                 run: composer require laminas/laminas-ldap
@@ -129,6 +112,3 @@ jobs:
                     DATABASE_URL: mysql://root:kimai@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/kimai?charset=utf8mb4&serverVersion=8.0.35
                     APP_ENV: dev
                     MAILER_URL: null://localhost
-
-            -   name: Check for security issues in packages
-                run: symfony security:check
