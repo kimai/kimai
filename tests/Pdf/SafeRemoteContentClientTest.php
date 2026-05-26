@@ -13,6 +13,7 @@ use App\Pdf\SafeRemoteContentClient;
 use Mpdf\PsrHttpMessageShim\Request;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpClient\Exception\TransportException;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\NoPrivateNetworkHttpClient;
@@ -27,7 +28,7 @@ class SafeRemoteContentClientTest extends TestCase
             new MockResponse('image-bytes', ['http_code' => 200])
         );
 
-        $sut = new SafeRemoteContentClient($client);
+        $sut = new SafeRemoteContentClient($client, $this->createStub(LoggerInterface::class));
         $response = $sut->sendRequest(new Request('GET', 'https://example.com/logo.png'));
 
         self::assertSame(200, $response->getStatusCode());
@@ -40,7 +41,7 @@ class SafeRemoteContentClientTest extends TestCase
             new MockResponse('not found', ['http_code' => 404])
         );
 
-        $sut = new SafeRemoteContentClient($client);
+        $sut = new SafeRemoteContentClient($client, $this->createStub(LoggerInterface::class));
         $response = $sut->sendRequest(new Request('GET', 'https://example.com/missing.png'));
 
         self::assertSame(404, $response->getStatusCode());
@@ -55,7 +56,10 @@ class SafeRemoteContentClientTest extends TestCase
             throw new TransportException('IP blocked');
         });
 
-        $sut = new SafeRemoteContentClient($client);
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects(self::once())->method('error');
+
+        $sut = new SafeRemoteContentClient($client, $logger);
         $response = $sut->sendRequest(new Request('GET', 'http://127.0.0.1/internal'));
 
         self::assertSame(502, $response->getStatusCode());
@@ -68,7 +72,10 @@ class SafeRemoteContentClientTest extends TestCase
         $inner = new MockHttpClient(new MockResponse('should-not-be-reached'));
         $safe = new NoPrivateNetworkHttpClient($inner);
 
-        $sut = new SafeRemoteContentClient($safe);
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects(self::once())->method('error');
+
+        $sut = new SafeRemoteContentClient($safe, $logger);
         $response = $sut->sendRequest(new Request('GET', 'http://127.0.0.1/internal'));
 
         self::assertSame(502, $response->getStatusCode());
