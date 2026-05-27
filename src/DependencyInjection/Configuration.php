@@ -556,8 +556,20 @@ final class Configuration implements ConfigurationInterface
                 ->booleanNode('login')
                     ->defaultTrue()
                 ->end()
+                ->scalarNode('theme')
+                    ->defaultValue('auto')
+                    ->validate()
+                        ->ifTrue(static function ($v) {
+                            return (!\in_array($v, ['auto', 'default', 'dark']));
+                        })
+                        ->thenInvalid('The theme must be one of: "auto", "default", "dark"')
+                    ->end()
+                ->end()
                 ->booleanNode('registration')
                     ->defaultFalse()
+                ->end()
+                ->booleanNode('wizard')
+                    ->defaultTrue()
                 ->end()
                 ->booleanNode('password_reset')
                     ->defaultTrue()
@@ -625,7 +637,15 @@ final class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('timezone')->defaultNull()->end()
                         ->scalarNode('language')->defaultValue(User::DEFAULT_LANGUAGE)->end()
-                        ->scalarNode('theme')->defaultValue('auto')->end()
+                        ->scalarNode('theme')
+                            ->defaultValue('auto')
+                            ->validate()
+                                ->ifTrue(static function ($v) {
+                                    return (!\in_array($v, ['auto', 'default', 'dark']));
+                                })
+                                ->thenInvalid('The theme must be one of: "auto", "default", "dark"')
+
+                        ->end()
                     ->end()
                 ->end()
             ->end()

@@ -1,17 +1,28 @@
-{% 
+{%
     set options = {
-        'teams': teams, 
-        'team': team|default(null), 
-        'route_create': route_create|default(null), 
-        'route_edit': route_edit|default(null), 
+        'teams': teams,
+        'team': team|default(null),
+        'route_create': route_create|default(null),
+        'route_edit': route_edit|default(null),
         'empty_message': empty_message|default('team.visibility_global')
-    } 
+    }
 %}
 {% embed '@theme/embeds/card.html.twig' with options %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% block box_tools %}
         {% if route_create is not null and (teams|length == 0 or team is null) and is_granted('create_team') %}
-            {{ widgets.card_tool_button('create', {'title': 'team.create_default', 'translation_domain': 'teams', 'url': route_create}) }}
+            {{ widgets.card_tool_button('create', {
+                'title': 'team.create_default',
+                'translation_domain': 'teams',
+                'url': '#',
+                'class': 'api-link',
+                'attr': {
+                    'data-href': route_create,
+                    'data-method': 'POST',
+                    'data-event': 'kimai.teamUpdate',
+                    'data-msg-error': 'action.update.error'
+                }
+            }) }}
         {% endif %}
         {% if route_edit is not null %}
             {{ widgets.card_tool_button('edit', {'class': 'modal-ajax-form open-edit', 'title': 'edit', 'url': route_edit}) }}

@@ -20,12 +20,12 @@ parameters:
         objectManagerLoader: %rootDir%/../../../tests/phpstan-doctrine.php
     ignoreErrors:
         - identifier: missingType.iterableValue
-
-        -
-            message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) with '(.*)' and (.*) will always evaluate to true\\.$#"
-
-        -
-            message: "#^PHPDoc tag @var with type App\\\\(.*) is not subtype of native type PHPUnit\\\\Framework\\\\MockObject\\\\MockObject\\.$#"
+        - message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) with '(.*)' and (.*) will always evaluate to true\\.$#"
+        - message: "#^PHPDoc tag @var with type App\\\\(.*) is not subtype of native type PHPUnit\\\\Framework\\\\MockObject\\\\MockObject\\.$#"
+        - message: '#^Call to deprecated method getApiToken\(\) of class App\\Entity\\User#'
+        - message: '#^Call to deprecated method setApiToken\(\) of class App\\Entity\\User#'
+        - message: '#^Call to deprecated method getPlainApiToken\(\) of class App\\Entity\\User#'
+        - message: '#^Call to deprecated method setPlainApiToken\(\) of class App\\Entity\\User#'
 
         -
             identifier: classConstant.deprecatedClass
@@ -45,6 +45,11 @@ parameters:
         -
             identifier: method.deprecatedClass
             count: 13
+            path: API/Authentication/TokenAuthenticatorTest.php
+
+        -
+            identifier: method.deprecated
+            count: 2
             path: API/Authentication/TokenAuthenticatorTest.php
 
         -
@@ -268,7 +273,7 @@ parameters:
 
         -
             message: "#^Parameter \\#5 \\$content of method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:request\\(\\) expects string\\|null, string\\|false given\\.$#"
-            count: 23
+            count: 25
             path: API/TeamControllerTest.php
 
         -
@@ -582,16 +587,6 @@ parameters:
             path: Controller/CustomerControllerTest.php
 
         -
-            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|null given\\.$#"
-            count: 2
-            path: Controller/CustomerControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$url of method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:request\\(\\) expects string, string\\|null given\\.$#"
-            count: 2
-            path: Controller/CustomerControllerTest.php
-
-        -
             message: "#^Parameter \\#1 \\$project of method App\\\\Entity\\\\Team\\:\\:addProject\\(\\) expects App\\\\Entity\\\\Project, App\\\\Entity\\\\Project\\|null given\\.$#"
             count: 1
             path: Controller/ExportControllerTest.php
@@ -779,16 +774,6 @@ parameters:
         -
             message: "#^Parameter \\#1 \\$projects of method App\\\\Tests\\\\DataFixtures\\\\TimesheetFixtures\\:\\:setProjects\\(\\) expects array\\<App\\\\Entity\\\\Project\\>, array\\<int, App\\\\Entity\\\\Project\\|null\\> given\\.$#"
             count: 1
-            path: Controller/ProjectControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|null given\\.$#"
-            count: 2
-            path: Controller/ProjectControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$url of method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:request\\(\\) expects string, string\\|null given\\.$#"
-            count: 2
             path: Controller/ProjectControllerTest.php
 
         -
@@ -2079,11 +2064,6 @@ parameters:
         -
             message: "#^Parameter \\#1 \\$callback of function call_user_func expects callable\\(\\)\\: mixed, array\\{class\\-string, string\\}\\|\\(callable\\(\\)\\: mixed\\)\\|null given\\.$#"
             count: 5
-            path: Twig/LocaleFormatExtensionsTest.php
-
-        -
-            message: "#^Parameter \\#1 \\$timezoneId of function date_default_timezone_set expects string, string\\|null given\\.$#"
-            count: 1
             path: Twig/LocaleFormatExtensionsTest.php
 
         -

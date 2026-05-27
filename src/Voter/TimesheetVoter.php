@@ -48,7 +48,8 @@ final class TimesheetVoter extends Voter
         self::EDIT_RATE,
         self::EDIT_EXPORT,
         'edit_billable',
-        'duplicate'
+        'duplicate',
+        'is_owner',
     ];
 
     private ?bool $lockdownGrace = null;
@@ -82,15 +83,18 @@ final class TimesheetVoter extends Voter
     {
         $user = $token->getUser();
 
-        if (!($user instanceof User)) {
+        if (!($user instanceof User) || $user->getId() === null) {
             return false;
         }
 
         $permission = '';
 
         switch ($attribute) {
+            case 'is_owner':
+                return (!$subject instanceof MultiUserTimesheet) && $user->getId() === $subject->getUser()?->getId();
+
             case self::START:
-                if (!$this->canStart($subject)) {
+                if (!$this->canStart($user, $subject)) {
                     return false;
                 }
                 $permission .= $attribute;
@@ -111,7 +115,7 @@ final class TimesheetVoter extends Voter
                 break;
 
             case 'duplicate':
-                if (!$this->canStart($subject)) {
+                if (!$this->canStart($user, $subject)) {
                     return false;
                 }
                 $permission = self::EDIT;
@@ -142,11 +146,10 @@ final class TimesheetVoter extends Voter
         return $this->permissionManager->hasRolePermission($user, $permission . '_other_timesheet');
     }
 
-    private function canStart(Timesheet $timesheet): bool
+    private function canStart(User $user, Timesheet $timesheet): bool
     {
         // possible improvements for the future:
         // we could check the amount of active entries (maybe slow)
-        // if a teamlead starts an entry for another user, check that this user is part of his team (needs to be done for teams)
 
         if (null === $timesheet->getActivity()) {
             return false;
@@ -165,6 +168,18 @@ final class TimesheetVoter extends Voter
         }
 
         if (!$timesheet->getActivity()->isVisible()) {
+            return false;
+        }
+
+        // starting and duplicating both create a NEW record under the referenced
+        // project and activity, so the current user must still have team-based
+        // access to them - historical ownership of the original timesheet is not
+        // sufficient (otherwise old entries would survive an access revocation).
+        if (!$this->permissionManager->checkTeamAccessProject($timesheet->getProject(), $user)) {
+            return false;
+        }
+
+        if (!$this->permissionManager->checkTeamAccessActivity($timesheet->getActivity(), $user)) {
             return false;
         }
 

@@ -8,6 +8,17 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
+## [2.58.0](https://github.com/kimai/kimai/releases/tag/2.58.0)
+
+The official Docker image no longer runs with the default `APP_SECRET=change_this_to_something_unique`.
+If you did not explicitly set your own `APP_SECRET` (via `-e APP_SECRET=...` or your compose/environment
+config), the container now generates a unique secret on first start and persists it as `var/data/.appsecret`
+inside the `data` volume that the documented Docker setup already mounts.
+
+As a one-time effect of this upgrade, all existing sessions, "remember me" cookies and pending
+password-reset links become invalid — every user has to log in again once. No manual action is required;
+the container starts as before. It is recommended to configure your own `APP_SECRET` explicitly.
+
 ## [2.56.0](https://github.com/kimai/kimai/releases/tag/2.56.0)
 
 The required minimum PHP version is now 8.2, read https://www.php.net/supported-versions.php

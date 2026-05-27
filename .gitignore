@@ -13,10 +13,11 @@ var/templates/
 /php.ini
 /.php-version
 
-# YARN 2
+# frontend
 /.yarnrc.yml
 /.yarn
 /.pnp.*
+/.pnpm-store
 
 # for keeping empty directories
 /config/packages/local.yaml

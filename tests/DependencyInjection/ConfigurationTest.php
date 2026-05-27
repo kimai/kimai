@@ -11,6 +11,7 @@ namespace App\Tests\DependencyInjection;
 
 use App\DependencyInjection\Configuration;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
@@ -121,6 +122,120 @@ class ConfigurationTest extends TestCase
         $config['calendar'] = [
             'dragdrop_amount' => 50,
         ];
+
+        $this->assertConfig($config, []);
+    }
+
+    public static function provideValidThemeConfigurations(): iterable
+    {
+        yield 'authentication auto theme' => [
+            [
+                'user' => [
+                    'theme' => 'auto',
+                ],
+            ],
+            ['user', 'theme'],
+            'auto',
+        ];
+
+        yield 'authentication default theme' => [
+            [
+                'user' => [
+                    'theme' => 'default',
+                ],
+            ],
+            ['user', 'theme'],
+            'default',
+        ];
+
+        yield 'authentication dark theme' => [
+            [
+                'user' => [
+                    'theme' => 'dark',
+                ],
+            ],
+            ['user', 'theme'],
+            'dark',
+        ];
+
+        yield 'user default auto theme' => [
+            [
+                'defaults' => [
+                    'user' => [
+                        'theme' => 'auto',
+                    ],
+                ],
+            ],
+            ['defaults', 'user', 'theme'],
+            'auto',
+        ];
+
+        yield 'user default default theme' => [
+            [
+                'defaults' => [
+                    'user' => [
+                        'theme' => 'default',
+                    ],
+                ],
+            ],
+            ['defaults', 'user', 'theme'],
+            'default',
+        ];
+
+        yield 'user default dark theme' => [
+            [
+                'defaults' => [
+                    'user' => [
+                        'theme' => 'dark',
+                    ],
+                ],
+            ],
+            ['defaults', 'user', 'theme'],
+            'dark',
+        ];
+    }
+
+    #[DataProvider('provideValidThemeConfigurations')]
+    public function testValidateThemeAllowsSupportedValues(array $input, array $path, string $expected): void
+    {
+        $config = array_replace_recursive($this->getMinConfig(), $input);
+        $compiled = $this->getCompiledConfig($config);
+
+        self::assertSame($expected, array_reduce($path, static function ($value, $key) {
+            return $value[$key];
+        }, $compiled));
+    }
+
+    public static function provideInvalidThemeConfigurations(): iterable
+    {
+        yield 'authentication invalid theme' => [
+            [
+                'user' => [
+                    'theme' => 'blue',
+                ],
+            ],
+            'kimai.user.theme',
+        ];
+
+        yield 'user default invalid theme' => [
+            [
+                'defaults' => [
+                    'user' => [
+                        'theme' => 'blue',
+                    ],
+                ],
+            ],
+            'kimai.defaults.user.theme',
+        ];
+    }
+
+    #[DataProvider('provideInvalidThemeConfigurations')]
+    public function testValidateThemeRejectsUnsupportedValues(array $input, string $path): void
+    {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage(\sprintf('Invalid configuration for path "%s": The theme must be one of: "auto", "default", "dark"', $path));
+
+        $config = array_replace_recursive($this->getMinConfig(), $input);
 
         $this->assertConfig($config, []);
     }
@@ -297,9 +412,11 @@ class ConfigurationTest extends TestCase
             'user' => [
                 'registration' => false,
                 'password_reset' => true,
+                'wizard' => true,
                 'login' => true,
                 'password_reset_retry_ttl' => 3600,
                 'password_reset_token_ttl' => 86400,
+                'theme' => 'auto',
             ],
             'invoice' => [
                 'documents' => [

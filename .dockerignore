@@ -1,0 +1,76 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.dist
+.dockerhub.secrets
+config/secrets/*
+
+# Git and CI
+.git
+.gitattributes
+.gitignore
+.github
+
+# Build artifacts and dependencies (installed inside the image)
+vendor/
+node_modules/
+public/bundles/
+.pnpm-store/
+.yarn/
+.yarnrc.yml
+.pnp.*
+
+# Symfony runtime data — exclude contents but keep the directories themselves
+# (the dirs are tracked in git via .gitkeep and code expects them to exist)
+var/advisories/
+var/cache/*
+var/log/*
+var/sessions/*
+var/data/*
+var/dev/*
+var/invoices/*
+var/export/*
+var/packages/*
+var/plugins/*
+var/templates/*
+!var/**/.gitkeep
+
+# IDE, tools, caches
+.idea/
+.claude/
+.vscode/
+.php-cs-fixer.cache
+.php_cs.cache
+.phpunit.result.cache
+.phpunit/
+nbproject/
+
+# Dev-only configs
+test/
+.php-cs-fixer.dist.php
+php-cs-fixer.sh
+phpstan.sh
+phpstan.neon
+phpstan-baseline.neon
+eslint.config.mjs
+.editorconfig
+.codecov.yml
+phpunit.xml
+phpunit.xml.dist
+
+# Docker and compose (not needed inside the image; .docker/ is copied explicitly)
+docker-compose.yml
+docker-compose.*.yml
+Dockerfile
+.dockerignore
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Local Symfony overrides
+public/.user.ini
+php.ini
+.php-version
+config/packages/local.yaml
+config/bundles-local.php

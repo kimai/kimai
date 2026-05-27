@@ -9,6 +9,7 @@
 
 namespace App\EventSubscriber;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -21,34 +22,31 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class WizardSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private UrlGeneratorInterface $urlGenerator,
-        private AuthorizationCheckerInterface $security,
-        private TokenStorageInterface $storage
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly AuthorizationCheckerInterface $security,
+        private readonly TokenStorageInterface $storage,
+        private readonly SystemConfiguration $systemConfiguration
     ) {
     }
 
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::REQUEST => ['onKernelRequest']
+            KernelEvents::REQUEST => ['onKernelRequest', -30]
         ];
     }
 
     public function onKernelRequest(RequestEvent $event): void
     {
-        // ignore sub-requests
-        if (!$event->isMainRequest()) {
-            return;
-        }
-
-        // ignore events like the toolbar where we do not have a token
-        if (null === ($token = $this->storage->getToken())) {
+        // ignore sub-requests and un-authenticated events
+        if (!$event->isMainRequest() || null === ($token = $this->storage->getToken())) {
             return;
         }
 
         $uri = $event->getRequest()->getRequestUri();
 
-        // never require 2FA on API calls
+        // never trigger wizard on API calls
+        // TODO 3.0 remove /register/
         if (str_starts_with($uri, '/api/') || stripos($uri, '/register/') !== false || stripos($uri, '/wizard/') !== false) {
             return;
         }
@@ -63,6 +61,10 @@ class WizardSubscriber implements EventSubscriberInterface
             return;
         }
 
+        if ($user->isRegularUserOnly() && !$this->systemConfiguration->isUserWizardActive()) {
+            return;
+        }
+
         foreach (User::WIZARDS as $wizard) {
             if (!$user->hasSeenWizard($wizard)) {
                 $response = new RedirectResponse($this->urlGenerator->generate('wizard', ['wizard' => $wizard]));
@@ -70,11 +72,6 @@ class WizardSubscriber implements EventSubscriberInterface
 
                 return;
             }
-        }
-
-        if ($user->requiresPasswordReset()) {
-            $response = new RedirectResponse($this->urlGenerator->generate('wizard', ['wizard' => 'password']));
-            $event->setResponse($response);
         }
     }
 }

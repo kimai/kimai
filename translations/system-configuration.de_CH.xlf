@@ -254,6 +254,10 @@
         <source>authentication</source>
         <target state="translated">Authentifizierung</target>
       </trans-unit>
+      <trans-unit id="uf2_qIW" resname="user_auth_wizard">
+        <source>user_auth_wizard</source>
+        <target>Einrichtungsassistent für neue Benutzer anzeigen</target>
+      </trans-unit>
       <trans-unit id="FaGqoTT" resname="timesheet.mode">
         <source>timesheet.mode</source>
         <target state="translated">Zeiterfassungsmodus</target>

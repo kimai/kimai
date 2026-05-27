@@ -32,6 +32,7 @@ final class DoctorController extends AbstractController
     public const DIRECTORIES_WRITABLE = [
         'var/cache/',
         'var/log/',
+        'var/packages/',
     ];
 
     public function __construct(private string $projectDirectory, private string $kernelEnvironment, private FileHelper $fileHelper, private CacheInterface $cache)

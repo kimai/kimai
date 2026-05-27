@@ -265,6 +265,24 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/export/template-create');
     }
 
+    public function testCreateTemplateIsSecureForTeamlead(): void
+    {
+        // GHSA-rw46-qg69-vg6h
+        $this->assertUrlIsSecuredForRole(User::ROLE_TEAMLEAD, '/export/template-create');
+    }
+
+    public function testEditTemplateIsSecureForTeamlead(): void
+    {
+        // GHSA-rw46-qg69-vg6h
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        /** @var ExportTemplate[] $templates */
+        $templates = $this->importFixture(new ExportTemplateFixtures());
+        $id = $templates[0]->getId();
+
+        $this->request($client, $this->createUrl('/export/template-edit/' . $id));
+        $this->assertAccessDenied($client);
+    }
+
     public function testCreateTemplateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);

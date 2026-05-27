@@ -34,7 +34,6 @@ use App\Repository\Query\TeamQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\Query\VisibilityInterface;
 use App\Repository\TeamRepository;
-use App\User\TeamService;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -42,10 +41,7 @@ use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Csrf\CsrfToken;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
@@ -170,29 +166,6 @@ final class CustomerController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{id}/comment_delete/{token}', name: 'customer_comment_delete', methods: ['GET'])]
-    #[IsGranted(new Expression("is_granted('edit', subject.getCustomer()) and is_granted('comments', subject.getCustomer())"), 'comment')]
-    public function deleteCommentAction(CustomerComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
-    {
-        $customerId = $comment->getCustomer()->getId();
-
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('comment.delete', $token))) {
-            $this->flashError('action.csrf.error');
-
-            return $this->redirectToRoute('customer_details', ['id' => $customerId]);
-        }
-
-        $csrfTokenManager->refreshToken('comment.delete');
-
-        try {
-            $this->repository->deleteComment($comment);
-        } catch (\Exception $ex) {
-            $this->flashDeleteException($ex);
-        }
-
-        return $this->redirectToRoute('customer_details', ['id' => $customerId]);
-    }
-
     #[Route(path: '/{id}/comment_add', name: 'customer_comment_add', methods: ['POST'])]
     #[IsGranted('comments', 'customer')]
     public function addCommentAction(Customer $customer, Request $request): Response
@@ -208,58 +181,6 @@ final class CustomerController extends AbstractController
             } catch (\Exception $ex) {
                 $this->flashUpdateException($ex);
             }
-        }
-
-        return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
-    }
-
-    #[Route(path: '/{id}/comment_pin/{token}', name: 'customer_comment_pin', methods: ['GET'])]
-    #[IsGranted(new Expression("is_granted('edit', subject.getCustomer()) and is_granted('comments', subject.getCustomer())"), 'comment')]
-    public function pinCommentAction(CustomerComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
-    {
-        $customerId = $comment->getCustomer()->getId();
-
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('comment.pin', $token))) {
-            $this->flashError('action.csrf.error');
-
-            return $this->redirectToRoute('customer_details', ['id' => $customerId]);
-        }
-
-        $csrfTokenManager->refreshToken('comment.pin');
-
-        $comment->setPinned(!$comment->isPinned());
-        try {
-            $this->repository->saveComment($comment);
-        } catch (\Exception $ex) {
-            $this->flashUpdateException($ex);
-        }
-
-        return $this->redirectToRoute('customer_details', ['id' => $customerId]);
-    }
-
-    #[Route(path: '/{id}/create_team', name: 'customer_team_create', methods: ['GET'])]
-    #[IsGranted('create_team')]
-    #[IsGranted('permissions', 'customer')]
-    public function createDefaultTeamAction(Customer $customer, TeamService $teamService): Response
-    {
-        $name = $customer->getName();
-        if ($name === null) {
-            throw new BadRequestHttpException('Cannot create default team for customer with empty name: ' . $customer->getId());
-        }
-
-        $defaultTeam = $teamService->findTeamByName($name);
-
-        if (null === $defaultTeam) {
-            $defaultTeam = $teamService->createNewTeam($name);
-        }
-
-        $defaultTeam->addTeamlead($this->getUser());
-        $defaultTeam->addCustomer($customer);
-
-        try {
-            $teamService->saveTeam($defaultTeam);
-        } catch (\Exception $ex) {
-            $this->flashUpdateException($ex);
         }
 
         return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
@@ -371,6 +292,10 @@ final class CustomerController extends AbstractController
     #[IsGranted('edit', 'customer')]
     public function editRateAction(Customer $customer, CustomerRate $rate, Request $request, CustomerRateRepository $repository): Response
     {
+        if ($rate->getCustomer() !== $customer) {
+            throw $this->createAccessDeniedException('Trying to edit rate and customer that do not belong together.');
+        }
+
         return $this->rateFormAction($customer, $rate, $request, $repository, $this->generateUrl('admin_customer_rate_edit', ['id' => $customer->getId(), 'rate' => $rate->getId()]));
     }
 

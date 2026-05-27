@@ -175,6 +175,11 @@ final class SystemConfiguration
         return (bool) $this->find('user.registration');
     }
 
+    public function getAuthenticationTheme(): string
+    {
+        return $this->getString('user.theme', 'auto');
+    }
+
     public function getPasswordResetTokenLifetime(): int
     {
         return (int) $this->find('user.password_reset_token_ttl');
@@ -363,6 +368,11 @@ final class SystemConfiguration
     public function getUserDefaultCurrency(): string
     {
         return $this->getDefaultCurrency();
+    }
+
+    public function isUserWizardActive(): bool
+    {
+        return (bool) $this->find('user.wizard');
     }
 
     // ========== Timesheet configurations ==========

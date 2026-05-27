@@ -31,7 +31,6 @@ use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\TeamQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TeamRepository;
-use App\User\TeamService;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
 use Exception;
@@ -40,7 +39,6 @@ use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -189,6 +187,10 @@ final class ActivityController extends AbstractController
     #[IsGranted('edit', 'activity')]
     public function editRateAction(Activity $activity, ActivityRate $rate, Request $request, ActivityRateRepository $repository): Response
     {
+        if ($rate->getActivity() !== $activity) {
+            throw $this->createAccessDeniedException('Trying to edit rate and activity that do not belong together.');
+        }
+
         return $this->rateFormAction($activity, $rate, $request, $repository, $this->generateUrl('admin_activity_rate_edit', ['id' => $activity->getId(), 'rate' => $rate->getId()]));
     }
 
@@ -231,6 +233,7 @@ final class ActivityController extends AbstractController
 
     #[Route(path: '/create/{project}', name: 'admin_activity_create_with_project', methods: ['GET', 'POST'])]
     #[IsGranted('create_activity')]
+    #[IsGranted('edit', 'project')]
     public function createWithProjectAction(Project $project, Request $request, ActivityService $activityService, SystemConfiguration $configuration): Response
     {
         return $this->createActivity($request, $activityService, $configuration, $project);
@@ -299,34 +302,6 @@ final class ActivityController extends AbstractController
             'activity' => $activity,
             'form' => $form->createView()
         ]);
-    }
-
-    #[Route(path: '/{id}/create_team', name: 'activity_team_create', methods: ['GET'])]
-    #[IsGranted('create_team')]
-    #[IsGranted('permissions', 'activity')]
-    public function createDefaultTeamAction(Activity $activity, TeamService $teamService): Response
-    {
-        $name = $activity->getName();
-        if ($name === null) {
-            throw new BadRequestHttpException('Cannot create default team for activity with empty name: ' . $activity->getId());
-        }
-
-        $defaultTeam = $teamService->findTeamByName($name);
-
-        if (null === $defaultTeam) {
-            $defaultTeam = $teamService->createNewTeam($name);
-        }
-
-        $defaultTeam->addTeamlead($this->getUser());
-        $defaultTeam->addActivity($activity);
-
-        try {
-            $teamService->saveTeam($defaultTeam);
-        } catch (Exception $ex) {
-            $this->flashUpdateException($ex);
-        }
-
-        return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
     }
 
     #[Route(path: '/{id}/edit', name: 'admin_activity_edit', methods: ['GET', 'POST'])]

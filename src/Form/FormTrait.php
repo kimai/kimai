@@ -62,29 +62,19 @@ trait FormTrait
                 /** @var array<string, mixed> $data */
                 $data = $event->getData();
                 $customer = \array_key_exists('customer', $data) && $data['customer'] !== '' ? $data['customer'] : null;
-                $project = \array_key_exists('project', $data) && $data['project'] !== '' ? $data['project'] : $project;
 
                 $event->getForm()->add('project', ProjectType::class, array_merge($options, [
                     'group_by' => null,
                     'query_builder' => function (ProjectRepository $repo) use ($builder, $project, $customer, $isNew) {
                         // is there a better way to prevent starting a record with a hidden project ?
-                        $project = \is_string($project) ? (int) $project : $project;
                         $customer = \is_string($customer) ? (int) $customer : $customer;
-                        if ($isNew && \is_int($project)) {
-                            /** @var Project $project */
-                            $project = $repo->find($project);
-                            if ($project !== null) {
-                                if (!$project->getCustomer()->isVisible()) {
-                                    $customer = null;
-                                    $project = null;
-                                } elseif (!$project->isVisible()) {
-                                    $project = null;
-                                }
+                        if ($isNew && $project instanceof Project) {
+                            if (!$project->getCustomer()->isVisible()) {
+                                $customer = null;
+                                $project = null;
+                            } elseif (!$project->isVisible()) {
+                                $project = null;
                             }
-                        }
-
-                        if ($project !== null && !\is_int($project) && !($project instanceof Project)) {
-                            throw new \InvalidArgumentException('Project type needs a project object or an ID');
                         }
 
                         if ($customer !== null && !\is_int($customer) && !($customer instanceof Customer)) {

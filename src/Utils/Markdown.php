@@ -15,7 +15,7 @@ namespace App\Utils;
 final class Markdown
 {
     private ?ParsedownExtension $parser = null;
-    private ?\Parsedown $parserFull = null;
+    private ?Parsedown $parserFull = null;
 
     public function toHtml(string $text): string
     {
