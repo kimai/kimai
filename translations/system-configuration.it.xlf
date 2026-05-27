@@ -314,6 +314,10 @@
         <source>invoice.rounding_mode</source>
         <target state="final">Modalità di arrotondamento</target>
       </trans-unit>
+      <trans-unit id="uf2_qIW" resname="user_auth_wizard" xml:space="preserve" approved="yes">
+        <source>user_auth_wizard</source>
+        <target state="final">Mostra la procedura guidata di configurazione per i nuovi utenti</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -314,6 +314,10 @@
         <source>invoice.rounding_mode</source>
         <target state="translated">Modus zaokruživanja</target>
       </trans-unit>
+      <trans-unit id="uf2_qIW" resname="user_auth_wizard" xml:space="preserve">
+        <source>user_auth_wizard</source>
+        <target state="translated">Prikaži čarobnjaka za postavljanje novim korisnicima</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
