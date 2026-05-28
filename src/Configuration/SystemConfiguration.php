@@ -349,6 +349,11 @@ final class SystemConfiguration
         return $this->getString('defaults.user.language', 'en');
     }
 
+    public function getUserDefaultHomepage(): string
+    {
+        return $this->getString('defaults.user.homepage', 'timesheet');
+    }
+
     public function getDefaultCurrency(): string
     {
         return $this->getString('defaults.customer.currency', 'EUR');
