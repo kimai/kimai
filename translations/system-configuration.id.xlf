@@ -302,10 +302,6 @@
         <source>calendar.title_pattern</source>
         <target state="translated">Tampilan judul entri kalender</target>
       </trans-unit>
-      <trans-unit id="12sQGSo" resname="activity.allow_inline_create" xml:space="preserve">
-        <source>activity.allow_inline_create</source>
-        <target state="translated">Izinkan pembuatan aktivitas dalam formulir pelacakan waktu</target>
-      </trans-unit>
       <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no" xml:space="preserve">
         <source>copy_teams_on_create</source>
         <target state="translated">Ambil alih tim dari pengguna yang sedang masuk saat membuat entri baru</target>

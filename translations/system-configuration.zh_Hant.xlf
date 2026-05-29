@@ -302,10 +302,6 @@
         <source>calendar.title_pattern</source>
         <target state="final">顯示行事曆項目的標題</target>
       </trans-unit>
-      <trans-unit id="12sQGSo" resname="activity.allow_inline_create" xml:space="preserve" approved="yes">
-        <source>activity.allow_inline_create</source>
-        <target state="final">允許在工時追蹤表單中建立活動</target>
-      </trans-unit>
       <trans-unit id="9efN4Oc" resname="calendar.dragdrop_data" xml:space="preserve" approved="yes">
         <source>Copies data when adding via drag and drop</source>
         <target state="final">透過拖放新增項目時複製原項目資料</target>

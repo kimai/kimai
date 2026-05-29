@@ -302,10 +302,6 @@
         <source>calendar.title_pattern</source>
         <target state="translated">காலண்டர் உள்ளீடுகளின் தலைப்புகளின் காட்சி</target>
       </trans-unit>
-      <trans-unit id="12sQGSo" resname="activity.allow_inline_create" xml:space="preserve">
-        <source>activity.allow_inline_create</source>
-        <target state="translated">நேர கண்காணிப்பு வடிவத்தில் செயல்பாடுகளை உருவாக்க அனுமதிக்கவும்</target>
-      </trans-unit>
       <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no" xml:space="preserve">
         <source>copy_teams_on_create</source>
         <target state="translated">புதிய உள்ளீடுகளை உருவாக்கும்போது உள்நுழைந்த பயனரிடமிருந்து குழுக்களை எடுத்துக் கொள்ளுங்கள்</target>
