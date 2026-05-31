@@ -777,6 +777,16 @@ class UserTest extends TestCase
         self::assertTrue($user->isPasswordRequestNonExpired(7200));
     }
 
+    public function testSignatureDate(): void
+    {
+        $user = new User();
+
+        self::assertEquals('', $user->getSignatureDate());
+        $user->resetSecuritySignature();
+        // shortest possible result: 2026-05-31T01:18:19Z
+        self::assertGreaterThanOrEqual(20, strlen($user->getSignatureDate()));
+    }
+
     private static function userWithId(int $id): User
     {
         $user = new User();
