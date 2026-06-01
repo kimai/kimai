@@ -50,9 +50,9 @@
         <source>timesheet.mode</source>
         <target state="translated">Időrögzítési mód</target>
       </trans-unit>
-      <trans-unit id="mPRUBFX" resname="theme.markdown_content">
+      <trans-unit id="mPRUBFX" resname="theme.markdown_content" xml:space="preserve">
         <source>theme.markdown_content</source>
-        <target>Engedélyezz markdown-formázást leírásokban és hozzászólásokban</target>
+        <target state="translated">Markdown-formázás engedélyezése leírásokban és hozzászólásokban</target>
       </trans-unit>
       <trans-unit id="PLggHn." resname="theme">
         <source>theme</source>
@@ -186,9 +186,9 @@
         <source>timesheet.rules.break_warning_duration</source>
         <target>Egy munkaidő-nyilvántartási rekord maximális időtartama percekben, mielőtt a „szünetfigyelmeztetés” megjelenik (0 = deaktiválva)</target>
       </trans-unit>
-      <trans-unit id="SnkW0Pk" resname="theme.avatar_url">
+      <trans-unit id="SnkW0Pk" resname="theme.avatar_url" xml:space="preserve">
         <source>theme.avatar_url</source>
-        <target>Engedélyezze az URL-ek használatát az avatarképekhez</target>
+        <target state="translated">URL-ek használatának engedélyezése a profilképekhez</target>
       </trans-unit>
       <trans-unit id="AzOiQES" resname="company.financial_year">
         <source>company.financial_year</source>
@@ -309,6 +309,14 @@
       <trans-unit id="9efN4Oc" resname="calendar.dragdrop_data" xml:space="preserve">
         <source>Copies data when adding via drag and drop</source>
         <target state="translated">Adatok másolása bejegyzések húzással történő létrehozásakor</target>
+      </trans-unit>
+      <trans-unit id="uf2_qIW" resname="user_auth_wizard" xml:space="preserve">
+        <source>user_auth_wizard</source>
+        <target state="translated">Beállítási varázsló megjelenítése az új felhasználók számára</target>
+      </trans-unit>
+      <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="no" xml:space="preserve">
+        <source>invoice.rounding_mode</source>
+        <target state="translated">Kerekítési mód</target>
       </trans-unit>
     </body>
   </file>
