@@ -784,7 +784,7 @@ class UserTest extends TestCase
         self::assertEquals('', $user->getSignatureDate());
         $user->resetSecuritySignature();
         // shortest possible result: 2026-05-31T01:18:19Z
-        self::assertGreaterThanOrEqual(20, strlen($user->getSignatureDate()));
+        self::assertGreaterThanOrEqual(20, \strlen($user->getSignatureDate()));
     }
 
     private static function userWithId(int $id): User
