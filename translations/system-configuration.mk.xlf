@@ -302,10 +302,6 @@
         <source>calendar.title_pattern</source>
         <target state="translated">Приказ на насловите на записите во календарот</target>
       </trans-unit>
-      <trans-unit id="12sQGSo" resname="activity.allow_inline_create" xml:space="preserve">
-        <source>activity.allow_inline_create</source>
-        <target state="translated">Дозволете креирање активности во форма за следење на времето</target>
-      </trans-unit>
       <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no" xml:space="preserve">
         <source>copy_teams_on_create</source>
         <target state="translated">Преземи ги тимовите од најавениот корисник при креирање нови записи</target>
