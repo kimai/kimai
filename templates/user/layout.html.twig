@@ -25,6 +25,9 @@
                             </div>
                             <div class="col-auto text-end mt-2 mt-sm-1" id="profile-buttons">
                                 {% from '@theme/components/buttons.html.twig' import link_button %}
+                                {% if is_granted('impersonate_user', user) %}
+                                    {{ link_button('impersonate'|trans, impersonation_path(user.userIdentifier), 'fas fa-user-secret', 'default') }}
+                                {% endif %}
                                 {% if app.user == user %}
                                 {{ link_button('notifications'|trans, 'javascript:notificationStatus()', 'fas fa-bell', 'default') }}
                                 {% endif %}

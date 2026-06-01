@@ -76,8 +76,10 @@
                     {% for role in roles %}
                         {% set value = manager.permission(role.name, permission) %}
                         <td class="{{ tables.data_table_column_class(tableName, columns, role.name) }}">
-                            {# see RolePermissionManager for this special case #}
-                            {% if role.name == 'ROLE_SUPER_ADMIN' and permission in always_apply_superadmin %}
+                            {% if deactivated[role.name] is defined and permission in deactivated[role.name] %}
+                                &ndash;
+                            {% elseif role.name == 'ROLE_SUPER_ADMIN' and permission in always_apply_superadmin %}
+                                {# see RolePermissionManager for this special case #}
                                 {% if value %}
                                     {{ widgets.label('yes'|trans, 'warning') }}
                                 {% else %}
