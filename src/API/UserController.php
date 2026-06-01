@@ -13,6 +13,7 @@ use App\Entity\AccessToken;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
+use App\Form\API\AccessTokenApiCreateForm;
 use App\Form\API\UserApiCreateForm;
 use App\Form\API\UserApiEditForm;
 use App\Repository\AccessTokenRepository;
@@ -197,6 +198,36 @@ final class UserController extends BaseApiController
 
         $view = new View($profile, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Create API token
+     */
+    #[IsGranted('api-token', 'profile')]
+    #[OA\Post(description: 'Creates a new API token and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created API token', content: new OA\JsonContent(ref: '#/components/schemas/AccessTokenEntity'))])]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/AccessTokenCreateForm'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'User ID to create the token for', required: true)]
+    #[Route(methods: ['POST'], path: '/{id}/api-token', name: 'post_api_token', requirements: ['id' => '\d+'])]
+    public function postApiToken(User $profile, Request $request, AccessTokenRepository $accessTokenRepository): Response
+    {
+        $accessToken = new AccessToken($profile);
+
+        $form = $this->createForm(AccessTokenApiCreateForm::class, $accessToken);
+        $form->submit($request->request->all());
+
+        if ($form->isValid()) {
+            $accessTokenRepository->saveAccessToken($accessToken);
+
+            $view = new View($accessToken, Response::HTTP_OK);
+            $view->getContext()->setGroups(self::GROUPS_ENTITY);
+
+            return $this->viewHandler->handle($view);
+        }
+
+        $view = new View($form);
+        $view->getContext()->setGroups(self::GROUPS_FORM);
 
         return $this->viewHandler->handle($view);
     }

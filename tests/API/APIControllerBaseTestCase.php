@@ -353,6 +353,14 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'visible' => 'bool',
                 ];
 
+            case 'AccessTokenEntity':
+                return [
+                    'id' => 'int',
+                    'name' => 'string',
+                    'token' => 'string',
+                    'expiresAt' => '@datetime',
+                ];
+
                 // embedded meta data
             case 'UserPreference':
                 return [
