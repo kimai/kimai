@@ -107,7 +107,7 @@ final class WizardManager
 
         return [
             'previous' => $previous?->route,
-            'next' => $next?->route ?? 'wizard_finish',
+            'next' => $next?->route ?? 'wizard_finish', // @phpstan-ignore nullsafe.neverNull
         ];
     }
 }
