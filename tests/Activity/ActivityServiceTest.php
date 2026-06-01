@@ -153,6 +153,21 @@ class ActivityServiceTest extends TestCase
         self::assertEquals((string) $expected, $activity->getNumber());
     }
 
+    public function testActivityNumberIncrementsForMultipleCreateCallsOnSameInstance(): void
+    {
+        $sut = $this->getSut(null, null, null, ['number_format' => '{ac,1}']);
+
+        $activity1 = $sut->createNewActivity();
+        $activity2 = $sut->createNewActivity();
+        $activity3 = $sut->createNewActivity();
+
+        // countActivity() is mocked and returns 0, the formatter normalizes increaseBy=0 to 1,
+        // so the first generated number is 2. The in-instance counter must bump subsequent calls.
+        self::assertEquals('2', $activity1->getNumber());
+        self::assertEquals('3', $activity2->getNumber());
+        self::assertEquals('4', $activity3->getNumber());
+    }
+
     /**
      * @return array<int, array<int, string|\DateTime|int>>
      */

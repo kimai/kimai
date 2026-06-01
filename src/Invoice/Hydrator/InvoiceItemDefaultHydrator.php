@@ -102,6 +102,7 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
                 'entry.user_title' => $user->getTitle() ?? '',
                 'entry.user_alias' => $user->getAlias() ?? '',
                 'entry.user_display' => $user->getDisplayName(),
+                'entry.user_account' => $user->getAccountNumber() ?? '',
             ]);
 
             foreach ($user->getVisiblePreferences() as $pref) {
@@ -135,6 +136,7 @@ final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
             }
         }
 
+        // @deprecated since 2.59.0 - invoices have one global customer - removed from the docs 2026-05-27
         if (null !== $customer) {
             $values = array_merge($values, [
                 'entry.customer' => $customer->getName(),

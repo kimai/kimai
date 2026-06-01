@@ -12,6 +12,7 @@ namespace App\Pdf;
 use Mpdf\Http\ClientInterface;
 use Mpdf\PsrHttpMessageShim\Response;
 use Psr\Http\Message\RequestInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface as HttpClientExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -33,16 +34,20 @@ final class SafeRemoteContentClient implements ClientInterface
      */
     private const TIMEOUT = 10;
 
-    public function __construct(private readonly HttpClientInterface $client)
+    public function __construct(
+        private readonly HttpClientInterface $client,
+        private readonly LoggerInterface $logger
+    )
     {
     }
 
     public function sendRequest(RequestInterface $request): Response
     {
+        $url = (string) $request->getUri();
         try {
             $response = $this->client->request(
                 $request->getMethod(),
-                (string) $request->getUri(),
+                $url,
                 [
                     'headers' => $this->flattenHeaders($request),
                     'timeout' => self::TIMEOUT,
@@ -55,8 +60,10 @@ final class SafeRemoteContentClient implements ClientInterface
                 [],
                 $response->getContent(false)
             );
-        } catch (HttpClientExceptionInterface) {
+        } catch (HttpClientExceptionInterface $e) {
             // Request blocked (private network), DNS failure, timeout, etc.
+            $this->logger->error(\sprintf('Failed fetching from URL "%s" with : %s', $url, $e->getMessage()));
+
             return new Response(502);
         }
     }

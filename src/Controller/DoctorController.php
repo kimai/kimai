@@ -102,7 +102,7 @@ final class DoctorController extends AbstractController
     }
 
     /**
-     * @return array{enabled: bool, status: false|array<mixed>}
+     * @return array{unknown: bool, enabled: bool, status: false|array<mixed>}
      */
     private function getOpcacheConfiguration(): array
     {
@@ -111,7 +111,7 @@ final class DoctorController extends AbstractController
 
         $enabled = \is_array($status) && $status['opcache_enabled'];
 
-        if ($enabled && \array_key_exists('scripts', $status)) {
+        if ($enabled && \is_array($status) && \array_key_exists('scripts', $status)) {
             unset($status['scripts']);
         }
 
