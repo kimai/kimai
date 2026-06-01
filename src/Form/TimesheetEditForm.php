@@ -34,7 +34,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -47,7 +46,6 @@ class TimesheetEditForm extends AbstractType
     public function __construct(
         private readonly CustomerRepository $customers,
         private readonly SystemConfiguration $systemConfiguration,
-        private readonly AuthorizationCheckerInterface $authorizationChecker,
     )
     {
     }
@@ -465,7 +463,7 @@ class TimesheetEditForm extends AbstractType
             'include_exported' => false,
             'include_billable' => true,
             'include_rate' => true,
-            'create_activity' => $this->authorizationChecker->isGranted('create_activity'),
+            'create_activity' => false,
             'docu_chapter' => 'timesheet.html',
             'method' => 'POST',
             'date_format' => null,
