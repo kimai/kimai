@@ -99,7 +99,7 @@ security:
         - {path: '^/{_locale}/register', role: PUBLIC_ACCESS}
         - {path: '^/{_locale}/resetting', role: PUBLIC_ACCESS}
         - {path: '^/{_locale}/', roles: ROLE_USER}
-        - {path: '^/api', roles: IS_AUTHENTICATED}
+        - {path: '^/api', roles: IS_AUTHENTICATED_REMEMBERED}
 
 when@test:
     # this configuration simplifies testing URLs protected by the security mechanism
