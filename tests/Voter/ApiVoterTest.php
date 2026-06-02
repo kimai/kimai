@@ -81,7 +81,7 @@ class ApiVoterTest extends AbstractVoterTestCase
         $user = self::getUser(1, User::ROLE_USER);
         $token = new RememberMeToken($user, 'secured_area', 'secret');
 
-        self::assertNotInstanceOf(TwoFactorTokenInterface::class, $token);
+        self::assertNotInstanceOf(TwoFactorTokenInterface::class, $token); // @phpstan-ignore staticMethod.alreadyNarrowedType
         self::assertSame(
             VoterInterface::ACCESS_GRANTED,
             $this->createApiVoter()->vote($token, null, ['API'])
