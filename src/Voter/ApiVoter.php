@@ -65,7 +65,7 @@ final class ApiVoter extends Voter
             $token instanceof TwoFactorTokenInterface ||
             $this->authorizationChecker->isGranted('IS_AUTHENTICATED_2FA_IN_PROGRESS', $user)
         ) {
-           return false;
+            return false;
         }
 
         // derived from AccessTokenSuccessHandler
