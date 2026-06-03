@@ -32,6 +32,7 @@ final class InvoiceArchiveToolbarForm extends AbstractType
         $this->addDateRange($builder, ['timezone' => $options['timezone']]);
         $this->addCustomerMultiChoice($builder, ['required' => false, 'start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true, 'placeholder' => ''], true);
         $builder->add('status', InvoiceStatusType::class, ['required' => false]);
+        $this->addUsersChoice($builder);
         $this->addPageSizeChoice($builder);
         $this->addHiddenPagination($builder);
         $this->addOrder($builder);
