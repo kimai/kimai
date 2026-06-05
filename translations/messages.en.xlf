@@ -2082,6 +2082,34 @@
         <source>count_as_expected_time_help</source>
         <target>When enabled, %type% will count as worked hours towards the expected daily hours. When disabled, the expected hours for these days will be set to 0. Both settings maintain a neutral balance but affect monthly totals differently.</target>
       </trans-unit>
+      <trans-unit id="WrNTzd7" resname="assign_timesheets">
+        <source>assign_timesheets</source>
+        <target>Assign timesheets</target>
+      </trans-unit>
+      <trans-unit id="zO0oxtw" resname="start">
+        <source>start</source>
+        <target>Start</target>
+      </trans-unit>
+      <trans-unit id="DAMFhpR" resname="lock">
+        <source>lock</source>
+        <target>Lock</target>
+      </trans-unit>
+      <trans-unit id="pNRR7CN" resname="release">
+        <source>release</source>
+        <target>Release</target>
+      </trans-unit>
+      <trans-unit id="kwC00lZ" resname="assign">
+        <source>assign</source>
+        <target>Assign</target>
+      </trans-unit>
+      <trans-unit id="2ajb.ZU" resname="assign_self">
+        <source>assign_self</source>
+        <target>Assign to me</target>
+      </trans-unit>
+      <trans-unit id="LfO_otF" resname="reopen">
+        <source>reopen</source>
+        <target>Reopen</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

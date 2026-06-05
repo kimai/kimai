@@ -169,6 +169,34 @@ class CustomerServiceTest extends TestCase
         self::assertEquals($expected($date), $customer->getNumber());
     }
 
+    public function testCustomerNumberIncrementsForMultipleCreateCallsOnSameInstance(): void
+    {
+        $configuration = SystemConfigurationFactory::createStub([
+            'defaults' => [
+                'customer' => [
+                    'timezone' => 'Europe/Vienna',
+                    'country' => 'IN',
+                    'currency' => 'RUB',
+                ]
+            ],
+            'customer' => [
+                'number_format' => '{cc,1}',
+            ]
+        ]);
+
+        $sut = $this->getSut(null, null, $configuration);
+
+        $customer1 = $sut->createNewCustomer('A');
+        $customer2 = $sut->createNewCustomer('B');
+        $customer3 = $sut->createNewCustomer('C');
+
+        // countCustomer() is mocked and returns 0, the formatter normalizes increaseBy=0 to 1,
+        // so the first generated number is 2. The in-instance counter must bump subsequent calls.
+        self::assertEquals('2', $customer1->getNumber());
+        self::assertEquals('3', $customer2->getNumber());
+        self::assertEquals('4', $customer3->getNumber());
+    }
+
     /**
      * @return array<int, array{0: string, 1: \Closure(\DateTimeInterface): string}>
      */

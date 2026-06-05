@@ -19,6 +19,7 @@ use App\Form\Model\DateRange;
 class InvoiceArchiveQuery extends BaseQuery implements DateRangeInterface
 {
     use DateRangeTrait;
+    use UsersTrait;
 
     public const INVOICE_ARCHIVE_ORDER_ALLOWED = [
         'date', 'invoice.number', 'status', 'total_rate'

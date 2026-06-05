@@ -255,7 +255,9 @@ export default class KimaiAjaxModalForm extends KimaiReducedClickHandler {
                             if (hasFieldError || hasFormError || hasFlashError) {
                                 this._openFormInModal(html);
                             } else {
-                                events.trigger(eventName);
+                                if (eventName !== undefined) {
+                                    events.trigger(eventName);
+                                }
 
                                 this._isDirty = false;
                                 this._getModal().hide();
