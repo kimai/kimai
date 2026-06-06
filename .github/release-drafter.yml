@@ -4,7 +4,6 @@ exclude-labels:
     - 'duplicate'
     - 'invalid'
     - 'wontfix'
-    - 'release'
 exclude-contributors:
     - 'dependabot'
     - 'weblate'
@@ -15,15 +14,19 @@ version-resolver:
         labels:
             - 'feature request'
             - 'release'
-    patch:
-        labels:
             - 'technical debt'
             - 'bug'
             - 'translation'
-    default: patch
+    default: minor
 template: |
     **Compatible with PHP 8.2 to 8.5**
     
     $CHANGES
     
+    **Security**
+    
+    - This release contains a fix for a high severity security issue reported by @shafiqaimanx
+    
+    You can read more about all published vulnerabilities [here](https://www.kimai.org/documentation/bughunter.html#published-vulnerabilities) or grab a [RSS feed](https://www.kimai.org/security.xml) to get notified about new published advisories.
+
     Involved in this release: $CONTRIBUTORS
