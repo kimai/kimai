@@ -235,10 +235,10 @@ final class InvoiceCreateCommand extends Command
                 $projects[] = $tmp;
             }
             $invoices = $this->createInvoicesForProjects($projects, $defaultQuery, $input, $output);
-        } elseif ($byActiveCustomer) {
+        } elseif ($byActiveCustomer) { // @phpstan-ignore elseif.alwaysFalse
             $customers = $this->getActiveCustomers($defaultQuery);
             $invoices = $this->createInvoicesForCustomer($customers, $defaultQuery, $input, $output);
-        } elseif ($byActiveProject) {
+        } elseif ($byActiveProject) { // @phpstan-ignore elseif.alwaysTrue
             $projects = $this->getActiveProjects($defaultQuery);
             $invoices = $this->createInvoicesForProjects($projects, $defaultQuery, $input, $output);
         } else {

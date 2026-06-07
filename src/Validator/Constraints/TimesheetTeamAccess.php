@@ -9,8 +9,11 @@
 
 namespace App\Validator\Constraints;
 
-#[\Attribute(\Attribute::TARGET_CLASS)]
-final class TimesheetTeamAccess extends TimesheetConstraint
+use App\Validator\Attribute\TimesheetConstraint;
+use Symfony\Component\Validator\Constraint;
+
+#[TimesheetConstraint]
+final class TimesheetTeamAccess extends Constraint
 {
     public const PROJECT_ACCESS_ERROR = 'kimai-timesheet-team-project';
     public const ACTIVITY_ACCESS_ERROR = 'kimai-timesheet-team-activity';

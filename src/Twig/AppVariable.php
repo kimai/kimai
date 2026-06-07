@@ -76,7 +76,7 @@ final class AppVariable
      * The request should not be exposed under any circumstance to the frontend.
      * This here is added as fallback for old customer templates still using this object.
      *
-     * @return array{locale: string}
+     * @return array{locale: string, pathinfo: string|null}
      */
     public function getRequest(): array
     {

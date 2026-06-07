@@ -36,7 +36,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[OA\Tag(name: 'Team')]
 final class TeamController extends BaseApiController
 {
-    private const array GROUPS_ENTITY = ['Default', 'Entity', 'Team', 'Team_Entity', 'Not_Expanded'];
+    public const array GROUPS_ENTITY = ['Default', 'Entity', 'Team', 'Team_Entity', 'Not_Expanded'];
     private const array GROUPS_FORM = ['Default', 'Entity', 'Team', 'Team_Entity', 'Not_Expanded'];
     private const array GROUPS_COLLECTION = ['Default', 'Collection', 'Team'];
 
