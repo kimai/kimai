@@ -46,7 +46,7 @@ var/templates/*
 nbproject/
 
 # Dev-only configs
-test/
+tests/
 .php-cs-fixer.dist.php
 php-cs-fixer.sh
 phpstan.sh
