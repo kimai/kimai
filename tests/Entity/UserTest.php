@@ -20,6 +20,7 @@ use App\Tests\Security\TestUserEntity;
 use App\WorkingTime\Mode\WorkingTimeModeDay;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -716,7 +717,6 @@ class UserTest extends TestCase
         $user = new User();
         $reflection = new \ReflectionClass($user);
         $property = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($user, $id);
 
         return $user;

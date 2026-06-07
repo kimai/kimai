@@ -22,10 +22,6 @@ parameters:
         - identifier: missingType.iterableValue
         - message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) with '(.*)' and (.*) will always evaluate to true\\.$#"
         - message: "#^PHPDoc tag @var with type App\\\\(.*) is not subtype of native type PHPUnit\\\\Framework\\\\MockObject\\\\MockObject\\.$#"
-        - message: '#^Call to deprecated method getApiToken\(\) of class App\\Entity\\User#'
-        - message: '#^Call to deprecated method setApiToken\(\) of class App\\Entity\\User#'
-        - message: '#^Call to deprecated method getPlainApiToken\(\) of class App\\Entity\\User#'
-        - message: '#^Call to deprecated method setPlainApiToken\(\) of class App\\Entity\\User#'
 
         -
             message: "#^Method App\\\\Tests\\\\API\\\\APIControllerBaseTestCase\\:\\:assertApiException\\(\\) has parameter \\$expectedErrors with no value type specified in iterable type array\\.$#"

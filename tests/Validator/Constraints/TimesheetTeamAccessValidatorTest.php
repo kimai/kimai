@@ -200,9 +200,7 @@ class TimesheetTeamAccessValidatorTest extends ConstraintValidatorTestCase
         $timesheet = new Timesheet();
         $reflection = new \ReflectionClass($timesheet);
         $property = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($timesheet, 1);
-        $property->setAccessible(false);
 
         return $timesheet;
     }
