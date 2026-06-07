@@ -26,6 +26,7 @@ final class PdfContext
         'filename', 'mode', 'format', 'orientation', 'default_font', 'default_font_size', 'fonts',
         'margin_left', 'margin_right', 'margin_top', 'margin_bottom', 'margin_header', 'margin_footer',
         'setAutoTopMargin', 'setAutoBottomMargin', 'PDFA', 'PDFAauto', 'useActiveForms',
+        'showWatermarkText', 'showWatermarkImage'
     ];
 
     private array $options = [];
