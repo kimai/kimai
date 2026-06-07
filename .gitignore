@@ -10,10 +10,11 @@ public/.user.ini
 /php.ini
 /.php-version
 
-# YARN 2
+# frontend
 /.yarnrc.yml
 /.yarn
 /.pnp.*
+/.pnpm-store
 
 # for keeping empty directories
 /config/packages/local.yaml
@@ -61,3 +62,7 @@ yarn-error.log
 /nbproject/*
 
 .dockerhub.secrets
+
+check-licenses.php
+docker-compose.yml
+tests/_data/fonts

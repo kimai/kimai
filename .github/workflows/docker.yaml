@@ -9,32 +9,28 @@ on:
     release:
         types: [released]
 
+concurrency:
+    group: docker-build
+    cancel-in-progress: true
+
+permissions: {}
+
 jobs:
     build:
+        name: Docker images
         runs-on: ubuntu-latest
-
         steps:
-
-            - name: Checkout code
-              uses: actions/checkout@v6
-
-            - name: Install buildx
-              uses: docker/setup-buildx-action@v4
-
-            - name: Login to DockerHub
-              uses: docker/login-action@v4
-              with:
-                  username: ${{secrets.DOCKERHUB_USERNAME}}
-                  password: ${{secrets.DOCKERHUB_PASSWORD}}
-
             - name: Determine version
+              env:
+                  GITHUB_EVENT_INPUTS_KIMAI_TAG: ${{ github.event.inputs.kimai_tag }}
+                  GITHUB_EVENT_RELEASE_TAG_NAME: ${{ github.event.release.tag_name }}
               run: |
-                  input="${{ github.event.inputs.kimai_tag }}"
+                  input="${GITHUB_EVENT_INPUTS_KIMAI_TAG}"
 
                   # Determine between manual trigger and release event
                   if [ -z "$input" ]; then
-                      echo "Using release tag: ${{ github.event.release.tag_name }}"
-                      version="${{ github.event.release.tag_name }}"
+                      echo "Using release tag: ${GITHUB_EVENT_RELEASE_TAG_NAME}"
+                      version="${GITHUB_EVENT_RELEASE_TAG_NAME}"
                   else
                       echo "Using tag provided: $input"
                       version="$input"
@@ -47,23 +43,24 @@ jobs:
 
                   echo "kimai_version=$version" >> $GITHUB_ENV
 
-            - name: FPM image
-              uses: docker/build-push-action@v6
+            - name: Checkout code
+              uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
               with:
-                  context: .
-                  file: Dockerfile
-                  build-args: |
-                      KIMAI=${{ env.kimai_version }}
-                      BASE=fpm
-                  target: prod
-                  platforms: linux/amd64,linux/arm64
-                  tags: |
-                      kimai/kimai2:latest
-                      kimai/kimai2:fpm
-                  push: true
+                  ref: ${{ env.kimai_version }}
+                  persist-credentials: false
 
+            - name: Install buildx
+              uses: docker/setup-buildx-action@d7f5e7f509e45cec5c76c4d5afdd7de93d0b3df5 # v4.1.0
+
+            - name: Login to DockerHub
+              uses: docker/login-action@650006c6eb7dba73a995cc03b0b2d7f5ca915bee # v4.2.0
+              with:
+                  username: ${{secrets.DOCKERHUB_USERNAME}}
+                  password: ${{secrets.DOCKERHUB_PASSWORD}}
+
+            # TODO 3.0 remove kimai/kimai2:apache and kimai/kimai2:apache-<version>
             - name: Apache image
-              uses: docker/build-push-action@v6
+              uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
               with:
                   context: .
                   file: Dockerfile
@@ -75,11 +72,12 @@ jobs:
                   tags: |
                       kimai/kimai2:stable
                       kimai/kimai2:apache
-                      kimai/kimai2:apache-${{ env.kimai_version }}
+                      kimai/kimai2:3
+                      kimai/kimai2:${{ env.kimai_version }}
                   push: true
 
             - name: Development image
-              uses: docker/build-push-action@v6
+              uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
               with:
                   context: .
                   file: Dockerfile

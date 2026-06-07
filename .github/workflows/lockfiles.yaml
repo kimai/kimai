@@ -1,21 +1,27 @@
 name: Check .lock files
-on:
+
+on: # zizmor: ignore[dangerous-triggers] using the target branch workflow prevents adding new trustedAuthors
     pull_request_target: null
     push:
         branches:
             - main
 
-permissions:
-    pull-requests: read
+concurrency:
+    group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+    cancel-in-progress: true
+
+permissions: {}
 
 jobs:
     lockfiles:
+        permissions:
+            pull-requests: read # read the PR author
         runs-on: ubuntu-latest
         name: Verify lock file integrity
         steps:
             - name: Prevent file change
-              uses: xalvarez/prevent-file-change-action@v3
+              uses: xalvarez/prevent-file-change-action@dbc67c205c9ed02aa39c497b422c24f364c3e8dd # v3.0.1
               with:
                   githubToken: ${{ secrets.GITHUB_TOKEN }}
                   pattern: .*\.lock$|^\.github\/.*$
-                  trustedAuthors: kevinpapst, dependabot
+                  trustedAuthors: kevinpapst

@@ -25,11 +25,11 @@ abstract class AbstractTimesheetSubscriber extends AbstractActionsSubscriber
         $timesheet = $payload['timesheet'];
         if ($timesheet->getId() !== null) {
             if ($timesheet->isRunning() && $this->isGranted('stop', $timesheet)) {
-                $event->addAction('stop', ['url' => $this->path('stop_timesheet', ['id' => $timesheet->getId()]), 'class' => 'api-link dd-ts-stop', 'attr' => ['data-event' => 'kimai.timesheetStop kimai.timesheetUpdate', 'data-method' => 'PATCH', 'data-msg-error' => 'timesheet.stop.error', 'data-msg-success' => 'timesheet.stop.success']]);
+                $event->addAction('stop', ['url' => '#', 'class' => 'api-link dd-ts-stop', 'attr' => ['data-event' => 'kimai.timesheetStop kimai.timesheetUpdate', 'data-href' => $this->path('stop_timesheet', ['id' => $timesheet->getId()]), 'data-method' => 'PATCH', 'data-msg-error' => 'timesheet.stop.error', 'data-msg-success' => 'timesheet.stop.success']]);
             }
 
             if (!$timesheet->isRunning() && $this->isGranted('start', $timesheet)) {
-                $event->addAction('repeat', ['title' => 'repeat', 'url' => $this->path('restart_timesheet', ['id' => $timesheet->getId()]), 'class' => 'api-link dd-ts-repeat', 'attr' => ['data-payload' => '{"copy": "all"}', 'data-event' => 'kimai.timesheetStart kimai.timesheetUpdate', 'data-method' => 'PATCH', 'data-msg-error' => 'timesheet.start.error', 'data-msg-success' => 'timesheet.start.success']]);
+                $event->addAction('repeat', ['title' => 'repeat', 'url' => '#', 'class' => 'api-link dd-ts-repeat', 'attr' => ['data-payload' => '{"copy": "all"}', 'data-event' => 'kimai.timesheetStart kimai.timesheetUpdate', 'data-href' => $this->path('restart_timesheet', ['id' => $timesheet->getId()]), 'data-method' => 'PATCH', 'data-msg-error' => 'timesheet.start.error', 'data-msg-success' => 'timesheet.start.success']]);
             }
 
             if ($this->isGranted('edit', $timesheet)) {

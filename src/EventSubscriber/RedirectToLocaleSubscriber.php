@@ -10,11 +10,13 @@
 namespace App\EventSubscriber;
 
 use App\Configuration\LocaleService;
+use App\Entity\User;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * When visiting the homepage, this listener redirects the user to the most
@@ -24,7 +26,8 @@ final class RedirectToLocaleSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private readonly UrlGeneratorInterface $urlGenerator,
-        private readonly LocaleService $localeService
+        private readonly LocaleService $localeService,
+        private readonly TokenStorageInterface $storage,
     )
     {
     }
@@ -32,7 +35,9 @@ final class RedirectToLocaleSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::REQUEST => ['onKernelRequest']
+            // the higher the priority (default: 0), the earlier it is executed
+            // runs on default priority to make sure we have the correct locale in the URL
+            KernelEvents::REQUEST => ['onKernelRequest', 0]
         ];
     }
 
@@ -52,15 +57,26 @@ final class RedirectToLocaleSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $allLanguages = $this->localeService->getTranslatedLocales();
+        $preferredLanguage = null;
 
-        // Add the default locale at the first position of the array, because getPreferredLanguage()
-        // returns the first element when no appropriate language is found
-        array_unshift($allLanguages, 'en');
+        if (null !== ($token = $this->storage->getToken())) {
+            $user = $token->getUser();
+            if ($user instanceof User) {
+                $preferredLanguage = $user->getLanguage();
+            }
+        }
 
-        $preferredLanguage = $request->getPreferredLanguage(array_unique($allLanguages));
+        if ($preferredLanguage === null){
+            $allLanguages = $this->localeService->getTranslatedLocales();
 
-        $response = new RedirectResponse($this->urlGenerator->generate('homepage', ['_locale' => $preferredLanguage]));
+            // Add the default locale at the first position of the array, because getPreferredLanguage()
+            // returns the first element when no appropriate language is found
+            array_unshift($allLanguages, 'en');
+
+            $preferredLanguage = $request->getPreferredLanguage(array_unique($allLanguages));
+        }
+
+        $response = new RedirectResponse($this->urlGenerator->generate('homepage', ['_locale' => $preferredLanguage ?? 'en']));
         $event->setResponse($response);
     }
 }

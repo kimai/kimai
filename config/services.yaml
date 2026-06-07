@@ -68,9 +68,23 @@ services:
         arguments:
             $settings: '%kimai.config%'
 
+    # HTTP client used by mPDF to fetch remote resources (e.g. logos referenced
+    # from custom Twig invoice templates). Decorated with NoPrivateNetworkHttpClient
+    # so requests to private/loopback/link-local targets are blocked at the
+    # network layer — defense in depth for SSRF.
+    # @see https://github.com/kimai/kimai/security/advisories/GHSA-pj8j-p4g4-4vw8
+    Symfony\Component\HttpClient\NoPrivateNetworkHttpClient:
+        arguments:
+            - '@http_client'
+
+    App\Pdf\SafeRemoteContentClient:
+        arguments:
+            - '@Symfony\Component\HttpClient\NoPrivateNetworkHttpClient'
+
     App\Pdf\MPdfConverter:
         arguments:
             $cacheDirectory: '%kernel.cache_dir%'
+            $httpClient: '@App\Pdf\SafeRemoteContentClient'
 
     App\Utils\FileHelper:
         arguments:

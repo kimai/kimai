@@ -36,10 +36,10 @@
                         <tr>
                             <th class="ps-0">{{ 'date'|trans }}</th>
                             <td contenteditable="true">
-                                {% if invoice['query.begin_month_number'] != invoice['query.end_month_number'] or invoice['query.begin_year'] != invoice['query.end_year'] %}
-                                    {{ invoice['query.begin'] }} - {{ invoice['query.end'] }}
+                                {% if invoice['invoice.first_month'] != invoice['invoice.last_month'] or invoice['invoice.first_year'] != invoice['invoice.last_year'] %}
+                                    {{ invoice['invoice.first'] }} - {{ invoice['invoice.last'] }}
                                 {% else %}
-                                    {{ invoice['query.end_month'] }} {{ invoice['query.end_year'] }}
+                                    {{ invoice['invoice.last_month'] }} {{ invoice['invoice.last_year'] }}
                                 {% endif %}
                             </td>
                         </tr>

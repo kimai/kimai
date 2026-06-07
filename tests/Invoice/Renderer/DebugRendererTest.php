@@ -104,8 +104,12 @@ class DebugRendererTest extends TestCase
             'invoice.total_time',
             'invoice.duration_decimal',
             'invoice.first',
+            'invoice.first_month',
+            'invoice.first_year',
             'invoice.first_process',
             'invoice.last',
+            'invoice.last_month',
+            'invoice.last_year',
             'invoice.last_process',
             'invoice.total',
             'invoice.total_nc',
@@ -201,6 +205,7 @@ class DebugRendererTest extends TestCase
             'activity.budget_open_plain',
             'activity.time_budget_open',
             'activity.time_budget_open_plain',
+            'user.account',
             'user.alias',
             'user.display',
             'user.email',
@@ -210,6 +215,7 @@ class DebugRendererTest extends TestCase
             'user.meta.hello',
             'user.meta.kitty',
             'testFromModelHydrator',
+            'project._counter',
         ];
 
         if ($activityCounter === 1) {
@@ -336,6 +342,7 @@ class DebugRendererTest extends TestCase
             'entry.user_display',
             'entry.user_alias',
             'entry.user_title',
+            'entry.user_account',
             'entry.user_preference.foo',
             'entry.user_preference.mad',
             'entry.activity',

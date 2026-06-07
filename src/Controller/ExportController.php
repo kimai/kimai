@@ -197,12 +197,14 @@ final class ExportController extends AbstractController
     }
 
     #[Route(path: '/template-create', name: 'export_template_create', methods: ['GET', 'POST'])]
+    #[IsGranted('create_export_template')]
     public function createExportTemplate(Request $request, ExportTemplateRepository $repository): Response
     {
         return $this->editExportForm($this->generateUrl('export_template_create'), $request, $repository, new ExportTemplate());
     }
 
     #[Route(path: '/template-edit/{exportTemplate}', name: 'export_template_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('create_export_template')]
     public function editExportTemplate(ExportTemplate $exportTemplate, Request $request, ExportTemplateRepository $repository): Response
     {
         return $this->editExportForm($this->generateUrl('export_template_edit', ['exportTemplate' => $exportTemplate->getId()]), $request, $repository, $exportTemplate);

@@ -172,8 +172,11 @@ class ProjectServiceTest extends TestCase
         self::assertNull($project->getCustomer());
     }
 
+    /**
+     * @param \Closure(\DateTimeInterface): string $expected
+     */
     #[DataProvider('getTestData')]
-    public function testProjectNumber(string $format, int|string $expected): void
+    public function testProjectNumber(string $format, \Closure $expected): void
     {
         $configuration = SystemConfigurationFactory::createStub([
             'project' => [
@@ -184,65 +187,123 @@ class ProjectServiceTest extends TestCase
 
         $customer = new Customer('foo');
         $customer->setTimezone('UTC');
+        $date = new \DateTimeImmutable();
         $sut = $this->getSut(null, null, $configuration);
         $project = $sut->createNewProject($customer);
 
-        self::assertEquals((string) $expected, $project->getNumber());
+        self::assertEquals($expected($date), $project->getNumber());
+    }
+
+    public function testProjectNumberIncrementsForMultipleCreateCallsOnSameInstance(): void
+    {
+        $configuration = SystemConfigurationFactory::createStub([
+            'project' => [
+                'copy_teams_on_create' => false,
+                'number_format' => '{pc,1}',
+            ]
+        ]);
+
+        $sut = $this->getSut(null, null, $configuration);
+
+        $project1 = $sut->createNewProject();
+        $project2 = $sut->createNewProject();
+        $project3 = $sut->createNewProject();
+
+        // countProject() is mocked and returns 0, the formatter normalizes increaseBy=0 to 1,
+        // so the first generated number is 2. Without the in-instance counter all three
+        // calls would re-use "2" — which is exactly the bug reported by the importer.
+        self::assertEquals('2', $project1->getNumber());
+        self::assertEquals('3', $project2->getNumber());
+        self::assertEquals('4', $project3->getNumber());
+    }
+
+    public function testProjectNumberSkipsAlreadyExistingNumbers(): void
+    {
+        $configuration = SystemConfigurationFactory::createStub([
+            'project' => [
+                'copy_teams_on_create' => false,
+                'number_format' => '{pc,1}',
+            ]
+        ]);
+
+        $repository = $this->createMock(ProjectRepository::class);
+        $repository->method('countProject')->willReturn(0);
+        // Pretend the database already contains projects with numbers 2 and 3 — the
+        // service must skip them and only return the next unused number.
+        $repository->method('findOneBy')->willReturnCallback(function (array $criteria): ?Project {
+            if (\in_array($criteria['number'] ?? null, ['2', '3'], true)) {
+                return new Project();
+            }
+
+            return null;
+        });
+
+        $dispatcher = $this->createMock(EventDispatcherInterface::class);
+        $dispatcher->method('dispatch')->willReturnCallback(static fn ($event) => $event);
+
+        $validator = $this->createMock(ValidatorInterface::class);
+        $validator->method('validate')->willReturn(new ConstraintViolationList());
+
+        $sut = new ProjectService($repository, $configuration, $dispatcher, $validator);
+
+        $project1 = $sut->createNewProject();
+        $project2 = $sut->createNewProject();
+
+        self::assertEquals('4', $project1->getNumber());
+        self::assertEquals('5', $project2->getNumber());
     }
 
     /**
-     * @return array<int, array<int, string|\DateTime|int>>
+     * @return array<int, array{0: string, 1: \Closure(\DateTimeInterface): string}>
      */
     public static function getTestData(): array
     {
-        $dateTime = new \DateTime('now', new \DateTimeZone('UTC'));
-
-        $yearLong = (int) $dateTime->format('Y');
-        $yearShort = (int) $dateTime->format('y');
-        $monthLong = $dateTime->format('m');
-        $monthShort = (int) $dateTime->format('n');
-        $dayLong = $dateTime->format('d');
-        $dayShort = (int) $dateTime->format('j');
+        $literal = static fn (string $value): \Closure => static fn (): string => $value;
+        $date = static fn (string $format): \Closure => static fn (\DateTimeInterface $d): string => $d->format($format);
+        $yearLong = static fn (int $add): \Closure => static fn (\DateTimeInterface $d): string => (string) ((int) $d->format('Y') + $add);
+        $yearShort = static fn (int $add): \Closure => static fn (\DateTimeInterface $d): string => (string) ((int) $d->format('y') + $add);
+        $monthShort = static fn (int $add): \Closure => static fn (\DateTimeInterface $d): string => (string) ((int) $d->format('m') + $add);
+        $dayShort = static fn (int $add): \Closure => static fn (\DateTimeInterface $d): string => (string) ((int) $d->format('d') + $add);
 
         return [
             // simple tests for single calls
-            ['{pc,1}', '2'],
-            ['{pc,2}', '02'],
-            ['{pc,3}', '002'],
-            ['{pc,4}', '0002'],
-            ['{Y}', $yearLong],
-            ['{y}', $yearShort],
-            ['{M}', $monthLong],
-            ['{m}', $monthShort],
-            ['{D}', $dayLong],
-            ['{d}', $dayShort],
-            // number formatting (not testing the lower case versions, as the tests might break depending on the date)
-            ['{Y,6}', '00' . $yearLong],
-            ['{M,3}', '0' . $monthLong],
-            ['{D,3}', '0' . $dayLong],
+            ['{pc,1}', $literal('2')],
+            ['{pc,2}', $literal('02')],
+            ['{pc,3}', $literal('002')],
+            ['{pc,4}', $literal('0002')],
+            ['{Y}', $date('Y')],
+            ['{y}', $date('y')],
+            ['{M}', $date('m')],
+            ['{m}', $date('n')],
+            ['{D}', $date('d')],
+            ['{d}', $date('j')],
+            // number formatting
+            ['{Y,6}', static fn (\DateTimeInterface $d): string => '00' . $d->format('Y')],
+            ['{M,3}', static fn (\DateTimeInterface $d): string => '0' . $d->format('m')],
+            ['{D,3}', static fn (\DateTimeInterface $d): string => '0' . $d->format('d')],
             // increment dates
-            ['{YY}', $yearLong + 1],
-            ['{YY+1}', $yearLong + 1],
-            ['{YY+2}', $yearLong + 2],
-            ['{YY+3}', $yearLong + 3],
-            ['{YY-1}', $yearLong - 1],
-            ['{YY-2}', $yearLong - 2],
-            ['{YY-3}', $yearLong - 3],
-            ['{yy}', $yearShort + 1],
-            ['{yy+1}', $yearShort + 1],
-            ['{yy+2}', $yearShort + 2],
-            ['{yy+3}', $yearShort + 3],
-            ['{yy-1}', $yearShort - 1],
-            ['{yy-2}', $yearShort - 2],
-            ['{yy-3}', $yearShort - 3],
-            ['{MM}', $monthShort + 1], // cast to int removes leading zero
-            ['{MM+1}', $monthShort + 1], // cast to int removes leading zero
-            ['{MM+2}', $monthShort + 2], // cast to int removes leading zero
-            ['{MM+3}', $monthShort + 3], // cast to int removes leading zero
-            ['{DD}', $dayShort + 1], // cast to int removes leading zero
-            ['{DD+1}', $dayShort + 1], // cast to int removes leading zero
-            ['{DD+2}', $dayShort + 2], // cast to int removes leading zero
-            ['{DD+3}', $dayShort + 3], // cast to int removes leading zero
+            ['{YY}', $yearLong(1)],
+            ['{YY+1}', $yearLong(1)],
+            ['{YY+2}', $yearLong(2)],
+            ['{YY+3}', $yearLong(3)],
+            ['{YY-1}', $yearLong(-1)],
+            ['{YY-2}', $yearLong(-2)],
+            ['{YY-3}', $yearLong(-3)],
+            ['{yy}', $yearShort(1)],
+            ['{yy+1}', $yearShort(1)],
+            ['{yy+2}', $yearShort(2)],
+            ['{yy+3}', $yearShort(3)],
+            ['{yy-1}', $yearShort(-1)],
+            ['{yy-2}', $yearShort(-2)],
+            ['{yy-3}', $yearShort(-3)],
+            ['{MM}', $monthShort(1)], // cast to int removes leading zero
+            ['{MM+1}', $monthShort(1)], // cast to int removes leading zero
+            ['{MM+2}', $monthShort(2)], // cast to int removes leading zero
+            ['{MM+3}', $monthShort(3)], // cast to int removes leading zero
+            ['{DD}', $dayShort(1)], // cast to int removes leading zero
+            ['{DD+1}', $dayShort(1)], // cast to int removes leading zero
+            ['{DD+2}', $dayShort(2)], // cast to int removes leading zero
+            ['{DD+3}', $dayShort(3)], // cast to int removes leading zero
         ];
     }
 }

@@ -28,6 +28,22 @@ class InvoiceModelDefaultHydratorTest extends TestCase
 
         $result = $sut->hydrate($model);
         $this->assertModelStructure($result);
+        self::assertSame(
+            $model->getFormatter()->getFormattedDateTime($model->getInvoicePeriod()->getStart()),
+            $result['invoice.first']
+        );
+        self::assertSame(
+            $model->getInvoicePeriod()->getStart()->format('Y-m-d h:i:s'),
+            $result['invoice.first_process']
+        );
+        self::assertSame(
+            $model->getFormatter()->getFormattedDateTime($model->getInvoicePeriod()->getEnd()),
+            $result['invoice.last']
+        );
+        self::assertSame(
+            $model->getInvoicePeriod()->getEnd()->format('Y-m-d h:i:s'),
+            $result['invoice.last_process']
+        );
     }
 
     public function testHydrateThrowsOnMissing(): void
@@ -66,8 +82,12 @@ class InvoiceModelDefaultHydratorTest extends TestCase
             'invoice.total_time',
             'invoice.duration_decimal',
             'invoice.first',
+            'invoice.first_month',
+            'invoice.first_year',
             'invoice.first_process',
             'invoice.last',
+            'invoice.last_month',
+            'invoice.last_year',
             'invoice.last_process',
             'invoice.total',
             'invoice.total_nc',

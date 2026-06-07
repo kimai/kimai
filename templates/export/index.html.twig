@@ -142,7 +142,7 @@
                                         <div class="dropdown-menu">
                                             {% for id, cfg in group %}
                                                 {% set btnTitle = (cfg.title)|trans %}
-                                                {% if loop.first %}
+                                                {% if id == type %}
                                                     {% set btnTitle = 'default'|trans %}
                                                 {% endif %}
                                                 <a href="#" class="dropdown-item startExportBtn" data-type="{{ id }}">

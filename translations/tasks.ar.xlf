@@ -98,6 +98,10 @@
         <source>task.unassign</source>
         <target state="translated">إصدار المهمة</target>
       </trans-unit>
+      <trans-unit id="zJvuPBv" resname="task.help.tags" xml:space="preserve" approved="no">
+        <source>task.help.tags</source>
+        <target state="translated">هذه البطاقات ستُنسخ في كل سجل من سجلات صحيفة الزمن</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

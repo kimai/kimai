@@ -142,8 +142,11 @@ class CustomerServiceTest extends TestCase
         $sut->saveCustomer($Customer);
     }
 
+    /**
+     * @param \Closure(\DateTimeInterface): string $expected
+     */
     #[DataProvider('getTestData')]
-    public function testCustomerNumber(string $format, int|string $expected): void
+    public function testCustomerNumber(string $format, \Closure $expected): void
     {
         $configuration = SystemConfigurationFactory::createStub([
             'defaults' => [
@@ -159,64 +162,92 @@ class CustomerServiceTest extends TestCase
         ]);
 
         $sut = $this->getSut(null, null, $configuration);
+
+        $date = new \DateTimeImmutable();
         $customer = $sut->createNewCustomer('Test');
 
-        self::assertEquals((string) $expected, $customer->getNumber());
+        self::assertEquals($expected($date), $customer->getNumber());
+    }
+
+    public function testCustomerNumberIncrementsForMultipleCreateCallsOnSameInstance(): void
+    {
+        $configuration = SystemConfigurationFactory::createStub([
+            'defaults' => [
+                'customer' => [
+                    'timezone' => 'Europe/Vienna',
+                    'country' => 'IN',
+                    'currency' => 'RUB',
+                ]
+            ],
+            'customer' => [
+                'number_format' => '{cc,1}',
+            ]
+        ]);
+
+        $sut = $this->getSut(null, null, $configuration);
+
+        $customer1 = $sut->createNewCustomer('A');
+        $customer2 = $sut->createNewCustomer('B');
+        $customer3 = $sut->createNewCustomer('C');
+
+        // countCustomer() is mocked and returns 0, the formatter normalizes increaseBy=0 to 1,
+        // so the first generated number is 2. The in-instance counter must bump subsequent calls.
+        self::assertEquals('2', $customer1->getNumber());
+        self::assertEquals('3', $customer2->getNumber());
+        self::assertEquals('4', $customer3->getNumber());
     }
 
     /**
-     * @return array<int, array<int, string|\DateTime|int>>
+     * @return array<int, array{0: string, 1: \Closure(\DateTimeInterface): string}>
      */
     public static function getTestData(): array
     {
-        $dateTime = new \DateTime('now', new \DateTimeZone('Europe/Vienna'));
-
-        $yearLong = (int) $dateTime->format('Y');
-        $yearShort = (int) $dateTime->format('y');
-        $monthLong = $dateTime->format('m');
-        $monthShort = (int) $dateTime->format('n');
-        $dayLong = $dateTime->format('d');
-        $dayShort = (int) $dateTime->format('j');
+        $literal = static fn (string $value): \Closure => static fn (): string => $value;
+        $date = static fn (string $format): \Closure => static fn (\DateTimeInterface $d): string => $d->format($format);
+        $yearLong = static fn (int $add): \Closure => static fn (\DateTimeInterface $d): string => (string) ((int) $d->format('Y') + $add);
+        $yearShort = static fn (int $add): \Closure => static fn (\DateTimeInterface $d): string => (string) ((int) $d->format('y') + $add);
+        $monthShort = static fn (int $add): \Closure => static fn (\DateTimeInterface $d): string => (string) ((int) $d->format('m') + $add);
+        $dayShort = static fn (int $add): \Closure => static fn (\DateTimeInterface $d): string => (string) ((int) $d->format('d') + $add);
 
         return [
             // simple tests for single calls
-            ['{cc,1}', '2'],
-            ['{cc,2}', '02'],
-            ['{cc,3}', '002'],
-            ['{cc,4}', '0002'],
-            ['{Y}', $yearLong],
-            ['{y}', $yearShort],
-            ['{M}', $monthLong],
-            ['{m}', $monthShort],
-            ['{D}', $dayLong],
-            ['{d}', $dayShort],
-            // number formatting (not testing the lower case versions, as the tests might break depending on the date)
-            ['{Y,6}', '00' . $yearLong],
-            ['{M,3}', '0' . $monthLong],
-            ['{D,3}', '0' . $dayLong],
+            ['{cc,1}', $literal('2')],
+            ['{cc,2}', $literal('02')],
+            ['{cc,3}', $literal('002')],
+            ['{cc,4}', $literal('0002')],
+            ['{Y}', $date('Y')],
+            ['{y}', $date('y')],
+            ['{M}', $date('m')],
+            ['{m}', $date('n')],
+            ['{D}', $date('d')],
+            ['{d}', $date('j')],
+            // number formatting
+            ['{Y,6}', static fn (\DateTimeInterface $d): string => '00' . $d->format('Y')],
+            ['{M,3}', static fn (\DateTimeInterface $d): string => '0' . $d->format('m')],
+            ['{D,3}', static fn (\DateTimeInterface $d): string => '0' . $d->format('d')],
             // increment dates
-            ['{YY}', $yearLong + 1],
-            ['{YY+1}', $yearLong + 1],
-            ['{YY+2}', $yearLong + 2],
-            ['{YY+3}', $yearLong + 3],
-            ['{YY-1}', $yearLong - 1],
-            ['{YY-2}', $yearLong - 2],
-            ['{YY-3}', $yearLong - 3],
-            ['{yy}', $yearShort + 1],
-            ['{yy+1}', $yearShort + 1],
-            ['{yy+2}', $yearShort + 2],
-            ['{yy+3}', $yearShort + 3],
-            ['{yy-1}', $yearShort - 1],
-            ['{yy-2}', $yearShort - 2],
-            ['{yy-3}', $yearShort - 3],
-            ['{MM}', $monthShort + 1], // cast to int removes leading zero
-            ['{MM+1}', $monthShort + 1], // cast to int removes leading zero
-            ['{MM+2}', $monthShort + 2], // cast to int removes leading zero
-            ['{MM+3}', $monthShort + 3], // cast to int removes leading zero
-            ['{DD}', $dayShort + 1], // cast to int removes leading zero
-            ['{DD+1}', $dayShort + 1], // cast to int removes leading zero
-            ['{DD+2}', $dayShort + 2], // cast to int removes leading zero
-            ['{DD+3}', $dayShort + 3], // cast to int removes leading zero
+            ['{YY}', $yearLong(1)],
+            ['{YY+1}', $yearLong(1)],
+            ['{YY+2}', $yearLong(2)],
+            ['{YY+3}', $yearLong(3)],
+            ['{YY-1}', $yearLong(-1)],
+            ['{YY-2}', $yearLong(-2)],
+            ['{YY-3}', $yearLong(-3)],
+            ['{yy}', $yearShort(1)],
+            ['{yy+1}', $yearShort(1)],
+            ['{yy+2}', $yearShort(2)],
+            ['{yy+3}', $yearShort(3)],
+            ['{yy-1}', $yearShort(-1)],
+            ['{yy-2}', $yearShort(-2)],
+            ['{yy-3}', $yearShort(-3)],
+            ['{MM}', $monthShort(1)], // cast to int removes leading zero
+            ['{MM+1}', $monthShort(1)], // cast to int removes leading zero
+            ['{MM+2}', $monthShort(2)], // cast to int removes leading zero
+            ['{MM+3}', $monthShort(3)], // cast to int removes leading zero
+            ['{DD}', $dayShort(1)], // cast to int removes leading zero
+            ['{DD+1}', $dayShort(1)], // cast to int removes leading zero
+            ['{DD+2}', $dayShort(2)], // cast to int removes leading zero
+            ['{DD+3}', $dayShort(3)], // cast to int removes leading zero
         ];
     }
 }

@@ -49,6 +49,7 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
      */
     activateSelectPickerByElement(node)
     {
+        // TODO cannot update tom-select to >= 2.6.0 due to https://github.com/orchidjs/tom-select/pull/993#issuecomment-4489286080
         let plugins = ['change_listener'];
 
         const isMultiple = node.multiple !== undefined && node.multiple === true;
@@ -85,13 +86,12 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
             sortField:[{field: '$order'}, {field: '$score'}],
             // required so it works in table.responsive, but requires z-index 1056, because bootstrap modal would otherwise hide it
             dropdownParent: 'body',
-        };
-
-        let render = {
             onOptionAdd: (value) => {
                 node.dispatchEvent(new CustomEvent('create', {detail: {'value': value}}));
-            },
+            }
         };
+
+        let render = {};
 
         const rendererType = (node.dataset['renderer'] !== undefined) ? node.dataset['renderer'] : 'default';
         options.render = {...render, ...this.getRenderer(rendererType)};

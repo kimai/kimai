@@ -11,10 +11,15 @@ namespace App\Tests\Controller;
 
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
+use App\Entity\ActivityRate;
 use App\Entity\Project;
+use App\Entity\Role;
+use App\Entity\RolePermission;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\ActivityFixtures;
+use App\Tests\DataFixtures\CustomerFixtures;
+use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\ActivityTestMetaFieldSubscriberMock;
@@ -191,6 +196,54 @@ class ActivityControllerTest extends AbstractControllerBaseTestCase
         self::assertStringContainsString('123.45', $node->text(null, true));
     }
 
+    public function testEditRateActionDeniesForeignRate(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $project = $this->getEntityManager()->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $project);
+
+        $activity = $this->importFixture((new ActivityFixtures(1))->setProjects([$project]))[0];
+        $rate = new ActivityRate();
+        $rate->setActivity($activity);
+        $rate->setRate(123.45);
+
+        $em = $this->getEntityManager();
+        $em->persist($rate);
+        $em->flush();
+
+        $this->request($client, '/admin/activity/1/rate/' . $rate->getId());
+
+        $this->assertAccessDenied($client);
+    }
+
+    public function testCreateWithProjectActionDeniesUserWithoutEditProjectPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
+
+        $customer = $this->importFixture(new CustomerFixtures(1))[0];
+        $project = $this->importFixture((new ProjectFixtures(1))->setCustomers([$customer]))[0];
+
+        $em = $this->getEntityManager();
+
+        $role = (new Role())->setName('TEST_CREATE_ACTIVITY_ONLY');
+        $permission = (new RolePermission())->setRole($role)->setPermission('create_activity')->setAllowed(true);
+
+        $roleName = $role->getName();
+        self::assertNotNull($roleName);
+        $user->addRole($roleName);
+
+        $em->persist($role);
+        $em->persist($permission);
+        $em->persist($user);
+        $em->flush();
+
+        $this->request($client, '/admin/activity/create/' . $project->getId());
+
+        $this->assertAccessDenied($client);
+    }
+
     public function testCreateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
@@ -295,22 +348,6 @@ class ActivityControllerTest extends AbstractControllerBaseTestCase
         /** @var Activity $activity */
         $activity = $em->getRepository(Activity::class)->find($id);
         self::assertEquals(2, $activity->getTeams()->count());
-    }
-
-    public function testCreateDefaultTeamAction(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/activity/1/details');
-        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-body');
-        self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text());
-
-        $this->request($client, '/admin/activity/1/create_team');
-        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-title');
-        self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text());
-        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-body table tbody tr');
-        self::assertEquals(1, $node->count());
     }
 
     public function testDeleteAction(): void

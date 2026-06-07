@@ -310,6 +310,10 @@
         <source>invoice.rounding_mode</source>
         <target state="translated">Mode d'arrondi</target>
       </trans-unit>
+      <trans-unit id="uf2_qIW" resname="user_auth_wizard" xml:space="preserve">
+        <source>user_auth_wizard</source>
+        <target state="translated">Afficher l'assistant de configuration pour les nouveaux utilisateurs</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

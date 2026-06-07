@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "php": "8.5.*",
+        "php": ">=8.5",
         "ext-gd": "*",
         "ext-intl": "*",
         "ext-json": "*",
@@ -32,6 +32,7 @@
         "doctrine/orm": "^3.0",
         "easybill/zugferd-php": "^2.1",
         "endroid/qr-code": "^6.0",
+        "erusev/parsedown": "^1.8",
         "friendsofsymfony/rest-bundle": "^3.9",
         "gedmo/doctrine-extensions": "^3.6",
         "horstoeko/zugferd": "^1.0",
@@ -45,7 +46,6 @@
         "onelogin/php-saml": "^4.0",
         "openspout/openspout": "^4.0",
         "pagerfanta/pagerfanta": "^4.0",
-        "parsedown/parsedown": "^1.6",
         "phpoffice/phpspreadsheet": "^2.0",
         "phpoffice/phpword": "^1.0",
         "psr/container": "^2.0",

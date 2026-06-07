@@ -198,4 +198,38 @@ final class RolePermissionManager
 
         return $this->checkTeamLeadAccess($timesheet->getUser()?->getTeams() ?? [], $user);
     }
+
+    public function checkUserAccess(User $subject, User $user, bool $onlyEnabled = true): bool
+    {
+        if ($subject->getId() === $user->getId()) {
+            return true;
+        }
+
+        if ($user->isSuperAdmin() || $user->canSeeAllData()) {
+            return true;
+        }
+
+        if ($onlyEnabled && !$subject->isEnabled()) {
+            return false;
+        }
+
+        // system accounts are used for admins or API-only accounts
+        // and should not be accessed by less-privileged users (e.g. teamleads)
+        if (!$user->isSystemAccount() && $subject->isSystemAccount()) {
+            return false;
+        }
+
+        if ($user->isTeamleadOfUser($subject)) {
+            return true;
+        }
+
+        // special case: the requested user is in no team and the current user is a teamlead.
+        // this configuration is likely in new installations with small teams, and
+        // it is allowed for teamleads to see other users data by definition
+        if (($user->hasTeamleadRole() || $user->isAdmin()) && $subject->isRegularUserOnly()) {
+            return \count($subject->getTeams()) === 0;
+        }
+
+        return false;
+    }
 }

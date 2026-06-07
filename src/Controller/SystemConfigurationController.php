@@ -273,6 +273,9 @@ final class SystemConfigurationController extends AbstractController
                     ->setLabel('user_auth_password_reset_token_ttl')
                     ->setConstraints([new NotNull(), new GreaterThanOrEqual(value: 60)])
                     ->setType(IntegerType::class),
+                (new Configuration('user.theme'))
+                    ->setLabel('skin')
+                    ->setType(SkinType::class),
             ]);
 
         if (!$this->systemConfiguration->isSamlActive()) {
@@ -532,6 +535,10 @@ final class SystemConfigurationController extends AbstractController
                     (new Configuration('theme.avatar_url'))
                         ->setRequired(false)
                         ->setLabel('theme.avatar_url')
+                        ->setType(YesNoType::class)
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration('user.wizard'))
+                        ->setLabel('user_auth_wizard')
                         ->setType(YesNoType::class)
                         ->setTranslationDomain('system-configuration'),
                 ]),

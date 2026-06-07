@@ -75,7 +75,7 @@ final class LocaleFormatter
      */
     public function durationDecimal(Timesheet|int|string|null $duration): string
     {
-        if (null === $this->numberFormatter) {
+        if (null === $this->decimalFormatter) {
             $this->decimalFormatter = new NumberFormatter($this->locale, NumberFormatter::DECIMAL);
             $this->decimalFormatter->setAttribute(NumberFormatter::FRACTION_DIGITS, 2);
         }
@@ -287,7 +287,7 @@ final class LocaleFormatter
             try {
                 $date = new \DateTimeImmutable($date);
             } catch (Exception $ex) {
-                return $date;
+                return null;
             }
         }
 

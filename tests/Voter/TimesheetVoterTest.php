@@ -16,6 +16,7 @@ use App\Entity\Project;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Form\Model\MultiUserTimesheet;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\LockdownService;
 use App\Voter\TimesheetVoter;
@@ -167,6 +168,49 @@ class TimesheetVoterTest extends AbstractVoterTestCase
         $timesheet = new Timesheet();
         $timesheet->setUser($user2)->setActivity(new Activity());
         $this->assertVote($user2, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testIsOwnerGrantedForOwnTimesheet(): void
+    {
+        // is_owner bypasses the RolePermissionManager entirely: a user with no
+        // role/permissions at all must still be recognised as the owner.
+        $owner = self::getUser(1, 'unknown');
+
+        $timesheet = self::getTimesheet($owner);
+
+        $this->assertVote($owner, $timesheet, 'is_owner', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testIsOwnerDeniedForOtherUsersTimesheet(): void
+    {
+        $owner = self::getUser(1, User::ROLE_USER);
+        $other = self::getUser(2, User::ROLE_SUPER_ADMIN);
+
+        $timesheet = self::getTimesheet($owner);
+
+        // even a super admin is not the *owner* of someone else's timesheet
+        $this->assertVote($other, $timesheet, 'is_owner', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testIsOwnerDeniedWhenTimesheetHasNoUser(): void
+    {
+        $user = self::getUser(1, User::ROLE_USER);
+
+        $timesheet = new Timesheet();
+
+        $this->assertVote($user, $timesheet, 'is_owner', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testIsOwnerDeniedForMultiUserTimesheetEvenWhenSameUser(): void
+    {
+        // A MultiUserTimesheet is explicitly excluded from being "owned",
+        // regardless of the assigned user.
+        $owner = self::getUser(1, User::ROLE_USER);
+
+        $timesheet = new MultiUserTimesheet();
+        $timesheet->setUser($owner);
+
+        $this->assertVote($owner, $timesheet, 'is_owner', VoterInterface::ACCESS_DENIED);
     }
 
     private static function getTimesheet($user): Timesheet
@@ -594,6 +638,99 @@ class TimesheetVoterTest extends AbstractVoterTestCase
 
         // Owner has no teams -> teamlead gate is permissive.
         $this->assertVote($requester, $timesheet, 'view', VoterInterface::ACCESS_GRANTED);
+    }
+
+    /**
+     * Reproduces GHSA-c6w6-57jj-62vh.
+     *
+     * After a user loses team access to a project, "restart" (start) and
+     * "duplicate" must NOT be allowed on one of their own historical timesheets:
+     * both operations derive a brand-new record from the old entry and would
+     * therefore create a new write under the now-unauthorized project/activity.
+     *
+     * The "_own_timesheet" branch in the voter currently short-circuits before
+     * checkTeamAccess*() runs, so this test FAILS on vulnerable code (the voter
+     * returns ACCESS_GRANTED) and documents the expected secure behaviour.
+     */
+    public function testStartAndDuplicateDeniedAfterProjectAccessRevoked(): void
+    {
+        $owner = self::getUser(1, User::ROLE_USER);
+
+        // The project is now restricted to a team the owner is NOT a member of.
+        // This is the post-revocation state from the advisory's PoC.
+        $restrictedTeam = new Team('restricted after revocation');
+
+        $customer = new Customer('Acme');
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam($restrictedTeam);
+
+        $activity = new Activity();
+        $activity->setProject($project);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        $this->assertVote($owner, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
+        $this->assertVote($owner, $timesheet, 'duplicate', VoterInterface::ACCESS_DENIED);
+    }
+
+    /**
+     * Reproduces GHSA-c6w6-57jj-62vh for activity-level restriction.
+     *
+     * Even if the project is unrestricted, a restricted activity (a team the
+     * owner is no longer in) must block restart/duplicate.
+     */
+    public function testStartAndDuplicateDeniedAfterActivityAccessRevoked(): void
+    {
+        $owner = self::getUser(1, User::ROLE_USER);
+
+        $customer = new Customer('Acme');
+        $project = new Project();
+        $project->setCustomer($customer);
+
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activity->addTeam(new Team('restricted after revocation'));
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        $this->assertVote($owner, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
+        $this->assertVote($owner, $timesheet, 'duplicate', VoterInterface::ACCESS_DENIED);
+    }
+
+    /**
+     * Positive control for GHSA-c6w6-57jj-62vh: when the owner still has team
+     * access to the project and activity, restart/duplicate stay allowed.
+     * Guards the fix against over-restriction.
+     */
+    public function testStartAndDuplicateGrantedWhenOwnerStillHasProjectAccess(): void
+    {
+        $owner = self::getUser(1, User::ROLE_USER);
+
+        $team = new Team('still a member');
+        $team->addUser($owner);
+
+        $customer = new Customer('Acme');
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam($team);
+
+        $activity = new Activity();
+        $activity->setProject($project);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        $this->assertVote($owner, $timesheet, 'start', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($owner, $timesheet, 'duplicate', VoterInterface::ACCESS_GRANTED);
     }
 
     private static function getTimesheetFor(User $owner, ?Team $customerTeam = null, ?Team $projectTeam = null, ?Team $activityTeam = null): Timesheet

@@ -23,7 +23,7 @@ use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Form\InvoiceDocumentUploadForm;
 use App\Form\InvoiceEditForm;
 use App\Form\InvoiceTemplateForm;
-use App\Form\Toolbar\InvoiceArchiveForm;
+use App\Form\Toolbar\InvoiceArchiveToolbarForm;
 use App\Form\Toolbar\InvoiceToolbarForm;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\InvoiceTemplateType;
@@ -751,7 +751,7 @@ final class InvoiceController extends AbstractController
 
     private function getArchiveToolbarForm(InvoiceArchiveQuery $query): FormInterface
     {
-        return $this->createSearchForm(InvoiceArchiveForm::class, $query, [
+        return $this->createSearchForm(InvoiceArchiveToolbarForm::class, $query, [
             'action' => $this->generateUrl('admin_invoice_list', []),
             'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
             'attr' => [
