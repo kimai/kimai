@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a66f2c7698fd70e6b4e1af7b1eb75408",
+    "content-hash": "401fecf728a60ff31b24e35b92b822b8",
     "packages": [
         {
             "name": "azuyalabs/yasumi",
@@ -1452,70 +1452,6 @@
                 "source": "https://github.com/doctrine/sql-formatter/tree/1.5.4"
             },
             "time": "2026-02-08T16:21:46+00:00"
-        },
-        {
-            "name": "easybill/zugferd-php",
-            "version": "v2.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/easybill/zugferd-php.git",
-                "reference": "fba2a504feb58ae2b3a19da5a0c051ce8fe13895"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/easybill/zugferd-php/zipball/fba2a504feb58ae2b3a19da5a0c051ce8fe13895",
-                "reference": "fba2a504feb58ae2b3a19da5a0c051ce8fe13895",
-                "shasum": ""
-            },
-            "require": {
-                "ext-dom": "*",
-                "jms/serializer": "^3.16",
-                "php": "^8.2"
-            },
-            "require-dev": {
-                "ext-libxml": "*",
-                "friendsofphp/php-cs-fixer": "^3.16",
-                "phpstan/phpstan": "^1.10",
-                "phpstan/phpstan-strict-rules": "^1.5",
-                "phpunit/phpunit": "^9.3",
-                "rector/rector": "^1.0",
-                "symfony/finder": "^5.4"
-            },
-            "suggest": {
-                "ext-libxml": "Needed for XSD validation"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Easybill\\ZUGFeRD\\": "src/zugferd10",
-                    "Easybill\\ZUGFeRD2\\": "src/zugferd2"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Patrick Romowicz",
-                    "email": "patrick@romowicz.de"
-                },
-                {
-                    "name": "Jan Nöhles",
-                    "email": "jan.noehles@easybill.de"
-                }
-            ],
-            "description": "ZUGFeRD PHP SDK (Factur-X, XRechnung) - Convert PHP Objects to XML and back.",
-            "keywords": [
-                "ZUGFeRD",
-                "factur-x",
-                "xrechnung"
-            ],
-            "support": {
-                "issues": "https://github.com/easybill/zugferd-php/issues",
-                "source": "https://github.com/easybill/zugferd-php/tree/v2.3.1"
-            },
-            "time": "2025-09-13T13:57:46+00:00"
         },
         {
             "name": "egulias/email-validator",
