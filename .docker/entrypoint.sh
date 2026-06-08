@@ -25,12 +25,13 @@ function waitForDB() {
 }
 
 function handleStartup() {
-  # set mem limits and copy in custom logger config
-  if [ -z "$memory_limit" ]; then
-    memory_limit=512M
-  fi
-  sed -i "s/memory_limit.*/memory_limit=$memory_limit/g" /usr/local/etc/php/php.ini
   cp /assets/monolog.yaml /opt/kimai/config/packages/monolog.yaml
+
+  # Allow runtime timezone override via -e TIMEZONE=America/New_York
+  if [ -n "$TIMEZONE" ]; then
+    ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} > /etc/timezone
+    sed -i "s|^date.timezone=.*|date.timezone=${TIMEZONE}|" /usr/local/etc/php/conf.d/kimai.ini
+  fi
 
   if [ -z "$USER_ID" ]; then
     USER_ID=$(id -u www-data)
@@ -72,6 +73,14 @@ function prepareKimai() {
     /opt/kimai/bin/console kimai:user:create admin "$ADMINMAIL" ROLE_SUPER_ADMIN "$ADMINPASS"
     echo "Created Super-Admin account"
   fi
+
+  # Fix ownership for Kimai-managed directories (cache, logs, sessions).
+  # Mounted volumes (var/data, var/plugins) are left untouched — their
+  # ownership is controlled by the host / volume driver.
+  for dir in cache log sessions; do
+    [ -d "/opt/kimai/var/$dir" ] && chown -R "$USER_ID:$GROUP_ID" "/opt/kimai/var/$dir"
+  done
+
   echo "$KIMAI" > /opt/kimai/var/installed
   echo "Kimai is ready"
 }
@@ -131,14 +140,12 @@ function ensureAppSecret() {
   set -x
 }
 
-function runServer() {
-    # changing the permissions here can be problematic for host mounts
-    # chown -R $USER_ID:$GROUP_ID /opt/kimai/var
-  exec /usr/sbin/apache2 -D FOREGROUND
-}
-
 waitForDB
 handleStartup
 ensureAppSecret
 prepareKimai
-runServer
+
+# Hand off to CMD — default is apache2, but allows:
+#   docker run kimai bash          → setup + shell
+#   docker run kimai php bin/console → setup + console command
+exec "$@"

@@ -1,0 +1,10 @@
+expose_php = Off
+opcache.enable=1
+opcache.memory_consumption=256
+opcache.interned_strings_buffer=24
+opcache.max_accelerated_files=100000
+opcache.validate_timestamps=0
+session.gc_maxlifetime = 604800
+memory_limit=512M
+max_memory_limit=512M
+date.timezone=Europe/Berlin
