@@ -30,7 +30,6 @@
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.0",
-        "easybill/zugferd-php": "^2.1",
         "endroid/qr-code": "^6.0",
         "erusev/parsedown": "^1.8",
         "friendsofsymfony/rest-bundle": "^3.9",
