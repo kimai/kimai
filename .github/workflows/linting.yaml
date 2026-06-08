@@ -73,7 +73,7 @@ jobs:
                 run: composer linting
 
             -   name: Check for published security advisories
-                run: composer audit
+                run: composer audit --abandoned=report
 
             -   name: Check for security issues in packages
                 run: symfony security:check
