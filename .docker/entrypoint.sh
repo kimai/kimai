@@ -55,22 +55,14 @@ function handleStartup() {
     pwconv
   fi
 
-  if [ -e /use_apache ]; then
-    export APACHE_RUN_USER=$(id -nu "$USER_ID")
-    # This doesn't _exactly_ run as the specified GID, it runs as the GID of the specified user but WTF
-    export APACHE_RUN_GROUP=$(id -ng "$USER_ID")
-    export APACHE_PID_FILE=/var/run/apache2/apache2.pid
-    export APACHE_RUN_DIR=/var/run/apache2
-    export APACHE_LOCK_DIR=/var/lock/apache2
-    export APACHE_LOG_DIR=/var/log/apache2
-    export LANG=C
-  elif [ -e /use_fpm ]; then
-    sed -i "s/user = .*/user = $USER_ID/g" /usr/local/etc/php-fpm.d/www.conf
-    sed -i "s/group = .*/group = $GROUP_ID/g" /usr/local/etc/php-fpm.d/www.conf
-    echo "Setting fpm to run as ${USER_ID}:${GROUP_ID}"
-  else
-    echo "Error, unknown server type"
-  fi
+  export APACHE_RUN_USER=$(id -nu "$USER_ID")
+  # This doesn't _exactly_ run as the specified GID, it runs as the GID of the specified user but WTF
+  export APACHE_RUN_GROUP=$(id -ng "$USER_ID")
+  export APACHE_PID_FILE=/var/run/apache2/apache2.pid
+  export APACHE_RUN_DIR=/var/run/apache2
+  export APACHE_LOCK_DIR=/var/lock/apache2
+  export APACHE_LOG_DIR=/var/log/apache2
+  export LANG=C
 }
 
 function prepareKimai() {
@@ -78,6 +70,7 @@ function prepareKimai() {
   /opt/kimai/bin/console -n kimai:install
   if [ ! -z "$ADMINPASS" ] && [ ! -a "$ADMINMAIL" ]; then
     /opt/kimai/bin/console kimai:user:create admin "$ADMINMAIL" ROLE_SUPER_ADMIN "$ADMINPASS"
+    echo "Created Super-Admin account"
   fi
   echo "$KIMAI" > /opt/kimai/var/installed
   echo "Kimai is ready"
@@ -129,7 +122,7 @@ function ensureAppSecret() {
   # override file and is loaded before .env. Rewritten on every container
   # start; the source of truth is the persisted SECRET_FILE above.
   ( umask 077 && echo "APP_SECRET=$APP_SECRET" > "$ENV_LOCAL" )
-  # The PHP runtime (apache/php-fpm) runs as $USER_ID:$GROUP_ID and must be
+  # The PHP runtime runs as $USER_ID:$GROUP_ID and must be
   # able to read .env.local; the entrypoint itself runs as root, so the file
   # would otherwise be 0600 root:root and unreadable to the web user, causing
   # Symfony's Dotenv to throw PathException at boot.
@@ -139,16 +132,9 @@ function ensureAppSecret() {
 }
 
 function runServer() {
-  # Just while I'm fixing things
-  /opt/kimai/bin/console kimai:reload --env="$APP_ENV"
-  chown -R $USER_ID:$GROUP_ID /opt/kimai/var
-  if [ -e /use_apache ]; then
-    exec /usr/sbin/apache2 -D FOREGROUND
-  elif [ -e /use_fpm ]; then
-    exec php-fpm
-  else
-    echo "Error, unknown server type"
-  fi
+    # changing the permissions here can be problematic for host mounts
+    # chown -R $USER_ID:$GROUP_ID /opt/kimai/var
+  exec /usr/sbin/apache2 -D FOREGROUND
 }
 
 waitForDB
