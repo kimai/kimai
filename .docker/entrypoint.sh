@@ -68,7 +68,11 @@ function handleStartup() {
 
 function prepareKimai() {
   # These are idempotent, so we can run them on every start-up
+  echo "Installing/Updating Kimai database"
   /opt/kimai/bin/console -n kimai:install
+  echo "Installing plugins"
+  /opt/kimai/kimai.sh plugins
+  echo "Done: Installed plugins"
   if [ ! -z "$ADMINPASS" ] && [ ! -a "$ADMINMAIL" ]; then
     /opt/kimai/bin/console kimai:user:create admin "$ADMINMAIL" ROLE_SUPER_ADMIN "$ADMINPASS"
     echo "Created Super-Admin account"
