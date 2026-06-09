@@ -33,6 +33,8 @@ final class Version20260530080724 extends AbstractMigration
         if (!$schema->getTable('kimai2_sessions')->hasIndex('lifetime_idx')) {
             $this->addSql('CREATE INDEX lifetime_idx ON kimai2_sessions (lifetime)');
         }
+
+        $this->preventEmptyMigrationWarning(false);
     }
 
     public function down(Schema $schema): void
@@ -44,6 +46,8 @@ final class Version20260530080724 extends AbstractMigration
         if ($schema->getTable('kimai2_sessions')->hasIndex('lifetime_idx')) {
             $this->addSql('DROP INDEX lifetime_idx ON kimai2_sessions');
         }
+
+        $this->preventEmptyMigrationWarning(false);
     }
 
     public function isTransactional(): bool
