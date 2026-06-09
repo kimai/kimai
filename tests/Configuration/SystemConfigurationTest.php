@@ -105,9 +105,6 @@ class SystemConfigurationTest extends TestCase
                     'company' => 'Acme Corp.',
                 ],
             ],
-            'user' => [
-                'wizard' => true,
-            ],
             'webhook' => [
                 'endpoints' => '[]',
                 'max_endpoints' => 5,
@@ -118,6 +115,7 @@ class SystemConfigurationTest extends TestCase
                 'login' => true,
                 'password_reset_retry_ttl' => 3600,
                 'password_reset_token_ttl' => 86400,
+                'wizard' => true,
             ],
         ];
     }
