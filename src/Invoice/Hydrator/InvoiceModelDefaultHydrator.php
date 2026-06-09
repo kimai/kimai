@@ -26,20 +26,13 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
         }
 
         $currency = $model->getCurrency();
-        $tax = $calculator->getTax();
+        $totalTax = $calculator->getTax();
         $total = $calculator->getTotal();
         $subtotal = $calculator->getSubtotal();
         $formatter = $model->getFormatter();
         $language = $template->getLanguage();
         if ($language === null) {
             throw new \InvalidArgumentException('InvoiceTemplate needs a language');
-        }
-
-        $taxRows = $calculator->getTaxRows();
-
-        $vat = 0.00;
-        foreach ($taxRows as $taxRow) {
-            $vat += $taxRow->getTax()->getRate();
         }
 
         $values = [
@@ -51,11 +44,6 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             'invoice.currency' => $currency,
             'invoice.language' => $language, // since 1.9
             'invoice.currency_symbol' => $formatter->getCurrencySymbol($currency),
-            'invoice.vat' => $vat, // @deprecated, use invoice.tax_rows instead
-            'invoice.tax_hide' => $model->isHideZeroTax() && $tax === 0.00, // @deprecated, use invoice.tax_rows instead
-            'invoice.tax' => $formatter->getFormattedMoney($tax, $currency), // @deprecated, use invoice.tax_rows instead
-            'invoice.tax_nc' => $formatter->getFormattedMoney($tax, $currency, false), // @deprecated, use invoice.tax_rows instead
-            'invoice.tax_plain' => $tax, // @deprecated, use invoice.tax_rows instead
             'invoice.total_time' => $formatter->getFormattedDuration($calculator->getTimeWorked()),
             'invoice.duration_decimal' => $formatter->getFormattedDecimalDuration($calculator->getTimeWorked()),
             'invoice.total' => $formatter->getFormattedMoney($total, $currency),
@@ -66,12 +54,12 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             'invoice.subtotal_plain' => $subtotal,
 
             'template.name' => $template->getName() ?? '',
-            'template.company' => $template->getCompany() ?? '', // deprecated since 2.45
-            'template.address' => $template->getAddress() ?? '',
+            'template.company' => $template->getCompany() ?? '', // deprecated - cannot be deleted, referenced in customer templates
+            'template.address' => $template->getAddress() ?? '', // deprecated - cannot be deleted, referenced in customer templates
             'template.title' => $template->getTitle() ?? '',
             'template.payment_terms' => $template->getPaymentTerms() ?? '',
             'template.due_days' => $template->getDueDays(),
-            'template.vat_id' => $template->getVatId() ?? '', // deprecated since 2.45
+            'template.vat_id' => $template->getVatId() ?? '', // deprecated - cannot be deleted, referenced in customer templates
             'template.contact' => $template->getContact() ?? '',
             'template.country' => null,
             'template.country_name' => null,
@@ -94,6 +82,8 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             'user.see_others' => ($model->getQuery()?->getUser() === null),
         ];
 
+        $taxRows = $calculator->getTaxRows();
+
         $values['invoice.tax_rows'] = [];
         $counter = 1;
         foreach ($taxRows as $taxRow) {
@@ -111,12 +101,25 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             ];
         }
 
+        // this must be kept for BC reasons, many templates access these values
+        if (\count($taxRows) > 0) {
+            $taxRow = $taxRows[0];
+            $tax = $taxRow->getTax();
+            $totalTax = $taxRow->getAmount();
+
+            $values['invoice.vat'] = $tax->getRate();
+            $values['invoice.tax_hide'] = !$tax->isShow();
+            $values['invoice.tax'] = $formatter->getFormattedMoney($totalTax, $currency);
+            $values['invoice.tax_nc'] = $formatter->getFormattedMoney($totalTax, $currency, false);
+            $values['invoice.tax_plain'] = $totalTax;
+        }
+
         $seller = $template->getCustomer();
         if ($seller !== null) {
             $country = $seller->getCountry();
             if ($country !== null) {
-                $values['template.country'] = $country; // deprecated since 2.45
-                $values['template.country_name'] = Countries::getName($country, $language); // deprecated since 2.45
+                $values['template.country'] = $country; // deprecated - cannot be deleted, referenced in customer templates
+                $values['template.country_name'] = Countries::getName($country, $language); // deprecated - cannot be deleted, referenced in customer templates
             }
         }
 
@@ -126,11 +129,11 @@ final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
             if ($begin !== null) {
                 $values = array_merge($values, [
                     'query.day' => $begin->format('d'),
-                    'query.month' => $formatter->getFormattedMonthName($begin), // @deprecated - but impossible to delete
-                    'query.month_number' => $begin->format('m'), // @deprecated - but impossible to delete
-                    'query.year' => $begin->format('Y'), // @deprecated - but impossible to delete
-                    'query.begin' => $formatter->getFormattedDateTime($begin), // @deprecated - but impossible to delete
-                    'query.begin_process' => $begin->format(self::DATE_PROCESS_FORMAT), // since 2.14
+                    'query.month' => $formatter->getFormattedMonthName($begin), // deprecated - cannot be deleted, referenced in customer templates
+                    'query.month_number' => $begin->format('m'), // deprecated - cannot be deleted, referenced in customer templates
+                    'query.year' => $begin->format('Y'), // deprecated - cannot be deleted, referenced in customer templates
+                    'query.begin' => $formatter->getFormattedDateTime($begin), // deprecated - cannot be deleted, referenced in customer templates
+                    'query.begin_process' => $begin->format(self::DATE_PROCESS_FORMAT),
                     'query.begin_day' => $begin->format('d'),
                     'query.begin_month' => $formatter->getFormattedMonthName($begin),
                     'query.begin_month_number' => $begin->format('m'),

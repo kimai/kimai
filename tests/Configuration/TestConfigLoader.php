@@ -25,7 +25,7 @@ class TestConfigLoader implements ConfigLoaderInterface
     public function __construct(array $configs)
     {
         foreach ($configs as $config) {
-            $this->configs[$config->getName()] = $config->getValue();
+            $this->configs[(string) $config->getName()] = $config->getValue();
         }
     }
 

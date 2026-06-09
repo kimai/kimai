@@ -6,10 +6,6 @@
         <source>reset.button</source>
         <target state="translated">登入</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject" xml:space="preserve" approved="yes">
-        <source>registration.subject</source>
-        <target state="final">啟用您的帳號</target>
-      </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve" approved="no">
         <source>reset.subject</source>
         <target state="translated">登入 Kimai</target>
@@ -17,18 +13,6 @@
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve" approved="no">
         <source>Forgot your password?</source>
         <target state="translated">登入您的帳號</target>
-      </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button" xml:space="preserve" approved="yes">
-        <source>registration.button</source>
-        <target state="final">啟用您的帳號</target>
-      </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro" xml:space="preserve" approved="yes">
-        <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
-        <target state="final">您在 Kimai 工時追蹤工具所註冊的電子信箱地址為 %email%。鏈結將於數小時內失效，請於鏈結失效前點選以啟用您的帳號。</target>
-      </trans-unit>
-      <trans-unit id="QtcznHC" resname="registration.title" xml:space="preserve" approved="yes">
-        <source>registration.title</source>
-        <target state="final">歡迎 %username%</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve" approved="no">
         <source>Don't worry, Kimai will help you create a new one!</source>

@@ -32,25 +32,26 @@ trait RendererTrait
             $projectId = 'none';
             $activityId = 'none';
             $userId = 'none';
-            $customer = null;
-            $project = null;
-            $activity = null;
+            $project = $exportItem->getProject();
+            $customer = $project?->getCustomer();
+            $activity = $exportItem->getActivity();
+            $user = $exportItem->getUser();
             $currency = null;
 
-            if (null !== ($project = $exportItem->getProject())) {
+            if ($project !== null) {
                 $projectId = $project->getId();
-                $customer = $project->getCustomer();
-                if ($customer !== null) {
-                    $customerId = $customer->getId();
-                    $currency = $customer->getCurrency();
-                }
             }
 
-            if (null !== ($activity = $exportItem->getActivity())) {
-                $activityId = $exportItem->getActivity()->getId();
+            if ($customer !== null) {
+                $customerId = $customer->getId();
+                $currency = $customer->getCurrency();
             }
 
-            if (null !== ($user = $exportItem->getUser())) {
+            if ($activity !== null) {
+                $activityId = $activity->getId();
+            }
+
+            if ($user !== null) {
                 $userId = $user->getId();
             }
 

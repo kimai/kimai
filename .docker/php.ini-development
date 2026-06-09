@@ -1,0 +1,6 @@
+expose_php = Off
+opcache.enable=0
+session.gc_maxlifetime=604800
+memory_limit=512M
+max_memory_limit=512M
+date.timezone=Europe/Berlin

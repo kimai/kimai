@@ -10,15 +10,13 @@
 namespace App\Tests\Validator\Constraints;
 
 use App\Validator\Constraints\TimesheetBudgetUsed;
-use App\Validator\Constraints\TimesheetConstraint;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\TestCase;
 
 #[CoversClass(TimesheetBudgetUsed::class)]
-class TimesheetBudgetUsedTest extends TestCase
+class TimesheetBudgetUsedTest extends AbstractConstraintTestCase
 {
     public function testIsTimesheetConstraint(): void
     {
-        self::assertInstanceOf(TimesheetConstraint::class, new TimesheetBudgetUsed());
+        $this->assertTimesheetConstraint(new TimesheetBudgetUsed());
     }
 }

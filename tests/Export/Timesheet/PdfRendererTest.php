@@ -33,7 +33,10 @@ class PdfRendererTest extends AbstractRendererTestCase
         $sut = new PDFRenderer(
             $this->createMock(Environment::class),
             $this->createMock(HtmlToPdfConverter::class),
-            $this->createMock(ProjectStatisticService::class)
+            $this->createMock(ProjectStatisticService::class),
+            'pdf',
+            'pdf',
+            'export/pdf-layout.html.twig'
         );
 
         self::assertEquals('pdf', $sut->getId());
@@ -54,7 +57,14 @@ class PdfRendererTest extends AbstractRendererTestCase
         $request->setLocale('en');
         $stack->push($request);
 
-        $sut = new PDFRenderer($twig, $converter, $this->createMock(ProjectStatisticService::class));
+        $sut = new PDFRenderer(
+            $twig,
+            $converter,
+            $this->createMock(ProjectStatisticService::class),
+            'pdf',
+            'pdf',
+            'export/pdf-layout.html.twig'
+        );
 
         $response = $this->render($sut);
 

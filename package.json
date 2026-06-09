@@ -2,6 +2,7 @@
   "name": "kimai",
   "homepage": "https://github.com/kimai/kimai",
   "license": "AGPL",
+  "private": true,
   "maintainers": [
     {
       "name": "Kevin Papst",

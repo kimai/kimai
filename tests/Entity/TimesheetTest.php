@@ -166,9 +166,7 @@ class TimesheetTest extends TestCase
 
         $reflection = new \ReflectionClass($sut);
         $property = $reflection->getProperty('modifiedAt');
-        $property->setAccessible(true);
         $property->setValue($sut, $modifiedDate);
-        $property->setAccessible(false);
 
         self::assertEquals($modifiedDate, $sut->getModifiedAt());
 

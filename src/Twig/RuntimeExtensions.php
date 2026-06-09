@@ -9,6 +9,7 @@
 
 namespace App\Twig;
 
+use App\Twig\Runtime\DatatableExtensions;
 use App\Twig\Runtime\EncoreExtension;
 use App\Twig\Runtime\MarkdownExtension;
 use App\Twig\Runtime\MenuExtension;
@@ -40,6 +41,8 @@ final class RuntimeExtensions extends AbstractExtension
             new TwigFunction('icon', [RuntimeExtension::class, 'createIcon'], ['is_safe' => ['html']]),
             new TwigFunction('qr_code_data_uri', [QrCodeExtension::class, 'qrCodeDataUriFunction']),
             new TwigFunction('user_shortcuts', [MenuExtension::class, 'getUserShortcuts']),
+            new TwigFunction('initialize_datatable', [DatatableExtensions::class, 'initializeDatatable']),
+            new TwigFunction('datatable_column_class', [DatatableExtensions::class, 'getDatatableColumnClass']),
         ];
     }
 

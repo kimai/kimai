@@ -41,16 +41,13 @@ final class InvoiceFixtures extends Fixture
             $template->setRenderer($invoiceConfig[2]);
             $template->setCalculator($invoiceConfig[3]);
             $template->setNumberGenerator($invoiceConfig[4]);
-            $template->setCompany($invoiceConfig[5]); // @phpstan-ignore method.deprecated
             $template->setCustomer($customers[array_rand($customers)]);
-            $template->setVat($invoiceConfig[6]);
+            $template->setTaxRate($invoiceConfig[6]);
             $template->setDueDays($invoiceConfig[7]);
             $template->setPaymentTerms($invoiceConfig[8]);
             $template->setLanguage('en');
-            $template->setAddress($this->generateAddress($faker)); // @phpstan-ignore method.deprecated
             $template->setContact($this->generateContact($faker));
             $template->setPaymentDetails($this->generatePaymentDetails($faker));
-            $template->setVatId($faker->creditCardNumber()); // @phpstan-ignore method.deprecated
 
             $manager->persist($template);
             $manager->flush();
@@ -58,7 +55,7 @@ final class InvoiceFixtures extends Fixture
     }
 
     /**
-     * @return array<array{0: string, 1: string, 2: string, 3: string, 4: string, 5: string, 6: int, 7: int, 8: string}>
+     * @return array<array{0: string, 1: string, 2: string, 3: string, 4: string, 5: string, 6: float, 7: int, 8: string}>
      */
     private function getInvoiceConfigs(Generator $faker): array
     {
@@ -88,10 +85,10 @@ final class InvoiceFixtures extends Fixture
 
         // name, title, renderer, calculator, numberGenerator, company, vat, dueDays, address, paymentTerms
         return [
-            ['Default (PDF)',             'Invoice',         'default',         'default',  'default', $faker->company(), 16, 10, $paymentTerms],
-            ['Invoice (HTML)',            'Company name',    'invoice',         'default',  'default', $faker->company(), 19, 30, $paymentTerms],
-            ['Single service date (PDF)', 'Invoice',         'service-date',    'short',    'default', $faker->company(), 19, 14, $paymentTerms_de],
-            ['Timesheet (HTML)',          'Timesheet',       'timesheet',       'default',  'default', $faker->company(), 19, 7,  $paymentTerms_alt],
+            ['Default (PDF)',             'Invoice',         'default',         'default',  'default', $faker->company(), 16.0, 10, $paymentTerms],
+            ['Invoice (HTML)',            'Company name',    'invoice',         'default',  'default', $faker->company(), 19.0, 30, $paymentTerms],
+            ['Single service date (PDF)', 'Invoice',         'service-date',    'short',    'default', $faker->company(), 19.0, 14, $paymentTerms_de],
+            ['Timesheet (HTML)',          'Timesheet',       'timesheet',       'default',  'default', $faker->company(), 19.0, 7,  $paymentTerms_alt],
         ];
     }
 
@@ -110,14 +107,6 @@ final class InvoiceFixtures extends Fixture
             'Phone: ' . $faker->phoneNumber() . PHP_EOL .
             'Email: ' . $faker->safeEmail() . PHP_EOL .
             'Web: www.' . $faker->domainName()
-        ;
-    }
-
-    private function generateAddress(Generator $faker): string
-    {
-        return
-            $faker->streetAddress() . PHP_EOL .
-            $faker->postcode() . ' ' . $faker->city() . ', ' . $faker->country()
         ;
     }
 }

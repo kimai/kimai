@@ -73,7 +73,7 @@ class ExportCreateCommandTest extends KernelTestCase
         $application = new Application($kernel);
         $container = self::getContainer();
 
-        $application->add(new ExportCreateCommand(
+        $application->addCommand(new ExportCreateCommand(
             $container->get(ServiceExport::class), // @phpstan-ignore argument.type
             $container->get(CustomerRepository::class), // @phpstan-ignore argument.type
             $container->get(ProjectRepository::class), // @phpstan-ignore argument.type

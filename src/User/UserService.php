@@ -89,11 +89,10 @@ class UserService
             throw new InvalidArgumentException('Cannot create user, already persisted');
         }
 
-        $this->validateUser($user, ['Registration', 'UserCreate']);
+        $this->validateUser($user, ['UserCreate']);
 
         $this->hashPassword($user);
-        $this->hashApiToken($user);
-        $user->eraseCredentials();
+        $user->setPlainPassword(null);
 
         $this->dispatcher->dispatch(new UserCreatePreEvent($user)); // @CloudRequired
         $this->repository->saveUser($user);
@@ -121,8 +120,7 @@ class UserService
         $this->validateUser($user, $groups);
 
         $this->hashPassword($user);
-        $this->hashApiToken($user);
-        $user->eraseCredentials();
+        $user->setPlainPassword(null);
 
         $this->dispatcher->dispatch(new UserUpdatePreEvent($user));
         $this->repository->saveUser($user);
@@ -162,16 +160,6 @@ class UserService
         return $this->repository->findOneBy(['alias' => $name]);
     }
 
-    public function findUserByConfirmationToken(string $token): ?User
-    {
-        return $this->repository->findOneBy(['confirmationToken' => $token]);
-    }
-
-    public function generateSecurityToken(): string
-    {
-        return rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
-    }
-
     private function hashPassword(User $user): void
     {
         $plain = $user->getPlainPassword();
@@ -182,18 +170,6 @@ class UserService
 
         $password = $this->passwordHasher->hashPassword($user, $plain);
         $user->setPassword($password);
-    }
-
-    private function hashApiToken(User $user): void
-    {
-        $plain = $user->getPlainApiToken();
-
-        if ($plain === null || 0 === \strlen($plain)) {
-            return;
-        }
-
-        $password = $this->passwordHasher->hashPassword($user, $plain);
-        $user->setApiToken($password);
     }
 
     public function deleteUser(User $delete, ?User $replace = null): void

@@ -250,7 +250,7 @@ class SystemConfigurationTest extends TestCase
         self::assertFalse($sut->isTimesheetMarkdownEnabled());
         self::assertEquals('punch', $sut->getTimesheetTrackingMode());
         self::assertEquals('now', $sut->getTimesheetDefaultBeginTime());
-        self::assertEquals('', $sut->isTimesheetAllowOverlappingRecords());
+        self::assertTrue($sut->isTimesheetAllowOverlappingRecords());
         self::assertEquals('', $sut->getTimesheetDefaultRoundingDays());
         self::assertEquals('', $sut->getTimesheetDefaultRoundingMode());
         self::assertEquals(0, $sut->getTimesheetDefaultRoundingDuration());
@@ -268,7 +268,7 @@ class SystemConfigurationTest extends TestCase
         self::assertTrue($sut->isTimesheetMarkdownEnabled());
         self::assertEquals('default', $sut->getTimesheetTrackingMode());
         self::assertEquals('07:00', $sut->getTimesheetDefaultBeginTime());
-        self::assertEquals('', $sut->isTimesheetAllowOverlappingRecords());
+        self::assertTrue($sut->isTimesheetAllowOverlappingRecords());
         self::assertEquals('', $sut->getTimesheetDefaultRoundingDays());
         self::assertEquals('', $sut->getTimesheetDefaultRoundingMode());
         self::assertEquals(0, $sut->getTimesheetDefaultRoundingDuration());

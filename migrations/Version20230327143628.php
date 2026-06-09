@@ -35,7 +35,7 @@ final class Version20230327143628 extends AbstractMigration
         $workingTimes->addColumn('expected', 'integer', ['notnull' => true]);
         $workingTimes->addColumn('actual', 'integer', ['notnull' => true]);
         $workingTimes->addColumn('approved_at', 'datetime', ['notnull' => false, 'default' => null]);
-        $workingTimes->setPrimaryKey(['id']);
+        $this->addPrimaryKeyConstraint($workingTimes, ['id']);
         $workingTimes->addIndex(['user_id'], 'IDX_F95E4933A76ED395');
         $workingTimes->addIndex(['approved_by'], 'IDX_F95E49334EA3CB3D');
         $workingTimes->addUniqueIndex(['user_id', 'date'], 'UNIQ_F95E4933A76ED395AA9E377A');

@@ -78,7 +78,7 @@ class TimesheetTeamAccessValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetTeamAccess(['message' => 'myMessage']));
+        $this->validator->validate(new NotBlank(), new TimesheetTeamAccess('myMessage'));
     }
 
     public function testTriggersForNewTimesheetWithInaccessibleProject(): void
@@ -200,9 +200,7 @@ class TimesheetTeamAccessValidatorTest extends ConstraintValidatorTestCase
         $timesheet = new Timesheet();
         $reflection = new \ReflectionClass($timesheet);
         $property = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($timesheet, 1);
-        $property->setAccessible(false);
 
         return $timesheet;
     }

@@ -23,7 +23,6 @@ use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingModeService;
 use App\Validator\ValidationFailedException;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -63,20 +62,6 @@ class TimesheetServiceTest extends TestCase
         $service = new TimesheetService($configuration, $repository, $service, $dispatcher, $authorizationChecker, $validator);
 
         return $service;
-    }
-
-    #[Group('legacy')]
-    public function testCannotSavePersistedTimesheetAsNew(): void
-    {
-        $timesheet = $this->createMock(Timesheet::class);
-        $timesheet->expects($this->once())->method('getId')->willReturn(1);
-
-        $sut = $this->getSut();
-
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Cannot create timesheet, already persisted');
-
-        $sut->saveNewTimesheet($timesheet); // @phpstan-ignore method.deprecated
     }
 
     public function testCannotStartTimesheet(): void
@@ -157,28 +142,6 @@ class TimesheetServiceTest extends TestCase
         $sut = $this->getSut($authorizationChecker);
 
         $sut->saveTimesheet($timesheet);
-
-        self::assertEquals('Europe/Paris', $timesheet->getTimezone());
-    }
-
-    #[Group('legacy')]
-    public function testUpdateTimesheetFixesTimezone(): void
-    {
-        $user = new User();
-        $user->setTimezone('Europe/Paris');
-
-        $begin = new \DateTime('now', new \DateTimeZone('Africa/Casablanca'));
-        $timesheet = new Timesheet();
-
-        $timesheet->setBegin($begin);
-        self::assertEquals('Africa/Casablanca', $timesheet->getTimezone());
-
-        $timesheet->setUser($user);
-        self::assertEquals('Africa/Casablanca', $timesheet->getTimezone());
-
-        $sut = $this->getSut();
-
-        $sut->updateTimesheet($timesheet); // @phpstan-ignore method.deprecated
 
         self::assertEquals('Europe/Paris', $timesheet->getTimezone());
     }

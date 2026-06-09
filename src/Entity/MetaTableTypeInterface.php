@@ -11,10 +11,6 @@ namespace App\Entity;
 
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @method null|string getSection()
- * @method void setSection(?string $name)
- */
 interface MetaTableTypeInterface
 {
     /**
@@ -138,15 +134,12 @@ interface MetaTableTypeInterface
      */
     public function getOrder(): int;
 
-    /**
-     * FIXME activate with 3.0
-     */
-    //public function setSection(?string $section): void;
+    public function setSection(?string $section): void;
 
     /**
-     * FIXME activate with 3.0
+     * Name of section where the form field is rendered.
      */
-    //public function getSection(): ?string;
+    public function getSection(): ?string;
 
     /**
      * Whether true if this field is defined by a plugin, or false if it is a value stored in the database.

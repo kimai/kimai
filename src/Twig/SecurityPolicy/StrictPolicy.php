@@ -153,12 +153,7 @@ final class StrictPolicy implements SecurityPolicyInterface
         }
 
         if ($obj instanceof User) {
-            if (str_contains($lcm, 'password')
-                || str_contains($lcm, 'totp')
-                || str_contains($lcm, 'api')
-                || str_contains($lcm, 'secret')
-                || str_contains($lcm, 'token')
-            ) {
+            if (str_contains($lcm, 'password') || str_contains($lcm, 'totp') || str_contains($lcm, 'secret')) {
                 throw new SecurityNotAllowedMethodError('Tried to access user secrets', User::class, $method);
             }
         }

@@ -3,10 +3,6 @@ jms_serializer:
         datetime:
             default_format: 'Y-m-d\TH:i:sO' # DATE_ISO8601
     visitors:
-        json_serialization:
-            options:
-                - JSON_UNESCAPED_SLASHES
-                - JSON_PRESERVE_ZERO_FRACTION
         xml_serialization:
             format_output: '%kernel.debug%'
     metadata:
@@ -18,3 +14,20 @@ jms_serializer:
                 excluded: []
     property_naming:
         id: 'jms_serializer.identical_property_naming_strategy'
+
+when@prod:
+    jms_serializer:
+        visitors:
+            json_serialization:
+                options:
+                    - JSON_UNESCAPED_SLASHES
+                    - JSON_PRESERVE_ZERO_FRACTION
+
+when@dev:
+    jms_serializer:
+        visitors:
+            json_serialization:
+                options:
+                    - JSON_PRETTY_PRINT
+                    - JSON_UNESCAPED_SLASHES
+                    - JSON_PRESERVE_ZERO_FRACTION

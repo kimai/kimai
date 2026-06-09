@@ -9,11 +9,15 @@
 
 namespace App\Validator\Constraints;
 
-final class TimesheetOverlapping extends TimesheetConstraint
-{
-    public const RECORD_OVERLAPPING = 'kimai-timesheet-overlapping-01';
+use App\Validator\Attribute\TimesheetConstraint;
+use Symfony\Component\Validator\Constraint;
 
-    protected const ERROR_NAMES = [
+#[TimesheetConstraint]
+final class TimesheetOverlapping extends Constraint
+{
+    public const string RECORD_OVERLAPPING = 'kimai-timesheet-overlapping-01';
+
+    protected const array ERROR_NAMES = [
         self::RECORD_OVERLAPPING => 'You already have an entry for this time.',
     ];
 

@@ -86,10 +86,6 @@
         <source>stats.workingTimeMonth</source>
         <target state="translated">%month% %year%</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve">
-        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="translated">Sebuah surel telah dikirimkan ke %email%. Surel ini berisi tautan yang harus Anda klik untuk mengaktifkan akun Anda.</target>
-      </trans-unit>
       <trans-unit id="yQRveje" resname="description">
         <source>description</source>
         <target state="translated">Deskripsi</target>
@@ -218,10 +214,6 @@
         <source>file</source>
         <target state="translated">Berkas</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token" xml:space="preserve">
-        <source>api_token</source>
-        <target state="translated">Kata sandi API</target>
-      </trans-unit>
       <trans-unit id="EGpYQvx" resname="help">
         <source>help</source>
         <target state="translated">Dokumentasi</target>
@@ -305,10 +297,6 @@
       <trans-unit id="3rJ5QDP" resname="help.teams" xml:space="preserve">
         <source>help.teams</source>
         <target state="translated">Batasi ketampakan bagi kelompok-kelompok yang dipilih.</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration" xml:space="preserve">
-        <source>menu.system_configuration</source>
-        <target state="translated">Setelan</target>
       </trans-unit>
       <trans-unit id="JGaf9IK" resname="Doctor" xml:space="preserve">
         <source>Doctor</source>
@@ -705,10 +693,6 @@
       <trans-unit id="loeWEWU" resname="active" xml:space="preserve">
         <source>active</source>
         <target state="translated">Aktif</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat" xml:space="preserve">
-        <source>api_token_repeat</source>
-        <target state="translated">Ulangi kata sandi API</target>
       </trans-unit>
       <trans-unit id=".372.o7" resname="login_required" xml:space="preserve">
         <source>login_required</source>
@@ -1141,10 +1125,6 @@
       <trans-unit id="L27KvC9" resname="includeNoWork" xml:space="preserve">
         <source>includeNoWork</source>
         <target state="translated">Munculkan entri tanpa pemesanan</target>
-      </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title" xml:space="preserve">
-        <source>api_password.missing_title</source>
-        <target state="translated">API tidak dapat digunakan</target>
       </trans-unit>
       <trans-unit id="Uu8YvYV" resname="deactivated" xml:space="preserve">
         <source>Deactivated</source>
@@ -1793,10 +1773,6 @@
       <trans-unit id="rkCw7Ml" resname="last_usage" xml:space="preserve">
         <source>Last usage</source>
         <target state="translated">Penggunaan terakhir</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">Kata sandi API telah usang: sebagai gantinya, tolong gunakan token API.</target>
       </trans-unit>
       <trans-unit id="y7KtuSS" resname="hours_per_week" xml:space="preserve">
         <source>hours_per_week</source>

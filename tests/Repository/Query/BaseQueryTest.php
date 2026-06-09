@@ -96,9 +96,15 @@ class BaseQueryTest extends TestCase
 
     protected function assertTeams(BaseQuery $sut): void
     {
+        $reflectionTeam = new \ReflectionClass(Team::class);
+        $teamIdProperty = $reflectionTeam->getProperty('id');
+
+        $team = new Team('foo');
+        $teamIdProperty->setValue($team, 1);
+
         self::assertEmpty($sut->getTeams());
 
-        self::assertInstanceOf(BaseQuery::class, $sut->addTeam(new Team('foo')));
+        self::assertInstanceOf(BaseQuery::class, $sut->addTeam($team));
         self::assertEquals(1, \count($sut->getTeams()));
 
         $sut->setTeams(null);
@@ -106,7 +112,9 @@ class BaseQueryTest extends TestCase
         $sut->setTeams([]);
         self::assertEmpty($sut->getTeams());
 
-        $team = new Team('foo');
+        $team = new Team('foo2');
+        $teamIdProperty->setValue($team, 2);
+
         self::assertInstanceOf(BaseQuery::class, $sut->setTeams([$team]));
         self::assertCount(1, $sut->getTeams());
         self::assertSame($team, $sut->getTeams()[0]);

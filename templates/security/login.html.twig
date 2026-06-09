@@ -92,10 +92,5 @@
     {% endif %}
 {% endblock %}
 
-{% block registration %}
-    {% if config('selfRegistrationActive') %}
-        {{ parent() }}
-    {% endif %}
-{% endblock %}
-
+{% block registration %}{% endblock %}
 {% block remember_me %}{% endblock %}

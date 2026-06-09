@@ -70,10 +70,6 @@
         <source>task.widget_rows</source>
         <target>Anzahl Aufgaben pro Seite im Dashboard</target>
       </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation">
-        <source>estimation</source>
-        <target>Zeitschätzung</target>
-      </trans-unit>
       <trans-unit id="ZCSPtzc" resname="task.help.estimation">
         <source>task.help.estimation</source>
         <target>Geschätzte Dauer zur Erledigung der Aufgabe in hh:mm</target>
@@ -105,10 +101,6 @@
       <trans-unit id="ZwdUYYa" resname="task_overdue">
         <source>task_overdue</source>
         <target>Überfällig</target>
-      </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo">
-        <source>task_todo</source>
-        <target>Aufgabe</target>
       </trans-unit>
     </body>
   </file>

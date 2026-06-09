@@ -58,7 +58,6 @@ abstract class AbstractEntityTestCase extends TestCase
         self::assertNull($sut->getId());
         $obj = new \ReflectionObject($sut);
         $prop = $obj->getProperty('id');
-        $prop->setAccessible(true);
         $prop->setValue($sut, 123);
         self::assertEquals(123, $sut->getId());
 
@@ -66,6 +65,5 @@ abstract class AbstractEntityTestCase extends TestCase
 
         self::assertNull($clone->getId());
         $prop->setValue($sut, null);
-        $prop->setAccessible(false);
     }
 }

@@ -62,14 +62,6 @@
         <source>user_profile</source>
         <target>Můj profil</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>API heslo</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>Potvrdit API heslo</target>
-      </trans-unit>
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Nástěnka</target>
@@ -117,10 +109,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target>Doplňky</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>Nastavení</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
@@ -1066,10 +1054,6 @@
         <source>remove_default</source>
         <target>Smazat oblíbené vyhledávání</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve">
-        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="translated">Aktivační e-mail byl odeslán na adresu %email%. E-mail obsahuje aktivační odkaz, na který musíte kliknout pro aktivaci účtu.</target>
-      </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="translated">Byl vám zaslán e-mail s odkazem na obnovení hesla. Poznámka: O nové heslo můžete požádat pouze jednou za %tokenLifetime% hodin. Pokud e-mail neobdržíte, zkontrolujte složku se spamem nebo to zkuste znovu.</target>
@@ -1381,10 +1365,6 @@
       <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
         <target state="translated">Zde můžete spravovat své API tokeny, které se používají k autentizaci vaší aplikace pro Kimai.</target>
-      </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
-        <source>api_password.missing_title</source>
-        <target state="translated">API nelze použít</target>
       </trans-unit>
       <trans-unit id="WbT2QLP" resname="extended_settings">
         <source>extended_settings</source>
@@ -1730,10 +1710,6 @@
         <source>api_token_hidden</source>
         <target state="translated">Toto je jediný čas, kdy tento klíč kdy bude zobrazen! Tak ho udržujte v bezpečí a ujistětete se, že jste si ho zkopírovali před zavřením tohoto okna.</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">API hesla jsou zastaralá: prosím používejte místo nich API tokeny.</target>
-      </trans-unit>
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
         <source>absence_comment_mandatory</source>
         <target state="translated">Nepřítomnost: Komentář je povinné pole</target>
@@ -1961,6 +1937,14 @@
       <trans-unit id="lU1Njcy" resname="tax.type.standard" xml:space="preserve">
         <source>tax.type.standard</source>
         <target state="translated">Danitelné</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+            <target state="translated">Úkol</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+            <target state="translated">Časový odhad</target>
       </trans-unit>
     </body>
   </file>

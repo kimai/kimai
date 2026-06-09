@@ -231,7 +231,7 @@ class UserControllerTest extends AbstractControllerBaseTestCase
         );
     }
 
-    public static function getValidationTestData()
+    public static function getValidationTestData(): array
     {
         return [
             [

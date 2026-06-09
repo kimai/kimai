@@ -25,6 +25,7 @@ final class Extensions extends AbstractExtension
     public function getFilters(): array
     {
         return [
+            new TwigFilter('month_picker', [$this, 'formatMonthPicker']),
             new TwigFilter('report_date', [$this, 'formatReportDate']),
             new TwigFilter('docu_link', [$this, 'documentationLink']),
             new TwigFilter('multiline_indent', [$this, 'multilineIndent']),
@@ -90,6 +91,11 @@ final class Extensions extends AbstractExtension
     public function formatReportDate(\DateTimeInterface $dateTime): string
     {
         return $dateTime->format(self::REPORT_DATE);
+    }
+
+    public function formatMonthPicker(\DateTimeInterface $dateTime): string
+    {
+        return $dateTime->format('Y-m');
     }
 
     public function buildDateRange(\DateTimeInterface $begin, \DateTimeInterface $end): string

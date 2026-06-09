@@ -410,7 +410,6 @@ class ConfigurationTest extends TestCase
                 'time_increment' => 15,
             ],
             'user' => [
-                'registration' => false,
                 'password_reset' => true,
                 'wizard' => true,
                 'login' => true,
@@ -560,9 +559,6 @@ class ConfigurationTest extends TestCase
                     'allow_duplicate_number' => false,
                 ],
                 'choice_pattern' => '{name}',
-            ],
-            'features' => [
-                'user_registration' => false,
             ],
         ];
 

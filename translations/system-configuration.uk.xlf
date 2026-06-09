@@ -234,10 +234,6 @@
         <source>user_auth_login</source>
         <target state="translated">Форма входу</target>
       </trans-unit>
-      <trans-unit id="C26_mL7" resname="user_auth_registration">
-        <source>user_auth_registration</source>
-        <target state="translated">Реєстрація користувача</target>
-      </trans-unit>
       <trans-unit id="5RSshEN" resname="user_auth_password_reset">
         <source>user_auth_password_reset</source>
         <target state="translated">Забули пароль</target>

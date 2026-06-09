@@ -1,13 +1,10 @@
-# some hosters require a htaccess to change the PHP version
-/public/.htaccess
-/.env-*
-/.idea/
+.idea/
 .DS_Store
 var/templates/
-
+config/reference.php
 
 # custom apache rules e.g. to deactivate ioncube loader
-/public/.user.ini
+public/.user.ini
 
 # for symfony local webserver
 /php.ini
@@ -25,6 +22,7 @@ var/templates/
 /var/dev/*
 /var/data/*
 /var/cache/*
+/var/share/*
 /var/invoices*
 /var/export*
 /var/log/*
@@ -38,7 +36,6 @@ var/templates/
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
-.env
 /public/bundles/
 /vendor/
 ###< symfony/framework-bundle ###
@@ -49,9 +46,8 @@ var/templates/
 ###< phpunit/phpunit ###
 
 ###> friendsofphp/php-cs-fixer ###
-.php_cs
-.php_cs.cache
-.php-cs-fixer.cache
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
 
 ###> symfony/phpunit-bridge ###
@@ -66,3 +62,7 @@ yarn-error.log
 /nbproject/*
 
 .dockerhub.secrets
+
+check-licenses.php
+docker-compose.yml
+tests/_data/fonts

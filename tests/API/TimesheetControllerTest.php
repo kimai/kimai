@@ -30,9 +30,9 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
 #[Group('integration')]
 class TimesheetControllerTest extends APIControllerBaseTestCase
 {
-    public const DATE_FORMAT = 'Y-m-d H:i:s';
-    public const DATE_FORMAT_HTML5 = 'Y-m-d\TH:i:s';
-    public const TEST_TIMEZONE = 'Europe/London';
+    public const string DATE_FORMAT = 'Y-m-d H:i:s';
+    public const string DATE_FORMAT_HTML5 = 'Y-m-d\TH:i:s';
+    public const string TEST_TIMEZONE = 'Europe/London';
 
     /**
      * @return Timesheet[]
@@ -552,8 +552,8 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $data = [
             'activity' => 1,
             'project' => 1,
-            'begin' => ($dateTime->createDateTime('-8 hours'))->format('Y-m-d H:m:0'),
-            'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
+            'begin' => ($dateTime->createDateTime('-8 hours'))->format('Y-m-d H:i:0'),
+            'end' => ($dateTime->createDateTime())->format('Y-m-d H:i:0'),
             'description' => 'foo',
             'fixedRate' => 2016,
             'hourlyRate' => 127,
@@ -583,8 +583,8 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $data = [
             'activity' => 1,
             'project' => 1,
-            'begin' => ($dateTime->createDateTime('-8 hours'))->format('Y-m-d H:m:0'),
-            'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
+            'begin' => ($dateTime->createDateTime('-8 hours'))->format('Y-m-d H:i:0'),
+            'end' => ($dateTime->createDateTime())->format('Y-m-d H:i:0'),
             'description' => 'foo',
             'fixedRate' => 2016,
             'hourlyRate' => 127,
@@ -620,8 +620,8 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
             'activity' => 1,
             'project' => 1,
             'user' => $user->getId(),
-            'begin' => ($dateTime->createDateTime('- 8 hours'))->format('Y-m-d H:m:0'),
-            'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
+            'begin' => ($dateTime->createDateTime('- 8 hours'))->format('Y-m-d H:i:0'),
+            'end' => ($dateTime->createDateTime())->format('Y-m-d H:i:0'),
             'description' => 'foo',
         ];
         $json = json_encode($data);
@@ -667,8 +667,8 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $data = [
             'activity' => $activity->getId(),
             'project' => $project->getId(),
-            'begin' => (new \DateTime('- 8 hours'))->format('Y-m-d H:m:s'),
-            'end' => (new \DateTime())->format('Y-m-d H:m:s'),
+            'begin' => (new \DateTime('- 8 hours'))->format('Y-m-d H:i:s'),
+            'end' => (new \DateTime())->format('Y-m-d H:i:s'),
             'description' => 'foo',
         ];
         $json = json_encode($data);
@@ -694,8 +694,8 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $em->persist($project);
 
         $data = [
-            'begin' => (new \DateTime('- 8 hours'))->format('Y-m-d H:m:s'),
-            'end' => (new \DateTime())->format('Y-m-d H:m:s'),
+            'begin' => (new \DateTime('- 8 hours'))->format('Y-m-d H:i:s'),
+            'end' => (new \DateTime())->format('Y-m-d H:i:s'),
             'project' => $project->getId(),
             'activity' => 99,
         ];
@@ -717,8 +717,8 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $em->flush();
 
         $data = [
-            'begin' => (new \DateTime('- 8 hours'))->format('Y-m-d H:m:s'),
-            'end' => (new \DateTime())->format('Y-m-d H:m:s'),
+            'begin' => (new \DateTime('- 8 hours'))->format('Y-m-d H:i:s'),
+            'end' => (new \DateTime())->format('Y-m-d H:i:s'),
             'project' => 99,
             'activity' => $activity->getId(),
         ];
@@ -903,8 +903,8 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $data = [
             'activity' => 1,
             'project' => 1,
-            'begin' => ($dateTime->createDateTime('-8 hours'))->format('Y-m-d H:m:0'),
-            'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
+            'begin' => ($dateTime->createDateTime('-8 hours'))->format('Y-m-d H:i:0'),
+            'end' => ($dateTime->createDateTime())->format('Y-m-d H:i:0'),
             'description' => 'foo',
         ];
         $json = json_encode($data);
@@ -927,8 +927,8 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $data = [
             'activity' => 1,
             'project' => 1,
-            'begin' => ($dateTime->createDateTime('- 7 hours'))->format('Y-m-d\TH:m:0'),
-            'end' => ($dateTime->createDateTime())->format('Y-m-d\TH:m:0'),
+            'begin' => ($dateTime->createDateTime('- 7 hours'))->format('Y-m-d\TH:i:0'),
+            'end' => ($dateTime->createDateTime())->format('Y-m-d\TH:i:0'),
             'description' => 'foo',
             'billable' => false,
         ];
@@ -1008,8 +1008,8 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $data = [
             'activity' => 1,
             'project' => 1,
-            'begin' => (new \DateTime('- 7 hours'))->format('Y-m-d\TH:m:s'),
-            'end' => (new \DateTime())->format('Y-m-d\TH:m:s'),
+            'begin' => (new \DateTime('- 7 hours'))->format('Y-m-d\TH:i:s'),
+            'end' => (new \DateTime())->format('Y-m-d\TH:i:s'),
             'description' => 'foo',
             'exported' => true,
         ];
@@ -1029,12 +1029,14 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $timesheets = $this->importFixtureForUser(User::ROLE_USER);
+        $begin = new \DateTimeImmutable();
+        $end = $begin->modify('-1 day');
 
         $data = [
             'activity' => 10,
             'project' => 1,
-            'begin' => (new \DateTime())->format('Y-m-d H:m'),
-            'end' => (new \DateTime('-1 day'))->format('Y-m-d H:m'),
+            'begin' => $begin->format('Y-m-d H:m'),
+            'end' => $end->format('Y-m-d H:m'),
             'description' => 'foo',
         ];
         $json = json_encode($data);
@@ -1189,6 +1191,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertIsString($content);
         $result = json_decode($content, true);
 
+        self::assertIsArray($result);
         self::assertEquals(3, \count($result));
         foreach ($result as $timesheet) {
             self::assertIsArray($timesheet);
@@ -1439,7 +1442,9 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('TimesheetEntity', $result);
         self::assertEquals('foo', $result['description']);
-        self::assertEquals([['name' => 'sdfsdf', 'value' => 'nnnnn'], ['name' => '1234567890', 'value' => '1234567890']], $result['metaFields']);
+        self::assertIsArray($result['metaFields']);
+        self::assertEquals(['name' => 'sdfsdf', 'value' => 'nnnnn'], $result['metaFields'][0]);
+        self::assertEquals(['name' => '1234567890', 'value' => '1234567890'], $result['metaFields'][1]);
         self::assertEquals(['another', 'testing', 'bar'], $result['tags']);
 
         $em = $this->getEntityManager();
@@ -1487,8 +1492,8 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $data = [
             'activity' => 1,
             'project' => 1,
-            'begin' => ($dateTime->createDateTime('- 8 hours'))->format('Y-m-d H:m:0'),
-            'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
+            'begin' => ($dateTime->createDateTime('- 8 hours'))->format('Y-m-d H:i:0'),
+            'end' => ($dateTime->createDateTime())->format('Y-m-d H:i:0'),
             'description' => 'foo',
             'fixedRate' => 2016,
             'hourlyRate' => 127
@@ -1709,7 +1714,16 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
 
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('TimesheetEntity', $result);
-        self::assertEquals(['name' => 'metatestmock', 'value' => 'another,testing,bar'], $result['metaFields'][0]);
+        self::assertIsArray($result['metaFields']);
+        $found = false;
+        foreach ($result['metaFields'] as $field) {
+            self::assertIsArray($field);
+            if ($field['name'] === 'metatestmock') {
+                self::assertEquals(['name' => 'metatestmock', 'value' => 'another,testing,bar'], $field);
+                $found = true;
+            }
+        }
+        self::assertTrue($found);
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */

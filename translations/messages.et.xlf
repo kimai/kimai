@@ -30,10 +30,6 @@
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target state="translated">Kataloogi “%dir%” pole olemas ja seda ei saanud luua.</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve">
-        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="translated">E-kiri on saadetud aadressile %email%. See sisaldab linki, millel peate oma konto aktiveerimiseks klõpsama.</target>
-      </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="no" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="translated">Teie parooli lähtestamiseks on saadetud link e-meilile. Märkus: Uut parooli saate taotleda ainult üks kord iga %tokenLifetime% tunni järel. Kui te meili ei saa, kontrollige oma rämpsposti kausta või proovige uuesti.</target>
@@ -150,14 +146,6 @@
         <source>user_profile</source>
         <target state="translated">Minu profiil</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token" xml:space="preserve">
-        <source>api_token</source>
-        <target state="translated">API salasõna</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat" xml:space="preserve">
-        <source>api_token_repeat</source>
-        <target state="translated">Korda API salasõna</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required" xml:space="preserve">
         <source>login_required</source>
         <target state="translated">Puudub luba. Suunan ümber sisselogimisele?</target>
@@ -269,10 +257,6 @@
       <trans-unit id="yqea9Nt" resname="duration" xml:space="preserve">
         <source>duration</source>
         <target state="translated">Kestvus</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration" xml:space="preserve">
-        <source>menu.system_configuration</source>
-        <target state="translated">Seaded</target>
       </trans-unit>
       <trans-unit id="_t.2z4V" resname="teams" xml:space="preserve">
         <source>teams</source>
