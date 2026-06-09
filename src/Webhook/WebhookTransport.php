@@ -12,6 +12,7 @@ namespace App\Webhook;
 use App\Configuration\SystemConfiguration;
 use Symfony\Component\HttpClient\HttpOptions;
 use Symfony\Component\HttpClient\NoPrivateNetworkHttpClient;
+use Symfony\Component\Messenger\Exception\UnrecoverableMessageHandlingException;
 use Symfony\Component\RemoteEvent\RemoteEvent;
 use Symfony\Component\Webhook\Server\RequestConfiguratorInterface;
 use Symfony\Component\Webhook\Server\TransportInterface;
@@ -42,6 +43,13 @@ class WebhookTransport implements TransportInterface
             $client = new NoPrivateNetworkHttpClient($client);
         }
 
-        $client->request('POST', $subscriber->getUrl(), $options->toArray());
+        // some http clients are lazy and only execute if we ask for content or status code
+        $response = $client->request('POST', $subscriber->getUrl(), $options->toArray());
+
+        // we use the response to make sure that the client really dispatched the request
+        $code = $response->getStatusCode();
+        if (200 !== $code) {
+            throw new UnrecoverableMessageHandlingException();
+        }
     }
 }

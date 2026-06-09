@@ -56,14 +56,14 @@ final class WebhookService implements ResetInterface
         $eventId = $this->generateEventId($name);
 
         foreach ($events as $event) {
-            $payload = [
+            $newPayload = [
                 'id' => $eventId,
                 'event' => $event->getName(),
                 'data' => $content,
             ];
 
             $subscriber = new Subscriber($event->getUrl(), $event->getSecret());
-            $remoteEvent = new RemoteEvent($name, $eventId, $payload);
+            $remoteEvent = new RemoteEvent($name, $eventId, $newPayload);
             $this->bus->dispatch(new SendWebhookMessage($subscriber, $remoteEvent));
         }
     }
@@ -92,7 +92,7 @@ final class WebhookService implements ResetInterface
      * Reads `webhook.endpoints` and returns normalized, validated entries.
      *
      * Malformed JSON or entries with an empty URL / non-array events list are
-     * dropped, with a warning logged for each drop.
+     * dropped with an aggregated warning logged for all dropped configs.
      *
      * @return array<int, array{url: string, secret: string, events: array<int, string>}>
      */
