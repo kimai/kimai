@@ -78,7 +78,7 @@ class TimesheetTeamAccessValidatorTest extends ConstraintValidatorTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
 
-        $this->validator->validate(new NotBlank(), new TimesheetTeamAccess(['message' => 'myMessage']));
+        $this->validator->validate(new NotBlank(), new TimesheetTeamAccess('myMessage'));
     }
 
     public function testTriggersForNewTimesheetWithInaccessibleProject(): void
