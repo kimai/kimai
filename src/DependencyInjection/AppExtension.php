@@ -215,7 +215,7 @@ final class AppExtension extends Extension implements PrependExtensionInterface
         return 'kimai';
     }
 
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         $container->setParameter('kimai.version', Constants::VERSION);
     }
