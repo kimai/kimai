@@ -1,22 +1,53 @@
+parameters:
+    env(MESSENGER_TRANSPORT_DSN): 'doctrine://default?auto_setup=0'
+
 framework:
     messenger:
-        # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
-        # failure_transport: failed
+        failure_transport: failed
 
         transports:
-            # https://symfony.com/doc/current/messenger.html#transport-configuration
-            # async: '%env(MESSENGER_TRANSPORT_DSN)%'
-            # failed: 'doctrine://default?queue_name=failed'
-            sync: 'sync://'
+            failed:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    queue_name: failed
+
+            failed_emails:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    queue_name: failed_emails
+
+            emails:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    queue_name: emails
+                failure_transport: failed_emails
+                retry_strategy:
+                    max_retries: 5
+                    multiplier: 2
+                    delay: 60000
+                    max_delay: 0
+
+            failed_async:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    queue_name: failed_async
+
+            async:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    queue_name: async
+                failure_transport: failed_async
+                retry_strategy:
+                    max_retries: 5
+                    multiplier: 2
+                    delay: 60000
+                    max_delay: 0
 
         routing:
-            # Route your messages to the transports
-            # 'App\Message\YourMessage': async
+            'Symfony\Component\Mailer\Messenger\SendEmailMessage': emails
+            'App\Jobs\Event\*': async
+            'App\Jobs\AsyncMessage': async
 
-# when@test:
-#    framework:
-#        messenger:
-#            transports:
-#                # replace with your transport name here (e.g., my_transport: 'in-memory://')
-#                # For more Messenger testing tools, see https://github.com/zenstruck/messenger-test
-#                async: 'in-memory://'
+when@test:
+    parameters:
+        env(MESSENGER_TRANSPORT_DSN): 'in-memory://'

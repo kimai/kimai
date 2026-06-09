@@ -149,7 +149,12 @@ handleStartup
 ensureAppSecret
 prepareKimai
 
-# Hand off to CMD — default is apache2, but allows:
-#   docker run kimai bash          → setup + shell
-#   docker run kimai php bin/console → setup + console command
+# When the container starts with its default CMD (apache), hand off to
+# supervisord so it can manage apache + the messenger worker. Any other
+# CMD (bash, php bin/console, ...) is exec'd directly to allow for admin tasks.
+if [ "$1" = "/usr/sbin/apache2" ]; then
+  echo "Starting supervisord (apache + messenger worker)"
+  exec /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
+fi
+
 exec "$@"
