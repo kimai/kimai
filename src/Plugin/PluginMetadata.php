@@ -84,8 +84,12 @@ class PluginMetadata
         // the version field is required if we use composer to install a plugin via var/packages/
         $meta->version = $json['extra']['kimai']['version'] ?? ($json['version'] ?? 'unknown');
 
-        if (\array_key_exists('skip-envs', $json['extra']['kimai'])) {
-            $meta->skipEnvs = $json['extra']['kimai']['skip-envs'];
+        if (\array_key_exists('skip-envs', $json['extra']['kimai']) && \is_array($json['extra']['kimai']['skip-envs'])) {
+            foreach ($json['extra']['kimai']['skip-envs'] as $env) {
+                if (\is_string($env)) {
+                    $meta->skipEnvs[] = $env;
+                }
+            }
         }
 
         return $meta;

@@ -3,6 +3,8 @@ nelmio_api_doc:
     models:
         use_jms: true
         names:
+            - { alias: Comment,                     type: App\Entity\CommentTableTypeTrait,         groups: [Default] }
+            - { alias: CommentForm,                 type: App\Form\API\CommentApiForm,              groups: [Default] }
             - { alias: CustomerEditForm,            type: App\Form\API\CustomerApiEditForm,         groups: [Default, Entity, Customer, Customer_Entity] }
             - { alias: CustomerEntity,              type: App\Entity\Customer,                      groups: [Default, Entity, Customer, Customer_Entity, Not_Expanded] }
             - { alias: Customer,                    type: App\Entity\Customer,                      groups: [Default, Not_Expanded] }

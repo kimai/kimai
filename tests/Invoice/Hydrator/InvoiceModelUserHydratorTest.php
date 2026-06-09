@@ -37,6 +37,7 @@ class InvoiceModelUserHydratorTest extends TestCase
             'user.email',
             'user.name',
             'user.title',
+            'user.account',
             'user.meta.hello',
             'user.meta.kitty',
         ];

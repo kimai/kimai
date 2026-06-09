@@ -10,7 +10,7 @@
 namespace App\Command;
 
 use App\Configuration\LocaleService;
-use App\Kernel;
+use App\Plugin\PluginManager;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -31,7 +31,8 @@ final class TranslationCommand extends Command
     public function __construct(
         private readonly string $projectDirectory,
         private readonly string $kernelEnvironment,
-        private readonly LocaleService $localeService
+        private readonly LocaleService $localeService,
+        private readonly PluginManager $pluginManager,
     )
     {
         parent::__construct();
@@ -74,7 +75,14 @@ final class TranslationCommand extends Command
         ];
 
         if (!$input->getOption('only-core')) {
-            $bases['plugins'] = $this->projectDirectory . Kernel::PLUGIN_DIRECTORY . '/*/Resources/translations/*.xlf';
+            foreach ($this->pluginManager->getPlugins() as $plugin) {
+                $path = $plugin->getPath();
+                if (is_dir($path . '/translations/')) {
+                    $bases[$plugin->getId()] = $path . '/translations/*.xlf';
+                } else {
+                    $bases[$plugin->getId()] = $path . '/Resources/translations/*.xlf';
+                }
+            }
             $bases['theme'] = $this->projectDirectory . '/vendor/kevinpapst/tabler-bundle/translations/*.xlf';
         }
 

@@ -20,6 +20,7 @@ use App\Tests\Security\TestUserEntity;
 use App\WorkingTime\Mode\WorkingTimeModeDay;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -405,6 +406,74 @@ class UserTest extends TestCase
         self::assertFalse($sut->initCanSeeAllData(true));
     }
 
+    public function testIsRegularUserOnly(): void
+    {
+        $sut = new User();
+        self::assertTrue($sut->isRegularUserOnly());
+
+        $sut->setRoles([User::ROLE_USER]);
+        self::assertTrue($sut->isRegularUserOnly());
+
+        $sut->addRole(User::ROLE_TEAMLEAD);
+        self::assertFalse($sut->isRegularUserOnly());
+
+        $sut->removeRole(User::ROLE_TEAMLEAD);
+        self::assertTrue($sut->isRegularUserOnly());
+    }
+
+    /**
+     * @deprecated
+     */
+    #[Group('legacy')]
+    public function testCanSeeUserGrantsAccessForTeamleadToRegularUserWithoutTeam(): void
+    {
+        $requester = new User();
+        $requester->setRoles([User::ROLE_TEAMLEAD]);
+
+        $subject = self::userWithId(1);
+        $subject->setEnabled(true);
+
+        self::assertTrue($subject->isRegularUserOnly());
+        self::assertSame([], $subject->getTeams());
+        self::assertTrue($requester->canSeeUser($subject));
+    }
+
+    /**
+     * @deprecated
+     */
+    #[Group('legacy')]
+    public function testCanSeeUserDeniesTeamleadFallbackForRegularUserWithTeam(): void
+    {
+        $requester = new User();
+        $requester->setRoles([User::ROLE_TEAMLEAD]);
+
+        $subject = self::userWithId(1);
+        $subject->setEnabled(true);
+        (new Team('Support'))->addUser($subject);
+
+        self::assertTrue($subject->isRegularUserOnly());
+        self::assertNotSame([], $subject->getTeams());
+        self::assertFalse($requester->canSeeUser($subject));
+    }
+
+    /**
+     * @deprecated
+     */
+    #[Group('legacy')]
+    public function testCanSeeUserDeniesTeamleadFallbackForNonRegularUserWithoutTeam(): void
+    {
+        $requester = new User();
+        $requester->setRoles([User::ROLE_TEAMLEAD]);
+
+        $subject = self::userWithId(1);
+        $subject->setEnabled(true);
+        $subject->addRole(User::ROLE_ADMIN);
+
+        self::assertFalse($subject->isRegularUserOnly());
+        self::assertSame([], $subject->getTeams());
+        self::assertFalse($requester->canSeeUser($subject));
+    }
+
     public function testSystemAccount(): void
     {
         $sut = new User();
@@ -627,11 +696,29 @@ class UserTest extends TestCase
         self::assertTrue($user->isPasswordRequestNonExpired(3600));
         self::assertTrue($user->isPasswordRequestNonExpired(7200));
 
-        $before = date_default_timezone_get();
-        date_default_timezone_set('America/Los_Angeles');
-        date_default_timezone_set($before);
+        $user->setTimezone('America/Los_Angeles');
 
         self::assertTrue($user->isPasswordRequestNonExpired(3600));
         self::assertTrue($user->isPasswordRequestNonExpired(7200));
+    }
+
+    public function testSignatureDate(): void
+    {
+        $user = new User();
+
+        self::assertEquals('', $user->getSignatureDate());
+        $user->resetSecuritySignature();
+        // shortest possible result: 2026-05-31T01:18:19Z
+        self::assertGreaterThanOrEqual(20, \strlen($user->getSignatureDate()));
+    }
+
+    private static function userWithId(int $id): User
+    {
+        $user = new User();
+        $reflection = new \ReflectionClass($user);
+        $property = $reflection->getProperty('id');
+        $property->setValue($user, $id);
+
+        return $user;
     }
 }

@@ -85,6 +85,7 @@ class InvoiceItemDefaultHydratorTest extends TestCase
             'entry.user_alias',
             'entry.user_display',
             'entry.user_title',
+            'entry.user_account',
             'entry.user_preference.foo',
             'entry.user_preference.mad',
             'entry.activity',

@@ -11,7 +11,9 @@ namespace App\Voter;
 
 use App\Entity\User;
 use App\Security\RolePermissionManager;
+use Scheb\TwoFactorBundle\Security\Authentication\Token\TwoFactorTokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
@@ -22,7 +24,10 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  */
 final class ApiVoter extends Voter
 {
-    public function __construct(private readonly RolePermissionManager $permissionManager)
+    public function __construct(
+        private readonly RolePermissionManager $permissionManager,
+        private readonly AuthorizationCheckerInterface $authorizationChecker,
+    )
     {
     }
 
@@ -49,6 +54,22 @@ final class ApiVoter extends Voter
             return false;
         }
 
+        // this check does not work, because remember_me sessions would not pass this check
+        // as the frontend uses the API, the user need to be able to use the API via session, even if not "fully authenticated"
+        // !$this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY', $user)
+
+        // the instanceof check is not mentioned in the official docs https://symfony.com/bundles/SchebTwoFactorBundle/8.x/index.html
+        // but it should be a tiny bit faster than asking the TwoFactorInProgressVoter, which does the same ...
+        // as we rely on internal bundle knowledge, we keep the defense-in-depth branch here as well
+
+        if (
+            $token instanceof TwoFactorTokenInterface ||
+            $this->authorizationChecker->isGranted('IS_AUTHENTICATED_2FA_IN_PROGRESS', $user)
+        ) {
+            return false;
+        }
+
+        // derived from AccessTokenSuccessHandler
         if ($token->hasAttribute('api-token')) {
             return $this->permissionManager->hasRolePermission($user, 'api_access');
         }

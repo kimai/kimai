@@ -148,7 +148,9 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[Assert\Length(max: 20)]
     private ?string $auth = self::AUTH_INTERNAL;
     /**
-     * @internal no database mapping: the value is calculated from a permission in UserEnvironmentSubscriber
+     * This flag will be initialized in UserEnvironmentSubscriber.
+     *
+     * @internal has no database mapping as the value is calculated from a permission
      */
     private ?bool $isAllowedToSeeAllData = null;
     #[ORM\Column(name: 'username', type: Types::STRING, length: 180, nullable: false)]
@@ -222,6 +224,8 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[Serializer\Groups(['User_Entity'])]
     #[OA\Property(ref: '#/components/schemas/User')]
     private ?User $supervisor = null;
+    #[ORM\Column(name: 'signature_date', type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $signatureDate = null;
 
     use ColorTrait;
 
@@ -587,6 +591,8 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     /**
      * Use this function to check if the current user can read data from the given user.
+     *
+     * @deprecated since 2.57 use RolePermissionManager::checkUserAccess() or is_granted('access_user', user)
      */
     public function canSeeUser(User $user): bool
     {
@@ -594,7 +600,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             return true;
         }
 
-        if ($this->canSeeAllData()) {
+        if ($this->isSuperAdmin() || $this->canSeeAllData()) {
             return true;
         }
 
@@ -610,7 +616,34 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             return true;
         }
 
+        // special case: the requested user is in no team and the current user is a teamlead.
+        // this configuration is likely in new installations with small teams, and
+        // it is allowed for teamleads to see other users data by definition
+        if ($this->hasTeamleadRole() && $user->isRegularUserOnly()) {
+            return \count($user->getTeams()) === 0;
+        }
+
         return false;
+    }
+
+    public function isRegularUserOnly(): bool
+    {
+        return $this->getRoles() === [static::DEFAULT_ROLE];
+    }
+
+    public function getSignatureDate(): string
+    {
+        return $this->signatureDate?->format(\DateTimeInterface::ATOM) ?? '';
+    }
+
+    /**
+     * This will reset all security signatures and therefor invalidate:
+     * - login links
+     * - remember me cookies
+     */
+    public function resetSecuritySignature(): void
+    {
+        $this->signatureDate = new \DateTimeImmutable('now', new \DateTimeZone($this->getTimezone()));
     }
 
     /**
@@ -882,6 +915,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      */
     public function setUsername(string $username): void
     {
+        // TODO trigger deprecation?
         $this->username = $username;
     }
 

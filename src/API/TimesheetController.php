@@ -113,6 +113,9 @@ final class TimesheetController extends BaseApiController
 
             if (!$seeAll) {
                 foreach ($userRepository->findByIds($users) as $user) {
+                    if (!$this->isGranted('access_user', $user)) {
+                        throw $this->createAccessDeniedException('Cannot access user: ' . $user->getId());
+                    }
                     $query->addUser($user);
                 }
             }
@@ -426,16 +429,11 @@ final class TimesheetController extends BaseApiController
 
     /**
      * Stop active timesheet
-     *
-     * This route is available via GET and PATCH, as users over and over again run into errors when stopping.
-     * Likely caused by a slow JS engine and a fast-click after page reload.
      */
     #[IsGranted('stop', 'timesheet')]
     #[OA\Response(response: 200, description: 'Stops an active timesheet and returns it afterwards.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet ID to stop', required: true)]
-    #[Route(methods: ['GET'], path: '/{id}/stop', name: 'stop_timesheet_get', requirements: ['id' => '\d+'])]
     #[Route(methods: ['PATCH'], path: '/{id}/stop', name: 'stop_timesheet', requirements: ['id' => '\d+'])]
-    #[OA\Get(x: ['internal' => true])]
     public function stopAction(Timesheet $timesheet): Response
     {
         $this->service->stopTimesheet($timesheet);
@@ -454,8 +452,6 @@ final class TimesheetController extends BaseApiController
     #[IsGranted('start', 'timesheet')]
     #[OA\Response(response: 200, description: 'Restart a timesheet for the same customer, project, activity combination. The current user will be the owner of the new record. Kimai tries to stop running records, which is expected to fail depending on the configured rules. Data will be copied from the original record if requested.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet ID to restart', required: true)]
-    #[OA\Get(x: ['internal' => true])]
-    #[Route(methods: ['GET'], path: '/{id}/restart', name: 'restart_timesheet_get', requirements: ['id' => '\d+'])]
     #[Route(methods: ['PATCH'], path: '/{id}/restart', name: 'restart_timesheet', requirements: ['id' => '\d+'])]
     #[Rest\RequestParam(name: 'copy', requirements: 'all', strict: true, nullable: true, description: 'Whether data should be copied to the new entry. Allowed values: all (default: nothing is copied)')]
     #[Rest\RequestParam(name: 'begin', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Changes the restart date to the given one (default: now)')]

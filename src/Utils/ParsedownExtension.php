@@ -10,7 +10,7 @@
 namespace App\Utils;
 
 /**
- * This Class extends the default Parsedown Class for custom methods.
+ * The default markdown implementation.
  */
 final class ParsedownExtension extends Parsedown
 {
@@ -42,31 +42,4 @@ final class ParsedownExtension extends Parsedown
         '|' => ['Table'],
         '~' => ['FencedCode'],
     ];
-
-    /**
-     * Overwritten to open links in new windows
-     */
-    protected function inlineUrl($Excerpt): ?array
-    {
-        $block = parent::inlineUrl($Excerpt);
-
-        if (isset($block['element']['attributes']) && \is_array($block['element']['attributes'])) {
-            $block['element']['attributes']['target'] = '_blank';
-        }
-
-        return $block;
-    }
-
-    protected function blockTable($Line, ?array $Block = null) // @phpstan-ignore missingType.return,missingType.iterableValue,missingType.parameter
-    {
-        $Block = parent::blockTable($Line, $Block);
-
-        if ($Block === null) {
-            return null;
-        }
-
-        $Block['element']['attributes']['class'] = 'table';
-
-        return $Block;
-    }
 }

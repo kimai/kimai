@@ -11,7 +11,6 @@ namespace App\DependencyInjection;
 
 use App\Configuration\LocaleService;
 use App\Constants;
-use App\Kernel;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -48,7 +47,6 @@ final class AppExtension extends Extension implements PrependExtensionInterface
             $config['data_dir'] = $container->getParameter('kernel.project_dir') . '/var/data';
         }
         $container->setParameter('kimai.data_dir', $config['data_dir']);
-        $container->setParameter('kimai.plugin_dir', $container->getParameter('kernel.project_dir') . Kernel::PLUGIN_DIRECTORY);
 
         $this->setLanguageFormats($container);
 

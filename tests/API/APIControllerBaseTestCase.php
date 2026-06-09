@@ -328,6 +328,15 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'metaFields' => ['result' => 'array', 'type' => 'InvoiceMeta'],
                 ];
 
+            case 'Comment':
+                return [
+                    'id' => 'int',
+                    'message' => 'string',
+                    'createdBy' => ['result' => 'object', 'type' => '@User'],
+                    'createdAt' => '@datetime',
+                    'pinned' => 'bool',
+                ];
+
             case 'PageActionItem':
                 return [
                     'id' => 'string',

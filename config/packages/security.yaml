@@ -41,6 +41,7 @@ security:
                 lifetime: 604800
                 path: /
                 always_remember_me: true
+                signature_properties: ['email', 'password', 'signatureDate']
             # activate all configured user provider
             provider: chain_provider
             form_login:
@@ -60,9 +61,12 @@ security:
                 interval: '5 minutes'
             login_link:
                 check_route: link_login_check
-                signature_properties: ['id']
                 lifetime: 900
                 max_uses: 3
+                # 'password' binds the HMAC signature to the password hash, so a
+                # link becomes invalid as soon as the user changes the password
+                signature_properties: ['email', 'password', 'signatureDate']
+
     access_decision_manager:
         # only grants access if there is no voter denying access
         strategy: unanimous
@@ -82,7 +86,7 @@ security:
         - {path: '^/{_locale}/register', role: PUBLIC_ACCESS}
         - {path: '^/{_locale}/resetting', role: PUBLIC_ACCESS}
         - {path: '^/{_locale}/', roles: ROLE_USER}
-        - {path: '^/api', roles: IS_AUTHENTICATED}
+        - {path: '^/api', roles: IS_AUTHENTICATED_REMEMBERED}
 
 when@test:
     security:

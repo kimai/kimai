@@ -37,13 +37,18 @@ final class InvoiceModelProjectHydrator implements InvoiceModelHydrator
             }
         }
 
-        if (\count($projects) === 0) {
-            return [];
+        $counter = \count($projects);
+
+        $values = [
+            'project._counter' => $counter,
+        ];
+
+        if ($counter === 0) {
+            return $values;
         }
 
         $projects = array_values($projects);
 
-        $values = [];
         $i = 0;
 
         foreach ($projects as $project) {

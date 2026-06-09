@@ -28,6 +28,7 @@ final class InvoiceModelUserHydrator implements InvoiceModelHydrator
             'user.title' => $user->getTitle() ?? '',
             'user.alias' => $user->getAlias() ?? '',
             'user.display' => $user->getDisplayName(),
+            'user.account' => $user->getAccountNumber() ?? '',
         ];
 
         foreach ($user->getVisiblePreferences() as $metaField) {

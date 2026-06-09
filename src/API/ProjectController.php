@@ -10,8 +10,10 @@
 namespace App\API;
 
 use App\Entity\Project;
+use App\Entity\ProjectComment;
 use App\Entity\ProjectRate;
 use App\Entity\User;
+use App\Form\API\CommentApiForm;
 use App\Form\API\ProjectApiEditForm;
 use App\Form\API\ProjectRateApiForm;
 use App\Project\ProjectService;
@@ -19,6 +21,7 @@ use App\Repository\CustomerRepository;
 use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
+use App\User\TeamService;
 use App\Utils\SearchTerm;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -28,6 +31,7 @@ use OpenApi\Attributes as OA;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints;
@@ -37,6 +41,7 @@ use Symfony\Component\Validator\Constraints;
 #[OA\Tag(name: 'Project')]
 final class ProjectController extends BaseApiController
 {
+    private const array GROUPS_COMMENT = ['Default', 'Not_Expanded'];
     private const array GROUPS_ENTITY = ['Default', 'Entity', 'Project', 'Project_Entity'];
     private const array GROUPS_COLLECTION = ['Default', 'Collection', 'Project'];
     private const array GROUPS_RATE = ['Default', 'Entity', 'Project_Rate'];
@@ -238,7 +243,7 @@ final class ProjectController extends BaseApiController
      * Delete project
      *
      * [DANGER] This will also delete ALL linked activities and timesheets.
-     * Do you want to use `PATCH` instead and mark it as inactive with `{visible: false}` instead?
+     * Do you want to use `PATCH` instead and mark it as inactive with `{visible: false}`?
      */
     #[IsGranted('delete', 'project')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Delete one project')])]
@@ -352,6 +357,140 @@ final class ProjectController extends BaseApiController
 
         $view = new View($rate, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_RATE);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Fetch comments for project
+     */
+    #[IsGranted('view', 'project')]
+    #[IsGranted('comments', 'project')]
+    #[OA\Response(response: 200, description: 'Returns a collection of project comments', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/Comment')))]
+    #[OA\Parameter(name: 'id', description: 'The project whose comments will be returned', in: 'path', required: true)]
+    #[Route(path: '/{id}/comments', name: 'get_project_comments', requirements: ['id' => '\d+'], methods: ['GET'])]
+    public function getCommentsAction(#[MapEntity(mapping: ['id' => 'id'])] Project $project): Response
+    {
+        $comments = $this->repository->getComments($project);
+
+        $view = new View($comments, 200);
+        $view->getContext()->setGroups(self::GROUPS_COMMENT);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Add comment for project
+     */
+    #[IsGranted('view', 'project')]
+    #[IsGranted('comments', 'project')]
+    #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the newly created project comment', content: new OA\JsonContent(ref: '#/components/schemas/Comment'))])]
+    #[OA\Parameter(name: 'id', description: 'The project to add the comment for', in: 'path', required: true)]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/CommentForm'))]
+    #[Route(path: '/{id}/comments', name: 'post_project_comment', requirements: ['id' => '\d+'], methods: ['POST'])]
+    public function postCommentAction(#[MapEntity(mapping: ['id' => 'id'])] Project $project, Request $request): Response
+    {
+        $comment = new ProjectComment($project);
+        $comment->setCreatedBy($this->getUser());
+
+        $form = $this->createForm(CommentApiForm::class, $comment, [
+            'method' => 'POST',
+        ]);
+
+        $form->setData($comment);
+        $form->submit($request->request->all(), false);
+
+        if (false === $form->isValid()) {
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
+        }
+
+        $this->repository->saveComment($comment);
+
+        $view = new View($comment, 200);
+        $view->getContext()->setGroups(self::GROUPS_COMMENT);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Pin project comment
+     *
+     * This toggles the `pinned` status of the given comment.
+     */
+    #[IsGranted('view', 'project')]
+    #[IsGranted('edit', 'project')]
+    #[IsGranted('comments', 'project')]
+    #[OA\Patch(responses: [new OA\Response(response: 200, description: 'Returns the updated project comment', content: new OA\JsonContent(ref: '#/components/schemas/Comment'))])]
+    #[OA\Parameter(name: 'id', description: 'The project whose comment will be pinned or unpinned', in: 'path', required: true)]
+    #[OA\Parameter(name: 'comment', description: 'The comment whose pinned status will be toggled', in: 'path', required: true)]
+    #[Route(path: '/{id}/comments/{comment}/pin', name: 'toggle_project_comment_pin', requirements: ['id' => '\d+', 'comment' => '\d+'], methods: ['PATCH'])]
+    public function toggleCommentPin(#[MapEntity(mapping: ['id' => 'id'])] Project $project, #[MapEntity(mapping: ['comment' => 'id'])] ProjectComment $comment): Response
+    {
+        if ($comment->getProject() !== $project) {
+            throw $this->createAccessDeniedException(\sprintf('Comment %s does not belong to project %s', $comment->getId(), $project->getId()));
+        }
+
+        $comment->setPinned(!$comment->isPinned());
+        $this->repository->saveComment($comment);
+
+        $view = new View($comment, 200);
+        $view->getContext()->setGroups(self::GROUPS_COMMENT);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Delete project comment
+     */
+    #[IsGranted('view', 'project')]
+    #[IsGranted('edit', 'project')]
+    #[IsGranted('comments', 'project')]
+    #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
+    #[OA\Parameter(name: 'id', description: 'The project whose comment will be removed', in: 'path', required: true)]
+    #[OA\Parameter(name: 'comment', description: 'The comment to remove', in: 'path', required: true)]
+    #[Route(path: '/{id}/comments/{comment}', name: 'delete_project_comment', requirements: ['id' => '\d+', 'comment' => '\d+'], methods: ['DELETE'])]
+    public function deleteCommentAction(#[MapEntity(mapping: ['id' => 'id'])] Project $project, #[MapEntity(mapping: ['comment' => 'id'])] ProjectComment $comment): Response
+    {
+        if ($comment->getProject() !== $project) {
+            throw $this->createAccessDeniedException(\sprintf('Comment %s does not belong to project %s', $comment->getId(), $project->getId()));
+        }
+
+        $this->repository->deleteComment($comment);
+
+        return $this->viewHandler->handle(new View(null, Response::HTTP_NO_CONTENT));
+    }
+
+    /**
+     * Create team for project
+     *
+     * If a team with the project's name already exists, it is reused.
+     * The current user is added as teamlead (if not already), and the project is bound to the team.
+     */
+    #[IsGranted('create_team')]
+    #[IsGranted('permissions', 'project')]
+    #[OA\Post(description: 'Creates (or reuses) a default team named after the project, makes the current user a teamlead, and binds the project to that team. Calling this multiple times is safe and will not create duplicate teams or bindings.', responses: [new OA\Response(response: 200, description: 'Returns the team', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
+    #[OA\Parameter(name: 'id', description: 'The project to create a default team for', in: 'path', required: true)]
+    #[Route(path: '/{id}/team', name: 'post_project_team', requirements: ['id' => '\d+'], methods: ['POST'])]
+    public function postDefaultTeamAction(Project $project, TeamService $teamService): Response
+    {
+        $name = $project->getName();
+        if ($name === null || $name === '') {
+            throw new BadRequestHttpException('Cannot create default team for project with empty name: ' . $project->getId());
+        }
+
+        $team = $teamService->findTeamByName($name);
+
+        if ($team === null) {
+            $team = $teamService->createNewTeam($name);
+        }
+
+        $team->addTeamlead($this->getUser());
+        $team->addProject($project);
+
+        $teamService->saveTeam($team);
+
+        $view = new View($team, Response::HTTP_OK);
+        $view->getContext()->setGroups(TeamController::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
     }

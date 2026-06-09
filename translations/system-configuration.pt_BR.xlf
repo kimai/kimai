@@ -306,6 +306,10 @@
         <source>allow_duplicate_number</source>
         <target state="translated">Permitir vários usos da mesma numeração</target>
       </trans-unit>
+      <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="no" xml:space="preserve">
+        <source>invoice.rounding_mode</source>
+        <target state="translated">Modo de arredondamento</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
