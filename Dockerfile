@@ -39,6 +39,7 @@ ARG TIMEZONE
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         unzip \
+        git \
         libicu76 \
         libldap-common \
         libzip5 \
