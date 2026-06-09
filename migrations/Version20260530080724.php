@@ -24,16 +24,26 @@ final class Version20260530080724 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE kimai2_users ADD signature_date DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime_immutable)\'');
+        // a security related column
+        if (!$schema->getTable('kimai2_users')->hasColumn('signature_date')) {
+            $this->addSql('ALTER TABLE kimai2_users ADD signature_date DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime_immutable)\'');
+        }
+
         // improve session garbage collection
-        $this->addSql('CREATE INDEX lifetime_idx ON kimai2_sessions (lifetime)');
+        if (!$schema->getTable('kimai2_sessions')->hasIndex('lifetime_idx')) {
+            $this->addSql('CREATE INDEX lifetime_idx ON kimai2_sessions (lifetime)');
+        }
     }
 
     public function down(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE kimai2_users DROP signature_date');
-        // improve session garbage collection
-        $this->addSql('DROP INDEX lifetime_idx ON kimai2_sessions');
+        if ($schema->getTable('kimai2_users')->hasColumn('signature_date')) {
+            $this->addSql('ALTER TABLE kimai2_users DROP signature_date');
+        }
+
+        if ($schema->getTable('kimai2_sessions')->hasIndex('lifetime_idx')) {
+            $this->addSql('DROP INDEX lifetime_idx ON kimai2_sessions');
+        }
     }
 
     public function isTransactional(): bool
