@@ -38,6 +38,7 @@ ARG TIMEZONE
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
+        supervisor \
         unzip \
         git \
         libicu76 \
@@ -79,6 +80,7 @@ RUN apt-get update && \
 COPY .docker/000-default.conf /etc/apache2/sites-available/000-default.conf
 COPY .docker/dbtest.php /dbtest.php
 COPY .docker/entrypoint.sh /entrypoint.sh
+COPY .docker/supervisord.conf /etc/supervisor/supervisord.conf
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 EXPOSE 8001
