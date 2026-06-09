@@ -72,13 +72,9 @@ services:
     # so requests to private/loopback/link-local targets are blocked at the
     # network layer — defense in depth for SSRF.
     # @see https://github.com/kimai/kimai/security/advisories/GHSA-pj8j-p4g4-4vw8
-    Symfony\Component\HttpClient\NoPrivateNetworkHttpClient:
-        arguments:
-            - '@http_client'
-
     App\Pdf\SafeRemoteContentClient:
         arguments:
-            - '@Symfony\Component\HttpClient\NoPrivateNetworkHttpClient'
+            - '@http_client'
 
     App\Pdf\MPdfConverter:
         arguments:

@@ -25,6 +25,14 @@ final class TimesheetTeamAccess extends Constraint
 
     public string $message = 'This timesheet has invalid settings.';
 
+    public function __construct(?string $message = null)
+    {
+        if ($message !== null) {
+            $this->message = $message;
+        }
+        parent::__construct();
+    }
+
     public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;
