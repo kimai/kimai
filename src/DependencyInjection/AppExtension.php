@@ -46,7 +46,6 @@ final class AppExtension extends Extension
             $config['data_dir'] = $container->getParameter('kernel.project_dir') . '/var/data';
         }
         $container->setParameter('kimai.data_dir', $config['data_dir']);
-        $container->setParameter('kimai.plugin_dir', $container->getParameter('kernel.project_dir') . Kernel::PLUGIN_DIRECTORY);
 
         $this->setLanguageFormats($container);
 
