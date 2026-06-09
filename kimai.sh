@@ -78,8 +78,6 @@ function confirm_update() {
 }
 
 function update_kimai() {
-    command -v git >/dev/null 2>&1 || { echo >&2 "Update requires 'git' but it's not installed."; exit 1; }
-
     if [[ "$1" == "latest" ]]; then
         if ! command -v sort >/dev/null 2>&1 || ! command -v tail >/dev/null 2>&1; then
             echo "we could not detect the latest kimai version due to missing commands: sort, tail"
@@ -208,6 +206,7 @@ cd "$(dirname "$0")" || { echo "Cannot change working directory."; exit 1; }
 
 # we need a few commands installed in order for this script to complete
 composer_exists || { echo >&2 "Kimai requires 'composer' but it's not installed or not executable."; exit 1; }
+command -v git >/dev/null 2>&1 || { echo >&2 "Kimai requires 'git' but it's not installed."; exit 1; }
 command -v "$KIMAI_PHP" >/dev/null 2>&1 || { echo >&2 "Kimai requires 'php' but it's not installed."; exit 1; }
 
 verbose "Using PHP: $KIMAI_PHP"
