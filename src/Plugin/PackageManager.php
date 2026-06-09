@@ -178,7 +178,7 @@ final class PackageManager
         $packages = [];
 
         $paths = new \DirectoryIterator($path);
-        /** @var \SplFileInfo $file */
+        /** @var \DirectoryIterator $file */
         foreach ($paths as $file) {
             if (!$file->isDir()) {
                 continue;
