@@ -11,6 +11,11 @@ namespace App\Plugin;
 
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
+/**
+ * Works with already installed Kimai plugins:
+ * - either registered as dynamic Bundles from var/plugins/
+ * - or from composer packages via var/packages/
+ */
 final class PluginManager
 {
     /**

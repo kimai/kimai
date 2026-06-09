@@ -14,7 +14,7 @@ namespace App\Plugin;
  */
 final class PackageManager
 {
-    public const PACKAGE_DIR = 'var/packages';
+    public const string PACKAGE_DIR = 'var/packages';
 
     public function __construct(private readonly string $projectDirectory)
     {
@@ -51,17 +51,19 @@ final class PackageManager
                 continue;
             }
 
-            $package = $this->getComposerJson($file->getPathname());
+            $path = $file->getPathname();
+
+            $package = $this->getComposerJson($path);
             if ($package === null) {
                 continue;
             }
 
             $content = json_decode($package, true);
             if (\JSON_ERROR_NONE !== json_last_error() || !\is_array($content)) {
-                throw new \RuntimeException('Failed to parse composer.json file in: ' . $file->getPathname());
+                throw new \RuntimeException('Failed to parse composer.json file in: ' . $path);
             }
 
-            $packages[] = new Package($file, PluginMetadata::createFromArray($content));
+            $packages[] = new Package($path, PluginMetadata::createFromArray($content));
         }
 
         return $packages;
