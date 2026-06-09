@@ -110,6 +110,54 @@
         <source>task_todo</source>
         <target>Task</target>
       </trans-unit>
+      <trans-unit id="hZFps4G" resname="board">
+        <source>board</source>
+        <target>Board</target>
+      </trans-unit>
+      <trans-unit id="aF2ajw." resname="boards">
+        <source>boards</source>
+        <target>Boards</target>
+      </trans-unit>
+      <trans-unit id="TRpwk3n" resname="board.private">
+        <source>board.private</source>
+        <target>Private board</target>
+      </trans-unit>
+      <trans-unit id="ruHAlfl" resname="board.column.todo">
+        <source>board.column.todo</source>
+        <target>To Do</target>
+      </trans-unit>
+      <trans-unit id="Mbeo_WG" resname="board.column.waiting">
+        <source>board.column.waiting</source>
+        <target>Waiting</target>
+      </trans-unit>
+      <trans-unit id="RN6UMwt" resname="board.column.progress">
+        <source>board.column.progress</source>
+        <target>In Progress</target>
+      </trans-unit>
+      <trans-unit id="o6eg_hf" resname="board.column.done">
+        <source>board.column.done</source>
+        <target>Done</target>
+      </trans-unit>
+      <trans-unit id="Wq09TUJ" resname="board.empty_state">
+        <source>board.empty_state</source>
+        <target>You do not have any boards yet. Create one to get started.</target>
+      </trans-unit>
+      <trans-unit id="7lJ6pzI" resname="board.limit_reached">
+        <source>board.limit_reached</source>
+        <target>You reached the limit of 3 private boards.</target>
+      </trans-unit>
+      <trans-unit id="K.9A2XH" resname="board.close_task">
+        <source>board.close_task</source>
+        <target>Complete this task?</target>
+      </trans-unit>
+      <trans-unit id="Hj3qdDA" resname="board.delete_confirm">
+        <source>board.delete_confirm</source>
+        <target>Delete this board?</target>
+      </trans-unit>
+      <trans-unit id="_H1KEu_" resname="board.unassign_user">
+        <source>board.unassign_user</source>
+        <target>Remove the assigned user from this task?</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

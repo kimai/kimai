@@ -110,6 +110,54 @@
         <source>task_todo</source>
         <target>Aufgabe</target>
       </trans-unit>
+      <trans-unit id="hZFps4G" resname="board">
+        <source>board</source>
+        <target>Board</target>
+      </trans-unit>
+      <trans-unit id="aF2ajw." resname="boards">
+        <source>boards</source>
+        <target>Boards</target>
+      </trans-unit>
+      <trans-unit id="TRpwk3n" resname="board.private">
+        <source>board.private</source>
+        <target>Privates Board</target>
+      </trans-unit>
+      <trans-unit id="ruHAlfl" resname="board.column.todo">
+        <source>board.column.todo</source>
+        <target>To Do</target>
+      </trans-unit>
+      <trans-unit id="Mbeo_WG" resname="board.column.waiting">
+        <source>board.column.waiting</source>
+        <target>Waiting</target>
+      </trans-unit>
+      <trans-unit id="RN6UMwt" resname="board.column.progress">
+        <source>board.column.progress</source>
+        <target>In Arbeit</target>
+      </trans-unit>
+      <trans-unit id="o6eg_hf" resname="board.column.done">
+        <source>board.column.done</source>
+        <target>Erledigt</target>
+      </trans-unit>
+      <trans-unit id="Wq09TUJ" resname="board.empty_state">
+        <source>board.empty_state</source>
+        <target>Du hast noch keine Boards. Lege jetzt eines an.</target>
+      </trans-unit>
+      <trans-unit id="7lJ6pzI" resname="board.limit_reached">
+        <source>board.limit_reached</source>
+        <target>Du hast das Limit von 3 privaten Boards erreicht.</target>
+      </trans-unit>
+      <trans-unit id="K.9A2XH" resname="board.close_task">
+        <source>board.close_task</source>
+        <target>Diese Aufgabe abschließen?</target>
+      </trans-unit>
+      <trans-unit id="Hj3qdDA" resname="board.delete_confirm">
+        <source>board.delete_confirm</source>
+        <target>Dieses Board löschen?</target>
+      </trans-unit>
+      <trans-unit id="_H1KEu_" resname="board.unassign_user">
+        <source>board.unassign_user</source>
+        <target>Den zugewiesenen Benutzer aus dieser Aufgabe entfernen?</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
