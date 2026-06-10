@@ -211,7 +211,7 @@ class SearchHelperTest extends TestCase
     }
 
     /**
-     * // Regression test for GHSA-9cxw-hp3c-637x
+     * Regression test for GHSA-9cxw-hp3c-637x
      */
     #[DataProvider('provideMaliciousMetaFieldPayloads')]
     public function testMaliciousMetaFieldNamesCannotInfluenceSubqueryDql(string $term, array $expectedMetaNames): void
