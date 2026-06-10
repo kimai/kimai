@@ -4,6 +4,7 @@ exclude-labels:
     - 'duplicate'
     - 'invalid'
     - 'wontfix'
+    - 'infrastructure'
 exclude-contributors:
     - 'dependabot'
     - 'weblate'
