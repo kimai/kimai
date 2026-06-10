@@ -7,6 +7,7 @@ exclude-labels:
 exclude-contributors:
     - 'dependabot'
     - 'weblate'
+    - 'renovate-bot'
 change-template: '- $TITLE (#$NUMBER)'
 change-title-escapes: '\<*_&`#@'
 categories:
