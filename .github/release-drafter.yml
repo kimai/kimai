@@ -12,25 +12,24 @@ change-title-escapes: '\<*_&`#@'
 categories:
     - title: "Features"
       semver-increment: minor
-      when:
-          labels:
-              - "feature request"
-              - "enhancement"
-              - "technical debt"
-              - "translation"
-              - "release"
+      labels:
+          - "feature request"
+          - "enhancement"
+          - "technical debt"
+          - "translation"
+          - "release"
     - title: "Bugfixes"
       semver-increment: minor
-      when:
-          labels:
-              - "fix"
-              - "bugfix"
-              - "bug"
+      labels:
+          - "fix"
+          - "bugfix"
+          - "bug"
     - title: "🚨 Security"
       semver-increment: minor
-      when:
-          labels:
-              - "security"
+      labels:
+          - "security"
+version-resolver:
+    default: minor
 template: |
     **Compatible with PHP 8.2 to 8.5**
     
