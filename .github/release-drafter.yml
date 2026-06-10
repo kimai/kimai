@@ -19,17 +19,18 @@ categories:
               - "technical debt"
               - "translation"
               - "release"
-    - title: "Bug Fixes"
+    - title: "Bugfixes"
+      semver-increment: minor
       when:
           labels:
               - "fix"
               - "bugfix"
               - "bug"
     - title: "🚨 Security"
+      semver-increment: minor
       when:
-          label: "security"
-version-resolver:
-    default: minor
+          labels:
+              - "security"
 template: |
     **Compatible with PHP 8.2 to 8.5**
     
