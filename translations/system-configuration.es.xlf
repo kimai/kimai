@@ -314,6 +314,10 @@
         <source>invoice.rounding_mode</source>
         <target state="translated">Modo de redondeo</target>
       </trans-unit>
+      <trans-unit id="uf2_qIW" resname="user_auth_wizard" xml:space="preserve">
+        <source>user_auth_wizard</source>
+        <target state="translated">Muestra el asistente de configuración para los usuarios nuevos</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

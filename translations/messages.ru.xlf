@@ -2082,6 +2082,18 @@
         <source>count_as_expected_time_help</source>
         <target state="translated">При активации, %type% учтётся в рабочие часы в расчёте ожидаемых дневных часов. При отключении, ожидаемые часы для этих дней будут обнулены. Обе настройки сохраняют нейтральный баланс, но по-разному влияют на месячные итоги.</target>
       </trans-unit>
+      <trans-unit id="DAMFhpR" resname="lock" xml:space="preserve">
+        <source>lock</source>
+        <target state="translated">Заблокировать</target>
+      </trans-unit>
+      <trans-unit id="LfO_otF" resname="reopen" xml:space="preserve">
+        <source>reopen</source>
+        <target state="translated">Открыть снова</target>
+      </trans-unit>
+      <trans-unit id="zO0oxtw" resname="start" xml:space="preserve">
+        <source>start</source>
+        <target state="translated">Старт</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
