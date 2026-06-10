@@ -12,7 +12,6 @@ namespace App\Webhook;
 use App\Configuration\SystemConfiguration;
 use Symfony\Component\HttpClient\HttpOptions;
 use Symfony\Component\HttpClient\NoPrivateNetworkHttpClient;
-use Symfony\Component\Messenger\Exception\UnrecoverableMessageHandlingException;
 use Symfony\Component\RemoteEvent\RemoteEvent;
 use Symfony\Component\Webhook\Server\RequestConfiguratorInterface;
 use Symfony\Component\Webhook\Server\TransportInterface;
