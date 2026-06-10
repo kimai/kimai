@@ -23,6 +23,7 @@ use Doctrine\ORM\Query\Expr\Orx;
 use Doctrine\ORM\Query\Parameter;
 use Doctrine\ORM\QueryBuilder;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(SearchHelper::class)]
@@ -197,5 +198,58 @@ class SearchHelperTest extends TestCase
         $sut = new SearchHelper($configuration);
 
         $sut->addSearchTerm($qb, $query);
+    }
+
+    public static function provideMaliciousMetaFieldPayloads(): array
+    {
+        $exploitPayload = "metaNotExists1\tFROM\tApp\\Entity\\User\tmetaNotExists1\tWHERE\tmetaNotExists1.id=1)--";
+
+        return [
+            'dot and parenthesis characters' => ['x.y:~ x):""', ['x.y', 'x)']],
+            'tab and comment injection payloads' => [$exploitPayload . ':~ ' . $exploitPayload . ':""', ['metaNotExists1.id=1)--', 'metaNotExists1.id=1)--']],
+        ];
+    }
+
+    /**
+     * // Regression test for GHSA-9cxw-hp3c-637x
+     */
+    #[DataProvider('provideMaliciousMetaFieldPayloads')]
+    public function testMaliciousMetaFieldNamesCannotInfluenceSubqueryDql(string $term, array $expectedMetaNames): void
+    {
+        $em = $this->createMock(EntityManagerInterface::class);
+        $em->method('getExpressionBuilder')->willReturn(new Expr());
+        $qb = new QueryBuilder($em);
+        $qb->from(Timesheet::class, 'testFoo');
+
+        $query = new BaseQuery();
+        $query->setSearchTerm(new SearchTerm($term));
+        $configuration = new SearchConfiguration(['bar'], 'MetaFieldClass', 'metaFieldName');
+        $configuration->setEntityFieldName('entityFieldName');
+
+        $sut = new SearchHelper($configuration);
+
+        $sut->addSearchTerm($qb, $query);
+
+        $wherePart = $qb->getDQLPart('where');
+        self::assertInstanceOf(Andx::class, $wherePart);
+        $where = (string) $wherePart;
+
+        self::assertStringContainsString('metaNotExists0', $where);
+        self::assertStringContainsString('metaNotExists1', $where);
+        self::assertStringNotContainsString('App\\Entity\\User', $where);
+        self::assertStringNotContainsString('--', $where);
+        self::assertStringNotContainsString("\tFROM\t", $where);
+
+        $metaNames = [];
+        /** @var Parameter $parameter */
+        foreach ($qb->getParameters() as $parameter) {
+            if (str_starts_with($parameter->getName(), 'metaName')) {
+                $metaNames[] = $parameter->getValue();
+            }
+        }
+
+        self::assertCount(2, $metaNames);
+        self::assertEquals($expectedMetaNames[0], $metaNames[0]);
+        self::assertEquals($expectedMetaNames[1], $metaNames[1]);
     }
 }
