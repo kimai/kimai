@@ -26,6 +26,9 @@ final class PdfContext
         'filename', 'mode', 'format', 'orientation', 'default_font', 'default_font_size', 'fonts',
         'margin_left', 'margin_right', 'margin_top', 'margin_bottom', 'margin_header', 'margin_footer',
         'setAutoTopMargin', 'setAutoBottomMargin', 'PDFA', 'PDFAauto', 'useActiveForms',
+        // Adding watermarks to PDFs
+        'watermarkImgBehind', 'showWatermarkText', 'showWatermarkImage', 'watermarkText', 'watermarkAngle',
+        'watermarkImage', 'watermark_font', 'watermarkTextAlpha', 'watermarkImageAlpha',
     ];
 
     private array $options = [];

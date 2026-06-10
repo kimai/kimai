@@ -92,15 +92,19 @@ mpdf-->
             {{ invoice['customer.number'] }}
         {% endif %}
 
-        {% if invoice['query.project.order_number'] is defined and invoice['query.project.order_number'] is not empty %}
+        {% if invoice['project.counter'] == 1 and invoice['project.order_number'] is not empty %}
             <br>
             {{ 'orderNumber'|trans }}:
-            {{ invoice['query.project.order_number'] }}
+            {{ invoice['project.order_number'] }}
         {% endif %}
     </p>
 
     {% if invoice['customer.invoice_text'] is not empty%}
-        <p>{{ invoice['customer.invoice_text']|md2html }}</p>
+        {{ invoice['customer.invoice_text']|md2html }}
+    {% endif %}
+
+    {% if invoice['project.counter'] == 1 and invoice['project.invoice_text'] is not empty %}
+        {{ invoice['project.invoice_text']|md2html }}
     {% endif %}
 
     <table class="items">

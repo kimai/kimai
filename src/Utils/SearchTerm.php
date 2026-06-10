@@ -21,7 +21,10 @@ final class SearchTerm
     public function __construct(string $searchTerm)
     {
         $this->originalTerm = $searchTerm;
-        $terms = explode(' ', $searchTerm);
+        $terms = preg_split('/\s+/', trim($searchTerm), -1, PREG_SPLIT_NO_EMPTY);
+        if (!\is_array($terms)) {
+            $terms = [];
+        }
         $finalTerm = [];
 
         foreach ($terms as $term) {
