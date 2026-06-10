@@ -71,9 +71,8 @@ mpdf-->
                     <br> {{ country }}
                 {% endif %}
                 {% if invoice['customer.vat_id'] is not empty %}
-                <br>{{ 'vat_id'|trans }}: {{ invoice['customer.vat_id'] }}
-        </tr>
-        {% endif %}
+                    <br>{{ 'vat_id'|trans }}: {{ invoice['customer.vat_id'] }}
+                {% endif %}
             </td>
             <td class="text-right">
                 {% set classLeft = 'text-left' %}
