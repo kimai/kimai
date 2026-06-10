@@ -9,24 +9,32 @@ exclude-contributors:
     - 'weblate'
 change-template: '- $TITLE (#$NUMBER)'
 change-title-escapes: '\<*_&`#@'
+categories:
+    - title: "Features"
+      semver-increment: minor
+      when:
+          labels:
+              - "feature request"
+              - "enhancement"
+              - "technical debt"
+              - "translation"
+              - "release"
+    - title: "Bug Fixes"
+      when:
+          labels:
+              - "fix"
+              - "bugfix"
+              - "bug"
+    - title: "🚨 Security"
+      when:
+          label: "security"
 version-resolver:
-    minor:
-        labels:
-            - 'feature request'
-            - 'release'
-            - 'technical debt'
-            - 'bug'
-            - 'translation'
     default: minor
 template: |
     **Compatible with PHP 8.2 to 8.5**
     
     $CHANGES
     
-    **Security**
-    
-    - This release contains a fix for a high severity security issue reported by @shafiqaimanx
-    
-    You can read more about all published vulnerabilities [here](https://www.kimai.org/documentation/bughunter.html#published-vulnerabilities) or grab a [RSS feed](https://www.kimai.org/security.xml) to get notified about new published advisories.
+    You can read more about all security reports [here](https://www.kimai.org/documentation/bughunter.html#published-vulnerabilities) or grab this [RSS feed](https://www.kimai.org/security.xml) to get notified about new published advisories.
 
     Involved in this release: $CONTRIBUTORS
