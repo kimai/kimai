@@ -48,7 +48,7 @@ class WebhookTransport implements TransportInterface
 
         // we use the response to make sure that the client really dispatched the request
         $code = $response->getStatusCode();
-        if (200 !== $code) {
+        if ($code >= 300) {
             throw new UnrecoverableMessageHandlingException();
         }
     }

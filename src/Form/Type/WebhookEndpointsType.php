@@ -93,7 +93,7 @@ final class WebhookEndpointsType extends AbstractType
             'label' => 'webhook.endpoints',
             'translation_domain' => 'system-configuration',
             'constraints' => [
-                new Callback([$this, 'validateEndpoints']),
+                new Callback($this->validateEndpoints(...)),
             ],
         ]);
     }
@@ -108,6 +108,20 @@ final class WebhookEndpointsType extends AbstractType
      */
     public function validateEndpoints($value, ExecutionContextInterface $context): void
     {
+        if (\is_string($value)) {
+            if (trim($value) === '' || trim($value) === '[]') {
+                $value = [];
+            } else {
+                try {
+                    $decoded = json_decode($value, true, 16, \JSON_THROW_ON_ERROR);
+                } catch (\JsonException) {
+                    return;
+                }
+
+                $value = \is_array($decoded) ? $decoded : [];
+            }
+        }
+
         if (!\is_array($value)) {
             return;
         }
