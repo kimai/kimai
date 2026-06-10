@@ -46,10 +46,7 @@ class WebhookTransport implements TransportInterface
         // some http clients are lazy and only execute if we ask for content or status code
         $response = $client->request('POST', $subscriber->getUrl(), $options->toArray());
 
-        // we use the response to make sure that the client really dispatched the request
-        $code = $response->getStatusCode();
-        if ($code >= 300) {
-            throw new UnrecoverableMessageHandlingException();
-        }
+        // we fetch the response to make sure that a lazy loading client really dispatched the request
+        $response->getStatusCode();
     }
 }
