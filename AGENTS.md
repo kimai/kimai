@@ -1,29 +1,21 @@
 # Kimai Core Agent Guide
 
-Use this file when working in the Kimai core repository.
-
-## Stack
-
 - Kimai is a professional open source time-tracking application
-- PHP versions: 8.2, 8.3, 8.4, 8.5
-- Main framework: Symfony 6.4
-- Core libraries: Doctrine, Twig
-- API libraries: FOSRestBundle, NelmioApiDocBundle
-- Frontend: Bootstrap with Tabler.io
-- Frontend build: Webpack Encore via `symfony/webpack-encore`
-- Package managers: Composer and Yarn
+- PHP versions: 8.5
+- Backend: Symfony 7.4, Doctrine, Twig (see composer.json)
+- Frontend: Bootstrap with Tabler.io theme (see package.json)
+- Package managers: Composer and pnpm
 - Tests: PHPUnit
 - Code styles: PhpCsFixer
 - Static analysis: PHPStan
 - Project information in README.md
-- Translations managed with Weblate online service
+- Frontend build: `pnpm run build`
 
 ## Scope
 
-- This guide applies to Kimai core only
+- This guide applies to Kimai core mainly
 - Work in `var/plugins/` is out of scope unless explicitly requested
-- Each subdirectory in `var/plugins/` is a separate Kimai plugin and its own Git repository
-- In fresh installations, `var/data/` and `var/plugins/` are empty
+- Each subdirectory in `var/plugins/` is a separate Kimai plugin and Git repository
 
 ## Repository Map
 
@@ -35,7 +27,7 @@ Use this file when working in the Kimai core repository.
 - `migrations/` Doctrine migrations for installs and upgrades
 - `public/` web root with `index.php`
 - `public/build/` generated frontend assets
-- `public/bundles/` generated public bundle assets
+- `public/bundles/` generated plugin frontend assets
 - `src/` core PHP source code
 - `src/API/` the JSON API
 - `templates/` Twig templates
@@ -46,13 +38,12 @@ Use this file when working in the Kimai core repository.
 
 ## Never Touch
 
-- Do not read from or write to `var/cache/`, it is Symfony-managed internal state
+- Do not read or write `var/cache/`: contains Symfony-managed internal state
 - Do not modify `vendor/`
 - Do not modify `var/data/`
 - Do not modify `var/log/`
-- Do not modify `public/build/`, generated frontend assets
-- Do not modify `public/bundles/`, frintend assets from plugins
-- Do not modify plugins in `var/plugins/` unless explicitly asked
+- Do not modify `public/build/`
+- Do not modify `public/bundles/`
 
 ## Agent Workflow
 
@@ -100,16 +91,15 @@ Use this file when working in the Kimai core repository.
 - For focused checks, run `vendor/bin/phpunit tests/<directory>/<TestClassName>.php`
 - Use `composer tests-unit` for broader validation without expensive end-to-end coverage
 - Use `composer tests` when the change justifies running the full suite
-- If tests fail, remove stale cache with `rm -r ./var/cache/test/` to cause a rebuild 
+- If tests fail, remove stale cache with `rm -r ./var/cache/test/` and run tests again 
 
 ## Git Rules
 
 - Avoid working directly on `main`
 - Small fixes should target the active `release-x.y.z` branch
 - Larger changes should go to descriptive `snake_case` feature branches
-- Agents may create branches when needed
+- Agents must not create branches unless explicitly asked
 - Agents must not create commits unless explicitly asked
-- Commits are normally created by the maintainer
 
 ## Coding Conventions
 
@@ -118,14 +108,6 @@ Use this file when working in the Kimai core repository.
 - Use PHP attributes for routing, mapping, and configuration where established
 - Use `camelCase` for variables and methods
 - Use 4-space indentation
-- Use single quotes for strings in PHP, JavaScript, and CSS unless the local code style requires otherwise
-- Use modern HTML5, Twig, and ES6+ syntax
-
-## Security Focus
-
-- Prevent XSS
-- Prevent CSRF issues
-- Prevent SQL or command injection patterns
-- Prevent auth bypasses
-- Prevent open redirects
-- Apply Rate-Limiting in authentication flows
+- Use single quotes for strings in PHP, JavaScript, and CSS
+- Use modern HTML5, CSS3 and ES6+ syntax
+- Always apply rate-limiting in unauthenticated flows

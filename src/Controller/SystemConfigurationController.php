@@ -29,6 +29,7 @@ use App\Form\Type\SkinType;
 use App\Form\Type\TimezoneType;
 use App\Form\Type\TrackingModeType;
 use App\Form\Type\UserLanguageType;
+use App\Form\Type\WebhookEndpointsType;
 use App\Form\Type\WeekDaysType;
 use App\Form\Type\YesNoType;
 use App\Timesheet\LockdownService;
@@ -618,6 +619,14 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(DatePickerType::class)
                         ->setOptions(['input' => 'string']),
                 ]),
+            (new SystemConfigurationModel('webhook'))
+                ->setConfiguration([
+                    (new Configuration('webhook.endpoints'))
+                        ->setLabel('webhook.endpoints')
+                        ->setRequired(false)
+                        ->setType(WebhookEndpointsType::class)
+                        ->setTranslationDomain('system-configuration')
+                ])
         ];
     }
 }

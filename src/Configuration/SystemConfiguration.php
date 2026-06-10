@@ -450,6 +450,18 @@ final class SystemConfiguration
         return $this->getBool('theme.avatar_url', false);
     }
 
+    // ========== Webhooks configurations ==========
+
+    public function isWebhookPrivateNetworkAllowed(): bool
+    {
+        return $this->getBool('webhook.allow_private_network', false);
+    }
+
+    public function getMaxWebhookEndpoints(): int
+    {
+        return $this->getInt('webhook.max_endpoints', 5);
+    }
+
     /**
      * @return array<string, string>
      */

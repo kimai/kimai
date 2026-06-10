@@ -45,6 +45,7 @@ framework:
 
         routing:
             'Symfony\Component\Mailer\Messenger\SendEmailMessage': emails
+            'Symfony\Component\Webhook\Messenger\SendWebhookMessage': async
             'App\Jobs\Event\*': async
             'App\Jobs\AsyncMessage': async
 

@@ -47,6 +47,12 @@ framework:
         email_validation_mode: html5
         enable_attributes: true
 
+    http_client:
+        default_options:
+            headers:
+                'User-Agent': 'Kimai %kimai.version%'
+            max_redirects: 3
+
 when@dev:
     framework:
         mailer:

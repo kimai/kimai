@@ -314,6 +314,26 @@
         <source>invoice.rounding_mode</source>
         <target>Rundungsmodus</target>
       </trans-unit>
+      <trans-unit id="n9CdwzV" resname="webhook">
+        <source>webhook</source>
+        <target>Webhooks</target>
+      </trans-unit>
+      <trans-unit id="FJgSFXo" resname="webhook.endpoints">
+        <source>webhook.endpoints</source>
+        <target>Endpunkte</target>
+      </trans-unit>
+      <trans-unit id="K7gNU3s" resname="secret">
+        <source>secret</source>
+        <target>Geheimnis</target>
+      </trans-unit>
+      <trans-unit id="hiQXuef" resname="events">
+        <source>events</source>
+        <target>Ereignisse</target>
+      </trans-unit>
+      <trans-unit id="56JB3rr" resname="URL">
+        <source>URL</source>
+        <target>URL</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
