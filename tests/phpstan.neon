@@ -957,11 +957,6 @@ parameters:
             path: Controller/UserControllerTest.php
 
         -
-            message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
-            count: 3
-            path: Controller/WidgetControllerTest.php
-
-        -
             message: "#^Cannot access offset 'foo\\-bundle\\.bar' on array\\|bool\\|float\\|int\\|string\\|null\\.$#"
             count: 1
             path: DependencyInjection/AppExtensionTest.php
