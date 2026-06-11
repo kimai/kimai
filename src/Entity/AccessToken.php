@@ -12,6 +12,7 @@ namespace App\Entity;
 use App\Repository\AccessTokenRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -20,11 +21,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\UniqueConstraint(columns: ['token'])]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[UniqueEntity(fields: ['token'])]
+#[Serializer\ExclusionPolicy('all')]
 class AccessToken
 {
     #[ORM\Column(name: 'id', type: Types::INTEGER)]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?int $id = null;
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
@@ -33,20 +37,26 @@ class AccessToken
     #[ORM\Column(name: 'token', type: Types::STRING, length: 100, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 100)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private string $token;
     #[ORM\Column(name: 'name', type: Types::STRING, length: 50, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 50)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?string $name = null;
     #[ORM\Column(name: 'last_usage', type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $lastUsage = null;
     #[ORM\Column(name: 'expires_at', type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     private ?\DateTimeImmutable $expiresAt = null;
 
-    public function __construct(User $user, string $token)
+    public function __construct(User $user, ?string $token = null)
     {
         $this->user = $user;
-        $this->token = $token;
+        $this->token = $token ?? substr(bin2hex(random_bytes(100)), 0, 25);
     }
 
     public function getId(): ?int
