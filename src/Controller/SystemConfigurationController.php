@@ -519,12 +519,6 @@ final class SystemConfigurationController extends AbstractController
                         ->setLabel('allow_duplicate_number')
                         ->setType(YesNoType::class)
                         ->setTranslationDomain('system-configuration'),
-                    // TODO see DependencyInjection/Configuration::getActivityNode()
-                    /*
-                    (new Configuration('activity.allow_inline_create'))
-                        ->setLabel('activity.allow_inline_create')
-                        ->setType(YesNoType::class)
-                        ->setTranslationDomain('system-configuration'), */
                 ]),
             (new SystemConfigurationModel('user'))
                 ->setConfiguration([

@@ -274,10 +274,6 @@
         <source>theme.color_choices</source>
         <target state="translated">Povolené farby</target>
       </trans-unit>
-      <trans-unit id="12sQGSo" resname="activity.allow_inline_create">
-        <source>activity.allow_inline_create</source>
-        <target state="translated">Umožniť vytváranie činností vo forme sledovanie-času</target>
-      </trans-unit>
       <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no">
         <source>copy_teams_on_create</source>
         <target state="translated">Prevzať tímy od prihláseného používateľa, pri vytváraní nových záznamov</target>
