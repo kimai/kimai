@@ -79,6 +79,11 @@ security:
                 # link becomes invalid as soon as the user changes the password
                 signature_properties: ['email', 'password', 'signatureDate']
 
+            switch_user:
+                role: impersonate_user
+                parameter: _see_kimai_as
+                target_route: homepage
+
     access_decision_manager:
         # only grants access if there is no voter denying access
         strategy: unanimous

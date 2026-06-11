@@ -193,6 +193,25 @@
 {% endblock %}
 
 {% block page_header %}
+    {% if is_granted('IS_IMPERSONATOR') %}
+        <div class="container-fluid p-2">
+            <div class="alert alert-danger mb-0" role="alert">
+                <div class="alert-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon alert-icon icon-2">
+                        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
+                        <path d="M12 8v4"></path>
+                        <path d="M12 16h.01"></path>
+                    </svg>
+                </div>
+                <div>
+                    <div class="alert-heading">You are watching Kimai as <strong>{{ app.user.alias }}</strong>.</div>
+                    <div class="alert-description">
+                        <a class="alert-action" href="{{ impersonation_exit_path(path('homepage')) }}">Exit impersonation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
     {%- if page_setup is defined -%}
         {%- if page_setup.actionName is not null or page_setup.hasSearchForm() -%}
             {{ parent() }}
