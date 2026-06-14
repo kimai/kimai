@@ -262,9 +262,9 @@
         <source>company</source>
         <target>Название компании</target>
       </trans-unit>
-      <trans-unit id="fFErSLq" resname="vat">
+      <trans-unit id="fFErSLq" resname="vat" xml:space="preserve">
         <source>vat</source>
-        <target>Налог НДС</target>
+        <target state="translated">НДС</target>
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact" approved="yes">
         <source>Contact</source>
@@ -306,9 +306,9 @@
         <source>alias</source>
         <target>Имя</target>
       </trans-unit>
-      <trans-unit id="qvIyBkY" resname="title">
+      <trans-unit id="qvIyBkY" resname="title" xml:space="preserve">
         <source>title</source>
-        <target>Заголовок</target>
+        <target state="translated">Заголовок</target>
       </trans-unit>
       <trans-unit id="h7voece" resname="avatar">
         <source>avatar</source>
