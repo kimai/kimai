@@ -62,6 +62,6 @@ final class SamlConfiguration implements SamlConfigurationInterface
 
     public function getUsernameAttribute(): ?string
     {
-        return $this->configuration->find('saml.usernameAttribute');
+        return $this->configuration->find('saml.usernameAttribute'); // @phpstan-ignore return.type
     }
 }
