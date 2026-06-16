@@ -109,7 +109,7 @@ class SamlAuthenticator extends AbstractAuthenticator
             if (!\array_key_exists($usernameAttribute, $attributes)) {
                 $errorMessage = \sprintf("Attribute '%s' not found in SAML data", $usernameAttribute);
                 $this->logger->critical($errorMessage);
-                throw new \Exception($errorMessage);
+                throw new AuthenticationException($errorMessage);
             }
 
             $username = $attributes[$usernameAttribute][0];
