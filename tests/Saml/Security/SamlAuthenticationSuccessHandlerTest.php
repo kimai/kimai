@@ -82,9 +82,10 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
             ->expects($this->any())
             ->method('generate')
             ->willReturnCallback(function ($name) use ($rules) {
-                if (array_key_exists($name, $rules)) {
+                if (\array_key_exists($name, $rules)) {
                     return $rules[$name];
                 }
+
                 return (string) $name;
             })
         ;
