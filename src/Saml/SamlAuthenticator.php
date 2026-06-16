@@ -103,27 +103,27 @@ class SamlAuthenticator extends AbstractAuthenticator
         $loginAttributes = new SamlLoginAttributes();
         $loginAttributes->setAttributes($attributes);
 
-        if (isset($this->options['username_attribute'])) {
-            if (!\array_key_exists($this->options['username_attribute'], $attributes)) {
-                $errorMessage = \sprintf("Attribute '%s' not found in SAML data", $this->options['username_attribute']);
+        // TODO 3.0 remove method_exists()
+        $usernameAttribute = method_exists($this->configuration, 'getUsernameAttribute') ? $this->configuration->getUsernameAttribute() : null;
+        if ($usernameAttribute !== null) {
+            if (!\array_key_exists($usernameAttribute, $attributes)) {
+                $errorMessage = \sprintf("Attribute '%s' not found in SAML data", $usernameAttribute);
                 $this->logger->critical($errorMessage);
                 throw new \Exception($errorMessage);
             }
 
-            $username = $attributes[$this->options['username_attribute']][0];
+            $username = $attributes[$usernameAttribute][0];
         } else {
             $username = $oneLoginAuth->getNameId();
         }
         $loginAttributes->setUserIdentifier($username);
 
-        $passport = new SelfValidatingPassport(
+        return new SelfValidatingPassport(
             new UserBadge($loginAttributes->getUserIdentifier(), function () use ($loginAttributes) {
                 return $this->samlProvider->findUser($loginAttributes);
             }),
             [new RememberMeBadge(), new SamlBadge($loginAttributes)]
         );
-
-        return $passport;
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response

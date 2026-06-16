@@ -11,6 +11,7 @@ namespace App\Configuration;
 
 /**
  * @CloudRequired
+ * @method string getUsernameAttribute()
  */
 interface SamlConfigurationInterface
 {
@@ -49,4 +50,7 @@ interface SamlConfigurationInterface
 
     // TODO 3.0 activate me
     //public function cleanupLongRelayState(): bool;
+
+    // TODO 3.0 activate me
+    //public function getUsernameAttribute(): ?string;
 }
