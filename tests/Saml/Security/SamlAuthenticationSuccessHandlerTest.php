@@ -57,9 +57,9 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
 
     public function testWithoutRelayState(): void
     {
-        $httpUtils = new HttpUtils($this->getUrlGenerator());
+        $httpUtils = new HttpUtils($this->getUrlGenerator(['homepage' => '/homepage']));
         $handler = new SamlAuthenticationSuccessHandler($httpUtils);
-        $defaultTargetPath = $httpUtils->generateUri($this->getRequest('/sso/login'), '/');
+        $defaultTargetPath = $httpUtils->generateUri($this->getRequest('/sso/login'), 'homepage');
         $response = $handler->onAuthenticationSuccess($this->getRequest(), $this->getSamlToken());
         self::assertInstanceOf(RedirectResponse::class, $response);
         self::assertTrue($response->isRedirect($defaultTargetPath));
