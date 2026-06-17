@@ -156,8 +156,10 @@ final class Configuration
         return $this->formTheme;
     }
 
-    public function setFormTheme(string $formTheme): void
+    public function setFormTheme(string $formTheme): Configuration
     {
         $this->formTheme = $formTheme;
+
+        return $this;
     }
 }

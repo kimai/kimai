@@ -14,7 +14,6 @@ use App\Form\Model\SystemConfiguration;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-#[CoversClass(Configuration::class)]
 #[CoversClass(SystemConfiguration::class)]
 class SystemConfigurationTest extends TestCase
 {
