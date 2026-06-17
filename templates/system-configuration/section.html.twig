@@ -12,6 +12,11 @@
         {% embed formEditTemplate with {'title': title, 'form': section.form} %}
             {% block form_body %}
                 {% for pref in form.children.configuration %}
+                    {% if pref.vars.data.formTheme is not null %}
+                        {% form_theme form pref.vars.data.formTheme %}
+                    {% endif %}
+                {% endfor %}
+                {% for pref in form.children.configuration %}
                     {{ form_widget(pref) }}
                 {% endfor %}
                 {{ form_rest(form) }}

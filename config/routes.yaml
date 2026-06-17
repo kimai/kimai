@@ -46,6 +46,24 @@ homeLocale:
         route: homepage
         permanent: true
 
+# SF DefaultAuthenticationSuccessHandler uses /login as default target
+loginFallback:
+    path: /login
+    defaults:
+        _controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
+        _locale: '%locale%'
+        route: login
+        permanent: true
+
+# SF LogoutListener uses /logout as default target
+logoutFallback:
+    path: /logout
+    defaults:
+        _controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
+        _locale: '%locale%'
+        route: logout
+        permanent: true
+
 2fa_login:
     path: /{_locale}/auth/2fa
     defaults:
