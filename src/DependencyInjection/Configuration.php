@@ -865,7 +865,6 @@ final class Configuration implements ConfigurationInterface
                                 ->children()
                                     ->scalarNode('saml')->isRequired()->cannotBeEmpty()->end()
                                     ->scalarNode('kimai')->isRequired()->cannotBeEmpty()->end()
-                                    ->end()
                                 ->end()
                             ->end()
                         ->end()
