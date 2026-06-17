@@ -23,6 +23,7 @@ final class Configuration
     private array $options = [];
     private bool $enabled = true;
     private bool $required = true;
+    private ?string $formTheme = null;
     /**
      * @var Constraint[]
      */
@@ -148,5 +149,15 @@ final class Configuration
         $this->options = $options;
 
         return $this;
+    }
+
+    public function getFormTheme(): ?string
+    {
+        return $this->formTheme;
+    }
+
+    public function setFormTheme(string $formTheme): void
+    {
+        $this->formTheme = $formTheme;
     }
 }
