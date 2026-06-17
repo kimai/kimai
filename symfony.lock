@@ -467,17 +467,14 @@
             "config/packages/mailer.yaml"
         ]
     },
-    "symfony/messenger": {
-        "version": "7.4",
+    "symfony/maker-bundle": {
+        "version": "1.67",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
-            "version": "6.0",
-            "ref": "d8936e2e2230637ef97e5eecc0eea074eecae58b"
-        },
-        "files": [
-            "config/packages/messenger.yaml"
-        ]
+            "version": "1.0",
+            "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
+        }
     },
     "symfony/messenger": {
         "version": "7.4",
