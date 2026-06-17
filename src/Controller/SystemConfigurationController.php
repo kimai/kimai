@@ -626,6 +626,7 @@ final class SystemConfigurationController extends AbstractController
                         ->setRequired(false)
                         ->setType(WebhookEndpointsType::class)
                         ->setTranslationDomain('system-configuration')
+                        ->setFormTheme('form/webhooks.html.twig')
                 ])
         ];
     }
