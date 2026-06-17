@@ -314,7 +314,7 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, []);
     }
 
-    public static function getDisallowedSamlMappingFieldNames()
+    public static function getDisallowedSamlMappingFieldNames(): iterable
     {
         yield 'username' => ['username'];
         yield 'USERNAME' => ['USERNAME'];
