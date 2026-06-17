@@ -198,10 +198,6 @@
         <source>user_auth_password_reset</source>
         <target state="translated">Passwort vergessen</target>
       </trans-unit>
-      <trans-unit id="C26_mL7" resname="user_auth_registration">
-        <source>user_auth_registration</source>
-        <target state="translated">Benutzer Registrierung</target>
-      </trans-unit>
       <trans-unit id="ihORk9W" resname="ldap_activate">
         <source>ldap_activate</source>
         <target state="translated">LDAP Anmeldung</target>

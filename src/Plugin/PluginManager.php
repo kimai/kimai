@@ -9,8 +9,13 @@
 
 namespace App\Plugin;
 
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
+/**
+ * Works with already installed Kimai plugins:
+ * - either registered as dynamic Bundles from var/plugins/
+ * - or from composer packages via var/packages/
+ */
 final class PluginManager
 {
     /**
@@ -22,7 +27,7 @@ final class PluginManager
      * @param iterable<PluginInterface> $bundles
      */
     public function __construct(
-        #[TaggedIterator(PluginInterface::class)]
+        #[AutowireIterator(PluginInterface::class)]
         private readonly iterable $bundles
     )
     {

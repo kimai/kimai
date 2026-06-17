@@ -60,6 +60,7 @@ final class ProjectDateRangeController extends AbstractController
         }
 
         return $this->render('reporting/project/daterange.html.twig', [
+            'expand_projects' => $request->query->get('view', '1') === '1',
             'report_title' => 'report_project_daterange',
             'entries' => $byCustomer,
             'form' => $form->createView(),

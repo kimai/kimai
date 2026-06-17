@@ -46,14 +46,6 @@
         <source>user_profile</source>
         <target>ملفي</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>كلمة مرور API</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>كرر كلمة مرور API</target>
-      </trans-unit>
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>لوحة القيادة</target>
@@ -606,10 +598,6 @@
         <source>Doctor</source>
         <target>حالة الخدمات</target>
       </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>الإعدادات</target>
-      </trans-unit>
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target>الإضافات</target>
@@ -990,10 +978,6 @@
         <source>Display of entries in selection lists</source>
         <target state="translated">عرض الإدخالات في قوائم الاختيار</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target state="translated">تم إرسال بريد إلكتروني إلى %email% يحتوي على رابط تنشيط يجب النقر فوقه لتنشيط حسابك.</target>
-      </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected">
         <source>error.directory_protected</source>
         <target state="translated">الدليل "%dir%" محمي ضد الكتابة.</target>
@@ -1249,10 +1233,6 @@
       <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
         <target state="translated">يتم استخدام كلمة مرور واجهة برمجة التطبيقات للاتصال بين Kimai وتطبيقاتك.</target>
-      </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
-        <source>api_password.missing_title</source>
-        <target state="translated">لا يمكن استخدام واجهة برمجة التطبيقات</target>
       </trans-unit>
       <trans-unit id="ZZaqTEr" resname="no_activity">
         <source>no_activity</source>
@@ -1890,10 +1870,6 @@
         <source>Expiry date</source>
         <target state="translated">تاريخ انتهاء الصلاحية</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">كلمات مرور واجهة برمجة التطبيقات (API) قديمة: يُرجى استخدام رموز واجهة برمجة التطبيقات (API) بدلاً من ذلك.</target>
-      </trans-unit>
       <trans-unit id="eWmotjb" resname="completed_month_pdf" xml:space="preserve">
         <source>completed_month_pdf</source>
         <target state="translated">ملف PDF الشهر المنتهي</target>
@@ -2081,6 +2057,14 @@
       <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
         <source>count_as_expected_time_help</source>
         <target state="translated">وعند التمكين، ستحسب %type% ساعات عمل من الساعات اليومية المتوقعة. وعندما يُعطل، تُحدد الساعات المتوقعة لهذه الأيام إلى صفر. ويحافظ كلا الإطارين على توازن محايد ولكنهما يؤثران على المجاميع الشهرية بشكل مختلف.</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="needs-translation">وصف المهمة</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">الوقت التقديري</target>
       </trans-unit>
     </body>
   </file>

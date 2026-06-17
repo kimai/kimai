@@ -62,14 +62,6 @@
         <source>user_profile</source>
         <target>Meu perfil</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>Palavra-passe da API</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>Repita a palavra-passe da API</target>
-      </trans-unit>
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target>Painel principal</target>
@@ -113,10 +105,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target>Plugins</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>Configurações</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
@@ -1030,10 +1018,6 @@
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="translated">Foi enviado um email que contém uma hiperligação para redefinir a senha. Nota: Apenas é possível solicitar uma palavra-passe nova uma vez a cada %tokenLifetime% horas. Se não receber o email, por favor verifique a pasta de SPAM ou tente novamente.</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target>Foi enviado um email para %email%. Ele contém uma hiperligação de ativação onde tem de clicar para ativar a sua conta.</target>
-      </trans-unit>
       <trans-unit id="KH2hgil" resname="account_number">
         <source>account_number</source>
         <target>Número da equipa</target>
@@ -1313,10 +1297,6 @@
       <trans-unit id="5NugIxO" resname="includeWithBudget">
         <source>includeWithBudget</source>
         <target state="translated">Mostrar as entradas com orçamento</target>
-      </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
-        <source>api_password.missing_title</source>
-        <target state="translated">A API não pode ser usada</target>
       </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
@@ -1714,10 +1694,6 @@
         <source>Expiry date</source>
         <target state="translated">Data de expiração</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve" approved="no">
-        <source>api_password_deprecated</source>
-        <target state="translated">As palavras-passe da API estão desatualizadas: utilize antes os tokens da API.</target>
-      </trans-unit>
       <trans-unit id="rkCw7Ml" resname="last_usage" xml:space="preserve" approved="no">
         <source>Last usage</source>
         <target state="translated">Última utilização</target>
@@ -1957,6 +1933,14 @@
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>Timesheet</source>
         <target>Quadro de horários</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+            <target state="translated">Tarefa</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+            <target state="translated">Estimativa de tempo</target>
       </trans-unit>
     </body>
   </file>

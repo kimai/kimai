@@ -20,7 +20,7 @@ class WorkingTimeTest extends TestCase
     public function testDefaultValues(): void
     {
         $user = new User();
-        $user->setUsername('bar');
+        $user->setUserIdentifier('bar');
         $date = new \DateTimeImmutable();
         $sut = new WorkingTime($user, $date);
 
@@ -37,7 +37,7 @@ class WorkingTimeTest extends TestCase
 
         $approvedAt = new \DateTimeImmutable('2023-01-01 12:00:00', new \DateTimeZone('Europe/Vienna'));
         $approvedBy = new User();
-        $approvedBy->setUsername('foo');
+        $approvedBy->setUserIdentifier('foo');
 
         $sut->setApprovedAt($approvedAt);
         $sut->setApprovedBy($approvedBy);

@@ -112,7 +112,7 @@ class CustomerStatisticService
         $qb = $this->timesheetRepository->createQueryBuilder('t');
         $qb
             ->select('IDENTITY(p.customer) AS id')
-            ->join(Project::class, 'p', Join::WITH, 't.project = p.id')
+            ->join(Project::class, 'p', Join::ON, 't.project = p.id')
             ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
             ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
             ->addSelect('COALESCE(SUM(t.internalRate), 0) as internalRate')

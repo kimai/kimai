@@ -39,8 +39,8 @@ class ContractControllerTest extends AbstractControllerBaseTestCase
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
-        /** @var UserRepository $repository */
-        $repository = $this->getPrivateService(UserRepository::class);
+        /** @var UserRepository $userRepository */
+        $userRepository = $this->getPrivateService(UserRepository::class);
         $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
         $user->setWorkContractMode(WorkingTimeModeDay::ID);
         $user->setPreferenceValue(WorkingTimeCalculatorDay::WORK_HOURS_MONDAY, '28800');
@@ -50,7 +50,7 @@ class ContractControllerTest extends AbstractControllerBaseTestCase
         $user->setPreferenceValue(WorkingTimeCalculatorDay::WORK_HOURS_FRIDAY, '19800');
         $user->setPreferenceValue(WorkingTimeCalculatorDay::WORK_HOURS_SATURDAY, '0');
         $user->setPreferenceValue(WorkingTimeCalculatorDay::WORK_HOURS_SUNDAY, '0');
-        $repository->saveUser($user);
+        $userRepository->saveUser($user);
 
         $this->assertAccessIsGranted($client, '/contract');
         $content = $client->getResponse()->getContent();

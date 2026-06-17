@@ -56,11 +56,17 @@ final class SystemConfigurationType extends AbstractType
 
                 $options = [
                     'label' => $preference->getLabel() ?? $preference->getName(),
-                    'constraints' => $preference->getConstraints(),
                     'required' => $required,
                     'disabled' => !$preference->isEnabled(),
                     'translation_domain' => $preference->getTranslationDomain(),
                 ];
+
+                // if we always pass all (which by default is an empty list), we could not use constraints
+                // in custom form types like WebhookEndpointsType
+                $constraints = $preference->getConstraints();
+                if ([] !== $constraints) {
+                    $options['constraints'] = $constraints;
+                }
 
                 $event->getForm()->add('value', $type, array_merge($options, $preference->getOptions()));
             }

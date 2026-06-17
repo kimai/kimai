@@ -410,7 +410,6 @@ class ConfigurationTest extends TestCase
                 'time_increment' => 15,
             ],
             'user' => [
-                'registration' => false,
                 'password_reset' => true,
                 'wizard' => true,
                 'login' => true,
@@ -537,6 +536,11 @@ class ConfigurationTest extends TestCase
             'company' => [
                 'financial_year' => null,
             ],
+            'webhook' => [
+                'endpoints' => '[]',
+                'max_endpoints' => 5,
+                'allow_private_network' => false,
+            ],
             'quick_entry' => [
                 'recent_activities' => 5,
                 'recent_activity_weeks' => null,
@@ -560,9 +564,6 @@ class ConfigurationTest extends TestCase
                     'allow_duplicate_number' => false,
                 ],
                 'choice_pattern' => '{name}',
-            ],
-            'features' => [
-                'user_registration' => false,
             ],
         ];
 

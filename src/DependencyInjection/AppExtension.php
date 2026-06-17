@@ -10,16 +10,17 @@
 namespace App\DependencyInjection;
 
 use App\Configuration\LocaleService;
-use App\Kernel;
+use App\Constants;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\Intl\Locales;
 
 /**
  * This class that loads and manages the Kimai configuration and container parameter.
  */
-final class AppExtension extends Extension
+final class AppExtension extends Extension implements PrependExtensionInterface
 {
     public function load(array $configs, ContainerBuilder $container): void
     {
@@ -46,7 +47,6 @@ final class AppExtension extends Extension
             $config['data_dir'] = $container->getParameter('kernel.project_dir') . '/var/data';
         }
         $container->setParameter('kimai.data_dir', $config['data_dir']);
-        $container->setParameter('kimai.plugin_dir', $container->getParameter('kernel.project_dir') . Kernel::PLUGIN_DIRECTORY);
 
         $this->setLanguageFormats($container);
 
@@ -108,7 +108,6 @@ final class AppExtension extends Extension
     private function setLanguageFormats(ContainerBuilder $container): void
     {
         $locales = $container->getParameter('kimai_locales');
-        // @deprecated since 2.21.0
         $container->setParameter('app_locales', implode('|', $locales));
 
         $directory = $container->getParameter('kernel.project_dir');
@@ -214,5 +213,10 @@ final class AppExtension extends Extension
     public function getAlias(): string
     {
         return 'kimai';
+    }
+
+    public function prepend(ContainerBuilder $container): void
+    {
+        $container->setParameter('kimai.version', Constants::VERSION);
     }
 }

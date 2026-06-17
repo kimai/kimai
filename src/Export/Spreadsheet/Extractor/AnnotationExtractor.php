@@ -102,10 +102,6 @@ final class AnnotationExtractor implements ExtractorInterface
                     $arguments['label'],
                     $arguments['type'] ?? 'string',
                     function ($obj) use ($property) {
-                        if (!$property->isPublic()) {
-                            $property->setAccessible(true);
-                        }
-
                         return $property->getValue($obj);
                     }
                 );
@@ -140,10 +136,6 @@ final class AnnotationExtractor implements ExtractorInterface
                     $arguments['label'],
                     $arguments['type'] ?? 'string',
                     function ($obj) use ($method) {
-                        if (!$method->isPublic()) {
-                            $method->setAccessible(true);
-                        }
-
                         return $method->invoke($obj);
                     }
                 );

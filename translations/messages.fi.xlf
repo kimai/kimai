@@ -86,14 +86,6 @@
         <source>user_profile</source>
         <target state="translated">Oma profiili</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target state="translated">API salasana</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target state="translated">Toista API salasana</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target state="translated">Puuttuvat oikeudet. Uudelleen ohjataanko kirjautumiseen?</target>
@@ -149,10 +141,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target state="translated">Liitännäiset</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target state="translated">Asetukset</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
@@ -1002,10 +990,6 @@
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="translated">Sähköpostiin on lähetetty linkki salasanan vaihtoon. Huomautus: Voit pyytää uutta salasanaa vain kerran %tokenLifetime% tunnin välein. Jos et saa sähköpostia, tarkista roskapostikansiosi tai yritä uudelleen.</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target>Sähköposti lähetetty osoitteeseen %email%. Aktivoi tili klikkaamalla viestin linkkiä.</target>
-      </trans-unit>
       <trans-unit id="XP5zkiN" resname="modal.dirty">
         <source>modal.dirty</source>
         <target>Lomake muuttui. Valitse "Tallenna" tai "Sulje".</target>
@@ -1269,10 +1253,6 @@
       <trans-unit id="JSBReoa" resname="api_password.intro" xml:space="preserve">
         <source>api_password.intro</source>
         <target state="translated">Täällä voit hallita API-tunnuksiasi, joita käytetään sovelluksesi todentamiseen Kimaille.</target>
-      </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
-        <source>api_password.missing_title</source>
-        <target state="translated">API ei käytettävissä</target>
       </trans-unit>
       <trans-unit id="Y0PRG9Z" resname="profile.2fa_confirmation">
         <source>profile.2fa_confirmation</source>
@@ -1706,10 +1686,6 @@
         <source>api_token_hidden</source>
         <target state="translated">Tämä on ainoa kerta, kun tämä avain näytetään! Pidä se siis turvassa ja varmista, että olet kopioinut sen ennen tämän ikkunan sulkemista.</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">API-salasanat ovat vanhentuneet: käytä sen sijaan API-tunnuksia.</target>
-      </trans-unit>
       <trans-unit id="1btzNDa" resname="work_times_should" xml:space="preserve">
         <source>Expected number of hours</source>
         <target state="translated">Odotetut tunnit</target>
@@ -1957,6 +1933,10 @@
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>Timesheet</source>
         <target state="translated">Kellokortti</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation">
+        <source>estimation</source>
+        <target>Aika-arvio</target>
       </trans-unit>
     </body>
   </file>

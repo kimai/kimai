@@ -62,14 +62,6 @@
         <source>user_profile</source>
         <target state="translated">Min profil</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target state="translated">API lösenord</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target state="translated">Upprepa API lösenord</target>
-      </trans-unit>
       <trans-unit id="UoOv6mx" resname="menu.homepage" xml:space="preserve">
         <source>menu.homepage</source>
         <target state="translated">Överblick</target>
@@ -113,10 +105,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin" xml:space="preserve">
         <source>menu.plugin</source>
         <target state="translated">Tillägg</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target state="translated">Systeminställningar</target>
       </trans-unit>
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found">
         <source>error.no_entries_found</source>
@@ -1022,10 +1010,6 @@
         <source>stats.amountFinancialYear</source>
         <target>Intäkter detta räkenskapsåret</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target>Ett mejl har skickats till %email%. Det innehåller en aktiveringslänk som du måste klicka för att aktivera kontot.</target>
-      </trans-unit>
       <trans-unit id="1c0EQaz" resname="profile.registration_date">
         <source>profile.registration_date</source>
         <target>Registrerad</target>
@@ -1341,10 +1325,6 @@
       <trans-unit id="WOFPb2i" resname="skin.dark">
         <source>skin.dark</source>
         <target state="translated">Mörkt</target>
-      </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
-        <source>api_password.missing_title</source>
-        <target state="translated">API kan inte användas</target>
       </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results">
         <source>search.no_results</source>
@@ -1718,10 +1698,6 @@
         <source>api_token_hidden</source>
         <target state="translated">Detta är den enda gången nyckeln visas, så kopiera undan den till en säker plats innan du stänger fönstret.</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">API-lösenord är förlegade, använd API-nycklar istället.</target>
-      </trans-unit>
       <trans-unit id="WwesQPU" resname="deactivate" xml:space="preserve">
         <source>Deactivate</source>
         <target state="translated">Inaktivera</target>
@@ -2081,6 +2057,14 @@
       <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
         <source>count_as_expected_time_help</source>
         <target state="translated">När det är aktiverat räknas %type% som arbetade timmar mot de förväntade dagliga timmarna. När det är inaktiverat sätts de förväntade timmarna för dessa dagar till 0. Båda inställningarna ger ett neutralt saldo men påverkar månadssummorna på olika sätt.</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+            <target state="translated">Uppgift</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+            <target state="translated">Tidsuppskattning</target>
       </trans-unit>
     </body>
   </file>

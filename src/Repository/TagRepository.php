@@ -105,8 +105,7 @@ class TagRepository extends EntityRepository
      * - name
      * - amount
      *
-     * @param TagQuery $query
-     * @return Pagination
+     * @return Pagination<array{id: int, name: string, color: string, visible: bool, amount: int}>
      */
     public function getTagCount(TagQuery $query): Pagination
     {
@@ -127,7 +126,7 @@ class TagRepository extends EntityRepository
         $pager->setMaxPerPage($query->getPageSize());
         $pager->setCurrentPage($query->getPage());
 
-        return $pager;
+        return $pager; // @phpstan-ignore return.type
     }
 
     private function getQueryBuilderForQuery(TagQuery $query): QueryBuilder

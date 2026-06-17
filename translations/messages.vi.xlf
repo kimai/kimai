@@ -86,14 +86,6 @@
         <source>user_profile</source>
         <target>Thông tin của tôi</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>Mật khẩu API</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>Lặp lại mật khẩu API</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target>Thiếu sự cho phép. Chuyển hướng để đăng nhập?</target>
@@ -145,10 +137,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target>Ứng dụng bổ sung</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>Cài đặt</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
@@ -870,10 +858,6 @@
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="translated">Một thư tín đã được gửi với một đường dẫn để đặt lại mật khẩu. Ghi chú: Bạn chỉ có thể yêu cầu một mật khẩu mới trong vòng %tokenLifetime% giờ. Nếu bạn không thấy thư hãy kiểm tra mục thư rác hoặc thử lại một lần nữa.</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target>Một thư đã được gửi đến %email%. Thư chứa một đường dẫn kích hoạt bạn cần phải nhấn để kích hoạt tài khoản.</target>
-      </trans-unit>
       <trans-unit id="XP5zkiN" resname="modal.dirty">
         <source>modal.dirty</source>
         <target>Văn bản đã thay đổi. Vui lòng nhấn " Lưu'" để lưu thay đổi hoặc "Đóng" để hủy.</target>
@@ -1406,10 +1390,6 @@
         <source>team.configure_teamlead.help</source>
         <target state="translated">Người dùng được chọn là trưởng nhóm.</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title" xml:space="preserve">
-        <source>api_password.missing_title</source>
-        <target state="translated">Không thể dùng API</target>
-      </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results" xml:space="preserve">
         <source>search.no_results</source>
         <target state="translated">Không tìm thấy kết quả cho "%input%"</target>
@@ -1722,10 +1702,6 @@
         <source>Expiry date</source>
         <target state="translated">Ngày hết hạn</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">Mật khẩu API đã lỗi thời: xin dùng mã API thay vào đó.</target>
-      </trans-unit>
       <trans-unit id="bEXLcqN" resname="stop">
         <source>stop</source>
         <target>Dừng</target>
@@ -1861,6 +1837,14 @@
       <trans-unit id="wZRRqg0" resname="manual_bookings" xml:space="preserve">
         <source>manual_bookings</source>
         <target state="translated">Đặt lịch thủ công</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+            <target state="translated">Tác vụ cần làm</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+            <target state="translated">Thời gian dự kiến</target>
       </trans-unit>
     </body>
   </file>

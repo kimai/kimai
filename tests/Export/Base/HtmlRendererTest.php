@@ -45,17 +45,7 @@ class HtmlRendererTest extends AbstractRendererTestCase
         self::assertEquals('foo', $sut->getId());
         self::assertEquals('bar', $sut->getTitle());
         self::assertEquals('html', $sut->getType());
-        self::assertFalse($sut->isInternal());
-    }
-
-    #[Group('legacy')]
-    public function testLegacy(): void
-    {
-        $sut = $this->getAbstractRenderer();
-
-        $sut->setTemplate('some'); // @phpstan-ignore method.deprecated
-        $sut->setId('xxxxxx'); // @phpstan-ignore method.deprecated
-        self::assertEquals('xxxxxx', $sut->getId());
+        self::assertFalse($sut->isInternal()); // @phpstan-ignore staticMethod.alreadyNarrowedType
     }
 
     public function testRender(): void

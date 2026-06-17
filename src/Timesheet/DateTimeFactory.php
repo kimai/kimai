@@ -48,20 +48,6 @@ final class DateTimeFactory
         return $date;
     }
 
-    /**
-     * @deprecated
-     * @codeCoverageIgnore
-     */
-    public function getStartOfLastMonth(): DateTimeInterface
-    {
-        @trigger_error('The method "DateTimeFactory::getStartOfLastMonth()" will be removed soon', E_USER_DEPRECATED);
-
-        $date = $this->createDateTime('first day of -1 month');
-        $date = $date->setTime(0, 0, 0);
-
-        return $date;
-    }
-
     private function getDate(DateTimeInterface|string|null $date = null): DateTime
     {
         if ($date === null) {
@@ -73,23 +59,6 @@ final class DateTimeFactory
         }
 
         return $this->createDateTime($date->format('Y-m-d H:i:s'));
-    }
-
-    /**
-     * @deprecated
-     * @codeCoverageIgnore
-     */
-    private function createDate(DateTimeInterface|string|null $date = null): \DateTimeImmutable
-    {
-        if ($date === null) {
-            $date = 'now';
-        }
-
-        if (\is_string($date)) {
-            return $this->create($date);
-        }
-
-        return $this->create($date->format('Y-m-d H:i:s'));
     }
 
     public function getStartOfWeek(DateTimeInterface|string|null $date = null): DateTime
@@ -135,20 +104,6 @@ final class DateTimeFactory
         return $date;
     }
 
-    /**
-     * @deprecated
-     * @codeCoverageIgnore
-     */
-    public function getEndOfLastMonth(): DateTimeInterface
-    {
-        @trigger_error('The method "DateTimeFactory::getEndOfLastMonth()" will be removed soon', E_USER_DEPRECATED);
-
-        $date = $this->createDateTime('last day of -1 month');
-        $date = $date->setTime(23, 59, 59);
-
-        return $date;
-    }
-
     private function createWeekDateTime(int $year, int $week, int $day, int $hour, int $minute, int $second): DateTime
     {
         $date = new DateTime('now', $this->getTimezone());
@@ -166,32 +121,6 @@ final class DateTimeFactory
     public function create(string $datetime = 'now'): \DateTimeImmutable
     {
         return new \DateTimeImmutable($datetime, $this->getTimezone());
-    }
-
-    /**
-     * @deprecated
-     * @codeCoverageIgnore
-     */
-    public function createStartOfDay(DateTimeInterface|string|null $date = null): \DateTimeImmutable
-    {
-        @trigger_error('The method "DateTimeFactory::createStartOfDay()" will be removed soon', E_USER_DEPRECATED);
-
-        $date = $this->createDate($date);
-
-        return $date->modify('00:00:00');
-    }
-
-    /**
-     * @deprecated
-     * @codeCoverageIgnore
-     */
-    public function createEndOfDay(DateTimeInterface|string|null $date = null): \DateTimeImmutable
-    {
-        @trigger_error('The method "DateTimeFactory::createEndOfDay()" will be removed soon', E_USER_DEPRECATED);
-
-        $date = $this->createDate($date);
-
-        return $date->modify('23:59:59');
     }
 
     public function createDateTimeFromFormat(string $format, ?string $datetime = 'now'): false|DateTime

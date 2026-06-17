@@ -254,10 +254,6 @@
         <source>user_auth_password_reset_token_ttl</source>
         <target state="translated">Zapomenuté heslo - sekund než odkaz vyprší</target>
       </trans-unit>
-      <trans-unit id="C26_mL7" resname="user_auth_registration">
-        <source>user_auth_registration</source>
-        <target state="translated">Registrování uživatele</target>
-      </trans-unit>
       <trans-unit id="5RSshEN" resname="user_auth_password_reset">
         <source>user_auth_password_reset</source>
         <target state="translated">Zapomenuté heslo</target>

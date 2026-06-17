@@ -66,30 +66,13 @@ jobs:
                   file: Dockerfile
                   build-args: |
                       KIMAI=${{ env.kimai_version }}
-                      BASE=apache
                   target: prod
                   platforms: linux/amd64,linux/arm64
                   tags: |
                       kimai/kimai2:stable
                       kimai/kimai2:apache
-                      kimai/kimai2:2
+                      kimai/kimai2:3
                       kimai/kimai2:${{ env.kimai_version }}
-                  push: true
-
-            # TODO 3.0 remove the deprecated FPM build
-            - name: FPM image
-              uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
-              with:
-                  context: .
-                  file: Dockerfile
-                  build-args: |
-                      KIMAI=${{ env.kimai_version }}
-                      BASE=fpm
-                  target: prod
-                  platforms: linux/amd64,linux/arm64
-                  tags: |
-                      kimai/kimai2:latest
-                      kimai/kimai2:fpm
                   push: true
 
             - name: Development image
@@ -99,7 +82,6 @@ jobs:
                   file: Dockerfile
                   build-args: |
                       KIMAI=${{ env.kimai_version }}
-                      BASE=apache
                   target: dev
                   platforms: linux/amd64,linux/arm64
                   tags: |

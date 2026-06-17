@@ -26,21 +26,11 @@ final class ApiRequestMatcher implements RequestMatcherInterface
             return false;
         }
 
-        // ------------------------------------------------------------------------------------
-        // the next two checks are primarily here to make sure to return proper error messages
-
         // let's use this firewall if a Bearer token is set in the header
         // other cases like "bearer" are rejected earlier
         if (($auth = $request->headers->get('Authorization')) !== null && str_starts_with($auth, 'Bearer ')) {
             return true;
         }
-
-        // let's use this firewall if the deprecated username & token combination is available
-        if ($request->headers->has(TokenAuthenticator::HEADER_USERNAME) && // @phpstan-ignore classConstant.deprecatedClass
-            $request->headers->has(TokenAuthenticator::HEADER_TOKEN)) { // @phpstan-ignore classConstant.deprecatedClass
-            return true;
-        }
-        // ------------------------------------------------------------------------------------
 
         // checking for a previous session allows us to skip the API firewall and token access handler
         // we simply re-use the existing session when doing API calls from the frontend.

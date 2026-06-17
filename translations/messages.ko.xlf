@@ -62,14 +62,6 @@
         <source>user_profile</source>
         <target state="translated">나의 프로필</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target state="translated">API 비밀번호</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target state="translated">API 비밀번호 재확인</target>
-      </trans-unit>
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target state="translated">대시보드</target>
@@ -117,10 +109,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target state="translated">플러그인</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target state="translated">설정</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
@@ -990,10 +978,6 @@
         <source>stats.activeUsersFinancialYear</source>
         <target>이번 회계연도 활성화 사용자</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target>이메일이 %email%(으)로 전송되었습니다. 계정을 활성화하는 링크가 이메일에 포함되어 있으니 링크를 클릭하세요.</target>
-      </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
         <source>Working hours</source>
         <target>근무 시간</target>
@@ -1505,10 +1489,6 @@
       <trans-unit id="5NugIxO" resname="includeWithBudget" xml:space="preserve">
         <source>includeWithBudget</source>
         <target state="translated">예산으로 항목 표시</target>
-      </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title" xml:space="preserve">
-        <source>api_password.missing_title</source>
-        <target state="translated">API는 사용될 수 없습니다</target>
       </trans-unit>
     </body>
   </file>

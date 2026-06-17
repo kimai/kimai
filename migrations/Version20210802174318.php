@@ -30,7 +30,7 @@ final class Version20210802174318 extends AbstractMigration
         $teamMember->addColumn('id', 'integer', ['autoincrement' => true, 'notnull' => true]);
         $teamMember->addColumn('teamlead', 'boolean', ['notnull' => true, 'default' => false]);
         $teamMember->dropPrimaryKey();
-        $teamMember->setPrimaryKey(['id']);
+        $this->addPrimaryKeyConstraint($teamMember, ['id']);
         $teamMember->addUniqueIndex(['user_id', 'team_id'], 'UNIQ_B5E92CF8A76ED395296CD8AE');
     }
 
@@ -41,6 +41,6 @@ final class Version20210802174318 extends AbstractMigration
         $teamMember->dropPrimaryKey();
         $teamMember->dropColumn('teamlead');
         $teamMember->dropColumn('id');
-        $teamMember->setPrimaryKey(['user_id', 'team_id']);
+        $this->addPrimaryKeyConstraint($teamMember, ['user_id', 'team_id']);
     }
 }

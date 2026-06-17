@@ -10,11 +10,15 @@
 namespace App\Plugin;
 
 /**
+ * Works with packages
+ * - ZIP packages in var/packages/ (for production)
+ * - and directories in var/packages/ (mainly for development)
+ *
  * @internal
  */
 final class PackageManager
 {
-    public const PACKAGE_DIR = 'var/packages';
+    public const string PACKAGE_DIR = 'var/packages';
 
     public function __construct(private readonly string $projectDirectory)
     {
@@ -25,7 +29,10 @@ final class PackageManager
      */
     public function getAvailablePackages(): array
     {
-        return $this->findAvailablePackages($this->projectDirectory . '/' . self::PACKAGE_DIR);
+        return array_merge(
+            $this->findAvailablePlugins($this->projectDirectory . '/' . self::PACKAGE_DIR),
+            $this->findAvailablePackages($this->projectDirectory . '/' . self::PACKAGE_DIR)
+        );
     }
 
     /**
@@ -51,17 +58,19 @@ final class PackageManager
                 continue;
             }
 
-            $package = $this->getComposerJson($file->getPathname());
+            $path = $file->getPathname();
+
+            $package = $this->getComposerJson($path);
             if ($package === null) {
                 continue;
             }
 
             $content = json_decode($package, true);
             if (\JSON_ERROR_NONE !== json_last_error() || !\is_array($content)) {
-                throw new \RuntimeException('Failed to parse composer.json file in: ' . $file->getPathname());
+                throw new \RuntimeException('Failed to parse composer.json file in: ' . $path);
             }
 
-            $packages[] = new Package($file, PluginMetadata::createFromArray($content));
+            $packages[] = new Package($path, PluginMetadata::createFromArray($content));
         }
 
         return $packages;
@@ -155,5 +164,46 @@ final class PackageManager
         }
 
         throw new \RuntimeException('No composer.json found either at the top level or within the topmost directory');
+    }
+
+    /**
+     * @return Package[]
+     */
+    private function findAvailablePlugins(string $path): array
+    {
+        if (!file_exists($path) || !is_readable($path) || !is_dir($path)) {
+            return [];
+        }
+
+        $packages = [];
+
+        $paths = new \DirectoryIterator($path);
+        /** @var \DirectoryIterator $file */
+        foreach ($paths as $file) {
+            if (!$file->isDir()) {
+                continue;
+            }
+
+            $path = $file->getPathname();
+            $composerFile = $path . '/composer.json';
+
+            if (!file_exists($composerFile)) {
+                continue;
+            }
+
+            $package = file_get_contents($composerFile);
+            if ($package === false) {
+                continue;
+            }
+
+            $content = json_decode($package, true);
+            if (\JSON_ERROR_NONE !== json_last_error() || !\is_array($content)) {
+                throw new \RuntimeException('Failed to parse composer.json file in: ' . $path);
+            }
+
+            $packages[] = new Package($path, PluginMetadata::createFromArray($content));
+        }
+
+        return $packages;
     }
 }

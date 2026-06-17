@@ -66,10 +66,6 @@
         <source>task.help.team</source>
         <target state="translated">Wijs deze taak toe aan een team</target>
       </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
-        <source>estimation</source>
-        <target state="translated">Geschatte tijd</target>
-      </trans-unit>
       <trans-unit id="ZCSPtzc" resname="task.help.estimation" xml:space="preserve" approved="no">
         <source>task.help.estimation</source>
         <target state="translated">Geschatte tijd nodig om de taak te voltooien in uu:mm</target>
@@ -97,10 +93,6 @@
       <trans-unit id="ZwdUYYa" resname="task_overdue" xml:space="preserve" approved="no">
         <source>task_overdue</source>
         <target state="translated">Verlopen</target>
-      </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
-        <source>task_todo</source>
-        <target state="translated">Taak</target>
       </trans-unit>
       <trans-unit id="F1_rg1R" resname="task.reopen" xml:space="preserve" approved="no">
         <source>task.reopen</source>

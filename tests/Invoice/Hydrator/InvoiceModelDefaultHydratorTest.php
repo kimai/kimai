@@ -55,7 +55,6 @@ class InvoiceModelDefaultHydratorTest extends TestCase
 
         $obj = new ReflectionObject($model);
         $prop = $obj->getProperty('calculator');
-        $prop->setAccessible(true);
         $prop->setValue($model, null);
 
         $sut = new InvoiceModelDefaultHydrator();

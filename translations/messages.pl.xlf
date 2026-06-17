@@ -74,14 +74,6 @@
         <source>user_profile</source>
         <target>Mój profil</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target state="translated">Hasło API</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target state="translated">Powtórz hasło API</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target state="translated">Brak uprawnień. Przekierować na stronę logowania?</target>
@@ -133,10 +125,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target>Wtyczki</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>Ustawienia</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
@@ -982,10 +970,6 @@
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="translated">Wysłano wiadomość email z linkiem umożliwiającym zresetowanie hasła. Uwaga: o nowe hasło możesz poprosić tylko raz na %tokenLifetime% godzin. Jeśli nie otrzymasz wiadomości email, sprawdź folder ze spamem lub spróbuj ponownie.</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target state="translated">Email został wysłany do %email%. Zawiera link aktywacyjny który musisz kliknąć, aby aktywować swoje konto.</target>
-      </trans-unit>
       <trans-unit id="O5w1jzb" resname="file">
         <source>file</source>
         <target state="translated">Pliki</target>
@@ -1321,10 +1305,6 @@
       <trans-unit id="ZZaqTEr" resname="no_activity">
         <source>no_activity</source>
         <target state="translated">Bez aktywności</target>
-      </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
-        <source>api_password.missing_title</source>
-        <target state="translated">Nie można użyć interfejsu API</target>
       </trans-unit>
       <trans-unit id="Uu8YvYV" resname="deactivated">
         <source>Deactivated</source>
@@ -1722,10 +1702,6 @@
         <source>Expiry date</source>
         <target state="translated">Data wygaśnięcia</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">Hasła API są nieaktualne: zamiast tego użyj tokenów API.</target>
-      </trans-unit>
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve">
         <source>absence_comment_mandatory</source>
         <target state="translated">Nieobecność: Komentarz jest polem obowiązkowym</target>
@@ -2081,6 +2057,14 @@
       <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
         <source>count_as_expected_time_help</source>
         <target state="translated">Gdy włączone, %type% liczy się do przepracowanych godzin. Gdy wyłączone, oczekiwane godziny ustawiane są na 0. Obie opcje neutralne, różnią się wpływem na sumę miesięczną.</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+            <target state="translated">Zadanie</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+            <target state="translated">Szacowany czas</target>
       </trans-unit>
     </body>
   </file>

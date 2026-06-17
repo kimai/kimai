@@ -58,26 +58,25 @@ final class Configuration implements ConfigurationInterface
                 ->append($this->getQuickEntryNode())
                 ->append($this->getActivityNode())
                 ->append($this->getProjectNode())
-                ->append($this->getFeaturesNode())
+                ->append($this->getWebhookNode())
             ->end()
         ->end();
 
         return $treeBuilder;
     }
 
-    private function getFeaturesNode(): ArrayNodeDefinition
+    private function getWebhookNode(): ArrayNodeDefinition
     {
-        $builder = new TreeBuilder('features');
+        $builder = new TreeBuilder('webhook');
         /** @var ArrayNodeDefinition $node */
         $node = $builder->getRootNode();
 
         $node
             ->addDefaultsIfNotSet()
-                ->children()
-                    // this feature was deactivated in order to deprecate/remove it in the future, very likely not necessary for anyone
-                    ->integerNode('user_registration')
-                ->defaultFalse()
-                ->end()
+            ->children()
+                ->scalarNode('endpoints')->defaultValue('[]')->end()
+                ->integerNode('max_endpoints')->defaultValue(5)->end()
+                ->booleanNode('allow_private_network')->defaultFalse()->end()
             ->end()
         ;
 
@@ -121,7 +120,7 @@ final class Configuration implements ConfigurationInterface
                     ->defaultValue(ProjectHelper::PATTERN_NAME)
                 ->end()
                 ->booleanNode('copy_teams_on_create')
-                    ->defaultValue(false)
+                    ->defaultFalse()
                 ->end()
                 ->scalarNode('number_format')
                     ->defaultValue('{pc,4}')
@@ -148,7 +147,7 @@ final class Configuration implements ConfigurationInterface
                     ->defaultValue(ActivityHelper::PATTERN_NAME)
                 ->end()
                 ->booleanNode('allow_inline_create')
-                    ->defaultValue(false)
+                    ->defaultFalse()
                 ->end()
                 ->scalarNode('number_format')
                     ->defaultValue('{ac,4}')
@@ -177,7 +176,7 @@ final class Configuration implements ConfigurationInterface
                     ->defaultValue('default')
                 ->end()
                 ->booleanNode('markdown_content')
-                    ->defaultValue(false)
+                    ->defaultFalse()
                 ->end()
                 ->integerNode('duration_increment')
                     ->defaultValue(15)
@@ -258,14 +257,11 @@ final class Configuration implements ConfigurationInterface
                     ->arrayPrototype()
                         ->children()
                             ->arrayNode('days')
-                                ->requiresAtLeastOneElement()
                                 ->useAttributeAsKey('key')
-                                ->isRequired()
                                 ->scalarPrototype()->end()
                                 ->defaultValue([])
                             ->end()
                             ->floatNode('factor')
-                                ->isRequired()
                                 ->defaultValue(1)
                                 ->validate()
                                     ->ifTrue(function ($value) {
@@ -565,9 +561,6 @@ final class Configuration implements ConfigurationInterface
                         ->thenInvalid('The theme must be one of: "auto", "default", "dark"')
                     ->end()
                 ->end()
-                ->booleanNode('registration')
-                    ->defaultFalse()
-                ->end()
                 ->booleanNode('wizard')
                     ->defaultTrue()
                 ->end()
@@ -670,7 +663,6 @@ final class Configuration implements ConfigurationInterface
                         ->useAttributeAsKey('key')
                         ->isRequired()
                         ->scalarPrototype()->end()
-                        ->defaultValue([])
                     ->end()
                 ->end()
                 ->arrayNode('maps')
@@ -680,7 +672,6 @@ final class Configuration implements ConfigurationInterface
                         ->useAttributeAsKey('key')
                         ->isRequired()
                         ->scalarPrototype()->end()
-                        ->defaultValue([])
                     ->end()
                 ->end()
                 ->arrayNode('roles')
@@ -689,7 +680,6 @@ final class Configuration implements ConfigurationInterface
                     ->arrayPrototype()
                         ->isRequired()
                         ->scalarPrototype()->end()
-                        ->defaultValue([])
                     ->end()
                     ->defaultValue([
                         'ROLE_USER' => [],
@@ -935,7 +925,7 @@ final class Configuration implements ConfigurationInterface
                                             ->prototype('array')
                                                 ->children()
                                                     ->scalarNode('name')->end()
-                                                    ->booleanNode('isRequired')->defaultValue(false)->end()
+                                                    ->booleanNode('isRequired')->defaultFalse()->end()
                                                     ->scalarNode('nameFormat')->end()
                                                     ->scalarNode('friendlyName')->end()
                                                     ->arrayNode('attributeValue')->end()

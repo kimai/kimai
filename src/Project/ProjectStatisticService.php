@@ -36,6 +36,7 @@ use App\Timesheet\DateTimeFactory;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Query\Expr\Join;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -656,7 +657,7 @@ class ProjectStatisticService
 
         if (!$query->isIncludeNoWork()) {
             $qb
-                ->leftJoin(Timesheet::class, 't', 'WITH', 'p.id = t.project')
+                ->leftJoin(Timesheet::class, 't', Join::ON, 'p.id = t.project')
                 ->andHaving($qb->expr()->gt('SUM(t.duration)', 0))
             ;
         }

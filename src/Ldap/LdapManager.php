@@ -243,12 +243,6 @@ class LdapManager
                 $value = $ldapValue;
             }
 
-            // BC layer for 2.0
-            if ($attr['user_method'] === 'setUsername') {
-                @trigger_error('Your LDAP configuration is deprecated: change the attribute mapping from "setUsername" to "setUserIdentifier".', E_USER_DEPRECATED);
-                $attr['user_method'] = 'setUserIdentifier';
-            }
-
             if ($attr['user_method'] === 'setEmail') {
                 if (\is_array($value)) {
                     $value = $value[0];

@@ -71,7 +71,7 @@ class PdfTemplateRendererTest extends AbstractRendererTestCase
         self::assertEquals('test', $sut->getId());
         self::assertEquals('bar', $sut->getTitle());
         self::assertEquals('pdf', $sut->getType());
-        self::assertTrue($sut->isInternal());
+        self::assertTrue($sut->isInternal()); // @phpstan-ignore staticMethod.alreadyNarrowedType
     }
 
     public function testDefaultTemplateRender(): void
@@ -95,7 +95,7 @@ class PdfTemplateRendererTest extends AbstractRendererTestCase
                 'date',
                 'begin',
                 'end',
-                'duration',
+                'duration_decimal',
                 'currency',
                 'rate',
                 'internal_rate',

@@ -39,10 +39,10 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[OA\Tag(name: 'Customer')]
 final class CustomerController extends BaseApiController
 {
-    private const GROUPS_COMMENT = ['Default', 'Not_Expanded'];
-    public const GROUPS_ENTITY = ['Default', 'Entity', 'Customer', 'Customer_Entity'];
-    public const GROUPS_COLLECTION = ['Default', 'Collection', 'Customer'];
-    public const GROUPS_RATE = ['Default', 'Entity', 'Customer_Rate'];
+    private const array GROUPS_COMMENT = ['Default', 'Not_Expanded'];
+    private const array GROUPS_ENTITY = ['Default', 'Entity', 'Customer', 'Customer_Entity'];
+    private const array GROUPS_COLLECTION = ['Default', 'Collection', 'Customer'];
+    private const array GROUPS_RATE = ['Default', 'Entity', 'Customer_Rate'];
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,

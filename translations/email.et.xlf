@@ -6,22 +6,6 @@
         <source>automated_email_dont_answer</source>
         <target state="translated">See on automaatselt genereeritud e-mail. Palume sellele mitte vastata, sest vastuseid ei toimetata edasi.</target>
       </trans-unit>
-      <trans-unit id="QtcznHC" resname="registration.title" xml:space="preserve">
-        <source>registration.title</source>
-        <target state="translated">Tere tulemast, %username%</target>
-      </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject" xml:space="preserve">
-        <source>registration.subject</source>
-        <target state="translated">Aktiveeri oma konto</target>
-      </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button" xml:space="preserve">
-        <source>registration.button</source>
-        <target state="translated">Aktiveeri oma konto</target>
-      </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro" xml:space="preserve">
-        <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
-        <target state="translated">Registreerusid Kimai ajaarvestuse kasutajaks e-posti aadressiga %email%. Palun aktiveeri oma konto järgmise paari tunni jooksul, enne kui link aegub.</target>
-      </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
         <target state="translated">Logi Kimai'sse sisse</target>

@@ -1,5 +1,50 @@
 monolog:
-    channels: ["deprecation"]
+    channels:
+        - deprecation # Deprecations are logged in the dedicated "deprecation" channel when it exists
+
+when@dev:
+    monolog:
+        handlers:
+            main:
+                type: fingers_crossed
+                action_level: notice
+                handler: file_log
+                excluded_http_codes:
+                    - {400: ['^/api/']}
+                    - {401: ['^/api/']}
+                    - 403
+                    - 404
+                    - 405
+                channels: ["!event", "!deprecation"]
+            file_log:
+                type: stream
+                path: "%kernel.logs_dir%/%kernel.environment%.log"
+                level: debug
+                formatter: monolog.formatter.kimai
+            console:
+                type: console
+                process_psr_3_messages: false
+                channels: ["!event", "!doctrine", "!deprecation"]
+            deprecation:
+                type: stream
+                channels: ["deprecation"]
+                path: "%kernel.logs_dir%/deprecations.log"
+                formatter: monolog.formatter.deprecation
+
+when@test:
+    monolog:
+        handlers:
+            main:
+                type: fingers_crossed
+                action_level: error
+                handler: nested
+                excluded_http_codes: [404, 405]
+                channels: ["!event"]
+            nested:
+                type: stream
+                path: "%kernel.logs_dir%/%kernel.environment%.log"
+                level: debug
+                formatter: monolog.formatter.kimai
 
 when@prod:
     monolog:
@@ -24,42 +69,3 @@ when@prod:
                 type: console
                 process_psr_3_messages: false
                 channels: ["!event", "!doctrine", "!deprecation"]
-
-when@dev:
-    monolog:
-        handlers:
-            main:
-                type: fingers_crossed
-                action_level: notice
-                handler: file_log
-                excluded_http_codes:
-                    - {400: ['^/api/']}
-                    - {401: ['^/api/']}
-                    - 403
-                    - 404
-                    - {405: ['/homepage$', '/login_check$', '/export/data$']}
-                channels: ["!event", "!deprecation"]
-            file_log:
-                type: stream
-                path: "%kernel.logs_dir%/%kernel.environment%.log"
-                level: debug
-                formatter: monolog.formatter.kimai
-            console:
-                type: console
-                process_psr_3_messages: false
-                channels: ["!event", "!doctrine", "!deprecation"]
-            deprecation:
-                type: stream
-                channels: ["deprecation"]
-                path: "%kernel.logs_dir%/deprecations.log"
-                formatter: monolog.formatter.deprecation
-
-when@test:
-    monolog:
-        handlers:
-            main:
-                type: stream
-                path: "%kernel.logs_dir%/%kernel.environment%.log"
-                level: info
-                channels: ["!event"]
-                formatter: monolog.formatter.kimai

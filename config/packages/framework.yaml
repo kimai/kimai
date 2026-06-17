@@ -37,12 +37,21 @@ framework:
     php_errors:
         log: true
 
+    property_info:
+        with_constructor_extractor: true
+
     mailer:
         dsn: '%env(MAILER_URL)%'
 
     validation:
         email_validation_mode: html5
         enable_attributes: true
+
+    http_client:
+        default_options:
+            headers:
+                'User-Agent': 'Kimai %kimai.version%'
+            max_redirects: 3
 
 when@dev:
     framework:

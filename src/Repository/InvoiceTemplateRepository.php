@@ -62,6 +62,9 @@ class InvoiceTemplateRepository extends EntityRepository
         return new QueryPaginator($query, $counter);
     }
 
+    /**
+     * @return Pagination<InvoiceTemplate>
+     */
     public function getPagerfantaForQuery(BaseQuery $query): Pagination
     {
         return new Pagination($this->getPaginatorForQuery($query), $query);

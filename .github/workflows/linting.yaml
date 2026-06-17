@@ -19,7 +19,7 @@ jobs:
 
         strategy:
             matrix:
-                php: ['8.2'] # use lowest supported PHP version to prevent introducing syntax from newer PHP versions
+                php: ['8.5']
 
         steps:
 

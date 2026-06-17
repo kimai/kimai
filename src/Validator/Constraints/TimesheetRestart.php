@@ -9,11 +9,15 @@
 
 namespace App\Validator\Constraints;
 
-final class TimesheetRestart extends TimesheetConstraint
-{
-    public const START_DISALLOWED = 'kimai-timesheet-restart-01';
+use App\Validator\Attribute\TimesheetConstraint;
+use Symfony\Component\Validator\Constraint;
 
-    protected const ERROR_NAMES = [
+#[TimesheetConstraint]
+final class TimesheetRestart extends Constraint
+{
+    public const string START_DISALLOWED = 'kimai-timesheet-restart-01';
+
+    protected const array ERROR_NAMES = [
         self::START_DISALLOWED => 'You are not allowed to start this timesheet record.',
     ];
 

@@ -46,14 +46,6 @@
         <source>user_profile</source>
         <target state="translated">Мой профиль</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target state="translated">Пароль API</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target state="translated">Повторите пароль API</target>
-      </trans-unit>
       <trans-unit id="UoOv6mx" resname="menu.homepage">
         <source>menu.homepage</source>
         <target state="translated">Информпанель</target>
@@ -690,10 +682,6 @@
         <source>error.no_comments_found</source>
         <target state="translated">Комментариев ещё нет.</target>
       </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>Настройки</target>
-      </trans-unit>
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target state="translated">Плагины</target>
@@ -969,10 +957,6 @@
       <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
         <source>stats.workingTimeFinancialYear</source>
         <target>Финансовый год</target>
-      </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve">
-        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="translated">Письмо было отправлено на %email%. Чтобы активировать аккаунт, нажмите на ссылку в тексте письма.</target>
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
@@ -1586,10 +1570,6 @@
         <source>skin.dark</source>
         <target state="translated">Тёмный</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title" xml:space="preserve">
-        <source>api_password.missing_title</source>
-        <target state="translated">API не можзет быть использован</target>
-      </trans-unit>
       <trans-unit id="i_XOmN4" resname="help_locales" xml:space="preserve">
         <source>help_locales</source>
         <target state="translated">Здесь даны примеры правил форматирование для поддерживаемых языков</target>
@@ -1866,10 +1846,6 @@
         <source>unlock_month.help</source>
         <target state="translated">Это разблокирует все дни года после выбранной даты.</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">Пароли API устарели: вместо них используйте токены API.</target>
-      </trans-unit>
       <trans-unit id="7p_pFHl" resname="work_days" xml:space="preserve">
         <source>work_days</source>
         <target state="translated">Рабочие дни</target>
@@ -2081,6 +2057,14 @@
       <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
         <source>count_as_expected_time_help</source>
         <target state="translated">При активации, %type% учтётся в рабочие часы в расчёте ожидаемых дневных часов. При отключении, ожидаемые часы для этих дней будут обнулены. Обе настройки сохраняют нейтральный баланс, но по-разному влияют на месячные итоги.</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+        <target state="needs-translation">Описание</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+        <target state="translated">Оценка времени</target>
       </trans-unit>
       <trans-unit id="DAMFhpR" resname="lock" xml:space="preserve">
         <source>lock</source>

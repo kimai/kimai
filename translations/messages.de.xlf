@@ -138,21 +138,9 @@
         <source>user_profile</source>
         <target>Mein Profil</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>API-Passwort</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>API-Passwort wiederholen</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target>Fehlende Berechtigung. Zur Anmeldung wechseln?</target>
-      </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target>Eine E-Mail wurde an %email% gesendet. Sie enthält einen Link, den Sie anklicken müssen, um Ihr Benutzerkonto zu bestätigen.</target>
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve" approved="yes">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
@@ -229,10 +217,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target>Erweiterungen</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>Einstellungen</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
@@ -1514,10 +1498,6 @@
         <source>api_password.intro</source>
         <target state="translated">Hier verwalten Sie Ihre API-Tokens, welche zur Authentifizierung Ihrer Anwendung gegenüber Kimai dienen.</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title">
-        <source>api_password.missing_title</source>
-        <target>API kann nicht genutzt werden</target>
-      </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results" xml:space="preserve" approved="yes">
         <source>search.no_results</source>
         <target state="final">Kein Ergebnis gefunden für „%input%“</target>
@@ -1769,10 +1749,6 @@
       <trans-unit id="Z9IIn_b" resname="api_token_hidden">
         <source>api_token_hidden</source>
         <target>Dies ist das einzige Mal, dass der Token angezeigt wird! Bewahren Sie ihn gut auf und vergewissern Sie sich, dass Sie ihn notiert haben, bevor Sie dieses Fenster schließen.</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve" approved="yes">
-        <source>api_password_deprecated</source>
-        <target state="final">API-Passwörter sind veraltet: bitte nutzen Sie stattdessen API-Tokens.</target>
       </trans-unit>
       <trans-unit id="2qbRs28" resname="hours_per_day">
         <source>hours_per_day</source>
@@ -2109,6 +2085,14 @@
       <trans-unit id="LfO_otF" resname="reopen">
         <source>reopen</source>
         <target>Wieder öffnen</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo">
+        <source>todo</source>
+        <target>Aufgabe</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation">
+        <source>estimation</source>
+        <target>Schätzung</target>
       </trans-unit>
     </body>
   </file>
