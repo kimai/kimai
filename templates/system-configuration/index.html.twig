@@ -39,7 +39,7 @@
                         {% block form_body %}
                             {% for pref in form.children.configuration %}
                                 {% if pref.vars.data.formTheme is not null %}
-                                    {% form_theme form pref.vars.data.formTheme %}
+                                    {% form_theme pref pref.vars.data.formTheme %}
                                 {% endif %}
                             {% endfor %}
                             {% for pref in form.children.configuration %}
