@@ -51,7 +51,7 @@ final class MultiUserTimesheet extends Timesheet
     public function removeUser(User $user): void
     {
         if ($this->users->contains($user)) {
-            $this->users->remove($user);
+            $this->users->removeElement($user);
         }
     }
 
@@ -71,7 +71,7 @@ final class MultiUserTimesheet extends Timesheet
     public function removeTeam(Team $team): void
     {
         if ($this->teams->contains($team)) {
-            $this->teams->remove($team);
+            $this->teams->removeElement($team);
         }
     }
 }
