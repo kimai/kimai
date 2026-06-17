@@ -23,6 +23,10 @@ class ThemeEvent extends Event
      * The toolbar is rendered twice for small and large screens.
      */
     public const TOOLBAR = 'app.theme.toolbar';
+    /**
+     * Rendered before the ticktac timer, for pinned plugin buttons.
+     */
+    public const TOOLBAR_PINNED = 'app.theme.toolbar_pinned';
     public const CONTENT_END = 'app.theme.content_end';
     public const CONTENT_AFTER = 'app.theme.content_after';
 
