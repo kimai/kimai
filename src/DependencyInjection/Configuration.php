@@ -864,15 +864,7 @@ final class Configuration implements ConfigurationInterface
                             ->arrayPrototype()
                                 ->children()
                                     ->scalarNode('saml')->isRequired()->cannotBeEmpty()->end()
-                                    ->scalarNode('kimai')
-                                        ->isRequired()
-                                        ->cannotBeEmpty()
-                                        ->validate()
-                                            ->ifTrue(function ($v) {
-                                                return \in_array($v, ['username', 'userIdentifier'], true);
-                                            })
-                                            ->thenInvalid('Must be an array or a bool.')
-                                        ->end()
+                                    ->scalarNode('kimai')->isRequired()->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()
@@ -891,7 +883,7 @@ final class Configuration implements ConfigurationInterface
                                     ->ifTrue(function ($v) {
                                         return \in_array(strtolower($v), ['username', 'useridentifier'], true);
                                     })
-                                    ->thenInvalid('Cannot user "username" or "userIdentifier" as SAML mapping values')
+                                    ->thenInvalid('You cannot configure "username" and "userIdentifier" for SAML attribute mapping.')
                                 ->end()
                             ->end()
                         ->end()
