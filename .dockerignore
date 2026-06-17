@@ -57,6 +57,9 @@ eslint.config.mjs
 .codecov.yml
 phpunit.xml
 phpunit.xml.dist
+package.json
+pnpm-lock.yaml
+webpack.config.js
 
 # Docker and compose (not needed inside the image; .docker/ is copied explicitly)
 docker-compose.yml

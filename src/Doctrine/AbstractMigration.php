@@ -63,9 +63,11 @@ abstract class AbstractMigration extends BaseAbstractMigration
         }
     }
 
-    protected function preventEmptyMigrationWarning(): void
+    protected function preventEmptyMigrationWarning(bool $always = true): void
     {
-        $this->addSql('#prevent empty warning - no SQL to execute');
+        if ($always || \count($this->getSql()) === 0) {
+            $this->addSql('#prevent empty warning - no SQL to execute');
+        }
     }
 
     /**

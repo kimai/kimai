@@ -62,6 +62,7 @@ security:
             login_link:
                 check_route: link_login_check
                 lifetime: 900
+                login_path: login
                 max_uses: 3
                 # 'password' binds the HMAC signature to the password hash, so a
                 # link becomes invalid as soon as the user changes the password
@@ -80,6 +81,8 @@ security:
     access_control:
         - {path: '^/auth/2fa', role: IS_AUTHENTICATED_2FA_IN_PROGRESS}
         - {path: '^/auth', roles: PUBLIC_ACCESS}
+        - {path: '^/login', roles: PUBLIC_ACCESS}
+        - {path: '^/logout', roles: PUBLIC_ACCESS}
         - {path: '^/{_locale}$', role: PUBLIC_ACCESS}
         - {path: '^/{_locale}/auth', role: PUBLIC_ACCESS}
         - {path: '^/{_locale}/login', role: PUBLIC_ACCESS}

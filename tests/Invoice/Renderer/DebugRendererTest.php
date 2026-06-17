@@ -215,7 +215,8 @@ class DebugRendererTest extends TestCase
             'user.meta.hello',
             'user.meta.kitty',
             'testFromModelHydrator',
-            'project._counter',
+            'project.counter',
+            'activity.counter',
         ];
 
         if ($activityCounter === 1) {

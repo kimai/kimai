@@ -135,4 +135,39 @@ class SearchTermTest extends TestCase
             self::assertEquals($expected[2], $part->isExcluded());
         }
     }
+
+    public function testWhitespaceIsNormalizedWhenTokenizing(): void
+    {
+        $sut = new SearchTerm(" \tfoo\tbar:baz\nhello  world\t ");
+
+        self::assertTrue($sut->hasSearchTerm());
+        self::assertEquals('foo hello world', $sut->getSearchTerm());
+        self::assertEquals(['bar' => 'baz'], $sut->getSearchFields());
+        self::assertEquals(" \tfoo\tbar:baz\nhello  world\t ", $sut->getOriginalSearch());
+        self::assertCount(4, $sut->getParts());
+
+        $expectedParts = [
+            ['foo', null, false],
+            ['baz', 'bar', false],
+            ['hello', null, false],
+            ['world', null, false],
+        ];
+        $i = 0;
+        foreach ($sut->getParts() as $part) {
+            $expected = $expectedParts[$i++];
+            self::assertEquals($expected[0], $part->getTerm());
+            self::assertEquals($expected[1], $part->getField());
+            self::assertEquals($expected[2], $part->isExcluded());
+        }
+    }
+
+    public function testWhitespaceOnlySearchTermCreatesNoParts(): void
+    {
+        $sut = new SearchTerm(" \t \n ");
+
+        self::assertFalse($sut->hasSearchTerm());
+        self::assertEquals('', $sut->getSearchTerm());
+        self::assertEquals([], $sut->getSearchFields());
+        self::assertCount(0, $sut->getParts());
+    }
 }

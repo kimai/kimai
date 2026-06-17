@@ -2066,6 +2066,18 @@
         <source>estimation</source>
         <target state="translated">Оценка времени</target>
       </trans-unit>
+      <trans-unit id="DAMFhpR" resname="lock" xml:space="preserve">
+        <source>lock</source>
+        <target state="translated">Заблокировать</target>
+      </trans-unit>
+      <trans-unit id="LfO_otF" resname="reopen" xml:space="preserve">
+        <source>reopen</source>
+        <target state="translated">Открыть снова</target>
+      </trans-unit>
+      <trans-unit id="zO0oxtw" resname="start" xml:space="preserve">
+        <source>start</source>
+        <target state="translated">Старт</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
