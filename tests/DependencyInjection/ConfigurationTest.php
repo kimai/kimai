@@ -314,6 +314,33 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($config, []);
     }
 
+    public static function getDisallowedSamlMappingFieldNames(): iterable
+    {
+        yield 'username' => ['username'];
+        yield 'USERNAME' => ['USERNAME'];
+        yield 'useridentifier' => ['useridentifier'];
+        yield 'userIdentifier' => ['userIdentifier'];
+        yield 'UserIdentifier' => ['UserIdentifier'];
+    }
+
+    #[DataProvider('getDisallowedSamlMappingFieldNames')]
+    public function testValidateSamlFailsIfUsernameIsUsed(string $field): void
+    {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('Invalid configuration for path "kimai.saml.mapping.1.kimai": You cannot configure "username" and "userIdentifier" for SAML attribute mapping');
+
+        $config = $this->getMinConfig();
+        $config['saml'] = [
+            'activate' => true,
+            'mapping' => [
+                ['kimai' => 'email', 'saml' => '$email'],
+                ['kimai' => $field, 'saml' => 'username']
+            ],
+        ];
+
+        $this->assertConfig($config, []);
+    }
+
     public function testValidateSamlDoesNotTriggerOnDeactivatedSaml(): void
     {
         $finalizedConfig = $this->getCompiledConfig($this->getMinConfig());
@@ -522,6 +549,7 @@ class ConfigurationTest extends TestCase
             'saml' => [
                 'activate' => false,
                 'title' => 'Login with SAML',
+                'usernameAttribute' => null,
                 'roles' => [
                     'resetOnLogin' => true,
                     'attribute' => null,

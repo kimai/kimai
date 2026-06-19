@@ -847,6 +847,9 @@ final class Configuration implements ConfigurationInterface
                     // adjust their config between 1.x and 2.0
                     ->defaultValue('default')
                 ->end()
+                ->scalarNode('usernameAttribute')
+                    ->defaultNull()
+                ->end()
                 ->arrayNode('roles')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -872,7 +875,16 @@ final class Configuration implements ConfigurationInterface
                     ->arrayPrototype()
                         ->children()
                             ->scalarNode('saml')->isRequired()->cannotBeEmpty()->end()
-                            ->scalarNode('kimai')->isRequired()->cannotBeEmpty()->end()
+                            ->scalarNode('kimai')
+                                ->isRequired()
+                                ->cannotBeEmpty()
+                                ->validate()
+                                    ->ifTrue(function ($v) {
+                                        return \in_array(strtolower($v), ['username', 'useridentifier'], true);
+                                    })
+                                    ->thenInvalid('You cannot configure "username" and "userIdentifier" for SAML attribute mapping.')
+                                ->end()
+                            ->end()
                         ->end()
                     ->end()
                 ->end()

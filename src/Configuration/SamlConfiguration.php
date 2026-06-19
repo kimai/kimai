@@ -59,4 +59,9 @@ final class SamlConfiguration implements SamlConfigurationInterface
     {
         return (bool) $this->configuration->find('saml.connection.cleanupLongRelayState');
     }
+
+    public function getUsernameAttribute(): ?string
+    {
+        return $this->configuration->find('saml.usernameAttribute'); // @phpstan-ignore return.type
+    }
 }
