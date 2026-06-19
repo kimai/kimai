@@ -9,8 +9,10 @@
 
 namespace App\EventSubscriber;
 
+use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\UserCreateEvent;
+use App\Event\UserPreferenceEvent;
 use App\WorkingTime\Calculator\WorkingTimeCalculatorDay;
 use App\WorkingTime\Mode\WorkingTimeModeNone;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -20,14 +22,27 @@ final class WorkContractPreferenceSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            UserCreateEvent::class => ['onRegisterUserPreferences', 100]
+            UserPreferenceEvent::class => ['registerDefaultUserPreferences', 100],
+            UserCreateEvent::class => ['registerNewUserPreferences', 100]
         ];
     }
 
-    public function onRegisterUserPreferences(UserCreateEvent $event): void
+    public function registerDefaultUserPreferences(UserPreferenceEvent $event): void
     {
-        $user = $event->getUser();
+        if ($event->isBooting()) {
+            return;
+        }
 
+        $this->registerUserPreferences($event->getUser());
+    }
+
+    public function registerNewUserPreferences(UserCreateEvent $event): void
+    {
+        $this->registerUserPreferences($event->getUser());
+    }
+
+    private function registerUserPreferences(User $user): void
+    {
         $prefs = [
             UserPreference::WORK_CONTRACT_TYPE => WorkingTimeModeNone::ID,
             WorkingTimeCalculatorDay::WORK_HOURS_MONDAY => 0,
