@@ -86,11 +86,27 @@ $extraArgsStr = implode(' ', array_map('escapeshellarg', $extraArgs));
 $exitCode = 0;
 
 foreach ($testable as $plugin) {
-    // Clean baseline: clear test cache with all plugins loaded so the
-    // Symfony container is compiled with the correct bundle registrations
+    // Compile the container with exactly the bundle set this suite's phpunit.xml
+    // registers (its LOAD_PLUGINS_IN_TEST). Compiling with all plugins instead
+    // would wire another plugin's subscribers into the container while its routes
+    // stay absent from the test kernel's router — breaking full-page (HTML) renders.
+    // Falls back to all discovered plugins when the suite declares nothing.
+    $loadPlugins = $pluginList;
+    $suiteXml = @simplexml_load_file($plugin['config']);
+    if ($suiteXml !== false) {
+        foreach ($suiteXml->php->env ?? [] as $env) {
+            if ((string) $env['name'] === 'LOAD_PLUGINS_IN_TEST') {
+                $loadPlugins = (string) $env['value'];
+                break;
+            }
+        }
+    }
+
+    // Clean baseline: clear the test cache so the container is compiled with the
+    // bundle set the test kernel will register.
     passthru(sprintf(
         'APP_ENV=test APP_DEBUG=0 LOAD_PLUGINS_IN_TEST=%s php %s cache:clear --no-warmup --env=test --quiet',
-        escapeshellarg($pluginList),
+        escapeshellarg($loadPlugins),
         escapeshellarg($console)
     ));
 
