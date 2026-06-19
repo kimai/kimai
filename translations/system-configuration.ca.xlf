@@ -186,9 +186,9 @@
         <source>Closest</source>
         <target state="translated">Arrodoniment matemàtic al valor pròxim</target>
       </trans-unit>
-      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
+      <trans-unit id="IbERy.5" resname="Default" xml:space="preserve" approved="yes">
         <source>Default</source>
-        <target state="translated">L'inici s'arrodonirà cap avall, i el final i la durada cap amunt</target>
+        <target state="final">L'inici s'arrodonirà cap avall, i el final i la durada cap amunt</target>
       </trans-unit>
       <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
@@ -313,6 +313,10 @@
       <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="no" xml:space="preserve">
         <source>invoice.rounding_mode</source>
         <target state="translated">Mode d’arrodoniment</target>
+      </trans-unit>
+      <trans-unit id="uf2_qIW" resname="user_auth_wizard" xml:space="preserve" approved="yes">
+        <source>user_auth_wizard</source>
+        <target state="final">Mostra l'assistent de configuració als nous usuaris</target>
       </trans-unit>
     </body>
   </file>

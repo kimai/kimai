@@ -16,11 +16,11 @@
       </trans-unit>
       <trans-unit id=".3dyBTq" resname="both" xml:space="preserve">
         <source>Both</source>
-        <target state="needs-translation">Obojí</target>
+        <target state="translated">Společně</target>
       </trans-unit>
       <trans-unit id="KLIuHvt" resname="This is a mandatory field" xml:space="preserve">
         <source>This is a mandatory field</source>
-        <target state="needs-translation">Povinné</target>
+        <target state="translated">Závazné</target>
       </trans-unit>
       <trans-unit id="_ohHsMM" resname="create">
         <source>create</source>
@@ -1540,7 +1540,7 @@
       </trans-unit>
       <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
         <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
-        <target state="needs-translation">Nemoc, návštěva lékaře, péče o blízké příbuzné, atd.</target>
+        <target state="translated">Pracovní neschopnost, potřeba neodkladné lékařské péče , nezájem o zdravotní péči</target>
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
@@ -1961,6 +1961,46 @@
       <trans-unit id="lU1Njcy" resname="tax.type.standard" xml:space="preserve">
         <source>tax.type.standard</source>
         <target state="translated">Danitelné</target>
+      </trans-unit>
+      <trans-unit id="BmDRYT." resname="sending_company.help" xml:space="preserve">
+        <source>sending_company.help</source>
+        <target state="translated">Tato společnost je na faktuře uvedena jako vydavatel. Bude použito jméno, adresa a daňové údaje.</target>
+      </trans-unit>
+      <trans-unit id="Uzll0ps" resname="Customer portal" xml:space="preserve">
+        <source>Customer portal</source>
+        <target state="translated">Portál zákazníka</target>
+      </trans-unit>
+      <trans-unit id="cDOQMYv" resname="Beta" xml:space="preserve">
+        <source>Beta</source>
+        <target state="translated">Umožňuje funkci náhledu, která je stále ve vývoji.</target>
+      </trans-unit>
+      <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve">
+        <source>Code</source>
+        <target state="translated">Kód</target>
+      </trans-unit>
+      <trans-unit id="xZzzKxM" resname="orientation" xml:space="preserve">
+        <source>Orientation</source>
+        <target state="translated">Rozložení</target>
+      </trans-unit>
+      <trans-unit id="UcWoKWo" resname="portrait" xml:space="preserve">
+        <source>Portrait</source>
+        <target state="translated">Na výšku</target>
+      </trans-unit>
+      <trans-unit id="rLlV34K" resname="landscape" xml:space="preserve">
+        <source>Landscape</source>
+        <target state="translated">Na šířku</target>
+      </trans-unit>
+      <trans-unit id="UZUFKZg" resname="remaining_budget" xml:space="preserve">
+        <source>remaining_budget</source>
+        <target state="translated">Zbývající rozpočet</target>
+      </trans-unit>
+      <trans-unit id="eV6j76Q" resname="font" xml:space="preserve">
+        <source>font</source>
+        <target state="translated">Styl písma</target>
+      </trans-unit>
+      <trans-unit id="PciSBv9" resname="address_row" xml:space="preserve">
+        <source>address_row</source>
+        <target state="translated">Řada %row%</target>
       </trans-unit>
     </body>
   </file>
