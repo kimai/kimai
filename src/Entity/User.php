@@ -237,6 +237,8 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     #[Serializer\Groups(['User_Entity'])]
     #[OA\Property(ref: '#/components/schemas/User')]
     private ?User $supervisor = null;
+    #[ORM\Column(name: 'signature_date', type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $signatureDate = null;
 
     use ColorTrait;
 
@@ -697,6 +699,21 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function isRegularUserOnly(): bool
     {
         return $this->getRoles() === [static::DEFAULT_ROLE];
+    }
+
+    public function getSignatureDate(): string
+    {
+        return $this->signatureDate?->format(\DateTimeInterface::ATOM) ?? '';
+    }
+
+    /**
+     * This will reset all security signatures and therefor invalidate:
+     * - login links
+     * - remember me cookies
+     */
+    public function resetSecuritySignature(): void
+    {
+        $this->signatureDate = new \DateTimeImmutable('now', new \DateTimeZone($this->getTimezone()));
     }
 
     /**

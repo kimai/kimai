@@ -24,12 +24,12 @@ jobs:
         steps:
 
             -   name: Clone Kimai
-                uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+                uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
                 with:
                     persist-credentials: false
 
             -   name: Setup PHP
-                uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # 2.37.1
+                uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
                 with:
                     php-version: ${{ matrix.php }}
                     coverage: pcov
@@ -71,6 +71,9 @@ jobs:
 
             -   name: Lint codebase
                 run: composer linting
+
+            -   name: Check for published security advisories
+                run: composer audit --abandoned=report
 
             -   name: Check for security issues in packages
                 run: symfony security:check

@@ -193,6 +193,65 @@ class ProjectServiceTest extends TestCase
         self::assertEquals($expected($date), $project->getNumber());
     }
 
+    public function testProjectNumberIncrementsForMultipleCreateCallsOnSameInstance(): void
+    {
+        $configuration = SystemConfigurationFactory::createStub([
+            'project' => [
+                'copy_teams_on_create' => false,
+                'number_format' => '{pc,1}',
+            ]
+        ]);
+
+        $sut = $this->getSut(null, null, $configuration);
+
+        $project1 = $sut->createNewProject();
+        $project2 = $sut->createNewProject();
+        $project3 = $sut->createNewProject();
+
+        // countProject() is mocked and returns 0, the formatter normalizes increaseBy=0 to 1,
+        // so the first generated number is 2. Without the in-instance counter all three
+        // calls would re-use "2" — which is exactly the bug reported by the importer.
+        self::assertEquals('2', $project1->getNumber());
+        self::assertEquals('3', $project2->getNumber());
+        self::assertEquals('4', $project3->getNumber());
+    }
+
+    public function testProjectNumberSkipsAlreadyExistingNumbers(): void
+    {
+        $configuration = SystemConfigurationFactory::createStub([
+            'project' => [
+                'copy_teams_on_create' => false,
+                'number_format' => '{pc,1}',
+            ]
+        ]);
+
+        $repository = $this->createMock(ProjectRepository::class);
+        $repository->method('countProject')->willReturn(0);
+        // Pretend the database already contains projects with numbers 2 and 3 — the
+        // service must skip them and only return the next unused number.
+        $repository->method('findOneBy')->willReturnCallback(function (array $criteria): ?Project {
+            if (\in_array($criteria['number'] ?? null, ['2', '3'], true)) {
+                return new Project();
+            }
+
+            return null;
+        });
+
+        $dispatcher = $this->createMock(EventDispatcherInterface::class);
+        $dispatcher->method('dispatch')->willReturnCallback(static fn ($event) => $event);
+
+        $validator = $this->createMock(ValidatorInterface::class);
+        $validator->method('validate')->willReturn(new ConstraintViolationList());
+
+        $sut = new ProjectService($repository, $configuration, $dispatcher, $validator);
+
+        $project1 = $sut->createNewProject();
+        $project2 = $sut->createNewProject();
+
+        self::assertEquals('4', $project1->getNumber());
+        self::assertEquals('5', $project2->getNumber());
+    }
+
     /**
      * @return array<int, array{0: string, 1: \Closure(\DateTimeInterface): string}>
      */

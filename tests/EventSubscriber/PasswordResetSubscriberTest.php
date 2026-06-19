@@ -179,7 +179,7 @@ class PasswordResetSubscriberTest extends TestCase
         $urlGenerator
             ->expects($this->once())
             ->method('generate')
-            ->with('wizard', ['wizard' => 'password'])
+            ->with('wizard_password')
             ->willReturn('/wizard/password');
 
         $security = $this->createMock(AuthorizationCheckerInterface::class);

@@ -1450,9 +1450,9 @@
         <source>support</source>
         <target>الدعم</target>
       </trans-unit>
-      <trans-unit id="mz4ieCN" resname="donate">
+      <trans-unit id="mz4ieCN" resname="donate" xml:space="preserve">
         <source>donate</source>
-        <target>تبرع لمستقبل KIMAI</target>
+        <target state="translated">تبرع</target>
       </trans-unit>
       <trans-unit id="cR5DD88" resname="invoice_number_generator.date">
         <source>invoice_number_generator.date</source>
@@ -1676,7 +1676,7 @@
       </trans-unit>
       <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
         <source>Settings</source>
-        <target state="needs-translation">التفضيلات</target>
+        <target state="translated">الاعدادات</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
@@ -1932,7 +1932,7 @@
       </trans-unit>
       <trans-unit id="mhOe3Iy" resname="unlock_month.help" xml:space="preserve">
         <source>unlock_month.help</source>
-        <target state="translated">هذا الخيار يفك القفل عن جميع الايام في السنة بعد اختيار التاريخ المحدد</target>
+        <target state="translated">هذا الخيار يفك القفل عن جميع الايام في السنة بعد اختيار التاريخ المحدد.</target>
       </trans-unit>
       <trans-unit id="HQ2YM1b" resname="attendance_only_project" xml:space="preserve">
         <source>attendance_only_project</source>
@@ -1948,7 +1948,7 @@
       </trans-unit>
       <trans-unit id="y1XHR1Q" resname="address_deprecated" xml:space="preserve">
         <source>address_deprecated</source>
-        <target state="translated">سيتم ازالة هذا الحقل قريبا, يرجى نقل العنوان لانشاء فواتير صالحة (مثل, الفواتير الالكترونية)</target>
+        <target state="translated">سيتم ازالة هذا الحقل قريبا, يرجى نقل العنوان لانشاء فواتير صالحة (مثل, الفواتير الالكترونية).</target>
       </trans-unit>
       <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
         <source>sending_company</source>
@@ -1972,7 +1972,7 @@
       </trans-unit>
       <trans-unit id="BmDRYT." resname="sending_company.help" xml:space="preserve">
         <source>sending_company.help</source>
-        <target state="needs-translation">تظهر هذه الشركة كجهة إصدار على الفاتورة. سيتم استخدام الاسم والعنوان ومعلومات الضرائب.</target>
+        <target state="translated">تظهر هذه الشركة كجهة إصدار على الفاتورة. سيتم استخدام الاسم والعنوان ومعلومات الضرائب.</target>
       </trans-unit>
       <trans-unit id="xZzzKxM" resname="orientation" xml:space="preserve">
         <source>Orientation</source>
@@ -2061,6 +2061,26 @@
       <trans-unit id="6w8kS.m" resname="user_access_all" xml:space="preserve">
         <source>user_access_all</source>
         <target state="translated">السماح بالوصول لجميع المستخدمين</target>
+      </trans-unit>
+      <trans-unit id="jMvh7bn" resname="Credit Transfer" xml:space="preserve">
+        <source>Credit Transfer</source>
+        <target state="translated">تحويل رصيد</target>
+      </trans-unit>
+      <trans-unit id="E470U8W" resname="tax.type.reverse" xml:space="preserve">
+        <source>tax.type.reverse</source>
+        <target state="translated">رسوم عكسية</target>
+      </trans-unit>
+      <trans-unit id="hi31a3v" resname="tax.note.reverse_charge" xml:space="preserve">
+        <source>tax.note.reverse_charge</source>
+        <target state="translated">الضرائب الواجب دفعها على أساس رسوم عكسية</target>
+      </trans-unit>
+      <trans-unit id="DbF_j60" resname="count_as_expected_time" xml:space="preserve">
+        <source>count_as_expected_time</source>
+        <target state="translated">العد حسب الساعات المتوقعة: %type%</target>
+      </trans-unit>
+      <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
+        <source>count_as_expected_time_help</source>
+        <target state="translated">وعند التمكين، ستحسب %type% ساعات عمل من الساعات اليومية المتوقعة. وعندما يُعطل، تُحدد الساعات المتوقعة لهذه الأيام إلى صفر. ويحافظ كلا الإطارين على توازن محايد ولكنهما يؤثران على المجاميع الشهرية بشكل مختلف.</target>
       </trans-unit>
     </body>
   </file>

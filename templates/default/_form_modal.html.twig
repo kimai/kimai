@@ -1,3 +1,7 @@
+{% set bodyClasses = 'modal-body' %}
+{% if fullsize ?? false %}
+    {% set bodyClasses = bodyClasses ~ ' p-0' %}
+{% endif %}
 <div class="modal {% block modal_class %}{% endblock %}" id="{% block modal_id %}form_modal{% endblock %}" tabindex="-1" role="dialog" aria-labelledby="{{ block('modal_id') }}_label">
     <div class="modal-dialog {% block modal_size %}modal-lg{% endblock %}" role="document">
         <div class="modal-content">
@@ -14,7 +18,7 @@
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'action.close'|trans }}"></button>
             </div>
-            <div class="modal-body">
+            <div class="{{ bodyClasses }}">
                 {% block modal_body %}
                     {% block form_body_outer %}
                         {% block form_body_pre %}

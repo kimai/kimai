@@ -135,9 +135,9 @@ final class UserController extends BaseApiController
      * Create user
      */
     #[IsGranted('create_user')]
-    #[OA\Post(description: 'Creates a new user and returns it afterwards')]
+    #[OA\Post(description: 'Creates a new user and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created user', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/UserCreateForm'))]
-    #[Route(methods: ['POST'], path: '', name: 'post_user')]
+    #[Route(path: '', name: 'post_user', methods: ['POST'])]
     public function postAction(Request $request, UserService $userService): Response
     {
         $user = $userService->createNewUser();

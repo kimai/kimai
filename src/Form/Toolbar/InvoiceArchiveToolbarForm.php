@@ -19,16 +19,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Defines the form used for filtering timesheet entries for invoices.
  * @extends AbstractType<InvoiceArchiveQuery>
  */
-final class InvoiceArchiveForm extends AbstractType
+final class InvoiceArchiveToolbarForm extends AbstractType
 {
     use ToolbarFormTrait;
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addSearchTermInputField($builder);
         $this->addDateRange($builder, ['timezone' => $options['timezone']]);
         $this->addCustomerMultiChoice($builder, ['required' => false, 'start_date_param' => null, 'end_date_param' => null, 'ignore_date' => true, 'placeholder' => ''], true);
         $builder->add('status', InvoiceStatusType::class, ['required' => false]);
+        $this->addUsersChoice($builder);
         $this->addPageSizeChoice($builder);
         $this->addHiddenPagination($builder);
         $this->addOrder($builder);

@@ -34,6 +34,10 @@
         <source>wizard.password.title</source>
         <target state="translated">كلمة المرور الخاصة بك</target>
       </trans-unit>
+      <trans-unit id="zlNbbUg" resname="wizard.password.description" xml:space="preserve">
+        <source>wizard.password.description</source>
+        <target state="translated">من فضلك أدخل كلمة السر الجديدة التي ستستخدم لتسجيل الدخول من الآن فصاعداً.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

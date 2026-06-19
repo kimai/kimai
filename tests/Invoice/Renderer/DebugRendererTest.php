@@ -205,6 +205,7 @@ class DebugRendererTest extends TestCase
             'activity.budget_open_plain',
             'activity.time_budget_open',
             'activity.time_budget_open_plain',
+            'user.account',
             'user.alias',
             'user.display',
             'user.email',
@@ -214,7 +215,8 @@ class DebugRendererTest extends TestCase
             'user.meta.hello',
             'user.meta.kitty',
             'testFromModelHydrator',
-            'project._counter',
+            'project.counter',
+            'activity.counter',
         ];
 
         if ($activityCounter === 1) {
@@ -341,6 +343,7 @@ class DebugRendererTest extends TestCase
             'entry.user_display',
             'entry.user_alias',
             'entry.user_title',
+            'entry.user_account',
             'entry.user_preference.foo',
             'entry.user_preference.mad',
             'entry.activity',

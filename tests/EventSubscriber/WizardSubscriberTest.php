@@ -10,11 +10,15 @@
 namespace App\Tests\EventSubscriber;
 
 use App\Entity\User;
+use App\Event\WizardEvent;
 use App\EventSubscriber\WizardSubscriber;
 use App\Tests\Mocks\SystemConfigurationFactory;
+use App\Wizard\WizardManager;
+use App\Wizard\WizardStep;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -41,7 +45,7 @@ class WizardSubscriberTest extends TestCase
         $storage = $this->createMock(TokenStorageInterface::class);
         $storage->expects($this->never())->method('getToken');
 
-        $sut = new WizardSubscriber($urlGenerator, $security, $storage, SystemConfigurationFactory::createStub());
+        $sut = new WizardSubscriber($urlGenerator, $security, $storage, SystemConfigurationFactory::createStub(), $this->createWizardManager());
         $event = $this->createRequestEvent('/dashboard', false);
 
         $sut->onKernelRequest($event);
@@ -58,7 +62,7 @@ class WizardSubscriberTest extends TestCase
         $storage = $this->createMock(TokenStorageInterface::class);
         $storage->expects($this->once())->method('getToken')->willReturn(null);
 
-        $sut = new WizardSubscriber($urlGenerator, $security, $storage, SystemConfigurationFactory::createStub());
+        $sut = new WizardSubscriber($urlGenerator, $security, $storage, SystemConfigurationFactory::createStub(), $this->createWizardManager());
         $event = $this->createRequestEvent('/dashboard');
 
         $sut->onKernelRequest($event);
@@ -89,7 +93,7 @@ class WizardSubscriberTest extends TestCase
         $storage = $this->createMock(TokenStorageInterface::class);
         $storage->expects($this->once())->method('getToken')->willReturn($token);
 
-        $sut = new WizardSubscriber($urlGenerator, $security, $storage, SystemConfigurationFactory::createStub());
+        $sut = new WizardSubscriber($urlGenerator, $security, $storage, SystemConfigurationFactory::createStub(), $this->createWizardManager());
         $event = $this->createRequestEvent($uri);
 
         $sut->onKernelRequest($event);
@@ -113,7 +117,7 @@ class WizardSubscriberTest extends TestCase
             'user' => [
                 'wizard' => true,
             ]
-        ]));
+        ]), $this->createWizardManager());
         $event = $this->createRequestEvent('/dashboard');
 
         $sut->onKernelRequest($event);
@@ -137,7 +141,7 @@ class WizardSubscriberTest extends TestCase
             'user' => [
                 'wizard' => true,
             ]
-        ]));
+        ]), $this->createWizardManager());
         $event = $this->createRequestEvent('/dashboard');
 
         $sut->onKernelRequest($event);
@@ -163,7 +167,7 @@ class WizardSubscriberTest extends TestCase
             'user' => [
                 'wizard' => false,
             ]
-        ]));
+        ]), $this->createWizardManager());
         $event = $this->createRequestEvent('/dashboard');
 
         $sut->onKernelRequest($event);
@@ -181,7 +185,7 @@ class WizardSubscriberTest extends TestCase
         $urlGenerator
             ->expects($this->once())
             ->method('generate')
-            ->with('wizard', ['wizard' => 'profile'])
+            ->with('wizard_profile')
             ->willReturn('/wizard/profile');
 
         $security = $this->createMock(AuthorizationCheckerInterface::class);
@@ -190,11 +194,16 @@ class WizardSubscriberTest extends TestCase
         $storage = $this->createMock(TokenStorageInterface::class);
         $storage->expects($this->once())->method('getToken')->willReturn($token);
 
+        $manager = $this->createWizardManager(static function (WizardEvent $event): void {
+            $event->addStep(new WizardStep('intro', 'wizard_intro', 100));
+            $event->addStep(new WizardStep('profile', 'wizard_profile', 200));
+        });
+
         $sut = new WizardSubscriber($urlGenerator, $security, $storage, SystemConfigurationFactory::createStub([
             'user' => [
                 'wizard' => true,
             ]
-        ]));
+        ]), $manager);
         $event = $this->createRequestEvent('/dashboard');
 
         $sut->onKernelRequest($event);
@@ -202,6 +211,39 @@ class WizardSubscriberTest extends TestCase
         $response = $event->getResponse();
         self::assertInstanceOf(RedirectResponse::class, $response);
         self::assertSame('/wizard/profile', $response->headers->get('Location'));
+    }
+
+    public function testOnKernelRequestDoesNotRedirectWhenAllStepsSeen(): void
+    {
+        $user = new User();
+        $user->setWizardAsSeen('intro');
+        $user->setWizardAsSeen('profile');
+        $token = $this->createUserToken($user);
+
+        $urlGenerator = $this->createMock(UrlGeneratorInterface::class);
+        $urlGenerator->expects($this->never())->method('generate');
+
+        $security = $this->createMock(AuthorizationCheckerInterface::class);
+        $security->expects($this->once())->method('isGranted')->with('IS_AUTHENTICATED_FULLY')->willReturn(true);
+
+        $storage = $this->createMock(TokenStorageInterface::class);
+        $storage->expects($this->once())->method('getToken')->willReturn($token);
+
+        $manager = $this->createWizardManager(static function (WizardEvent $event): void {
+            $event->addStep(new WizardStep('intro', 'wizard_intro', 100));
+            $event->addStep(new WizardStep('profile', 'wizard_profile', 200));
+        });
+
+        $sut = new WizardSubscriber($urlGenerator, $security, $storage, SystemConfigurationFactory::createStub([
+            'user' => [
+                'wizard' => true,
+            ]
+        ]), $manager);
+        $event = $this->createRequestEvent('/dashboard');
+
+        $sut->onKernelRequest($event);
+
+        self::assertNull($event->getResponse());
     }
 
     private function createUserToken(User $user): TokenInterface
@@ -218,5 +260,22 @@ class WizardSubscriberTest extends TestCase
         $request = Request::create($uri);
 
         return new RequestEvent($kernel, $request, $mainRequest ? HttpKernelInterface::MAIN_REQUEST : HttpKernelInterface::SUB_REQUEST);
+    }
+
+    /**
+     * @param (callable(WizardEvent): void)|null $stepRegistrar
+     */
+    private function createWizardManager(?callable $stepRegistrar = null): WizardManager
+    {
+        $dispatcher = $this->createMock(EventDispatcherInterface::class);
+        $dispatcher->method('dispatch')->willReturnCallback(static function (object $event) use ($stepRegistrar): object {
+            if ($stepRegistrar !== null && $event instanceof WizardEvent) {
+                $stepRegistrar($event);
+            }
+
+            return $event;
+        });
+
+        return new WizardManager($dispatcher);
     }
 }

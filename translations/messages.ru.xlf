@@ -1052,11 +1052,11 @@
       </trans-unit>
       <trans-unit id="tvV0NhL" resname="delete_warning.short_stats" xml:space="preserve">
         <source>delete_warning.short_stats</source>
-        <target state="needs-translation">В настоящее время существует %records% записей учета времени, общая длительность которых составляет %duration%.</target>
+        <target state="translated">В настоящее время существует %records% записей времени, общая продолжительность которых составляет %duration%.</target>
       </trans-unit>
       <trans-unit id="W92QGbY" resname="export.warn_result_amount" xml:space="preserve">
         <source>export.warn_result_amount</source>
-        <target state="needs-translation">Ваш поиск дал %count% результатов. Если экспорт не удается, вам необходимо уменьшить область поиска.</target>
+        <target state="translated">Ваш поиск даёт %count% результатов. Если экспорт не удастся, вам придётся сузить поиск.</target>
       </trans-unit>
       <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month">
         <source>stats.percentUsedLeft_month</source>
@@ -2081,6 +2081,18 @@
       <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
         <source>count_as_expected_time_help</source>
         <target state="translated">При активации, %type% учтётся в рабочие часы в расчёте ожидаемых дневных часов. При отключении, ожидаемые часы для этих дней будут обнулены. Обе настройки сохраняют нейтральный баланс, но по-разному влияют на месячные итоги.</target>
+      </trans-unit>
+      <trans-unit id="DAMFhpR" resname="lock" xml:space="preserve">
+        <source>lock</source>
+        <target state="translated">Заблокировать</target>
+      </trans-unit>
+      <trans-unit id="LfO_otF" resname="reopen" xml:space="preserve">
+        <source>reopen</source>
+        <target state="translated">Открыть снова</target>
+      </trans-unit>
+      <trans-unit id="zO0oxtw" resname="start" xml:space="preserve">
+        <source>start</source>
+        <target state="translated">Старт</target>
       </trans-unit>
     </body>
   </file>

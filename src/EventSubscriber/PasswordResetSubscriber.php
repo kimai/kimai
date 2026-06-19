@@ -64,7 +64,7 @@ class PasswordResetSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $response = new RedirectResponse($this->urlGenerator->generate('wizard', ['wizard' => 'password']));
+        $response = new RedirectResponse($this->urlGenerator->generate('wizard_password'));
         $event->setResponse($response);
     }
 }
