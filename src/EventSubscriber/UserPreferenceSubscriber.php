@@ -14,7 +14,6 @@ use App\Controller\HomepageController;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
-use App\Event\RegisterUserPreferencesEvent;
 use App\Event\UserPreferenceEvent;
 use App\Form\Type\CalendarViewType;
 use App\Form\Type\FavoriteMenuType;
@@ -162,7 +161,5 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 $user->addPreference($preference);
             }
         }
-
-        $this->eventDispatcher->dispatch(new RegisterUserPreferencesEvent($user));
     }
 }
