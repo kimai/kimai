@@ -42,7 +42,7 @@
     "bootstrap": "^5.3.8",
     "chart.js": "^4.5.1",
     "core-js": "^3.49.0",
-    "dompurify": "^3.4.10",
+    "dompurify": "^3.4.11",
     "eslint": "^9.39.4",
     "globals": "^15.15.0",
     "gridstack": "^7.3.0",

@@ -3,7 +3,7 @@
     "app": {
       "js": [
         "/build/runtime.684e9f6d.js",
-        "/build/app.b37ecf21.js"
+        "/build/app.9b8f9a75.js"
       ],
       "css": [
         "/build/app.49955ea2.css"
@@ -12,7 +12,7 @@
     "app-rtl": {
       "js": [
         "/build/runtime.684e9f6d.js",
-        "/build/app-rtl.d60af4d3.js"
+        "/build/app-rtl.6cb62422.js"
       ],
       "css": [
         "/build/app-rtl.e8e3029e.css"
@@ -21,7 +21,7 @@
     "export-pdf": {
       "js": [
         "/build/runtime.684e9f6d.js",
-        "/build/export-pdf.ae450b6f.js"
+        "/build/export-pdf.5a61594d.js"
       ],
       "css": [
         "/build/export-pdf.d8a6c23b.css"
@@ -30,7 +30,7 @@
     "invoice": {
       "js": [
         "/build/runtime.684e9f6d.js",
-        "/build/invoice.a24e99c2.js"
+        "/build/invoice.98e3fce4.js"
       ],
       "css": [
         "/build/invoice.36018785.css"
@@ -39,7 +39,7 @@
     "invoice-pdf": {
       "js": [
         "/build/runtime.684e9f6d.js",
-        "/build/invoice-pdf.455a623b.js"
+        "/build/invoice-pdf.b95df1de.js"
       ],
       "css": [
         "/build/invoice-pdf.2b749265.css"
@@ -72,7 +72,7 @@
     "highlight": {
       "js": [
         "/build/runtime.684e9f6d.js",
-        "/build/highlight.60f96e8e.js"
+        "/build/highlight.24c969f2.js"
       ],
       "css": [
         "/build/highlight.98bf3927.css"
@@ -81,22 +81,22 @@
   },
   "integrity": {
     "/build/runtime.684e9f6d.js": "sha384-suKiEX2de4fdNqQzdYbUd6osp4AepD9FiMXl+1QdvgMW9dcQqUWQNQasf3KWzwLr",
-    "/build/app.b37ecf21.js": "sha384-1SEhDk1nV9XUef26cxxcMHWSS5vurCrlUK++QcwddqJ5dYBt9VR/vUUtFVd67mk1",
+    "/build/app.9b8f9a75.js": "sha384-f22nxPURqJnQ73mwunLiJNfmgtdsRe1OmYhCMIxNtli/lTEFjE4blGcxID64/aDt",
     "/build/app.49955ea2.css": "sha384-8ix/CKnR2d1mU3tMEFJPrOOPtQA2tdzHugEJMnODX+7my6dFwlworNdfZwrwuvz5",
-    "/build/app-rtl.d60af4d3.js": "sha384-6FJJeI9vhVlvR3aai1llZp662mZG3Fqv7a/6XZWSmxJaNOrFBUBoFK+DvV2YfCkC",
+    "/build/app-rtl.6cb62422.js": "sha384-+Qe2UDfczBxeGkLsQbu0XdeVZaqMgQABeZKOzbl2IuiKi7XHZKYkGf+pOJ6rDAXy",
     "/build/app-rtl.e8e3029e.css": "sha384-21kGyBRbajbE/gt4g8ej+clQSGAvYx1BMmiUMRTAE3ZVpMb5bvO/kVRcdKuV97J5",
-    "/build/export-pdf.ae450b6f.js": "sha384-2Tqs5I8CSBIqUe6gFQUahHICyuyeEUUmYznouJFIRJYI6rod1P6KMm1XR4cQDFbE",
+    "/build/export-pdf.5a61594d.js": "sha384-C7qvFoiVESu9Q5s1BTeJDNx9T0eq9aWc72Lljm5PAd8trPulfSvPbcV9mEGEiizb",
     "/build/export-pdf.d8a6c23b.css": "sha384-ztepocHE4rnGE9eKZ4kL6jTKaePUyiwiB9TjJjstjpf/ckcKg1HedrEOOk/8ElJg",
-    "/build/invoice.a24e99c2.js": "sha384-pMdWqm7KyH9q4yLvN7HjJT934ZTNEEiXxzYoodR+vU+PsThV7kuLZl/o3ayGp2+r",
+    "/build/invoice.98e3fce4.js": "sha384-UMbDLtx2NN6w5+e6jzrHs6AE3ncLS2eSnThuPM0h1bjgGWC7yrD+VwpG8L40RDmh",
     "/build/invoice.36018785.css": "sha384-jukM9uZ6pexDxXKgZThSxiqXimzsxzniBMHz08N9x8ryXZYkM5r/ZgaainCV0+J6",
-    "/build/invoice-pdf.455a623b.js": "sha384-UnAhvPe1DZsI9ZZx3vLqz0DSX9UKoAGqQ9HQAUQo/zhyo8CrgUre+C9lgIKUG2dj",
+    "/build/invoice-pdf.b95df1de.js": "sha384-UR3ydRd7G8xJIGmQa1Vk8CosiI8ATPc5q7gIenUxOeuC5GPONEU6MafXQLNtcddE",
     "/build/invoice-pdf.2b749265.css": "sha384-DXXgkz2WWnrWnfBnXX5fmfPQSPb98upMnWxYKwTGYS04EhrPIWfDCutB2unIrWh7",
     "/build/chart.b21da607.js": "sha384-/fFG+fPuAmuBnuLQBn7uC/3lT9zqKBSj6n3R6+8BIviR6DMYrWRWpyh1/kN7A6zf",
     "/build/calendar.7f100f67.js": "sha384-1bKtpSG8lTeDzKLavFZNey/ZuINRPQiBJF1HB6halbmDIagXIFTkFVMf0UeOGfWH",
     "/build/calendar.287b9d06.css": "sha384-U1MhUddqhzynvw0SfqX+rVSrWakw85c2KAJgM+F3EtQ7b7rAJzBvakX0Apwy7Vu0",
     "/build/dashboard.3485b30a.js": "sha384-r0WM8JWtoPAYbyYqO7lUaGIRqt+ajMHjXotKjRQOnM642kEg+3yO5WeiNLBI9+AD",
     "/build/dashboard.b7129fa1.css": "sha384-2nn5hLA+3YedgHYBpge62S8Losj8aoPwK9Zk9EvN1xEYatvOUQ7H3rIR2UUJAGOS",
-    "/build/highlight.60f96e8e.js": "sha384-njFG2WH6c7KuZ6QWzqthZm3QlkQNW/CNKQihJegRktD/8Y/g93mNXKHaGZ0x6AHC",
+    "/build/highlight.24c969f2.js": "sha384-5yEF9mMrpfznjnYrbd0CupApGTvyqBOWjx/uHBdPQagb13YXQ8X9ga/j3rVCrLVD",
     "/build/highlight.98bf3927.css": "sha384-YgweSwDwN0dI4DEmh478xYVw/TewJYvCO1QTbWHpaHFDPuLrZvYMR0Tc+QfFxVPE"
   }
 }
