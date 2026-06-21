@@ -83,6 +83,6 @@ final class HomepageController extends AbstractController
             }
         }
 
-        return $this->redirectToRoute($defaultRoute, ['_locale' => User::DEFAULT_LANGUAGE]);
+        return $this->redirectToRoute('timesheet', ['_locale' => User::DEFAULT_LANGUAGE]);
     }
 }
