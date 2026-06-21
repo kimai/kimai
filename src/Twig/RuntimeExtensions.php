@@ -27,6 +27,7 @@ final class RuntimeExtensions extends AbstractExtension
     public function getFunctions(): array
     {
         return [
+            new TwigFunction('theme_event', [ThemeExtension::class, 'themeEvent'], ['is_safe' => ['html']]),
             new TwigFunction('trigger', [ThemeExtension::class, 'trigger'], ['needs_environment' => true]),
             new TwigFunction('actions', [ThemeExtension::class, 'actions']),
             new TwigFunction('get_title', [ThemeExtension::class, 'generateTitle']),
