@@ -45,7 +45,7 @@ class TimesheetEditForm extends AbstractType
 
     public function __construct(
         private readonly CustomerRepository $customers,
-        private readonly SystemConfiguration $systemConfiguration
+        private readonly SystemConfiguration $systemConfiguration,
     )
     {
     }
@@ -131,12 +131,15 @@ class TimesheetEditForm extends AbstractType
         // TODO pre-select if only one exists
         $this->addProject($builder, $isNew, $project, $customer);
 
-        // TODO make creation possible
-        //$allowCreate = (bool) $this->systemConfiguration->find('activity.allow_inline_create');
-        $this->addActivity($builder, $activity, $project, [
-            'allow_create' => false,
-            // 'allow_create' => $allowCreate && $options['create_activity'],
-        ]);
+        // Enable inline creation of activities only when the user is granted to create activities
+        $activityOptions = [];
+        if ($options['create_activity']) {
+            $activityOptions = [
+                'allow_create' => true,
+                'api_data' => ['create' => 'post_activity'],
+            ];
+        }
+        $this->addActivity($builder, $activity, $project, $activityOptions);
 
         $descriptionOptions = ['required' => false];
         if (!$isNew) {
