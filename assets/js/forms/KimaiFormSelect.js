@@ -255,10 +255,12 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
             const optionLength = allOptions.length;
             let selectOption = '';
 
-            if (optionLength === 1 && node.dataset['autoselect'] === undefined) {
-                selectOption = allOptions[0].value;
-            } else if (optionLength === 2 && emptyOption !== null) {
-                selectOption = allOptions[1].value;
+            if (optionLength > 0 && node.dataset['autoselect'] === undefined) {
+                if (optionLength > 1 && emptyOption !== null) {
+                    selectOption = allOptions[1].value;
+                } else {
+                    selectOption = allOptions[0].value;
+                }
             }
 
             if (selectOption !== '') {
