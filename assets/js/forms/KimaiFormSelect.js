@@ -542,6 +542,11 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
      */
     _updateSelect(select, data)
     {
+        if (!Array.isArray(data)) {
+            this._updateOptions(select, data);
+            return;
+        }
+
         const options = {};
         for (const apiData of data) {
             let title = '__empty__';
