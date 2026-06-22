@@ -240,9 +240,11 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
         options.forEach(child => node.appendChild(child));
 
         // append the ones with no parent at the end (e.g. global activities)
-        const optGroupEmpty = this._createOptgroup('');
-        emptyOpts.forEach(child => optGroupEmpty.appendChild(child));
-        node.appendChild(optGroupEmpty);
+        if (emptyOpts.length > 0) {
+            const optGroupEmpty = this._createOptgroup('');
+            emptyOpts.forEach(child => optGroupEmpty.appendChild(child));
+            node.appendChild(optGroupEmpty);
+        }
 
         // if available, re-select the previous selected option (mostly usable for global activities)
         node.value = selectedValue;
