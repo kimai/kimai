@@ -24,6 +24,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  */
 final class TimesheetVoter extends Voter
 {
+    public const CREATE = 'create';
     public const VIEW = 'view';
     public const START = 'start';
     public const STOP = 'stop';
@@ -50,7 +51,7 @@ final class TimesheetVoter extends Voter
         'edit_billable',
         'duplicate',
         'is_owner',
-        'create'
+        self::CREATE
     ];
 
     private ?bool $lockdownGrace = null;
@@ -94,7 +95,7 @@ final class TimesheetVoter extends Voter
             case 'is_owner':
                 return (!$subject instanceof MultiUserTimesheet) && $user->getId() === $subject->getUser()?->getId();
 
-            case 'create':
+            case self::CREATE:
             case self::START:
                 if (!$this->canStart($user, $subject)) {
                     return false;
@@ -120,7 +121,7 @@ final class TimesheetVoter extends Voter
                 if (!$this->canStart($user, $subject)) {
                     return false;
                 }
-                $permission = self::EDIT;
+                $permission = self::CREATE;
                 break;
 
             case self::VIEW_RATE:
