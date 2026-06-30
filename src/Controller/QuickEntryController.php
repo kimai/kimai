@@ -66,6 +66,7 @@ final class QuickEntryController extends AbstractController
 
         $user = $values->getUser() ?? $user;
         $factory = $this->getDateTimeFactory($user);
+        $allowCreate = $this->isGranted($user === $this->getUser() ? 'create_own_timesheet' : 'create_other_timesheet');
 
         $begin = $values->getDate();
 
@@ -192,23 +193,26 @@ final class QuickEntryController extends AbstractController
             $model->setMetaFields($metaFields);
         }
 
-        // create prototype model
-        $empty = $formModel->createRow($user);
-        $empty->setMetaFields($metaFields);
-        $empty->markAsPrototype();
-        foreach ($week as $dayId => $day) {
-            $tmp = $this->timesheetService->createNewTimesheet($user);
-            $tmp->setDuration(null);
-            $newTime = \DateTime::createFromInterface($day['day']);
-            $newTime = $newTime->setTime($defaultHour, $defaultMinute, 0, 0);
-            $tmp->setBegin($newTime);
-            $this->timesheetService->prepareNewTimesheet($tmp);
-            $empty->addTimesheet($tmp);
+        $empty = null;
+        if ($allowCreate) {
+            // create prototype model
+            $empty = $formModel->createRow($user);
+            $empty->setMetaFields($metaFields);
+            $empty->markAsPrototype();
+            foreach ($week as $dayId => $day) {
+                $tmp = $this->timesheetService->createNewTimesheet($user);
+                $tmp->setDuration(null);
+                $newTime = \DateTime::createFromInterface($day['day']);
+                $newTime = $newTime->setTime($defaultHour, $defaultMinute, 0, 0);
+                $tmp->setBegin($newTime);
+                $this->timesheetService->prepareNewTimesheet($tmp);
+                $empty->addTimesheet($tmp);
+            }
         }
 
         // add empty rows for simpler starting
         $minRows = \intval($this->configuration->find('quick_entry.minimum_rows'));
-        if (!$locked && $formModel->countRows() < $minRows) {
+        if (!$locked && $allowCreate && $formModel->countRows() < $minRows) {
             $newRows = $minRows - $formModel->countRows();
             for ($a = 0; $a < $newRows; $a++) {
                 $model = $formModel->addRow($user);
@@ -247,17 +251,16 @@ final class QuickEntryController extends AbstractController
                         $duration = $timesheet->getDuration(false);
                         // running timesheets also have a empty duration.
                         // we distinguish them from temporary ones, to make sure they will not be deleted
-                        if ($timesheet->isRunning()) {
-                            $saveTimesheets[] = $timesheet;
-                        } elseif ($duration === null) {
+                        if (!$timesheet->isRunning() && $duration === null) {
                             if ($this->isGranted('delete', $timesheet)) {
                                 $deleteTimesheets[] = $timesheet;
                             }
-                        } else {
+                        } elseif ($this->isGranted('edit', $timesheet)) {
                             $saveTimesheets[] = $timesheet;
                         }
                     } else {
-                        if ($timesheet->getDuration() !== null) {
+                        // empty duration = nothing entered in the form, do not create
+                        if ($timesheet->getDuration() !== null && $this->isGranted('create', $timesheet)) {
                             $saveTimesheets[] = $timesheet;
                         }
                     }
@@ -272,16 +275,8 @@ final class QuickEntryController extends AbstractController
                 }
 
                 if (\count($saveTimesheets) > 0) {
-                    $saveMe = [];
-                    foreach ($saveTimesheets as $timesheet) {
-                        if ($timesheet->getId() === null || $this->isGranted('edit', $timesheet)) {
-                            $saveMe[] = $timesheet;
-                        }
-                    }
-                    if (\count($saveMe) > 0) {
-                        $this->timesheetService->updateMultipleTimesheets($saveMe);
-                        $saved = true;
-                    }
+                    $this->timesheetService->updateMultipleTimesheets($saveTimesheets);
+                    $saved = true;
                 }
 
                 if ($saved) {

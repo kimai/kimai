@@ -50,6 +50,7 @@ final class TimesheetVoter extends Voter
         'edit_billable',
         'duplicate',
         'is_owner',
+        'create'
     ];
 
     private ?bool $lockdownGrace = null;
@@ -93,6 +94,7 @@ final class TimesheetVoter extends Voter
             case 'is_owner':
                 return (!$subject instanceof MultiUserTimesheet) && $user->getId() === $subject->getUser()?->getId();
 
+            case 'create':
             case self::START:
                 if (!$this->canStart($user, $subject)) {
                     return false;
@@ -148,9 +150,6 @@ final class TimesheetVoter extends Voter
 
     private function canStart(User $user, Timesheet $timesheet): bool
     {
-        // possible improvements for the future:
-        // we could check the amount of active entries (maybe slow)
-
         if (null === $timesheet->getActivity()) {
             return false;
         }
