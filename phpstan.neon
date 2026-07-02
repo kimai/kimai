@@ -598,6 +598,11 @@ parameters:
             path: src/Configuration/SystemConfiguration.php
 
         -
+            message: "#^Method App\\\\Configuration\\\\SystemConfiguration\\:\\:getCustomerDefaultLanguage\\(\\) should return string\\|null but returns bool\\|float\\|int\\|string\\|null\\.$#"
+            count: 1
+            path: src/Configuration/SystemConfiguration.php
+
+        -
             message: "#^Method App\\\\Configuration\\\\SystemConfiguration\\:\\:offsetExists\\(\\) has parameter \\$offset with no type specified\\.$#"
             count: 1
             path: src/Configuration/SystemConfiguration.php
