@@ -150,6 +150,10 @@ class CustomerEditForm extends AbstractType
                 'help' => 'help.invoiceTemplate_customer',
                 'required' => false,
             ])
+            ->add('invoiceEmail', MailType::class, [
+                'label' => 'invoice_email',
+                'required' => false,
+            ])
             ->add('buyerReference', TextType::class, [
                 'label' => 'buyerReference',
                 'required' => false,
