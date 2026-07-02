@@ -253,6 +253,7 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
         self::assertNull($configService->find('defaults.user.timezone'));
         self::assertEquals('auto', $configService->find('defaults.user.theme'));
         self::assertEquals('en', $configService->find('defaults.user.language'));
+        self::assertEquals('timesheet', $configService->find('defaults.user.homepage'));
 
         $form = $client->getCrawler()->filter('form[name=system_configuration_form_user]')->form();
         $client->submit($form, [
@@ -261,6 +262,7 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
                     ['name' => 'defaults.user.timezone', 'value' => 'Pacific/Tahiti'],
                     ['name' => 'defaults.user.language', 'value' => 'ru'],
                     ['name' => 'defaults.user.theme', 'value' => 'dark'],
+                    ['name' => 'defaults.user.homepage', 'value' => 'dashboard'],
                 ]
             ]
         ]);
@@ -274,6 +276,7 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
         self::assertEquals('Pacific/Tahiti', $configService->find('defaults.user.timezone'));
         self::assertEquals('dark', $configService->find('defaults.user.theme'));
         self::assertEquals('ru', $configService->find('defaults.user.language'));
+        self::assertEquals('dashboard', $configService->find('defaults.user.homepage'));
     }
 
     public function testUpdateCustomerConfigValidation(): void
