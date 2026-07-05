@@ -310,6 +310,14 @@
         <source>allow_duplicate_number</source>
         <target state="translated">Povolit vícenásobné použití stejného čísla</target>
       </trans-unit>
+      <trans-unit id="uf2_qIW" resname="user_auth_wizard" xml:space="preserve">
+        <source>user_auth_wizard</source>
+        <target state="needs-translation">Zobrazit průvodce nastavením pro nové uživatele</target>
+      </trans-unit>
+      <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="no" xml:space="preserve">
+        <source>invoice.rounding_mode</source>
+        <target state="needs-translation">Režim zaokrouhlování</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
