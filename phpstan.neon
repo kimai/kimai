@@ -693,11 +693,6 @@ parameters:
             path: src/Controller/DoctorController.php
 
         -
-            message: "#^Parameter \\#2 \\$subject of function preg_match_all expects string, string\\|false given\\.$#"
-            count: 1
-            path: src/Controller/DoctorController.php
-
-        -
             message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
             count: 2
             path: src/Controller/ExportController.php
