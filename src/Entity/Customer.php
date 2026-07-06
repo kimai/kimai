@@ -85,7 +85,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[ORM\Column(name: 'vat_id', type: Types::STRING, length: 50, nullable: true)]
     #[Assert\Length(max: 50)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer_Entity'])]
+    #[Serializer\Groups(['Customer_Entity', 'Customer_Details'])]
     #[Exporter\Expose(label: 'vat_id')]
     private ?string $vatId = null;
     /**
@@ -204,32 +204,32 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[ORM\Column(name: 'address_line1', type: Types::STRING, length: 150, nullable: true)]
     #[Assert\Length(max: 150)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer_Entity'])]
+    #[Serializer\Groups(['Customer_Entity', 'Customer_Details'])]
     #[Exporter\Expose(label: 'address_line1')]
     private ?string $addressLine1 = null;
     #[ORM\Column(name: 'address_line2', type: Types::STRING, length: 150, nullable: true)]
     #[Assert\Length(max: 150)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer_Entity'])]
+    #[Serializer\Groups(['Customer_Entity', 'Customer_Details'])]
     #[Exporter\Expose(label: 'address_line2')]
     private ?string $addressLine2 = null;
     #[ORM\Column(name: 'address_line3', type: Types::STRING, length: 150, nullable: true)]
     #[Assert\Length(max: 150)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer_Entity'])]
+    #[Serializer\Groups(['Customer_Entity', 'Customer_Details'])]
     #[Exporter\Expose(label: 'address_line3')]
     private ?string $addressLine3 = null;
     #[ORM\Column(name: 'postcode', type: Types::STRING, length: 20, nullable: true)]
     #[Assert\Length(max: 20)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer_Entity'])]
+    #[Serializer\Groups(['Customer_Entity', 'Customer_Details'])]
     #[Exporter\Expose(label: 'postcode')]
     private ?string $postCode = null;
     // this should be more than enough to cover 99.99% - https://en.wikipedia.org/wiki/List_of_long_place_names
     #[ORM\Column(name: 'city', type: Types::STRING, length: 50, nullable: true)]
     #[Assert\Length(max: 50)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer_Entity'])]
+    #[Serializer\Groups(['Customer_Entity', 'Customer_Details'])]
     #[Exporter\Expose(label: 'city')]
     private ?string $city = null;
     #[ORM\Column(name: 'buyer_reference', type: Types::STRING, length: 50, nullable: true)]
