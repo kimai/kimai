@@ -1540,11 +1540,11 @@
       </trans-unit>
       <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
         <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
-        <target state="translated">Pracovní neschopnost, potřeba neodkladné lékařské péče , nezájem o zdravotní péči</target>
+        <target state="needs-translation">Pracovní neschopnost, potřeba neodkladné lékařské péče, nezájem o zdravotní péči.</target>
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
-        <target state="needs-translation">Doposud jste využili %used% z dostupných %days% dní dovolené.</target>
+        <target state="needs-translation">Doposud jste čerpali %used% z dostupných %days% dní dovolené.</target>
       </trans-unit>
       <trans-unit id="DA1.Ln_" resname="time_off.intro">
         <source>time_off.intro</source>
@@ -1924,7 +1924,7 @@
       </trans-unit>
       <trans-unit id="wvt4jH3" resname="training" xml:space="preserve">
         <source>training</source>
-        <target state="needs-translation">Trénink</target>
+        <target state="translated">Trénink</target>
       </trans-unit>
       <trans-unit id="HQ2YM1b" resname="attendance_only_project" xml:space="preserve">
         <source>attendance_only_project</source>
@@ -2001,6 +2001,114 @@
       <trans-unit id="PciSBv9" resname="address_row" xml:space="preserve">
         <source>address_row</source>
         <target state="translated">Řada %row%</target>
+      </trans-unit>
+      <trans-unit id="rD4oQRR" resname="postcode" xml:space="preserve">
+        <source>Postcode</source>
+        <target state="needs-translation">PSČ</target>
+      </trans-unit>
+      <trans-unit id="EaYsI0E" resname="city" xml:space="preserve">
+        <source>City</source>
+        <target state="needs-translation">Město</target>
+      </trans-unit>
+      <trans-unit id="y1XHR1Q" resname="address_deprecated" xml:space="preserve">
+        <source>address_deprecated</source>
+        <target state="needs-translation">Toto pole bude brzy odstraněno. Zadejte prosím adresu, abyste mohli i nadále vystavovat platné faktury (např. pro elektronickou fakturaci).</target>
+      </trans-unit>
+      <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
+        <source>sending_company</source>
+        <target state="needs-translation">Vystavitel faktury</target>
+      </trans-unit>
+      <trans-unit id="_Ep8Ogx" resname="buyerReference" xml:space="preserve">
+        <source>buyerReference</source>
+        <target state="needs-translation">Referenční číslo kupujícího</target>
+      </trans-unit>
+      <trans-unit id="nPJWKwW" resname="payment_type" xml:space="preserve">
+        <source>payment_type</source>
+        <target state="needs-translation">Způsob platby</target>
+      </trans-unit>
+      <trans-unit id="uXB48Vj" resname="SEPA Credit Transfer" xml:space="preserve">
+        <source>SEPA Credit Transfer</source>
+        <target state="needs-translation">SEPA převod</target>
+      </trans-unit>
+      <trans-unit id="s42A2gm" resname="SEPA Direct Debit" xml:space="preserve">
+        <source>SEPA Direct Debit</source>
+        <target state="needs-translation">SEPA inkaso</target>
+      </trans-unit>
+      <trans-unit id="4toQj2M" resname="Cash" xml:space="preserve">
+        <source>Cash</source>
+        <target state="needs-translation">Hotovost</target>
+      </trans-unit>
+      <trans-unit id="cWZZc6D" resname="Cheque" xml:space="preserve">
+        <source>Cheque</source>
+        <target state="needs-translation">Šek</target>
+      </trans-unit>
+      <trans-unit id="jMvh7bn" resname="Credit Transfer" xml:space="preserve">
+        <source>Credit Transfer</source>
+        <target state="needs-translation">Převod</target>
+      </trans-unit>
+      <trans-unit id="TJQbc0a" resname="Payment To Bank Account" xml:space="preserve">
+        <source>Payment To Bank Account</source>
+        <target state="needs-translation">Platba na bankovní účet</target>
+      </trans-unit>
+      <trans-unit id=".UIt099" resname="Card Payment" xml:space="preserve">
+        <source>Card Payment</source>
+        <target state="needs-translation">Platba kartou</target>
+      </trans-unit>
+      <trans-unit id="Wnb_qF0" resname="Direct Debit" xml:space="preserve">
+        <source>Direct Debit</source>
+        <target state="needs-translation">Inkaso</target>
+      </trans-unit>
+      <trans-unit id="Mi7y8Q3" resname="tax.type.exempt" xml:space="preserve">
+        <source>tax.type.exempt</source>
+        <target state="needs-translation">Osvobozeno</target>
+      </trans-unit>
+      <trans-unit id="E470U8W" resname="tax.type.reverse" xml:space="preserve">
+        <source>tax.type.reverse</source>
+        <target state="translated">Přenesení daňové povinnosti</target>
+      </trans-unit>
+      <trans-unit id="hi31a3v" resname="tax.note.reverse_charge" xml:space="preserve">
+        <source>tax.note.reverse_charge</source>
+        <target state="needs-translation">Daň se platí na základě mechanismu přenesení daňové povinnosti</target>
+      </trans-unit>
+      <trans-unit id="6w8kS.m" resname="user_access_all" xml:space="preserve">
+        <source>user_access_all</source>
+        <target state="needs-translation">Povolit přístup všem uživatelům</target>
+      </trans-unit>
+      <trans-unit id="DbF_j60" resname="count_as_expected_time" xml:space="preserve">
+        <source>count_as_expected_time</source>
+        <target state="needs-translation">Započítat jako předpokládané hodiny: %type%</target>
+      </trans-unit>
+      <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
+        <source>count_as_expected_time_help</source>
+        <target state="needs-translation">Je-li tato funkce zapnutá, budou se %type% započítávat jako odpracované hodiny do očekávaného denního počtu hodin. Je-li vypnutá, bude očekávaný počet hodin pro tyto dny nastaven na 0. Obě nastavení zachovávají neutrální rovnováhu, ale mají odlišný vliv na měsíční součty.</target>
+      </trans-unit>
+      <trans-unit id="WrNTzd7" resname="assign_timesheets" xml:space="preserve">
+        <source>assign_timesheets</source>
+        <target state="needs-translation">Přiřadit výkazy práce</target>
+      </trans-unit>
+      <trans-unit id="zO0oxtw" resname="start" xml:space="preserve">
+        <source>start</source>
+        <target state="needs-translation">Start</target>
+      </trans-unit>
+      <trans-unit id="DAMFhpR" resname="lock" xml:space="preserve">
+        <source>lock</source>
+        <target state="needs-translation">Zamknout</target>
+      </trans-unit>
+      <trans-unit id="pNRR7CN" resname="release" xml:space="preserve">
+        <source>release</source>
+        <target state="needs-translation">Uvolnit</target>
+      </trans-unit>
+      <trans-unit id="kwC00lZ" resname="assign" xml:space="preserve">
+        <source>assign</source>
+        <target state="needs-translation">Přiřadit</target>
+      </trans-unit>
+      <trans-unit id="2ajb.ZU" resname="assign_self" xml:space="preserve">
+        <source>assign_self</source>
+        <target state="needs-translation">Přiřadit sobě</target>
+      </trans-unit>
+      <trans-unit id="LfO_otF" resname="reopen" xml:space="preserve">
+        <source>reopen</source>
+        <target state="needs-translation">Znovuotevřít</target>
       </trans-unit>
     </body>
   </file>
