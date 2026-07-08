@@ -2082,6 +2082,34 @@
         <source>count_as_expected_time_help</source>
         <target state="translated">Jika diaktifkan, %type% akan dihitung sebagai jam kerja untuk memenuhi jam kerja harian yang diharapkan. Jika dinonaktifkan, jam kerja yang diharapkan untuk hari-hari ini akan ditetapkan ke 0. Kedua pengaturan ini menjaga keseimbangan netral tetapi memengaruhi total bulanan secara berbeda.</target>
       </trans-unit>
+      <trans-unit id="WrNTzd7" resname="assign_timesheets" xml:space="preserve">
+        <source>assign_timesheets</source>
+        <target state="translated">Tetapkan lembar waktu</target>
+      </trans-unit>
+      <trans-unit id="zO0oxtw" resname="start" xml:space="preserve">
+        <source>start</source>
+        <target state="translated">Mulai</target>
+      </trans-unit>
+      <trans-unit id="DAMFhpR" resname="lock" xml:space="preserve">
+        <source>lock</source>
+        <target state="translated">Kunci</target>
+      </trans-unit>
+      <trans-unit id="pNRR7CN" resname="release" xml:space="preserve">
+        <source>release</source>
+        <target state="translated">Lepaskan</target>
+      </trans-unit>
+      <trans-unit id="kwC00lZ" resname="assign" xml:space="preserve">
+        <source>assign</source>
+        <target state="translated">Tetapkan</target>
+      </trans-unit>
+      <trans-unit id="2ajb.ZU" resname="assign_self" xml:space="preserve">
+        <source>assign_self</source>
+        <target state="translated">Tetapkan ke saya</target>
+      </trans-unit>
+      <trans-unit id="LfO_otF" resname="reopen" xml:space="preserve">
+        <source>reopen</source>
+        <target state="translated">Buka kembali</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
