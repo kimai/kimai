@@ -170,6 +170,10 @@
         <source>These characters are not allowed: {{ chars }}</source>
         <target>The following characters are not allowed: {{ chars }}</target>
       </trans-unit>
+      <trans-unit id="Dp2KT8W" resname="The field {{ field }} is required, please select a value">
+        <source>The field {{ field }} is required, please select a value</source>
+        <target>Bitten wählen Sie einen Wert für {{ field }} aus</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

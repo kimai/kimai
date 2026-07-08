@@ -1,0 +1,1 @@
+(self.webpackChunkkimai=self.webpackChunkkimai||[]).push([[896],{2836:function(i,n,u){u(7180)},7180:function(i,n,u){"use strict";u.r(n)}},function(i){var n;n=2836,i(i.s=n)}]);

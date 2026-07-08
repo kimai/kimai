@@ -54,6 +54,7 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
 
         const isMultiple = node.multiple !== undefined && node.multiple === true;
         const isRequired = node.required !== undefined && node.required === true;
+        const allowEmpty = !isRequired && node.dataset['allowEmpty'] !== '0';
 
         if (isRequired) {
             plugins.push('no_backspace_delete');
@@ -75,7 +76,7 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
                 this.setTextboxValue('');
             },
             lockOptgroupOrder: true,
-            allowEmptyOption: !isRequired,
+            allowEmptyOption: allowEmpty,
             hidePlaceholder: false,
             plugins: plugins,
             // if there are more than X entries, the other ones are hidden and can only be found
@@ -197,10 +198,16 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
             return;
         }
         const selectedValue = node.value;
+        // this could mean the field is required
+        const allowEmpty = node.tomselect.settings.allowEmptyOption === true;
+        // this means the field has no emPty option and should be pre-selected
+        const disallowEmpty = node.dataset['allowEmpty'] === '0';
 
-        for (let i = 0; i < node.options.length; i++) {
-            if (node.options[i].value === '') {
-                emptyOption = node.options[i];
+        if (allowEmpty) {
+            for (let i = 0; i < node.options.length; i++) {
+                if (node.options[i].value === '') {
+                    emptyOption = node.options[i];
+                }
             }
         }
 
@@ -240,9 +247,11 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
         options.forEach(child => node.appendChild(child));
 
         // append the ones with no parent at the end (e.g. global activities)
-        const optGroupEmpty = this._createOptgroup('');
-        emptyOpts.forEach(child => optGroupEmpty.appendChild(child));
-        node.appendChild(optGroupEmpty);
+        if (emptyOpts.length > 0) {
+            const optGroupEmpty = this._createOptgroup('');
+            emptyOpts.forEach(child => optGroupEmpty.appendChild(child));
+            node.appendChild(optGroupEmpty);
+        }
 
         // if available, re-select the previous selected option (mostly usable for global activities)
         node.value = selectedValue;
@@ -253,10 +262,14 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
             const optionLength = allOptions.length;
             let selectOption = '';
 
-            if (optionLength === 1 && node.dataset['autoselect'] === undefined) {
-                selectOption = allOptions[0].value;
-            } else if (optionLength === 2 && emptyOption !== null) {
-                selectOption = allOptions[1].value;
+            if (optionLength > 0 && node.dataset['autoselect'] !== 'false') {
+                if (optionLength === 1) {
+                    selectOption = allOptions[0].value;
+                } else if (optionLength === 2 && emptyOption !== null) {
+                    selectOption = allOptions[1].value;
+                } else if (disallowEmpty) {
+                    selectOption = allOptions[0].value;
+                }
             }
 
             if (selectOption !== '') {
@@ -456,63 +469,22 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
     {
         let newApiUrl = apiUrl;
 
-        apiUrl.split('?')[1].split('&').forEach(item => {
-            const [key, value] = item.split('='); // eslint-disable-line no-unused-vars
-            const decoded = decodeURIComponent(value);
-            const test = decoded.match(/%(.*)%/);
-            if (test !== null) {
-                const originalFieldName = test[1];
-                const targetFieldName = (formPrefix + originalFieldName).replace(/\[/, '').replace(/]/, '');
-                const targetField = document.getElementById(targetFieldName);
-                let newValue = '';
-                if (targetField === null) {
-                    // happens for example:
-                    // - in duration only mode, when the end field is not found
-                    // console.log('ERROR: Cannot find field with name "' + test[1] + '" by selector: #' + formPrefix + test[1]);
-                } else {
-                    if (targetField.value !== null) {
-                        newValue = targetField.value;
-                        if (targetField.tagName === 'SELECT' && targetField.multiple) {
-                            newValue = [...targetField.selectedOptions].map(o => o.value);
-                        } else if (newValue !== '') {
-                            if (targetField.type === 'date') {
-                                const timeId = targetField.id.replace('_date', '_time');
-                                const timeElement = document.getElementById(timeId);
-                                const time = timeElement === null ? '12:00:00' : timeElement.value;
-                                // using 12:00 as fallback, because timezone handling might change the date if we use 00:00
-                                const newDate = this.getDateUtils().fromHtml5Input(newValue, time);
-                                newValue = this.getDateUtils().formatForAPI(newDate, false);
-                            } else if (targetField.type === 'text' && targetField.name.includes('date')) {
-                                const timeId = targetField.id.replace('_date', '_time');
-                                const timeElement = document.getElementById(timeId);
-                                // using 12:00 as fallback, because timezone handling might change the date if we use 00:00
-                                let time = '12:00:00';
-                                let timeFormat = 'HH:mm';
-                                if (timeElement !== null) {
-                                    time = timeElement.value;
-                                    timeFormat = timeElement.dataset['format'];
-                                }
-                                const newDate = this.getDateUtils().fromFormat(newValue.trim() + ' ' + time.trim(), targetField.dataset['format'] + ' ' + timeFormat);
-                                newValue = this.getDateUtils().formatForAPI(newDate, false);
-                            } else if (targetField.dataset['format'] !== undefined) {
-                                // find out when this else branch is triggered and document!
+        const [path, query] = apiUrl.split('?');
 
-                                if (this.getDateUtils().isValidDateTime(newValue, targetField.dataset['format'])) {
-                                    newValue = this.getDateUtils().format(targetField.dataset['format'], newValue);
-                                }
-                            }
-                        } else {
-                            // happens for example:
-                            // - when the end date is not set on a timesheet record and the project list is loaded (as the URL contains the %end% replacer)
-                            // console.log('Empty value found for field with name "' + test[1] + '" by selector: #' + formPrefix + test[1]);
-                        }
-                    } else {
-                        // happens for example:
-                        // - when a customer without projects is selected
-                        // console.log('ERROR: Empty field with name "' + test[1] + '" by selector: #' + formPrefix + test[1]);
-                    }
+        // replace placeholders that are part of the query string, e.g.:
+        // /api/foo?activity=%25activity%25&field=bar
+        // this also supports multi-value fields, which are expanded into several query parameters
+        if (query !== undefined && query !== '') {
+            query.split('&').forEach(item => {
+                const [key, value] = item.split('='); // eslint-disable-line no-unused-vars
+                const decoded = decodeURIComponent(value);
+                const test = decoded.match(/%(.*)%/);
+                if (test === null) {
+                    return;
                 }
 
+                const originalFieldName = test[1];
+                let newValue = this._resolveFormFieldValue(originalFieldName, formPrefix);
 
                 if (Array.isArray(newValue)) {
                     let urlParams = [];
@@ -529,10 +501,98 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
                     }
                     newApiUrl = newApiUrl.replace(value, newValue);
                 }
+            });
+        }
+
+        // replace placeholders that are part of the URL path, e.g.:
+        // /api/foo/%25activity%25/bar
+        if (path !== undefined) {
+            const pathPlaceholders = path.match(/%25(.+?)%25/g);
+            if (pathPlaceholders !== null) {
+                pathPlaceholders.forEach(placeholder => {
+                    const originalFieldName = placeholder.replace(/%25/g, '');
+                    let newValue = this._resolveFormFieldValue(originalFieldName, formPrefix);
+
+                    if (Array.isArray(newValue)) {
+                        newValue = newValue.map(v => v === null ? '' : v).join(',');
+                    } else if (newValue === null) {
+                        newValue = '';
+                    }
+
+                    newApiUrl = newApiUrl.replace(placeholder, encodeURIComponent(newValue));
+                });
             }
-        });
+        }
 
         return newApiUrl;
+    }
+
+    /**
+     * Resolves the current value of a form field that is referenced by a placeholder
+     * (e.g. "%activity%") inside an API URL.
+     *
+     * @param {string} originalFieldName the placeholder name without the surrounding "%"
+     * @param {string} formPrefix
+     * @return {string|array} an array for multi-value fields, otherwise a string
+     * @private
+     */
+    _resolveFormFieldValue(originalFieldName, formPrefix)
+    {
+        const targetFieldName = (formPrefix + originalFieldName).replace(/\[/, '').replace(/]/, '');
+        const targetField = document.getElementById(targetFieldName);
+        let newValue = '';
+
+        if (targetField === null) {
+            // happens for example:
+            // - in duration only mode, when the end field is not found
+            // console.log('ERROR: Cannot find field with name "' + originalFieldName + '" by selector: #' + formPrefix + originalFieldName);
+            return newValue;
+        }
+
+        if (targetField.value === null) {
+            // happens for example:
+            // - when a customer without projects is selected
+            // console.log('ERROR: Empty field with name "' + originalFieldName + '" by selector: #' + formPrefix + originalFieldName);
+            return newValue;
+        }
+
+        newValue = targetField.value;
+        if (targetField.tagName === 'SELECT' && targetField.multiple) {
+            newValue = [...targetField.selectedOptions].map(o => o.value);
+        } else if (newValue !== '') {
+            if (targetField.type === 'date') {
+                const timeId = targetField.id.replace('_date', '_time');
+                const timeElement = document.getElementById(timeId);
+                const time = timeElement === null ? '12:00:00' : timeElement.value;
+                // using 12:00 as fallback, because timezone handling might change the date if we use 00:00
+                const newDate = this.getDateUtils().fromHtml5Input(newValue, time);
+                newValue = this.getDateUtils().formatForAPI(newDate, false);
+            } else if (targetField.type === 'text' && targetField.name.includes('date')) {
+                const timeId = targetField.id.replace('_date', '_time');
+                const timeElement = document.getElementById(timeId);
+                // using 12:00 as fallback, because timezone handling might change the date if we use 00:00
+                let time = '12:00:00';
+                let timeFormat = 'HH:mm';
+                if (timeElement !== null) {
+                    time = timeElement.value;
+                    timeFormat = timeElement.dataset['format'];
+                }
+                const newDate = this.getDateUtils().fromFormat(newValue.trim() + ' ' + time.trim(), targetField.dataset['format'] + ' ' + timeFormat);
+                newValue = this.getDateUtils().formatForAPI(newDate, false);
+            } else if (targetField.dataset['format'] !== undefined) {
+                // find out when this else branch is triggered and document!
+
+                if (this.getDateUtils().isValidDateTime(newValue, targetField.dataset['format'])) {
+                    newValue = this.getDateUtils().format(targetField.dataset['format'], newValue);
+                }
+            }
+        } else {
+            // happens for example:
+            // - when the end date is not set on a timesheet record and the project list is loaded (as the URL contains the %end% replacer)
+            // console.log('Empty value found for field with name "' + originalFieldName + '" by selector: #' + formPrefix + originalFieldName);
+        }
+
+        return newValue;
     }
 
     /**
@@ -542,6 +602,11 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
      */
     _updateSelect(select, data)
     {
+        if (!Array.isArray(data)) {
+            this._updateOptions(select, data);
+            return;
+        }
+
         const options = {};
         for (const apiData of data) {
             let title = '__empty__';
