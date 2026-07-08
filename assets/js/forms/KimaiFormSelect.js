@@ -85,6 +85,26 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
             // TODO make this value configurable with a data attribute
             maxOptions: 500,
             sortField:[{field: '$order'}, {field: '$score'}],
+            // also match options by their optgroup label (e.g. find a project by its
+            // customer name). TomSelect only searches the option text by default, and
+            // an option's "optgroup" property holds the group id, not its label, so we
+            // resolve the label from the optgroups registry inside a custom score.
+            score: function(search) {
+                const scoreFn = this.getScoreFunction(search);
+                const needle = search.trim().toLowerCase();
+                const labelField = this.settings.optgroupLabelField;
+                return (item) => {
+                    let score = scoreFn(item);
+                    if (score === 0 && needle !== '' && item.optgroup !== undefined) {
+                        const optgroup = this.optgroups[item.optgroup];
+                        const label = optgroup !== undefined ? (optgroup[labelField] ?? '') : '';
+                        if (label.toString().toLowerCase().indexOf(needle) !== -1) {
+                            score = 1;
+                        }
+                    }
+                    return score;
+                };
+            },
             // required so it works in table.responsive, but requires z-index 1056, because bootstrap modal would otherwise hide it
             dropdownParent: 'body',
             onOptionAdd: (value) => {
