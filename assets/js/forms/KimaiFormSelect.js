@@ -54,6 +54,7 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
 
         const isMultiple = node.multiple !== undefined && node.multiple === true;
         const isRequired = node.required !== undefined && node.required === true;
+        const allowEmpty = !isRequired && node.dataset['allowEmpty'] !== '0';
 
         if (isRequired) {
             plugins.push('no_backspace_delete');
@@ -75,7 +76,7 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
                 this.setTextboxValue('');
             },
             lockOptgroupOrder: true,
-            allowEmptyOption: !isRequired,
+            allowEmptyOption: allowEmpty,
             hidePlaceholder: false,
             plugins: plugins,
             // if there are more than X entries, the other ones are hidden and can only be found
@@ -197,10 +198,16 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
             return;
         }
         const selectedValue = node.value;
+        // this could mean the field is required
+        const allowEmpty = node.tomselect.settings.allowEmptyOption === true;
+        // this means the field has no emPty option and should be pre-selected
+        const disallowEmpty = node.dataset['allowEmpty'] === '0';
 
-        for (let i = 0; i < node.options.length; i++) {
-            if (node.options[i].value === '') {
-                emptyOption = node.options[i];
+        if (allowEmpty) {
+            for (let i = 0; i < node.options.length; i++) {
+                if (node.options[i].value === '') {
+                    emptyOption = node.options[i];
+                }
             }
         }
 
@@ -255,10 +262,12 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
             const optionLength = allOptions.length;
             let selectOption = '';
 
-            if (optionLength > 0 && node.dataset['autoselect'] === undefined) {
-                if (optionLength > 1 && emptyOption !== null) {
+            if (optionLength > 0 && node.dataset['autoselect'] !== 'false') {
+                if (optionLength === 1) {
+                    selectOption = allOptions[0].value;
+                } else if (optionLength === 2 && emptyOption !== null) {
                     selectOption = allOptions[1].value;
-                } else {
+                } else if (disallowEmpty) {
                     selectOption = allOptions[0].value;
                 }
             }
