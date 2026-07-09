@@ -60,7 +60,24 @@ final class QuickEntryTimesheetType extends AbstractType
                     $event->getForm()->get('duration')->setData(null);
                 }
 
-                if ($data instanceof Timesheet && !$this->security->isGranted('edit', $data)) {
+                $isNew = true;
+                $disable = false;
+
+                // let's disable certain fields, to prevent validation issues
+                if ($data instanceof Timesheet) {
+                    // do not allow editing of certain fields
+                    if (!$this->security->isGranted('edit', $data)) {
+                        $disable = true;
+                    }
+                    // prevent adding values to empty cells, if the user cannot create timesheets
+                    if ($data->getId() === null && !$this->security->isGranted('create', $data)) {
+                        $disable = true;
+                    }
+
+                    $isNew = $data->getId() === null;
+                }
+
+                if ($disable) {
                     // do not call $event->getForm()->remove() this would change the field order
                     $event->getForm()->add('duration', DurationType::class, array_merge(['disabled' => true], $durationOptions));
 
@@ -68,8 +85,6 @@ final class QuickEntryTimesheetType extends AbstractType
                     if ($mainForm === null) {
                         return;
                     }
-
-                    $isNew = $data->getId() === null;
 
                     foreach($mainForm->all() as $key => $child) {
                         if ($key === 'timesheets') {

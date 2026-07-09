@@ -149,6 +149,39 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertApiResponseTypeStructure('CustomerCollection', $result[0]);
     }
 
+    public function testGetCollectionFull(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/api/customers?full=1');
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+        self::assertEquals(1, \count($result));
+        self::assertIsArray($result[0]);
+        self::assertApiResponseTypeStructure('CustomerCollectionFull', $result[0]);
+    }
+
+    public function testGetCollectionFullNeedsPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertAccessIsGranted($client, '/api/customers?full=1');
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+        self::assertEquals(1, \count($result));
+        self::assertIsArray($result[0]);
+        // make sure that regular user cannot access detail fields
+        self::assertApiResponseTypeStructure('CustomerCollection', $result[0]);
+    }
+
     public function testGetCollectionWithQuery(): void
     {
         $query = ['order' => 'ASC', 'orderBy' => 'name', 'visible' => 3, 'term' => 'test'];

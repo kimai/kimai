@@ -42,6 +42,7 @@ final class CustomerController extends BaseApiController
     private const GROUPS_COMMENT = ['Default', 'Not_Expanded'];
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Customer', 'Customer_Entity'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Customer'];
+    private const GROUPS_COLLECTION_FULL = ['Default', 'Collection', 'Customer', 'Customer_Details'];
     public const GROUPS_RATE = ['Default', 'Entity', 'Customer_Rate'];
 
     public function __construct(
@@ -61,6 +62,7 @@ final class CustomerController extends BaseApiController
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name (default: name)')]
     #[Rest\QueryParam(name: 'term', description: 'Free search term', nullable: true)]
+    #[Rest\QueryParam(name: 'full', requirements: '0|1', strict: true, nullable: true, description: 'Allows to fetch objects with full details (needs `details_customer` permission). Allowed values: 0|1 (default: 0)')]
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         /** @var User $user */
@@ -93,7 +95,13 @@ final class CustomerController extends BaseApiController
         $query->setIsApiCall(true);
         $data = $this->repository->getCustomersForQuery($query);
         $view = new View($data, 200);
-        $view->getContext()->setGroups(self::GROUPS_COLLECTION);
+
+        $full = $paramFetcher->get('full');
+        if ($full === '1' && $this->isGranted('details_customer')) {
+            $view->getContext()->setGroups(self::GROUPS_COLLECTION_FULL);
+        } else {
+            $view->getContext()->setGroups(self::GROUPS_COLLECTION);
+        }
 
         return $this->viewHandler->handle($view);
     }

@@ -504,6 +504,35 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                 ];
 
+                // if a list of customers is loaded
+            case 'CustomerCollectionFull':
+                return [
+                    'id' => 'int',
+                    'name' => 'string',
+                    'visible' => 'boolean',
+                    'billable' => 'bool',
+                    'color' => '@string',
+                    'color-safe' => 'string',
+                    'number' => '@string',
+                    'comment' => '@string',
+                    'currency' => 'string',
+                    'country' => 'string',
+                    'company' => '@string',
+                    'homepage' => '@string',
+                    'timezone' => 'string',
+                    'fax' => '@string',
+                    'mobile' => '@string',
+                    'phone' => '@string',
+                    'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'],
+                    'teams' => ['result' => 'array', 'type' => 'Team'],
+                    'vatId' => '@string',
+                    'addressLine1' => '@string',
+                    'addressLine2' => '@string',
+                    'addressLine3' => '@string',
+                    'city' => '@string',
+                    'postCode' => '@string',
+                ];
+
                 // if a customer is loaded explicitly
             case 'CustomerEntity':
                 return [
