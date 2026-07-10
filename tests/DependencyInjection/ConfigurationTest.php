@@ -592,6 +592,25 @@ class ConfigurationTest extends TestCase
             'features' => [
                 'user_registration' => false,
             ],
+            'oidc' => [
+                'activate' => false,
+                'title' => 'Login with SSO',
+                'provider' => 'openid',
+                'client_id' => null,
+                'client_secret' => null,
+                'issuer' => null,
+                'authorization_url' => null,
+                'token_url' => null,
+                'userinfo_url' => null,
+                'scopes' => 'openid profile email',
+                'username_claim' => 'preferred_username',
+                'roles' => [
+                    'resetOnLogin' => true,
+                    'claim' => null,
+                    'mapping' => [],
+                ],
+                'mapping' => [],
+            ],
         ];
 
         $this->assertConfig($this->getMinConfig(), $fullDefaultConfig);
