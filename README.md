@@ -41,6 +41,7 @@ and so much more.
 - [Docker images](https://hub.docker.com/r/kimai/kimai2) with FPM only or incl. Apache
 - [Synology](https://www.kimai.org/documentation/synology.html) user can host the Docker version 
 - [Developer setups](https://www.kimai.org/documentation/developers.html) if you want to create Kimai integrations
+- Prefer not to self-host? [![Deploy with Zenith](https://cdn.zenith.hosting/buttons/deploy-with-zenith.svg)](https://zenith.hosting/host/kimai) for one-click managed hosting, no server required
 
 There are more documented ways for [on-premise hosting](https://www.kimai.org/documentation/chapter-on-premise.html). 
 
