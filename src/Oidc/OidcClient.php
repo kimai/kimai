@@ -201,8 +201,11 @@ class OidcClient
         }
 
         $issuer = $this->configuration->getIssuer();
-        if ($issuer !== null && $issuer !== '' && isset($payload['iss']) && rtrim((string) $payload['iss'], '/') !== rtrim($issuer, '/')) {
-            throw new AuthenticationException('OIDC ID token issuer mismatch.');
+        if ($issuer !== null && $issuer !== '' && isset($payload['iss'])) {
+            $tokenIssuer = $payload['iss'];
+            if (!\is_string($tokenIssuer) || rtrim($tokenIssuer, '/') !== rtrim($issuer, '/')) {
+                throw new AuthenticationException('OIDC ID token issuer mismatch.');
+            }
         }
 
         if (isset($payload['aud'])) {
@@ -223,7 +226,7 @@ class OidcClient
     }
 
     /**
-     * @return array<string, mixed>
+     * @return array<array-key, mixed>
      */
     private function decodeSegment(string $segment): array
     {
@@ -237,7 +240,6 @@ class OidcClient
             throw new AuthenticationException('OIDC ID token payload is invalid.');
         }
 
-        /** @var array<string, mixed> $data */
         return $data;
     }
 

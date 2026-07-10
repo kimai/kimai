@@ -10,14 +10,18 @@
 namespace App\Oidc\Security;
 
 use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessHandler;
+use Symfony\Component\Security\Http\HttpUtils;
 
 final class OidcAuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
 {
-    protected $defaultOptions = [
-        'always_use_default_target_path' => false,
-        'default_target_path' => 'homepage',
-        'login_path' => 'oidc_login',
-        'target_path_parameter' => '_target_path',
-        'use_referer' => false,
-    ];
+    public function __construct(HttpUtils $httpUtils)
+    {
+        parent::__construct($httpUtils, [
+            'always_use_default_target_path' => false,
+            'default_target_path' => 'homepage',
+            'login_path' => 'oidc_login',
+            'target_path_parameter' => '_target_path',
+            'use_referer' => false,
+        ]);
+    }
 }

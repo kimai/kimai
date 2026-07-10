@@ -130,7 +130,7 @@ final class OidcProvider
             $value = $value[0] ?? null;
         }
 
-        if ($value === null || \is_bool($value)) {
+        if (!\is_scalar($value) || \is_bool($value)) {
             return null;
         }
 
