@@ -357,4 +357,155 @@ class OidcClientTest extends TestCase
         $sut = $this->getSut($httpClient);
         $sut->fetchUserClaims('the-code', 'https://kimai.local/oidc/callback', 'nonce-123');
     }
+
+    public function testFetchUserClaimsThrowsWhenTokenResponseIsNotJson(): void
+    {
+        $this->expectException(AuthenticationException::class);
+        $this->expectExceptionMessage('OIDC token exchange failed.');
+
+        $httpClient = new MockHttpClient([
+            new MockResponse('not-a-json-response', ['response_headers' => ['content-type' => 'application/json']]),
+        ]);
+
+        $sut = $this->getSut($httpClient);
+        $sut->fetchUserClaims('the-code', 'https://kimai.local/oidc/callback', 'nonce-123');
+    }
+
+    public function testFetchUserClaimsThrowsOnTokenErrorStatus(): void
+    {
+        $this->expectException(AuthenticationException::class);
+        $this->expectExceptionMessage('OIDC token exchange failed.');
+
+        $httpClient = new MockHttpClient([
+            new MockResponse((string) json_encode(['message' => 'server error']), [
+                'http_code' => 500,
+                'response_headers' => ['content-type' => 'application/json'],
+            ]),
+        ]);
+
+        $sut = $this->getSut($httpClient);
+        $sut->fetchUserClaims('the-code', 'https://kimai.local/oidc/callback', 'nonce-123');
+    }
+
+    public function testFetchUserClaimsThrowsWhenUserInfoResponseIsNotJson(): void
+    {
+        $this->expectException(AuthenticationException::class);
+        $this->expectExceptionMessage('OIDC userinfo request failed.');
+
+        $httpClient = new MockHttpClient([
+            new MockResponse((string) json_encode([
+                'access_token' => 'the-access-token',
+            ]), ['response_headers' => ['content-type' => 'application/json']]),
+            new MockResponse('not-a-json-response', ['response_headers' => ['content-type' => 'application/json']]),
+        ]);
+
+        $sut = $this->getSut($httpClient);
+        $sut->fetchUserClaims('the-code', 'https://kimai.local/oidc/callback', 'nonce-123');
+    }
+
+    public function testFetchUserClaimsThrowsOnMalformedIdToken(): void
+    {
+        $this->expectException(AuthenticationException::class);
+        $this->expectExceptionMessage('OIDC ID token is malformed.');
+
+        $httpClient = new MockHttpClient([
+            new MockResponse((string) json_encode([
+                'access_token' => 'the-access-token',
+                'id_token' => 'only.two-parts',
+            ]), ['response_headers' => ['content-type' => 'application/json']]),
+        ]);
+
+        $sut = $this->getSut($httpClient);
+        $sut->fetchUserClaims('the-code', 'https://kimai.local/oidc/callback', 'nonce-123');
+    }
+
+    public function testFetchUserClaimsThrowsOnUndecodableIdToken(): void
+    {
+        $this->expectException(AuthenticationException::class);
+        $this->expectExceptionMessage('OIDC ID token could not be decoded.');
+
+        $httpClient = new MockHttpClient([
+            new MockResponse((string) json_encode([
+                'access_token' => 'the-access-token',
+                'id_token' => 'header.@@@invalid@@@.signature',
+            ]), ['response_headers' => ['content-type' => 'application/json']]),
+        ]);
+
+        $sut = $this->getSut($httpClient);
+        $sut->fetchUserClaims('the-code', 'https://kimai.local/oidc/callback', 'nonce-123');
+    }
+
+    public function testFetchUserClaimsThrowsOnIdTokenIssuerMismatch(): void
+    {
+        $this->expectException(AuthenticationException::class);
+        $this->expectExceptionMessage('OIDC ID token issuer mismatch.');
+
+        $idToken = $this->createIdToken([
+            'nonce' => 'nonce-123',
+            'iss' => 'https://evil.example.com',
+            'aud' => 'my-client-id',
+            'exp' => time() + 3600,
+        ]);
+
+        $httpClient = new MockHttpClient([
+            new MockResponse((string) json_encode([
+                'access_token' => 'the-access-token',
+                'id_token' => $idToken,
+            ]), ['response_headers' => ['content-type' => 'application/json']]),
+        ]);
+
+        $sut = $this->getSut($httpClient);
+        $sut->fetchUserClaims('the-code', 'https://kimai.local/oidc/callback', 'nonce-123');
+    }
+
+    public function testGetAuthorizationUrlThrowsOnDiscoveryErrorStatus(): void
+    {
+        $this->expectException(AuthenticationException::class);
+        $this->expectExceptionMessage('OIDC discovery request failed.');
+
+        $httpClient = new MockHttpClient([
+            new MockResponse((string) json_encode(['message' => 'down']), [
+                'http_code' => 500,
+                'response_headers' => ['content-type' => 'application/json'],
+            ]),
+        ]);
+
+        $sut = $this->getSut($httpClient, ['authorization_url' => '']);
+        $sut->getAuthorizationUrl('https://kimai.local/oidc/callback', 'state-123', 'nonce-123');
+    }
+
+    public function testGetAuthorizationUrlThrowsWhenDiscoveryEndpointMissing(): void
+    {
+        $this->expectException(AuthenticationException::class);
+        $this->expectExceptionMessage('OIDC discovery document is missing the "authorization_endpoint" endpoint.');
+
+        $httpClient = new MockHttpClient([
+            new MockResponse((string) json_encode([
+                'issuer' => 'https://id.example.com',
+            ]), ['response_headers' => ['content-type' => 'application/json']]),
+        ]);
+
+        $sut = $this->getSut($httpClient, ['authorization_url' => '']);
+        $sut->getAuthorizationUrl('https://kimai.local/oidc/callback', 'state-123', 'nonce-123');
+    }
+
+    public function testGetAuthorizationUrlCachesDiscoveryDocument(): void
+    {
+        $httpClient = new MockHttpClient([
+            new MockResponse((string) json_encode([
+                'issuer' => 'https://id.example.com',
+                'authorization_endpoint' => 'https://id.example.com/authorize',
+            ]), ['response_headers' => ['content-type' => 'application/json']]),
+        ]);
+
+        $sut = $this->getSut($httpClient, ['authorization_url' => '']);
+
+        $first = $sut->getAuthorizationUrl('https://kimai.local/oidc/callback', 'state-123', 'nonce-123');
+        $second = $sut->getAuthorizationUrl('https://kimai.local/oidc/callback', 'state-456', 'nonce-456');
+
+        self::assertStringStartsWith('https://id.example.com/authorize?', $first);
+        self::assertStringStartsWith('https://id.example.com/authorize?', $second);
+        // the discovery document must only be fetched once and then served from the cache
+        self::assertSame(1, $httpClient->getRequestsCount());
+    }
 }

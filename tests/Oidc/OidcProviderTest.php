@@ -199,4 +199,116 @@ class OidcProviderTest extends TestCase
         $sut = $this->getOidcProvider($settings);
         $sut->findUser($token);
     }
+
+    public function testRolesMappingWithoutResetAppendsRoles(): void
+    {
+        $settings = [
+            'mapping' => [],
+            'roles' => [
+                'claim' => 'groups',
+                'resetOnLogin' => false,
+                'mapping' => [
+                    ['oidc' => 'management', 'kimai' => 'ROLE_TEAMLEAD'],
+                ],
+            ],
+        ];
+
+        $token = new OidcLoginAttributes();
+        $token->setUserIdentifier('foo7@example.com');
+        $token->setAttributes([
+            'groups' => 'management',
+        ]);
+
+        $sut = $this->getOidcProvider($settings);
+        $tokenUser = $sut->findUser($token);
+
+        self::assertContains('ROLE_TEAMLEAD', $tokenUser->getRoles());
+        self::assertContains('ROLE_USER', $tokenUser->getRoles());
+    }
+
+    public function testNonStringClaimValueIsCastToString(): void
+    {
+        $settings = [
+            'mapping' => [
+                ['oidc' => 'employee_id', 'kimai' => 'title'],
+            ],
+            'roles' => [
+                'claim' => '',
+                'mapping' => [],
+            ],
+        ];
+
+        $token = new OidcLoginAttributes();
+        $token->setUserIdentifier('foo8@example.com');
+        $token->setAttributes([
+            'employee_id' => 4711,
+        ]);
+
+        $sut = $this->getOidcProvider($settings);
+        $tokenUser = $sut->findUser($token);
+
+        self::assertSame('4711', $tokenUser->getTitle());
+    }
+
+    public function testBooleanClaimValueIsIgnored(): void
+    {
+        $settings = [
+            'mapping' => [
+                ['oidc' => 'is_admin', 'kimai' => 'title'],
+            ],
+            'roles' => [
+                'claim' => '',
+                'mapping' => [],
+            ],
+        ];
+
+        $user = new User();
+        $user->setAuth(User::AUTH_OIDC);
+        $user->setUserIdentifier('foo9@example.com');
+        $user->setTitle('unchanged');
+
+        $token = new OidcLoginAttributes();
+        $token->setUserIdentifier($user->getUserIdentifier());
+        $token->setAttributes([
+            'is_admin' => true,
+        ]);
+
+        $sut = $this->getOidcProvider($settings, $user);
+        $tokenUser = $sut->findUser($token);
+
+        self::assertSame('unchanged', $tokenUser->getTitle());
+    }
+
+    public function testFindUserThrowsAuthenticationExceptionWhenSavingFails(): void
+    {
+        $this->expectException(AuthenticationException::class);
+        $this->expectExceptionMessage('Failed creating or hydrating user');
+
+        $configuration = SystemConfigurationFactory::create(new TestConfigLoader([]), [
+            'oidc' => [
+                'mapping' => [],
+                'roles' => ['claim' => '', 'mapping' => []],
+            ],
+        ]);
+        $oidcConfig = new OidcConfiguration($configuration);
+
+        $userProvider = $this->getMockBuilder(UserProviderInterface::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['refreshUser', 'supportsClass', 'loadUserByIdentifier'])
+            ->getMock();
+        $userProvider->method('loadUserByIdentifier')->willReturn(new User());
+
+        $userService = $this->getMockBuilder(UserService::class)->disableOriginalConstructor()->getMock();
+        $userService->method('saveUser')->willThrowException(new \RuntimeException('database is down'));
+
+        $sut = new OidcProvider($userService, $userProvider, $oidcConfig, $this->createMock(LoggerInterface::class));
+
+        $token = new OidcLoginAttributes();
+        $token->setUserIdentifier('foo10@example.com');
+        $token->setAttributes([
+            'email' => 'foo@example.com',
+        ]);
+
+        $sut->findUser($token);
+    }
 }

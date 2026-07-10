@@ -51,6 +51,49 @@ class ConfigurationTest extends TestCase
         $this->assertConfig($this->getMinConfig('sdfsdfsdfds'), []);
     }
 
+    public function testValidateOidcRequiresClientCredentialsWhenActivated(): void
+    {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('You need to configure "oidc.client_id" and "oidc.client_secret" when OIDC is activated.');
+
+        $config = $this->getMinConfig();
+        $config['oidc'] = [
+            'activate' => true,
+        ];
+
+        $this->assertConfig($config, []);
+    }
+
+    public function testValidateOidcRequiresIssuerOrEndpointsWhenActivated(): void
+    {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('You need to configure "oidc.issuer" or the explicit "oidc.authorization_url", "oidc.token_url" and "oidc.userinfo_url" endpoints.');
+
+        $config = $this->getMinConfig();
+        $config['oidc'] = [
+            'activate' => true,
+            'client_id' => 'my-client-id',
+            'client_secret' => 'my-client-secret',
+        ];
+
+        $this->assertConfig($config, []);
+    }
+
+    public function testValidateOidcRejectsReservedAttributeMapping(): void
+    {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('You cannot configure "username" and "userIdentifier" for OIDC attribute mapping.');
+
+        $config = $this->getMinConfig();
+        $config['oidc'] = [
+            'mapping' => [
+                ['oidc' => 'preferred_username', 'kimai' => 'username'],
+            ],
+        ];
+
+        $this->assertConfig($config, []);
+    }
+
     public function testValidateLdapConfigUserBaseDn(): void
     {
         $this->expectException(InvalidConfigurationException::class);
