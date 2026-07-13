@@ -76,8 +76,9 @@ class TimesheetRepositoryTest extends AbstractRepositoryTestCase
                 ->setUser($user)
                 ->setActivity($activity)
                 ->setProject($project);
-            $repository->save($timesheet);
+            $em->persist($timesheet);
         }
+        $em->flush();
 
         $pageSize = 5;
         $collected = [];
