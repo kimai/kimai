@@ -28,6 +28,11 @@ final class ColorChoicesValidator extends ConstraintValidator
         $colors = explode(',', $value);
 
         foreach ($colors as $color) {
+            // skip empty entries, e.g. caused by a trailing or duplicated comma
+            if (trim($color) === '') {
+                continue;
+            }
+
             $color = explode('|', $color);
             $name = $color[0];
             $code = $color[0];
@@ -49,7 +54,7 @@ final class ColorChoicesValidator extends ConstraintValidator
             }
 
             if ($name === $code) {
-                return;
+                continue;
             }
 
             $name = str_replace(['-', ' '], '', $name);

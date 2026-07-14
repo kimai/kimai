@@ -74,6 +74,13 @@ class ColorChoicesValidatorTest extends ConstraintValidatorTestCase
         yield ['#ffdd', '#ffdd', null];
         yield ['#ffddd', '#ffddd', null];
         yield ['#ffddddd', '#ffddddd', null];
+        // an invalid entry placed *after* a valid "bare" color (where name === code) must still
+        // be reported - every comma-separated entry has to be validated, not only the ones up to
+        // the first bare color
+        yield ['#fffaaa,fffaaa', 'fffaaa', null];
+        yield ['#fffaaa,#f', '#f', null];
+        yield ['#fffaaa,string', 'string', null];
+        yield ['#fffaaa,abcdefghijklmnopqrstu|#aaabbb', null, 'abcdefghijklmnopqrstu', '#aaabbb'];
     }
 
     /**
