@@ -61,7 +61,7 @@ class WorkingTimeModeDay implements WorkingTimeMode
             'translation_domain' => 'system-configuration',
             'constraints' => [
                 new GreaterThanOrEqual(0),
-                new LessThanOrEqual(86400),
+                new LessThanOrEqual(86400, message: 'A maximum of 24 hours is allowed.'),
             ],
         ];
 

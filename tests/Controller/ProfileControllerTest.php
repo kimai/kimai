@@ -582,6 +582,22 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         self::assertFalse($client->getResponse()->isSuccessful());
     }
 
+    public function testContractActionWithTooManyHours(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $crawler = $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/contract');
+        $form = $crawler->filter('form[name=user_contract]')->form();
+
+        $result = $client->submit($form, [
+            'user_contract[workHoursMonday]' => '25:00',
+        ]);
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $validationErrors = $result->filter('form[name=user_contract] div.invalid-feedback.d-block');
+        self::assertCount(1, $validationErrors);
+        self::assertSame('A maximum of 24 hours is allowed.', $validationErrors->text(null, true));
+    }
+
     public function testContractAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
