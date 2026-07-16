@@ -1337,11 +1337,6 @@ parameters:
             path: Invoice/Calculator/AbstractCalculatorTestCase.php
 
         -
-            message: "#^Cannot call method getEntries\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
-            count: 2
-            path: Invoice/Hydrator/InvoiceItemDefaultHydratorTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Invoice\\\\Hydrator\\\\InvoiceItemDefaultHydratorTest\\:\\:assertEntryStructure\\(\\) has parameter \\$metaFields with no value type specified in iterable type array\\.$#"
             count: 1
             path: Invoice/Hydrator/InvoiceItemDefaultHydratorTest.php

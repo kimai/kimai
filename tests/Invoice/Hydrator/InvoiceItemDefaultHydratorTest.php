@@ -34,8 +34,11 @@ class InvoiceItemDefaultHydratorTest extends TestCase
             ['meta_fields' => []],
         ];
 
+        $calculator = $model->getCalculator();
+        self::assertNotNull($calculator);
+
         $i = 0;
-        foreach ($model->getCalculator()->getEntries() as $entry) {
+        foreach ($calculator->getEntries() as $entry) {
             $result = $sut->hydrate($entry);
             $exp = $expected[$i++];
             $this->assertEntryStructure($result, $exp['meta_fields']);
@@ -55,8 +58,11 @@ class InvoiceItemDefaultHydratorTest extends TestCase
         $sut = new InvoiceItemDefaultHydrator();
         $sut->setInvoiceModel($model);
 
+        $calculator = $model->getCalculator();
+        self::assertNotNull($calculator);
+
         $dateProcessValues = [];
-        foreach ($model->getCalculator()->getEntries() as $entry) {
+        foreach ($calculator->getEntries() as $entry) {
             $result = $sut->hydrate($entry);
             $dateProcessValues[] = $result['entry.date_process'];
         }
