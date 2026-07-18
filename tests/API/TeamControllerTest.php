@@ -822,6 +822,144 @@ class TeamControllerTest extends APIControllerBaseTestCase
     }
 
     /**
+     * Regression test for GHSA-gmm9-hfxg-7v29 (postCustomerAction variant).
+     *
+     * A teamlead may have edit_team and view access to a customer through one
+     * team, but must not grant another team access without permissions_customer.
+     */
+    public function testPostCustomerActionRequiresCustomerPermissions(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $attackerTeam = $this->prepareAttackerTeamleadWithEditTeam('GHSA_GMM9_CUSTOMER');
+        $attacker = $this->getUserByName(UserFixtures::USERNAME_TEAMLEAD);
+
+        $visibilityTeam = new Team('GHSA-gmm9 visibility team customer');
+        $visibilityTeam->addTeamlead($attacker);
+        $em->persist($visibilityTeam);
+
+        $customer = new Customer('GHSA-gmm9 customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $visibilityTeam->addCustomer($customer);
+        $em->persist($customer);
+        $em->flush();
+
+        $teamId = $attackerTeam->getId();
+        $customerId = $customer->getId();
+        self::assertIsInt($teamId);
+        self::assertIsInt($customerId);
+
+        $this->request($client, '/api/teams/' . $teamId . '/customers/' . $customerId, 'POST');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $em->clear();
+        $reloadedTeam = $em->getRepository(Team::class)->find($teamId);
+        self::assertInstanceOf(Team::class, $reloadedTeam);
+        $reloadedCustomer = $em->getRepository(Customer::class)->find($customerId);
+        self::assertInstanceOf(Customer::class, $reloadedCustomer);
+        self::assertFalse($reloadedTeam->hasCustomer($reloadedCustomer));
+    }
+
+    /**
+     * Regression test for GHSA-gmm9-hfxg-7v29 (postProjectAction variant).
+     *
+     * A teamlead may have edit_team and view access to a project through one
+     * team, but must not grant another team access without permissions_project.
+     */
+    public function testPostProjectActionRequiresProjectPermissions(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $attackerTeam = $this->prepareAttackerTeamleadWithEditTeam('GHSA_GMM9_PROJECT');
+        $attacker = $this->getUserByName(UserFixtures::USERNAME_TEAMLEAD);
+
+        $visibilityTeam = new Team('GHSA-gmm9 visibility team project');
+        $visibilityTeam->addTeamlead($attacker);
+        $em->persist($visibilityTeam);
+
+        $customer = new Customer('GHSA-gmm9 project customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('GHSA-gmm9 project');
+        $project->setCustomer($customer);
+        $visibilityTeam->addProject($project);
+        $em->persist($project);
+        $em->flush();
+
+        $teamId = $attackerTeam->getId();
+        $projectId = $project->getId();
+        self::assertIsInt($teamId);
+        self::assertIsInt($projectId);
+
+        $this->request($client, '/api/teams/' . $teamId . '/projects/' . $projectId, 'POST');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $em->clear();
+        $reloadedTeam = $em->getRepository(Team::class)->find($teamId);
+        self::assertInstanceOf(Team::class, $reloadedTeam);
+        $reloadedProject = $em->getRepository(Project::class)->find($projectId);
+        self::assertInstanceOf(Project::class, $reloadedProject);
+        self::assertFalse($reloadedTeam->hasProject($reloadedProject));
+    }
+
+    /**
+     * Regression test for GHSA-gmm9-hfxg-7v29 (postActivityAction variant).
+     *
+     * A teamlead may have edit_team and view access to an activity through one
+     * team, but must not grant another team access without permissions_activity.
+     */
+    public function testPostActivityActionRequiresActivityPermissions(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $attackerTeam = $this->prepareAttackerTeamleadWithEditTeam('GHSA_GMM9_ACTIVITY');
+        $attacker = $this->getUserByName(UserFixtures::USERNAME_TEAMLEAD);
+
+        $visibilityTeam = new Team('GHSA-gmm9 visibility team activity');
+        $visibilityTeam->addTeamlead($attacker);
+        $em->persist($visibilityTeam);
+
+        $customer = new Customer('GHSA-gmm9 activity customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('GHSA-gmm9 activity project');
+        $project->setCustomer($customer);
+        $em->persist($project);
+
+        $activity = new Activity();
+        $activity->setName('GHSA-gmm9 activity');
+        $activity->setProject($project);
+        $visibilityTeam->addActivity($activity);
+        $em->persist($activity);
+        $em->flush();
+
+        $teamId = $attackerTeam->getId();
+        $activityId = $activity->getId();
+        self::assertIsInt($teamId);
+        self::assertIsInt($activityId);
+
+        $this->request($client, '/api/teams/' . $teamId . '/activities/' . $activityId, 'POST');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $em->clear();
+        $reloadedTeam = $em->getRepository(Team::class)->find($teamId);
+        self::assertInstanceOf(Team::class, $reloadedTeam);
+        $reloadedActivity = $em->getRepository(Activity::class)->find($activityId);
+        self::assertInstanceOf(Activity::class, $reloadedActivity);
+        self::assertFalse($reloadedTeam->hasActivity($reloadedActivity));
+    }
+
+    /**
      * Regression test for GHSA-xv4r-4885-gwpg.
      *
      * A teamlead with edit_team permission must not be able to add a user
