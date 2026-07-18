@@ -265,7 +265,7 @@ class TeamControllerTest extends APIControllerBaseTestCase
 
         $response = $client->getResponse();
         self::assertEquals(400, $response->getStatusCode());
-        $this->assertApiCallValidationError($response, ['members']);
+        $this->assertApiCallValidationError($response, [], false, ['The collection is invalid.']);
 
         $this->request($client, '/api/teams/' . $teamId);
         self::assertTrue($client->getResponse()->isSuccessful());
