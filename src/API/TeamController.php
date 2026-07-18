@@ -136,16 +136,6 @@ final class TeamController extends BaseApiController
     #[Route(methods: ['PATCH'], path: '/{id}', name: 'patch_team', requirements: ['id' => '\d+'])]
     public function patchAction(Request $request, Team $team): Response
     {
-        if ($request->request->has('members')) {
-            foreach ($team->getMembers() as $member) {
-                $team->removeMember($member);
-                $this->repository->removeTeamMember($member);
-            }
-            // this fails, if we use the teamservice, because the validator
-            // complains about teams without members or teamleads
-            $this->repository->saveTeam($team);
-        }
-
         $form = $this->createForm(TeamApiEditForm::class, $team);
 
         $form->setData($team);
