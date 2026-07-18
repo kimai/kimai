@@ -237,6 +237,55 @@ class TeamControllerTest extends APIControllerBaseTestCase
         $this->assertApiCallValidationError($response, ['name', 'members.0.user']);
     }
 
+    public function testPatchActionWithInvalidMembersPayloadKeepsExistingMembers(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'members' => [
+                ['user' => 1, 'teamlead' => true],
+                ['user' => 5, 'teamlead' => true],
+            ],
+        ];
+        $this->request($client, '/api/teams', 'POST', [], json_encode($data, JSON_THROW_ON_ERROR));
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $createdContent = $client->getResponse()->getContent();
+        self::assertIsString($createdContent);
+        $created = json_decode($createdContent, true, 512, JSON_THROW_ON_ERROR);
+        self::assertIsArray($created);
+        self::assertIsNumeric($created['id']);
+
+        $teamId = (int) $created['id'];
+
+        $payload = [
+            'members' => 'invalid',
+        ];
+        $this->request($client, '/api/teams/' . $teamId, 'PATCH', [], json_encode($payload, JSON_THROW_ON_ERROR));
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['members']);
+
+        $this->request($client, '/api/teams/' . $teamId);
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $reloadedContent = $client->getResponse()->getContent();
+        self::assertIsString($reloadedContent);
+        $reloaded = json_decode($reloadedContent, true, 512, JSON_THROW_ON_ERROR);
+        self::assertIsArray($reloaded);
+        self::assertIsArray($reloaded['members']);
+        self::assertCount(2, $reloaded['members']);
+        self::assertIsArray($reloaded['members'][0]);
+        self::assertIsArray($reloaded['members'][0]['user']);
+        self::assertIsArray($reloaded['members'][1]);
+        self::assertIsArray($reloaded['members'][1]['user']);
+        self::assertEquals(1, $reloaded['members'][0]['user']['id']);
+        self::assertEquals(5, $reloaded['members'][1]['user']['id']);
+        self::assertTrue($reloaded['members'][0]['teamlead']);
+        self::assertTrue($reloaded['members'][1]['teamlead']);
+    }
+
     public function testDeleteAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
