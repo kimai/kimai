@@ -595,7 +595,7 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         self::assertTrue($client->getResponse()->isSuccessful());
         $validationErrors = $result->filter('form[name=user_contract] div.invalid-feedback.d-block');
         self::assertCount(1, $validationErrors);
-        self::assertSame('A maximum of 24 hours is allowed.', $validationErrors->text(null, true));
+        self::assertSame('A maximum duration of 24:00 is allowed.', $validationErrors->text(null, true));
     }
 
     public function testContractAction(): void

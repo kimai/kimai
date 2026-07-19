@@ -11,11 +11,11 @@ namespace App\WorkingTime\Mode;
 
 use App\Entity\User;
 use App\Form\Type\DurationType;
+use App\Validator\Constraints\MaxDuration;
 use App\WorkingTime\Calculator\WorkingTimeCalculator;
 use App\WorkingTime\Calculator\WorkingTimeCalculatorDay;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
-use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 
 class WorkingTimeModeDay implements WorkingTimeMode
 {
@@ -61,7 +61,7 @@ class WorkingTimeModeDay implements WorkingTimeMode
             'translation_domain' => 'system-configuration',
             'constraints' => [
                 new GreaterThanOrEqual(0),
-                new LessThanOrEqual(86400, message: 'A maximum of 24 hours is allowed.'),
+                new MaxDuration(86400),
             ],
         ];
 
