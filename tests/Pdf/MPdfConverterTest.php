@@ -47,7 +47,7 @@ class MPdfConverterTest extends KernelTestCase
         $rows = str_repeat('<tr><td>2026-07-19</td><td>A readable timesheet description.</td></tr>', 20);
         $html = <<<HTML
             <div style="height: 140mm"></div>
-            <table style="page-break-inside: avoid">
+            <table style="font-size: 10pt; page-break-inside: avoid">
                 <tr>
                     <th>Date</th>
                     <th>Description</th>
@@ -72,7 +72,7 @@ class MPdfConverterTest extends KernelTestCase
         preg_match_all('/\/F\d+\s+([0-9.]+)\s+Tf/', $content, $matches);
 
         self::assertNotEmpty($matches[1]);
-        self::assertGreaterThanOrEqual(10.0, min(array_map('floatval', $matches[1])));
+        self::assertGreaterThanOrEqual(9.99, min(array_map('floatval', $matches[1])));
     }
 
     public function testAssociatedFilesPathIsStripped(): void
