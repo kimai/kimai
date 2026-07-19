@@ -13,6 +13,7 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Team;
+use App\Entity\TeamMember;
 use App\Entity\User;
 use App\Form\API\TeamApiEditForm;
 use App\Repository\ActivityRepository;
@@ -25,6 +26,7 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use OpenApi\Attributes as OA;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -136,15 +138,8 @@ final class TeamController extends BaseApiController
     #[Route(methods: ['PATCH'], path: '/{id}', name: 'patch_team', requirements: ['id' => '\d+'])]
     public function patchAction(Request $request, Team $team): Response
     {
-        if ($request->request->has('members')) {
-            foreach ($team->getMembers() as $member) {
-                $team->removeMember($member);
-                $this->repository->removeTeamMember($member);
-            }
-            // this fails, if we use the teamservice, because the validator
-            // complains about teams without members or teamleads
-            $this->repository->saveTeam($team);
-        }
+        $hasMembers = $request->request->has('members');
+        $existingMembers = $hasMembers ? $this->collectMembersByUserId($team) : [];
 
         $form = $this->createForm(TeamApiEditForm::class, $team);
 
@@ -158,12 +153,152 @@ final class TeamController extends BaseApiController
             return $this->viewHandler->handle($view);
         }
 
+        if ($hasMembers) {
+            $this->replaceTeamMembersFromForm($team, $form, $existingMembers);
+        }
+
         $this->teamService->saveTeam($team);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * @return array<int, array{member: TeamMember, user: User, teamlead: bool}>
+     */
+    private function collectMembersByUserId(Team $team): array
+    {
+        $members = [];
+
+        foreach ($team->getMembers() as $member) {
+            $user = $member->getUser();
+            $userId = $user?->getId();
+
+            if ($user === null || $userId === null) {
+                continue;
+            }
+
+            $members[$userId] = [
+                'member' => $member,
+                'user' => $user,
+                'teamlead' => $member->isTeamlead(),
+            ];
+        }
+
+        return $members;
+    }
+
+    /**
+     * @param array<int, array{member: TeamMember, user: User, teamlead: bool}> $existingMembers
+     */
+    private function replaceTeamMembersFromForm(Team $team, FormInterface $form, array $existingMembers): void
+    {
+        $desiredMembers = [];
+        $submittedMembers = $form->get('members')->getData();
+
+        if (!is_iterable($submittedMembers)) {
+            return;
+        }
+
+        /** @var TeamMember $member */
+        foreach ($submittedMembers as $member) {
+            $user = $member->getUser();
+            $userId = $user?->getId();
+
+            if ($user === null || $userId === null) {
+                continue;
+            }
+
+            $desiredMembers[] = [
+                'userId' => $userId,
+                'user' => $user,
+                'teamlead' => $member->isTeamlead(),
+            ];
+        }
+
+        $existingMemberObjects = [];
+        foreach ($existingMembers as $existingMember) {
+            $existingMemberObjects[spl_object_id($existingMember['member'])] = true;
+        }
+
+        foreach ($team->getMembers() as $member) {
+            if (!isset($existingMemberObjects[spl_object_id($member)])) {
+                $team->removeMember($member);
+            }
+        }
+
+        foreach ($existingMembers as $existingMember) {
+            $member = $existingMember['member'];
+            $member->setUser($existingMember['user']);
+            $member->setTeamlead($existingMember['teamlead']);
+            $member->setTeam($team);
+        }
+
+        foreach ($team->getMembers() as $member) {
+            $team->removeMember($member);
+        }
+
+        $availableMembers = $existingMembers;
+        $availableUserIds = array_keys($existingMembers);
+        $desiredUserIds = array_column($desiredMembers, 'userId');
+
+        foreach ($desiredMembers as $index => $desiredMember) {
+            $targetUserId = $desiredMember['userId'];
+            $member = null;
+
+            if (isset($availableMembers[$targetUserId])) {
+                $member = $availableMembers[$targetUserId]['member'];
+                unset($availableMembers[$targetUserId]);
+            } else {
+                $reservedUserIds = [];
+                foreach (\array_slice($desiredUserIds, $index + 1) as $remainingUserId) {
+                    if (isset($availableMembers[$remainingUserId])) {
+                        $reservedUserIds[$remainingUserId] = true;
+                    }
+                }
+
+                $selectedUserId = null;
+                foreach ($availableUserIds as $candidateUserId) {
+                    if (!isset($availableMembers[$candidateUserId]) || isset($reservedUserIds[$candidateUserId])) {
+                        continue;
+                    }
+
+                    $selectedUserId = $candidateUserId;
+                    break;
+                }
+
+                if ($selectedUserId === null) {
+                    foreach ($availableUserIds as $candidateUserId) {
+                        if (!isset($availableMembers[$candidateUserId])) {
+                            continue;
+                        }
+
+                        $selectedUserId = $candidateUserId;
+                        break;
+                    }
+                }
+
+                if ($selectedUserId !== null) {
+                    $member = $availableMembers[$selectedUserId]['member'];
+                    unset($availableMembers[$selectedUserId]);
+                }
+            }
+
+            if ($member === null) {
+                $member = new TeamMember();
+            }
+
+            $member->setTeam($team);
+            $member->setUser($desiredMember['user']);
+            $member->setTeamlead($desiredMember['teamlead']);
+            $team->addMember($member);
+        }
+
+        foreach ($availableMembers as $availableMember) {
+            $this->repository->removeTeamMember($availableMember['member']);
+        }
     }
 
     /**
@@ -225,7 +360,7 @@ final class TeamController extends BaseApiController
      * The team is granted access to the customer.
      */
     #[IsGranted('edit', 'team')]
-    #[IsGranted('view', 'customer')]
+    #[IsGranted('permissions', 'customer')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the team including the customer', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The team that is granted access', required: true)]
     #[OA\Parameter(name: 'customerId', in: 'path', description: 'The customer to grant acecess to (Customer ID)', required: true)]
@@ -276,7 +411,7 @@ final class TeamController extends BaseApiController
      * The team is granted access to the project.
      */
     #[IsGranted('edit', 'team')]
-    #[IsGranted('view', 'project')]
+    #[IsGranted('permissions', 'project')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the team including the project', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The team that is granted access', required: true)]
     #[OA\Parameter(name: 'projectId', in: 'path', description: 'The project to grant acecess to (Project ID)', required: true)]
@@ -327,7 +462,7 @@ final class TeamController extends BaseApiController
      * The team is granted access to the activity.
      */
     #[IsGranted('edit', 'team')]
-    #[IsGranted('view', 'activity')]
+    #[IsGranted('permissions', 'activity')]
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the team including the activity', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The team that is granted access', required: true)]
     #[OA\Parameter(name: 'activityId', in: 'path', description: 'The activity to grant acecess to (Activity ID)', required: true)]
