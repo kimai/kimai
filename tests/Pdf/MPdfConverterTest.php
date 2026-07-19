@@ -38,6 +38,43 @@ class MPdfConverterTest extends KernelTestCase
         self::assertCount(2, $matches);
     }
 
+    public function testTablesAreNotShrunkToFitTheRemainingPage(): void
+    {
+        $kernel = self::bootKernel();
+        /** @var string $cacheDir */
+        $cacheDir = $kernel->getContainer()->getParameter('kernel.cache_dir');
+
+        $rows = str_repeat('<tr><td>2026-07-19</td><td>A readable timesheet description.</td></tr>', 20);
+        $html = <<<HTML
+            <div style="height: 140mm"></div>
+            <table style="page-break-inside: avoid">
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                </tr>
+                {$rows}
+            </table>
+            HTML;
+
+        $sut = new MPdfConverter((new FileHelperFactory($this))->create(), $cacheDir);
+        $result = $sut->convertToPdf($html);
+
+        $content = '';
+        if (preg_match_all('/stream\r?\n(.*?)\r?\nendstream/s', $result, $streams) > 0) {
+            foreach ($streams[1] as $stream) {
+                $decoded = @gzuncompress($stream);
+                if ($decoded !== false) {
+                    $content .= $decoded;
+                }
+            }
+        }
+
+        preg_match_all('/\/F\d+\s+([0-9.]+)\s+Tf/', $content, $matches);
+
+        self::assertNotEmpty($matches[1]);
+        self::assertGreaterThanOrEqual(10.0, min(array_map('floatval', $matches[1])));
+    }
+
     public function testAssociatedFilesPathIsStripped(): void
     {
         $kernel = self::bootKernel();
