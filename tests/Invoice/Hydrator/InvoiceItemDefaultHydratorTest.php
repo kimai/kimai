@@ -34,8 +34,11 @@ class InvoiceItemDefaultHydratorTest extends TestCase
             ['meta_fields' => []],
         ];
 
+        $calculator = $model->getCalculator();
+        self::assertNotNull($calculator);
+
         $i = 0;
-        foreach ($model->getCalculator()->getEntries() as $entry) {
+        foreach ($calculator->getEntries() as $entry) {
             $result = $sut->hydrate($entry);
             $exp = $expected[$i++];
             $this->assertEntryStructure($result, $exp['meta_fields']);
@@ -46,6 +49,30 @@ class InvoiceItemDefaultHydratorTest extends TestCase
                 self::assertEquals($exp['description_safe'], $result['entry.description_safe']);
             }
         }
+    }
+
+    public function testDateProcessUsesTwentyFourHourFormat(): void
+    {
+        $model = $this->getInvoiceModel();
+
+        $sut = new InvoiceItemDefaultHydrator();
+        $sut->setInvoiceModel($model);
+
+        $calculator = $model->getCalculator();
+        self::assertNotNull($calculator);
+
+        $dateProcessValues = [];
+        foreach ($calculator->getEntries() as $entry) {
+            $result = $sut->hydrate($entry);
+            $dateProcessValues[] = $result['entry.date_process'];
+        }
+
+        // afternoon times must not be truncated to an ambiguous 12-hour value:
+        // with the buggy "h" format 14:00 became "02:00:00" and 18:00 became "06:00:00"
+        self::assertContains('2020-12-13 14:00:00', $dateProcessValues);
+        self::assertContains('2020-08-12 18:00:00', $dateProcessValues);
+        self::assertNotContains('2020-12-13 02:00:00', $dateProcessValues);
+        self::assertNotContains('2020-08-12 06:00:00', $dateProcessValues);
     }
 
     public function assertEntryStructure(array $model, array $metaFields): void
