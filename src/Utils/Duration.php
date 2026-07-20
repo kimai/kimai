@@ -30,6 +30,10 @@ final class Duration
 
     /**
      * Transforms seconds into a duration string.
+     *
+     * @param int|null $seconds the duration in seconds, or null to return null
+     * @param string $format the output format
+     * @return ($seconds is null ? null : string)
      */
     public function format(?int $seconds, string $format = self::FORMAT_DEFAULT): ?string
     {
