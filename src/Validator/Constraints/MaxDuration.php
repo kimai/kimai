@@ -28,9 +28,14 @@ final class MaxDuration extends Constraint
      */
     public function __construct(
         public int $value,
+        ?string $message = null,
         ?array $groups = null,
         mixed $payload = null,
     ) {
         parent::__construct([], $groups, $payload);
+
+        if ($message !== null) {
+            $this->message = $message;
+        }
     }
 }
