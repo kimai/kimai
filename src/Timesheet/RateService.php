@@ -57,7 +57,14 @@ final class RateService implements RateServiceInterface
 
         if (null !== $fixedRate) {
             if (null === $fixedInternalRate) {
-                $fixedInternalRate = (float) $record->getUser()->getPreferenceValue(UserPreference::INTERNAL_RATE, $fixedRate, false);
+                $internalHourlyRate = $record->getUser()->getPreferenceValue(UserPreference::INTERNAL_RATE, null, false);
+                if (null === $internalHourlyRate) {
+                    // no internal rate is configured, so the fixed rate is used as fallback
+                    $fixedInternalRate = $fixedRate;
+                } else {
+                    // the user's internal rate is an hourly rate, so the total internal rate is calculated from the duration - see #4801
+                    $fixedInternalRate = $this->calculatorMode->calculateRate((float) $internalHourlyRate, $record->getDuration() ?? 0);
+                }
             }
 
             return new Rate($fixedRate, $fixedInternalRate, null, $fixedRate);
