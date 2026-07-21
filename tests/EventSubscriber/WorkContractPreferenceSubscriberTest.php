@@ -18,10 +18,19 @@ use App\WorkingTime\Calculator\WorkingTimeCalculatorDay;
 use App\WorkingTime\Mode\WorkingTimeModeNone;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 #[CoversClass(WorkContractPreferenceSubscriber::class)]
 class WorkContractPreferenceSubscriberTest extends TestCase
 {
+    private function getSut(bool $isGranted = true): WorkContractPreferenceSubscriber
+    {
+        $voter = $this->createMock(AuthorizationCheckerInterface::class);
+        $voter->method('isGranted')->with('contract', self::isInstanceOf(User::class))->willReturn($isGranted);
+
+        return new WorkContractPreferenceSubscriber($voter);
+    }
+
     public function testGetSubscribedEvents(): void
     {
         $events = WorkContractPreferenceSubscriber::getSubscribedEvents();
@@ -36,7 +45,7 @@ class WorkContractPreferenceSubscriberTest extends TestCase
     {
         $user = new User();
 
-        $sut = new WorkContractPreferenceSubscriber();
+        $sut = $this->getSut(true);
         $sut->registerNewUserPreferences(new UserCreateEvent($user));
 
         self::assertCount(12, $user->getPreferences());
@@ -62,7 +71,7 @@ class WorkContractPreferenceSubscriberTest extends TestCase
         $user->setPreferenceValue(WorkingTimeCalculatorDay::WORK_HOURS_MONDAY, 28800);
         $user->setPreferenceValue('work_start_day', '2026-01-01');
 
-        $sut = new WorkContractPreferenceSubscriber();
+        $sut = $this->getSut(false);
         $sut->registerNewUserPreferences(new UserCreateEvent($user));
 
         self::assertSame('custom', $user->getWorkContractMode());
@@ -71,13 +80,18 @@ class WorkContractPreferenceSubscriberTest extends TestCase
         self::assertSame('0', $user->getPreferenceValue(WorkingTimeCalculatorDay::WORK_HOURS_TUESDAY));
         self::assertNull($user->getPreferenceValue('work_last_day'));
         self::assertCount(12, $user->getPreferences());
+
+        // Assert enabled is set to false correctly
+        self::assertFalse($user->getPreference(WorkingTimeCalculatorDay::WORK_HOURS_MONDAY)->isEnabled());
+        self::assertFalse($user->getPreference('work_start_day')->isEnabled());
+        self::assertFalse($user->getPreference('work_last_day')->isEnabled());
     }
 
     public function testRegisterDefaultUserPreferencesAddsMissingDefaultsWhenNotBooting(): void
     {
         $user = new User();
 
-        $sut = new WorkContractPreferenceSubscriber();
+        $sut = $this->getSut(true);
         $sut->registerDefaultUserPreferences(new UserPreferenceEvent($user, [], false));
 
         self::assertCount(12, $user->getPreferences());
@@ -99,7 +113,7 @@ class WorkContractPreferenceSubscriberTest extends TestCase
     {
         $user = new User();
 
-        $sut = new WorkContractPreferenceSubscriber();
+        $sut = $this->getSut();
         $sut->registerDefaultUserPreferences(new UserPreferenceEvent($user, []));
 
         self::assertCount(0, $user->getPreferences());
