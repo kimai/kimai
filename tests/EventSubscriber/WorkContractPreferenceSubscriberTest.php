@@ -82,9 +82,16 @@ class WorkContractPreferenceSubscriberTest extends TestCase
         self::assertCount(12, $user->getPreferences());
 
         // Assert enabled is set to false correctly
-        self::assertFalse($user->getPreference(WorkingTimeCalculatorDay::WORK_HOURS_MONDAY)->isEnabled());
-        self::assertFalse($user->getPreference('work_start_day')->isEnabled());
-        self::assertFalse($user->getPreference('work_last_day')->isEnabled());
+        self::assertExistsAndEnabled($user, WorkingTimeCalculatorDay::WORK_HOURS_MONDAY, false);
+        self::assertExistsAndEnabled($user, 'work_start_day', false);
+        self::assertExistsAndEnabled($user, 'work_last_day', false);
+    }
+
+    private static function assertExistsAndEnabled(User $user, string $prefName, bool $enabled): void
+    {
+        $pref = $user->getPreference($prefName);
+        self::assertNotNull($pref);
+        self::assertSame($enabled, $pref->isEnabled());
     }
 
     public function testRegisterDefaultUserPreferencesAddsMissingDefaultsWhenNotBooting(): void
