@@ -204,7 +204,11 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
             // activity: violations ----------------------------------------------------------------------
             //        previously logged                         available budgets                                           expected violation                              duration            entry currently in database
             'a_a' => [1230, null, null, null, null, null,       null, 3600, null, null, null, null, null, null, null,       '0:20', '0:39', '1:00', 'activity',          '+3600 seconds'],
-            'a_b' => [null, 1001.0, null, null, null, null,     null, null, 1000.0, null, null, null, null, null, null,     '€1,001.00', '€0.00', '€1,000.00', 'activity',  '+3600 seconds'],
+            'a_b' => [null, 900.0, null, null, null, null,      null, null, 1000.0, null, null, null, null, null, null,     '€900.00', '€100.00', '€1,000.00', 'activity',  '+3600 seconds',   [], new Rate(101.0, 0.00)],
+
+            // entries that do not consume any budget are allowed, even if the budget is already used up - see #6015
+            'a_a2' => [3601, null, null, null, null, null,      null, 3600, null, null, null, null, null, null, null,       null, null, null, null,                         '+0 seconds'],
+            'a_b2' => [null, 1001.0, null, null, null, null,    null, null, 1000.0, null, null, null, null, null, null,     null, null, null, null,                         '+3600 seconds'],
 
             // activity: no violations
             'a_c' => [1230, null, null, null, null, null,       null, null, null, null, null, null, null, null, null,       null, null, null, null,                         '+3600 seconds'],
@@ -215,7 +219,8 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
             'a_f1' => [1320, null, null, null, null, null,      null, 3600, null, null, null, null, null, null, null,       '0:22', '0:38', '1:00', 'activity',          '+3600 seconds',    ['rate' => 1.0, 'duration' => 1000]],
             'a_h1' => [7200, null, null, null, null, null,      null, 7200, null, null, null, null, null, null, null,       '2:00', '0:00', '2:00', 'activity',          '+3601 seconds',    ['rate' => 1.0, 'duration' => 3600]],
             'a_h2' => [3601, null, null, null, null, null,      null, 3600, null, null, null, null, null, null, null,       null, null, null, null,                         '+3600 seconds',    ['rate' => 1.0, 'duration' => 3601]],
-            'a_g0' => [null, 1002.0, null, null, null, null,    null, null, 1000.0, null, null, null, null, null, null,     '€1,002.00', '€0.00', '€1,000.00', 'activity',     '+3600 seconds',    ['rate' => 1.0, 'duration' => 1010]],
+            // lowering the rate of an existing entry must be allowed, even if the budget is already overbooked - see #6015
+            'a_g0' => [null, 1002.0, null, null, null, null,    null, null, 1000.0, null, null, null, null, null, null,     null, null, null, null,                         '+3600 seconds',    ['rate' => 1.0, 'duration' => 1010]],
             'a_g1' => [null, 1002.0, null, null, null, null,    null, null, 1000.0, null, null, null, null, null, null,     null, null, null, null,                         '+3600 seconds',    ['rate' => 2.0, 'duration' => 0]],
             // nothing changed => no violation
             'a_x1' => [3600, 1000.0, null, null, null, null,    null, 3600, 1000.0, null, null, null, null, null, null,     null, null, null, null,                         '+3600 seconds',    ['rate' => 1000.0, 'duration' => 3600], new Rate(1000.0, 0.00)],
@@ -228,13 +233,17 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
 
             // project: violations ----------------------------------------------------------------------
             'p_j' => [null, null, 1230, null, null, null,       null, null, null, null, 3600, null, null, null, null,       '0:20', '0:39', '1:00', 'project',           '+3600 seconds'],
-            'p_k' => [null, null, null, 1001.0, null, null,     null, null, null, null, null, 1000.0, null, null, null,     '€1,001.00', '€0.00', '€1,000.00', 'project',   '+3600 seconds'],
+            'p_k' => [null, null, null, 900.0, null, null,      null, null, null, null, null, 1000.0, null, null, null,     '€900.00', '€100.00', '€1,000.00', 'project',   '+3600 seconds',   [], new Rate(101.0, 0.00)],
+
+            // entries that do not consume any budget are allowed, even if the budget is already used up - see #6015
+            'p_k2' => [null, null, null, 1001.0, null, null,    null, null, null, null, null, 1000.0, null, null, null,     null, null, null, null,                         '+3600 seconds'],
 
             //        previously logged                         available budgets                                           expected violation                              duration            entry currently in database
             'p_f1' => [null, null, 1320, null, null, null,      null, null, null, null, 3600, null, null, null, null,       '0:22', '0:38', '1:00', 'project',           '+3600 seconds',    ['rate' => 1.0, 'duration' => 1000]],
             'p_h1' => [null, null, 7200, null, null, null,      null, null, null, null, 7200, null, null, null, null,       '2:00', '0:00', '2:00', 'project',           '+3601 seconds',    ['rate' => 1.0, 'duration' => 3600]],
             'p_h2' => [null, null, 3601, null, null, null,      null, null, null, null, 3600, null, null, null, null,       null, null, null, null,                         '+3600 seconds',    ['rate' => 1.0, 'duration' => 3601]],
-            'p_g0' => [null, null, null, 1002.0, null, null,    null, null, null, null, null, 1000.0, null, null, null,     '€1,002.00', '€0.00', '€1,000.00', 'project',      '+3600 seconds',    ['rate' => 1.0, 'duration' => 1010]],
+            // lowering the rate of an existing entry must be allowed, even if the budget is already overbooked - see #6015
+            'p_g0' => [null, null, null, 1002.0, null, null,    null, null, null, null, null, 1000.0, null, null, null,     null, null, null, null,                         '+3600 seconds',    ['rate' => 1.0, 'duration' => 1010]],
             'p_g1' => [null, null, null, 1002.0, null, null,    null, null, null, null, null, 1000.0, null, null, null,     null, null, null, null,                         '+3600 seconds',    ['rate' => 2.0, 'duration' => 0]],
 
             // project: no violations
@@ -250,13 +259,17 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
 
             // customer: violations ----------------------------------------------------------------------
             'c_v' => [null, null, null, null, 1230, null,       null, null, null, null, null, null, null, 3600, null,       '0:20', '0:39', '1:00', 'customer',          '+3600 seconds'],
-            'c_w' => [null, null, null, null, null, 1001.0,     null, null, null, null, null, null, null, null, 1000.0,     '€1,001.00', '€0.00', '€1,000.00', 'customer',  '+3600 seconds'],
+            'c_w' => [null, null, null, null, null, 900.0,      null, null, null, null, null, null, null, null, 1000.0,     '€900.00', '€100.00', '€1,000.00', 'customer',  '+3600 seconds',   [], new Rate(101.0, 0.00)],
+
+            // entries that do not consume any budget are allowed, even if the budget is already used up - see #6015
+            'c_w2' => [null, null, null, null, null, 1001.0,    null, null, null, null, null, null, null, null, 1000.0,     null, null, null, null,                         '+3600 seconds'],
 
             //        previously logged                         available budgets                                           expected violation                              duration            entry currently in database
             'c_f1' => [null, null, null, null, 1320, null,      null, null, null, null, null, null, null, 3600, null,       '0:22', '0:38', '1:00', 'customer',          '+3600 seconds',    ['rate' => 1.0, 'duration' => 1000]],
             'c_h1' => [null, null, null, null, 7200, null,      null, null, null, null, null, null, null, 7200, null,       '2:00', '0:00', '2:00', 'customer',          '+3601 seconds',    ['rate' => 1.0, 'duration' => 3600]],
             'c_h2' => [null, null, null, null, 3601, null,      null, null, null, null, null, null, null, 3600, null,       null, null, null, null,                         '+3600 seconds',    ['rate' => 1.0, 'duration' => 3601]],
-            'c_g0' => [null, null, null, null, null, 1002.0,    null, null, null, null, null, null, null, null, 1000.0,     '€1,002.00', '€0.00', '€1,000.00', 'customer',     '+3600 seconds',    ['rate' => 1.0, 'duration' => 1010]],
+            // lowering the rate of an existing entry must be allowed, even if the budget is already overbooked - see #6015
+            'c_g0' => [null, null, null, null, null, 1002.0,    null, null, null, null, null, null, null, null, 1000.0,     null, null, null, null,                         '+3600 seconds',    ['rate' => 1.0, 'duration' => 1010]],
             'c_g1' => [null, null, null, null, null, 1002.0,    null, null, null, null, null, null, null, null, 1000.0,     null, null, null, null,                         '+3600 seconds',    ['rate' => 2.0, 'duration' => 0]],
 
             // customer: no violations

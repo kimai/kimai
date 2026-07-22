@@ -180,9 +180,13 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
 
     private function checkBudgets(TimesheetBudgetUsed $constraint, BudgetStatisticModel $stat, TimesheetEntity $timesheet, int $duration, float $rate, string $field): bool
     {
+        // only check the budgets if the given record adds to the budget consumption ($rate and
+        // $duration hold the delta for updated records): entries that do not increase the used
+        // budget must not be rejected, even if the budget is already overbooked - see #6015
+
         $fullRate = ($stat->getBudgetSpent() + $rate);
 
-        if ($stat->hasBudget() && $fullRate > $stat->getBudget()) {
+        if ($rate > 0 && $stat->hasBudget() && $fullRate > $stat->getBudget()) {
             $this->addBudgetViolation($constraint, $timesheet, $field, $stat->getBudget(), $stat->getBudgetSpent());
 
             return true;
@@ -190,7 +194,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
 
         $fullDuration = ($stat->getTimeBudgetSpent() + $duration);
 
-        if ($stat->hasTimeBudget() && $fullDuration > $stat->getTimeBudget()) {
+        if ($duration > 0 && $stat->hasTimeBudget() && $fullDuration > $stat->getTimeBudget()) {
             $this->addTimeBudgetViolation($constraint, $field, $stat->getTimeBudget(), $stat->getTimeBudgetSpent());
 
             return true;
