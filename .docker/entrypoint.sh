@@ -64,6 +64,27 @@ function handleStartup() {
     export APACHE_LOCK_DIR=/var/lock/apache2
     export APACHE_LOG_DIR=/var/log/apache2
     export LANG=C
+
+    # Real client IP behind a reverse proxy (issue #5021). mod_remoteip needs the
+    # trusted proxies as a static directive that cannot read env at parse time, so
+    # generate the RemoteIP* directives here from $TRUSTED_PROXIES. RemoteIPHeader is
+    # only enabled together with a trusted proxy list, otherwise mod_remoteip would
+    # trust X-Forwarded-For from ANY client and allow IP spoofing.
+    if [ -n "$TRUSTED_PROXIES" ]; then
+      APACHE_TRUSTED_PROXIES=""
+      IFS=',' read -ra _proxies <<< "$TRUSTED_PROXIES"
+      for _p in "${_proxies[@]}"; do
+        _p=$(echo "$_p" | xargs)   # trim
+        # Accept only IPv4/IPv6/CIDR tokens; skip Symfony keywords (REMOTE_ADDR, PRIVATE_SUBNETS)
+        if [[ "$_p" =~ ^[0-9a-fA-F:.]+(/[0-9]+)?$ ]]; then
+          APACHE_TRUSTED_PROXIES="$APACHE_TRUSTED_PROXIES $_p"
+        fi
+      done
+      if [ -n "$APACHE_TRUSTED_PROXIES" ]; then
+        sed -i "s|# __KIMAI_REMOTEIP_TRUSTED_PROXY__|RemoteIPHeader X-Forwarded-For\n    RemoteIPTrustedProxy${APACHE_TRUSTED_PROXIES}|" \
+          /etc/apache2/sites-available/000-default.conf
+      fi
+    fi
   elif [ -e /use_fpm ]; then
     sed -i "s/user = .*/user = $USER_ID/g" /usr/local/etc/php-fpm.d/www.conf
     sed -i "s/group = .*/group = $GROUP_ID/g" /usr/local/etc/php-fpm.d/www.conf
