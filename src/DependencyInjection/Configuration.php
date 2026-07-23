@@ -55,6 +55,7 @@ final class Configuration implements ConfigurationInterface
                 ->append($this->getPermissionsNode())
                 ->append($this->getLdapNode())
                 ->append($this->getSamlNode())
+                ->append($this->getOidcNode())
                 ->append($this->getQuickEntryNode())
                 ->append($this->getActivityNode())
                 ->append($this->getProjectNode())
@@ -1034,6 +1035,115 @@ final class Configuration implements ConfigurationInterface
                     return !$found;
                 })
                 ->thenInvalid('You need to configure a SAML mapping for the email attribute.')
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    private function getOidcNode(): ArrayNodeDefinition
+    {
+        $builder = new TreeBuilder('oidc');
+        /** @var ArrayNodeDefinition $node */
+        $node = $builder->getRootNode();
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->booleanNode('activate')
+                    ->defaultFalse()
+                ->end()
+                ->scalarNode('title')
+                    ->defaultValue('Login with SSO')
+                ->end()
+                ->scalarNode('provider')
+                    ->defaultValue('openid')
+                ->end()
+                ->scalarNode('client_id')
+                    ->defaultNull()
+                ->end()
+                ->scalarNode('client_secret')
+                    ->defaultNull()
+                ->end()
+                ->scalarNode('issuer')
+                    ->defaultNull()
+                ->end()
+                ->scalarNode('authorization_url')
+                    ->defaultNull()
+                ->end()
+                ->scalarNode('token_url')
+                    ->defaultNull()
+                ->end()
+                ->scalarNode('userinfo_url')
+                    ->defaultNull()
+                ->end()
+                ->scalarNode('scopes')
+                    ->defaultValue('openid profile email')
+                ->end()
+                ->scalarNode('username_claim')
+                    ->defaultValue('preferred_username')
+                ->end()
+                ->arrayNode('roles')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode('resetOnLogin')
+                            ->defaultTrue()
+                        ->end()
+                        ->scalarNode('claim')
+                            ->defaultNull()
+                        ->end()
+                        ->arrayNode('mapping')
+                            ->defaultValue([])
+                            ->arrayPrototype()
+                                ->children()
+                                    ->scalarNode('oidc')->isRequired()->cannotBeEmpty()->end()
+                                    ->scalarNode('kimai')->isRequired()->cannotBeEmpty()->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('mapping')
+                    ->defaultValue([])
+                    ->arrayPrototype()
+                        ->children()
+                            ->scalarNode('oidc')->isRequired()->cannotBeEmpty()->end()
+                            ->scalarNode('kimai')
+                                ->isRequired()
+                                ->cannotBeEmpty()
+                                ->validate()
+                                    ->ifTrue(function ($v) {
+                                        return \in_array(strtolower($v), ['username', 'useridentifier'], true);
+                                    })
+                                    ->thenInvalid('You cannot configure "username" and "userIdentifier" for OIDC attribute mapping.')
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+            ->validate()
+                ->ifTrue(static function ($v) {
+                    if (true !== $v['activate']) {
+                        return false;
+                    }
+
+                    return empty($v['client_id']) || empty($v['client_secret']);
+                })
+                ->thenInvalid('You need to configure "oidc.client_id" and "oidc.client_secret" when OIDC is activated.')
+            ->end()
+            ->validate()
+                ->ifTrue(static function ($v) {
+                    if (true !== $v['activate']) {
+                        return false;
+                    }
+
+                    // either the issuer (for discovery) or explicit endpoints must be set
+                    $hasExplicit = !empty($v['authorization_url']) && !empty($v['token_url']) && !empty($v['userinfo_url']);
+
+                    return empty($v['issuer']) && !$hasExplicit;
+                })
+                ->thenInvalid('You need to configure "oidc.issuer" or the explicit "oidc.authorization_url", "oidc.token_url" and "oidc.userinfo_url" endpoints.')
             ->end()
         ;
 
