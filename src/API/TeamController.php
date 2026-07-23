@@ -196,6 +196,7 @@ final class TeamController extends BaseApiController
     private function replaceTeamMembersFromForm(Team $team, FormInterface $form, array $existingMembers): void
     {
         $desiredMembers = [];
+        $seenUserIds = [];
         $submittedMembers = $form->get('members')->getData();
 
         if (!is_iterable($submittedMembers)) {
@@ -210,6 +211,12 @@ final class TeamController extends BaseApiController
             if ($user === null || $userId === null) {
                 continue;
             }
+
+            if (isset($seenUserIds[$userId])) {
+                continue;
+            }
+
+            $seenUserIds[$userId] = true;
 
             $desiredMembers[] = [
                 'userId' => $userId,
