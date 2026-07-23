@@ -13,6 +13,7 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Team;
+use App\Entity\TeamMember;
 use App\Entity\User;
 use App\Form\API\TeamApiEditForm;
 use App\Repository\ActivityRepository;
@@ -25,6 +26,7 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use OpenApi\Attributes as OA;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -136,6 +138,9 @@ final class TeamController extends BaseApiController
     #[Route(methods: ['PATCH'], path: '/{id}', name: 'patch_team', requirements: ['id' => '\d+'])]
     public function patchAction(Request $request, Team $team): Response
     {
+        $hasMembers = $request->request->has('members');
+        $existingMembers = $hasMembers ? $this->collectMembersByUserId($team) : [];
+
         $form = $this->createForm(TeamApiEditForm::class, $team);
 
         $form->setData($team);
@@ -148,12 +153,159 @@ final class TeamController extends BaseApiController
             return $this->viewHandler->handle($view);
         }
 
+        if ($hasMembers) {
+            $this->replaceTeamMembersFromForm($team, $form, $existingMembers);
+        }
+
         $this->teamService->saveTeam($team);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * @return array<int, array{member: TeamMember, user: User, teamlead: bool}>
+     */
+    private function collectMembersByUserId(Team $team): array
+    {
+        $members = [];
+
+        foreach ($team->getMembers() as $member) {
+            $user = $member->getUser();
+            $userId = $user?->getId();
+
+            if ($user === null || $userId === null) {
+                continue;
+            }
+
+            $members[$userId] = [
+                'member' => $member,
+                'user' => $user,
+                'teamlead' => $member->isTeamlead(),
+            ];
+        }
+
+        return $members;
+    }
+
+    /**
+     * @param array<int, array{member: TeamMember, user: User, teamlead: bool}> $existingMembers
+     */
+    private function replaceTeamMembersFromForm(Team $team, FormInterface $form, array $existingMembers): void
+    {
+        $desiredMembers = [];
+        $seenUserIds = [];
+        $submittedMembers = $form->get('members')->getData();
+
+        if (!is_iterable($submittedMembers)) {
+            return;
+        }
+
+        /** @var TeamMember $member */
+        foreach ($submittedMembers as $member) {
+            $user = $member->getUser();
+            $userId = $user?->getId();
+
+            if ($user === null || $userId === null) {
+                continue;
+            }
+
+            if (isset($seenUserIds[$userId])) {
+                continue;
+            }
+
+            $seenUserIds[$userId] = true;
+
+            $desiredMembers[] = [
+                'userId' => $userId,
+                'user' => $user,
+                'teamlead' => $member->isTeamlead(),
+            ];
+        }
+
+        $existingMemberObjects = [];
+        foreach ($existingMembers as $existingMember) {
+            $existingMemberObjects[spl_object_id($existingMember['member'])] = true;
+        }
+
+        foreach ($team->getMembers() as $member) {
+            if (!isset($existingMemberObjects[spl_object_id($member)])) {
+                $team->removeMember($member);
+            }
+        }
+
+        foreach ($existingMembers as $existingMember) {
+            $member = $existingMember['member'];
+            $member->setUser($existingMember['user']);
+            $member->setTeamlead($existingMember['teamlead']);
+            $member->setTeam($team);
+        }
+
+        foreach ($team->getMembers() as $member) {
+            $team->removeMember($member);
+        }
+
+        $availableMembers = $existingMembers;
+        $availableUserIds = array_keys($existingMembers);
+        $desiredUserIds = array_column($desiredMembers, 'userId');
+
+        foreach ($desiredMembers as $index => $desiredMember) {
+            $targetUserId = $desiredMember['userId'];
+            $member = null;
+
+            if (isset($availableMembers[$targetUserId])) {
+                $member = $availableMembers[$targetUserId]['member'];
+                unset($availableMembers[$targetUserId]);
+            } else {
+                $reservedUserIds = [];
+                foreach (\array_slice($desiredUserIds, $index + 1) as $remainingUserId) {
+                    if (isset($availableMembers[$remainingUserId])) {
+                        $reservedUserIds[$remainingUserId] = true;
+                    }
+                }
+
+                $selectedUserId = null;
+                foreach ($availableUserIds as $candidateUserId) {
+                    if (!isset($availableMembers[$candidateUserId]) || isset($reservedUserIds[$candidateUserId])) {
+                        continue;
+                    }
+
+                    $selectedUserId = $candidateUserId;
+                    break;
+                }
+
+                if ($selectedUserId === null) {
+                    foreach ($availableUserIds as $candidateUserId) {
+                        if (!isset($availableMembers[$candidateUserId])) {
+                            continue;
+                        }
+
+                        $selectedUserId = $candidateUserId;
+                        break;
+                    }
+                }
+
+                if ($selectedUserId !== null) {
+                    $member = $availableMembers[$selectedUserId]['member'];
+                    unset($availableMembers[$selectedUserId]);
+                }
+            }
+
+            if ($member === null) {
+                $member = new TeamMember();
+            }
+
+            $member->setTeam($team);
+            $member->setUser($desiredMember['user']);
+            $member->setTeamlead($desiredMember['teamlead']);
+            $team->addMember($member);
+        }
+
+        foreach ($availableMembers as $availableMember) {
+            $this->repository->removeTeamMember($availableMember['member']);
+        }
     }
 
     /**

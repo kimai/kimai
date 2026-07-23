@@ -190,23 +190,25 @@ class TeamControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result['members']);
         self::assertCount(3, $result['members']);
 
-        self::assertIsArray($result['members'][0]);
-        self::assertTrue($result['members'][0]['teamlead']);
-        self::assertIsArray($result['members'][0]['user']);
-        self::assertEquals(2, $result['members'][0]['user']['id']);
-        self::assertEquals('john_user', $result['members'][0]['user']['username']);
+        $membersByUser = [];
+        foreach ($result['members'] as $member) {
+            self::assertIsArray($member);
+            self::assertIsArray($member['user']);
+            self::assertIsInt($member['user']['id']);
+            $membersByUser[$member['user']['id']] = $member;
+        }
 
-        self::assertIsArray($result['members'][1]);
-        self::assertFalse($result['members'][1]['teamlead']);
-        self::assertIsArray($result['members'][1]['user']);
-        self::assertEquals(1, $result['members'][1]['user']['id']);
-        self::assertEquals('clara_customer', $result['members'][1]['user']['username']);
+        self::assertArrayHasKey(2, $membersByUser);
+        self::assertTrue($membersByUser[2]['teamlead']);
+        self::assertEquals('john_user', $membersByUser[2]['user']['username']);
 
-        self::assertIsArray($result['members'][2]);
-        self::assertTrue($result['members'][2]['teamlead']);
-        self::assertIsArray($result['members'][2]['user']);
-        self::assertEquals(4, $result['members'][2]['user']['id']);
-        self::assertEquals('tony_teamlead', $result['members'][2]['user']['username']);
+        self::assertArrayHasKey(1, $membersByUser);
+        self::assertFalse($membersByUser[1]['teamlead']);
+        self::assertEquals('clara_customer', $membersByUser[1]['user']['username']);
+
+        self::assertArrayHasKey(4, $membersByUser);
+        self::assertTrue($membersByUser[4]['teamlead']);
+        self::assertEquals('tony_teamlead', $membersByUser[4]['user']['username']);
     }
 
     public function testPatchActionWithValidationErrors(): void
@@ -237,14 +239,14 @@ class TeamControllerTest extends APIControllerBaseTestCase
         $this->assertApiCallValidationError($response, ['name', 'members.0.user']);
     }
 
-    public function testPatchActionWithInvalidMembersPayloadKeepsExistingMembers(): void
+    public function testPatchActionCanReplaceTwoMembersWithOneWithoutConstraintViolation(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
             'members' => [
                 ['user' => 1, 'teamlead' => true],
-                ['user' => 5, 'teamlead' => true],
+                ['user' => 5, 'teamlead' => false],
             ],
         ];
         $this->request($client, '/api/teams', 'POST', [], json_encode($data, JSON_THROW_ON_ERROR));
@@ -257,15 +259,25 @@ class TeamControllerTest extends APIControllerBaseTestCase
         self::assertIsNumeric($created['id']);
 
         $teamId = (int) $created['id'];
-
         $payload = [
-            'members' => 'invalid',
+            'members' => [
+                ['user' => 5, 'teamlead' => true],
+            ],
         ];
-        $this->request($client, '/api/teams/' . $teamId, 'PATCH', [], json_encode($payload, JSON_THROW_ON_ERROR));
 
-        $response = $client->getResponse();
-        self::assertEquals(400, $response->getStatusCode());
-        $this->assertApiCallValidationError($response, [], false, ['The collection is invalid.']);
+        $this->request($client, '/api/teams/' . $teamId, 'PATCH', [], json_encode($payload, JSON_THROW_ON_ERROR));
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $patchedContent = $client->getResponse()->getContent();
+        self::assertIsString($patchedContent);
+        $patched = json_decode($patchedContent, true, 512, JSON_THROW_ON_ERROR);
+        self::assertIsArray($patched);
+        self::assertIsArray($patched['members']);
+        self::assertCount(1, $patched['members']);
+        self::assertIsArray($patched['members'][0]);
+        self::assertIsArray($patched['members'][0]['user']);
+        self::assertEquals(5, $patched['members'][0]['user']['id']);
+        self::assertTrue($patched['members'][0]['teamlead']);
 
         $this->request($client, '/api/teams/' . $teamId);
         self::assertTrue($client->getResponse()->isSuccessful());
@@ -275,15 +287,67 @@ class TeamControllerTest extends APIControllerBaseTestCase
         $reloaded = json_decode($reloadedContent, true, 512, JSON_THROW_ON_ERROR);
         self::assertIsArray($reloaded);
         self::assertIsArray($reloaded['members']);
-        self::assertCount(2, $reloaded['members']);
+        self::assertCount(1, $reloaded['members']);
         self::assertIsArray($reloaded['members'][0]);
         self::assertIsArray($reloaded['members'][0]['user']);
-        self::assertIsArray($reloaded['members'][1]);
-        self::assertIsArray($reloaded['members'][1]['user']);
-        self::assertEquals(1, $reloaded['members'][0]['user']['id']);
-        self::assertEquals(5, $reloaded['members'][1]['user']['id']);
+        self::assertEquals(5, $reloaded['members'][0]['user']['id']);
         self::assertTrue($reloaded['members'][0]['teamlead']);
-        self::assertTrue($reloaded['members'][1]['teamlead']);
+    }
+
+    public function testPatchActionWithDuplicateMembersUserDoesNotReuseUnrelatedMember(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'members' => [
+                ['user' => 1, 'teamlead' => true],
+                ['user' => 5, 'teamlead' => false],
+                ['user' => 4, 'teamlead' => false],
+            ],
+        ];
+        $this->request($client, '/api/teams', 'POST', [], json_encode($data, JSON_THROW_ON_ERROR));
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $createdContent = $client->getResponse()->getContent();
+        self::assertIsString($createdContent);
+        $created = json_decode($createdContent, true, 512, JSON_THROW_ON_ERROR);
+        self::assertIsArray($created);
+        self::assertIsNumeric($created['id']);
+
+        $teamId = (int) $created['id'];
+        $payload = [
+            'members' => [
+                ['user' => 1, 'teamlead' => true],
+                ['user' => 1, 'teamlead' => false],
+            ],
+        ];
+
+        $this->request($client, '/api/teams/' . $teamId, 'PATCH', [], json_encode($payload, JSON_THROW_ON_ERROR));
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $patchedContent = $client->getResponse()->getContent();
+        self::assertIsString($patchedContent);
+        $patched = json_decode($patchedContent, true, 512, JSON_THROW_ON_ERROR);
+        self::assertIsArray($patched);
+        self::assertIsArray($patched['members']);
+        self::assertCount(1, $patched['members']);
+        self::assertIsArray($patched['members'][0]);
+        self::assertIsArray($patched['members'][0]['user']);
+        self::assertEquals(1, $patched['members'][0]['user']['id']);
+        self::assertTrue($patched['members'][0]['teamlead']);
+
+        $this->request($client, '/api/teams/' . $teamId);
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $reloadedContent = $client->getResponse()->getContent();
+        self::assertIsString($reloadedContent);
+        $reloaded = json_decode($reloadedContent, true, 512, JSON_THROW_ON_ERROR);
+        self::assertIsArray($reloaded);
+        self::assertIsArray($reloaded['members']);
+        self::assertCount(1, $reloaded['members']);
+        self::assertIsArray($reloaded['members'][0]);
+        self::assertIsArray($reloaded['members'][0]['user']);
+        self::assertEquals(1, $reloaded['members'][0]['user']['id']);
     }
 
     public function testDeleteAction(): void

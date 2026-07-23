@@ -131,6 +131,7 @@ final class MPdfConverter implements HtmlToPdfConverter
 
         $mpdf = new Mpdf($options, $container);
         $mpdf->creator = Constants::SOFTWARE;
+        $mpdf->shrink_tables_to_fit = 1;
 
         if (\count($associatedFiles) > 0) {
             // remove "path" so mPDF will not use file_get_contents() on local files

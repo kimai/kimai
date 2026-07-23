@@ -9,8 +9,16 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\Timesheet;
+use App\Entity\TimesheetMeta;
+use App\Entity\User;
+use App\Tests\DataFixtures\ActivityFixtures;
+use App\Tests\DataFixtures\CustomerFixtures;
+use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use App\Tests\Mocks\QuickEntryMetaFieldSubscriberMock;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 #[Group('integration')]
 class QuickEntryControllerTest extends AbstractControllerBaseTestCase
@@ -88,5 +96,72 @@ class QuickEntryControllerTest extends AbstractControllerBaseTestCase
         }
         // project + activity + 7 days (duration) + row totals
         self::assertCount(10, $columns);
+    }
+
+    public function testTimesheetsAreNotMergedWhenMetaFieldValuesDiffer(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
+
+        $customers = new CustomerFixtures();
+        $customers->setIsVisible(true);
+        $customers->setAmount(1);
+        $customers = $this->importFixture($customers);
+
+        $projects = new ProjectFixtures();
+        $projects->setCustomers($customers);
+        $projects->setIsVisible(true);
+        $projects->setAmount(1);
+        $projects = $this->importFixture($projects);
+
+        $activities = new ActivityFixtures();
+        $activities->setIsGlobal(true);
+        $activities->setIsVisible(true);
+        $activities->setAmount(1);
+        $activities = $this->importFixture($activities);
+
+        // two entries sharing the same project and activity, on different days of the same
+        // week, but with different values for the "location" meta-field
+        $begins = [new \DateTime('2020-05-12 10:00:00'), new \DateTime('2020-05-14 10:00:00')];
+        $locations = ['office', 'homeoffice'];
+        $counter = 0;
+
+        $timesheets = new TimesheetFixtures();
+        $timesheets->setUser($user);
+        $timesheets->setProjects($projects);
+        $timesheets->setActivities($activities);
+        $timesheets->setAmount(2);
+        $timesheets->setCallback(function (Timesheet $timesheet) use (&$counter, $begins, $locations): void {
+            $begin = clone $begins[$counter];
+            $end = clone $begin;
+            $end->modify('+1 hour');
+            $timesheet->setBegin($begin);
+            $timesheet->setEnd($end);
+            $timesheet->setDuration(3600);
+            $timesheet->setMetaField((new TimesheetMeta())->setName('location')->setValue($locations[$counter]));
+            $counter++;
+        });
+        $this->importFixture($timesheets);
+
+        // register the "location" meta-field as a QuickEntry column, so it participates in the grouping
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = self::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new QuickEntryMetaFieldSubscriberMock());
+
+        // the "date" query parameter forces the view to the week containing both entries
+        $this->request($client, '/quick_entry/?date=2020-05-13');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $metaValues = $client->getCrawler()
+            ->filter('form[name=quick_entry_form] input[name$="[metaFields][location][value]"]')
+            ->each(function ($node) {
+                return $node->attr('value');
+            });
+        $metaValues = array_values(array_filter($metaValues, static fn ($value) => $value !== null && $value !== ''));
+
+        // before the fix both timesheets were merged into a single row and one of the meta values
+        // was lost - now each distinct meta value must be represented by its own row
+        self::assertContains('office', $metaValues, 'The "office" entry must be shown in its own row');
+        self::assertContains('homeoffice', $metaValues, 'The "homeoffice" entry must be shown in its own row');
     }
 }

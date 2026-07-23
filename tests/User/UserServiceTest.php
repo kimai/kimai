@@ -21,6 +21,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[CoversClass(UserService::class)]
@@ -29,7 +30,9 @@ class UserServiceTest extends TestCase
     public function testCreateNewUserAttachesWorkContractPreferencesFromSubscriber(): void
     {
         $dispatcher = new EventDispatcher();
-        $dispatcher->addSubscriber(new WorkContractPreferenceSubscriber());
+        $voter = $this->createMock(AuthorizationCheckerInterface::class);
+        $voter->method('isGranted')->with('contract', self::isInstanceOf(User::class))->willReturn(true);
+        $dispatcher->addSubscriber(new WorkContractPreferenceSubscriber($voter));
 
         $sut = new UserService(
             $this->createMock(UserRepository::class),

@@ -16,9 +16,14 @@ use App\Event\UserPreferenceEvent;
 use App\WorkingTime\Calculator\WorkingTimeCalculatorDay;
 use App\WorkingTime\Mode\WorkingTimeModeNone;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 final class WorkContractPreferenceSubscriber implements EventSubscriberInterface
 {
+    public function __construct(private readonly AuthorizationCheckerInterface $voter)
+    {
+    }
+
     public static function getSubscribedEvents(): array
     {
         return [
@@ -43,6 +48,8 @@ final class WorkContractPreferenceSubscriber implements EventSubscriberInterface
 
     private function registerUserPreferences(User $user): void
     {
+        $canEditContract = $this->voter->isGranted('contract', $user);
+
         $prefs = [
             UserPreference::WORK_CONTRACT_TYPE => WorkingTimeModeNone::ID,
             WorkingTimeCalculatorDay::WORK_HOURS_MONDAY => 0,
@@ -59,9 +66,12 @@ final class WorkContractPreferenceSubscriber implements EventSubscriberInterface
         ];
 
         foreach ($prefs as $prefName => $defaultValue) {
-            if ($user->getPreference($prefName) === null) {
-                $user->addPreference(new UserPreference($prefName, $defaultValue));
+            $pref = $user->getPreference($prefName);
+            if ($pref === null) {
+                $pref = new UserPreference($prefName, $defaultValue);
+                $user->addPreference($pref);
             }
+            $pref->setEnabled($canEditContract);
         }
     }
 }
