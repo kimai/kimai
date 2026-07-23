@@ -748,16 +748,6 @@ parameters:
             path: src/Controller/QuickEntryController.php
 
         -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Activity\\|null\\.$#"
-            count: 3
-            path: src/Controller/QuickEntryController.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 3
-            path: src/Controller/QuickEntryController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\Reporting\\\\AbstractUserReportController\\:\\:getStatisticDataRaw\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Controller/Reporting/AbstractUserReportController.php
