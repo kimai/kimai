@@ -107,9 +107,11 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
             },
             // required so it works in table.responsive, but requires z-index 1056, because bootstrap modal would otherwise hide it
             dropdownParent: 'body',
-            onOptionAdd: (value) => {
-                node.dispatchEvent(new CustomEvent('create', {detail: {'value': value}}));
-            }
+        };
+
+        // onOptionAdd is a top-level TomSelect callback, NOT a render function
+        options.onOptionAdd = (value) => {
+            node.dispatchEvent(new CustomEvent('create', {detail: {'value': value}}));
         };
 
         let render = {};

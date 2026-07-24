@@ -306,10 +306,6 @@
         <source>calendar.dragdrop_amount</source>
         <target state="translated">Aantal tijdsregistraties voor slepen en neerzetten (0 = gedeactiveerd)</target>
       </trans-unit>
-      <trans-unit id="12sQGSo" resname="activity.allow_inline_create" xml:space="preserve">
-        <source>activity.allow_inline_create</source>
-        <target state="translated">Sta het creëren van activiteiten toe via het tijdsregistratie formulier</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>
