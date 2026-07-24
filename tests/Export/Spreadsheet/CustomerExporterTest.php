@@ -58,6 +58,7 @@ class CustomerExporterTest extends TestCase
         $customer->setAddressLine3('Golden Office Tower');
         $customer->setCity('Acme City');
         $customer->setPostCode('MT 543.6');
+        $customer->setInvoiceEmail('invoice@example.com');
         $customer->setBuyerReference('BR-0987654321');
 
         $sut = new EntityWithMetaFieldsExporter($spreadsheetExporter, $annotationExtractor, $metaFieldExtractor);
@@ -93,6 +94,7 @@ class CustomerExporterTest extends TestCase
         self::assertFalse($worksheet->getCell([++$i, 2])->getValue()); // visible
         self::assertEquals('Lorem Ipsum', $worksheet->getCell([++$i, 2])->getValue()); // comment
         self::assertTrue($worksheet->getCell([++$i, 2])->getValue()); // billable
+        self::assertEquals('invoice@example.com', $worksheet->getCell([++$i, 2])->getValue()); // invoice_email
         self::assertEquals('BR-0987654321', $worksheet->getCell([++$i, 2])->getValue()); // buyer reference
         self::assertEquals('some magic', $worksheet->getCell([++$i, 2])->getValue());
         self::assertEquals('is happening', $worksheet->getCell([++$i, 2])->getValue());
