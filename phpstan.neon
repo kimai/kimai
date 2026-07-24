@@ -2603,6 +2603,16 @@ parameters:
             path: src/Repository/TimesheetRepository.php
 
         -
+            message: "#^Property App\\\\Oidc\\\\Security\\\\OidcAuthenticationFailureHandler\\:\\:\\$defaultOptions has no type specified\\.$#"
+            count: 1
+            path: src/Oidc/Security/OidcAuthenticationFailureHandler.php
+
+        -
+            message: "#^Property App\\\\Oidc\\\\Security\\\\OidcAuthenticationSuccessHandler\\:\\:\\$defaultOptions has no type specified\\.$#"
+            count: 1
+            path: src/Oidc/Security/OidcAuthenticationSuccessHandler.php
+
+        -
             message: "#^Parameter \\#1 \\$message of class Symfony\\\\Component\\\\Security\\\\Core\\\\Exception\\\\AuthenticationException constructor expects string, string\\|null given\\.$#"
             count: 1
             path: src/Saml/SamlAuthenticator.php
