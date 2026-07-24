@@ -69,8 +69,6 @@ export default class KimaiAPILink extends KimaiPlugin {
         const API = this.getContainer().getPlugin('api');
         /** @type {KimaiEvent} EVENTS */
         const EVENTS = this.getContainer().getPlugin('event');
-        /** @type {KimaiAlert} ALERT */
-        const ALERT = this.getContainer().getPlugin('alert');
         const successHandle = () => {
             EVENTS.trigger(eventName);
             document.dispatchEvent(new CustomEvent('kimai.reloadedContent'));

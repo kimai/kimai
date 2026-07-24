@@ -1,4 +1,4 @@
-const Encore = require('@symfony/webpack-encore');
+const Encore = require('@symfony/webpack-encore').default;
 
 Encore
     .setOutputPath('public/build/')
@@ -24,11 +24,12 @@ Encore
 
     .configureBabel((config) => {
         config.sourceType = 'unambiguous';
-        config.plugins.push('@babel/plugin-syntax-dynamic-import');
+        config.plugins.push(['babel-plugin-polyfill-corejs3', {
+            method: 'usage-global',
+            version: require('core-js/package.json').version,
+        }]);
     })
     .configureBabelPresetEnv((config) => {
-        config.useBuiltIns = 'usage';
-        config.corejs = 3;
         config.targets = {};
         config.modules = false;
     })
@@ -38,14 +39,15 @@ Encore
     .enableSourceMaps(!Encore.isProduction())
     .enableSassLoader((options) => {})
 
-    .configureCssMinimizerPlugin((options) => {
+    .configureCssMinimizerPlugin((options, MinimizerPlugin) => {
+        options.minify = MinimizerPlugin.cssnanoMinify;
         options.minimizerOptions = {
             preset: ['default', { discardComments: { removeAll: true } }],
         }
     })
 
     // compress javascript in production build
-    .configureTerserPlugin((options) => {
+    .configureJsMinimizerPlugin((options) => {
         options.terserOptions = {
             compress: true,
             output: {

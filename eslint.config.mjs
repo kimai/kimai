@@ -10,6 +10,7 @@ export default [
             eqeqeq: 1,
             curly: "error",
             semi: ["warn", "always"],
+            "no-useless-assignment": "off",
         },
         languageOptions: {
             globals: {
