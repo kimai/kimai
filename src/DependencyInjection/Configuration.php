@@ -637,6 +637,7 @@ final class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('timezone')->defaultNull()->end()
                         ->scalarNode('language')->defaultValue(User::DEFAULT_LANGUAGE)->end()
+                        ->scalarNode('homepage')->defaultValue('timesheet')->end()
                         ->scalarNode('theme')
                             ->defaultValue('auto')
                             ->validate()
