@@ -583,6 +583,7 @@ class ConfigurationTest extends TestCase
                 'choice_pattern' => '{name}',
             ],
             'customer' => [
+                'language' => 'en',
                 'number_format' => '{cc,4}',
                 'rules' => [
                     'allow_duplicate_number' => false,

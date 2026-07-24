@@ -14,6 +14,7 @@ use App\Form\Type\InvoiceTemplateType;
 use App\Form\Type\MailType;
 use App\Form\Type\TeamType;
 use App\Form\Type\TimezoneType;
+use App\Form\Type\UserLanguageType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
@@ -108,6 +109,10 @@ class CustomerEditForm extends AbstractType
             ])
             ->add('country', CountryType::class, [
                 'label' => 'country',
+            ])
+            ->add('language', UserLanguageType::class, [
+                'label' => 'language',
+                'required' => true,
             ])
             ->add('currency', CurrencyType::class, [
                 'label' => 'currency',

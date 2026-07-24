@@ -294,6 +294,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertEquals('test@example.com', $result['email']);
         self::assertNull($result['homepage']);
         self::assertEquals('Europe/Berlin', $result['timezone']);
+        self::assertEquals('en', $result['language']);
         self::assertNull($result['buyerReference']);
         self::assertNull($result['color']);
         self::assertEquals('#5319e7', $result['color-safe']);
@@ -325,6 +326,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
             'postCode' => '12345',
             'city' => 'Acme Town',
             'country' => 'DE',
+            'language' => 'de',
             'currency' => 'EUR',
             'phone' => '666667787778999909087',
             'fax' => '0987654321',
@@ -388,6 +390,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         $data = [
             'name' => 'foo',
             'country' => 'DE',
+            'language' => 'de',
             'currency' => 'EUR',
             'timezone' => 'Europe/Berlin',
         ];

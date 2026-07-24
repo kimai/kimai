@@ -470,6 +470,9 @@ final class SystemConfigurationController extends AbstractController
                         ->setLabel('country')
                         ->setType(CountryType::class)
                         ->setOptions(['help' => 'default_value_new']),
+                    (new Configuration('defaults.customer.language'))
+                        ->setLabel('language')
+                        ->setType(UserLanguageType::class),
                     (new Configuration('customer.choice_pattern'))
                         ->setLabel('choice_pattern')
                         ->setType(CustomerTypePatternType::class),
