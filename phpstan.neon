@@ -748,16 +748,6 @@ parameters:
             path: src/Controller/QuickEntryController.php
 
         -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Activity\\|null\\.$#"
-            count: 3
-            path: src/Controller/QuickEntryController.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 3
-            path: src/Controller/QuickEntryController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\Reporting\\\\AbstractUserReportController\\:\\:getStatisticDataRaw\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Controller/Reporting/AbstractUserReportController.php
@@ -3013,11 +3003,6 @@ parameters:
             path: src/Utils/LocaleFormatter.php
 
         -
-            message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:formatDuration\\(\\) should return string but returns string\\|null\\.$#"
-            count: 1
-            path: src/Utils/LocaleFormatter.php
-
-        -
             message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:money\\(\\) should return string but returns string\\|false\\.$#"
             count: 2
             path: src/Utils/LocaleFormatter.php
@@ -3156,11 +3141,6 @@ parameters:
             message: "#^Cannot call method getTimezone\\(\\) on DateTime\\|null\\.$#"
             count: 1
             path: src/Validator/Constraints/TimesheetFutureTimesValidator.php
-
-        -
-            message: "#^Parameter \\#2 \\$value of method Symfony\\\\Component\\\\Validator\\\\Violation\\\\ConstraintViolationBuilderInterface\\:\\:setParameter\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetLongRunningValidator.php
 
         -
             message: "#^Cannot call method isVisible\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
