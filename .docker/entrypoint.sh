@@ -71,17 +71,43 @@ function handleStartup() {
     # only enabled together with a trusted proxy list, otherwise mod_remoteip would
     # trust X-Forwarded-For from ANY client and allow IP spoofing.
     if [ -n "$TRUSTED_PROXIES" ]; then
-      APACHE_TRUSTED_PROXIES=""
-      IFS=',' read -ra _proxies <<< "$TRUSTED_PROXIES"
-      for _p in "${_proxies[@]}"; do
-        _p=$(echo "$_p" | xargs)   # trim
-        # Accept only IPv4/IPv6/CIDR tokens; skip Symfony keywords (REMOTE_ADDR, PRIVATE_SUBNETS)
-        if [[ "$_p" =~ ^[0-9a-fA-F:.]+(/[0-9]+)?$ ]]; then
-          APACHE_TRUSTED_PROXIES="$APACHE_TRUSTED_PROXIES $_p"
-        fi
-      done
+      # Keep only real IPv4/IPv6 addresses and CIDR ranges. Everything else is dropped:
+      # Symfony keywords (REMOTE_ADDR, PRIVATE_SUBNETS), typos, hostname-like tokens and
+      # out-of-range prefixes such as 10.0.0.0/99. RemoteIPTrustedProxy is evaluated while
+      # Apache parses its configuration, so a single value it cannot parse aborts startup.
+      APACHE_TRUSTED_PROXIES=$(php -r '
+        $valid = [];
+        foreach (explode(",", $argv[1]) as $proxy) {
+            $proxy = trim($proxy);
+            if ($proxy === "") {
+                continue;
+            }
+            $address = $proxy;
+            $prefix = null;
+            if (str_contains($address, "/")) {
+                [$address, $prefix] = explode("/", $address, 2);
+                if (!ctype_digit($prefix)) {
+                    continue;
+                }
+                $prefix = (int) $prefix;
+            }
+            if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false) {
+                $maxPrefix = 32;
+            } elseif (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false) {
+                $maxPrefix = 128;
+            } else {
+                continue;
+            }
+            if ($prefix !== null && $prefix > $maxPrefix) {
+                continue;
+            }
+            $valid[] = $proxy;
+        }
+        echo implode(" ", $valid);
+      ' "$TRUSTED_PROXIES")
+
       if [ -n "$APACHE_TRUSTED_PROXIES" ]; then
-        sed -i "s|# __KIMAI_REMOTEIP_TRUSTED_PROXY__|RemoteIPHeader X-Forwarded-For\n    RemoteIPTrustedProxy${APACHE_TRUSTED_PROXIES}|" \
+        sed -i "s|# __KIMAI_REMOTEIP_TRUSTED_PROXY__|RemoteIPHeader X-Forwarded-For\n    RemoteIPTrustedProxy ${APACHE_TRUSTED_PROXIES}|" \
           /etc/apache2/sites-available/000-default.conf
       fi
     fi
