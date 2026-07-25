@@ -155,7 +155,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
                 $activityDuration = $duration;
             }
             $stat = $this->activityStatisticService->getBudgetStatisticModel($activity, $dateTime);
-            $this->checkBudgets($constraint, $stat, $value, $activityDuration, $activityRate, 'activity');
+            $this->checkBudgets($constraint, $stat, $value, $activityDuration, $activityRate, 'activity', $duration ?? 0, $rate);
         }
 
         if (null !== ($project = $value->getProject())) {
@@ -165,7 +165,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
                     $projectDuration = $duration;
                 }
                 $stat = $this->projectStatisticService->getBudgetStatisticModel($project, $dateTime);
-                $this->checkBudgets($constraint, $stat, $value, $projectDuration, $projectRate, 'project');
+                $this->checkBudgets($constraint, $stat, $value, $projectDuration, $projectRate, 'project', $duration ?? 0, $rate);
             }
             if (null !== ($customer = $project->getCustomer()) && $customer->hasBudgets()) {
                 $dateTime = $customer->isMonthlyBudget() ? $recordDate : $now;
@@ -173,18 +173,20 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
                     $customerDuration = $duration;
                 }
                 $stat = $this->customerStatisticService->getBudgetStatisticModel($customer, $dateTime);
-                $this->checkBudgets($constraint, $stat, $value, $customerDuration, $customerRate, 'customer');
+                $this->checkBudgets($constraint, $stat, $value, $customerDuration, $customerRate, 'customer', $duration ?? 0, $rate);
             }
         }
     }
 
-    private function checkBudgets(TimesheetBudgetUsed $constraint, BudgetStatisticModel $stat, TimesheetEntity $timesheet, int $duration, float $rate, string $field): bool
+    private function checkBudgets(TimesheetBudgetUsed $constraint, BudgetStatisticModel $stat, TimesheetEntity $timesheet, int $durationDelta, float $rateDelta, string $field, int $duration, float $rate): bool
     {
-        // only check the budgets if the given record adds to the budget consumption ($rate and
-        // $duration hold the delta for updated records): entries that do not increase the used
-        // budget must not be rejected, even if the budget is already overbooked - see #6015
+        // records that do not consume any budget must not be rejected, even if the budget is
+        // already overbooked - see #6015. The guard uses the values of the validated record
+        // itself ($rate / $duration): a record with a rate of 0.00 never consumes money budget
+        // and a record without duration never consumes time budget. The deltas may not be used
+        // here, otherwise shrinking a record that still overbooks the budget would be allowed.
 
-        $fullRate = ($stat->getBudgetSpent() + $rate);
+        $fullRate = ($stat->getBudgetSpent() + $rateDelta);
 
         if ($rate > 0 && $stat->hasBudget() && $fullRate > $stat->getBudget()) {
             $this->addBudgetViolation($constraint, $timesheet, $field, $stat->getBudget(), $stat->getBudgetSpent());
@@ -192,7 +194,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
             return true;
         }
 
-        $fullDuration = ($stat->getTimeBudgetSpent() + $duration);
+        $fullDuration = ($stat->getTimeBudgetSpent() + $durationDelta);
 
         if ($duration > 0 && $stat->hasTimeBudget() && $fullDuration > $stat->getTimeBudget()) {
             $this->addTimeBudgetViolation($constraint, $field, $stat->getTimeBudget(), $stat->getTimeBudgetSpent());

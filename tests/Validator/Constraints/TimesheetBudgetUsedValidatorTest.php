@@ -219,6 +219,8 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
             'a_f1' => [1320, null, null, null, null, null,      null, 3600, null, null, null, null, null, null, null,       '0:22', '0:38', '1:00', 'activity',          '+3600 seconds',    ['rate' => 1.0, 'duration' => 1000]],
             'a_h1' => [7200, null, null, null, null, null,      null, 7200, null, null, null, null, null, null, null,       '2:00', '0:00', '2:00', 'activity',          '+3601 seconds',    ['rate' => 1.0, 'duration' => 3600]],
             'a_h2' => [3601, null, null, null, null, null,      null, 3600, null, null, null, null, null, null, null,       null, null, null, null,                         '+3600 seconds',    ['rate' => 1.0, 'duration' => 3601]],
+            // shrinking an entry is not enough, if the remaining total still overbooks the time budget
+            'a_h3' => [10800, null, null, null, null, null,     null, 3600, null, null, null, null, null, null, null,      '3:00', '0:00', '1:00', 'activity',          '+3600 seconds',    ['rate' => 1.0, 'duration' => 7200]],
             // lowering the rate of an existing entry must be allowed, even if the budget is already overbooked - see #6015
             'a_g0' => [null, 1002.0, null, null, null, null,    null, null, 1000.0, null, null, null, null, null, null,     null, null, null, null,                         '+3600 seconds',    ['rate' => 1.0, 'duration' => 1010]],
             'a_g1' => [null, 1002.0, null, null, null, null,    null, null, 1000.0, null, null, null, null, null, null,     null, null, null, null,                         '+3600 seconds',    ['rate' => 2.0, 'duration' => 0]],
