@@ -9,6 +9,7 @@
 
 namespace App\Tests\Controller\Reporting;
 
+use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
 use App\Tests\DataFixtures\TimesheetFixtures;
@@ -26,6 +27,21 @@ abstract class AbstractUsersPeriodControllerTestCase extends AbstractControllerB
         $fixture->setAmountRunning(10);
         $fixture->setUser($this->getUserByRole($role));
         $fixture->setStartDate(new \DateTime());
+        $this->importFixture($fixture);
+    }
+
+    protected function importRevenueFixture(User $user): void
+    {
+        $counter = 0;
+        $fixture = new TimesheetFixtures();
+        $fixture->setAmount(2);
+        $fixture->setUser($user);
+        $fixture->setFixedStartDate(new \DateTime('today 10:00'));
+        $fixture->setCallback(static function (Timesheet $timesheet) use (&$counter): void {
+            $timesheet->setRate($counter === 0 ? 100.0 : 40.0);
+            $timesheet->setBillable($counter === 0);
+            $counter++;
+        });
         $this->importFixture($fixture);
     }
 
@@ -85,5 +101,22 @@ abstract class AbstractUsersPeriodControllerTestCase extends AbstractControllerB
         self::assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));
         self::assertStringContainsString('attachment; filename=kimai-export-users-', $response->headers->get('Content-Disposition'));
         self::assertStringContainsString('.xlsx', $response->headers->get('Content-Disposition'));
+    }
+
+    public function testRevenueExcludesNonBillableEntries(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->importRevenueFixture($this->getUserByRole(User::ROLE_SUPER_ADMIN));
+
+        $this->assertAccessIsGranted($client, \sprintf(
+            '%s?date=%s&sumType=rate',
+            $this->getReportUrl(),
+            (new \DateTime())->format('Y-m-d')
+        ));
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        self::assertStringContainsString('100', $content);
+        self::assertStringNotContainsString('140', $content);
     }
 }

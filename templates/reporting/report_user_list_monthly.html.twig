@@ -27,7 +27,7 @@
         {% endblock %}
         {% block rate %}
             <a href="{{ path('report_user_month', {'sumType': dataType, 'date': create_date(period.date.format('Y') ~'-'~period.date.format('m')~'-01')|report_date, 'user': userPeriod.user.id}) }}" data-toggle="tooltip" title="{{ 'billable'|trans }}: {{ period.billableDuration|duration(decimal) }}">
-                {{ period.totalRate|money }}
+                {{ period.billableRate|money }}
             </a>
         {% endblock %}
         {% block internal_rate %}
