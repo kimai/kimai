@@ -10,6 +10,8 @@
 namespace App\Controller;
 
 use App\Configuration\SystemConfiguration;
+use App\Entity\MetaTableTypeInterface;
+use App\Entity\Timesheet;
 use App\Event\QuickEntryMetaDisplayEvent;
 use App\Form\QuickEntryForm;
 use App\Form\WeekByUserForm;
@@ -42,6 +44,30 @@ final class QuickEntryController extends AbstractController
         private readonly WorkingTimeService $workingTimeService,
     )
     {
+    }
+
+    /**
+     * @param MetaTableTypeInterface[] $metaFields
+     */
+    private function buildGroupIdentifier(Timesheet $timesheet, array $metaFields, ?int $counter = null): string
+    {
+        $id = $timesheet->getProject()?->getId() . '_' . $timesheet->getActivity()?->getId();
+
+        if ($counter !== null) {
+            $id .= '_' . $counter;
+        }
+
+        // added with 2.63 - make sure that custom-field values are not merged
+        foreach ($metaFields as $metaField) {
+            $name = $metaField->getName();
+            if ($name === null) {
+                continue;
+            }
+            $value = $timesheet->getMetaField($name)?->getValue();
+            $id .= '_' . $name . '#' . (\is_scalar($value) ? (string) $value : '');
+        }
+
+        return $id;
     }
 
     #[Route(path: '/quick_entry/', name: 'quick_entry', methods: ['GET', 'POST'])]
@@ -94,15 +120,20 @@ final class QuickEntryController extends AbstractController
 
         $result = $this->repository->getTimesheetResult($query);
 
+        // find additional meta-fields exclusively for QuickEntry view
+        $event = new QuickEntryMetaDisplayEvent($query);
+        $this->dispatcher->dispatch($event);
+        $metaFields = $event->getFields();
+
         $rows = [];
         foreach ($result->getResults() as $timesheet) {
             $i = 0;
-            $id = $timesheet->getProject()->getId() . '_' . $timesheet->getActivity()->getId();
+            $id = $this->buildGroupIdentifier($timesheet, $metaFields);
             $day = $timesheet->getBegin()->format('Y-m-d');
 
             while (\array_key_exists($id, $rows) && \array_key_exists('entry', $rows[$id]['days'][$day])) {
                 $i++;
-                $id = $timesheet->getProject()->getId() . '_' . $timesheet->getActivity()->getId() . '_' . $i;
+                $id = $this->buildGroupIdentifier($timesheet, $metaFields, $i);
             }
 
             if (!\array_key_exists($id, $rows)) {
@@ -139,7 +170,7 @@ final class QuickEntryController extends AbstractController
                         continue;
                     }
 
-                    $id = $timesheet->getProject()->getId() . '_' . $timesheet->getActivity()->getId();
+                    $id = $this->buildGroupIdentifier($timesheet, $metaFields);
                     if (\array_key_exists($id, $rows)) {
                         continue;
                     }
@@ -164,11 +195,6 @@ final class QuickEntryController extends AbstractController
         $defaultBegin = $factory->createDateTime($this->configuration->getTimesheetDefaultBeginTime());
         $defaultHour = (int) $defaultBegin->format('H');
         $defaultMinute = (int) $defaultBegin->format('i');
-
-        // find additional meta-fields exclusively for QuickEntry view
-        $event = new QuickEntryMetaDisplayEvent($query);
-        $this->dispatcher->dispatch($event);
-        $metaFields = $event->getFields();
 
         $formModel = new QuickEntryWeek($startWeek);
 

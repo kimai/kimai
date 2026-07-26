@@ -203,7 +203,11 @@ abstract class AbstractBundleInstallerCommand extends Command
 
         if (!$process->isSuccessful()) {
             $io->error('Failed to install bundle database: ' . PHP_EOL . $config);
-            $io->error($process->getErrorOutput());
+            $o = $process->getErrorOutput();
+            if (trim($o) === '') {
+                $o = $process->getOutput();
+            }
+            $io->error($o);
             throw new \Exception('Problem occurred while executing migrations.');
         }
 

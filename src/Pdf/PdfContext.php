@@ -25,7 +25,7 @@ final class PdfContext
     private const ALLOWED_KEYS = [
         'filename', 'mode', 'format', 'orientation', 'default_font', 'default_font_size', 'fonts',
         'margin_left', 'margin_right', 'margin_top', 'margin_bottom', 'margin_header', 'margin_footer',
-        'setAutoTopMargin', 'setAutoBottomMargin', 'PDFA', 'PDFAauto', 'useActiveForms',
+        'setAutoTopMargin', 'setAutoBottomMargin', 'PDFA', 'PDFAauto', 'PDFAversion', 'useActiveForms',
         // Adding watermarks to PDFs
         'watermarkImgBehind', 'showWatermarkText', 'showWatermarkImage', 'watermarkText', 'watermarkAngle',
         'watermarkImage', 'watermark_font', 'watermarkTextAlpha', 'watermarkImageAlpha',
