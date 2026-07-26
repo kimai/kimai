@@ -2022,6 +2022,10 @@
         <source>Timesheet</source>
         <target>Fișă de pontaj</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info" approved="no" xml:space="preserve">
+        <source>contact_info</source>
+        <target state="translated">Contact</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

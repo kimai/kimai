@@ -2110,6 +2110,10 @@
         <source>reopen</source>
         <target state="translated">Otvori ponovo</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info">
+        <source>contact_info</source>
+        <target>Kontakt</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

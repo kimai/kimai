@@ -2110,6 +2110,10 @@
         <source>assign_timesheets</source>
         <target state="translated">Atribuir folhas de horas</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info">
+        <source>contact_info</source>
+        <target state="translated">Contato</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

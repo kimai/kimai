@@ -2082,6 +2082,10 @@
         <source>count_as_expected_time_help</source>
         <target state="final">כשהאפשרות פעילה, %type% תחושבנה כשעות עבודה כחלק משעות צפי העבודה היומיות. כשהאפשרות כבויה, שעות הצפי לימים האלה תוגדרנה ל־0. שתי ההגדרות מחזיקות מאזן נייטרלי אבל משפיעות על הסכומים החודשיים בצורות שונות.</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info">
+        <source>contact_info</source>
+        <target>איש קשר</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

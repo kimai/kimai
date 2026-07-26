@@ -2002,6 +2002,10 @@
         <source>release</source>
         <target state="needs-translation">Uitgave</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info" approved="no">
+        <source>contact_info</source>
+        <target state="translated">Contact</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

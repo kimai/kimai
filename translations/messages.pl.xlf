@@ -2082,6 +2082,10 @@
         <source>count_as_expected_time_help</source>
         <target state="translated">Gdy włączone, %type% liczy się do przepracowanych godzin. Gdy wyłączone, oczekiwane godziny ustawiane są na 0. Obie opcje neutralne, różnią się wpływem na sumę miesięczną.</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info">
+        <source>contact_info</source>
+        <target state="translated">Kontakt</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

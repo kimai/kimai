@@ -910,6 +910,10 @@
         <source>Timesheet</source>
         <target state="translated">タイムシート</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info">
+        <source>contact_info</source>
+        <target state="translated">コンタクト</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

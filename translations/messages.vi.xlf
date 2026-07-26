@@ -1862,6 +1862,10 @@
         <source>manual_bookings</source>
         <target state="translated">Đặt lịch thủ công</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info">
+        <source>contact_info</source>
+        <target>Liên hệ</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

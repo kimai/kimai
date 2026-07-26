@@ -2082,6 +2082,10 @@
         <source>count_as_expected_time_help</source>
         <target state="translated">Якщо ввімкнено, %type% зараховуватиметься як відпрацьовані години в межах очікуваної денної норми. Якщо вимкнено - очікувані години для цих днів буде встановлено в 0. Обидва варіанти зберігають нейтральний баланс, але по‑різному впливають на місячні підсумки.</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info" approved="yes">
+        <source>contact_info</source>
+        <target state="final">Контакт</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
