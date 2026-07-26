@@ -1970,6 +1970,10 @@
         <source>user_access_all</source>
         <target state="translated">Hozzáférés engedélyezése minden felhasználónak</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info" xml:space="preserve">
+        <source>contact_info</source>
+        <target state="translated">Kapcsolattartó</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

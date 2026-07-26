@@ -2058,6 +2058,10 @@
         <source>Timesheet</source>
         <target state="translated">تایم شیت</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info">
+        <source>contact_info</source>
+        <target state="translated">مخاطب</target>
+      </trans-unit>
       <trans-unit id="k8F51oP" resname="project_locked_until" xml:space="preserve">
         <source>project_locked_until</source>
         <target state="translated">زمان‌ قفل شد تا</target>

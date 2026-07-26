@@ -558,6 +558,10 @@
         <source>replace</source>
         <target state="translated">Zamenjaj</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info" approved="no">
+        <source>contact_info</source>
+        <target state="needs-translation">Contact</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -796,7 +796,7 @@
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact" approved="yes">
         <source>Contact</source>
-        <target state="final">Contact</target>
+        <target state="final">Contact person</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">
         <source>address</source>
@@ -2145,6 +2145,10 @@
       <trans-unit id="LfO_otF" resname="reopen">
         <source>reopen</source>
         <target>Reopen</target>
+      </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info" approved="yes">
+        <source>contact_info</source>
+        <target state="final">Contact</target>
       </trans-unit>
       <trans-unit id="DI8vH1J" resname="copy_to_clipboard">
         <source>copy_to_clipboard</source>

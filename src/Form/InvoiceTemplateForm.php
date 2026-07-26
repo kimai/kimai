@@ -39,7 +39,7 @@ final class InvoiceTemplateForm extends AbstractType
                 'label' => 'title',
             ])
             ->add('contact', TextareaType::class, [
-                'label' => 'contact',
+                'label' => 'contact_info',
                 'required' => false,
             ])
             ->add('paymentTerms', TextareaType::class, [

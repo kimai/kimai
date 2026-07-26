@@ -1238,6 +1238,10 @@
         <source>invoice.cancel</source>
         <target>Nuligita fakturo</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info">
+        <source>contact_info</source>
+        <target state="translated">Kontakto</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

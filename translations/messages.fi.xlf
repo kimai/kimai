@@ -1958,6 +1958,10 @@
         <source>Timesheet</source>
         <target state="translated">Kellokortti</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info">
+        <source>contact_info</source>
+        <target state="translated">Yhteystiedot</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

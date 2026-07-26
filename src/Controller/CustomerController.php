@@ -87,7 +87,7 @@ final class CustomerController extends AbstractController
         $table->addColumn('number', ['class' => 'd-none w-min']);
         $table->addColumn('company', ['class' => 'd-none']);
         $table->addColumn('vat_id', ['class' => 'd-none w-min']);
-        $table->addColumn('contact', ['class' => 'd-none']);
+        $table->addColumn('contact', ['class' => 'd-none', 'title' => 'contact_person']);
         $table->addColumn('street', ['class' => 'd-none', 'title' => 'address']);
         $table->addColumn('city', ['class' => 'd-none']);
         $table->addColumn('country', ['class' => 'd-none w-min']);

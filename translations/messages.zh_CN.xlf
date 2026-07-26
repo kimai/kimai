@@ -2042,6 +2042,10 @@
         <source>SEPA Direct Debit</source>
         <target state="translated">SEPA直接扣款</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info">
+        <source>contact_info</source>
+        <target>联系人</target>
+      </trans-unit>
       <trans-unit id="TTL.5NF" resname="status.todo" xml:space="preserve">
         <source>status.todo</source>
         <target state="translated">待办</target>
