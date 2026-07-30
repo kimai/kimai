@@ -1,0 +1,354 @@
+name: DevSecOps
+
+# On-premise security pipeline (see devsecops/docs/PIPELINE.md).
+# Runs on a self-hosted runner inside the local network - no cloud deployment.
+# The runner host is provisioned by devsecops/runner/setup-runner.sh and must
+# carry the labels "self-hosted", "linux" and "kimai-devsecops".
+
+on:
+    pull_request: null
+    push:
+        branches:
+            - main
+    schedule:
+        # weekly full scan, Monday 04:23 runner-local time
+        - cron: '23 4 * * 1'
+    workflow_dispatch: null
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+    cancel-in-progress: true
+
+permissions: {}
+
+env:
+    # Pin these images by digest in production (see devsecops/docs/MAINTENANCE.md)
+    SEMGREP_IMAGE: semgrep/semgrep:latest
+    TRIVY_IMAGE: aquasec/trivy:latest
+    ZAP_IMAGE: ghcr.io/zaproxy/zaproxy:stable
+    DEPENDENCY_CHECK_IMAGE: owasp/dependency-check:latest
+    SONAR_SCANNER_IMAGE: sonarsource/sonar-scanner-cli:latest
+    # Shared on-premise report directory on the runner host
+    SECURITY_REPORT_DIR: /opt/kimai/security-reports
+    KIMAI_DEPLOY_URL: https://localhost:8443
+
+jobs:
+    sast:
+        name: Static analysis (PHPStan, PhpCsFixer, Semgrep)
+        runs-on: [self-hosted, linux, kimai-devsecops]
+        permissions:
+            contents: read
+        outputs:
+            semgrep_findings: ${{ steps.semgrep-audit.outputs.findings }}
+        steps:
+            -   name: Clone Kimai
+                uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+                with:
+                    persist-credentials: false
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
+                with:
+                    php-version: '8.3'
+                    coverage: none
+                    extensions: ctype, gd, iconv, intl, mbstring, xml, zip, xsl
+
+            -   name: Determine composer cache directory
+                id: composer-cache
+                run: echo "composer_cache_directory=$(composer config cache-dir)" >> "$GITHUB_ENV"
+
+            -   name: Cache Composer dependencies
+                uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+                with:
+                    path: "${{ env.composer_cache_directory }}"
+                    key: ${{ runner.os }}-devsecops-php8.3-${{ hashFiles('**/composer.lock') }}
+
+            -   name: Install dependencies
+                run: composer install --no-interaction
+
+            -   name: Prepare report directory
+                run: mkdir -p "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}"
+
+            -   name: Check codestyles (PhpCsFixer)
+                run: vendor/bin/php-cs-fixer fix --dry-run --verbose --config=.php-cs-fixer.dist.php --using-cache=no --show-progress=none
+
+            -   name: Warm container cache for PHPStan
+                run: APP_ENV=dev bin/console cache:warmup -q --no-interaction
+
+            -   name: Run PHPStan for application
+                run: vendor/bin/phpstan analyse -c phpstan.neon --no-progress
+
+            -   name: Run PHPStan for tests
+                run: vendor/bin/phpstan analyse -c tests/phpstan.neon --no-progress
+
+            -   name: Run Semgrep (Kimai ruleset, gating)
+                # High-precision custom rules - a finding here fails the pipeline
+                run: |
+                    docker run --rm \
+                        -v "$PWD:/src" \
+                        -v "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}:/reports" \
+                        -w /src \
+                        "$SEMGREP_IMAGE" \
+                        semgrep scan \
+                            --config devsecops/semgrep/rules/ \
+                            --metrics=off \
+                            --json --output /reports/semgrep-kimai.json \
+                            --error src/
+
+            -   name: Run Semgrep (community rulesets, audit only)
+                # Broad coverage (p/php + p/security-audit) - findings are reported
+                # through the notify job instead of failing the build, to keep the
+                # signal-to-noise ratio manageable (see devsecops/docs/PIPELINE.md)
+                id: semgrep-audit
+                run: |
+                    docker run --rm \
+                        -v "$PWD:/src" \
+                        -v "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}:/reports" \
+                        -w /src \
+                        "$SEMGREP_IMAGE" \
+                        semgrep scan \
+                            --config p/php \
+                            --config p/security-audit \
+                            --metrics=off \
+                            --json --output /reports/semgrep-community.json \
+                            src/ || echo "findings=true" >> "$GITHUB_OUTPUT"
+
+            -   name: Run SonarQube analysis (optional)
+                # Only runs when the on-premise SonarQube server is configured
+                if: vars.SONAR_HOST_URL != ''
+                env:
+                    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+                    SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
+                run: |
+                    docker run --rm \
+                        -v "$PWD:/usr/src" \
+                        -e SONAR_HOST_URL="$SONAR_HOST_URL" \
+                        -e SONAR_TOKEN="$SONAR_TOKEN" \
+                        "$SONAR_SCANNER_IMAGE" \
+                        -Dproject.settings=devsecops/sonar/sonar-project.properties
+
+    sca:
+        name: Dependency & supply-chain scanning
+        runs-on: [self-hosted, linux, kimai-devsecops]
+        permissions:
+            contents: read
+        steps:
+            -   name: Clone Kimai
+                uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+                with:
+                    persist-credentials: false
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
+                with:
+                    php-version: '8.3'
+                    coverage: none
+                    extensions: ctype, gd, iconv, intl, mbstring, xml, zip, xsl
+
+            -   name: Prepare report directory
+                run: mkdir -p "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}"
+
+            -   name: Audit PHP dependencies (composer audit)
+                run: composer audit --locked --abandoned=report --format=plain | tee "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}/composer-audit.txt"
+
+            -   name: Setup Node.js for the JS audit
+                uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+                with:
+                    node-version: '22'
+
+            -   name: Setup pnpm
+                uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+
+            -   name: Audit JS dependencies (pnpm audit)
+                run: pnpm audit --prod --audit-level=high | tee "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}/pnpm-audit.txt"
+
+            -   name: Scan filesystem with Trivy (vulnerabilities, secrets, misconfig)
+                run: |
+                    docker run --rm \
+                        -v trivy-cache:/root/.cache/ \
+                        -v "$PWD:/src" \
+                        -v "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}:/reports" \
+                        "$TRIVY_IMAGE" \
+                        fs --scanners vuln,secret,misconfig \
+                        --severity HIGH,CRITICAL \
+                        --exit-code 1 \
+                        --format json --output /reports/trivy-fs.json \
+                        /src
+
+            -   name: Run OWASP Dependency-Check
+                # Informational for the PHP ecosystem (experimental analyzer) -
+                # the report is archived and reviewed, but does not gate the build
+                env:
+                    NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+                continue-on-error: true
+                run: |
+                    NVD_ARGS=""
+                    if [ -n "$NVD_API_KEY" ]; then NVD_ARGS="--nvdApiKey $NVD_API_KEY"; fi
+                    docker run --rm \
+                        -v "$PWD:/src" \
+                        -v depcheck-data:/usr/share/dependency-check/data \
+                        -v "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}:/reports" \
+                        "$DEPENDENCY_CHECK_IMAGE" \
+                        --scan /src \
+                        --format HTML \
+                        --format JSON \
+                        --out /reports \
+                        --suppression /src/devsecops/dependency-check/suppressions.xml \
+                        $NVD_ARGS
+
+    security_tests:
+        name: Security test suite (OWASP WSTG)
+        runs-on: [self-hosted, linux, kimai-devsecops]
+        permissions:
+            contents: read
+        services:
+            mariadb:
+                image: mariadb@sha256:be981e4113326ada8d6004174dd09eeaefc03094037f811182a52d4f2e737350 # 10.11
+                env:
+                    MARIADB_ROOT_PASSWORD: kimai-root
+                    MARIADB_DATABASE: kimai2_test
+                    MARIADB_USER: kimai2_test
+                    MARIADB_PASSWORD: kimai2_test
+                ports:
+                    - 3306/tcp
+                options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
+        env:
+            DATABASE_URL: mysql://kimai2_test:kimai2_test@127.0.0.1:${{ job.services.mariadb.ports['3306'] }}/kimai2_test?charset=utf8mb4&serverVersion=10.11.0-MariaDB
+            APP_ENV: test
+            MAILER_URL: null://localhost
+        steps:
+            -   name: Clone Kimai
+                uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+                with:
+                    persist-credentials: false
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
+                with:
+                    php-version: '8.3'
+                    coverage: none
+                    extensions: ctype, gd, iconv, intl, mbstring, mysql, xml, zip, xsl
+
+            -   name: Determine composer cache directory
+                id: composer-cache
+                run: echo "composer_cache_directory=$(composer config cache-dir)" >> "$GITHUB_ENV"
+
+            -   name: Cache Composer dependencies
+                uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+                with:
+                    path: "${{ env.composer_cache_directory }}"
+                    key: ${{ runner.os }}-devsecops-php8.3-${{ hashFiles('**/composer.lock') }}
+
+            -   name: Install dependencies
+                run: composer install --no-interaction
+
+            -   name: Run OWASP WSTG security tests
+                # tests/SecurityTesting/ - see devsecops/docs/TEST_CASES.md
+                run: vendor/bin/phpunit --group security tests/SecurityTesting/
+
+            -   name: Run existing security-focused suites
+                run: vendor/bin/phpunit tests/Security/ tests/Voter/ tests/API/AuthenticationTest.php
+
+    deploy:
+        name: Secure deployment & post-deploy validation
+        runs-on: [self-hosted, linux, kimai-devsecops]
+        permissions:
+            contents: read
+        needs: [security_tests]
+        steps:
+            -   name: Clone Kimai
+                uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+                with:
+                    persist-credentials: false
+
+            -   name: Prepare report directory
+                run: mkdir -p "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}"
+
+            -   name: Deploy hardened local environment
+                run: devsecops/deploy/deploy.sh
+
+            -   name: Scan deployed image with Trivy
+                run: |
+                    docker run --rm \
+                        -v trivy-cache:/root/.cache/ \
+                        -v "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}:/reports" \
+                        "$TRIVY_IMAGE" \
+                        image --severity HIGH,CRITICAL \
+                        --exit-code 0 \
+                        --format json --output /reports/trivy-image.json \
+                        kimai-devsecops:local
+
+            -   name: Smoke test (availability & integrity)
+                run: devsecops/validation/smoke-test.sh "$KIMAI_DEPLOY_URL"
+
+            -   name: Configuration audit (headers, HTTPS, debug mode)
+                run: devsecops/validation/security-audit.sh "$KIMAI_DEPLOY_URL" | tee "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}/security-audit.txt"
+
+            -   name: OWASP ZAP baseline scan
+                env:
+                    ZAP_IMAGE: ${{ env.ZAP_IMAGE }}
+                run: devsecops/validation/zap-baseline.sh "$KIMAI_DEPLOY_URL" "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}"
+
+    notify:
+        name: Developer notification
+        runs-on: [self-hosted, linux, kimai-devsecops]
+        if: always() && (needs.sast.result == 'failure' || needs.sca.result == 'failure' || needs.security_tests.result == 'failure' || needs.deploy.result == 'failure' || needs.sast.outputs.semgrep_findings == 'true')
+        needs: [sast, sca, security_tests, deploy]
+        permissions:
+            contents: read # needed to check out the repository
+            issues: write # needed to create/comment the developer notification issues
+        env:
+            RESULT_SAST: ${{ needs.sast.result }}
+            RESULT_SCA: ${{ needs.sca.result }}
+            RESULT_SECURITY_TESTS: ${{ needs.security_tests.result }}
+            RESULT_DEPLOY: ${{ needs.deploy.result }}
+            SEMGREP_FINDINGS: ${{ needs.sast.outputs.semgrep_findings }}
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            WEBHOOK_URL: ${{ secrets.SECURITY_NOTIFY_WEBHOOK_URL }}
+        steps:
+            -   name: Clone Kimai
+                uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+                with:
+                    persist-credentials: false
+
+            -   name: Notify developers about security findings
+                run: |
+                    FAILED=""
+                    [ "$RESULT_SAST" = "failure" ] && FAILED="$FAILED sast"
+                    [ "$RESULT_SCA" = "failure" ] && FAILED="$FAILED sca"
+                    [ "$RESULT_SECURITY_TESTS" = "failure" ] && FAILED="$FAILED security_tests"
+                    [ "$RESULT_DEPLOY" = "failure" ] && FAILED="$FAILED deploy"
+                    [ "$SEMGREP_FINDINGS" = "true" ] && FAILED="$FAILED semgrep-audit"
+
+                    TITLE="[DevSecOps] Security findings in run ${GITHUB_RUN_NUMBER} (${GITHUB_SHA:0:8})"
+                    BODY_FILE=$(mktemp)
+                    {
+                        echo "The DevSecOps pipeline detected security findings that need attention."
+                        echo ""
+                        echo "- Workflow: ${GITHUB_WORKFLOW}"
+                        echo "- Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+                        echo "- Commit: ${GITHUB_SHA}"
+                        echo "- Ref: ${GITHUB_REF}"
+                        echo "- Failed or alerting stages:${FAILED:- none}"
+                        echo ""
+                        echo "Reports are stored on the runner at ${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}/"
+                        echo ""
+                        echo "Triage guide: devsecops/docs/MAINTENANCE.md"
+                    } > "$BODY_FILE"
+
+                    # de-duplicate: comment on an existing open issue instead of spamming
+                    EXISTING=$(gh issue list --state open --label devsecops --search "Security findings" --json number --jq '.[0].number // empty' || true)
+                    if [ -n "$EXISTING" ]; then
+                        gh issue comment "$EXISTING" --body-file "$BODY_FILE"
+                        echo "Commented on existing issue #$EXISTING"
+                    else
+                        gh issue create --title "$TITLE" --body-file "$BODY_FILE" --label devsecops --label security
+                        echo "Created new notification issue"
+                    fi
+
+                    # optional chat notification (Slack/Discord incoming webhook)
+                    if [ -n "$WEBHOOK_URL" ]; then
+                        curl -sf -X POST -H 'Content-Type: application/json' \
+                            -d "{\"content\": \"DevSecOps findings in run ${GITHUB_RUN_NUMBER} (${GITHUB_SHA:0:8}) - stages:${FAILED:- none}. See ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}\"}" \
+                            "$WEBHOOK_URL" || echo "Webhook notification failed (non-blocking)"
+                    fi
