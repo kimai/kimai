@@ -26,6 +26,26 @@ class ProjectViewControllerTest extends AbstractControllerBaseTestCase
         $this->assertUrlIsSecured('/reporting/project_view');
     }
 
+    public function testExportIsSecure(): void
+    {
+        $this->assertUrlIsSecured('/reporting/project_view/export');
+    }
+
+    public function testReportIsSecureForUserRole(): void
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/reporting/project_view');
+    }
+
+    /**
+     * Regression test: the export route returned the full project overview to any
+     * authenticated user, because the security attributes were attached to
+     * __invoke() only instead of the class (like in every other reporting controller).
+     */
+    public function testExportIsSecureForUserRole(): void
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/reporting/project_view/export');
+    }
+
     public function testReport(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
