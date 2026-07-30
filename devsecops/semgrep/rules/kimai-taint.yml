@@ -1,0 +1,178 @@
+# Kimai specific Semgrep rules (taint mode).
+#
+# These rules are GATING in the DevSecOps pipeline (a finding fails the build),
+# so they must stay near-zero false positives. Tune with care and re-run the
+# pipeline locally before adding new rules (see devsecops/docs/MAINTENANCE.md).
+#
+# Sources cover both raw superglobals and the Symfony Request accessors used
+# throughout the Kimai codebase.
+
+rules:
+    -   id: kimai-taint-command-injection
+        languages: [php]
+        severity: ERROR
+        mode: taint
+        pattern-sources:
+            -   patterns:
+                -   pattern-either:
+                    -   pattern: $_GET
+                    -   pattern: $_POST
+                    -   pattern: $_REQUEST
+                    -   pattern: $_COOKIE
+                    -   pattern: $_FILES
+                    -   pattern: $REQUEST->query->get(...)
+                    -   pattern: $REQUEST->request->get(...)
+                    -   pattern: $REQUEST->get(...)
+                    -   pattern: $REQUEST->getContent()
+                    -   pattern: $REQUEST->headers->get(...)
+                    -   pattern: $REQUEST->attributes->get(...)
+        pattern-sinks:
+            -   patterns:
+                -   pattern-either:
+                    -   pattern: exec(...)
+                    -   pattern: shell_exec(...)
+                    -   pattern: system(...)
+                    -   pattern: passthru(...)
+                    -   pattern: popen(...)
+                    -   pattern: proc_open(...)
+        message: User controlled input reaches a shell execution sink (OS command injection, CWE-78 / OWASP A03)
+        metadata:
+            category: security
+            cwe: CWE-78
+            owasp: A03:2021
+
+    -   id: kimai-taint-object-injection
+        languages: [php]
+        severity: ERROR
+        mode: taint
+        pattern-sources:
+            -   patterns:
+                -   pattern-either:
+                    -   pattern: $_GET
+                    -   pattern: $_POST
+                    -   pattern: $_REQUEST
+                    -   pattern: $_COOKIE
+                    -   pattern: $REQUEST->query->get(...)
+                    -   pattern: $REQUEST->request->get(...)
+                    -   pattern: $REQUEST->get(...)
+                    -   pattern: $REQUEST->getContent()
+        pattern-sinks:
+            -   pattern: unserialize(...)
+        message: User controlled input reaches unserialize() (PHP object injection, CWE-502 / OWASP A08)
+        metadata:
+            category: security
+            cwe: CWE-502
+            owasp: A08:2021
+
+    -   id: kimai-taint-open-redirect
+        languages: [php]
+        severity: ERROR
+        mode: taint
+        pattern-sources:
+            -   patterns:
+                -   pattern-either:
+                    -   pattern: $_GET
+                    -   pattern: $_POST
+                    -   pattern: $_REQUEST
+                    -   pattern: $REQUEST->query->get(...)
+                    -   pattern: $REQUEST->request->get(...)
+                    -   pattern: $REQUEST->get(...)
+        pattern-sinks:
+            -   patterns:
+                -   pattern-either:
+                    -   pattern: new Symfony\Component\HttpFoundation\RedirectResponse(...)
+                    -   pattern: $THIS->redirect(...)
+        message: User controlled input reaches a redirect sink (open redirect, CWE-601 / OWASP A01)
+        metadata:
+            category: security
+            cwe: CWE-601
+            owasp: A01:2021
+
+    -   id: kimai-taint-path-traversal
+        languages: [php]
+        severity: ERROR
+        mode: taint
+        pattern-sources:
+            -   patterns:
+                -   pattern-either:
+                    -   pattern: $_GET
+                    -   pattern: $_POST
+                    -   pattern: $_REQUEST
+                    -   pattern: $_COOKIE
+                    -   pattern: $REQUEST->query->get(...)
+                    -   pattern: $REQUEST->request->get(...)
+                    -   pattern: $REQUEST->get(...)
+                    -   pattern: $REQUEST->attributes->get(...)
+        pattern-sinks:
+            -   patterns:
+                -   pattern-either:
+                    -   pattern: file_get_contents(...)
+                    -   pattern: readfile(...)
+                    -   pattern: fopen(...)
+                    -   pattern: include(...)
+                    -   pattern: include_once(...)
+                    -   pattern: require(...)
+                    -   pattern: require_once(...)
+        message: User controlled input reaches a file system sink (path traversal / LFI, CWE-22 / OWASP A01)
+        metadata:
+            category: security
+            cwe: CWE-22
+            owasp: A01:2021
+
+    -   id: kimai-taint-ssrf
+        languages: [php]
+        severity: ERROR
+        mode: taint
+        pattern-sources:
+            -   patterns:
+                -   pattern-either:
+                    -   pattern: $_GET
+                    -   pattern: $_POST
+                    -   pattern: $_REQUEST
+                    -   pattern: $REQUEST->query->get(...)
+                    -   pattern: $REQUEST->request->get(...)
+                    -   pattern: $REQUEST->get(...)
+        pattern-sinks:
+            -   pattern: curl_setopt($CURL, CURLOPT_URL, ...)
+        message: User controlled input reaches a server side request sink (SSRF, CWE-918 / OWASP A10)
+        metadata:
+            category: security
+            cwe: CWE-918
+            owasp: A10:2021
+
+    -   id: kimai-dql-string-concatenation
+        languages: [php]
+        severity: ERROR
+        patterns:
+            -   pattern-either:
+                -   pattern: $EM->createQuery('...' . $VAR)
+                -   pattern: $EM->createQuery("..." . $VAR)
+                -   pattern: $CONNECTION->query('...' . $VAR)
+                -   pattern: $CONNECTION->query("..." . $VAR)
+                -   pattern: $CONNECTION->executeQuery('...' . $VAR)
+                -   pattern: $CONNECTION->executeQuery("..." . $VAR)
+        message: SQL/DQL built by string concatenation - use bound parameters instead (CWE-89 / OWASP A03)
+        metadata:
+            category: security
+            cwe: CWE-89
+            owasp: A03:2021
+
+    -   id: kimai-weak-hash-for-secrets
+        languages: [php]
+        severity: ERROR
+        pattern-regex: '(?i)(md5|sha1)\s*\(\s*\$[A-Za-z_]*(pass|pwd|secret|token|apikey|api_key)[A-Za-z_]*'
+        message: Weak hash algorithm (MD5/SHA1) used on a credential - use password_hash() or hash_hmac() (CWE-327)
+        metadata:
+            category: security
+            cwe: CWE-327
+            owasp: A02:2021
+
+    -   id: kimai-eval-usage
+        languages: [php]
+        severity: ERROR
+        pattern: eval(...)
+        message: eval() executes dynamic code and must not be used (CWE-95)
+        metadata:
+            category: security
+            cwe: CWE-95
+            owasp: A03:2021

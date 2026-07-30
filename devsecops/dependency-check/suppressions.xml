@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    OWASP Dependency-Check suppressions for Kimai.
+
+    Only suppress findings that were TRIAGED and documented.
+    Every suppression needs:
+      - the CVE / advisory id
+      - a justification (why it does not apply to Kimai)
+      - an expiry date via the "until" attribute, so suppressions are
+        re-evaluated regularly (see devsecops/docs/MAINTENANCE.md)
+
+    Documentation:
+    https://jeremylong.github.io/DependencyCheck/general/suppression.html
+-->
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+
+    <!--
+        The PHP analyzer of Dependency-Check is experimental and frequently
+        reports Java-only CVEs against similarly named Composer packages.
+        Suppress per finding after triage, e.g.:
+
+    <suppress until="2026-12-31">
+        <notes>Jakarta-only CVE, does not apply to the PHP runtime</notes>
+        <cve>CVE-2023-XXXX</cve>
+    </suppress>
+    -->
+
+</suppressions>
