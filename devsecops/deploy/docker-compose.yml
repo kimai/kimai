@@ -1,0 +1,102 @@
+# Hardened on-premise deployment of Kimai for the DevSecOps pipeline.
+#
+# Architecture:
+#   internet/runner -> nginx (TLS termination, secure headers) -> app (Apache/PHP)
+#                                                            \-> db (MariaDB, backend network only)
+#
+# Managed by devsecops/deploy/deploy.sh - see devsecops/docs/DEPLOYMENT.md
+name: kimai-devsecops
+
+services:
+    nginx:
+        # Pin by digest in production (see devsecops/docs/MAINTENANCE.md)
+        image: nginx:1.27-alpine
+        restart: unless-stopped
+        ports:
+            - "8080:80"
+            - "8443:443"
+        volumes:
+            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+            - ./nginx/certs:/etc/nginx/certs:ro
+        depends_on:
+            app:
+                condition: service_healthy
+        networks:
+            - frontend
+        security_opt:
+            - no-new-privileges:true
+        cap_drop:
+            - ALL
+        cap_add:
+            - NET_BIND_SERVICE
+        read_only: true
+        tmpfs:
+            - /var/cache/nginx
+            - /var/run
+
+    app:
+        build:
+            context: ../..
+            dockerfile: Dockerfile
+            args:
+                BASE: apache
+                KIMAI: devsecops
+        image: kimai-devsecops:local
+        restart: unless-stopped
+        environment:
+            APP_ENV: prod
+            APP_DEBUG: '0'
+            APP_SECRET: ${APP_SECRET:?APP_SECRET must be set in devsecops/deploy/.env}
+            DATABASE_URL: mysql://${DB_USER:?}:${DB_PASSWORD:?}@db:3306/${DB_NAME:?}?charset=utf8mb4&serverVersion=10.11.0-MariaDB
+            TRUSTED_PROXIES: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+            MAILER_URL: null://null
+            MAILER_FROM: kimai@example.com
+        volumes:
+            - kimai-var:/opt/kimai/var
+        depends_on:
+            db:
+                condition: service_healthy
+        networks:
+            - frontend
+            - backend
+        security_opt:
+            - no-new-privileges:true
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://127.0.0.1:8001/en/login"]
+            interval: 20s
+            timeout: 10s
+            retries: 5
+            start_period: 60s
+
+    db:
+        # Pin by digest in production (see devsecops/docs/MAINTENANCE.md)
+        image: mariadb:10.11
+        restart: unless-stopped
+        environment:
+            MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?}
+            MARIADB_DATABASE: ${DB_NAME:?}
+            MARIADB_USER: ${DB_USER:?}
+            MARIADB_PASSWORD: ${DB_PASSWORD:?}
+        volumes:
+            - db-data:/var/lib/mysql
+        # no published ports: reachable only inside the backend network
+        networks:
+            - backend
+        security_opt:
+            - no-new-privileges:true
+        healthcheck:
+            test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+networks:
+    frontend:
+        driver: bridge
+    backend:
+        driver: bridge
+        internal: true
+
+volumes:
+    kimai-var:
+    db-data:
