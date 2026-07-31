@@ -213,7 +213,6 @@ jobs:
                     - 3306/tcp
                 options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
         env:
-            DATABASE_URL: mysql://kimai2_test:kimai2_test@127.0.0.1:${{ job.services.mariadb.ports['3306'] }}/kimai2_test?charset=utf8mb4&serverVersion=10.11.0-MariaDB
             APP_ENV: test
             MAILER_URL: null://localhost
         steps:
@@ -241,6 +240,10 @@ jobs:
 
             -   name: Install dependencies
                 run: composer install --no-interaction
+
+            -   name: Prepare database connection string
+                # the job context (service ports) is only available inside steps
+                run: echo "DATABASE_URL=mysql://kimai2_test:kimai2_test@127.0.0.1:${{ job.services.mariadb.ports['3306'] }}/kimai2_test?charset=utf8mb4&serverVersion=10.11.0-MariaDB" >> "$GITHUB_ENV"
 
             -   name: Run OWASP WSTG security tests
                 # tests/SecurityTesting/ - see devsecops/docs/TEST_CASES.md
