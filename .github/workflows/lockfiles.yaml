@@ -26,4 +26,6 @@ jobs:
                   pattern: .*\.lock$|^\.github\/.*$|^pnpm-lock.yaml$
                   # kevinpapst is the upstream maintainer, devzephyr is the owner of
                   # this fork and develops the DevSecOps pipeline under .github/
-                  trustedAuthors: kevinpapst,devzephyr
+                  # (the action compares github.context.actor, so the Cursor app
+                  # bot that pushes the automation commits must be listed as well)
+                  trustedAuthors: kevinpapst,devzephyr,cursor[bot]
