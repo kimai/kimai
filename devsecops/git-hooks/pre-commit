@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+#
+# Optional commit policy hook (see devsecops/docs/PIPELINE.md "Optional enhancements").
+#
+# Enforces the secure coding checklist at commit time:
+#   1. no secrets/environment files may be committed
+#   2. no private keys or obvious credentials in staged diffs
+#   3. staged PHP files must satisfy PhpCsFixer
+#   4. staged PHP files must pass the gating Kimai Semgrep ruleset (if semgrep is installed)
+#
+# Install:  git config core.hooksPath devsecops/git-hooks
+set -uo pipefail
+
+FAILED=0
+
+STAGED=$(git diff --cached --name-only --diff-filter=ACMR)
+
+# 1. blocked files ---------------------------------------------------------
+BLOCKED=$(echo "$STAGED" | grep -E '(^|/)\.env(\..*)?$|\.(pem|key|p12|pfx)$|devsecops/deploy/nginx/certs/' || true)
+if [[ -n "$BLOCKED" ]]; then
+    echo "COMMIT REJECTED: secret/config files must not be committed:"
+    echo "$BLOCKED"
+    FAILED=1
+fi
+
+# 2. credential patterns in the staged diff ---------------------------------
+if git diff --cached | grep -qiE '^\+.*(BEGIN (RSA|OPENSSH|EC|PGP) PRIVATE KEY|APP_SECRET=[0-9a-f]{32,}|-----BEGIN)'; then
+    echo "COMMIT REJECTED: staged diff looks like it contains a private key or secret"
+    FAILED=1
+fi
+
+PHP_FILES=$(echo "$STAGED" | grep -E '\.php$' || true)
+
+# 3. code style --------------------------------------------------------------
+if [[ -n "$PHP_FILES" && -x vendor/bin/php-cs-fixer ]]; then
+    # shellcheck disable=SC2086
+    vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --using-cache=no --show-progress=none --path-mode=intersection $PHP_FILES >/dev/null 2>&1 || {
+        echo "COMMIT REJECTED: PhpCsFixer violations in staged files (run: composer codestyle-fix)"
+        FAILED=1
+    }
+fi
+
+# 4. gating semgrep rules -----------------------------------------------------
+if [[ -n "$PHP_FILES" ]] && command -v semgrep >/dev/null 2>&1; then
+    # shellcheck disable=SC2086
+    semgrep scan --config devsecops/semgrep/rules/ --metrics=off --quiet --error $PHP_FILES || {
+        echo "COMMIT REJECTED: Kimai security ruleset findings in staged files"
+        FAILED=1
+    }
+fi
+
+if [[ $FAILED -ne 0 ]]; then
+    exit 1
+fi

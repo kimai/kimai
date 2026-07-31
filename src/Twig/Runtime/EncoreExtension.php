@@ -46,6 +46,9 @@ final class EncoreExtension implements RuntimeExtensionInterface, ServiceSubscri
             if (!str_ends_with($file, '.css') || str_contains($file, '..')) {
                 continue;
             }
+            // the file list comes from the webpack encore build metadata, the package
+            // name is allow-listed above and ".." is filtered out
+            // nosemgrep: devsecops.semgrep.rules.kimai-taint-path-traversal
             $source .= file_get_contents($this->projectDirectory . '/public/' . $file);
         }
 
