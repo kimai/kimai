@@ -16,6 +16,10 @@ jobs:
     integration:
         name: Integration (${{ matrix.php }})
         runs-on: ubuntu-latest
+        env:
+            # mapped to a job env var so the coverage upload can be skipped on
+            # installations (like forks) that have no Codecov token configured
+            CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         services:
             mysql:
                 image: mysql@sha256:cbade841779f1661300e705721f9d2ff159865cc7a8a291affbff43ac6ec7f1d # 8.4.9
@@ -95,7 +99,7 @@ jobs:
                     MAILER_URL: null://localhost
 
             -   name: Upload code coverage
-                if: matrix.php == '8.5'
+                if: matrix.php == '8.5' && env.CODECOV_TOKEN != ''
                 uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
                 with:
                     token: ${{ secrets.CODECOV_TOKEN }}
