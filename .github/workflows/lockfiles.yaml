@@ -24,4 +24,6 @@ jobs:
               with:
                   githubToken: ${{ secrets.GITHUB_TOKEN }}
                   pattern: .*\.lock$|^\.github\/.*$|^pnpm-lock.yaml$
-                  trustedAuthors: kevinpapst
+                  # kevinpapst is the upstream maintainer, devzephyr is the owner of
+                  # this fork and develops the DevSecOps pipeline under .github/
+                  trustedAuthors: kevinpapst,devzephyr
