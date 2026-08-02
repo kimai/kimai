@@ -51,6 +51,7 @@ class InvoiceModelCustomerHydratorTest extends TestCase
             'customer.number' => '',
             'customer.country' => 'AT',
             'customer.country_name' => 'Austria',
+            'customer.language' => 'en',
             'customer.homepage' => '',
             'customer.comment' => '',
             'customer.email' => '',
@@ -98,6 +99,7 @@ class InvoiceModelCustomerHydratorTest extends TestCase
             'customer.time_budget_open',
             'customer.time_budget_open_plain',
             'customer.invoice_text',
+            'customer.language',
         ];
 
         $givenKeys = array_keys($model);

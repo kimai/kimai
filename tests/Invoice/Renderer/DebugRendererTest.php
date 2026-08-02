@@ -197,6 +197,7 @@ class DebugRendererTest extends TestCase
             'customer.mobile',
             'customer.meta.foo-customer',
             'customer.invoice_text',
+            'customer.language',
             'activity.id',
             'activity.name',
             'activity.comment',

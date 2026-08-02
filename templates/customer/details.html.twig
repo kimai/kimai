@@ -112,6 +112,12 @@
                         <td>{{ customer_now|date_time }} ({{ customer.timezone }})</td>
                     </tr>
                 {% endif %}
+                {% if customer.language is not empty %}
+                    <tr>
+                        <th>{{ 'language'|trans }}</th>
+                        <td>{{ customer.language|locale_name }}</td>
+                    </tr>
+                {% endif %}
                 {% if customer.currency is not empty %}
                     <tr>
                         <th>{{ 'currency'|trans }}</th>
