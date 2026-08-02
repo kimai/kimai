@@ -16,7 +16,7 @@ use Doctrine\DBAL\Types\Types;
 /**
  * @version 2.63
  */
-final class Version20260304231806 extends AbstractMigration
+final class Version20260802173206 extends AbstractMigration
 {
     public function getDescription(): string
     {
