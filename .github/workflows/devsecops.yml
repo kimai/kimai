@@ -308,7 +308,10 @@ jobs:
 
             -   name: Scan deployed image with Trivy
                 run: |
+                    # the docker socket mount lets the trivy container see the
+                    # image that was built on the host daemon
                     docker run --rm \
+                        -v /var/run/docker.sock:/var/run/docker.sock \
                         -v trivy-cache:/root/.cache/ \
                         -v "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}:/reports" \
                         "$TRIVY_IMAGE" \
@@ -380,6 +383,10 @@ jobs:
                         echo ""
                         echo "Triage guide: devsecops/docs/MAINTENANCE.md"
                     } > "$BODY_FILE"
+
+                    # forks do not inherit upstream labels - make sure ours exist
+                    gh label create devsecops --color E99695 --description "DevSecOps pipeline findings" 2>/dev/null || true
+                    gh label create security --color D73A4A --description "Security findings" 2>/dev/null || true
 
                     # de-duplicate: comment on an existing open issue instead of spamming
                     EXISTING=$(gh issue list --state open --label devsecops --search "Security findings" --json number --jq '.[0].number // empty' || true)
