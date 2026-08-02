@@ -50,6 +50,7 @@ final class Configuration extends AbstractExtension
                 // whitelisted configs that can be read even in invoice environments
             case 'theme.branding.logo':
             case 'theme.branding.company':
+            case 'theme.branding.accent_color':
                 return $this->configuration->find($name);
         }
 

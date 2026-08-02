@@ -47,7 +47,9 @@ final class StrictPolicy implements SecurityPolicyInterface
         // Twig/LocaleFormatExtensions.php
         'create_date', 'month_names', 'locale_format',
         // Twig/Extensions.php
-        'class_name'
+        'class_name',
+        // Twig/BrandingExtension.php
+        'branding_logo_url', 'branding_logo_img', 'branding_accent_css',
     ];
     /** @var string[] */
     private array $allowedFilters = [
