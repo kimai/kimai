@@ -149,10 +149,14 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
         $now = new DateTime('now', $begin->getTimezone());
         $recordDate = $begin;
 
+        // for a monthly budget the statistic model only covers the record's (new) month. When the
+        // record was moved into a different month, that month does not contain the previous values,
+        // so the full duration and rate of the record must be checked instead of the delta.
         if (null !== ($activity = $value->getActivity()) && $activity->hasBudgets()) {
             $dateTime = $activity->isMonthlyBudget() ? $recordDate : $now;
             if ($activity->isMonthlyBudget() && $monthWasChanged) {
                 $activityDuration = $duration;
+                $activityRate = $rate;
             }
             $stat = $this->activityStatisticService->getBudgetStatisticModel($activity, $dateTime);
             $this->checkBudgets($constraint, $stat, $value, $activityDuration, $activityRate, 'activity', $duration ?? 0, $rate);
@@ -163,6 +167,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
                 $dateTime = $project->isMonthlyBudget() ? $recordDate : $now;
                 if ($project->isMonthlyBudget() && $monthWasChanged) {
                     $projectDuration = $duration;
+                    $projectRate = $rate;
                 }
                 $stat = $this->projectStatisticService->getBudgetStatisticModel($project, $dateTime);
                 $this->checkBudgets($constraint, $stat, $value, $projectDuration, $projectRate, 'project', $duration ?? 0, $rate);
@@ -171,6 +176,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
                 $dateTime = $customer->isMonthlyBudget() ? $recordDate : $now;
                 if ($customer->isMonthlyBudget() && $monthWasChanged) {
                     $customerDuration = $duration;
+                    $customerRate = $rate;
                 }
                 $stat = $this->customerStatisticService->getBudgetStatisticModel($customer, $dateTime);
                 $this->checkBudgets($constraint, $stat, $value, $customerDuration, $customerRate, 'customer', $duration ?? 0, $rate);
