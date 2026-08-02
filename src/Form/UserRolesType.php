@@ -29,6 +29,7 @@ final class UserRolesType extends AbstractType
             ->add('roles', UserRoleType::class, [
                 'multiple' => true,
                 'expanded' => true,
+                'restrict_to_assignable' => true,
             ])
         ;
 

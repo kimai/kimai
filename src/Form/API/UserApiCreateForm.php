@@ -53,6 +53,7 @@ final class UserApiCreateForm extends UserCreateType
                 'required' => false,
                 'multiple' => true,
                 'expanded' => false,
+                'restrict_to_assignable' => true,
             ]);
         }
     }
