@@ -83,6 +83,17 @@ Reports are written to `/opt/kimai/security-reports/<run-id>/` on the runner.
 
 ## 5. Operating the environment
 
+Deployment state (the generated `.env` secrets and the TLS certificate) lives
+in `/opt/kimai/devsecops-deploy/` on the runner host - outside the git
+checkout, which CI runners wipe between jobs. The database volume keeps the
+password from the first deployment, so wiping `.env` would strand the
+database with an unrecoverable credential. If the database password and the
+volume are ever out of sync (e.g. after a manual cleanup), reset once:
+
+```bash
+devsecops/deploy/deploy.sh --reset-volumes   # docker compose down -v, then redeploy
+```
+
 ```bash
 # deploy / redeploy
 devsecops/deploy/deploy.sh
