@@ -30,7 +30,9 @@ header_check "X-Content-Type-Options: nosniff"         X-Content-Type-Options   
 header_check "X-Frame-Options is set"                  X-Frame-Options           "(SAMEORIGIN|DENY)"
 header_check "Referrer-Policy is set"                  Referrer-Policy           ".+"
 header_check "Permissions-Policy is set"               Permissions-Policy        ".+"
-header_check "Content-Security-Policy is present"      Content-Security-Policy   ".+"
+# the deployment emits CSP in Report-Only mode on purpose (see DEPLOYMENT.md) -
+# accept either the enforcing or the report-only variant
+header_check "Content-Security-Policy is present (enforcing or report-only)" "Content-Security-Policy(-Report-Only)?" ".+"
 
 # --- information disclosure -------------------------------------------------
 if echo "$HEADERS" | grep -qiP '^Server:\s*nginx/[0-9]'; then
