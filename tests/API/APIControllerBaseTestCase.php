@@ -309,6 +309,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                 return [
                     'id' => 'int',
                     'comment' => '@string',
+                    'company' => '@string',
                     'createdAt' => 'datetime',
                     'currency' => 'string',
                     'customer' => ['result' => 'object', 'type' => '@Customer'],
