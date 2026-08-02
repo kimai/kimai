@@ -411,6 +411,9 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
     {
         $role = (new Role())->setName(User::ROLE_ADMIN);
         $permission = (new RolePermission())->setRole($role)->setPermission('roles_other_profile')->setAllowed(true);
+        $em = $this->getEntityManager();
+        $em->persist($role);
+        $em->flush();
         /** @var PermissionService $permissionService */
         $permissionService = $this->getPrivateService(PermissionService::class);
         $permissionService->saveRolePermission($permission);
