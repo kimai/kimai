@@ -1,40 +1,70 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
+{% set sortedSections = [] %}
+{% for section in sections %}
+    {% set title = section.model.translation|trans({}, section.model.translationDomain) %}
+    {% if title == section.model.translation %}
+        {% set title = section.model.section|trans %}
+    {% endif %}
+    {% set sortedSections = sortedSections|merge([{'model': section.model, 'form': section.form, 'title': title, 'id': section.model.section, 'counter': section.form.children.configuration|length}]) %}
+{% endfor %}
+{% set sortedSections = sortedSections|sort((a, b) => a.title <=> b.title) %}
+
+{# Mobile: horizontal scrollable tab pills #}
+<div class="d-md-none mb-3 overflow-x-auto text-nowrap pb-1">
+    <ul class="nav nav-pills flex-nowrap gap-1" role="tablist">
+        {% for section in sortedSections %}
+            <li class="nav-item" role="presentation">
+                <button class="nav-link px-3 py-2 {{ loop.first ? 'active' : '' }}"
+                        id="tab-mobile-{{ section.id }}"
+                        data-bs-toggle="tab"
+                        data-bs-target="#panel-{{ section.id }}"
+                        type="button"
+                        role="tab"
+                        aria-controls="panel-{{ section.id }}"
+                        aria-selected="{{ loop.first ? 'true' : 'false' }}">
+                    {{ section.title }}
+                    <span class="badge bg-secondary-subtle text-secondary ms-1">{{ section.counter }}</span>
+                </button>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
 <div class="row">
 
-    <div class="col-12 col-xxl-2 col-md-3 mb-3 d-none d-md-block">
-        <div class="card sticky-xxl-top">
-            <div class="list-group list-group-flush">
-                {% set sorted = [] %}
-                {% for section in sections %}
-                    {% set title = section.model.translation|trans({}, section.model.translationDomain) %}
-                    {% if title == section.model.translation %}
-                        {% set title = section.model.section|trans %}
-                    {% endif %}
-                    {% set sorted = sorted|merge([{'name': title, 'id': section.model.section, 'counter': section.form.children.configuration|length}]) %}
-                {% endfor %}
-                {% for section in sorted|sort((a, b) => a.name <=> b.name) %}
-                    <a class="list-group-item d-flex ps-4 pe-4 p-lg-3 pb-md-2 pt-md-2" href="#conf_{{ section.id }}">
-                        {{ section.name }}
+    {# Desktop: Tabler settings sidebar list-group #}
+    <div class="col-12 col-xxl-2 col-md-3 d-none d-md-block">
+        <div class="card sticky-top" style="top: 1rem;">
+            <div class="list-group list-group-flush" role="tablist">
+                {% for section in sortedSections %}
+                    <button class="list-group-item list-group-item-action d-flex align-items-center px-3 py-2 {{ loop.first ? 'active' : '' }}"
+                            id="tab-desktop-{{ section.id }}"
+                            data-bs-toggle="tab"
+                            data-bs-target="#panel-{{ section.id }}"
+                            type="button"
+                            role="tab"
+                            aria-controls="panel-{{ section.id }}"
+                            aria-selected="{{ loop.first ? 'true' : 'false' }}">
+                        {{ section.title }}
                         <small class="text-body-secondary ms-auto">{{ section.counter }}</small>
-                    </a>
+                    </button>
                 {% endfor %}
             </div>
         </div>
     </div>
 
+    {# Main content: Tab Panes #}
     <div class="col-12 col-xxl-10 col-md-9">
-        <div class="row">
-            <div class="col-12">
-                {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
-        
-                {% for section in sections %}
-                    {% set title = section.model.translation|trans({}, section.model.translationDomain) %}
-                    {% if title == section.model.translation %}
-                        {% set title = section.model.section|trans %}
-                    {% endif %}
-                    {% embed formEditTemplate with {'title': title, 'form': section.form} %}
+        {% set formEditTemplate = kimai_context.modalRequest ? 'default/_form_modal.html.twig' : 'default/_form.html.twig' %}
+        <div class="tab-content">
+            {% for section in sortedSections %}
+                <div class="tab-pane fade {{ loop.first ? 'show active' : '' }}"
+                     id="panel-{{ section.id }}"
+                     role="tabpanel"
+                     aria-labelledby="tab-desktop-{{ section.id }}">
+                    {% embed formEditTemplate with {'title': section.title, 'form': section.form} %}
                         {% block form_before %}<span id="conf_{{ section.model.section }}"></span>{% endblock %}
                         {% block form_body %}
                             {% for pref in form.children.configuration %}
@@ -48,8 +78,8 @@
                             {{ form_rest(form) }}
                         {% endblock %}
                     {% endembed %}
-                {% endfor %}
-            </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 
