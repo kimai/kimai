@@ -32,7 +32,9 @@ final class Version20260802183206 extends AbstractMigration
 
         if (!$schema->getTable('kimai2_customers')->hasColumn('language')) {
             $this->addSql("ALTER TABLE kimai2_customers ADD `language` VARCHAR(35) NOT NULL DEFAULT 'en'");
-            $this->addSql('UPDATE kimai2_customers SET `language` = ?', [$language]);
+            if (language !== 'en') {
+                $this->addSql('UPDATE kimai2_customers SET `language` = ?', [$language]);
+            }
         }
 
         $this->addSql('DELETE FROM kimai2_configuration WHERE `name` = ?', ['defaults.customer.language']);
