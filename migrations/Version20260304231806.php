@@ -14,7 +14,7 @@ use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Types\Types;
 
 /**
- * @version 2.61
+ * @version 2.63
  */
 final class Version20260304231806 extends AbstractMigration
 {
