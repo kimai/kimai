@@ -115,6 +115,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Exporter\Expose(label: 'country')]
     private ?string $country = null;
     #[ORM\Column(name: 'language', type: Types::STRING, length: 35, nullable: false)]
+    #[Assert\Length(min: 2, max: 35)]
     #[Assert\NotBlank]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
