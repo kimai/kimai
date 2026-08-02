@@ -41,33 +41,59 @@ class LastLoginSubscriberTest extends TestCase
 
     public function testOnImplicitLogin(): void
     {
+        $user = new User();
+
         $repository = $this->createMock(UserRepository::class);
-        $repository->expects($this->once())->method('saveUser');
+        // the user entity is no longer modified directly, to prevent excessive writes and
+        // Doctrine changeset computes (e.g. on each API request); the "last_login" field is
+        // updated by the repository and only becomes visible on subsequent requests
+        $repository->expects($this->once())->method('updateLastLogin')->with($user);
+        $repository->expects($this->never())->method('saveUser');
 
         $sut = new LastLoginSubscriber($repository);
 
-        $user = new User();
         self::assertNull($user->getLastLogin());
 
         $event = new UserInteractiveLoginEvent($user);
         $sut->onImplicitLogin($event);
-        self::assertNotNull($user->getLastLogin());
+
+        // the in-memory entity stays untouched, the field is only persisted via the repository
+        self::assertNull($user->getLastLogin());
     }
 
     public function testOnLoginSuccessWithUser(): void
     {
+        $user = new User();
+
         $repository = $this->createMock(UserRepository::class);
-        $repository->expects($this->once())->method('saveUser');
+        $repository->expects($this->once())->method('updateLastLogin')->with($user);
+        $repository->expects($this->never())->method('saveUser');
 
         $sut = new LastLoginSubscriber($repository);
 
-        $user = new User();
         self::assertNull($user->getLastLogin());
         $authenticator = $this->createMock(AuthenticatorInterface::class);
         $passport = $this->createMock(Passport::class);
         $passport->method('getUser')->willReturn($user);
         $event = new LoginSuccessEvent($authenticator, $passport, new UsernamePasswordToken($user, 'sdf'), new Request(), null, 'xyz');
         $sut->onFormLogin($event);
-        self::assertNotNull($user->getLastLogin());
+
+        self::assertNull($user->getLastLogin());
+    }
+
+    public function testOnLoginSuccessWithNonUser(): void
+    {
+        $repository = $this->createMock(UserRepository::class);
+        $repository->expects($this->never())->method('updateLastLogin');
+        $repository->expects($this->never())->method('saveUser');
+
+        $sut = new LastLoginSubscriber($repository);
+
+        $nonUser = $this->createMock(\Symfony\Component\Security\Core\User\UserInterface::class);
+        $authenticator = $this->createMock(AuthenticatorInterface::class);
+        $passport = $this->createMock(Passport::class);
+        $passport->method('getUser')->willReturn($nonUser);
+        $event = new LoginSuccessEvent($authenticator, $passport, new UsernamePasswordToken($nonUser, 'sdf'), new Request(), null, 'xyz');
+        $sut->onFormLogin($event);
     }
 }

@@ -478,6 +478,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->getPreferenceValue(UserPreference::TIMEZONE, date_default_timezone_get(), false);
     }
 
+    public function getDateTimezone(): \DateTimeZone
+    {
+        return new \DateTimeZone($this->getTimezone());
+    }
+
     /**
      * The locale used for translating the UI
      */
@@ -713,7 +718,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      */
     public function resetSecuritySignature(): void
     {
-        $this->signatureDate = new \DateTimeImmutable('now', new \DateTimeZone($this->getTimezone()));
+        $this->signatureDate = new \DateTimeImmutable('now', $this->getDateTimezone());
     }
 
     /**
@@ -933,7 +938,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     {
         if ($this->lastLogin !== null) {
             // make sure to use the users own timezone
-            $this->lastLogin->setTimezone(new \DateTimeZone($this->getTimezone()));
+            $this->lastLogin->setTimezone($this->getDateTimezone());
         }
 
         return $this->lastLogin;
@@ -1031,6 +1036,10 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
+    /**
+     * @internal
+     * @deprecated since 2.63 - internal field - method will be remove in 3.0
+     */
     public function setLastLogin(?\DateTime $time = null): User
     {
         $this->lastLogin = $time;
@@ -1045,7 +1054,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function markPasswordRequested(): void
     {
-        $this->passwordRequestedAt = new \DateTimeImmutable('now', new \DateTimeZone($this->getTimezone()));
+        $this->passwordRequestedAt = new \DateTimeImmutable('now', $this->getDateTimezone());
     }
 
     public function isPasswordRequestNonExpired(int $seconds): bool
@@ -1352,7 +1361,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         }
 
         try {
-            $date = \DateTimeImmutable::createFromFormat('Y-m-d h:i:s', $date . ' 00:00:00', new \DateTimeZone($this->getTimezone()));
+            $date = \DateTimeImmutable::createFromFormat('Y-m-d h:i:s', $date . ' 00:00:00', $this->getDateTimezone());
         } catch (Exception $e) {
         }
 

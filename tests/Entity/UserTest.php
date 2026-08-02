@@ -745,6 +745,7 @@ class UserTest extends TestCase
         self::assertSame($supervisor, $user->getSupervisor());
     }
 
+    #[Group('legacy')]
     public function testLastLogin(): void
     {
         $dateTime = new \DateTime('now', new \DateTimeZone('UTC'));
