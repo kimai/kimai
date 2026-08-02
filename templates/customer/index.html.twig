@@ -33,6 +33,8 @@
         {{ entry.email }}
     {% elseif column == 'homepage' %}
         {{ entry.homepage }}
+    {% elseif column == 'invoice_email' %}
+        {{ entry.invoiceEmail }}
     {% elseif column == 'budget' %}
         {% if entry.hasBudget() and is_granted('budget', entry) %}
             {{ entry.budget|money(entry.currency) }}
