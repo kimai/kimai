@@ -43,7 +43,12 @@ echo "==> [4/7] Building application image (hardened apache variant)"
 docker build --build-arg BASE=apache --build-arg KIMAI=devsecops -t kimai-devsecops:local "$REPO_ROOT"
 
 echo "==> [5/7] Starting hardened compose stack"
-docker compose --env-file .env -f docker-compose.yml up -d
+if ! docker compose --env-file .env -f docker-compose.yml up -d; then
+    echo "ERROR: compose stack failed to start - container states and logs:" >&2
+    docker compose --env-file .env -f docker-compose.yml ps -a >&2 || true
+    docker compose --env-file .env -f docker-compose.yml logs --tail=80 >&2 || true
+    exit 1
+fi
 
 echo "==> [6/7] Running database migrations (configuration management)"
 # the Kimai image has no WORKDIR - use absolute paths inside the container
@@ -54,9 +59,10 @@ echo "==> [7/7] Waiting for the application over HTTPS ($BASE_URL)"
 ATTEMPTS=0
 until curl -ksf -o /dev/null "$BASE_URL/en/login"; do
     ATTEMPTS=$((ATTEMPTS + 1))
-    if [[ $ATTEMPTS -ge 30 ]]; then
-        echo "ERROR: application did not become ready in time" >&2
-        docker compose logs --tail=50
+    if [[ $ATTEMPTS -ge 40 ]]; then
+        echo "ERROR: application did not become ready in time - container states and logs:" >&2
+        docker compose ps -a >&2 || true
+        docker compose logs --tail=80 >&2 || true
         exit 1
     fi
     sleep 5

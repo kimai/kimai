@@ -63,10 +63,12 @@ services:
             - no-new-privileges:true
         healthcheck:
             test: ["CMD", "curl", "-f", "http://127.0.0.1:8001/en/login"]
-            interval: 20s
+            interval: 15s
             timeout: 10s
-            retries: 5
-            start_period: 60s
+            retries: 12
+            # the first boot initializes the application and the database
+            # connection and can take several minutes on a loaded host
+            start_period: 180s
 
     db:
         # Pin by digest in production (see devsecops/docs/MAINTENANCE.md)
