@@ -21,7 +21,11 @@ openssl req -x509 -nodes -newkey rsa:2048 \
     -subj "/C=DE/O=Kimai DevSecOps Lab/CN=localhost" \
     -addext "subjectAltName=DNS:localhost,IP:127.0.0.1"
 
-chmod 600 "$CERT_DIR/kimai.key"
+# the key is bind-mounted read-only into the nginx container, whose master
+# process must be able to read it (a 600 host-owned key is denied through
+# Docker Desktop file sharing) - acceptable here because this is a
+# self-signed lab certificate; production deployments use internal CA certs
+chmod 644 "$CERT_DIR/kimai.key"
 chmod 644 "$CERT_DIR/kimai.crt"
 
 echo "Generated self-signed TLS certificate in $CERT_DIR (replace with internal CA certs for production)"
