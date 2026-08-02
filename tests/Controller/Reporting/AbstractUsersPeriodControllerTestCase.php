@@ -38,7 +38,9 @@ abstract class AbstractUsersPeriodControllerTestCase extends AbstractControllerB
         $fixture->setUser($user);
         $fixture->setFixedStartDate(new \DateTime('today 10:00'));
         $fixture->setCallback(static function (Timesheet $timesheet) use (&$counter): void {
-            $timesheet->setRate($counter === 0 ? 100.0 : 40.0);
+            $rate = $counter === 0 ? 100.0 : 40.0;
+            $timesheet->setFixedRate($rate);
+            $timesheet->setRate($rate);
             $timesheet->setBillable($counter === 0);
             $counter++;
         });
@@ -114,9 +116,9 @@ abstract class AbstractUsersPeriodControllerTestCase extends AbstractControllerB
             (new \DateTime())->format('Y-m-d')
         ));
 
-        $content = $client->getResponse()->getContent();
-        self::assertIsString($content);
-        self::assertStringContainsString('100', $content);
-        self::assertStringNotContainsString('140', $content);
+        $total = $client->getCrawler()->filterXPath("//table[contains(@class, 'dataTable')]/tfoot/tr[contains(@class, 'summary')]/td[2]");
+        self::assertCount(1, $total);
+        self::assertMatchesRegularExpression('/\\b100(?:[.,]00)?\\b/u', $total->text());
+        self::assertDoesNotMatchRegularExpression('/\\b140(?:[.,]00)?\\b/u', $total->text());
     }
 }

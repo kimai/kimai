@@ -132,7 +132,9 @@ class CustomerMonthlyProjectsControllerTest extends AbstractControllerBaseTestCa
         $timesheets->setFixedStartDate(new \DateTime('today 10:00'));
         $timesheets->setUser($this->getUserByRole(User::ROLE_TEAMLEAD));
         $timesheets->setCallback(static function (Timesheet $timesheet) use (&$counter): void {
-            $timesheet->setRate($counter === 0 ? 100.0 : 40.0);
+            $rate = $counter === 0 ? 100.0 : 40.0;
+            $timesheet->setFixedRate($rate);
+            $timesheet->setRate($rate);
             $timesheet->setBillable($counter === 0);
             $counter++;
         });
@@ -145,9 +147,9 @@ class CustomerMonthlyProjectsControllerTest extends AbstractControllerBaseTestCa
             '/reporting/customer/monthly_projects/view?sumType=rate&customer=%s',
             $customer->getId()
         ));
-        $content = $client->getResponse()->getContent();
-        self::assertIsString($content);
-        self::assertStringContainsString('100', $content);
-        self::assertStringNotContainsString('140', $content);
+        $total = $client->getCrawler()->filterXPath("//table[contains(@class, 'dataTable')]/tbody/tr[not(@class='summary')][1]/th[last()]");
+        self::assertCount(1, $total);
+        self::assertMatchesRegularExpression('/\\b100(?:[.,]00)?\\b/u', $total->text());
+        self::assertDoesNotMatchRegularExpression('/\\b140(?:[.,]00)?\\b/u', $total->text());
     }
 }
