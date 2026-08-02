@@ -327,6 +327,12 @@ jobs:
 
             -   name: Notify developers about security findings
                 run: |
+                    # forks have Issues disabled by default - fail with an actionable message
+                    if [ "$(gh api "repos/${GITHUB_REPOSITORY}" --jq '.has_issues')" != "true" ]; then
+                        echo "::error::Repository Issues are disabled. Enable them under Settings > General > Features > Issues, then re-run this job."
+                        exit 1
+                    fi
+
                     FAILED=""
                     [ "$RESULT_SAST" = "failure" ] && FAILED="$FAILED sast"
                     [ "$RESULT_SCA" = "failure" ] && FAILED="$FAILED sca"

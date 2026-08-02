@@ -99,11 +99,13 @@ Provisioning complete.
 Next steps:
   1. Register the self-hosted runner (repo Settings > Actions > Runners > New)
      with the labels: self-hosted, linux, kimai-devsecops
-  2. Optional secrets (repo Settings > Secrets and variables > Actions):
+  2. Enable Issues (Settings > General > Features > Issues) - forks disable them
+     by default and the notification job needs them
+  3. Optional secrets (repo Settings > Secrets and variables > Actions):
        SONAR_TOKEN                  - token of the on-premise SonarQube server
        NVD_API_KEY                  - speeds up OWASP Dependency-Check
        SECURITY_NOTIFY_WEBHOOK_URL  - Slack/Discord incoming webhook
-  3. Optional variable:
+  4. Optional variable:
        SONAR_HOST_URL               - e.g. http://sonarqube.local:9000
-  4. Review devsecops/docs/PIPELINE.md and devsecops/docs/MAINTENANCE.md
+  5. Review devsecops/docs/PIPELINE.md and devsecops/docs/MAINTENANCE.md
 DONE
