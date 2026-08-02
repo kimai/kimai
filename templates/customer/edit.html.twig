@@ -136,6 +136,9 @@
                     {% if form.vatId is defined %}
                         {{ form_row(form.vatId) }}
                     {% endif %}
+                    {% if form.invoiceEmail is defined %}
+                        {{ form_row(form.invoiceEmail) }}
+                    {% endif %}
                     {% if form.buyerReference is defined %}
                         {{ form_row(form.buyerReference) }}
                     {% endif %}

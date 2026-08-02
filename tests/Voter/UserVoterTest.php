@@ -228,6 +228,66 @@ class UserVoterTest extends AbstractVoterTestCase
     }
 
     /**
+     * A user with the "roles_other_profile" permission must not be able to edit the roles of a
+     * subject who holds a role the user cannot assign themselves (privilege escalation guard).
+     *
+     * @param string|null $actorRole the role of the acting user
+     * @param string|null $subjectRole the role held by the edited subject
+     * @param int $result expected voter result for the "roles" attribute
+     */
+    #[DataProvider('getRolesManagementTestData')]
+    public function testRolesManagementRespectsRoleHierarchy(?string $actorRole, ?string $subjectRole, int $result): void
+    {
+        $actor = self::getUser(60, $actorRole);
+        $actor->setEnabled(true);
+        // grant "see all data" so RolePermissionManager::checkUserAccess() passes and the new
+        // hierarchy guard is the only thing that can still deny access
+        $actor->initCanSeeAllData(true);
+
+        $subject = self::getUser(61, $subjectRole);
+        $subject->setEnabled(true);
+
+        $permissions = [
+            'ROLE_TEAMLEAD' => ['roles_other_profile', 'edit_other_profile'],
+            'ROLE_ADMIN' => ['roles_other_profile', 'edit_other_profile'],
+            'ROLE_SUPER_ADMIN' => ['roles_other_profile', 'edit_other_profile'],
+        ];
+        $voter = new UserVoter($this->getRolePermissionManager($permissions, true));
+
+        $token = new UsernamePasswordToken($actor, 'bar', $actor->getRoles());
+
+        self::assertEquals($result, $voter->vote($token, $subject, ['roles']));
+
+        // the "edit" attribute has no hierarchy guard, so it must stay granted in every case,
+        // proving the denial above is specific to role management
+        self::assertEquals(VoterInterface::ACCESS_GRANTED, $voter->vote($token, $subject, ['edit']));
+    }
+
+    public static function getRolesManagementTestData(): \Generator
+    {
+        $granted = VoterInterface::ACCESS_GRANTED;
+        $denied = VoterInterface::ACCESS_DENIED;
+
+        // a super admin may manage everyone
+        yield [User::ROLE_SUPER_ADMIN, User::ROLE_SUPER_ADMIN, $granted];
+        yield [User::ROLE_SUPER_ADMIN, User::ROLE_ADMIN, $granted];
+        yield [User::ROLE_SUPER_ADMIN, User::ROLE_TEAMLEAD, $granted];
+        yield [User::ROLE_SUPER_ADMIN, User::ROLE_USER, $granted];
+
+        // an admin may manage admins and below, but not super admins
+        yield [User::ROLE_ADMIN, User::ROLE_SUPER_ADMIN, $denied];
+        yield [User::ROLE_ADMIN, User::ROLE_ADMIN, $granted];
+        yield [User::ROLE_ADMIN, User::ROLE_TEAMLEAD, $granted];
+        yield [User::ROLE_ADMIN, User::ROLE_USER, $granted];
+
+        // a teamlead may manage teamleads and below, but not admins or super admins
+        yield [User::ROLE_TEAMLEAD, User::ROLE_SUPER_ADMIN, $denied];
+        yield [User::ROLE_TEAMLEAD, User::ROLE_ADMIN, $denied];
+        yield [User::ROLE_TEAMLEAD, User::ROLE_TEAMLEAD, $granted];
+        yield [User::ROLE_TEAMLEAD, User::ROLE_USER, $granted];
+    }
+
+    /**
      * Without the role permission "<attribute>_other_profile" the voter must deny,
      * regardless of any team relation between user and subject.
      */

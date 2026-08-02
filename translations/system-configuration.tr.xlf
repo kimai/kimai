@@ -314,6 +314,10 @@
         <source>invoice.rounding_mode</source>
         <target state="translated">Yuvarlama modu</target>
       </trans-unit>
+      <trans-unit id="uf2_qIW" resname="user_auth_wizard" xml:space="preserve">
+        <source>user_auth_wizard</source>
+        <target state="translated">Yeni kullanıcılar için kurulum sihirbazını göster</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

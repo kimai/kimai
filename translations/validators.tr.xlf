@@ -166,6 +166,18 @@
         <source>Duration cannot be negative.</source>
         <target state="translated">Süre negatif olamaz.</target>
       </trans-unit>
+      <trans-unit id="EDEDQtZ" resname="These characters are not allowed: {{ chars }}" xml:space="preserve">
+        <source>These characters are not allowed: {{ chars }}</source>
+        <target state="translated">Şu karakterlere izin verilmiyor: {{ chars }}</target>
+      </trans-unit>
+      <trans-unit id="Dp2KT8W" resname="The field {{ field }} is required, please select a value" xml:space="preserve">
+        <source>The field {{ field }} is required, please select a value</source>
+        <target state="translated">{{ field }} alanı zorunludur, lütfen bir değer seçin</target>
+      </trans-unit>
+      <trans-unit id="4fhT2gH" resname="A maximum duration of {{ value }} is allowed." xml:space="preserve">
+        <source>A maximum duration of {{ value }} is allowed.</source>
+        <target state="translated">En fazla {{ value }} süreye izin veriliyor.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -214,9 +214,9 @@
         <source>hours</source>
         <target>Uren</target>
       </trans-unit>
-      <trans-unit id="xUl3nXn" resname="rate">
+      <trans-unit id="xUl3nXn" resname="rate" xml:space="preserve">
         <source>rate</source>
-        <target>Tarief</target>
+        <target state="translated">Bedrag</target>
       </trans-unit>
       <trans-unit id="pO8wS6Q" resname="language">
         <source>language</source>
@@ -294,9 +294,9 @@
         <source>begin</source>
         <target>Van</target>
       </trans-unit>
-      <trans-unit id="Nh5I0DC" resname="end">
+      <trans-unit id="Nh5I0DC" resname="end" xml:space="preserve">
         <source>end</source>
-        <target state="translated">Aan</target>
+        <target state="translated">Tot</target>
       </trans-unit>
       <trans-unit id="iNOVZRh" resname="daterange">
         <source>daterange</source>
