@@ -31,11 +31,6 @@ echo "==> [1/7] Checking prerequisites"
 command -v docker >/dev/null 2>&1 || { echo "ERROR: docker is not installed" >&2; exit 1; }
 docker compose version >/dev/null 2>&1 || { echo "ERROR: docker compose plugin is not installed" >&2; exit 1; }
 
-if [[ $RESET_VOLUMES -eq 1 ]]; then
-    echo "==> Resetting deployment volumes (fresh database and application data)"
-    docker compose --env-file .env -f docker-compose.yml down -v --remove-orphans || true
-fi
-
 # Persistent state (.env secrets and TLS certificates) lives OUTSIDE the git
 # checkout, because CI runners wipe untracked files between jobs - a wiped
 # .env would generate new DB passwords that no longer match the persistent
@@ -60,6 +55,12 @@ else
     echo "    $STATE_DIR/.env already exists - keeping it"
 fi
 ln -sfn "$STATE_DIR/.env" .env
+
+# the reset runs AFTER .env is linked - compose needs it to resolve the project
+if [[ $RESET_VOLUMES -eq 1 ]]; then
+    echo "==> Resetting deployment volumes (fresh database and application data)"
+    docker compose --env-file .env -f docker-compose.yml down -v --remove-orphans
+fi
 
 echo "==> [4/7] Building application image (hardened apache variant)"
 docker build --build-arg BASE=apache --build-arg KIMAI=devsecops -t kimai-devsecops:local "$REPO_ROOT"
