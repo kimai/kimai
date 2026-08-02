@@ -607,6 +607,10 @@ final class TranslationCommand extends Command
     private function moveResname(SymfonyStyle $io, string $resname, array $sources, array $targets): int
     {
         foreach ($sources as $source) {
+            if (\strlen($source) === 0 || !file_exists($source)) {
+                throw new \RuntimeException('Invalid source: ' . $source);
+            }
+
             $tmp = basename($source);
             $pos = strpos($tmp, '.');
             if ($pos === false) {
@@ -677,6 +681,10 @@ final class TranslationCommand extends Command
     private function copyResname(SymfonyStyle $io, string $resname, string $target, array $sources): int
     {
         foreach ($sources as $source) {
+            if (\strlen($source) === 0 || !file_exists($source)) {
+                throw new \RuntimeException('Invalid source: ' . $source);
+            }
+
             $tmp = basename($source);
             $pos = strpos($tmp, '.');
             if ($pos === false) {
@@ -734,6 +742,10 @@ final class TranslationCommand extends Command
     private function moveAll(SymfonyStyle $io, array $sources, array $targets): int
     {
         foreach ($sources as $source) {
+            if (\strlen($source) === 0 || !file_exists($source)) {
+                throw new \RuntimeException('Invalid source: ' . $source);
+            }
+
             $tmp = basename($source);
             $pos = strpos($tmp, '.');
             if ($pos === false) {
