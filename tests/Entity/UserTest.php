@@ -745,6 +745,7 @@ class UserTest extends TestCase
         self::assertSame($supervisor, $user->getSupervisor());
     }
 
+    #[Group('legacy')]
     public function testLastLogin(): void
     {
         $dateTime = new \DateTime('now', new \DateTimeZone('UTC'));
@@ -754,7 +755,7 @@ class UserTest extends TestCase
 
         $lastLogin = $user->getLastLogin();
         self::assertNull($lastLogin);
-        $user->setLastLogin($dateTime);
+        $user->setLastLogin($dateTime); // @phpstan-ignore method.deprecated
 
         $lastLogin = $user->getLastLogin();
         self::assertNotNull($lastLogin);
