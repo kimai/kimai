@@ -26,9 +26,9 @@ Legend: **Done** = automated/artifact complete in this repository ·
 | Enforce HTTPS | Done | nginx TLS 1.2/1.3, HTTP->HTTPS redirect + audit check |
 | Secure headers | Done | HSTS, XCTO, XFO, Referrer-Policy, Permissions-Policy, CSP-Report-Only |
 | Restrict sensitive endpoints | Done | nginx deny rules + rate-limited login + internal db network |
-| Post-deployment: configuration audit | Done | `validation/security-audit.sh` |
-| Post-deployment: vulnerability scan | Done | Trivy image scan + ZAP baseline |
-| Post-deployment: availability/integrity | Done | `validation/smoke-test.sh` |
+| Post-deployment: configuration audit | Done | `validation/security-audit.sh` - 22/22 PASS live |
+| Post-deployment: vulnerability scan | Done | Trivy image scan + ZAP baseline (green CI run 30768622416+) |
+| Post-deployment: availability/integrity | Done | `validation/smoke-test.sh` - 4/4 PASS live |
 
 ## Part 3: Collaboration & Bug Reporting
 
@@ -55,9 +55,9 @@ Legend: **Done** = automated/artifact complete in this repository ·
 
 | Task | Status | Artifact |
 |---|---|---|
-| Final report (PDF, Springer, AODA) | Incomplete | FINAL_REPORT.md skeleton ready - compile to PDF |
-| Video 10-15 min (pipeline, tests, detection, notification, deployment, validation) | Incomplete | VIDEO_STORYBOARD.md - record individually |
-| Slides | Incomplete | outline in VIDEO_STORYBOARD.md |
+| Final report (PDF, Springer, AODA) | Incomplete | `devsecops/deliverables/DevSecOps_Final_Report.docx` generated (full content, 12 screenshot placeholders) - fill captures, export tagged PDF |
+| Video 10-15 min (pipeline, tests, detection, notification, deployment, validation) | Incomplete | VIDEO_STORYBOARD.md + speaker notes in the pptx - record individually |
+| Slides | Done | `devsecops/deliverables/DevSecOps_Slides.pptx` (9 slides with demo speaker notes) |
 | Submissions (report, pipeline configs, feedback evidence, bug report, maintenance guide, video) | Incomplete | configs + guides in repo; PDFs/video to produce |
 
 ## Lab assessment (in-person OWASP WSTG demonstration)
