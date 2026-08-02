@@ -38,7 +38,7 @@ class ExportTemplate
     /**
      * Used for header column translation.
      */
-    #[ORM\Column(name: 'language', type: Types::STRING, length: 6, nullable: true)]
+    #[ORM\Column(name: 'language', type: Types::STRING, length: 35, nullable: true)]
     #[Assert\Locale]
     private ?string $language = null;
     /**

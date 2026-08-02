@@ -73,7 +73,7 @@ class InvoiceTemplate implements EntityWithMetaFields
     /**
      * Used for translations and formatting money, numbers, dates and time.
      */
-    #[ORM\Column(name: 'language', type: Types::STRING, length: 6, nullable: false)]
+    #[ORM\Column(name: 'language', type: Types::STRING, length: 35, nullable: false)]
     #[Assert\NotBlank]
     private ?string $language = 'en';
     /**
