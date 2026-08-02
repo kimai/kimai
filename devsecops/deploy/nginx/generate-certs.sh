@@ -5,7 +5,8 @@
 # internal CA (place kimai.crt / kimai.key into devsecops/deploy/nginx/certs/).
 set -euo pipefail
 
-CERT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/certs"
+# CERTS_DIR can point outside the checkout (persistent runner state)
+CERT_DIR="${CERTS_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/certs}"
 mkdir -p "$CERT_DIR"
 
 if [[ -f "$CERT_DIR/kimai.crt" && -f "$CERT_DIR/kimai.key" ]]; then

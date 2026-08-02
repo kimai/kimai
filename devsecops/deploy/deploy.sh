@@ -16,7 +16,14 @@ set -euo pipefail
 
 DEPLOY_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$DEPLOY_DIR/../.." && pwd)"
-BASE_URL="${1:-https://localhost:8443}"
+BASE_URL="https://localhost:8443"
+RESET_VOLUMES=0
+for arg in "$@"; do
+    case "$arg" in
+        --reset-volumes) RESET_VOLUMES=1 ;;
+        http*) BASE_URL="$arg" ;;
+    esac
+done
 
 cd "$DEPLOY_DIR"
 
@@ -24,20 +31,35 @@ echo "==> [1/7] Checking prerequisites"
 command -v docker >/dev/null 2>&1 || { echo "ERROR: docker is not installed" >&2; exit 1; }
 docker compose version >/dev/null 2>&1 || { echo "ERROR: docker compose plugin is not installed" >&2; exit 1; }
 
+if [[ $RESET_VOLUMES -eq 1 ]]; then
+    echo "==> Resetting deployment volumes (fresh database and application data)"
+    docker compose --env-file .env -f docker-compose.yml down -v --remove-orphans || true
+fi
+
+# Persistent state (.env secrets and TLS certificates) lives OUTSIDE the git
+# checkout, because CI runners wipe untracked files between jobs - a wiped
+# .env would generate new DB passwords that no longer match the persistent
+# database volume
+STATE_DIR="${STATE_DIR:-/opt/kimai/devsecops-deploy}"
+mkdir -p "$STATE_DIR"
+
 echo "==> [2/7] Ensuring TLS certificate"
-./nginx/generate-certs.sh
+CERTS_DIR="$STATE_DIR/certs" ./nginx/generate-certs.sh
+[[ -d nginx/certs && ! -L nginx/certs ]] && rm -rf nginx/certs
+ln -sfn "$STATE_DIR/certs" nginx/certs
 
 echo "==> [3/7] Ensuring deployment secrets (.env)"
-if [[ ! -f .env ]]; then
+if [[ ! -f "$STATE_DIR/.env" ]]; then
     sed -e "s|^APP_SECRET=.*|APP_SECRET=$(openssl rand -hex 32)|" \
         -e "s|^DB_PASSWORD=.*|DB_PASSWORD=$(openssl rand -hex 16)|" \
         -e "s|^DB_ROOT_PASSWORD=.*|DB_ROOT_PASSWORD=$(openssl rand -hex 16)|" \
-        .env.example > .env
-    chmod 600 .env
-    echo "    created .env with random secrets"
+        .env.example > "$STATE_DIR/.env"
+    chmod 600 "$STATE_DIR/.env"
+    echo "    created $STATE_DIR/.env with random secrets"
 else
-    echo "    .env already exists - keeping it"
+    echo "    $STATE_DIR/.env already exists - keeping it"
 fi
+ln -sfn "$STATE_DIR/.env" .env
 
 echo "==> [4/7] Building application image (hardened apache variant)"
 docker build --build-arg BASE=apache --build-arg KIMAI=devsecops -t kimai-devsecops:local "$REPO_ROOT"
