@@ -432,6 +432,59 @@ class UserTest extends TestCase
         self::assertFalse($sut->isSuperAdmin());
     }
 
+    public function testIsAdminRespectsRoleHierarchy(): void
+    {
+        $sut = new User();
+
+        // a regular user is neither an explicit nor an implicit admin
+        self::assertFalse($sut->isAdmin());
+        self::assertFalse($sut->isAdmin(true));
+        self::assertFalse($sut->isAdmin(false));
+
+        // an explicit admin matches both modes
+        $sut->addRole(User::ROLE_ADMIN);
+        self::assertTrue($sut->isAdmin());
+        self::assertTrue($sut->isAdmin(true));
+        self::assertTrue($sut->isAdmin(false));
+
+        // a super admin is implicitly an admin, but not an explicit one
+        $sut->removeRole(User::ROLE_ADMIN);
+        $sut->addRole(User::ROLE_SUPER_ADMIN);
+        self::assertFalse($sut->isAdmin());
+        self::assertFalse($sut->isAdmin(true));
+        self::assertTrue($sut->isAdmin(false));
+    }
+
+    public function testHasTeamleadRoleRespectsRoleHierarchy(): void
+    {
+        $sut = new User();
+
+        // a regular user has no teamlead role in either mode
+        self::assertFalse($sut->hasTeamleadRole());
+        self::assertFalse($sut->hasTeamleadRole(true));
+        self::assertFalse($sut->hasTeamleadRole(false));
+
+        // an explicit teamlead matches both modes
+        $sut->addRole(User::ROLE_TEAMLEAD);
+        self::assertTrue($sut->hasTeamleadRole());
+        self::assertTrue($sut->hasTeamleadRole(true));
+        self::assertTrue($sut->hasTeamleadRole(false));
+
+        // an admin is implicitly a teamlead, but not an explicit one
+        $sut->removeRole(User::ROLE_TEAMLEAD);
+        $sut->addRole(User::ROLE_ADMIN);
+        self::assertFalse($sut->hasTeamleadRole());
+        self::assertFalse($sut->hasTeamleadRole(true));
+        self::assertTrue($sut->hasTeamleadRole(false));
+
+        // a super admin is implicitly a teamlead as well
+        $sut->removeRole(User::ROLE_ADMIN);
+        $sut->addRole(User::ROLE_SUPER_ADMIN);
+        self::assertFalse($sut->hasTeamleadRole());
+        self::assertFalse($sut->hasTeamleadRole(true));
+        self::assertTrue($sut->hasTeamleadRole(false));
+    }
+
     /**
      * This functionality was added, because these fields can be set via external providers (LDAP, SAML) and
      * an invalid length should not result in errors.

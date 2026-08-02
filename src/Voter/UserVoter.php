@@ -105,6 +105,12 @@ final class UserVoter extends Voter
             return $user->isSuperAdmin();
         }
 
+        // a user must not edit the roles of someone who holds a role they are not allowed to assign
+        // themselves - otherwise a lower-privileged user could strip a higher role from the subject
+        if ($attribute === 'roles' && !$this->canManageAllRolesOf($subject, $user)) {
+            return false;
+        }
+
         $permission = $attribute;
 
         if ($subject->getId() === $user->getId()) {
@@ -116,5 +122,29 @@ final class UserVoter extends Voter
         }
 
         return $this->permissionManager->checkUserAccess($subject, $user, false);
+    }
+
+    /**
+     * Whether $user is allowed to assign every role the $subject currently holds.
+     *
+     * The rules mirror the assignable roles offered by {@see \App\Form\Type\UserRoleType}:
+     * a super-admin role may only be managed by a super admin, an admin role only by an
+     * admin (or above) and a teamlead role only by a teamlead (or above).
+     */
+    private function canManageAllRolesOf(User $subject, User $user): bool
+    {
+        if ($subject->isSuperAdmin() && !$user->isSuperAdmin()) {
+            return false;
+        }
+
+        if ($subject->isAdmin() && !$user->isAdmin(false)) {
+            return false;
+        }
+
+        if ($subject->hasTeamleadRole() && !$user->hasTeamleadRole(false)) {
+            return false;
+        }
+
+        return true;
     }
 }
