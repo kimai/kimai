@@ -278,6 +278,7 @@ jobs:
 
             -   name: Prepare database connection string
                 # the job context (service ports) is only available inside steps
+                # zizmor: ignore[template-injection] the port is assigned by the GitHub service container runtime, not by user input
                 run: echo "DATABASE_URL=mysql://kimai2_test:kimai2_test@127.0.0.1:${{ job.services.mariadb.ports['3306'] }}/kimai2_test?charset=utf8mb4&serverVersion=10.11.0-MariaDB" >> "$GITHUB_ENV"
 
             -   name: Run OWASP WSTG security tests
