@@ -46,8 +46,9 @@ echo "==> [5/7] Starting hardened compose stack"
 docker compose --env-file .env -f docker-compose.yml up -d
 
 echo "==> [6/7] Running database migrations (configuration management)"
-docker compose exec -T app bin/console doctrine:database:create --if-not-exists --no-interaction || true
-docker compose exec -T app bin/console doctrine:migrations:migrate --no-interaction
+# the Kimai image has no WORKDIR - use absolute paths inside the container
+docker compose exec -T app /opt/kimai/bin/console doctrine:database:create --if-not-exists --no-interaction || true
+docker compose exec -T app /opt/kimai/bin/console doctrine:migrations:migrate --no-interaction
 
 echo "==> [7/7] Waiting for the application over HTTPS ($BASE_URL)"
 ATTEMPTS=0
@@ -67,4 +68,4 @@ echo "  - HTTPS:  $BASE_URL"
 echo "  - HTTP:   http://localhost:8080 (redirects to HTTPS)"
 echo "  - Create a demo admin with:"
 echo "      docker compose -f $DEPLOY_DIR/docker-compose.yml exec -T app \\"
-echo "          bin/console kimai:user:create admin admin@example.com ROLE_SUPER_ADMIN"
+echo "          /opt/kimai/bin/console kimai:user:create admin admin@example.com ROLE_SUPER_ADMIN"
