@@ -70,6 +70,7 @@ Reports land in `/opt/kimai/security-reports/<run-id>/` on the runner host:
 |---|---|---|
 | `composer-audit.txt`, `pnpm-audit.txt` | SCA job | Any advisory: upgrade the package or document why it does not apply |
 | `trivy-fs.json` | SCA job | HIGH/CRITICAL findings gate the build: fix, upgrade or suppress with reason |
+| `trivy-misconfig.json` | SCA job | Audit-mode configuration findings (e.g. Dockerfile best practices); triage monthly and decide per rule whether to fix, accept, or gate |
 | `semgrep-kimai.json` | SAST job | Any finding gates the build: fix the code or suppress with justification |
 | `semgrep-community.json` | SAST job | Audit-mode: review weekly; promote true positives to the gating ruleset |
 | `dependency-check-report.html/json` | SCA job | Informational for PHP; triage and add suppressions with expiry |
