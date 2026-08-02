@@ -22,7 +22,7 @@
     {% elseif column == 'country' %}
         {{ entry.country|country_name }}
     {% elseif column == 'language' %}
-        {% if entry.language is not empty %}{{ entry.language|locale_name }}{% endif %}
+        {{ entry.language|locale_name }}
     {% elseif column == 'currency' %}
         {{ entry.currency|currency_name }}
     {% elseif column == 'phone' %}
