@@ -108,12 +108,22 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
             $projectId = (int) $rawData['project'];
             $customerId = (int) $rawData['customer'];
 
+            // getRawData() hydrates "begin" through DQL and therefore skips the timezone localization
+            // that Timesheet::getBegin() applies (see Timesheet::localizeDates()), so it stays in UTC.
+            // It has to be normalized to the record timezone before comparing dates: otherwise an entry
+            // that falls on a local month boundary (e.g. the 1st at 00:30 in a timezone ahead of UTC)
+            // looks like its month/day changed although it did not - which would wrongly take the
+            // full-rate path below and could reject an ordinary edit.
+            $rawBegin = $rawData['begin'] instanceof \DateTimeInterface
+                ? DateTime::createFromInterface($rawData['begin'])->setTimezone($begin->getTimezone())
+                : $rawData['begin'];
+
             // if an existing entry was updated, but the relevant fields for budget calculation were not touched: do not validate!
             // this could for example happen when export flag is changed OR if "prevent overbooking"  config was recently activated and this is an old entry
             if ($duration === $rawData['duration'] &&
                 $rate === $rawData['rate'] &&
                 $value->isBillable() === $rawData['billable'] &&
-                $begin->format('Y.m.d') === $rawData['begin']->format('Y.m.d') &&
+                $begin->format('Y.m.d') === $rawBegin->format('Y.m.d') &&
                 $value->getProject()->getId() === $projectId &&
                 ($value->getActivity() === null || $value->getActivity()->getId() === $activityId)
             ) {
@@ -143,7 +153,7 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
                 }
             }
 
-            $monthWasChanged = $begin->format('Y.m') !== $rawData['begin']->format('Y.m');
+            $monthWasChanged = $begin->format('Y.m') !== $rawBegin->format('Y.m');
         }
 
         $now = new DateTime('now', $begin->getTimezone());

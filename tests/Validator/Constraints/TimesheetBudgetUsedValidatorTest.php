@@ -33,6 +33,7 @@ use App\Timesheet\RateServiceInterface;
 use App\Validator\Constraints\TimesheetBudgetUsed;
 use App\Validator\Constraints\TimesheetBudgetUsedValidator;
 use DateTime;
+use DateTimeZone;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -284,6 +285,85 @@ class TimesheetBudgetUsedValidatorTest extends ConstraintValidatorTestCase
         } else {
             $this->assertNoViolation();
         }
+    }
+
+    /**
+     * A record that sits on a local month boundary (e.g. the 1st at 00:30 in a timezone ahead of UTC)
+     * is stored in UTC and therefore looks like it belongs to the previous month in the raw database
+     * data. Editing such a record must not be mistaken for a month change, which would re-check the
+     * full rate against a monthly budget that already contains the record and reject an ordinary edit.
+     */
+    public function testEditOnLocalMonthBoundaryIsNotTreatedAsMonthChange(): void
+    {
+        // nothing budget-relevant changed - the record must simply be accepted (no double counting)
+        $this->assertLocalMonthBoundaryEdit(400.0, 400.0);
+    }
+
+    public function testRateChangeOnLocalMonthBoundaryUsesDeltaNotFullRate(): void
+    {
+        // the rate is raised from 400.00 to 450.00; only the +50.00 delta counts against the month
+        // (900.00 already used + 50.00 = 950.00 <= 1000.00), not the full 450.00 (which would overbook)
+        $this->assertLocalMonthBoundaryEdit(400.0, 450.0);
+    }
+
+    private function assertLocalMonthBoundaryEdit(float $rawRate, float $newRate): void
+    {
+        // Europe/Berlin is UTC+2 in August, so 00:30 local is 22:30 UTC on the previous (July) day
+        $timezone = new DateTimeZone('Europe/Berlin');
+        $begin = new DateTime('2024-08-01 00:30:00', $timezone);
+        $end = new DateTime('2024-08-01 01:30:00', $timezone);
+
+        $customer = $this->createMock(Customer::class);
+        $customer->method('getId')->willReturn(1);
+        $customer->method('getCurrency')->willReturn('EUR');
+        $customer->method('isMonthlyBudget')->willReturn(true);
+        $customer->method('getBudgetType')->willReturn('month');
+        $customer->method('hasBudgets')->willReturn(true);
+        $customer->method('hasBudget')->willReturn(true);
+        $customer->method('getBudget')->willReturn(1000.0);
+
+        $project = $this->createMock(Project::class);
+        $project->method('getId')->willReturn(1);
+        $project->method('getCustomer')->willReturn($customer);
+        $project->method('hasBudgets')->willReturn(false);
+        $project->method('isMonthlyBudget')->willReturn(false);
+
+        // the August budget already holds 900.00, including this record's current rate of 400.00
+        $customerStatistic = new CustomerStatistic();
+        $customerStatistic->setRate(900.0);
+        $customerStatistic->setRateBillable(900.0);
+        $customerModel = new CustomerBudgetStatisticModel($customer);
+        $customerModel->setStatistic($customerStatistic);
+        $customerModel->setStatisticTotal($customerStatistic);
+
+        // getRawData() returns "begin" in UTC (as hydrated by Doctrine), i.e. the previous month
+        $rawData = [
+            'activity' => 1,
+            'project' => 1,
+            'customer' => 1,
+            'rate' => $rawRate,
+            'duration' => 3600,
+            'begin' => new DateTime('2024-07-31 22:30:00', new DateTimeZone('UTC')),
+            'end' => new DateTime('2024-07-31 23:30:00', new DateTimeZone('UTC')),
+            'billable' => true,
+        ];
+
+        $timesheet = $this->createMock(Timesheet::class);
+        $timesheet->method('getId')->willReturn(1);
+        $timesheet->method('getBegin')->willReturn($begin);
+        $timesheet->method('getEnd')->willReturn($end);
+        $timesheet->method('getCalculatedDuration')->willReturn(3600);
+        $timesheet->method('getDuration')->willReturn(3600);
+        $timesheet->method('getUser')->willReturn(new User());
+        $timesheet->method('getProject')->willReturn($project);
+        $timesheet->method('getActivity')->willReturn(null);
+        $timesheet->method('isBillable')->willReturn(true);
+
+        $this->validator = $this->createValidator(false, null, null, $customerModel, $rawData, new Rate($newRate, 0.00));
+        $this->validator->initialize($this->context);
+        $this->validator->validate($timesheet, new TimesheetBudgetUsed());
+
+        $this->assertNoViolation();
     }
 
     public static function getViolationTestData(): array
