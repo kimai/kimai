@@ -45,14 +45,11 @@ final class UserRoleType extends AbstractType
 
             $user = $options['user'];
             if ($user instanceof User) {
-                if (!$user->isSuperAdmin() && \array_key_exists(User::ROLE_SUPER_ADMIN, $roles)) {
-                    unset($roles[User::ROLE_SUPER_ADMIN]);
-                }
-                if (!$user->isAdmin(false) && \array_key_exists(User::ROLE_ADMIN, $roles)) {
-                    unset($roles[User::ROLE_ADMIN]);
-                }
-                if (!$user->hasTeamleadRole(false) && \array_key_exists(User::ROLE_TEAMLEAD, $roles)) {
-                    unset($roles[User::ROLE_TEAMLEAD]);
+                // only offer the roles the current user is allowed to assign
+                foreach (array_keys($roles) as $roleName) {
+                    if (!$user->canAssignRole($roleName)) {
+                        unset($roles[$roleName]);
+                    }
                 }
             }
 

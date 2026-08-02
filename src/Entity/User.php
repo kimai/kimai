@@ -838,6 +838,24 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $explicit ? $isAdmin : $isAdmin || $this->isSuperAdmin();
     }
 
+    /**
+     * Whether this user is allowed to grant the given role to a user.
+     *
+     * This is the single source of truth for the role hierarchy used when assigning roles:
+     * a super-admin role may only be granted by a super admin, an admin role only by an admin
+     * (or above) and a teamlead role only by a teamlead (or above). Every other role (the default
+     * role and custom roles) may be granted by anyone.
+     */
+    public function canAssignRole(string $role): bool
+    {
+        return match (strtoupper($role)) {
+            static::ROLE_SUPER_ADMIN => $this->isSuperAdmin(),
+            static::ROLE_ADMIN => $this->isAdmin(false),
+            static::ROLE_TEAMLEAD => $this->hasTeamleadRole(false),
+            default => true,
+        };
+    }
+
     public function getDisplayName(): string
     {
         if (!empty($this->getAlias())) {

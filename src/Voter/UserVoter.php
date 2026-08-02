@@ -127,22 +127,15 @@ final class UserVoter extends Voter
     /**
      * Whether $user is allowed to assign every role the $subject currently holds.
      *
-     * The rules mirror the assignable roles offered by {@see \App\Form\Type\UserRoleType}:
-     * a super-admin role may only be managed by a super admin, an admin role only by an
-     * admin (or above) and a teamlead role only by a teamlead (or above).
+     * Uses the same role hierarchy as the assignable roles offered by
+     * {@see \App\Form\Type\UserRoleType} via {@see User::canAssignRole()}.
      */
     private function canManageAllRolesOf(User $subject, User $user): bool
     {
-        if ($subject->isSuperAdmin() && !$user->isSuperAdmin()) {
-            return false;
-        }
-
-        if ($subject->isAdmin() && !$user->isAdmin(false)) {
-            return false;
-        }
-
-        if ($subject->hasTeamleadRole() && !$user->hasTeamleadRole(false)) {
-            return false;
+        foreach ($subject->getRoles() as $role) {
+            if (!$user->canAssignRole($role)) {
+                return false;
+            }
         }
 
         return true;

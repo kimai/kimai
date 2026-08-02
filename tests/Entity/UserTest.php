@@ -485,6 +485,45 @@ class UserTest extends TestCase
         self::assertTrue($sut->hasTeamleadRole(false));
     }
 
+    public function testCanAssignRole(): void
+    {
+        $superAdmin = new User();
+        $superAdmin->addRole(User::ROLE_SUPER_ADMIN);
+        // a super admin may assign every role
+        self::assertTrue($superAdmin->canAssignRole(User::ROLE_SUPER_ADMIN));
+        self::assertTrue($superAdmin->canAssignRole(User::ROLE_ADMIN));
+        self::assertTrue($superAdmin->canAssignRole(User::ROLE_TEAMLEAD));
+        self::assertTrue($superAdmin->canAssignRole(User::ROLE_USER));
+
+        $admin = new User();
+        $admin->addRole(User::ROLE_ADMIN);
+        // an admin may assign admin and below, but not super admin
+        self::assertFalse($admin->canAssignRole(User::ROLE_SUPER_ADMIN));
+        self::assertTrue($admin->canAssignRole(User::ROLE_ADMIN));
+        self::assertTrue($admin->canAssignRole(User::ROLE_TEAMLEAD));
+        self::assertTrue($admin->canAssignRole(User::ROLE_USER));
+
+        $teamlead = new User();
+        $teamlead->addRole(User::ROLE_TEAMLEAD);
+        // a teamlead may assign teamlead and below, but not admin or super admin
+        self::assertFalse($teamlead->canAssignRole(User::ROLE_SUPER_ADMIN));
+        self::assertFalse($teamlead->canAssignRole(User::ROLE_ADMIN));
+        self::assertTrue($teamlead->canAssignRole(User::ROLE_TEAMLEAD));
+        self::assertTrue($teamlead->canAssignRole(User::ROLE_USER));
+
+        $user = new User();
+        // a regular user may not assign any of the privileged roles
+        self::assertFalse($user->canAssignRole(User::ROLE_SUPER_ADMIN));
+        self::assertFalse($user->canAssignRole(User::ROLE_ADMIN));
+        self::assertFalse($user->canAssignRole(User::ROLE_TEAMLEAD));
+        self::assertTrue($user->canAssignRole(User::ROLE_USER));
+
+        // custom roles can be assigned by anyone, and the check is case-insensitive
+        self::assertTrue($user->canAssignRole('ROLE_CUSTOM'));
+        self::assertTrue($admin->canAssignRole('role_teamlead'));
+        self::assertFalse($teamlead->canAssignRole('role_admin'));
+    }
+
     /**
      * This functionality was added, because these fields can be set via external providers (LDAP, SAML) and
      * an invalid length should not result in errors.
