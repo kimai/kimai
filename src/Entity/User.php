@@ -827,14 +827,38 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return true;
     }
 
-    public function hasTeamleadRole(): bool
+    public function hasTeamleadRole(bool $explicit = true): bool
     {
-        return $this->hasRole(static::ROLE_TEAMLEAD);
+        $isTeamlead = $this->hasRole(static::ROLE_TEAMLEAD);
+
+        // when not asking for the explicit role, higher roles (admin, super admin) count as teamlead as well
+        return $explicit ? $isTeamlead : $isTeamlead || $this->isAdmin(false);
     }
 
-    public function isAdmin(): bool
+    public function isAdmin(bool $explicit = true): bool
     {
-        return $this->hasRole(static::ROLE_ADMIN);
+        $isAdmin = $this->hasRole(static::ROLE_ADMIN);
+
+        // when not asking for the explicit role, the higher super admin role counts as admin as well
+        return $explicit ? $isAdmin : $isAdmin || $this->isSuperAdmin();
+    }
+
+    /**
+     * Whether this user is allowed to grant the given role to a user.
+     *
+     * This is the single source of truth for the role hierarchy used when assigning roles:
+     * a super-admin role may only be granted by a super admin, an admin role only by an admin
+     * (or above) and a teamlead role only by a teamlead (or above). Every other role (the default
+     * role and custom roles) may be granted by anyone.
+     */
+    public function canAssignRole(string $role): bool
+    {
+        return match (strtoupper($role)) {
+            static::ROLE_SUPER_ADMIN => $this->isSuperAdmin(),
+            static::ROLE_ADMIN => $this->isAdmin(false),
+            static::ROLE_TEAMLEAD => $this->hasTeamleadRole(false),
+            default => true,
+        };
     }
 
     public function getDisplayName(): string
