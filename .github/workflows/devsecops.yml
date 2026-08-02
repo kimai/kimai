@@ -154,18 +154,25 @@ jobs:
             -   name: Setup Node.js for the JS audit
                 # Must run BEFORE pnpm/action-setup: the pnpm self-installer runs on
                 # the runner's system Node.js, which may be too old (e.g. v18 on a
-                # bare Ubuntu VM) for recent pnpm versions
+                # bare Ubuntu VM) for recent pnpm versions.
+                # No pnpm cache here: setup-node's pnpm cache requires pnpm to
+                # already exist, which is circular on a fresh runner
                 uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
                 with:
                     node-version: '24'
-                    cache: pnpm
-                    cache-dependency-path: pnpm-lock.yaml
 
             -   name: Setup pnpm
                 uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
                 with:
                     run_install: false
                     version: ^11
+
+            -   name: Cache pnpm store
+                uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+                with:
+                    path: ~/.local/share/pnpm/store
+                    key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                    restore-keys: ${{ runner.os }}-pnpm-store-
 
             -   name: Install frontend dependencies
                 run: pnpm install --frozen-lockfile --ignore-scripts
