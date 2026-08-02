@@ -28,7 +28,12 @@ services:
         cap_drop:
             - ALL
         cap_add:
+            # nginx master needs to chown its cache dirs and spawn workers
+            # as the nginx user - everything else stays dropped
             - NET_BIND_SERVICE
+            - CHOWN
+            - SETUID
+            - SETGID
         read_only: true
         tmpfs:
             - /var/cache/nginx
