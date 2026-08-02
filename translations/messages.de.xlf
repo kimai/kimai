@@ -424,7 +424,7 @@
       </trans-unit>
       <trans-unit id="LIOnolg" resname="placeholder.type_message">
         <source>placeholder.type_message</source>
-        <target>Schreibe deine Nachricht …</target>
+        <target>Schreibe deine Nachricht …</target>
       </trans-unit>
       <trans-unit id="aVwNQcX" resname="billable">
         <source>billable</source>
