@@ -97,6 +97,25 @@ class RateResetCalculatorTest extends TestCase
         self::assertSame(0.0, $record->getRate());
     }
 
+    public function testAutomaticFixedRateWithFloatingPointDifferenceIsReset(): void
+    {
+        $record = $this->createTimesheet();
+        $record->setFixedRate(80.0000001);
+        $record->setRate(80.0000001);
+
+        $rateService = $this->createMock(RateServiceInterface::class);
+        $rateService->expects($this->once())
+            ->method('calculate')
+            ->willReturn(new Rate(80, 25, null, 80));
+
+        $sut = new RateResetCalculator($rateService);
+        $sut->calculate($record, ['activity' => [new Activity(), new Activity()]]);
+
+        self::assertNull($record->getFixedRate());
+        self::assertNull($record->getHourlyRate());
+        self::assertSame(0.0, $record->getRate());
+    }
+
     public function testManualHourlyRateIsPreserved(): void
     {
         $record = $this->createTimesheet();
@@ -121,6 +140,25 @@ class RateResetCalculatorTest extends TestCase
         $record = $this->createTimesheet();
         $record->setHourlyRate(50);
         $record->setRate(50);
+
+        $rateService = $this->createMock(RateServiceInterface::class);
+        $rateService->expects($this->once())
+            ->method('calculate')
+            ->willReturn(new Rate(50, 25, 50));
+
+        $sut = new RateResetCalculator($rateService);
+        $sut->calculate($record, ['activity' => [new Activity(), new Activity()]]);
+
+        self::assertNull($record->getFixedRate());
+        self::assertNull($record->getHourlyRate());
+        self::assertSame(0.0, $record->getRate());
+    }
+
+    public function testAutomaticHourlyRateWithFloatingPointDifferenceIsReset(): void
+    {
+        $record = $this->createTimesheet();
+        $record->setHourlyRate(50.0000001);
+        $record->setRate(50.0000001);
 
         $rateService = $this->createMock(RateServiceInterface::class);
         $rateService->expects($this->once())

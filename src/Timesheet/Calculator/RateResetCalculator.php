@@ -18,6 +18,8 @@ use App\Timesheet\RateServiceInterface;
 
 final class RateResetCalculator implements CalculatorInterface
 {
+    private const RATE_COMPARISON_EPSILON = 0.000001;
+
     public function __construct(private readonly RateServiceInterface $rateService)
     {
     }
@@ -68,15 +70,20 @@ final class RateResetCalculator implements CalculatorInterface
         $manualFixedRate = null;
         $manualHourlyRate = null;
 
-        if (null !== $fixedRate && $fixedRate !== $previousRate->getFixedRate()) {
+        if (null !== $fixedRate && !$this->ratesAreEqual($fixedRate, $previousRate->getFixedRate())) {
             $manualFixedRate = $fixedRate;
-        } elseif (null !== $hourlyRate && $hourlyRate !== $previousRate->getHourlyRate()) {
+        } elseif (null !== $hourlyRate && !$this->ratesAreEqual($hourlyRate, $previousRate->getHourlyRate())) {
             $manualHourlyRate = $hourlyRate;
         }
 
         $record->resetRates();
         $record->setFixedRate($manualFixedRate);
         $record->setHourlyRate($manualHourlyRate);
+    }
+
+    private function ratesAreEqual(float $storedRate, ?float $calculatedRate): bool
+    {
+        return null !== $calculatedRate && abs($storedRate - $calculatedRate) < self::RATE_COMPARISON_EPSILON;
     }
 
     public function getPriority(): int
