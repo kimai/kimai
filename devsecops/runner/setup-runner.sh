@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 #
-# Provisions an on-premise Ubuntu 24.04 host as a self-hosted GitHub Actions
-# runner for the DevSecOps pipeline (.github/workflows/devsecops.yml).
+# Provisions an on-premise Ubuntu 22.04/24.04 host (also works on WSL2) as a
+# self-hosted GitHub Actions runner for the DevSecOps pipeline
+# (.github/workflows/devsecops.yml).
 #
 # What it installs/configures:
 #   - PHP 8.3 + extensions used by Kimai, Composer
@@ -22,10 +23,31 @@ fi
 
 echo "==> Installing base packages"
 sudo apt-get update -y
+
+. /etc/os-release
+
+# PHP 8.3: Ubuntu 24.04+ ships it natively; older Ubuntu releases (e.g. 22.04,
+# whose default php-cli is 8.1 - too old for Kimai) get it via the ondrej PPA,
+# the same source the setup-php GitHub action uses
+PHP_PKG_PREFIX="php8.3"
+if [[ "${ID:-}" == "ubuntu" && "${VERSION_ID%%.*}" -lt 24 ]]; then
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common
+    sudo add-apt-repository -y ppa:ondrej/php
+    sudo apt-get update -y
+elif [[ "${ID:-}" != "ubuntu" ]]; then
+    # Debian/Kali and others: distribution default PHP (must be >= 8.2 for Kimai)
+    PHP_PKG_PREFIX="php"
+fi
+
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    php-cli php-gd php-intl php-mbstring php-xml php-zip php-xsl php-curl php-mysql php-ldap \
+    ${PHP_PKG_PREFIX}-cli ${PHP_PKG_PREFIX}-gd ${PHP_PKG_PREFIX}-intl ${PHP_PKG_PREFIX}-mbstring \
+    ${PHP_PKG_PREFIX}-xml ${PHP_PKG_PREFIX}-zip ${PHP_PKG_PREFIX}-xsl ${PHP_PKG_PREFIX}-curl \
+    ${PHP_PKG_PREFIX}-mysql ${PHP_PKG_PREFIX}-ldap \
     mariadb-server mariadb-client \
     curl git unzip ca-certificates gnupg
+
+php -r 'exit(version_compare(PHP_VERSION, "8.2.0", ">=") ? 0 : 1);' \
+    || echo "WARNING: system PHP is older than 8.2 - CI jobs use setup-php (8.3), but manual composer/phpunit runs need PHP >= 8.2"
 
 echo "==> Installing Composer"
 if ! command -v composer >/dev/null 2>&1; then
