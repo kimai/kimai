@@ -1657,11 +1657,6 @@ parameters:
             path: Reporting/ProjectDateRange/ProjectDateRangeQueryTest.php
 
         -
-            message: "#^Method App\\\\Tests\\\\Repository\\\\AbstractRepositoryTestCase\\:\\:getEntityManager\\(\\) should return Doctrine\\\\Persistence\\\\ObjectManager but returns Doctrine\\\\Persistence\\\\ObjectManager\\|null\\.$#"
-            count: 1
-            path: Repository/AbstractRepositoryTestCase.php
-
-        -
             message: "#^Parameter \\#1 \\$directory of method App\\\\Repository\\\\InvoiceDocumentRepository\\:\\:addDirectory\\(\\) expects string, string\\|false given\\.$#"
             count: 1
             path: Repository/InvoiceDocumentRepositoryTest.php

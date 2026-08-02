@@ -755,7 +755,7 @@ class UserTest extends TestCase
 
         $lastLogin = $user->getLastLogin();
         self::assertNull($lastLogin);
-        $user->setLastLogin($dateTime);
+        $user->setLastLogin($dateTime); // @phpstan-ignore method.deprecated
 
         $lastLogin = $user->getLastLogin();
         self::assertNotNull($lastLogin);
