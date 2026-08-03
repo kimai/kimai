@@ -10,6 +10,8 @@
 namespace App\Controller;
 
 use App\Configuration\SystemConfiguration;
+use App\Entity\MetaTableTypeInterface;
+use App\Entity\Timesheet;
 use App\Event\QuickEntryMetaDisplayEvent;
 use App\Form\QuickEntryForm;
 use App\Form\WeekByUserForm;
@@ -44,6 +46,30 @@ final class QuickEntryController extends AbstractController
     {
     }
 
+    /**
+     * @param MetaTableTypeInterface[] $metaFields
+     */
+    private function buildGroupIdentifier(Timesheet $timesheet, array $metaFields, ?int $counter = null): string
+    {
+        $id = $timesheet->getProject()?->getId() . '_' . $timesheet->getActivity()?->getId();
+
+        if ($counter !== null) {
+            $id .= '_' . $counter;
+        }
+
+        // added with 2.63 - make sure that custom-field values are not merged
+        foreach ($metaFields as $metaField) {
+            $name = $metaField->getName();
+            if ($name === null) {
+                continue;
+            }
+            $value = $timesheet->getMetaField($name)?->getValue();
+            $id .= '_' . $name . '#' . (\is_scalar($value) ? (string) $value : '');
+        }
+
+        return $id;
+    }
+
     #[Route(path: '/quick_entry/', name: 'quick_entry', methods: ['GET', 'POST'])]
     public function quickEntry(Request $request): Response
     {
@@ -66,6 +92,7 @@ final class QuickEntryController extends AbstractController
 
         $user = $values->getUser() ?? $user;
         $factory = $this->getDateTimeFactory($user);
+        $allowCreate = $this->isGranted($user === $this->getUser() ? 'create_own_timesheet' : 'create_other_timesheet');
 
         $begin = $values->getDate();
 
@@ -93,15 +120,20 @@ final class QuickEntryController extends AbstractController
 
         $result = $this->repository->getTimesheetResult($query);
 
+        // find additional meta-fields exclusively for QuickEntry view
+        $event = new QuickEntryMetaDisplayEvent($query);
+        $this->dispatcher->dispatch($event);
+        $metaFields = $event->getFields();
+
         $rows = [];
         foreach ($result->getResults() as $timesheet) {
             $i = 0;
-            $id = $timesheet->getProject()->getId() . '_' . $timesheet->getActivity()->getId();
+            $id = $this->buildGroupIdentifier($timesheet, $metaFields);
             $day = $timesheet->getBegin()->format('Y-m-d');
 
             while (\array_key_exists($id, $rows) && \array_key_exists('entry', $rows[$id]['days'][$day])) {
                 $i++;
-                $id = $timesheet->getProject()->getId() . '_' . $timesheet->getActivity()->getId() . '_' . $i;
+                $id = $this->buildGroupIdentifier($timesheet, $metaFields, $i);
             }
 
             if (!\array_key_exists($id, $rows)) {
@@ -138,7 +170,7 @@ final class QuickEntryController extends AbstractController
                         continue;
                     }
 
-                    $id = $timesheet->getProject()->getId() . '_' . $timesheet->getActivity()->getId();
+                    $id = $this->buildGroupIdentifier($timesheet, $metaFields);
                     if (\array_key_exists($id, $rows)) {
                         continue;
                     }
@@ -164,11 +196,6 @@ final class QuickEntryController extends AbstractController
         $defaultHour = (int) $defaultBegin->format('H');
         $defaultMinute = (int) $defaultBegin->format('i');
 
-        // find additional meta-fields exclusively for QuickEntry view
-        $event = new QuickEntryMetaDisplayEvent($query);
-        $this->dispatcher->dispatch($event);
-        $metaFields = $event->getFields();
-
         $formModel = new QuickEntryWeek($startWeek);
 
         foreach ($rows as $id => $row) {
@@ -192,23 +219,26 @@ final class QuickEntryController extends AbstractController
             $model->setMetaFields($metaFields);
         }
 
-        // create prototype model
-        $empty = $formModel->createRow($user);
-        $empty->setMetaFields($metaFields);
-        $empty->markAsPrototype();
-        foreach ($week as $dayId => $day) {
-            $tmp = $this->timesheetService->createNewTimesheet($user);
-            $tmp->setDuration(null);
-            $newTime = \DateTime::createFromInterface($day['day']);
-            $newTime = $newTime->setTime($defaultHour, $defaultMinute, 0, 0);
-            $tmp->setBegin($newTime);
-            $this->timesheetService->prepareNewTimesheet($tmp);
-            $empty->addTimesheet($tmp);
+        $empty = null;
+        if ($allowCreate) {
+            // create prototype model
+            $empty = $formModel->createRow($user);
+            $empty->setMetaFields($metaFields);
+            $empty->markAsPrototype();
+            foreach ($week as $dayId => $day) {
+                $tmp = $this->timesheetService->createNewTimesheet($user);
+                $tmp->setDuration(null);
+                $newTime = \DateTime::createFromInterface($day['day']);
+                $newTime = $newTime->setTime($defaultHour, $defaultMinute, 0, 0);
+                $tmp->setBegin($newTime);
+                $this->timesheetService->prepareNewTimesheet($tmp);
+                $empty->addTimesheet($tmp);
+            }
         }
 
         // add empty rows for simpler starting
         $minRows = \intval($this->configuration->find('quick_entry.minimum_rows'));
-        if (!$locked && $formModel->countRows() < $minRows) {
+        if (!$locked && $allowCreate && $formModel->countRows() < $minRows) {
             $newRows = $minRows - $formModel->countRows();
             for ($a = 0; $a < $newRows; $a++) {
                 $model = $formModel->addRow($user);
@@ -247,17 +277,16 @@ final class QuickEntryController extends AbstractController
                         $duration = $timesheet->getDuration(false);
                         // running timesheets also have a empty duration.
                         // we distinguish them from temporary ones, to make sure they will not be deleted
-                        if ($timesheet->isRunning()) {
-                            $saveTimesheets[] = $timesheet;
-                        } elseif ($duration === null) {
+                        if (!$timesheet->isRunning() && $duration === null) {
                             if ($this->isGranted('delete', $timesheet)) {
                                 $deleteTimesheets[] = $timesheet;
                             }
-                        } else {
+                        } elseif ($this->isGranted('edit', $timesheet)) {
                             $saveTimesheets[] = $timesheet;
                         }
                     } else {
-                        if ($timesheet->getDuration() !== null) {
+                        // empty duration = nothing entered in the form, do not create
+                        if ($timesheet->getDuration() !== null && $this->isGranted('create', $timesheet)) {
                             $saveTimesheets[] = $timesheet;
                         }
                     }
@@ -272,16 +301,8 @@ final class QuickEntryController extends AbstractController
                 }
 
                 if (\count($saveTimesheets) > 0) {
-                    $saveMe = [];
-                    foreach ($saveTimesheets as $timesheet) {
-                        if ($timesheet->getId() === null || $this->isGranted('edit', $timesheet)) {
-                            $saveMe[] = $timesheet;
-                        }
-                    }
-                    if (\count($saveMe) > 0) {
-                        $this->timesheetService->updateMultipleTimesheets($saveMe);
-                        $saved = true;
-                    }
+                    $this->timesheetService->updateMultipleTimesheets($saveTimesheets);
+                    $saved = true;
                 }
 
                 if ($saved) {

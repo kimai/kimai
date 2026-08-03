@@ -332,6 +332,11 @@ final class SystemConfiguration
         return $this->find('defaults.customer.country');
     }
 
+    public function getCustomerDefaultLanguage(): string
+    {
+        return $this->getString('defaults.customer.language', 'en');
+    }
+
     // ========== User configurations ==========
 
     public function getUserDefaultTimezone(): ?string

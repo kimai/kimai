@@ -478,6 +478,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->getPreferenceValue(UserPreference::TIMEZONE, date_default_timezone_get(), false);
     }
 
+    public function getDateTimezone(): \DateTimeZone
+    {
+        return new \DateTimeZone($this->getTimezone());
+    }
+
     /**
      * The locale used for translating the UI
      */
@@ -713,7 +718,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      */
     public function resetSecuritySignature(): void
     {
-        $this->signatureDate = new \DateTimeImmutable('now', new \DateTimeZone($this->getTimezone()));
+        $this->signatureDate = new \DateTimeImmutable('now', $this->getDateTimezone());
     }
 
     /**
@@ -822,14 +827,38 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return true;
     }
 
-    public function hasTeamleadRole(): bool
+    public function hasTeamleadRole(bool $explicit = true): bool
     {
-        return $this->hasRole(static::ROLE_TEAMLEAD);
+        $isTeamlead = $this->hasRole(static::ROLE_TEAMLEAD);
+
+        // when not asking for the explicit role, higher roles (admin, super admin) count as teamlead as well
+        return $explicit ? $isTeamlead : $isTeamlead || $this->isAdmin(false);
     }
 
-    public function isAdmin(): bool
+    public function isAdmin(bool $explicit = true): bool
     {
-        return $this->hasRole(static::ROLE_ADMIN);
+        $isAdmin = $this->hasRole(static::ROLE_ADMIN);
+
+        // when not asking for the explicit role, the higher super admin role counts as admin as well
+        return $explicit ? $isAdmin : $isAdmin || $this->isSuperAdmin();
+    }
+
+    /**
+     * Whether this user is allowed to grant the given role to a user.
+     *
+     * This is the single source of truth for the role hierarchy used when assigning roles:
+     * a super-admin role may only be granted by a super admin, an admin role only by an admin
+     * (or above) and a teamlead role only by a teamlead (or above). Every other role (the default
+     * role and custom roles) may be granted by anyone.
+     */
+    public function canAssignRole(string $role): bool
+    {
+        return match (strtoupper($role)) {
+            static::ROLE_SUPER_ADMIN => $this->isSuperAdmin(),
+            static::ROLE_ADMIN => $this->isAdmin(false),
+            static::ROLE_TEAMLEAD => $this->hasTeamleadRole(false),
+            default => true,
+        };
     }
 
     public function getDisplayName(): string
@@ -933,7 +962,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     {
         if ($this->lastLogin !== null) {
             // make sure to use the users own timezone
-            $this->lastLogin->setTimezone(new \DateTimeZone($this->getTimezone()));
+            $this->lastLogin->setTimezone($this->getDateTimezone());
         }
 
         return $this->lastLogin;
@@ -1031,6 +1060,10 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
+    /**
+     * @internal
+     * @deprecated since 2.63 - internal field - method will be remove in 3.0
+     */
     public function setLastLogin(?\DateTime $time = null): User
     {
         $this->lastLogin = $time;
@@ -1045,7 +1078,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function markPasswordRequested(): void
     {
-        $this->passwordRequestedAt = new \DateTimeImmutable('now', new \DateTimeZone($this->getTimezone()));
+        $this->passwordRequestedAt = new \DateTimeImmutable('now', $this->getDateTimezone());
     }
 
     public function isPasswordRequestNonExpired(int $seconds): bool
@@ -1352,7 +1385,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         }
 
         try {
-            $date = \DateTimeImmutable::createFromFormat('Y-m-d h:i:s', $date . ' 00:00:00', new \DateTimeZone($this->getTimezone()));
+            $date = \DateTimeImmutable::createFromFormat('Y-m-d h:i:s', $date . ' 00:00:00', $this->getDateTimezone());
         } catch (Exception $e) {
         }
 

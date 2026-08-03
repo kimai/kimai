@@ -185,7 +185,7 @@ final class ProjectController extends BaseApiController
             'include_time' => $this->isGranted('time', $project),
         ]);
 
-        $form->submit($request->request->all());
+        $form->submit($request->request->all(), false);
 
         if ($form->isValid()) {
             $this->projectService->saveProject($project);

@@ -41,6 +41,7 @@ final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
             $prefix . 'name' => $customer->getName() ?? '',
             $prefix . 'contact' => $customer->getContact() ?? '',
             $prefix . 'company' => $customer->getCompany() ?? '',
+            $prefix . 'language' => $customer->getLanguage() ?? '',
             $prefix . 'vat' => $customer->getVatId() ?? '', // deprecated since 2.0.15
             $prefix . 'vat_id' => $customer->getVatId() ?? '',
             $prefix . 'number' => $customer->getNumber() ?? '',
@@ -53,6 +54,7 @@ final class InvoiceModelCustomerHydrator implements InvoiceModelHydrator
             $prefix . 'phone' => $customer->getPhone() ?? '',
             $prefix . 'mobile' => $customer->getMobile() ?? '',
             $prefix . 'invoice_text' => $customer->getInvoiceText() ?? '',
+            $prefix . 'invoice_email' => $customer->getInvoiceEmail() ?? '',
             $prefix . 'buyer_reference' => $customer->getBuyerReference() ?? '',
         ];
 

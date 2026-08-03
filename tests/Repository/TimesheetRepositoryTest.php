@@ -49,6 +49,56 @@ class TimesheetRepositoryTest extends AbstractRepositoryTestCase
         self::assertIsArray($result);
     }
 
+    public function testPaginationReturnsDistinctResultsWithIdenticalBegin(): void
+    {
+        $em = $this->getEntityManager();
+        /** @var ActivityRepository $activityRepository */
+        $activityRepository = $em->getRepository(Activity::class);
+        $activity = $activityRepository->find(1);
+        /** @var ProjectRepository $projectRepository */
+        $projectRepository = $em->getRepository(Project::class);
+        $project = $projectRepository->find(1);
+
+        $user = $this->getUserByRole(User::ROLE_USER);
+        /** @var TimesheetRepository $repository */
+        $repository = $em->getRepository(Timesheet::class);
+
+        // all records share the exact same begin, so the default "begin DESC"
+        // order alone cannot produce a stable order across paginated queries
+        $begin = new \DateTime('2015-06-15 10:00:00');
+        $end = new \DateTime('2015-06-15 11:00:00');
+        $amount = 20;
+        for ($i = 0; $i < $amount; $i++) {
+            $timesheet = new Timesheet();
+            $timesheet
+                ->setBegin(clone $begin)
+                ->setEnd(clone $end)
+                ->setUser($user)
+                ->setActivity($activity)
+                ->setProject($project);
+            $em->persist($timesheet);
+        }
+        $em->flush();
+
+        $pageSize = 5;
+        $collected = [];
+        $pages = (int) ceil($amount / $pageSize);
+        for ($page = 1; $page <= $pages; $page++) {
+            $query = new TimesheetQuery();
+            $query->setUser($user);
+            $query->setPage($page);
+            $query->setPageSize($pageSize);
+            $pager = $repository->getPagerfantaForQuery($query);
+            /** @var Timesheet $timesheet */
+            foreach ($pager->getCurrentPageResults() as $timesheet) {
+                $collected[] = $timesheet->getId();
+            }
+        }
+
+        self::assertCount($amount, $collected);
+        self::assertCount($amount, array_unique($collected), 'Pagination returned the same timesheet on more than one page');
+    }
+
     public function testSave(): void
     {
         $em = $this->getEntityManager();

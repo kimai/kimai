@@ -64,12 +64,12 @@ trait MetaTableTypeTrait
     /**
      * Used for data conversion during form transformation.
      *
-     * ATTENTION: This field can be used to temporary hold data in another format (e.g. array) during form transformation.
-     * TODO unclear when "array" should happen. the above statement is old and maybe we can remove the "mixed” type
+     * This field can be used to temporary hold data in another format (e.g. array) during form transformation.
      */
     private mixed $data = null;
     private bool $updated = false;
     private ?string $section = null;
+    private ?string $formTheme = null;
 
     public function getName(): ?string
     {
@@ -287,5 +287,15 @@ trait MetaTableTypeTrait
     public function isDefined(): bool
     {
         return $this->type !== null;
+    }
+
+    public function getFormTheme(): ?string
+    {
+        return $this->formTheme;
+    }
+
+    public function setFormTheme(string $formTheme): void
+    {
+        $this->formTheme = $formTheme;
     }
 }

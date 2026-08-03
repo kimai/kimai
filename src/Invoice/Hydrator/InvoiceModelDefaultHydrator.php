@@ -15,7 +15,7 @@ use Symfony\Component\Intl\Countries;
 
 final class InvoiceModelDefaultHydrator implements InvoiceModelHydrator
 {
-    private const DATE_PROCESS_FORMAT = 'Y-m-d h:i:s';
+    private const DATE_PROCESS_FORMAT = 'Y-m-d H:i:s';
 
     public function hydrate(InvoiceModel $model): array
     {

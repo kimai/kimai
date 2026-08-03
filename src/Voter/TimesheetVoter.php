@@ -9,6 +9,8 @@
 
 namespace App\Voter;
 
+use App\Entity\Activity;
+use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Form\Model\MultiUserTimesheet;
@@ -24,6 +26,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  */
 final class TimesheetVoter extends Voter
 {
+    public const CREATE = 'create';
     public const VIEW = 'view';
     public const START = 'start';
     public const STOP = 'stop';
@@ -50,6 +53,7 @@ final class TimesheetVoter extends Voter
         'edit_billable',
         'duplicate',
         'is_owner',
+        self::CREATE
     ];
 
     private ?bool $lockdownGrace = null;
@@ -93,6 +97,13 @@ final class TimesheetVoter extends Voter
             case 'is_owner':
                 return (!$subject instanceof MultiUserTimesheet) && $user->getId() === $subject->getUser()?->getId();
 
+            case self::CREATE:
+                if (!$this->canCreate($user, $subject)) {
+                    return false;
+                }
+                $permission .= $attribute;
+                break;
+
             case self::START:
                 if (!$this->canStart($user, $subject)) {
                     return false;
@@ -118,7 +129,7 @@ final class TimesheetVoter extends Voter
                 if (!$this->canStart($user, $subject)) {
                     return false;
                 }
-                $permission = self::EDIT;
+                $permission = self::CREATE;
                 break;
 
             case self::VIEW_RATE:
@@ -146,28 +157,43 @@ final class TimesheetVoter extends Voter
         return $this->permissionManager->hasRolePermission($user, $permission . '_other_timesheet');
     }
 
+    private function canCreate(User $user, Timesheet $timesheet): bool
+    {
+        $activity = $timesheet->getActivity();
+        if (null !== $activity && !$this->checkActivity($user, $activity)) {
+            return false;
+        }
+
+        $project = $timesheet->getProject();
+        if (null !== $project && !$this->checkProject($user, $project)) {
+            return false;
+        }
+
+        return true;
+    }
+
     private function canStart(User $user, Timesheet $timesheet): bool
     {
-        // possible improvements for the future:
-        // we could check the amount of active entries (maybe slow)
-
-        if (null === $timesheet->getActivity()) {
+        $activity = $timesheet->getActivity();
+        if (null === $activity || !$this->checkActivity($user, $activity)) {
             return false;
         }
 
-        if (null === $timesheet->getProject()) {
+        $project = $timesheet->getProject();
+        if (null === $project || !$this->checkProject($user, $project)) {
             return false;
         }
 
-        if (!$timesheet->getProject()->isVisible()) {
+        return true;
+    }
+
+    private function checkProject(User $user, Project $project): bool
+    {
+        if (!$project->isVisible()) {
             return false;
         }
 
-        if (!$timesheet->getProject()->getCustomer()->isVisible()) {
-            return false;
-        }
-
-        if (!$timesheet->getActivity()->isVisible()) {
+        if (!$project->getCustomer()->isVisible()) {
             return false;
         }
 
@@ -175,11 +201,20 @@ final class TimesheetVoter extends Voter
         // project and activity, so the current user must still have team-based
         // access to them - historical ownership of the original timesheet is not
         // sufficient (otherwise old entries would survive an access revocation).
-        if (!$this->permissionManager->checkTeamAccessProject($timesheet->getProject(), $user)) {
+        if (!$this->permissionManager->checkTeamAccessProject($project, $user)) {
             return false;
         }
 
-        if (!$this->permissionManager->checkTeamAccessActivity($timesheet->getActivity(), $user)) {
+        return true;
+    }
+
+    private function checkActivity(User $user, Activity $activity): bool
+    {
+        if (!$activity->isVisible()) {
+            return false;
+        }
+
+        if (!$this->permissionManager->checkTeamAccessActivity($activity, $user)) {
             return false;
         }
 

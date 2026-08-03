@@ -57,6 +57,7 @@ final class CustomerService
         $customer = new Customer($name);
         $customer->setTimezone($this->getDefaultTimezone());
         $customer->setCountry($this->configuration->getCustomerDefaultCountry());
+        $customer->setLanguage($this->configuration->getCustomerDefaultLanguage());
         $customer->setCurrency($this->configuration->getDefaultCurrency());
         $customer->setNumber($this->calculateNextCustomerNumber());
 

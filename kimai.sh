@@ -145,10 +145,10 @@ function install_plugins() {
     if [[ ${#packages[@]} -gt 0 ]]; then
         verbose "Installing Composer plugins: ${packages[*]}"
         run_composer require "${packages[@]} --update-no-dev --optimize-autoloader" || exit 1
-        $KIMAI_PHP bin/console kimai:plugins --install || exit 1
-    else
-        verbose "No Composer plugins detected."
     fi
+
+    verbose "Installing plugins"
+    $KIMAI_PHP bin/console kimai:plugins --install || exit 1
 }
 
 function set_permission() {
@@ -205,9 +205,9 @@ fi
 cd "$(dirname "$0")" || { echo "Cannot change working directory."; exit 1; }
 
 # we need a few commands installed in order for this script to complete
-composer_exists || { echo >&2 "Update requires 'composer' but it's not installed or not executable."; exit 1; }
-command -v git >/dev/null 2>&1 || { echo >&2 "Update requires 'git' but it's not installed."; exit 1; }
-command -v "$KIMAI_PHP" >/dev/null 2>&1 || { echo >&2 "Update requires 'php' but it's not installed."; exit 1; }
+composer_exists || { echo >&2 "Kimai requires 'composer' but it's not installed or not executable."; exit 1; }
+command -v git >/dev/null 2>&1 || { echo >&2 "Kimai requires 'git' but it's not installed."; exit 1; }
+command -v "$KIMAI_PHP" >/dev/null 2>&1 || { echo >&2 "Kimai requires 'php' but it's not installed."; exit 1; }
 
 verbose "Using PHP: $KIMAI_PHP"
 verbose "Using Composer: $KIMAI_COMPOSER"

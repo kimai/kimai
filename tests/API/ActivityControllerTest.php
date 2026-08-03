@@ -341,6 +341,11 @@ class ActivityControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ActivityEntity', $result);
         self::assertNotEmpty($result['id']);
+        self::assertTrue($result['billable']);
+        self::assertTrue($result['visible']);
+        self::assertEquals('0003', $result['number']);
+        self::assertNull($result['color']);
+        self::assertNull($result['budgetType']);
     }
 
     public function testPostActionWithInvalidUser(): void

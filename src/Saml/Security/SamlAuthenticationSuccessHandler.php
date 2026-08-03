@@ -16,7 +16,7 @@ final class SamlAuthenticationSuccessHandler extends DefaultAuthenticationSucces
 {
     protected $defaultOptions = [
         'always_use_default_target_path' => false,
-        'default_target_path' => '/',
+        'default_target_path' => 'homepage',
         'login_path' => 'saml_login',
         'target_path_parameter' => '_target_path',
         'use_referer' => false,

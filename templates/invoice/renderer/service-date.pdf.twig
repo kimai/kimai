@@ -70,6 +70,9 @@ mpdf-->
                 {% if country not in invoice['customer.address'] %}
                     <br> {{ country }}
                 {% endif %}
+                {% if invoice['customer.vat_id'] is not empty %}
+                    <br>{{ 'vat_id'|trans }}: {{ invoice['customer.vat_id'] }}
+                {% endif %}
             </td>
             <td class="text-right">
                 {% set classLeft = 'text-left' %}
@@ -103,16 +106,10 @@ mpdf-->
                             <td class="{{ classRight }}">{{ invoice['customer.number'] }}</td>
                         </tr>
                     {% endif %}
-                    {% if invoice['query.project.order_number'] is defined and invoice['query.project.order_number'] is not empty %}
+                    {% if invoice['project.counter'] == 1 and invoice['project.order_number'] is not empty %}
                         <tr>
                             <td class="{{ classLeft }}">{{ 'orderNumber'|trans }}</td>
-                            <td class="{{ classRight }}">{{ invoice['query.project.order_number'] }}</td>
-                        </tr>
-                    {% endif %}
-                    {% if invoice['customer.vat_id'] is not empty %}
-                        <tr>
-                            <td class="{{ classLeft }}">{{ 'vat_id'|trans }}</td>
-                            <td class="{{ classRight }}">{{ invoice['customer.vat_id'] }}</td>
+                            <td class="{{ classRight }}">{{ invoice['project.order_number'] }}</td>
                         </tr>
                     {% endif %}
                 </table>
@@ -120,10 +117,14 @@ mpdf-->
         </tr>
     </table>
 
-    <h2 style="margin-top: 60px">{{ invoice['template.title'] }}</h2>
+    <h2 style="margin-top: 60px; margin-bottom: 20px;">{{ invoice['template.title'] }}</h2>
 
     {% if invoice['customer.invoice_text'] is not empty%}
-        <p>{{ invoice['customer.invoice_text']|md2html }}</p>
+        {{ invoice['customer.invoice_text']|md2html }}
+    {% endif %}
+
+    {% if invoice['project.counter'] == 1 and invoice['project.invoice_text'] is not empty %}
+        {{ invoice['project.invoice_text']|md2html }}
     {% endif %}
 
     <table class="items">

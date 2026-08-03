@@ -10,11 +10,14 @@
 namespace App\Tests\Controller;
 
 use App\DataFixtures\UserFixtures;
+use App\Entity\Role;
+use App\Entity\RolePermission;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Repository\AccessTokenRepository;
 use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use App\User\PermissionService;
 use App\WorkingTime\Mode\WorkingTimeModeDay;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -345,6 +348,77 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         self::assertFalse($client->getResponse()->isSuccessful());
     }
 
+    /**
+     * A lower-privileged actor must not be able to edit the roles of a user who holds a role the
+     * actor cannot assign - otherwise they could strip that higher role from the subject.
+     *
+     * Setup mirrors an installation that granted "roles_other_profile" to ROLE_ADMIN. As ROLE_ADMIN
+     * also has "view_all_data", such an admin passes the general profile access check, but the
+     * UserVoter must still deny access to a super admin's roles form.
+     */
+    public function testRolesActionDeniesEditingHigherPrivilegedUser(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->grantRolesOtherProfileToAdmin();
+
+        // the target is a super admin, a role the admin may not assign
+        $target = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+        self::assertContains(User::ROLE_SUPER_ADMIN, $target->getRoles());
+
+        $this->request($client, '/profile/' . $target->getUserIdentifier() . '/roles');
+
+        $this->assertAccessDenied($client);
+    }
+
+    /**
+     * Counterpart to the test above: editing the roles of a user the admin outranks stays allowed,
+     * so the new voter guard does not over-block legitimate role management.
+     */
+    public function testRolesActionAllowsEditingLowerPrivilegedUser(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->grantRolesOtherProfileToAdmin();
+
+        $target = $this->getUserByRole(User::ROLE_USER);
+        $targetName = $target->getUserIdentifier();
+        self::assertEquals([User::ROLE_USER], $target->getRoles());
+
+        $this->request($client, '/profile/' . $targetName . '/roles');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        // the admin may assign the teamlead role, but not the super admin role
+        $rendered = $client->getResponse()->getContent();
+        self::assertIsString($rendered);
+        self::assertStringNotContainsString('value="ROLE_SUPER_ADMIN"', $rendered);
+
+        $form = $client->getCrawler()->filter('form[name=user_roles]')->form();
+        $client->submit($form, [
+            'user_roles[roles]' => [
+                'ROLE_TEAMLEAD',
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode($targetName) . '/roles'));
+        $client->followRedirect();
+
+        $target = $this->getUserByName($targetName);
+        self::assertContains(User::ROLE_TEAMLEAD, $target->getRoles());
+    }
+
+    /**
+     * Grants ROLE_ADMIN the (non-default) permission to edit other users' roles and busts the cache.
+     */
+    private function grantRolesOtherProfileToAdmin(): void
+    {
+        $role = (new Role())->setName(User::ROLE_ADMIN);
+        $permission = (new RolePermission())->setRole($role)->setPermission('roles_other_profile')->setAllowed(true);
+        $em = $this->getEntityManager();
+        $em->persist($role);
+        $em->flush();
+        /** @var PermissionService $permissionService */
+        $permissionService = $this->getPrivateService(PermissionService::class);
+        $permissionService->saveRolePermission($permission);
+    }
+
     public function testRolesAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
@@ -580,6 +654,22 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/contract');
         self::assertFalse($client->getResponse()->isSuccessful());
+    }
+
+    public function testContractActionWithTooManyHours(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $crawler = $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/contract');
+        $form = $crawler->filter('form[name=user_contract]')->form();
+
+        $result = $client->submit($form, [
+            'user_contract[workHoursMonday]' => '25:00',
+        ]);
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $validationErrors = $result->filter('form[name=user_contract] div.invalid-feedback.d-block');
+        self::assertCount(1, $validationErrors);
+        self::assertSame('A maximum duration of 24:00 is allowed.', $validationErrors->text(null, true));
     }
 
     public function testContractAction(): void

@@ -45,6 +45,7 @@ class InvoiceArchiveQuery extends BaseQuery implements DateRangeInterface
             'dateRange' => new DateRange(),
             'customers' => [],
             'status' => [],
+            'users' => [],
         ]);
     }
 

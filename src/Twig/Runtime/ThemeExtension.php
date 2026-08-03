@@ -34,6 +34,7 @@ final class ThemeExtension implements RuntimeExtensionInterface
     }
 
     /**
+     * TODO 3.0 return string, remove Environment
      * @param array<string, mixed> $payload
      */
     public function trigger(Environment $environment, string $eventName, array $payload = []): ThemeEvent
@@ -44,6 +45,25 @@ final class ThemeExtension implements RuntimeExtensionInterface
         $this->eventDispatcher->dispatch($themeEvent, $eventName);
 
         return $themeEvent;
+    }
+
+    /**
+     * @param class-string $eventName
+     */
+    public function themeEvent(string $eventName): string
+    {
+        if (!class_exists($eventName)) {
+            throw new \Exception('Unknown Theme Event triggered');
+        }
+
+        $themeEvent = new $eventName();
+        if (!$themeEvent instanceof \Stringable) {
+            throw new \Exception('Theme Event needs to be Stringable');
+        }
+
+        $this->eventDispatcher->dispatch($themeEvent);
+
+        return (string) $themeEvent;
     }
 
     public function actions(User $user, string $action, string $view, array $payload = []): ThemeEvent

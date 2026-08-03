@@ -201,3 +201,11 @@
         {{ parent() }}
     {%- endif -%}
 {% endblock %}
+
+{% block navbar_menu_start %}
+    {{ theme_event('\\App\\Event\\ThemeEventMenuStart') }}
+{% endblock %}
+
+{% block navbar_menu_end %}
+    {{ theme_event('\\App\\Event\\ThemeEventMenuEnd') }}
+{% endblock %}

@@ -37,13 +37,18 @@ final class InvoiceModelActivityHydrator implements InvoiceModelHydrator
             }
         }
 
-        if (\count($activities) === 0) {
-            return [];
+        $counter = \count($activities);
+
+        $values = [
+            'activity.counter' => $counter,
+        ];
+
+        if ($counter === 0) {
+            return $values;
         }
 
         $activities = array_values($activities);
 
-        $values = [];
         $i = 0;
 
         foreach ($activities as $activity) {

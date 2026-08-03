@@ -24,12 +24,12 @@ jobs:
         steps:
 
             -   name: Clone Kimai
-                uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+                uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
                 with:
                     persist-credentials: false
 
             -   name: Setup PHP
-                uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc # 2.37.1
+                uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
                 with:
                     php-version: ${{ matrix.php }}
                     coverage: pcov
@@ -43,7 +43,7 @@ jobs:
                 run: echo "composer_cache_directory=$(composer config cache-dir)" >> $GITHUB_ENV
 
             -   name: Cache Composer dependencies
-                uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+                uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
                 with:
                     path: "${{ env.composer_cache_directory }}"
                     key: ${{ runner.os }}-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
@@ -71,6 +71,9 @@ jobs:
 
             -   name: Lint codebase
                 run: composer linting
+
+            -   name: Check for published security advisories
+                run: composer audit --abandoned=report
 
             -   name: Check for security issues in packages
                 run: symfony security:check

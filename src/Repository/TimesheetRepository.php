@@ -555,6 +555,10 @@ class TimesheetRepository extends EntityRepository
         }
 
         $qb->addOrderBy($orderBy, $query->getOrder());
+        // add the primary key as a stable tie-breaker, otherwise records sharing
+        // the same value in the sort column have no deterministic order and can be
+        // returned on more than one page (or skipped entirely) when paginating (#4881)
+        $qb->addOrderBy('t.id', $query->getOrder());
 
         $user = [];
         if (null !== $query->getUser()) {

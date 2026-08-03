@@ -24,7 +24,7 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
 {
     public function testRelayStateWithInvalidHost(): void
     {
-        $handler = new SamlAuthenticationSuccessHandler(new HttpUtils($this->getUrlGenerator()));
+        $handler = new SamlAuthenticationSuccessHandler(new HttpUtils($this->getUrlGenerator(['homepage' => 'http://example.com/'])));
         $response = $handler->onAuthenticationSuccess($this->getRequest('http://example.com/sso/login', 'https://localhost/relayed'), $this->getSamlToken());
         self::assertInstanceOf(RedirectResponse::class, $response);
         $target = $response->getTargetUrl();
@@ -57,9 +57,9 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
 
     public function testWithoutRelayState(): void
     {
-        $httpUtils = new HttpUtils($this->getUrlGenerator());
+        $httpUtils = new HttpUtils($this->getUrlGenerator(['homepage' => '/homepage']));
         $handler = new SamlAuthenticationSuccessHandler($httpUtils);
-        $defaultTargetPath = $httpUtils->generateUri($this->getRequest('/sso/login'), '/');
+        $defaultTargetPath = $httpUtils->generateUri($this->getRequest('/sso/login'), 'homepage');
         $response = $handler->onAuthenticationSuccess($this->getRequest(), $this->getSamlToken());
         self::assertInstanceOf(RedirectResponse::class, $response);
         self::assertTrue($response->isRedirect($defaultTargetPath));
@@ -75,13 +75,17 @@ class SamlAuthenticationSuccessHandlerTest extends TestCase
         self::assertTrue(!$response->isRedirect($loginPath));
     }
 
-    private function getUrlGenerator(): UrlGeneratorInterface
+    private function getUrlGenerator(array $rules = []): UrlGeneratorInterface
     {
         $urlGenerator = $this->getMockBuilder(UrlGeneratorInterface::class)->getMock();
         $urlGenerator
             ->expects($this->any())
             ->method('generate')
-            ->willReturnCallback(function ($name) {
+            ->willReturnCallback(function ($name) use ($rules) {
+                if (\array_key_exists($name, $rules)) {
+                    return $rules[$name];
+                }
+
                 return (string) $name;
             })
         ;

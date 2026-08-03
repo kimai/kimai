@@ -35,6 +35,7 @@ class InvoiceModelActivityHydratorTest extends TestCase
         $keys = [
             'activity.id',
             'activity.name',
+            'activity.counter',
             'activity.comment',
             'activity.number',
             'activity.invoice_text',

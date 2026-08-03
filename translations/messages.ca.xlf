@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ca" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="XohImNo" resname="password" approved="no" xml:space="preserve">
+      <trans-unit id="XohImNo" resname="password" approved="yes" xml:space="preserve">
         <source>Password</source>
-        <target state="translated">Contrasenya</target>
+        <target state="final">Contrasenya</target>
       </trans-unit>
       <trans-unit id="yQRveje" resname="description" approved="no" xml:space="preserve">
         <source>Description</source>
@@ -30,9 +30,9 @@
         <source>This is a mandatory field</source>
         <target state="final">Obligatori</target>
       </trans-unit>
-      <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm" xml:space="preserve">
+      <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm" xml:space="preserve" approved="yes">
         <source>admin_entity.delete_confirm</source>
-        <target state="translated">Aquestes dades també s'esborraran! Alternativament, podeu seleccionar una entrada a la qual es transferiran totes les dades:</target>
+        <target state="final">Aquestes dades també s'esborraran! Alternativament, podeu seleccionar una entrada a la qual es transferiran totes les dades:</target>
       </trans-unit>
       <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve" approved="yes">
         <source>Time Tracking</source>
@@ -50,9 +50,9 @@
         <source>automatic</source>
         <target state="final">Automàtic</target>
       </trans-unit>
-      <trans-unit id="DYHuW58" resname="confirm.delete" xml:space="preserve">
+      <trans-unit id="DYHuW58" resname="confirm.delete" xml:space="preserve" approved="yes">
         <source>confirm.delete</source>
-        <target state="translated">Confirmeu que voleu eliminar-lo?</target>
+        <target state="final">Confirmeu que voleu eliminar-lo?</target>
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user" xml:space="preserve" approved="yes">
         <source>User</source>
@@ -70,113 +70,113 @@
         <source>date</source>
         <target state="final">Data</target>
       </trans-unit>
-      <trans-unit id="COyxNde" resname="delete.not_in_use" xml:space="preserve">
+      <trans-unit id="COyxNde" resname="delete.not_in_use" xml:space="preserve" approved="yes">
         <source>delete.not_in_use</source>
-        <target state="translated">Aquest element es pot eliminar amb seguretat.</target>
+        <target state="final">Aquest element es pot eliminar amb seguretat.</target>
       </trans-unit>
-      <trans-unit id="I3TZF5S" resname="cancel" xml:space="preserve">
+      <trans-unit id="I3TZF5S" resname="cancel" xml:space="preserve" approved="yes">
         <source>cancel</source>
-        <target state="translated">Cancel·lar</target>
+        <target state="final">Cancel·lar</target>
       </trans-unit>
-      <trans-unit id="PyZ8KrQ" resname="confirm" xml:space="preserve">
+      <trans-unit id="PyZ8KrQ" resname="confirm" xml:space="preserve" approved="yes">
         <source>confirm</source>
-        <target state="translated">Confirma</target>
+        <target state="final">Confirma</target>
       </trans-unit>
-      <trans-unit id=".0CFrRV" resname="upload" xml:space="preserve">
+      <trans-unit id=".0CFrRV" resname="upload" xml:space="preserve" approved="yes">
         <source>upload</source>
-        <target state="translated">Pujar</target>
+        <target state="final">Pujar</target>
       </trans-unit>
-      <trans-unit id="JBkykGe" resname="search" xml:space="preserve">
+      <trans-unit id="JBkykGe" resname="search" xml:space="preserve" approved="yes">
         <source>search</source>
-        <target state="translated">Cerca</target>
+        <target state="final">Cerca</target>
       </trans-unit>
-      <trans-unit id="op76XPd" resname="search_filter" xml:space="preserve">
+      <trans-unit id="op76XPd" resname="search_filter" xml:space="preserve" approved="yes">
         <source>Search filter</source>
-        <target state="translated">Filtre de cerca</target>
+        <target state="final">Filtre de cerca</target>
       </trans-unit>
-      <trans-unit id="8W_TZI0" resname="searchTerm" xml:space="preserve">
+      <trans-unit id="8W_TZI0" resname="searchTerm" xml:space="preserve" approved="yes">
         <source>searchTerm</source>
-        <target state="translated">Cerca terme</target>
+        <target state="final">Cerca terme</target>
       </trans-unit>
-      <trans-unit id="CiA4s9E" resname="set_as_default" xml:space="preserve">
+      <trans-unit id="CiA4s9E" resname="set_as_default" xml:space="preserve" approved="yes">
         <source>set_as_default</source>
-        <target state="translated">Desar com a preferit de cerca</target>
+        <target state="final">Desar com a preferit de cerca</target>
       </trans-unit>
-      <trans-unit id="DUDrvjk" resname="remove_default" xml:space="preserve">
+      <trans-unit id="DUDrvjk" resname="remove_default" xml:space="preserve" approved="yes">
         <source>remove_default</source>
-        <target state="translated">Esborra preferit de cerca</target>
+        <target state="final">Esborra preferit de cerca</target>
       </trans-unit>
-      <trans-unit id="1MfS6X5" resname="remove_filter" xml:space="preserve">
+      <trans-unit id="1MfS6X5" resname="remove_filter" xml:space="preserve" approved="yes">
         <source>remove_filter</source>
-        <target state="translated">Restablir el filtre de cerca</target>
+        <target state="final">Restablir el filtre de cerca</target>
       </trans-unit>
-      <trans-unit id="1o0.9vf" resname="asc" xml:space="preserve">
+      <trans-unit id="1o0.9vf" resname="asc" xml:space="preserve" approved="yes">
         <source>asc</source>
-        <target state="translated">Ascendent</target>
+        <target state="final">Ascendent</target>
       </trans-unit>
-      <trans-unit id="l4ZOh4." resname="desc" xml:space="preserve">
+      <trans-unit id="l4ZOh4." resname="desc" xml:space="preserve" approved="yes">
         <source>desc</source>
-        <target state="translated">Descendent</target>
+        <target state="final">Descendent</target>
       </trans-unit>
-      <trans-unit id="VSo_gmO" resname="orderBy" xml:space="preserve">
+      <trans-unit id="VSo_gmO" resname="orderBy" xml:space="preserve" approved="yes">
         <source>orderBy</source>
-        <target state="translated">Ordena per</target>
+        <target state="final">Ordena per</target>
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple" xml:space="preserve" approved="yes">
         <source>update_multiple</source>
         <target state="final">%action% %count% registres</target>
       </trans-unit>
-      <trans-unit id="OTDmccn" resname="attachments" xml:space="preserve">
+      <trans-unit id="OTDmccn" resname="attachments" xml:space="preserve" approved="yes">
         <source>attachments</source>
-        <target state="translated">Fitxers</target>
+        <target state="final">Fitxers</target>
       </trans-unit>
-      <trans-unit id="O5w1jzb" resname="file" xml:space="preserve">
+      <trans-unit id="O5w1jzb" resname="file" xml:space="preserve" approved="yes">
         <source>file</source>
-        <target state="translated">Fitxer</target>
+        <target state="final">Fitxer</target>
       </trans-unit>
-      <trans-unit id="mflwMcX" resname="rates.title" xml:space="preserve">
+      <trans-unit id="mflwMcX" resname="rates.title" xml:space="preserve" approved="yes">
         <source>rates.title</source>
-        <target state="translated">Preus</target>
+        <target state="final">Preus</target>
       </trans-unit>
-      <trans-unit id="0M_Gylq" resname="rates.empty" xml:space="preserve">
+      <trans-unit id="0M_Gylq" resname="rates.empty" xml:space="preserve" approved="yes">
         <source>rates.empty</source>
-        <target state="translated">No s'han configurat preus.</target>
+        <target state="final">No s'han configurat preus.</target>
       </trans-unit>
-      <trans-unit id="zFfl7jw" resname="sum.total" xml:space="preserve">
+      <trans-unit id="zFfl7jw" resname="sum.total" xml:space="preserve" approved="yes">
         <source>sum.total</source>
-        <target state="translated">Total</target>
+        <target state="final">Total</target>
       </trans-unit>
-      <trans-unit id="XP5zkiN" resname="modal.dirty" xml:space="preserve">
+      <trans-unit id="XP5zkiN" resname="modal.dirty" xml:space="preserve" approved="yes">
         <source>modal.dirty</source>
-        <target state="translated">El formulari ha canviat. Feu clic a "Desar" per desar els canvis o "Tancar" per cancel·lar.</target>
+        <target state="final">El formulari ha canviat. Feu clic a "Desar" per desar els canvis o "Tancar" per cancel·lar.</target>
       </trans-unit>
-      <trans-unit id="fVA3M2x" resname="choice_pattern" xml:space="preserve">
+      <trans-unit id="fVA3M2x" resname="choice_pattern" xml:space="preserve" approved="yes">
         <source>Display of entries in selection lists</source>
-        <target state="translated">Visualització de les entrades a les llistes de selecció</target>
+        <target state="final">Visualització de les entrades a les llistes de selecció</target>
       </trans-unit>
-      <trans-unit id="hLEZkoC" resname="password_repeat" xml:space="preserve">
+      <trans-unit id="hLEZkoC" resname="password_repeat" xml:space="preserve" approved="yes">
         <source>password_repeat</source>
-        <target state="translated">Repetiu la contrasenya</target>
+        <target state="final">Repetiu la contrasenya</target>
       </trans-unit>
-      <trans-unit id="ACcM9j_" resname="logout" xml:space="preserve">
+      <trans-unit id="ACcM9j_" resname="logout" xml:space="preserve" approved="yes">
         <source>logout</source>
-        <target state="translated">Tancar sessió</target>
+        <target state="final">Tancar sessió</target>
       </trans-unit>
-      <trans-unit id="_x2He8M" resname="user_profile" xml:space="preserve">
+      <trans-unit id="_x2He8M" resname="user_profile" xml:space="preserve" approved="yes">
         <source>user_profile</source>
-        <target state="translated">El meu perfil</target>
+        <target state="final">El meu perfil</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token" xml:space="preserve">
+      <trans-unit id="T4nAM7X" resname="api_token" xml:space="preserve" approved="yes">
         <source>api_token</source>
-        <target state="translated">Contrasenya de l'API</target>
+        <target state="final">Contrasenya de l'API</target>
       </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat" xml:space="preserve">
+      <trans-unit id="aq59Sk8" resname="api_token_repeat" xml:space="preserve" approved="yes">
         <source>api_token_repeat</source>
-        <target state="translated">Repeteix la contrasenya de l'API</target>
+        <target state="final">Repeteix la contrasenya de l'API</target>
       </trans-unit>
-      <trans-unit id=".372.o7" resname="login_required" xml:space="preserve">
+      <trans-unit id=".372.o7" resname="login_required" xml:space="preserve" approved="yes">
         <source>login_required</source>
-        <target state="translated">Permís absent. Redirigir a l'inici de sessió?</target>
+        <target state="final">Permís absent. Redirigir a l'inici de sessió?</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve" approved="yes">
         <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
@@ -186,29 +186,29 @@
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="final">S'ha enviat un correu electrònic amb un enllaç per restablir la vostra contrasenya. Nota: Només podeu sol·licitar una nova contrasenya una vegada cada %tokenLifetime% hores. Si no rebeu el correu electrònic, comproveu la vostra carpeta de correu brossa o torneu-ho a intentar.</target>
       </trans-unit>
-      <trans-unit id="fQ3Prt4" resname="security.unlock.title" xml:space="preserve">
+      <trans-unit id="fQ3Prt4" resname="security.unlock.title" xml:space="preserve" approved="yes">
         <source>security.unlock.title</source>
-        <target state="translated">Desbloquejar compte</target>
+        <target state="final">Desbloquejar compte</target>
       </trans-unit>
-      <trans-unit id="nqEYrfk" resname="security.unlock.intro" xml:space="preserve">
+      <trans-unit id="nqEYrfk" resname="security.unlock.intro" xml:space="preserve" approved="yes">
         <source>security.unlock.intro</source>
-        <target state="translated">Introduïu la vostra contrasenya per a un accés complet</target>
+        <target state="final">Introduïu la vostra contrasenya per a un accés complet</target>
       </trans-unit>
-      <trans-unit id="853W5Iu" resname="security.unlock.button" xml:space="preserve">
+      <trans-unit id="853W5Iu" resname="security.unlock.button" xml:space="preserve" approved="yes">
         <source>security.unlock.button</source>
-        <target state="translated">Desbloqueja</target>
+        <target state="final">Desbloqueja</target>
       </trans-unit>
-      <trans-unit id="UoOv6mx" resname="menu.homepage" xml:space="preserve">
+      <trans-unit id="UoOv6mx" resname="menu.homepage" xml:space="preserve" approved="yes">
         <source>menu.homepage</source>
-        <target state="translated">Tauler de control</target>
+        <target state="final">Tauler de control</target>
       </trans-unit>
-      <trans-unit id="Eq2E_Rd" resname="menu.apps" xml:space="preserve">
+      <trans-unit id="Eq2E_Rd" resname="menu.apps" xml:space="preserve" approved="yes">
         <source>Apps</source>
-        <target state="translated">Aplicacions</target>
+        <target state="final">Aplicacions</target>
       </trans-unit>
-      <trans-unit id="wvvYSw_" resname="menu.admin" xml:space="preserve">
+      <trans-unit id="wvvYSw_" resname="menu.admin" xml:space="preserve" approved="yes">
         <source>menu.admin</source>
-        <target state="translated">Administració</target>
+        <target state="final">Administració</target>
       </trans-unit>
       <trans-unit id="6OKwCUB" resname="menu.system" xml:space="preserve">
         <source>menu.system</source>
@@ -2081,6 +2081,34 @@
       <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
         <source>count_as_expected_time_help</source>
         <target state="translated">Quan estigui habilitat, %type% comptarà com a hores treballades cap a les hores diàries previstes. Quan estigui desactivat, les hores previstes per a aquests dies s’establiran en 0. Ambdues configuracions mantenen un equilibri neutre, però afecten els totals mensuals de manera diferent.</target>
+      </trans-unit>
+      <trans-unit id="WrNTzd7" resname="assign_timesheets" xml:space="preserve" approved="yes">
+        <source>assign_timesheets</source>
+        <target state="final">Assignar registre d'hores</target>
+      </trans-unit>
+      <trans-unit id="zO0oxtw" resname="start" xml:space="preserve" approved="yes">
+        <source>start</source>
+        <target state="final">Iniciar</target>
+      </trans-unit>
+      <trans-unit id="DAMFhpR" resname="lock" xml:space="preserve" approved="yes">
+        <source>lock</source>
+        <target state="final">Bloqueja</target>
+      </trans-unit>
+      <trans-unit id="pNRR7CN" resname="release" xml:space="preserve" approved="yes">
+        <source>release</source>
+        <target state="final">Alliberar</target>
+      </trans-unit>
+      <trans-unit id="kwC00lZ" resname="assign" xml:space="preserve" approved="yes">
+        <source>assign</source>
+        <target state="final">Assignar</target>
+      </trans-unit>
+      <trans-unit id="2ajb.ZU" resname="assign_self" xml:space="preserve" approved="yes">
+        <source>assign_self</source>
+        <target state="final">Assignar-m'ho</target>
+      </trans-unit>
+      <trans-unit id="LfO_otF" resname="reopen" xml:space="preserve" approved="yes">
+        <source>reopen</source>
+        <target state="final">Reobrir</target>
       </trans-unit>
     </body>
   </file>

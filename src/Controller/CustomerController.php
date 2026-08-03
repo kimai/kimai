@@ -88,12 +88,14 @@ final class CustomerController extends AbstractController
         $table->addColumn('contact', ['class' => 'd-none']);
         $table->addColumn('city', ['class' => 'd-none']);
         $table->addColumn('country', ['class' => 'd-none w-min']);
+        $table->addColumn('language', ['class' => 'd-none w-min']);
         $table->addColumn('currency', ['class' => 'd-none w-min']);
         $table->addColumn('phone', ['class' => 'd-none']);
         $table->addColumn('fax', ['class' => 'd-none']);
         $table->addColumn('mobile', ['class' => 'd-none']);
         $table->addColumn('email', ['class' => 'd-none']);
         $table->addColumn('homepage', ['class' => 'd-none']);
+        $table->addColumn('invoice_email', ['class' => 'd-none']);
 
         foreach ($metaColumns as $metaColumn) {
             $table->addColumn('mf_' . $metaColumn->getName(), ['title' => $metaColumn->getLabel(), 'class' => 'd-none', 'orderBy' => false, 'data' => $metaColumn]);
