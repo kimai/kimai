@@ -2082,6 +2082,34 @@
         <source>count_as_expected_time_help</source>
         <target state="translated">Etkinleştirildiğinde, %type% beklenen günlük saatlere çalışılmış saat olarak sayılır. Devre dışı bırakıldığında ise bu günler için beklenen saatler 0 olarak ayarlanır. Her iki ayar da süreyi nötr tutar, ancak aylık toplamları farklı şekilde etkiler.</target>
       </trans-unit>
+      <trans-unit id="WrNTzd7" resname="assign_timesheets" xml:space="preserve">
+        <source>assign_timesheets</source>
+        <target state="translated">Zaman çizelgelerini ata</target>
+      </trans-unit>
+      <trans-unit id="zO0oxtw" resname="start" xml:space="preserve">
+        <source>start</source>
+        <target state="translated">Başlat</target>
+      </trans-unit>
+      <trans-unit id="DAMFhpR" resname="lock" xml:space="preserve">
+        <source>lock</source>
+        <target state="translated">Kilitle</target>
+      </trans-unit>
+      <trans-unit id="pNRR7CN" resname="release" xml:space="preserve">
+        <source>release</source>
+        <target state="translated">Bırak</target>
+      </trans-unit>
+      <trans-unit id="kwC00lZ" resname="assign" xml:space="preserve">
+        <source>assign</source>
+        <target state="translated">Ata</target>
+      </trans-unit>
+      <trans-unit id="2ajb.ZU" resname="assign_self" xml:space="preserve">
+        <source>assign_self</source>
+        <target state="translated">Bana ata</target>
+      </trans-unit>
+      <trans-unit id="LfO_otF" resname="reopen" xml:space="preserve">
+        <source>reopen</source>
+        <target state="translated">Yeniden aç</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

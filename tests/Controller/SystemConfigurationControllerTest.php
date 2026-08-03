@@ -199,6 +199,7 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
 
         $configService = $this->getSystemConfiguration();
         self::assertNull($configService->find('defaults.customer.timezone'));
+        self::assertEquals('en', $configService->find('defaults.customer.language'));
         self::assertEquals('DE', $configService->find('defaults.customer.country'));
         self::assertEquals('EUR', $configService->find('defaults.customer.currency'));
 
@@ -206,8 +207,10 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
         $client->submit($form, [
             'system_configuration_form_customer' => [
                 'configuration' => [
+                    // The order of the fields must match the order of the actual form fields!
                     ['name' => 'defaults.customer.timezone', 'value' => 'Atlantic/Canary'],
                     ['name' => 'defaults.customer.country', 'value' => 'BB'],
+                    ['name' => 'defaults.customer.language', 'value' => 'es'],
                 ]
             ]
         ]);
@@ -219,6 +222,7 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
 
         $configService = $this->getSystemConfiguration();
         self::assertEquals('Atlantic/Canary', $configService->find('defaults.customer.timezone'));
+        self::assertEquals('es', $configService->find('defaults.customer.language'));
         self::assertEquals('BB', $configService->find('defaults.customer.country'));
     }
 
@@ -232,8 +236,10 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
         $client->submit($form, [
             'system_configuration_form_customer' => [
                 'configuration' => [
+                    // The order of the fields must match the order of the actual form fields!
                     ['name' => 'defaults.customer.timezone', 'value' => 'Atlantic/Canary'],
                     ['name' => 'defaults.customer.country', 'value' => 'BB'],
+                    ['name' => 'defaults.customer.language', 'value' => 'de'],
                 ]
             ]
         ]);
@@ -287,12 +293,14 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
                     'configuration' => [
                         ['name' => 'defaults.customer.timezone', 'value' => 'XX'],
                         ['name' => 'defaults.customer.country', 'value' => 1],
+                        ['name' => 'defaults.customer.language', 'value' => 1],
                     ]
                 ]
             ],
             [
                 '#system_configuration_form_customer_configuration_0_value',
                 '#system_configuration_form_customer_configuration_1_value',
+                '#system_configuration_form_customer_configuration_2_value',
             ]
         );
     }

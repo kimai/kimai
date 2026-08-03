@@ -483,8 +483,13 @@ parameters:
             path: src/Command/TranslationCommand.php
 
         -
-            message: "#^Parameter \\#1 \\$source of method DOMDocument\\:\\:loadXML\\(\\) expects string, string\\|false given\\.$#"
+            message: "#^Parameter \\#1 \\$source of method DOMDocument\\:\\:loadXML\\(\\) expects non-empty-string, string\\|false given\\.$#"
             count: 5
+            path: src/Command/TranslationCommand.php
+
+        -
+            message: "#^Parameter \\#1 \\$filename of method DOMDocument\\:\\:load\\(\\) expects non-empty-string, string given\\.$#"
+            count: 2
             path: src/Command/TranslationCommand.php
 
         -
@@ -3128,7 +3133,7 @@ parameters:
             path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
 
         -
-            message: "#^Parameter \\#4 \\$duration of method App\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidator\\:\\:checkBudgets\\(\\) expects int, float\\|int\\|null given\\.$#"
+            message: "#^Parameter \\#4 \\$durationDelta of method App\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidator\\:\\:checkBudgets\\(\\) expects int, float\\|int\\|null given\\.$#"
             count: 3
             path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
 

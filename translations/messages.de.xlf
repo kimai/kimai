@@ -1994,6 +1994,10 @@
         <source>address_row</source>
         <target>Zeile %row%</target>
       </trans-unit>
+      <trans-unit id="nlJ2pW2" resname="invoice_email">
+        <source>invoice_email</source>
+        <target>Rechnungs-E-Mail</target>
+      </trans-unit>
       <trans-unit id="_Ep8Ogx" resname="buyerReference">
         <source>buyerReference</source>
         <target>Bestellreferenz</target>

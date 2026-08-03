@@ -217,7 +217,7 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
             console.log('Missing select: ' + selectIdentifier);
             return;
         }
-        const selectedValue = node.value;
+        const selectedValue = node.multiple ? [...node.selectedOptions].map(option => option.value) : node.value;
         // this could mean the field is required
         const allowEmpty = node.tomselect.settings.allowEmptyOption === true;
         // this means the field has no emPty option and should be pre-selected
@@ -274,7 +274,13 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
         }
 
         // if available, re-select the previous selected option (mostly usable for global activities)
-        node.value = selectedValue;
+        if (Array.isArray(selectedValue)) {
+            for (const option of node.options) {
+                option.selected = selectedValue.includes(option.value);
+            }
+        } else {
+            node.value = selectedValue;
+        }
 
         // pre-select an option if it is the only available one
         if (node.value === '' || node.value === null) {
@@ -298,7 +304,8 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
         }
 
         // this will update the attached javascript component
-        node.dispatchEvent(new CustomEvent('data-reloaded', {detail: node.value}));
+        const reloadedValue = node.multiple ? [...node.selectedOptions].map(option => option.value) : node.value;
+        node.dispatchEvent(new CustomEvent('data-reloaded', {detail: reloadedValue}));
         // if we don't trigger the change, the other selects won't reset
         node.dispatchEvent(new Event('change'));
     }

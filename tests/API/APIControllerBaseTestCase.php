@@ -470,6 +470,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'color-safe' => 'string',
                     'number' => '@string',
                     'comment' => '@string',
+                    'language' => 'string',
                     'currency' => 'string',
                     'country' => 'string',
                     'company' => '@string',
@@ -494,6 +495,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'comment' => '@string',
                     'currency' => 'string',
                     'country' => 'string',
+                    'language' => 'string',
                     'company' => '@string',
                     'homepage' => '@string',
                     'timezone' => 'string',
@@ -515,6 +517,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'color-safe' => 'string',
                     'number' => '@string',
                     'comment' => '@string',
+                    'language' => 'string',
                     'currency' => 'string',
                     'country' => 'string',
                     'company' => '@string',
@@ -546,6 +549,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'comment' => '@string',
                     'currency' => 'string',
                     'country' => 'string',
+                    'language' => 'string',
                     'company' => '@string',
                     'homepage' => '@string',
                     'timezone' => 'string',
@@ -563,6 +567,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'addressLine3' => '@string',
                     'city' => '@string',
                     'postCode' => '@string',
+                    'invoiceEmail' => '@string',
                     'buyerReference' => '@string',
                     // only available in the entity itself
                     'address' => '@string', // deprecated, do not expose in collection
@@ -818,7 +823,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
      * @param array $result
      * @throws \Exception
      */
-    protected function assertApiResponseTypeStructure(string $type, array $result): void
+    protected static function assertApiResponseTypeStructure(string $type, array $result): void
     {
         $expected = self::getExpectedResponseStructure($type);
         $expectedKeys = array_keys($expected);
