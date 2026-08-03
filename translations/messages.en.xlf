@@ -1770,6 +1770,18 @@
         <source>api_token_hidden</source>
         <target>This is the only time this key will ever be displayed! So keep it safe and make sure you've copied it down before closing this window.</target>
       </trans-unit>
+      <trans-unit id="FbqVQFq" resname="api_token.full_access">
+        <source>api_token.full_access</source>
+        <target>Full access</target>
+      </trans-unit>
+      <trans-unit id="6aaf8ZU" resname="api_token.no_access">
+        <source>api_token.no_access</source>
+        <target>No access</target>
+      </trans-unit>
+      <trans-unit id="rgATsZ_" resname="api_token.scopes_help">
+        <source>api_token.scopes_help</source>
+        <target>The selected permissions apply to this API token. Whether a user is actually allowed to perform an action still depends on the regular permission system, which usually also depends on the specific object.</target>
+      </trans-unit>
       <trans-unit id="TCr2ArH" resname="api_password_deprecated">
         <source>api_password_deprecated</source>
         <target>API passwords are outdated: please use API tokens instead.</target>

@@ -9,6 +9,7 @@
 
 namespace App\API;
 
+use App\API\Attribute\ApiToken;
 use App\API\Model\TimesheetConfig;
 use App\Configuration\SystemConfiguration;
 use FOS\RestBundle\View\View;
@@ -21,6 +22,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('API')]
 #[OA\Tag(name: 'Default')]
+#[ApiToken(ignore: true)]
 final class ConfigurationController extends BaseApiController
 {
     /**

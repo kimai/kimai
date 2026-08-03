@@ -95,6 +95,7 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
             '/api/ping',
             '/api/version',
             '/api/plugins',
+            '/api/token',
             '/api/tags',
             '/api/tags/find',
             '/api/tags/{id}',

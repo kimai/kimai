@@ -9,6 +9,7 @@
 
 namespace App\API;
 
+use App\API\Attribute\ApiToken;
 use App\Entity\AccessToken;
 use App\Entity\User;
 use App\Entity\UserPreference;
@@ -36,6 +37,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route(path: '/users')]
 #[IsGranted('API')]
 #[OA\Tag(name: 'User')]
+#[ApiToken('user')]
 final class UserController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'User', 'User_Entity'];
@@ -122,6 +124,7 @@ final class UserController extends BaseApiController
      * Fetch current user
      */
     #[OA\Response(response: 200, description: 'Return the current user entity.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
+    #[ApiToken(ignore: true)]
     #[Route(methods: ['GET'], path: '/me', name: 'me_user')]
     public function meAction(): Response
     {

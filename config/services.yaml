@@ -116,6 +116,10 @@ services:
             $permissions: '%kimai.permissions%'
             $permissionNames: '%kimai.permission_names%'
 
+    App\API\Permission\ApiTokenScopeMap:
+        arguments:
+            $buildDir: '%kernel.build_dir%'
+
     # ================================================================================
     # SAML Services
     # ================================================================================

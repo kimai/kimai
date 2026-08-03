@@ -42,6 +42,17 @@ class AccessToken
     private ?\DateTimeImmutable $lastUsage = null;
     #[ORM\Column(name: 'expires_at', type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $expiresAt = null;
+    /**
+     * The list of granted API scopes (e.g. "timesheet:read").
+     *
+     * A value of NULL means "legacy token" with full access (backward compatibility):
+     * tokens created before this feature existed are not restricted at runtime.
+     * An explicit (even empty) array activates the scope restriction.
+     *
+     * @var array<string>|null
+     */
+    #[ORM\Column(name: 'scopes', type: Types::JSON, nullable: true)]
+    private ?array $scopes = null;
 
     public function __construct(User $user, string $token)
     {
@@ -97,6 +108,46 @@ class AccessToken
     public function isValid(): bool
     {
         return $this->expiresAt === null || $this->expiresAt > new \DateTimeImmutable();
+    }
+
+    /**
+     * @return array<string>|null
+     */
+    public function getScopes(): ?array
+    {
+        return $this->scopes;
+    }
+
+    /**
+     * @param array<string>|null $scopes
+     */
+    public function setScopes(?array $scopes): void
+    {
+        if ($scopes !== null) {
+            // normalize: unique, re-indexed list of non-empty strings
+            $scopes = array_values(array_unique(array_filter($scopes, static fn (string $scope) => $scope !== '')));
+        }
+
+        $this->scopes = $scopes;
+    }
+
+    /**
+     * A legacy token has no configured scopes and therefore runs with the
+     * full permissions of its user (backward compatibility).
+     */
+    public function isLegacy(): bool
+    {
+        return $this->scopes === null;
+    }
+
+    public function hasScope(string $scope): bool
+    {
+        // legacy tokens are allowed to do everything
+        if ($this->scopes === null) {
+            return true;
+        }
+
+        return \in_array($scope, $this->scopes, true);
     }
 
     public function __clone()

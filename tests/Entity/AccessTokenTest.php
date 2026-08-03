@@ -28,6 +28,10 @@ class AccessTokenTest extends AbstractEntityTestCase
         self::assertSame('foo', $sut->getToken());
         self::assertSame($user, $sut->getUser());
         self::assertTrue($sut->isValid());
+        self::assertNull($sut->getScopes());
+        self::assertTrue($sut->isLegacy());
+        // a legacy token (no scopes) is allowed to do everything
+        self::assertTrue($sut->hasScope('timesheet:read'));
 
         $sut->setName('bar');
         self::assertSame('bar', $sut->getName());
@@ -47,6 +51,31 @@ class AccessTokenTest extends AbstractEntityTestCase
         $sut = new AccessToken($user, 'foo');
         $sut->setExpiresAt(new \DateTimeImmutable('-1 day'));
         self::assertFalse($sut->isValid());
+    }
+
+    public function testScopes(): void
+    {
+        $sut = new AccessToken(new User(), 'foo');
+
+        $sut->setScopes(['timesheet:read', 'timesheet:read', 'customer:create', '']);
+        // normalized: unique, re-indexed, no empty strings
+        self::assertSame(['timesheet:read', 'customer:create'], $sut->getScopes());
+        self::assertFalse($sut->isLegacy());
+        self::assertTrue($sut->hasScope('timesheet:read'));
+        self::assertTrue($sut->hasScope('customer:create'));
+        self::assertFalse($sut->hasScope('customer:delete'));
+
+        // an empty scope set restricts everything
+        $sut->setScopes([]);
+        self::assertSame([], $sut->getScopes());
+        self::assertFalse($sut->isLegacy());
+        self::assertFalse($sut->hasScope('timesheet:read'));
+
+        // resetting to null makes it a legacy token again
+        $sut->setScopes(null);
+        self::assertNull($sut->getScopes());
+        self::assertTrue($sut->isLegacy());
+        self::assertTrue($sut->hasScope('anything:read'));
     }
 
     public function testClone(): void

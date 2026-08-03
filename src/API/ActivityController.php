@@ -10,6 +10,7 @@
 namespace App\API;
 
 use App\Activity\ActivityService;
+use App\API\Attribute\ApiToken;
 use App\Entity\Activity;
 use App\Entity\ActivityRate;
 use App\Form\API\ActivityApiEditForm;
@@ -35,6 +36,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route(path: '/activities')]
 #[IsGranted('API')]
 #[OA\Tag(name: 'Activity')]
+#[ApiToken('activity')]
 final class ActivityController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Activity', 'Activity_Entity'];
@@ -262,6 +264,7 @@ final class ActivityController extends BaseApiController
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The activity whose rate will be removed', required: true)]
     #[OA\Parameter(name: 'rateId', in: 'path', description: 'The rate to remove', required: true)]
+    #[ApiToken(action: 'update')]
     #[Route(methods: ['DELETE'], path: '/{id}/rates/{rateId}', name: 'delete_activity_rate', requirements: ['id' => '\d+', 'rateId' => '\d+'])]
     public function deleteRateAction(Activity $activity, #[MapEntity(mapping: ['rateId' => 'id'])] ActivityRate $rate): Response
     {
@@ -283,6 +286,7 @@ final class ActivityController extends BaseApiController
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the new created rate', content: new OA\JsonContent(ref: '#/components/schemas/ActivityRate'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The activity to add the rate for', required: true)]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/ActivityRateForm'))]
+    #[ApiToken(action: 'update')]
     #[Route(methods: ['POST'], path: '/{id}/rates', name: 'post_activity_rate', requirements: ['id' => '\d+'])]
     public function postRateAction(Activity $activity, Request $request): Response
     {
@@ -321,6 +325,7 @@ final class ActivityController extends BaseApiController
     #[IsGranted('permissions', 'activity')]
     #[OA\Post(description: 'Creates (or reuses) a default team named after the activity, makes the current user a teamlead, and binds the activity to that team. Calling this multiple times is safe and will not create duplicate teams or bindings.', responses: [new OA\Response(response: 200, description: 'Returns the team', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
     #[OA\Parameter(name: 'id', description: 'The activity to create a default team for', in: 'path', required: true)]
+    #[ApiToken(action: 'update')]
     #[Route(path: '/{id}/team', name: 'post_activity_team', requirements: ['id' => '\d+'], methods: ['POST'])]
     public function postDefaultTeamAction(Activity $activity, TeamService $teamService): Response
     {

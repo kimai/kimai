@@ -39,10 +39,11 @@
         {% endif %}
 
         {% if access_tokens|length > 0 %}
-            <table class="table table-vcenter">
+            <table class="table table-vcenter table-hover">
                 <thead>
                 <tr>
                     <th>{{ 'name'|trans }}</th>
+                    <th>{{ 'permissions'|trans }}</th>
                     <th>{{ 'last_usage'|trans }}</th>
                     <th>{{ 'expires'|trans }}</th>
                     <th class="w-min actions"></th>
@@ -52,6 +53,17 @@
                 {% for token in access_tokens %}
                     <tr>
                         <td>{{ token.name }}</td>
+                        <td>
+                            {% if token.legacy %}
+                                {{ widgets.badge_type('api_token.full_access'|trans, 'danger') }}
+                            {% else %}
+                                {% for scope in token.scopes %}
+                                    {{ widgets.badge_type(scope, 'secondary') }}
+                                {% else %}
+                                    {{ widgets.badge_type('api_token.no_access'|trans, 'warning') }}
+                                {% endfor %}
+                            {% endif %}
+                        </td>
                         <td>
                             {% if token.lastUsage is not null %}
                                 {{ token.lastUsage|date_time }}
@@ -63,6 +75,7 @@
                             {% endif %}
                         </td>
                         <td>
+                            <a class="btn btn-icon modal-ajax-form" href="{{ path('user_profile_access_token_edit', {'username': user.userIdentifier, 'id': token.id}) }}" title="{{ 'edit'|trans }}">{{ icon('edit', true) }}</a>
                             {{ widgets.action_button('trash', {'url': path('delete_api_token', {id: token.id}), class: 'api-link', 'attr': {
                                 'data-question': 'confirm.delete',
                                 'data-event': 'kimai.accessToken',
