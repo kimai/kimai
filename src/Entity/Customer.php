@@ -120,7 +120,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'language')]
-    private ?string $language = 'en';
+    private ?string $language = self::DEFAULT_LANGUAGE;
     #[ORM\Column(name: 'currency', type: Types::STRING, length: 3, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Currency]
