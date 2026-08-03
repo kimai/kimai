@@ -18,10 +18,12 @@ use App\Form\SystemConfigurationForm;
 use App\Form\Type\ActivityTypePatternType;
 use App\Form\Type\ArrayToCommaStringType;
 use App\Form\Type\CalendarTitlePatternType;
+use App\Form\Type\ColorPickerType;
 use App\Form\Type\CustomerTypePatternType;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\DateTimeTextType;
 use App\Form\Type\DayTimeType;
+use App\Form\Type\ImageUploadType;
 use App\Form\Type\MinuteIncrementType;
 use App\Form\Type\ProjectTypePatternType;
 use App\Form\Type\RoundingModeType;
@@ -615,11 +617,16 @@ final class SystemConfigurationController extends AbstractController
                     (new Configuration('theme.branding.logo'))
                         ->setTranslationDomain('system-configuration')
                         ->setRequired(false)
-                        ->setType(TextType::class),
+                        ->setType(ImageUploadType::class),
                     (new Configuration('theme.branding.company'))
                         ->setTranslationDomain('system-configuration')
                         ->setRequired(false)
                         ->setType(TextType::class),
+                    (new Configuration('theme.branding.accent_color'))
+                        ->setTranslationDomain('system-configuration')
+                        ->setRequired(false)
+                        ->setType(ColorPickerType::class)
+                        ->setOptions(['constraints' => [new Regex('/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/')]]),
                     (new Configuration('defaults.customer.currency'))
                         ->setLabel('currency')
                         ->setType(CurrencyType::class)

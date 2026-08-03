@@ -34,12 +34,14 @@
     {% endif %}
     {% set summaryColumns = summaryColumns|merge(['rate']) %}
 {% endif %}
+{% set accentColor = config('theme.branding.accent_color') %}
 <html{% if app.request is defined and app.request is not null %} lang="{{ app.request.locale }}"{% endif %}>
 <head>
     <title>{% block document_title %}{{ 'export'|trans }}{% endblock %}</title>
 {% block styles %}
     <style>
         {{ encore_entry_css_source('export-pdf')|raw }}
+        {{ branding_accent_css(['table.items th'])|raw }}
     </style>
 {% endblock %}
 </head>
@@ -47,7 +49,7 @@
 {% block pdf_footer %}
 <!--mpdf
 <htmlpagefooter name="myfooter">
-<table style="border-top: 1px solid #000000; font-size: 9pt; padding-top: 3mm; width: 100%">
+<table style="border-top: 1px solid {% if accentColor is not empty %}{{ accentColor }}{% else %}#000000{% endif %}; font-size: 9pt; padding-top: 3mm; width: 100%">
 <tr>
     <td align="left">
     {{ 'export.page_of'|trans({'%page%': '{PAGENO}', '%pages%': '{nb}'}) }}
@@ -70,7 +72,9 @@
 <sethtmlpagefooter name="myfooter" value="on" />
 mpdf-->
 {% endblock %}
-{% block body_start %}{% endblock %}
+{% block body_start %}
+    {{ branding_logo_img('', 40)|raw }}
+{% endblock %}
 {% block summary %}
     {% block summary_header %}
         <h2 style="margin-bottom: 4px; padding-bottom: 0">{% block title %}{{ 'export.document_title'|trans }}{% endblock %}</h2>
