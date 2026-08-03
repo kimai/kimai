@@ -83,12 +83,6 @@ final class StrictPolicy implements SecurityPolicyInterface
         'multiline_indent', 'color', 'nl2str'
     ];
 
-    /**
-     * @param string[] $tags
-     * @param string[] $filters
-     * @param string[] $functions
-     * @param string[] $tests TODO add for the next major twig release
-     */
     public function checkSecurity($tags, $filters, $functions): void
     {
         foreach ($tags as $tag) {
