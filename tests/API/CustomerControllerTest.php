@@ -373,6 +373,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertEquals('12345', $result['postCode']);
         self::assertEquals('Acme Town', $result['city']);
         self::assertEquals('DE', $result['country']);
+        self::assertEquals('de', $result['language']);
         self::assertEquals('EUR', $result['currency']);
         self::assertEquals('666667787778999909087', $result['phone']);
         self::assertEquals('0987654321', $result['fax']);
@@ -392,10 +393,6 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'country' => 'DE',
-            'language' => 'de',
-            'currency' => 'EUR',
-            'timezone' => 'Europe/Berlin',
         ];
         $this->request($client, '/api/customers', 'POST', [], json_encode($data));
         self::assertTrue($client->getResponse()->isSuccessful());
@@ -407,6 +404,10 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
         self::assertNotEmpty($result['id']);
+        self::assertEquals('0003', $result['number']);
+        self::assertEquals('foo', $result['name']);
+        self::assertTrue($result['billable']);
+        self::assertTrue($result['visible']);
     }
 
     public function testPostActionWithInvalidUser(): void

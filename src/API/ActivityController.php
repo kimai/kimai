@@ -137,7 +137,7 @@ final class ActivityController extends BaseApiController
             'include_time' => $this->isGranted('time', $activity),
         ]);
 
-        $form->submit($request->request->all());
+        $form->submit($request->request->all(), false);
 
         if ($form->isValid()) {
             $this->activityService->saveActivity($activity);
