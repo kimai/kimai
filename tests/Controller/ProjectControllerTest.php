@@ -30,6 +30,7 @@ use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
+use Symfony\Component\DomCrawler\Field\FormField;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
@@ -607,5 +608,99 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
                 ]
             ],
         ];
+    }
+
+    public function testCreateActionWithLockedUntil(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/project/create');
+
+        $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
+        self::assertTrue($form->has('project_edit_form[lockedUntil]'));
+
+        $client->submit($form, [
+            'project_edit_form' => [
+                'name' => 'A locked project',
+                'customer' => 1,
+                // the date picker uses the locale format of the logged-in user
+                'lockedUntil' => '6/30/2020',
+            ]
+        ]);
+
+        $location = $this->assertIsModalRedirect($client, '/details');
+        $this->requestPure($client, $location);
+        $this->assertHasFlashSuccess($client);
+
+        $em = $this->getEntityManager();
+        $project = $em->getRepository(Project::class)->findOneBy(['name' => 'A locked project']);
+        self::assertInstanceOf(Project::class, $project);
+
+        $lockedUntil = $project->getLockedUntil();
+        self::assertInstanceOf(\DateTime::class, $lockedUntil);
+        // the form stores the end of the day, so the lock date itself is fully included
+        self::assertEquals('2020-06-30 23:59:59', $lockedUntil->format('Y-m-d H:i:s'));
+
+        $timezone = $lockedUntil->getTimezone();
+        self::assertTrue($project->isLockedAtDate(new \DateTime('2020-06-30 22:00:00', $timezone)));
+        self::assertFalse($project->isLockedAtDate(new \DateTime('2020-07-01 00:00:00', $timezone)));
+    }
+
+    public function testEditActionCanRemoveLockedUntil(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $em = $this->getEntityManager();
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $project);
+        $project->setLockedUntil(new \DateTime('2020-06-30 23:59:59'));
+        $em->persist($project);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/admin/project/1/edit');
+        $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
+        $field = $form->get('project_edit_form[lockedUntil]');
+        self::assertInstanceOf(FormField::class, $field);
+        self::assertEquals('6/30/2020', $field->getValue());
+
+        $client->submit($form, [
+            'project_edit_form' => [
+                'lockedUntil' => '',
+            ]
+        ]);
+
+        $em->clear();
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $project);
+        self::assertNull($project->getLockedUntil());
+    }
+
+    public function testProjectFormShowsDateHelpTexts(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/project/create');
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+
+        self::assertStringContainsString('Times before this date cannot be recorded.', $content);
+        self::assertStringContainsString('Times after this date cannot be recorded.', $content);
+        self::assertStringContainsString('Times up to and including this date can neither be created nor changed.', $content);
+    }
+
+    public function testDetailsPageShowsLockedUntil(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $em = $this->getEntityManager();
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $project);
+        $project->setLockedUntil(new \DateTime('2020-06-30 23:59:59'));
+        $em->persist($project);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/admin/project/1/details');
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        self::assertStringContainsString('Times locked until', $content);
     }
 }

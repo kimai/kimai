@@ -30,7 +30,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Serializer\ExclusionPolicy('all')]
 #[Serializer\VirtualProperty('CustomerName', exp: 'object.getCustomer() === null ? null : object.getCustomer().getName()', options: [new Serializer\SerializedName('parentTitle'), new Serializer\Type(name: 'string'), new Serializer\Groups(['Project'])])]
 #[Serializer\VirtualProperty('CustomerAsId', exp: 'object.getCustomer() === null ? null : object.getCustomer().getId()', options: [new Serializer\SerializedName('customer'), new Serializer\Type(name: 'integer'), new Serializer\Groups(['Project', 'Team', 'Not_Expanded'])])]
-#[Exporter\Order(['id', 'name', 'customer', 'orderNumber', 'orderDate', 'start', 'end', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable', 'number'])]
+#[Exporter\Order(['id', 'name', 'customer', 'orderNumber', 'orderDate', 'start', 'end', 'lockedUntil', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable', 'number'])]
 #[Exporter\Expose(name: 'customer', label: 'customer', exp: 'object.getCustomer() === null ? null : object.getCustomer().getName()')]
 #[Constraints\Project]
 class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
@@ -112,6 +112,17 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Type(name: "DateTime<'Y-m-d'>")]
     #[Serializer\Accessor(getter: 'getEnd')]
     private ?\DateTime $end = null;
+    /**
+     * Timesheets up to and including this date are locked and cannot be changed
+     *
+     * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
+     */
+    #[ORM\Column(name: 'locked_until', type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Serializer\Type(name: "DateTime<'Y-m-d'>")]
+    #[Serializer\Accessor(getter: 'getLockedUntil')]
+    private ?\DateTime $lockedUntil = null;
     #[ORM\Column(name: 'timezone', type: Types::STRING, length: 64, nullable: true)]
     private ?string $timezone = null;
     private bool $localized = false;
@@ -293,6 +304,10 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
             $this->end->setTimezone($timezone);
         }
 
+        if (null !== $this->lockedUntil) {
+            $this->lockedUntil->setTimezone($timezone);
+        }
+
         $this->localized = true;
     }
 
@@ -351,6 +366,44 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
         }
 
         return $this;
+    }
+
+    #[Exporter\Expose(name: 'lockedUntil', label: 'project_locked_until', type: 'date')]
+    public function getLockedUntil(): ?\DateTime
+    {
+        $this->localizeDates();
+
+        return $this->lockedUntil;
+    }
+
+    public function setLockedUntil(?\DateTime $lockedUntil): Project
+    {
+        $this->lockedUntil = $lockedUntil;
+
+        if (null !== $lockedUntil) {
+            $this->timezone = $lockedUntil->getTimezone()->getName();
+        }
+
+        return $this;
+    }
+
+    /**
+     * Whether timesheets at the given date are locked and must not be created, changed or deleted.
+     *
+     * The configured date is a day, which is always locked entirely, no matter
+     * which time was stored along with it.
+     */
+    public function isLockedAtDate(\DateTimeInterface $dateTime): bool
+    {
+        $lockedUntil = $this->getLockedUntil();
+
+        if ($lockedUntil === null) {
+            return false;
+        }
+
+        $lockedUntil = (clone $lockedUntil)->setTime(23, 59, 59, 999999);
+
+        return $dateTime <= $lockedUntil;
     }
 
     public function isGlobalActivities(): bool

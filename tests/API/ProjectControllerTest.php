@@ -300,6 +300,7 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         $project->setOrderDate($orderDate);
         $project->setStart($startDate);
         $project->setEnd($endDate);
+        $project->setLockedUntil(new \DateTime('2021-01-31 23:59:59', new \DateTimeZone('Pacific/Tongatapu')));
         $em->persist($project);
         $em->flush();
 
@@ -323,6 +324,7 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         self::assertEquals('2019-11-29', $result['orderDate']);
         self::assertEquals('2020-01-07', $result['start']);
         self::assertEquals('2021-03-23', $result['end']);
+        self::assertEquals('2021-01-31', $result['lockedUntil']);
         self::assertEquals(0.0, $result['budget']);
         self::assertEquals(0, $result['timeBudget']);
         self::assertNull($result['budgetType']);
@@ -1030,5 +1032,86 @@ class ProjectControllerTest extends APIControllerBaseTestCase
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertEntityNotFoundForPost($client, '/api/projects/' . PHP_INT_MAX . '/team');
+    }
+
+    public function testPostActionWithLockedUntil(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'locked project',
+            'customer' => 1,
+            'lockedUntil' => '2020-06-30',
+            'visible' => true,
+            'billable' => true,
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/projects', 'POST', [], $json);
+        self::assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('ProjectEntity', $result);
+        self::assertEquals('2020-06-30', $result['lockedUntil']);
+
+        // the entire lock day must be locked, the API stores the end of the day
+        $em = $this->getEntityManager();
+        $project = $em->getRepository(Project::class)->find($result['id']);
+        self::assertInstanceOf(Project::class, $project);
+        self::assertTrue($project->isLockedAtDate(new \DateTime('2020-06-30 23:00:00', new \DateTimeZone($project->getLockedUntil()?->getTimezone()->getName() ?? 'UTC'))));
+        self::assertFalse($project->isLockedAtDate(new \DateTime('2020-07-01 00:00:00', new \DateTimeZone($project->getLockedUntil()?->getTimezone()->getName() ?? 'UTC'))));
+    }
+
+    public function testPatchActionSetsAndRemovesLockedUntil(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        // PATCH uses the HTML5 date-time format, just like "start" and "end"
+        $json = json_encode(['lockedUntil' => '2020-06-30T00:00:00']);
+        self::assertIsString($json);
+        $this->request($client, '/api/projects/1', 'PATCH', [], $json);
+        self::assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        self::assertEquals('2020-06-30', $result['lockedUntil']);
+
+        // re-opening the period by removing the date
+        $json = json_encode(['lockedUntil' => null]);
+        self::assertIsString($json);
+        $this->request($client, '/api/projects/1', 'PATCH', [], $json);
+        self::assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        self::assertNull($result['lockedUntil']);
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $project);
+        self::assertNull($project->getLockedUntil());
+        self::assertFalse($project->isLockedAtDate(new \DateTime('2020-06-30 12:00:00')));
+    }
+
+    public function testProjectWithoutLockedUntilIsNull(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/api/projects/1');
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertArrayHasKey('lockedUntil', $result);
+        self::assertNull($result['lockedUntil']);
     }
 }

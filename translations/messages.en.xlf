@@ -750,6 +750,22 @@
         <source>project_end</source>
         <target>Project end</target>
       </trans-unit>
+      <trans-unit id="k8F51oP" resname="project_locked_until">
+        <source>project_locked_until</source>
+        <target>Times locked until</target>
+      </trans-unit>
+      <trans-unit id="C_ZcSX2" resname="help.project_start">
+        <source>help.project_start</source>
+        <target>Times before this date cannot be recorded.</target>
+      </trans-unit>
+      <trans-unit id="9A.4S.i" resname="help.project_end">
+        <source>help.project_end</source>
+        <target>Times after this date cannot be recorded.</target>
+      </trans-unit>
+      <trans-unit id="ktmsI7g" resname="help.project_locked_until">
+        <source>help.project_locked_until</source>
+        <target>Times up to and including this date can neither be created nor changed.</target>
+      </trans-unit>
       <trans-unit id="tfOjLNp" resname="project_number">
         <source>Project number</source>
         <target>Project number</target>

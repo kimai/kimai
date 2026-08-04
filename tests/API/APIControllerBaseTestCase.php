@@ -593,6 +593,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'comment' => '@string',
                     'start' => '@datetime',
                     'end' => '@datetime',
+                    'lockedUntil' => '@datetime',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                 ];
 
@@ -613,6 +614,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'comment' => '@string',
                     'start' => '@datetime',
                     'end' => '@datetime',
+                    'lockedUntil' => '@datetime',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                 ];
 
@@ -633,6 +635,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'comment' => '@string',
                     'start' => '@datetime',
                     'end' => '@datetime',
+                    'lockedUntil' => '@datetime',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                     'parentTitle' => 'string',
@@ -655,6 +658,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'comment' => '@string',
                     'start' => '@date',
                     'end' => '@date',
+                    'lockedUntil' => '@date',
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                     'parentTitle' => 'string',

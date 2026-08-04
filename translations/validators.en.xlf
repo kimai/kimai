@@ -38,6 +38,10 @@
         <source>The begin date cannot be in the future.</source>
         <target>The begin date cannot be in the future.</target>
       </trans-unit>
+      <trans-unit id="5vkuQs2" resname="The project is locked until %date%, please choose a later date.">
+        <source>The project is locked until %date%, please choose a later date.</source>
+        <target>The project is locked until %date%, please choose a later date.</target>
+      </trans-unit>
       <trans-unit id="Jz1y3yB" resname="Duration cannot be zero.">
         <source>Duration cannot be zero.</source>
         <target>An empty duration is not allowed.</target>
@@ -174,7 +178,7 @@
         <source>The field {{ field }} is required, please select a value</source>
         <target>Bitten wählen Sie einen Wert für {{ field }} aus</target>
       </trans-unit>
-      <trans-unit id="4fhT2gH" resname="A maximum duration of {{ value }} is allowed.">
+      <trans-unit id="7hNS8l3" resname="A maximum duration of {{ value }} is allowed.">
         <source>A maximum duration of {{ value }} is allowed.</source>
         <target>A maximum duration of {{ value }} is allowed.</target>
       </trans-unit>

@@ -170,6 +170,202 @@ class TimesheetVoterTest extends AbstractVoterTestCase
         $this->assertVote($user2, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
     }
 
+    /**
+     * @return \Generator<array{0: string, 1: int}>
+     */
+    public static function getProjectLockedAttributes(): \Generator
+    {
+        // everything that changes a stopped timesheet is forbidden inside a locked project period
+        yield ['create', VoterInterface::ACCESS_DENIED];
+        yield ['edit', VoterInterface::ACCESS_DENIED];
+        yield ['delete', VoterInterface::ACCESS_DENIED];
+        yield ['duplicate', VoterInterface::ACCESS_DENIED];
+        // reading a locked record stays possible, the project remains visible for reporting and invoicing
+        yield ['view', VoterInterface::ACCESS_GRANTED];
+        yield ['export', VoterInterface::ACCESS_GRANTED];
+        yield ['view_rate', VoterInterface::ACCESS_GRANTED];
+        yield ['is_owner', VoterInterface::ACCESS_GRANTED];
+    }
+
+    #[DataProvider('getProjectLockedAttributes')]
+    public function testProjectLockedUntil(string $attribute, int $expected): void
+    {
+        $user = self::getUser(1, User::ROLE_SUPER_ADMIN);
+
+        $timesheet = self::getTimesheet($user);
+        $timesheet->setBegin(new \DateTime('2020-06-15 10:00:00'));
+        $timesheet->setEnd(new \DateTime('2020-06-15 12:00:00'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTime('2020-06-30 23:59:59'));
+
+        $this->assertVote($user, $timesheet, $attribute, $expected);
+    }
+
+    /**
+     * @return \Generator<array{0: string, 1: int}>
+     */
+    public static function getProjectLockedAttributesForRunningRecord(): \Generator
+    {
+        yield ['create', VoterInterface::ACCESS_DENIED];
+        yield ['start', VoterInterface::ACCESS_DENIED];
+        yield ['stop', VoterInterface::ACCESS_DENIED];
+        yield ['delete', VoterInterface::ACCESS_DENIED];
+        yield ['duplicate', VoterInterface::ACCESS_DENIED];
+        // a running record must stay editable, otherwise it could neither be stopped nor
+        // moved out of the locked period - the validator rejects saving it with a locked begin date
+        yield ['edit', VoterInterface::ACCESS_GRANTED];
+        yield ['view', VoterInterface::ACCESS_GRANTED];
+    }
+
+    #[DataProvider('getProjectLockedAttributesForRunningRecord')]
+    public function testProjectLockedUntilForRunningRecord(string $attribute, int $expected): void
+    {
+        $user = self::getUser(1, User::ROLE_SUPER_ADMIN);
+
+        // started inside the locked period and never stopped
+        $timesheet = self::getTimesheet($user);
+        $timesheet->setBegin(new \DateTime('2020-06-15 10:00:00'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTime('2020-06-30 23:59:59'));
+
+        $this->assertVote($user, $timesheet, $attribute, $expected);
+    }
+
+    /**
+     * @return \Generator<array{0: string}>
+     */
+    public static function getProjectUnlockedAttributes(): \Generator
+    {
+        yield ['create'];
+        yield ['start'];
+        yield ['stop'];
+        yield ['edit'];
+        yield ['delete'];
+        yield ['duplicate'];
+        yield ['view'];
+    }
+
+    #[DataProvider('getProjectUnlockedAttributes')]
+    public function testTimesheetAfterLockedPeriodIsNotAffected(string $attribute): void
+    {
+        $user = self::getUser(1, User::ROLE_USER);
+
+        $timesheet = self::getTimesheet($user);
+        $timesheet->setBegin(new \DateTime('2020-07-01 00:00:00'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTime('2020-06-30 23:59:59'));
+
+        $this->assertVote($user, $timesheet, $attribute, VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testProjectLockDateIsIncluded(): void
+    {
+        $user = self::getUser(1, User::ROLE_USER);
+
+        $timesheet = self::getTimesheet($user);
+        // the very last second of the lock date is still locked
+        $timesheet->setBegin(new \DateTime('2020-06-30 23:59:59'));
+        $timesheet->setEnd(new \DateTime('2020-07-02 10:00:00'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTime('2020-06-30 23:59:59'));
+
+        $this->assertVote($user, $timesheet, 'edit', VoterInterface::ACCESS_DENIED);
+
+        // the first second of the next day is not
+        $timesheet->setBegin(new \DateTime('2020-07-01 00:00:00'));
+        $this->assertVote($user, $timesheet, 'edit', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testProjectLockAppliesToEveryRole(): void
+    {
+        // the lock has no exceptions, not even for admins
+        foreach ([User::ROLE_USER, User::ROLE_TEAMLEAD, User::ROLE_ADMIN, User::ROLE_SUPER_ADMIN] as $role) {
+            $user = self::getUser(1, $role);
+
+            $timesheet = self::getTimesheet($user);
+            $timesheet->setBegin(new \DateTime('2020-06-15 10:00:00'));
+            $timesheet->setEnd(new \DateTime('2020-06-15 12:00:00'));
+            $timesheet->getProject()?->setLockedUntil(new \DateTime('2020-06-30 23:59:59'));
+
+            $this->assertVote($user, $timesheet, 'edit', VoterInterface::ACCESS_DENIED);
+            $this->assertVote($user, $timesheet, 'delete', VoterInterface::ACCESS_DENIED);
+            $this->assertVote($user, $timesheet, 'duplicate', VoterInterface::ACCESS_DENIED);
+        }
+    }
+
+    public function testRunningTimesheetInLockedPeriodCannotBeStopped(): void
+    {
+        $user = self::getUser(1, User::ROLE_SUPER_ADMIN);
+
+        // started before the lock date and still running
+        $timesheet = self::getTimesheet($user);
+        $timesheet->setBegin(new \DateTime('-2 months'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTime('-1 month'));
+
+        $this->assertVote($user, $timesheet, 'stop', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testRunningTimesheetAfterLockedPeriodCanBeStopped(): void
+    {
+        $user = self::getUser(1, User::ROLE_USER);
+
+        $timesheet = self::getTimesheet($user);
+        $timesheet->setBegin(new \DateTime('-2 days'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTime('-1 month'));
+
+        $this->assertVote($user, $timesheet, 'stop', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testRestartingAnOldRecordUsesTheDateOfTheNewRecord(): void
+    {
+        $user = self::getUser(1, User::ROLE_USER);
+
+        // a stopped record is only the template for a new record, which will begin "now".
+        // the lock is in the past, so a new record can be created from it.
+        $timesheet = self::getTimesheet($user);
+        $timesheet->setBegin(new \DateTime('-2 months'));
+        $timesheet->setEnd(new \DateTime('-2 months +1 hour'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTime('-1 month'));
+
+        $this->assertVote($user, $timesheet, 'start', VoterInterface::ACCESS_GRANTED);
+        // copying keeps the original dates and is therefore forbidden
+        $this->assertVote($user, $timesheet, 'duplicate', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testRestartingIsDeniedWhenLockDateIsInTheFuture(): void
+    {
+        $user = self::getUser(1, User::ROLE_USER);
+
+        // the whole project is frozen up to a future date, so nothing can be booked at all
+        $timesheet = self::getTimesheet($user);
+        $timesheet->setBegin(new \DateTime('-2 months'));
+        $timesheet->setEnd(new \DateTime('-2 months +1 hour'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTime('+1 month'));
+
+        $this->assertVote($user, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testProjectWithoutLockDateIsNotAffected(): void
+    {
+        $user = self::getUser(1, User::ROLE_USER);
+
+        $timesheet = self::getTimesheet($user);
+        $timesheet->setBegin(new \DateTime('2010-01-01 10:00:00'));
+
+        $this->assertVote($user, $timesheet, 'edit', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($user, $timesheet, 'delete', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($user, $timesheet, 'stop', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($user, $timesheet, 'duplicate', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testTimesheetWithoutProjectIsNotAffected(): void
+    {
+        $user = self::getUser(1, User::ROLE_USER);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($user);
+        $timesheet->setBegin(new \DateTime('2020-06-15 10:00:00'));
+
+        $this->assertVote($user, $timesheet, 'edit', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($user, $timesheet, 'stop', VoterInterface::ACCESS_GRANTED);
+    }
+
     public function testIsOwnerGrantedForOwnTimesheet(): void
     {
         // is_owner bypasses the RolePermissionManager entirely: a user with no

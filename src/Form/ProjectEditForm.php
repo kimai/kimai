@@ -88,11 +88,19 @@ class ProjectEditForm extends AbstractType
             ]))
             ->add('start', DatePickerType::class, array_merge($dateTimeOptions, [
                 'label' => 'project_start',
+                'help' => 'help.project_start',
                 'required' => false,
                 'force_time' => 'start',
             ]))
             ->add('end', DatePickerType::class, array_merge($dateTimeOptions, [
                 'label' => 'project_end',
+                'help' => 'help.project_end',
+                'required' => false,
+                'force_time' => 'end',
+            ]))
+            ->add('lockedUntil', DatePickerType::class, array_merge($dateTimeOptions, [
+                'label' => 'project_locked_until',
+                'help' => 'help.project_locked_until',
                 'required' => false,
                 'force_time' => 'end',
             ]))

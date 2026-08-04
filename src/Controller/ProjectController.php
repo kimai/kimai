@@ -94,6 +94,7 @@ final class ProjectController extends AbstractController
         $table->addColumn('orderDate', ['class' => 'd-none']);
         $table->addColumn('project_start', ['class' => 'd-none']);
         $table->addColumn('project_end', ['class' => 'd-none']);
+        $table->addColumn('lockedUntil', ['class' => 'd-none', 'title' => 'project_locked_until']);
 
         foreach ($metaColumns as $metaColumn) {
             $table->addColumn('mf_' . $metaColumn->getName(), ['title' => $metaColumn->getLabel(), 'class' => 'd-none', 'orderBy' => false, 'data' => $metaColumn]);

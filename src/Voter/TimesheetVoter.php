@@ -126,15 +126,21 @@ final class TimesheetVoter extends Voter
                 break;
 
             case 'duplicate':
-                if (!$this->canStart($user, $subject)) {
+                if (!$this->canDuplicate($user, $subject)) {
                     return false;
                 }
                 $permission = self::CREATE;
                 break;
 
+            case self::STOP:
+                if (!$this->canStop($subject)) {
+                    return false;
+                }
+                $permission .= $attribute;
+                break;
+
             case self::VIEW_RATE:
             case self::EDIT_RATE:
-            case self::STOP:
             case self::VIEW:
             case self::EXPORT:
             case self::EDIT_EXPORT:
@@ -169,10 +175,38 @@ final class TimesheetVoter extends Voter
             return false;
         }
 
-        return true;
+        return !$this->isProjectLocked($timesheet, $timesheet->getBegin());
     }
 
     private function canStart(User $user, Timesheet $timesheet): bool
+    {
+        if (!$this->checkProjectAndActivity($user, $timesheet)) {
+            return false;
+        }
+
+        // a running timesheet is the record itself, so its begin date is the one that will be stored.
+        // a stopped timesheet is only used as template for a new record, which will begin "now".
+        $begin = $timesheet->isRunning() ? $timesheet->getBegin() : $this->getNow($user);
+
+        return !$this->isProjectLocked($timesheet, $begin);
+    }
+
+    private function canDuplicate(User $user, Timesheet $timesheet): bool
+    {
+        if (!$this->checkProjectAndActivity($user, $timesheet)) {
+            return false;
+        }
+
+        // the copy is created with the dates of the original record
+        return !$this->isProjectLocked($timesheet, $timesheet->getBegin());
+    }
+
+    private function canStop(Timesheet $timesheet): bool
+    {
+        return !$this->isProjectLocked($timesheet, $timesheet->getBegin());
+    }
+
+    private function checkProjectAndActivity(User $user, Timesheet $timesheet): bool
     {
         $activity = $timesheet->getActivity();
         if (null === $activity || !$this->checkActivity($user, $activity)) {
@@ -185,6 +219,20 @@ final class TimesheetVoter extends Voter
         }
 
         return true;
+    }
+
+    /**
+     * Timesheets within a locked project period cannot be changed by anyone, admins included.
+     */
+    private function isProjectLocked(Timesheet $timesheet, ?\DateTimeInterface $begin): bool
+    {
+        $project = $timesheet->getProject();
+
+        if ($project === null || $begin === null) {
+            return false;
+        }
+
+        return $project->isLockedAtDate($begin);
     }
 
     private function checkProject(User $user, Project $project): bool
@@ -231,7 +279,12 @@ final class TimesheetVoter extends Voter
             return false;
         }
 
-        return true;
+        // do not produce a dead-lock for locked projects: allow editing and moving it out of the lockdown period
+        if ($timesheet->isRunning()) {
+            return true;
+        }
+
+        return !$this->isProjectLocked($timesheet, $timesheet->getBegin());
     }
 
     private function canDelete(User $user, Timesheet $timesheet): bool
@@ -244,7 +297,7 @@ final class TimesheetVoter extends Voter
             return false;
         }
 
-        return true;
+        return !$this->isProjectLocked($timesheet, $timesheet->getBegin());
     }
 
     private function isAllowedExported(User $user, Timesheet $timesheet): bool
@@ -278,10 +331,15 @@ final class TimesheetVoter extends Voter
             $this->lockdownGrace = $this->permissionManager->hasRolePermission($user, 'lockdown_grace_timesheet');
         }
 
+        return $this->lockdownService->isEditable($timesheet, $this->getNow($user), $this->lockdownGrace);
+    }
+
+    private function getNow(User $user): \DateTime
+    {
         if ($this->now === null) {
             $this->now = new \DateTime('now', new \DateTimeZone($user->getTimezone()));
         }
 
-        return $this->lockdownService->isEditable($timesheet, $this->now, $this->lockdownGrace);
+        return $this->now;
     }
 }
