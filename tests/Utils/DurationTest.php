@@ -32,7 +32,7 @@ class DurationTest extends TestCase
         // a duration that is a multiple of three minutes can be expressed exactly with two
         // decimal places, so formatting and re-parsing it must return the original seconds
         for ($seconds = 180; $seconds <= 86400; $seconds += 180) {
-            $decimal = number_format($seconds / 3600, 2, '.', '');
+            $decimal = (string) $sut->formatDecimal($seconds);
             self::assertSame($seconds, $sut->parseDuration($decimal, Duration::FORMAT_DECIMAL), 'Failed parsing "' . $decimal . '"');
         }
     }
