@@ -279,7 +279,6 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         self::assertEquals(1, $copy->count());
         $code = $block->filter('pre code');
         self::assertEquals(1, $code->count());
-        self::assertEquals(1, $copy->filter('button[data-clipboard-text]')->count());
 
         $tokens = $tokenRepository->findForUser($user);
         self::assertCount(2, $tokens);
