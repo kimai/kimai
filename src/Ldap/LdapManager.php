@@ -26,8 +26,10 @@ class LdapManager
     /**
      * Creates a new (not persisted) user from the LDAP entry.
      *
-     * Only called for users that are unknown in the local database,
-     * see the provider order in the "chain_provider" security configuration.
+     * Only called for users that are unknown in the local database, see the provider
+     * order in the "chain_provider" security configuration. As this happens BEFORE the
+     * password was verified, the account is deliberately kept empty: the system defaults
+     * are applied in LdapCredentialsSubscriber, after a successful bind().
      *
      * @throws LdapDriverException
      */
@@ -41,6 +43,7 @@ class LdapManager
 
         // do not updateUser() here, as this would happen before bind()
         $user = new User();
+        // required, because the UserChecker rejects disabled accounts before bind() is executed
         $user->setEnabled(true);
         $this->hydrateUser($user, $entry);
 

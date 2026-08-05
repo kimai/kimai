@@ -15,6 +15,7 @@ use App\Ldap\LdapCredentialsSubscriber;
 use App\Ldap\LdapManager;
 use App\User\UserService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
@@ -53,13 +54,19 @@ class LdapCredentialsSubscriberTest extends TestCase
         return $manager;
     }
 
-    public function testNewUserIsSaved(): void
+    private function createUserService(): UserService&MockObject
+    {
+        return $this->getMockBuilder(UserService::class)->disableOriginalConstructor()->onlyMethods(['prepareNewUser', 'saveUser'])->getMock();
+    }
+
+    public function testNewUserIsPreparedAndSaved(): void
     {
         $user = new User();
         $user->setUserIdentifier('foobar');
         $user->setAuth(User::AUTH_LDAP);
 
-        $userService = $this->getMockBuilder(UserService::class)->disableOriginalConstructor()->onlyMethods(['saveUser'])->getMock();
+        $userService = $this->createUserService();
+        $userService->expects($this->once())->method('prepareNewUser')->with($user)->willReturn($user);
         $userService->expects($this->once())->method('saveUser')->with($user)->willReturn($user);
 
         $sut = new LdapCredentialsSubscriber($this->createLdapManager(), $userService);
@@ -69,7 +76,7 @@ class LdapCredentialsSubscriberTest extends TestCase
         self::assertNotEmpty($user->getPlainPassword());
     }
 
-    public function testExistingUserIsSaved(): void
+    public function testExistingUserIsSavedWithoutDefaults(): void
     {
         $user = $this->createMock(User::class);
         $user->method('getId')->willReturn(13);
@@ -77,11 +84,45 @@ class LdapCredentialsSubscriberTest extends TestCase
         $user->method('isLdapUser')->willReturn(true);
         $user->expects($this->never())->method('setPlainPassword');
 
-        $userService = $this->getMockBuilder(UserService::class)->disableOriginalConstructor()->onlyMethods(['saveUser'])->getMock();
+        $userService = $this->createUserService();
+        $userService->expects($this->never())->method('prepareNewUser');
         $userService->expects($this->once())->method('saveUser')->with($user)->willReturn($user);
 
         $sut = new LdapCredentialsSubscriber($this->createLdapManager(), $userService);
         $sut->onCheckPassport($this->createEvent($user));
+    }
+
+    public function testDefaultsAreAppliedBeforeTheLdapAttributes(): void
+    {
+        $user = new User();
+        $user->setUserIdentifier('foobar');
+        $user->setAuth(User::AUTH_LDAP);
+
+        $calls = [];
+
+        $manager = $this->getMockBuilder(LdapManager::class)->disableOriginalConstructor()->onlyMethods(['bind', 'updateUser'])->getMock();
+        $manager->method('bind')->willReturn(true);
+        $manager->method('updateUser')->willReturnCallback(function () use (&$calls) {
+            $calls[] = 'updateUser';
+        });
+
+        $userService = $this->createUserService();
+        $userService->method('prepareNewUser')->willReturnCallback(function (User $user) use (&$calls) {
+            $calls[] = 'prepareNewUser';
+
+            return $user;
+        });
+        $userService->method('saveUser')->willReturnCallback(function (User $user) use (&$calls) {
+            $calls[] = 'saveUser';
+
+            return $user;
+        });
+
+        $sut = new LdapCredentialsSubscriber($manager, $userService);
+        $sut->onCheckPassport($this->createEvent($user));
+
+        // the roles and attributes from LDAP must not be overwritten by the system defaults
+        self::assertEquals(['prepareNewUser', 'updateUser', 'saveUser'], $calls);
     }
 
     public function testFailingSaveThrowsException(): void
@@ -93,7 +134,7 @@ class LdapCredentialsSubscriberTest extends TestCase
         $user->setUserIdentifier('foobar');
         $user->setAuth(User::AUTH_LDAP);
 
-        $userService = $this->getMockBuilder(UserService::class)->disableOriginalConstructor()->onlyMethods(['saveUser'])->getMock();
+        $userService = $this->createUserService();
         $userService->expects($this->once())->method('saveUser')->willThrowException(new \RuntimeException('Duplicate username'));
 
         $sut = new LdapCredentialsSubscriber($this->createLdapManager(), $userService);
@@ -105,7 +146,7 @@ class LdapCredentialsSubscriberTest extends TestCase
         $user = new User();
         $user->setUserIdentifier('foobar');
 
-        $userService = $this->getMockBuilder(UserService::class)->disableOriginalConstructor()->onlyMethods(['saveUser'])->getMock();
+        $userService = $this->createUserService();
         $userService->expects($this->never())->method('saveUser');
 
         $sut = new LdapCredentialsSubscriber($this->createLdapManager(), $userService);
@@ -118,7 +159,7 @@ class LdapCredentialsSubscriberTest extends TestCase
         $user->setUserIdentifier('foobar');
         self::assertTrue($user->isInternalUser());
 
-        $userService = $this->getMockBuilder(UserService::class)->disableOriginalConstructor()->onlyMethods(['saveUser'])->getMock();
+        $userService = $this->createUserService();
         $userService->expects($this->never())->method('saveUser');
 
         $sut = new LdapCredentialsSubscriber($this->createLdapManager(false), $userService);
@@ -134,7 +175,7 @@ class LdapCredentialsSubscriberTest extends TestCase
         $user->setUserIdentifier('foobar');
         $user->setAuth(User::AUTH_LDAP);
 
-        $userService = $this->getMockBuilder(UserService::class)->disableOriginalConstructor()->onlyMethods(['saveUser'])->getMock();
+        $userService = $this->createUserService();
         $userService->expects($this->never())->method('saveUser');
 
         $sut = new LdapCredentialsSubscriber($this->createLdapManager(false), $userService);
