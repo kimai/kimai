@@ -138,7 +138,7 @@ class TimesheetProjectLockedValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testRunningTimesheetInsideLockedPeriodIsInvalid(): void
+    public function testRunningTimesheetInsideLockedPeriodCannotBeStopped(): void
     {
         // a running record that was started before the lock date cannot be stopped
         $timesheet = $this->createTimesheet($this->createProject('2020-06-15 23:59:59'), '2020-06-15 08:00:00');

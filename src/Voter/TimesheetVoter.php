@@ -279,7 +279,9 @@ final class TimesheetVoter extends Voter
             return false;
         }
 
-        // do not produce a dead-lock for locked projects: allow editing and moving it out of the lockdown period
+        // if a project is "locked until" the timesheet cannot be stopped.
+        // the user needs to be able to edit it, in order to change the start date.
+        // do not change order of calls: the check is here, because the isProjectLocked() comes directly afterward.
         if ($timesheet->isRunning()) {
             return true;
         }
