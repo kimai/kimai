@@ -21,6 +21,9 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface;
 use Symfony\Component\Security\Http\EntryPoint\Exception\NotAnEntryPointException;
 
+/**
+ * @internal
+ */
 final class LdapAuthenticator implements AuthenticationEntryPointInterface, InteractiveAuthenticatorInterface
 {
     public function __construct(private AuthenticatorInterface $authenticator, private LdapConfiguration $configuration, private LoggerInterface $logger)

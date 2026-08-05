@@ -491,9 +491,12 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
         self::assertNotEmpty($result['id']);
         self::assertEquals('foo', $result['name']);
-        self::assertFalse($result['globalActivities']);
-        self::assertFalse($result['billable']);
-        self::assertFalse($result['visible']);
+        self::assertEquals('0003', $result['number']);
+        self::assertTrue($result['billable']);
+        self::assertTrue($result['visible']);
+        self::assertNull($result['color']);
+        self::assertNull($result['budgetType']);
+        self::assertTrue($result['globalActivities']);
     }
 
     public function testPostActionWithInvalidUser(): void
