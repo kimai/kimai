@@ -3406,16 +3406,16 @@
         },
         {
             "name": "nelmio/api-doc-bundle",
-            "version": "v5.10.3",
+            "version": "v5.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "e6b6d3f4e413f8f9a78b8470a082b9e4ffb49533"
+                "reference": "8241953a59f424f4e21d0ee605b2f6cb1bef01ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/e6b6d3f4e413f8f9a78b8470a082b9e4ffb49533",
-                "reference": "e6b6d3f4e413f8f9a78b8470a082b9e4ffb49533",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/8241953a59f424f4e21d0ee605b2f6cb1bef01ff",
+                "reference": "8241953a59f424f4e21d0ee605b2f6cb1bef01ff",
                 "shasum": ""
             },
             "require": {
@@ -3433,17 +3433,16 @@
                 "symfony/http-foundation": "^6.4 || ^7.2 || ^8.0",
                 "symfony/http-kernel": "^6.4 || ^7.2 || ^8.0",
                 "symfony/options-resolver": "^6.4 || ^7.2 || ^8.0",
-                "symfony/property-info": "^6.4 || ^7.2 || ^8.0",
+                "symfony/property-info": "^6.4.15 || ^7.2 || ^8.0",
                 "symfony/routing": "^6.4 || ^7.2 || ^8.0",
                 "symfony/type-info": "^7.2 || ^8.0",
-                "zircote/swagger-php": "^4.11.1 || ^5.0 || ^6.0"
+                "zircote/swagger-php": "^5.7.8 || ^6.0"
             },
             "conflict": {
-                "symfony/property-info": "6.4.32 || 7.3.10 || 7.4.4 || 8.0.4",
-                "zircote/swagger-php": "4.8.7 || 5.5.0"
+                "symfony/property-info": "6.4.32 || 7.3.10 || 7.4.4 || 8.0.4"
             },
             "require-dev": {
-                "api-platform/core": "^3.2 || ^4.0",
+                "api-platform/core": "^3.4.6 || ^4.0.9",
                 "doctrine/inflector": "^2.0",
                 "friendsofphp/php-cs-fixer": "^3.52",
                 "friendsofsymfony/rest-bundle": "^3.2.0",
@@ -3517,7 +3516,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nelmio/NelmioApiDocBundle/issues",
-                "source": "https://github.com/nelmio/NelmioApiDocBundle/tree/v5.10.3"
+                "source": "https://github.com/nelmio/NelmioApiDocBundle/tree/v5.11.0"
             },
             "funding": [
                 {
@@ -3525,7 +3524,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-06-01T07:56:07+00:00"
+            "time": "2026-08-03T14:14:53+00:00"
         },
         {
             "name": "nelmio/cors-bundle",
@@ -11906,11 +11905,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.2.7",
+            "version": "2.2.8",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/692db47b9dddb0487934e5236e77d48594aef921",
-                "reference": "692db47b9dddb0487934e5236e77d48594aef921",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e285254e60f33c21902efef4a926ca0987c06804",
+                "reference": "e285254e60f33c21902efef4a926ca0987c06804",
                 "shasum": ""
             },
             "require": {
@@ -11966,7 +11965,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-07-29T17:39:32+00:00"
+            "time": "2026-08-04T22:21:45+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",

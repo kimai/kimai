@@ -174,7 +174,7 @@
         <source>The field {{ field }} is required, please select a value</source>
         <target>Bitten wählen Sie einen Wert für {{ field }} aus</target>
       </trans-unit>
-      <trans-unit id="4fhT2gH" resname="A maximum duration of {{ value }} is allowed.">
+      <trans-unit id="7hNS8l3" resname="A maximum duration of {{ value }} is allowed.">
         <source>A maximum duration of {{ value }} is allowed.</source>
         <target>A maximum duration of {{ value }} is allowed.</target>
       </trans-unit>
