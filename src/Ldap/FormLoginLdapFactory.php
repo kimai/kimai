@@ -10,6 +10,7 @@
 namespace App\Ldap;
 
 use App\Configuration\LdapConfiguration;
+use App\User\UserService;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\AbstractFactory;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\AuthenticatorFactoryInterface;
@@ -18,6 +19,9 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
+/**
+ * @internal
+ */
 final class FormLoginLdapFactory extends AbstractFactory implements AuthenticatorFactoryInterface
 {
     public function __construct()
@@ -61,6 +65,7 @@ final class FormLoginLdapFactory extends AbstractFactory implements Authenticato
         $container->setDefinition('security.listener.' . $key . '.' . $firewallName, new Definition(LdapCredentialsSubscriber::class))
             ->addTag('kernel.event_subscriber', ['dispatcher' => 'security.event_dispatcher.' . $firewallName])
             ->addArgument(new Reference(LdapManager::class))
+            ->addArgument(new Reference(UserService::class))
         ;
 
         $ldapAuthenticatorId = 'security.authenticator.' . $key . '.' . $firewallName;

@@ -58,7 +58,19 @@ class UserService
 
     public function createNewUser(): User
     {
-        $user = new User();
+        return $this->prepareNewUser(new User());
+    }
+
+    /**
+     * Applies the system defaults to a not yet persisted user.
+     *
+     * Use it if the user object was created somewhere else, e.g. by one of the
+     * authentication flows (see LdapCredentialsSubscriber) which hydrate the
+     * account from an external system. Has to be called BEFORE those external
+     * attributes are applied, otherwise the defaults would overwrite them.
+     */
+    public function prepareNewUser(User $user): User
+    {
         $user->setEnabled(true);
         $user->setRoles([User::DEFAULT_ROLE]);
         $user->setTimezone($this->configuration->getUserDefaultTimezone());
