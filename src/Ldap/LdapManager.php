@@ -12,7 +12,6 @@ namespace App\Ldap;
 use App\Configuration\LdapConfiguration;
 use App\Entity\User;
 use App\Security\RoleService;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @final
@@ -24,20 +23,38 @@ class LdapManager
     }
 
     /**
-     * Only executed for unknown local users.
+     * Creates a new (not persisted) user from the LDAP entry.
      *
-     * @param string $username
-     * @return User|null
-     * @throws \Exception
+     * Only called for users that are unknown in the local database,
+     * see the provider order in the "chain_provider" security configuration.
+     *
+     * @throws LdapDriverException
      */
-    public function findUserByUsername(string $username): ?UserInterface
+    public function findUserByUsername(string $username): ?User
+    {
+        $entry = $this->findUserEntry($username);
+
+        if (null === $entry) {
+            return null;
+        }
+
+        // do not updateUser() here, as this would happen before bind()
+        $user = new User();
+        $user->setEnabled(true);
+        $this->hydrateUser($user, $entry);
+
+        return $user;
+    }
+
+    /**
+     * @return array<mixed>|null
+     * @throws LdapDriverException
+     */
+    private function findUserEntry(string $username): ?array
     {
         $params = $this->config->getUserParameters();
 
-        $criteria = [$params['usernameAttribute'] => $username];
-
-        $params = $this->config->getUserParameters();
-        $filter = $this->buildFilter($criteria);
+        $filter = $this->buildFilter([$params['usernameAttribute'] => $username]);
         $entries = $this->driver->search($params['baseDn'], $filter);
 
         if ($entries['count'] > 1) {
@@ -48,12 +65,7 @@ class LdapManager
             return null;
         }
 
-        // do not updateUser() here, as this would happen before bind()
-        $user = new User();
-        $user->setEnabled(true);
-        $this->hydrateUser($user, $entries[0]);
-
-        return $user;
+        return $entries[0];
     }
 
     private function buildFilter(array $criteria, string $condition = '&'): string
@@ -86,8 +98,9 @@ class LdapManager
     public function updateUser(User $user): void
     {
         // always look up the users current DN first, as the current user might be upgraded from local to LDAP
-        $userFresh = $this->findUserByUsername($user->getUserIdentifier());
-        if (null === $userFresh || null === ($baseDn = $userFresh->getPreferenceValue('ldap_dn'))) {
+        $entry = $this->findUserEntry($user->getUserIdentifier());
+        $baseDn = $entry['dn'] ?? null;
+        if (!\is_string($baseDn)) {
             throw new LdapDriverException(\sprintf('Failed fetching user DN for %s', $user->getUserIdentifier()));
         }
         $user->setPreferenceValue('ldap_dn', $baseDn);
@@ -215,7 +228,7 @@ class LdapManager
         return $role;
     }
 
-    private function hydrateUserWithAttributesMap(UserInterface $user, array $ldapUserAttributes, array $attributeMap): void
+    private function hydrateUserWithAttributesMap(User $user, array $ldapUserAttributes, array $attributeMap): void
     {
         $sawUsername = false;
         /** @var array $attr */

@@ -29,7 +29,7 @@ final class LdapUserProvider implements UserProviderInterface
     {
         $user = $this->ldapManager->findUserByUsername($identifier);
 
-        if (empty($user)) {
+        if (null === $user) {
             $this->logDebug('User {username} {result} on LDAP', [
                 'action' => 'loadUserByIdentifier',
                 'username' => $identifier,

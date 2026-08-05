@@ -2273,11 +2273,6 @@ parameters:
             path: src/Ldap/LdapManager.php
 
         -
-            message: "#^Parameter \\#1 \\$baseDn of method App\\\\Ldap\\\\LdapDriver\\:\\:search\\(\\) expects string, bool\\|float\\|int\\|string given\\.$#"
-            count: 1
-            path: src/Ldap/LdapManager.php
-
-        -
             message: "#^Parameter \\#1 \\$string of function trim expects string, string\\|null given\\.$#"
             count: 1
             path: src/Ldap/LdapManager.php
