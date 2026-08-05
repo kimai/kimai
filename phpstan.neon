@@ -2248,11 +2248,6 @@ parameters:
             path: src/Ldap/LdapManager.php
 
         -
-            message: "#^Method App\\\\Ldap\\\\LdapManager\\:\\:hydrate\\(\\) has parameter \\$ldapEntry with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Ldap/LdapManager.php
-
-        -
             message: "#^Method App\\\\Ldap\\\\LdapManager\\:\\:hydrateRoles\\(\\) has parameter \\$entries with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Ldap/LdapManager.php

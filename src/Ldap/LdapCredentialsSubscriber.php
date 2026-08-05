@@ -10,14 +10,16 @@
 namespace App\Ldap;
 
 use App\Entity\User;
+use App\User\UserService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Event\CheckPassportEvent;
 
 final class LdapCredentialsSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly LdapManager $ldapManager)
+    public function __construct(private readonly LdapManager $ldapManager, private readonly UserService $userService)
     {
     }
 
@@ -74,6 +76,22 @@ final class LdapCredentialsSubscriber implements EventSubscriberInterface
             $this->ldapManager->updateUser($user);
         } catch (LdapDriverException $ex) {
             throw new BadCredentialsException('Fetching user data/roles failed, probably DN is expired.');
+        }
+
+        if ($user->getId() === null) {
+            // set a plain password to satisfy the validator, it is never used to authenticate LDAP users
+            $user->setPlainPassword(substr(bin2hex(random_bytes(100)), 0, 50));
+        }
+
+        // new users only exist in memory at this point and the synced attributes/roles of existing
+        // users have to be written as well: nothing else in the login process stores the user
+        // (see SamlProvider::findUser() which does the same for SAML logins)
+        try {
+            $this->userService->saveUser($user);
+        } catch (\Exception $ex) {
+            throw new AuthenticationException(
+                \sprintf('Failed creating or updating user "%s": %s', $user->getUserIdentifier(), $ex->getMessage())
+            );
         }
 
         // make sure that the normal auth process is not triggered

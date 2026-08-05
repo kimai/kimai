@@ -49,7 +49,11 @@ class LdapManager
         }
 
         // do not updateUser() here, as this would happen before bind()
-        return $this->hydrate($entries[0]);
+        $user = new User();
+        $user->setEnabled(true);
+        $this->hydrateUser($user, $entries[0]);
+
+        return $user;
     }
 
     private function buildFilter(array $criteria, string $condition = '&'): string
@@ -131,17 +135,6 @@ class LdapManager
             \sprintf('(&%s(%s=%s))', $filter, $roleParameter['userDnAttribute'], ldap_escape($dn, '', LDAP_ESCAPE_FILTER)),
             [$roleParameter['nameAttribute']]
         );
-    }
-
-    // ===================================================================
-
-    public function hydrate(array $ldapEntry): User
-    {
-        $user = new User();
-        $user->setEnabled(true);
-        $this->hydrateUser($user, $ldapEntry);
-
-        return $user;
     }
 
     public function hydrateUser(User $user, array $ldapEntry): void
