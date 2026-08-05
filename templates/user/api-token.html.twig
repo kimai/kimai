@@ -10,7 +10,7 @@
                     {{ 'api_password.intro'|trans }}
                 </p>
                 <p>
-                    <strong>URL</strong>: {{ url('api.swagger_ui', {}, false)|replace({'/doc': ''}) }}
+                    <strong>URL</strong>: {{ api_url }}
                 </p>
             </div>
 
@@ -34,6 +34,15 @@
                         </div>
                         <pre><code>{{ created_token.token }}</code></pre>
                     </div>
+                    {% if qr_code_payload is not null %}
+                        <p class="mt-3 mb-1">
+                            <img style="max-width: 200px; max-height: 200px;" alt="API QR code" src="{{ qr_code_data_uri(qr_code_payload) }}" />
+                        </p>
+                        <p class="text-secondary">
+                            <i class="{{ 'info'|icon(false) }}"></i>
+                            {{ 'api_token_qr_hint'|trans }}
+                        </p>
+                    {% endif %}
                 </div>
             </div>
         {% endif %}

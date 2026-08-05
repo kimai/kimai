@@ -279,11 +279,19 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         self::assertEquals(1, $copy->count());
         $code = $block->filter('pre code');
         self::assertEquals(1, $code->count());
+        self::assertEquals(1, $copy->filter('button[data-clipboard-text]')->count());
 
         $tokens = $tokenRepository->findForUser($user);
         self::assertCount(2, $tokens);
         self::assertEquals('Demo', $tokens[1]->getName());
         self::assertEquals($code->innerText(), $tokens[1]->getToken());
+
+        // the QR code is only rendered together with the one-time token display
+        self::assertEquals(1, $crawler->filter('img[src^="data:image/png"]')->count());
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/api-token');
+        self::assertTrue($client->getResponse()->isSuccessful());
+        self::assertEquals(0, $client->getCrawler()->filter('img[src^="data:image/png"]')->count());
     }
 
     #[Group('legacy')]

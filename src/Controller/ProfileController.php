@@ -46,6 +46,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
@@ -248,6 +249,21 @@ final class ProfileController extends AbstractController
             }
         }
 
+        $baseUrl = rtrim($this->generateUrl('home', [], UrlGeneratorInterface::ABSOLUTE_URL), '/');
+        $qrCodePayload = null;
+
+        if ($createdToken !== null) {
+            // this payload is a public contract with the mobile apps: only add fields, never rename or remove them.
+            // example: {"type":"kimai","version":1,"url":"https://127.0.0.1:8000","token":"6ccc2932be3a7e8fa1dd2c254"}
+            // "version" has to be raised, if the meaning of an existing field changes.
+            $qrCodePayload = json_encode([
+                'type' => 'kimai',
+                'version' => 1,
+                'url' => $baseUrl,
+                'token' => $createdToken->getToken(),
+            ], JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
+        }
+
         return $this->render('user/api-token.html.twig', [
             'tab' => 'api-token',
             'created_token' => $createdToken,
@@ -255,6 +271,8 @@ final class ProfileController extends AbstractController
             'page_setup' => $this->getPageSetup($profile, 'api-token'),
             'user' => $profile,
             'form' => $form->createView(),
+            'api_url' => $baseUrl . '/api',
+            'qr_code_payload' => $qrCodePayload,
         ]);
     }
 
