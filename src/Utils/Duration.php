@@ -117,7 +117,10 @@ final class Duration
         $duration = (float) $duration;
         $duration = $duration * 3600;
 
-        return (int) $duration;
+        // most decimal fractions cannot be represented exactly as float, so the multiplication
+        // above returns values like 29519.999999999996 for "8.20" hours. Casting that to int
+        // truncates and the result would be one second (and one displayed minute) short: 8:11.
+        return (int) round($duration);
     }
 
     private function parseColonFormat(string $duration): int
