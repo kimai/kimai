@@ -17,6 +17,9 @@ use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Event\CheckPassportEvent;
 
+/**
+ * @internal
+ */
 final class LdapCredentialsSubscriber implements EventSubscriberInterface
 {
     public function __construct(private readonly LdapManager $ldapManager, private readonly UserService $userService)

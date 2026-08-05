@@ -18,6 +18,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * @template-implements UserProviderInterface<User>
+ * @internal
  */
 final class LdapUserProvider implements UserProviderInterface
 {

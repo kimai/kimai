@@ -11,6 +11,9 @@ namespace App\Ldap;
 
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\BadgeInterface;
 
+/**
+ * @internal
+ */
 final class LdapBadge implements BadgeInterface
 {
     private bool $resolved = false;

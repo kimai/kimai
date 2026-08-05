@@ -15,6 +15,7 @@ use App\Security\RoleService;
 
 /**
  * @final
+ * @internal
  */
 class LdapManager
 {
