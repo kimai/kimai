@@ -191,6 +191,9 @@ class CustomerRepository extends EntityRepository
                 case 'vat_id':
                     $orderBy = 'c.vatId';
                     break;
+                case 'invoice_email':
+                    $orderBy = 'c.invoiceEmail';
+                    break;
                 default:
                     $orderBy = 'c.' . $orderBy;
                     break;
@@ -207,7 +210,7 @@ class CustomerRepository extends EntityRepository
         $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
 
         $configuration = new SearchConfiguration(
-            ['c.name', 'c.comment', 'c.company', 'c.vatId', 'c.number', 'c.contact', 'c.phone', 'c.email', 'c.address'],
+            ['c.name', 'c.comment', 'c.company', 'c.vatId', 'c.number', 'c.contact', 'c.phone', 'c.email', 'c.address', 'c.invoiceEmail'],
             CustomerMeta::class,
             'customer'
         );

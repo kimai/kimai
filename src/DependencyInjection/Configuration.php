@@ -595,6 +595,11 @@ final class Configuration implements ConfigurationInterface
         $node
             ->addDefaultsIfNotSet()
             ->children()
+                ->scalarNode('timezone')->end()
+                ->scalarNode('country')->end()
+                ->scalarNode('language')
+                    ->defaultValue(Customer::DEFAULT_LANGUAGE)
+                ->end()
                 ->scalarNode('choice_pattern')
                     ->defaultValue(CustomerHelper::PATTERN_NAME)
                 ->end()

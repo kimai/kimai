@@ -108,12 +108,22 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
             $projectId = (int) $rawData['project'];
             $customerId = (int) $rawData['customer'];
 
+            // getRawData() hydrates "begin" through DQL and therefore skips the timezone localization
+            // that Timesheet::getBegin() applies (see Timesheet::localizeDates()), so it stays in UTC.
+            // It has to be normalized to the record timezone before comparing dates: otherwise an entry
+            // that falls on a local month boundary (e.g. the 1st at 00:30 in a timezone ahead of UTC)
+            // looks like its month/day changed although it did not - which would wrongly take the
+            // full-rate path below and could reject an ordinary edit.
+            $rawBegin = $rawData['begin'] instanceof \DateTimeInterface
+                ? DateTime::createFromInterface($rawData['begin'])->setTimezone($begin->getTimezone())
+                : $rawData['begin'];
+
             // if an existing entry was updated, but the relevant fields for budget calculation were not touched: do not validate!
             // this could for example happen when export flag is changed OR if "prevent overbooking"  config was recently activated and this is an old entry
             if ($duration === $rawData['duration'] &&
                 $rate === $rawData['rate'] &&
                 $value->isBillable() === $rawData['billable'] &&
-                $begin->format('Y.m.d') === $rawData['begin']->format('Y.m.d') &&
+                $begin->format('Y.m.d') === $rawBegin->format('Y.m.d') &&
                 $value->getProject()->getId() === $projectId &&
                 ($value->getActivity() === null || $value->getActivity()->getId() === $activityId)
             ) {
@@ -143,19 +153,23 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
                 }
             }
 
-            $monthWasChanged = $begin->format('Y.m') !== $rawData['begin']->format('Y.m');
+            $monthWasChanged = $begin->format('Y.m') !== $rawBegin->format('Y.m');
         }
 
         $now = new DateTime('now', $begin->getTimezone());
         $recordDate = $begin;
 
+        // for a monthly budget the statistic model only covers the record's (new) month. When the
+        // record was moved into a different month, that month does not contain the previous values,
+        // so the full duration and rate of the record must be checked instead of the delta.
         if (null !== ($activity = $value->getActivity()) && $activity->hasBudgets()) {
             $dateTime = $activity->isMonthlyBudget() ? $recordDate : $now;
             if ($activity->isMonthlyBudget() && $monthWasChanged) {
                 $activityDuration = $duration;
+                $activityRate = $rate;
             }
             $stat = $this->activityStatisticService->getBudgetStatisticModel($activity, $dateTime);
-            $this->checkBudgets($constraint, $stat, $value, $activityDuration, $activityRate, 'activity');
+            $this->checkBudgets($constraint, $stat, $value, $activityDuration, $activityRate, 'activity', $duration ?? 0, $rate);
         }
 
         if (null !== ($project = $value->getProject())) {
@@ -163,34 +177,42 @@ final class TimesheetBudgetUsedValidator extends ConstraintValidator
                 $dateTime = $project->isMonthlyBudget() ? $recordDate : $now;
                 if ($project->isMonthlyBudget() && $monthWasChanged) {
                     $projectDuration = $duration;
+                    $projectRate = $rate;
                 }
                 $stat = $this->projectStatisticService->getBudgetStatisticModel($project, $dateTime);
-                $this->checkBudgets($constraint, $stat, $value, $projectDuration, $projectRate, 'project');
+                $this->checkBudgets($constraint, $stat, $value, $projectDuration, $projectRate, 'project', $duration ?? 0, $rate);
             }
             if (null !== ($customer = $project->getCustomer()) && $customer->hasBudgets()) {
                 $dateTime = $customer->isMonthlyBudget() ? $recordDate : $now;
                 if ($customer->isMonthlyBudget() && $monthWasChanged) {
                     $customerDuration = $duration;
+                    $customerRate = $rate;
                 }
                 $stat = $this->customerStatisticService->getBudgetStatisticModel($customer, $dateTime);
-                $this->checkBudgets($constraint, $stat, $value, $customerDuration, $customerRate, 'customer');
+                $this->checkBudgets($constraint, $stat, $value, $customerDuration, $customerRate, 'customer', $duration ?? 0, $rate);
             }
         }
     }
 
-    private function checkBudgets(TimesheetBudgetUsed $constraint, BudgetStatisticModel $stat, TimesheetEntity $timesheet, int $duration, float $rate, string $field): bool
+    private function checkBudgets(TimesheetBudgetUsed $constraint, BudgetStatisticModel $stat, TimesheetEntity $timesheet, int $durationDelta, float $rateDelta, string $field, int $duration, float $rate): bool
     {
-        $fullRate = ($stat->getBudgetSpent() + $rate);
+        // records that do not consume any budget must not be rejected, even if the budget is
+        // already overbooked - see #6015. The guard uses the values of the validated record
+        // itself ($rate / $duration): a record with a rate of 0.00 never consumes money budget
+        // and a record without duration never consumes time budget. The deltas may not be used
+        // here, otherwise shrinking a record that still overbooks the budget would be allowed.
 
-        if ($stat->hasBudget() && $fullRate > $stat->getBudget()) {
+        $fullRate = ($stat->getBudgetSpent() + $rateDelta);
+
+        if ($rate > 0 && $stat->hasBudget() && $fullRate > $stat->getBudget()) {
             $this->addBudgetViolation($constraint, $timesheet, $field, $stat->getBudget(), $stat->getBudgetSpent());
 
             return true;
         }
 
-        $fullDuration = ($stat->getTimeBudgetSpent() + $duration);
+        $fullDuration = ($stat->getTimeBudgetSpent() + $durationDelta);
 
-        if ($stat->hasTimeBudget() && $fullDuration > $stat->getTimeBudget()) {
+        if ($duration > 0 && $stat->hasTimeBudget() && $fullDuration > $stat->getTimeBudget()) {
             $this->addTimeBudgetViolation($constraint, $field, $stat->getTimeBudget(), $stat->getTimeBudgetSpent());
 
             return true;

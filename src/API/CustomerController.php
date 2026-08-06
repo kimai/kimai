@@ -139,7 +139,7 @@ final class CustomerController extends BaseApiController
             'include_time' => $this->isGranted('time', $customer),
         ]);
 
-        $form->submit($request->request->all());
+        $form->submit($request->request->all(), false);
 
         if ($form->isValid()) {
             $this->customerService->saveCustomer($customer);

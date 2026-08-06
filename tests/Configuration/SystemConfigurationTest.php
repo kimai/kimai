@@ -56,6 +56,7 @@ class SystemConfigurationTest extends TestCase
             'defaults' => [
                 'customer' => [
                     'timezone' => 'Europe/London',
+                    'language' => 'de',
                     'currency' => 'GBP',
                     'country' => 'FR',
                 ],
@@ -213,6 +214,7 @@ class SystemConfigurationTest extends TestCase
         self::assertEquals('Europe/London', $sut->getCustomerDefaultTimezone());
         self::assertEquals('GBP', $sut->getDefaultCurrency());
         self::assertEquals('FR', $sut->getCustomerDefaultCountry());
+        self::assertEquals('de', $sut->getCustomerDefaultLanguage());
         self::assertEquals('foo/bar', $sut->getUserDefaultTimezone());
         self::assertEquals('blue', $sut->getUserDefaultTheme());
         self::assertEquals('IT', $sut->getUserDefaultLanguage());
@@ -225,6 +227,7 @@ class SystemConfigurationTest extends TestCase
         self::assertEquals('Russia/Moscov', $sut->getCustomerDefaultTimezone());
         self::assertEquals('RUB', $sut->getDefaultCurrency());
         self::assertEquals('FR', $sut->getCustomerDefaultCountry());
+        self::assertEquals('de', $sut->getCustomerDefaultLanguage());
         self::assertEquals('foo/bar', $sut->getUserDefaultTimezone());
         self::assertEquals('blue', $sut->getUserDefaultTheme());
         self::assertEquals('IT', $sut->getUserDefaultLanguage());

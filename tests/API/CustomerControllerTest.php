@@ -294,6 +294,8 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertEquals('test@example.com', $result['email']);
         self::assertNull($result['homepage']);
         self::assertEquals('Europe/Berlin', $result['timezone']);
+        self::assertEquals('en', $result['language']);
+        self::assertNull($result['invoiceEmail']);
         self::assertNull($result['buyerReference']);
         self::assertNull($result['color']);
         self::assertEquals('#5319e7', $result['color-safe']);
@@ -325,6 +327,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
             'postCode' => '12345',
             'city' => 'Acme Town',
             'country' => 'DE',
+            'language' => 'de',
             'currency' => 'EUR',
             'phone' => '666667787778999909087',
             'fax' => '0987654321',
@@ -333,6 +336,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
             'homepage' => 'https://www.example.com/',
             'timezone' => 'Europe/Berlin',
             'invoiceText' => 'Some random text, pay fast please!',
+            'invoiceEmail' => 'invoice@example.com',
             'buyerReference' => 'REF-0123456789',
             'color' => '#ff0000',
             'visible' => true,
@@ -369,6 +373,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertEquals('12345', $result['postCode']);
         self::assertEquals('Acme Town', $result['city']);
         self::assertEquals('DE', $result['country']);
+        self::assertEquals('de', $result['language']);
         self::assertEquals('EUR', $result['currency']);
         self::assertEquals('666667787778999909087', $result['phone']);
         self::assertEquals('0987654321', $result['fax']);
@@ -376,6 +381,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertEquals('admin@example.com', $result['email']);
         self::assertEquals('https://www.example.com/', $result['homepage']);
         self::assertEquals('Europe/Berlin', $result['timezone']);
+        self::assertEquals('invoice@example.com', $result['invoiceEmail']);
         self::assertEquals('REF-0123456789', $result['buyerReference']);
         self::assertEquals('#ff0000', $result['color']);
         self::assertTrue($result['visible']);
@@ -387,9 +393,6 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'country' => 'DE',
-            'currency' => 'EUR',
-            'timezone' => 'Europe/Berlin',
         ];
         $this->request($client, '/api/customers', 'POST', [], json_encode($data));
         self::assertTrue($client->getResponse()->isSuccessful());
@@ -401,6 +404,10 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
         self::assertNotEmpty($result['id']);
+        self::assertEquals('0003', $result['number']);
+        self::assertEquals('foo', $result['name']);
+        self::assertTrue($result['billable']);
+        self::assertTrue($result['visible']);
     }
 
     public function testPostActionWithInvalidUser(): void

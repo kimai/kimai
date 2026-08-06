@@ -112,6 +112,12 @@
                         <td>{{ customer_now|date_time }} ({{ customer.timezone }})</td>
                     </tr>
                 {% endif %}
+                {% if customer.language is not empty %}
+                    <tr>
+                        <th>{{ 'language'|trans }}</th>
+                        <td>{{ customer.language|locale_name }}</td>
+                    </tr>
+                {% endif %}
                 {% if customer.currency is not empty %}
                     <tr>
                         <th>{{ 'currency'|trans }}</th>
@@ -129,6 +135,12 @@
                         <tr>
                             <th>{{ 'vat_id'|trans }}</th>
                             <td>{{ customer.vatId }}</td>
+                        </tr>
+                    {% endif %}
+                    {% if customer.invoiceEmail is not empty %}
+                        <tr>
+                            <th>{{ 'invoice_email'|trans }}</th>
+                            <td><a href="mailto:{{ customer.invoiceEmail }}">{{ customer.invoiceEmail }}</a></td>
                         </tr>
                     {% endif %}
                 {% endif %}
