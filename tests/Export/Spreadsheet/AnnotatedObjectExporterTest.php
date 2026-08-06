@@ -50,6 +50,7 @@ class AnnotatedObjectExporterTest extends TestCase
         self::assertEquals('', $worksheet->getCell([++$i, 2])->getValue());
         self::assertEquals('', $worksheet->getCell([++$i, 2])->getValue());
         self::assertEquals('', $worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals('', $worksheet->getCell([++$i, 2])->getValue());
         self::assertEquals(123456.7890, $worksheet->getCell([++$i, 2])->getValue());
         self::assertEquals('=1234567890/86400', $worksheet->getCell([++$i, 2])->getValue());
         self::assertEquals('month', $worksheet->getCell([++$i, 2])->getValue());

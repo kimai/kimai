@@ -2165,4 +2165,245 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
 
         return $timesheet;
     }
+
+    /**
+     * @return array{0: Project, 1: Activity}
+     */
+    private function createLockedProjectFixture(string $suffix, ?string $lockedUntil): array
+    {
+        $em = $this->getEntityManager();
+
+        $customer = new Customer('locked customer ' . $suffix);
+        $customer->setCountry('DE');
+        $customer->setCurrency('EUR');
+        $customer->setTimezone(self::TEST_TIMEZONE);
+        $customer->setVisible(true);
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('locked project ' . $suffix);
+        $project->setCustomer($customer);
+        $project->setVisible(true);
+        if ($lockedUntil !== null) {
+            $project->setLockedUntil(new \DateTimeImmutable($lockedUntil, new \DateTimeZone(self::TEST_TIMEZONE)));
+        }
+        $em->persist($project);
+
+        $activity = new Activity();
+        $activity->setName('locked activity ' . $suffix);
+        $activity->setProject($project);
+        $activity->setVisible(true);
+        $em->persist($activity);
+
+        $em->flush();
+
+        return [$project, $activity];
+    }
+
+    private function persistTimesheetForProject(User $owner, Project $project, Activity $activity, string $begin, ?string $end): Timesheet
+    {
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+        $timesheet->setBegin(new \DateTime($begin, new \DateTimeZone(self::TEST_TIMEZONE)));
+        $timesheet->setDescription('LOCKED_RECORD');
+        if ($end !== null) {
+            $timesheet->setEnd(new \DateTime($end, new \DateTimeZone(self::TEST_TIMEZONE)));
+        }
+
+        $em = $this->getEntityManager();
+        $em->persist($timesheet);
+        $em->flush();
+
+        return $timesheet;
+    }
+
+    public function testPatchIsDeniedForLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+        [$project, $activity] = $this->createLockedProjectFixture('patch', '-1 month');
+        $timesheet = $this->persistTimesheetForProject($user, $project, $activity, '-2 months', '-2 months +1 hour');
+
+        $json = json_encode(['description' => 'changed']);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $timesheet->getId(), 'PATCH', [], $json);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        $reloaded = $em->getRepository(Timesheet::class)->find($timesheet->getId());
+        self::assertInstanceOf(Timesheet::class, $reloaded);
+        self::assertSame('LOCKED_RECORD', $reloaded->getDescription());
+    }
+
+    public function testDeleteIsDeniedForLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+        [$project, $activity] = $this->createLockedProjectFixture('delete', '-1 month');
+        $timesheet = $this->persistTimesheetForProject($user, $project, $activity, '-2 months', '-2 months +1 hour');
+
+        $this->request($client, '/api/timesheets/' . $timesheet->getId(), 'DELETE');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        self::assertInstanceOf(Timesheet::class, $em->getRepository(Timesheet::class)->find($timesheet->getId()));
+    }
+
+    public function testDuplicateIsDeniedForLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+        [$project, $activity] = $this->createLockedProjectFixture('duplicate', '-1 month');
+        $timesheet = $this->persistTimesheetForProject($user, $project, $activity, '-2 months', '-2 months +1 hour');
+
+        $this->request($client, '/api/timesheets/' . $timesheet->getId() . '/duplicate', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    public function testStopIsDeniedForLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+        [$project, $activity] = $this->createLockedProjectFixture('stop', '-1 month');
+        // started before the lock date and still running
+        $timesheet = $this->persistTimesheetForProject($user, $project, $activity, '-2 months', null);
+
+        $this->request($client, '/api/timesheets/' . $timesheet->getId() . '/stop', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        $reloaded = $em->getRepository(Timesheet::class)->find($timesheet->getId());
+        self::assertInstanceOf(Timesheet::class, $reloaded);
+        self::assertTrue($reloaded->isRunning(), 'The running record was stopped inside a locked period.');
+    }
+
+    public function testRunningTimesheetCanBeMovedOutOfLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+        [$project, $activity] = $this->createLockedProjectFixture('rebook', '-1 month');
+        // started before the lock date and still running, so it cannot be stopped
+        $timesheet = $this->persistTimesheetForProject($user, $project, $activity, '-2 months', null);
+
+        // it must stay possible to move it to a date after the lock, otherwise it is stuck forever
+        $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
+        $json = json_encode([
+            'begin' => ($dateTime->createDateTime('-2 hours'))->format('Y-m-d\TH:i:s'),
+            'end' => ($dateTime->createDateTime('-1 hour'))->format('Y-m-d\TH:i:s'),
+        ]);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $timesheet->getId(), 'PATCH', [], $json);
+        self::assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        $reloaded = $em->getRepository(Timesheet::class)->find($timesheet->getId());
+        self::assertInstanceOf(Timesheet::class, $reloaded);
+        self::assertFalse($reloaded->isRunning());
+        $begin = $reloaded->getBegin();
+        self::assertInstanceOf(\DateTime::class, $begin);
+        self::assertFalse($project->isLockedAtDate($begin));
+    }
+
+    public function testRunningTimesheetCannotBeChangedInsideLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+        [$project, $activity] = $this->createLockedProjectFixture('rebook-fail', '-1 month');
+        $timesheet = $this->persistTimesheetForProject($user, $project, $activity, '-2 months', null);
+
+        // editing is allowed, but saving is rejected as long as the begin date stays inside the lock
+        $json = json_encode(['description' => 'changed']);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $timesheet->getId(), 'PATCH', [], $json);
+
+        $this->assertApiCallValidationError($client->getResponse(), []);
+        self::assertStringContainsString('The project is locked until', (string) $client->getResponse()->getContent());
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        $reloaded = $em->getRepository(Timesheet::class)->find($timesheet->getId());
+        self::assertInstanceOf(Timesheet::class, $reloaded);
+        self::assertSame('LOCKED_RECORD', $reloaded->getDescription());
+    }
+
+    public function testPostIsRejectedForLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        [$project, $activity] = $this->createLockedProjectFixture('post', '-1 month');
+
+        $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
+        $data = [
+            'activity' => $activity->getId(),
+            'project' => $project->getId(),
+            'begin' => ($dateTime->createDateTime('-2 months'))->format('Y-m-d\TH:i:s'),
+            'end' => ($dateTime->createDateTime('-2 months +1 hour'))->format('Y-m-d\TH:i:s'),
+            'description' => 'must not be created',
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets', 'POST', [], $json);
+
+        $this->assertApiCallValidationError($client->getResponse(), []);
+        // the error message names the date up to which the project is locked
+        self::assertStringContainsString('The project is locked until', (string) $client->getResponse()->getContent());
+    }
+
+    public function testPostIsAllowedAfterLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        [$project, $activity] = $this->createLockedProjectFixture('post-after', '-1 month');
+
+        $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
+        $data = [
+            'activity' => $activity->getId(),
+            'project' => $project->getId(),
+            'begin' => ($dateTime->createDateTime('-2 hours'))->format('Y-m-d\TH:i:s'),
+            'end' => ($dateTime->createDateTime('-1 hour'))->format('Y-m-d\TH:i:s'),
+            'description' => 'after the lock',
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets', 'POST', [], $json);
+        self::assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
+    }
+
+    public function testPatchCannotMoveRecordIntoLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+        [$project, $activity] = $this->createLockedProjectFixture('patch-into', '-1 month');
+        // the record itself is not locked, it starts after the lock date
+        $timesheet = $this->persistTimesheetForProject($user, $project, $activity, '-2 hours', '-1 hour');
+
+        $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
+        $json = json_encode([
+            'begin' => ($dateTime->createDateTime('-2 months'))->format('Y-m-d\TH:i:s'),
+            'end' => ($dateTime->createDateTime('-2 months +1 hour'))->format('Y-m-d\TH:i:s'),
+        ]);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $timesheet->getId(), 'PATCH', [], $json);
+
+        $this->assertApiCallValidationError($client->getResponse(), []);
+        // the error message names the date up to which the project is locked
+        self::assertStringContainsString('The project is locked until', (string) $client->getResponse()->getContent());
+    }
+
+    public function testTimesheetOfUnlockedProjectStaysEditable(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+        [$project, $activity] = $this->createLockedProjectFixture('unlocked', null);
+        $timesheet = $this->persistTimesheetForProject($user, $project, $activity, '-2 months', '-2 months +1 hour');
+
+        $json = json_encode(['description' => 'changed']);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $timesheet->getId(), 'PATCH', [], $json);
+        self::assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
+    }
 }

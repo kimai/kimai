@@ -10,6 +10,8 @@
 namespace App\Tests\Controller;
 
 use App\Entity\Activity;
+use App\Entity\Customer;
+use App\Entity\Project;
 use App\Entity\Tag;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
@@ -850,5 +852,203 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         self::assertEquals(127, $timesheet->getHourlyRate());
         self::assertEquals(2016, $timesheet->getFixedRate());
         self::assertEquals(2016, $timesheet->getRate());
+    }
+
+    /**
+     * @return array{0: Project, 1: Activity, 2: Timesheet}
+     */
+    private function createLockedProjectWithTimesheet(User $user, ?string $lockedUntil, string $begin, ?string $end, string $suffix = ''): array
+    {
+        $em = $this->getEntityManager();
+
+        $customer = new Customer('locked customer' . $suffix);
+        $customer->setCountry('DE');
+        $customer->setCurrency('EUR');
+        $customer->setTimezone('Europe/London');
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('locked project' . $suffix);
+        $project->setCustomer($customer);
+        if ($lockedUntil !== null) {
+            $project->setLockedUntil(new \DateTimeImmutable($lockedUntil));
+        }
+        $em->persist($project);
+
+        $activity = new Activity();
+        $activity->setName('locked activity' . $suffix);
+        $activity->setProject($project);
+        $em->persist($activity);
+        $em->flush();
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($user);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+        $timesheet->setBegin(new \DateTime($begin));
+        $timesheet->setDescription('LOCKED_RECORD');
+        if ($end !== null) {
+            $timesheet->setEnd(new \DateTime($end));
+        }
+        $em->persist($timesheet);
+        $em->flush();
+
+        return [$project, $activity, $timesheet];
+    }
+
+    public function testEditActionIsDeniedForLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+
+        [, , $timesheet] = $this->createLockedProjectWithTimesheet($user, '-1 month', '-2 months', '-2 months +1 hour');
+
+        $this->request($client, '/timesheet/' . $timesheet->getId() . '/edit');
+        $this->assertAccessDenied($client);
+    }
+
+    public function testDuplicateActionIsDeniedForLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+
+        [, , $timesheet] = $this->createLockedProjectWithTimesheet($user, '-1 month', '-2 months', '-2 months +1 hour');
+
+        $this->request($client, '/timesheet/' . $timesheet->getId() . '/duplicate');
+        $this->assertAccessDenied($client);
+    }
+
+    public function testEditActionIsAllowedAfterLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+
+        // the record starts after the lock date and is therefore not affected
+        [, , $timesheet] = $this->createLockedProjectWithTimesheet($user, '-1 month', '-2 hours', '-1 hour');
+
+        $this->request($client, '/timesheet/' . $timesheet->getId() . '/edit');
+        self::assertTrue($client->getResponse()->isSuccessful());
+    }
+
+    public function testMultiDeleteSkipsLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+
+        [, , $locked] = $this->createLockedProjectWithTimesheet($user, '-1 month', '-2 months', '-2 months +1 hour', ' locked');
+        [, , $unlocked] = $this->createLockedProjectWithTimesheet($user, null, '-2 months', '-2 months +1 hour', ' open');
+
+        $this->assertAccessIsGranted($client, '/timesheet/');
+
+        $form = $client->getCrawler()->filter('form[name=multi_update_table]')->form();
+        $node = $form->getFormNode();
+        $node->setAttribute('action', $this->createUrl('/timesheet/multi-delete'));
+
+        $em = $this->getEntityManager();
+        $ids = [];
+        foreach ($em->getRepository(Timesheet::class)->findAll() as $timesheet) {
+            $ids[] = $timesheet->getId();
+        }
+        self::assertCount(2, $ids);
+
+        $client->submit($form, [
+            'multi_update_table' => [
+                'entities' => implode(',', $ids)
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
+
+        $em->clear();
+        // the locked record survived, the other one was deleted
+        self::assertEquals(1, $em->getRepository(Timesheet::class)->count([]));
+        self::assertInstanceOf(Timesheet::class, $em->getRepository(Timesheet::class)->find($locked->getId()));
+        self::assertNull($em->getRepository(Timesheet::class)->find($unlocked->getId()));
+    }
+
+    public function testMultiUpdateCannotMoveRecordsIntoLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+
+        // the record itself is not locked, but the project it should be moved to is
+        [, , $open] = $this->createLockedProjectWithTimesheet($user, null, '-2 months', '-2 months +1 hour', ' open');
+        [$locked, $lockedActivity] = $this->createLockedProjectWithTimesheet($user, '-1 month', '-2 hours', '-1 hour', ' locked');
+
+        $this->assertAccessIsGranted($client, '/timesheet/');
+
+        $form = $client->getCrawler()->filter('form[name=multi_update_table]')->form();
+        $form->getFormNode()->setAttribute('action', $this->createUrl('/timesheet/multi-update'));
+        $client->submit($form, [
+            'multi_update_table' => [
+                'entities' => (string) $open->getId()
+            ]
+        ]);
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        // the project and activity choices are rendered dynamically, so the values are posted directly
+        $form = $client->getCrawler()->filter('form[name=timesheet_multi_update]')->form();
+        $values = $form->getPhpValues();
+        $values['timesheet_multi_update']['project'] = $locked->getId();
+        $values['timesheet_multi_update']['activity'] = $lockedActivity->getId();
+        $this->request($client, '/timesheet/multi-update', 'POST', $values);
+
+        // the batch update is rejected as a whole and the form is shown again with the error
+        self::assertTrue($client->getResponse()->isSuccessful());
+        self::assertStringContainsString('The project is locked for the selected times.', (string) $client->getResponse()->getContent());
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        $reloaded = $em->getRepository(Timesheet::class)->find($open->getId());
+        self::assertInstanceOf(Timesheet::class, $reloaded);
+        self::assertNotEquals($locked->getId(), $reloaded->getProject()?->getId(), 'A record was bulk-moved into a locked project period.');
+    }
+
+    public function testMultiUpdateStillMovesRecordsToUnlockedProjects(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+
+        [, , $record] = $this->createLockedProjectWithTimesheet($user, null, '-2 hours', '-1 hour', ' source');
+        // the target project has a lock, but it ends before the date of the record
+        [$target, $targetActivity] = $this->createLockedProjectWithTimesheet($user, '-1 month', '-2 hours', '-1 hour', ' target');
+
+        $this->assertAccessIsGranted($client, '/timesheet/');
+
+        $form = $client->getCrawler()->filter('form[name=multi_update_table]')->form();
+        $form->getFormNode()->setAttribute('action', $this->createUrl('/timesheet/multi-update'));
+        $client->submit($form, [
+            'multi_update_table' => [
+                'entities' => (string) $record->getId()
+            ]
+        ]);
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_multi_update]')->form();
+        $values = $form->getPhpValues();
+        $values['timesheet_multi_update']['project'] = $target->getId();
+        $values['timesheet_multi_update']['activity'] = $targetActivity->getId();
+        $this->request($client, '/timesheet/multi-update', 'POST', $values);
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        $reloaded = $em->getRepository(Timesheet::class)->find($record->getId());
+        self::assertInstanceOf(Timesheet::class, $reloaded);
+        self::assertEquals($target->getId(), $reloaded->getProject()?->getId());
+    }
+
+    public function testTimesheetActionsAreHiddenForLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+
+        [, , $timesheet] = $this->createLockedProjectWithTimesheet($user, '-1 month', '-2 months', '-2 months +1 hour');
+
+        $this->assertAccessIsGranted($client, '/timesheet/');
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+
+        self::assertStringNotContainsString('/timesheet/' . $timesheet->getId() . '/edit', $content);
+        self::assertStringNotContainsString('/timesheet/' . $timesheet->getId() . '/duplicate', $content);
+        self::assertStringNotContainsString('/timesheet/' . $timesheet->getId() . '/delete', $content);
     }
 }

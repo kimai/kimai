@@ -12,6 +12,7 @@ namespace App\Tests\Validator\Constraints;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\Timesheet;
 use App\Form\MultiUpdate\TimesheetMultiUpdateDTO;
 use App\Validator\Constraints\TimesheetMultiUpdate as TimesheetMultiUpdateConstraint;
 use App\Validator\Constraints\TimesheetMultiUpdateValidator;
@@ -132,5 +133,74 @@ class TimesheetMultiUpdateValidatorTest extends ConstraintValidatorTestCase
             ->atPath('property.path.customer')
             ->setCode(TimesheetMultiUpdateConstraint::DISABLED_CUSTOMER_ERROR)
             ->assertRaised();
+    }
+
+    private function createLockedProjectDto(?string $lockedUntil, string $begin): TimesheetMultiUpdateDTO
+    {
+        $project = new Project();
+        $project->setName('foo');
+        $project->setCustomer(new Customer('bar'));
+        if ($lockedUntil !== null) {
+            $project->setLockedUntil(new \DateTimeImmutable($lockedUntil));
+        }
+
+        $activity = new Activity();
+        $activity->setName('an activity');
+
+        $timesheet = new Timesheet();
+        $timesheet->setBegin(new \DateTime($begin));
+
+        $dto = new TimesheetMultiUpdateDTO();
+        $dto->setEntities([$timesheet]);
+        $dto->setActivity($activity);
+        $dto->setProject($project);
+
+        return $dto;
+    }
+
+    public function testCannotAssignProjectWithLockedPeriod(): void
+    {
+        // the selected records would end up inside the locked period of the new project
+        $dto = $this->createLockedProjectDto('2020-06-30 23:59:59', '2020-06-15 10:00:00');
+
+        $this->validator->validate($dto, new TimesheetMultiUpdateConstraint(['message' => 'myMessage']));
+
+        $this->buildViolation('The project is locked for the selected times.')
+            ->atPath('property.path.project')
+            ->setCode(TimesheetMultiUpdateConstraint::LOCKED_PROJECT_ERROR)
+            ->assertRaised();
+    }
+
+    public function testCanAssignProjectWhenRecordsAreAfterTheLockedPeriod(): void
+    {
+        $dto = $this->createLockedProjectDto('2020-06-30 23:59:59', '2020-07-01 00:00:00');
+
+        $this->validator->validate($dto, new TimesheetMultiUpdateConstraint(['message' => 'myMessage']));
+
+        $this->assertNoViolation();
+    }
+
+    public function testCanAssignProjectWithoutLockDate(): void
+    {
+        $dto = $this->createLockedProjectDto(null, '2020-06-15 10:00:00');
+
+        $this->validator->validate($dto, new TimesheetMultiUpdateConstraint(['message' => 'myMessage']));
+
+        $this->assertNoViolation();
+    }
+
+    public function testLockedProjectIsOnlyReportedOnce(): void
+    {
+        // several locked records must not produce one violation each
+        $dto = $this->createLockedProjectDto('2020-06-30 23:59:59', '2020-06-15 10:00:00');
+        $second = new Timesheet();
+        $second->setBegin(new \DateTime('2020-06-16 10:00:00'));
+        $entities = $dto->getEntities();
+        $entities[] = $second;
+        $dto->setEntities($entities);
+
+        $this->validator->validate($dto, new TimesheetMultiUpdateConstraint(['message' => 'myMessage']));
+
+        self::assertCount(1, $this->context->getViolations());
     }
 }
