@@ -62,6 +62,23 @@ if [[ $RESET_VOLUMES -eq 1 ]]; then
     docker compose --env-file .env -f docker-compose.yml down -v --remove-orphans
 fi
 
+# Build frontend assets if needed (ensure public/build exists in the image context)
+if [ -f "$REPO_ROOT/package.json" ]; then
+  echo "==> Building frontend assets (production)"
+  # prefer pnpm if lockfile exists
+  if [ -f "$REPO_ROOT/pnpm-lock.yaml" ]; then
+    if ! command -v pnpm >/dev/null 2>&1; then
+      echo "pnpm not found; installing local pnpm client via npm..."
+      npm install -g pnpm || true
+    fi
+    pnpm --prefix "$REPO_ROOT" install --frozen-lockfile
+    NODE_ENV=production pnpm --prefix "$REPO_ROOT" run build
+  else
+    npm --prefix "$REPO_ROOT" ci
+    NODE_ENV=production npm --prefix "$REPO_ROOT" run build
+  fi
+fi
+
 echo "==> [4/7] Building application image (hardened apache variant)"
 docker build --build-arg BASE=apache --build-arg KIMAI=devsecops -t kimai-devsecops:local "$REPO_ROOT"
 
