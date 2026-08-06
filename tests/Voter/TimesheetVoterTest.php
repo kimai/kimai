@@ -195,7 +195,7 @@ class TimesheetVoterTest extends AbstractVoterTestCase
         $timesheet = self::getTimesheet($user);
         $timesheet->setBegin(new \DateTime('2020-06-15 10:00:00'));
         $timesheet->setEnd(new \DateTime('2020-06-15 12:00:00'));
-        $timesheet->getProject()?->setLockedUntil(new \DateTime('2020-06-30 23:59:59'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTimeImmutable('2020-06-30 23:59:59'));
 
         $this->assertVote($user, $timesheet, $attribute, $expected);
     }
@@ -224,7 +224,7 @@ class TimesheetVoterTest extends AbstractVoterTestCase
         // started inside the locked period and never stopped
         $timesheet = self::getTimesheet($user);
         $timesheet->setBegin(new \DateTime('2020-06-15 10:00:00'));
-        $timesheet->getProject()?->setLockedUntil(new \DateTime('2020-06-30 23:59:59'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTimeImmutable('2020-06-30 23:59:59'));
 
         $this->assertVote($user, $timesheet, $attribute, $expected);
     }
@@ -250,7 +250,7 @@ class TimesheetVoterTest extends AbstractVoterTestCase
 
         $timesheet = self::getTimesheet($user);
         $timesheet->setBegin(new \DateTime('2020-07-01 00:00:00'));
-        $timesheet->getProject()?->setLockedUntil(new \DateTime('2020-06-30 23:59:59'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTimeImmutable('2020-06-30 23:59:59'));
 
         $this->assertVote($user, $timesheet, $attribute, VoterInterface::ACCESS_GRANTED);
     }
@@ -263,7 +263,7 @@ class TimesheetVoterTest extends AbstractVoterTestCase
         // the very last second of the lock date is still locked
         $timesheet->setBegin(new \DateTime('2020-06-30 23:59:59'));
         $timesheet->setEnd(new \DateTime('2020-07-02 10:00:00'));
-        $timesheet->getProject()?->setLockedUntil(new \DateTime('2020-06-30 23:59:59'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTimeImmutable('2020-06-30 23:59:59'));
 
         $this->assertVote($user, $timesheet, 'edit', VoterInterface::ACCESS_DENIED);
 
@@ -281,7 +281,7 @@ class TimesheetVoterTest extends AbstractVoterTestCase
             $timesheet = self::getTimesheet($user);
             $timesheet->setBegin(new \DateTime('2020-06-15 10:00:00'));
             $timesheet->setEnd(new \DateTime('2020-06-15 12:00:00'));
-            $timesheet->getProject()?->setLockedUntil(new \DateTime('2020-06-30 23:59:59'));
+            $timesheet->getProject()?->setLockedUntil(new \DateTimeImmutable('2020-06-30 23:59:59'));
 
             $this->assertVote($user, $timesheet, 'edit', VoterInterface::ACCESS_DENIED);
             $this->assertVote($user, $timesheet, 'delete', VoterInterface::ACCESS_DENIED);
@@ -296,7 +296,7 @@ class TimesheetVoterTest extends AbstractVoterTestCase
         // started before the lock date and still running
         $timesheet = self::getTimesheet($user);
         $timesheet->setBegin(new \DateTime('-2 months'));
-        $timesheet->getProject()?->setLockedUntil(new \DateTime('-1 month'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTimeImmutable('-1 month'));
 
         $this->assertVote($user, $timesheet, 'stop', VoterInterface::ACCESS_DENIED);
     }
@@ -307,7 +307,7 @@ class TimesheetVoterTest extends AbstractVoterTestCase
 
         $timesheet = self::getTimesheet($user);
         $timesheet->setBegin(new \DateTime('-2 days'));
-        $timesheet->getProject()?->setLockedUntil(new \DateTime('-1 month'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTimeImmutable('-1 month'));
 
         $this->assertVote($user, $timesheet, 'stop', VoterInterface::ACCESS_GRANTED);
     }
@@ -321,7 +321,7 @@ class TimesheetVoterTest extends AbstractVoterTestCase
         $timesheet = self::getTimesheet($user);
         $timesheet->setBegin(new \DateTime('-2 months'));
         $timesheet->setEnd(new \DateTime('-2 months +1 hour'));
-        $timesheet->getProject()?->setLockedUntil(new \DateTime('-1 month'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTimeImmutable('-1 month'));
 
         $this->assertVote($user, $timesheet, 'start', VoterInterface::ACCESS_GRANTED);
         // copying keeps the original dates and is therefore forbidden
@@ -336,7 +336,7 @@ class TimesheetVoterTest extends AbstractVoterTestCase
         $timesheet = self::getTimesheet($user);
         $timesheet->setBegin(new \DateTime('-2 months'));
         $timesheet->setEnd(new \DateTime('-2 months +1 hour'));
-        $timesheet->getProject()?->setLockedUntil(new \DateTime('+1 month'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTimeImmutable('+1 month'));
 
         $this->assertVote($user, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
     }

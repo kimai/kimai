@@ -871,7 +871,7 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         $project->setName('locked project' . $suffix);
         $project->setCustomer($customer);
         if ($lockedUntil !== null) {
-            $project->setLockedUntil(new \DateTime($lockedUntil));
+            $project->setLockedUntil(new \DateTimeImmutable($lockedUntil));
         }
         $em->persist($project);
 

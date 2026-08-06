@@ -115,14 +115,14 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     /**
      * Timesheets up to and including this date are locked and cannot be changed
      *
-     * Attention: Accessor MUST be used, otherwise date will be serialized in UTC.
+     * This is a calendar day and NOT a point in time: it is stored without a timezone,
+     * so the locked period is the same for every user, no matter where they work.
      */
-    #[ORM\Column(name: 'locked_until', type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(name: 'locked_until', type: Types::DATE_IMMUTABLE, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
-    #[Serializer\Type(name: "DateTime<'Y-m-d'>")]
-    #[Serializer\Accessor(getter: 'getLockedUntil')]
-    private ?\DateTime $lockedUntil = null;
+    #[Serializer\Type(name: "DateTimeImmutable<'Y-m-d'>")]
+    private ?\DateTimeImmutable $lockedUntil = null;
     #[ORM\Column(name: 'timezone', type: Types::STRING, length: 64, nullable: true)]
     private ?string $timezone = null;
     private bool $localized = false;
@@ -304,10 +304,6 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
             $this->end->setTimezone($timezone);
         }
 
-        if (null !== $this->lockedUntil) {
-            $this->lockedUntil->setTimezone($timezone);
-        }
-
         $this->localized = true;
     }
 
@@ -369,20 +365,15 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     }
 
     #[Exporter\Expose(name: 'lockedUntil', label: 'project_locked_until', type: 'date')]
-    public function getLockedUntil(): ?\DateTime
+    public function getLockedUntil(): ?\DateTimeImmutable
     {
-        $this->localizeDates();
-
         return $this->lockedUntil;
     }
 
-    public function setLockedUntil(?\DateTime $lockedUntil): Project
+    public function setLockedUntil(?\DateTimeImmutable $lockedUntil): Project
     {
-        $this->lockedUntil = $lockedUntil;
-
-        if (null !== $lockedUntil) {
-            $this->timezone = $lockedUntil->getTimezone()->getName();
-        }
+        // only the day matters, the time is dropped to keep the value comparable
+        $this->lockedUntil = $lockedUntil?->setTime(0, 0, 0);
 
         return $this;
     }
@@ -390,20 +381,17 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     /**
      * Whether timesheets at the given date are locked and must not be created, changed or deleted.
      *
-     * The configured date is a day, which is always locked entirely, no matter
-     * which time was stored along with it.
+     * Calendar days are compared and NOT points in time: a record which is shown on the lock date
+     * is locked for every user, independent of the timezone they are working in.
      */
     public function isLockedAtDate(\DateTimeInterface $dateTime): bool
     {
-        $lockedUntil = $this->getLockedUntil();
-
-        if ($lockedUntil === null) {
+        if ($this->lockedUntil === null) {
             return false;
         }
 
-        $lockedUntil = (clone $lockedUntil)->setTime(23, 59, 59, 999999);
-
-        return $dateTime <= $lockedUntil;
+        // "Ymd" gives a comparable number like 20200615
+        return (int) $dateTime->format('Ymd') <= (int) $this->lockedUntil->format('Ymd');
     }
 
     public function isGlobalActivities(): bool

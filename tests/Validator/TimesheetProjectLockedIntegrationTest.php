@@ -49,7 +49,7 @@ class TimesheetProjectLockedIntegrationTest extends KernelTestCase
         $project->setName('a project');
         $project->setCustomer($customer);
         if ($lockedUntil !== null) {
-            $project->setLockedUntil(new \DateTime($lockedUntil));
+            $project->setLockedUntil(new \DateTimeImmutable($lockedUntil));
         }
 
         $activity = new Activity();

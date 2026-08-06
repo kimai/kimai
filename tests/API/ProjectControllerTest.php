@@ -18,6 +18,7 @@ use App\Entity\ProjectRate;
 use App\Entity\RateInterface;
 use App\Entity\Team;
 use App\Entity\User;
+use App\Entity\UserPreference;
 use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\VisibilityInterface;
@@ -300,7 +301,7 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         $project->setOrderDate($orderDate);
         $project->setStart($startDate);
         $project->setEnd($endDate);
-        $project->setLockedUntil(new \DateTime('2021-01-31 23:59:59', new \DateTimeZone('Pacific/Tongatapu')));
+        $project->setLockedUntil(new \DateTimeImmutable('2021-01-31 23:59:59', new \DateTimeZone('Pacific/Tongatapu')));
         $em->persist($project);
         $em->flush();
 
@@ -1099,6 +1100,61 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         self::assertInstanceOf(Project::class, $project);
         self::assertNull($project->getLockedUntil());
         self::assertFalse($project->isLockedAtDate(new \DateTime('2020-06-30 12:00:00')));
+    }
+
+    /**
+     * @return \Generator<array{0: string, 1: string}>
+     */
+    public static function getLockedUntilTimezones(): \Generator
+    {
+        // [timezone of the acting user, value submitted in the HTML5 date-time format]
+        yield ['Pacific/Kiritimati', '2026-08-06T00:00:00'];
+        yield ['Pacific/Kiritimati', '2026-08-06T23:59:59'];
+        yield ['Pacific/Kiritimati', '2026-08-06T12:34:56'];
+        yield ['Pacific/Midway', '2026-08-06T00:00:00'];
+        yield ['Pacific/Midway', '2026-08-06T23:59:59'];
+        yield ['Europe/Vienna', '2026-08-06T23:59:59'];
+        yield ['Asia/Tokyo', '2026-08-06T23:59:59'];
+        yield ['UTC', '2026-08-06T23:59:59'];
+    }
+
+    /**
+     * The lock date is a calendar day. Handing over a time of day - from any timezone -
+     * must never move it to another day, neither in the database nor in the response.
+     */
+    #[DataProvider('getLockedUntilTimezones')]
+    public function testLockedUntilKeepsTheDayWhenATimeIsSubmitted(string $timezone, string $value): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $em = $this->getEntityManager();
+        $user = $em->getRepository(User::class)->findOneBy(['username' => UserFixtures::USERNAME_ADMIN]);
+        self::assertInstanceOf(User::class, $user);
+        $user->setPreferenceValue(UserPreference::TIMEZONE, $timezone);
+        $em->persist($user);
+        $em->flush();
+
+        $json = json_encode(['lockedUntil' => $value]);
+        self::assertIsString($json);
+        $this->request($client, '/api/projects/1', 'PATCH', [], $json);
+        self::assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        self::assertEquals('2026-08-06', $result['lockedUntil'], 'The API response shifted the day in ' . $timezone);
+
+        $stored = $em->getConnection()->fetchOne('SELECT locked_until FROM kimai2_projects WHERE id = 1');
+        self::assertEquals('2026-08-06', $stored, 'The stored day shifted in ' . $timezone);
+
+        $em->clear();
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $project);
+        $zone = new \DateTimeZone($timezone);
+        self::assertTrue($project->isLockedAtDate(new \DateTime('2026-08-06 00:00:00', $zone)), $timezone);
+        self::assertTrue($project->isLockedAtDate(new \DateTime('2026-08-06 23:59:59', $zone)), $timezone);
+        self::assertFalse($project->isLockedAtDate(new \DateTime('2026-08-07 00:00:00', $zone)), $timezone);
     }
 
     public function testProjectWithoutLockedUntilIsNull(): void

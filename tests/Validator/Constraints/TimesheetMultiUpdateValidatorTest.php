@@ -141,7 +141,7 @@ class TimesheetMultiUpdateValidatorTest extends ConstraintValidatorTestCase
         $project->setName('foo');
         $project->setCustomer(new Customer('bar'));
         if ($lockedUntil !== null) {
-            $project->setLockedUntil(new \DateTime($lockedUntil));
+            $project->setLockedUntil(new \DateTimeImmutable($lockedUntil));
         }
 
         $activity = new Activity();

@@ -2185,7 +2185,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $project->setCustomer($customer);
         $project->setVisible(true);
         if ($lockedUntil !== null) {
-            $project->setLockedUntil(new \DateTime($lockedUntil, new \DateTimeZone(self::TEST_TIMEZONE)));
+            $project->setLockedUntil(new \DateTimeImmutable($lockedUntil, new \DateTimeZone(self::TEST_TIMEZONE)));
         }
         $em->persist($project);
 

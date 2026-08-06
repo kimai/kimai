@@ -44,7 +44,7 @@ class TimesheetProjectLockedValidatorTest extends ConstraintValidatorTestCase
         $project->setCustomer(new Customer('bar'));
 
         if ($lockedUntil !== null) {
-            $project->setLockedUntil(new \DateTime($lockedUntil));
+            $project->setLockedUntil(new \DateTimeImmutable($lockedUntil));
         }
 
         return $project;

@@ -53,9 +53,12 @@ class ProjectEditForm extends AbstractType
             'model_timezone' => $options['timezone'],
             'view_timezone' => $options['timezone'],
         ];
+        // date-only fields must not be converted between timezones, otherwise the day would shift
+        $dateOnlyOptions = [];
         // primarily for API usage, where we cannot use a user/locale specific format
         if (null !== $options['date_format']) {
             $dateTimeOptions['format'] = $options['date_format'];
+            $dateOnlyOptions['format'] = $options['date_format'];
         }
 
         $builder
@@ -98,11 +101,12 @@ class ProjectEditForm extends AbstractType
                 'required' => false,
                 'force_time' => 'end',
             ]))
-            ->add('lockedUntil', DatePickerType::class, array_merge($dateTimeOptions, [
+            // a plain calendar day without timezone
+            ->add('lockedUntil', DatePickerType::class, array_merge($dateOnlyOptions, [
                 'label' => 'project_locked_until',
                 'help' => 'help.project_locked_until',
                 'required' => false,
-                'force_time' => 'end',
+                'input' => 'datetime_immutable',
             ]))
             ->add('customer', CustomerType::class, array_merge([
                 'placeholder' => ($isNew && null === $customer) ? '' : false,
