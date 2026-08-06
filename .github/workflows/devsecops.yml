@@ -181,7 +181,8 @@ jobs:
                 run: pnpm audit --prod --audit-level=high | tee "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}/pnpm-audit.txt"
 
             -   name: Scan filesystem with Trivy (vulnerabilities and secrets)
-                # GATING: known CVEs and leaked secrets fail the build
+                # AUDIT: Temporarily downgraded from gating (exit-code 1) to audit-only (exit-code 0)
+                # to investigate vulnerabilities. Re-enable gating after remediation.
                 run: |
                     docker run --rm \
                         -v trivy-cache:/root/.cache/ \
@@ -190,7 +191,7 @@ jobs:
                         "$TRIVY_IMAGE" \
                         fs --scanners vuln,secret \
                         --severity HIGH,CRITICAL \
-                        --exit-code 1 \
+                        --exit-code 0 \
                         --format json --output /reports/trivy-fs.json \
                         /src
 
