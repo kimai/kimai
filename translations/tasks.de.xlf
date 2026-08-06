@@ -122,29 +122,13 @@
         <source>board.private</source>
         <target>Privates Board</target>
       </trans-unit>
-      <trans-unit id="ruHAlfl" resname="board.column.todo">
-        <source>board.column.todo</source>
-        <target>To Do</target>
-      </trans-unit>
-      <trans-unit id="Mbeo_WG" resname="board.column.waiting">
-        <source>board.column.waiting</source>
-        <target>Waiting</target>
-      </trans-unit>
-      <trans-unit id="RN6UMwt" resname="board.column.progress">
-        <source>board.column.progress</source>
-        <target>In Arbeit</target>
-      </trans-unit>
-      <trans-unit id="o6eg_hf" resname="board.column.done">
-        <source>board.column.done</source>
-        <target>Erledigt</target>
-      </trans-unit>
       <trans-unit id="Wq09TUJ" resname="board.empty_state">
         <source>board.empty_state</source>
         <target>Du hast noch keine Boards. Lege jetzt eines an.</target>
       </trans-unit>
       <trans-unit id="7lJ6pzI" resname="board.limit_reached">
         <source>board.limit_reached</source>
-        <target>Du hast das Limit von 3 privaten Boards erreicht.</target>
+        <target>Du hast das Limit von %limit% privaten Boards erreicht.</target>
       </trans-unit>
       <trans-unit id="K.9A2XH" resname="board.close_task">
         <source>board.close_task</source>
@@ -157,6 +141,42 @@
       <trans-unit id="_H1KEu_" resname="board.unassign_user">
         <source>board.unassign_user</source>
         <target>Den zugewiesenen Benutzer aus dieser Aufgabe entfernen?</target>
+      </trans-unit>
+      <trans-unit id="TuoG.8m" resname="board.remove_task">
+        <source>board.remove_task</source>
+        <target>Vom Board entfernen</target>
+      </trans-unit>
+      <trans-unit id="e3APxiK" resname="board.remove_task_confirm">
+        <source>board.remove_task_confirm</source>
+        <target>Diese Aufgabe vom Board entfernen?</target>
+      </trans-unit>
+      <trans-unit id="wkzeXtZ" resname="board.move_to">
+        <source>board.move_to</source>
+        <target>Verschieben nach</target>
+      </trans-unit>
+      <trans-unit id="hhrw1nb" resname="board.columns">
+        <source>board.columns</source>
+        <target>Spalten</target>
+      </trans-unit>
+      <trans-unit id="9.F1FZS" resname="board.add_column">
+        <source>board.add_column</source>
+        <target>Spalte hinzufügen</target>
+      </trans-unit>
+      <trans-unit id="SPiQMlQ" resname="board.column.limit">
+        <source>board.column.limit</source>
+        <target>WIP-Limit</target>
+      </trans-unit>
+      <trans-unit id="ad2nQdr" resname="board.columns_invalid">
+        <source>board.columns_invalid</source>
+        <target>Die Spalten-Konfiguration ist ungültig.</target>
+      </trans-unit>
+      <trans-unit id="lu5uNlv" resname="board.filter">
+        <source>board.filter</source>
+        <target>Aufgaben filtern</target>
+      </trans-unit>
+      <trans-unit id="9rA4ixj" resname="board.only_mine">
+        <source>board.only_mine</source>
+        <target>Nur meine Aufgaben</target>
       </trans-unit>
     </body>
   </file>
