@@ -42,6 +42,10 @@
         <source>The project is locked until %date%, please choose a later date.</source>
         <target>The project is locked until %date%, please choose a later date.</target>
       </trans-unit>
+      <trans-unit id="vgsD_Cw" resname="The project is locked for the selected times.">
+        <source>The project is locked for the selected times.</source>
+        <target>The project is locked for the selected times.</target>
+      </trans-unit>
       <trans-unit id="Jz1y3yB" resname="Duration cannot be zero.">
         <source>Duration cannot be zero.</source>
         <target>An empty duration is not allowed.</target>

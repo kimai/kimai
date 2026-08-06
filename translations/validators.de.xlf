@@ -58,6 +58,10 @@
         <source>The project is locked until %date%, please choose a later date.</source>
         <target>Das Projekt ist bis zum %date% gesperrt, bitte wählen Sie ein späteres Datum.</target>
       </trans-unit>
+      <trans-unit id="vgsD_Cw" resname="The project is locked for the selected times.">
+        <source>The project is locked for the selected times.</source>
+        <target>Das Projekt ist für die ausgewählten Zeiten gesperrt.</target>
+      </trans-unit>
       <trans-unit id="u2wjm2i" resname="You already have an entry for this time.">
         <source>You already have an entry for this time.</source>
         <target>Es existiert bereits ein Eintrag für diesen Zeitpunkt.</target>

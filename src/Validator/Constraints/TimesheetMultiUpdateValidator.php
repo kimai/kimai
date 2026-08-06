@@ -9,6 +9,7 @@
 
 namespace App\Validator\Constraints;
 
+use App\Entity\Timesheet;
 use App\Form\MultiUpdate\TimesheetMultiUpdateDTO;
 use App\Validator\Constraints\TimesheetMultiUpdate as TimesheetMultiUpdateConstraint;
 use Symfony\Component\Validator\Constraint;
@@ -110,6 +111,25 @@ final class TimesheetMultiUpdateValidator extends ConstraintValidator
                     ->setTranslationDomain('validators')
                     ->setCode(TimesheetMultiUpdateConstraint::DISABLED_CUSTOMER_ERROR)
                     ->addViolation();
+            }
+
+            // batch updates are saved without validating each timesheet, so records that would be
+            // moved into the locked period of the new project have to be rejected right here
+            foreach ($dto->getEntities() as $timesheet) {
+                if (!$timesheet instanceof Timesheet) {
+                    continue;
+                }
+
+                $begin = $timesheet->getBegin();
+                if ($begin !== null && $project->isLockedAtDate($begin)) {
+                    $context->buildViolation('The project is locked for the selected times.')
+                        ->atPath('project')
+                        ->setTranslationDomain('validators')
+                        ->setCode(TimesheetMultiUpdateConstraint::LOCKED_PROJECT_ERROR)
+                        ->addViolation();
+
+                    break;
+                }
             }
         }
     }
