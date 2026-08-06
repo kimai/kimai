@@ -149,7 +149,11 @@ jobs:
                 run: mkdir -p "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}"
 
             -   name: Audit PHP dependencies (composer audit)
-                run: composer audit --locked --abandoned=report --format=plain | tee "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}/composer-audit.txt"
+                # GATING: pipefail is required, otherwise the exit status is
+                # tee's (always 0) and advisories would never fail the build
+                run: |
+                    set -o pipefail
+                    composer audit --locked --abandoned=report --format=plain | tee "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}/composer-audit.txt"
 
             -   name: Setup Node.js for the JS audit
                 # Must run BEFORE pnpm/action-setup: the pnpm self-installer runs on
@@ -178,22 +182,40 @@ jobs:
                 run: pnpm install --frozen-lockfile --ignore-scripts
 
             -   name: Audit JS dependencies (pnpm audit)
-                run: pnpm audit --prod --audit-level=high | tee "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}/pnpm-audit.txt"
+                # GATING: see the composer audit step - without pipefail this
+                # reports findings but always exits 0
+                run: |
+                    set -o pipefail
+                    pnpm audit --prod --audit-level=high | tee "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}/pnpm-audit.txt"
 
             -   name: Scan filesystem with Trivy (vulnerabilities and secrets)
-                # AUDIT: Temporarily downgraded from gating (exit-code 1) to audit-only (exit-code 0)
-                # to investigate vulnerabilities. Re-enable gating after remediation.
+                # GATING: known CVEs and leaked secrets fail the build.
+                # The scan itself never gates (--exit-code 0) - it only writes the
+                # JSON report. "trivy convert" then renders that same report as a
+                # table on the console AND applies the gate, so a failure here
+                # names the offending package instead of printing a bare exit
+                # code with the findings hidden in a file on the runner.
                 run: |
+                    set -o pipefail
                     docker run --rm \
                         -v trivy-cache:/root/.cache/ \
                         -v "$PWD:/src" \
                         -v "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}:/reports" \
+                        -e TRIVY_SKIP_VERSION_CHECK=true \
                         "$TRIVY_IMAGE" \
                         fs --scanners vuln,secret \
                         --severity HIGH,CRITICAL \
                         --exit-code 0 \
+                        --no-progress \
                         --format json --output /reports/trivy-fs.json \
                         /src
+                    docker run --rm \
+                        -v "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}:/reports" \
+                        -e TRIVY_SKIP_VERSION_CHECK=true \
+                        "$TRIVY_IMAGE" \
+                        convert --format table \
+                        --exit-code 1 \
+                        /reports/trivy-fs.json
 
             -   name: Scan configuration with Trivy (misconfig, audit only)
                 # AUDIT: best-practice deviations (e.g. the upstream Dockerfile
@@ -208,6 +230,7 @@ jobs:
                         fs --scanners misconfig \
                         --severity MEDIUM,HIGH,CRITICAL \
                         --exit-code 0 \
+                        --no-progress \
                         --format json --output /reports/trivy-misconfig.json \
                         /src
 
@@ -318,6 +341,7 @@ jobs:
                         "$TRIVY_IMAGE" \
                         image --severity HIGH,CRITICAL \
                         --exit-code 0 \
+                        --no-progress \
                         --format json --output /reports/trivy-image.json \
                         kimai-devsecops:local
 
