@@ -2110,6 +2110,10 @@
         <source>reopen</source>
         <target state="translated">Réouvrir</target>
       </trans-unit>
+      <trans-unit id="nlJ2pW2" resname="invoice_email" xml:space="preserve">
+        <source>invoice_email</source>
+        <target state="translated">E-mail de facturation</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
