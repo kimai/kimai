@@ -294,10 +294,6 @@
         <source>user_auth_password_reset_token_ttl</source>
         <target state="translated">Sekunden bevor ein Passwort vergessen Reset-Link abläuft</target>
       </trans-unit>
-      <trans-unit id="12sQGSo" resname="activity.allow_inline_create">
-        <source>activity.allow_inline_create</source>
-        <target state="translated">Erstellung von Tätigkeiten im Zeiterfassungsformular zulassen</target>
-      </trans-unit>
       <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no">
         <source>copy_teams_on_create</source>
         <target state="translated">Beim Erstellen neuer Einträge Teams vom eingeloggten Benutzer übernehmen</target>

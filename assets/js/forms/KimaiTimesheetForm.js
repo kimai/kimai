@@ -95,13 +95,24 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
         /** @param {CustomEvent} event */
         this._activityListener = (event) => {
             const project = this._project.value;
+            const tempName = event.detail.value;
             /** @type {KimaiAPI} API */
             const API = this.getContainer().getPlugin('api');
             API.post(this._activity.dataset['create'], {
-                name: event.detail.value,
+                name: tempName,
                 project: (project === '' ? null : project),
                 visible: true,
-            }, () => {
+            }, (newActivity) => {
+                // TomSelect created an option with value=name (temp). Replace it
+                // with the real DB id so Symfony's EntityType validation accepts it.
+                const ts = this._activity.tomselect;
+                if (ts && newActivity && newActivity.id !== undefined) {
+                    const realId = String(newActivity.id);
+                    // Remove the temporary option (value=name) and add the real one
+                    ts.removeOption(tempName);
+                    ts.addOption({ value: realId, text: newActivity.name });
+                    ts.addItem(realId, true); // silent=true to avoid re-firing create
+                }
                 this._project.dispatchEvent(new Event('change'));
             });
         };
