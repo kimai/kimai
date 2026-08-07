@@ -38,7 +38,7 @@ final class CustomerMonthlyProjectsRepository
 
         $qb = $this->repository->createQueryBuilder('t');
         $qb
-            ->select('COALESCE(SUM(t.rate), 0) as rate')
+            ->select('COALESCE(SUM(CASE WHEN t.billable = true THEN t.rate ELSE 0 END), 0) as rate')
             ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
             ->addSelect('COALESCE(SUM(t.internalRate), 0) as internalRate')
             ->addSelect('IDENTITY(t.user) as user')

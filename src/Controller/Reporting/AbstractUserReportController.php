@@ -68,6 +68,9 @@ abstract class AbstractUserReportController extends AbstractController
                 if (!isset($data[$projectId]['internalRate'])) {
                     $data[$projectId]['internalRate'] = 0.0;
                 }
+                if (!isset($data[$projectId]['billableRate'])) {
+                    $data[$projectId]['billableRate'] = 0.0;
+                }
                 if (!isset($data[$projectId]['activities'][$activityId]['duration'])) {
                     $data[$projectId]['activities'][$activityId]['duration'] = 0;
                 }
@@ -76,6 +79,9 @@ abstract class AbstractUserReportController extends AbstractController
                 }
                 if (!isset($data[$projectId]['activities'][$activityId]['internalRate'])) {
                     $data[$projectId]['activities'][$activityId]['internalRate'] = 0.0;
+                }
+                if (!isset($data[$projectId]['activities'][$activityId]['billableRate'])) {
+                    $data[$projectId]['activities'][$activityId]['billableRate'] = 0.0;
                 }
                 /** @var StatisticDate $date */
                 foreach ($activityValues['data']->getData() as $date) {
@@ -87,12 +93,15 @@ abstract class AbstractUserReportController extends AbstractController
                     $statisticDate->setTotalDuration($statisticDate->getTotalDuration() + $date->getTotalDuration());
                     $statisticDate->setTotalRate($statisticDate->getTotalRate() + $date->getTotalRate());
                     $statisticDate->setTotalInternalRate($statisticDate->getTotalInternalRate() + $date->getTotalInternalRate());
+                    $statisticDate->setBillableRate($statisticDate->getBillableRate() + $date->getBillableRate());
                     $data[$projectId]['duration'] = $data[$projectId]['duration'] + $date->getTotalDuration();
                     $data[$projectId]['rate'] = $data[$projectId]['rate'] + $date->getTotalRate();
                     $data[$projectId]['internalRate'] = $data[$projectId]['internalRate'] + $date->getTotalInternalRate();
+                    $data[$projectId]['billableRate'] = $data[$projectId]['billableRate'] + $date->getBillableRate();
                     $data[$projectId]['activities'][$activityId]['duration'] = $data[$projectId]['activities'][$activityId]['duration'] + $date->getTotalDuration();
                     $data[$projectId]['activities'][$activityId]['rate'] = $data[$projectId]['activities'][$activityId]['rate'] + $date->getTotalRate();
                     $data[$projectId]['activities'][$activityId]['internalRate'] = $data[$projectId]['activities'][$activityId]['internalRate'] + $date->getTotalInternalRate();
+                    $data[$projectId]['activities'][$activityId]['billableRate'] = $data[$projectId]['activities'][$activityId]['billableRate'] + $date->getBillableRate();
                 }
             }
             $data[$projectId]['data'] = $dailyProjectStatistic;
@@ -124,12 +133,14 @@ abstract class AbstractUserReportController extends AbstractController
                     'duration' => 0,
                     'rate' => 0.0,
                     'internalRate' => 0.0,
+                    'billableRate' => 0.0,
                 ];
             }
             $customers[$customerId]['projects'][$id] = $row;
             $customers[$customerId]['duration'] += $row['duration'];
             $customers[$customerId]['rate'] += $row['rate'];
             $customers[$customerId]['internalRate'] += $row['internalRate'];
+            $customers[$customerId]['billableRate'] += $row['billableRate'];
         }
 
         return $customers;
