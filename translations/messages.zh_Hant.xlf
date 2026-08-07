@@ -1910,6 +1910,10 @@
         <source>Unlock month</source>
         <target state="translated">解鎖月份</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info" xml:space="preserve" approved="yes">
+        <source>contact_info</source>
+        <target state="final">聯繫</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

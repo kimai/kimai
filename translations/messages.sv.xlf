@@ -2082,6 +2082,10 @@
         <source>count_as_expected_time_help</source>
         <target state="translated">När det är aktiverat räknas %type% som arbetade timmar mot de förväntade dagliga timmarna. När det är inaktiverat sätts de förväntade timmarna för dessa dagar till 0. Båda inställningarna ger ett neutralt saldo men påverkar månadssummorna på olika sätt.</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info">
+        <source>contact_info</source>
+        <target state="translated">Kontakt</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

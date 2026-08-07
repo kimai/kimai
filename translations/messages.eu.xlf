@@ -1050,6 +1050,10 @@
         <source>create-timesheet-multiuser</source>
         <target>Erabiltzaile anitzentzat</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info">
+        <source>contact_info</source>
+        <target state="translated">Kontaktua</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

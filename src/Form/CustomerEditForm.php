@@ -72,7 +72,7 @@ class CustomerEditForm extends AbstractType
                 'required' => false,
             ])
             ->add('contact', TextType::class, [
-                'label' => 'contact',
+                'label' => 'contact_person',
                 'required' => false,
             ])
         ;

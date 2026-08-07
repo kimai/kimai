@@ -1994,6 +1994,10 @@
         <source>Beta</source>
         <target state="translated">Ενεργοποιεί μία λειτουργεία προεπισκόπησης που είναι ακόμα σε ανάπτυξη.</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info">
+        <source>contact_info</source>
+        <target state="translated">Επικοινωνία</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

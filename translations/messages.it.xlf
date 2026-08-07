@@ -2082,6 +2082,10 @@
         <source>count_as_expected_time_help</source>
         <target state="final">Se abilitato, %type% verrà conteggiato come ore lavorate ai fini delle ore giornaliere previste. Se disabilitato, le ore previste per questi giorni saranno impostate su 0. Entrambe le impostazioni mantengono un saldo neutro, ma influiscono sui totali mensili in modo diverso.</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info" approved="yes">
+        <source>contact_info</source>
+        <target state="final">Contatto</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

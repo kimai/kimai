@@ -1654,6 +1654,10 @@
         <source>Timesheet</source>
         <target state="translated">Pracovný výkaz</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info">
+        <source>contact_info</source>
+        <target state="translated">Kontakt</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

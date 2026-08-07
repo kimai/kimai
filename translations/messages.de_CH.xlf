@@ -1970,6 +1970,10 @@
         <source>Timesheet</source>
         <target state="translated">Stundenzettel</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info" approved="yes">
+        <source>contact_info</source>
+        <target state="final">Kontakt</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

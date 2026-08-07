@@ -2082,6 +2082,10 @@
         <source>count_as_expected_time_help</source>
         <target state="translated">இயக்கப்பட்டால், %type% என்பது எதிர்பார்க்கப்படும் நாள்தோறும் மணிநேரத்தை நோக்கி வேலை நேரமாக கணக்கிடப்படும். முடக்கப்பட்டால், இந்த நாட்களில் எதிர்பார்க்கப்படும் மணிநேரம் 0 ஆக அமைக்கப்படும். இரண்டு அமைப்புகளும் நடுநிலை சமநிலையை பராமரிக்கின்றன, ஆனால் மாதாந்திர மொத்தத்தை வித்தியாசமாக பாதிக்கும்.</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info" approved="yes" xml:space="preserve">
+        <source>contact_info</source>
+        <target state="final">தொடர்பு</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -780,7 +780,7 @@
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact">
         <source>contact</source>
-        <target>Kontakt</target>
+        <target>Kontaktperson</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">
         <source>address</source>
@@ -2113,6 +2113,10 @@
       <trans-unit id="LfO_otF" resname="reopen">
         <source>reopen</source>
         <target>Wieder öffnen</target>
+      </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info">
+        <source>contact_info</source>
+        <target>Kontakt</target>
       </trans-unit>
     </body>
   </file>

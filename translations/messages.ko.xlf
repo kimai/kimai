@@ -1526,6 +1526,10 @@
         <source>replace</source>
         <target state="translated">바꾸기</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info">
+        <source>contact_info</source>
+        <target state="translated">연락</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
