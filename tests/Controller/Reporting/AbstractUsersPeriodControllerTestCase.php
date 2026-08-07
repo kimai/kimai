@@ -9,6 +9,7 @@
 
 namespace App\Tests\Controller\Reporting;
 
+use App\Entity\Customer;
 use App\Entity\User;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
 use App\Tests\DataFixtures\TimesheetFixtures;
@@ -71,6 +72,32 @@ abstract class AbstractUsersPeriodControllerTestCase extends AbstractControllerB
         self::assertEquals(0, $select->count());
         $cell = $client->getCrawler()->filterXPath("//th[contains(@class, 'reportDataTypeTitle')]");
         self::assertEquals($title, $cell->text());
+    }
+
+    public function testUsersPeriodReportHasCustomerFilter(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->importReportingFixture(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, $this->getReportUrl());
+        $select = $client->getCrawler()->filterXPath("//select[@id='customer']");
+        self::assertEquals(1, $select->count());
+    }
+
+    public function testUsersPeriodReportWithCustomerFilter(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->importReportingFixture(User::ROLE_SUPER_ADMIN);
+
+        $customer = $this->getEntityManager()->getRepository(Customer::class)->findOneBy([]);
+        self::assertInstanceOf(Customer::class, $customer);
+
+        $this->assertAccessIsGranted($client, \sprintf('%s?date=12999119191&customer=%s', $this->getReportUrl(), $customer->getId()));
+
+        $box = $client->getCrawler()->filterXPath(\sprintf("//div[contains(@class, '%s')]", $this->getBoxId()));
+        self::assertEquals(1, $box->count());
+
+        $selected = $client->getCrawler()->filterXPath("//select[@id='customer']/option[@selected]");
+        self::assertEquals((string) $customer->getId(), $selected->attr('value'));
     }
 
     #[DataProvider('getTestData')]
