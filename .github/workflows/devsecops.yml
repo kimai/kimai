@@ -90,6 +90,14 @@ jobs:
             -   name: Run existing security-focused suites
                 run: vendor/bin/phpunit tests/Security/ tests/Voter/ tests/API/AuthenticationTest.php
 
+            -   name: Run API access-control suites
+                # These controllers enforce object-level authorization through
+                # #[IsGranted] attributes and voters, but their tests were not run
+                # by this job - a dropped scope on the Team or Invoice endpoints
+                # passed the whole pipeline. Both real advisories reviewed for this
+                # project sat in exactly this gap. ~25s for the three files.
+                run: vendor/bin/phpunit tests/API/TimesheetControllerTest.php tests/API/TeamControllerTest.php tests/API/InvoiceControllerTest.php
+
     sast:
         name: Static analysis (PHPStan, PhpCsFixer, Semgrep)
         runs-on: [self-hosted, linux, kimai-devsecops]
@@ -356,6 +364,7 @@ jobs:
                         image --severity HIGH,CRITICAL \
                         --exit-code 0 \
                         --no-progress \
+                        --ignore-unfixed \
                         --format json --output /reports/trivy-image.json \
                         kimai-devsecops:local
 
@@ -363,7 +372,12 @@ jobs:
                 run: devsecops/validation/smoke-test.sh "$KIMAI_DEPLOY_URL"
 
             -   name: Configuration audit (headers, HTTPS, debug mode)
-                run: devsecops/validation/security-audit.sh "$KIMAI_DEPLOY_URL" | tee "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}/security-audit.txt"
+                # GATING: same tee trap as the composer/pnpm audit steps - without
+                # pipefail the exit status is tee's, so security-audit.sh could
+                # print "Configuration audit FAILED" and still pass the build
+                run: |
+                    set -o pipefail
+                    devsecops/validation/security-audit.sh "$KIMAI_DEPLOY_URL" | tee "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}/security-audit.txt"
 
             -   name: OWASP ZAP baseline scan
                 env:

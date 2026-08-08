@@ -10,6 +10,7 @@
 namespace App\Tests\SecurityTesting;
 
 use App\DataFixtures\UserFixtures;
+use App\Entity\User;
 use App\Tests\API\APIControllerBaseTestCase;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +25,12 @@ use Symfony\Component\HttpFoundation\Response;
 #[Group('security')]
 class AuthenticationSecurityTest extends APIControllerBaseTestCase
 {
+    /**
+     * Seeded by src/Command/ResetTestCommand.php as a bare literal - see
+     * testDisabledFixtureAccountExistsAndIsDisabled() for why this is pinned.
+     */
+    private const DISABLED_FIXTURE_USERNAME = 'chris_user';
+
     /**
      * WSTG-ATHN-01 / WSTG-ATHN-02:
      * Every secured API endpoint must reject requests without credentials with HTTP 401.
@@ -91,5 +98,47 @@ class AuthenticationSecurityTest extends APIControllerBaseTestCase
                 \sprintf('Disabled account could access %s', $url)
             );
         }
+    }
+
+    /**
+     * Fixture guard for the two WSTG-ATHN-06 tests above.
+     *
+     * Those tests prove a point only if the "_inactive" token really belongs to
+     * an existing, disabled account. If that account were renamed, deleted, or
+     * its token suffix changed, the endpoint would answer 401 because the token
+     * is unknown - and both tests would keep passing for the wrong reason.
+     *
+     * The account is seeded by src/Command/ResetTestCommand.php as a bare string
+     * literal, with no constant tying it to src/DataFixtures/UserFixtures.php,
+     * so nothing else in the codebase catches that drift.
+     */
+    public function testDisabledFixtureAccountExistsAndIsDisabled(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        // visible=2 selects only the disabled (invisible) users
+        $this->request($client, '/api/users', 'GET', ['visible' => 2]);
+        self::assertTrue($client->getResponse()->isSuccessful(), 'Could not list disabled users');
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $users = json_decode($content, true);
+        self::assertIsArray($users);
+
+        $found = false;
+        foreach ($users as $user) {
+            if (\is_array($user) && ($user['username'] ?? null) === self::DISABLED_FIXTURE_USERNAME) {
+                $found = true;
+                break;
+            }
+        }
+
+        self::assertTrue(
+            $found,
+            \sprintf(
+                'Fixture account "%s" is missing from the disabled users - the WSTG-ATHN-06 tests above would pass vacuously. Check src/Command/ResetTestCommand.php.',
+                self::DISABLED_FIXTURE_USERNAME
+            )
+        );
     }
 }

@@ -10,12 +10,16 @@
 namespace App\Tests\SecurityTesting;
 
 use App\Entity\Customer;
+use App\Entity\Invoice;
 use App\Entity\Project;
+use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\API\APIControllerBaseTestCase;
 use App\Tests\DataFixtures\CustomerFixtures;
+use App\Tests\DataFixtures\InvoiceFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
+use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -115,6 +119,75 @@ class AuthorizationSecurityTest extends APIControllerBaseTestCase
             Response::HTTP_FORBIDDEN,
             $client->getResponse()->getStatusCode(),
             'A user without team access could read a foreign project'
+        );
+    }
+
+    /**
+     * WSTG-ATHZ-03 (IDOR):
+     * Invoices carry billing totals and customer data, and are scoped through the
+     * customer's teams. A plain user must not read one by guessing its ID.
+     *
+     * This closes the last uncovered object type in tests/SecurityTesting/: the
+     * suite previously had no invoice reference at all, so a dropped customer
+     * scope on the invoice endpoints passed the entire --group security run.
+     */
+    public function testUserCannotReadUnaffiliatedInvoiceById(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $fixture = new InvoiceFixtures();
+        $fixture->setAmount(1);
+        /** @var Invoice[] $invoices */
+        $invoices = $this->importFixture($fixture);
+
+        $this->request($client, '/api/invoices/' . $invoices[0]->getId());
+
+        self::assertSame(
+            Response::HTTP_FORBIDDEN,
+            $client->getResponse()->getStatusCode(),
+            'A user without team access could read a foreign invoice'
+        );
+    }
+
+    /**
+     * WSTG-ATHZ-03 (IDOR) / WSTG-ATHZ-02:
+     * A teamlead must not edit a team they do not lead.
+     *
+     * What actually denies this: TeamVoter:59 lets admins and super-admins
+     * through unconditionally and otherwise requires isTeamleadOf($team); the
+     * `edit_team` role permission is then checked, and ROLE_TEAMLEAD does not
+     * hold it (config/packages/kimai.yaml grants the TEAMS group only to
+     * ROLE_ADMIN and above).
+     *
+     * Measured scope of this test: it does NOT detect removal of the object
+     * argument from the attribute. Verified by rewriting the guard on
+     * patchAction to `#[IsGranted('edit_team')]` - this test still passed.
+     * Dropping the object scope changes nothing under the default role setup,
+     * because the only accounts it would newly admit are those holding
+     * `edit_team` without being admin, and no shipped role does. What this test
+     * does catch is a role-configuration change that grants TEAMS to
+     * ROLE_TEAMLEAD, which would open foreign-team edits immediately.
+     */
+    public function testTeamleadCannotEditForeignTeam(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $fixture = new TeamFixtures();
+        $fixture->setAmount(1);
+        $fixture->setAddCustomer(false);
+        // guarantee the acting user is neither lead nor member of the new team
+        $fixture->addUserToIgnore($this->getUserByRole(User::ROLE_TEAMLEAD));
+        /** @var Team[] $teams */
+        $teams = $this->importFixture($fixture);
+
+        $json = json_encode(['name' => 'renamed-by-outsider']);
+        self::assertIsString($json);
+        $this->request($client, '/api/teams/' . $teams[0]->getId(), 'PATCH', [], $json);
+
+        self::assertSame(
+            Response::HTTP_FORBIDDEN,
+            $client->getResponse()->getStatusCode(),
+            'A teamlead could edit a team they do not lead'
         );
     }
 

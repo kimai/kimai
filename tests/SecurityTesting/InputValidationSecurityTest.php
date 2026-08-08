@@ -14,6 +14,7 @@ use App\Entity\User;
 use App\Tests\API\APIControllerBaseTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 /**
  * Security tests for OWASP WSTG v4.2 category "4.7 Input Validation Testing" (WSTG-INPV).
@@ -79,8 +80,8 @@ class InputValidationSecurityTest extends APIControllerBaseTestCase
 
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
-            'activity' => 1,
-            'project' => 1,
+            'activity' => $this->resolveFirstId($client, '/api/activities'),
+            'project' => $this->resolveFirstId($client, '/api/projects'),
             'begin' => (new \DateTime('-1 hour'))->format(self::DATE_FORMAT_HTML5),
             'end' => (new \DateTime())->format(self::DATE_FORMAT_HTML5),
             'description' => $payload,
@@ -110,8 +111,8 @@ class InputValidationSecurityTest extends APIControllerBaseTestCase
 
         $apiClient = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
-            'activity' => 1,
-            'project' => 1,
+            'activity' => $this->resolveFirstId($apiClient, '/api/activities'),
+            'project' => $this->resolveFirstId($apiClient, '/api/projects'),
             'begin' => (new \DateTime('-1 hour'))->format(self::DATE_FORMAT_HTML5),
             'end' => (new \DateTime())->format(self::DATE_FORMAT_HTML5),
             'description' => $payload,
@@ -144,8 +145,8 @@ class InputValidationSecurityTest extends APIControllerBaseTestCase
 
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
-            'activity' => 1,
-            'project' => 1,
+            'activity' => $this->resolveFirstId($client, '/api/activities'),
+            'project' => $this->resolveFirstId($client, '/api/projects'),
             'begin' => (new \DateTime('-1 hour'))->format(self::DATE_FORMAT_HTML5),
             'end' => (new \DateTime())->format(self::DATE_FORMAT_HTML5),
             'description' => $payload,
@@ -176,5 +177,38 @@ class InputValidationSecurityTest extends APIControllerBaseTestCase
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->request($client, '/api/customers', 'POST', [], '{"name": "broken", ');
         $this->assertBadRequestResponse($client->getResponse());
+    }
+
+    /**
+     * Resolves a real entity ID from the API instead of assuming fixture seeding
+     * order.
+     *
+     * These payloads previously hard-coded 'activity' => 1 and 'project' => 1.
+     * src/DataFixtures/UserFixtures.php supplies the constants but
+     * src/Command/ResetTestCommand.php seeds the actual rows, so a literal ID
+     * silently targets a different record - or none - whenever that ordering
+     * changes. A POST that then 400s would make these injection tests pass
+     * without ever storing the payload they are meant to check.
+     */
+    private function resolveFirstId(HttpKernelBrowser $client, string $url): int
+    {
+        $this->request($client, $url);
+        self::assertTrue($client->getResponse()->isSuccessful(), \sprintf('Could not list %s', $url));
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+
+        $rows = json_decode($content, true);
+        self::assertIsArray($rows);
+        self::assertNotEmpty($rows, \sprintf('No fixture rows returned by %s', $url));
+
+        $first = $rows[0];
+        self::assertIsArray($first);
+        self::assertArrayHasKey('id', $first);
+
+        $id = $first['id'];
+        self::assertIsInt($id);
+
+        return $id;
     }
 }

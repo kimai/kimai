@@ -145,6 +145,25 @@ verifies each label exists and files the issue without labels rather than
 aborting. If you see the warning, grant the workflow token `issues: write` or
 create the `devsecops` and `security` labels by hand.
 
+### The image scan reports hundreds of HIGH/CRITICAL findings
+
+Expected, and audit-only. A scan of `kimai-devsecops:local` returned 204
+HIGH/CRITICAL advisories, **every one of them without an upstream fix** - mostly
+`linux-libc-dev` kernel headers plus perl/curl/expat in the Debian base layer.
+There is no package to upgrade, so the step now runs with `--ignore-unfixed` and
+surfaces only findings that can actually be acted on. Rebuild against a newer
+base image tag to pick up fixes as they are published.
+
+### A gate prints FAILED but the job goes green
+
+Check for a `| tee` without `set -o pipefail` in the step. The exit status of a
+pipeline is its *last* command, so `some-check.sh | tee report.txt` reports
+tee's success and discards the checker's failure. Three steps had this:
+`composer audit`, `pnpm audit` and the post-deploy configuration audit - the
+last one meant `security-audit.sh` could print "Configuration audit FAILED" and
+still pass the build. All three now set `pipefail`. Any new gate that writes a
+report through `tee` must do the same.
+
 ### Trivy suddenly reports HIGH findings with no code change
 
 Expected. `TRIVY_IMAGE` is a floating `:latest` tag and the vulnerability

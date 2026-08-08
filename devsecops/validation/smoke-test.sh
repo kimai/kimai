@@ -18,14 +18,40 @@ check() {
     fi
 }
 
+# This script runs immediately after deploy.sh, while the container may still be
+# warming up (cache warmup, opcache, first DB connection). Judging availability
+# and page content on a single cold request produced spurious failures - most
+# often "login page does not look like Kimai" while the app was still starting.
+# Retry those two checks instead; genuine breakage still fails after the budget.
+RETRIES="${SMOKE_RETRIES:-10}"
+RETRY_DELAY="${SMOKE_RETRY_DELAY:-3}"
+
+retry() {
+    local attempt=1
+    until "$@" >/dev/null 2>&1; do
+        if (( attempt >= RETRIES )); then
+            return 1
+        fi
+        attempt=$(( attempt + 1 ))
+        sleep "$RETRY_DELAY"
+    done
+    return 0
+}
+
+login_page_is_kimai() {
+    curl -ksf "$BASE_URL/en/login" | grep -qi "kimai"
+}
+
 echo "== Smoke test against $BASE_URL =="
+echo "   (availability and content checks retry up to ${RETRIES}x every ${RETRY_DELAY}s)"
 
 # 1. login page is served over HTTPS
 check "HTTPS login page returns HTTP 200" \
-    curl -ksf -o /dev/null -w '%{http_code}' "$BASE_URL/en/login"
+    retry curl -ksf -o /dev/null -w '%{http_code}' "$BASE_URL/en/login"
 
 # 2. the page is actually Kimai (integrity: expected content marker)
-curl -ksf "$BASE_URL/en/login" | grep -qi "kimai" && echo "PASS: login page contains Kimai marker" || { echo "FAIL: login page does not look like Kimai"; FAILED=1; }
+check "login page contains Kimai marker" \
+    retry login_page_is_kimai
 
 # 3. plain HTTP redirects to HTTPS
 HTTP_PORT="${HTTP_PORT:-8080}"

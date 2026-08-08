@@ -36,9 +36,14 @@ if [[ -z "$DOCKER_BIN" ]]; then
     exit 1
 fi
 
-case "$DOCKER_BIN" in
-    /mnt/c/*)
-        echo "::warning::'docker' resolved to the Windows Docker Desktop shim at ${DOCKER_BIN}."
+# Resolve symlinks before classifying: on this runner /usr/bin/docker is itself
+# a link to /mnt/wsl/docker-desktop/cli-tools/..., so testing the literal path
+# would report a native engine while actually running the Desktop shim.
+DOCKER_REAL="$(readlink -f "$DOCKER_BIN" 2>/dev/null || echo "$DOCKER_BIN")"
+
+case "$DOCKER_REAL" in
+    /mnt/c/*|/mnt/wsl/docker-desktop/*)
+        echo "::warning::'docker' resolves to the Docker Desktop shim (${DOCKER_BIN} -> ${DOCKER_REAL})."
         echo "::warning::This breaks whenever Docker Desktop is closed or WSL integration is off."
         echo "::warning::Install the native Linux engine and make sure /usr/bin precedes /mnt/c in PATH."
         ;;

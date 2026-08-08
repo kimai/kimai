@@ -66,3 +66,10 @@ yarn-error.log
 /nbproject/*
 
 .dockerhub.secrets
+
+###> devsecops ###
+# self-hosted GitHub Actions runner, installed in-tree on the runner host
+# (see devsecops/runner/setup-runner.sh) - contains its registration
+# credentials in .runner/.credentials and must never be committed
+/actions-runner/
+###< devsecops ###
