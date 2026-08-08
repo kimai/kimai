@@ -100,3 +100,55 @@ after the underlying finding is fixed or formally accepted.
   `devsecops/deploy/docker-compose.yml` and `nginx/default.conf` accordingly.
 - Keep this documentation in sync - the checklist in
   [CHECKLIST.md](CHECKLIST.md) tracks the state of every deliverable.
+
+## 6. Troubleshooting pipeline failures
+
+Failures on the on-premise runner cluster into a few recurring causes. Check
+these before assuming a real security finding.
+
+### A run shows as "cancelled", not failed
+
+`concurrency.cancel-in-progress: true` cancels a superseded run whenever a new
+push lands on the same branch or PR. A wall of cancelled runs after rapid
+pushes is expected behaviour, not a broken pipeline.
+
+### "The command 'docker' could not be found in this WSL 2 distro"
+
+Windows PATH interop resolved `docker` to the Docker Desktop shim under
+`/mnt/c/Program Files/Docker/...`, which fails when Docker Desktop is closed or
+its WSL integration is disabled. Every docker-using job now runs
+`devsecops/runner/verify-docker.sh` first, which prefers the native Linux
+engine and reports the real cause.
+
+Permanent fix on the runner host:
+
+```bash
+sudo service docker start                 # native engine installed by setup-runner.sh
+command -v docker                         # must print /usr/bin/docker, not /mnt/c/...
+```
+
+If `/mnt/c/...` still wins, put `/usr/bin` ahead of the Windows entries in the
+runner user's PATH (or disable WSL interop for that distro).
+
+### Trivy image scan: "unable to find the specified image kimai-devsecops:local"
+
+Same root cause - the docker daemon was unreachable, so Trivy could not inspect
+the image the deploy step had just built. The preflight check above now fails
+earlier with a clearer message.
+
+### The notification job fails with "could not add label"
+
+Fixed. Label-creation errors used to be discarded with `2>/dev/null || true`,
+after which `gh issue create --label` aborted because the label did not exist -
+so the job whose only purpose is reporting failures failed on every run. It now
+verifies each label exists and files the issue without labels rather than
+aborting. If you see the warning, grant the workflow token `issues: write` or
+create the `devsecops` and `security` labels by hand.
+
+### Trivy suddenly reports HIGH findings with no code change
+
+Expected. `TRIVY_IMAGE` is a floating `:latest` tag and the vulnerability
+database refreshes on every run, so newly published advisories can turn a green
+build red. Triage the finding on its merits; see §3 for pinning by digest.
+The scan writes JSON and `trivy convert` then renders it as a console table, so
+the failing step names the offending package directly.

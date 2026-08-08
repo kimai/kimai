@@ -33,6 +33,63 @@ env:
     KIMAI_DEPLOY_URL: https://localhost:8443
 
 jobs:
+    security_tests:
+        name: Security test suite (OWASP WSTG)
+        runs-on: [self-hosted, linux, kimai-devsecops]
+        permissions:
+            contents: read
+        services:
+            mariadb:
+                image: mariadb@sha256:be981e4113326ada8d6004174dd09eeaefc03094037f811182a52d4f2e737350 # 10.11
+                env:
+                    MARIADB_ROOT_PASSWORD: kimai-root
+                    MARIADB_DATABASE: kimai2_test
+                    MARIADB_USER: kimai2_test
+                    MARIADB_PASSWORD: kimai2_test
+                ports:
+                    - 3306/tcp
+                options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
+        env:
+            APP_ENV: test
+            MAILER_URL: null://localhost
+        steps:
+            -   name: Clone Kimai
+                uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+                with:
+                    persist-credentials: false
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
+                with:
+                    php-version: '8.3'
+                    coverage: none
+                    extensions: ctype, gd, iconv, intl, mbstring, mysql, xml, zip, xsl
+
+            -   name: Determine composer cache directory
+                id: composer-cache
+                run: echo "composer_cache_directory=$(composer config cache-dir)" >> "$GITHUB_ENV"
+
+            -   name: Cache Composer dependencies
+                uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+                with:
+                    path: "${{ env.composer_cache_directory }}"
+                    key: ${{ runner.os }}-devsecops-php8.3-${{ hashFiles('**/composer.lock') }}
+
+            -   name: Install dependencies
+                run: composer install --no-interaction
+
+            -   name: Prepare database connection string
+                # the job context (service ports) is only available inside steps
+                # zizmor: ignore[template-injection] the port is assigned by the GitHub service container runtime, not by user input
+                run: echo "DATABASE_URL=mysql://kimai2_test:kimai2_test@127.0.0.1:${{ job.services.mariadb.ports['3306'] }}/kimai2_test?charset=utf8mb4&serverVersion=10.11.0-MariaDB" >> "$GITHUB_ENV"
+
+            -   name: Run OWASP WSTG security tests
+                # tests/SecurityTesting/ - see devsecops/docs/TEST_CASES.md
+                run: vendor/bin/phpunit --group security tests/SecurityTesting/
+
+            -   name: Run existing security-focused suites
+                run: vendor/bin/phpunit tests/Security/ tests/Voter/ tests/API/AuthenticationTest.php
+
     sast:
         name: Static analysis (PHPStan, PhpCsFixer, Semgrep)
         runs-on: [self-hosted, linux, kimai-devsecops]
@@ -45,6 +102,11 @@ jobs:
                 uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
                 with:
                     persist-credentials: false
+
+            -   name: Verify Docker is usable
+                # Fails fast with an actionable message instead of letting a later
+                # scanner step die on the WSL Docker Desktop shim - see the script
+                run: devsecops/runner/verify-docker.sh
 
             -   name: Setup PHP
                 uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
@@ -137,6 +199,9 @@ jobs:
                 uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
                 with:
                     persist-credentials: false
+
+            -   name: Verify Docker is usable
+                run: devsecops/runner/verify-docker.sh
 
             -   name: Setup PHP
                 uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
@@ -255,63 +320,6 @@ jobs:
                         --suppression /src/devsecops/dependency-check/suppressions.xml \
                         $NVD_ARGS
 
-    security_tests:
-        name: Security test suite (OWASP WSTG)
-        runs-on: [self-hosted, linux, kimai-devsecops]
-        permissions:
-            contents: read
-        services:
-            mariadb:
-                image: mariadb@sha256:be981e4113326ada8d6004174dd09eeaefc03094037f811182a52d4f2e737350 # 10.11
-                env:
-                    MARIADB_ROOT_PASSWORD: kimai-root
-                    MARIADB_DATABASE: kimai2_test
-                    MARIADB_USER: kimai2_test
-                    MARIADB_PASSWORD: kimai2_test
-                ports:
-                    - 3306/tcp
-                options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
-        env:
-            APP_ENV: test
-            MAILER_URL: null://localhost
-        steps:
-            -   name: Clone Kimai
-                uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-                with:
-                    persist-credentials: false
-
-            -   name: Setup PHP
-                uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
-                with:
-                    php-version: '8.3'
-                    coverage: none
-                    extensions: ctype, gd, iconv, intl, mbstring, mysql, xml, zip, xsl
-
-            -   name: Determine composer cache directory
-                id: composer-cache
-                run: echo "composer_cache_directory=$(composer config cache-dir)" >> "$GITHUB_ENV"
-
-            -   name: Cache Composer dependencies
-                uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-                with:
-                    path: "${{ env.composer_cache_directory }}"
-                    key: ${{ runner.os }}-devsecops-php8.3-${{ hashFiles('**/composer.lock') }}
-
-            -   name: Install dependencies
-                run: composer install --no-interaction
-
-            -   name: Prepare database connection string
-                # the job context (service ports) is only available inside steps
-                # zizmor: ignore[template-injection] the port is assigned by the GitHub service container runtime, not by user input
-                run: echo "DATABASE_URL=mysql://kimai2_test:kimai2_test@127.0.0.1:${{ job.services.mariadb.ports['3306'] }}/kimai2_test?charset=utf8mb4&serverVersion=10.11.0-MariaDB" >> "$GITHUB_ENV"
-
-            -   name: Run OWASP WSTG security tests
-                # tests/SecurityTesting/ - see devsecops/docs/TEST_CASES.md
-                run: vendor/bin/phpunit --group security tests/SecurityTesting/
-
-            -   name: Run existing security-focused suites
-                run: vendor/bin/phpunit tests/Security/ tests/Voter/ tests/API/AuthenticationTest.php
-
     deploy:
         name: Secure deployment & post-deploy validation
         runs-on: [self-hosted, linux, kimai-devsecops]
@@ -323,6 +331,12 @@ jobs:
                 uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
                 with:
                     persist-credentials: false
+
+            -   name: Verify Docker is usable
+                # run #36 failed here with "unable to find the specified image
+                # kimai-devsecops:local" - the real cause was an unreachable
+                # docker daemon, which this surfaces directly
+                run: devsecops/runner/verify-docker.sh
 
             -   name: Prepare report directory
                 run: mkdir -p "${SECURITY_REPORT_DIR}/${GITHUB_RUN_ID}"
@@ -409,9 +423,29 @@ jobs:
                         echo "Triage guide: devsecops/docs/MAINTENANCE.md"
                     } > "$BODY_FILE"
 
-                    # forks do not inherit upstream labels - make sure ours exist
-                    gh label create devsecops --color E99695 --description "DevSecOps pipeline findings" 2>/dev/null || true
-                    gh label create security --color D73A4A --description "Security findings" 2>/dev/null || true
+                    # Forks do not inherit upstream labels, so create ours. Failures used
+                    # to be discarded with "2>/dev/null || true" and the later
+                    # "gh issue create --label" then died with "could not add label" -
+                    # the notification job failed on every run it was triggered for.
+                    # Now: surface why creation failed, then verify the label actually
+                    # exists and only pass --label for the ones that do.
+                    LABEL_ARGS=""
+                    EXISTING_LABELS=$(gh label list --limit 200 --json name --jq '.[].name' || true)
+                    for label in devsecops security; do
+                        case "$label" in
+                            devsecops) color=E99695; desc="DevSecOps pipeline findings" ;;
+                            security)  color=D73A4A; desc="Security findings" ;;
+                        esac
+                        if ! printf '%s\n' "$EXISTING_LABELS" | grep -qx "$label"; then
+                            # capture the error rather than discarding it
+                            if ! CREATE_ERR=$(gh label create "$label" --color "$color" --description "$desc" 2>&1); then
+                                echo "::warning::Could not create label '$label': $CREATE_ERR"
+                                echo "::warning::Filing the notification issue without it"
+                                continue
+                            fi
+                        fi
+                        LABEL_ARGS="$LABEL_ARGS --label $label"
+                    done
 
                     # de-duplicate: comment on an existing open issue instead of spamming
                     EXISTING=$(gh issue list --state open --label devsecops --search "Security findings" --json number --jq '.[0].number // empty' || true)
@@ -419,7 +453,8 @@ jobs:
                         gh issue comment "$EXISTING" --body-file "$BODY_FILE"
                         echo "Commented on existing issue #$EXISTING"
                     else
-                        gh issue create --title "$TITLE" --body-file "$BODY_FILE" --label devsecops --label security
+                        # shellcheck disable=SC2086 # LABEL_ARGS is intentionally word-split
+                        gh issue create --title "$TITLE" --body-file "$BODY_FILE" $LABEL_ARGS
                         echo "Created new notification issue"
                     fi
 
