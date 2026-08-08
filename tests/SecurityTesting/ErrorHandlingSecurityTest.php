@@ -72,7 +72,18 @@ class ErrorHandlingSecurityTest extends APIControllerBaseTestCase
 
     /**
      * WSTG-CONF-05:
-     * Debug and profiler tooling must not be exposed in a production like setup.
+     * Debug and profiler tooling must not be reachable, and must 404 rather than
+     * error out.
+     *
+     * Scope: under APP_ENV=test these routes are not registered at all (see
+     * Kernel::configureRoutes), so this can only prove the runtime behaviour -
+     * it cannot prove the profiler is off in production. That guarantee is
+     * asserted from configuration in
+     * SecurityConfigurationTest::testProfilerIsConfinedToDevelopmentEnvironments.
+     *
+     * The original assertion was only "not 200", which also accepts a 500 - the
+     * very stack-trace leak this WSTG category is about. A server error is now
+     * a failure too.
      */
     public function testDebugAndProfilerRoutesAreNotExposed(): void
     {
@@ -81,11 +92,17 @@ class ErrorHandlingSecurityTest extends APIControllerBaseTestCase
         foreach (['/_profiler', '/_wdt/123456', '/app_dev.php'] as $url) {
             $client->request('GET', $url);
             $response = $client->getResponse();
+            $status = $response->getStatusCode();
 
             self::assertNotSame(
                 Response::HTTP_OK,
-                $response->getStatusCode(),
+                $status,
                 \sprintf('Debug URL %s is accessible', $url)
+            );
+            self::assertLessThan(
+                Response::HTTP_INTERNAL_SERVER_ERROR,
+                $status,
+                \sprintf('Debug URL %s returned a server error (%d) instead of being absent', $url, $status)
             );
 
             $body = $response->getContent();

@@ -24,6 +24,7 @@ use Symfony\Component\Yaml\Yaml;
 class SecurityConfigurationTest extends TestCase
 {
     private const CONFIG_DIR = __DIR__ . '/../../config/packages/';
+    private const ROUTES_DIR = __DIR__ . '/../../config/routes/';
 
     /**
      * WSTG-ATHN-03 / WSTG-CONF-01:
@@ -96,12 +97,80 @@ class SecurityConfigurationTest extends TestCase
 
     /**
      * WSTG-CONF-05:
-     * Debug mode must be disabled in non-development environments (test env included).
+     * Debug mode must be disabled in the environment that actually ships.
+     *
+     * This deliberately does NOT read $_ENV['APP_DEBUG']: phpunit.xml.dist sets
+     * that variable with force="true", so the test harness overwrites it before
+     * any test runs and the assertion could only ever observe its own fixture.
+     * The deployment compose file is the artefact a regression would land in.
      */
-    public function testDebugModeIsDisabled(): void
+    public function testDeployedEnvironmentDisablesDebug(): void
     {
-        $debug = $_ENV['APP_DEBUG'] ?? getenv('APP_DEBUG');
-        self::assertSame('0', $debug, 'APP_DEBUG is enabled, leaking stack traces and internals');
+        $environment = self::getDeployedAppEnvironment();
+
+        self::assertArrayHasKey('APP_ENV', $environment, 'Deployment no longer pins APP_ENV');
+        self::assertSame('prod', $environment['APP_ENV'], 'Deployment does not run in the prod environment');
+
+        self::assertArrayHasKey('APP_DEBUG', $environment, 'Deployment no longer pins APP_DEBUG');
+        self::assertSame(
+            '0',
+            (string) $environment['APP_DEBUG'],
+            'APP_DEBUG is enabled in the deployed environment, leaking stack traces and internals'
+        );
+    }
+
+    /**
+     * WSTG-CONF-05:
+     * The profiler and its routes must never be reachable outside dev/test.
+     *
+     * The HTTP-level check in ErrorHandlingSecurityTest cannot prove this on its
+     * own - under APP_ENV=test those routes are simply not registered, so it
+     * would pass even if the profiler were enabled in production. These are the
+     * two conditions that actually keep it off a deployed instance.
+     */
+    public function testProfilerIsConfinedToDevelopmentEnvironments(): void
+    {
+        // 1. Profiler routes live in config/routes/dev/, which Kernel.php only
+        //    imports when the active environment directory matches.
+        self::assertFileExists(
+            self::ROUTES_DIR . 'dev/web_profiler.yaml',
+            'Profiler routes moved - re-check that they are still dev-only'
+        );
+        foreach (['prod', 'test'] as $environment) {
+            self::assertFileDoesNotExist(
+                self::ROUTES_DIR . $environment . '/web_profiler.yaml',
+                \sprintf('Profiler routes are registered for the "%s" environment', $environment)
+            );
+        }
+
+        // 2. web_profiler.yaml must gate every key behind a when@ block. A
+        //    top-level key would apply to prod as well.
+        $profilerConfig = Yaml::parseFile(self::CONFIG_DIR . 'web_profiler.yaml');
+        self::assertIsArray($profilerConfig);
+        foreach (array_keys($profilerConfig) as $key) {
+            self::assertMatchesRegularExpression(
+                '/^when@(dev|test)$/',
+                (string) $key,
+                \sprintf('web_profiler.yaml key "%s" is not restricted to dev or test', $key)
+            );
+        }
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private static function getDeployedAppEnvironment(): array
+    {
+        $path = __DIR__ . '/../../devsecops/deploy/docker-compose.yml';
+        self::assertFileExists($path, 'Deployment compose file is missing');
+
+        $compose = Yaml::parseFile($path);
+        self::assertIsArray($compose);
+
+        $environment = self::getSubArray($compose, 'services', 'app', 'environment');
+        self::assertNotEmpty($environment, 'Deployed app service declares no environment');
+
+        return $environment;
     }
 
     /**

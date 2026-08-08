@@ -9,9 +9,13 @@
 
 namespace App\Tests\SecurityTesting;
 
+use App\Entity\Customer;
+use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\API\APIControllerBaseTestCase;
+use App\Tests\DataFixtures\CustomerFixtures;
+use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -70,6 +74,51 @@ class AuthorizationSecurityTest extends APIControllerBaseTestCase
     }
 
     /**
+     * WSTG-ATHZ-03 (IDOR):
+     * Customers are scoped by team membership, not ownership. A plain user with
+     * no team association must not read one by guessing its ID.
+     *
+     * Expected denial is pinned by CustomerVoterTest::testVote, which asserts
+     * ACCESS_DENIED on "view" for ROLE_USER against an unaffiliated customer.
+     */
+    public function testUserCannotReadUnaffiliatedCustomerById(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        /** @var Customer[] $customers */
+        $customers = $this->importFixture(new CustomerFixtures(1));
+
+        $this->request($client, '/api/customers/' . $customers[0]->getId());
+
+        self::assertSame(
+            Response::HTTP_FORBIDDEN,
+            $client->getResponse()->getStatusCode(),
+            'A user without team access could read a foreign customer'
+        );
+    }
+
+    /**
+     * WSTG-ATHZ-03 (IDOR):
+     * Same guarantee for projects, which are scoped through their customer's
+     * teams as well as their own.
+     *
+     * Expected denial is pinned by ProjectVoterTest::testVote.
+     */
+    public function testUserCannotReadUnaffiliatedProjectById(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        /** @var Project[] $projects */
+        $projects = $this->importFixture(new ProjectFixtures(1));
+
+        $this->request($client, '/api/projects/' . $projects[0]->getId());
+
+        self::assertSame(
+            Response::HTTP_FORBIDDEN,
+            $client->getResponse()->getStatusCode(),
+            'A user without team access could read a foreign project'
+        );
+    }
+
+    /**
      * WSTG-ATHZ-04 (horizontal privilege escalation):
      * A regular user must not browse foreign user profiles.
      */
@@ -77,8 +126,11 @@ class AuthorizationSecurityTest extends APIControllerBaseTestCase
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
-        // user ID 4 is the teamlead fixture account
-        $this->request($client, '/api/users/4');
+        // resolved from the fixture set rather than hard-coded: the literal ID
+        // silently points at a different account if the seeding order changes
+        $foreignUserId = $this->getAuthenticatedUserId(User::ROLE_TEAMLEAD);
+
+        $this->request($client, '/api/users/' . $foreignUserId);
         self::assertSame(Response::HTTP_FORBIDDEN, $client->getResponse()->getStatusCode());
     }
 
@@ -125,9 +177,18 @@ class AuthorizationSecurityTest extends APIControllerBaseTestCase
     public static function provideRestrictedEndpoints(): array
     {
         return [
+            // user administration
             'user collection as user' => [User::ROLE_USER, '/api/users', 'GET'],
             'user collection as teamlead' => [User::ROLE_TEAMLEAD, '/api/users', 'GET'],
+            'create user as teamlead' => [User::ROLE_TEAMLEAD, '/api/users', 'POST'],
+            // master data creation - administrative in the default role setup
             'create customer as user' => [User::ROLE_USER, '/api/customers', 'POST'],
+            'create customer as teamlead' => [User::ROLE_TEAMLEAD, '/api/customers', 'POST'],
+            'create project as user' => [User::ROLE_USER, '/api/projects', 'POST'],
+            'create activity as user' => [User::ROLE_USER, '/api/activities', 'POST'],
+            // team administration
+            'team collection as user' => [User::ROLE_USER, '/api/teams', 'GET'],
+            'create team as user' => [User::ROLE_USER, '/api/teams', 'POST'],
         ];
     }
 }
