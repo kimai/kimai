@@ -2114,6 +2114,22 @@
         <source>reopen</source>
         <target>Reopen</target>
       </trans-unit>
-    </body>
+        <trans-unit id="aB3cD4e" resname="locale_demo">
+        <source>locale_demo</source>
+        <target>Formatting examples</target>
+      </trans-unit>
+      <trans-unit id="xK9qW2z" resname="decimal">
+        <source>decimal</source>
+        <target>Decimal</target>
+      </trans-unit>
+      <trans-unit id="mN7vP5t" resname="price">
+        <source>price</source>
+        <target>Price</target>
+      </trans-unit>
+      <trans-unit id="rT4sY8u" resname="rtl">
+        <source>rtl</source>
+        <target>RTL</target>
+      </trans-unit>
+  </body>
   </file>
 </xliff>
