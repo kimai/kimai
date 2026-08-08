@@ -24,8 +24,13 @@ final class DateTimeFactory
         return new DateTimeFactory(new \DateTimeZone($user->getTimezone()), $user->getFirstDayOfWeek());
     }
 
-    public function __construct(?DateTimeZone $timezone = null, string $firstDayOfWeek = 'monday')
+    public function __construct(?DateTimeZone $timezone = null, bool|string $firstDayOfWeek = 'monday')
     {
+        if (\is_bool($firstDayOfWeek)) {
+            @trigger_error('Passing a boolean as first day of week is deprecated, pass "sunday" or "monday" instead.', E_USER_DEPRECATED);
+            $firstDayOfWeek = $firstDayOfWeek ? 'sunday' : 'monday';
+        }
+
         if (null === $timezone) {
             $timezone = new \DateTimeZone(date_default_timezone_get());
         }
