@@ -1,0 +1,17 @@
+{# Demo values for the formatting of the currently active locale, shown below the language selector #}
+{% import "macros/widgets.html.twig" as widgets %}
+<div class="mb-3 row">
+    <div class="col-sm-10 offset-sm-2">
+        <div class="text-muted small">
+            <div class="fw-semibold mb-1">{{ 'locale_demo'|trans }}</div>
+            <div>
+                <span class="me-3"><strong>{{ 'date'|trans }}:</strong> {{ locale_demo.date }}</span>
+                <span class="me-3"><strong>{{ 'time'|trans }}:</strong> {{ locale_demo.time }}</span>
+                <span class="me-3"><strong>{{ 'duration'|trans }}:</strong> {{ locale_demo.duration }}</span>
+                <span class="me-3"><strong>{{ 'decimal'|trans }}:</strong> {{ locale_demo.decimal }}</span>
+                <span class="me-3"><strong>{{ 'price'|trans }}:</strong> {{ locale_demo.money }}</span>
+                <span><strong>{{ 'rtl'|trans }}:</strong> {{ widgets.label_boolean(locale_demo.rtl) }}</span>
+            </div>
+        </div>
+    </div>
+</div>

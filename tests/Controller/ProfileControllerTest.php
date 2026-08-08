@@ -568,6 +568,22 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         self::assertEquals('sunday', $user->getFirstDayOfWeek());
     }
 
+    public function testPreferencesPageShowsLocaleDemo(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_ADMIN . '/prefs');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        // demo values for the default locale (en) are rendered below the language selector
+        self::assertStringContainsString('Formatting examples', $content);
+        self::assertStringContainsString('11/25/2035', $content);
+        self::assertStringContainsString('3:34 PM', $content);
+        self::assertStringContainsString('25:48', $content);
+        self::assertStringContainsString('2,794.83', $content);
+    }
+
     public function testIsTwoFactorSecure(): void
     {
         $this->assertUrlIsSecured('/profile/' . UserFixtures::USERNAME_USER . '/2fa');

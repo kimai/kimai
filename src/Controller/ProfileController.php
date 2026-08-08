@@ -9,6 +9,8 @@
 
 namespace App\Controller;
 
+use App\Configuration\LocaleService;
+use App\Configuration\SystemConfiguration;
 use App\Entity\AccessToken;
 use App\Entity\User;
 use App\Entity\UserPreference;
@@ -31,6 +33,7 @@ use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
 use App\Timesheet\TimesheetStatisticService;
 use App\User\UserService;
+use App\Utils\LocaleFormatter;
 use App\Utils\PageSetup;
 use Doctrine\Common\Collections\ArrayCollection;
 use Endroid\QrCode\Builder\Builder;
@@ -376,7 +379,9 @@ final class ProfileController extends AbstractController
         User $profile,
         Request $request,
         EventDispatcherInterface $dispatcher,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        LocaleService $localeService,
+        SystemConfiguration $systemConfiguration
     ): Response
     {
         // we need to prepare the user preferences, which is done via an EventSubscriber
@@ -419,12 +424,31 @@ final class ProfileController extends AbstractController
             }
         }
 
+        // demo values for the formatting of the currently active locale, shown below the language selector
+        $localeDemo = [];
+        $locale = $profile->getLocale();
+        if ($localeService->isKnownLocale($locale)) {
+            $formatter = new LocaleFormatter($localeService, $locale);
+            // fixed demo values, which cannot be misinterpreted (see issue #4429)
+            $demoDate = new \DateTime('2035-11-25 15:34:00');
+            $demoDuration = 25 * 3600 + 48 * 60; // 25:48
+            $localeDemo = [
+                'date' => $formatter->dateShort($demoDate),
+                'time' => $formatter->time($demoDate),
+                'duration' => $formatter->duration($demoDuration),
+                'decimal' => $formatter->durationDecimal($demoDuration),
+                'money' => $formatter->money(2794.83, $systemConfiguration->getDefaultCurrency()),
+                'rtl' => $localeService->isRightToLeft($locale),
+            ];
+        }
+
         return $this->render('user/preferences.html.twig', [
             'tab' => 'settings',
             'page_setup' => $this->getPageSetup($profile, 'settings'),
             'user' => $profile,
             'form' => $form->createView(),
-            'sections' => $sections
+            'sections' => $sections,
+            'locale_demo' => $localeDemo
         ]);
     }
 
