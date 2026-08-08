@@ -17,7 +17,7 @@
             <fieldset class="form-fieldset form-fieldset-light mb-3">
                 {% for pref in form.children.preferences|filter(pref => pref.vars.data.section == section)|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
                     {{ form_widget(pref) }}
-                    {% if pref.vars.data.name == constant('App\\Entity\\UserPreference::LANGUAGE') and locale_demo is defined %}
+                    {% if pref.vars.data.name == constant('App\\Entity\\UserPreference::LOCALE') and locale_demo is defined %}
                         {% include 'partials/locale-demo.html.twig' with {'locale_demo': locale_demo} %}
                     {% endif %}
                 {% endfor %}
