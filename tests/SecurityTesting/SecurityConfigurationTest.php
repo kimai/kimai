@@ -112,9 +112,13 @@ class SecurityConfigurationTest extends TestCase
         self::assertSame('prod', $environment['APP_ENV'], 'Deployment does not run in the prod environment');
 
         self::assertArrayHasKey('APP_DEBUG', $environment, 'Deployment no longer pins APP_DEBUG');
+        // compose may quote the value or leave it bare, so YAML yields '0' or 0 -
+        // assert it is scalar before normalising rather than casting blindly
+        $debug = $environment['APP_DEBUG'];
+        self::assertIsScalar($debug, 'APP_DEBUG is not a scalar value');
         self::assertSame(
             '0',
-            (string) $environment['APP_DEBUG'],
+            (string) $debug,
             'APP_DEBUG is enabled in the deployed environment, leaking stack traces and internals'
         );
     }
@@ -164,6 +168,7 @@ class SecurityConfigurationTest extends TestCase
         $path = __DIR__ . '/../../devsecops/deploy/docker-compose.yml';
         self::assertFileExists($path, 'Deployment compose file is missing');
 
+        /** @var array<string, mixed> $compose */
         $compose = Yaml::parseFile($path);
         self::assertIsArray($compose);
 
