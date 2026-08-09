@@ -1772,7 +1772,7 @@
       </trans-unit>
       <trans-unit id="G8ZoGoA" resname="api_token_qr_hint">
         <source>api_token_qr_hint</source>
-        <target>Sie können diesen QR-Code mit einer mobilen App scannen, um Server-URL und Token in einem Schritt zu konfigurieren.</target>
+        <target>Sie können diesen QR-Code mit einer mobilen App scannen, um Server-URL und Token in einem Schritt zu konfigurieren. Teilen Sie dieses Bild nicht: Es enthält Ihren API-Token.</target>
       </trans-unit>
       <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve" approved="yes">
         <source>api_password_deprecated</source>

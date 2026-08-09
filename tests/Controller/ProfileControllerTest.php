@@ -285,6 +285,9 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         self::assertEquals('Demo', $tokens[1]->getName());
         self::assertEquals($code->innerText(), $tokens[1]->getToken());
 
+        // the base URL for manual configuration, the QR code contains it without the "/api" suffix
+        self::assertStringContainsString('URL: http://localhost/api', $crawler->text());
+
         // the QR code is only rendered together with the one-time token display
         self::assertEquals(1, $crawler->filter('img[src^="data:image/png"]')->count());
 

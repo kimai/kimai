@@ -24,6 +24,7 @@ use App\Form\UserPreferencesForm;
 use App\Form\UserRolesType;
 use App\Form\UserTeamsType;
 use App\Form\UserTwoFactorType;
+use App\Model\AppConnectPayload;
 use App\Repository\AccessTokenRepository;
 use App\Repository\Query\TimesheetStatisticQuery;
 use App\Repository\TeamRepository;
@@ -253,15 +254,7 @@ final class ProfileController extends AbstractController
         $qrCodePayload = null;
 
         if ($createdToken !== null) {
-            // this payload is a public contract with the mobile apps: only add fields, never rename or remove them.
-            // example: {"type":"kimai","version":1,"url":"https://127.0.0.1:8000","token":"6ccc2932be3a7e8fa1dd2c254"}
-            // "version" has to be raised, if the meaning of an existing field changes.
-            $qrCodePayload = json_encode([
-                'type' => 'kimai',
-                'version' => 1,
-                'url' => $baseUrl,
-                'token' => $createdToken->getToken(),
-            ], JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
+            $qrCodePayload = (new AppConnectPayload($baseUrl, $createdToken->getToken()))->toJson();
         }
 
         return $this->render('user/api-token.html.twig', [
