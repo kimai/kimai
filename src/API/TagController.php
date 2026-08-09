@@ -9,6 +9,7 @@
 
 namespace App\API;
 
+use App\API\Attribute\ApiToken;
 use App\Entity\Tag;
 use App\Form\API\TagApiEditForm;
 use App\Repository\TagRepository;
@@ -25,6 +26,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route(path: '/tags')]
 #[IsGranted('API')]
 #[OA\Tag(name: 'Tag')]
+#[ApiToken('tag')]
 final class TagController extends BaseApiController
 {
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Tag'];

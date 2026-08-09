@@ -259,12 +259,14 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/create-access-token');
 
         $form = $client->getCrawler()->filter('form[name=access_token_form]')->form();
-        $client->submit($form, [
-            'access_token_form' => [
-                'name' => 'Demo',
-                'expiresAt' => ''
-            ]
-        ]);
+        // expanded multi-checkbox choices cannot be set reliably via the crawler,
+        // so we submit the raw values (including the CSRF token) directly
+        $values = $form->getPhpValues();
+        $values['access_token_form']['name'] = 'Demo';
+        $values['access_token_form']['expiresAt'] = '';
+        // at least one scope is mandatory (secure default)
+        $values['access_token_form']['scopes'] = ['timesheet:read'];
+        $client->request('POST', $form->getUri(), $values);
 
         // if you follow this redirect, the info will not be shown
         $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/api-token?hide-token=1'));
@@ -284,6 +286,53 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         self::assertCount(2, $tokens);
         self::assertEquals('Demo', $tokens[1]->getName());
         self::assertEquals($code->innerText(), $tokens[1]->getToken());
+        self::assertSame(['timesheet:read'], $tokens[1]->getScopes());
+    }
+
+    public function testEditApiToken(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
+
+        /** @var AccessTokenRepository $tokenRepository */
+        $tokenRepository = self::getContainer()->get(AccessTokenRepository::class);
+        $tokens = $tokenRepository->findForUser($user);
+        self::assertCount(1, $tokens);
+        $token = $tokens[0];
+        // the fixture token is a legacy token (no scopes = full access)
+        self::assertTrue($token->isLegacy());
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/api-token/' . $token->getId() . '/edit');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=access_token_form]')->form();
+        $values = $form->getPhpValues();
+        $values['access_token_form']['scopes'] = ['timesheet:read', 'timesheet:create'];
+        $client->request('POST', $form->getUri(), $values);
+        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/api-token?hide-token=1'));
+
+        $updated = $tokenRepository->findForUser($user)[0];
+        self::assertFalse($updated->isLegacy());
+        $scopes = $updated->getScopes();
+        self::assertNotNull($scopes);
+        sort($scopes);
+        self::assertSame(['timesheet:create', 'timesheet:read'], $scopes);
+    }
+
+    public function testEditApiTokenOfOtherUserIsDenied(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        // a token belonging to another user (the teamlead fixture token)
+        $other = $this->getUserByRole(User::ROLE_TEAMLEAD);
+        /** @var AccessTokenRepository $tokenRepository */
+        $tokenRepository = self::getContainer()->get(AccessTokenRepository::class);
+        $otherToken = $tokenRepository->findForUser($other)[0];
+
+        // the ROLE_USER tries to edit it via their own profile URL -> denied
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/api-token/' . $otherToken->getId() . '/edit');
+        self::assertFalse($client->getResponse()->isSuccessful());
+        self::assertEquals(403, $client->getResponse()->getStatusCode());
     }
 
     #[Group('legacy')]

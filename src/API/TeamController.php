@@ -9,6 +9,7 @@
 
 namespace App\API;
 
+use App\API\Attribute\ApiToken;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
@@ -36,6 +37,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route(path: '/teams')]
 #[IsGranted('API')]
 #[OA\Tag(name: 'Team')]
+#[ApiToken('team')]
 final class TeamController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Team', 'Team_Entity', 'Not_Expanded'];
@@ -316,6 +318,7 @@ final class TeamController extends BaseApiController
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Adds a new user to a team.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The team which will receive the new member', required: true)]
     #[OA\Parameter(name: 'userId', in: 'path', description: 'The team member to add (User ID)', required: true)]
+    #[ApiToken(action: 'update')]
     #[Route(methods: ['POST'], path: '/{id}/members/{userId}', name: 'post_team_member', requirements: ['id' => '\d+', 'userId' => '\d+'])]
     public function postMemberAction(Team $team, #[MapEntity(mapping: ['userId' => 'id'])] User $member): Response
     {
@@ -340,6 +343,7 @@ final class TeamController extends BaseApiController
     #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Removes a user from the team. The teamlead cannot be removed.', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The team from which the member will be removed', required: true)]
     #[OA\Parameter(name: 'userId', in: 'path', description: 'The team member to remove (User ID)', required: true)]
+    #[ApiToken(action: 'update')]
     #[Route(methods: ['DELETE'], path: '/{id}/members/{userId}', name: 'delete_team_member', requirements: ['id' => '\d+', 'userId' => '\d+'])]
     public function deleteMemberAction(Team $team, #[MapEntity(mapping: ['userId' => 'id'])] User $member): Response
     {
@@ -371,6 +375,7 @@ final class TeamController extends BaseApiController
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the team including the customer', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The team that is granted access', required: true)]
     #[OA\Parameter(name: 'customerId', in: 'path', description: 'The customer to grant acecess to (Customer ID)', required: true)]
+    #[ApiToken(action: 'update')]
     #[Route(methods: ['POST'], path: '/{id}/customers/{customerId}', name: 'post_team_customer', requirements: ['id' => '\d+', 'customerId' => '\d+'])]
     public function postCustomerAction(Team $team, #[MapEntity(mapping: ['customerId' => 'id'])] Customer $customer, CustomerRepository $customerRepository): Response
     {
@@ -396,6 +401,7 @@ final class TeamController extends BaseApiController
     #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Returns the team without the customer', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The team whose permission will be revoked', required: true)]
     #[OA\Parameter(name: 'customerId', in: 'path', description: 'The customer to remove (Customer ID)', required: true)]
+    #[ApiToken(action: 'update')]
     #[Route(methods: ['DELETE'], path: '/{id}/customers/{customerId}', name: 'delete_team_customer', requirements: ['id' => '\d+', 'customerId' => '\d+'])]
     public function deleteCustomerAction(Team $team, #[MapEntity(mapping: ['customerId' => 'id'])] Customer $customer, CustomerRepository $customerRepository): Response
     {
@@ -422,6 +428,7 @@ final class TeamController extends BaseApiController
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the team including the project', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The team that is granted access', required: true)]
     #[OA\Parameter(name: 'projectId', in: 'path', description: 'The project to grant acecess to (Project ID)', required: true)]
+    #[ApiToken(action: 'update')]
     #[Route(methods: ['POST'], path: '/{id}/projects/{projectId}', name: 'post_team_project', requirements: ['id' => '\d+', 'projectId' => '\d+'])]
     public function postProjectAction(Team $team, #[MapEntity(mapping: ['projectId' => 'id'])] Project $project, ProjectRepository $projectRepository): Response
     {
@@ -447,6 +454,7 @@ final class TeamController extends BaseApiController
     #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Returns the team without the project', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The team whose permission will be revoked', required: true)]
     #[OA\Parameter(name: 'projectId', in: 'path', description: 'The project to remove (Project ID)', required: true)]
+    #[ApiToken(action: 'update')]
     #[Route(methods: ['DELETE'], path: '/{id}/projects/{projectId}', name: 'delete_team_project', requirements: ['id' => '\d+', 'projectId' => '\d+'])]
     public function deleteProjectAction(Team $team, #[MapEntity(mapping: ['projectId' => 'id'])] Project $project, ProjectRepository $projectRepository): Response
     {
@@ -473,6 +481,7 @@ final class TeamController extends BaseApiController
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the team including the activity', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The team that is granted access', required: true)]
     #[OA\Parameter(name: 'activityId', in: 'path', description: 'The activity to grant acecess to (Activity ID)', required: true)]
+    #[ApiToken(action: 'update')]
     #[Route(methods: ['POST'], path: '/{id}/activities/{activityId}', name: 'post_team_activity', requirements: ['id' => '\d+', 'activityId' => '\d+'])]
     public function postActivityAction(Team $team, #[MapEntity(mapping: ['activityId' => 'id'])] Activity $activity, ActivityRepository $activityRepository): Response
     {
@@ -498,6 +507,7 @@ final class TeamController extends BaseApiController
     #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Returns the team without the activity', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The team whose permission will be revoked', required: true)]
     #[OA\Parameter(name: 'activityId', in: 'path', description: 'The activity to remove (Activity ID)', required: true)]
+    #[ApiToken(action: 'update')]
     #[Route(methods: ['DELETE'], path: '/{id}/activities/{activityId}', name: 'delete_team_activity', requirements: ['id' => '\d+', 'activityId' => '\d+'])]
     public function deleteActivityAction(Team $team, #[MapEntity(mapping: ['activityId' => 'id'])] Activity $activity, ActivityRepository $activityRepository): Response
     {

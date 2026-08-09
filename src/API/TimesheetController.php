@@ -9,6 +9,7 @@
 
 namespace App\API;
 
+use App\API\Attribute\ApiToken;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Event\RecentActivityEvent;
@@ -45,6 +46,7 @@ use Symfony\Component\Validator\Constraints;
 #[Route(path: '/timesheets')]
 #[IsGranted('API')]
 #[OA\Tag(name: 'Timesheet')]
+#[ApiToken('timesheet')]
 final class TimesheetController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Timesheet', 'Timesheet_Entity', 'Not_Expanded'];
@@ -433,6 +435,7 @@ final class TimesheetController extends BaseApiController
     #[IsGranted('stop', 'timesheet')]
     #[OA\Response(response: 200, description: 'Stops an active timesheet and returns it afterwards.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet ID to stop', required: true)]
+    #[ApiToken(action: 'create')]
     #[Route(methods: ['PATCH'], path: '/{id}/stop', name: 'stop_timesheet', requirements: ['id' => '\d+'])]
     public function stopAction(Timesheet $timesheet): Response
     {
@@ -452,6 +455,7 @@ final class TimesheetController extends BaseApiController
     #[IsGranted('start', 'timesheet')]
     #[OA\Response(response: 200, description: 'Restart a timesheet for the same customer, project, activity combination. The current user will be the owner of the new record. Kimai tries to stop running records, which is expected to fail depending on the configured rules. Data will be copied from the original record if requested.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet ID to restart', required: true)]
+    #[ApiToken(action: 'create')]
     #[Route(methods: ['PATCH'], path: '/{id}/restart', name: 'restart_timesheet', requirements: ['id' => '\d+'])]
     #[Rest\RequestParam(name: 'copy', requirements: 'all', strict: true, nullable: true, description: 'Whether data should be copied to the new entry. Allowed values: all (default: nothing is copied)')]
     #[Rest\RequestParam(name: 'begin', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Changes the restart date to the given one (default: now)')]
@@ -512,6 +516,7 @@ final class TimesheetController extends BaseApiController
     #[IsGranted('duplicate', 'timesheet')]
     #[OA\Response(response: 200, description: 'Duplicates a timesheet, resetting the export state only.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet ID to duplicate', required: true)]
+    #[ApiToken(action: 'create')]
     #[Route(methods: ['PATCH'], path: '/{id}/duplicate', name: 'duplicate_timesheet', requirements: ['id' => '\d+'])]
     public function duplicateAction(Timesheet $timesheet): Response
     {

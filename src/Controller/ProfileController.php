@@ -9,6 +9,8 @@
 
 namespace App\Controller;
 
+use App\API\Permission\ApiTokenScopeMap;
+use App\API\Permission\ApiTokenScopes;
 use App\Entity\AccessToken;
 use App\Entity\User;
 use App\Entity\UserPreference;
@@ -178,14 +180,17 @@ final class ProfileController extends AbstractController
         #[MapEntity(mapping: ['username' => 'username'])]
         User $profile,
         Request $request,
-        AccessTokenRepository $accessTokenRepository
+        AccessTokenRepository $accessTokenRepository,
+        ApiTokenScopeMap $scopeMap,
+        ApiTokenScopes $apiTokenScopes
     ): Response
     {
         $accessToken = new AccessToken($profile, substr(bin2hex(random_bytes(100)), 0, 25));
 
         $form = $this->createForm(AccessTokenForm::class, $accessToken, [
             'action' => $this->generateUrl('user_profile_access_token', ['username' => $profile->getUserIdentifier()]),
-            'method' => 'POST'
+            'method' => 'POST',
+            'scope_choices' => $this->buildScopeChoices($profile, $scopeMap, $apiTokenScopes),
         ]);
         $form->handleRequest($request);
 
@@ -203,6 +208,66 @@ final class ProfileController extends AbstractController
             'user' => $profile,
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route(path: '/{username}/api-token/{id}/edit', name: 'user_profile_access_token_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    #[IsGranted('api-token', 'profile')]
+    public function editAccessToken(
+        #[MapEntity(mapping: ['username' => 'username'])]
+        User $profile,
+        #[MapEntity(mapping: ['id' => 'id'])]
+        AccessToken $accessToken,
+        Request $request,
+        AccessTokenRepository $accessTokenRepository,
+        ApiTokenScopeMap $scopeMap,
+        ApiTokenScopes $apiTokenScopes
+    ): Response
+    {
+        // make sure a user can only edit their own tokens
+        if ($accessToken->getUser()->getId() !== $profile->getId()) {
+            throw $this->createAccessDeniedException('Cannot edit an API token of another user.');
+        }
+
+        $form = $this->createForm(AccessTokenForm::class, $accessToken, [
+            'action' => $this->generateUrl('user_profile_access_token_edit', ['username' => $profile->getUserIdentifier(), 'id' => $accessToken->getId()]),
+            'method' => 'POST',
+            'scope_choices' => $this->buildScopeChoices($profile, $scopeMap, $apiTokenScopes),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $accessTokenRepository->saveAccessToken($accessToken);
+
+            $this->flashSuccess('action.update.success');
+
+            return $this->redirectToRoute('user_profile_api_token', ['username' => $profile->getUserIdentifier(), 'hide-token' => '1']);
+        }
+
+        return $this->render('user/access-token.html.twig', [
+            'access_token' => $accessToken,
+            'user' => $profile,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * Builds the grouped list of API scopes the given user may actually use.
+     *
+     * @return array<string, array<string, string>> resource => [action label => "resource:action" value]
+     */
+    private function buildScopeChoices(User $profile, ApiTokenScopeMap $scopeMap, ApiTokenScopes $apiTokenScopes): array
+    {
+        $choices = [];
+        foreach ($scopeMap->getCatalog() as $resource => $actions) {
+            foreach ($actions as $action) {
+                if ($apiTokenScopes->userMayUseScope($profile, $resource, $action)) {
+                    $choices[$resource][$action] = ApiTokenScopes::createScope($resource, $action);
+                }
+            }
+        }
+
+        return $choices;
     }
 
     #[Route(path: '/{username}/api-token', name: 'user_profile_api_token', methods: ['GET', 'POST'])]

@@ -9,6 +9,7 @@
 
 namespace App\API;
 
+use App\API\Attribute\ApiToken;
 use App\Entity\Project;
 use App\Entity\ProjectComment;
 use App\Entity\ProjectRate;
@@ -39,6 +40,7 @@ use Symfony\Component\Validator\Constraints;
 #[Route(path: '/projects')]
 #[IsGranted('API')]
 #[OA\Tag(name: 'Project')]
+#[ApiToken('project')]
 final class ProjectController extends BaseApiController
 {
     private const GROUPS_COMMENT = ['Default', 'Not_Expanded'];
@@ -312,6 +314,7 @@ final class ProjectController extends BaseApiController
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The project whose rate will be removed', required: true)]
     #[OA\Parameter(name: 'rateId', in: 'path', description: 'The rate to remove', required: true)]
+    #[ApiToken(action: 'update')]
     #[Route(methods: ['DELETE'], path: '/{id}/rates/{rateId}', name: 'delete_project_rate', requirements: ['id' => '\d+', 'rateId' => '\d+'])]
     public function deleteRateAction(Project $project, #[MapEntity(mapping: ['rateId' => 'id'])] ProjectRate $rate): Response
     {
@@ -333,6 +336,7 @@ final class ProjectController extends BaseApiController
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the new created rate', content: new OA\JsonContent(ref: '#/components/schemas/ProjectRate'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The project to add the rate for', required: true)]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/ProjectRateForm'))]
+    #[ApiToken(action: 'update')]
     #[Route(methods: ['POST'], path: '/{id}/rates', name: 'post_project_rate', requirements: ['id' => '\d+'])]
     public function postRateAction(Project $project, Request $request): Response
     {
@@ -387,6 +391,7 @@ final class ProjectController extends BaseApiController
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the newly created project comment', content: new OA\JsonContent(ref: '#/components/schemas/Comment'))])]
     #[OA\Parameter(name: 'id', description: 'The project to add the comment for', in: 'path', required: true)]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/CommentForm'))]
+    #[ApiToken(action: 'update')]
     #[Route(path: '/{id}/comments', name: 'post_project_comment', requirements: ['id' => '\d+'], methods: ['POST'])]
     public function postCommentAction(#[MapEntity(mapping: ['id' => 'id'])] Project $project, Request $request): Response
     {
@@ -448,6 +453,7 @@ final class ProjectController extends BaseApiController
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
     #[OA\Parameter(name: 'id', description: 'The project whose comment will be removed', in: 'path', required: true)]
     #[OA\Parameter(name: 'comment', description: 'The comment to remove', in: 'path', required: true)]
+    #[ApiToken(action: 'update')]
     #[Route(path: '/{id}/comments/{comment}', name: 'delete_project_comment', requirements: ['id' => '\d+', 'comment' => '\d+'], methods: ['DELETE'])]
     public function deleteCommentAction(#[MapEntity(mapping: ['id' => 'id'])] Project $project, #[MapEntity(mapping: ['comment' => 'id'])] ProjectComment $comment): Response
     {
@@ -470,6 +476,7 @@ final class ProjectController extends BaseApiController
     #[IsGranted('permissions', 'project')]
     #[OA\Post(description: 'Creates (or reuses) a default team named after the project, makes the current user a teamlead, and binds the project to that team. Calling this multiple times is safe and will not create duplicate teams or bindings.', responses: [new OA\Response(response: 200, description: 'Returns the team', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
     #[OA\Parameter(name: 'id', description: 'The project to create a default team for', in: 'path', required: true)]
+    #[ApiToken(action: 'update')]
     #[Route(path: '/{id}/team', name: 'post_project_team', requirements: ['id' => '\d+'], methods: ['POST'])]
     public function postDefaultTeamAction(Project $project, TeamService $teamService): Response
     {

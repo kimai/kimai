@@ -1782,6 +1782,18 @@
         <source>api_token_hidden</source>
         <target>Dies ist das einzige Mal, dass der Token angezeigt wird! Bewahren Sie ihn gut auf und vergewissern Sie sich, dass Sie ihn notiert haben, bevor Sie dieses Fenster schließen.</target>
       </trans-unit>
+      <trans-unit id="FbqVQFq" resname="api_token.full_access">
+        <source>api_token.full_access</source>
+        <target>Vollzugriff</target>
+      </trans-unit>
+      <trans-unit id="6aaf8ZU" resname="api_token.no_access">
+        <source>api_token.no_access</source>
+        <target>Kein Zugriff</target>
+      </trans-unit>
+      <trans-unit id="rgATsZ_" resname="api_token.scopes_help">
+        <source>api_token.scopes_help</source>
+        <target>Die ausgewählten Berechtigungen beziehen sich auf diesen API-Token. Ob ein Benutzer eine Berechtigung tatsächlich besitzt, hängt weiterhin vom allgemeinen Berechtigungssystem ab, das meist zusätzlich vom konkreten Objekt abhängt.</target>
+      </trans-unit>
       <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve" approved="yes">
         <source>api_password_deprecated</source>
         <target state="final">API-Passwörter sind veraltet: bitte nutzen Sie stattdessen API-Tokens.</target>

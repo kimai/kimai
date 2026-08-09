@@ -9,6 +9,7 @@
 
 namespace App\API\Authentication;
 
+use App\API\Permission\ApiTokenContext;
 use App\Repository\AccessTokenRepository;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Http\AccessToken\AccessTokenHandlerInterface;
@@ -17,7 +18,8 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 final class AccessTokenHandler implements AccessTokenHandlerInterface
 {
     public function __construct(
-        private readonly AccessTokenRepository $accessTokenRepository
+        private readonly AccessTokenRepository $accessTokenRepository,
+        private readonly ApiTokenContext $tokenContext,
     )
     {
     }
@@ -40,6 +42,9 @@ final class AccessTokenHandler implements AccessTokenHandlerInterface
             $accessToken->setLastUsage($now);
             $this->accessTokenRepository->saveAccessToken($accessToken);
         }
+
+        // remember the token for scope enforcement and introspection during this request
+        $this->tokenContext->setToken($accessToken);
 
         return new UserBadge($accessToken->getUser()->getUserIdentifier(), fn (string $userIdentifier) => $accessToken->getUser());
     }

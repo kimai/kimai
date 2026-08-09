@@ -9,6 +9,7 @@
 
 namespace App\API;
 
+use App\API\Attribute\ApiToken;
 use App\Entity\Invoice;
 use App\Entity\InvoiceMeta;
 use App\Invoice\InvoiceService;
@@ -31,6 +32,7 @@ use Symfony\Component\Validator\Constraints;
 #[Route(path: '/invoices')]
 #[IsGranted('API')]
 #[OA\Tag(name: 'Invoice')]
+#[ApiToken('invoice')]
 final class InvoiceController extends BaseApiController
 {
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Invoice', 'Invoice_Entity'];

@@ -9,8 +9,12 @@
 
 namespace App\API;
 
+use App\API\Attribute\ApiToken;
 use App\API\Model\Plugin;
 use App\API\Model\Version;
+use App\API\Permission\ApiTokenContext;
+use App\API\Permission\ApiTokenScopeMap;
+use App\API\Permission\ApiTokenScopes;
 use App\Plugin\PluginManager;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
@@ -22,6 +26,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('API')]
 #[OA\Tag(name: 'Default')]
+#[ApiToken(ignore: true)]
 final class StatusController extends BaseApiController
 {
     public function __construct(private readonly ViewHandlerInterface $viewHandler)
@@ -63,5 +68,22 @@ final class StatusController extends BaseApiController
         }
 
         return $this->viewHandler->handle(new View($plugins, 200));
+    }
+
+    /**
+     * Fetch the effective scopes of the currently used API token
+     *
+     * Returns the complete scope catalog as a nested object "resource => action => granted".
+     * The boolean reflects what the token can effectively do right now: the scope has to be
+     * granted to the token AND the user still has to hold the underlying permission.
+     * Legacy tokens (created before configurable scopes existed) return everything as "true".
+     */
+    #[OA\Response(response: 200, description: 'Returns the effective scope matrix of the current API token', content: new OA\JsonContent(example: '{"timesheet":{"create":true,"read":true,"update":true,"delete":false},"customer":{"create":false,"read":true,"update":false,"delete":false}}'))]
+    #[Route(methods: ['GET'], path: '/token', name: 'get_api_token')]
+    public function tokenAction(ApiTokenContext $tokenContext, ApiTokenScopeMap $scopeMap, ApiTokenScopes $scopes): Response
+    {
+        $matrix = $scopes->getEffectiveMatrix($tokenContext->getToken(), $this->getUser(), $scopeMap->getCatalog());
+
+        return $this->viewHandler->handle(new View($matrix, 200));
     }
 }

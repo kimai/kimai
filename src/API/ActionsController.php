@@ -9,6 +9,7 @@
 
 namespace App\API;
 
+use App\API\Attribute\ApiToken;
 use App\API\Model\PageAction;
 use App\Entity\Activity;
 use App\Entity\Customer;
@@ -28,6 +29,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route(path: '/actions')]
 #[IsGranted('API')]
 #[OA\Tag(name: 'Actions')]
+#[ApiToken(ignore: true)]
 final class ActionsController extends BaseApiController
 {
     public function __construct(

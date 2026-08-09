@@ -9,6 +9,7 @@
 
 namespace App\API;
 
+use App\API\Attribute\ApiToken;
 use App\Entity\ExportTemplate;
 use App\Repository\ExportTemplateRepository;
 use FOS\RestBundle\View\View;
@@ -21,6 +22,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route(path: '/export')]
 #[IsGranted('API')]
 #[OA\Tag(name: 'Export')]
+#[ApiToken('export')]
 final class ExportController extends BaseApiController
 {
     /**

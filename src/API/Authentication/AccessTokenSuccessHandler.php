@@ -9,6 +9,7 @@
 
 namespace App\API\Authentication;
 
+use App\API\Permission\ApiTokenContext;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -16,9 +17,14 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerI
 
 final class AccessTokenSuccessHandler implements AuthenticationSuccessHandlerInterface
 {
+    public function __construct(private readonly ApiTokenContext $tokenContext)
+    {
+    }
+
     public function onAuthenticationSuccess(Request $request, TokenInterface $token): ?Response
     {
         $token->setAttribute('api-token', true);
+        $token->setAttribute('api-scopes', $this->tokenContext->getToken()?->getScopes());
 
         return null;
     }

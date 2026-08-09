@@ -9,6 +9,7 @@
 
 namespace App\API;
 
+use App\API\Attribute\ApiToken;
 use App\Customer\CustomerService;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
@@ -37,6 +38,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route(path: '/customers')]
 #[IsGranted('API')]
 #[OA\Tag(name: 'Customer')]
+#[ApiToken('customer')]
 final class CustomerController extends BaseApiController
 {
     private const GROUPS_COMMENT = ['Default', 'Not_Expanded'];
@@ -264,6 +266,7 @@ final class CustomerController extends BaseApiController
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The customer whose rate will be removed', required: true)]
     #[OA\Parameter(name: 'rateId', in: 'path', description: 'The rate to remove', required: true)]
+    #[ApiToken(action: 'update')]
     #[Route(methods: ['DELETE'], path: '/{id}/rates/{rateId}', name: 'delete_customer_rate', requirements: ['id' => '\d+', 'rateId' => '\d+'])]
     public function deleteRateAction(Customer $customer, #[MapEntity(mapping: ['rateId' => 'id'])] CustomerRate $rate): Response
     {
@@ -285,6 +288,7 @@ final class CustomerController extends BaseApiController
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the new created rate', content: new OA\JsonContent(ref: '#/components/schemas/CustomerRate'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The customer to add the rate for', required: true)]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/CustomerRateForm'))]
+    #[ApiToken(action: 'update')]
     #[Route(methods: ['POST'], path: '/{id}/rates', name: 'post_customer_rate', requirements: ['id' => '\d+'])]
     public function postRateAction(Customer $customer, Request $request): Response
     {
@@ -339,6 +343,7 @@ final class CustomerController extends BaseApiController
     #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the newly created customer comment', content: new OA\JsonContent(ref: '#/components/schemas/Comment'))])]
     #[OA\Parameter(name: 'id', description: 'The customer to add the comment for', in: 'path', required: true)]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/CommentForm'))]
+    #[ApiToken(action: 'update')]
     #[Route(path: '/{id}/comments', name: 'post_customer_comment', requirements: ['id' => '\d+'], methods: ['POST'])]
     public function postCommentAction(#[MapEntity(mapping: ['id' => 'id'])] Customer $customer, Request $request): Response
     {
@@ -400,6 +405,7 @@ final class CustomerController extends BaseApiController
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
     #[OA\Parameter(name: 'id', description: 'The customer whose comment will be removed', in: 'path', required: true)]
     #[OA\Parameter(name: 'comment', description: 'The comment to remove', in: 'path', required: true)]
+    #[ApiToken(action: 'update')]
     #[Route(path: '/{id}/comments/{comment}', name: 'delete_customer_comment', requirements: ['id' => '\d+', 'comment' => '\d+'], methods: ['DELETE'])]
     public function deleteCommentAction(#[MapEntity(mapping: ['id' => 'id'])] Customer $customer, #[MapEntity(mapping: ['comment' => 'id'])] CustomerComment $comment): Response
     {
@@ -422,6 +428,7 @@ final class CustomerController extends BaseApiController
     #[IsGranted('permissions', 'customer')]
     #[OA\Post(description: 'Creates (or reuses) a default team named after the customer, makes the current user a teamlead, and binds the customer to that team. Calling this multiple times is safe and will not create duplicate teams or bindings.', responses: [new OA\Response(response: 200, description: 'Returns the team', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
     #[OA\Parameter(name: 'id', description: 'The customer to create a default team for', in: 'path', required: true)]
+    #[ApiToken(action: 'update')]
     #[Route(path: '/{id}/team', name: 'post_customer_team', requirements: ['id' => '\d+'], methods: ['POST'])]
     public function postDefaultTeamAction(Customer $customer, TeamService $teamService): Response
     {

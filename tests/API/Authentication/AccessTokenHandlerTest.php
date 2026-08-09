@@ -10,6 +10,7 @@
 namespace App\Tests\API\Authentication;
 
 use App\API\Authentication\AccessTokenHandler;
+use App\API\Permission\ApiTokenContext;
 use App\Entity\AccessToken;
 use App\Entity\User;
 use App\Repository\AccessTokenRepository;
@@ -25,7 +26,7 @@ class AccessTokenHandlerTest extends TestCase
         $userProvider = $this->createMock(AccessTokenRepository::class);
         $userProvider->method('findByToken')->willReturn($accessToken);
 
-        return new AccessTokenHandler($userProvider);
+        return new AccessTokenHandler($userProvider, new ApiTokenContext());
     }
 
     public function testUnknownToken(): void
