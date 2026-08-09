@@ -51,8 +51,7 @@ Use this file when working in the Kimai core repository.
 - Do not modify `var/data/`
 - Do not modify `var/log/`
 - Do not modify `public/build/`, generated frontend assets
-- Do not modify `public/bundles/`, frintend assets from plugins
-- Do not modify plugins in `var/plugins/` unless explicitly asked
+- Do not modify `public/bundles/`, frontend assets from plugins
 
 ## Agent Workflow
 
@@ -75,6 +74,7 @@ Use this file when working in the Kimai core repository.
 - Doctrine entity changes affecting the schema require a migration file
 - Generate migration with `bin/console doctrine:migrations:diff`
 - Prefer `Doctrine\DBAL\Schema` in migrations over inline SQL
+- Activate `<env name="BOOTSTRAP_RESET_DATABASE" value="true"/>` in `phpunit.xml` when running tests that require a database change 
 
 ## Frontend and Translation Rules
 
@@ -100,16 +100,15 @@ Use this file when working in the Kimai core repository.
 - For focused checks, run `vendor/bin/phpunit tests/<directory>/<TestClassName>.php`
 - Use `composer tests-unit` for broader validation without expensive end-to-end coverage
 - Use `composer tests` when the change justifies running the full suite
-- If tests fail, remove stale cache with `rm -r ./var/cache/test/` to cause a rebuild 
+- If tests fail, remove stale cache with `rm -r ./var/cache/test/` to cause a rebuild of the service container
 
 ## Git Rules
 
-- Avoid working directly on `main`
 - Small fixes should target the active `release-x.y.z` branch
 - Larger changes should go to descriptive `snake_case` feature branches
 - Agents may create branches when needed
+- Commits are created by the maintainer
 - Agents must not create commits unless explicitly asked
-- Commits are normally created by the maintainer
 
 ## Coding Conventions
 
