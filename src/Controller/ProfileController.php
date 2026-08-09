@@ -24,6 +24,7 @@ use App\Form\UserPreferencesForm;
 use App\Form\UserRolesType;
 use App\Form\UserTeamsType;
 use App\Form\UserTwoFactorType;
+use App\Model\AppConnectPayload;
 use App\Repository\AccessTokenRepository;
 use App\Repository\Query\TimesheetStatisticQuery;
 use App\Repository\TeamRepository;
@@ -46,6 +47,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
@@ -248,13 +250,25 @@ final class ProfileController extends AbstractController
             }
         }
 
+        $baseUrl = rtrim($this->generateUrl('home', [], UrlGeneratorInterface::ABSOLUTE_URL), '/');
+        $qrCodePayload = null;
+
+        if ($createdToken !== null) {
+            $qrCodePayload = (new AppConnectPayload($baseUrl, $createdToken->getToken()))->toJson();
+        }
+
+        $pageSetup = $this->getPageSetup($profile, 'api-token');
+        $pageSetup->setHelp('user-api.html');
+
         return $this->render('user/api-token.html.twig', [
             'tab' => 'api-token',
             'created_token' => $createdToken,
             'access_tokens' => $accessTokens,
-            'page_setup' => $this->getPageSetup($profile, 'api-token'),
+            'page_setup' => $pageSetup,
             'user' => $profile,
             'form' => $form->createView(),
+            'api_url' => $baseUrl . '/api',
+            'qr_code_payload' => $qrCodePayload,
         ]);
     }
 

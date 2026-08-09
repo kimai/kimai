@@ -1782,6 +1782,10 @@
         <source>api_token_hidden</source>
         <target>This is the only time this key will ever be displayed! So keep it safe and make sure you've copied it down before closing this window.</target>
       </trans-unit>
+      <trans-unit id="G8ZoGoA" resname="api_token_qr_hint">
+        <source>api_token_qr_hint</source>
+        <target>You can scan this QR code with a mobile app, to configure server URL and token in one step. Do not share this image: it contains your API token.</target>
+      </trans-unit>
       <trans-unit id="TCr2ArH" resname="api_password_deprecated">
         <source>api_password_deprecated</source>
         <target>API passwords are outdated: please use API tokens instead.</target>
