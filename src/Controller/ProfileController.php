@@ -257,11 +257,14 @@ final class ProfileController extends AbstractController
             $qrCodePayload = (new AppConnectPayload($baseUrl, $createdToken->getToken()))->toJson();
         }
 
+        $pageSetup = $this->getPageSetup($profile, 'api-token');
+        $pageSetup->setHelp('user-api.html');
+
         return $this->render('user/api-token.html.twig', [
             'tab' => 'api-token',
             'created_token' => $createdToken,
             'access_tokens' => $accessTokens,
-            'page_setup' => $this->getPageSetup($profile, 'api-token'),
+            'page_setup' => $pageSetup,
             'user' => $profile,
             'form' => $form->createView(),
             'api_url' => $baseUrl . '/api',
