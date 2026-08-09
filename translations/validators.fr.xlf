@@ -170,6 +170,14 @@
         <source>These characters are not allowed: {{ chars }}</source>
         <target state="translated">Les caractères suivants ne sont pas autorisés : {{ chars }}</target>
       </trans-unit>
+      <trans-unit id="7hNS8l3" resname="A maximum duration of {{ value }} is allowed." xml:space="preserve">
+        <source>A maximum duration of {{ value }} is allowed.</source>
+        <target state="translated">Une durée maximale de {{ value }} est permise.</target>
+      </trans-unit>
+      <trans-unit id="Dp2KT8W" resname="The field {{ field }} is required, please select a value" xml:space="preserve">
+        <source>The field {{ field }} is required, please select a value</source>
+        <target state="translated">Veuillez sélectionner une valeur pour {{ field }}</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
