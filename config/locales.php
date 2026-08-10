@@ -1973,6 +1973,13 @@
     'rtl' => false,
     'translation' => true,
   ],
+  'sr' => 
+  [
+    'date' => 'd. M. y.',
+    'time' => 'HH:mm',
+    'rtl' => false,
+    'translation' => true,
+  ],
   'sv' => 
   [
     'date' => 'y-MM-dd',
