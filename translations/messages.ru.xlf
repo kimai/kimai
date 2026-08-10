@@ -2110,6 +2110,26 @@
         <source>assign_self</source>
         <target state="translated">Назначить мне</target>
       </trans-unit>
+      <trans-unit id="TTL.5NF" resname="status.todo" xml:space="preserve">
+        <source>status.todo</source>
+        <target state="translated">Сделать</target>
+      </trans-unit>
+      <trans-unit id="j_0FPm3" resname="status.waiting" xml:space="preserve">
+        <source>status.waiting</source>
+        <target state="translated">Ожидание</target>
+      </trans-unit>
+      <trans-unit id="QdfOAGZ" resname="status.done" xml:space="preserve">
+        <source>status.done</source>
+        <target state="translated">Готово</target>
+      </trans-unit>
+      <trans-unit id="G8ZoGoA" resname="api_token_qr_hint" xml:space="preserve">
+        <source>api_token_qr_hint</source>
+        <target state="translated">Вы можете отсканировать этот QR-код в мобильном приложении, чтобы одним шагом настроить URL-адрес сервера и токен. Не передавайте это изображение другим лицам: оно содержит ваш API-токен.</target>
+      </trans-unit>
+      <trans-unit id="nlJ2pW2" resname="invoice_email" xml:space="preserve">
+        <source>invoice_email</source>
+        <target state="translated">Почта для оплаты</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

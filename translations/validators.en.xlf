@@ -170,9 +170,9 @@
         <source>These characters are not allowed: {{ chars }}</source>
         <target>The following characters are not allowed: {{ chars }}</target>
       </trans-unit>
-      <trans-unit id="Dp2KT8W" resname="The field {{ field }} is required, please select a value">
-        <source>The field {{ field }} is required, please select a value</source>
-        <target>Bitten wählen Sie einen Wert für {{ field }} aus</target>
+      <trans-unit id="Dp2KT8W" resname="The field {{ field }} is required, please select a value" xml:space="preserve" approved="yes">
+        <source>Please select a value for {{ field }}</source>
+        <target state="final">Please select a value for {{ field }}</target>
       </trans-unit>
       <trans-unit id="7hNS8l3" resname="A maximum duration of {{ value }} is allowed.">
         <source>A maximum duration of {{ value }} is allowed.</source>

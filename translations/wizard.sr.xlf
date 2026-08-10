@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="sr" datatype="plaintext" original="wizard.en.xlf">
+    <body>
+      <trans-unit id="9XidDHG" resname="wizard.intro.title" xml:space="preserve">
+        <source>wizard.intro.title</source>
+        <target state="translated">Dobrodošli u Kimai</target>
+      </trans-unit>
+      <trans-unit id="X0ws5mu" resname="wizard.intro.description" xml:space="preserve">
+        <source>wizard.intro.description</source>
+        <target state="translated">Ovaj čarobnjak će vam pomoći da prilagodite Kimai svojim potrebama.</target>
+      </trans-unit>
+      <trans-unit id="FCMK0ph" resname="wizard.separator" xml:space="preserve">
+        <source>wizard.separator</source>
+        <target state="translated">Vaša podešavanja</target>
+      </trans-unit>
+      <trans-unit id="8_e6ApF" resname="wizard.profile.title" xml:space="preserve">
+        <source>wizard.profile.title</source>
+        <target state="translated">Vaš profil</target>
+      </trans-unit>
+      <trans-unit id="Mo1506M" resname="wizard.profile.description" xml:space="preserve">
+        <source>wizard.profile.description</source>
+        <target state="translated">Neka osnovna podešavanja koja će vam olakšati rad sa Kimai-jem.</target>
+      </trans-unit>
+      <trans-unit id="7Vipfs7" resname="wizard.password.title" xml:space="preserve">
+        <source>wizard.password.title</source>
+        <target state="translated">Vaša lozinka</target>
+      </trans-unit>
+      <trans-unit id="zlNbbUg" resname="wizard.password.description" xml:space="preserve">
+        <source>wizard.password.description</source>
+        <target state="translated">Unesite svoju novu lozinku, koja će se od sada koristiti za prijavu.</target>
+      </trans-unit>
+      <trans-unit id="8p.2pXa" resname="wizard.done.title" xml:space="preserve">
+        <source>wizard.done.title</source>
+        <target state="translated">Čestitamo</target>
+      </trans-unit>
+      <trans-unit id="k1SzMuI" resname="wizard.done.description" xml:space="preserve">
+        <source>wizard.done.description</source>
+        <target state="translated">Najvažnija podešavanja su sada završena. Ima još mnogo toga što možete kasnije prilagoditi u svom korisničkom profilu.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
