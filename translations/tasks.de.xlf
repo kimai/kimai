@@ -110,13 +110,13 @@
         <source>task_todo</source>
         <target>Aufgabe</target>
       </trans-unit>
-      <trans-unit id="hZFps4G" resname="board">
+      <trans-unit id="hZFps4G" resname="board" xml:space="preserve" approved="yes">
         <source>board</source>
-        <target>Board</target>
+        <target state="final">Board</target>
       </trans-unit>
-      <trans-unit id="aF2ajw." resname="boards">
+      <trans-unit id="aF2ajw." resname="boards" xml:space="preserve" approved="yes">
         <source>boards</source>
-        <target>Boards</target>
+        <target state="final">Boards</target>
       </trans-unit>
       <trans-unit id="TRpwk3n" resname="board.private">
         <source>board.private</source>
