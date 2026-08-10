@@ -10,8 +10,10 @@
 namespace App\Tests\Repository;
 
 use App\Entity\Activity;
+use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Tag;
+use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Repository\ActivityRepository;
@@ -20,6 +22,7 @@ use App\Repository\Query\TimesheetQuery;
 use App\Repository\Query\TimesheetQueryHint;
 use App\Repository\TimesheetRepository;
 use App\Utils\Pagination;
+use Doctrine\ORM\PersistentCollection;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -162,5 +165,77 @@ class TimesheetRepositoryTest extends AbstractRepositoryTestCase
         self::assertNotNull($timesheet->getTags()->get(0)->getId());
         self::assertEquals('Picture', $timesheet->getTags()->get(1)->getName());
         self::assertNotNull($timesheet->getTags()->get(1)->getId());
+    }
+
+    /**
+     * The voters check the teams of project, customer and activity for every rendered row.
+     * If those collections are not preloaded, Doctrine resolves them one by one, which adds
+     * two queries per distinct project to every listing page.
+     */
+    public function testTimesheetResultPreloadsTeamAssignments(): void
+    {
+        $em = $this->getEntityManager();
+
+        $user = $this->getUserByRole(User::ROLE_USER);
+
+        $team = new Team('preload team');
+        $team->addTeamlead($user);
+        $em->persist($team);
+
+        $customer = new Customer('preload customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $team->addCustomer($customer);
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('preload project');
+        $project->setCustomer($customer);
+        $team->addProject($project);
+        $em->persist($project);
+
+        $activity = new Activity();
+        $activity->setName('preload activity');
+        $activity->setProject($project);
+        $team->addActivity($activity);
+        $em->persist($activity);
+
+        $em->flush();
+
+        $timesheet = new Timesheet();
+        $timesheet->setBegin(new \DateTime('2021-04-01 10:00:00'))
+            ->setEnd(new \DateTime('2021-04-01 11:00:00'))
+            ->setUser($user)
+            ->setProject($project)
+            ->setActivity($activity);
+        $em->persist($timesheet);
+        $em->flush();
+        $em->clear();
+
+        /** @var TimesheetRepository $repository */
+        $repository = $em->getRepository(Timesheet::class);
+
+        $query = new TimesheetQuery();
+        $query->setUser($this->getUserByRole(User::ROLE_USER));
+
+        $results = $repository->getTimesheetResult($query)->getResults();
+        self::assertNotEmpty($results);
+
+        foreach ($results as $loaded) {
+            $loadedProject = $loaded->getProject();
+            self::assertInstanceOf(Project::class, $loadedProject);
+            self::assertInstanceOf(PersistentCollection::class, $loadedProject->getTeams());
+            self::assertTrue($loadedProject->getTeams()->isInitialized(), 'Project teams were not preloaded');
+
+            $loadedCustomer = $loadedProject->getCustomer();
+            self::assertInstanceOf(Customer::class, $loadedCustomer);
+            self::assertInstanceOf(PersistentCollection::class, $loadedCustomer->getTeams());
+            self::assertTrue($loadedCustomer->getTeams()->isInitialized(), 'Customer teams were not preloaded');
+
+            $loadedActivity = $loaded->getActivity();
+            self::assertInstanceOf(Activity::class, $loadedActivity);
+            self::assertInstanceOf(PersistentCollection::class, $loadedActivity->getTeams());
+            self::assertTrue($loadedActivity->getTeams()->isInitialized(), 'Activity teams were not preloaded');
+        }
     }
 }
