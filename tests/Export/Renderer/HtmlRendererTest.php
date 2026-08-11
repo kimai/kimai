@@ -10,18 +10,13 @@
 namespace App\Tests\Export\Renderer;
 
 use App\Activity\ActivityStatisticService;
-use App\Entity\User;
 use App\Export\Base\HtmlRenderer;
 use App\Export\Base\RendererTrait;
 use App\Project\ProjectStatisticService;
+use App\Tests\TwigAppVariableTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
-use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Twig\Environment;
 
 #[CoversClass(RendererTrait::class)]
@@ -29,6 +24,8 @@ use Twig\Environment;
 #[Group('integration')]
 class HtmlRendererTest extends AbstractRendererTestCase
 {
+    use TwigAppVariableTrait;
+
     public function testConfiguration(): void
     {
         $sut = new HtmlRenderer(
@@ -47,26 +44,7 @@ class HtmlRendererTest extends AbstractRendererTestCase
         /** @var Environment $twig */
         $twig = self::getContainer()->get('twig');
 
-        $user = $this->createMock(User::class);
-        $user->method('getId')->willReturn(1);
-        $user->method('getName')->willReturn('Testing');
-        $user->method('isAdmin')->willReturn(false);
-        $user->method('isSuperAdmin')->willReturn(false);
-        $user->method('getTimezone')->willReturn('America/Edmonton');
-        $token = $this->createMock(TokenInterface::class);
-        $token->expects($this->any())->method('getUser')->willReturn($user);
-
-        $tokenStorage = new TokenStorage();
-        $tokenStorage->setToken($token);
-        /** @var AppVariable $app */
-        $app = $twig->getGlobals()['app'];
-        $twig->addGlobal('app', $app);
-        $app->setTokenStorage($tokenStorage);
-        /** @var RequestStack $stack */
-        $stack = self::getContainer()->get('request_stack');
-        $request = new Request();
-        $request->setLocale('en');
-        $stack->push($request);
+        $this->prepareTwigAppVariable();
 
         $sut = new HtmlRenderer(
             $twig,
