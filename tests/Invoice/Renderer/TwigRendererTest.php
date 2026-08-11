@@ -12,12 +12,11 @@ namespace App\Tests\Invoice\Renderer;
 use App\Invoice\Renderer\AbstractTwigRenderer;
 use App\Invoice\Renderer\TwigRenderer;
 use App\Model\InvoiceDocument;
+use App\Tests\TwigAppVariableTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -27,6 +26,7 @@ use Twig\Loader\FilesystemLoader;
 class TwigRendererTest extends KernelTestCase
 {
     use RendererTestTrait;
+    use TwigAppVariableTrait;
 
     public function testSupports(): void
     {
@@ -47,11 +47,8 @@ class TwigRendererTest extends KernelTestCase
         $kernel = self::bootKernel();
         /** @var Environment $twig */
         $twig = self::getContainer()->get('twig');
-        /** @var RequestStack $stack */
-        $stack = self::getContainer()->get('request_stack');
-        $request = new Request();
-        $request->setLocale('en');
-        $stack->push($request);
+
+        $this->prepareTwigAppVariable();
 
         /** @var FilesystemLoader $loader */
         $loader = $twig->getLoader();
@@ -86,11 +83,8 @@ class TwigRendererTest extends KernelTestCase
         $kernel = self::bootKernel();
         /** @var Environment $twig */
         $twig = self::getContainer()->get('twig');
-        /** @var RequestStack $stack */
-        $stack = self::getContainer()->get('request_stack');
-        $request = new Request();
-        $request->setLocale('en');
-        $stack->push($request);
+
+        $this->prepareTwigAppVariable();
 
         /** @var FilesystemLoader $loader */
         $loader = $twig->getLoader();
