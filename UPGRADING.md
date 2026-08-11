@@ -17,8 +17,29 @@ These three API endpoints were removed, because they were technically broken and
 - `POST /api/activities/{id}/team`
 
 They still exist as routes, but every call now fails with `410 Gone` instead of creating a team.
-If one of your applications uses them, switch to `POST /api/teams/` to create the team and assign
-the customer, project or activity to it. These routes will be deleted in a future release.
+If one of your applications uses them, switch to `POST /api/teams/` to create the team and then 
+`PATCH /api/teams/` to assign the customer, project or activity to it.
+
+## [2.64.0](https://github.com/kimai/kimai/releases/tag/2.65.0)
+
+The base URL, which is used to generate links outside of a browser request (e.g. in emails or CLI commands),
+is now configured with the new `DEFAULT_URI` environment variable, e.g. in your `.env` file:
+
+```
+DEFAULT_URI=https://kimai.example.com
+```
+
+The previously documented way of configuring it via `config/packages/local.yaml` is deprecated and should be removed:
+
+```yaml
+parameters:
+    router.request_context.host: 'kimai.example.com'
+    router.request_context.scheme: 'https'
+    router.request_context.base_url: ''
+```
+
+These parameters still take precedence for now, so as long as `router.request_context.base_url` is defined
+in your `local.yaml`, the `DEFAULT_URI` setting has no effect. Delete the entire block and use `DEFAULT_URI` instead.
 
 ## [2.58.0](https://github.com/kimai/kimai/releases/tag/2.58.0)
 

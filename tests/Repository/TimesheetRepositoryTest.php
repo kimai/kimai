@@ -238,4 +238,143 @@ class TimesheetRepositoryTest extends AbstractRepositoryTestCase
             self::assertTrue($loadedActivity->getTeams()->isInitialized(), 'Activity teams were not preloaded');
         }
     }
+
+    /**
+     * Regression test for GHSA-c6j4-35fc-x3hw.
+     *
+     * The permission criteria only limited the results by project and customer
+     * teams. Timesheets using an activity, which is limited to a team the current
+     * user is not part of, were returned by the listing - although the voter
+     * (and therefore every by-id route) rejects exactly those records.
+     */
+    public function testQueryDoesNotReturnTimesheetsWithForeignActivityTeam(): void
+    {
+        $em = $this->getEntityManager();
+
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+        $member = $this->getUserByRole(User::ROLE_USER);
+
+        $ownTeam = new Team('GHSA-c6j4 own team');
+        $ownTeam->addTeamlead($teamlead);
+        $ownTeam->addUser($member);
+        $em->persist($ownTeam);
+
+        $foreignTeam = new Team('GHSA-c6j4 foreign team');
+        $foreignTeam->addTeamlead($member);
+        $em->persist($foreignTeam);
+
+        $customer = new Customer('GHSA-c6j4 customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('GHSA-c6j4 project');
+        $project->setCustomer($customer);
+        $em->persist($project);
+
+        $visibleActivity = new Activity();
+        $visibleActivity->setName('GHSA-c6j4 visible activity');
+        $visibleActivity->setProject($project);
+        $em->persist($visibleActivity);
+
+        // only the foreign team may access this activity
+        $restrictedActivity = new Activity();
+        $restrictedActivity->setName('GHSA-c6j4 restricted activity');
+        $restrictedActivity->setProject($project);
+        $foreignTeam->addActivity($restrictedActivity);
+        $em->persist($restrictedActivity);
+
+        $em->flush();
+
+        $visible = new Timesheet();
+        $visible->setBegin(new \DateTime('2020-01-01 10:00:00'))
+            ->setEnd(new \DateTime('2020-01-01 11:00:00'))
+            ->setUser($member)
+            ->setProject($project)
+            ->setActivity($visibleActivity);
+        $em->persist($visible);
+
+        $restricted = new Timesheet();
+        $restricted->setBegin(new \DateTime('2020-01-01 12:00:00'))
+            ->setEnd(new \DateTime('2020-01-01 13:00:00'))
+            ->setUser($member)
+            ->setProject($project)
+            ->setActivity($restrictedActivity);
+        $em->persist($restricted);
+
+        $em->flush();
+        $em->clear();
+
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+
+        /** @var TimesheetRepository $repository */
+        $repository = $em->getRepository(Timesheet::class);
+
+        $query = new TimesheetQuery();
+        $query->setCurrentUser($teamlead);
+
+        $found = [];
+        foreach ($repository->getPagerfantaForQuery($query)->getCurrentPageResults() as $timesheet) {
+            self::assertInstanceOf(Timesheet::class, $timesheet);
+            $found[] = $timesheet->getId();
+        }
+
+        self::assertContains($visible->getId(), $found);
+        self::assertNotContains($restricted->getId(), $found);
+    }
+
+    /**
+     * The same boundary has to be enforced when timesheets are fetched by ID,
+     * see GHSA-c6j4-35fc-x3hw.
+     */
+    public function testFindTimesheetsByIdDoesNotReturnForeignActivityTeam(): void
+    {
+        $em = $this->getEntityManager();
+
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+        $member = $this->getUserByRole(User::ROLE_USER);
+
+        $foreignTeam = new Team('GHSA-c6j4 foreign team by id');
+        $foreignTeam->addTeamlead($member);
+        $em->persist($foreignTeam);
+
+        $customer = new Customer('GHSA-c6j4 customer by id');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('GHSA-c6j4 project by id');
+        $project->setCustomer($customer);
+        $em->persist($project);
+
+        $restrictedActivity = new Activity();
+        $restrictedActivity->setName('GHSA-c6j4 restricted activity by id');
+        $restrictedActivity->setProject($project);
+        $foreignTeam->addActivity($restrictedActivity);
+        $em->persist($restrictedActivity);
+
+        $em->flush();
+
+        $restricted = new Timesheet();
+        $restricted->setBegin(new \DateTime('2020-02-01 12:00:00'))
+            ->setEnd(new \DateTime('2020-02-01 13:00:00'))
+            ->setUser($member)
+            ->setProject($project)
+            ->setActivity($restrictedActivity);
+        $em->persist($restricted);
+
+        $em->flush();
+        $restrictedId = $restricted->getId();
+        self::assertIsInt($restrictedId);
+        $em->clear();
+
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+
+        /** @var TimesheetRepository $repository */
+        $repository = $em->getRepository(Timesheet::class);
+
+        self::assertCount(0, $repository->findTimesheetsById($teamlead, [$restrictedId]));
+    }
 }

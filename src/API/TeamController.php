@@ -393,6 +393,7 @@ final class TeamController extends BaseApiController
      * This removes access to the customer from the team.
      */
     #[IsGranted('edit', 'team')]
+    #[IsGranted('permissions', 'customer')]
     #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Returns the team without the customer', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The team whose permission will be revoked', required: true)]
     #[OA\Parameter(name: 'customerId', in: 'path', description: 'The customer to remove (Customer ID)', required: true)]
@@ -444,6 +445,7 @@ final class TeamController extends BaseApiController
      * This removes access to the project from the team.
      */
     #[IsGranted('edit', 'team')]
+    #[IsGranted('permissions', 'project')]
     #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Returns the team without the project', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The team whose permission will be revoked', required: true)]
     #[OA\Parameter(name: 'projectId', in: 'path', description: 'The project to remove (Project ID)', required: true)]
@@ -495,6 +497,7 @@ final class TeamController extends BaseApiController
      * This removes access to the activity from the team.
      */
     #[IsGranted('edit', 'team')]
+    #[IsGranted('permissions', 'activity')]
     #[OA\Delete(responses: [new OA\Response(response: 200, description: 'Returns the team without the activity', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
     #[OA\Parameter(name: 'id', in: 'path', description: 'The team whose permission will be revoked', required: true)]
     #[OA\Parameter(name: 'activityId', in: 'path', description: 'The activity to remove (Activity ID)', required: true)]
