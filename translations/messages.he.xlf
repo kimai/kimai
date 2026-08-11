@@ -2082,6 +2082,54 @@
         <source>count_as_expected_time_help</source>
         <target state="final">כשהאפשרות פעילה, %type% תחושבנה כשעות עבודה כחלק משעות צפי העבודה היומיות. כשהאפשרות כבויה, שעות הצפי לימים האלה תוגדרנה ל־0. שתי ההגדרות מחזיקות מאזן נייטרלי אבל משפיעות על הסכומים החודשיים בצורות שונות.</target>
       </trans-unit>
+      <trans-unit id="TTL.5NF" resname="status.todo" xml:space="preserve" approved="yes">
+        <source>status.todo</source>
+        <target state="final">לביצוע</target>
+      </trans-unit>
+      <trans-unit id="j_0FPm3" resname="status.waiting" xml:space="preserve" approved="yes">
+        <source>status.waiting</source>
+        <target state="final">בהמתנה</target>
+      </trans-unit>
+      <trans-unit id="QdfOAGZ" resname="status.done" xml:space="preserve" approved="yes">
+        <source>status.done</source>
+        <target state="final">בוצע</target>
+      </trans-unit>
+      <trans-unit id="G8ZoGoA" resname="api_token_qr_hint" xml:space="preserve" approved="yes">
+        <source>api_token_qr_hint</source>
+        <target state="final">אפשר לסרוק את קוד ה־QR הזה עם יישומון לניידים, כדי להגדיר את כתובת השרת והאסימון בצעד אחד. אסור לשתף את התמונה הזאת, היא מכילה את אסימון ה־API שלך.</target>
+      </trans-unit>
+      <trans-unit id="nlJ2pW2" resname="invoice_email" xml:space="preserve" approved="yes">
+        <source>invoice_email</source>
+        <target state="final">דוא״ל לחיוב</target>
+      </trans-unit>
+      <trans-unit id="WrNTzd7" resname="assign_timesheets" xml:space="preserve" approved="yes">
+        <source>assign_timesheets</source>
+        <target state="final">הקצאת גיליונות שעות</target>
+      </trans-unit>
+      <trans-unit id="zO0oxtw" resname="start" xml:space="preserve" approved="yes">
+        <source>start</source>
+        <target state="final">התחלה</target>
+      </trans-unit>
+      <trans-unit id="DAMFhpR" resname="lock" xml:space="preserve" approved="yes">
+        <source>lock</source>
+        <target state="final">נעילה</target>
+      </trans-unit>
+      <trans-unit id="pNRR7CN" resname="release" xml:space="preserve" approved="yes">
+        <source>release</source>
+        <target state="final">שחרור</target>
+      </trans-unit>
+      <trans-unit id="kwC00lZ" resname="assign" xml:space="preserve" approved="yes">
+        <source>assign</source>
+        <target state="final">הקצאה</target>
+      </trans-unit>
+      <trans-unit id="2ajb.ZU" resname="assign_self" xml:space="preserve" approved="yes">
+        <source>assign_self</source>
+        <target state="final">הקצאה אליי</target>
+      </trans-unit>
+      <trans-unit id="LfO_otF" resname="reopen" xml:space="preserve" approved="yes">
+        <source>reopen</source>
+        <target state="final">פתיחה מחדש</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

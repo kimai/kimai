@@ -172,7 +172,7 @@
       </trans-unit>
       <trans-unit id="Dp2KT8W" resname="The field {{ field }} is required, please select a value" xml:space="preserve">
         <source>Please select a value for {{ field }}</source>
-        <target state="needs-translation">{{ field }} alanı zorunludur, lütfen bir değer seçin</target>
+        <target state="translated">Lütfen {{ field }} için bir değer seçin</target>
       </trans-unit>
       <trans-unit id="7hNS8l3" resname="A maximum duration of {{ value }} is allowed." xml:space="preserve">
         <source>A maximum duration of {{ value }} is allowed.</source>

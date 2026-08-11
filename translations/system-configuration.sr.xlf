@@ -252,7 +252,7 @@
       </trans-unit>
       <trans-unit id="aUc3uU1" resname="help.theme.color_choices" xml:space="preserve">
         <source>Comma-separated list of HTML color-codes. Color names can be set by prefixing the color code with a name and the "|" delimiter, e.g: White|#ffffff,Black|#000000.</source>
-        <target state="translated">Lista HTML kodova boja odvojenih zarezom. Nazivi boja se mogu podesiti tako što se kod boje unese sa prefiksom naziva i graničnikom „|”, npr: White|#ffffff,Black|#000000.</target>
+        <target state="translated">Lista HTML kodova boja odvojenih zarezom. Nazivi boja se mogu podesiti tako što se kod boje unese sa prefiksom naziva i graničnikom "|", npr: White|#ffffff,Black|#000000.</target>
       </trans-unit>
       <trans-unit id="udkGKEU" resname="authentication" xml:space="preserve">
         <source>authentication</source>
@@ -288,7 +288,7 @@
       </trans-unit>
       <trans-unit id="Rf_fb9x" resname="timesheet.rules.break_warning_duration" xml:space="preserve">
         <source>timesheet.rules.break_warning_duration</source>
-        <target state="translated">Maksimalno trajanje unosa evidencije vremena u minutima pre nego što se prikaže „upozorenje o pauzi” (0 = isključeno)</target>
+        <target state="translated">Maksimalno trajanje unosa evidencije vremena u minutima pre nego što se prikaže "upozorenje o pauzi" (0 = isključeno)</target>
       </trans-unit>
       <trans-unit id="vg5G_9i" resname="timesheet.rules.long_running_duration" xml:space="preserve">
         <source>timesheet.rules.long_running_duration</source>

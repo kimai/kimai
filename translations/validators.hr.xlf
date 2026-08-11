@@ -170,6 +170,14 @@
         <source>These characters are not allowed: {{ chars }}</source>
         <target state="translated">Sljedeći znakovi nisu dopušteni: {{ chars }}</target>
       </trans-unit>
+      <trans-unit id="Dp2KT8W" resname="The field {{ field }} is required, please select a value" xml:space="preserve" approved="no">
+        <source>Please select a value for {{ field }}</source>
+        <target state="translated">Odaberite vrijednost za {{ field }}</target>
+      </trans-unit>
+      <trans-unit id="7hNS8l3" resname="A maximum duration of {{ value }} is allowed." xml:space="preserve">
+        <source>A maximum duration of {{ value }} is allowed.</source>
+        <target state="translated">Dopušteno je maksimalno trajanje od {{ value }}.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

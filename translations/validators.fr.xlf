@@ -176,7 +176,7 @@
       </trans-unit>
       <trans-unit id="Dp2KT8W" resname="The field {{ field }} is required, please select a value" xml:space="preserve">
         <source>Please select a value for {{ field }}</source>
-        <target state="needs-translation">Veuillez sélectionner une valeur pour {{ field }}</target>
+        <target state="translated">Veuillez sélectionner une valeur pour {{ field }}</target>
       </trans-unit>
     </body>
   </file>

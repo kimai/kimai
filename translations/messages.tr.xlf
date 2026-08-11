@@ -2110,6 +2110,26 @@
         <source>reopen</source>
         <target state="translated">Yeniden aç</target>
       </trans-unit>
+      <trans-unit id="TTL.5NF" resname="status.todo" xml:space="preserve">
+        <source>status.todo</source>
+        <target state="translated">Yapılacak</target>
+      </trans-unit>
+      <trans-unit id="j_0FPm3" resname="status.waiting" xml:space="preserve">
+        <source>status.waiting</source>
+        <target state="translated">Bekliyor</target>
+      </trans-unit>
+      <trans-unit id="QdfOAGZ" resname="status.done" xml:space="preserve">
+        <source>status.done</source>
+        <target state="translated">Yapıldı</target>
+      </trans-unit>
+      <trans-unit id="G8ZoGoA" resname="api_token_qr_hint" xml:space="preserve">
+        <source>api_token_qr_hint</source>
+        <target state="translated">Bu QR kodunu bir mobil uygulama ile tarayarak, sunucu URL'sini ve belirteci tek adımda yapılandırabilirsiniz. Bu resmi paylaşmayın: API belirteciniz bu resimde yer almaktadır.</target>
+      </trans-unit>
+      <trans-unit id="nlJ2pW2" resname="invoice_email" xml:space="preserve">
+        <source>invoice_email</source>
+        <target state="translated">Fatura e-posta adresi</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

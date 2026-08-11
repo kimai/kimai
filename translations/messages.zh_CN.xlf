@@ -2042,6 +2042,14 @@
         <source>SEPA Direct Debit</source>
         <target state="translated">SEPA直接扣款</target>
       </trans-unit>
+      <trans-unit id="TTL.5NF" resname="status.todo" xml:space="preserve">
+        <source>status.todo</source>
+        <target state="translated">待办</target>
+      </trans-unit>
+      <trans-unit id="QdfOAGZ" resname="status.done" xml:space="preserve">
+        <source>status.done</source>
+        <target state="translated">已完成</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
