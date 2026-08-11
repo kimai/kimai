@@ -630,9 +630,9 @@
         <source>stats.workingTimeWeek</source>
         <target state="translated">%week%. kalendarski tjedan</target>
       </trans-unit>
-      <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth">
+      <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth" xml:space="preserve">
         <source>stats.workingTimeMonth</source>
-        <target>%month% %year%.</target>
+        <target state="translated">%month% %year%</target>
       </trans-unit>
       <trans-unit id="JnUFsNi" resname="stats.workingTimeYear">
         <source>stats.workingTimeYear</source>
@@ -2109,6 +2109,26 @@
       <trans-unit id="LfO_otF" resname="reopen" xml:space="preserve">
         <source>reopen</source>
         <target state="translated">Otvori ponovo</target>
+      </trans-unit>
+      <trans-unit id="TTL.5NF" resname="status.todo" xml:space="preserve">
+        <source>status.todo</source>
+        <target state="translated">Za uraditi</target>
+      </trans-unit>
+      <trans-unit id="j_0FPm3" resname="status.waiting" xml:space="preserve">
+        <source>status.waiting</source>
+        <target state="translated">Čeka se</target>
+      </trans-unit>
+      <trans-unit id="QdfOAGZ" resname="status.done" xml:space="preserve">
+        <source>status.done</source>
+        <target state="translated">Završeno</target>
+      </trans-unit>
+      <trans-unit id="G8ZoGoA" resname="api_token_qr_hint" xml:space="preserve">
+        <source>api_token_qr_hint</source>
+        <target state="translated">Ovaj QR kod možete skenirati mobilnom aplikacijom kako biste u jednom koraku podesili URL poslužitelja i token. Ne dijelite ovu sliku: ona sadrži vaš API token.</target>
+      </trans-unit>
+      <trans-unit id="nlJ2pW2" resname="invoice_email" xml:space="preserve">
+        <source>invoice_email</source>
+        <target state="translated">E-mail za naplatu</target>
       </trans-unit>
     </body>
   </file>
