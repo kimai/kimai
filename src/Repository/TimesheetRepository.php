@@ -9,7 +9,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Activity;
 use App\Entity\ActivityRate;
+use App\Entity\Customer;
 use App\Entity\CustomerRate;
 use App\Entity\Project;
 use App\Entity\ProjectRate;
@@ -45,6 +47,11 @@ use InvalidArgumentException;
  */
 class TimesheetRepository extends EntityRepository
 {
+    /**
+     * @var array<class-string, bool>
+     */
+    private array $hasTeamRestrictions = [];
+
     /** @deprecated since 2.0.35 */
     public const STATS_QUERY_DURATION = 'duration';
     /** @deprecated since 2.0.35 */
@@ -389,9 +396,50 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
+     * Customers, projects and activities can be limited to teams.
+     *
+     * Each of the three permission criteria costs a join and two correlated sub-queries per
+     * row. If no entity of a type is assigned to a team, "SIZE(x.teams) = 0" is true for every
+     * row, so the criteria are a no-op and can be skipped entirely - including the join.
+     *
+     * All three flags are answered by one statement, because three separate DQL queries would
+     * cause three round-trips, for a question that can be answered by looking at three join tables.
+     *
+     * @param class-string $entity
+     */
+    private function hasTeamRestrictions(string $entity): bool
+    {
+        if (\count($this->hasTeamRestrictions) === 0) {
+            $em = $this->getEntityManager();
+            $selects = [];
+            $aliases = [];
+
+            foreach ([Project::class, Customer::class, Activity::class] as $i => $class) {
+                $mapping = $em->getClassMetadata($class)->getAssociationMapping('teams');
+                if (!isset($mapping['joinTable']['name']) || !\is_string($mapping['joinTable']['name'])) {
+                    throw new \RuntimeException('Missing join table for team association of ' . $class);
+                }
+
+                $alias = 'has_teams_' . $i;
+                $aliases[$alias] = $class;
+                $selects[] = \sprintf('EXISTS(SELECT 1 FROM %s) AS %s', $mapping['joinTable']['name'], $alias);
+            }
+
+            $result = $em->getConnection()->fetchAssociative('SELECT ' . implode(', ', $selects));
+
+            foreach ($aliases as $alias => $class) {
+                $this->hasTeamRestrictions[$class] = \is_array($result) && (bool) $result[$alias];
+            }
+        }
+
+        return $this->hasTeamRestrictions[$entity];
+    }
+
+    /**
      * This method causes me some headaches ...
      *
-     * Activity permissions are currently not checked (which would be easy to add)
+     * Returns the aliases the caller has to join for the added criteria: "p" (project),
+     * "c" (customer) and "a" (activity). An empty list means no criteria were added.
      *
      * Especially the following question is still un-answered!
      *
@@ -400,41 +448,78 @@ class TimesheetRepository extends EntityRepository
      * 2. only see records for projects which can be accessed by him (current situation)
      *
      * @param array<Team> $teams
+     * @return array<string>
      */
-    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): bool
+    private function addPermissionCriteria(QueryBuilder $qb, ?User $user = null, array $teams = []): array
     {
         // make sure that all queries without a user see all projects
         if (null === $user && empty($teams)) {
-            return false;
+            return [];
         }
 
         // make sure that admins see all timesheet records
         if (null !== $user && $user->canSeeAllData()) {
-            return false;
+            return [];
+        }
+
+        $checkProject = $this->hasTeamRestrictions(Project::class);
+        $checkCustomer = $this->hasTeamRestrictions(Customer::class);
+        // activities can be limited to teams as well, the voter (see TimesheetVoter and
+        // RolePermissionManager::checkTeamAccessTimesheet) rejects those records, so the
+        // listings have to hide them as well, see GHSA-c6j4-35fc-x3hw
+        $checkActivity = $this->hasTeamRestrictions(Activity::class);
+
+        // nothing is assigned to a team, so every record is visible to everyone
+        if (!$checkProject && !$checkCustomer && !$checkActivity) {
+            return [];
         }
 
         if (null !== $user) {
             $teams = array_merge($teams, $user->getTeams());
         }
 
-        if (empty($teams)) {
-            $qb->andWhere('SIZE(c.teams) = 0');
-            $qb->andWhere('SIZE(p.teams) = 0');
+        $aliases = [];
 
-            return true;
+        if (empty($teams)) {
+            if ($checkCustomer) {
+                $qb->andWhere('SIZE(c.teams) = 0');
+                $aliases[] = 'c';
+            }
+            if ($checkProject) {
+                $qb->andWhere('SIZE(p.teams) = 0');
+                $aliases[] = 'p';
+            }
+            if ($checkActivity) {
+                $qb->andWhere('SIZE(a.teams) = 0');
+                $aliases[] = 'a';
+            }
+
+            return $aliases;
         }
 
-        $orProject = $qb->expr()->orX(
-            'SIZE(p.teams) = 0',
-            $qb->expr()->isMemberOf(':teams', 'p.teams')
-        );
-        $qb->andWhere($orProject);
+        if ($checkProject) {
+            $qb->andWhere($qb->expr()->orX(
+                'SIZE(p.teams) = 0',
+                $qb->expr()->isMemberOf(':teams', 'p.teams')
+            ));
+            $aliases[] = 'p';
+        }
 
-        $orCustomer = $qb->expr()->orX(
-            'SIZE(c.teams) = 0',
-            $qb->expr()->isMemberOf(':teams', 'c.teams')
-        );
-        $qb->andWhere($orCustomer);
+        if ($checkCustomer) {
+            $qb->andWhere($qb->expr()->orX(
+                'SIZE(c.teams) = 0',
+                $qb->expr()->isMemberOf(':teams', 'c.teams')
+            ));
+            $aliases[] = 'c';
+        }
+
+        if ($checkActivity) {
+            $qb->andWhere($qb->expr()->orX(
+                'SIZE(a.teams) = 0',
+                $qb->expr()->isMemberOf(':teams', 'a.teams')
+            ));
+            $aliases[] = 'a';
+        }
 
         $ids = array_values(array_unique(array_map(function (Team $team) {
             return $team->getId();
@@ -442,7 +527,7 @@ class TimesheetRepository extends EntityRepository
 
         $qb->setParameter('teams', $ids);
 
-        return true;
+        return $aliases;
     }
 
     public function getPagerfantaForQuery(TimesheetQuery $query): Pagination
@@ -650,7 +735,7 @@ class TimesheetRepository extends EntityRepository
                 ->setParameter('tags', $tags);
         }
 
-        $requiresTeams = $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
+        $permissionAliases = $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
 
         $configuration = new SearchConfiguration(
             ['t.description'],
@@ -660,15 +745,20 @@ class TimesheetRepository extends EntityRepository
         $helper = new SearchHelper($configuration);
         $helper->addSearchTerm($qb, $query);
 
-        if ($requiresCustomer || $requiresProject || $requiresTeams) {
+        $needsCustomer = $requiresCustomer || \in_array('c', $permissionAliases, true);
+        // the customer is only reachable through the project
+        $needsProject = $requiresProject || $needsCustomer || \in_array('p', $permissionAliases, true);
+        $needsActivity = $requiresActivity || \in_array('a', $permissionAliases, true);
+
+        if ($needsProject) {
             $qb->leftJoin('t.project', 'p');
         }
 
-        if ($requiresCustomer || $requiresTeams) {
+        if ($needsCustomer) {
             $qb->leftJoin('p.customer', 'c');
         }
 
-        if ($requiresActivity) {
+        if ($needsActivity) {
             $qb->leftJoin('t.activity', 'a');
         }
 
@@ -752,6 +842,9 @@ class TimesheetRepository extends EntityRepository
 
         $qb->join('t.project', 'p');
         $qb->join('p.customer', 'c');
+        if ($this->hasTeamRestrictions(Activity::class)) {
+            $qb->leftJoin('t.activity', 'a');
+        }
 
         $this->addPermissionCriteria($qb, $user);
 
