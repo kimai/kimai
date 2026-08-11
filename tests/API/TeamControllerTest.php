@@ -1073,6 +1073,145 @@ class TeamControllerTest extends APIControllerBaseTestCase
     }
 
     /**
+     * A teamlead with edit_team must not be able to strip their team's access
+     * to a customer without holding `permissions_customer`.
+     */
+    public function testDeleteCustomerActionRequiresCustomerPermissions(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $attackerTeam = $this->prepareAttackerTeamleadWithEditTeam('GHSA_GMM9_DELETE_CUSTOMER');
+
+        // an admin granted the team access to this customer before
+        $customer = new Customer('GHSA-gmm9 revoke customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $attackerTeam->addCustomer($customer);
+        $em->persist($customer);
+
+        // a second customer that was never assigned, to verify that the permission
+        // check runs before the "is it assigned?" check and does not leak that state
+        $unassigned = new Customer('GHSA-gmm9 unassigned customer');
+        $unassigned->setCountry('DE');
+        $unassigned->setTimezone('Europe/Berlin');
+        $em->persist($unassigned);
+        $em->flush();
+
+        $teamId = $attackerTeam->getId();
+        $customerId = $customer->getId();
+        $unassignedId = $unassigned->getId();
+        self::assertIsInt($teamId);
+        self::assertIsInt($customerId);
+        self::assertIsInt($unassignedId);
+
+        $this->request($client, '/api/teams/' . $teamId . '/customers/' . $customerId, 'DELETE');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->request($client, '/api/teams/' . $teamId . '/customers/' . $unassignedId, 'DELETE');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $em->clear();
+        $reloadedTeam = $em->getRepository(Team::class)->find($teamId);
+        self::assertInstanceOf(Team::class, $reloadedTeam);
+        $reloadedCustomer = $em->getRepository(Customer::class)->find($customerId);
+        self::assertInstanceOf(Customer::class, $reloadedCustomer);
+        self::assertTrue(
+            $reloadedTeam->hasCustomer($reloadedCustomer),
+            'The customer must still be assigned to the team after the denied revoke.'
+        );
+    }
+
+    /**
+     * A teamlead with edit_team must not be able to strip their team's access
+     * to a project without holding `permissions_project`.
+     */
+    public function testDeleteProjectActionRequiresProjectPermissions(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $attackerTeam = $this->prepareAttackerTeamleadWithEditTeam('GHSA_GMM9_DELETE_PROJECT');
+
+        $customer = new Customer('GHSA-gmm9 revoke project customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('GHSA-gmm9 revoke project');
+        $project->setCustomer($customer);
+        $attackerTeam->addProject($project);
+        $em->persist($project);
+        $em->flush();
+
+        $teamId = $attackerTeam->getId();
+        $projectId = $project->getId();
+        self::assertIsInt($teamId);
+        self::assertIsInt($projectId);
+
+        $this->request($client, '/api/teams/' . $teamId . '/projects/' . $projectId, 'DELETE');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $em->clear();
+        $reloadedTeam = $em->getRepository(Team::class)->find($teamId);
+        self::assertInstanceOf(Team::class, $reloadedTeam);
+        $reloadedProject = $em->getRepository(Project::class)->find($projectId);
+        self::assertInstanceOf(Project::class, $reloadedProject);
+        self::assertTrue(
+            $reloadedTeam->hasProject($reloadedProject),
+            'The project must still be assigned to the team after the denied revoke.'
+        );
+    }
+
+    /**
+     * A teamlead with edit_team must not be able to strip their team's access
+     * to an activity without holding `permissions_activity`.
+     */
+    public function testDeleteActivityActionRequiresActivityPermissions(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $attackerTeam = $this->prepareAttackerTeamleadWithEditTeam('GHSA_GMM9_DELETE_ACTIVITY');
+
+        $customer = new Customer('GHSA-gmm9 revoke activity customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('GHSA-gmm9 revoke activity project');
+        $project->setCustomer($customer);
+        $em->persist($project);
+
+        $activity = new Activity();
+        $activity->setName('GHSA-gmm9 revoke activity');
+        $activity->setProject($project);
+        $attackerTeam->addActivity($activity);
+        $em->persist($activity);
+        $em->flush();
+
+        $teamId = $attackerTeam->getId();
+        $activityId = $activity->getId();
+        self::assertIsInt($teamId);
+        self::assertIsInt($activityId);
+
+        $this->request($client, '/api/teams/' . $teamId . '/activities/' . $activityId, 'DELETE');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $em->clear();
+        $reloadedTeam = $em->getRepository(Team::class)->find($teamId);
+        self::assertInstanceOf(Team::class, $reloadedTeam);
+        $reloadedActivity = $em->getRepository(Activity::class)->find($activityId);
+        self::assertInstanceOf(Activity::class, $reloadedActivity);
+        self::assertTrue(
+            $reloadedTeam->hasActivity($reloadedActivity),
+            'The activity must still be assigned to the team after the denied revoke.'
+        );
+    }
+
+    /**
      * Regression test for GHSA-xv4r-4885-gwpg.
      *
      * A teamlead with edit_team permission must not be able to add a user
