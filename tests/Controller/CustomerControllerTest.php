@@ -12,6 +12,7 @@ namespace App\Tests\Controller;
 use App\Entity\Customer;
 use App\Entity\CustomerMeta;
 use App\Entity\CustomerRate;
+use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\CustomerFixtures;
@@ -325,6 +326,45 @@ class CustomerControllerTest extends AbstractControllerBaseTestCase
         /** @var Customer $customer */
         $customer = $em->getRepository(Customer::class)->find(1);
         self::assertEquals(2, $customer->getTeams()->count());
+    }
+
+    public function testCreateTeamActionIsSecure(): void
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/admin/customer/1/team-create');
+    }
+
+    public function testCreateTeamAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $em = $this->getEntityManager();
+
+        /** @var Customer $customer */
+        $customer = $em->getRepository(Customer::class)->find(1);
+        self::assertEquals(0, $customer->getTeams()->count());
+
+        $this->assertAccessIsGranted($client, '/admin/customer/1/team-create');
+        $form = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
+        self::assertEquals('Test', $form->get('team_edit_form[name]')->getValue());
+
+        $client->submit($form);
+
+        $location = $this->assertIsModalRedirect($client, '/admin/customer/1/details');
+        $this->requestPure($client, $location);
+        $this->assertHasFlashSuccess($client);
+
+        $em->clear();
+
+        /** @var Customer $customer */
+        $customer = $em->getRepository(Customer::class)->find(1);
+        self::assertEquals(1, $customer->getTeams()->count());
+
+        $team = $em->getRepository(Team::class)->findOneBy(['name' => 'Test']);
+        self::assertInstanceOf(Team::class, $team);
+        self::assertTrue($team->hasCustomer($customer));
+
+        $teamleads = $team->getTeamleads();
+        self::assertCount(1, $teamleads);
+        self::assertEquals($this->getUserByRole(User::ROLE_ADMIN)->getId(), $teamleads[0]->getId());
     }
 
     public function testDeleteAction(): void
