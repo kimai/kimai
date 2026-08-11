@@ -23,6 +23,7 @@ use App\Form\ProjectCommentForm;
 use App\Form\ProjectEditForm;
 use App\Form\ProjectRateForm;
 use App\Form\ProjectTeamPermissionForm;
+use App\Form\TeamEditForm;
 use App\Form\Toolbar\ProjectToolbarForm;
 use App\Form\Type\ProjectType;
 use App\Project\ProjectDuplicationService;
@@ -37,6 +38,7 @@ use App\Repository\Query\TeamQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\Query\VisibilityInterface;
 use App\Repository\TeamRepository;
+use App\User\TeamService;
 use App\Utils\Context;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
@@ -157,6 +159,40 @@ final class ProjectController extends AbstractController
         ]);
     }
 
+    #[Route(path: '/{id}/team-create', name: 'project_team_create', methods: ['GET', 'POST'])]
+    #[IsGranted('create_team')]
+    #[IsGranted('permissions', 'project')]
+    public function createTeam(Project $project, Request $request, TeamService $teamService): Response
+    {
+        $team = $teamService->createNewTeam($project->getName() ?? '');
+        $team->addTeamlead($this->getUser());
+        $team->addProject($project);
+
+        $form = $this->createForm(TeamEditForm::class, $team, [
+            'action' => $this->generateUrl('project_team_create', ['id' => $project->getId()]),
+            'method' => 'POST',
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $teamService->saveTeam($team);
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRouteAfterCreate('project_details', ['id' => $project->getId()]);
+            } catch (\Exception $ex) {
+                $this->flashUpdateException($ex);
+            }
+        }
+
+        return $this->render('project/form.html.twig', [
+            'page_setup' => $this->createPageSetup(),
+            'project' => $project,
+            'form' => $form->createView()
+        ]);
+    }
+
     #[Route(path: '/create/{customer}', name: 'admin_project_create_with_customer', methods: ['GET', 'POST'])]
     #[IsGranted('create_project')]
     #[IsGranted('edit', 'customer')]
@@ -248,7 +284,6 @@ final class ProjectController extends AbstractController
         $projectService->loadMetaFields($project);
 
         $stats = null;
-        $defaultTeam = null;
         $commentForm = null;
         $attachments = [];
         $comments = null;
@@ -266,9 +301,6 @@ final class ProjectController extends AbstractController
         }
 
         if ($this->isGranted('edit', $project)) {
-            if ($this->isGranted('create_team')) {
-                $defaultTeam = $teamRepository->findOneBy(['name' => $project->getName()]);
-            }
             $rates = $rateRepository->getRatesForProject($project);
         }
 
@@ -304,7 +336,6 @@ final class ProjectController extends AbstractController
             'commentForm' => $commentForm,
             'attachments' => $attachments,
             'stats' => $stats,
-            'team' => $defaultTeam,
             'teams' => $teams,
             'rates' => $rates,
             'now' => $now,
@@ -355,7 +386,7 @@ final class ProjectController extends AbstractController
             }
         }
 
-        return $this->render('project/rates.html.twig', [
+        return $this->render('project/form.html.twig', [
             'page_setup' => $this->createPageSetup(),
             'project' => $project,
             'form' => $form->createView()

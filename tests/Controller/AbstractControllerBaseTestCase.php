@@ -12,10 +12,13 @@ namespace App\Tests\Controller;
 use App\Configuration\ConfigurationService;
 use App\DataFixtures\UserFixtures;
 use App\Entity\Configuration;
+use App\Entity\Role;
+use App\Entity\RolePermission;
 use App\Entity\User;
 use App\Form\Type\DateRangeType;
 use App\Repository\UserRepository;
 use App\Tests\KernelTestTrait;
+use App\User\PermissionService;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
@@ -177,6 +180,35 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
     public function requestPure(HttpKernelBrowser $client, string $url, string $method = 'GET', array $parameters = [], ?string $content = null): Crawler
     {
         return $client->request($method, $url, $parameters, [], [], $content);
+    }
+
+    /**
+     * Adds a new role with the given permissions to the user behind $role, to test
+     * permission combinations which no default role has.
+     *
+     * @param array<string> $permissions
+     */
+    protected function grantPermissions(string $role, string $roleName, array $permissions): void
+    {
+        $em = $this->getEntityManager();
+
+        $newRole = (new Role())->setName($roleName);
+        $em->persist($newRole);
+
+        $user = $this->getUserByRole($role);
+        $user->addRole($roleName);
+        $em->persist($user);
+        $em->flush();
+
+        $permissionService = self::getContainer()->get(PermissionService::class);
+        self::assertInstanceOf(PermissionService::class, $permissionService);
+
+        foreach ($permissions as $permission) {
+            // routed through the service, so the shared permission cache is invalidated
+            $permissionService->saveRolePermission(
+                (new RolePermission())->setRole($newRole)->setPermission($permission)->setAllowed(true)
+            );
+        }
     }
 
     protected function assertRequestIsSecured(HttpKernelBrowser $client, string $url, string $method = 'GET'): void

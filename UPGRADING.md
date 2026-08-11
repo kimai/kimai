@@ -8,6 +8,18 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
+## [2.65.0](https://github.com/kimai/kimai/releases/tag/2.65.0)
+
+These three API endpoints were removed, because they were technically broken and could not be fixed without breaking changes:
+
+- `POST /api/customers/{id}/team`
+- `POST /api/projects/{id}/team`
+- `POST /api/activities/{id}/team`
+
+They still exist as routes, but every call now fails with `410 Gone` instead of creating a team.
+If one of your applications uses them, switch to `POST /api/teams/` to create the team and assign
+the customer, project or activity to it. These routes will be deleted in a future release.
+
 ## [2.58.0](https://github.com/kimai/kimai/releases/tag/2.58.0)
 
 The official Docker image no longer runs with the default `APP_SECRET=change_this_to_something_unique`.

@@ -464,6 +464,111 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
         self::assertEquals(2, $project->getTeams()->count());
     }
 
+    public function testCreateTeamActionIsSecure(): void
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/admin/project/1/team-create');
+    }
+
+    /**
+     * "create_team" alone is not enough, the caller also has to be allowed to manage the
+     * permissions of the project the team is created for.
+     */
+    public function testCreateTeamActionNeedsProjectPermissions(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->grantPermissions(User::ROLE_USER, 'TEST_PROJECT_TEAM_CREATE_ONLY', ['create_team', 'view_project']);
+
+        $this->request($client, '/admin/project/1/team-create');
+        $this->assertAccessDenied($client);
+    }
+
+    /**
+     * Regression test for GHSA-hvq2-5gh2-rgvv.
+     *
+     * The endpoint once looked up a team by the project name and reused it, which made the
+     * caller a teamlead of an unrelated team that happened to share that name. A team is now
+     * always created from scratch, so an existing team with the same name must stay untouched.
+     */
+    public function testCreateTeamActionDoesNotTouchForeignTeamWithSameName(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $em = $this->getEntityManager();
+
+        /** @var Project $project */
+        $project = $em->getRepository(Project::class)->find(1);
+        $name = $project->getName();
+        self::assertIsString($name);
+
+        // a pre-existing team with the very same name, led by somebody else
+        $victimId = $this->getUserByRole(User::ROLE_USER)->getId();
+        $foreignTeam = new Team($name);
+        $foreignTeam->addTeamlead($this->getUserByRole(User::ROLE_USER));
+        $em->persist($foreignTeam);
+        $em->flush();
+
+        $foreignTeamId = $foreignTeam->getId();
+        self::assertIsInt($foreignTeamId);
+
+        $this->assertAccessIsGranted($client, '/admin/project/1/team-create');
+        $form = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
+        $client->submit($form);
+
+        // the team name is unique, so the collision surfaces as a validation error
+        self::assertFalse($client->getResponse()->isRedirect());
+
+        $em->clear();
+
+        $reloaded = $em->getRepository(Team::class)->find($foreignTeamId);
+        self::assertInstanceOf(Team::class, $reloaded);
+
+        $memberIds = array_map(static function (User $user) { return $user->getId(); }, $reloaded->getUsers());
+        self::assertEquals([$victimId], $memberIds, 'The foreign team must not have gained a member');
+
+        $boundProjects = [];
+        foreach ($reloaded->getProjects() as $boundProject) {
+            $boundProjects[] = $boundProject->getId();
+        }
+        self::assertEquals([], $boundProjects, 'The foreign team must not have been bound to the project');
+
+        /** @var Project $reloadedProject */
+        $reloadedProject = $em->getRepository(Project::class)->find(1);
+        self::assertEquals(0, $reloadedProject->getTeams()->count());
+    }
+
+    public function testCreateTeamAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $em = $this->getEntityManager();
+
+        /** @var Project $project */
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertEquals(0, $project->getTeams()->count());
+
+        $this->assertAccessIsGranted($client, '/admin/project/1/team-create');
+        $form = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
+        self::assertEquals('Test', $form->get('team_edit_form[name]')->getValue());
+
+        $client->submit($form);
+
+        $location = $this->assertIsModalRedirect($client, '/admin/project/1/details');
+        $this->requestPure($client, $location);
+        $this->assertHasFlashSuccess($client);
+
+        $em->clear();
+
+        /** @var Project $project */
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertEquals(1, $project->getTeams()->count());
+
+        $team = $em->getRepository(Team::class)->findOneBy(['name' => 'Test']);
+        self::assertInstanceOf(Team::class, $team);
+        self::assertTrue($team->hasProject($project));
+
+        $teamleads = $team->getTeamleads();
+        self::assertCount(1, $teamleads);
+        self::assertEquals($this->getUserByRole(User::ROLE_ADMIN)->getId(), $teamleads[0]->getId());
+    }
+
     public function testDeleteAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
