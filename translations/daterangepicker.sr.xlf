@@ -44,7 +44,7 @@
       </trans-unit>
       <trans-unit id="mgJ2Z7M" resname="daterangepicker.thisFinancialYear" xml:space="preserve">
         <source>daterangepicker.thisFinancialYear</source>
-        <target state="translated">Ova finansijska godina</target>
+        <target state="translated">Ova fiskalna godina</target>
       </trans-unit>
     </body>
   </file>

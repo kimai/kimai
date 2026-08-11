@@ -152,9 +152,12 @@
     {% endfor %}
 
     {% if teams is not null%}
-        {% set options = {'teams': teams, 'team': team} %}
+        {% set options = {'teams': teams} %}
         {% if is_granted('permissions', project) %}
-            {% set options = options|merge({'route_create': path('post_project_team', {'id': project.id}), 'route_edit': path('admin_project_permissions', {'id': project.id})}) %}
+            {% if is_granted('create_team') %}
+                {% set options = options|merge({'route_create': path('project_team_create', {'id': project.id})}) %}
+            {% endif %}
+            {% set options = options|merge({'route_edit': path('admin_project_permissions', {'id': project.id})}) %}
         {% endif %}
         {% if project.customer.teams|length > 0 %}
             {% set options = options|merge({'empty_message': 'team.project_visibility_inherited'}) %}

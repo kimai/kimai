@@ -110,6 +110,18 @@
         <source>task_todo</source>
         <target state="translated">משימה</target>
       </trans-unit>
+      <trans-unit id="hZFps4G" resname="board" xml:space="preserve" approved="yes">
+        <source>board</source>
+        <target state="final">לוח</target>
+      </trans-unit>
+      <trans-unit id="aF2ajw." resname="boards" xml:space="preserve" approved="yes">
+        <source>boards</source>
+        <target state="final">לוחות</target>
+      </trans-unit>
+      <trans-unit id="TRpwk3n" resname="board.private" xml:space="preserve" approved="yes">
+        <source>board.private</source>
+        <target state="final">לוח פרטי</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

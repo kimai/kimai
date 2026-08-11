@@ -438,7 +438,7 @@ parameters:
 
         -
             message: "#^Cannot call method getValue\\(\\) on array\\<array\\<Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\>\\|Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\>\\|Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\.$#"
-            count: 5
+            count: 6
             path: Controller/ActivityControllerTest.php
 
         -
@@ -558,7 +558,7 @@ parameters:
 
         -
             message: "#^Cannot call method getValue\\(\\) on array\\<array\\<Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\>\\|Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\>\\|Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\.$#"
-            count: 3
+            count: 4
             path: Controller/CustomerControllerTest.php
 
         -
@@ -713,7 +713,7 @@ parameters:
 
         -
             message: "#^Cannot call method getValue\\(\\) on array\\<array\\<Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\>\\|Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\>\\|Symfony\\\\Component\\\\DomCrawler\\\\Field\\\\FormField\\.$#"
-            count: 2
+            count: 3
             path: Controller/ProjectControllerTest.php
 
         -

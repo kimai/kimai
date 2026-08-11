@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="DYHuW58" resname="confirm.delete" xml:space="preserve">
         <source>confirm.delete</source>
-        <target state="translated">Da li stvarno želite da obrišete?</target>
+        <target state="translated">Da li stvarno želite da ovo obrišete?</target>
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm" xml:space="preserve">
         <source>admin_entity.delete_confirm</source>
@@ -104,11 +104,11 @@
       </trans-unit>
       <trans-unit id="0M_Gylq" resname="rates.empty" xml:space="preserve">
         <source>rates.empty</source>
-        <target state="translated">Nije podešena nijedna cena.</target>
+        <target state="translated">Satnice još nisu konfigurisane.</target>
       </trans-unit>
       <trans-unit id="mflwMcX" resname="rates.title" xml:space="preserve">
         <source>rates.title</source>
-        <target state="translated">Cene</target>
+        <target state="translated">Naknade</target>
       </trans-unit>
       <trans-unit id="zFfl7jw" resname="sum.total" xml:space="preserve">
         <source>sum.total</source>
@@ -116,7 +116,7 @@
       </trans-unit>
       <trans-unit id="XP5zkiN" resname="modal.dirty" xml:space="preserve">
         <source>modal.dirty</source>
-        <target state="translated">Forma je izmenjena. Kliknite na „Sačuvaj” da sačuvate izmene ili „Zatvori” da otkažete.</target>
+        <target state="translated">Forma je izmenjena. Kliknite na "Sačuvaj" da sačuvate izmene ili "Zatvori" da otkažete.</target>
       </trans-unit>
       <trans-unit id="fVA3M2x" resname="choice_pattern" xml:space="preserve">
         <source>Display of entries in selection lists</source>
@@ -152,11 +152,11 @@
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve">
         <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="translated">E-poruka je poslata na %email%. Sadrži link na koji morate kliknuti da biste aktivirali nalog.</target>
+        <target state="translated">E-mail je poslat na %email%. Sadrži link na koji morate kliknuti da biste aktivirali nalog.</target>
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="no" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
-        <target state="translated">E-poruka sa linkom za resetovanje lozinke je poslata. Napomena: novu lozinku možete zatražiti samo jednom u %tokenLifetime% sati. Ako ne dobijete e-poruku, proverite folder za neželjenu poštu ili pokušajte ponovo.</target>
+        <target state="translated">E-mail sa linkom za resetovanje lozinke je poslat. Napomena: novu lozinku možete zatražiti samo jednom u %tokenLifetime% sati. Ako ne dobijete e-mail, proverite folder za neželjenu poštu ili pokušajte ponovo.</target>
       </trans-unit>
       <trans-unit id="fQ3Prt4" resname="security.unlock.title" xml:space="preserve">
         <source>security.unlock.title</source>
@@ -164,7 +164,7 @@
       </trans-unit>
       <trans-unit id="nqEYrfk" resname="security.unlock.intro" xml:space="preserve">
         <source>security.unlock.intro</source>
-        <target state="translated">Unesite svoju lozinku za potpuni pristup</target>
+        <target state="translated">Unesite svoju lozinku za puni pristup</target>
       </trans-unit>
       <trans-unit id="853W5Iu" resname="security.unlock.button" xml:space="preserve">
         <source>security.unlock.button</source>
@@ -240,7 +240,7 @@
       </trans-unit>
       <trans-unit id="JGaf9IK" resname="Doctor" xml:space="preserve">
         <source>Doctor</source>
-        <target state="translated">Doctor</target>
+        <target state="translated">Doktor</target>
       </trans-unit>
       <trans-unit id="Vz3Igj3" resname="error.no_entries_found" xml:space="preserve">
         <source>error.no_entries_found</source>
@@ -256,7 +256,7 @@
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing" xml:space="preserve">
         <source>The directory “%dir%” does not exist and could not be created.</source>
-        <target state="translated">Direktorijum „%dir%” ne postoji i nije mogao biti kreiran.</target>
+        <target state="translated">Direktorijum "%dir%" ne postoji i nije mogao biti kreiran.</target>
       </trans-unit>
       <trans-unit id="C2TGff0" resname="error.directory_protected" xml:space="preserve">
         <source>error.directory_protected</source>
@@ -308,7 +308,7 @@
       </trans-unit>
       <trans-unit id="OJ.wI1U" resname="invoiceText" xml:space="preserve">
         <source>invoiceText</source>
-        <target state="translated">Podaci za fakturisanje</target>
+        <target state="translated">Informacije računa</target>
       </trans-unit>
       <trans-unit id="aOJITgv" resname="help.invoiceText" xml:space="preserve">
         <source>help.invoiceText</source>
@@ -324,7 +324,7 @@
       </trans-unit>
       <trans-unit id="gqNTf.D" resname="name" xml:space="preserve">
         <source>name</source>
-        <target state="translated">Naziv</target>
+        <target state="translated">Ime</target>
       </trans-unit>
       <trans-unit id="xEuy.VF" resname="comment" xml:space="preserve">
         <source>comment</source>
@@ -368,11 +368,11 @@
       </trans-unit>
       <trans-unit id="E_bHhGR" resname="hourlyRate" xml:space="preserve">
         <source>hourlyRate</source>
-        <target state="translated">Cena po satu</target>
+        <target state="translated">Satnica</target>
       </trans-unit>
       <trans-unit id="KgBw0BS" resname="skin" xml:space="preserve">
         <source>skin</source>
-        <target state="translated">Izgled</target>
+        <target state="translated">Dizajn</target>
       </trans-unit>
       <trans-unit id="HcWuW2g" resname="layout" xml:space="preserve">
         <source>layout</source>
@@ -396,7 +396,7 @@
       </trans-unit>
       <trans-unit id="Cxv_0wG" resname="help.internalRate" xml:space="preserve">
         <source>help.internalRate</source>
-        <target state="translated">Ako ovo nije navedeno, koristi se uobičajena cena</target>
+        <target state="translated">Interni troškovi (ako nije određeno, koristi se uobičajena cena)</target>
       </trans-unit>
       <trans-unit id="Qc5nsFn" resname="recalculate_rates" xml:space="preserve">
         <source>recalculate_rates</source>
@@ -432,7 +432,7 @@
       </trans-unit>
       <trans-unit id="oq1jcSQ" resname="help.billable" xml:space="preserve">
         <source>help.billable</source>
-        <target state="translated">Ako je podešavanje isključeno, svi budući evidentirani unosi vremena biće označeni kao „nenaplativo”.</target>
+        <target state="translated">Ako je podešavanje isključeno, svi budući evidentirani unosi vremena biće označeni kao "nenaplativo".</target>
       </trans-unit>
       <trans-unit id="Kw3N1AA" resname="actions" xml:space="preserve">
         <source>actions</source>
@@ -1304,7 +1304,7 @@
       </trans-unit>
       <trans-unit id="vjmoQGo" resname="export.period" xml:space="preserve">
         <source>export.period</source>
-        <target state="translated">Period</target>
+        <target state="translated">Razdoblje</target>
       </trans-unit>
       <trans-unit id="3CQ7A2m" resname="export.document_title" xml:space="preserve">
         <source>export.document_title</source>
@@ -1436,11 +1436,11 @@
       </trans-unit>
       <trans-unit id="ViUuILv" resname="includeBudgetType_month" xml:space="preserve">
         <source>includeBudgetType_month</source>
-        <target state="translated">Prikaži unose sa „mesečnim” budžetom</target>
+        <target state="translated">Prikaži unose sa "mesečnim" budžetom</target>
       </trans-unit>
       <trans-unit id="KukrzcT" resname="includeBudgetType_full" xml:space="preserve">
         <source>includeBudgetType_full</source>
-        <target state="translated">Prikaži unose sa budžetom za „ceo životni ciklus”</target>
+        <target state="translated">Prikaži unose sa budžetom za "ceo životni ciklus"</target>
       </trans-unit>
       <trans-unit id="2dm.ZWM" resname="not_exported" xml:space="preserve">
         <source>not_exported</source>
@@ -1532,11 +1532,11 @@
       </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results" xml:space="preserve">
         <source>search.no_results</source>
-        <target state="translated">Nema rezultata za „%input%”</target>
+        <target state="translated">Nema rezultata za "%input%"</target>
       </trans-unit>
       <trans-unit id="biHjm0h" resname="select.add_new" xml:space="preserve">
         <source>select.add_new</source>
-        <target state="translated">Kreiraj novo sa nazivom „%input%”</target>
+        <target state="translated">Kreiraj novo sa nazivom "%input%"</target>
       </trans-unit>
       <trans-unit id="dru_Thv" resname="please_choose" xml:space="preserve">
         <source>please_choose</source>
