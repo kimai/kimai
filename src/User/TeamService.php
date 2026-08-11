@@ -37,11 +37,6 @@ final class TeamService
     {
     }
 
-    public function findTeamByName(string $name): ?Team
-    {
-        return $this->repository->findOneBy(['name' => $name]);
-    }
-
     public function countTeams(): int
     {
         if (!\array_key_exists('count', $this->cache)) {

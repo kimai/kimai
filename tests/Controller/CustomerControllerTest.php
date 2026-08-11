@@ -333,6 +333,72 @@ class CustomerControllerTest extends AbstractControllerBaseTestCase
         $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/admin/customer/1/team-create');
     }
 
+    /**
+     * "create_team" alone is not enough, the caller also has to be allowed to manage the
+     * permissions of the customer the team is created for.
+     */
+    public function testCreateTeamActionNeedsCustomerPermissions(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->grantPermissions(User::ROLE_USER, 'TEST_CUSTOMER_TEAM_CREATE_ONLY', ['create_team', 'view_customer']);
+
+        $this->request($client, '/admin/customer/1/team-create');
+        $this->assertAccessDenied($client);
+    }
+
+    /**
+     * Regression test for GHSA-hvq2-5gh2-rgvv.
+     *
+     * The endpoint once looked up a team by the customer name and reused it, which made the
+     * caller a teamlead of an unrelated team that happened to share that name. A team is now
+     * always created from scratch, so an existing team with the same name must stay untouched.
+     */
+    public function testCreateTeamActionDoesNotTouchForeignTeamWithSameName(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $em = $this->getEntityManager();
+
+        /** @var Customer $customer */
+        $customer = $em->getRepository(Customer::class)->find(1);
+        $name = $customer->getName();
+        self::assertIsString($name);
+
+        // a pre-existing team with the very same name, led by somebody else
+        $victimId = $this->getUserByRole(User::ROLE_USER)->getId();
+        $foreignTeam = new Team($name);
+        $foreignTeam->addTeamlead($this->getUserByRole(User::ROLE_USER));
+        $em->persist($foreignTeam);
+        $em->flush();
+
+        $foreignTeamId = $foreignTeam->getId();
+        self::assertIsInt($foreignTeamId);
+
+        $this->assertAccessIsGranted($client, '/admin/customer/1/team-create');
+        $form = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
+        $client->submit($form);
+
+        // the team name is unique, so the collision surfaces as a validation error
+        self::assertFalse($client->getResponse()->isRedirect());
+
+        $em->clear();
+
+        $reloaded = $em->getRepository(Team::class)->find($foreignTeamId);
+        self::assertInstanceOf(Team::class, $reloaded);
+
+        $memberIds = array_map(static function (User $user) { return $user->getId(); }, $reloaded->getUsers());
+        self::assertEquals([$victimId], $memberIds, 'The foreign team must not have gained a member');
+
+        $bound = [];
+        foreach ($reloaded->getCustomers() as $entity) {
+            $bound[] = $entity->getId();
+        }
+        self::assertEquals([], $bound, 'The foreign team must not have been bound to the customer');
+
+        /** @var Customer $reloadedCustomer */
+        $reloadedCustomer = $em->getRepository(Customer::class)->find(1);
+        self::assertEquals(0, $reloadedCustomer->getTeams()->count());
+    }
+
     public function testCreateTeamAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
