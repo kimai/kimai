@@ -41,6 +41,7 @@ import ptBrLocale from '@fullcalendar/core/locales/pt-br';
 import roLocale from '@fullcalendar/core/locales/ro';
 import ruLocale from '@fullcalendar/core/locales/ru';
 import skLocale from '@fullcalendar/core/locales/sk';
+import srLocale from '@fullcalendar/core/locales/sr';
 import svLocale from '@fullcalendar/core/locales/sv';
 import trLocale from '@fullcalendar/core/locales/tr';
 import zhLocale from '@fullcalendar/core/locales/zh-cn';
@@ -99,9 +100,12 @@ export default class KimaiCalendar {
             nextYear: this.options['icons']['nextYear'],
         };
         let calendarOptions = {
-            locales: [ enGbLocale, enUsLocale, arLocale, csLocale, daLocale, deLocale, deAtLocale, elLocale,
-                esLocale, euLocale, faLocale, fiLocale, frLocale, heLocale, hrLocale, huLocale, itLocale, jaLocale, koLocale,
-                nbLocale, nlLocale, plLocale, ptLocale, ptBrLocale, roLocale, ruLocale, skLocale, svLocale, trLocale, zhLocale, viLocale ],
+            locales: [
+                enGbLocale, enUsLocale, arLocale, csLocale, daLocale, deLocale, deAtLocale, elLocale,
+                esLocale, euLocale, faLocale, fiLocale, frLocale, heLocale, hrLocale, huLocale, itLocale,
+                jaLocale, koLocale, nbLocale, nlLocale, plLocale, ptLocale, ptBrLocale, roLocale, ruLocale,
+                skLocale, srLocale, svLocale, trLocale, zhLocale, viLocale
+            ],
             plugins: [ bootstrap5Plugin, dayGridPlugin, timeGridPlugin, googlePlugin, iCalendarPlugin, interactionPlugin ],
             initialView: this.toInternalViewName(this.options['initialView']),
             initialDate: this.options['initialDate'],
