@@ -24,7 +24,7 @@ trait BudgetTrait
     #[Assert\Range(min: 0.00, max: 900000000000.00)]
     #[Assert\NotNull]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Activity_Entity', 'Project_Entity', 'Customer_Entity'])]
+    #[Serializer\Groups(['Activity_Entity', 'Project_Entity', 'Customer_Entity', 'Budget_Money', 'Budgets'])]
     #[Exporter\Expose(label: 'budget', type: 'float')]
     private float $budget = 0.00;
     /**
@@ -34,7 +34,7 @@ trait BudgetTrait
     #[Assert\Range(min: 0, max: 2145600000)]
     #[Assert\NotNull]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Activity_Entity', 'Project_Entity', 'Customer_Entity'])]
+    #[Serializer\Groups(['Activity_Entity', 'Project_Entity', 'Customer_Entity', 'Budget_Time', 'Budgets'])]
     #[Exporter\Expose(label: 'timeBudget', type: 'duration')]
     private int $timeBudget = 0;
     /**
@@ -44,7 +44,7 @@ trait BudgetTrait
      */
     #[ORM\Column(name: 'budget_type', type: Types::STRING, length: 10, nullable: true)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Activity_Entity', 'Project_Entity', 'Customer_Entity'])]
+    #[Serializer\Groups(['Activity_Entity', 'Project_Entity', 'Customer_Entity', 'Budget_Type', 'Budgets'])]
     #[Exporter\Expose(label: 'budgetType')]
     private ?string $budgetType = null;
 

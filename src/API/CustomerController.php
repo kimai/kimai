@@ -41,8 +41,9 @@ final class CustomerController extends BaseApiController
     private const GROUPS_COMMENT = ['Default', 'Not_Expanded'];
     public const GROUPS_ENTITY = ['Default', 'Entity', 'Customer', 'Customer_Entity'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Customer'];
-    private const GROUPS_COLLECTION_FULL = ['Default', 'Collection', 'Customer', 'Customer_Details'];
     public const GROUPS_RATE = ['Default', 'Entity', 'Customer_Rate'];
+    private const GROUP_FULL = 'Customer_Details';
+    public const GROUP_BUDGET = 'Budgets';
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
@@ -94,12 +95,11 @@ final class CustomerController extends BaseApiController
         $query->setIsApiCall(true);
         $data = $this->repository->getCustomersForQuery($query);
         $view = new View($data, 200);
+        $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
         $full = $paramFetcher->get('full');
         if ($full === '1' && $this->isGranted('details_customer')) {
-            $view->getContext()->setGroups(self::GROUPS_COLLECTION_FULL);
-        } else {
-            $view->getContext()->setGroups(self::GROUPS_COLLECTION);
+            $view->getContext()->addGroup(self::GROUP_FULL);
         }
 
         return $this->viewHandler->handle($view);
