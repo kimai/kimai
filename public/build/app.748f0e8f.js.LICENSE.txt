@@ -125,6 +125,10 @@
  */
 
 /*!
+ * [KIMAI] KimaiLocaleDemo: live update of the formatting examples below the language selector in the user preferences
+ */
+
+/*!
  * [KIMAI] KimaiMultiUpdateForm: handle the multi update checkbox list and form
  */
 

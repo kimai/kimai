@@ -38,6 +38,7 @@ import KimaiTimesheetForm from "./forms/KimaiTimesheetForm";
 import KimaiTeamForm from "./forms/KimaiTeamForm";
 import KimaiCopyDataForm from "./forms/KimaiCopyDataForm";
 import KimaiDateNowForm from "./forms/KimaiDateNowForm";
+import KimaiLocaleDemo from "./plugins/KimaiLocaleDemo";
 import KimaiNotification from "./plugins/KimaiNotification";
 import KimaiHotkeys from "./plugins/KimaiHotkeys";
 import KimaiRemoteModal from "./plugins/KimaiRemoteModal";
@@ -76,6 +77,7 @@ export default class KimaiLoader {
         kimai.registerPlugin(new KimaiTeamForm());
         kimai.registerPlugin(new KimaiCopyDataForm());
         kimai.registerPlugin(new KimaiDateNowForm());
+        kimai.registerPlugin(new KimaiLocaleDemo());
         kimai.registerPlugin(new KimaiForm());
         kimai.registerPlugin(new KimaiHotkeys());
 

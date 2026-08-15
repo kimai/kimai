@@ -582,6 +582,15 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         self::assertStringContainsString('3:34 PM', $content);
         self::assertStringContainsString('25:48', $content);
         self::assertStringContainsString('2,794.83', $content);
+        // the demo block is wired up for the live update via JavaScript
+        self::assertStringContainsString('data-locale-demo', $content);
+        self::assertStringContainsString('data-select="user_preferences_form_preferences_locale_value"', $content);
+        self::assertStringContainsString('data-date="', $content);
+        self::assertStringContainsString('data-duration="92880"', $content);
+        self::assertStringContainsString('data-money="2794.83"', $content);
+        // all locale formats are passed to the client, including non-default locales like German
+        self::assertStringContainsString('&quot;de&quot;', $content);
+        self::assertStringContainsString('dd.MM.y', $content);
     }
 
     public function testIsTwoFactorSecure(): void
