@@ -773,6 +773,7 @@ export default class KimaiCalendar {
             if (view === 'timeGridWeek') { // this is the week view
                 const headerCells = document.querySelectorAll(`th.fc-col-header-cell[data-date="${dateValue}"]`);
 
+                // only count durations that have a visible column (excludes hidden weekends and out-of-range dates)
                 if (headerCells.length > 0) {
                     weekTotalSeconds += durationValue;
                 }
@@ -788,11 +789,13 @@ export default class KimaiCalendar {
 
         // show the weekly total next to the week number in the week view
         if (view === 'timeGridWeek') {
-            const weekCushion = document.querySelector('.fc-timegrid-axis-cushion');
+            // scope to the header table to avoid matching the all-day row cushion
+            const weekCushion = document.querySelector('.fc-col-header .fc-timegrid-axis-cushion') ?? document.querySelector('.fc-col-header .fc-timegrid-axis-frame');
             if (weekCushion !== null) {
                 const weekTotalElement = document.createElement('div');
                 weekTotalElement.classList.add('fc-dailytotal', 'fc-weektotal');
                 weekTotalElement.textContent = DATES.formatSeconds(weekTotalSeconds);
+                weekTotalElement.title = DATES.formatSeconds(weekTotalSeconds);
                 weekCushion.appendChild(weekTotalElement);
             }
         }
