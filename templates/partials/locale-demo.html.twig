@@ -1,17 +1,25 @@
 {# Demo values for the formatting of the currently active locale, shown below the language selector #}
-{% import "macros/widgets.html.twig" as widgets %}
-<div class="mb-3 row">
-    <div class="col-sm-10 offset-sm-2">
-        <div class="text-muted small">
-            <div class="fw-semibold mb-1">{{ 'locale_demo'|trans }}</div>
-            <div>
-                <span class="me-3"><strong>{{ 'date'|trans }}:</strong> {{ locale_demo.date }}</span>
-                <span class="me-3"><strong>{{ 'time'|trans }}:</strong> {{ locale_demo.time }}</span>
-                <span class="me-3"><strong>{{ 'duration'|trans }}:</strong> {{ locale_demo.duration }}</span>
-                <span class="me-3"><strong>{{ 'decimal'|trans }}:</strong> {{ locale_demo.decimal }}</span>
-                <span class="me-3"><strong>{{ 'price'|trans }}:</strong> {{ locale_demo.money }}</span>
-                <span><strong>{{ 'rtl'|trans }}:</strong> {{ widgets.label_boolean(locale_demo.rtl) }}</span>
+{% if locale_demo|length > 0 %}
+    {% import "macros/widgets.html.twig" as widgets %}
+    <div class="mb-3 row" data-locale-demo
+         data-select="{{ locale_select_id }}"
+         data-date="{{ locale_demo_values.date }}"
+         data-duration="{{ locale_demo_values.duration }}"
+         data-money="{{ locale_demo_values.money }}"
+         data-currency="{{ locale_demo_values.currency }}"
+         data-yes="{{ 'yes'|trans }}"
+         data-no="{{ 'no'|trans }}"
+         data-formats="{{ locale_formats|json_encode|e('html_attr') }}">
+        <div class="col-sm-10 offset-sm-2">
+            <div class="text-muted small d-flex flex-wrap align-items-center">
+                <span class="fw-semibold me-3">{{ 'locale_demo'|trans }}:</span>
+                <span class="locale-demo-entry me-3" data-demo-value="date"><strong>{{ 'date'|trans }}:</strong> <span class="locale-demo-value">{{ locale_demo.date }}</span></span>
+                <span class="locale-demo-entry me-3" data-demo-value="time"><strong>{{ 'time'|trans }}:</strong> <span class="locale-demo-value">{{ locale_demo.time }}</span></span>
+                <span class="locale-demo-entry me-3" data-demo-value="duration"><strong>{{ 'duration'|trans }}:</strong> <span class="locale-demo-value">{{ locale_demo.duration }}</span></span>
+                <span class="locale-demo-entry me-3" data-demo-value="decimal"><strong>{{ 'decimal'|trans }}:</strong> <span class="locale-demo-value">{{ locale_demo.decimal }}</span></span>
+                <span class="locale-demo-entry me-3" data-demo-value="money"><strong>{{ 'price'|trans }}:</strong> <span class="locale-demo-value">{{ locale_demo.money }}</span></span>
+                <span class="locale-demo-entry" data-demo-value="rtl"><strong>{{ 'rtl'|trans }}:</strong> <span class="locale-demo-value">{{ widgets.label_boolean(locale_demo.rtl) }}</span></span>
             </div>
         </div>
     </div>
-</div>
+{% endif %}
