@@ -504,7 +504,6 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
 
         $content = '';
 
-        dd($spreadsheet->getActiveSheet()->toArray(null, false, false, false));
         foreach ($spreadsheet->getActiveSheet()->toArray(null, false, false, false) as $row) {
             foreach ($row as $cell) {
                 if ($cell === null) {
