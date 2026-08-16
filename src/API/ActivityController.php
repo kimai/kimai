@@ -49,6 +49,32 @@ final class ActivityController extends BaseApiController
     }
 
     /**
+     * @return array<string>
+     */
+    private function getEntitySerializationGroups(Activity $activity): array
+    {
+        $groups = self::GROUPS_ENTITY;
+
+        if ($this->isGranted('budget', $activity)) {
+            $groups = array_merge($groups, ['Budget_Money']);
+        }
+
+        if ($this->isGranted('time', $activity)) {
+            $groups = array_merge($groups, ['Budget_Time']);
+        }
+
+        return $groups;
+    }
+
+    private function renderEntity(Activity $activity): Response
+    {
+        $view = new View($activity, Response::HTTP_OK);
+        $view->getContext()->setGroups($this->getEntitySerializationGroups($activity));
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
      * Fetch activities
      */
     #[OA\Response(response: 200, description: 'Returns a collection of activities', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/ActivityCollection')))]
@@ -111,10 +137,7 @@ final class ActivityController extends BaseApiController
     #[IsGranted('view', 'activity')]
     public function getAction(Activity $activity): Response
     {
-        $view = new View($activity, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($activity);
     }
 
     /**
@@ -138,19 +161,13 @@ final class ActivityController extends BaseApiController
 
         $form->submit($request->request->all(), false);
 
-        if ($form->isValid()) {
-            $this->activityService->saveActivity($activity);
-
-            $view = new View($activity, 200);
-            $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-            return $this->viewHandler->handle($view);
+        if (false === $form->isValid()) {
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
-        $view = new View($form);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+        $this->activityService->saveActivity($activity);
 
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($activity);
     }
 
     /**
@@ -174,18 +191,12 @@ final class ActivityController extends BaseApiController
         $form->submit($request->request->all(), false);
 
         if (false === $form->isValid()) {
-            $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-            return $this->viewHandler->handle($view);
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
         $this->activityService->saveActivity($activity);
 
-        $view = new View($activity, Response::HTTP_OK);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($activity);
     }
 
     /**
@@ -231,10 +242,7 @@ final class ActivityController extends BaseApiController
 
         $this->activityService->saveActivity($activity);
 
-        $view = new View($activity, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($activity);
     }
 
     /**
@@ -296,10 +304,7 @@ final class ActivityController extends BaseApiController
         $form->submit($request->request->all(), false);
 
         if (false === $form->isValid()) {
-            $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_RATE);
-
-            return $this->viewHandler->handle($view);
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
         $this->activityRateRepository->saveRate($rate);

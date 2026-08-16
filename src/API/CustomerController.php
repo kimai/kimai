@@ -39,11 +39,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class CustomerController extends BaseApiController
 {
     private const GROUPS_COMMENT = ['Default', 'Not_Expanded'];
-    public const GROUPS_ENTITY = ['Default', 'Entity', 'Customer', 'Customer_Entity'];
-    public const GROUPS_COLLECTION = ['Default', 'Collection', 'Customer'];
-    public const GROUPS_RATE = ['Default', 'Entity', 'Customer_Rate'];
-    private const GROUP_FULL = 'Customer_Details';
-    public const GROUP_BUDGET = 'Budgets';
+    private const GROUPS_ENTITY = ['Default', 'Entity', 'Customer', 'Customer_Entity'];
+    private const GROUPS_COLLECTION = ['Default', 'Collection', 'Customer'];
+    private const GROUPS_RATE = ['Default', 'Entity', 'Customer_Rate'];
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
@@ -51,6 +49,32 @@ final class CustomerController extends BaseApiController
         private readonly CustomerRateRepository $customerRateRepository,
         private readonly CustomerService $customerService,
     ) {
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function getEntitySerializationGroups(Customer $customer): array
+    {
+        $groups = self::GROUPS_ENTITY;
+
+        if ($this->isGranted('budget', $customer)) {
+            $groups = array_merge($groups, ['Budget_Money']);
+        }
+
+        if ($this->isGranted('time', $customer)) {
+            $groups = array_merge($groups, ['Budget_Time']);
+        }
+
+        return $groups;
+    }
+
+    private function renderEntity(Customer $customer): Response
+    {
+        $view = new View($customer, Response::HTTP_OK);
+        $view->getContext()->setGroups($this->getEntitySerializationGroups($customer));
+
+        return $this->viewHandler->handle($view);
     }
 
     /**
@@ -97,9 +121,8 @@ final class CustomerController extends BaseApiController
         $view = new View($data, 200);
         $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
-        $full = $paramFetcher->get('full');
-        if ($full === '1' && $this->isGranted('details_customer')) {
-            $view->getContext()->addGroup(self::GROUP_FULL);
+        if ($paramFetcher->get('full') === '1' && $this->isGranted('details_customer')) {
+            $view->getContext()->addGroup('Customer_Details');
         }
 
         return $this->viewHandler->handle($view);
@@ -113,10 +136,7 @@ final class CustomerController extends BaseApiController
     #[IsGranted('view', 'customer')]
     public function getAction(Customer $customer): Response
     {
-        $view = new View($customer, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($customer);
     }
 
     /**
@@ -140,19 +160,13 @@ final class CustomerController extends BaseApiController
 
         $form->submit($request->request->all(), false);
 
-        if ($form->isValid()) {
-            $this->customerService->saveCustomer($customer);
-
-            $view = new View($customer, 200);
-            $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-            return $this->viewHandler->handle($view);
+        if (false === $form->isValid()) {
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
-        $view = new View($form);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+        $this->customerService->saveCustomer($customer);
 
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($customer);
     }
 
     /**
@@ -176,18 +190,12 @@ final class CustomerController extends BaseApiController
         $form->submit($request->request->all(), false);
 
         if (false === $form->isValid()) {
-            $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-            return $this->viewHandler->handle($view);
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
         $this->customerService->saveCustomer($customer);
 
-        $view = new View($customer, Response::HTTP_OK);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($customer);
     }
 
     /**
@@ -233,10 +241,7 @@ final class CustomerController extends BaseApiController
 
         $this->customerService->saveCustomer($customer);
 
-        $view = new View($customer, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($customer);
     }
 
     /**
@@ -298,10 +303,7 @@ final class CustomerController extends BaseApiController
         $form->submit($request->request->all(), false);
 
         if (false === $form->isValid()) {
-            $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_RATE);
-
-            return $this->viewHandler->handle($view);
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
         $this->customerRateRepository->saveRate($rate);
