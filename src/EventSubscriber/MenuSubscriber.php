@@ -136,19 +136,19 @@ final class MenuSubscriber implements EventSubscriberInterface
         // ------------------- admin menu -------------------
         $menu = $event->getAdminMenu();
 
-        if ($auth->isGranted('view_customer') || $auth->isGranted('view_teamlead_customer') || $auth->isGranted('view_team_customer')) {
+        if ($auth->isGranted('listing', 'customer')) {
             $customers = new MenuItemModel('customers', 'customers', 'admin_customer', [], 'customer');
             $customers->setChildRoutes(['admin_customer_create', 'admin_customer_permissions', 'customer_details', 'admin_customer_edit', 'admin_customer_delete']);
             $menu->addChild($customers);
         }
 
-        if ($auth->isGranted('view_project') || $auth->isGranted('view_teamlead_project') || $auth->isGranted('view_team_project')) {
+        if ($auth->isGranted('listing', 'project')) {
             $projects = new MenuItemModel('projects', 'projects', 'admin_project', [], 'project');
             $projects->setChildRoutes(['admin_project_permissions', 'admin_project_create', 'project_details', 'admin_project_edit', 'admin_project_delete']);
             $menu->addChild($projects);
         }
 
-        if ($auth->isGranted('view_activity') || $auth->isGranted('view_teamlead_activity') || $auth->isGranted('view_team_activity')) {
+        if ($auth->isGranted('listing', 'activity')) {
             $activities = new MenuItemModel('activities', 'activities', 'admin_activity', [], 'activity');
             $activities->setChildRoutes(['admin_activity_create', 'activity_details', 'admin_activity_edit', 'admin_activity_delete']);
             $menu->addChild($activities);
