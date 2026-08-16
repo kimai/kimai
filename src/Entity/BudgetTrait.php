@@ -25,7 +25,7 @@ trait BudgetTrait
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Budget_Money', 'Budgets'])]
-    #[Exporter\Expose(label: 'budget', type: 'float')]
+    #[Exporter\Expose(label: 'budget', type: 'float', permissions: ['budget'])]
     private float $budget = 0.00;
     /**
      * The time budget in seconds (default: 0).
@@ -35,7 +35,7 @@ trait BudgetTrait
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Budget_Time', 'Budgets'])]
-    #[Exporter\Expose(label: 'timeBudget', type: 'duration')]
+    #[Exporter\Expose(label: 'timeBudget', type: 'duration', permissions: ['time'])]
     private int $timeBudget = 0;
     /**
      * The type of budget:
@@ -45,7 +45,7 @@ trait BudgetTrait
     #[ORM\Column(name: 'budget_type', type: Types::STRING, length: 10, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Budget_Money', 'Budget_Time', 'Budgets'])]
-    #[Exporter\Expose(label: 'budgetType')]
+    #[Exporter\Expose(label: 'budgetType', permissions: ['time', 'budget'])]
     private ?string $budgetType = null;
 
     public function setBudget(float $budget): void

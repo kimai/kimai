@@ -19,6 +19,7 @@ use App\Export\Spreadsheet\CellFormatter\StringFormatter;
 use App\Export\Spreadsheet\CellFormatter\TimeFormatter;
 use PhpOffice\PhpSpreadsheet\Cell\CellAddress;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -31,15 +32,8 @@ class SpreadsheetExporter
      */
     private array $formatter = [];
 
-    public function __construct(private readonly TranslatorInterface $translator)
+    public function __construct(private readonly TranslatorInterface $translator, private readonly AuthorizationCheckerInterface $authorizationChecker)
     {
-        $this->registerCellFormatter('datetime', new DateTimeFormatter());
-        $this->registerCellFormatter('date', new DateFormatter());
-        $this->registerCellFormatter('time', new TimeFormatter());
-        $this->registerCellFormatter('duration', new DurationFormatter());
-        $this->registerCellFormatter('boolean', new BooleanFormatter());
-        $this->registerCellFormatter('array', new ArrayFormatter());
-        $this->registerCellFormatter('string', new StringFormatter());
     }
 
     public function registerCellFormatter(string $type, CellFormatterInterface $formatter): void
@@ -49,12 +43,25 @@ class SpreadsheetExporter
 
     /**
      * @param ColumnDefinition[] $columns
-     * @param array $entries
-     * @return Spreadsheet
+     * @param array<object> $entries
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function export(array $columns, array $entries): Spreadsheet
     {
+        $formatter = [
+            'datetime' => new DateTimeFormatter(),
+            'date' => new DateFormatter(),
+            'time' => new TimeFormatter(),
+            'duration' => new DurationFormatter(),
+            'boolean' => new BooleanFormatter(),
+            'array' => new ArrayFormatter(),
+            'string' => new StringFormatter(),
+        ];
+
+        foreach ($this->formatter as $name => $object) {
+            $formatter[$name] = $object;
+        }
+
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
@@ -77,13 +84,27 @@ class SpreadsheetExporter
             $entryHeaderColumn = 1;
 
             foreach ($columns as $settings) {
-                $value = \call_user_func($settings->getAccessor(), $entry);
+                $allow = null;
+                foreach ($settings->getPermissions() as $permission) {
+                    if ($allow === null) {
+                        $allow = false;
+                    }
 
-                if (!\array_key_exists($settings->getType(), $this->formatter)) {
+                    if ($this->authorizationChecker->isGranted($permission, $entry)) {
+                        $allow = true;
+                    }
+                }
+
+                if ($allow === false) {
+                    $value = null;
+                } else {
+                    $value = \call_user_func($settings->getAccessor(), $entry);
+                }
+
+                if (!\array_key_exists($settings->getType(), $formatter)) {
                     $sheet->setCellValue(CellAddress::fromColumnAndRow($entryHeaderColumn, $entryHeaderRow), $value);
                 } else {
-                    $formatter = $this->formatter[$settings->getType()];
-                    $formatter->setFormattedValue($sheet, $entryHeaderColumn, $entryHeaderRow, $value);
+                    $formatter[$settings->getType()]->setFormattedValue($sheet, $entryHeaderColumn, $entryHeaderRow, $value);
                 }
 
                 $entryHeaderColumn++;

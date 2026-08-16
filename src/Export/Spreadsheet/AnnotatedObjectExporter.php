@@ -12,7 +12,7 @@ namespace App\Export\Spreadsheet;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
-final class AnnotatedObjectExporter
+final readonly class AnnotatedObjectExporter
 {
     public function __construct(private SpreadsheetExporter $spreadsheetExporter, private AnnotationExtractor $annotationExtractor)
     {
