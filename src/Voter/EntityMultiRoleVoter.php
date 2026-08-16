@@ -113,6 +113,16 @@ final class EntityMultiRoleVoter extends Voter
         }
 
         foreach ($permissions as $permission) {
+            if (str_contains($permission, '_team')) {
+                if ($subject instanceof Activity && !$this->permissionManager->checkTeamAccessActivity($subject, $user)) {
+                    return false;
+                } elseif ($subject instanceof Project && !$this->permissionManager->checkTeamAccessProject($subject, $user)) {
+                    return false;
+                } elseif ($subject instanceof Customer && !$this->permissionManager->checkTeamAccessCustomer($subject, $user)) {
+                    return false;
+                }
+            }
+
             if ($this->permissionManager->hasRolePermission($user, $permission . '_' . $suffix)) {
                 return true;
             }
