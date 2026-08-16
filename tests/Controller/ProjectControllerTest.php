@@ -134,6 +134,92 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
         $this->assertExcelExportResponse($client, 'kimai-projects_');
     }
 
+    /**
+     * Regression test for GHSA-hr8v-m742-9mph.
+     *
+     * The export is protected by "listing" only. It must apply the same budget rules as the
+     * listing table, which hides those columns unless the budget permissions are granted.
+     */
+    public function testExportHidesBudgetsWithoutPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->grantPermissions(User::ROLE_USER, 'TEST_PROJECT_LISTING_ONLY', ['view_project']);
+
+        $em = $this->getEntityManager();
+        /** @var Project $entity */
+        $entity = $em->getRepository(Project::class)->find(1);
+        $entity->setBudget(123456.78);
+        $entity->setTimeBudget(987654);
+        $entity->setBudgetType('month');
+        $em->persist($entity);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/admin/project/export');
+        $content = $this->getExcelExportContent($client);
+
+        self::assertStringNotContainsString('123456.78', $content);
+        self::assertStringNotContainsString('987654', $content);
+        self::assertStringNotContainsString('month', $content);
+    }
+
+    public function testExportShowsBudgetsWithPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $em = $this->getEntityManager();
+        /** @var Project $entity */
+        $entity = $em->getRepository(Project::class)->find(1);
+        $entity->setBudget(123456.78);
+        $entity->setTimeBudget(987654);
+        $entity->setBudgetType('month');
+        $em->persist($entity);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/admin/project/export');
+        $content = $this->getExcelExportContent($client);
+
+        self::assertStringContainsString('123456.78', $content);
+        self::assertStringContainsString('987654', $content);
+        self::assertStringContainsString('month', $content);
+    }
+
+    /**
+     * The permission is evaluated per record, not once for the whole export: a teamlead sees
+     * the budget of the projects they lead and nothing for the others.
+     */
+    public function testExportHidesBudgetsPerRecord(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $this->grantPermissions(User::ROLE_TEAMLEAD, 'TEST_PROJECT_BUDGET_TEAMLEAD', ['view_project', 'budget_teamlead_project']);
+
+        $em = $this->getEntityManager();
+
+        /** @var Project $visible */
+        $visible = $em->getRepository(Project::class)->find(1);
+        $visible->setBudget(111111.11);
+        $em->persist($visible);
+
+        $hidden = new Project();
+        $hidden->setName('not my project');
+        $hidden->setCustomer($visible->getCustomer());
+        $hidden->setBudget(222222.22);
+        $em->persist($hidden);
+
+        // the teamlead only leads the team of the first project
+        $team = new Team('budget team');
+        $team->addTeamlead($this->getUserByRole(User::ROLE_TEAMLEAD));
+        $team->addProject($visible);
+        $em->persist($team);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/admin/project/export');
+        $content = $this->getExcelExportContent($client);
+
+        self::assertStringContainsString('not my project', $content, 'Both projects have to be listed');
+        self::assertStringContainsString('111111.11', $content);
+        self::assertStringNotContainsString('222222.22', $content);
+    }
+
     public function testExportActionWithSearchTermQuery(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);

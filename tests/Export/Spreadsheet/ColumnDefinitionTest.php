@@ -31,4 +31,17 @@ class ColumnDefinitionTest extends TestCase
         $sut->setTranslationDomain('foo');
         self::assertEquals('foo', $sut->getTranslationDomain());
     }
+
+    public function testPermissions(): void
+    {
+        $sut = new ColumnDefinition('foo', 'bar', function () {
+            return 'hello world';
+        });
+
+        // without permissions the column is exported for everyone
+        self::assertEquals([], $sut->getPermissions());
+
+        $sut->setPermissions(['budget', 'time']);
+        self::assertEquals(['budget', 'time'], $sut->getPermissions());
+    }
 }

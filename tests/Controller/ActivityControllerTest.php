@@ -111,6 +111,55 @@ class ActivityControllerTest extends AbstractControllerBaseTestCase
         $this->assertExcelExportResponse($client, 'kimai-activities_');
     }
 
+    /**
+     * Regression test for GHSA-hr8v-m742-9mph.
+     *
+     * The export is protected by "listing" only. It must apply the same budget rules as the
+     * listing table, which hides those columns unless the budget permissions are granted.
+     */
+    public function testExportHidesBudgetsWithoutPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->grantPermissions(User::ROLE_USER, 'TEST_ACTIVITY_LISTING_ONLY', ['view_activity']);
+
+        $em = $this->getEntityManager();
+        /** @var Activity $entity */
+        $entity = $em->getRepository(Activity::class)->find(1);
+        $entity->setBudget(123456.78);
+        $entity->setTimeBudget(987654);
+        $entity->setBudgetType('month');
+        $em->persist($entity);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/admin/activity/export');
+        $content = $this->getExcelExportContent($client);
+
+        self::assertStringNotContainsString('123456.78', $content);
+        self::assertStringNotContainsString('987654', $content);
+        self::assertStringNotContainsString('month', $content);
+    }
+
+    public function testExportShowsBudgetsWithPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $em = $this->getEntityManager();
+        /** @var Activity $entity */
+        $entity = $em->getRepository(Activity::class)->find(1);
+        $entity->setBudget(123456.78);
+        $entity->setTimeBudget(987654);
+        $entity->setBudgetType('month');
+        $em->persist($entity);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/admin/activity/export');
+        $content = $this->getExcelExportContent($client);
+
+        self::assertStringContainsString('123456.78', $content);
+        self::assertStringContainsString('987654', $content);
+        self::assertStringContainsString('month', $content);
+    }
+
     public function testExportActionWithSearchTermQuery(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);

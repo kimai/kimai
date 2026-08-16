@@ -14,6 +14,7 @@ use App\Entity\Project;
 use App\Export\Spreadsheet\AnnotatedObjectExporter;
 use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use App\Export\Spreadsheet\SpreadsheetExporter;
+use App\Tests\Mocks\AuthorizationCheckerFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -23,7 +24,7 @@ class AnnotatedObjectExporterTest extends TestCase
 {
     public function testExport(): void
     {
-        $spreadsheetExporter = new SpreadsheetExporter($this->createMock(TranslatorInterface::class));
+        $spreadsheetExporter = new SpreadsheetExporter($this->createMock(TranslatorInterface::class), (new AuthorizationCheckerFactory($this))->create());
         $annotationExtractor = new AnnotationExtractor();
 
         $project = new Project();
