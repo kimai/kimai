@@ -113,21 +113,36 @@ final class EntityMultiRoleVoter extends Voter
         }
 
         foreach ($permissions as $permission) {
-            if (str_contains($permission, '_team')) {
-                if ($subject instanceof Activity && !$this->permissionManager->checkTeamAccessActivity($subject, $user)) {
-                    return false;
-                } elseif ($subject instanceof Project && !$this->permissionManager->checkTeamAccessProject($subject, $user)) {
-                    return false;
-                } elseif ($subject instanceof Customer && !$this->permissionManager->checkTeamAccessCustomer($subject, $user)) {
-                    return false;
-                }
+            if (!$this->permissionManager->hasRolePermission($user, $permission . '_' . $suffix)) {
+                continue;
             }
 
-            if ($this->permissionManager->hasRolePermission($user, $permission . '_' . $suffix)) {
-                return true;
+            // a team based permission is not enough, the user has to be related to the object as well
+            if (str_contains($permission, '_team') && !$this->hasTeamAccess($subject, $user)) {
+                continue;
             }
+
+            return true;
         }
 
         return false;
+    }
+
+    private function hasTeamAccess(mixed $subject, User $user): bool
+    {
+        if ($subject instanceof Activity) {
+            return $this->permissionManager->checkTeamAccessActivity($subject, $user);
+        }
+
+        if ($subject instanceof Project) {
+            return $this->permissionManager->checkTeamAccessProject($subject, $user);
+        }
+
+        if ($subject instanceof Customer) {
+            return $this->permissionManager->checkTeamAccessCustomer($subject, $user);
+        }
+
+        // a string subject asks whether the permission could be granted on any object
+        return true;
     }
 }
