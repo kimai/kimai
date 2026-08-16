@@ -171,9 +171,24 @@ final class Extensions extends AbstractExtension
         return implode(PHP_EOL, $parts);
     }
 
-    public function documentationLink(?string $url = ''): string
+    /**
+     * @param string|null $url the documentation page, e.g. "timesheet.html"
+     * @param string $medium the UI element which links to the documentation, used to compare the usage of the different help entry points
+     */
+    public function documentationLink(?string $url = '', string $medium = 'app'): string
     {
-        return Constants::HOMEPAGE . '/documentation/' . $url;
+        $url ??= '';
+        $anchor = '';
+
+        // the query string has to be added before the anchor, otherwise it becomes part of the fragment and is lost
+        if (($pos = strpos($url, '#')) !== false) {
+            $anchor = substr($url, $pos);
+            $url = substr($url, 0, $pos);
+        }
+
+        $query = '?utm_source=kimai&utm_medium=' . $medium;
+
+        return Constants::HOMEPAGE . '/documentation/' . $url . $query . $anchor;
     }
 
     public function replaceNewline($input, string $newline)
