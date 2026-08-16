@@ -683,7 +683,7 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         self::assertTrue($response->isSuccessful());
 
         self::assertStringContainsString(
-            'href="https://www.kimai.org/documentation/timesheet.html"',
+            'href="https://www.kimai.org/documentation/timesheet.html',
             $response->getContent(),
             'Could not find link to documentation'
         );
