@@ -52,7 +52,6 @@ final class TimesheetController extends BaseApiController
     public const GROUPS_FORM = ['Default', 'Entity', 'Timesheet', 'Not_Expanded'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Timesheet', 'Not_Expanded'];
     public const GROUPS_COLLECTION_FULL = ['Default', 'Collection', 'Timesheet', 'Expanded'];
-    public const GROUP_RATE = 'Rates';
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
