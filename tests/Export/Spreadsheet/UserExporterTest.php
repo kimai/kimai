@@ -15,6 +15,7 @@ use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use App\Export\Spreadsheet\Extractor\UserPreferenceExtractor;
 use App\Export\Spreadsheet\SpreadsheetExporter;
 use App\Export\Spreadsheet\UserExporter;
+use App\Tests\Mocks\AuthorizationCheckerFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -25,7 +26,7 @@ class UserExporterTest extends TestCase
 {
     public function testExport(): void
     {
-        $spreadsheetExporter = new SpreadsheetExporter($this->createMock(TranslatorInterface::class));
+        $spreadsheetExporter = new SpreadsheetExporter($this->createMock(TranslatorInterface::class), (new AuthorizationCheckerFactory($this))->create());
         $annotationExtractor = new AnnotationExtractor();
         $userPreferenceExtractor = new UserPreferenceExtractor($this->createMock(EventDispatcherInterface::class));
 

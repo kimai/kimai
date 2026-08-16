@@ -14,8 +14,12 @@ final class ColumnDefinition
     private $accessor;
 
     private string $translationDomain = 'messages';
+    /**
+     * @var string[]
+     */
+    private array $permissions = [];
 
-    public function __construct(private string $label, private string $type, callable $accessor)
+    public function __construct(private readonly string $label, private readonly string $type, callable $accessor)
     {
         $this->accessor = $accessor;
     }
@@ -43,5 +47,23 @@ final class ColumnDefinition
     public function setTranslationDomain(string $translationDomain): void
     {
         $this->translationDomain = $translationDomain;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getPermissions(): array
+    {
+        return $this->permissions;
+    }
+
+    /**
+     * If one of the given "permissions" is granted, the column value will be shown.
+     *
+     * @param string[] $permissions
+     */
+    public function setPermissions(array $permissions): void
+    {
+        $this->permissions = $permissions;
     }
 }

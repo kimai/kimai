@@ -17,6 +17,7 @@ use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use App\Export\Spreadsheet\Extractor\MetaFieldExtractor;
 use App\Export\Spreadsheet\SpreadsheetExporter;
 use App\Repository\Query\CustomerQuery;
+use App\Tests\Mocks\AuthorizationCheckerFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -36,7 +37,7 @@ class CustomerExporterTest extends TestCase
             return $event;
         });
 
-        $spreadsheetExporter = new SpreadsheetExporter($this->createMock(TranslatorInterface::class));
+        $spreadsheetExporter = new SpreadsheetExporter($this->createMock(TranslatorInterface::class), (new AuthorizationCheckerFactory($this))->create());
         $annotationExtractor = new AnnotationExtractor();
         $metaFieldExtractor = new MetaFieldExtractor($dispatcher);
 
