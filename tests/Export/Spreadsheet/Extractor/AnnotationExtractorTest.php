@@ -17,6 +17,9 @@ use App\Export\Spreadsheet\Extractor\ExtractorException;
 use App\Tests\Export\Spreadsheet\Entities\DemoFull;
 use App\Tests\Export\Spreadsheet\Entities\ExpressionOnMethod;
 use App\Tests\Export\Spreadsheet\Entities\ExpressionOnProperty;
+use App\Tests\Export\Spreadsheet\Entities\InvalidPermissionOnClass;
+use App\Tests\Export\Spreadsheet\Entities\InvalidPermissionOnMethod;
+use App\Tests\Export\Spreadsheet\Entities\InvalidPermissionOnProperty;
 use App\Tests\Export\Spreadsheet\Entities\MethodRequiresParams;
 use App\Tests\Export\Spreadsheet\Entities\MissingExpressionOnClass;
 use App\Tests\Export\Spreadsheet\Entities\MissingNameOnClass;
@@ -43,16 +46,16 @@ class AnnotationExtractorTest extends TestCase
         }
 
         $expected = [
-            ['type-time', 'time', new \DateTime(), 'foo'],
-            ['Public-Property', 'string', 'public-property', 'messages'],
-            ['type-date', 'date', new \DateTime(), 'messages'],
-            ['Private-Property', 'integer', 123, 'test'],
-            ['accessor', 'string', 'accessor-method', 'messages'],
-            ['Protected-Property', 'boolean', false, 'messages'],
-            ['Public-Method', 'string', 'public-method', 'messages'],
-            ['Protected-Method', 'datetime', new \DateTime(), 'messages'],
-            ['duration', 'duration', 12345, 'messages'],
-            ['Private-Method', 'boolean', true, 'bar'],
+            ['type-time', 'time', new \DateTime(), 'foo', ['class-permission']],
+            ['Public-Property', 'string', 'public-property', 'messages', []],
+            ['type-date', 'date', new \DateTime(), 'messages', []],
+            ['Private-Property', 'integer', 123, 'test', ['property-permission', 'second-permission']],
+            ['accessor', 'string', 'accessor-method', 'messages', []],
+            ['Protected-Property', 'boolean', false, 'messages', []],
+            ['Public-Method', 'string', 'public-method', 'messages', []],
+            ['Protected-Method', 'datetime', new \DateTime(), 'messages', []],
+            ['duration', 'duration', 12345, 'messages', ['method-permission']],
+            ['Private-Method', 'boolean', true, 'bar', []],
         ];
 
         $i = 0;
@@ -68,7 +71,38 @@ class AnnotationExtractorTest extends TestCase
                 self::assertEquals($item[2], $result);
             }
             self::assertEquals($item[3], $column->getTranslationDomain(), 'Failed translation domain for: ' . $item[0]);
+            self::assertEquals($item[4], $column->getPermissions(), 'Failed permissions for: ' . $item[0]);
         }
+    }
+
+    public function testExceptionOnInvalidPermissionOnClass(): void
+    {
+        $sut = new AnnotationExtractor();
+
+        $this->expectException(ExtractorException::class);
+        $this->expectExceptionMessage('@Expose only supports string "permissions" on class level hierarchy, check App\Tests\Export\Spreadsheet\Entities\InvalidPermissionOnClass::class');
+
+        $sut->extract(InvalidPermissionOnClass::class);
+    }
+
+    public function testExceptionOnInvalidPermissionOnProperty(): void
+    {
+        $sut = new AnnotationExtractor();
+
+        $this->expectException(ExtractorException::class);
+        $this->expectExceptionMessage('@Expose only supports string "permissions" on property level hierarchy, check App\Tests\Export\Spreadsheet\Entities\InvalidPermissionOnProperty::$foo');
+
+        $sut->extract(InvalidPermissionOnProperty::class);
+    }
+
+    public function testExceptionOnInvalidPermissionOnMethod(): void
+    {
+        $sut = new AnnotationExtractor();
+
+        $this->expectException(ExtractorException::class);
+        $this->expectExceptionMessage('@Expose only supports string "permissions" on method level hierarchy, check App\Tests\Export\Spreadsheet\Entities\InvalidPermissionOnMethod::$getFoo()');
+
+        $sut->extract(InvalidPermissionOnMethod::class);
     }
 
     public function testExceptionOnInvalidType(): void

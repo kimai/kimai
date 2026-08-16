@@ -9,22 +9,23 @@
 
 namespace App\Voter;
 
-use App\Entity\Activity;
-use App\Entity\Customer;
-use App\Entity\Project;
 use App\Entity\User;
 use App\Security\RolePermissionManager;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
- * @extends Voter<string, Activity|Project|Customer|string>
+ * Answers the question "may this user see that kind of data on any customer, project or
+ * activity?" and is used to decide whether a column, a menu or a report is rendered at all.
+ *
+ * It deliberately works on the entity type and not on a single entity: a permission like
+ * "budget_teamlead_project" says nothing about one specific project.
+ * Use the CustomerVoter, ProjectVoter and ActivityVoter to check a concrete object.
+ *
+ * @extends Voter<string, string>
  */
 final class EntityMultiRoleVoter extends Voter
 {
-    /**
-     * support rules based on the given activity/project/customer
-     */
     private const ALLOWED_ATTRIBUTES = [
         'budget_money',
         'budget_time',
@@ -47,21 +48,18 @@ final class EntityMultiRoleVoter extends Voter
         return \in_array($attribute, self::ALLOWED_ATTRIBUTES, true);
     }
 
+    public function supportsType(string $subjectType): bool
+    {
+        return $subjectType === 'string';
+    }
+
     protected function supports(string $attribute, mixed $subject): bool
     {
         if (!$this->supportsAttribute($attribute)) {
             return false;
         }
 
-        if (\is_string($subject) && \in_array($subject, self::ALLOWED_SUBJECTS, true)) {
-            return true;
-        }
-
-        if ($subject instanceof Activity || $subject instanceof Project || $subject instanceof Customer) {
-            return true;
-        }
-
-        return false;
+        return \is_string($subject) && \in_array($subject, self::ALLOWED_SUBJECTS, true);
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
@@ -69,22 +67,6 @@ final class EntityMultiRoleVoter extends Voter
         $user = $token->getUser();
 
         if (!$user instanceof User) {
-            return false;
-        }
-
-        $suffix = null;
-
-        if (\is_string($subject) && \in_array($subject, self::ALLOWED_SUBJECTS, true)) {
-            $suffix = $subject;
-        } elseif ($subject instanceof Activity) {
-            $suffix = 'activity';
-        } elseif ($subject instanceof Project) {
-            $suffix = 'project';
-        } elseif ($subject instanceof Customer) {
-            $suffix = 'customer';
-        }
-
-        if ($suffix === null) {
             return false;
         }
 
@@ -113,7 +95,7 @@ final class EntityMultiRoleVoter extends Voter
         }
 
         foreach ($permissions as $permission) {
-            if ($this->permissionManager->hasRolePermission($user, $permission . '_' . $suffix)) {
+            if ($this->permissionManager->hasRolePermission($user, $permission . '_' . $subject)) {
                 return true;
             }
         }

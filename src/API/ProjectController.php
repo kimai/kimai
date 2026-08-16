@@ -41,9 +41,9 @@ use Symfony\Component\Validator\Constraints;
 final class ProjectController extends BaseApiController
 {
     private const GROUPS_COMMENT = ['Default', 'Not_Expanded'];
-    public const GROUPS_ENTITY = ['Default', 'Entity', 'Project', 'Project_Entity'];
-    public const GROUPS_COLLECTION = ['Default', 'Collection', 'Project'];
-    public const GROUPS_RATE = ['Default', 'Entity', 'Project_Rate'];
+    private const GROUPS_ENTITY = ['Default', 'Entity', 'Project', 'Project_Entity'];
+    private const GROUPS_COLLECTION = ['Default', 'Collection', 'Project'];
+    private const GROUPS_RATE = ['Default', 'Entity', 'Project_Rate'];
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
@@ -51,6 +51,32 @@ final class ProjectController extends BaseApiController
         private readonly ProjectRateRepository $projectRateRepository,
         private readonly ProjectService $projectService
     ) {
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function getEntitySerializationGroups(Project $project): array
+    {
+        $groups = self::GROUPS_ENTITY;
+
+        if ($this->isGranted('budget', $project)) {
+            $groups = array_merge($groups, ['Budget_Money']);
+        }
+
+        if ($this->isGranted('time', $project)) {
+            $groups = array_merge($groups, ['Budget_Time']);
+        }
+
+        return $groups;
+    }
+
+    private function renderEntity(Project $project): Response
+    {
+        $view = new View($project, Response::HTTP_OK);
+        $view->getContext()->setGroups($this->getEntitySerializationGroups($project));
+
+        return $this->viewHandler->handle($view);
     }
 
     /**
@@ -157,10 +183,7 @@ final class ProjectController extends BaseApiController
     #[IsGranted('view', 'project')]
     public function getAction(Project $project): Response
     {
-        $view = new View($project, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($project);
     }
 
     /**
@@ -186,19 +209,13 @@ final class ProjectController extends BaseApiController
 
         $form->submit($request->request->all(), false);
 
-        if ($form->isValid()) {
-            $this->projectService->saveProject($project);
-
-            $view = new View($project, 200);
-            $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-            return $this->viewHandler->handle($view);
+        if (false === $form->isValid()) {
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
-        $view = new View($form);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+        $this->projectService->saveProject($project);
 
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($project);
     }
 
     /**
@@ -224,18 +241,12 @@ final class ProjectController extends BaseApiController
         $form->submit($request->request->all(), false);
 
         if (false === $form->isValid()) {
-            $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-            return $this->viewHandler->handle($view);
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
         $this->projectService->saveProject($project);
 
-        $view = new View($project, Response::HTTP_OK);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($project);
     }
 
     /**
@@ -281,10 +292,7 @@ final class ProjectController extends BaseApiController
 
         $this->projectService->saveProject($project);
 
-        $view = new View($project, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($project);
     }
 
     /**
@@ -346,10 +354,7 @@ final class ProjectController extends BaseApiController
         $form->submit($request->request->all(), false);
 
         if (false === $form->isValid()) {
-            $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_RATE);
-
-            return $this->viewHandler->handle($view);
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
         $this->projectRateRepository->saveRate($rate);

@@ -1518,11 +1518,6 @@ parameters:
             path: src/Export/Spreadsheet/Extractor/UserPreferenceExtractor.php
 
         -
-            message: "#^Method App\\\\Export\\\\Spreadsheet\\\\SpreadsheetExporter\\:\\:export\\(\\) has parameter \\$entries with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Spreadsheet/SpreadsheetExporter.php
-
-        -
             message: "#^Method App\\\\Export\\\\Spreadsheet\\\\Writer\\\\BinaryFileResponseWriter\\:\\:getFileResponse\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Export/Spreadsheet/Writer/BinaryFileResponseWriter.php

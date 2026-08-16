@@ -36,9 +36,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[OA\Tag(name: 'Activity')]
 final class ActivityController extends BaseApiController
 {
-    public const GROUPS_ENTITY = ['Default', 'Entity', 'Activity', 'Activity_Entity'];
-    public const GROUPS_COLLECTION = ['Default', 'Collection', 'Activity'];
-    public const GROUPS_RATE = ['Default', 'Entity', 'Activity_Rate'];
+    private const GROUPS_ENTITY = ['Default', 'Entity', 'Activity', 'Activity_Entity'];
+    private const GROUPS_COLLECTION = ['Default', 'Collection', 'Activity'];
+    private const GROUPS_RATE = ['Default', 'Entity', 'Activity_Rate'];
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
@@ -46,6 +46,32 @@ final class ActivityController extends BaseApiController
         private readonly ActivityRateRepository $activityRateRepository,
         private readonly ActivityService $activityService
     ) {
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function getEntitySerializationGroups(Activity $activity): array
+    {
+        $groups = self::GROUPS_ENTITY;
+
+        if ($this->isGranted('budget', $activity)) {
+            $groups = array_merge($groups, ['Budget_Money']);
+        }
+
+        if ($this->isGranted('time', $activity)) {
+            $groups = array_merge($groups, ['Budget_Time']);
+        }
+
+        return $groups;
+    }
+
+    private function renderEntity(Activity $activity): Response
+    {
+        $view = new View($activity, Response::HTTP_OK);
+        $view->getContext()->setGroups($this->getEntitySerializationGroups($activity));
+
+        return $this->viewHandler->handle($view);
     }
 
     /**
@@ -111,10 +137,7 @@ final class ActivityController extends BaseApiController
     #[IsGranted('view', 'activity')]
     public function getAction(Activity $activity): Response
     {
-        $view = new View($activity, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($activity);
     }
 
     /**
@@ -138,19 +161,13 @@ final class ActivityController extends BaseApiController
 
         $form->submit($request->request->all(), false);
 
-        if ($form->isValid()) {
-            $this->activityService->saveActivity($activity);
-
-            $view = new View($activity, 200);
-            $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-            return $this->viewHandler->handle($view);
+        if (false === $form->isValid()) {
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
-        $view = new View($form);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+        $this->activityService->saveActivity($activity);
 
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($activity);
     }
 
     /**
@@ -174,18 +191,12 @@ final class ActivityController extends BaseApiController
         $form->submit($request->request->all(), false);
 
         if (false === $form->isValid()) {
-            $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-            return $this->viewHandler->handle($view);
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
         $this->activityService->saveActivity($activity);
 
-        $view = new View($activity, Response::HTTP_OK);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($activity);
     }
 
     /**
@@ -231,10 +242,7 @@ final class ActivityController extends BaseApiController
 
         $this->activityService->saveActivity($activity);
 
-        $view = new View($activity, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($activity);
     }
 
     /**
@@ -296,10 +304,7 @@ final class ActivityController extends BaseApiController
         $form->submit($request->request->all(), false);
 
         if (false === $form->isValid()) {
-            $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_RATE);
-
-            return $this->viewHandler->handle($view);
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
         $this->activityRateRepository->saveRate($rate);
