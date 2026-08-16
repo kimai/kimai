@@ -2346,16 +2346,16 @@
         },
         {
             "name": "horstoeko/zugferdublbridge",
-            "version": "v1.0.16",
+            "version": "v1.0.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/horstoeko/zugferdublbridge.git",
-                "reference": "db1ba7fdc3e3cf7b5c8b89d03e44dd6c651ffb0e"
+                "reference": "c493cc76d5fff49880bfe140eb15a983927d9edc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/horstoeko/zugferdublbridge/zipball/db1ba7fdc3e3cf7b5c8b89d03e44dd6c651ffb0e",
-                "reference": "db1ba7fdc3e3cf7b5c8b89d03e44dd6c651ffb0e",
+                "url": "https://api.github.com/repos/horstoeko/zugferdublbridge/zipball/c493cc76d5fff49880bfe140eb15a983927d9edc",
+                "reference": "c493cc76d5fff49880bfe140eb15a983927d9edc",
                 "shasum": ""
             },
             "require": {
@@ -2405,9 +2405,9 @@
             ],
             "support": {
                 "issues": "https://github.com/horstoeko/zugferdublbridge/issues",
-                "source": "https://github.com/horstoeko/zugferdublbridge/tree/v1.0.16"
+                "source": "https://github.com/horstoeko/zugferdublbridge/tree/v1.0.17"
             },
-            "time": "2025-12-17T15:18:02+00:00"
+            "time": "2026-08-12T15:01:23+00:00"
         },
         {
             "name": "jms/metadata",
@@ -3406,16 +3406,16 @@
         },
         {
             "name": "nelmio/api-doc-bundle",
-            "version": "v5.11.0",
+            "version": "v5.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "8241953a59f424f4e21d0ee605b2f6cb1bef01ff"
+                "reference": "86d8ca816c0951f542c0095ac3680cab172c7920"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/8241953a59f424f4e21d0ee605b2f6cb1bef01ff",
-                "reference": "8241953a59f424f4e21d0ee605b2f6cb1bef01ff",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/86d8ca816c0951f542c0095ac3680cab172c7920",
+                "reference": "86d8ca816c0951f542c0095ac3680cab172c7920",
                 "shasum": ""
             },
             "require": {
@@ -3516,7 +3516,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nelmio/NelmioApiDocBundle/issues",
-                "source": "https://github.com/nelmio/NelmioApiDocBundle/tree/v5.11.0"
+                "source": "https://github.com/nelmio/NelmioApiDocBundle/tree/v5.11.1"
             },
             "funding": [
                 {
@@ -3524,7 +3524,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-03T14:14:53+00:00"
+            "time": "2026-08-12T10:26:23+00:00"
         },
         {
             "name": "nelmio/cors-bundle",
