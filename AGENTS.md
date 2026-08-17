@@ -66,6 +66,7 @@
 - Doctrine entity changes affecting the schema require a migration file
 - Generate migration with `bin/console doctrine:migrations:diff`
 - Prefer `Doctrine\DBAL\Schema` in migrations over inline SQL
+- Activate `<env name="BOOTSTRAP_RESET_DATABASE" value="true"/>` in `phpunit.xml` when running tests that require a database change 
 
 ## Frontend and Translation Rules
 
@@ -91,11 +92,10 @@
 - For focused checks, run `vendor/bin/phpunit tests/<directory>/<TestClassName>.php`
 - Use `composer tests-unit` for broader validation without expensive end-to-end coverage
 - Use `composer tests` when the change justifies running the full suite
-- If tests fail, remove stale cache with `rm -r ./var/cache/test/` and run tests again 
+- If tests fail, remove stale cache with `rm -r ./var/cache/test/` to cause a rebuild of the service container
 
 ## Git Rules
 
-- Avoid working directly on `main`
 - Small fixes should target the active `release-x.y.z` branch
 - Larger changes should go to descriptive `snake_case` feature branches
 - Agents must not create branches unless explicitly asked

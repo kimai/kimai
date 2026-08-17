@@ -190,23 +190,25 @@ class TeamControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result['members']);
         self::assertCount(3, $result['members']);
 
-        self::assertIsArray($result['members'][0]);
-        self::assertTrue($result['members'][0]['teamlead']);
-        self::assertIsArray($result['members'][0]['user']);
-        self::assertEquals(2, $result['members'][0]['user']['id']);
-        self::assertEquals('john_user', $result['members'][0]['user']['username']);
+        $membersByUser = [];
+        foreach ($result['members'] as $member) {
+            self::assertIsArray($member);
+            self::assertIsArray($member['user']);
+            self::assertIsInt($member['user']['id']);
+            $membersByUser[$member['user']['id']] = $member;
+        }
 
-        self::assertIsArray($result['members'][1]);
-        self::assertFalse($result['members'][1]['teamlead']);
-        self::assertIsArray($result['members'][1]['user']);
-        self::assertEquals(1, $result['members'][1]['user']['id']);
-        self::assertEquals('clara_customer', $result['members'][1]['user']['username']);
+        self::assertArrayHasKey(2, $membersByUser);
+        self::assertTrue($membersByUser[2]['teamlead']);
+        self::assertEquals('john_user', $membersByUser[2]['user']['username']);
 
-        self::assertIsArray($result['members'][2]);
-        self::assertTrue($result['members'][2]['teamlead']);
-        self::assertIsArray($result['members'][2]['user']);
-        self::assertEquals(4, $result['members'][2]['user']['id']);
-        self::assertEquals('tony_teamlead', $result['members'][2]['user']['username']);
+        self::assertArrayHasKey(1, $membersByUser);
+        self::assertFalse($membersByUser[1]['teamlead']);
+        self::assertEquals('clara_customer', $membersByUser[1]['user']['username']);
+
+        self::assertArrayHasKey(4, $membersByUser);
+        self::assertTrue($membersByUser[4]['teamlead']);
+        self::assertEquals('tony_teamlead', $membersByUser[4]['user']['username']);
     }
 
     public function testPatchActionWithValidationErrors(): void
@@ -235,6 +237,117 @@ class TeamControllerTest extends APIControllerBaseTestCase
         $response = $client->getResponse();
         self::assertEquals(400, $response->getStatusCode());
         $this->assertApiCallValidationError($response, ['name', 'members.0.user']);
+    }
+
+    public function testPatchActionCanReplaceTwoMembersWithOneWithoutConstraintViolation(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'members' => [
+                ['user' => 1, 'teamlead' => true],
+                ['user' => 5, 'teamlead' => false],
+            ],
+        ];
+        $this->request($client, '/api/teams', 'POST', [], json_encode($data, JSON_THROW_ON_ERROR));
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $createdContent = $client->getResponse()->getContent();
+        self::assertIsString($createdContent);
+        $created = json_decode($createdContent, true, 512, JSON_THROW_ON_ERROR);
+        self::assertIsArray($created);
+        self::assertIsNumeric($created['id']);
+
+        $teamId = (int) $created['id'];
+        $payload = [
+            'members' => [
+                ['user' => 5, 'teamlead' => true],
+            ],
+        ];
+
+        $this->request($client, '/api/teams/' . $teamId, 'PATCH', [], json_encode($payload, JSON_THROW_ON_ERROR));
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $patchedContent = $client->getResponse()->getContent();
+        self::assertIsString($patchedContent);
+        $patched = json_decode($patchedContent, true, 512, JSON_THROW_ON_ERROR);
+        self::assertIsArray($patched);
+        self::assertIsArray($patched['members']);
+        self::assertCount(1, $patched['members']);
+        self::assertIsArray($patched['members'][0]);
+        self::assertIsArray($patched['members'][0]['user']);
+        self::assertEquals(5, $patched['members'][0]['user']['id']);
+        self::assertTrue($patched['members'][0]['teamlead']);
+
+        $this->request($client, '/api/teams/' . $teamId);
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $reloadedContent = $client->getResponse()->getContent();
+        self::assertIsString($reloadedContent);
+        $reloaded = json_decode($reloadedContent, true, 512, JSON_THROW_ON_ERROR);
+        self::assertIsArray($reloaded);
+        self::assertIsArray($reloaded['members']);
+        self::assertCount(1, $reloaded['members']);
+        self::assertIsArray($reloaded['members'][0]);
+        self::assertIsArray($reloaded['members'][0]['user']);
+        self::assertEquals(5, $reloaded['members'][0]['user']['id']);
+        self::assertTrue($reloaded['members'][0]['teamlead']);
+    }
+
+    public function testPatchActionWithDuplicateMembersUserDoesNotReuseUnrelatedMember(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'foo',
+            'members' => [
+                ['user' => 1, 'teamlead' => true],
+                ['user' => 5, 'teamlead' => false],
+                ['user' => 4, 'teamlead' => false],
+            ],
+        ];
+        $this->request($client, '/api/teams', 'POST', [], json_encode($data, JSON_THROW_ON_ERROR));
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $createdContent = $client->getResponse()->getContent();
+        self::assertIsString($createdContent);
+        $created = json_decode($createdContent, true, 512, JSON_THROW_ON_ERROR);
+        self::assertIsArray($created);
+        self::assertIsNumeric($created['id']);
+
+        $teamId = (int) $created['id'];
+        $payload = [
+            'members' => [
+                ['user' => 1, 'teamlead' => true],
+                ['user' => 1, 'teamlead' => false],
+            ],
+        ];
+
+        $this->request($client, '/api/teams/' . $teamId, 'PATCH', [], json_encode($payload, JSON_THROW_ON_ERROR));
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $patchedContent = $client->getResponse()->getContent();
+        self::assertIsString($patchedContent);
+        $patched = json_decode($patchedContent, true, 512, JSON_THROW_ON_ERROR);
+        self::assertIsArray($patched);
+        self::assertIsArray($patched['members']);
+        self::assertCount(1, $patched['members']);
+        self::assertIsArray($patched['members'][0]);
+        self::assertIsArray($patched['members'][0]['user']);
+        self::assertEquals(1, $patched['members'][0]['user']['id']);
+        self::assertTrue($patched['members'][0]['teamlead']);
+
+        $this->request($client, '/api/teams/' . $teamId);
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $reloadedContent = $client->getResponse()->getContent();
+        self::assertIsString($reloadedContent);
+        $reloaded = json_decode($reloadedContent, true, 512, JSON_THROW_ON_ERROR);
+        self::assertIsArray($reloaded);
+        self::assertIsArray($reloaded['members']);
+        self::assertCount(1, $reloaded['members']);
+        self::assertIsArray($reloaded['members'][0]);
+        self::assertIsArray($reloaded['members'][0]['user']);
+        self::assertEquals(1, $reloaded['members'][0]['user']['id']);
     }
 
     public function testDeleteAction(): void
@@ -819,6 +932,283 @@ class TeamControllerTest extends APIControllerBaseTestCase
         $em->flush();
 
         return $attackerTeam;
+    }
+
+    /**
+     * Regression test for GHSA-gmm9-hfxg-7v29 (postCustomerAction variant).
+     *
+     * A teamlead may have edit_team and view access to a customer through one
+     * team, but must not grant another team access without permissions_customer.
+     */
+    public function testPostCustomerActionRequiresCustomerPermissions(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $attackerTeam = $this->prepareAttackerTeamleadWithEditTeam('GHSA_GMM9_CUSTOMER');
+        $attacker = $this->getUserByName(UserFixtures::USERNAME_TEAMLEAD);
+
+        $visibilityTeam = new Team('GHSA-gmm9 visibility team customer');
+        $visibilityTeam->addTeamlead($attacker);
+        $em->persist($visibilityTeam);
+
+        $customer = new Customer('GHSA-gmm9 customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $visibilityTeam->addCustomer($customer);
+        $em->persist($customer);
+        $em->flush();
+
+        $teamId = $attackerTeam->getId();
+        $customerId = $customer->getId();
+        self::assertIsInt($teamId);
+        self::assertIsInt($customerId);
+
+        $this->request($client, '/api/teams/' . $teamId . '/customers/' . $customerId, 'POST');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $em->clear();
+        $reloadedTeam = $em->getRepository(Team::class)->find($teamId);
+        self::assertInstanceOf(Team::class, $reloadedTeam);
+        $reloadedCustomer = $em->getRepository(Customer::class)->find($customerId);
+        self::assertInstanceOf(Customer::class, $reloadedCustomer);
+        self::assertFalse($reloadedTeam->hasCustomer($reloadedCustomer));
+    }
+
+    /**
+     * Regression test for GHSA-gmm9-hfxg-7v29 (postProjectAction variant).
+     *
+     * A teamlead may have edit_team and view access to a project through one
+     * team, but must not grant another team access without permissions_project.
+     */
+    public function testPostProjectActionRequiresProjectPermissions(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $attackerTeam = $this->prepareAttackerTeamleadWithEditTeam('GHSA_GMM9_PROJECT');
+        $attacker = $this->getUserByName(UserFixtures::USERNAME_TEAMLEAD);
+
+        $visibilityTeam = new Team('GHSA-gmm9 visibility team project');
+        $visibilityTeam->addTeamlead($attacker);
+        $em->persist($visibilityTeam);
+
+        $customer = new Customer('GHSA-gmm9 project customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('GHSA-gmm9 project');
+        $project->setCustomer($customer);
+        $visibilityTeam->addProject($project);
+        $em->persist($project);
+        $em->flush();
+
+        $teamId = $attackerTeam->getId();
+        $projectId = $project->getId();
+        self::assertIsInt($teamId);
+        self::assertIsInt($projectId);
+
+        $this->request($client, '/api/teams/' . $teamId . '/projects/' . $projectId, 'POST');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $em->clear();
+        $reloadedTeam = $em->getRepository(Team::class)->find($teamId);
+        self::assertInstanceOf(Team::class, $reloadedTeam);
+        $reloadedProject = $em->getRepository(Project::class)->find($projectId);
+        self::assertInstanceOf(Project::class, $reloadedProject);
+        self::assertFalse($reloadedTeam->hasProject($reloadedProject));
+    }
+
+    /**
+     * Regression test for GHSA-gmm9-hfxg-7v29 (postActivityAction variant).
+     *
+     * A teamlead may have edit_team and view access to an activity through one
+     * team, but must not grant another team access without permissions_activity.
+     */
+    public function testPostActivityActionRequiresActivityPermissions(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $attackerTeam = $this->prepareAttackerTeamleadWithEditTeam('GHSA_GMM9_ACTIVITY');
+        $attacker = $this->getUserByName(UserFixtures::USERNAME_TEAMLEAD);
+
+        $visibilityTeam = new Team('GHSA-gmm9 visibility team activity');
+        $visibilityTeam->addTeamlead($attacker);
+        $em->persist($visibilityTeam);
+
+        $customer = new Customer('GHSA-gmm9 activity customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('GHSA-gmm9 activity project');
+        $project->setCustomer($customer);
+        $em->persist($project);
+
+        $activity = new Activity();
+        $activity->setName('GHSA-gmm9 activity');
+        $activity->setProject($project);
+        $visibilityTeam->addActivity($activity);
+        $em->persist($activity);
+        $em->flush();
+
+        $teamId = $attackerTeam->getId();
+        $activityId = $activity->getId();
+        self::assertIsInt($teamId);
+        self::assertIsInt($activityId);
+
+        $this->request($client, '/api/teams/' . $teamId . '/activities/' . $activityId, 'POST');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $em->clear();
+        $reloadedTeam = $em->getRepository(Team::class)->find($teamId);
+        self::assertInstanceOf(Team::class, $reloadedTeam);
+        $reloadedActivity = $em->getRepository(Activity::class)->find($activityId);
+        self::assertInstanceOf(Activity::class, $reloadedActivity);
+        self::assertFalse($reloadedTeam->hasActivity($reloadedActivity));
+    }
+
+    /**
+     * A teamlead with edit_team must not be able to strip their team's access
+     * to a customer without holding `permissions_customer`.
+     */
+    public function testDeleteCustomerActionRequiresCustomerPermissions(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $attackerTeam = $this->prepareAttackerTeamleadWithEditTeam('GHSA_GMM9_DELETE_CUSTOMER');
+
+        // an admin granted the team access to this customer before
+        $customer = new Customer('GHSA-gmm9 revoke customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $attackerTeam->addCustomer($customer);
+        $em->persist($customer);
+
+        // a second customer that was never assigned, to verify that the permission
+        // check runs before the "is it assigned?" check and does not leak that state
+        $unassigned = new Customer('GHSA-gmm9 unassigned customer');
+        $unassigned->setCountry('DE');
+        $unassigned->setTimezone('Europe/Berlin');
+        $em->persist($unassigned);
+        $em->flush();
+
+        $teamId = $attackerTeam->getId();
+        $customerId = $customer->getId();
+        $unassignedId = $unassigned->getId();
+        self::assertIsInt($teamId);
+        self::assertIsInt($customerId);
+        self::assertIsInt($unassignedId);
+
+        $this->request($client, '/api/teams/' . $teamId . '/customers/' . $customerId, 'DELETE');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->request($client, '/api/teams/' . $teamId . '/customers/' . $unassignedId, 'DELETE');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $em->clear();
+        $reloadedTeam = $em->getRepository(Team::class)->find($teamId);
+        self::assertInstanceOf(Team::class, $reloadedTeam);
+        $reloadedCustomer = $em->getRepository(Customer::class)->find($customerId);
+        self::assertInstanceOf(Customer::class, $reloadedCustomer);
+        self::assertTrue(
+            $reloadedTeam->hasCustomer($reloadedCustomer),
+            'The customer must still be assigned to the team after the denied revoke.'
+        );
+    }
+
+    /**
+     * A teamlead with edit_team must not be able to strip their team's access
+     * to a project without holding `permissions_project`.
+     */
+    public function testDeleteProjectActionRequiresProjectPermissions(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $attackerTeam = $this->prepareAttackerTeamleadWithEditTeam('GHSA_GMM9_DELETE_PROJECT');
+
+        $customer = new Customer('GHSA-gmm9 revoke project customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('GHSA-gmm9 revoke project');
+        $project->setCustomer($customer);
+        $attackerTeam->addProject($project);
+        $em->persist($project);
+        $em->flush();
+
+        $teamId = $attackerTeam->getId();
+        $projectId = $project->getId();
+        self::assertIsInt($teamId);
+        self::assertIsInt($projectId);
+
+        $this->request($client, '/api/teams/' . $teamId . '/projects/' . $projectId, 'DELETE');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $em->clear();
+        $reloadedTeam = $em->getRepository(Team::class)->find($teamId);
+        self::assertInstanceOf(Team::class, $reloadedTeam);
+        $reloadedProject = $em->getRepository(Project::class)->find($projectId);
+        self::assertInstanceOf(Project::class, $reloadedProject);
+        self::assertTrue(
+            $reloadedTeam->hasProject($reloadedProject),
+            'The project must still be assigned to the team after the denied revoke.'
+        );
+    }
+
+    /**
+     * A teamlead with edit_team must not be able to strip their team's access
+     * to an activity without holding `permissions_activity`.
+     */
+    public function testDeleteActivityActionRequiresActivityPermissions(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $attackerTeam = $this->prepareAttackerTeamleadWithEditTeam('GHSA_GMM9_DELETE_ACTIVITY');
+
+        $customer = new Customer('GHSA-gmm9 revoke activity customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('GHSA-gmm9 revoke activity project');
+        $project->setCustomer($customer);
+        $em->persist($project);
+
+        $activity = new Activity();
+        $activity->setName('GHSA-gmm9 revoke activity');
+        $activity->setProject($project);
+        $attackerTeam->addActivity($activity);
+        $em->persist($activity);
+        $em->flush();
+
+        $teamId = $attackerTeam->getId();
+        $activityId = $activity->getId();
+        self::assertIsInt($teamId);
+        self::assertIsInt($activityId);
+
+        $this->request($client, '/api/teams/' . $teamId . '/activities/' . $activityId, 'DELETE');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $em->clear();
+        $reloadedTeam = $em->getRepository(Team::class)->find($teamId);
+        self::assertInstanceOf(Team::class, $reloadedTeam);
+        $reloadedActivity = $em->getRepository(Activity::class)->find($activityId);
+        self::assertInstanceOf(Activity::class, $reloadedActivity);
+        self::assertTrue(
+            $reloadedTeam->hasActivity($reloadedActivity),
+            'The activity must still be assigned to the team after the denied revoke.'
+        );
     }
 
     /**

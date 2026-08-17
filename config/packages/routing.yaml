@@ -1,5 +1,5 @@
 parameters:
-    env(default_uri): 'http://localhost'
+    env(DEFAULT_URI): 'http://localhost'
 
 framework:
     router:

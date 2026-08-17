@@ -1846,6 +1846,30 @@
         <source>estimation</source>
             <target state="translated">Thời gian dự kiến</target>
       </trans-unit>
+      <trans-unit id="QdfOAGZ" resname="status.done" xml:space="preserve">
+        <source>status.done</source>
+        <target state="translated">Hoàn thành</target>
+      </trans-unit>
+      <trans-unit id="YzOSTim" resname="status.rejected" xml:space="preserve" approved="no">
+        <source>Rejected</source>
+        <target state="translated">Bị từ chối</target>
+      </trans-unit>
+      <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve">
+        <source>reject</source>
+        <target state="translated">Từ chối</target>
+      </trans-unit>
+      <trans-unit id="G8ZoGoA" resname="api_token_qr_hint" xml:space="preserve">
+        <source>api_token_qr_hint</source>
+        <target state="translated">Bạn có thể quét mã QR này bằng ứng dụng di động để cấu hình URL máy chủ và API token chỉ trong một bước. Không chia sẻ hình ảnh này: hình ảnh có chứa API token của bạn.</target>
+      </trans-unit>
+      <trans-unit id="j_0FPm3" resname="status.waiting" xml:space="preserve">
+        <source>status.waiting</source>
+        <target state="translated">Đang chờ</target>
+      </trans-unit>
+      <trans-unit id="TTL.5NF" resname="status.todo" xml:space="preserve">
+        <source>status.todo</source>
+        <target state="translated">Cần làm</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

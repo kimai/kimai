@@ -18,7 +18,6 @@ use App\Repository\ActivityRateRepository;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityQuery;
-use App\User\TeamService;
 use App\Utils\SearchTerm;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -28,7 +27,7 @@ use OpenApi\Attributes as OA;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\GoneHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -47,6 +46,32 @@ final class ActivityController extends BaseApiController
         private readonly ActivityRateRepository $activityRateRepository,
         private readonly ActivityService $activityService
     ) {
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function getEntitySerializationGroups(Activity $activity): array
+    {
+        $groups = self::GROUPS_ENTITY;
+
+        if ($this->isGranted('budget', $activity)) {
+            $groups = array_merge($groups, ['Budget_Money']);
+        }
+
+        if ($this->isGranted('time', $activity)) {
+            $groups = array_merge($groups, ['Budget_Time']);
+        }
+
+        return $groups;
+    }
+
+    private function renderEntity(Activity $activity): Response
+    {
+        $view = new View($activity, Response::HTTP_OK);
+        $view->getContext()->setGroups($this->getEntitySerializationGroups($activity));
+
+        return $this->viewHandler->handle($view);
     }
 
     /**
@@ -112,10 +137,7 @@ final class ActivityController extends BaseApiController
     #[IsGranted('view', 'activity')]
     public function getAction(Activity $activity): Response
     {
-        $view = new View($activity, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($activity);
     }
 
     /**
@@ -137,21 +159,15 @@ final class ActivityController extends BaseApiController
             'include_time' => $this->isGranted('time', $activity),
         ]);
 
-        $form->submit($request->request->all());
+        $form->submit($request->request->all(), false);
 
-        if ($form->isValid()) {
-            $this->activityService->saveActivity($activity);
-
-            $view = new View($activity, 200);
-            $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-            return $this->viewHandler->handle($view);
+        if (false === $form->isValid()) {
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
-        $view = new View($form);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+        $this->activityService->saveActivity($activity);
 
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($activity);
     }
 
     /**
@@ -175,18 +191,12 @@ final class ActivityController extends BaseApiController
         $form->submit($request->request->all(), false);
 
         if (false === $form->isValid()) {
-            $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-            return $this->viewHandler->handle($view);
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
         $this->activityService->saveActivity($activity);
 
-        $view = new View($activity, Response::HTTP_OK);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($activity);
     }
 
     /**
@@ -232,10 +242,7 @@ final class ActivityController extends BaseApiController
 
         $this->activityService->saveActivity($activity);
 
-        $view = new View($activity, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($activity);
     }
 
     /**
@@ -297,10 +304,7 @@ final class ActivityController extends BaseApiController
         $form->submit($request->request->all(), false);
 
         if (false === $form->isValid()) {
-            $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_RATE);
-
-            return $this->viewHandler->handle($view);
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
         $this->activityRateRepository->saveRate($rate);
@@ -313,36 +317,16 @@ final class ActivityController extends BaseApiController
 
     /**
      * Create team for activity
+     * @deprecated remove me
+     * FIXME 3.0 remove me
      *
-     * If a team with the activity's name already exists, it is reused.
-     * The current user is added as teamlead (if not already), and the activity is bound to the team.
+     * REMOVED: this endpoint was removed, use `POST /api/teams/` instead.
      */
-    #[IsGranted('create_team')]
-    #[IsGranted('permissions', 'activity')]
-    #[OA\Post(description: 'Creates (or reuses) a default team named after the activity, makes the current user a teamlead, and binds the activity to that team. Calling this multiple times is safe and will not create duplicate teams or bindings.', responses: [new OA\Response(response: 200, description: 'Returns the team', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
+    #[OA\Post(description: 'REMOVED: this endpoint was removed, use `POST /api/teams/` instead.', responses: [new OA\Response(response: 410, description: 'This endpoint was removed')], deprecated: true)]
     #[OA\Parameter(name: 'id', description: 'The activity to create a default team for', in: 'path', required: true)]
     #[Route(path: '/{id}/team', name: 'post_activity_team', requirements: ['id' => '\d+'], methods: ['POST'])]
-    public function postDefaultTeamAction(Activity $activity, TeamService $teamService): Response
+    public function postDefaultTeamAction(): Response
     {
-        $name = $activity->getName();
-        if ($name === null || $name === '') {
-            throw new BadRequestHttpException('Cannot create default team for activity with empty name: ' . $activity->getId());
-        }
-
-        $team = $teamService->findTeamByName($name);
-
-        if ($team === null) {
-            $team = $teamService->createNewTeam($name);
-        }
-
-        $team->addTeamlead($this->getUser());
-        $team->addActivity($activity);
-
-        $teamService->saveTeam($team);
-
-        $view = new View($team, Response::HTTP_OK);
-        $view->getContext()->setGroups(TeamController::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        throw new GoneHttpException('This endpoint was removed, use "POST /api/teams/" instead.');
     }
 }

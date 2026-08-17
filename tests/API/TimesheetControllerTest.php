@@ -2162,6 +2162,67 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertNotContains($project->getId(), array_column($result, 'id'));
     }
 
+    /**
+     * Regression test for GHSA-c6j4-35fc-x3hw.
+     *
+     * The collection endpoint has to apply the same activity team boundary as the
+     * voter, which protects the single entity endpoint.
+     */
+    public function testGetCollectionHidesForeignActivityTeams(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+        $member = $this->getUserByRole(User::ROLE_USER);
+
+        $ownTeam = new Team('GHSA-c6j4 api own team');
+        $ownTeam->addTeamlead($teamlead);
+        $ownTeam->addUser($member);
+        $em->persist($ownTeam);
+
+        $foreignTeam = new Team('GHSA-c6j4 api foreign team');
+        $foreignTeam->addTeamlead($member);
+        $em->persist($foreignTeam);
+
+        $customer = new Customer('GHSA-c6j4 api customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('GHSA-c6j4 api project');
+        $project->setCustomer($customer);
+        $em->persist($project);
+
+        $restrictedActivity = new Activity();
+        $restrictedActivity->setName('GHSA-c6j4 api restricted activity');
+        $restrictedActivity->setProject($project);
+        $foreignTeam->addActivity($restrictedActivity);
+        $em->persist($restrictedActivity);
+
+        $em->flush();
+
+        $timesheet = $this->persistFinishedTimesheet($member, $project, $restrictedActivity, 'GHSA-c6j4');
+        $timesheetId = $timesheet->getId();
+        self::assertIsInt($timesheetId);
+
+        // the single entity endpoint denies the record ...
+        $this->assertApiAccessDenied($client, '/api/timesheets/' . $timesheetId, 'Access denied.');
+
+        // ... so the collection must not return it either
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', ['user' => $member->getId()]);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+
+        foreach ($result as $row) {
+            self::assertIsArray($row);
+            self::assertNotEquals($timesheetId, $row['id']);
+        }
+    }
+
     private function persistFinishedTimesheet(User $owner, Project $project, Activity $activity, string $description): Timesheet
     {
         $timesheet = new Timesheet();

@@ -102,6 +102,74 @@
         <source>tasks.my</source>
         <target state="translated">Tác vụ của tôi</target>
       </trans-unit>
+      <trans-unit id="9rA4ixj" resname="board.only_mine" xml:space="preserve" approved="no">
+        <source>board.only_mine</source>
+        <target state="translated">Chỉ công việc của tôi</target>
+      </trans-unit>
+      <trans-unit id="lu5uNlv" resname="board.filter" xml:space="preserve" approved="no">
+        <source>board.filter</source>
+        <target state="translated">Lọc công việc</target>
+      </trans-unit>
+      <trans-unit id="ad2nQdr" resname="board.columns_invalid" xml:space="preserve" approved="no">
+        <source>board.columns_invalid</source>
+        <target state="translated">Cấu hình cột không hợp lệ.</target>
+      </trans-unit>
+      <trans-unit id="9.F1FZS" resname="board.add_column" xml:space="preserve" approved="no">
+        <source>board.add_column</source>
+        <target state="translated">Thêm cột</target>
+      </trans-unit>
+      <trans-unit id="SPiQMlQ" resname="board.column.limit" xml:space="preserve" approved="no">
+        <source>board.column.limit</source>
+        <target state="translated">Giới hạn WIP</target>
+      </trans-unit>
+      <trans-unit id="hhrw1nb" resname="board.columns" xml:space="preserve" approved="no">
+        <source>board.columns</source>
+        <target state="translated">Cột</target>
+      </trans-unit>
+      <trans-unit id="wkzeXtZ" resname="board.move_to" xml:space="preserve" approved="no">
+        <source>board.move_to</source>
+        <target state="translated">Chuyển đến</target>
+      </trans-unit>
+      <trans-unit id="e3APxiK" resname="board.remove_task_confirm" xml:space="preserve" approved="no">
+        <source>board.remove_task_confirm</source>
+        <target state="translated">Xóa công việc này khỏi bảng?</target>
+      </trans-unit>
+      <trans-unit id="TuoG.8m" resname="board.remove_task" xml:space="preserve" approved="no">
+        <source>board.remove_task</source>
+        <target state="translated">Xoá khỏi bảng</target>
+      </trans-unit>
+      <trans-unit id="_H1KEu_" resname="board.unassign_user" xml:space="preserve" approved="no">
+        <source>board.unassign_user</source>
+        <target state="translated">Xóa người được phân công khỏi công việc này?</target>
+      </trans-unit>
+      <trans-unit id="Hj3qdDA" resname="board.delete_confirm" xml:space="preserve" approved="no">
+        <source>board.delete_confirm</source>
+        <target state="translated">Xoá bảng này?</target>
+      </trans-unit>
+      <trans-unit id="K.9A2XH" resname="board.close_task" xml:space="preserve" approved="no">
+        <source>board.close_task</source>
+        <target state="translated">Hoàn thành công việc này?</target>
+      </trans-unit>
+      <trans-unit id="7lJ6pzI" resname="board.limit_reached" xml:space="preserve" approved="no">
+        <source>board.limit_reached</source>
+        <target state="translated">Bạn đã đạt giới hạn %limit% bảng riêng tư.</target>
+      </trans-unit>
+      <trans-unit id="Wq09TUJ" resname="board.empty_state" xml:space="preserve" approved="no">
+        <source>board.empty_state</source>
+        <target state="translated">Bạn chưa có bảng nào. Tạo một bảng để bắt đầu.</target>
+      </trans-unit>
+      <trans-unit id="TRpwk3n" resname="board.private" xml:space="preserve" approved="no">
+        <source>board.private</source>
+        <target state="translated">Bảng riêng tư</target>
+      </trans-unit>
+      <trans-unit id="aF2ajw." resname="boards" xml:space="preserve" approved="no">
+        <source>boards</source>
+        <target state="translated">Bảng</target>
+      </trans-unit>
+      <trans-unit id="hZFps4G" resname="board" xml:space="preserve" approved="no">
+        <source>board</source>
+        <target state="translated">Bảng</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

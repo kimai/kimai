@@ -62,6 +62,7 @@ class UserCreateType extends UserEditType
                 'multiple' => true,
                 'expanded' => false,
                 'required' => false,
+                'restrict_to_assignable' => true,
             ]);
         }
 

@@ -1238,6 +1238,18 @@
         <source>status.closed</source>
         <target>Completed</target>
       </trans-unit>
+      <trans-unit id="TTL.5NF" resname="status.todo">
+        <source>status.todo</source>
+        <target>To Do</target>
+      </trans-unit>
+      <trans-unit id="j_0FPm3" resname="status.waiting">
+        <source>status.waiting</source>
+        <target>Waiting</target>
+      </trans-unit>
+      <trans-unit id="QdfOAGZ" resname="status.done">
+        <source>status.done</source>
+        <target>Done</target>
+      </trans-unit>
       <trans-unit id="opDmYAa" resname="status.approved">
         <source>status.approved</source>
         <target>Approved</target>
@@ -1750,6 +1762,10 @@
         <source>api_token_hidden</source>
         <target>This is the only time this key will ever be displayed! So keep it safe and make sure you've copied it down before closing this window.</target>
       </trans-unit>
+        <trans-unit id="G8ZoGoA" resname="api_token_qr_hint">
+            <source>api_token_qr_hint</source>
+            <target>You can scan this QR code with a mobile app, to configure server URL and token in one step. Do not share this image: it contains your API token.</target>
+        </trans-unit>
       <trans-unit id="2qbRs28" resname="hours_per_day">
         <source>hours_per_day</source>
         <target>Hours per day</target>
@@ -1969,6 +1985,10 @@
       <trans-unit id="PciSBv9" resname="address_row">
         <source>address_row</source>
         <target>Line %row%</target>
+      </trans-unit>
+      <trans-unit id="nlJ2pW2" resname="invoice_email">
+        <source>invoice_email</source>
+        <target>Billing email</target>
       </trans-unit>
       <trans-unit id="_Ep8Ogx" resname="buyerReference">
         <source>buyerReference</source>

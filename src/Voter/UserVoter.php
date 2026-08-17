@@ -106,6 +106,12 @@ final class UserVoter extends Voter
             return $user->isSuperAdmin();
         }
 
+        // a user must not edit the roles of someone who holds a role they are not allowed to assign
+        // themselves - otherwise a lower-privileged user could strip a higher role from the subject
+        if ($attribute === 'roles' && !$this->canManageAllRolesOf($subject, $user)) {
+            return false;
+        }
+
         $permission = $attribute;
 
         if ($subject->getId() === $user->getId()) {
@@ -117,5 +123,22 @@ final class UserVoter extends Voter
         }
 
         return $this->permissionManager->checkUserAccess($subject, $user, false);
+    }
+
+    /**
+     * Whether $user is allowed to assign every role the $subject currently holds.
+     *
+     * Uses the same role hierarchy as the assignable roles offered by
+     * {@see \App\Form\Type\UserRoleType} via {@see User::canAssignRole()}.
+     */
+    private function canManageAllRolesOf(User $subject, User $user): bool
+    {
+        foreach ($subject->getRoles() as $role) {
+            if (!$user->canAssignRole($role)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

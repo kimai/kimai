@@ -23,6 +23,7 @@ use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Form\ActivityEditForm;
 use App\Form\ActivityRateForm;
 use App\Form\ActivityTeamPermissionForm;
+use App\Form\TeamEditForm;
 use App\Form\Toolbar\ActivityToolbarForm;
 use App\Form\Type\ActivityType;
 use App\Repository\ActivityRateRepository;
@@ -31,6 +32,7 @@ use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\TeamQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\TeamRepository;
+use App\User\TeamService;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
 use Exception;
@@ -122,7 +124,6 @@ final class ActivityController extends AbstractController
         $stats = null;
         $rates = [];
         $teams = null;
-        $defaultTeam = null;
         $now = $this->getDateTimeFactory()->createDateTime();
 
         $exportUrl = null;
@@ -142,9 +143,6 @@ final class ActivityController extends AbstractController
         }
 
         if ($this->isGranted('edit', $activity)) {
-            if ($this->isGranted('create_team')) {
-                $defaultTeam = $teamRepository->findOneBy(['name' => $activity->getName()]);
-            }
             $rates = $rateRepository->getRatesForActivity($activity);
         }
 
@@ -173,7 +171,6 @@ final class ActivityController extends AbstractController
             'activity' => $activity,
             'stats' => $stats,
             'rates' => $rates,
-            'team' => $defaultTeam,
             'teams' => $teams,
             'now' => $now,
             'boxes' => $boxes,
@@ -223,7 +220,7 @@ final class ActivityController extends AbstractController
             }
         }
 
-        return $this->render('activity/rates.html.twig', [
+        return $this->render('activity/form.html.twig', [
             'page_setup' => $this->createPageSetup(),
             'activity' => $activity,
             'form' => $form->createView()
@@ -297,6 +294,40 @@ final class ActivityController extends AbstractController
         }
 
         return $this->render('activity/permissions.html.twig', [
+            'page_setup' => $this->createPageSetup(),
+            'activity' => $activity,
+            'form' => $form->createView()
+        ]);
+    }
+
+    #[Route(path: '/{id}/team-create', name: 'activity_team_create', methods: ['GET', 'POST'])]
+    #[IsGranted('create_team')]
+    #[IsGranted('permissions', 'activity')]
+    public function createTeam(Activity $activity, Request $request, TeamService $teamService): Response
+    {
+        $team = $teamService->createNewTeam($activity->getName() ?? '');
+        $team->addTeamlead($this->getUser());
+        $team->addActivity($activity);
+
+        $form = $this->createForm(TeamEditForm::class, $team, [
+            'action' => $this->generateUrl('activity_team_create', ['id' => $activity->getId()]),
+            'method' => 'POST',
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $teamService->saveTeam($team);
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRouteAfterCreate('activity_details', ['id' => $activity->getId()]);
+            } catch (\Exception $ex) {
+                $this->flashUpdateException($ex);
+            }
+        }
+
+        return $this->render('activity/form.html.twig', [
             'page_setup' => $this->createPageSetup(),
             'activity' => $activity,
             'form' => $form->createView()

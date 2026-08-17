@@ -462,8 +462,13 @@ parameters:
             path: src/Command/TranslationCommand.php
 
         -
-            message: "#^Parameter \\#1 \\$source of method DOMDocument\\:\\:loadXML\\(\\) expects string, string\\|false given\\.$#"
+            message: "#^Parameter \\#1 \\$source of method DOMDocument\\:\\:loadXML\\(\\) expects non-empty-string, string\\|false given\\.$#"
             count: 5
+            path: src/Command/TranslationCommand.php
+
+        -
+            message: "#^Parameter \\#1 \\$filename of method DOMDocument\\:\\:load\\(\\) expects non-empty-string, string given\\.$#"
+            count: 2
             path: src/Command/TranslationCommand.php
 
         -
@@ -657,11 +662,6 @@ parameters:
             path: src/Controller/DoctorController.php
 
         -
-            message: "#^Parameter \\#2 \\$subject of function preg_match_all expects string, string\\|false given\\.$#"
-            count: 1
-            path: src/Controller/DoctorController.php
-
-        -
             message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
             count: 2
             path: src/Controller/ExportController.php
@@ -714,16 +714,6 @@ parameters:
         -
             message: "#^Cannot call method format\\(\\) on DateTime\\|null\\.$#"
             count: 1
-            path: src/Controller/QuickEntryController.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Activity\\|null\\.$#"
-            count: 3
-            path: src/Controller/QuickEntryController.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 3
             path: src/Controller/QuickEntryController.php
 
         -
@@ -1430,11 +1420,6 @@ parameters:
             message: "#^Parameter \\#1 \\$value \\(App\\\\Event\\\\UserPreferenceDisplayEvent\\) of method App\\\\Export\\\\Spreadsheet\\\\Extractor\\\\UserPreferenceExtractor\\:\\:extract\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method App\\\\Export\\\\Spreadsheet\\\\Extractor\\\\ExtractorInterface\\:\\:extract\\(\\)$#"
             count: 1
             path: src/Export/Spreadsheet/Extractor/UserPreferenceExtractor.php
-
-        -
-            message: "#^Method App\\\\Export\\\\Spreadsheet\\\\SpreadsheetExporter\\:\\:export\\(\\) has parameter \\$entries with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Spreadsheet/SpreadsheetExporter.php
 
         -
             message: "#^Method App\\\\Export\\\\Spreadsheet\\\\Writer\\\\BinaryFileResponseWriter\\:\\:getFileResponse\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
@@ -2162,11 +2147,6 @@ parameters:
             path: src/Ldap/LdapManager.php
 
         -
-            message: "#^Method App\\\\Ldap\\\\LdapManager\\:\\:hydrate\\(\\) has parameter \\$ldapEntry with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Ldap/LdapManager.php
-
-        -
             message: "#^Method App\\\\Ldap\\\\LdapManager\\:\\:hydrateRoles\\(\\) has parameter \\$entries with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Ldap/LdapManager.php
@@ -2188,11 +2168,6 @@ parameters:
 
         -
             message: "#^PHPDoc tag @var for variable \\$attr has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Ldap/LdapManager.php
-
-        -
-            message: "#^Parameter \\#1 \\$baseDn of method App\\\\Ldap\\\\LdapDriver\\:\\:search\\(\\) expects string, bool\\|float\\|int\\|string given\\.$#"
             count: 1
             path: src/Ldap/LdapManager.php
 
@@ -2877,11 +2852,6 @@ parameters:
             path: src/Utils/LocaleFormatter.php
 
         -
-            message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:formatDuration\\(\\) should return string but returns string\\|null\\.$#"
-            count: 1
-            path: src/Utils/LocaleFormatter.php
-
-        -
             message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:money\\(\\) should return string but returns string\\|false\\.$#"
             count: 2
             path: src/Utils/LocaleFormatter.php
@@ -2992,7 +2962,7 @@ parameters:
             path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
 
         -
-            message: "#^Parameter \\#4 \\$duration of method App\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidator\\:\\:checkBudgets\\(\\) expects int, float\\|int\\|null given\\.$#"
+            message: "#^Parameter \\#4 \\$durationDelta of method App\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidator\\:\\:checkBudgets\\(\\) expects int, float\\|int\\|null given\\.$#"
             count: 3
             path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
 
@@ -3005,11 +2975,6 @@ parameters:
             message: "#^Cannot call method getTimezone\\(\\) on DateTime\\|null\\.$#"
             count: 1
             path: src/Validator/Constraints/TimesheetFutureTimesValidator.php
-
-        -
-            message: "#^Parameter \\#2 \\$value of method Symfony\\\\Component\\\\Validator\\\\Violation\\\\ConstraintViolationBuilderInterface\\:\\:setParameter\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetLongRunningValidator.php
 
         -
             message: "#^Cannot call method isVisible\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"

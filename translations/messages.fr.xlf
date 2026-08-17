@@ -2094,6 +2094,26 @@
         <source>reopen</source>
         <target state="translated">Réouvrir</target>
       </trans-unit>
+      <trans-unit id="nlJ2pW2" resname="invoice_email" xml:space="preserve">
+        <source>invoice_email</source>
+        <target state="translated">E-mail de facturation</target>
+      </trans-unit>
+      <trans-unit id="TTL.5NF" resname="status.todo" xml:space="preserve">
+        <source>status.todo</source>
+        <target state="translated">A faire</target>
+      </trans-unit>
+      <trans-unit id="j_0FPm3" resname="status.waiting" xml:space="preserve">
+        <source>status.waiting</source>
+        <target state="translated">En attente</target>
+      </trans-unit>
+      <trans-unit id="QdfOAGZ" resname="status.done" xml:space="preserve">
+        <source>status.done</source>
+        <target state="translated">Fait</target>
+      </trans-unit>
+      <trans-unit id="G8ZoGoA" resname="api_token_qr_hint" xml:space="preserve">
+        <source>api_token_qr_hint</source>
+        <target state="translated">Vous pouvez scanner ce QR code avec une application mobile, pour configurer l'URL du serveur et le jeton en une seule étape. Ne partagez pas cette image : elle contient votre jeton d'API.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

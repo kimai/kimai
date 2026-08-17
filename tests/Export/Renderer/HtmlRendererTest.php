@@ -10,10 +10,10 @@
 namespace App\Tests\Export\Renderer;
 
 use App\Activity\ActivityStatisticService;
-use App\Entity\User;
 use App\Export\Base\HtmlRenderer;
 use App\Export\Base\RendererTrait;
 use App\Project\ProjectStatisticService;
+use App\Tests\TwigAppVariableTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -24,6 +24,8 @@ use Twig\Environment;
 #[Group('integration')]
 class HtmlRendererTest extends AbstractRendererTestCase
 {
+    use TwigAppVariableTrait;
+
     public function testConfiguration(): void
     {
         $sut = new HtmlRenderer(
@@ -45,12 +47,7 @@ class HtmlRendererTest extends AbstractRendererTestCase
         /** @var Environment $twig */
         $twig = self::getContainer()->get('twig');
 
-        $user = $this->createMock(User::class);
-        $user->method('getId')->willReturn(1);
-        $user->method('getName')->willReturn('Testing');
-        $user->method('isAdmin')->willReturn(false);
-        $user->method('isSuperAdmin')->willReturn(false);
-        $user->method('getTimezone')->willReturn('America/Edmonton');
+        $this->prepareTwigAppVariable();
 
         $sut = new HtmlRenderer(
             $twig,

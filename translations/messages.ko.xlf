@@ -168,7 +168,7 @@
       </trans-unit>
       <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="needs-translation">예상 시간</target>
+        <target state="translated">시간당 할당량</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity">
         <source>activity</source>
@@ -1489,6 +1489,22 @@
       <trans-unit id="5NugIxO" resname="includeWithBudget" xml:space="preserve">
         <source>includeWithBudget</source>
         <target state="translated">예산으로 항목 표시</target>
+      </trans-unit>
+      <trans-unit id="6Hip2aF" resname="created_at" xml:space="preserve">
+        <source>created_at</source>
+        <target state="translated">만든 곳:</target>
+      </trans-unit>
+      <trans-unit id="QG7.sen" resname="created" xml:space="preserve">
+        <source>Created</source>
+        <target state="translated">만들어짐</target>
+      </trans-unit>
+      <trans-unit id="wv3n.FT" resname="dashboard.edit_mode" xml:space="preserve">
+        <source>dashboard.edit_mode</source>
+        <target state="translated">드래그 앤 드롭을 사용하여 위젯을 배열할 수 있습니다. 위젯을 추가하면 변경 사항을 자동 저장합니다.</target>
+      </trans-unit>
+      <trans-unit id="erN3h3b" resname="replace" xml:space="preserve">
+        <source>replace</source>
+        <target state="translated">바꾸기</target>
       </trans-unit>
     </body>
   </file>

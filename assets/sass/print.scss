@@ -6,7 +6,7 @@
  */
 
 @media print{
-    .sf-toolbar, .control-sidebar {
+    .sf-toolbar, .control-sidebar, .navbar-vertical {
         display: none !important;
     }
     .col-print-12{

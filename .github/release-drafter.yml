@@ -17,7 +17,6 @@ categories:
       labels:
           - "feature request"
           - "enhancement"
-          - "technical debt"
           - "translation"
           - "release"
     - title: "Bugfixes"
@@ -26,6 +25,11 @@ categories:
           - "fix"
           - "bugfix"
           - "bug"
+    - title: "Maintenance"
+      semver-increment: minor
+      labels:
+          - "maintenance"
+          - "infrastructure"
     - title: "🚨 Security"
       semver-increment: minor
       labels:

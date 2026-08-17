@@ -23,5 +23,5 @@ jobs:
               uses: xalvarez/prevent-file-change-action@dbc67c205c9ed02aa39c497b422c24f364c3e8dd # v3.0.1
               with:
                   githubToken: ${{ secrets.GITHUB_TOKEN }}
-                  pattern: .*\.lock$|^\.github\/.*$
+                  pattern: .*\.lock$|^\.github\/.*$|^pnpm-lock.yaml$
                   trustedAuthors: kevinpapst

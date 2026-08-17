@@ -12,7 +12,6 @@ namespace App\Tests\Repository;
 use App\Tests\KernelTestTrait;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -22,7 +21,7 @@ abstract class AbstractRepositoryTestCase extends KernelTestCase
 {
     use KernelTestTrait;
 
-    private ?ObjectManager $entityManager = null;
+    private ?EntityManagerInterface $entityManager = null;
 
     protected function setUp(): void
     {
@@ -32,11 +31,17 @@ abstract class AbstractRepositoryTestCase extends KernelTestCase
         /** @var Registry $doctrine */
         $doctrine = $kernel->getContainer()->get('doctrine');
 
-        $this->entityManager = $doctrine->getManager();
+        $manager = $doctrine->getManager();
+        self::assertInstanceOf(EntityManagerInterface::class, $manager);
+        $this->entityManager = $manager;
     }
 
-    protected function getEntityManager(): ObjectManager
+    protected function getEntityManager(): EntityManagerInterface
     {
+        if ($this->entityManager === null) {
+            throw new \RuntimeException('setup() needs to be called first');
+        }
+
         return $this->entityManager;
     }
 
@@ -44,7 +49,7 @@ abstract class AbstractRepositoryTestCase extends KernelTestCase
     {
         parent::tearDown();
 
-        if ($this->entityManager instanceof EntityManagerInterface) {
+        if ($this->entityManager !== null) {
             $this->entityManager->close();
         }
         $this->entityManager = null; // avoid memory leaks

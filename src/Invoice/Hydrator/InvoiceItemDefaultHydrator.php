@@ -15,7 +15,7 @@ use App\Invoice\InvoiceModel;
 
 final class InvoiceItemDefaultHydrator implements InvoiceItemHydrator
 {
-    private const DATE_PROCESS_FORMAT = 'Y-m-d h:i:s';
+    private const DATE_PROCESS_FORMAT = 'Y-m-d H:i:s';
 
     private InvoiceModel $model;
 

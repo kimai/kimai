@@ -221,6 +221,10 @@ final class TimesheetTeamController extends TimesheetAbstractController
             return true;
         }
 
+        if ($formName === 'create') {
+            return $this->isGranted('create_other_timesheet');
+        }
+
         return $this->isGranted('edit_other_timesheet');
     }
 

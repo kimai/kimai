@@ -478,7 +478,9 @@ class LdapManagerTest extends TestCase
         $config = new LdapConfiguration($systemConfig);
 
         $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create([]));
-        $user = $sut->hydrate(['dn' => 'blub', 'foo' => ['blub']]);
+        $user = new User();
+        $user->setEnabled(true);
+        $sut->hydrateUser($user, ['dn' => 'blub', 'foo' => ['blub']]);
         self::assertInstanceOf(User::class, $user);
         self::assertEquals('blub', $user->getUserIdentifier());
         self::assertEquals('blub', $user->getUserIdentifier());
@@ -506,7 +508,9 @@ class LdapManagerTest extends TestCase
         $config = new LdapConfiguration($systemConfig);
 
         $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create([]));
-        $user = $sut->hydrate(['dn' => 'blub']);
+        $user = new User();
+        $user->setEnabled(true);
+        $sut->hydrateUser($user, ['dn' => 'blub']);
         self::assertInstanceOf(User::class, $user);
     }
 
@@ -544,7 +548,9 @@ class LdapManagerTest extends TestCase
         ];
 
         $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create([]));
-        $user = $sut->hydrate($ldapEntry);
+        $user = new User();
+        $user->setEnabled(true);
+        $sut->hydrateUser($user, $ldapEntry);
 
         self::assertInstanceOf(User::class, $user);
         self::assertEquals('Karl-Heinz', $user->getUserIdentifier());
@@ -579,7 +585,9 @@ class LdapManagerTest extends TestCase
         ];
 
         $sut = new LdapManager($this->createMock(LdapDriver::class), $config, (new RoleServiceFactory($this))->create([]));
-        $user = $sut->hydrate($ldapEntry);
+        $user = new User();
+        $user->setEnabled(true);
+        $sut->hydrateUser($user, $ldapEntry);
     }
 
     public function testHydrateUser(): void

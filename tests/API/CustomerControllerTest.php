@@ -149,6 +149,39 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertApiResponseTypeStructure('CustomerCollection', $result[0]);
     }
 
+    public function testGetCollectionFull(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/api/customers?full=1');
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+        self::assertEquals(1, \count($result));
+        self::assertIsArray($result[0]);
+        self::assertApiResponseTypeStructure('CustomerCollectionFull', $result[0]);
+    }
+
+    public function testGetCollectionFullNeedsPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertAccessIsGranted($client, '/api/customers?full=1');
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+        self::assertEquals(1, \count($result));
+        self::assertIsArray($result[0]);
+        // make sure that regular user cannot access detail fields
+        self::assertApiResponseTypeStructure('CustomerCollection', $result[0]);
+    }
+
     public function testGetCollectionWithQuery(): void
     {
         $query = ['order' => 'ASC', 'orderBy' => 'name', 'visible' => 3, 'term' => 'test'];
@@ -261,6 +294,8 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertEquals('test@example.com', $result['email']);
         self::assertNull($result['homepage']);
         self::assertEquals('Europe/Berlin', $result['timezone']);
+        self::assertEquals('en', $result['language']);
+        self::assertNull($result['invoiceEmail']);
         self::assertNull($result['buyerReference']);
         self::assertNull($result['color']);
         self::assertEquals('#5319e7', $result['color-safe']);
@@ -292,6 +327,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
             'postCode' => '12345',
             'city' => 'Acme Town',
             'country' => 'DE',
+            'language' => 'de',
             'currency' => 'EUR',
             'phone' => '666667787778999909087',
             'fax' => '0987654321',
@@ -300,6 +336,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
             'homepage' => 'https://www.example.com/',
             'timezone' => 'Europe/Berlin',
             'invoiceText' => 'Some random text, pay fast please!',
+            'invoiceEmail' => 'invoice@example.com',
             'buyerReference' => 'REF-0123456789',
             'color' => '#ff0000',
             'visible' => true,
@@ -336,6 +373,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertEquals('12345', $result['postCode']);
         self::assertEquals('Acme Town', $result['city']);
         self::assertEquals('DE', $result['country']);
+        self::assertEquals('de', $result['language']);
         self::assertEquals('EUR', $result['currency']);
         self::assertEquals('666667787778999909087', $result['phone']);
         self::assertEquals('0987654321', $result['fax']);
@@ -343,6 +381,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertEquals('admin@example.com', $result['email']);
         self::assertEquals('https://www.example.com/', $result['homepage']);
         self::assertEquals('Europe/Berlin', $result['timezone']);
+        self::assertEquals('invoice@example.com', $result['invoiceEmail']);
         self::assertEquals('REF-0123456789', $result['buyerReference']);
         self::assertEquals('#ff0000', $result['color']);
         self::assertTrue($result['visible']);
@@ -354,9 +393,6 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'country' => 'DE',
-            'currency' => 'EUR',
-            'timezone' => 'Europe/Berlin',
         ];
         $this->request($client, '/api/customers', 'POST', [], json_encode($data));
         self::assertTrue($client->getResponse()->isSuccessful());
@@ -368,6 +404,10 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
         self::assertNotEmpty($result['id']);
+        self::assertEquals('0003', $result['number']);
+        self::assertEquals('foo', $result['name']);
+        self::assertTrue($result['billable']);
+        self::assertTrue($result['visible']);
     }
 
     public function testPostActionWithInvalidUser(): void
@@ -875,49 +915,35 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertNull($this->getEntityManager()->getRepository(CustomerComment::class)->find($commentId));
     }
 
-    public function testPostDefaultTeamAction(): void
+    /**
+     * @group legacy
+     */
+    public function testPostDefaultTeamActionWasRemoved(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $this->request($client, '/api/customers/1/team', 'POST');
-        self::assertTrue($client->getResponse()->isSuccessful());
-
-        $content = $client->getResponse()->getContent();
-        self::assertIsString($content);
-        $result = json_decode($content, true);
-        self::assertIsArray($result);
-        self::assertApiResponseTypeStructure('TeamEntity', $result);
-        self::assertIsNumeric($result['id']);
-        $teamId = $result['id'];
-
-        // verify customer is bound and current user is teamlead
-        self::assertIsArray($result['members']);
-        self::assertCount(1, $result['members']);
-        self::assertIsArray($result['members'][0]);
-        self::assertArrayHasKey('teamlead', $result['members'][0]);
-        self::assertTrue($result['members'][0]['teamlead']);
-
-        // idempotent: calling again returns the same team without duplicate bindings or members
-        $this->request($client, '/api/customers/1/team', 'POST');
-        self::assertTrue($client->getResponse()->isSuccessful());
-
-        $content = $client->getResponse()->getContent();
-        self::assertIsString($content);
-        $result = json_decode($content, true);
-        self::assertIsArray($result);
-        self::assertSame($teamId, $result['id']);
-        self::assertIsArray($result['members']);
-        self::assertCount(1, $result['members']);
+        // the endpoint was removed: it fails for an existing as well as for an unknown customer
+        foreach (['/api/customers/1/team', '/api/customers/' . PHP_INT_MAX . '/team'] as $url) {
+            $this->request($client, $url, 'POST');
+            $this->assertApiException($client->getResponse(), [
+                'code' => Response::HTTP_GONE,
+                'message' => 'This endpoint was removed, use "POST /api/teams/" instead.'
+            ]);
+        }
     }
 
-    public function testPostDefaultTeamActionIsSecure(): void
+    /**
+     * @group legacy
+     */
+    public function testPostDefaultTeamActionWasRemovedForUserWithoutPermission(): void
     {
-        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/api/customers/1/team', 'POST');
-    }
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
-    public function testPostDefaultTeamActionNotFound(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertEntityNotFoundForPost($client, '/api/customers/' . PHP_INT_MAX . '/team');
+        // the permission checks were removed as well, so every caller learns that the endpoint is gone
+        $this->request($client, '/api/customers/1/team', 'POST');
+        $this->assertApiException($client->getResponse(), [
+            'code' => Response::HTTP_GONE,
+            'message' => 'This endpoint was removed, use "POST /api/teams/" instead.'
+        ]);
     }
 }

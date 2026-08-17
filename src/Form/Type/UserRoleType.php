@@ -31,7 +31,13 @@ final class UserRoleType extends AbstractType
         $resolver->setDefaults([
             'label' => 'roles',
             'include_default' => false,
+            // when true, the choices are limited to the roles the current user is allowed to
+            // assign - only meaningful when this field is used to assign roles (create/edit),
+            // not when it is used to filter the user list (e.g. in the toolbar)
+            'restrict_to_assignable' => false,
         ]);
+
+        $resolver->setAllowedTypes('restrict_to_assignable', 'bool');
 
         $resolver->setDefault('choices', function (Options $options): array {
             $roles = [];
@@ -41,6 +47,16 @@ final class UserRoleType extends AbstractType
 
             if ($options['include_default'] !== true && isset($roles[User::DEFAULT_ROLE])) {
                 unset($roles[User::DEFAULT_ROLE]);
+            }
+
+            $user = $options['user'];
+            if ($options['restrict_to_assignable'] === true && $user instanceof User) {
+                // only offer the roles the current user is allowed to assign
+                foreach (array_keys($roles) as $roleName) {
+                    if (!$user->canAssignRole($roleName)) {
+                        unset($roles[$roleName]);
+                    }
+                }
             }
 
             return $roles;

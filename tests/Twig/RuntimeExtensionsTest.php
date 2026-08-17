@@ -37,6 +37,7 @@ class RuntimeExtensionsTest extends TestCase
     public function testGetFunctions(): void
     {
         $expected = [
+            'theme_event',
             'trigger',
             'actions',
             'get_title',

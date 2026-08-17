@@ -341,6 +341,11 @@ class ActivityControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('ActivityEntity', $result);
         self::assertNotEmpty($result['id']);
+        self::assertTrue($result['billable']);
+        self::assertTrue($result['visible']);
+        self::assertEquals('0003', $result['number']);
+        self::assertNull($result['color']);
+        self::assertNull($result['budgetType']);
     }
 
     public function testPostActionWithInvalidUser(): void
@@ -560,48 +565,35 @@ class ActivityControllerTest extends APIControllerBaseTestCase
         ]);
     }
 
-    public function testPostDefaultTeamAction(): void
+    /**
+     * @group legacy
+     */
+    public function testPostDefaultTeamActionWasRemoved(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
 
-        $this->request($client, '/api/activities/1/team', 'POST');
-        self::assertTrue($client->getResponse()->isSuccessful());
-
-        $content = $client->getResponse()->getContent();
-        self::assertIsString($content);
-        $result = json_decode($content, true);
-        self::assertIsArray($result);
-        self::assertApiResponseTypeStructure('TeamEntity', $result);
-        self::assertIsNumeric($result['id']);
-        $teamId = $result['id'];
-
-        self::assertIsArray($result['members']);
-        self::assertCount(1, $result['members']);
-        self::assertIsArray($result['members'][0]);
-        self::assertArrayHasKey('teamlead', $result['members'][0]);
-        self::assertTrue($result['members'][0]['teamlead']);
-
-        // idempotent
-        $this->request($client, '/api/activities/1/team', 'POST');
-        self::assertTrue($client->getResponse()->isSuccessful());
-
-        $content = $client->getResponse()->getContent();
-        self::assertIsString($content);
-        $result = json_decode($content, true);
-        self::assertIsArray($result);
-        self::assertSame($teamId, $result['id']);
-        self::assertIsArray($result['members']);
-        self::assertCount(1, $result['members']);
+        // the endpoint was removed: it fails for an existing as well as for an unknown activity
+        foreach (['/api/activities/1/team', '/api/activities/' . PHP_INT_MAX . '/team'] as $url) {
+            $this->request($client, $url, 'POST');
+            $this->assertApiException($client->getResponse(), [
+                'code' => Response::HTTP_GONE,
+                'message' => 'This endpoint was removed, use "POST /api/teams/" instead.'
+            ]);
+        }
     }
 
-    public function testPostDefaultTeamActionIsSecure(): void
+    /**
+     * @group legacy
+     */
+    public function testPostDefaultTeamActionWasRemovedForUserWithoutPermission(): void
     {
-        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/api/activities/1/team', 'POST');
-    }
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
-    public function testPostDefaultTeamActionNotFound(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertEntityNotFoundForPost($client, '/api/activities/' . PHP_INT_MAX . '/team');
+        // the permission checks were removed as well, so every caller learns that the endpoint is gone
+        $this->request($client, '/api/activities/1/team', 'POST');
+        $this->assertApiException($client->getResponse(), [
+            'code' => Response::HTTP_GONE,
+            'message' => 'This endpoint was removed, use "POST /api/teams/" instead.'
+        ]);
     }
 }

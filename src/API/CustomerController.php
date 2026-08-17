@@ -20,7 +20,6 @@ use App\Form\API\CustomerRateApiForm;
 use App\Repository\CustomerRateRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\Query\CustomerQuery;
-use App\User\TeamService;
 use App\Utils\SearchTerm;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -30,7 +29,7 @@ use OpenApi\Attributes as OA;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\GoneHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -53,6 +52,32 @@ final class CustomerController extends BaseApiController
     }
 
     /**
+     * @return array<string>
+     */
+    private function getEntitySerializationGroups(Customer $customer): array
+    {
+        $groups = self::GROUPS_ENTITY;
+
+        if ($this->isGranted('budget', $customer)) {
+            $groups = array_merge($groups, ['Budget_Money']);
+        }
+
+        if ($this->isGranted('time', $customer)) {
+            $groups = array_merge($groups, ['Budget_Time']);
+        }
+
+        return $groups;
+    }
+
+    private function renderEntity(Customer $customer): Response
+    {
+        $view = new View($customer, Response::HTTP_OK);
+        $view->getContext()->setGroups($this->getEntitySerializationGroups($customer));
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
      * Fetch customers
      */
     #[OA\Response(response: 200, description: 'Returns a collection of customers', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/CustomerCollection')))]
@@ -61,6 +86,7 @@ final class CustomerController extends BaseApiController
     #[Rest\QueryParam(name: 'order', requirements: 'ASC|DESC', strict: true, nullable: true, description: 'The result order. Allowed values: ASC, DESC (default: ASC)')]
     #[Rest\QueryParam(name: 'orderBy', requirements: 'id|name', strict: true, nullable: true, description: 'The field by which results will be ordered. Allowed values: id, name (default: name)')]
     #[Rest\QueryParam(name: 'term', description: 'Free search term', nullable: true)]
+    #[Rest\QueryParam(name: 'full', requirements: '0|1', strict: true, nullable: true, description: 'Allows to fetch objects with full details (needs `details_customer` permission). Allowed values: 0|1 (default: 0)')]
     public function cgetAction(ParamFetcherInterface $paramFetcher): Response
     {
         /** @var User $user */
@@ -95,6 +121,10 @@ final class CustomerController extends BaseApiController
         $view = new View($data, 200);
         $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
+        if ($paramFetcher->get('full') === '1' && $this->isGranted('details_customer')) {
+            $view->getContext()->addGroup('Customer_Details');
+        }
+
         return $this->viewHandler->handle($view);
     }
 
@@ -106,10 +136,7 @@ final class CustomerController extends BaseApiController
     #[IsGranted('view', 'customer')]
     public function getAction(Customer $customer): Response
     {
-        $view = new View($customer, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($customer);
     }
 
     /**
@@ -131,21 +158,15 @@ final class CustomerController extends BaseApiController
             'include_time' => $this->isGranted('time', $customer),
         ]);
 
-        $form->submit($request->request->all());
+        $form->submit($request->request->all(), false);
 
-        if ($form->isValid()) {
-            $this->customerService->saveCustomer($customer);
-
-            $view = new View($customer, 200);
-            $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-            return $this->viewHandler->handle($view);
+        if (false === $form->isValid()) {
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
-        $view = new View($form);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+        $this->customerService->saveCustomer($customer);
 
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($customer);
     }
 
     /**
@@ -169,18 +190,12 @@ final class CustomerController extends BaseApiController
         $form->submit($request->request->all(), false);
 
         if (false === $form->isValid()) {
-            $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-            return $this->viewHandler->handle($view);
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
         $this->customerService->saveCustomer($customer);
 
-        $view = new View($customer, Response::HTTP_OK);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($customer);
     }
 
     /**
@@ -226,10 +241,7 @@ final class CustomerController extends BaseApiController
 
         $this->customerService->saveCustomer($customer);
 
-        $view = new View($customer, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($customer);
     }
 
     /**
@@ -291,10 +303,7 @@ final class CustomerController extends BaseApiController
         $form->submit($request->request->all(), false);
 
         if (false === $form->isValid()) {
-            $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_RATE);
-
-            return $this->viewHandler->handle($view);
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
         $this->customerRateRepository->saveRate($rate);
@@ -406,36 +415,16 @@ final class CustomerController extends BaseApiController
 
     /**
      * Create team for customer
+     * @deprecated
+     * FIXME 3.0 remove me
      *
-     * If a team with the customer's name already exists, it is reused.
-     * The current user is added as teamlead (if not already), and the customer is bound to the team.
+     * REMOVED: this endpoint was removed, use `POST /api/teams/` instead.
      */
-    #[IsGranted('create_team')]
-    #[IsGranted('permissions', 'customer')]
-    #[OA\Post(description: 'Creates (or reuses) a default team named after the customer, makes the current user a teamlead, and binds the customer to that team. Calling this multiple times is safe and will not create duplicate teams or bindings.', responses: [new OA\Response(response: 200, description: 'Returns the team', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
+    #[OA\Post(description: 'REMOVED: this endpoint was removed, use `POST /api/teams/` instead.', responses: [new OA\Response(response: 410, description: 'This endpoint was removed')], deprecated: true)]
     #[OA\Parameter(name: 'id', description: 'The customer to create a default team for', in: 'path', required: true)]
     #[Route(path: '/{id}/team', name: 'post_customer_team', requirements: ['id' => '\d+'], methods: ['POST'])]
-    public function postDefaultTeamAction(Customer $customer, TeamService $teamService): Response
+    public function postDefaultTeamAction(): Response
     {
-        $name = $customer->getName();
-        if ($name === null || $name === '') {
-            throw new BadRequestHttpException('Cannot create default team for customer with empty name: ' . $customer->getId());
-        }
-
-        $team = $teamService->findTeamByName($name);
-
-        if ($team === null) {
-            $team = $teamService->createNewTeam($name);
-        }
-
-        $team->addTeamlead($this->getUser());
-        $team->addCustomer($customer);
-
-        $teamService->saveTeam($team);
-
-        $view = new View($team, Response::HTTP_OK);
-        $view->getContext()->setGroups(TeamController::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        throw new GoneHttpException('This endpoint was removed, use "POST /api/teams/" instead.');
     }
 }

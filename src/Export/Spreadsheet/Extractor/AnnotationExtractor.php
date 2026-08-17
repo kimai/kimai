@@ -80,6 +80,15 @@ final class AnnotationExtractor implements ExtractorInterface
             if (\array_key_exists('translationDomain', $arguments) && \is_string($arguments['translationDomain'])) {
                 $columns[$name]->setTranslationDomain($arguments['translationDomain']);
             }
+
+            if (\array_key_exists('permissions', $arguments) && \is_array($arguments['permissions'])) {
+                foreach ($arguments['permissions'] as $permission) {
+                    if (!\is_string($permission)) {
+                        throw new ExtractorException(\sprintf('@Expose only supports string "permissions" on class level hierarchy, check %s::class', $value));
+                    }
+                }
+                $columns[$name]->setPermissions($arguments['permissions']);
+            }
         }
 
         foreach ($reflectionClass->getProperties() as $property) {
@@ -108,6 +117,15 @@ final class AnnotationExtractor implements ExtractorInterface
 
                 if (\array_key_exists('translationDomain', $arguments) && \is_string($arguments['translationDomain'])) {
                     $columns[$name]->setTranslationDomain($arguments['translationDomain']);
+                }
+
+                if (\array_key_exists('permissions', $arguments) && \is_array($arguments['permissions'])) {
+                    foreach ($arguments['permissions'] as $permission) {
+                        if (!\is_string($permission)) {
+                            throw new ExtractorException(\sprintf('@Expose only supports string "permissions" on property level hierarchy, check %s::$%s', $value, $property->getName()));
+                        }
+                    }
+                    $columns[$name]->setPermissions($arguments['permissions']);
                 }
             }
         }
@@ -142,6 +160,15 @@ final class AnnotationExtractor implements ExtractorInterface
 
                 if (\array_key_exists('translationDomain', $arguments) && \is_string($arguments['translationDomain'])) {
                     $columns[$name]->setTranslationDomain($arguments['translationDomain']);
+                }
+
+                if (\array_key_exists('permissions', $arguments) && \is_array($arguments['permissions'])) {
+                    foreach ($arguments['permissions'] as $permission) {
+                        if (!\is_string($permission)) {
+                            throw new ExtractorException(\sprintf('@Expose only supports string "permissions" on method level hierarchy, check %s::$%s()', $value, $method->getName()));
+                        }
+                    }
+                    $columns[$name]->setPermissions($arguments['permissions']);
                 }
             }
         }

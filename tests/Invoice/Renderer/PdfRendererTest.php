@@ -15,12 +15,11 @@ use App\Model\InvoiceDocument;
 use App\Pdf\HtmlToPdfConverter;
 use App\Pdf\MPdfConverter;
 use App\Tests\Mocks\FileHelperFactory;
+use App\Tests\TwigAppVariableTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 use Twig\Loader\FilesystemLoader;
@@ -31,6 +30,7 @@ use Twig\Loader\FilesystemLoader;
 class PdfRendererTest extends KernelTestCase
 {
     use RendererTestTrait;
+    use TwigAppVariableTrait;
 
     public function testSupports(): void
     {
@@ -49,13 +49,9 @@ class PdfRendererTest extends KernelTestCase
         $kernel = self::bootKernel();
         /** @var Environment $twig */
         $twig = self::getContainer()->get('twig');
-        /** @var RequestStack $stack */
-        $stack = self::getContainer()->get('request_stack');
         $cacheDir = $kernel->getContainer()->getParameter('kernel.cache_dir');
 
-        $request = new Request();
-        $request->setLocale('en');
-        $stack->push($request);
+        $this->prepareTwigAppVariable();
 
         /** @var FilesystemLoader $loader */
         $loader = $twig->getLoader();
@@ -76,14 +72,10 @@ class PdfRendererTest extends KernelTestCase
         $kernel = self::bootKernel();
         /** @var Environment $twig */
         $twig = self::getContainer()->get('twig');
-        /** @var RequestStack $stack */
-        $stack = self::getContainer()->get('request_stack');
         /** @var string $cacheDir */
         $cacheDir = $kernel->getContainer()->getParameter('kernel.cache_dir');
 
-        $request = new Request();
-        $request->setLocale('en');
-        $stack->push($request);
+        $this->prepareTwigAppVariable();
 
         /** @var FilesystemLoader $loader */
         $loader = $twig->getLoader();
@@ -104,14 +96,10 @@ class PdfRendererTest extends KernelTestCase
         $kernel = self::bootKernel();
         /** @var Environment $twig */
         $twig = self::getContainer()->get('twig');
-        /** @var RequestStack $stack */
-        $stack = self::getContainer()->get('request_stack');
         /** @var string $cacheDir */
         $cacheDir = $kernel->getContainer()->getParameter('kernel.cache_dir');
 
-        $request = new Request();
-        $request->setLocale('en');
-        $stack->push($request);
+        $this->prepareTwigAppVariable();
 
         /** @var FilesystemLoader $loader */
         $loader = $twig->getLoader();

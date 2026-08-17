@@ -18,7 +18,7 @@ jobs:
         runs-on: ubuntu-latest
         services:
             mysql:
-                image: mysql@sha256:e370cd5f64599d46985b7729b452f2153825246f88d82753ec595c5dfc6fef6a # 8.4.9
+                image: mysql@sha256:66aec17cd21a956029b83f083b813073859e8355dc1a00e55df6ba02f0e32345 # 8.4.9
                 env:
                     MYSQL_ALLOW_EMPTY_PASSWORD: false
                     MYSQL_ROOT_PASSWORD: kimai
@@ -34,7 +34,7 @@ jobs:
         steps:
 
             -   name: Clone Kimai
-                uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+                uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
                 with:
                     persist-credentials: false
 
@@ -56,7 +56,7 @@ jobs:
                 run: echo "composer_cache_directory=$(composer config cache-dir)" >> $GITHUB_ENV
 
             -   name: Cache Composer dependencies
-                uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+                uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
                 with:
                     path: "${{ env.composer_cache_directory }}"
                     key: ${{ runner.os }}-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}

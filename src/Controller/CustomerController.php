@@ -23,6 +23,7 @@ use App\Form\CustomerCommentForm;
 use App\Form\CustomerEditForm;
 use App\Form\CustomerRateForm;
 use App\Form\CustomerTeamPermissionForm;
+use App\Form\TeamEditForm;
 use App\Form\Toolbar\CustomerToolbarForm;
 use App\Form\Type\CustomerType;
 use App\Repository\CustomerRateRepository;
@@ -34,6 +35,7 @@ use App\Repository\Query\TeamQuery;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\Query\VisibilityInterface;
 use App\Repository\TeamRepository;
+use App\User\TeamService;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -87,12 +89,14 @@ final class CustomerController extends AbstractController
         $table->addColumn('contact', ['class' => 'd-none']);
         $table->addColumn('city', ['class' => 'd-none']);
         $table->addColumn('country', ['class' => 'd-none w-min']);
+        $table->addColumn('language', ['class' => 'd-none w-min']);
         $table->addColumn('currency', ['class' => 'd-none w-min']);
         $table->addColumn('phone', ['class' => 'd-none']);
         $table->addColumn('fax', ['class' => 'd-none']);
         $table->addColumn('mobile', ['class' => 'd-none']);
         $table->addColumn('email', ['class' => 'd-none']);
         $table->addColumn('homepage', ['class' => 'd-none']);
+        $table->addColumn('invoice_email', ['class' => 'd-none']);
 
         foreach ($metaColumns as $metaColumn) {
             $table->addColumn('mf_' . $metaColumn->getName(), ['title' => $metaColumn->getLabel(), 'class' => 'd-none', 'orderBy' => false, 'data' => $metaColumn]);
@@ -165,6 +169,40 @@ final class CustomerController extends AbstractController
         ]);
     }
 
+    #[Route(path: '/{id}/team-create', name: 'customer_team_create', methods: ['GET', 'POST'])]
+    #[IsGranted('create_team')]
+    #[IsGranted('permissions', 'customer')]
+    public function createTeam(Customer $customer, Request $request, TeamService $teamService): Response
+    {
+        $team = $teamService->createNewTeam($customer->getName() ?? '');
+        $team->addTeamlead($this->getUser());
+        $team->addCustomer($customer);
+
+        $form = $this->createForm(TeamEditForm::class, $team, [
+            'action' => $this->generateUrl('customer_team_create', ['id' => $customer->getId()]),
+            'method' => 'POST',
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $teamService->saveTeam($team);
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRouteAfterCreate('customer_details', ['id' => $customer->getId()]);
+            } catch (\Exception $ex) {
+                $this->flashUpdateException($ex);
+            }
+        }
+
+        return $this->render('customer/form.html.twig', [
+            'page_setup' => $this->createPageSetup(),
+            'customer' => $customer,
+            'form' => $form->createView()
+        ]);
+    }
+
     #[Route(path: '/{id}/comment_add', name: 'customer_comment_add', methods: ['POST'])]
     #[IsGranted('comments', 'customer')]
     public function addCommentAction(Customer $customer, Request $request): Response
@@ -216,7 +254,6 @@ final class CustomerController extends AbstractController
 
         $stats = null;
         $timezone = null;
-        $defaultTeam = null;
         $commentForm = null;
         $attachments = [];
         $comments = null;
@@ -234,9 +271,6 @@ final class CustomerController extends AbstractController
         }
 
         if ($this->isGranted('edit', $customer)) {
-            if ($this->isGranted('create_team')) {
-                $defaultTeam = $teamRepository->findOneBy(['name' => $customer->getName()]);
-            }
             $rates = $rateRepository->getRatesForCustomer($customer);
         }
 
@@ -276,7 +310,6 @@ final class CustomerController extends AbstractController
             'commentForm' => $commentForm,
             'attachments' => $attachments,
             'stats' => $stats,
-            'team' => $defaultTeam,
             'teams' => $teams,
             'customer_now' => new \DateTime('now', $timezone),
             'rates' => $rates,
@@ -328,7 +361,7 @@ final class CustomerController extends AbstractController
             }
         }
 
-        return $this->render('customer/rates.html.twig', [
+        return $this->render('customer/form.html.twig', [
             'page_setup' => $this->createPageSetup(),
             'customer' => $customer,
             'form' => $form->createView()

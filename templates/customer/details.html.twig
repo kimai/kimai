@@ -112,6 +112,12 @@
                         <td>{{ customer_now|date_time }} ({{ customer.timezone }})</td>
                     </tr>
                 {% endif %}
+                {% if customer.language is not empty %}
+                    <tr>
+                        <th>{{ 'language'|trans }}</th>
+                        <td>{{ customer.language|locale_name }}</td>
+                    </tr>
+                {% endif %}
                 {% if customer.currency is not empty %}
                     <tr>
                         <th>{{ 'currency'|trans }}</th>
@@ -129,6 +135,12 @@
                         <tr>
                             <th>{{ 'vat_id'|trans }}</th>
                             <td>{{ customer.vatId }}</td>
+                        </tr>
+                    {% endif %}
+                    {% if customer.invoiceEmail is not empty %}
+                        <tr>
+                            <th>{{ 'invoice_email'|trans }}</th>
+                            <td><a href="mailto:{{ customer.invoiceEmail }}">{{ customer.invoiceEmail }}</a></td>
                         </tr>
                     {% endif %}
                 {% endif %}
@@ -157,9 +169,12 @@
     {% endfor %}
 
     {% if teams is not null %}
-        {% set options = {'teams': teams, 'team': team} %}
+        {% set options = {'teams': teams} %}
         {% if is_granted('permissions', customer) %}
-            {% set options = options|merge({'route_create': path('post_customer_team', {'id': customer.id}), 'route_edit': path('admin_customer_permissions', {'id': customer.id})}) %}
+            {% if is_granted('create_team') %}
+                {% set options = options|merge({'route_create': path('customer_team_create', {'id': customer.id})}) %}
+            {% endif %}
+            {% set options = options|merge({'route_edit': path('admin_customer_permissions', {'id': customer.id})}) %}
         {% endif %}
         {{ include('embeds/teams.html.twig', options) }}
     {% endif %}

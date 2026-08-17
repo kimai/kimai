@@ -21,7 +21,6 @@ use App\Repository\CustomerRepository;
 use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
-use App\User\TeamService;
 use App\Utils\SearchTerm;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -31,7 +30,7 @@ use OpenApi\Attributes as OA;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\GoneHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints;
@@ -52,6 +51,32 @@ final class ProjectController extends BaseApiController
         private readonly ProjectRateRepository $projectRateRepository,
         private readonly ProjectService $projectService
     ) {
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function getEntitySerializationGroups(Project $project): array
+    {
+        $groups = self::GROUPS_ENTITY;
+
+        if ($this->isGranted('budget', $project)) {
+            $groups = array_merge($groups, ['Budget_Money']);
+        }
+
+        if ($this->isGranted('time', $project)) {
+            $groups = array_merge($groups, ['Budget_Time']);
+        }
+
+        return $groups;
+    }
+
+    private function renderEntity(Project $project): Response
+    {
+        $view = new View($project, Response::HTTP_OK);
+        $view->getContext()->setGroups($this->getEntitySerializationGroups($project));
+
+        return $this->viewHandler->handle($view);
     }
 
     /**
@@ -158,10 +183,7 @@ final class ProjectController extends BaseApiController
     #[IsGranted('view', 'project')]
     public function getAction(Project $project): Response
     {
-        $view = new View($project, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($project);
     }
 
     /**
@@ -185,21 +207,15 @@ final class ProjectController extends BaseApiController
             'include_time' => $this->isGranted('time', $project),
         ]);
 
-        $form->submit($request->request->all());
+        $form->submit($request->request->all(), false);
 
-        if ($form->isValid()) {
-            $this->projectService->saveProject($project);
-
-            $view = new View($project, 200);
-            $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-            return $this->viewHandler->handle($view);
+        if (false === $form->isValid()) {
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
-        $view = new View($form);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+        $this->projectService->saveProject($project);
 
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($project);
     }
 
     /**
@@ -225,18 +241,12 @@ final class ProjectController extends BaseApiController
         $form->submit($request->request->all(), false);
 
         if (false === $form->isValid()) {
-            $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-            return $this->viewHandler->handle($view);
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
         $this->projectService->saveProject($project);
 
-        $view = new View($project, Response::HTTP_OK);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($project);
     }
 
     /**
@@ -282,10 +292,7 @@ final class ProjectController extends BaseApiController
 
         $this->projectService->saveProject($project);
 
-        $view = new View($project, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($project);
     }
 
     /**
@@ -347,10 +354,7 @@ final class ProjectController extends BaseApiController
         $form->submit($request->request->all(), false);
 
         if (false === $form->isValid()) {
-            $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_RATE);
-
-            return $this->viewHandler->handle($view);
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
         $this->projectRateRepository->saveRate($rate);
@@ -462,36 +466,16 @@ final class ProjectController extends BaseApiController
 
     /**
      * Create team for project
+     * @deprecated
+     * FIXME 3.0
      *
-     * If a team with the project's name already exists, it is reused.
-     * The current user is added as teamlead (if not already), and the project is bound to the team.
+     * REMOVED: this endpoint was removed, use `POST /api/teams/` instead.
      */
-    #[IsGranted('create_team')]
-    #[IsGranted('permissions', 'project')]
-    #[OA\Post(description: 'Creates (or reuses) a default team named after the project, makes the current user a teamlead, and binds the project to that team. Calling this multiple times is safe and will not create duplicate teams or bindings.', responses: [new OA\Response(response: 200, description: 'Returns the team', content: new OA\JsonContent(ref: '#/components/schemas/Team'))])]
+    #[OA\Post(description: 'REMOVED: this endpoint was removed, use `POST /api/teams/` instead.', responses: [new OA\Response(response: 410, description: 'This endpoint was removed')], deprecated: true)]
     #[OA\Parameter(name: 'id', description: 'The project to create a default team for', in: 'path', required: true)]
     #[Route(path: '/{id}/team', name: 'post_project_team', requirements: ['id' => '\d+'], methods: ['POST'])]
-    public function postDefaultTeamAction(Project $project, TeamService $teamService): Response
+    public function postDefaultTeamAction(): Response
     {
-        $name = $project->getName();
-        if ($name === null || $name === '') {
-            throw new BadRequestHttpException('Cannot create default team for project with empty name: ' . $project->getId());
-        }
-
-        $team = $teamService->findTeamByName($name);
-
-        if ($team === null) {
-            $team = $teamService->createNewTeam($name);
-        }
-
-        $team->addTeamlead($this->getUser());
-        $team->addProject($project);
-
-        $teamService->saveTeam($team);
-
-        $view = new View($team, Response::HTTP_OK);
-        $view->getContext()->setGroups(TeamController::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        throw new GoneHttpException('This endpoint was removed, use "POST /api/teams/" instead.');
     }
 }

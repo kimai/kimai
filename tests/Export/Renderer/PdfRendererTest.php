@@ -16,10 +16,9 @@ use App\Pdf\MPdfConverter;
 use App\Pdf\PdfRendererTrait;
 use App\Project\ProjectStatisticService;
 use App\Tests\Mocks\FileHelperFactory;
+use App\Tests\TwigAppVariableTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Environment;
 
 #[CoversClass(PDFRendererTrait::class)]
@@ -28,6 +27,8 @@ use Twig\Environment;
 #[Group('integration')]
 class PdfRendererTest extends AbstractRendererTestCase
 {
+    use TwigAppVariableTrait;
+
     public function testConfiguration(): void
     {
         $sut = new PDFRenderer(
@@ -53,14 +54,11 @@ class PdfRendererTest extends AbstractRendererTestCase
         $kernel = self::bootKernel();
         /** @var Environment $twig */
         $twig = self::getContainer()->get('twig');
-        /** @var RequestStack $stack */
-        $stack = self::getContainer()->get('request_stack');
         /** @var string $cacheDir */
         $cacheDir = $kernel->getContainer()->getParameter('kernel.cache_dir');
         $converter = new MPdfConverter((new FileHelperFactory($this))->create(), $cacheDir);
-        $request = new Request();
-        $request->setLocale('en');
-        $stack->push($request);
+
+        $this->prepareTwigAppVariable();
 
         $sut = new PDFRenderer(
             $twig,
@@ -84,14 +82,11 @@ class PdfRendererTest extends AbstractRendererTestCase
         $kernel = self::bootKernel();
         /** @var Environment $twig */
         $twig = self::getContainer()->get('twig');
-        /** @var RequestStack $stack */
-        $stack = self::getContainer()->get('request_stack');
         /** @var string $cacheDir */
         $cacheDir = $kernel->getContainer()->getParameter('kernel.cache_dir');
         $converter = new MPdfConverter((new FileHelperFactory($this))->create(), $cacheDir);
-        $request = new Request();
-        $request->setLocale('en');
-        $stack->push($request);
+
+        $this->prepareTwigAppVariable();
 
         $sut = new PDFRenderer(
             $twig,

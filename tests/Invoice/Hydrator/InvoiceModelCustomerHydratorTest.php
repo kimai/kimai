@@ -39,6 +39,7 @@ class InvoiceModelCustomerHydratorTest extends TestCase
             'customer.address_line1' => '',
             'customer.address_line2' => '',
             'customer.address_line3' => '',
+            'customer.invoice_email' => '',
             'customer.buyer_reference' => '',
             'customer.city' => '',
             'customer.postcode' => '',
@@ -50,6 +51,7 @@ class InvoiceModelCustomerHydratorTest extends TestCase
             'customer.number' => '',
             'customer.country' => 'AT',
             'customer.country_name' => 'Austria',
+            'customer.language' => 'en',
             'customer.homepage' => '',
             'customer.comment' => '',
             'customer.email' => '',
@@ -73,6 +75,7 @@ class InvoiceModelCustomerHydratorTest extends TestCase
             'customer.address_line1',
             'customer.address_line2',
             'customer.address_line3',
+            'customer.invoice_email',
             'customer.buyer_reference',
             'customer.city',
             'customer.postcode',
@@ -96,6 +99,7 @@ class InvoiceModelCustomerHydratorTest extends TestCase
             'customer.time_budget_open',
             'customer.time_budget_open_plain',
             'customer.invoice_text',
+            'customer.language',
         ];
 
         $givenKeys = array_keys($model);
