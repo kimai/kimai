@@ -1526,10 +1526,6 @@
         <source>api_password.intro</source>
         <target state="translated">Ovde možete upravljati svojim API tokenima, koji se koriste za autentifikaciju vaše aplikacije prema Kimai-ju.</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title" xml:space="preserve">
-        <source>api_password.missing_title</source>
-        <target state="translated">API se ne može koristiti</target>
-      </trans-unit>
       <trans-unit id="wYcx0So" resname="search.no_results" xml:space="preserve">
         <source>search.no_results</source>
         <target state="translated">Nema rezultata za "%input%"</target>
@@ -1785,10 +1781,6 @@
       <trans-unit id="G8ZoGoA" resname="api_token_qr_hint" xml:space="preserve">
         <source>api_token_qr_hint</source>
         <target state="translated">Ovaj QR kod možete skenirati mobilnom aplikacijom kako biste u jednom koraku podesili URL servera i token. Ne delite ovu sliku: ona sadrži vaš API token.</target>
-      </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">API lozinke su zastarele: umesto njih koristite API tokene.</target>
       </trans-unit>
       <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
         <source>hours_per_day</source>

@@ -1374,10 +1374,6 @@
         <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
         <target state="translated">일, 의료 필요한 약속, 배려 휴가, 등에 대 한 사용.</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">API 암호는 오래되었습니다: 대신 API 토큰을 사용하십시오.</target>
-      </trans-unit>
       <trans-unit id="cDOQMYv" resname="Beta" xml:space="preserve">
         <source>Beta</source>
         <target state="translated">아직 개발 중인 프리뷰 기능을 제공합니다.</target>
