@@ -10,14 +10,10 @@
 namespace App\Tests;
 
 use App\Entity\User;
-use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Twig\Environment;
 
 /**
  * Prepares the "app" variable for tests that render Twig templates in invoice/export scenarios.

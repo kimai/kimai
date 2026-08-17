@@ -618,7 +618,7 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         $form = $crawler->filter('form[name=user_contract]')->form();
 
         $result = $client->submit($form, [
-            'user_contract[workHoursMonday]' => '25:00',
+            'user_contract[work_monday]' => '25:00',
         ]);
 
         self::assertTrue($client->getResponse()->isSuccessful());
