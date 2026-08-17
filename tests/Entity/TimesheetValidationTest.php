@@ -70,9 +70,18 @@ class TimesheetValidationTest extends KernelTestCase
     public function testValidationProjectMismatch(): void
     {
         $customer = new Customer('foo');
-        $project = (new Project())->setName('foo')->setCustomer($customer);
-        $project2 = (new Project())->setName('bar')->setCustomer($customer);
-        $activity = (new Activity())->setName('hello-world')->setProject($project);
+
+        $project = new Project();
+        $project->setName('foo');
+        $project->setCustomer($customer);
+
+        $project2 = new Project();
+        $project2->setName('bar');
+        $project2->setCustomer($customer);
+
+        $activity = new Activity();
+        $activity->setName('hello-world');
+        $activity->setProject($project);
 
         $entity = new Timesheet();
         $entity->setUser(new User());
@@ -116,9 +125,7 @@ class TimesheetValidationTest extends KernelTestCase
         if ($id !== null) {
             $o = new \ReflectionClass($entity);
             $p = $o->getProperty('id');
-            $p->setAccessible(true);
             $p->setValue($entity, $id);
-            $p->setAccessible(false);
         }
 
         return $entity;
@@ -159,8 +166,15 @@ class TimesheetValidationTest extends KernelTestCase
     public function testValidationProjectInvisible(): void
     {
         $customer = new Customer('foo');
-        $project = (new Project())->setName('foo')->setCustomer($customer)->setVisible(false);
-        $activity = (new Activity())->setName('hello-world')->setProject($project);
+
+        $project = new Project();
+        $project->setName('foo');
+        $project->setCustomer($customer);
+        $project->setVisible(false);
+
+        $activity = new Activity();
+        $activity->setName('hello-world');
+        $activity->setProject($project);
 
         $entity = new Timesheet();
         $entity->setUser(new User());
@@ -175,8 +189,15 @@ class TimesheetValidationTest extends KernelTestCase
     public function testValidationProjectInvisibleDoesNotTriggerOnStoppedEntities(): void
     {
         $customer = new Customer('foo');
-        $project = (new Project())->setName('foo')->setCustomer($customer)->setVisible(false);
-        $activity = (new Activity())->setName('hello-world')->setProject($project);
+
+        $project = new Project();
+        $project->setName('foo');
+        $project->setCustomer($customer);
+        $project->setVisible(false);
+
+        $activity = new Activity();
+        $activity->setName('hello-world');
+        $activity->setProject($project);
 
         $entity = $this->createStoppedTimesheet($project, $activity, 1);
 
@@ -186,8 +207,14 @@ class TimesheetValidationTest extends KernelTestCase
     public function testValidationProjectInvisibleDoesTriggerOnNewEntities(): void
     {
         $customer = new Customer('foo');
-        $project = (new Project())->setName('foo')->setCustomer($customer)->setVisible(false);
-        $activity = (new Activity())->setName('hello-world')->setProject($project);
+        $project = new Project();
+        $project->setName('foo');
+        $project->setCustomer($customer);
+        $project->setVisible(false);
+
+        $activity = new Activity();
+        $activity->setName('hello-world');
+        $activity->setProject($project);
 
         $entity = $this->createStoppedTimesheet($project, $activity);
 
@@ -197,8 +224,15 @@ class TimesheetValidationTest extends KernelTestCase
     public function testValidationActivityInvisible(): void
     {
         $customer = new Customer('foo');
-        $project = (new Project())->setName('foo')->setCustomer($customer);
-        $activity = (new Activity())->setName('hello-world')->setProject($project)->setVisible(false);
+
+        $project = new Project();
+        $project->setName('foo');
+        $project->setCustomer($customer);
+
+        $activity = new Activity();
+        $activity->setName('hello-world');
+        $activity->setProject($project);
+        $activity->setVisible(false);
 
         $entity = new Timesheet();
         $entity->setUser(new User());

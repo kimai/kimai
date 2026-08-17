@@ -90,10 +90,7 @@ class StrictPolicyTestCase extends TestCase
             [new User(), 'getPassword', 'Tried to access user secrets'],
             [new User(), 'getTotpSecret', 'Tried to access user secrets'],
             [new User(), 'getPlainPassword', 'Tried to access user secrets'],
-            [new User(), 'getConfirmationToken', 'Tried to access user secrets'],
             [new User(), 'getTotpAuthenticationConfiguration', 'Tried to access user secrets'],
-            [new User(), 'getPlainApiToken', 'Tried to access user secrets'],
-            [new User(), 'getApiToken', 'Tried to access user secrets'],
         ];
     }
 }

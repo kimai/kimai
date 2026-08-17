@@ -56,10 +56,6 @@ final class TimesheetService
 
     /**
      * Calls prepareNewTimesheet() automatically if $request is not null.
-     *
-     * @param User $user
-     * @param Request|null $request
-     * @return Timesheet
      */
     public function createNewTimesheet(User $user, ?Request $request = null): Timesheet
     {
@@ -91,9 +87,6 @@ final class TimesheetService
     }
 
     /**
-     * @param Timesheet $timesheet
-     * @param Timesheet $copyFrom
-     * @return Timesheet
      * @throws ValidationFailedException for invalid timesheets or running timesheets that should be stopped
      * @throws InvalidArgumentException for already persisted timesheets
      * @throws AccessDeniedException if user is not allowed to start timesheet
@@ -101,19 +94,13 @@ final class TimesheetService
     public function restartTimesheet(Timesheet $timesheet, Timesheet $copyFrom): Timesheet
     {
         $this->dispatcher->dispatch(new TimesheetRestartPreEvent($timesheet, $copyFrom));
-        $this->saveNewTimesheet($timesheet); // @phpstan-ignore method.deprecated
+        $this->saveNewTimesheet($timesheet);
         $this->dispatcher->dispatch(new TimesheetRestartPostEvent($timesheet, $copyFrom));
 
         return $timesheet;
     }
 
-    /**
-     * @throws ValidationFailedException for invalid timesheets or running timesheets that should be stopped
-     * @throws InvalidArgumentException for already persisted timesheets
-     * @throws AccessDeniedException if user is not allowed to start timesheet
-     * @deprecated since 2.36.0 - use saveTimesheet() instead
-     */
-    public function saveNewTimesheet(Timesheet $timesheet): Timesheet
+    private function saveNewTimesheet(Timesheet $timesheet): Timesheet
     {
         if (null !== $timesheet->getId()) {
             throw new InvalidArgumentException('Cannot create timesheet, already persisted');
@@ -124,14 +111,9 @@ final class TimesheetService
             throw new AccessDeniedException(\sprintf('You are not allowed to %s this timesheet record', $permission));
         }
 
-        $this->repository->begin();
         try {
             $this->validateTimesheet($timesheet);
             $this->fixTimezone($timesheet);
-
-            $this->dispatcher->dispatch(new TimesheetCreatePreEvent($timesheet));
-            $this->repository->save($timesheet);
-            $this->dispatcher->dispatch(new TimesheetCreatePostEvent($timesheet));
 
             if ($timesheet->isRunning()) {
                 try {
@@ -143,9 +125,10 @@ final class TimesheetService
                 }
             }
 
-            $this->repository->commit();
+            $this->dispatcher->dispatch(new TimesheetCreatePreEvent($timesheet));
+            $this->repository->save($timesheet);
+            $this->dispatcher->dispatch(new TimesheetCreatePostEvent($timesheet));
         } catch (\Exception $ex) {
-            $this->repository->rollback();
             throw $ex;
         }
 
@@ -155,18 +138,16 @@ final class TimesheetService
     public function saveTimesheet(Timesheet $timesheet): Timesheet
     {
         if ($timesheet->getId() === null) {
-            return $this->saveNewTimesheet($timesheet); // @phpstan-ignore method.deprecated
+            return $this->saveNewTimesheet($timesheet);
         } else {
-            return $this->updateTimesheet($timesheet); // @phpstan-ignore method.deprecated
+            return $this->updateTimesheet($timesheet);
         }
     }
 
     /**
      * Does NOT validate the given timesheet.
-     *
-     * @deprecated since 2.36.0 - use saveTimesheet() instead
      */
-    public function updateTimesheet(Timesheet $timesheet): Timesheet
+    private function updateTimesheet(Timesheet $timesheet): Timesheet
     {
         $this->fixTimezone($timesheet);
 

@@ -1054,7 +1054,6 @@ class RolePermissionManagerTest extends TestCase
         $user = new User();
         $reflection = new \ReflectionClass($user);
         $property = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($user, $id);
 
         return $user;

@@ -13,6 +13,7 @@ use Mpdf\Http\ClientInterface;
 use Mpdf\PsrHttpMessageShim\Response;
 use Psr\Http\Message\RequestInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpClient\NoPrivateNetworkHttpClient;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface as HttpClientExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -32,7 +33,7 @@ final class SafeRemoteContentClient implements ClientInterface
     /**
      * Timeout in seconds: a slow or unreachable remote target should not block PDF rendering.
      */
-    private const TIMEOUT = 10;
+    private const int TIMEOUT = 10;
 
     public function __construct(
         private readonly HttpClientInterface $client,
@@ -45,7 +46,8 @@ final class SafeRemoteContentClient implements ClientInterface
     {
         $url = (string) $request->getUri();
         try {
-            $response = $this->client->request(
+            $client = new NoPrivateNetworkHttpClient($this->client);
+            $response = $client->request(
                 $request->getMethod(),
                 $url,
                 [

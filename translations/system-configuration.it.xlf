@@ -166,10 +166,6 @@
         <source>user_auth_password_reset</source>
         <target state="final">Password dimenticata</target>
       </trans-unit>
-      <trans-unit id="C26_mL7" resname="user_auth_registration" approved="yes">
-        <source>user_auth_registration</source>
-        <target state="final">Registrazione utente</target>
-      </trans-unit>
       <trans-unit id="BGHQ8YO" resname="user_auth_login" approved="yes">
         <source>user_auth_login</source>
         <target state="final">Modulo di accesso</target>

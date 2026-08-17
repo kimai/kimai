@@ -6,8 +6,8 @@ use App\ConsoleApplication;
 
 set_time_limit(0);
 
-if (!is_file(dirname(__DIR__).'/vendor/autoload_runtime.php')) {
-    throw new LogicException('Symfony Runtime is missing. Try running "composer require symfony/runtime".');
+if (!is_dir(dirname(__DIR__).'/vendor')) {
+	throw new LogicException('Dependencies are missing. Try running "composer install".');
 }
 
 require_once dirname(__DIR__).'/vendor/autoload_runtime.php';

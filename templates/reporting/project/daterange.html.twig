@@ -28,7 +28,6 @@
     'actions':       {'class': 'actions alwaysVisible'},
 }) %}
 {% set tableName = 'project_daterange_reporting' %}
-{% set queryValue = app.request.query.get('view') %}
 
 {% block main_before %}
     {{ tables.data_table_column_modal(tableName, columns) }}
@@ -52,14 +51,13 @@
                 {{ form_widget(form.includeNoWork) }}
             </li>
         </ul>
-        <button onclick="{{ form.view.vars.id }}.value = {{ queryValue == '1' ? 0 : 1 }}" type="submit"  class="btn btn-icon {% if queryValue != '1' %}active{% endif %}">
+        <button onclick="{{ form.view.vars.id }}.value = {{ expand_projects ? 0 : 1 }}" type="submit"  class="btn btn-icon {% if expand_projects %}active{% endif %}">
             {{ icon('collapse', true) }}
         </button>
     </div>
 {% endblock %}
 
 {% block report %}
-
     {% set hasData = entries|length > 0 %}
 
     {% embed '@theme/embeds/card.html.twig' %}
@@ -74,7 +72,7 @@
             {% else %}
                 {{ tables.datatable_header(tableName, columns, null, {'boxClass': ''}) }}
 
-                {% if queryValue != '1' %}
+                {% if expand_projects %}
                     {% for id, mapping in entries|sort((a, b) => a.customer.name <=> b.customer.name) %}
                         {% set currency = mapping.customer.currency %}
                         {% set totalDuration = 0 %}

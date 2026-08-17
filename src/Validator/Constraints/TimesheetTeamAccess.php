@@ -9,8 +9,11 @@
 
 namespace App\Validator\Constraints;
 
-#[\Attribute(\Attribute::TARGET_CLASS)]
-final class TimesheetTeamAccess extends TimesheetConstraint
+use App\Validator\Attribute\TimesheetConstraint;
+use Symfony\Component\Validator\Constraint;
+
+#[TimesheetConstraint]
+final class TimesheetTeamAccess extends Constraint
 {
     public const PROJECT_ACCESS_ERROR = 'kimai-timesheet-team-project';
     public const ACTIVITY_ACCESS_ERROR = 'kimai-timesheet-team-activity';
@@ -21,6 +24,14 @@ final class TimesheetTeamAccess extends TimesheetConstraint
     ];
 
     public string $message = 'This timesheet has invalid settings.';
+
+    public function __construct(?string $message = null)
+    {
+        if ($message !== null) {
+            $this->message = $message;
+        }
+        parent::__construct();
+    }
 
     public function getTargets(): string
     {

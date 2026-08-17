@@ -10,6 +10,7 @@
 namespace App\Security;
 
 use App\Entity\User;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use Symfony\Component\Security\Core\Exception\DisabledException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
@@ -21,7 +22,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 final class UserChecker implements UserCheckerInterface
 {
     /**
-     * @param UserInterface $user
      * @throws AccountStatusException
      */
     public function checkPreAuth(UserInterface $user): void
@@ -38,10 +38,9 @@ final class UserChecker implements UserCheckerInterface
     }
 
     /**
-     * @param UserInterface $user
      * @throws AccountStatusException
      */
-    public function checkPostAuth(UserInterface $user): void
+    public function checkPostAuth(UserInterface $user, ?TokenInterface $token = null): void
     {
         if (!($user instanceof User)) {
             return;

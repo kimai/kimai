@@ -193,7 +193,7 @@ final class MenuSubscriber implements EventSubscriberInterface
         }
 
         if ($auth->isGranted('system_configuration')) {
-            $systemConfig = new MenuItemModel('configurations', 'menu.system_configuration', 'system_configuration', [], 'configuration');
+            $systemConfig = new MenuItemModel('configurations', 'settings', 'system_configuration', [], 'configuration');
             $systemConfig->setChildRoutes(['system_configuration_update', 'system_configuration_section']);
             $menu->addChild($systemConfig);
         }

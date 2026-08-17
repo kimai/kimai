@@ -286,10 +286,6 @@
         <source>user_auth_login</source>
         <target state="final">登入表單</target>
       </trans-unit>
-      <trans-unit id="C26_mL7" resname="user_auth_registration" xml:space="preserve" approved="yes">
-        <source>user_auth_registration</source>
-        <target state="final">使用者註冊</target>
-      </trans-unit>
       <trans-unit id="E9URNEx" resname="user_auth_password_reset_retry_ttl" xml:space="preserve" approved="yes">
         <source>user_auth_password_reset_retry_ttl</source>
         <target state="final">忘記密碼——使用者可以再次請求寄送電子郵件前的等待秒數</target>

@@ -27,7 +27,6 @@ use OpenApi\Attributes as OA;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\GoneHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -36,9 +35,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[OA\Tag(name: 'Activity')]
 final class ActivityController extends BaseApiController
 {
-    private const GROUPS_ENTITY = ['Default', 'Entity', 'Activity', 'Activity_Entity'];
-    private const GROUPS_COLLECTION = ['Default', 'Collection', 'Activity'];
-    private const GROUPS_RATE = ['Default', 'Entity', 'Activity_Rate'];
+    private const array GROUPS_ENTITY = ['Default', 'Entity', 'Activity', 'Activity_Entity'];
+    private const array GROUPS_COLLECTION = ['Default', 'Collection', 'Activity'];
+    private const array GROUPS_RATE = ['Default', 'Entity', 'Activity_Rate'];
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
@@ -313,18 +312,5 @@ final class ActivityController extends BaseApiController
         $view->getContext()->setGroups(self::GROUPS_RATE);
 
         return $this->viewHandler->handle($view);
-    }
-
-    /**
-     * Create team for activity
-     *
-     * REMOVED: this endpoint was removed, use `POST /api/teams/` instead.
-     */
-    #[OA\Post(description: 'REMOVED: this endpoint was removed, use `POST /api/teams/` instead.', responses: [new OA\Response(response: 410, description: 'This endpoint was removed')], deprecated: true)]
-    #[OA\Parameter(name: 'id', description: 'The activity to create a default team for', in: 'path', required: true)]
-    #[Route(path: '/{id}/team', name: 'post_activity_team', requirements: ['id' => '\d+'], methods: ['POST'])]
-    public function postDefaultTeamAction(): Response
-    {
-        throw new GoneHttpException('This endpoint was removed, use "POST /api/teams/" instead.');
     }
 }

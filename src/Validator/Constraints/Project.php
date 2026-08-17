@@ -14,10 +14,10 @@ use Symfony\Component\Validator\Constraint;
 #[\Attribute(\Attribute::TARGET_CLASS)]
 final class Project extends Constraint
 {
-    public const END_BEFORE_BEGIN_ERROR = 'kimai-project-00';
-    public const PROJECT_NUMBER_EXISTING = 'kimai-project-01';
+    public const string END_BEFORE_BEGIN_ERROR = 'kimai-project-00';
+    public const string PROJECT_NUMBER_EXISTING = 'kimai-project-01';
 
-    protected const ERROR_NAMES = [
+    protected const array ERROR_NAMES = [
         self::END_BEFORE_BEGIN_ERROR => 'End date must not be earlier then start date.',
         self::PROJECT_NUMBER_EXISTING => 'The number %number% is already used.',
     ];

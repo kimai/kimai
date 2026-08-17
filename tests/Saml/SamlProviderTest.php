@@ -25,7 +25,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 #[CoversClass(SamlProvider::class)]
 class SamlProviderTest extends TestCase
 {
-    protected function getSamlProvider(array $mapping = null, ?User $user = null): SamlProvider
+    protected function getSamlProvider(?array $mapping = null, ?User $user = null): SamlProvider
     {
         if (null === $mapping) {
             $mapping = [

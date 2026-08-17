@@ -32,7 +32,7 @@ final class Version20190730123324 extends AbstractMigration
         $teams->addColumn('id', 'integer', ['autoincrement' => true, 'notnull' => true]);
         $teams->addColumn('name', 'string', ['notnull' => true, 'length' => 100]);
         $teams->addColumn('teamlead_id', 'integer', ['length' => 11, 'notnull' => true]);
-        $teams->setPrimaryKey(['id']);
+        $this->addPrimaryKeyConstraint($teams, ['id']);
         $teams->addUniqueIndex(['name'], 'UNIQ_3BEDDC7F5E237E06');
         $teams->addForeignKeyConstraint('kimai2_users', ['teamlead_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_3BEDDC7F8F7DE5D7');
 
@@ -41,21 +41,21 @@ final class Version20190730123324 extends AbstractMigration
         $userTeams->addColumn('team_id', 'integer', ['length' => 11, 'notnull' => true]);
         $userTeams->addForeignKeyConstraint('kimai2_users', ['user_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_B5E92CF8A76ED395');
         $userTeams->addForeignKeyConstraint('kimai2_teams', ['team_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_B5E92CF8296CD8AE');
-        $userTeams->setPrimaryKey(['user_id', 'team_id']);
+        $this->addPrimaryKeyConstraint($userTeams, ['user_id', 'team_id']);
 
         $customerTeams = $schema->createTable('kimai2_customers_teams');
         $customerTeams->addColumn('customer_id', 'integer', ['length' => 11, 'notnull' => true]);
         $customerTeams->addColumn('team_id', 'integer', ['length' => 11, 'notnull' => true]);
         $customerTeams->addForeignKeyConstraint('kimai2_customers', ['customer_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_50BD83889395C3F3');
         $customerTeams->addForeignKeyConstraint('kimai2_teams', ['team_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_50BD8388296CD8AE');
-        $customerTeams->setPrimaryKey(['customer_id', 'team_id']);
+        $this->addPrimaryKeyConstraint($customerTeams, ['customer_id', 'team_id']);
 
         $projectTeams = $schema->createTable('kimai2_projects_teams');
         $projectTeams->addColumn('project_id', 'integer', ['length' => 11, 'notnull' => true]);
         $projectTeams->addColumn('team_id', 'integer', ['length' => 11, 'notnull' => true]);
         $projectTeams->addForeignKeyConstraint('kimai2_projects', ['project_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_9345D431166D1F9C');
         $projectTeams->addForeignKeyConstraint('kimai2_teams', ['team_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_9345D431296CD8AE');
-        $projectTeams->setPrimaryKey(['project_id', 'team_id']);
+        $this->addPrimaryKeyConstraint($projectTeams, ['project_id', 'team_id']);
     }
 
     public function down(Schema $schema): void

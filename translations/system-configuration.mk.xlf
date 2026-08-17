@@ -258,10 +258,6 @@
         <source>user_auth_login</source>
         <target state="translated">Формулар за најавување</target>
       </trans-unit>
-      <trans-unit id="C26_mL7" resname="user_auth_registration" xml:space="preserve">
-        <source>user_auth_registration</source>
-        <target state="translated">Регистрација на корисник</target>
-      </trans-unit>
       <trans-unit id="5RSshEN" resname="user_auth_password_reset" xml:space="preserve">
         <source>user_auth_password_reset</source>
         <target state="translated">Заборавена лозинка</target>

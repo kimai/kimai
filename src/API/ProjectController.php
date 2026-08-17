@@ -30,7 +30,6 @@ use OpenApi\Attributes as OA;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\GoneHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints;
@@ -40,10 +39,10 @@ use Symfony\Component\Validator\Constraints;
 #[OA\Tag(name: 'Project')]
 final class ProjectController extends BaseApiController
 {
-    private const GROUPS_COMMENT = ['Default', 'Not_Expanded'];
-    private const GROUPS_ENTITY = ['Default', 'Entity', 'Project', 'Project_Entity'];
-    private const GROUPS_COLLECTION = ['Default', 'Collection', 'Project'];
-    private const GROUPS_RATE = ['Default', 'Entity', 'Project_Rate'];
+    private const array GROUPS_COMMENT = ['Default', 'Not_Expanded'];
+    private const array GROUPS_ENTITY = ['Default', 'Entity', 'Project', 'Project_Entity'];
+    private const array GROUPS_COLLECTION = ['Default', 'Collection', 'Project'];
+    private const array GROUPS_RATE = ['Default', 'Entity', 'Project_Rate'];
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
@@ -462,18 +461,5 @@ final class ProjectController extends BaseApiController
         $this->repository->deleteComment($comment);
 
         return $this->viewHandler->handle(new View(null, Response::HTTP_NO_CONTENT));
-    }
-
-    /**
-     * Create team for project
-     *
-     * REMOVED: this endpoint was removed, use `POST /api/teams/` instead.
-     */
-    #[OA\Post(description: 'REMOVED: this endpoint was removed, use `POST /api/teams/` instead.', responses: [new OA\Response(response: 410, description: 'This endpoint was removed')], deprecated: true)]
-    #[OA\Parameter(name: 'id', description: 'The project to create a default team for', in: 'path', required: true)]
-    #[Route(path: '/{id}/team', name: 'post_project_team', requirements: ['id' => '\d+'], methods: ['POST'])]
-    public function postDefaultTeamAction(): Response
-    {
-        throw new GoneHttpException('This endpoint was removed, use "POST /api/teams/" instead.');
     }
 }

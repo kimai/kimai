@@ -134,7 +134,7 @@ final class PluginCommand extends Command
                 $metadata->getVersion(),
                 $metadata->getKimaiVersion(),
                 $metadata->getPackage(),
-                $package->getPackageFile()->getPathname(),
+                $package->getPackagePath(),
             ];
         }
         $io->table(['Name', 'Version', 'Requires', 'Package', 'Directory'], $rows);

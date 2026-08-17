@@ -93,7 +93,7 @@ final class QuickEntryForm extends AbstractType
             'prototype_data' => $options['prototype_data'],
             'constraints' => [
                 new Valid(),
-                new All(['constraints' => [new QuickEntryModel()]])
+                new All(constraints: [new QuickEntryModel()])
             ],
         ];
 

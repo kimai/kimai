@@ -25,7 +25,7 @@ class ResetTestCommandTest extends KernelTestCase
     {
         $kernel = self::bootKernel();
         $application = new Application($kernel);
-        $application->add(new ResetTestCommand(
+        $application->addCommand(new ResetTestCommand(
             $this->createMock(EntityManagerInterface::class),
             $this->createMock(UserPasswordHasherInterface::class),
             'test'

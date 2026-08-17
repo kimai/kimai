@@ -86,14 +86,6 @@
         <source>user_profile</source>
         <target>Mia profilo</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target>API-pasvorto</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target>Ripetu API-pasvorton</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target>Mankas permeso. Redirekti al ensaluto?</target>
@@ -145,10 +137,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target>Kromprogramoj</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target>Agordoj</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
@@ -1009,10 +997,6 @@
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="needs-translation">Retpoŝta mesaĝo estis sendita al email. Ĝi enhavas aktivigan ligon, kiun vi devas alklaki por restarigi vian pasvorton. Noto: Vi povas peti novan pasvorton nur unufoje en %tokenLifetime% horoj. Se vi ne ricevas retpoŝtan mesaĝon, kontrolu vian trudmesaĝujon aŭ reprovu.</target>
-      </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>registration.check_email</source>
-        <target>Retpoŝta mesaĝo estis sendita al %email%. Ĝi enhavas aktivigan ligon, kiun vi devas alklaki por aktivigi vian konton.</target>
       </trans-unit>
       <trans-unit id="Nx9_QiO" resname="revenue">
         <source>revenue</source>

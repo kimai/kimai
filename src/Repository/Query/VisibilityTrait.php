@@ -35,14 +35,6 @@ trait VisibilityTrait
         return $this->visibility === VisibilityInterface::SHOW_VISIBLE;
     }
 
-    /**
-     * @deprecated since 2.41
-     */
-    public function setShowBoth(): void
-    {
-        $this->setVisibility(VisibilityInterface::SHOW_BOTH);
-    }
-
     public function isShowBoth(): bool
     {
         return $this->visibility === VisibilityInterface::SHOW_BOTH;

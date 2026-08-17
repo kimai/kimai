@@ -31,7 +31,7 @@ final class ProjectDuplicationService
     {
         $newProject = clone $project;
         $newProject->setName($newName);
-        $newProject->setNumber($this->projectService->calculateNextProjectNumber());
+        $newProject->setNumber($this->projectService->calculateNextProjectNumber($project->getCustomer()));
 
         foreach ($project->getTeams() as $team) {
             $newProject->addTeam($team);

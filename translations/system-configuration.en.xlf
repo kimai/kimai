@@ -262,10 +262,6 @@
         <source>user_auth_login</source>
         <target>Login form</target>
       </trans-unit>
-      <trans-unit id="C26_mL7" resname="user_auth_registration">
-        <source>user_auth_registration</source>
-        <target>User registration</target>
-      </trans-unit>
       <trans-unit id="5RSshEN" resname="user_auth_password_reset">
         <source>user_auth_password_reset</source>
         <target>Forgot password</target>
@@ -317,6 +313,26 @@
       <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="yes">
         <source>invoice.rounding_mode</source>
         <target>Rounding mode</target>
+      </trans-unit>
+      <trans-unit id="n9CdwzV" resname="webhook">
+        <source>webhook</source>
+        <target>Webhooks</target>
+      </trans-unit>
+      <trans-unit id="FJgSFXo" resname="webhook.endpoints">
+        <source>webhook.endpoints</source>
+        <target>Endpoints</target>
+      </trans-unit>
+      <trans-unit id="K7gNU3s" resname="secret">
+        <source>secret</source>
+        <target>Secret</target>
+      </trans-unit>
+      <trans-unit id="hiQXuef" resname="events">
+        <source>events</source>
+        <target>Events</target>
+      </trans-unit>
+      <trans-unit id="56JB3rr" resname="URL">
+        <source>URL</source>
+        <target>URL</target>
       </trans-unit>
     </body>
   </file>

@@ -12,6 +12,8 @@ namespace App\Tests\Utils;
 use App\Repository\Query\BaseQuery;
 use App\Utils\DataTable;
 use App\Utils\PageSetup;
+use App\Utils\Pagination;
+use Pagerfanta\Adapter\ArrayAdapter;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -32,7 +34,7 @@ class PageSetupTest extends TestCase
 
     public function testSetter(): void
     {
-        $dataTable = new DataTable('tadaaaaa', new BaseQuery());
+        $dataTable = new DataTable('tadaaaaa', new BaseQuery(), new Pagination(new ArrayAdapter([])));
         $sut = new PageSetup('foo-bar');
         $sut->setDataTable($dataTable);
         $sut->setActionName('some-action');

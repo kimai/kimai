@@ -6,22 +6,6 @@
         <source>automated_email_dont_answer</source>
         <target>Đây là một e-mail được tạo tự động. Xin đừng trả lời.</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject">
-        <source>registration.subject</source>
-        <target>Kích hoạt tài khoản của bạn</target>
-      </trans-unit>
-      <trans-unit id="QtcznHC" resname="registration.title">
-        <source>registration.title</source>
-        <target>Chào mừng %username%</target>
-      </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button">
-        <source>registration.button</source>
-        <target>Kích hoạt tài khoản của bạn</target>
-      </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target>Bạn đã đăng ký theo dõi thời gian Kimai với email %email%. Bây giờ bạn phải kích hoạt tài khoản của mình trong vài giờ tới, trước khi liên kết hết hạn.</target>
-      </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
         <target state="translated">Đăng nhập vào Kimai</target>

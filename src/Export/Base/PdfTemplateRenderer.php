@@ -20,12 +20,10 @@ use App\Pdf\PdfContext;
 use App\Pdf\PdfRendererTrait;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\TimesheetQuery;
-use Symfony\Component\DependencyInjection\Attribute\Exclude;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Translation\LocaleSwitcher;
 use Twig\Environment;
 
-#[Exclude]
 final class PdfTemplateRenderer implements DispositionInlineInterface, ExportRendererInterface
 {
     use RendererTrait;
@@ -42,7 +40,7 @@ final class PdfTemplateRenderer implements DispositionInlineInterface, ExportRen
     {
     }
 
-    public function isInternal(): bool
+    public function isInternal(): true
     {
         return true;
     }

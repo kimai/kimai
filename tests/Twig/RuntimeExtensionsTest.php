@@ -51,6 +51,8 @@ class RuntimeExtensionsTest extends TestCase
             'icon',
             'qr_code_data_uri',
             'user_shortcuts',
+            'initialize_datatable',
+            'datatable_column_class'
         ];
 
         $i = 0;

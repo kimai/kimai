@@ -23,7 +23,7 @@ class LocaleServiceTest extends TestCase
     }
 
     /**
-     * @return array<string, array{'date': string, 'time': string, 'rtl': bool, 'translation': bool}>
+     * @return array<string, array{'date': string, 'time': string, 'translation': bool}>
      */
     protected function getDefaultSettings(): array
     {
@@ -31,73 +31,61 @@ class LocaleServiceTest extends TestCase
             'de' => [
                 'date' => 'd.m.Y',
                 'time' => 'H:i',
-                'rtl' => false,
                 'translation' => true,
             ],
             'en' => [
                 'date' => 'Y-m-d',
                 'time' => 'H:i:s',
-                'rtl' => false,
                 'translation' => true,
             ],
             'en_AU' => [
                 'date' => 'Y-m-d',
                 'time' => 'H:i:s',
-                'rtl' => false,
                 'translation' => false,
             ],
             'pt_BR' => [
                 'date' => 'd-m-Y',
                 'time' => 'HH:mm',
-                'rtl' => false,
                 'translation' => true,
             ],
             'it' => [
                 'date' => 'd.m.Y',
                 'time' => 'HH:mm',
-                'rtl' => false,
                 'translation' => true,
             ],
             'fr' => [
                 'date' => 'd/m/Y',
                 'time' => 'HH:mm',
-                'rtl' => false,
                 'translation' => true,
             ],
             'fr_BE' => [
                 'date' => 'd/MM/yy',
                 'time' => 'HH:mm',
-                'rtl' => false,
                 'translation' => false,
             ],
             'fr_CA' => [
                 'date' => 'y-MM-dd',
                 'time' => 'HH \'h\' mm',
-                'rtl' => false,
                 'translation' => true,
             ],
             'es' => [
                 'date' => 'd.m.Y',
                 'time' => 'HH:mm',
-                'rtl' => false,
                 'translation' => true,
             ],
             'ru' => [
                 'date' => 'd.m.Y',
                 'time' => 'HH:mm',
-                'rtl' => false,
                 'translation' => true,
             ],
             'ar' => [
                 'date' => 'Y-m-d',
                 'time' => 'HH:mm',
-                'rtl' => true,
                 'translation' => true,
             ],
             'hu' => [
                 'date' => 'Y.m.d.',
                 'time' => 'HH:mm',
-                'rtl' => false,
                 'translation' => true,
             ],
         ];
@@ -144,6 +132,24 @@ class LocaleServiceTest extends TestCase
         $sut = $this->getSut($this->getDefaultSettings());
         self::assertEquals('H:i', $sut->getTimeFormat('de'));
         self::assertEquals('H:i:s', $sut->getTimeFormat('en'));
+    }
+
+    public function testIsRightToLeft(): void
+    {
+        $sut = $this->getSut($this->getDefaultSettings());
+        self::assertTrue($sut->isRightToLeft('ar'));
+        self::assertTrue($sut->isRightToLeft('he'));
+        self::assertTrue($sut->isRightToLeft('he_IL'));
+        self::assertTrue($sut->isRightToLeft('he-IL'));
+        self::assertTrue($sut->isRightToLeft('fa'));
+        self::assertTrue($sut->isRightToLeft('ur'));
+        self::assertTrue($sut->isRightToLeft('ps'));
+        self::assertTrue($sut->isRightToLeft('sd'));
+        self::assertTrue($sut->isRightToLeft('ug'));
+        self::assertTrue($sut->isRightToLeft('ckb'));
+        self::assertTrue($sut->isRightToLeft('yi'));
+        self::assertTrue($sut->isRightToLeft('ku_arab'));
+        self::assertTrue($sut->isRightToLeft('ku-arab'));
     }
 
     #[DataProvider('getNearestTranslationLocaleData')]

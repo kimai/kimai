@@ -113,7 +113,6 @@ class ExportTemplateTest extends AbstractEntityTestCase
         $sut = new ExportTemplate();
         $r = new \ReflectionObject($sut);
         $p = $r->getProperty('id');
-        $p->setAccessible(true);
         $p->setValue($sut, 13);
         self::assertEquals(13, $sut->getId());
         self::assertFalse($sut->isNew());

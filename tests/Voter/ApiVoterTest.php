@@ -79,7 +79,7 @@ class ApiVoterTest extends AbstractVoterTestCase
     public function testRememberMeSessionIsGranted(): void
     {
         $user = self::getUser(1, User::ROLE_USER);
-        $token = new RememberMeToken($user, 'secured_area', 'secret');
+        $token = new RememberMeToken($user, 'secured_area');
 
         self::assertNotInstanceOf(TwoFactorTokenInterface::class, $token); // @phpstan-ignore staticMethod.alreadyNarrowedType
         self::assertSame(

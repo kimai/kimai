@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Audit\Loggable;
 use App\Export\Annotation as Exporter;
 use App\Invoice\InvoiceModel;
 use App\Repository\InvoiceRepository;
@@ -35,6 +36,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Exporter\Expose(name: 'dueDate', label: 'invoice.due_days', type: 'datetime', exp: 'object.getDueDate() === null ? null : object.getDueDate()')]
 #[Exporter\Expose(name: 'user', label: 'username', type: 'string', exp: 'object.getUser() === null ? null : object.getUser().getDisplayName()')]
 #[Exporter\Expose(name: 'paymentDate', label: 'invoice.payment_date', type: 'date', exp: 'object.getPaymentDate() === null ? null : object.getPaymentDate()')]
+#[Loggable(title: 'invoices')]
 class Invoice implements EntityWithMetaFields
 {
     public const STATUS_PENDING = 'pending';

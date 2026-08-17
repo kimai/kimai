@@ -14,9 +14,9 @@ use Symfony\Component\Validator\Constraint;
 #[\Attribute(\Attribute::TARGET_CLASS)]
 final class Customer extends Constraint
 {
-    public const CUSTOMER_NUMBER_EXISTING = 'kimai-customer-00';
+    public const string CUSTOMER_NUMBER_EXISTING = 'kimai-customer-00';
 
-    protected const ERROR_NAMES = [
+    protected const array ERROR_NAMES = [
         self::CUSTOMER_NUMBER_EXISTING => 'The number %number% is already used.',
     ];
 

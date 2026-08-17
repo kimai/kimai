@@ -258,10 +258,6 @@
         <source>user_auth_login</source>
         <target state="translated">Mẫu đăng nhập</target>
       </trans-unit>
-      <trans-unit id="C26_mL7" resname="user_auth_registration">
-        <source>user_auth_registration</source>
-        <target state="translated">Đăng ký người dùng</target>
-      </trans-unit>
       <trans-unit id="SnkW0Pk" resname="theme.avatar_url">
         <source>theme.avatar_url</source>
         <target state="translated">Cho phép sử dụng URLs cho ảnh đại diện</target>

@@ -234,10 +234,6 @@
         <source>theme.color_choices</source>
         <target state="translated">Tilladte farver</target>
       </trans-unit>
-      <trans-unit id="C26_mL7" resname="user_auth_registration" xml:space="preserve">
-        <source>user_auth_registration</source>
-        <target state="translated">Bruger registrering</target>
-      </trans-unit>
       <trans-unit id="E9URNEx" resname="user_auth_password_reset_retry_ttl" xml:space="preserve">
         <source>user_auth_password_reset_retry_ttl</source>
         <target state="translated">Glemt password - sekunder før en bruger kan bede om den næste e-mail</target>

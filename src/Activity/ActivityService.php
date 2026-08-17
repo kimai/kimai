@@ -65,16 +65,13 @@ class ActivityService
     public function saveActivity(Activity $activity): Activity
     {
         if ($activity->isNew()) {
-            return $this->saveNewActivity($activity); // @phpstan-ignore method.deprecated
+            return $this->saveNewActivity($activity);
         } else {
-            return $this->updateActivity($activity); // @phpstan-ignore method.deprecated
+            return $this->updateActivity($activity);
         }
     }
 
-    /**
-     * @deprecated since 2.35 - use saveActivity() instead
-     */
-    public function saveNewActivity(Activity $activity): Activity
+    private function saveNewActivity(Activity $activity): Activity
     {
         if (null !== $activity->getId()) {
             throw new InvalidArgumentException('Cannot create activity, already persisted');
@@ -108,10 +105,7 @@ class ActivityService
         }
     }
 
-    /**
-     * @deprecated since 2.35 - use saveActivity() instead
-     */
-    public function updateActivity(Activity $activity): Activity
+    private function updateActivity(Activity $activity): Activity
     {
         $this->validateActivity($activity);
 

@@ -238,10 +238,6 @@
         <source>user_auth_password_reset</source>
         <target>Ξέχασα τον κωδικό μου</target>
       </trans-unit>
-      <trans-unit id="C26_mL7" resname="user_auth_registration">
-        <source>user_auth_registration</source>
-        <target>Εγγραφή χρήστη</target>
-      </trans-unit>
       <trans-unit id="BGHQ8YO" resname="user_auth_login">
         <source>user_auth_login</source>
         <target>Φόρμα εισόδου</target>

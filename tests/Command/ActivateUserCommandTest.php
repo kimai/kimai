@@ -32,12 +32,12 @@ class ActivateUserCommandTest extends KernelTestCase
         parent::setUp();
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
-        $container = self::$kernel->getContainer();
+        $container = self::getContainer();
 
         /** @var UserService $userService */
         $userService = $container->get(UserService::class);
 
-        $this->application->add(new ActivateUserCommand($userService));
+        $this->application->addCommand(new ActivateUserCommand($userService));
     }
 
     public function testCommandName(): void
@@ -72,7 +72,7 @@ class ActivateUserCommandTest extends KernelTestCase
         $output = $commandTester->getDisplay();
         self::assertStringContainsString('[OK] User "chris_user" has been activated.', $output);
 
-        $container = self::$kernel->getContainer();
+        $container = self::getContainer();
         /** @var Registry $doctrine */
         $doctrine = $container->get('doctrine');
         /** @var UserRepository $userRepository */

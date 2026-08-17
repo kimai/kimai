@@ -30,7 +30,7 @@ trait Rate
     #[OA\Property(ref: '#/components/schemas/User')]
     private ?User $user = null;
     #[ORM\Column(name: 'rate', type: Types::FLOAT, nullable: false)]
-    #[Assert\GreaterThanOrEqual(0)]
+    #[Assert\GreaterThanOrEqual(value: 0)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private float $rate = 0.00;

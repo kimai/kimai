@@ -6,22 +6,6 @@
         <source>automated_email_dont_answer</source>
         <target>Tio estas aŭtomata mesaĝo. Bonvolu ne respondi, la mesaĝo ne estos legita.</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject">
-        <source>registration.subject</source>
-        <target>Aktivigu vian konton</target>
-      </trans-unit>
-      <trans-unit id="QtcznHC" resname="registration.title">
-        <source>registration.title</source>
-        <target>Bonvenon, %username%</target>
-      </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button">
-        <source>registration.button</source>
-        <target>Aktivigu vian konton</target>
-      </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target>Vi aliĝis al la temporegistrilo Kimai per la retadreso %email%. Bonvolu aktivigi vian konton dum la sekvaj kelkaj horoj, antaŭ ol la ligilo senvalidiĝos.</target>
-      </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
         <target state="needs-translation">Restarigi vian pasvorton</target>

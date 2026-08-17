@@ -59,7 +59,7 @@ final class CustomerService
         $customer->setCountry($this->configuration->getCustomerDefaultCountry());
         $customer->setLanguage($this->configuration->getCustomerDefaultLanguage());
         $customer->setCurrency($this->configuration->getDefaultCurrency());
-        $customer->setNumber($this->calculateNextCustomerNumber());
+        $customer->setNumber($this->calculateNextCustomerNumber($customer));
 
         $this->loadMetaFields($customer);
         $this->dispatcher->dispatch(new CustomerCreateEvent($customer));
@@ -70,16 +70,13 @@ final class CustomerService
     public function saveCustomer(Customer $customer): Customer
     {
         if ($customer->isNew()) {
-            return $this->saveNewCustomer($customer); // @phpstan-ignore method.deprecated
+            return $this->saveNewCustomer($customer);
         } else {
-            return $this->updateCustomer($customer); // @phpstan-ignore method.deprecated
+            return $this->updateCustomer($customer);
         }
     }
 
-    /**
-     * @deprecated since 2.35 - use saveCustomer() instead
-     */
-    public function saveNewCustomer(Customer $customer): Customer
+    private function saveNewCustomer(Customer $customer): Customer
     {
         if (null !== $customer->getId()) {
             throw new InvalidArgumentException('Cannot create customer, already persisted');
@@ -113,10 +110,7 @@ final class CustomerService
         }
     }
 
-    /**
-     * @deprecated since 2.35 - use saveCustomer() instead
-     */
-    public function updateCustomer(Customer $customer): Customer
+    private function updateCustomer(Customer $customer): Customer
     {
         $this->validateCustomer($customer);
 
@@ -150,7 +144,7 @@ final class CustomerService
         return $this->repository->countCustomer($visible);
     }
 
-    private function calculateNextCustomerNumber(): ?string
+    private function calculateNextCustomerNumber(Customer $customer): ?string
     {
         $format = $this->configuration->find('customer.number_format');
         if (empty($format) || !\is_string($format)) {
@@ -161,7 +155,7 @@ final class CustomerService
         $count = $this->repository->countCustomer();
         $start = $count + $this->generatedNumbers;
         $i = 0;
-        $createDate = new \DateTimeImmutable();
+        $createDate = new \DateTimeImmutable('now', new \DateTimeZone($customer->getTimezone() ?? $this->getDefaultTimezone()));
 
         do {
             $start++;

@@ -106,15 +106,15 @@ final class PermissionController extends AbstractController
         $other = [];
 
         foreach ($event->getSections() as $section) {
-            $permissionSorted[$section->getTitle()] = []; // @phpstan-ignore method.deprecatedInterface
+            $permissionSorted[$section->getTitle()] = [];
         }
 
         foreach ($this->manager->getPermissions() as $permission) {
             $found = false;
 
             foreach (array_reverse($event->getSections()) as $section) {
-                if ($section->filter($permission)) { // @phpstan-ignore method.deprecatedInterface
-                    $permissionSorted[$section->getTitle()][] = $permission; // @phpstan-ignore method.deprecatedInterface
+                if ($section->filter($permission)) {
+                    $permissionSorted[$section->getTitle()][] = $permission;
                     $found = true;
                     break;
                 }

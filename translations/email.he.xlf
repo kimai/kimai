@@ -6,22 +6,6 @@
         <source>automated_email_dont_answer</source>
         <target state="final">זאת הודעת דוא״ל שנוצרת אוטומטית. נא לא להשיב לה, אף אחד לא ייקרא את זה.</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject" xml:space="preserve" approved="yes">
-        <source>registration.subject</source>
-        <target state="final">הפעלת החשבון שלך</target>
-      </trans-unit>
-      <trans-unit id="QtcznHC" resname="registration.title" xml:space="preserve" approved="yes">
-        <source>registration.title</source>
-        <target state="final">ברוך בואך %username%</target>
-      </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button" xml:space="preserve" approved="yes">
-        <source>registration.button</source>
-        <target state="final">הפעלת החשבון שלך</target>
-      </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro" xml:space="preserve" approved="yes">
-        <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
-        <target state="final">נרשמת למערכת דיווח השעות Kimai עם כתובת הדוא״ל %email%. נא להפעיל את החשבון בשעות הקרובות לפני שיפוג תוקף הקישור.</target>
-      </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve" approved="yes">
         <source>reset.subject</source>
         <target state="final">כניסה ל־Kimai</target>

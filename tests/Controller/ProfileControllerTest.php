@@ -245,7 +245,7 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         );
     }
 
-    public function testCreateApiToken(): void
+    public function testCreateAccessToken(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
@@ -294,61 +294,6 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/api-token');
         self::assertTrue($client->getResponse()->isSuccessful());
         self::assertEquals(0, $client->getCrawler()->filter('img[src^="data:image/png"]')->count());
-    }
-
-    #[Group('legacy')]
-    public function testCreateApiPassword(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/api-token');
-
-        $user = $this->getUserByRole(User::ROLE_USER);
-        /** @var PasswordHasherFactoryInterface $passwordEncoder */
-        $passwordEncoder = self::getContainer()->get('security.password_hasher_factory');
-
-        self::assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), UserFixtures::DEFAULT_API_TOKEN));
-        self::assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), 'test1234'));
-        self::assertEquals(UserFixtures::USERNAME_USER, $user->getUserIdentifier());
-
-        $form = $client->getCrawler()->filter('form[name=user_api_password]')->form();
-        $client->submit($form, [
-            'user_api_password' => [
-                'plainApiToken' => [
-                    'first' => 'test1234',
-                    'second' => 'test1234',
-                ]
-            ]
-        ]);
-
-        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/api-token'));
-        $client->followRedirect();
-        self::assertTrue($client->getResponse()->isSuccessful());
-
-        $this->assertHasFlashSuccess($client);
-
-        $user = $this->getUserByRole(User::ROLE_USER);
-
-        self::assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), UserFixtures::DEFAULT_API_TOKEN));
-        self::assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), 'test1234'));
-    }
-
-    #[Group('legacy')]
-    public function testCreateApiPasswordFailsIfPasswordLengthToShort(): void
-    {
-        $this->assertFormHasValidationError(
-            User::ROLE_USER,
-            '/profile/' . UserFixtures::USERNAME_USER . '/api-token',
-            'form[name=user_api_password]',
-            [
-                'user_api_password' => [
-                    'plainApiToken' => [
-                        'first' => 'abcdef1',
-                        'second' => 'abcdef1',
-                    ]
-                ]
-            ],
-            ['#user_api_password_plainApiToken_first']
-        );
     }
 
     public function testRolesActionIsSecured(): void
@@ -673,7 +618,7 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         $form = $crawler->filter('form[name=user_contract]')->form();
 
         $result = $client->submit($form, [
-            'user_contract[workHoursMonday]' => '25:00',
+            'user_contract[work_monday]' => '25:00',
         ]);
 
         self::assertTrue($client->getResponse()->isSuccessful());
@@ -702,13 +647,13 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         $form = $client->getCrawler()->filter('form[name=user_contract]')->form();
 
         $client->submit($form, [
-            'user_contract[workHoursMonday]' => '1:00',
-            'user_contract[workHoursTuesday]' => '2:00',
-            'user_contract[workHoursWednesday]' => '3:00',
-            'user_contract[workHoursThursday]' => '4:30',
-            'user_contract[workHoursFriday]' => '5:12',
-            'user_contract[workHoursSaturday]' => '6:59',
-            'user_contract[workHoursSunday]' => '0:01',
+            'user_contract[work_monday]' => '1:00',
+            'user_contract[work_tuesday]' => '2:00',
+            'user_contract[work_wednesday]' => '3:00',
+            'user_contract[work_thursday]' => '4:30',
+            'user_contract[work_friday]' => '5:12',
+            'user_contract[work_saturday]' => '6:59',
+            'user_contract[work_sunday]' => '0:01',
         ]);
 
         $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/contract'));

@@ -29,7 +29,7 @@ final class Version20220101204501 extends AbstractMigration
         $table->addColumn('name', 'string', ['notnull' => true, 'length' => 50]);
         $table->addColumn('value', 'text', ['notnull' => false, 'length' => 65535]);
         $table->addColumn('visible', 'boolean', ['notnull' => true, 'default' => false]);
-        $table->setPrimaryKey(['id']);
+        $this->addPrimaryKeyConstraint($table, ['id']);
         $table->addIndex(['invoice_id'], 'IDX_7EDC37D92989F1FD');
         $table->addUniqueIndex(['invoice_id', 'name'], 'UNIQ_7EDC37D92989F1FD5E237E06');
         $table->addForeignKeyConstraint('kimai2_invoices', ['invoice_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_7EDC37D92989F1FD');

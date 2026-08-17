@@ -156,7 +156,6 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
         $prefs = $this->getUserPreferences($user, 'America/Vancouver');
         $user->setPreferences($prefs);
         $user->setPassword($this->passwordHasher->hashPassword($user, self::DEFAULT_PASSWORD));
-        $user->setApiToken($this->passwordHasher->hashPassword($user, self::DEFAULT_API_TOKEN));
         $token = new AccessToken($user, self::DEFAULT_API_TOKEN . '_john');
         $token->setName('User fixture');
         $all[] = [$user, $token];
@@ -172,7 +171,6 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
         $prefs = $this->getUserPreferences($user, 'America/Vancouver');
         $user->setPreferences($prefs);
         $user->setPassword($this->passwordHasher->hashPassword($user, self::DEFAULT_PASSWORD));
-        $user->setApiToken($this->passwordHasher->hashPassword($user, self::DEFAULT_API_TOKEN));
         $token = new AccessToken($user, self::DEFAULT_API_TOKEN . '_user');
         $token->setName('User fixture');
         $all[] = [$user, $token];
@@ -189,7 +187,6 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
         $prefs = $this->getUserPreferences($user, 'Australia/Sydney');
         $user->setPreferences($prefs);
         $user->setPassword($this->passwordHasher->hashPassword($user, self::DEFAULT_PASSWORD));
-        $user->setApiToken($this->passwordHasher->hashPassword($user, self::DEFAULT_API_TOKEN));
         $token = new AccessToken($user, self::DEFAULT_API_TOKEN . '_inactive');
         $token->setName('User fixture');
         $all[] = [$user, $token];
@@ -205,7 +202,6 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
         $prefs = $this->getUserPreferences($user, 'Asia/Bangkok');
         $user->setPreferences($prefs);
         $user->setPassword($this->passwordHasher->hashPassword($user, self::DEFAULT_PASSWORD));
-        $user->setApiToken($this->passwordHasher->hashPassword($user, self::DEFAULT_API_TOKEN));
         $token = new AccessToken($user, self::DEFAULT_API_TOKEN . '_teamlead');
         $token->setName('User fixture');
         $all[] = [$user, $token];
@@ -221,7 +217,6 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
         $prefs = $this->getUserPreferences($user, 'Asia/Bangkok');
         $user->setPreferences($prefs);
         $user->setPassword($this->passwordHasher->hashPassword($user, self::DEFAULT_PASSWORD));
-        $user->setApiToken($this->passwordHasher->hashPassword($user, self::DEFAULT_API_TOKEN));
         $token = new AccessToken($user, self::DEFAULT_API_TOKEN . '_tony');
         $token->setName('User fixture');
         $all[] = [$user, $token];
@@ -237,7 +232,6 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
         $prefs = $this->getUserPreferences($user, 'Europe/London');
         $user->setPreferences($prefs);
         $user->setPassword($this->passwordHasher->hashPassword($user, self::DEFAULT_PASSWORD));
-        $user->setApiToken($this->passwordHasher->hashPassword($user, self::DEFAULT_API_TOKEN));
         $token = new AccessToken($user, self::DEFAULT_API_TOKEN . '_anna');
         $token->setName('User fixture');
         $all[] = [$user, $token];
@@ -252,7 +246,6 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
         $prefs = $this->getUserPreferences($user, 'Europe/London');
         $user->setPreferences($prefs);
         $user->setPassword($this->passwordHasher->hashPassword($user, self::DEFAULT_PASSWORD));
-        $user->setApiToken($this->passwordHasher->hashPassword($user, self::DEFAULT_API_TOKEN));
         $token = new AccessToken($user, self::DEFAULT_API_TOKEN . '_admin');
         $token->setName('User fixture');
         $all[] = [$user, $token];
@@ -268,7 +261,6 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
         $prefs = $this->getUserPreferences($user, 'Europe/Berlin');
         $user->setPreferences($prefs);
         $user->setPassword($this->passwordHasher->hashPassword($user, self::DEFAULT_PASSWORD));
-        $user->setApiToken($this->passwordHasher->hashPassword($user, self::DEFAULT_API_TOKEN));
         $token = new AccessToken($user, self::DEFAULT_API_TOKEN . '_susan');
         $token->setName('User fixture');
         $all[] = [$user, $token];
@@ -283,7 +275,6 @@ final class UserFixtures extends Fixture implements FixtureGroupInterface
         $prefs = $this->getUserPreferences($user, 'Europe/Berlin');
         $user->setPreferences($prefs);
         $user->setPassword($this->passwordHasher->hashPassword($user, self::DEFAULT_PASSWORD));
-        $user->setApiToken($this->passwordHasher->hashPassword($user, self::DEFAULT_API_TOKEN));
         $token = new AccessToken($user, self::DEFAULT_API_TOKEN . '_super');
         $token->setName('User fixture');
         $all[] = [$user, $token];

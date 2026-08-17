@@ -12,15 +12,15 @@ namespace App\Plugin;
 /**
  * @internaö
  */
-final class Package
+final readonly class Package
 {
-    public function __construct(private readonly \SplFileInfo $packageFile, private readonly PluginMetadata $pluginMetadata)
+    public function __construct(private string $packagePath, private PluginMetadata $pluginMetadata)
     {
     }
 
-    public function getPackageFile(): \SplFileInfo
+    public function getPackagePath(): string
     {
-        return $this->packageFile;
+        return $this->packagePath;
     }
 
     public function getMetadata(): PluginMetadata

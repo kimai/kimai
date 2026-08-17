@@ -185,10 +185,11 @@ class ProjectServiceTest extends TestCase
             ]
         ]);
 
-        $sut = $this->getSut(null, null, $configuration);
-
+        $customer = new Customer('foo');
+        $customer->setTimezone('UTC');
         $date = new \DateTimeImmutable();
-        $project = $sut->createNewProject();
+        $sut = $this->getSut(null, null, $configuration);
+        $project = $sut->createNewProject($customer);
 
         self::assertEquals($expected($date), $project->getNumber());
     }

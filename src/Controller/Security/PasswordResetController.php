@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -40,7 +40,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route(path: '/resetting')]
 final class PasswordResetController extends AbstractController
 {
-    public const CSRF_TOKEN = 'password_reset';
+    public const string CSRF_TOKEN = 'password_reset';
 
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,
@@ -75,7 +75,7 @@ final class PasswordResetController extends AbstractController
         TranslatorInterface $translator,
         CsrfTokenManagerInterface $csrfTokenManager,
         LoginLinkHandlerInterface $loginLinkHandler,
-        RateLimiterFactory $resetPasswordLimiter
+        RateLimiterFactoryInterface $resetPasswordLimiter
     ): Response
     {
         if (!$this->configuration->isPasswordResetActive()) {
@@ -113,7 +113,7 @@ final class PasswordResetController extends AbstractController
             }
 
             if (!$user->isPasswordRequestNonExpired($this->configuration->getPasswordResetRetryLifetime())) {
-                $loginLinkDetails = $loginLinkHandler->createLoginLink($user, $request, $this->configuration->getPasswordResetRetryLifetime()); // @phpstan-ignore-line
+                $loginLinkDetails = $loginLinkHandler->createLoginLink($user, $request, $this->configuration->getPasswordResetRetryLifetime());
                 $loginLink = $loginLinkDetails->getUrl();
 
                 $mail = $this->generateResettingEmailMessage($user, $translator, $loginLink);

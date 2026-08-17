@@ -18,14 +18,12 @@ use Symfony\Contracts\EventDispatcher\Event;
 final class ConfigureMainMenuEvent extends Event
 {
     private MenuItemModel $menu;
-    private MenuItemModel $apps;
     private MenuItemModel $admin;
     private MenuItemModel $system;
 
     public function __construct()
     {
         $this->menu = new MenuItemModel('main', 'menu.root');
-        $this->apps = new MenuItemModel('apps', 'menu.apps', '', [], 'applications');
         $this->admin = new MenuItemModel('admin', 'menu.admin', '', [], 'administration');
         $this->system = new MenuItemModel('system', 'menu.system', '', [], 'configuration');
     }
@@ -33,10 +31,6 @@ final class ConfigureMainMenuEvent extends Event
     public function findById(string $identifier): ?MenuItemModel
     {
         if (($tmp = $this->menu->findChild($identifier)) !== null) {
-            return $tmp;
-        }
-
-        if (($tmp = $this->apps->findChild($identifier)) !== null) {
             return $tmp;
         }
 
@@ -69,14 +63,6 @@ final class ConfigureMainMenuEvent extends Event
     public function getReportingMenu(): ?MenuItemModel
     {
         return $this->menu->getChild('reporting');
-    }
-
-    /**
-     * @deprecated since 2.22 - use getMenu() or getAdminMenu() instead
-     */
-    public function getAppsMenu(): MenuItemModel
-    {
-        return $this->apps;
     }
 
     public function getAdminMenu(): MenuItemModel

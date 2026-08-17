@@ -27,7 +27,7 @@ class MailTestCommandTest extends KernelTestCase
         parent::setUp();
         $kernel = self::bootKernel();
         $this->application = new Application($kernel);
-        $this->application->add(new MailTestCommand(
+        $this->application->addCommand(new MailTestCommand(
             $this->createMock(EventDispatcherInterface::class)
         ));
     }

@@ -54,11 +54,4 @@ final class Context
 
         return str_contains(strtolower($request->headers->get('X-Requested-With')), 'kimai');
     }
-
-    public function getBranding(string $config): mixed
-    {
-        @trigger_error('Use config() instead of "kimai_context" to access system configurations', E_USER_DEPRECATED);
-
-        return null;
-    }
 }

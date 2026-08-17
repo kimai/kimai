@@ -6,22 +6,6 @@
         <source>automated_email_dont_answer</source>
         <target>Αυτό είναι ένα αυτοματοποιημένο e-mail. Παρακαλούμε μην απαντήσετε, το περιεχόμενο δεν θα αναγνωσθεί.</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject">
-        <source>registration.subject</source>
-        <target>Ενεργοποίηση του λογαριασμού σας</target>
-      </trans-unit>
-      <trans-unit id="QtcznHC" resname="registration.title">
-        <source>registration.title</source>
-        <target>Καλώς όρισες %username%</target>
-      </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button">
-        <source>registration.button</source>
-        <target>Ενεργοποίηση λογαριασμού</target>
-      </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target>Εγγραφήκατε στο λογισμικό παρακολούθησης χρόνου Kimai με το e-mail %email%. Παρακαλούμε ενεργοποιήσετε τον λογαριασμό σας εντός μερικών ωρών, προτού λήξει ο σύνδεσμος.</target>
-      </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
         <target state="needs-translation">Επαναφορά του κωδικού σας</target>

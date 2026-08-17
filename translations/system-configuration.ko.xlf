@@ -254,10 +254,6 @@
         <source>user_auth_password_reset</source>
         <target>비밀번호 분실</target>
       </trans-unit>
-      <trans-unit id="C26_mL7" resname="user_auth_registration">
-        <source>user_auth_registration</source>
-        <target>사용자 등록</target>
-      </trans-unit>
       <trans-unit id="yBBvkfb" resname="timesheet.rules.allow_zero_duration">
         <source>timesheet.rules.allow_zero_duration</source>
         <target state="translated">시간 항목을 비워두는 것을 허용</target>

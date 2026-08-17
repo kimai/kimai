@@ -44,8 +44,6 @@ class SearchTermTransformerTest extends TestCase
 
         self::assertInstanceOf(SearchTerm::class, $term);
         self::assertEquals('hello world:xxxxx foo bar test:1234', $term->getOriginalSearch());
-        self::assertEquals('hello foo bar', $term->getSearchTerm());
-        self::assertEquals(['world' => 'xxxxx', 'test' => '1234'], $term->getSearchFields());
         $expectedParts = [
             ['hello', null],
             ['xxxxx', 'world'],

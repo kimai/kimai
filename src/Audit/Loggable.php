@@ -9,13 +9,22 @@
 
 namespace App\Audit;
 
+/**
+ * For entity classes, whose changes could be logged.
+ */
 #[\Attribute(\Attribute::TARGET_CLASS)]
 final class Loggable
 {
     /**
      * @param class-string|null $customFieldClass
+     * @param string[] $ignoredProperties
      */
-    public function __construct(public ?string $customFieldClass = null)
+    public function __construct(
+        public ?string $customFieldClass = null,
+        public array $ignoredProperties = [],
+        public ?string $title = null,
+        public string $translationDomain = 'messages',
+    )
     {
     }
 }

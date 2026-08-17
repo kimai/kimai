@@ -202,10 +202,6 @@
         <source>user_auth_password_reset</source>
         <target>Parola uitată</target>
       </trans-unit>
-      <trans-unit id="C26_mL7" resname="user_auth_registration">
-        <source>user_auth_registration</source>
-        <target>Înregistrarea utilizatorului</target>
-      </trans-unit>
       <trans-unit id="BGHQ8YO" resname="user_auth_login">
         <source>user_auth_login</source>
         <target>Formular de autentificare</target>

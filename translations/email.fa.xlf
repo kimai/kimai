@@ -6,22 +6,6 @@
         <source>automated_email_dont_answer</source>
         <target>این یک ایمیلی است که به صورت اتوماتیک ساخته شده است. لطفا به آن پاسخ ندهید، این آدرس خوانده نمی شود.</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject">
-        <source>registration.subject</source>
-        <target>حساب کاربری خود را فعال کنید</target>
-      </trans-unit>
-      <trans-unit id="QtcznHC" resname="registration.title">
-        <source>registration.title</source>
-        <target>%username% خوش آمدید</target>
-      </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button">
-        <source>registration.button</source>
-        <target>حساب کاربری خود را فعال کنید</target>
-      </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target state="translated">شما در رهگیر زمان Kimai با ایمیل %email% ثبت نام کرده اید. اکنون باید ایمیل خود را در همین زمان، قبل از باطل شدن لینک فعال کنید.</target>
-      </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
         <target state="translated">ورود به کیمای</target>

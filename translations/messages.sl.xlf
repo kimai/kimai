@@ -10,10 +10,6 @@
         <source>Contact</source>
         <target state="needs-translation">Contact</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email">
-        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="translated">E-poštno sporočilo je bilo poslano na %email%. Vsebuje povezavo, ki jo morate klikniti, da aktivirate svoj račun.</target>
-      </trans-unit>
       <trans-unit id="l4ZOh4." resname="desc">
         <source>desc</source>
         <target state="translated">Sestopanje</target>
@@ -142,10 +138,6 @@
         <source>user_profile</source>
         <target state="translated">Moj profil</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token">
-        <source>api_token</source>
-        <target state="translated">Geslo za API</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required">
         <source>login_required</source>
         <target state="translated">Manjka dovoljenje. Preusmeri na prijavo?</target>
@@ -221,10 +213,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin">
         <source>menu.plugin</source>
         <target state="translated">Vtičniki</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration">
-        <source>menu.system_configuration</source>
-        <target state="translated">Nastavitve</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags">
         <source>tags</source>
@@ -397,10 +385,6 @@
       <trans-unit id="6Hip2aF" resname="created_at">
         <source>created_at</source>
         <target state="translated">Ustvarjeno ob</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat">
-        <source>api_token_repeat</source>
-        <target state="translated">Ponovite geslo za API</target>
       </trans-unit>
       <trans-unit id="hlu4iX5" resname="error.no_comments_found">
         <source>error.no_comments_found</source>

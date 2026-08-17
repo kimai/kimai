@@ -1,17 +1,45 @@
 webpack_encore:
-    # The path where Encore is building the assets.
-    # This should match Encore.setOutputPath() in webpack.config.js.
+    # The path where Encore is building the assets - i.e. Encore.setOutputPath()
     output_path: '%kernel.project_dir%/public/build'
     # If multiple builds are defined (as shown below), you can disable the default build:
     # output_path: false
 
-    # if using Encore.enableIntegrityHashes() specify the crossorigin attribute value (default: false, or use 'anonymous' or 'use-credentials')
-    # crossorigin: 'anonymous'
-    
-    # Cache the entrypoints.json (rebuild Symfony's cache when entrypoints.json changes)
-    # Available in version 1.2
-    cache: '%kernel.debug%'
+    # Set attributes that will be rendered on all script and link tags
+    script_attributes:
+        defer: true
+        # Uncomment (also under link_attributes) if using Turbo Drive
+        # https://turbo.hotwired.dev/handbook/drive#reloading-when-assets-change
+        # 'data-turbo-track': reload
+    # link_attributes:
+        # Uncomment if using Turbo Drive
+        # 'data-turbo-track': reload
 
-when@dev:
+    # If using Encore.enableIntegrityHashes() and need the crossorigin attribute (default: false, or use 'anonymous' or 'use-credentials')
+    # crossorigin: 'anonymous'
+
+    # Preload all rendered script and link tags automatically via the HTTP/2 Link header
+    # preload: true
+
+    # Throw an exception if the entrypoints.json file is missing or an entry is missing from the data
+    # strict_mode: false
+
+    # If you have multiple builds:
+    # builds:
+        # frontend: '%kernel.project_dir%/public/frontend/build'
+
+        # pass the build name as the 3rd argument to the Twig functions
+        # {{ encore_entry_script_tags('entry1', null, 'frontend') }}
+
+framework:
+    assets:
+        json_manifest_path: '%kernel.project_dir%/public/build/manifest.json'
+
+when@prod:
     webpack_encore:
-        cache: false
+        # Cache the entrypoints.json (rebuild Symfony's cache when entrypoints.json changes)
+        # Available in version 1.2
+        cache: true
+
+#when@test:
+#    webpack_encore:
+#        strict_mode: false

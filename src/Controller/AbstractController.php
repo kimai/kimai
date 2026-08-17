@@ -69,7 +69,7 @@ abstract class AbstractController extends BaseAbstractController implements Serv
      */
     protected function createFormForGetRequest(string $type, mixed $data, array $options = []): FormInterface
     {
-        return $this->container->get('form.factory')->createNamed('', $type, $data, array_merge(['method' => 'GET'], $options)); // @phpstan-ignore-line
+        return $this->container->get('form.factory')->createNamed('', $type, $data, array_merge(['method' => 'GET'], $options));
     }
 
     /**

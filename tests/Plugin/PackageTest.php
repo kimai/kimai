@@ -21,16 +21,16 @@ class PackageTest extends TestCase
     {
         $fileInfo = new \SplFileInfo('path/to/package.zip');
         $metadata = $this->createMock(PluginMetadata::class);
-        $package = new Package($fileInfo, $metadata);
+        $package = new Package($fileInfo->getPathname(), $metadata);
 
-        self::assertSame($fileInfo, $package->getPackageFile());
+        self::assertSame($fileInfo->getPathname(), $package->getPackagePath());
     }
 
     public function testGetMetadataReturnsCorrectMetadata(): void
     {
         $fileInfo = new \SplFileInfo('path/to/package.zip');
         $metadata = $this->createMock(PluginMetadata::class);
-        $package = new Package($fileInfo, $metadata);
+        $package = new Package($fileInfo->getPathname(), $metadata);
 
         self::assertSame($metadata, $package->getMetadata());
     }

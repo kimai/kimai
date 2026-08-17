@@ -134,14 +134,6 @@
         <source>user_profile</source>
         <target state="translated">Моят профил</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token" xml:space="preserve">
-        <source>api_token</source>
-        <target state="translated">API парола</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat" xml:space="preserve">
-        <source>api_token_repeat</source>
-        <target state="translated">Повторете паролата за API</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required" xml:space="preserve">
         <source>login_required</source>
         <target state="translated">Липсва разрешение. Пренасочване към вход?</target>
@@ -217,10 +209,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin" xml:space="preserve">
         <source>menu.plugin</source>
         <target state="translated">Приставки</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration" xml:space="preserve">
-        <source>menu.system_configuration</source>
-        <target state="translated">Настройки</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags" xml:space="preserve">
         <source>tags</source>
@@ -1426,10 +1414,6 @@
         <source>api_password.intro</source>
         <target state="translated">Тук можете да управлявате вашите API жетони, които се използват за удостоверяване на вашето приложение към Kimai.</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title" xml:space="preserve">
-        <source>api_password.missing_title</source>
-        <target state="translated">API не може да се използва</target>
-      </trans-unit>
       <trans-unit id="dru_Thv" resname="please_choose" xml:space="preserve">
         <source>please_choose</source>
         <target state="translated">Моля, изберете</target>
@@ -1658,10 +1642,6 @@
         <source>api_token_hidden</source>
         <target state="translated">Това е единственият път, когато този ключ някога ще бъде показан! Затова го пазете и се уверете, че сте го копирали преди затварянето на този прозорец.</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve">
-        <source>api_password_deprecated</source>
-        <target state="translated">Паролите на API са остарели: моля, използвайте вместо това API маркери.</target>
-      </trans-unit>
       <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
         <source>hours_per_day</source>
         <target state="translated">Часове на ден</target>
@@ -1858,10 +1838,6 @@
         <source>update_multiple</source>
         <target state="translated">%action% %count% записи</target>
       </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve">
-        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="translated">Изпратен е имейл на %email%. Той съдържа линк, върху който трябва да кликнете, за да активирате акаунта си.</target>
-      </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="no" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="translated">Изпратен ви е имейл с линк за нулиране на паролата ви. Забележка: Можете да заявите нова парола само веднъж на всеки %tokenLifetime% часа. Ако не получите имейла, моля, проверете папката си за спам или опитайте отново.</target>
@@ -1969,6 +1945,14 @@
       <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
         <source>Timesheet</source>
         <target state="translated">Работно време</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="no">
+        <source>todo</source>
+            <target state="translated">Задача</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
+        <source>estimation</source>
+            <target state="translated">Оценка на времето</target>
       </trans-unit>
     </body>
   </file>

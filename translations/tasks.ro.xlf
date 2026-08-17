@@ -74,10 +74,6 @@
         <source>task.widget_rows</source>
         <target state="translated">Cantitatea de sarcini pe pagină în widgetul tabloului de bord</target>
       </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
-        <source>estimation</source>
-        <target state="translated">Estimarea timpului</target>
-      </trans-unit>
       <trans-unit id="SzbkpWy" resname="task.help.description" xml:space="preserve" approved="no">
         <source>task.help.description</source>
         <target state="translated">Această descriere va fi copiată în fiecare înregistrare a foii de pontaj</target>

@@ -41,7 +41,7 @@ class ProjectActivityInvoiceCalculatorTest extends AbstractCalculatorTestCase
     {
         $customer = new Customer('foo');
         $template = new InvoiceTemplate();
-        $template->setVat(19);
+        $template->setTaxRate(19.0);
 
         $user1 = $this->getMockBuilder(User::class)->onlyMethods(['getId'])->disableOriginalConstructor()->getMock();
         $user1->method('getId')->willReturn(1);

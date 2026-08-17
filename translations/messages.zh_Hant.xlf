@@ -130,21 +130,9 @@
         <source>user_profile</source>
         <target state="final">我的資訊</target>
       </trans-unit>
-      <trans-unit id="T4nAM7X" resname="api_token" xml:space="preserve" approved="yes">
-        <source>api_token</source>
-        <target state="final">API 密碼</target>
-      </trans-unit>
-      <trans-unit id="aq59Sk8" resname="api_token_repeat" xml:space="preserve" approved="yes">
-        <source>api_token_repeat</source>
-        <target state="final">再次輸入 API 密碼</target>
-      </trans-unit>
       <trans-unit id=".372.o7" resname="login_required" xml:space="preserve" approved="yes">
         <source>login_required</source>
         <target state="final">權限不足。要移至登入頁面嗎？</target>
-      </trans-unit>
-      <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve" approved="yes">
-        <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
-        <target state="final">已傳送電子郵件到 %email%。您必須點選郵件中的啟用鏈結才能啟用您的帳號。</target>
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve" approved="yes">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
@@ -201,10 +189,6 @@
       <trans-unit id="hOZxcaK" resname="menu.plugin" xml:space="preserve" approved="yes">
         <source>menu.plugin</source>
         <target state="final">外掛程式</target>
-      </trans-unit>
-      <trans-unit id="IXtkHRw" resname="menu.system_configuration" xml:space="preserve" approved="yes">
-        <source>menu.system_configuration</source>
-        <target state="final">設定</target>
       </trans-unit>
       <trans-unit id="l4wviUE" resname="tags" xml:space="preserve" approved="yes">
         <source>tags</source>
@@ -1058,10 +1042,6 @@
         <source>internalRate</source>
         <target state="final">內部費率</target>
       </trans-unit>
-      <trans-unit id="QT8.BCN" resname="api_password.missing_title" xml:space="preserve" approved="yes">
-        <source>api_password.missing_title</source>
-        <target state="final">無法使用 API</target>
-      </trans-unit>
       <trans-unit id="Y0PRG9Z" resname="profile.2fa_confirmation" xml:space="preserve" approved="yes">
         <source>profile.2fa_confirmation</source>
         <target state="final">請確認驗證碼，以啟用此帳號的雙重要素驗證。</target>
@@ -1726,10 +1706,6 @@
         <source>user_identifier</source>
         <target state="final">使用者 ID</target>
       </trans-unit>
-      <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve" approved="yes">
-        <source>api_password_deprecated</source>
-        <target state="final">API 密碼已過時：請改用 API token。</target>
-      </trans-unit>
       <trans-unit id="O5KpOtm" resname="absence_comment_mandatory" xml:space="preserve" approved="yes">
         <source>absence_comment_mandatory</source>
         <target state="final">缺勤：備註欄是必填欄位</target>
@@ -1909,6 +1885,14 @@
       <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="no">
         <source>Unlock month</source>
         <target state="translated">解鎖月份</target>
+      </trans-unit>
+      <trans-unit id="YC_uWA9" resname="todo" xml:space="preserve" approved="yes">
+        <source>todo</source>
+            <target state="final">任務</target>
+      </trans-unit>
+      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="yes">
+        <source>estimation</source>
+            <target state="final">工時估算</target>
       </trans-unit>
     </body>
   </file>

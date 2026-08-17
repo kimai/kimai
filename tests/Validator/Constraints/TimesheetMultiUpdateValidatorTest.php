@@ -50,7 +50,7 @@ class TimesheetMultiUpdateValidatorTest extends ConstraintValidatorTestCase
         $timesheet->setActivity($activity);
         $timesheet->setProject($project2);
 
-        $this->validator->validate($timesheet, new TimesheetMultiUpdateConstraint(['message' => 'myMessage']));
+        $this->validator->validate($timesheet, new TimesheetMultiUpdateConstraint(message: 'myMessage'));
 
         $this->buildViolation('Project mismatch, project specific activity and timesheet project are different.')
             ->atPath('property.path.project')
@@ -65,7 +65,7 @@ class TimesheetMultiUpdateValidatorTest extends ConstraintValidatorTestCase
             ->setProject(new Project())
         ;
 
-        $this->validator->validate($timesheet, new TimesheetMultiUpdateConstraint(['message' => 'myMessage']));
+        $this->validator->validate($timesheet, new TimesheetMultiUpdateConstraint(message: 'myMessage'));
 
         $this->buildViolation('You need to choose an activity, if the project should be changed.')
             ->atPath('property.path.activity')
@@ -80,7 +80,7 @@ class TimesheetMultiUpdateValidatorTest extends ConstraintValidatorTestCase
             ->setActivity((new Activity())->setProject(new Project()))
         ;
 
-        $this->validator->validate($timesheet, new TimesheetMultiUpdateConstraint(['message' => 'myMessage']));
+        $this->validator->validate($timesheet, new TimesheetMultiUpdateConstraint(message: 'myMessage'));
 
         $this->buildViolation('Missing project.')
             ->atPath('property.path.project')
@@ -94,7 +94,7 @@ class TimesheetMultiUpdateValidatorTest extends ConstraintValidatorTestCase
         $timesheet->setHourlyRate(10.12);
         $timesheet->setFixedRate(123.45);
 
-        $this->validator->validate($timesheet, new TimesheetMultiUpdateConstraint(['message' => 'myMessage']));
+        $this->validator->validate($timesheet, new TimesheetMultiUpdateConstraint(message: 'myMessage'));
 
         $this->buildViolation('Cannot set hourly rate and fixed rate at the same time.')
             ->atPath('property.path.fixedRate')
@@ -120,7 +120,7 @@ class TimesheetMultiUpdateValidatorTest extends ConstraintValidatorTestCase
         $timesheet->setActivity($activity);
         $timesheet->setProject($project);
 
-        $this->validator->validate($timesheet, new TimesheetMultiUpdateConstraint(['message' => 'myMessage']));
+        $this->validator->validate($timesheet, new TimesheetMultiUpdateConstraint(message: 'myMessage'));
 
         $this->buildViolation('Cannot assign a disabled activity.')
             ->atPath('property.path.activity')

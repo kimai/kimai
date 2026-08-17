@@ -28,8 +28,6 @@ tabler:
         tabler_welcome: dashboard
         tabler_login: login
         tabler_login_check: security_check
-        tabler_registration: registration_register
-        tabler_registration_register: registration_register
         tabler_password_reset: resetting_request
         tabler_password_reset_sent: resetting_send_email
 

@@ -6,22 +6,6 @@
         <source>automated_email_dont_answer</source>
         <target state="translated">Това е автоматично генериран имейл. Моля, не отговаряйте, адресът няма да бъде прочетен.</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject" xml:space="preserve">
-        <source>registration.subject</source>
-        <target state="translated">Активирайте акаунта си</target>
-      </trans-unit>
-      <trans-unit id="QtcznHC" resname="registration.title" xml:space="preserve">
-        <source>registration.title</source>
-        <target state="translated">Добре дошъл, %username%</target>
-      </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button" xml:space="preserve">
-        <source>registration.button</source>
-        <target state="translated">Активирайте акаунта си</target>
-      </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro" xml:space="preserve">
-        <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
-        <target state="translated">Регистрирахте се във времето за проследяване на Kimai с имейл адрес %email%. Моля, активирайте акаунта си през следващите няколко часа, преди линкът да изтече.</target>
-      </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
         <target state="translated">Влезте в Kimai</target>

@@ -10,10 +10,6 @@
         <source>task.help.title</source>
         <target state="final">Una breve descrizione del compito</target>
       </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="yes">
-        <source>estimation</source>
-        <target state="final">Stima del tempo</target>
-      </trans-unit>
       <trans-unit id="H.zMNfb" resname="task_started" xml:space="preserve" approved="yes">
         <source>task_started</source>
         <target state="final">Il lavoro è iniziato</target>
@@ -105,10 +101,6 @@
       <trans-unit id="zJvuPBv" resname="task.help.tags" xml:space="preserve" approved="yes">
         <source>task.help.tags</source>
         <target state="final">Questi tag verranno copiati in ogni registrazione del foglio di presenza</target>
-      </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="yes">
-        <source>task_todo</source>
-        <target state="final">Compito</target>
       </trans-unit>
     </body>
   </file>

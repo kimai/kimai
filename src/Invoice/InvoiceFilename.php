@@ -10,7 +10,9 @@
 namespace App\Invoice;
 
 use App\Utils\FileHelper;
+use Symfony\Component\DependencyInjection\Attribute\Exclude;
 
+#[Exclude]
 final class InvoiceFilename
 {
     private string $filename;

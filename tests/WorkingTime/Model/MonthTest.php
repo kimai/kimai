@@ -21,7 +21,7 @@ class MonthTest extends TestCase
     public function testDefaults(): void
     {
         $user = new User();
-        $user->setUsername('foo-bar');
+        $user->setUserIdentifier('foo-bar');
 
         $months = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
         foreach($months as $key => $days) {

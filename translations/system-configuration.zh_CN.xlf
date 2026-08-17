@@ -162,10 +162,6 @@
         <source>user_auth_password_reset</source>
         <target>忘记密码</target>
       </trans-unit>
-      <trans-unit id="C26_mL7" resname="user_auth_registration">
-        <source>user_auth_registration</source>
-        <target>用户注册</target>
-      </trans-unit>
       <trans-unit id="BGHQ8YO" resname="user_auth_login">
         <source>user_auth_login</source>
         <target>登录表单</target>

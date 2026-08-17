@@ -34,14 +34,13 @@ final class NoSpecialCharacters extends Constraint
      * @param string[]|null $character
      */
     public function __construct(
-        mixed $options = null,
         ?string $message = null,
         ?array $character = null,
         ?array $groups = null,
         mixed $payload = null
     )
     {
-        parent::__construct($options, $groups, $payload);
+        parent::__construct(null, $groups, $payload);
         $this->message = $message ?? $this->message;
         $this->characters = $character ?? $this->characters;
     }

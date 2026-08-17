@@ -37,7 +37,7 @@ final class Version20200205115243 extends AbstractMigration
         $customerRates->addForeignKeyConstraint('kimai2_users', ['user_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_82AB0AECA76ED395');
         $customerRates->addForeignKeyConstraint('kimai2_customers', ['customer_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_82AB0AEC9395C3F3');
         $customerRates->addUniqueIndex(['user_id', 'customer_id'], 'UNIQ_82AB0AECA76ED3959395C3F3');
-        $customerRates->setPrimaryKey(['id']);
+        $this->addPrimaryKeyConstraint($customerRates, ['id']);
 
         $projectRates = $schema->createTable('kimai2_projects_rates');
         $projectRates->addColumn('id', 'integer', ['autoincrement' => true, 'notnull' => true]);
@@ -48,7 +48,7 @@ final class Version20200205115243 extends AbstractMigration
         $projectRates->addForeignKeyConstraint('kimai2_users', ['user_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_41535D55A76ED395');
         $projectRates->addForeignKeyConstraint('kimai2_projects', ['project_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_41535D55166D1F9C');
         $projectRates->addUniqueIndex(['user_id', 'project_id'], 'UNIQ_41535D55A76ED395166D1F9C');
-        $projectRates->setPrimaryKey(['id']);
+        $this->addPrimaryKeyConstraint($projectRates, ['id']);
 
         $activityRates = $schema->createTable('kimai2_activities_rates');
         $activityRates->addColumn('id', 'integer', ['autoincrement' => true, 'notnull' => true]);
@@ -59,7 +59,7 @@ final class Version20200205115243 extends AbstractMigration
         $activityRates->addForeignKeyConstraint('kimai2_users', ['user_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_4A7F11BEA76ED395');
         $activityRates->addForeignKeyConstraint('kimai2_activities', ['activity_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_4A7F11BE81C06096');
         $activityRates->addUniqueIndex(['user_id', 'activity_id'], 'UNIQ_4A7F11BEA76ED39581C06096');
-        $activityRates->setPrimaryKey(['id']);
+        $this->addPrimaryKeyConstraint($activityRates, ['id']);
     }
 
     public function down(Schema $schema): void

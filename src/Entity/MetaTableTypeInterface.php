@@ -11,11 +11,6 @@ namespace App\Entity;
 
 use Symfony\Component\Validator\Constraint;
 
-/**
- * @method null|string getSection()
- * @method void setSection(?string $name)
- * @method string|null getFormTheme()
- */
 interface MetaTableTypeInterface
 {
     /**
@@ -140,19 +135,19 @@ interface MetaTableTypeInterface
     public function getOrder(): int;
 
     /**
-     * FIXME activate with 3.0
+     * Name of the section where this is rendered.
      */
-    //public function setSection(?string $section): void;
+    public function setSection(?string $section): void;
 
     /**
-     * FIXME activate with 3.0
+     * Name of section where the form field is rendered.
      */
-    //public function getSection(): ?string;
+    public function getSection(): ?string;
 
     /**
-     * FIXME activate with 3.0
+     * A form theme, if you type needs a custom one.
      */
-    // public function getFormTheme(): ?string;
+    public function getFormTheme(): ?string;
 
     /**
      * Whether true if this field is defined by a plugin, or false if it is a value stored in the database.

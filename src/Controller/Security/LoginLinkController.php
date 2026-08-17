@@ -13,10 +13,10 @@ use App\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route(path: '/auth/link')]
 /**
  * @CloudRequired
  */
+#[Route(path: '/auth/link')]
 final class LoginLinkController extends AbstractController
 {
     #[Route(path: '/check', name: 'link_login_check', methods: ['GET'])]

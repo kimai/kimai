@@ -14,10 +14,6 @@
         <source>task.start</source>
         <target state="translated">Verarbeitung starten</target>
       </trans-unit>
-      <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
-        <source>task_todo</source>
-        <target state="translated">Aufgabe</target>
-      </trans-unit>
       <trans-unit id="7f4C38O" resname="tasks.pending" xml:space="preserve" approved="no">
         <source>tasks.pending</source>
         <target state="translated">Ausstehende Aufgaben</target>
@@ -57,10 +53,6 @@
       <trans-unit id="kMOottI" resname="task.widget_rows" xml:space="preserve" approved="no">
         <source>task.widget_rows</source>
         <target state="translated">Anzahl der Aufgaben pro Seite im Dashboard-Widget</target>
-      </trans-unit>
-      <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
-        <source>estimation</source>
-        <target state="translated">Zeitschätzung</target>
       </trans-unit>
       <trans-unit id="SzbkpWy" resname="task.help.description" xml:space="preserve" approved="no">
         <source>task.help.description</source>

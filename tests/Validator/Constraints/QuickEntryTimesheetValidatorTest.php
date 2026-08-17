@@ -34,7 +34,7 @@ class QuickEntryTimesheetValidatorTest extends ConstraintValidatorTestCase
 
     protected function createValidator(): ConstraintValidatorInterface
     {
-        return new QuickEntryTimesheetValidator([new TimesheetBasic()]);
+        return new QuickEntryTimesheetValidator([TimesheetBasic::class]);
     }
 
     public function testConstraintIsInvalid(): void

@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Audit\Loggable;
 use App\Repository\TagRepository;
 use App\Validator\Constraints as Constraints;
 use Doctrine\DBAL\Types\Types;
@@ -24,6 +25,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Index(columns: ['visible'])]
 #[UniqueEntity('name')]
 #[Serializer\ExclusionPolicy('all')]
+#[Loggable(title: 'tags')]
 class Tag
 {
     /**

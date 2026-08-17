@@ -11,7 +11,6 @@ namespace App\Twig;
 
 use App\Utils\Pagination;
 use App\Utils\PaginationView;
-use Pagerfanta\Pagerfanta;
 use Pagerfanta\View\ViewInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyPath;
@@ -43,19 +42,23 @@ final class PaginationExtension extends AbstractExtension
         return $this->view;
     }
 
-    public function renderPagination(Pagerfanta|Pagination $pager, array $options = []): string
+    /**
+     * @param Pagination<string> $pager
+     * @param array<string, mixed> $options
+     */
+    public function renderPagination(Pagination $pager, array $options = []): string
     {
-        if (!($pager instanceof Pagination)) {
-            @trigger_error('Twig function pagination() needs an instanceof Pagination, Pagerfanta given', E_USER_DEPRECATED);
-        }
-
         $routeGenerator = $this->createRouteGenerator($options);
 
         return $this->getView()->render($pager, $routeGenerator, $options);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     private function createRouteGenerator(array $options = []): \Closure
     {
+        /** @var array{routeName: string, routeParams: array<string, mixed>, pageParameter: string} $options */
         $options = array_replace([
             'routeName' => null,
             'routeParams' => [],
@@ -76,7 +79,7 @@ final class PaginationExtension extends AbstractExtension
             $propertyAccessor = PropertyAccess::createPropertyAccessor();
             $propertyAccessor->setValue($routeParams, $pagePropertyPath, $page);
 
-            return $router->generate($routeName, $routeParams); // @phpstan-ignore-line
+            return $router->generate($routeName, $routeParams);
         };
     }
 }

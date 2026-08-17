@@ -6,22 +6,6 @@
         <source>automated_email_dont_answer</source>
         <target>Ovo je automatski generirani e-mail. Nemoj odgovarati, adresa se neće čitati.</target>
       </trans-unit>
-      <trans-unit id="pjr3FDv" resname="registration.subject">
-        <source>registration.subject</source>
-        <target>Aktiviraj svoj račun</target>
-      </trans-unit>
-      <trans-unit id="QtcznHC" resname="registration.title">
-        <source>registration.title</source>
-        <target>Zdravo %username%</target>
-      </trans-unit>
-      <trans-unit id="YMLel3P" resname="registration.button">
-        <source>registration.button</source>
-        <target>Aktiviraj svoj račun</target>
-      </trans-unit>
-      <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target state="translated">Prijavio/prijavila si se na Kimaijevo evidentiranje vremena s e-mail adresom %email%. Aktiviraj svoj račun u idućih par sati prije nego što poveznica istekne.</target>
-      </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
         <target state="translated">Prijavi se na Kimai</target>

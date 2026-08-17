@@ -1,0 +1,14 @@
+{% extends '@!NelmioApiDoc/Scalar/index.html.twig' %}
+
+{% block swagger_initialization %}
+    {{ parent() }}
+    <style>
+        a.open-api-client-button,
+        section[id="kimai-api/tag/actions"],
+        section[id="kimai-api/tag/export"],
+        li[data-sidebar-id="kimai-api/tag/actions"],
+        li[data-sidebar-id="kimai-api/tag/export"] {
+            display: none!important;
+        }
+    </style>
+{% endblock swagger_initialization %}

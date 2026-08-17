@@ -27,13 +27,12 @@ abstract class AbstractUserCommand extends Command
         $passwordQuestion = new Question('Please enter the password: ');
         $passwordQuestion->setHidden(true);
         $passwordQuestion->setHiddenFallback(true);
-        $passwordQuestion->setValidator(function (?string $value) {
-            $password = trim($value);
-            if (empty($password)) {
+        $passwordQuestion->setValidator(function (?string $value): string { // @phpstan-ignore argument.type
+            if (!\is_string($value) || \strlen(trim($value)) === 0) {
                 throw new \Exception('The password may not be empty');
             }
 
-            return $value;
+            return trim($value);
         });
         $passwordQuestion->setMaxAttempts(3);
 
