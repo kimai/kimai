@@ -412,19 +412,4 @@ final class CustomerController extends BaseApiController
 
         return $this->viewHandler->handle(new View(null, Response::HTTP_NO_CONTENT));
     }
-
-    /**
-     * Create team for customer
-     * @deprecated
-     * FIXME 3.0 remove me
-     *
-     * REMOVED: this endpoint was removed, use `POST /api/teams/` instead.
-     */
-    #[OA\Post(description: 'REMOVED: this endpoint was removed, use `POST /api/teams/` instead.', responses: [new OA\Response(response: 410, description: 'This endpoint was removed')], deprecated: true)]
-    #[OA\Parameter(name: 'id', description: 'The customer to create a default team for', in: 'path', required: true)]
-    #[Route(path: '/{id}/team', name: 'post_customer_team', requirements: ['id' => '\d+'], methods: ['POST'])]
-    public function postDefaultTeamAction(): Response
-    {
-        throw new GoneHttpException('This endpoint was removed, use "POST /api/teams/" instead.');
-    }
 }
