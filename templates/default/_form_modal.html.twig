@@ -12,7 +12,7 @@
                     {% block modal_title %}
                         {{ title }}
                         {% if form.vars.docu_chapter is defined and form.vars.docu_chapter is not empty %}
-                            <a class="form-help" href="{{ form.vars.docu_chapter|docu_link }}" target="_blank">?</a>
+                            <a class="form-help" href="{{ form.vars.docu_chapter|docu_link('form') }}" target="_blank">?</a>
                         {% endif %}
                     {% endblock %}
                 </h5>

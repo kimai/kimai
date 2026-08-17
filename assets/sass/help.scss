@@ -7,30 +7,88 @@
 
 .float-help {
     position: fixed;
-    width: 50px;
-    height: 50px;
-    border-radius: 50px;
     bottom: 20px;
     right: 20px;
-    background-color: var(--tblr-body-color);
-    text-align: center;
     z-index: 1021;
-    /* box-shadow: 2px 2px 3px var(--tblr-body-color); */
+    display: inline-flex;
+    align-items: center;
+    max-width: calc(100vw - 40px);
+    // 12px padding + 26px icon + 12px padding = the 50px circle of the previous design
+    padding: .75rem;
+    border-radius: 100px;
+    line-height: 1;
+    box-shadow: 0 .5rem 1.25rem rgba(0, 0, 0, .3);
+
     i {
-        margin-top: 11px;
-        color: var(--tblr-body-bg);
-        font-size: 30px;
+        flex-shrink: 0;
+        width: 1.625rem;
+        font-size: 1.625rem;
+        line-height: 1.625rem;
+        text-align: center;
+    }
+
+    // the label is collapsed to zero width and only revealed on hover / keyboard focus.
+    // the 0fr => 1fr grid track animates to the intrinsic text width, which a plain "width: auto" cannot do
+    .float-help-label {
+        display: grid;
+        grid-template-columns: 0fr;
+        font-size: 1rem;
+        transition: grid-template-columns .25s ease;
+
+        > span {
+            min-width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+
+            // the spacing around the text must not be padding: with box-sizing "border-box" it survives the
+            // collapsed state, widens the grid container and pushes the first character into view.
+            // as inline content it is clipped together with the text instead
+            &::before,
+            &::after {
+                content: '';
+                display: inline-block;
+            }
+
+            &::before {
+                width: .625rem;
+            }
+
+            &::after {
+                width: .5rem;
+            }
+        }
+    }
+
+    &:hover,
+    &:focus-visible {
+        box-shadow: 0 .75rem 1.5rem rgba(0, 0, 0, .35);
+
+        .float-help-label {
+            grid-template-columns: 1fr;
+        }
     }
 }
 
+// 8px padding + 20px icon + 8px padding = the 36px circle of the previous design
 @include media-breakpoint-down(md) {
     .float-help {
-        width: 36px;
-        height: 36px;
-        border-radius: 36px;
+        padding: .5rem;
+
         i {
-            margin-top: 8px;
-            font-size: 20px;
+            width: 1.25rem;
+            font-size: 1.25rem;
+            line-height: 1.25rem;
         }
+
+        .float-help-label {
+            font-size: .875rem;
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .float-help .float-help-label {
+        transition: none;
     }
 }
