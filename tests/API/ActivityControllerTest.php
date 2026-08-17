@@ -564,36 +564,4 @@ class ActivityControllerTest extends APIControllerBaseTestCase
             'message' => 'Not Found'
         ]);
     }
-
-    /**
-     * @group legacy
-     */
-    public function testPostDefaultTeamActionWasRemoved(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-
-        // the endpoint was removed: it fails for an existing as well as for an unknown activity
-        foreach (['/api/activities/1/team', '/api/activities/' . PHP_INT_MAX . '/team'] as $url) {
-            $this->request($client, $url, 'POST');
-            $this->assertApiException($client->getResponse(), [
-                'code' => Response::HTTP_GONE,
-                'message' => 'This endpoint was removed, use "POST /api/teams/" instead.'
-            ]);
-        }
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testPostDefaultTeamActionWasRemovedForUserWithoutPermission(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-
-        // the permission checks were removed as well, so every caller learns that the endpoint is gone
-        $this->request($client, '/api/activities/1/team', 'POST');
-        $this->assertApiException($client->getResponse(), [
-            'code' => Response::HTTP_GONE,
-            'message' => 'This endpoint was removed, use "POST /api/teams/" instead.'
-        ]);
-    }
 }

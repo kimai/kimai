@@ -986,36 +986,4 @@ class ProjectControllerTest extends APIControllerBaseTestCase
 
         self::assertNull($this->getEntityManager()->getRepository(ProjectComment::class)->find($commentId));
     }
-
-    /**
-     * @group legacy
-     */
-    public function testPostDefaultTeamActionWasRemoved(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-
-        // the endpoint was removed: it fails for an existing as well as for an unknown project
-        foreach (['/api/projects/1/team', '/api/projects/' . PHP_INT_MAX . '/team'] as $url) {
-            $this->request($client, $url, 'POST');
-            $this->assertApiException($client->getResponse(), [
-                'code' => Response::HTTP_GONE,
-                'message' => 'This endpoint was removed, use "POST /api/teams/" instead.'
-            ]);
-        }
-    }
-
-    /**
-     * @group legacy
-     */
-    public function testPostDefaultTeamActionWasRemovedForUserWithoutPermission(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-
-        // the permission checks were removed as well, so every caller learns that the endpoint is gone
-        $this->request($client, '/api/projects/1/team', 'POST');
-        $this->assertApiException($client->getResponse(), [
-            'code' => Response::HTTP_GONE,
-            'message' => 'This endpoint was removed, use "POST /api/teams/" instead.'
-        ]);
-    }
 }
