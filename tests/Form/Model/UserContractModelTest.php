@@ -22,8 +22,8 @@ class UserContractModelTest extends TestCase
         $user = new User();
         $sut = new UserContractModel($user);
 
-        self::assertTrue($sut->__isset('alias'));
-        self::assertTrue($sut->__isset('unknownPreference'));
+        self::assertTrue($sut->__isset('alias')); // @phpstan-ignore staticMethod.alreadyNarrowedType
+        self::assertTrue($sut->__isset('unknownPreference')); // @phpstan-ignore staticMethod.alreadyNarrowedType
     }
 
     public function testSetAndGetExistingUserPropertyUsesUserMethods(): void

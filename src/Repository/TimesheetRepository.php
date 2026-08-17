@@ -35,6 +35,7 @@ use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Mapping\JoinTableMapping;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
@@ -367,13 +368,14 @@ class TimesheetRepository extends EntityRepository
 
             foreach ([Project::class, Customer::class, Activity::class] as $i => $class) {
                 $mapping = $em->getClassMetadata($class)->getAssociationMapping('teams');
-                if (!isset($mapping['joinTable']['name']) || !\is_string($mapping['joinTable']['name'])) {
+                /** @var JoinTableMapping $joinTable */
+                $joinTable = $mapping->offsetGet('joinTable');
+                if (!$joinTable instanceof JoinTableMapping) {
                     throw new \RuntimeException('Missing join table for team association of ' . $class);
                 }
-
                 $alias = 'has_teams_' . $i;
                 $aliases[$alias] = $class;
-                $selects[] = \sprintf('EXISTS(SELECT 1 FROM %s) AS %s', $mapping['joinTable']['name'], $alias);
+                $selects[] = \sprintf('EXISTS(SELECT 1 FROM %s) AS %s', $joinTable->name, $alias);
             }
 
             $result = $em->getConnection()->fetchAssociative('SELECT ' . implode(', ', $selects));

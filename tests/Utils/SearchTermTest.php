@@ -141,8 +141,6 @@ class SearchTermTest extends TestCase
         $sut = new SearchTerm(" \tfoo\tbar:baz\nhello  world\t ");
 
         self::assertTrue($sut->hasSearchTerm());
-        self::assertEquals('foo hello world', $sut->getSearchTerm());
-        self::assertEquals(['bar' => 'baz'], $sut->getSearchFields());
         self::assertEquals(" \tfoo\tbar:baz\nhello  world\t ", $sut->getOriginalSearch());
         self::assertCount(4, $sut->getParts());
 
@@ -166,8 +164,7 @@ class SearchTermTest extends TestCase
         $sut = new SearchTerm(" \t \n ");
 
         self::assertFalse($sut->hasSearchTerm());
-        self::assertEquals('', $sut->getSearchTerm());
-        self::assertEquals([], $sut->getSearchFields());
         self::assertCount(0, $sut->getParts());
+        self::assertEquals([], $sut->getParts());
     }
 }

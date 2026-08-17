@@ -61,9 +61,9 @@ final class TagController extends BaseApiController
     /**
      * Fetch tags
      */
-    #[OA\Response(response: 200, description: 'Find the collection of all matching tags', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TagEntity')))]
+    #[OA\Response(response: 200, description: 'The collection of all matching tags', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TagEntity')))]
     #[Route(path: '/find', name: 'get_tags_full', methods: ['GET'])]
-    #[Rest\QueryParam(name: 'name', strict: true, nullable: true, description: 'Search term to filter tag list')]
+    #[Rest\QueryParam(name: 'name', description: 'Search term to filter tag list', strict: true, nullable: true)]
     public function findTags(ParamFetcherInterface $paramFetcher): Response
     {
         $filter = $paramFetcher->get('name');
