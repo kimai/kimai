@@ -577,11 +577,15 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         $content = $client->getResponse()->getContent();
         self::assertIsString($content);
         // demo values for the default locale (en) are rendered below the language selector
-        self::assertStringContainsString('Formatting examples', $content);
         self::assertStringContainsString('11/25/2035', $content);
         self::assertStringContainsString('3:34 PM', $content);
-        self::assertStringContainsString('25:48', $content);
+        self::assertStringContainsString('25:48 / 25.80', $content);
         self::assertStringContainsString('2,794.83', $content);
+        // the money demo reuses the existing "rate" translation, no new translation keys are needed
+        self::assertStringContainsString('data-demo-value="money"><strong>Price:</strong>', $content);
+        self::assertStringNotContainsString('Formatting examples', $content);
+        self::assertStringNotContainsString('data-demo-value="rtl"', $content);
+        self::assertStringNotContainsString('data-demo-value="decimal"', $content);
         // the demo block is wired up for the live update via JavaScript
         self::assertStringContainsString('data-locale-demo', $content);
         self::assertStringContainsString('data-select="user_preferences_form_preferences_locale_value"', $content);

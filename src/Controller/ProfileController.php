@@ -436,10 +436,8 @@ final class ProfileController extends AbstractController
             $localeDemo = [
                 'date' => $formatter->dateShort($demoDate),
                 'time' => $formatter->time($demoDate),
-                'duration' => $formatter->duration($demoDuration),
-                'decimal' => $formatter->durationDecimal($demoDuration),
+                'duration' => $formatter->duration($demoDuration) . ' / ' . $formatter->durationDecimal($demoDuration),
                 'money' => $formatter->money(2794.83, $systemConfiguration->getDefaultCurrency()),
-                'rtl' => $localeService->isRightToLeft($locale),
             ];
         }
 
@@ -449,7 +447,6 @@ final class ProfileController extends AbstractController
             $localeFormats[$localeCode] = [
                 'date' => $localeService->getDateFormat($localeCode),
                 'time' => $localeService->getTimeFormat($localeCode),
-                'rtl' => $localeService->isRightToLeft($localeCode),
             ];
         }
 
