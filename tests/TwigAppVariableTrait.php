@@ -42,18 +42,6 @@ trait TwigAppVariableTrait
         $request->setLocale($locale);
         $stack->push($request);
 
-        $token = $this->createMock(TokenInterface::class);
-        $token->expects($this->any())->method('getUser')->willReturn($user ?? $this->createTwigAppUser());
-
-        $tokenStorage = new TokenStorage();
-        $tokenStorage->setToken($token);
-
-        /** @var Environment $twig */
-        $twig = self::getContainer()->get('twig');
-        /** @var AppVariable $app */
-        $app = $twig->getGlobals()['app'];
-        $app->setTokenStorage($tokenStorage);
-
         return $request;
     }
 
