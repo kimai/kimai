@@ -9,6 +9,7 @@
 
 namespace App\API;
 
+use App\API\Serializer\RateExclusionStrategy;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Event\RecentActivityEvent;
@@ -39,6 +40,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints;
 
@@ -58,7 +60,8 @@ final class TimesheetController extends BaseApiController
         private readonly TimesheetRepository $repository,
         private readonly TagRepository $tagRepository,
         private readonly EventDispatcherInterface $dispatcher,
-        private readonly TimesheetService $service
+        private readonly TimesheetService $service,
+        private readonly AuthorizationCheckerInterface $security
     ) {
     }
 
@@ -68,45 +71,19 @@ final class TimesheetController extends BaseApiController
     }
 
     /**
-     * Rate fields are only serialized if the user may see them for every given record.
+     * The rate groups are always requested, the per-record permission filtering
+     * is applied by the RateExclusionStrategy: see GHSA-fq95-vwvx-w88f.
      *
      * @param array<string> $groups
      * @param array<string> $rateGroups
-     * @param iterable<Timesheet> $timesheets
-     * @return array<string>
      */
-    private function addRateGroups(array $groups, array $rateGroups, iterable $timesheets): array
+    private function renderRateAwareView(View $view, array $groups, array $rateGroups): Response
     {
-        foreach ($timesheets as $timesheet) {
-            if (!$timesheet instanceof Timesheet) {
-                continue;
-            }
+        $context = $view->getContext();
+        $context->setGroups(array_merge($groups, $rateGroups));
+        $context->addExclusionStrategy(new RateExclusionStrategy($this->security));
 
-            if (!$this->isGranted('view_rate', $timesheet)) {
-                return $groups;
-            }
-        }
-
-        return array_merge($groups, $rateGroups);
-    }
-
-    /**
-     * @param iterable<Timesheet> $timesheets
-     * @param array<string> $groups
-     * @return array<string>
-     */
-    private function getCollectionSerializationGroups(iterable $timesheets, array $groups): array
-    {
-        return $this->addRateGroups($groups, ['Timesheet_Rate'], $timesheets);
-    }
-
-    /**
-     * @param array<string> $groups
-     * @return array<string>
-     */
-    private function getEntitySerializationGroups(Timesheet $timesheet, array $groups): array
-    {
-        return $this->addRateGroups($groups, ['Timesheet_Rate', 'Timesheet_Entity_Rate'], [$timesheet]);
+        return $this->viewHandler->handle($view);
     }
 
     /**
@@ -115,13 +92,7 @@ final class TimesheetController extends BaseApiController
      */
     private function renderCollection(iterable $timesheets, array $groups): Response
     {
-        $view = new View($timesheets, Response::HTTP_OK);
-        if ($timesheets instanceof \IteratorAggregate) {
-            $timesheets = $timesheets->getIterator();
-        }
-        $view->getContext()->setGroups($this->getCollectionSerializationGroups($timesheets, $groups)); // @phpstan-ignore argument.type
-
-        return $this->viewHandler->handle($view);
+        return $this->renderRateAwareView(new View($timesheets, Response::HTTP_OK), $groups, ['Timesheet_Rate']);
     }
 
     /**
@@ -129,10 +100,7 @@ final class TimesheetController extends BaseApiController
      */
     private function renderEntity(Timesheet $timesheet, array $groups): Response
     {
-        $view = new View($timesheet, Response::HTTP_OK);
-        $view->getContext()->setGroups($this->getEntitySerializationGroups($timesheet, $groups));
-
-        return $this->viewHandler->handle($view);
+        return $this->renderRateAwareView(new View($timesheet, Response::HTTP_OK), $groups, ['Timesheet_Rate', 'Timesheet_Entity_Rate']);
     }
 
     /**

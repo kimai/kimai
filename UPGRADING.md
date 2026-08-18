@@ -10,13 +10,14 @@ Perform EACH version specific task between your version and the new one, otherwi
 
 ## [2.66.0](https://github.com/kimai/kimai/releases/tag/2.66.0)
 
-The timesheet API now honours the `view_rate_own_timesheet` and `view_rate_other_timesheet`
+The timesheet API now honors the `view_rate_own_timesheet` and `view_rate_other_timesheet`
 permissions, which the UI, the export and the reporting always enforced.
 
 The fields `rate`, `internalRate`, `hourlyRate` and `fixedRate` are no longer part of the
-JSON response for users without those permissions. The default `ROLE_USER` does not hold
-them, so API clients running with a plain user account have to grant the permission if they
-rely on those fields.
+JSON response collectionfor records the user may not see the rates of. The permission is applied per
+record, so a  can contain records with and without these fields - treat them as
+optional. The default `ROLE_USER` does not hold the permissions, so API clients running
+with a plain user account have to grant them if they rely on those fields.
 
 ## [2.65.0](https://github.com/kimai/kimai/releases/tag/2.65.0)
 

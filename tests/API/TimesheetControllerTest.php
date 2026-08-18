@@ -647,14 +647,12 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
     }
 
     /**
-     * GHSA-fq95-vwvx-w88f: rate fields are only serialized if the permission is
-     * granted for EVERY record of the response. A teamlead whose role has
-     * "view_rate_other_timesheet" revoked may see his own rates, but not the
-     * rates of his team members - so a mixed page is serialized entirely
-     * without rate fields, while the single-record route still returns the
-     * rates of his own record.
+     * GHSA-fq95-vwvx-w88f: the rate permission is applied per record. A teamlead
+     * whose role has "view_rate_other_timesheet" revoked may see his own rates,
+     * but not the rates of his team members - so a mixed page contains the rate
+     * fields only on his own records.
      */
-    public function testGetCollectionWithMixedRatePermissionHidesAllRates(): void
+    public function testGetCollectionWithMixedRatePermissionShowsOnlyOwnRates(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $em = $this->getEntityManager();
@@ -692,8 +690,14 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
 
             foreach ($result as $row) {
                 self::assertIsArray($row);
-                foreach (self::TIMESHEET_RATE_FIELDS as $field) {
-                    self::assertArrayNotHasKey($field, $row);
+                if ($row['user'] === $teamlead->getId()) {
+                    self::assertEquals(1772.2958, $row['rate']);
+                    self::assertEquals(1772.2958, $row['internalRate']);
+                } else {
+                    self::assertEquals($owner->getId(), $row['user']);
+                    foreach (self::TIMESHEET_RATE_FIELDS as $field) {
+                        self::assertArrayNotHasKey($field, $row);
+                    }
                 }
             }
 

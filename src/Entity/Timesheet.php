@@ -161,21 +161,37 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?string $description = null;
+    /**
+     * Total rate for this timesheet.
+     * Each API result can be returned with or without this field (depends on the `view_rate_own_timesheet` and `view_rate_other_timesheet` permissions).
+     */
     #[ORM\Column(name: 'rate', type: Types::FLOAT, nullable: false)]
     #[Assert\GreaterThanOrEqual(0)]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Timesheet_Rate'])]
     private float $rate = 0.00;
+    /**
+     * Total internal-rate for this timesheet.
+     * Each API result can be returned with or without this field (depends on the `view_rate_own_timesheet` and `view_rate_other_timesheet` permissions).
+     */
     #[ORM\Column(name: 'internal_rate', type: Types::FLOAT, nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Timesheet_Rate'])]
     private ?float $internalRate = null;
+    /**
+     * If this timesheet has a fixed rate, this field is not `null`.
+     * Each API result can be returned with or without this field (depends on the `view_rate_own_timesheet` and `view_rate_other_timesheet` permissions).
+     */
     #[ORM\Column(name: 'fixed_rate', type: Types::FLOAT, nullable: true)]
     #[Assert\GreaterThanOrEqual(0)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Timesheet_Entity_Rate'])]
     private ?float $fixedRate = null;
+    /**
+     * The hourly rate of this timesheet, `null` if the timesheet has a fixed rate.
+     * Each API result can be returned with or without this field (depends on the `view_rate_own_timesheet` and `view_rate_other_timesheet` permissions).
+     */
     #[ORM\Column(name: 'hourly_rate', type: Types::FLOAT, nullable: true)]
     #[Assert\GreaterThanOrEqual(0)]
     #[Serializer\Expose]
