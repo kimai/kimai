@@ -127,6 +127,41 @@ class WeeklyInvoiceCalculatorTest extends AbstractCalculatorTestCase
         self::assertEquals(2143.1, $entries[0]->getRate());
     }
 
+    public function testSameWeekNumberInDifferentYearsIsNotMerged(): void
+    {
+        $customer = new Customer('foo');
+        $template = new InvoiceTemplate();
+        $template->setVat(19);
+        $project = (new Project())->setName('project');
+        $user = new User();
+
+        // Both dates are ISO week 30, one year apart. Keying only on the week
+        // number would sum them into a single invoice entry.
+        $entries = [];
+        foreach (['2025-07-21 12:00:00', '2026-07-20 12:00:00'] as $begin) {
+            $timesheet = new Timesheet();
+            $timesheet->setBegin(new DateTime($begin));
+            $timesheet->setEnd(new DateTime($begin));
+            $timesheet->setDuration(3600);
+            $timesheet->setRate(100);
+            $timesheet->setUser($user);
+            $timesheet->setActivity((new Activity())->setName('foo'));
+            $timesheet->setProject($project);
+            $entries[] = $timesheet;
+        }
+
+        $query = new InvoiceQuery();
+        $query->setProjects([$project]);
+
+        $model = (new InvoiceModelFactoryFactory($this))->create()->createModel(new DebugFormatter(), $customer, $template, $query);
+        $model->addEntries($entries);
+
+        $sut = $this->getCalculator();
+        $sut->setModel($model);
+
+        self::assertCount(2, $sut->getEntries());
+    }
+
     public function testDescriptionByTimesheet(): void
     {
         $this->assertDescription($this->getCalculator(), false, false);
