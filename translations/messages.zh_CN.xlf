@@ -1948,7 +1948,7 @@
       </trans-unit>
       <trans-unit id="cDOQMYv" resname="Beta" xml:space="preserve">
         <source>Beta</source>
-        <target state="translated">启用对实验性功能的预览</target>
+        <target state="translated">启用对实验性功能的预览。</target>
       </trans-unit>
       <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="no">
         <source>Unlock month</source>
@@ -2049,6 +2049,14 @@
       <trans-unit id="QdfOAGZ" resname="status.done" xml:space="preserve">
         <source>status.done</source>
         <target state="translated">已完成</target>
+      </trans-unit>
+      <trans-unit id="j_0FPm3" resname="status.waiting" xml:space="preserve" approved="no">
+        <source>status.waiting</source>
+        <target state="translated">等待中</target>
+      </trans-unit>
+      <trans-unit id="nlJ2pW2" resname="invoice_email" xml:space="preserve" approved="no">
+        <source>invoice_email</source>
+        <target state="translated">付费邮箱</target>
       </trans-unit>
     </body>
   </file>

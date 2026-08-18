@@ -122,6 +122,58 @@
         <source>board.private</source>
         <target state="final">לוח פרטי</target>
       </trans-unit>
+      <trans-unit id="Wq09TUJ" resname="board.empty_state" xml:space="preserve" approved="yes">
+        <source>board.empty_state</source>
+        <target state="final">אין לך לוחות עדיין. צריך ליצור אחד כדי להתחיל.</target>
+      </trans-unit>
+      <trans-unit id="7lJ6pzI" resname="board.limit_reached" xml:space="preserve" approved="yes">
+        <source>board.limit_reached</source>
+        <target state="final">הגעת למגבלה של %limit% לוחות פרטיים.</target>
+      </trans-unit>
+      <trans-unit id="K.9A2XH" resname="board.close_task" xml:space="preserve" approved="yes">
+        <source>board.close_task</source>
+        <target state="final">להשלים את המשימה הזאת?</target>
+      </trans-unit>
+      <trans-unit id="Hj3qdDA" resname="board.delete_confirm" xml:space="preserve" approved="yes">
+        <source>board.delete_confirm</source>
+        <target state="final">למחוק את הלוח הזה?</target>
+      </trans-unit>
+      <trans-unit id="_H1KEu_" resname="board.unassign_user" xml:space="preserve" approved="yes">
+        <source>board.unassign_user</source>
+        <target state="final">להסיר את המשתמש שהוקצה למשימה הזאת?</target>
+      </trans-unit>
+      <trans-unit id="TuoG.8m" resname="board.remove_task" xml:space="preserve" approved="yes">
+        <source>board.remove_task</source>
+        <target state="final">הסרה מהלוח</target>
+      </trans-unit>
+      <trans-unit id="e3APxiK" resname="board.remove_task_confirm" xml:space="preserve" approved="yes">
+        <source>board.remove_task_confirm</source>
+        <target state="final">להסיר את המשימה הזאת מהלוח?</target>
+      </trans-unit>
+      <trans-unit id="wkzeXtZ" resname="board.move_to" xml:space="preserve" approved="yes">
+        <source>board.move_to</source>
+        <target state="final">העברה אל</target>
+      </trans-unit>
+      <trans-unit id="hhrw1nb" resname="board.columns" xml:space="preserve" approved="yes">
+        <source>board.columns</source>
+        <target state="final">עמודות</target>
+      </trans-unit>
+      <trans-unit id="9.F1FZS" resname="board.add_column" xml:space="preserve" approved="yes">
+        <source>board.add_column</source>
+        <target state="final">הוספת עמודה</target>
+      </trans-unit>
+      <trans-unit id="ad2nQdr" resname="board.columns_invalid" xml:space="preserve" approved="yes">
+        <source>board.columns_invalid</source>
+        <target state="final">הגדרות העמודה שגויות.</target>
+      </trans-unit>
+      <trans-unit id="lu5uNlv" resname="board.filter" xml:space="preserve" approved="yes">
+        <source>board.filter</source>
+        <target state="final">סינון משימות</target>
+      </trans-unit>
+      <trans-unit id="9rA4ixj" resname="board.only_mine" xml:space="preserve" approved="yes">
+        <source>board.only_mine</source>
+        <target state="final">רק המשימות שלי</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

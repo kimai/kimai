@@ -442,9 +442,9 @@
         <source>alias</source>
         <target>Navn</target>
       </trans-unit>
-      <trans-unit id="qvIyBkY" resname="title">
+      <trans-unit id="qvIyBkY" resname="title" xml:space="preserve">
         <source>title</source>
-        <target>Titel</target>
+        <target state="translated">Titel</target>
       </trans-unit>
       <trans-unit id="h7voece" resname="avatar">
         <source>avatar</source>
@@ -1956,7 +1956,7 @@
       </trans-unit>
       <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
         <source>Timesheet</source>
-        <target state="translated">Timeoverblik</target>
+        <target state="translated">Timesheet</target>
       </trans-unit>
       <trans-unit id="UcWoKWo" resname="portrait" xml:space="preserve">
         <source>Portrait</source>
