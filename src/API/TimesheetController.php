@@ -119,7 +119,7 @@ final class TimesheetController extends BaseApiController
         if ($timesheets instanceof \IteratorAggregate) {
             $timesheets = $timesheets->getIterator();
         }
-        $view->getContext()->setGroups($this->getCollectionSerializationGroups($timesheets, $groups));
+        $view->getContext()->setGroups($this->getCollectionSerializationGroups($timesheets, $groups)); // @phpstan-ignore argument.type
 
         return $this->viewHandler->handle($view);
     }
@@ -310,7 +310,7 @@ final class TimesheetController extends BaseApiController
             $groups = self::GROUPS_COLLECTION_FULL;
         }
 
-        return $this->renderCollection($data, $groups); // @phpstan-ignore argument.type
+        return $this->renderCollection($data, $groups);
     }
 
     /**
