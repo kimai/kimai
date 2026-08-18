@@ -288,7 +288,8 @@ RUN \
     mkdir -p /opt/kimai/var/log && chmod 777 /opt/kimai/var/log && \
     sed "s/128M/-1/g" /usr/local/etc/php/php.ini-development > /opt/kimai/php-cli.ini && \
     sed -i "s/env php/env -S php -c \/opt\/kimai\/php-cli.ini/g" /opt/kimai/bin/console && \
-    /opt/kimai/bin/console kimai:version | awk '{print $2}' > /opt/kimai/version.txt
+    /opt/kimai/bin/console kimai:version | awk '{print $2}' > /opt/kimai/version.txt && \
+    rm -rf /opt/kimai/var/cache/*
 ENV APP_ENV=dev
 ENV DATABASE_URL=
 ENV memory_limit=512M
@@ -315,7 +316,8 @@ RUN \
     mkdir -p /opt/kimai/var/log && chmod 777 /opt/kimai/var/log && \
     sed "s/128M/-1/g" /usr/local/etc/php/php.ini-development > /opt/kimai/php-cli.ini && \
     chown -R www-data:www-data /opt/kimai /usr/local/etc/php/php.ini && \
-    /opt/kimai/bin/console kimai:version | awk '{print $2}' > /opt/kimai/version.txt
+    /opt/kimai/bin/console kimai:version | awk '{print $2}' > /opt/kimai/version.txt && \
+    rm -rf /opt/kimai/var/cache/*
 ENV APP_ENV=prod
 ENV DATABASE_URL=
 ENV memory_limit=512M
