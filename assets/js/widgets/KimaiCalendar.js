@@ -52,6 +52,9 @@ import KimaiColor from './KimaiColor';
 import KimaiContextMenu from "./KimaiContextMenu";
 import { DateTime } from 'luxon';
 
+/** @typedef {import('@fullcalendar/core').EventApi} EventApi */
+/** @typedef {import('@fullcalendar/core').EventDropArg} EventDropArg */
+
 export default class KimaiCalendar {
 
     /**
@@ -261,6 +264,14 @@ export default class KimaiCalendar {
                         }, (e) => { console.log('Failed to load actions for context menu', e); });
                     }
                 });
+
+                // Extension point: plugins can listen for this event and manipulate
+                // the entry's DOM element directly (e.g. append a badge or icon).
+                if (this.isKimaiSource(arg.event)) {
+                    document.dispatchEvent(new CustomEvent('kimai.calendar.eventContent', {
+                        detail: {event: arg.event.extendedProps, element: arg.el}
+                    }));
+                }
             },
 
             // called after all events of one source were set, so this can
@@ -645,6 +656,7 @@ export default class KimaiCalendar {
             project: apiItem.project.name,
             customer: apiItem.project.customer.name,
             tags: apiItem.tags,
+            metaFields: apiItem.metaFields ?? [],
             color: color,
             textColor: KimaiColor.calculateContrastColor(color),
         };
@@ -667,6 +679,12 @@ export default class KimaiCalendar {
             }
         }
 
+        // Extension point: plugins can listen for this event and push HTML into
+        // detail.content, which is read back synchronously right after dispatch.
+        const detail = {event: eventObj, content: []};
+        document.dispatchEvent(new CustomEvent('kimai.calendar.eventPopover', {detail: detail}));
+        const extensionHtml = detail.content.join('');
+
         return escaper.sanitize(`
             <div class="calendar-entry">
                 <ul>
@@ -674,8 +692,8 @@ export default class KimaiCalendar {
                     <li>` + this.options['translations']['project'] + `: ` + escaper.escapeForHtml(eventObj.project) + `</li>
                     <li>` + this.options['translations']['activity'] + `: ` + escaper.escapeForHtml(eventObj.activity) + `</li>
                 </ul>` +
-                (eventObj.description !== null || eventObj.tags.length > 0 ? '<hr>' : '') +
-                (eventObj.description ? '<div>' + escaper.escapeForHtml(eventObj.description) + '</div>' : '') + tags + `
+                (eventObj.description !== null || eventObj.tags.length > 0 || extensionHtml !== '' ? '<hr>' : '') +
+                (eventObj.description ? '<div>' + escaper.escapeForHtml(eventObj.description) + '</div>' : '') + tags + extensionHtml + `
             </div>`);
     }
 
