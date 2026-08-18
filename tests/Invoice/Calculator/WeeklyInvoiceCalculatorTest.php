@@ -20,6 +20,7 @@ use App\Invoice\Calculator\AbstractMergedCalculator;
 use App\Invoice\Calculator\AbstractSumInvoiceCalculator;
 use App\Invoice\Calculator\WeeklyInvoiceCalculator;
 use App\Invoice\CalculatorInterface;
+use App\Invoice\InvoiceItem;
 use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
@@ -129,16 +130,39 @@ class WeeklyInvoiceCalculatorTest extends AbstractCalculatorTestCase
 
     public function testSameWeekNumberInDifferentYearsIsNotMerged(): void
     {
+        // Both dates are ISO week 30, one year apart. Keying only on the week
+        // number would sum them into a single invoice entry.
+        $entries = $this->calculateEntriesForBeginDates(['2025-07-21 12:00:00', '2026-07-20 12:00:00']);
+
+        self::assertCount(2, $entries);
+    }
+
+    public function testIsoWeekSpanningTwoCalendarYearsIsMerged(): void
+    {
+        // Both dates belong to ISO week 1 of 2025, but to different calendar
+        // years. Keying on the calendar year ("Y-W") instead of the ISO
+        // week-numbering year ("o-W") would split them into two entries.
+        $entries = $this->calculateEntriesForBeginDates(['2024-12-30 12:00:00', '2025-01-02 12:00:00']);
+
+        self::assertCount(1, $entries);
+        self::assertEquals(7200, $entries[0]->getDuration());
+        self::assertEquals(200, $entries[0]->getRate());
+    }
+
+    /**
+     * @param array<string> $beginDates
+     * @return array<InvoiceItem>
+     */
+    private function calculateEntriesForBeginDates(array $beginDates): array
+    {
         $customer = new Customer('foo');
         $template = new InvoiceTemplate();
         $template->setVat(19);
         $project = (new Project())->setName('project');
         $user = new User();
 
-        // Both dates are ISO week 30, one year apart. Keying only on the week
-        // number would sum them into a single invoice entry.
         $entries = [];
-        foreach (['2025-07-21 12:00:00', '2026-07-20 12:00:00'] as $begin) {
+        foreach ($beginDates as $begin) {
             $timesheet = new Timesheet();
             $timesheet->setBegin(new DateTime($begin));
             $timesheet->setEnd(new DateTime($begin));
@@ -159,7 +183,7 @@ class WeeklyInvoiceCalculatorTest extends AbstractCalculatorTestCase
         $sut = $this->getCalculator();
         $sut->setModel($model);
 
-        self::assertCount(2, $sut->getEntries());
+        return $sut->getEntries();
     }
 
     public function testDescriptionByTimesheet(): void
