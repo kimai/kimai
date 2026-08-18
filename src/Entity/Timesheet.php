@@ -165,21 +165,21 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     #[Assert\GreaterThanOrEqual(0)]
     #[Assert\NotNull]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Timesheet_Rate', 'Rates'])]
+    #[Serializer\Groups(['Timesheet_Rate'])]
     private float $rate = 0.00;
     #[ORM\Column(name: 'internal_rate', type: Types::FLOAT, nullable: true)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Timesheet_Rate', 'Rates'])]
+    #[Serializer\Groups(['Timesheet_Rate'])]
     private ?float $internalRate = null;
     #[ORM\Column(name: 'fixed_rate', type: Types::FLOAT, nullable: true)]
     #[Assert\GreaterThanOrEqual(0)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Timesheet_Entity_Rate', 'Rates'])]
+    #[Serializer\Groups(['Timesheet_Entity_Rate'])]
     private ?float $fixedRate = null;
     #[ORM\Column(name: 'hourly_rate', type: Types::FLOAT, nullable: true)]
     #[Assert\GreaterThanOrEqual(0)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Timesheet_Entity_Rate', 'Rates'])]
+    #[Serializer\Groups(['Timesheet_Entity_Rate'])]
     private ?float $hourlyRate = null;
     #[ORM\Column(name: 'exported', type: Types::BOOLEAN, nullable: false, options: ['default' => false])]
     #[Assert\NotNull]

@@ -13,6 +13,8 @@ use App\API\BaseApiController;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\Role;
+use App\Entity\RolePermission;
 use App\Entity\Tag;
 use App\Entity\Team;
 use App\Entity\Timesheet;
@@ -21,11 +23,13 @@ use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\TimesheetTestMetaFieldSubscriberMock;
 use App\Timesheet\DateTimeFactory;
+use App\User\PermissionService;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
+use Symfony\Contracts\Cache\CacheInterface;
 
 #[Group('integration')]
 class TimesheetControllerTest extends APIControllerBaseTestCase
@@ -531,22 +535,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
     public function testGetEntityRatesAreVisibleWithPermission(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-        $em = $this->getEntityManager();
-
-        $startDate = new \DateTime('2020-03-27 14:35:59', new \DateTimeZone('Pacific/Tongatapu'));
-        $endDate = (clone $startDate)->modify('+ 46385 seconds');
-
-        $timesheet = new Timesheet();
-        $timesheet
-            ->setHourlyRate(137.21)
-            ->setBegin($startDate)
-            ->setEnd($endDate)
-            ->setUser($this->getUserByRole(User::ROLE_TEAMLEAD))
-            ->setProject($em->getRepository(Project::class)->find(1))
-            ->setActivity($em->getRepository(Activity::class)->find(1))
-        ;
-        $em->persist($timesheet);
-        $em->flush();
+        $timesheet = $this->createRatedTimesheet($this->getUserByRole(User::ROLE_TEAMLEAD));
 
         $this->assertAccessIsGranted($client, '/api/timesheets/' . $timesheet->getId());
         $content = $client->getResponse()->getContent();
@@ -576,6 +565,205 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
 
         self::assertIsArray($result);
         self::assertNotEmpty($result);
+
+        foreach ($result as $row) {
+            self::assertIsArray($row);
+            foreach (self::TIMESHEET_RATE_FIELDS as $field) {
+                self::assertArrayNotHasKey($field, $row);
+            }
+        }
+    }
+
+    /**
+     * Creates a stopped timesheet for the given owner, whose calculated rate
+     * and internal rate are known upfront: 12,92h * 137,21 = 1772,2958.
+     */
+    private function createRatedTimesheet(User $owner): Timesheet
+    {
+        $em = $this->getEntityManager();
+
+        $startDate = new \DateTime('2020-03-27 14:35:59', new \DateTimeZone('Pacific/Tongatapu'));
+        $endDate = (clone $startDate)->modify('+ 46385 seconds');
+
+        $timesheet = new Timesheet();
+        $timesheet
+            ->setHourlyRate(137.21)
+            ->setBegin($startDate)
+            ->setEnd($endDate)
+            ->setUser($owner)
+            ->setProject($em->getRepository(Project::class)->find(1))
+            ->setActivity($em->getRepository(Activity::class)->find(1))
+        ;
+        $em->persist($timesheet);
+        $em->flush();
+
+        return $timesheet;
+    }
+
+    /**
+     * GHSA-fq95-vwvx-w88f: a teamlead holds "view_rate_other_timesheet", so the
+     * rates of another users record (without restricting teams) are serialized.
+     */
+    public function testGetEntityRatesAreVisibleForOtherUsersRecordWithPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $timesheet = $this->createRatedTimesheet($this->getUserByRole(User::ROLE_USER));
+
+        $this->assertAccessIsGranted($client, '/api/timesheets/' . $timesheet->getId());
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        self::assertEquals(137.21, $result['hourlyRate']);
+        self::assertEquals(1772.2958, $result['rate']);
+        self::assertEquals(1772.2958, $result['internalRate']);
+    }
+
+    /**
+     * GHSA-fq95-vwvx-w88f, the high impact configuration from the advisory: a
+     * custom role may see the records of other users ("view_other_timesheet"),
+     * but not their monetary values (no "view_rate_other_timesheet").
+     */
+    public function testGetEntityHidesRatesForOtherUsersRecordWithoutRatePermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->grantPermissions(User::ROLE_USER, 'TEST_VIEW_OTHER_NO_RATES', ['view_other_timesheet']);
+
+        $timesheet = $this->createRatedTimesheet($this->getUserByRole(User::ROLE_TEAMLEAD));
+
+        $this->assertAccessIsGranted($client, '/api/timesheets/' . $timesheet->getId());
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result, self::TIMESHEET_RATE_FIELDS);
+
+        foreach (self::TIMESHEET_RATE_FIELDS as $field) {
+            self::assertArrayNotHasKey($field, $result);
+        }
+    }
+
+    /**
+     * GHSA-fq95-vwvx-w88f: rate fields are only serialized if the permission is
+     * granted for EVERY record of the response. A teamlead whose role has
+     * "view_rate_other_timesheet" revoked may see his own rates, but not the
+     * rates of his team members - so a mixed page is serialized entirely
+     * without rate fields, while the single-record route still returns the
+     * rates of his own record.
+     */
+    public function testGetCollectionWithMixedRatePermissionHidesAllRates(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+        $owner = $this->getUserByRole(User::ROLE_USER);
+
+        $team = new Team('GHSA-fq95 mixed team');
+        $team->addTeamlead($teamlead);
+        $team->addUser($owner);
+        $em->persist($team);
+        $em->flush();
+
+        // revoke the rate permission for other users records, as an admin would
+        // do it in the permission screen: with a DB override for the built-in role
+        $role = (new Role())->setName(User::ROLE_TEAMLEAD);
+        $em->persist($role);
+        $permissionService = self::getContainer()->get(PermissionService::class);
+        self::assertInstanceOf(PermissionService::class, $permissionService);
+        $revoked = (new RolePermission())->setRole($role)->setPermission('view_rate_other_timesheet')->setAllowed(false);
+        $permissionService->saveRolePermission($revoked);
+
+        try {
+            $own = $this->createRatedTimesheet($teamlead);
+            $this->createRatedTimesheet($owner);
+
+            $query = ['user' => 'all'];
+            $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
+            $content = $client->getResponse()->getContent();
+            self::assertIsString($content);
+            $result = json_decode($content, true);
+
+            self::assertIsArray($result);
+            self::assertCount(2, $result);
+
+            foreach ($result as $row) {
+                self::assertIsArray($row);
+                foreach (self::TIMESHEET_RATE_FIELDS as $field) {
+                    self::assertArrayNotHasKey($field, $row);
+                }
+            }
+
+            // the single-record route serializes the rates of the own record
+            $this->assertAccessIsGranted($client, '/api/timesheets/' . $own->getId());
+            $content = $client->getResponse()->getContent();
+            self::assertIsString($content);
+            $result = json_decode($content, true);
+
+            self::assertIsArray($result);
+            self::assertEquals(1772.2958, $result['rate']);
+        } finally {
+            // the DB override is rolled back with the test transaction, but the
+            // shared permission cache (PermissionService) survives the test run:
+            // reset it, so later tests (and runs) see the default permissions again
+            $cache = self::getContainer()->get('cache.app');
+            self::assertInstanceOf(CacheInterface::class, $cache);
+            $cache->delete('permissions');
+        }
+    }
+
+    /**
+     * GHSA-fq95-vwvx-w88f: the recent endpoint must not leak rate data either.
+     */
+    public function testRecentActionHidesRatesWithoutPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->createRatedTimesheet($this->getUserByRole(User::ROLE_USER));
+
+        $query = ['begin' => '2020-01-01T00:00:00'];
+        $this->assertAccessIsGranted($client, '/api/timesheets/recent', 'GET', $query);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+
+        foreach ($result as $row) {
+            self::assertIsArray($row);
+            self::assertApiResponseTypeStructure('TimesheetCollectionFull', $row, self::TIMESHEET_RATE_FIELDS);
+            foreach (self::TIMESHEET_RATE_FIELDS as $field) {
+                self::assertArrayNotHasKey($field, $row);
+            }
+        }
+    }
+
+    /**
+     * GHSA-fq95-vwvx-w88f: the active endpoint must not leak rate data either.
+     */
+    public function testActiveActionHidesRatesWithoutPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $fixture = new TimesheetFixtures($this->getUserByRole(User::ROLE_USER));
+        $fixture->setFixedRate(true);
+        $fixture->setHourlyRate(true);
+        $fixture->setStartDate(new \DateTime('-2 hours'));
+        $fixture->setAmountRunning(1);
+        $this->importFixture($fixture);
+
+        $this->request($client, '/api/timesheets/active');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertCount(1, $result);
 
         foreach ($result as $row) {
             self::assertIsArray($row);
