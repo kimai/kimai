@@ -75,7 +75,7 @@
 {% endblock %}
 
 {% block login_box %}
-    {% if config('loginFormActive') %}
+    {% if config('loginFormActive') or is_granted('IS_AUTHENTICATED_2FA_IN_PROGRESS') %}
         {{ parent() }}
     {% endif %}
 {% endblock %}
