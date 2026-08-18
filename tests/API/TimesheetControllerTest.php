@@ -33,6 +33,10 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
     public const DATE_FORMAT = 'Y-m-d H:i:s';
     public const DATE_FORMAT_HTML5 = 'Y-m-d\TH:i:s';
     public const TEST_TIMEZONE = 'Europe/London';
+    /**
+     * Rate fields only for users with the "view_rate" permission: GHSA-fq95-vwvx-w88f
+     */
+    private const TIMESHEET_RATE_FIELDS = ['rate', 'internalRate', 'fixedRate', 'hourlyRate'];
 
     /**
      * @return Timesheet[]
@@ -75,7 +79,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(10, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0], self::TIMESHEET_RATE_FIELDS);
     }
 
     public function testGetCollectionFull(): void
@@ -92,7 +96,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(10, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('TimesheetCollectionFull', $result[0]);
+        self::assertApiResponseTypeStructure('TimesheetCollectionFull', $result[0], self::TIMESHEET_RATE_FIELDS);
     }
 
     public function testGetCollectionForOtherUser(): void
@@ -240,7 +244,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(10, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0], self::TIMESHEET_RATE_FIELDS);
     }
 
     public function testGetCollectionForAllUser(): void
@@ -323,7 +327,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(4, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0], self::TIMESHEET_RATE_FIELDS);
     }
 
     public function testGetCollectionWithQueryFailsWith404OnOutOfRangedPage(): void
@@ -376,7 +380,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(5, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0], self::TIMESHEET_RATE_FIELDS);
     }
 
     public function testExportedFilter(): void
@@ -416,7 +420,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(7, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0], self::TIMESHEET_RATE_FIELDS);
 
         $query = [
             'page' => 1,
@@ -435,7 +439,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(10, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0], self::TIMESHEET_RATE_FIELDS);
 
         $query = [
             'page' => 1,
@@ -452,7 +456,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(17, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0], self::TIMESHEET_RATE_FIELDS);
     }
 
     public function testGetEntity(): void
@@ -490,7 +494,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $result = json_decode($content, true);
 
         self::assertIsArray($result);
-        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result, self::TIMESHEET_RATE_FIELDS);
 
         $expected = [
             'activity' => 1,
@@ -507,13 +511,77 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
             'duration' => 46500, // 12,916 => rounded 12,92 * 137,21 = 46512
             'exported' => true,
             'metaFields' => [],
-            'hourlyRate' => 137.21,
-            'rate' => 1772.2958,
-            'internalRate' => 1772.2958,
         ];
 
         foreach ($expected as $key => $value) {
             self::assertEquals($value, $result[$key], \sprintf('Field %s has invalid value', $key));
+        }
+
+        // a plain user does not hold "view_rate_own_timesheet", so the monetary
+        // values must not be part of the response, see GHSA-fq95-vwvx-w88f
+        foreach (self::TIMESHEET_RATE_FIELDS as $field) {
+            self::assertArrayNotHasKey($field, $result);
+        }
+    }
+
+    /**
+     * Regression test for GHSA-fq95-vwvx-w88f: the API has to honour the
+     * "view_rate" permission, which the UI, the export and the reporting enforce.
+     */
+    public function testGetEntityRatesAreVisibleWithPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $startDate = new \DateTime('2020-03-27 14:35:59', new \DateTimeZone('Pacific/Tongatapu'));
+        $endDate = (clone $startDate)->modify('+ 46385 seconds');
+
+        $timesheet = new Timesheet();
+        $timesheet
+            ->setHourlyRate(137.21)
+            ->setBegin($startDate)
+            ->setEnd($endDate)
+            ->setUser($this->getUserByRole(User::ROLE_TEAMLEAD))
+            ->setProject($em->getRepository(Project::class)->find(1))
+            ->setActivity($em->getRepository(Activity::class)->find(1))
+        ;
+        $em->persist($timesheet);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/api/timesheets/' . $timesheet->getId());
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        self::assertEquals(137.21, $result['hourlyRate']);
+        self::assertEquals(1772.2958, $result['rate']);
+        self::assertEquals(1772.2958, $result['internalRate']);
+    }
+
+    /**
+     * Regression test for GHSA-fq95-vwvx-w88f: the collection endpoint must not
+     * leak rate data either.
+     */
+    public function testGetCollectionHidesRatesWithoutPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->importFixtureForUser(User::ROLE_USER, 3);
+
+        $this->assertAccessIsGranted($client, '/api/timesheets');
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+
+        foreach ($result as $row) {
+            self::assertIsArray($row);
+            foreach (self::TIMESHEET_RATE_FIELDS as $field) {
+                self::assertArrayNotHasKey($field, $row);
+            }
         }
     }
 
@@ -984,7 +1052,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $result = json_decode($content, true);
 
         self::assertIsArray($result);
-        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result, self::TIMESHEET_RATE_FIELDS);
         self::assertSame($allowedProject->getId(), $result['project']);
         self::assertNotSame($restrictedProject->getId(), $result['project']);
     }
@@ -1059,7 +1127,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $result = json_decode($content, true);
 
         self::assertIsArray($result);
-        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result, self::TIMESHEET_RATE_FIELDS);
         self::assertNotEmpty($result['id']);
         self::assertIsNumeric($result['id']);
         $id = $result['id'];
@@ -1192,7 +1260,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertEquals(3, \count($result));
         foreach ($result as $timesheet) {
             self::assertIsArray($timesheet);
-            self::assertApiResponseTypeStructure('TimesheetCollectionFull', $timesheet);
+            self::assertApiResponseTypeStructure('TimesheetCollectionFull', $timesheet, self::TIMESHEET_RATE_FIELDS);
         }
     }
 
@@ -1224,7 +1292,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
 
         self::assertIsArray($result);
         self::assertNotEmpty($result);
-        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result, self::TIMESHEET_RATE_FIELDS);
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
@@ -1311,7 +1379,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(10, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0], self::TIMESHEET_RATE_FIELDS);
 
         $query = ['tags' => ['Test', 'Admin']];
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
@@ -1324,7 +1392,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(10, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0], self::TIMESHEET_RATE_FIELDS);
 
         $query = ['tags' => ['Nothing-2-see', 'not-existing-here']];
         $this->request($client, '/api/timesheets', 'GET', $query);
@@ -1353,7 +1421,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $result = json_decode($content, true);
 
         self::assertIsArray($result);
-        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result, self::TIMESHEET_RATE_FIELDS);
         self::assertEmpty($result['description']);
         self::assertEmpty($result['tags']);
 
@@ -1391,7 +1459,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $result = json_decode($content, true);
 
         self::assertIsArray($result);
-        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result, self::TIMESHEET_RATE_FIELDS);
         self::assertEmpty($result['description']);
         self::assertEmpty($result['tags']);
 
@@ -1437,7 +1505,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $result = json_decode($content, true);
 
         self::assertIsArray($result);
-        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result, self::TIMESHEET_RATE_FIELDS);
         self::assertEquals('foo', $result['description']);
         self::assertEquals([['name' => 'sdfsdf', 'value' => 'nnnnn'], ['name' => '1234567890', 'value' => '1234567890']], $result['metaFields']);
         self::assertEquals(['another', 'testing', 'bar'], $result['tags']);
@@ -1708,7 +1776,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $result = json_decode($content, true);
 
         self::assertIsArray($result);
-        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result, self::TIMESHEET_RATE_FIELDS);
         self::assertEquals(['name' => 'metatestmock', 'value' => 'another,testing,bar'], $result['metaFields'][0]);
 
         $em = $this->getEntityManager();

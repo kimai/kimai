@@ -821,11 +821,17 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
      *
      * @param string $type
      * @param array $result
+     * @param array<string> $removeFields fields which are not part of the response, eg. because a permission is missing
      * @throws \Exception
      */
-    protected static function assertApiResponseTypeStructure(string $type, array $result): void
+    protected static function assertApiResponseTypeStructure(string $type, array $result, array $removeFields = []): void
     {
         $expected = self::getExpectedResponseStructure($type);
+
+        foreach ($removeFields as $field) {
+            unset($expected[$field]);
+        }
+
         $expectedKeys = array_keys($expected);
 
         $actual = array_keys($result);
