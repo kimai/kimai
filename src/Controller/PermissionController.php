@@ -201,35 +201,6 @@ final class PermissionController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/roles/{role}/delete/{csrfToken}', name: 'admin_user_role_delete', methods: ['GET', 'POST'])]
-    public function deleteRole(Role $role, string $csrfToken, UserRepository $userRepository, CsrfTokenManagerInterface $csrfTokenManager): Response
-    {
-        if (!$this->isCsrfTokenValid(self::TOKEN_NAME, $csrfToken)) {
-            $this->flashError('action.csrf.error');
-
-            return $this->redirectToRoute('admin_user_permissions');
-        }
-
-        // make sure that the token can only be used once, so refresh it after successful submission
-        $csrfTokenManager->refreshToken(self::TOKEN_NAME)->getValue();
-
-        try {
-            // workaround, as roles is still a string array on users table
-            // until this is fixed, the users must be manually updated
-            $users = $userRepository->findUsersWithRole($role->getName());
-            foreach ($users as $user) {
-                $user->removeRole($role->getName());
-                $userRepository->saveUser($user);
-            }
-            $this->roleRepository->deleteRole($role);
-            $this->flashSuccess('action.delete.success');
-        } catch (\Exception $ex) {
-            $this->flashDeleteException($ex);
-        }
-
-        return $this->redirectToRoute('admin_user_permissions');
-    }
-
     #[Route(path: '/roles/{role}/{name}/{value}/{csrfToken}', name: 'admin_user_permission_save', methods: ['POST'])]
     public function savePermission(Role $role, string $name, bool $value, string $csrfToken, PermissionService $permissionService, CsrfTokenManagerInterface $csrfTokenManager): Response
     {

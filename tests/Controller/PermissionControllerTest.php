@@ -14,6 +14,7 @@ use App\Entity\Role;
 use App\Entity\RolePermission;
 use App\Entity\User;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Component\HttpFoundation\Response;
 
 #[Group('integration')]
 class PermissionControllerTest extends AbstractControllerBaseTestCase
@@ -78,20 +79,6 @@ class PermissionControllerTest extends AbstractControllerBaseTestCase
         $this->assertTableHeader($content);
     }
 
-    public function testDeleteRoleIsSecured(): void
-    {
-        $client = self::createClient();
-
-        $role = new Role();
-        $role->setName('TEST_ROLE');
-
-        $em = $this->getEntityManager();
-        $em->persist($role);
-        $em->flush();
-
-        $this->assertRequestIsSecured($client, '/admin/permissions/roles/' . $role->getId() . '/delete/sdfsdfsdfsd');
-    }
-
     public function testDeleteRoleIsSecuredForRole(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/admin/permissions');
@@ -139,15 +126,19 @@ class PermissionControllerTest extends AbstractControllerBaseTestCase
         $user = $this->getUserByName(UserFixtures::USERNAME_USER);
         self::assertEquals(['ROLE_TEAMLEAD', 'ROLE_SUPER_ADMIN', 'TEST_ROLE', 'ROLE_USER'], $user->getRoles());
 
+        // deleting a role is an API call, the link only carries the target URL
         $this->request($client, '/admin/permissions');
-        $node = $client->getCrawler()->filter('div.card .card-title a.confirmation-link');
+        $node = $client->getCrawler()->filter('div.card .card-title a.api-link');
         self::assertEquals(1, $node->count());
+        self::assertEquals('DELETE', $node->attr('data-method'));
+        self::assertEquals('/api/users/roles/' . $id, $node->attr('data-href'));
 
-        $this->request($client, $node->attr('href'));
-        $this->assertIsRedirect($client, $this->createUrl('/admin/permissions'));
-        $client->followRedirect();
+        $deleteUrl = $node->attr('data-href');
+        self::assertIsString($deleteUrl);
+        $client->request('DELETE', $deleteUrl);
+        self::assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
 
-        self::assertHasFlashDeleteSuccess($client);
+        $this->request($client, '/admin/permissions');
         $content = $client->getResponse()->getContent();
         self::assertStringNotContainsString('<th data-field="TEST_ROLE" class="alwaysVisible text-center">', $content);
 

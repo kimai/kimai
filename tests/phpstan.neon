@@ -647,11 +647,6 @@ parameters:
             path: Controller/PermissionControllerTest.php
 
         -
-            message: "#^Parameter \\#2 \\$url of method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:request\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: Controller/PermissionControllerTest.php
-
-        -
             message: "#^Method App\\\\Tests\\\\Controller\\\\ProfileControllerTest\\:\\:getPreferencesTestData\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: Controller/ProfileControllerTest.php

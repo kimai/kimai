@@ -34,7 +34,10 @@
                             <span ondblclick="navigator.clipboard.writeText('{{ role.getName() }}');" title="{{ role.getName() }}">{{ role.getName()|trans }}</span>
                             {% if canEditPermissions and (role.name not in system_roles) %}
                                 &nbsp;
-                                <a href="{{ path('admin_user_role_delete', {'role': role.id, 'csrfToken': token}) }}" class="confirmation-link" data-question="confirm.delete">{{ icon('trash') }}</a>
+                                <a href="#" data-href="{{ path('delete_user_role', {'id': role.id}) }}" data-method="DELETE"
+                                   data-event="kimai.userRoleUpdate" data-question="confirm.delete"
+                                   data-msg-error="action.delete.error" data-msg-success="action.delete.success"
+                                   class="api-link">{{ icon('trash') }}</a>
                             {% endif %}
                         </h4>
                         <div class="list-unstyled d-flex mb-0">
