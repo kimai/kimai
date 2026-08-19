@@ -643,16 +643,6 @@ parameters:
             path: src/Controller/DashboardController.php
 
         -
-            message: "#^Method App\\\\Controller\\\\DashboardController\\:\\:getDefaultConfig\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Controller/DashboardController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\DashboardController\\:\\:saveBookmark\\(\\) has parameter \\$widgets with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Controller/DashboardController.php
-
-        -
             message: "#^Parameter \\#1 \\$name of method App\\\\Widget\\\\WidgetInterface\\:\\:setOption\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/Controller/DashboardController.php

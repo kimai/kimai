@@ -78,6 +78,8 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
             '/api/customers/{id}/comments/{comment}/pin',
             '/api/customers/{id}/comments/{comment}',
             '/api/customers/{id}/team',
+            '/api/dashboard/widgets/{widget}',
+            '/api/dashboard/widgets',
             '/api/export/{id}',
             '/api/invoices',
             '/api/invoices/{id}',
