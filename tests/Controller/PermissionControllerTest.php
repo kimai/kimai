@@ -15,6 +15,7 @@ use App\Entity\RolePermission;
 use App\Entity\User;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 #[Group('integration')]
 class PermissionControllerTest extends AbstractControllerBaseTestCase
@@ -158,12 +159,49 @@ class PermissionControllerTest extends AbstractControllerBaseTestCase
         $em->persist($role);
         $em->flush();
 
-        $this->assertRequestIsSecured($client, '/admin/permissions/roles/' . $role->getId() . '/view_user/1/asdfasdf', 'POST');
+        $this->assertRequestIsSecured($client, '/admin/permissions/roles/' . $role->getId() . '/view_user', 'POST');
     }
 
     public function testSavePermissionIsSecuredForRole(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/admin/permissions');
+    }
+
+    private function requestPermissionSave(HttpKernelBrowser $client, string $url, string $token, bool $value = true): void
+    {
+        $this->request($client, $url, 'POST', [], json_encode(['token' => $token, 'value' => $value]) ?: '');
+    }
+
+    public function testSavePermissionWithoutTokenIsRejected(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/permissions');
+
+        $role = new Role();
+        $role->setName('TEST_ROLE');
+        $em = $this->getEntityManager();
+        $em->persist($role);
+        $em->flush();
+
+        $url = '/admin/permissions/roles/' . $role->getId() . '/view_user';
+
+        // no body at all
+        $this->request($client, $url, 'POST');
+        self::assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
+
+        // a wrong token
+        $this->requestPermissionSave($client, $url, 'asdfasdf');
+        self::assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
+
+        // a valid token, but no value to apply
+        $this->assertAccessIsGranted($client, '/admin/permissions');
+        $validToken = $client->getCrawler()->filter('div#permission-token')->attr('data-value');
+        self::assertIsString($validToken);
+        $this->request($client, $url, 'POST', [], json_encode(['token' => $validToken]) ?: '');
+        self::assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
+
+        $em->clear();
+        self::assertCount(0, $em->getRepository(RolePermission::class)->findAll());
     }
 
     public function testSavePermission(): void
@@ -193,9 +231,9 @@ class PermissionControllerTest extends AbstractControllerBaseTestCase
         }
 
         $token = $client->getCrawler()->filter('div#permission-token')->attr('data-value');
+        self::assertIsString($token);
 
-        // create the permission
-        $this->request($client, '/admin/permissions/roles/' . $id . '/view_user/1/' . $token, 'POST');
+        $this->requestPermissionSave($client, '/admin/permissions/roles/' . $id . '/view_user', $token, true);
         self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);
         self::assertIsArray($result);
@@ -214,7 +252,8 @@ class PermissionControllerTest extends AbstractControllerBaseTestCase
         $em->clear();
 
         // update the permission
-        $this->request($client, '/admin/permissions/roles/' . $id . '/view_user/0/' . $result['token'], 'POST');
+        self::assertIsString($result['token']);
+        $this->requestPermissionSave($client, '/admin/permissions/roles/' . $id . '/view_user', $result['token'], false);
 
         self::assertTrue($client->getResponse()->isSuccessful());
         $result = json_decode($client->getResponse()->getContent(), true);

@@ -24,6 +24,7 @@ use App\Security\RoleService;
 use App\User\PermissionService;
 use App\Utils\PageSetup;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Exception\JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -201,12 +202,36 @@ final class PermissionController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/roles/{role}/{name}/{value}/{csrfToken}', name: 'admin_user_permission_save', methods: ['POST'])]
-    public function savePermission(Role $role, string $name, bool $value, string $csrfToken, PermissionService $permissionService, CsrfTokenManagerInterface $csrfTokenManager): Response
+    /**
+     * @return array<string, mixed>
+     */
+    private function getRequestPayload(Request $request): array
     {
-        if (!$this->isCsrfTokenValid(self::TOKEN_NAME, $csrfToken)) {
+        try {
+            return $request->toArray();
+        } catch (JsonException) {
+            return [];
+        }
+    }
+
+    #[Route(path: '/roles/{role}/{name}', name: 'admin_user_permission_save', methods: ['POST'])]
+    public function savePermission(Role $role, string $name, Request $request, PermissionService $permissionService, CsrfTokenManagerInterface $csrfTokenManager): Response
+    {
+        $payload = $this->getRequestPayload($request);
+
+        // the token is sent in the request body and must not become part of the URL,
+        // where it would end up in server logs and the browser history
+        $token = \array_key_exists('token', $payload) ? $payload['token'] : null;
+
+        if (!\is_string($token) || !$this->isCsrfTokenValid(self::TOKEN_NAME, $token)) {
             throw new BadRequestHttpException('Invalid CSRF token');
         }
+
+        if (!\array_key_exists('value', $payload) || !\is_bool($payload['value'])) {
+            throw new BadRequestHttpException('Missing or invalid parameter "value"');
+        }
+
+        $value = $payload['value'];
 
         if (!$this->manager->isRegisteredPermission($name)) {
             throw $this->createNotFoundException('Unknown permission: ' . $name);
