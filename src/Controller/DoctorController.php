@@ -14,10 +14,10 @@ use App\Utils\FileHelper;
 use App\Utils\PageSetup;
 use App\Utils\ReleaseVersion;
 use Composer\InstalledVersions;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Csrf\CsrfToken;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
@@ -39,17 +39,32 @@ final class DoctorController extends AbstractController
     {
     }
 
-    #[Route(path: '/flush-log/{token}', name: 'doctor_flush_log', methods: ['GET'])]
-    #[IsGranted('system_configuration')]
-    public function deleteLogfileAction(string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
+    /**
+     * Emptying the logfile changes data, so it must not be possible with a GET request.
+     * The form carries the CSRF token in its body instead of the URL.
+     *
+     * @return FormInterface<mixed>
+     */
+    private function createFlushLogForm(): FormInterface
     {
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('doctor.flush_log', $token))) {
+        return $this->createFormBuilder(null, [
+            'action' => $this->generateUrl('doctor_flush_log'),
+            'method' => 'POST',
+        ])->getForm();
+    }
+
+    #[Route(path: '/flush-log', name: 'doctor_flush_log', methods: ['POST'])]
+    #[IsGranted('system_configuration')]
+    public function deleteLogfileAction(Request $request): Response
+    {
+        $form = $this->createFlushLogForm();
+        $form->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
             $this->flashError('action.csrf.error');
 
             return $this->redirectToRoute('doctor');
         }
-
-        $csrfTokenManager->refreshToken('doctor.flush_log');
 
         $logfile = $this->getLogFilename();
 
@@ -92,6 +107,7 @@ final class DoctorController extends AbstractController
             'extensions' => $this->getLoadedExtensions(),
             'directories' => $this->getFilePermissions(),
             'log_delete' => $canDeleteLogfile,
+            'log_delete_form' => $canDeleteLogfile ? $this->createFlushLogForm()->createView() : null,
             'logs' => $this->getLog(),
             'logLines' => $logLines,
             'logSize' => $this->getLogSize(),
