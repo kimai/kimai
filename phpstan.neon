@@ -723,11 +723,6 @@ parameters:
             path: src/Controller/PermissionController.php
 
         -
-            message: "#^Parameter \\#1 \\$role of method App\\\\Repository\\\\UserRepository\\:\\:findUsersWithRole\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/PermissionController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\PluginController\\:\\:getPluginInformation\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Controller/PluginController.php

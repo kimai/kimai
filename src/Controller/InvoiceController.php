@@ -574,49 +574,6 @@ final class InvoiceController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/document/{id}/delete/{token}', name: 'invoice_document_delete', methods: ['GET', 'POST'])]
-    #[IsGranted('manage_invoice_template')]
-    public function deleteDocument(string $id, string $token, CsrfTokenManagerInterface $csrfTokenManager, InvoiceDocumentRepository $documentRepository, InvoiceTemplateRepository $templateRepository): Response
-    {
-        $document = $documentRepository->findByName($id);
-        if ($document === null) {
-            throw $this->createNotFoundException();
-        }
-
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.delete_document', $token))) {
-            $this->flashError('action.csrf.error');
-
-            return $this->redirectToRoute('admin_invoice_document_upload');
-        }
-
-        $csrfTokenManager->refreshToken('invoice.delete_document');
-
-        foreach ($documentRepository->findBuiltIn() as $doc) {
-            if ($doc->getId() === $id) {
-                $this->flashError('Document is built-in and cannot be deleted.');
-
-                return $this->redirectToRoute('admin_invoice_document_upload');
-            }
-        }
-
-        foreach ($templateRepository->findAll() as $template) {
-            if ($template->getRenderer() === $id) {
-                $this->flashError('Document is used and cannot be deleted.');
-
-                return $this->redirectToRoute('admin_invoice_document_upload');
-            }
-        }
-
-        try {
-            $documentRepository->remove($document);
-            $this->flashSuccess('action.delete.success');
-        } catch (Exception $ex) {
-            $this->flashDeleteException($ex);
-        }
-
-        return $this->redirectToRoute('admin_invoice_document_upload');
-    }
-
     #[Route(path: '/template/create/{id}', name: 'admin_invoice_template_copy', methods: ['GET', 'POST'])]
     #[IsGranted('manage_invoice_template')]
     public function copyTemplateAction(Request $request, InvoiceTemplate $copyFrom, InvoiceTemplateRepository $templateRepository): Response
@@ -642,28 +599,6 @@ final class InvoiceController extends AbstractController
         }
 
         return $this->renderTemplateForm($template, $request, $templateRepository);
-    }
-
-    #[Route(path: '/template/{id}/delete/{csrfToken}', name: 'admin_invoice_template_delete', methods: ['GET', 'POST'])]
-    #[IsGranted('manage_invoice_template')]
-    public function deleteTemplate(InvoiceTemplate $template, string $csrfToken, CsrfTokenManagerInterface $csrfTokenManager, InvoiceTemplateRepository $templateRepository): Response
-    {
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.delete_template', $csrfToken))) {
-            $this->flashError('action.csrf.error');
-
-            return $this->redirectToRoute('admin_invoice_template');
-        }
-
-        $csrfTokenManager->refreshToken('invoice.delete_template');
-
-        try {
-            $templateRepository->removeTemplate($template);
-            $this->flashSuccess('action.delete.success');
-        } catch (Exception $ex) {
-            $this->flashDeleteException($ex);
-        }
-
-        return $this->redirectToRoute('admin_invoice_template');
     }
 
     private function getDefaultQuery(): InvoiceQuery

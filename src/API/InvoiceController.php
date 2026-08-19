@@ -11,9 +11,12 @@ namespace App\API;
 
 use App\Entity\Invoice;
 use App\Entity\InvoiceMeta;
+use App\Entity\InvoiceTemplate;
 use App\Invoice\InvoiceService;
 use App\Repository\CustomerRepository;
+use App\Repository\InvoiceDocumentRepository;
 use App\Repository\InvoiceRepository;
+use App\Repository\InvoiceTemplateRepository;
 use App\Repository\Query\InvoiceArchiveQuery;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -201,5 +204,53 @@ final class InvoiceController extends BaseApiController
         $view = new View(null, Response::HTTP_NO_CONTENT);
 
         return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Delete an invoice document
+     *
+     * Invoice documents are the files used to render an invoice, they cannot be created
+     * through the API. This endpoint is used by the invoice document screen.
+     */
+    #[IsGranted('manage_invoice_template')]
+    #[OA\Delete(description: 'Deletes an uploaded invoice document. Built-in documents and documents which are used by a template cannot be deleted.', responses: [new OA\Response(response: 204, description: 'Empty')], x: ['internal' => true])]
+    #[OA\Parameter(name: 'id', description: 'Invoice document ID to delete', in: 'path', required: true)]
+    #[Route(path: '/documents/{id}', name: 'delete_invoice_document', methods: ['DELETE'])]
+    public function deleteDocument(string $id, InvoiceDocumentRepository $documentRepository, InvoiceTemplateRepository $templateRepository): Response
+    {
+        $document = $documentRepository->findByName($id);
+        if ($document === null) {
+            throw $this->createNotFoundException('Unknown invoice document: ' . $id);
+        }
+
+        foreach ($documentRepository->findBuiltIn() as $doc) {
+            if ($doc->getId() === $id) {
+                throw new BadRequestHttpException('Document is built-in and cannot be deleted.');
+            }
+        }
+
+        foreach ($templateRepository->findAll() as $template) {
+            if ($template->getRenderer() === $id) {
+                throw new BadRequestHttpException('Document is used and cannot be deleted.');
+            }
+        }
+
+        $documentRepository->remove($document);
+
+        return $this->viewHandler->handle(new View(null, Response::HTTP_NO_CONTENT));
+    }
+
+    /**
+     * Delete an invoice template
+     */
+    #[IsGranted('manage_invoice_template')]
+    #[OA\Delete(description: 'Deletes an invoice template.', responses: [new OA\Response(response: 204, description: 'Empty')], x: ['internal' => true])]
+    #[OA\Parameter(name: 'id', description: 'Invoice template ID to delete', in: 'path', required: true)]
+    #[Route(path: '/templates/{id}', name: 'delete_invoice_template', requirements: ['id' => '\d+'], methods: ['DELETE'])]
+    public function deleteTemplate(InvoiceTemplate $template, InvoiceTemplateRepository $templateRepository): Response
+    {
+        $templateRepository->removeTemplate($template);
+
+        return $this->viewHandler->handle(new View(null, Response::HTTP_NO_CONTENT));
     }
 }

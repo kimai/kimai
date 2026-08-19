@@ -607,11 +607,6 @@ parameters:
             path: Controller/InvoiceControllerTest.php
 
         -
-            message: "#^Parameter \\#2 \\$url of method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:requestPure\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: Controller/InvoiceControllerTest.php
-
-        -
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 11
             path: Controller/LayoutControllerTest.php

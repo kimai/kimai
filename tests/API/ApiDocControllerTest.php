@@ -87,6 +87,8 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
             '/api/invoices/{id}',
             '/api/invoices/{id}/custom-fields',
             '/api/invoices/{id}/download',
+            '/api/invoices/documents/{id}',
+            '/api/invoices/templates/{id}',
             '/api/projects',
             '/api/projects/{id}',
             '/api/projects/{id}/meta',

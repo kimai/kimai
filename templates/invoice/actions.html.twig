@@ -7,12 +7,12 @@
 
 {% macro invoice_template(template, view) %}
     {% import "macros/widgets.html.twig" as widgets %}
-    {% set event = actions(app.user, 'invoice_template', view, {'template': template, 'token': csrf_token('invoice.delete_template')}) %}
+    {% set event = actions(app.user, 'invoice_template', view, {'template': template}) %}
     {{ widgets.table_actions(event.actions) }}
 {% endmacro %}
 
 {% macro invoice_document(document, inUse, view) %}
     {% import "macros/widgets.html.twig" as widgets %}
-    {% set event = actions(app.user, 'invoice_document', view, {'document': document, 'in_use': inUse, 'token': csrf_token('invoice.delete_document')}) %}
+    {% set event = actions(app.user, 'invoice_document', view, {'document': document, 'in_use': inUse}) %}
     {{ widgets.table_actions(event.actions) }}
 {% endmacro %}

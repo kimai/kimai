@@ -560,6 +560,9 @@ class InvoiceControllerTest extends AbstractControllerBaseTestCase
         $this->assertHasFlashSuccess($client);
     }
 
+    /**
+     * Deleting a template is an API call, the listing only renders the target URL.
+     */
     public function testDeleteTemplateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
@@ -569,16 +572,15 @@ class InvoiceControllerTest extends AbstractControllerBaseTestCase
         $id = $template[0]->getId();
 
         $this->request($client, '/invoice/template');
-        $url = $this->createUrl('/invoice/template/' . $id . '/delete/');
-        $links = $client->getCrawler()->filterXPath("//a[starts-with(@href, '" . $url . "')]");
+        $url = '/api/invoices/templates/' . $id;
+        $links = $client->getCrawler()->filterXPath("//a[@href='" . $url . "']");
+        self::assertEquals(1, $links->count(), 'Could not find the delete link');
+        self::assertEquals('DELETE', $links->attr('data-method'));
 
-        $this->requestPure($client, $links->attr('href'));
-        $this->assertIsRedirect($client, '/invoice/template');
-        $client->followRedirect();
+        $client->request('DELETE', $url);
+        self::assertEquals(204, $client->getResponse()->getStatusCode());
 
-        self::assertTrue($client->getResponse()->isSuccessful());
-        $this->assertHasFlashSuccess($client);
-
+        $this->getEntityManager()->clear();
         self::assertEquals(0, $this->getEntityManager()->getRepository(InvoiceTemplate::class)->count([]));
     }
 
