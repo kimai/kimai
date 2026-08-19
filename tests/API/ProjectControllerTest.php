@@ -1072,4 +1072,47 @@ class ProjectControllerTest extends APIControllerBaseTestCase
             'message' => 'This endpoint was removed, use "POST /api/teams/" instead.'
         ]);
     }
+
+    public function testDuplicateIsSecure(): void
+    {
+        $this->assertRequestIsSecured(self::createClient(), '/api/projects/1/duplicate', 'POST');
+    }
+
+    public function testDuplicateIsSecureForRole(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->request($client, '/api/projects/1/duplicate', 'POST');
+
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    public function testDuplicateNotFound(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertEntityNotFoundForPost($client, '/api/projects/' . PHP_INT_MAX . '/duplicate');
+    }
+
+    public function testDuplicate(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $before = $this->getEntityManager()->getRepository(Project::class)->count([]);
+
+        $this->request($client, '/api/projects/1/duplicate', 'POST');
+
+        self::assertEquals(Response::HTTP_CREATED, $client->getResponse()->getStatusCode());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('ProjectEntity', $result);
+        self::assertIsString($result['name']);
+        self::assertStringEndsWith(' [COPY]', $result['name']);
+        self::assertIsInt($result['id']);
+        self::assertNotEquals(1, $result['id'], 'the copy has to be a new project');
+
+        $this->getEntityManager()->clear();
+        self::assertEquals($before + 1, $this->getEntityManager()->getRepository(Project::class)->count([]));
+    }
 }

@@ -142,6 +142,7 @@ class ActionsControllerTest extends APIControllerBaseTestCase
                 'divider0',
                 'filter',
                 'divider1',
+                'copy',
                 'report_project_details',
                 'trash',
             ],
@@ -152,6 +153,7 @@ class ActionsControllerTest extends APIControllerBaseTestCase
                 'divider0',
                 'filter',
                 'divider1',
+                'copy',
                 'report_project_details',
             ],
         ];

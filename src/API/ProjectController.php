@@ -17,6 +17,7 @@ use App\Entity\User;
 use App\Form\API\CommentApiForm;
 use App\Form\API\ProjectApiEditForm;
 use App\Form\API\ProjectRateApiForm;
+use App\Project\ProjectDuplicationService;
 use App\Project\ProjectService;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRateRepository;
@@ -74,6 +75,22 @@ final class ProjectController extends BaseApiController
     private function renderEntity(Project $project): Response
     {
         return $this->renderBudgetAwareView(new View($project, Response::HTTP_OK), self::GROUPS_ENTITY);
+    }
+
+    /**
+     * Duplicate a project and all of it's activities
+     */
+    #[IsGranted('edit', 'project')]
+    #[IsGranted('create_project')]
+    #[IsGranted('create_activity')]
+    #[OA\Post(description: 'Creates a copy of the project, including its teams, rates, meta fields and activities.', responses: [new OA\Response(response: 201, description: 'Returns the new project', content: new OA\JsonContent(ref: '#/components/schemas/ProjectEntity'))], x: ['internal' => true])]
+    #[OA\Parameter(name: 'id', description: 'Project ID to duplicate', in: 'path', required: true)]
+    #[Route(path: '/{id}/duplicate', name: 'post_project_duplicate', requirements: ['id' => '\d+'], methods: ['POST'])]
+    public function duplicateAction(Project $project, ProjectDuplicationService $projectDuplicationService): Response
+    {
+        $newProject = $projectDuplicationService->duplicate($project, $project->getName() . ' [COPY]');
+
+        return $this->renderBudgetAwareView(new View($newProject, Response::HTTP_CREATED), self::GROUPS_ENTITY);
     }
 
     /**

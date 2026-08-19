@@ -26,7 +26,6 @@ use App\Form\ProjectTeamPermissionForm;
 use App\Form\TeamEditForm;
 use App\Form\Toolbar\ProjectToolbarForm;
 use App\Form\Type\ProjectType;
-use App\Project\ProjectDuplicationService;
 use App\Project\ProjectService;
 use App\Project\ProjectStatisticService;
 use App\Repository\ActivityRepository;
@@ -48,8 +47,6 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Csrf\CsrfToken;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
@@ -279,7 +276,7 @@ final class ProjectController extends AbstractController
 
     #[Route(path: '/{id}/details', name: 'project_details', methods: ['GET', 'POST'])]
     #[IsGranted('view', 'project')]
-    public function detailsAction(Project $project, TeamRepository $teamRepository, ProjectRateRepository $rateRepository, ProjectStatisticService $statisticService, ProjectService $projectService, CsrfTokenManagerInterface $csrfTokenManager, EventDispatcherInterface $dispatcher): Response
+    public function detailsAction(Project $project, TeamRepository $teamRepository, ProjectRateRepository $rateRepository, ProjectStatisticService $statisticService, ProjectService $projectService, EventDispatcherInterface $dispatcher): Response
     {
         $projectService->loadMetaFields($project);
 
@@ -327,7 +324,7 @@ final class ProjectController extends AbstractController
         $page = $this->createPageSetup();
         $page->setActionName('project');
         $page->setActionView('project_details');
-        $page->setActionPayload(['project' => $project, 'token' => $csrfTokenManager->getToken('project.duplicate')]);
+        $page->setActionPayload(['project' => $project]);
 
         return $this->render('project/details.html.twig', [
             'page_setup' => $page,
@@ -422,31 +419,6 @@ final class ProjectController extends AbstractController
             'project' => $project,
             'form' => $editForm->createView()
         ]);
-    }
-
-    #[Route(path: '/{id}/duplicate/{token}', name: 'admin_project_duplicate', methods: ['GET', 'POST'])]
-    #[IsGranted('edit', 'project')]
-    public function duplicateAction(Project $project, string $token, ProjectDuplicationService $projectDuplicationService, CsrfTokenManagerInterface $csrfTokenManager): Response
-    {
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('project.duplicate', $token))) {
-            $this->flashError('action.csrf.error');
-
-            return $this->redirectToRoute('project_details', ['id' => $project->getId()]);
-        }
-
-        $csrfTokenManager->refreshToken('project.duplicate');
-
-        try {
-            $newProject = $projectDuplicationService->duplicate($project, $project->getName() . ' [COPY]');
-            $this->flashSuccess('action.update.success');
-
-            return $this->redirectToRoute('project_details', ['id' => $newProject->getId()]);
-        } catch (\Exception $ex) {
-            $this->logException($ex);
-            $this->flashError('action.update.error', 'Failed to copy project: ' . $ex->getMessage());
-        }
-
-        return $this->redirectToRoute('admin_project');
     }
 
     #[Route(path: '/{id}/delete', name: 'admin_project_delete', methods: ['GET', 'POST'])]
