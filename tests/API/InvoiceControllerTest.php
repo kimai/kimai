@@ -11,11 +11,14 @@ namespace App\Tests\API;
 
 use App\Entity\Customer;
 use App\Entity\Invoice;
+use App\Entity\Role;
+use App\Entity\RolePermission;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Repository\TeamRepository;
 use App\Tests\DataFixtures\InvoiceFixtures;
 use App\Tests\Mocks\InvoiceTestMetaFieldSubscriberMock;
+use App\User\PermissionService;
 use App\Utils\FileHelper;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -352,5 +355,63 @@ class InvoiceControllerTest extends APIControllerBaseTestCase
         $invoice = $em->getRepository(Invoice::class)->find($id);
         self::assertEquals('another,testing,bar', $invoice->getMetaField('metatestmock')?->getValue());
         self::assertEquals(13081978, $invoice->getMetaField('foobar')?->getValue());
+    }
+
+    public function testDeleteIsSecure(): void
+    {
+        $this->assertUrlIsSecured('/api/invoices/1', 'DELETE');
+    }
+
+    public function testDeleteIsSecureForRole(): void
+    {
+        // no default role holds "delete_invoice", not even the super-admin
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $invoices = $this->importInvoiceFixtures(1);
+
+        $this->request($client, '/api/invoices/' . $invoices[0]->getId(), 'DELETE');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    public function testDeleteNotFound(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertNotFoundForDelete($client, '/api/invoices/' . PHP_INT_MAX);
+    }
+
+    public function testDelete(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->grantDeleteInvoicePermission();
+        $invoices = $this->importInvoiceFixtures(1);
+        $id = $invoices[0]->getId();
+        self::assertIsInt($id);
+
+        $this->request($client, '/api/invoices/' . $id, 'DELETE');
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+        self::assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
+        self::assertEmpty($client->getResponse()->getContent());
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        self::assertNull($em->getRepository(Invoice::class)->find($id));
+    }
+
+    /**
+     * The "delete_invoice" permission is not part of any default role.
+     */
+    private function grantDeleteInvoicePermission(): void
+    {
+        $em = $this->getEntityManager();
+
+        $role = (new Role())->setName(User::ROLE_SUPER_ADMIN);
+        $em->persist($role);
+        $em->flush();
+
+        $permissionService = self::getContainer()->get(PermissionService::class);
+        self::assertInstanceOf(PermissionService::class, $permissionService);
+        $permissionService->saveRolePermission(
+            (new RolePermission())->setRole($role)->setPermission('delete_invoice')->setAllowed(true)
+        );
     }
 }

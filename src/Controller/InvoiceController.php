@@ -274,28 +274,6 @@ final class InvoiceController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/delete/{id}/{token}', name: 'admin_invoice_delete', methods: ['GET'])]
-    #[IsGranted('delete_invoice', 'invoice')]
-    public function deleteInvoiceAction(Invoice $invoice, string $token, CsrfTokenManagerInterface $csrfTokenManager, InvoiceService $service): Response
-    {
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.status', $token))) {
-            $this->flashError('action.csrf.error');
-
-            return $this->redirectToRoute('admin_invoice_list');
-        }
-
-        $csrfTokenManager->refreshToken('invoice.status');
-
-        try {
-            $service->deleteInvoice($invoice, $this->dispatcher);
-            $this->flashSuccess('action.delete.success');
-        } catch (Exception $ex) {
-            $this->flashDeleteException($ex);
-        }
-
-        return $this->redirectToRoute('admin_invoice_list');
-    }
-
     #[Route(path: '/download/{id}', name: 'admin_invoice_download', methods: ['GET'])]
     #[IsGranted('view_invoice', 'invoice')]
     public function downloadAction(Invoice $invoice, InvoiceService $service): Response

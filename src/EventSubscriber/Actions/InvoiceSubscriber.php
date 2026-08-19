@@ -59,9 +59,9 @@ final class InvoiceSubscriber extends AbstractActionsSubscriber
             $event->addAction($id, ['url' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => 'canceled', 'token' => $payload['token']]), 'title' => 'invoice.cancel']);
         }
 
-        if ($this->isGranted('delete_invoice')) {
+        if ($allowDelete) {
             $event->addDivider();
-            $event->addDelete($this->path('admin_invoice_delete', ['id' => $invoice->getId(), 'token' => $payload['token']]), false);
+            $event->addDelete($this->path('delete_invoice', ['id' => $invoice->getId()]), false, 'kimai.invoiceUpdate');
         }
     }
 }
