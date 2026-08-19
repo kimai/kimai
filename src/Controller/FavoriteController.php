@@ -9,8 +9,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Timesheet;
-use App\Timesheet\FavoriteRecordService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -24,25 +22,5 @@ final class FavoriteController extends AbstractController
     public function favoriteAction(): Response
     {
         return $this->render('favorite/index.html.twig');
-    }
-
-    #[Route(path: '/timesheet/add/{id}', name: 'favorites_timesheets_add', methods: ['GET'])]
-    #[IsGranted('start_own_timesheet')]
-    #[IsGranted('is_owner', 'timesheet')]
-    public function add(Timesheet $timesheet, FavoriteRecordService $favoriteRecordService): Response
-    {
-        $favoriteRecordService->addFavorite($timesheet);
-
-        return $this->redirectToRoute('favorites_timesheets');
-    }
-
-    #[Route(path: '/timesheet/remove/{id}', name: 'favorites_timesheets_remove', methods: ['GET'])]
-    #[IsGranted('start_own_timesheet')]
-    #[IsGranted('is_owner', 'timesheet')]
-    public function remove(Timesheet $timesheet, FavoriteRecordService $favoriteRecordService): Response
-    {
-        $favoriteRecordService->removeFavorite($timesheet);
-
-        return $this->redirectToRoute('favorites_timesheets');
     }
 }

@@ -71,7 +71,7 @@ final class FavoriteRecordService
             }
         }
 
-        return \array_slice(array_values($all), 0, $limit);
+        return \array_slice(array_values($all), 0, ($limit > 0 ? $limit : 1));
     }
 
     private function getBookmark(User $user): Bookmark

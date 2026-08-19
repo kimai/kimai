@@ -48,7 +48,7 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
             }
         }
 
-        $expectedKeys = ['Actions', 'Activity', 'Default', 'Customer', 'Project', 'Tag', 'Team', 'Timesheet', 'User', 'Invoice', 'Export'];
+        $expectedKeys = ['Actions', 'Activity', 'Dashboard', 'Default', 'Customer', 'Favorites', 'Project', 'Tag', 'Team', 'Timesheet', 'User', 'Invoice', 'Export'];
         $actual = array_keys($tags);
 
         sort($actual);
@@ -81,6 +81,8 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
             '/api/dashboard/widgets/{widget}',
             '/api/dashboard/widgets',
             '/api/export/{id}',
+            '/api/favorites/timesheets',
+            '/api/favorites/timesheets/{id}',
             '/api/invoices',
             '/api/invoices/{id}',
             '/api/invoices/{id}/custom-fields',
