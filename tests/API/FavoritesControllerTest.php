@@ -241,6 +241,45 @@ class FavoritesControllerTest extends APIControllerBaseTestCase
         self::assertApiResponseTypeStructure('TimesheetCollectionFull', $row);
     }
 
+    /**
+     * A user can store up to five favorites and the endpoint has to return all of them.
+     */
+    public function testGetReturnsEveryFavorite(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $fixture = new TimesheetFixtures();
+        $fixture->setAmount(FavoriteRecordService::MAX_FAVORITES);
+        $fixture->setUser($this->getUserByRole(User::ROLE_USER));
+        $timesheets = $this->importFixture($fixture);
+
+        /** @var FavoriteRecordService $favoriteRecordService */
+        $favoriteRecordService = $this->getPrivateService(FavoriteRecordService::class);
+
+        $expected = [];
+        foreach ($timesheets as $timesheet) {
+            $favoriteRecordService->addFavorite($timesheet);
+            $expected[] = $timesheet->getId();
+        }
+
+        self::assertCount(FavoriteRecordService::MAX_FAVORITES, $expected);
+
+        $this->request($client, '/api/favorites/timesheets', 'GET');
+
+        $rows = $this->getJsonRows($client);
+        self::assertCount(FavoriteRecordService::MAX_FAVORITES, $rows, 'every favorite has to be returned');
+
+        $ids = [];
+        foreach ($rows as $row) {
+            self::assertIsArray($row);
+            $ids[] = $row['id'];
+        }
+
+        sort($ids);
+        sort($expected);
+        self::assertEquals($expected, $ids);
+    }
+
     public function testGetHidesRatesWithoutPermission(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
