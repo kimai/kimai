@@ -28,8 +28,11 @@ final class FavoriteRecordService
     }
 
     /**
-     * @param User $user
-     * @param int $limit
+     * Returns the favorites of the user, filled up with recently used records to be offered
+     * as templates for a new record.
+     *
+     * A limit of zero or less returns all favorites and no recent records.
+     *
      * @return array<FavoriteTimesheet>
      */
     public function favoriteEntries(User $user, int $limit = 5): array
@@ -71,7 +74,13 @@ final class FavoriteRecordService
             }
         }
 
-        return \array_slice(array_values($all), 0, $limit);
+        $all = array_values($all);
+
+        if ($limit <= 0) {
+            return $all;
+        }
+
+        return \array_slice($all, 0, $limit);
     }
 
     private function getBookmark(User $user): Bookmark

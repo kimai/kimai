@@ -10,6 +10,7 @@
 namespace App\API;
 
 use App\Entity\AccessToken;
+use App\Entity\Role;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
@@ -17,6 +18,7 @@ use App\Form\API\UserApiCreateForm;
 use App\Form\API\UserApiEditForm;
 use App\Repository\AccessTokenRepository;
 use App\Repository\Query\UserQuery;
+use App\Repository\RoleRepository;
 use App\Repository\UserRepository;
 use App\User\UserService;
 use App\Utils\SearchTerm;
@@ -199,6 +201,31 @@ final class UserController extends BaseApiController
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Delete a user role
+     */
+    #[IsGranted('role_permissions')]
+    #[OA\Delete(description: 'Deletes the role and removes it from every user owning it.', responses: [new OA\Response(response: 204, description: 'Empty')], x: ['internal' => true])]
+    #[OA\Parameter(name: 'id', description: 'The role ID to delete', in: 'path', required: true)]
+    #[Route(path: '/roles/{id}', name: 'delete_user_role', requirements: ['id' => '\d+'], methods: ['DELETE'])]
+    public function deleteRole(Role $role, RoleRepository $roleRepository): Response
+    {
+        $name = $role->getName();
+
+        // workaround, as roles is still a string array on users table
+        // until this is changed, the users must be manually updated
+        if ($name !== null) {
+            foreach ($this->repository->findUsersWithRole($name) as $user) {
+                $user->removeRole($name);
+                $this->repository->saveUser($user);
+            }
+        }
+
+        $roleRepository->deleteRole($role);
+
+        return $this->viewHandler->handle(new View(null, Response::HTTP_NO_CONTENT));
     }
 
     /**

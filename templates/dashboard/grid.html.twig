@@ -71,7 +71,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript">
+    <script>
         let grid = null;
 
         function resizeGrid() {
@@ -154,5 +154,9 @@
             document.getElementById('dashboard-widgets').submit();
         }
         {% endif %}
+
+        document.addEventListener('kimai.initialized', function() {
+            KimaiReloadPageWidget.create('kimai.dashboardUpdate', true);
+        });
     </script>
 {% endblock %}

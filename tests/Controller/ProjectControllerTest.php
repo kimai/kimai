@@ -31,6 +31,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 #[Group('integration')]
@@ -365,11 +366,17 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
         $em->persist($rate);
         $em->flush();
 
-        $token = $this->getCsrfToken($client, 'project.duplicate');
+        // duplicating is an API call, the views reload themselves through "kimai.projectDuplicate"
+        $this->requestPure($client, '/api/projects/1/duplicate', 'POST');
+        self::assertEquals(Response::HTTP_CREATED, $client->getResponse()->getStatusCode());
 
-        $this->request($client, '/admin/project/1/duplicate/' . $token);
-        $this->assertIsRedirect($client, '/details');
-        $client->followRedirect();
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        self::assertIsInt($result['id']);
+
+        $this->request($client, '/admin/project/' . $result['id'] . '/details');
         $node = $client->getCrawler()->filter('div.card#project_rates_box');
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.card#project_rates_box table.dataTable tbody tr:not(.summary)');
@@ -377,23 +384,31 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
         self::assertStringContainsString('123.45', $node->text(null, true));
     }
 
-    public function testDuplicateActionWithInvalidCsrf(): void
+    /**
+     * The details page only renders the API URL, the duplication itself is an API call.
+     */
+    public function testDuplicateActionPointsToTheApi(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        /** @var EntityManager $em */
-        $em = $this->getEntityManager();
-        $project = $em->find(Project::class, 1);
-        $project->setMetaField((new ProjectMeta())->setName('foo')->setValue('bar'));
-        $project->setEnd(new \DateTime());
-        $em->persist($project);
-        $activity = new Activity();
-        $activity->setName('blub');
-        $activity->setProject($project);
-        $activity->setMetaField((new ActivityMeta())->setName('blub')->setValue('blab'));
-        $em->persist($activity);
-        $em->flush();
+        $this->assertAccessIsGranted($client, '/admin/project/1/details');
 
-        $this->assertInvalidCsrfToken($client, '/admin/project/1/duplicate/rsetdzfukgli78t6r5uedtjfzkugl', $this->createUrl('/admin/project/1/details'));
+        $copy = $client->getCrawler()->filter('a.api-link[href="/api/projects/1/duplicate"]');
+        self::assertGreaterThan(0, $copy->count(), 'Could not find the duplicate action');
+        self::assertEquals('POST', $copy->first()->attr('data-method'));
+        self::assertEquals('kimai.projectDuplicate', $copy->first()->attr('data-event'));
+    }
+
+    public function testDuplicateActionIsNotPossibleWithGet(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $this->request($client, '/admin/project/1/duplicate/rsetdzfukgli78t6r5uedtjfzkugl');
+        self::assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
+
+        $this->requestPure($client, '/api/projects/1/duplicate');
+        self::assertEquals(Response::HTTP_METHOD_NOT_ALLOWED, $client->getResponse()->getStatusCode());
+
+        self::assertEquals(1, $this->getEntityManager()->getRepository(Project::class)->count(['name' => 'Test']));
     }
 
     public function testAddCommentAction(): void

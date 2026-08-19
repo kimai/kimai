@@ -11,12 +11,14 @@ namespace App\Tests\API;
 
 use App\Entity\Customer;
 use App\Entity\Invoice;
+use App\Entity\InvoiceTemplate;
 use App\Entity\Role;
 use App\Entity\RolePermission;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Repository\TeamRepository;
 use App\Tests\DataFixtures\InvoiceFixtures;
+use App\Tests\DataFixtures\InvoiceTemplateFixtures;
 use App\Tests\Mocks\InvoiceTestMetaFieldSubscriberMock;
 use App\User\PermissionService;
 use App\Utils\FileHelper;
@@ -413,5 +415,117 @@ class InvoiceControllerTest extends APIControllerBaseTestCase
         $permissionService->saveRolePermission(
             (new RolePermission())->setRole($role)->setPermission('delete_invoice')->setAllowed(true)
         );
+    }
+
+    public function testDeleteTemplateIsSecure(): void
+    {
+        $this->assertRequestIsSecured(self::createClient(), '/api/invoices/templates/1', 'DELETE');
+    }
+
+    public function testDeleteDocumentIsSecure(): void
+    {
+        $this->assertRequestIsSecured(self::createClient(), '/api/invoices/documents/invoice', 'DELETE');
+    }
+
+    public function testDeleteTemplateIsSecureForRole(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $fixture = new InvoiceTemplateFixtures();
+        $templates = $this->importFixture($fixture);
+        $id = $templates[0]->getId();
+
+        $this->request($client, '/api/invoices/templates/' . $id, 'DELETE');
+
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->getEntityManager()->clear();
+        self::assertNotNull($this->getEntityManager()->getRepository(InvoiceTemplate::class)->find($id));
+    }
+
+    public function testDeleteTemplate(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $fixture = new InvoiceTemplateFixtures();
+        $templates = $this->importFixture($fixture);
+        $id = $templates[0]->getId();
+
+        $this->request($client, '/api/invoices/templates/' . $id, 'DELETE');
+
+        self::assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
+
+        $this->getEntityManager()->clear();
+        self::assertNull($this->getEntityManager()->getRepository(InvoiceTemplate::class)->find($id));
+    }
+
+    /**
+     * The predecessor of this endpoint carried its CSRF token in the URL and accepted GET.
+     */
+    public function testDeleteTemplateWithGetIsNotAllowed(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $fixture = new InvoiceTemplateFixtures();
+        $templates = $this->importFixture($fixture);
+        $id = $templates[0]->getId();
+
+        $this->request($client, '/api/invoices/templates/' . $id, 'GET');
+
+        self::assertEquals(Response::HTTP_METHOD_NOT_ALLOWED, $client->getResponse()->getStatusCode());
+
+        $this->getEntityManager()->clear();
+        self::assertNotNull($this->getEntityManager()->getRepository(InvoiceTemplate::class)->find($id));
+    }
+
+    public function testDeleteTemplateNotFound(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertNotFoundForDelete($client, '/api/invoices/templates/' . PHP_INT_MAX);
+    }
+
+    public function testDeleteUnknownDocument(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertNotFoundForDelete($client, '/api/invoices/documents/this-does-not-exist');
+    }
+
+    /**
+     * Shipped documents live in the source tree and may never be deleted.
+     */
+    public function testDeleteBuiltInDocumentIsRejected(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $this->request($client, '/api/invoices/documents/invoice', 'DELETE');
+
+        $this->assertBadRequestResponse($client->getResponse());
+        self::assertFileExists(__DIR__ . '/../../templates/invoice/renderer/invoice.html.twig');
+    }
+
+    /**
+     * A document which is used by a template may not be deleted.
+     */
+    public function testDeleteUsedDocumentIsRejected(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $fixture = new InvoiceTemplateFixtures();
+        $templates = $this->importFixture($fixture);
+        $renderer = $templates[0]->getRenderer();
+        self::assertNotNull($renderer);
+
+        $this->request($client, '/api/invoices/documents/' . $renderer, 'DELETE');
+
+        $this->assertBadRequestResponse($client->getResponse());
+    }
+
+    public function testDeleteDocumentIsSecureForRole(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $this->request($client, '/api/invoices/documents/invoice', 'DELETE');
+
+        $this->assertApiResponseAccessDenied($client->getResponse());
     }
 }

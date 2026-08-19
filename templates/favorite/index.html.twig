@@ -22,11 +22,15 @@
                         </div>
                         <div class="col-auto">
                             {% if favorite.isFavorite() %}
-                            <a href="{{ path('favorites_timesheets_remove', {'id': favorite.timesheet.id}) }}" data-modal-class="p-0" class="list-group-item-actions show remote-modal-reload">
+                            <a href="#" data-href="{{ path('delete_favorite_timesheet', {'id': favorite.timesheet.id}) }}"
+                               data-method="DELETE" data-event="kimai.favoriteUpdate" data-msg-error="action.delete.error"
+                               class="list-group-item-actions show api-link">
                                 <i class="text-yellow {{ 'bookmarked'|icon }}"></i>
                             </a>
                             {% else %}
-                            <a href="{{ path('favorites_timesheets_add', {'id': favorite.timesheet.id}) }}" data-modal-class="p-0" class="list-group-item-actions remote-modal-reload">
+                            <a href="#" data-href="{{ path('post_favorite_timesheet', {'id': favorite.timesheet.id}) }}"
+                               data-method="POST" data-event="kimai.favoriteUpdate" data-msg-error="action.update.error"
+                               class="list-group-item-actions api-link">
                                 {{ icon('bookmark') }}
                             </a>
                             {% endif %}

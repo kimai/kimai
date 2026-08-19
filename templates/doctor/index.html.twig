@@ -106,7 +106,11 @@
                 <span class="{{ logLineClass }}">{{- logLine -}}</span>
             {%- endfor %}</pre>
             {% if log_delete %}
-                {{ button('delete', {combined: true, 'class': 'confirmation-link btn-danger', 'title': 'delete', 'url': path('doctor_flush_log', {'token': csrf_token('doctor.flush_log')}), 'attr': {'data-question': 'confirm.delete'}}) }}
+                {{ form_start(log_delete_form) }}
+                    <button type="submit" class="btn btn-danger confirmation-link" data-question="confirm.delete">
+                        {{ icon('delete', true) }} {{ 'delete'|trans }}
+                    </button>
+                {{ form_end(log_delete_form) }}
             {% endif %}
         {% endblock %}
     {% endembed %}

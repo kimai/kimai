@@ -9,6 +9,7 @@
 
 namespace App\Tests\API;
 
+use App\Entity\Role;
 use App\Entity\User;
 use App\Tests\Mocks\PrepareUserEventSubscriberMock;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -448,5 +449,85 @@ class UserControllerTest extends APIControllerBaseTestCase
         ];
         $this->request($client, '/api/users/' . $id . '/preferences', 'PATCH', [], (string) json_encode($data));
         self::assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    public function testDeleteRoleIsSecure(): void
+    {
+        $this->assertRequestIsSecured(self::createClient(), '/api/users/roles/1', 'DELETE');
+    }
+
+    public function testDeleteRoleIsSecureForRole(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $role = new Role();
+        $role->setName('TEST_ROLE');
+        $em = $this->getEntityManager();
+        $em->persist($role);
+        $em->flush();
+
+        $id = $role->getId();
+        self::assertNotNull($id);
+
+        $this->request($client, '/api/users/roles/' . $id, 'DELETE');
+
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->getEntityManager()->clear();
+        self::assertNotNull($this->getEntityManager()->getRepository(Role::class)->find($id), 'the role must not be deleted');
+    }
+
+    public function testDeleteRoleNotFound(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertNotFoundForDelete($client, '/api/users/roles/' . PHP_INT_MAX);
+    }
+
+    public function testDeleteRoleRemovesItFromUsers(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $role = new Role();
+        $role->setName('TEST_ROLE');
+        $em = $this->getEntityManager();
+        $em->persist($role);
+
+        $user = $this->getUserByRole(User::ROLE_USER);
+        $user->addRole('TEST_ROLE');
+        $em->persist($user);
+        $em->flush();
+
+        $id = $role->getId();
+        self::assertNotNull($id);
+        self::assertContains('TEST_ROLE', $this->getUserByRole(User::ROLE_USER)->getRoles());
+
+        $this->request($client, '/api/users/roles/' . $id, 'DELETE');
+
+        self::assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
+
+        $this->getEntityManager()->clear();
+        self::assertNull($this->getEntityManager()->getRepository(Role::class)->find($id));
+        self::assertNotContains('TEST_ROLE', $this->getUserByRole(User::ROLE_USER)->getRoles());
+    }
+
+    public function testDeleteRoleWithGetIsNotAllowed(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $role = new Role();
+        $role->setName('TEST_ROLE');
+        $em = $this->getEntityManager();
+        $em->persist($role);
+        $em->flush();
+
+        $id = $role->getId();
+        self::assertNotNull($id);
+
+        $this->request($client, '/api/users/roles/' . $id, 'GET');
+
+        self::assertEquals(Response::HTTP_METHOD_NOT_ALLOWED, $client->getResponse()->getStatusCode());
+
+        $this->getEntityManager()->clear();
+        self::assertNotNull($this->getEntityManager()->getRepository(Role::class)->find($id));
     }
 }

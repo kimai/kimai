@@ -48,7 +48,7 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
             }
         }
 
-        $expectedKeys = ['Actions', 'Activity', 'Default', 'Customer', 'Project', 'Tag', 'Team', 'Timesheet', 'User', 'Invoice', 'Export'];
+        $expectedKeys = ['Actions', 'Activity', 'Dashboard', 'Default', 'Customer', 'Favorites', 'Project', 'Tag', 'Team', 'Timesheet', 'User', 'Invoice', 'Export'];
         $actual = array_keys($tags);
 
         sort($actual);
@@ -78,11 +78,18 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
             '/api/customers/{id}/comments/{comment}/pin',
             '/api/customers/{id}/comments/{comment}',
             '/api/customers/{id}/team',
+            '/api/dashboard/widgets/{widget}',
+            '/api/dashboard/widgets',
             '/api/export/{id}',
+            '/api/favorites/timesheets',
+            '/api/favorites/timesheets/{id}',
             '/api/invoices',
             '/api/invoices/{id}',
             '/api/invoices/{id}/custom-fields',
             '/api/invoices/{id}/download',
+            '/api/invoices/documents/{id}',
+            '/api/invoices/templates/{id}',
+            '/api/projects/{id}/duplicate',
             '/api/projects',
             '/api/projects/{id}',
             '/api/projects/{id}/meta',
@@ -116,6 +123,7 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
             '/api/users',
             '/api/users/{id}',
             '/api/users/me',
+            '/api/users/roles/{id}',
             '/api/users/api-token/{id}',
             '/api/users/{id}/preferences',
         ];

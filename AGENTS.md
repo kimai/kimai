@@ -11,7 +11,7 @@ Use this file when working in the Kimai core repository.
 - API libraries: FOSRestBundle, NelmioApiDocBundle
 - Frontend: Bootstrap with Tabler.io
 - Frontend build: Webpack Encore via `symfony/webpack-encore`
-- Package managers: Composer and Yarn
+- Package managers: Composer and pnpm
 - Tests: PHPUnit
 - Code styles: PhpCsFixer
 - Static analysis: PHPStan
@@ -50,7 +50,7 @@ Use this file when working in the Kimai core repository.
 - Do not modify `vendor/`
 - Do not modify `var/data/`
 - Do not modify `var/log/`
-- Do not modify `public/build/`, generated frontend assets
+- Agents may not modify `public/build/`, re-generated frontend assets may only be committed by @kevinpapst
 - Do not modify `public/bundles/`, frontend assets from plugins
 
 ## Agent Workflow

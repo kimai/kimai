@@ -607,11 +607,6 @@ parameters:
             path: Controller/InvoiceControllerTest.php
 
         -
-            message: "#^Parameter \\#2 \\$url of method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:requestPure\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: Controller/InvoiceControllerTest.php
-
-        -
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, string\\|false given\\.$#"
             count: 11
             path: Controller/LayoutControllerTest.php
@@ -643,11 +638,6 @@ parameters:
 
         -
             message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringNotContainsString\\(\\) expects string, string\\|false given\\.$#"
-            count: 1
-            path: Controller/PermissionControllerTest.php
-
-        -
-            message: "#^Parameter \\#2 \\$url of method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:request\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: Controller/PermissionControllerTest.php
 
@@ -718,12 +708,12 @@ parameters:
 
         -
             message: "#^Cannot call method setEnd\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 2
+            count: 1
             path: Controller/ProjectControllerTest.php
 
         -
             message: "#^Cannot call method setMetaField\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 2
+            count: 1
             path: Controller/ProjectControllerTest.php
 
         -
@@ -758,7 +748,7 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$entity of method Doctrine\\\\ORM\\\\EntityManager\\:\\:persist\\(\\) expects object, App\\\\Entity\\\\Project\\|null given\\.$#"
-            count: 2
+            count: 1
             path: Controller/ProjectControllerTest.php
 
         -

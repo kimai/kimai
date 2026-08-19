@@ -45,3 +45,8 @@
         {{ widgets.meta_field_value(entry, data) }}
     {% endif %}
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ include('project/duplicate-redirect.html.twig') }}
+{% endblock %}

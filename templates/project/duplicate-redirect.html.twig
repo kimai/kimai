@@ -1,0 +1,11 @@
+<script type="text/javascript">
+    document.addEventListener('kimai.projectDuplicate', function(event) {
+        const project = event.detail;
+
+        if (project === null || project === undefined || project.id === undefined) {
+            return;
+        }
+
+        document.location = '{{ path('project_details', {'id': '__ID__'}) }}'.replace('__ID__', project.id);
+    });
+</script>
