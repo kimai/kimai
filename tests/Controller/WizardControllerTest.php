@@ -12,7 +12,10 @@ namespace App\Tests\Controller;
 use App\DataFixtures\UserFixtures;
 use App\Entity\User;
 use App\Entity\UserPreference;
+use App\Tests\Mocks\UserUpdateCounterSubscriberMock;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 #[Group('integration')]
 class WizardControllerTest extends AbstractControllerBaseTestCase
@@ -222,5 +225,43 @@ class WizardControllerTest extends AbstractControllerBaseTestCase
         $this->request($client, '/wizard/previous/does-not-exist');
 
         $this->assertIsRedirect($client, '/wizard/intro');
+    }
+
+    /**
+     * The intro is a rendered page, so it stays a GET route, but it stores that the user has
+     * seen it. That write may only ever happen once per account, otherwise every rendering of
+     * this page would be a state change on a GET request - see GHSA-wv7c-q6q8-8rpw.
+     */
+    public function testIntroWizardIsPersistedOnlyOnce(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        // the counting subscriber has to survive the second request
+        self::assertInstanceOf(KernelBrowser::class, $client);
+        $client->disableReboot();
+
+        $counter = new UserUpdateCounterSubscriberMock();
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber($counter);
+
+        // the fixtures mark every wizard as seen, reset it to the state of a fresh account
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        $user->setPreferenceValue('__wizards__', null);
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+
+        $this->getEntityManager()->clear();
+        self::assertFalse($this->getUserByRole(User::ROLE_USER)->hasSeenWizard('intro'));
+
+        $this->request($client, '/wizard/intro');
+        self::assertTrue($client->getResponse()->isSuccessful());
+        self::assertEquals(1, $counter->getCount(), 'the first visit stores that the intro was seen');
+
+        $this->getEntityManager()->clear();
+        self::assertTrue($this->getUserByRole(User::ROLE_USER)->hasSeenWizard('intro'));
+
+        $this->request($client, '/wizard/intro');
+        self::assertTrue($client->getResponse()->isSuccessful());
+        self::assertEquals(1, $counter->getCount(), 'every further visit must not save the user again');
     }
 }

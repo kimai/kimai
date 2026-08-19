@@ -73,8 +73,13 @@ final class WizardController extends AbstractController
     {
         $user = $this->getUser();
 
-        $user->setWizardAsSeen('intro');
-        $userService->saveUser($user);
+        // this is not a "state changing GET" route and does not qualify for a security advisory:
+        // new user accounts will see this route once during their first login, not usable for a CSRF attack
+
+        if (!$user->hasSeenWizard('intro')) {
+            $user->setWizardAsSeen('intro');
+            $userService->saveUser($user);
+        }
 
         return $this->render(
             'wizard/intro.html.twig',
