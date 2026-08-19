@@ -132,6 +132,9 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?int $duration = 0;
+    /**
+     * Break duration for this record in seconds, can be null.
+     */
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[ORM\Column(name: 'break', type: Types::INTEGER, nullable: true)]
@@ -163,7 +166,8 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     private ?string $description = null;
     /**
      * Total rate for this timesheet.
-     * Each API result can be returned with or without this field (depends on the `view_rate_own_timesheet` and `view_rate_other_timesheet` permissions).
+     *
+     * Optional. Only included if the current user may see the rates of this record: `view_rate_own_timesheet` permission for own records, `view_rate_other_timesheet` for records of other users.
      */
     #[ORM\Column(name: 'rate', type: Types::FLOAT, nullable: false)]
     #[Assert\GreaterThanOrEqual(0)]
@@ -173,7 +177,8 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     private float $rate = 0.00;
     /**
      * Total internal-rate for this timesheet.
-     * Each API result can be returned with or without this field (depends on the `view_rate_own_timesheet` and `view_rate_other_timesheet` permissions).
+     *
+     * Optional. Only included if the current user may see the rates of this record: `view_rate_own_timesheet` permission for own records, `view_rate_other_timesheet` for records of other users.
      */
     #[ORM\Column(name: 'internal_rate', type: Types::FLOAT, nullable: true)]
     #[Serializer\Expose]
@@ -181,7 +186,8 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     private ?float $internalRate = null;
     /**
      * If this timesheet has a fixed rate, this field is not `null`.
-     * Each API result can be returned with or without this field (depends on the `view_rate_own_timesheet` and `view_rate_other_timesheet` permissions).
+     *
+     * Optional. Only included if the current user may see the rates of this record: `view_rate_own_timesheet` permission for own records, `view_rate_other_timesheet` for records of other users.
      */
     #[ORM\Column(name: 'fixed_rate', type: Types::FLOAT, nullable: true)]
     #[Assert\GreaterThanOrEqual(0)]
@@ -190,18 +196,27 @@ class Timesheet implements EntityWithMetaFields, ExportableItem, ModifiedAt
     private ?float $fixedRate = null;
     /**
      * The hourly rate of this timesheet, `null` if the timesheet has a fixed rate.
-     * Each API result can be returned with or without this field (depends on the `view_rate_own_timesheet` and `view_rate_other_timesheet` permissions).
+     *
+     * Optional. Only included if the current user may see the rates of this record: `view_rate_own_timesheet` permission for own records, `view_rate_other_timesheet` for records of other users.
      */
     #[ORM\Column(name: 'hourly_rate', type: Types::FLOAT, nullable: true)]
     #[Assert\GreaterThanOrEqual(0)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Timesheet_Entity_Rate'])]
     private ?float $hourlyRate = null;
+    /**
+     * Whether this timesheet was already exported.
+     *
+     * Exported timesheets cannot be edited any more by regular users.
+     */
     #[ORM\Column(name: 'exported', type: Types::BOOLEAN, nullable: false, options: ['default' => false])]
     #[Assert\NotNull]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private bool $exported = false;
+    /**
+     * Whether this timesheet is billable.
+     */
     #[ORM\Column(name: 'billable', type: Types::BOOLEAN, nullable: false, options: ['default' => true])]
     #[Assert\NotNull]
     #[Serializer\Expose]
