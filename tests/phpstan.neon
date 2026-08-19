@@ -603,7 +603,7 @@ parameters:
 
         -
             message: "#^Parameter \\#2 \\$url of method App\\\\Tests\\\\Controller\\\\AbstractControllerBaseTestCase\\:\\:request\\(\\) expects string, string\\|null given\\.$#"
-            count: 2
+            count: 1
             path: Controller/InvoiceControllerTest.php
 
         -

@@ -169,16 +169,19 @@ final class InvoiceController extends AbstractController
         return $this->redirectToRoute('invoice');
     }
 
-    #[Route(path: '/save-invoice/{customer}/{token}', name: 'invoice_create', methods: ['GET'])]
+    #[Route(path: '/save-invoice/{customer}', name: 'invoice_create', methods: ['POST'])]
     #[IsGranted('create_invoice')]
     #[IsGranted('access', 'customer')]
-    public function createInvoiceAction(Customer $customer, string $token, Request $request, CustomerRepository $customerRepository, InvoiceService $service): Response
+    public function createInvoiceAction(Customer $customer, Request $request, CustomerRepository $customerRepository, InvoiceService $service): Response
     {
-        if (!$this->isCsrfTokenValid('invoice.create', $token)) {
+        if (!$this->isCsrfTokenValid('invoice.create', $this->getRequestToken($request))) {
             $this->flashError('action.csrf.error');
 
             return $this->redirectToRoute('invoice');
         }
+
+        // prevezt the token from becoming part of the search query
+        $request->request->remove('_token');
 
         $query = $this->getDefaultQuery();
         $query->setAllowTemplateOverwrite(false);
@@ -213,30 +216,36 @@ final class InvoiceController extends AbstractController
         return $this->redirectToRoute('invoice');
     }
 
-    #[Route(path: '/change-status/{id}/{status}/{token}', name: 'admin_invoice_status', methods: ['GET', 'POST'])]
+    /**
+     * Renders the invoice form with a pre-filled payment date, the record itself is
+     * saved by the form (see admin_invoice_edit) and not by this route.
+     */
+    #[Route(path: '/mark-paid/{id}', name: 'admin_invoice_paid', methods: ['GET'])]
     #[IsGranted('edit_invoice', 'invoice')]
-    public function changeStatusAction(Invoice $invoice, string $status, string $token, Request $request, CsrfTokenManagerInterface $csrfTokenManager, InvoiceService $InvoiceService): Response
+    public function markPaidAction(Invoice $invoice, InvoiceService $invoiceService): Response
     {
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.status', $token))) {
+        if (null === $invoice->getPaymentDate()) {
+            $invoice->setPaymentDate($this->getDateTimeFactory()->createDateTime());
+            $invoice->setIsPaid();
+        }
+
+        $form = $this->createInvoiceEditForm($invoice, $invoiceService);
+
+        return $this->render('invoice/invoice_edit.html.twig', [
+            'page_setup' => $this->createPageSetup(),
+            'invoice' => $invoice,
+            'form' => $form->createView()
+        ]);
+    }
+
+    #[Route(path: '/change-status/{id}/{status}', name: 'admin_invoice_status', methods: ['POST'])]
+    #[IsGranted('edit_invoice', 'invoice')]
+    public function changeStatusAction(Invoice $invoice, string $status, Request $request, CsrfTokenManagerInterface $csrfTokenManager, InvoiceService $InvoiceService): Response
+    {
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.status', $this->getRequestToken($request)))) {
             $this->flashError('action.csrf.error');
 
             return $this->redirectToRoute('admin_invoice_list');
-        }
-
-        if ($status === Invoice::STATUS_PAID) {
-            if (null === $invoice->getPaymentDate()) {
-                $invoice->setPaymentDate($this->getDateTimeFactory()->createDateTime());
-                $invoice->setIsPaid();
-            }
-
-            $form = $this->createInvoiceEditForm($invoice, $InvoiceService);
-            $form->handleRequest($request);
-
-            return $this->render('invoice/invoice_edit.html.twig', [
-                'page_setup' => $this->createPageSetup(),
-                'invoice' => $invoice,
-                'form' => $form->createView()
-            ]);
         }
 
         try {
@@ -764,6 +773,16 @@ final class InvoiceController extends AbstractController
         $this->dispatcher->dispatch($event);
 
         return $event->getFields();
+    }
+
+    /**
+     * CSRF tokens for state-changing routes are transported in the request body.
+     */
+    private function getRequestToken(Request $request): ?string
+    {
+        $token = $request->request->get('_token');
+
+        return \is_string($token) ? $token : null;
     }
 
     private function createInvoiceEditForm(Invoice $invoice, InvoiceService $InvoiceService): FormInterface

@@ -19,6 +19,22 @@ final class InvoiceSubscriber extends AbstractActionsSubscriber
         return 'invoice';
     }
 
+    /**
+     * Status changes are POST requests, whose CSRF token is submitted in the request body.
+     *
+     * @return array<string, mixed>
+     */
+    private function createStatusAction(Invoice $invoice, string $status): array
+    {
+        return [
+            'url' => '#',
+            'onclick' => 'return kimaiInvoiceStatus(this)',
+            'attr' => [
+                'data-href' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => $status]),
+            ],
+        ];
+    }
+
     public function onActions(PageActionsEvent $event): void
     {
         $payload = $event->getPayload();
@@ -47,16 +63,15 @@ final class InvoiceSubscriber extends AbstractActionsSubscriber
 
         if ($allowCreate) {
             if (!$invoice->isPending()) {
-                $event->addAction('invoice.pending', ['url' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => 'pending', 'token' => $payload['token']])]);
+                $event->addAction('invoice.pending', $this->createStatusAction($invoice, 'pending'));
             } else {
-                $event->addAction('invoice.paid', ['url' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => 'paid', 'token' => $payload['token']]), 'class' => 'modal-ajax-form']);
+                $event->addAction('invoice.paid', ['url' => $this->path('admin_invoice_paid', ['id' => $invoice->getId()]), 'class' => 'modal-ajax-form']);
             }
         }
 
         $allowDelete = $this->isGranted('delete_invoice');
         if (!$invoice->isCanceled()) {
-            $id = $allowDelete ? 'invoice.cancel' : 'trash';
-            $event->addAction($id, ['url' => $this->path('admin_invoice_status', ['id' => $invoice->getId(), 'status' => 'canceled', 'token' => $payload['token']]), 'title' => 'invoice.cancel']);
+            $event->addAction('invoice.cancel', $this->createStatusAction($invoice, 'canceled'));
         }
 
         if ($allowDelete) {
