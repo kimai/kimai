@@ -14,8 +14,8 @@ The timesheet API now honors the `view_rate_own_timesheet` and `view_rate_other_
 permissions, which the UI, the export and the reporting always enforced.
 
 The fields `rate`, `internalRate`, `hourlyRate` and `fixedRate` are no longer part of the
-JSON response collectionfor records the user may not see the rates of. The permission is applied per
-record, so a  can contain records with and without these fields - treat them as
+JSON response for records the user may not see the rates of. The permission is applied per
+record, so a collection can contain records with and without these fields - treat them as
 optional. The default `ROLE_USER` does not hold the permissions, so API clients running
 with a plain user account have to grant them if they rely on those fields.
 
