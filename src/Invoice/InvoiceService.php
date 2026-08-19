@@ -365,7 +365,7 @@ class InvoiceService
         );
     }
 
-    public function deleteInvoice(Invoice $invoice, EventDispatcherInterface $dispatcher): void
+    public function deleteInvoice(Invoice $invoice): void
     {
         $invoiceDirectory = $this->getInvoicesDirectory();
 
@@ -374,7 +374,7 @@ class InvoiceService
         }
 
         $event = new InvoiceDeleteEvent($invoice);
-        $dispatcher->dispatch($event);
+        $this->dispatcher->dispatch($event);
 
         $this->invoiceRepository->deleteInvoice($invoice);
     }

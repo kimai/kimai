@@ -136,7 +136,7 @@
                                 <td class="w-min text-center actions alwaysVisible">
                                     {% for attrs in [{'class': 'd-inline-flex d-md-none'}, {'icon': false, 'class': 'd-none d-md-inline-flex'}] %}
                                     {{ widgets.action_button('print', {'url': '#', 'onclick': 'return singleInvoice(this, true)', 'title': 'preview'|trans, 'target': '_blank', 'attr': {'data-customer': model.customer.id, 'data-href': path('invoice_preview', {'customer': model.customer.id, 'token': csrf_token('invoice.preview')})}}|merge(attrs)) }}
-                                    {{ widgets.action_button('invoice', {'url': '#', 'onclick': 'return singleInvoice(this, false)', 'title': 'action.save'|trans, 'attr': {'data-customer': model.customer.id, 'data-href': path('invoice_create', {'customer': model.customer.id, 'token': csrf_token('invoice.create')})}}|merge(attrs), 'primary') }}
+                                    {{ widgets.action_button('invoice', {'url': '#', 'onclick': 'return singleInvoice(this, false)', 'title': 'action.save'|trans, 'attr': {'data-customer': model.customer.id, 'data-href': path('invoice_create', {'customer': model.customer.id})}}|merge(attrs), 'primary') }}
                                     {% endfor %}
                                 </td>
                             </tr>
@@ -230,17 +230,33 @@
             const formPlugin = kimai.getPlugin('form');
             const overwrites = {'customers[]': link.dataset['customer'], 'template': template, 'invoiceDate': date};
             const uri = formPlugin.convertFormDataToQueryString(document.getElementById('{{ formId }}'), overwrites);
-            const invoiceUrl = link.dataset['href'] + '?' + uri;
 
             if (!preview) {
                 link.classList.toggle('disabled');
                 link.href = 'javascript: void(0)';
 
-                document.location = invoiceUrl;
+                const form = document.createElement('form');
+                form.method = 'post';
+                form.action = link.dataset['href'];
+
+                const params = new URLSearchParams(uri);
+                params.append('_token', '{{ csrf_token('invoice.create') }}');
+
+                for (const [name, value] of params) {
+                    const field = document.createElement('input');
+                    field.type = 'hidden';
+                    field.name = name;
+                    field.value = value;
+                    form.appendChild(field);
+                }
+
+                document.body.appendChild(form);
+                form.submit();
+
                 return false;
             }
 
-            link.href = invoiceUrl;
+            link.href = link.dataset['href'] + '?' + uri;
 
             return true;
         }

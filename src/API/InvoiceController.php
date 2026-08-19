@@ -186,4 +186,20 @@ final class InvoiceController extends BaseApiController
 
         return $this->file($file->getRealPath(), $file->getBasename());
     }
+
+    /**
+     * Delete invoice
+     */
+    #[IsGranted('delete_invoice', 'invoice')]
+    #[OA\Delete(description: 'Deletes the invoice and its generated document.', responses: [new OA\Response(response: 204, description: 'Empty')])]
+    #[OA\Parameter(name: 'id', description: 'Invoice ID to delete', in: 'path', required: true)]
+    #[Route(path: '/{id}', name: 'delete_invoice', requirements: ['id' => '\d+'], methods: ['DELETE'])]
+    public function deleteInvoice(Invoice $invoice, InvoiceService $service): Response
+    {
+        $service->deleteInvoice($invoice);
+
+        $view = new View(null, Response::HTTP_NO_CONTENT);
+
+        return $this->viewHandler->handle($view);
+    }
 }
