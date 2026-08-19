@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Removes the monetary fields from serialized timesheets, unless the current
- * user is granted the "view_rate" permission for that record: see GHSA-fq95-vwvx-w88f.
+ * user is granted the "view_rate" permission for that record.
  *
  * The decision is made per record, so a collection can contain records of
  * multiple users, each one serialized according to the callers permission.

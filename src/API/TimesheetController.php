@@ -72,7 +72,7 @@ final class TimesheetController extends BaseApiController
 
     /**
      * The rate groups are always requested, the per-record permission filtering
-     * is applied by the RateExclusionStrategy: see GHSA-fq95-vwvx-w88f.
+     * is applied by the RateExclusionStrategy.
      *
      * @param array<string> $groups
      * @param array<string> $rateGroups
