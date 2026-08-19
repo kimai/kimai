@@ -9,6 +9,7 @@
 
 namespace App\API;
 
+use App\API\Serializer\RateExclusionStrategy;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Event\RecentActivityEvent;
@@ -39,6 +40,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints;
 
@@ -58,13 +60,47 @@ final class TimesheetController extends BaseApiController
         private readonly TimesheetRepository $repository,
         private readonly TagRepository $tagRepository,
         private readonly EventDispatcherInterface $dispatcher,
-        private readonly TimesheetService $service
+        private readonly TimesheetService $service,
+        private readonly AuthorizationCheckerInterface $security
     ) {
     }
 
     protected function getTrackingMode(): TrackingModeInterface
     {
         return $this->service->getActiveTrackingMode();
+    }
+
+    /**
+     * The rate groups are always requested, the per-record permission filtering
+     * is applied by the RateExclusionStrategy.
+     *
+     * @param array<string> $groups
+     * @param array<string> $rateGroups
+     */
+    private function renderRateAwareView(View $view, array $groups, array $rateGroups): Response
+    {
+        $context = $view->getContext();
+        $context->setGroups(array_merge($groups, $rateGroups));
+        $context->addExclusionStrategy(new RateExclusionStrategy($this->security));
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * @param iterable<Timesheet> $timesheets
+     * @param array<string> $groups
+     */
+    private function renderCollection(iterable $timesheets, array $groups): Response
+    {
+        return $this->renderRateAwareView(new View($timesheets, Response::HTTP_OK), $groups, ['Timesheet_Rate']);
+    }
+
+    /**
+     * @param array<string> $groups
+     */
+    private function renderEntity(Timesheet $timesheet, array $groups): Response
+    {
+        return $this->renderRateAwareView(new View($timesheet, Response::HTTP_OK), $groups, ['Timesheet_Rate', 'Timesheet_Entity_Rate']);
     }
 
     /**
@@ -234,16 +270,15 @@ final class TimesheetController extends BaseApiController
         }
 
         $data = $this->repository->getPagerfantaForQuery($query);
-        $view = new View($data, 200);
+
+        $groups = self::GROUPS_COLLECTION;
 
         $full = $paramFetcher->get('full');
         if ($full === '1' || $full === 'true') {
-            $view->getContext()->setGroups(self::GROUPS_COLLECTION_FULL);
-        } else {
-            $view->getContext()->setGroups(self::GROUPS_COLLECTION);
+            $groups = self::GROUPS_COLLECTION_FULL;
         }
 
-        return $this->viewHandler->handle($view);
+        return $this->renderCollection($data, $groups);
     }
 
     /**
@@ -255,10 +290,7 @@ final class TimesheetController extends BaseApiController
     #[Route(methods: ['GET'], path: '/{id}', name: 'get_timesheet', requirements: ['id' => '\d+'])]
     public function getAction(Timesheet $timesheet): Response
     {
-        $view = new View($timesheet, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($timesheet, self::GROUPS_ENTITY);
     }
 
     /**
@@ -294,15 +326,11 @@ final class TimesheetController extends BaseApiController
             try {
                 $this->service->saveTimesheet($timesheet);
 
-                $view = new View($timesheet, 200);
-
                 if (null !== $paramFetcher->get('full')) {
-                    $view->getContext()->setGroups(self::GROUPS_ENTITY_FULL);
-                } else {
-                    $view->getContext()->setGroups(self::GROUPS_ENTITY);
+                    return $this->renderEntity($timesheet, self::GROUPS_ENTITY_FULL);
                 }
 
-                return $this->viewHandler->handle($view);
+                return $this->renderEntity($timesheet, self::GROUPS_ENTITY);
             } catch (ValidationFailedException $ex) {
                 $form->addError(new FormError($ex->getMessage()));
             }
@@ -351,10 +379,7 @@ final class TimesheetController extends BaseApiController
 
         $this->service->saveTimesheet($timesheet);
 
-        $view = new View($timesheet, Response::HTTP_OK);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($timesheet, self::GROUPS_ENTITY);
     }
 
     /**
@@ -402,10 +427,9 @@ final class TimesheetController extends BaseApiController
         $recentActivity = new RecentActivityEvent($user, $data);
         $this->dispatcher->dispatch($recentActivity);
 
-        $view = new View($recentActivity->getRecentActivities(), 200);
-        $view->getContext()->setGroups(self::GROUPS_COLLECTION_FULL);
+        $recent = $recentActivity->getRecentActivities();
 
-        return $this->viewHandler->handle($view);
+        return $this->renderCollection($recent, self::GROUPS_COLLECTION_FULL);
     }
 
     /**
@@ -421,10 +445,7 @@ final class TimesheetController extends BaseApiController
 
         $data = $this->repository->getActiveEntries($user);
 
-        $view = new View($data, 200);
-        $view->getContext()->setGroups(self::GROUPS_COLLECTION_FULL);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderCollection($data, self::GROUPS_COLLECTION_FULL);
     }
 
     /**
@@ -438,10 +459,7 @@ final class TimesheetController extends BaseApiController
     {
         $this->service->stopTimesheet($timesheet);
 
-        $view = new View($timesheet, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($timesheet, self::GROUPS_ENTITY);
     }
 
     /**
@@ -500,10 +518,7 @@ final class TimesheetController extends BaseApiController
 
         $this->service->restartTimesheet($copyTimesheet, $timesheet);
 
-        $view = new View($copyTimesheet, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($copyTimesheet, self::GROUPS_ENTITY);
     }
 
     /**
@@ -521,10 +536,7 @@ final class TimesheetController extends BaseApiController
         $this->service->saveTimesheet($copyTimesheet);
         $this->dispatcher->dispatch(new TimesheetDuplicatePostEvent($copyTimesheet, $timesheet));
 
-        $view = new View($copyTimesheet, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($copyTimesheet, self::GROUPS_ENTITY);
     }
 
     /**
@@ -544,10 +556,7 @@ final class TimesheetController extends BaseApiController
 
         $this->service->saveTimesheet($timesheet);
 
-        $view = new View($timesheet, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($timesheet, self::GROUPS_ENTITY);
     }
 
     /**
@@ -574,9 +583,6 @@ final class TimesheetController extends BaseApiController
 
         $this->service->saveTimesheet($timesheet);
 
-        $view = new View($timesheet, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($timesheet, self::GROUPS_ENTITY);
     }
 }

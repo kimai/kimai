@@ -132,14 +132,26 @@ final class TimesheetLoader implements LoaderInterface
                 ->execute();
         }
 
-        if ($this->query !== null && $this->query->hasQueryHint(TimesheetQueryHint::USER_PREFERENCES)) {
-            $userIds = array_filter(array_map(function (Timesheet $timesheet) {
-                return $timesheet->getUser()?->getId();
-            }, $results), function ($id): bool {
-                return $id !== null;
-            });
+        $userIds = array_filter(array_unique(array_map(function (Timesheet $timesheet) {
+            return $timesheet->getUser()?->getId();
+        }, $results)), function ($id): bool {
+            return $id !== null;
+        });
 
-            if (\count($userIds) > 0) {
+        if (\count($userIds) > 0) {
+            // the voter checks the team memberships of the record owner for every
+            // row (RolePermissionManager::checkTeamLeadAccess), load them upfront
+            // instead of once per user
+            $qb = $em->createQueryBuilder();
+            $qb->select('PARTIAL u.{id}', 'memberships', 'PARTIAL team.{id}')
+                ->from(User::class, 'u')
+                ->leftJoin('u.memberships', 'memberships')
+                ->leftJoin('memberships.team', 'team')
+                ->andWhere($qb->expr()->in('u.id', $userIds))
+                ->getQuery()
+                ->execute();
+
+            if ($this->query !== null && $this->query->hasQueryHint(TimesheetQueryHint::USER_PREFERENCES)) {
                 $qb = $em->createQueryBuilder();
                 $qb->select('PARTIAL u.{id}', 'preferences')
                     ->from(User::class, 'u')
