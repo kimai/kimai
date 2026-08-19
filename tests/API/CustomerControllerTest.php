@@ -30,6 +30,11 @@ use Symfony\Component\HttpFoundation\Response;
 #[Group('integration')]
 class CustomerControllerTest extends APIControllerBaseTestCase
 {
+    /**
+     * Budget fields are only visible for users with the "budget" / "time" permission
+     */
+    private const BUDGET_FIELDS = ['budget', 'timeBudget', 'budgetType'];
+
     use RateControllerTestTrait;
 
     protected function getRateUrlByRate(RateInterface $rate, bool $isCollection): string
@@ -146,7 +151,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(1, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('CustomerCollection', $result[0]);
+        self::assertApiResponseTypeStructure('CustomerCollection', $result[0], self::BUDGET_FIELDS);
     }
 
     public function testGetCollectionFull(): void
@@ -179,7 +184,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertEquals(1, \count($result));
         self::assertIsArray($result[0]);
         // make sure that regular user cannot access detail fields
-        self::assertApiResponseTypeStructure('CustomerCollection', $result[0]);
+        self::assertApiResponseTypeStructure('CustomerCollection', $result[0], self::BUDGET_FIELDS);
     }
 
     public function testGetCollectionWithQuery(): void
@@ -196,7 +201,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(1, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('CustomerCollection', $result[0]);
+        self::assertApiResponseTypeStructure('CustomerCollection', $result[0], self::BUDGET_FIELDS);
     }
 
     public function testGetEntityIsSecure(): void

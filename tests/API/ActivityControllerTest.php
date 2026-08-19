@@ -30,6 +30,11 @@ use Symfony\Component\HttpFoundation\Response;
 #[Group('integration')]
 class ActivityControllerTest extends APIControllerBaseTestCase
 {
+    /**
+     * Budget fields are only visible for users with the "budget" / "time" permission
+     */
+    private const BUDGET_FIELDS = ['budget', 'timeBudget', 'budgetType'];
+
     use RateControllerTestTrait;
 
     protected function getRateUrlByRate(RateInterface $rate, bool $isCollection): string
@@ -180,7 +185,7 @@ class ActivityControllerTest extends APIControllerBaseTestCase
             $activity = $result[$i];
             $hasProject = $expected[$i][0];
             self::assertIsArray($activity);
-            self::assertApiResponseTypeStructure('ActivityCollection', $activity);
+            self::assertApiResponseTypeStructure('ActivityCollection', $activity, self::BUDGET_FIELDS);
             if ($hasProject && $projectId !== null) {
                 self::assertEquals($projectId, $activity['project']);
             }
@@ -205,6 +210,42 @@ class ActivityControllerTest extends APIControllerBaseTestCase
         yield ['/api/activities', 1, ['projects' => ['2'], 'visible' => VisibilityInterface::SHOW_HIDDEN], [[true, 2], [false]]];
     }
 
+    /**
+     * Budget fields are part of the collection for users with the "budget" and
+     * "time" permission, they were missing completely before 2.66.
+     */
+    public function testGetCollectionIncludesBudgetsWithPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $em = $this->getEntityManager();
+
+        $activity = (new Activity())->setName('with budgets');
+        $activity->setBudget(1234.56);
+        $activity->setTimeBudget(3600);
+        $activity->setBudgetType('month');
+        $em->persist($activity);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/api/activities', 'GET', ['globals' => 'true']);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        $found = false;
+        foreach ($result as $row) {
+            self::assertIsArray($row);
+            self::assertApiResponseTypeStructure('ActivityCollection', $row);
+            if ($row['id'] === $activity->getId()) {
+                $found = true;
+                self::assertEquals(1234.56, $row['budget']);
+                self::assertEquals(3600, $row['timeBudget']);
+                self::assertEquals('month', $row['budgetType']);
+            }
+        }
+        self::assertTrue($found);
+    }
+
     public function testGetCollectionWithQuery(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
@@ -222,20 +263,20 @@ class ActivityControllerTest extends APIControllerBaseTestCase
         self::assertEquals(5, \count($result));
 
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('ActivityCollection', $result[0]);
+        self::assertApiResponseTypeStructure('ActivityCollection', $result[0], self::BUDGET_FIELDS);
 
         self::assertIsArray($result[2]);
-        self::assertApiResponseTypeStructure('ActivityCollection', $result[2]);
+        self::assertApiResponseTypeStructure('ActivityCollection', $result[2], self::BUDGET_FIELDS);
         self::assertArrayHasKey('project', $result[2]);
         self::assertEquals($imports[1]->getId(), $result[2]['project']);
 
         self::assertIsArray($result[3]);
-        self::assertApiResponseTypeStructure('ActivityCollection', $result[3]);
+        self::assertApiResponseTypeStructure('ActivityCollection', $result[3], self::BUDGET_FIELDS);
         self::assertArrayHasKey('project', $result[3]);
         self::assertEquals($imports[1]->getId(), $result[3]['project']);
 
         self::assertIsArray($result[4]);
-        self::assertApiResponseTypeStructure('ActivityCollection', $result[4]);
+        self::assertApiResponseTypeStructure('ActivityCollection', $result[4], self::BUDGET_FIELDS);
         self::assertArrayHasKey('project', $result[4]);
         self::assertEquals($imports[0]->getId(), $result[4]['project']);
     }

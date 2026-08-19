@@ -19,6 +19,12 @@ record, so a collection can contain records with and without these fields - trea
 optional. The default `ROLE_USER` does not hold the permissions, so API clients running
 with a plain user account have to grant them if they rely on those fields.
 
+The customer, project and activity APIs apply the `budget` and `time` permissions per
+record as well. The budget fields `budget`, `timeBudget` and `budgetType` are now also part 
+of the collection responses (`GET /api/customers`, `GET /api/projects`, `GET /api/activities`)
+for records the user may see the budgets of.
+Like the rate fields: treat them as optional.
+
 ## [2.65.0](https://github.com/kimai/kimai/releases/tag/2.65.0)
 
 These three API endpoints were removed, because they were technically broken and could not be fixed without breaking changes:
