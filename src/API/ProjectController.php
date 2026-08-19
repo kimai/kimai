@@ -9,6 +9,7 @@
 
 namespace App\API;
 
+use App\API\Serializer\BudgetExclusionStrategy;
 use App\Entity\Project;
 use App\Entity\ProjectComment;
 use App\Entity\ProjectRate;
@@ -32,6 +33,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\GoneHttpException;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints;
 
@@ -49,34 +51,29 @@ final class ProjectController extends BaseApiController
         private readonly ViewHandlerInterface $viewHandler,
         private readonly ProjectRepository $repository,
         private readonly ProjectRateRepository $projectRateRepository,
-        private readonly ProjectService $projectService
+        private readonly ProjectService $projectService,
+        private readonly AuthorizationCheckerInterface $security
     ) {
     }
 
     /**
-     * @return array<string>
+     * The budget groups are always requested, the per-record permission filtering
+     * is applied by the BudgetExclusionStrategy.
+     *
+     * @param array<string> $groups
      */
-    private function getEntitySerializationGroups(Project $project): array
+    private function renderBudgetAwareView(View $view, array $groups): Response
     {
-        $groups = self::GROUPS_ENTITY;
+        $context = $view->getContext();
+        $context->setGroups(array_merge($groups, ['Budget_Money', 'Budget_Time']));
+        $context->addExclusionStrategy(new BudgetExclusionStrategy($this->security));
 
-        if ($this->isGranted('budget', $project)) {
-            $groups = array_merge($groups, ['Budget_Money']);
-        }
-
-        if ($this->isGranted('time', $project)) {
-            $groups = array_merge($groups, ['Budget_Time']);
-        }
-
-        return $groups;
+        return $this->viewHandler->handle($view);
     }
 
     private function renderEntity(Project $project): Response
     {
-        $view = new View($project, Response::HTTP_OK);
-        $view->getContext()->setGroups($this->getEntitySerializationGroups($project));
-
-        return $this->viewHandler->handle($view);
+        return $this->renderBudgetAwareView(new View($project, Response::HTTP_OK), self::GROUPS_ENTITY);
     }
 
     /**
@@ -169,10 +166,8 @@ final class ProjectController extends BaseApiController
 
         $query->setIsApiCall(true);
         $data = $this->repository->getProjectsForQuery($query);
-        $view = new View($data, 200);
-        $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
-        return $this->viewHandler->handle($view);
+        return $this->renderBudgetAwareView(new View($data, Response::HTTP_OK), self::GROUPS_COLLECTION);
     }
 
     /**

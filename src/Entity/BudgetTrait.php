@@ -19,32 +19,38 @@ trait BudgetTrait
 {
     /**
      * The total monetary budget (default: 0).
+     *
+     * Optional. Only included if the current user may see the monetary budget of this record (`budget_<object>` and `budget_team<lead>_<object>` permission).
      */
     #[ORM\Column(name: 'budget', type: Types::FLOAT, nullable: false)]
     #[Assert\Range(min: 0.00, max: 900000000000.00)]
     #[Assert\NotNull]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Budget_Money', 'Budgets'])]
+    #[Serializer\Groups(['Budget_Money'])]
     #[Exporter\Expose(label: 'budget', type: 'float', permissions: ['budget'])]
     private float $budget = 0.00;
     /**
      * The time budget in seconds (default: 0).
+     *
+     * Optional. Only included if the current user may see the time budget of this record (`time_<object>` and `time_team<lead>_<object>` permission).
      */
     #[ORM\Column(name: 'time_budget', type: Types::INTEGER, nullable: false)]
     #[Assert\Range(min: 0, max: 2145600000)]
     #[Assert\NotNull]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Budget_Time', 'Budgets'])]
+    #[Serializer\Groups(['Budget_Time'])]
     #[Exporter\Expose(label: 'timeBudget', type: 'duration', permissions: ['time'])]
     private int $timeBudget = 0;
     /**
      * The type of budget:
      *  - null = default / full time
      *  - month = monthly budget
+     *
+     * Optional. Only included if the current user may see the monetary or the time budget of this record.
      */
     #[ORM\Column(name: 'budget_type', type: Types::STRING, length: 10, nullable: true)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Budget_Money', 'Budget_Time', 'Budgets'])]
+    #[Serializer\Groups(['Budget_Money', 'Budget_Time'])]
     #[Exporter\Expose(label: 'budgetType', permissions: ['time', 'budget'])]
     private ?string $budgetType = null;
 

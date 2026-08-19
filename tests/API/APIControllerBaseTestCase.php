@@ -504,6 +504,10 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'phone' => '@string',
                     'metaFields' => ['result' => 'array', 'type' => 'CustomerMeta'],
                     'teams' => ['result' => 'array', 'type' => 'Team'],
+                    // only visible with the budget/time permission
+                    'budget' => 'float',
+                    'timeBudget' => 'int',
+                    'budgetType' => '@string',
                 ];
 
                 // if a list of customers is loaded
@@ -534,6 +538,10 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'addressLine3' => '@string',
                     'city' => '@string',
                     'postCode' => '@string',
+                    // only visible with the budget/time permission
+                    'budget' => 'float',
+                    'timeBudget' => 'int',
+                    'budgetType' => '@string',
                 ];
 
                 // if a customer is loaded explicitly
@@ -569,8 +577,8 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'postCode' => '@string',
                     'invoiceEmail' => '@string',
                     'buyerReference' => '@string',
-                    // only available in the entity itself
                     'address' => '@string', // deprecated, do not expose in collection
+                    // only visible with the budget/time permission
                     'budget' => 'float',
                     'timeBudget' => 'int',
                     'budgetType' => '@string',
@@ -636,6 +644,10 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                     'parentTitle' => 'string',
+                    // only visible with the budget/time permission
+                    'budget' => 'float',
+                    'timeBudget' => 'int',
+                    'budgetType' => '@string',
                 ];
 
                 // if a project is explicitly loaded
@@ -658,7 +670,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'metaFields' => ['result' => 'array', 'type' => 'ProjectMeta'],
                     'teams' => ['result' => 'array', 'type' => 'Team'],
                     'parentTitle' => 'string',
-                    // only available in the entity itself
+                    // only visible with the budget/time permission
                     'budget' => 'float',
                     'timeBudget' => 'int',
                     'budgetType' => '@string',
@@ -708,6 +720,10 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'comment' => '@string',
                     'parentTitle' => '@string',
                     'teams' => ['result' => 'array', 'type' => 'Team'],
+                    // only visible with the budget/time permission
+                    'budget' => 'float',
+                    'timeBudget' => 'int',
+                    'budgetType' => '@string',
                 ];
 
                 // if a activity is explicitly loaded
@@ -725,7 +741,7 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
                     'comment' => '@string',
                     'parentTitle' => '@string',
                     'teams' => ['result' => 'array', 'type' => 'Team'],
-                    // only available in the entity itself
+                    // only visible with the budget/time permission
                     'budget' => 'float',
                     'timeBudget' => 'int',
                     'budgetType' => '@string',

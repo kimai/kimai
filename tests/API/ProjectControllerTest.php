@@ -31,6 +31,11 @@ use Symfony\Component\HttpFoundation\Response;
 #[Group('integration')]
 class ProjectControllerTest extends APIControllerBaseTestCase
 {
+    /**
+     * Budget fields are only visible for users with the "budget" / "time" permission
+     */
+    private const BUDGET_FIELDS = ['budget', 'timeBudget', 'budgetType'];
+
     use RateControllerTestTrait;
 
     protected function getRateUrlByRate(RateInterface $rate, bool $isCollection): string
@@ -95,6 +100,49 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         $this->assertUrlIsSecured('/api/projects');
     }
 
+    /**
+     * Budget fields are part of the collection for users with the "budget" and
+     * "time" permission, they were missing completely before 2.66.
+     */
+    public function testGetCollectionIncludesBudgetsWithPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $em = $this->getEntityManager();
+
+        $customer = new Customer('budget customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('with budgets');
+        $project->setCustomer($customer);
+        $project->setBudget(1234.56);
+        $project->setTimeBudget(3600);
+        $project->setBudgetType('month');
+        $em->persist($project);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/api/projects');
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        $found = false;
+        foreach ($result as $row) {
+            self::assertIsArray($row);
+            self::assertApiResponseTypeStructure('ProjectCollection', $row);
+            if ($row['id'] === $project->getId()) {
+                $found = true;
+                self::assertEquals(1234.56, $row['budget']);
+                self::assertEquals(3600, $row['timeBudget']);
+                self::assertEquals('month', $row['budgetType']);
+            }
+        }
+        self::assertTrue($found);
+    }
+
     public function testGetCollection(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
@@ -108,7 +156,7 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(1, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('ProjectCollection', $result[0]);
+        self::assertApiResponseTypeStructure('ProjectCollection', $result[0], self::BUDGET_FIELDS);
     }
 
     /**
@@ -228,10 +276,16 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result);
         self::assertEquals(\count($expected), \count($result), 'Found wrong amount of projects');
 
+        // the fixture team of the current user covers this customer, so the
+        // "time_team_project" permission of a ROLE_USER reveals the time budget
+        // fields of its projects - but never the monetary budget
+        $teamCustomerId = $imports[4]->getCustomer()?->getId();
+
         for ($i = 0; $i < \count($expected); $i++) {
             $project = $result[$i];
             self::assertIsArray($project);
-            self::assertApiResponseTypeStructure('ProjectCollection', $project);
+            $removeFields = $project['customer'] === $teamCustomerId ? ['budget'] : self::BUDGET_FIELDS;
+            self::assertApiResponseTypeStructure('ProjectCollection', $project, $removeFields);
             if ($customerId !== null) {
                 self::assertEquals($customerId, $project['customer']);
             }

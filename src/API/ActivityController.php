@@ -10,6 +10,7 @@
 namespace App\API;
 
 use App\Activity\ActivityService;
+use App\API\Serializer\BudgetExclusionStrategy;
 use App\Entity\Activity;
 use App\Entity\ActivityRate;
 use App\Form\API\ActivityApiEditForm;
@@ -29,6 +30,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\GoneHttpException;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/activities')]
@@ -44,34 +46,29 @@ final class ActivityController extends BaseApiController
         private readonly ViewHandlerInterface $viewHandler,
         private readonly ActivityRepository $repository,
         private readonly ActivityRateRepository $activityRateRepository,
-        private readonly ActivityService $activityService
+        private readonly ActivityService $activityService,
+        private readonly AuthorizationCheckerInterface $security
     ) {
     }
 
     /**
-     * @return array<string>
+     * The budget groups are always requested, the per-record permission filtering
+     * is applied by the BudgetExclusionStrategy.
+     *
+     * @param array<string> $groups
      */
-    private function getEntitySerializationGroups(Activity $activity): array
+    private function renderBudgetAwareView(View $view, array $groups): Response
     {
-        $groups = self::GROUPS_ENTITY;
+        $context = $view->getContext();
+        $context->setGroups(array_merge($groups, ['Budget_Money', 'Budget_Time']));
+        $context->addExclusionStrategy(new BudgetExclusionStrategy($this->security));
 
-        if ($this->isGranted('budget', $activity)) {
-            $groups = array_merge($groups, ['Budget_Money']);
-        }
-
-        if ($this->isGranted('time', $activity)) {
-            $groups = array_merge($groups, ['Budget_Time']);
-        }
-
-        return $groups;
+        return $this->viewHandler->handle($view);
     }
 
     private function renderEntity(Activity $activity): Response
     {
-        $view = new View($activity, Response::HTTP_OK);
-        $view->getContext()->setGroups($this->getEntitySerializationGroups($activity));
-
-        return $this->viewHandler->handle($view);
+        return $this->renderBudgetAwareView(new View($activity, Response::HTTP_OK), self::GROUPS_ENTITY);
     }
 
     /**
@@ -122,10 +119,8 @@ final class ActivityController extends BaseApiController
         }
 
         $data = $this->repository->getActivitiesForQuery($query);
-        $view = new View($data, 200);
-        $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
-        return $this->viewHandler->handle($view);
+        return $this->renderBudgetAwareView(new View($data, Response::HTTP_OK), self::GROUPS_COLLECTION);
     }
 
     /**

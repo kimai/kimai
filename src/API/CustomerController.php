@@ -9,6 +9,7 @@
 
 namespace App\API;
 
+use App\API\Serializer\BudgetExclusionStrategy;
 use App\Customer\CustomerService;
 use App\Entity\Customer;
 use App\Entity\CustomerComment;
@@ -31,6 +32,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\GoneHttpException;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/customers')]
@@ -48,33 +50,28 @@ final class CustomerController extends BaseApiController
         private readonly CustomerRepository $repository,
         private readonly CustomerRateRepository $customerRateRepository,
         private readonly CustomerService $customerService,
+        private readonly AuthorizationCheckerInterface $security,
     ) {
     }
 
     /**
-     * @return array<string>
+     * The budget groups are always requested, the per-record permission filtering
+     * is applied by the BudgetExclusionStrategy.
+     *
+     * @param array<string> $groups
      */
-    private function getEntitySerializationGroups(Customer $customer): array
+    private function renderBudgetAwareView(View $view, array $groups): Response
     {
-        $groups = self::GROUPS_ENTITY;
+        $context = $view->getContext();
+        $context->setGroups(array_merge($groups, ['Budget_Money', 'Budget_Time']));
+        $context->addExclusionStrategy(new BudgetExclusionStrategy($this->security));
 
-        if ($this->isGranted('budget', $customer)) {
-            $groups = array_merge($groups, ['Budget_Money']);
-        }
-
-        if ($this->isGranted('time', $customer)) {
-            $groups = array_merge($groups, ['Budget_Time']);
-        }
-
-        return $groups;
+        return $this->viewHandler->handle($view);
     }
 
     private function renderEntity(Customer $customer): Response
     {
-        $view = new View($customer, Response::HTTP_OK);
-        $view->getContext()->setGroups($this->getEntitySerializationGroups($customer));
-
-        return $this->viewHandler->handle($view);
+        return $this->renderBudgetAwareView(new View($customer, Response::HTTP_OK), self::GROUPS_ENTITY);
     }
 
     /**
@@ -118,14 +115,13 @@ final class CustomerController extends BaseApiController
 
         $query->setIsApiCall(true);
         $data = $this->repository->getCustomersForQuery($query);
-        $view = new View($data, 200);
-        $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
+        $groups = self::GROUPS_COLLECTION;
         if ($paramFetcher->get('full') === '1' && $this->isGranted('details_customer')) {
-            $view->getContext()->addGroup('Customer_Details');
+            $groups = array_merge($groups, ['Customer_Details']);
         }
 
-        return $this->viewHandler->handle($view);
+        return $this->renderBudgetAwareView(new View($data, Response::HTTP_OK), $groups);
     }
 
     /**
