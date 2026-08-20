@@ -578,6 +578,35 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         self::assertEquals('sunday', $user->getFirstDayOfWeek());
     }
 
+    public function testPreferencesPageShowsLocaleDemo(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_ADMIN . '/prefs');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        // demo values for the default locale (en) are rendered below the language selector
+        self::assertStringContainsString('11/25/2035', $content);
+        self::assertStringContainsString('3:34 PM', $content);
+        self::assertStringContainsString('25:48 / 25.80', $content);
+        self::assertStringContainsString('2,794.83', $content);
+        // the money demo reuses the existing "rate" translation, no new translation keys are needed
+        self::assertStringContainsString('data-demo-value="money"><strong>Price:</strong>', $content);
+        self::assertStringNotContainsString('Formatting examples', $content);
+        self::assertStringNotContainsString('data-demo-value="rtl"', $content);
+        self::assertStringNotContainsString('data-demo-value="decimal"', $content);
+        // the demo block is wired up for the live update via JavaScript
+        self::assertStringContainsString('data-locale-demo', $content);
+        self::assertStringContainsString('data-select="user_preferences_form_preferences_locale_value"', $content);
+        self::assertStringContainsString('data-date="', $content);
+        self::assertStringContainsString('data-duration="92880"', $content);
+        self::assertStringContainsString('data-money="2794.83"', $content);
+        // all locale formats are passed to the client, including non-default locales like German
+        self::assertStringContainsString('&quot;de&quot;', $content);
+        self::assertStringContainsString('dd.MM.y', $content);
+    }
+
     public function testIsTwoFactorSecure(): void
     {
         $this->assertUrlIsSecured('/profile/' . UserFixtures::USERNAME_USER . '/2fa');
