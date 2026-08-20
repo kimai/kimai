@@ -57,7 +57,7 @@
                     return;
                 }
 
-                const localeTag = select.value.replace('_', '-');
+                const localeTag = select.value.replace(/_/g, '-');
                 const decimalFormat = new Intl.NumberFormat(localeTag, {minimumFractionDigits: 2, maximumFractionDigits: 2});
                 const moneyFormat = new Intl.NumberFormat(localeTag, {style: 'currency', currency: currency});
 
