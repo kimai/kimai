@@ -28,11 +28,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     {{ form_row(form.start) }}
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     {{ form_row(form.end) }}
+                </div>
+                <div class="col-md-4">
+                    {{ form_row(form.lockedUntil) }}
                 </div>
             </div>
             {% if form.budgetType is defined %}

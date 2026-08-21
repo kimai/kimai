@@ -9,6 +9,7 @@
 
 namespace App\Tests\Controller;
 
+use App\DataFixtures\UserFixtures;
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
 use App\Entity\ActivityRate;
@@ -20,6 +21,7 @@ use App\Entity\RolePermission;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Entity\UserPreference;
 use App\Tests\DataFixtures\ActivityFixtures;
 use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
@@ -29,7 +31,9 @@ use App\Tests\Mocks\ProjectTestMetaFieldSubscriberMock;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
+use Symfony\Component\DomCrawler\Field\FormField;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
@@ -813,5 +817,163 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
                 ]
             ],
         ];
+    }
+
+    public function testCreateActionWithLockedUntil(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/project/create');
+
+        $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
+        self::assertTrue($form->has('project_edit_form[lockedUntil]'));
+
+        $client->submit($form, [
+            'project_edit_form' => [
+                'name' => 'A locked project',
+                'customer' => 1,
+                // the date picker uses the locale format of the logged-in user
+                'lockedUntil' => '6/30/2020',
+            ]
+        ]);
+
+        $location = $this->assertIsModalRedirect($client, '/details');
+        $this->requestPure($client, $location);
+        $this->assertHasFlashSuccess($client);
+
+        $em = $this->getEntityManager();
+        $project = $em->getRepository(Project::class)->findOneBy(['name' => 'A locked project']);
+        self::assertInstanceOf(Project::class, $project);
+
+        $lockedUntil = $project->getLockedUntil();
+        self::assertInstanceOf(\DateTimeImmutable::class, $lockedUntil);
+        // the form stores the plain day
+        self::assertEquals('2020-06-30', $lockedUntil->format('Y-m-d'));
+
+        self::assertTrue($project->isLockedAtDate(new \DateTime('2020-06-30 22:00:00')));
+        self::assertFalse($project->isLockedAtDate(new \DateTime('2020-07-01 00:00:00')));
+    }
+
+    /**
+     * @return \Generator<array{0: string, 1: string}>
+     */
+    public static function getEditorTimezones(): \Generator
+    {
+        yield ['Europe/Vienna', 'Pacific/Tahiti'];
+        yield ['Pacific/Tahiti', 'Europe/Vienna'];
+        yield ['Pacific/Kiritimati', 'Pacific/Midway'];
+        yield ['UTC', 'Asia/Tokyo'];
+    }
+
+    /**
+     * A user from another timezone, who saves the project without touching the lock date,
+     * must not move the locked period - not even by a single day.
+     */
+    #[DataProvider('getEditorTimezones')]
+    public function testLockedUntilDoesNotShiftWhenSavedFromAnotherTimezone(string $first, string $second): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $em = $this->getEntityManager();
+
+        $switchTimezone = function (string $timezone) use ($em, $client): void {
+            $user = $em->getRepository(User::class)->findOneBy(['username' => UserFixtures::USERNAME_ADMIN]);
+            self::assertInstanceOf(User::class, $user);
+            $user->setPreferenceValue(UserPreference::TIMEZONE, $timezone);
+            $em->persist($user);
+            $em->flush();
+            // the browser is a KernelBrowser, which can re-authenticate without booting a new kernel
+            self::assertInstanceOf(KernelBrowser::class, $client);
+            $client->loginUser($user, 'secured_area');
+        };
+
+        // the first user sets the lock date
+        $switchTimezone($first);
+        $this->request($client, '/admin/project/1/edit');
+        $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
+        $client->submit($form, ['project_edit_form' => ['lockedUntil' => '8/6/2026']]);
+
+        $stored = $em->getConnection()->fetchOne('SELECT locked_until FROM kimai2_projects WHERE id = 1');
+        self::assertEquals('2026-08-06', $stored);
+
+        // the second user opens the project, sees the same day and saves without touching it
+        $switchTimezone($second);
+        $this->request($client, '/admin/project/1/edit');
+        $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
+        $field = $form->get('project_edit_form[lockedUntil]');
+        self::assertInstanceOf(FormField::class, $field);
+        self::assertEquals('8/6/2026', $field->getValue(), 'The lock date is displayed differently in ' . $second);
+
+        $client->submit($form, ['project_edit_form' => ['name' => 'renamed in ' . $second]]);
+
+        $stored = $em->getConnection()->fetchOne('SELECT locked_until FROM kimai2_projects WHERE id = 1');
+        self::assertEquals('2026-08-06', $stored, 'The lock date moved when saved from ' . $second);
+
+        // and the locked period is still exactly the same for everyone
+        $em->clear();
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $project);
+        foreach ([$first, $second] as $timezone) {
+            $zone = new \DateTimeZone($timezone);
+            self::assertTrue($project->isLockedAtDate(new \DateTime('2026-08-06 10:00:00', $zone)), $timezone);
+            self::assertFalse($project->isLockedAtDate(new \DateTime('2026-08-07 10:00:00', $zone)), $timezone);
+        }
+    }
+
+    public function testEditActionCanRemoveLockedUntil(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $em = $this->getEntityManager();
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $project);
+        $project->setLockedUntil(new \DateTimeImmutable('2020-06-30 23:59:59'));
+        $em->persist($project);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/admin/project/1/edit');
+        $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
+        $field = $form->get('project_edit_form[lockedUntil]');
+        self::assertInstanceOf(FormField::class, $field);
+        self::assertEquals('6/30/2020', $field->getValue());
+
+        $client->submit($form, [
+            'project_edit_form' => [
+                'lockedUntil' => '',
+            ]
+        ]);
+
+        $em->clear();
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $project);
+        self::assertNull($project->getLockedUntil());
+    }
+
+    public function testProjectFormShowsDateHelpTexts(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/project/create');
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+
+        self::assertStringContainsString('Times before this date cannot be recorded.', $content);
+        self::assertStringContainsString('Times after this date cannot be recorded.', $content);
+        self::assertStringContainsString('Times up to and including this date can neither be created nor changed.', $content);
+    }
+
+    public function testDetailsPageShowsLockedUntil(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $em = $this->getEntityManager();
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $project);
+        $project->setLockedUntil(new \DateTimeImmutable('2020-06-30 23:59:59'));
+        $em->persist($project);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/admin/project/1/details');
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        self::assertStringContainsString('Times locked until', $content);
     }
 }
