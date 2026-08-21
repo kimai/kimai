@@ -9,6 +9,7 @@
 
 namespace App\Export;
 
+use App\Configuration\SystemConfiguration;
 use App\Entity\ExportableItem;
 use App\Entity\ExportTemplate;
 use App\Event\ExportItemsQueryEvent;
@@ -48,6 +49,7 @@ final class ServiceExport
         private readonly XlsxRendererFactory $xlsxRendererFactory,
         private readonly ExportTemplateRepository $exportTemplateRepository,
         private readonly LoggerInterface $logger,
+        private readonly SystemConfiguration $systemConfiguration,
     )
     {
     }
@@ -89,12 +91,19 @@ final class ServiceExport
      */
     public function getRenderer(): array
     {
-        $renderer = [
-            $this->csvRendererFactory->createDefault(),
-            $this->xlsxRendererFactory->createDefault(),
-            $this->pdfRendererFactory->create('pdf', 'export/pdf-layout.html.twig', 'pdf'),
-            $this->htmlRendererFactory->create('print', 'export/print.html.twig'),
-        ];
+        $renderer = [];
+
+        $showDefaults = $this->systemConfiguration->find('export.show_default_templates');
+        $showDefaults = $showDefaults === null || (bool) $showDefaults;
+
+        if ($showDefaults) {
+            $renderer = [
+                $this->csvRendererFactory->createDefault(),
+                $this->xlsxRendererFactory->createDefault(),
+                $this->pdfRendererFactory->create('pdf', 'export/pdf-layout.html.twig', 'pdf'),
+                $this->htmlRendererFactory->create('print', 'export/print.html.twig'),
+            ];
+        }
 
         foreach ($this->exportTemplateRepository->findAll() as $template) {
             try {
@@ -104,32 +113,34 @@ final class ServiceExport
             }
         }
 
-        foreach ($this->documentDirs as $exportPath) {
-            if (!is_dir($exportPath)) {
-                continue;
-            }
-
-            $htmlTemplates = glob($exportPath . '/*.html.twig');
-            if (\is_array($htmlTemplates)) {
-                foreach ($htmlTemplates as $htmlTpl) {
-                    $tplName = basename($htmlTpl);
-                    if (stripos($tplName, '-bundle') !== false) {
-                        continue;
-                    }
-
-                    $renderer[] = $this->htmlRendererFactory->create($tplName, '@export/' . $tplName, $this->filenameToTitle($tplName));
+        if ($showDefaults) {
+            foreach ($this->documentDirs as $exportPath) {
+                if (!is_dir($exportPath)) {
+                    continue;
                 }
-            }
 
-            $pdfTemplates = glob($exportPath . '/*.pdf.twig');
-            if (\is_array($pdfTemplates)) {
-                foreach ($pdfTemplates as $pdfTpl) {
-                    $tplName = basename($pdfTpl);
-                    if (stripos($tplName, '-bundle') !== false) {
-                        continue;
+                $htmlTemplates = glob($exportPath . '/*.html.twig');
+                if (\is_array($htmlTemplates)) {
+                    foreach ($htmlTemplates as $htmlTpl) {
+                        $tplName = basename($htmlTpl);
+                        if (stripos($tplName, '-bundle') !== false) {
+                            continue;
+                        }
+
+                        $renderer[] = $this->htmlRendererFactory->create($tplName, '@export/' . $tplName, $this->filenameToTitle($tplName));
                     }
+                }
 
-                    $renderer[] = $this->pdfRendererFactory->create($tplName, '@export/' . $tplName, $this->filenameToTitle($tplName));
+                $pdfTemplates = glob($exportPath . '/*.pdf.twig');
+                if (\is_array($pdfTemplates)) {
+                    foreach ($pdfTemplates as $pdfTpl) {
+                        $tplName = basename($pdfTpl);
+                        if (stripos($tplName, '-bundle') !== false) {
+                            continue;
+                        }
+
+                        $renderer[] = $this->pdfRendererFactory->create($tplName, '@export/' . $tplName, $this->filenameToTitle($tplName));
+                    }
                 }
             }
         }

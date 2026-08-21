@@ -630,6 +630,13 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(DatePickerType::class)
                         ->setOptions(['input' => 'string']),
                 ]),
+            (new SystemConfigurationModel('export'))
+                ->setConfiguration([
+                    (new Configuration('export.show_default_templates'))
+                        ->setTranslationDomain('system-configuration')
+                        ->setRequired(false)
+                        ->setType(YesNoType::class),
+                ]),
         ];
     }
 }
