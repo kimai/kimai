@@ -110,6 +110,7 @@ final class ReportUsersYearController extends AbstractController
         if (!empty($allUsers)) {
             $statsQuery = new TimesheetStatisticQuery($start, $end, $allUsers);
             $statsQuery->setProject($values->getProject());
+            $statsQuery->setCustomer($values->getCustomer());
             $monthStats = $statisticService->getMonthlyStats($statsQuery);
         }
 
