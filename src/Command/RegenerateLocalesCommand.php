@@ -225,15 +225,22 @@ final class RegenerateLocalesCommand extends Command
         // in the future this list should be reduced to the list of available translations, but for a long time users
         // could choose from the entire list of all locales, so we likely have to keep that forever ...
         $listOfLocales = array_map(fn ($locale) => "'$locale'", $locales);
+        $listOfTranslatedLocales = array_map(fn ($locale) => "'$locale'", $firstLevelLocales);
         $filename = 'config/services.yaml';
         $targetFile = $this->projectDirectory . DIRECTORY_SEPARATOR . $filename;
         $content = file_get_contents($targetFile);
         if ($content === false) {
             $io->error('Failed reading configuration file at ' . $filename);
         } else {
-            $content = preg_replace(
+            $content = (string) preg_replace(
                 '/^(\s*kimai_locales:\s*\[).*?(\])$/m',
                 '${1}' . implode(', ', $listOfLocales) . '${2}',
+                $content
+            );
+
+            $content = (string) preg_replace(
+                '/^(\s*kimai_translated_locales:\s*\[).*?(\])$/m',
+                '${1}' . implode(', ', $listOfTranslatedLocales) . '${2}',
                 $content
             );
 

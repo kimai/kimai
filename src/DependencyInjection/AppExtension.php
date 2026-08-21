@@ -108,7 +108,6 @@ final class AppExtension extends Extension
     private function setLanguageFormats(ContainerBuilder $container): void
     {
         $locales = $container->getParameter('kimai_locales');
-        // @deprecated since 2.21.0
         $container->setParameter('app_locales', implode('|', $locales));
 
         $directory = $container->getParameter('kernel.project_dir');
