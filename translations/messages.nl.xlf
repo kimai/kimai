@@ -2002,6 +2002,22 @@
         <source>release</source>
         <target state="needs-translation">Uitgave</target>
       </trans-unit>
+      <trans-unit id="TTL.5NF" resname="status.todo" xml:space="preserve">
+        <source>status.todo</source>
+        <target state="translated">To Do</target>
+      </trans-unit>
+      <trans-unit id="j_0FPm3" resname="status.waiting" xml:space="preserve">
+        <source>status.waiting</source>
+        <target state="translated">Wachten</target>
+      </trans-unit>
+      <trans-unit id="QdfOAGZ" resname="status.done" xml:space="preserve">
+        <source>status.done</source>
+        <target state="translated">Klaar</target>
+      </trans-unit>
+      <trans-unit id="G8ZoGoA" resname="api_token_qr_hint" xml:space="preserve">
+        <source>api_token_qr_hint</source>
+        <target state="translated">U kan deze QR-code scannen met een mobiele app om server-URL en token in één keer in te stellen. Deel deze afbeelding niet: het bevat uw API token.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
