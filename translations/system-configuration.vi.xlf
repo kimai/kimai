@@ -306,10 +306,6 @@
         <source>allow_duplicate_number</source>
         <target state="translated">Cho phép một số được dùng nhiều lần</target>
       </trans-unit>
-      <trans-unit id="12sQGSo" resname="activity.allow_inline_create" xml:space="preserve">
-        <source>activity.allow_inline_create</source>
-        <target state="translated">Cho phép tạo hoạt động trong bảng theo dõi thời gian</target>
-      </trans-unit>
       <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="no" xml:space="preserve">
         <source>invoice.rounding_mode</source>
         <target state="translated">Chế độ làm tròn</target>

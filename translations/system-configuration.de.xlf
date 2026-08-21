@@ -306,10 +306,6 @@
         <source>calendar.title_pattern</source>
         <target>Darstellung der Titel von Kalendereinträgen</target>
       </trans-unit>
-      <trans-unit id="12sQGSo" resname="activity.allow_inline_create">
-        <source>activity.allow_inline_create</source>
-        <target>Erlaube die Erstellung von Tätigkeiten im Zeiterfassungsformular</target>
-      </trans-unit>
       <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="yes">
         <source>copy_teams_on_create</source>
         <target>Übernehme Teams beim Erstellen neuer Einträge vom angemeldeten Benutzer</target>
