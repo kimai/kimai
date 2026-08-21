@@ -2110,6 +2110,26 @@
         <source>assign_timesheets</source>
         <target state="translated">Atribuir folhas de horas</target>
       </trans-unit>
+      <trans-unit id="TTL.5NF" resname="status.todo" xml:space="preserve">
+        <source>status.todo</source>
+        <target state="translated">Pendência</target>
+      </trans-unit>
+      <trans-unit id="j_0FPm3" resname="status.waiting" xml:space="preserve">
+        <source>status.waiting</source>
+        <target state="translated">Esperando</target>
+      </trans-unit>
+      <trans-unit id="QdfOAGZ" resname="status.done" xml:space="preserve">
+        <source>status.done</source>
+        <target state="translated">Feito</target>
+      </trans-unit>
+      <trans-unit id="G8ZoGoA" resname="api_token_qr_hint" xml:space="preserve">
+        <source>api_token_qr_hint</source>
+        <target state="translated">Você pode ler este código QR com um aplicativo móvel para configurar a URL do servidor e o token em uma única etapa. Não compartilhe esta imagem: ela contém o seu token de API.</target>
+      </trans-unit>
+      <trans-unit id="nlJ2pW2" resname="invoice_email" xml:space="preserve">
+        <source>invoice_email</source>
+        <target state="translated">E-mail de faturamento</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
