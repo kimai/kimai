@@ -39,6 +39,7 @@ security:
             entry_point: form_login
 
             custom_authenticators:
+                - App\Oidc\OidcAuthenticator
                 - App\Saml\SamlAuthenticator
 
             remember_me:
