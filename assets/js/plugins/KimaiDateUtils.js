@@ -289,7 +289,11 @@ export default class KimaiDateUtils extends KimaiPlugin {
             let c = parseInt(duration);
             const d = parseInt(duration).toFixed();
             if (!isNaN(c) && duration === d) {
-                duration = (c * 3600).toString();
+                if (c < 10) {
+                    duration = (c * 3600).toString();
+                } else {
+                    duration = (c * 60).toString();
+                }
                 luxonDuration = Duration.fromISO('PT' + duration + 'S');
             }
         }
