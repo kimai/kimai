@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Configuration\SystemConfiguration;
 use App\Entity\ExportableItem;
 use App\Entity\ExportTemplate;
+use App\Event\TimesheetMetaDisplayEvent;
 use App\Export\Base\DispositionInlineInterface;
 use App\Export\ServiceExport;
 use App\Export\TooManyItemsExportException;
@@ -20,6 +21,7 @@ use App\Form\Toolbar\ExportToolbarForm;
 use App\Repository\ExportTemplateRepository;
 use App\Repository\Query\ExportQuery;
 use App\Utils\PageSetup;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,8 +35,10 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('create_export')]
 final class ExportController extends AbstractController
 {
-    public function __construct(private readonly ServiceExport $export)
-    {
+    public function __construct(
+        private readonly ServiceExport $export,
+        private readonly EventDispatcherInterface $dispatcher,
+    ) {
     }
 
     #[Route(path: '/', name: 'export', methods: ['GET'])]
@@ -108,6 +112,10 @@ final class ExportController extends AbstractController
             $showRates = $this->isGranted('view_rate_own_timesheet');
         }
 
+        $event = new TimesheetMetaDisplayEvent($query, TimesheetMetaDisplayEvent::EXPORT);
+        $this->dispatcher->dispatch($event);
+        $metaColumns = $event->getFields();
+
         return $this->render('export/index.html.twig', [
             'page_setup' => $page,
             'too_many' => $tooManyResults,
@@ -119,6 +127,7 @@ final class ExportController extends AbstractController
             'preview_limit' => $maxItemsPreview,
             'preview_show' => $showPreview,
             'show_rates' => $showRates,
+            'metaColumns' => $metaColumns,
         ]);
     }
 
