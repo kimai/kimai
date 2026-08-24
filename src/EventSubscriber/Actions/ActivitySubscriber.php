@@ -23,10 +23,14 @@ final class ActivitySubscriber extends AbstractActionsSubscriber
     {
         $payload = $event->getPayload();
 
+        if (!isset($payload['activity'])) {
+            return;
+        }
+
         /** @var Activity $activity */
         $activity = $payload['activity'];
 
-        if ($activity->getId() === null) {
+        if (!$activity instanceof Activity || $activity->getId() === null) {
             return;
         }
 
