@@ -15,9 +15,11 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\ExportTemplateFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use App\Tests\Mocks\MetaFieldColumnSubscriberMock;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DomCrawler\Field\FormField;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 #[Group('integration')]
 class ExportControllerTest extends AbstractControllerBaseTestCase
@@ -67,7 +69,10 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
             ->setAmount(20)
             ->setStartDate($begin)
             ->setCallback(function (Timesheet $timesheet) use ($team, $em): void {
-                $team->addProject($timesheet->getProject());
+                $project = $timesheet->getProject();
+                if ($project !== null) {
+                    $team->addProject($project);
+                }
                 $em->persist($team);
             })
         ;
@@ -176,6 +181,45 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         self::assertEmpty($expected);
     }
 
+    public function testIndexActionShowsMetaFieldColumns(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = self::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new MetaFieldColumnSubscriberMock());
+
+        $begin = new \DateTime('first day of this month');
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setUser($this->getUserByRole(User::ROLE_USER))
+            ->setAmount(2)
+            ->setStartDate($begin)
+        ;
+        $this->importFixture($fixture);
+
+        $this->request($client, '/export/?performSearch=performSearch');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $modal = $client->getCrawler()->filter('#modal_export');
+        self::assertEquals(1, $modal->count());
+
+        $html = $modal->html();
+        self::assertStringContainsString('column_mf_foo', $html);
+        self::assertStringContainsString('column_mf_foo2', $html);
+
+        $columns = $client->getCrawler()->filter('section.content div.datatable_export table.dataTable thead th');
+        $found = false;
+        /** @var \DOMElement $th */
+        foreach ($columns as $th) {
+            if (str_contains($th->getAttribute('data-field'), 'mf_foo')) {
+                $found = true;
+                break;
+            }
+        }
+        self::assertTrue($found, 'Meta field column "mf_foo" not found in datatable header');
+    }
+
     public function testExportActionWithMissingRenderer(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
@@ -234,6 +278,7 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         $response = $client->getResponse();
         self::assertTrue($response->isSuccessful());
         $content = $response->getContent();
+        self::assertIsString($content);
         $node = $client->getCrawler()->filter('body');
         self::assertEquals(1, $node->count());
 
@@ -302,6 +347,7 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         $templates = $this->getEntityManager()->getRepository(ExportTemplate::class)->findAll();
         self::assertCount(1, $templates);
         $template = array_pop($templates);
+        self::assertNotNull($template);
         $id = $template->getId();
 
         $this->request($client, $this->createUrl('/export/template-edit/' . $id));
