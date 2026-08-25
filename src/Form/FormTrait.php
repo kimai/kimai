@@ -114,7 +114,13 @@ trait FormTrait
 
                 $options['projects'] = \is_string($data['project']) ? (int) $data['project'] : $data['project'];
 
-                $event->getForm()->add('activity', ActivityType::class, $options);
+                // Preserve api_data option when recreating activity field
+                $optionsForAdd = $options;
+                if (!isset($optionsForAdd['api_data'])) {
+                    $optionsForAdd['api_data'] = [];
+                }
+
+                $event->getForm()->add('activity', ActivityType::class, $optionsForAdd);
             }
         );
     }

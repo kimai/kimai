@@ -294,10 +294,6 @@
         <source>calendar.title_pattern</source>
         <target state="translated">Naptárbejegyzések címének megjelenítése</target>
       </trans-unit>
-      <trans-unit id="12sQGSo" resname="activity.allow_inline_create" xml:space="preserve">
-        <source>activity.allow_inline_create</source>
-        <target state="translated">Tevékenységek létrehozásának engedélyezése munkaidő-bejegyzés készítésekor</target>
-      </trans-unit>
       <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no" xml:space="preserve">
         <source>copy_teams_on_create</source>
         <target state="translated">Csapatok átvétele a bejelentkezett felhasználótól új bejegyzések készítésekor</target>
