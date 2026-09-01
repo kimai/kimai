@@ -4,179 +4,179 @@
     <body>
       <trans-unit id="rmH78_V" resname="At least one team leader must be assigned to the team." xml:space="preserve">
         <source>At least one team leader must be assigned to the team.</source>
-        <target state="translated">Timu mora biti dodeljen bar jedan vođa tima.</target>
+        <target state="translated">Тиму мора бити додељен бар један вођа тима.</target>
       </trans-unit>
       <trans-unit id="6WAG.Xj" resname="The entered passwords don't match." xml:space="preserve">
         <source>The entered passwords don't match.</source>
-        <target state="translated">Unete lozinke se ne poklapaju.</target>
+        <target state="translated">Унете лозинке се не поклапају.</target>
       </trans-unit>
       <trans-unit id="6u6oCwB" resname="The email is already used." xml:space="preserve">
         <source>This e-mail address is already in use.</source>
-        <target state="translated">Ova e-mail adresa se već koristi.</target>
+        <target state="translated">Ова е-маил адреса се већ користи.</target>
       </trans-unit>
       <trans-unit id="S14XECA" resname="The username is already used." xml:space="preserve">
         <source>The username is already used.</source>
-        <target state="translated">Korisničko ime se već koristi.</target>
+        <target state="translated">Корисничко име се већ користи.</target>
       </trans-unit>
       <trans-unit id="ekO5eXI" resname="An equal username is already used." xml:space="preserve">
         <source>An equal username is already used.</source>
-        <target state="translated">Isto korisničko ime se već koristi.</target>
+        <target state="translated">Исто корисничко име се већ користи.</target>
       </trans-unit>
       <trans-unit id="INlaCgW" resname="An equal email is already used." xml:space="preserve">
         <source>An equal e-mail address is already in use.</source>
-        <target state="translated">Ista e-mail adresa se već koristi.</target>
+        <target state="translated">Иста е-маил адреса се већ користи.</target>
       </trans-unit>
       <trans-unit id="IkNxbBI" resname="This value is not a valid role." xml:space="preserve">
         <source>This value is not a valid role.</source>
-        <target state="translated">Ova vrednost nije važeća uloga.</target>
+        <target state="translated">Ова вредност није важећа улога.</target>
       </trans-unit>
       <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
         <source>The end date must not be earlier than the start date.</source>
-        <target state="translated">Datum završetka ne sme biti raniji od datuma početka.</target>
+        <target state="translated">Датум завршетка не сме бити ранији од датума почетка.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future." xml:space="preserve">
         <source>The begin date cannot be in the future.</source>
-        <target state="translated">Datum početka ne može biti u budućnosti.</target>
+        <target state="translated">Датум почетка не може бити у будућности.</target>
       </trans-unit>
       <trans-unit id="Jz1y3yB" resname="Duration cannot be zero." xml:space="preserve">
         <source>Duration cannot be zero.</source>
-        <target state="translated">Prazno trajanje nije dozvoljeno.</target>
+        <target state="translated">Празно трајање није дозвољено.</target>
       </trans-unit>
       <trans-unit id="1V6BsD_" resname="You must select at least one user or team." xml:space="preserve">
         <source>You must select at least one user or team.</source>
-        <target state="translated">Morate izabrati bar jednog korisnika ili tim.</target>
+        <target state="translated">Морате изабрати бар једног корисника или тим.</target>
       </trans-unit>
       <trans-unit id="yDlKSRw" resname="This invoice document cannot be used, please rename the file and upload it again." xml:space="preserve">
         <source>This invoice document cannot be used. Please rename the file and upload it again.</source>
-        <target state="translated">Ovaj dokument fakture se ne može koristiti. Preimenujte fajl i otpremite ga ponovo.</target>
+        <target state="translated">Овај документ фактуре се не може користити. Преименујте фајл и отпремите га поново.</target>
       </trans-unit>
       <trans-unit id="0o.pH3X" resname="This period is locked, please choose a later date." xml:space="preserve">
         <source>This period is locked. Please choose a later date.</source>
-        <target state="translated">Ovaj period je zaključan. Izaberite kasniji datum.</target>
+        <target state="translated">Овај период је закључан. Изаберите каснији датум.</target>
       </trans-unit>
       <trans-unit id="u2wjm2i" resname="You already have an entry for this time." xml:space="preserve">
         <source>You already have an entry for this time.</source>
-        <target state="translated">Već imate unos za ovo vreme.</target>
+        <target state="translated">Већ имате унос за ово време.</target>
       </trans-unit>
       <trans-unit id="VJSZSD0" resname="The given value is not a valid time." xml:space="preserve">
         <source>The given value is not a valid time.</source>
-        <target state="translated">Uneta vrednost nije važeće vreme.</target>
+        <target state="translated">Унета вредност није важеће време.</target>
       </trans-unit>
       <trans-unit id="1oKCOa5" resname="The budget is completely used." xml:space="preserve">
         <source>The budget is completely used.</source>
-        <target state="translated">Budžet je iskorišćen. Od dostupnog %budget%, do sada je iskorišćeno %used%, a %free% se još može iskoristiti.</target>
+        <target state="translated">Буџет је искоришћен. Од доступног %budget%, до сада је искоришћено %used%, а %free% се још може искористити.</target>
       </trans-unit>
       <trans-unit id="dcPei9G" resname="Sorry, the budget is used up." xml:space="preserve">
         <source>Sorry, the budget is used up.</source>
-        <target state="translated">Nažalost, budžet je iskorišćen.</target>
+        <target state="translated">Нажалост, буџет је искоришћен.</target>
       </trans-unit>
       <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded." xml:space="preserve">
         <source>Maximum duration of {{ value }} hours exceeded.</source>
-        <target state="translated">Dozvoljeno je najviše {{ value }} sati.</target>
+        <target state="translated">Дозвољено је највише {{ value }} сати.</target>
       </trans-unit>
       <trans-unit id="to1Q85W" resname="An activity needs to be selected." xml:space="preserve">
         <source>An activity needs to be selected.</source>
-        <target state="translated">Potrebno je izabrati aktivnost.</target>
+        <target state="translated">Потребно је изабрати активност.</target>
       </trans-unit>
       <trans-unit id="rHd9_aA" resname="A project needs to be selected." xml:space="preserve">
         <source>A project needs to be selected.</source>
-        <target state="translated">Potrebno je izabrati projekat.</target>
+        <target state="translated">Потребно је изабрати пројекат.</target>
       </trans-unit>
       <trans-unit id="mjlH0la" resname="This timesheet is already exported." xml:space="preserve">
         <source>This timesheet is already exported.</source>
-        <target state="translated">Ova evidencija vremena je već izvezena.</target>
+        <target state="translated">Ова евиденција времена је већ извезена.</target>
       </trans-unit>
       <trans-unit id="gSAwscA" resname="Validation Failed" xml:space="preserve">
         <source>Validation Failed</source>
-        <target state="translated">Došlo je do problema prilikom čuvanja.</target>
+        <target state="translated">Дошло је до проблема приликом чувања.</target>
       </trans-unit>
       <trans-unit id="7HYTefs" resname="Cannot stop running timesheet" xml:space="preserve">
         <source>Cannot stop running timesheet</source>
-        <target state="translated">Imate aktivan unos vremena koji se ne može automatski zaustaviti.</target>
+        <target state="translated">Имате активан унос времена који се не може аутоматски зауставити.</target>
       </trans-unit>
       <trans-unit id="xp0lmgm" resname="The given code is not the correct TOTP token." xml:space="preserve">
         <source>The given code is not the correct TOTP token.</source>
-        <target state="translated">Uneti kod nije ispravan TOTP token.</target>
+        <target state="translated">Унети код није исправан TOTP токен.</target>
       </trans-unit>
       <trans-unit id="7mqg3TC" resname="This value is not a valid role name." xml:space="preserve">
         <source>This value is not a valid role name.</source>
-        <target state="translated">Ovo nije važeći naziv za korisničku ulogu.</target>
+        <target state="translated">Ово није важећи назив за корисничку улогу.</target>
       </trans-unit>
       <trans-unit id="ZObikpA" resname="This absence type is not known." xml:space="preserve">
         <source>This absence type is not known.</source>
-        <target state="translated">Ova vrsta odsustva nije poznata.</target>
+        <target state="translated">Ова врста одсуства није позната.</target>
       </trans-unit>
       <trans-unit id="0ULsHQA" resname="The chosen date is not a working day." xml:space="preserve">
         <source>The chosen date is not a working day.</source>
-        <target state="translated">Izabrani datum nije radni dan.</target>
+        <target state="translated">Изабрани датум није радни дан.</target>
       </trans-unit>
       <trans-unit id="N21br.P" resname="The chosen date is already locked." xml:space="preserve">
         <source>The chosen date is already locked.</source>
-        <target state="translated">Izabrani datum je već zaključan.</target>
+        <target state="translated">Изабрани датум је већ закључан.</target>
       </trans-unit>
       <trans-unit id="6H84TMs" resname="An absence must be assigned to a user." xml:space="preserve">
         <source>An absence must be assigned to a user.</source>
-        <target state="translated">Odsustvo mora biti dodeljeno korisniku.</target>
+        <target state="translated">Одсуство мора бити додељено кориснику.</target>
       </trans-unit>
       <trans-unit id="nLcihCc" resname="An absence must have a date." xml:space="preserve">
         <source>An absence must have a date.</source>
-        <target state="translated">Odsustvo mora imati datum.</target>
+        <target state="translated">Одсуство мора имати датум.</target>
       </trans-unit>
       <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="translated">Odsustvo se ne može zabeležiti pre prvog radnog dana.</target>
+        <target state="translated">Одсуство се не може забележити пре првог радног дана.</target>
       </trans-unit>
       <trans-unit id="IN37g5N" resname="Not enough holidays left." xml:space="preserve">
         <source>Not enough holidays left.</source>
-        <target state="translated">Nema dovoljno preostalih dana godišnjeg odmora.</target>
+        <target state="translated">Нема довољно преосталих дана годишњег одмора.</target>
       </trans-unit>
       <trans-unit id="ByeEMxW" resname="You do not have enough overtime, remaining are {{ value }}." xml:space="preserve">
         <source>You do not have enough overtime, remaining are {{ value }}.</source>
-        <target state="translated">Nemate dovoljno prekovremenih sati, preostalo je {{ value }}.</target>
+        <target state="translated">Немате довољно прековремених сати, преостало је {{ валуе }}.</target>
       </trans-unit>
       <trans-unit id="DiaaRa1" resname="You cannot have two absences of this type at one day." xml:space="preserve">
         <source>You cannot have two absences of this type at one day.</source>
-        <target state="translated">Ne možete imati dva odsustva ove vrste u istom danu.</target>
+        <target state="translated">Не можете имати два одсуства ове врсте у истом дану.</target>
       </trans-unit>
       <trans-unit id="kSBiyaF" resname="This is a public holiday, booking not allowed." xml:space="preserve">
         <source>This is a public holiday, booking not allowed.</source>
-        <target state="translated">Ovo je državni praznik, evidentiranje nije dozvoljeno.</target>
+        <target state="translated">Ово је државни празник, евидентирање није дозвољено.</target>
       </trans-unit>
       <trans-unit id="c2B6.lW" resname="You can book a maximum of {{ value }} days at once." xml:space="preserve">
         <source>You can book a maximum of {{ value }} days at once.</source>
-        <target state="translated">Možete odjednom zabeležiti najviše {{ value }} dana, trenutno ste izabrali {{ selected }}.</target>
+        <target state="translated">Можете ођедном забележити највише {{ валуе }} дана, тренутно сте изабрали {{ селецтед }}.</target>
       </trans-unit>
       <trans-unit id="BztgSSP" resname="The period of absence must not extend beyond the turn of the year." xml:space="preserve">
         <source>The period of absence must not extend beyond the turn of the year.</source>
-        <target state="translated">Period odsustva ne sme prelaziti u sledeću godinu.</target>
+        <target state="translated">Период одсуства не сме прелазити у следећу годину.</target>
       </trans-unit>
       <trans-unit id="fvxWW3V" resname="The CSRF token is invalid. Please try to resubmit the form." xml:space="preserve">
         <source>The CSRF token is invalid. Please try to resubmit the form.</source>
-        <target state="translated">Pokušajte ponovo da pošaljete formu. Ako se problem nastavi, osvežite stranicu u pregledaču.</target>
+        <target state="translated">Покушајте поново да пошаљете форму. Ако се проблем настави, освежите страницу у прегледачу.</target>
       </trans-unit>
       <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day." xml:space="preserve">
         <source>An absence cannot be booked after the last working day.</source>
-        <target state="translated">Odsustvo se ne može zabeležiti posle poslednjeg radnog dana.</target>
+        <target state="translated">Одсуство се не може забележити после последњег радног дана.</target>
       </trans-unit>
       <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve">
         <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
-        <target state="translated">Izabrani period se ne može zaključati: postoje nepotvrđeni zahtevi za odsustvo.</target>
+        <target state="translated">Изабрани период се не може закључати: постоје непотврђени захтеви за одсуство.</target>
       </trans-unit>
       <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
         <source>Duration cannot be negative.</source>
-        <target state="translated">Trajanje ne može biti negativno.</target>
+        <target state="translated">Трајање не може бити негативно.</target>
       </trans-unit>
       <trans-unit id="EDEDQtZ" resname="These characters are not allowed: {{ chars }}" xml:space="preserve">
         <source>These characters are not allowed: {{ chars }}</source>
-        <target state="translated">Sledeći znakovi nisu dozvoljeni: {{ chars }}</target>
+        <target state="translated">Следећи знакови нису дозвољени: {{ цхарс }}</target>
       </trans-unit>
       <trans-unit id="Dp2KT8W" resname="The field {{ field }} is required, please select a value" xml:space="preserve">
         <source>Please select a value for {{ field }}</source>
-        <target state="translated">Izaberite vrednost za polje {{ field }}</target>
+        <target state="translated">Изаберите вредност за поље {{ фиелд }}</target>
       </trans-unit>
       <trans-unit id="7hNS8l3" resname="A maximum duration of {{ value }} is allowed." xml:space="preserve">
         <source>A maximum duration of {{ value }} is allowed.</source>
-        <target state="translated">Dozvoljeno je najviše trajanje od {{ value }}.</target>
+        <target state="translated">Дозвољено је највише трајање од {{ валуе }}.</target>
       </trans-unit>
     </body>
   </file>

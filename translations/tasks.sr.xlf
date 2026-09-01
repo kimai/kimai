@@ -4,179 +4,179 @@
     <body>
       <trans-unit id="tLV1hoP" resname="report_tasks_assigned" xml:space="preserve" approved="no">
         <source>report_tasks_assigned</source>
-        <target state="translated">Broj zadataka po korisniku</target>
+        <target state="translated">Број задатака по кориснику</target>
       </trans-unit>
       <trans-unit id="8c0YWZm" resname="report_tasks_teams" xml:space="preserve" approved="no">
         <source>report_tasks_teams</source>
-        <target state="translated">Timski zadaci</target>
+        <target state="translated">Тимски задаци</target>
       </trans-unit>
       <trans-unit id="XjAwhoV" resname="task.start" xml:space="preserve" approved="no">
         <source>task.start</source>
-        <target state="translated">Počni obavljati zadatak</target>
+        <target state="translated">Почни обављати задатак</target>
       </trans-unit>
       <trans-unit id="XD7TZh7" resname="task.stop" xml:space="preserve" approved="no">
         <source>task.stop</source>
-        <target state="translated">Prekini obavljati zadatak</target>
+        <target state="translated">Прекини обављати задатак</target>
       </trans-unit>
       <trans-unit id="sG_9DvK" resname="task.assign" xml:space="preserve" approved="no">
         <source>task.assign</source>
-        <target state="translated">Dodeli meni</target>
+        <target state="translated">Додели мени</target>
       </trans-unit>
       <trans-unit id="qLewfPg" resname="task.unassign" xml:space="preserve" approved="no">
         <source>task.unassign</source>
-        <target state="translated">Ukloni dodeljivanje zadatka</target>
+        <target state="translated">Уклони додељивање задатка</target>
       </trans-unit>
       <trans-unit id="F1_rg1R" resname="task.reopen" xml:space="preserve" approved="no">
         <source>task.reopen</source>
-        <target state="translated">Ponovo otvori zadatak</target>
+        <target state="translated">Поново отвори задатак</target>
       </trans-unit>
       <trans-unit id="duBK63z" resname="task.close" xml:space="preserve" approved="no">
         <source>task.close</source>
-        <target state="translated">Završi zadatak</target>
+        <target state="translated">Заврши задатак</target>
       </trans-unit>
       <trans-unit id="t.y642H" resname="task.create" xml:space="preserve" approved="no">
         <source>task.create</source>
-        <target state="translated">Kreiraj zadatak</target>
+        <target state="translated">Креирај задатак</target>
       </trans-unit>
       <trans-unit id="s6YOYaU" resname="Tasks" xml:space="preserve" approved="no">
         <source>Tasks</source>
-        <target state="translated">Zadaci</target>
+        <target state="translated">Задаци</target>
       </trans-unit>
       <trans-unit id="7f4C38O" resname="tasks.pending" xml:space="preserve" approved="no">
         <source>tasks.pending</source>
-        <target state="translated">Nezavršeni zadaci</target>
+        <target state="translated">Незавршени задаци</target>
       </trans-unit>
       <trans-unit id="rLKr7Zu" resname="tasks.my" xml:space="preserve" approved="no">
         <source>tasks.my</source>
-        <target state="translated">Moji zadaci</target>
+        <target state="translated">Моји задаци</target>
       </trans-unit>
       <trans-unit id="FhEb.Hn" resname="task.help.title" xml:space="preserve" approved="no">
         <source>task.help.title</source>
-        <target state="translated">Kratak opis zadatka</target>
+        <target state="translated">Кратак опис задатка</target>
       </trans-unit>
       <trans-unit id="WCaBimL" resname="task.help.end" xml:space="preserve" approved="no">
         <source>task.help.end</source>
-        <target state="translated">Zadatak mora biti završen do ovog datuma</target>
+        <target state="translated">Задатак мора бити завршен до овог датума</target>
       </trans-unit>
       <trans-unit id="taZkyYV" resname="task.help.user" xml:space="preserve" approved="no">
         <source>task.help.user</source>
-        <target state="translated">Dodeli ovaj zadatak jednom korisniku</target>
+        <target state="translated">Додели овај задатак једном кориснику</target>
       </trans-unit>
       <trans-unit id="QF_bQPv" resname="task.help.team" xml:space="preserve" approved="no">
         <source>task.help.team</source>
-        <target state="translated">Dodeli ovaj zadatak jednom timu</target>
+        <target state="translated">Додели овај задатак једном тиму</target>
       </trans-unit>
       <trans-unit id="kMOottI" resname="task.widget_rows" xml:space="preserve" approved="no">
         <source>task.widget_rows</source>
-        <target state="translated">Broj zadataka po stranici u vidžetu kontrolne table</target>
+        <target state="translated">Број задатака по страници у виџету контролне табле</target>
       </trans-unit>
       <trans-unit id="tt.jOEH" resname="estimation" xml:space="preserve" approved="no">
         <source>estimation</source>
-        <target state="translated">Procena vremena</target>
+        <target state="translated">Процена времена</target>
       </trans-unit>
       <trans-unit id="ZCSPtzc" resname="task.help.estimation" xml:space="preserve" approved="no">
         <source>task.help.estimation</source>
-        <target state="translated">Procenjeno vreme potrebno za završetak zadatka u formatu hh:mm</target>
+        <target state="translated">Процењено време потребно за завршетак задатка у формату хх:мм</target>
       </trans-unit>
       <trans-unit id="SzbkpWy" resname="task.help.description" xml:space="preserve" approved="no">
         <source>task.help.description</source>
-        <target state="translated">Ovaj opis će biti kopiran u svaki unos evidencije vremena</target>
+        <target state="translated">Овај опис ће бити копиран у сваки унос евиденције времена</target>
       </trans-unit>
       <trans-unit id="zJvuPBv" resname="task.help.tags" xml:space="preserve" approved="no">
         <source>task.help.tags</source>
-        <target state="translated">Ove oznake će biti kopirane u svaki unos evidencije vremena</target>
+        <target state="translated">Ове ознаке ће бити копиране у сваки унос евиденције времена</target>
       </trans-unit>
       <trans-unit id="agwwK.J" resname="task_no_estimation" xml:space="preserve" approved="no">
         <source>task_no_estimation</source>
-        <target state="translated">Bez procene</target>
+        <target state="translated">Без процене</target>
       </trans-unit>
       <trans-unit id="kgA8TVH" resname="task_with_estimation" xml:space="preserve" approved="no">
         <source>task_with_estimation</source>
-        <target state="translated">Sa procenom</target>
+        <target state="translated">Са проценом</target>
       </trans-unit>
       <trans-unit id="H.zMNfb" resname="task_started" xml:space="preserve" approved="no">
         <source>task_started</source>
-        <target state="translated">Zadatak je započet</target>
+        <target state="translated">Задатак је започет</target>
       </trans-unit>
       <trans-unit id="cu1.2JS" resname="task_not_started" xml:space="preserve" approved="no">
         <source>task_not_started</source>
-        <target state="translated">Zadatak nije započet</target>
+        <target state="translated">Задатак није започет</target>
       </trans-unit>
       <trans-unit id="ZwdUYYa" resname="task_overdue" xml:space="preserve" approved="no">
         <source>task_overdue</source>
-        <target state="translated">Prekoračen rok zadatka</target>
+        <target state="translated">Прекорачен рок задатка</target>
       </trans-unit>
       <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
         <source>task_todo</source>
-        <target state="translated">Zadatak</target>
+        <target state="translated">Задатак</target>
       </trans-unit>
       <trans-unit id="hZFps4G" resname="board" xml:space="preserve" approved="no">
         <source>board</source>
-        <target state="translated">Tabla</target>
+        <target state="translated">Табла</target>
       </trans-unit>
       <trans-unit id="aF2ajw." resname="boards" xml:space="preserve" approved="no">
         <source>boards</source>
-        <target state="translated">Table</target>
+        <target state="translated">Табле</target>
       </trans-unit>
       <trans-unit id="TRpwk3n" resname="board.private" xml:space="preserve" approved="no">
         <source>board.private</source>
-        <target state="translated">Privatna tabla</target>
+        <target state="translated">Приватна табла</target>
       </trans-unit>
       <trans-unit id="Wq09TUJ" resname="board.empty_state" xml:space="preserve" approved="no">
         <source>board.empty_state</source>
-        <target state="translated">Trenutno nemate nijednu tablu. Kreirajte jednu da biste počeli.</target>
+        <target state="translated">Тренутно немате ниједну таблу. Креирајте једну да бисте почели.</target>
       </trans-unit>
       <trans-unit id="7lJ6pzI" resname="board.limit_reached" xml:space="preserve" approved="no">
         <source>board.limit_reached</source>
-        <target state="translated">Dostigli ste ograničenje od %limit% privatnih tabli.</target>
+        <target state="translated">Достигли сте ограничење од %limit% приватних табли.</target>
       </trans-unit>
       <trans-unit id="K.9A2XH" resname="board.close_task" xml:space="preserve" approved="no">
         <source>board.close_task</source>
-        <target state="translated">Završiti ovaj zadatak?</target>
+        <target state="translated">Завршити овај задатак?</target>
       </trans-unit>
       <trans-unit id="Hj3qdDA" resname="board.delete_confirm" xml:space="preserve" approved="no">
         <source>board.delete_confirm</source>
-        <target state="translated">Obrisati ovu tablu?</target>
+        <target state="translated">Обрисати ову таблу?</target>
       </trans-unit>
       <trans-unit id="_H1KEu_" resname="board.unassign_user" xml:space="preserve" approved="no">
         <source>board.unassign_user</source>
-        <target state="translated">Ukloniti dodeljenog korisnika sa ovog zadatka?</target>
+        <target state="translated">Уклонити додељеног корисника са овог задатка?</target>
       </trans-unit>
       <trans-unit id="TuoG.8m" resname="board.remove_task" xml:space="preserve" approved="no">
         <source>board.remove_task</source>
-        <target state="translated">Ukloni sa table</target>
+        <target state="translated">Уклони са табле</target>
       </trans-unit>
       <trans-unit id="e3APxiK" resname="board.remove_task_confirm" xml:space="preserve" approved="no">
         <source>board.remove_task_confirm</source>
-        <target state="translated">Ukloniti ovaj zadatak sa table?</target>
+        <target state="translated">Уклонити овај задатак са табле?</target>
       </trans-unit>
       <trans-unit id="wkzeXtZ" resname="board.move_to" xml:space="preserve" approved="no">
         <source>board.move_to</source>
-        <target state="translated">Premesti u</target>
+        <target state="translated">Премести у</target>
       </trans-unit>
       <trans-unit id="hhrw1nb" resname="board.columns" xml:space="preserve" approved="no">
         <source>board.columns</source>
-        <target state="translated">Kolone</target>
+        <target state="translated">Колоне</target>
       </trans-unit>
       <trans-unit id="9.F1FZS" resname="board.add_column" xml:space="preserve" approved="no">
         <source>board.add_column</source>
-        <target state="translated">Dodaj kolonu</target>
+        <target state="translated">Додај колону</target>
       </trans-unit>
       <trans-unit id="SPiQMlQ" resname="board.column.limit" xml:space="preserve" approved="no">
         <source>board.column.limit</source>
-        <target state="translated">WIP ograničenje</target>
+        <target state="translated">WIP ограничење</target>
       </trans-unit>
       <trans-unit id="ad2nQdr" resname="board.columns_invalid" xml:space="preserve" approved="no">
         <source>board.columns_invalid</source>
-        <target state="translated">Konfiguracija kolona nije važeća.</target>
+        <target state="translated">Конфигурација колона није важећа.</target>
       </trans-unit>
       <trans-unit id="lu5uNlv" resname="board.filter" xml:space="preserve" approved="no">
         <source>board.filter</source>
-        <target state="translated">Filtriraj zadatke</target>
+        <target state="translated">Филтрирај задатке</target>
       </trans-unit>
       <trans-unit id="9rA4ixj" resname="board.only_mine" xml:space="preserve" approved="no">
         <source>board.only_mine</source>
-        <target state="translated">Samo moji zadaci</target>
+        <target state="translated">Само моји задаци</target>
       </trans-unit>
     </body>
   </file>

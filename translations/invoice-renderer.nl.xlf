@@ -30,9 +30,9 @@
         <source>timesheet</source>
         <target state="translated">Tijdrooster</target>
       </trans-unit>
-      <trans-unit id="m1UyfD9" resname="service-date">
-        <source>service-date</source>
-        <target>Freelancer</target>
+      <trans-unit id="m1UyfD9" resname="service-date" xml:space="preserve">
+        <source>Single service date</source>
+        <target state="translated">Datum dienst</target>
       </trans-unit>
       <trans-unit id="22pt8Gs" resname="download_invoice_renderer" xml:space="preserve">
         <source>download_invoice_renderer</source>

@@ -144,19 +144,19 @@
       </trans-unit>
       <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target state="needs-translation">Plafond: begin, einde en duur worden naar boven afgerond</target>
+        <target state="translated">Begin, einde en tijdsduur worden naar boven afgerond</target>
       </trans-unit>
       <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target state="needs-translation">Dichtstbijzijnde: wiskundige afronding op de dichtstbijzijnde waarde</target>
+        <target state="translated">Wiskundige afronding naar de dichtstbijzijnde waarde</target>
       </trans-unit>
       <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target state="needs-translation">Standaard: begin wordt naar beneden afgerond, einde en duur naar boven</target>
+        <target state="translated">Begin wordt naar beneden afgerond, einde en tijdsduur naar boven</target>
       </trans-unit>
       <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target state="needs-translation">Vloer: begin, einde en duur worden naar beneden afgerond</target>
+        <target state="translated">Begin, einde en tijdsduur worden naar beneden afgerond</target>
       </trans-unit>
       <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
         <source>timesheet.default_begin</source>
@@ -309,6 +309,14 @@
       <trans-unit id="12sQGSo" resname="activity.allow_inline_create" xml:space="preserve">
         <source>activity.allow_inline_create</source>
         <target state="translated">Sta het creëren van activiteiten toe via het tijdsregistratie formulier</target>
+      </trans-unit>
+      <trans-unit id="uf2_qIW" resname="user_auth_wizard" xml:space="preserve">
+        <source>user_auth_wizard</source>
+        <target state="translated">Toon installatietool voor nieuwe gebruikers</target>
+      </trans-unit>
+      <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="no" xml:space="preserve">
+        <source>invoice.rounding_mode</source>
+        <target state="translated">Afrondingsmodus</target>
       </trans-unit>
     </body>
   </file>
