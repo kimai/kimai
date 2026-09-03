@@ -31,7 +31,7 @@ use Twig\Extension\SandboxExtension;
 class PDFRenderer implements DispositionInlineInterface, ExportRendererInterface
 {
     use RendererTrait;
-    use PDFRendererTrait;
+    use PdfRendererTrait;
 
     private array $pdfOptions = [];
 
