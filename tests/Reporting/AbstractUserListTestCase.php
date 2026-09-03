@@ -9,6 +9,8 @@
 
 namespace App\Tests\Reporting;
 
+use App\Entity\Customer;
+use App\Entity\Project;
 use App\Reporting\AbstractUserList;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -24,6 +26,9 @@ abstract class AbstractUserListTestCase extends TestCase
         self::assertNull($sut->getDate());
         self::assertEquals('duration', $sut->getSumType());
         self::assertFalse($sut->isDecimal());
+        self::assertNull($sut->getTeam());
+        self::assertNull($sut->getProject());
+        self::assertNull($sut->getCustomer());
     }
 
     public function testSetter(): void
@@ -49,6 +54,24 @@ abstract class AbstractUserListTestCase extends TestCase
 
         $sut->setDecimal(false);
         self::assertFalse($sut->isDecimal());
+
+        $project = new Project();
+        $sut->setProject($project);
+        self::assertSame($project, $sut->getProject());
+
+        $sut->setProject(null);
+        self::assertNull($sut->getProject());
+
+        $customer = new Customer('foo');
+        $sut->setCustomer($customer);
+        self::assertSame($customer, $sut->getCustomer());
+
+        $sut->setCustomer(null);
+        self::assertNull($sut->getCustomer());
+
+        $sut->setCustomer($customer);
+        $sut->setCustomer();
+        self::assertNull($sut->getCustomer());
     }
 
     public function testInvalidSumType(): void

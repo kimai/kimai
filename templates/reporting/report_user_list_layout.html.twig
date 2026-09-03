@@ -5,6 +5,9 @@
     {% if form.team is defined %}
         {{ form_widget(form.team, {'label': false, 'placeholder': 'team'}) }}
     {% endif %}
+    {% if form.customer is defined %}
+        {{ form_widget(form.customer, {'label': false, 'placeholder': 'customer'}) }}
+    {% endif %}
     {% if form.project is defined %}
         {{ form_widget(form.project, {'label': false, 'placeholder': 'project'}) }}
     {% endif %}
