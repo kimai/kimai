@@ -44,12 +44,12 @@
             {% set absoluteDuration = absoluteDuration + period.totalDuration %}
             {% set usersTotalInternalRate = usersTotalInternalRate + period.totalInternalRate %}
             {% set absoluteInternalRate = absoluteInternalRate + period.totalInternalRate %}
-            {% set usersTotalRate = usersTotalRate + period.totalRate %}
-            {% set absoluteRate = absoluteRate + period.totalRate %}
+            {% set usersTotalRate = usersTotalRate + period.billableRate %}
+            {% set absoluteRate = absoluteRate + period.billableRate %}
             {% set reportDateKey = period.date|report_date %}
             {% set totalsDuration = totalsDuration|merge({(reportDateKey): (totalsDuration[reportDateKey] + period.totalDuration)}) %}
             {% set totalsInternalRate = totalsInternalRate|merge({(reportDateKey): (totalsInternalRate[reportDateKey] + period.totalInternalRate)}) %}
-            {% set totalsRate = totalsRate|merge({(reportDateKey): (totalsRate[reportDateKey] + period.totalRate)}) %}
+            {% set totalsRate = totalsRate|merge({(reportDateKey): (totalsRate[reportDateKey] + period.billableRate)}) %}
         {% endfor %}
         {% if (show_empty_rows and userPeriod.user.enabled) or usersTotalDuration != 0 %}
         <tr class="user">
