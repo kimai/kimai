@@ -17,10 +17,73 @@
             <fieldset class="form-fieldset form-fieldset-light mb-3">
                 {% for pref in form.children.preferences|filter(pref => pref.vars.data.section == section)|sort((a, b) => a.vars.data.order <=> b.vars.data.order) %}
                     {{ form_widget(pref) }}
+                    {% if pref.vars.data.name == constant('App\\Entity\\UserPreference::LOCALE') and locale_demo is defined %}
+                        {% include 'partials/locale-demo.html.twig' with {'locale_demo': locale_demo, 'locale_select_id': pref.value.vars.id} %}
+                    {% endif %}
                 {% endfor %}
             </fieldset>
         {% endif %}
 
     {% endfor %}
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% if locale_demo is defined %}
+    <script type="text/javascript">
+        document.addEventListener('kimai.initialized', function(event) {
+            const kimai = event.detail.kimai;
+            const root = document.querySelector('[data-locale-demo]');
+            if (root === null || root.dataset['select'] === undefined) {
+                return;
+            }
+
+            const select = document.getElementById(root.dataset['select']);
+            if (select === null) {
+                return;
+            }
+
+            const DATES = kimai.getPlugin('date');
+            const formats = JSON.parse(root.dataset['formats']);
+            const demoDate = new Date(root.dataset['date']);
+            const duration = parseInt(root.dataset['duration']);
+            const money = parseFloat(root.dataset['money']);
+            const currency = root.dataset['currency'];
+
+            const updateDemo = () => {
+                const format = formats[select.value];
+                if (format === undefined) {
+                    return;
+                }
+
+                const localeTag = select.value.replace(/_/g, '-');
+                const decimalFormat = new Intl.NumberFormat(localeTag, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                const moneyFormat = new Intl.NumberFormat(localeTag, {style: 'currency', currency: currency});
+
+                const values = {
+                    'date': DATES.format(format.date, demoDate),
+                    'time': DATES.format(format.time, demoDate),
+                    'duration': DATES.formatSeconds(duration) + ' / ' + decimalFormat.format(duration / 3600),
+                    'money': moneyFormat.format(money)
+                };
+
+                for (const name in values) {
+                    const entry = root.querySelector('[data-demo-value="' + name + '"] .locale-demo-value');
+                    if (entry !== null) {
+                        entry.textContent = values[name];
+                    }
+                }
+            };
+
+            select.addEventListener('change', () => {
+                try {
+                    updateDemo();
+                } catch {
+                    // exotic locale patterns must never break the page, the values just stay as they were
+                }
+            });
+        });
+    </script>
+    {% endif %}
 {% endblock %}
