@@ -382,9 +382,9 @@
         <source>company</source>
         <target>Bedrijfsnaam</target>
       </trans-unit>
-      <trans-unit id="fFErSLq" resname="vat">
+      <trans-unit id="fFErSLq" resname="vat" xml:space="preserve">
         <source>vat</source>
-        <target>BTW</target>
+        <target state="translated">Belasting</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">
         <source>address</source>
@@ -406,9 +406,9 @@
         <source>mobile</source>
         <target>Mobiel</target>
       </trans-unit>
-      <trans-unit id="pcWhXux" resname="homepage">
+      <trans-unit id="pcWhXux" resname="homepage" xml:space="preserve">
         <source>homepage</source>
-        <target>Website</target>
+        <target state="translated">Thuispagina</target>
       </trans-unit>
       <trans-unit id="OWLt7pw" resname="timezone">
         <source>timezone</source>
@@ -626,9 +626,9 @@
         <source>invoice.subtotal</source>
         <target state="translated">Subtotaal</target>
       </trans-unit>
-      <trans-unit id="EO57yXg" resname="invoice.tax">
+      <trans-unit id="EO57yXg" resname="invoice.tax" xml:space="preserve">
         <source>invoice.tax</source>
-        <target>BTW</target>
+        <target state="translated">Belasting</target>
       </trans-unit>
       <trans-unit id="N68vyvo" resname="invoice.total">
         <source>invoice.total</source>
@@ -1028,7 +1028,7 @@
       </trans-unit>
       <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
         <source>stats.durationFinancialYear</source>
-        <target state="translated">Dit boekjaar</target>
+        <target state="translated">Boekjaar</target>
       </trans-unit>
       <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
         <source>stats.activeUsersFinancialYear</source>
@@ -1144,7 +1144,7 @@
       </trans-unit>
       <trans-unit id="hPY2VcD" resname="profile.2fa_intro" xml:space="preserve">
         <source>profile.2fa_intro</source>
-        <target state="translated">U kunt een nieuw toestel activeren door de QR code in scannen in je toepassing.</target>
+        <target state="translated">U kunt een nieuw toestel activeren door de afbeelding in uw app te scannen.</target>
       </trans-unit>
       <trans-unit id="Y0PRG9Z" resname="profile.2fa_confirmation" xml:space="preserve">
         <source>profile.2fa_confirmation</source>
@@ -1550,9 +1550,9 @@
         <source>holiday</source>
         <target state="translated">Vakantie</target>
       </trans-unit>
-      <trans-unit id="0xFBb6O" resname="Expenses">
+      <trans-unit id="0xFBb6O" resname="Expenses" xml:space="preserve">
         <source>Expenses</source>
-        <target>Kosten</target>
+        <target state="translated">Uitgaven</target>
       </trans-unit>
       <trans-unit id="KSwG8AR" resname="Category">
         <source>Category</source>
@@ -1720,7 +1720,7 @@
       </trans-unit>
       <trans-unit id="uqv2Lrv" resname="user_identifier.help" xml:space="preserve">
         <source>user_identifier.help</source>
-        <target state="translated">De unieke gebruikers ID wordt gebruikt voor authenticatie en in exports</target>
+        <target state="translated">De unieke gebruikersidentificatie wordt gebruikt voor authenticatie en in exports</target>
       </trans-unit>
       <trans-unit id="q4ooRfF" resname="expires" xml:space="preserve">
         <source>Expiry date</source>
@@ -1980,7 +1980,7 @@
       </trans-unit>
       <trans-unit id="4toQj2M" resname="Cash" xml:space="preserve">
         <source>Cash</source>
-        <target state="needs-translation">Contant</target>
+        <target state="translated">Contant</target>
       </trans-unit>
       <trans-unit id="jcT9Og6" resname="payment_account_number" xml:space="preserve">
         <source>payment_account_name</source>
@@ -2000,7 +2000,151 @@
       </trans-unit>
       <trans-unit id="pNRR7CN" resname="release" xml:space="preserve">
         <source>release</source>
-        <target state="needs-translation">Uitgave</target>
+        <target state="translated">Uitgeven</target>
+      </trans-unit>
+      <trans-unit id="TTL.5NF" resname="status.todo" xml:space="preserve">
+        <source>status.todo</source>
+        <target state="translated">To Do</target>
+      </trans-unit>
+      <trans-unit id="j_0FPm3" resname="status.waiting" xml:space="preserve">
+        <source>status.waiting</source>
+        <target state="translated">Wachten</target>
+      </trans-unit>
+      <trans-unit id="QdfOAGZ" resname="status.done" xml:space="preserve">
+        <source>status.done</source>
+        <target state="translated">Klaar</target>
+      </trans-unit>
+      <trans-unit id="G8ZoGoA" resname="api_token_qr_hint" xml:space="preserve">
+        <source>api_token_qr_hint</source>
+        <target state="translated">U kan deze QR-code scannen met een mobiele app om server-URL en token in één keer in te stellen. Deel deze afbeelding niet: het bevat uw API token.</target>
+      </trans-unit>
+      <trans-unit id="BmDRYT." resname="sending_company.help" xml:space="preserve">
+        <source>sending_company.help</source>
+        <target state="translated">Dit bedrijf wordt getoond als de uitgever op de factuur. De naam, het adres en belastinginformatie zullen worden gebruikt.</target>
+      </trans-unit>
+      <trans-unit id="xZzzKxM" resname="orientation" xml:space="preserve">
+        <source>Orientation</source>
+        <target state="translated">Oriëntatie</target>
+      </trans-unit>
+      <trans-unit id="UcWoKWo" resname="portrait" xml:space="preserve">
+        <source>Portrait</source>
+        <target state="translated">Portet</target>
+      </trans-unit>
+      <trans-unit id="UZUFKZg" resname="remaining_budget" xml:space="preserve">
+        <source>remaining_budget</source>
+        <target state="translated">Overblijvend budget</target>
+      </trans-unit>
+      <trans-unit id="eV6j76Q" resname="font" xml:space="preserve">
+        <source>font</source>
+        <target state="translated">Lettertype</target>
+      </trans-unit>
+      <trans-unit id="PciSBv9" resname="address_row" xml:space="preserve">
+        <source>address_row</source>
+        <target state="translated">Regel %row%</target>
+      </trans-unit>
+      <trans-unit id="nlJ2pW2" resname="invoice_email" xml:space="preserve">
+        <source>invoice_email</source>
+        <target state="translated">Facturering e-mail</target>
+      </trans-unit>
+      <trans-unit id="_Ep8Ogx" resname="buyerReference" xml:space="preserve">
+        <source>buyerReference</source>
+        <target state="translated">Kopersreferentie</target>
+      </trans-unit>
+      <trans-unit id="uXB48Vj" resname="SEPA Credit Transfer" xml:space="preserve">
+        <source>SEPA Credit Transfer</source>
+        <target state="translated">SEPA-overboeking</target>
+      </trans-unit>
+      <trans-unit id="s42A2gm" resname="SEPA Direct Debit" xml:space="preserve">
+        <source>SEPA Direct Debit</source>
+        <target state="translated">SEPA-incasso</target>
+      </trans-unit>
+      <trans-unit id="cWZZc6D" resname="Cheque" xml:space="preserve">
+        <source>Cheque</source>
+        <target state="translated">Cheque</target>
+      </trans-unit>
+      <trans-unit id="jMvh7bn" resname="Credit Transfer" xml:space="preserve">
+        <source>Credit Transfer</source>
+        <target state="translated">Overboeking</target>
+      </trans-unit>
+      <trans-unit id="TJQbc0a" resname="Payment To Bank Account" xml:space="preserve">
+        <source>Payment To Bank Account</source>
+        <target state="translated">Betaling naar Bankrekening</target>
+      </trans-unit>
+      <trans-unit id=".UIt099" resname="Card Payment" xml:space="preserve">
+        <source>Card Payment</source>
+        <target state="translated">Kaartbetaling</target>
+      </trans-unit>
+      <trans-unit id="Wnb_qF0" resname="Direct Debit" xml:space="preserve">
+        <source>Direct Debit</source>
+        <target state="translated">Incasso</target>
+      </trans-unit>
+      <trans-unit id="rIdfGxM" resname="payment_account_name" xml:space="preserve">
+        <source>payment_account_name</source>
+        <target state="translated">Rekening of kaarthouder</target>
+      </trans-unit>
+      <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve">
+        <source>electronic_invoice</source>
+        <target state="translated">E-Factuur</target>
+      </trans-unit>
+      <trans-unit id="QnN_ONc" resname="invoice_tax_type" xml:space="preserve">
+        <source>invoice_tax_type</source>
+        <target state="translated">Belastingstatus</target>
+      </trans-unit>
+      <trans-unit id="Mi7y8Q3" resname="tax.type.exempt" xml:space="preserve">
+        <source>tax.type.exempt</source>
+        <target state="translated">Uitgezonderd</target>
+      </trans-unit>
+      <trans-unit id="lU1Njcy" resname="tax.type.standard" xml:space="preserve">
+        <source>tax.type.standard</source>
+        <target state="translated">Belastbaar</target>
+      </trans-unit>
+      <trans-unit id="E470U8W" resname="tax.type.reverse" xml:space="preserve">
+        <source>tax.type.reverse</source>
+        <target state="translated">Verleggen</target>
+      </trans-unit>
+      <trans-unit id="hi31a3v" resname="tax.note.reverse_charge" xml:space="preserve">
+        <source>tax.note.reverse_charge</source>
+        <target state="translated">Belasting te betalen op basis van verleggingskosten</target>
+      </trans-unit>
+      <trans-unit id="DbF_j60" resname="count_as_expected_time" xml:space="preserve">
+        <source>count_as_expected_time</source>
+        <target state="translated">Tel als verwachtte uren: %type%</target>
+      </trans-unit>
+      <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
+        <source>count_as_expected_time_help</source>
+        <target state="translated">Als ingeschakeld zal %type% worden geteld als aantal gewerkte uren als onderdeel van het verwachtte aantal dagelijkse uren. Als uitgeschakeld wordt het aantal verwachtte uren op 0 gezet. Beide instellingen behouden een neutrale balans maar worden anders in maandelijkse totalen gerekend.</target>
+      </trans-unit>
+      <trans-unit id="WrNTzd7" resname="assign_timesheets" xml:space="preserve">
+        <source>assign_timesheets</source>
+        <target state="translated">Wijs tijdroosters toe</target>
+      </trans-unit>
+      <trans-unit id="kwC00lZ" resname="assign" xml:space="preserve">
+        <source>assign</source>
+        <target state="translated">Toewijzen</target>
+      </trans-unit>
+      <trans-unit id="2ajb.ZU" resname="assign_self" xml:space="preserve">
+        <source>assign_self</source>
+        <target state="translated">Wijs aan mij toe</target>
+      </trans-unit>
+      <trans-unit id="LfO_otF" resname="reopen" xml:space="preserve">
+        <source>reopen</source>
+        <target state="translated">Heropenen</target>
+      </trans-unit>
+      <trans-unit id="k8F51oP" resname="project_locked_until" xml:space="preserve">
+        <source>project_locked_until</source>
+        <target state="translated">Tijden vergrendeld tot</target>
+      </trans-unit>
+      <trans-unit id="C_ZcSX2" resname="help.project_start" xml:space="preserve">
+        <source>help.project_start</source>
+        <target state="translated">Tijden voor deze datum kunnen niet geregistreerd worden.</target>
+      </trans-unit>
+      <trans-unit id="9A.4S.i" resname="help.project_end" xml:space="preserve">
+        <source>help.project_end</source>
+        <target state="translated">Tijden na deze datum kunnen niet geregistreerd worden.</target>
+      </trans-unit>
+      <trans-unit id="ktmsI7g" resname="help.project_locked_until" xml:space="preserve">
+        <source>help.project_locked_until</source>
+        <target state="translated">Tijden tot en met deze datum kunnen niet aangemaakt of veranderd worden.</target>
       </trans-unit>
     </body>
   </file>

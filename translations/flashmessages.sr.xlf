@@ -4,55 +4,55 @@
     <body>
       <trans-unit id="S9k1S7Z" resname="warning" xml:space="preserve">
         <source>warning</source>
-        <target state="translated">Upozorenje</target>
+        <target state="translated">Упозорење</target>
       </trans-unit>
       <trans-unit id="WmrEP_5" resname="timesheet.stop.success" xml:space="preserve">
         <source>timesheet.stop.success</source>
-        <target state="translated">Evidentiranje vremena je zaustavljeno</target>
+        <target state="translated">Евидентирање времена је заустављено</target>
       </trans-unit>
       <trans-unit id="NPBnpK_" resname="timesheet.stop.error" xml:space="preserve">
         <source>timesheet.stop.error</source>
-        <target state="translated">Evidentiranje vremena nije moglo biti zaustavljeno</target>
+        <target state="translated">Евидентирање времена није могло бити заустављено</target>
       </trans-unit>
       <trans-unit id="CCUoZga" resname="timesheet.start.success" xml:space="preserve">
         <source>timesheet.start.success</source>
-        <target state="translated">Evidentiranje vremena je pokrenuto</target>
+        <target state="translated">Евидентирање времена је покренуто</target>
       </trans-unit>
       <trans-unit id="3w9tuox" resname="timesheet.start.error" xml:space="preserve">
         <source>timesheet.start.error</source>
-        <target state="translated">Evidentiranje vremena nije moglo biti pokrenuto</target>
+        <target state="translated">Евидентирање времена није могло бити покренуто</target>
       </trans-unit>
       <trans-unit id="kPINWEK" resname="timesheet.locked.warning" xml:space="preserve">
         <source>timesheet.locked.warning</source>
-        <target state="translated">Menjate izvezeni unos</target>
+        <target state="translated">Мењате извезени унос</target>
       </trans-unit>
       <trans-unit id="72Ih8zO" resname="action.update.success" xml:space="preserve">
         <source>action.update.success</source>
-        <target state="translated">Izmene su sačuvane</target>
+        <target state="translated">Измене су сачуване</target>
       </trans-unit>
       <trans-unit id="xeu1LSy" resname="action.update.error" xml:space="preserve">
         <source>action.update.error</source>
-        <target state="translated">Izmene nisu mogle biti sačuvane: %reason%</target>
+        <target state="translated">Измене нису могле бити сачуване: %reason%</target>
       </trans-unit>
       <trans-unit id="YV50HDB" resname="action.delete.success" xml:space="preserve">
         <source>action.delete.success</source>
-        <target state="translated">Unos je obrisan</target>
+        <target state="translated">Унос је обрисан</target>
       </trans-unit>
       <trans-unit id="mW91Tmb" resname="action.delete.error" xml:space="preserve">
         <source>action.delete.error</source>
-        <target state="translated">Unos nije mogao biti obrisan: %reason%</target>
+        <target state="translated">Унос није могао бити обрисан: %reason%</target>
       </trans-unit>
       <trans-unit id="B_cz49z" resname="invoice.first_template" xml:space="preserve">
         <source>invoice.first_template</source>
-        <target state="translated">Prvo kreirajte šablon fakture</target>
+        <target state="translated">Прво креирајте шаблон фактуре</target>
       </trans-unit>
       <trans-unit id="wejAEcR" resname="action.upload.error" xml:space="preserve">
         <source>action.upload.error</source>
-        <target state="translated">Fajl nije mogao biti otpremljen ili sačuvan: %reason%</target>
+        <target state="translated">Фајл није могао бити отпремљен или сачуван: %reason%</target>
       </trans-unit>
       <trans-unit resname="action.csrf.error" id="bOE_q5R" xml:space="preserve">
         <source>action.csrf.error</source>
-        <target state="translated">Radnja nije mogla biti izvršena: nevažeći bezbednosni token.</target>
+        <target state="translated">Радња није могла бити извршена: неважећи безбедносни токен.</target>
       </trans-unit>
     </body>
   </file>

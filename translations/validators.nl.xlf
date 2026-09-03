@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
         <source>The end date must not be earlier than the start date.</source>
-        <target state="needs-translation">De einddatum mag niet voor de startdatum liggen.</target>
+        <target state="translated">De einddatum mag niet voor de startdatum liggen.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
@@ -88,7 +88,7 @@
       </trans-unit>
       <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="needs-translation">Een afwezigheid kan niet worden geboekt voor je eerste werkdag.</target>
+        <target state="translated">Een afwezigheid kan niet worden geboekt voor de eerste werkdag.</target>
       </trans-unit>
       <trans-unit id="gSAwscA" resname="Validation Failed" xml:space="preserve">
         <source>Validation Failed</source>
@@ -153,6 +153,38 @@
       <trans-unit id="c2B6.lW" resname="You can book a maximum of {{ value }} days at once." xml:space="preserve">
         <source>You can book a maximum of {{ value }} days at once.</source>
         <target state="translated">Je kan maximaal {{ value }} dagen tegelijk boeken, je hebt momenteel {{selected }} dagen geselecteerd.</target>
+      </trans-unit>
+      <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day." xml:space="preserve">
+        <source>An absence cannot be booked after the last working day.</source>
+        <target state="translated">Een afwezigheid kan niet worden geboekt na de laatste werkdag.</target>
+      </trans-unit>
+      <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve">
+        <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
+        <target state="translated">Geselecteerde periode kan niet gesloten worden: onbevestigde afwezigheidsverzoeken zijn in afwachting.</target>
+      </trans-unit>
+      <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
+        <source>Duration cannot be negative.</source>
+        <target state="translated">Tijdsduur kan niet negatief zijn.</target>
+      </trans-unit>
+      <trans-unit id="EDEDQtZ" resname="These characters are not allowed: {{ chars }}" xml:space="preserve">
+        <source>These characters are not allowed: {{ chars }}</source>
+        <target state="translated">De volgende tekens zijn niet toegestaan: {{ chars }}</target>
+      </trans-unit>
+      <trans-unit id="Dp2KT8W" resname="The field {{ field }} is required, please select a value" xml:space="preserve" approved="no">
+        <source>Please select a value for {{ field }}</source>
+        <target state="translated">Selecteer een waarde voor {{ field }}</target>
+      </trans-unit>
+      <trans-unit id="7hNS8l3" resname="A maximum duration of {{ value }} is allowed." xml:space="preserve">
+        <source>A maximum duration of {{ value }} is allowed.</source>
+        <target state="translated">Een maximale tijdsduur van {{ value }} is toegestaan.</target>
+      </trans-unit>
+      <trans-unit id="5vkuQs2" resname="The project is locked until %date%, please choose a later date." xml:space="preserve">
+        <source>The project is locked until %date%, please choose a later date.</source>
+        <target state="translated">Het project is vergrendeld tot %date%, kies alstublieft een latere datum.</target>
+      </trans-unit>
+      <trans-unit id="vgsD_Cw" resname="The project is locked for the selected times." xml:space="preserve">
+        <source>The project is locked for the selected times.</source>
+        <target state="translated">Het project is vergrendeld voor de geselecteerde tijden.</target>
       </trans-unit>
     </body>
   </file>

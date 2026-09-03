@@ -4,35 +4,35 @@
     <body>
       <trans-unit id="A_4Fc7c" resname="teams.project_access" xml:space="preserve">
         <source>teams.project_access</source>
-        <target state="translated">Dodeli pristup projektima</target>
+        <target state="translated">Додели приступ пројектима</target>
       </trans-unit>
       <trans-unit id="QchGnbx" resname="teams.customer_access" xml:space="preserve">
         <source>teams.customer_access</source>
-        <target state="translated">Dodeli pristup klijentima</target>
+        <target state="translated">Додели приступ клијентима</target>
       </trans-unit>
       <trans-unit id=".yIcFDx" resname="team.visibility_global" xml:space="preserve">
         <source>team.visibility_global</source>
-        <target state="translated">Vidljivo svima, jer još uvek nije dodeljen nijedan tim.</target>
+        <target state="translated">Видљиво свима, јер још увек није додељен ниједан тим.</target>
       </trans-unit>
       <trans-unit id="hlIIRjb" resname="team.visibility_restricted" xml:space="preserve">
         <source>team.visibility_restricted</source>
-        <target state="translated">Vidljivo samo sledećim timovima i svim administratorima.</target>
+        <target state="translated">Видљиво само следећим тимовима и свим администраторима.</target>
       </trans-unit>
       <trans-unit id="sx7AVYH" resname="team.project_visibility_inherited" xml:space="preserve">
         <source>team.project_visibility_inherited</source>
-        <target state="translated">Projekat ima ograničen pristup, jer su timska ovlašćenja podešena za klijenta.</target>
+        <target state="translated">Пројекат има ограничен приступ, јер су тимска овлашћења подешена за клијента.</target>
       </trans-unit>
       <trans-unit id="FC4DW27" resname="team.activity_visibility_inherited" xml:space="preserve">
         <source>team.activity_visibility_inherited</source>
-        <target state="translated">Aktivnost ima ograničen pristup, jer su timska ovlašćenja podešena za projekat i/ili klijenta.</target>
+        <target state="translated">Активност има ограничен приступ, јер су тимска овлашћења подешена за пројекат и/или клијента.</target>
       </trans-unit>
       <trans-unit id="cZEIdcu" resname="team.create_default" xml:space="preserve">
         <source>team.create_default</source>
-        <target state="translated">Kreiraj novi tim da biste ograničili pristup</target>
+        <target state="translated">Креирај нови тим да бисте ограничили приступ</target>
       </trans-unit>
       <trans-unit id="6g81kYY" approved="no" resname="team.member" xml:space="preserve">
         <source>team.member</source>
-        <target state="translated">Član</target>
+        <target state="translated">Члан</target>
       </trans-unit>
     </body>
   </file>
