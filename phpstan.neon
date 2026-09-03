@@ -303,7 +303,7 @@ parameters:
             path: src/Command/InstallCommand.php
 
         -
-            message: "#^Binary operation \"\\.\" between non\\-empty\\-string and non\\-empty\\-list\\<string\\>\\|string results in an error\\.$#"
+            message: "#^Binary operation \"\\.\" between non\\-falsy\\-string and non\\-empty\\-list\\<string\\>\\|string results in an error\\.$#"
             count: 1
             path: src/Command/InvoiceCreateCommand.php
 

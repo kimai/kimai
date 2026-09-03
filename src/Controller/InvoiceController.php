@@ -306,6 +306,9 @@ final class InvoiceController extends AbstractController
 
         if (null !== ($id = $request->query->get('id'))) {
             $invoice = $invoiceRepository->find($id);
+            if ($invoice instanceof Invoice && !$this->isGranted('view_invoice', $invoice)) {
+                throw $this->createAccessDeniedException('User tried to download invoice: ' . $id);
+            }
         }
 
         $query = new InvoiceArchiveQuery();
