@@ -84,6 +84,14 @@
                         </td>
                     </tr>
                     {% endif %}
+                    {% if project.lockedUntil is not empty %}
+                    <tr>
+                        <th>{{ 'project_locked_until'|trans }}</th>
+                        <td colspan="3">
+                            {{ project.lockedUntil|date_short }}
+                        </td>
+                    </tr>
+                    {% endif %}
                     {% if project.number is not empty %}
                     <tr>
                         <th>{{ 'project_number'|trans }}</th>

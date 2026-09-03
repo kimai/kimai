@@ -32,6 +32,7 @@ class ProjectTest extends AbstractEntityTestCase
         self::assertNull($sut->getOrderDate());
         self::assertNull($sut->getStart());
         self::assertNull($sut->getEnd());
+        self::assertNull($sut->getLockedUntil());
         self::assertNull($sut->getComment());
         self::assertNull($sut->getInvoiceText());
         self::assertTrue($sut->isVisible());
@@ -46,6 +47,7 @@ class ProjectTest extends AbstractEntityTestCase
         self::assertInstanceOf(Collection::class, $sut->getTeams());
         self::assertEquals(0, $sut->getTeams()->count());
         self::assertTrue($sut->isVisibleAtDate(new \DateTime()));
+        self::assertFalse($sut->isLockedAtDate(new \DateTime()));
     }
 
     public function testBudgets(): void
@@ -94,6 +96,13 @@ class ProjectTest extends AbstractEntityTestCase
         self::assertSame($dateTime, $sut->getEnd());
         self::assertInstanceOf(Project::class, $sut->setEnd(null));
         self::assertNull($sut->getEnd());
+
+        $lockedUntil = new \DateTimeImmutable('2020-06-15 17:45:12');
+        self::assertInstanceOf(Project::class, $sut->setLockedUntil($lockedUntil));
+        // only the day is kept, the time is dropped
+        self::assertEquals('2020-06-15 00:00:00', $sut->getLockedUntil()?->format('Y-m-d H:i:s'));
+        self::assertInstanceOf(Project::class, $sut->setLockedUntil(null));
+        self::assertNull($sut->getLockedUntil());
 
         self::assertInstanceOf(Project::class, $sut->setComment('a comment'));
         self::assertEquals('a comment', $sut->getComment());
@@ -180,6 +189,7 @@ class ProjectTest extends AbstractEntityTestCase
             ['orderDate', 'date'],
             ['project_start', 'date'],
             ['project_end', 'date'],
+            ['project_locked_until', 'date'],
             ['budget', 'float'],
             ['timeBudget', 'duration'],
             ['budgetType', 'string'],
@@ -274,5 +284,107 @@ class ProjectTest extends AbstractEntityTestCase
         self::assertTrue($sut->isVisibleAtDate($now));
         $sut->setStart(new \DateTime('+1 hour'));
         self::assertFalse($sut->isVisibleAtDate($now));
+    }
+
+    public function testIsLockedAtDateWithoutLockDate(): void
+    {
+        $sut = new Project();
+
+        self::assertFalse($sut->isLockedAtDate(new \DateTime('2020-01-01 00:00:00')));
+        self::assertFalse($sut->isLockedAtDate(new \DateTime('2030-01-01 00:00:00')));
+    }
+
+    public function testIsLockedAtDateLocksTheEntireDay(): void
+    {
+        $sut = new Project();
+        // the time of the lock date must not matter, the day is always locked entirely
+        $sut->setLockedUntil(new \DateTimeImmutable('2020-06-15 00:00:00'));
+
+        self::assertTrue($sut->isLockedAtDate(new \DateTime('2020-06-14 23:59:59')));
+        self::assertTrue($sut->isLockedAtDate(new \DateTime('2020-06-15 00:00:00')));
+        self::assertTrue($sut->isLockedAtDate(new \DateTime('2020-06-15 12:00:00')));
+        self::assertTrue($sut->isLockedAtDate(new \DateTime('2020-06-15 23:59:59')));
+        self::assertFalse($sut->isLockedAtDate(new \DateTime('2020-06-16 00:00:00')));
+        self::assertFalse($sut->isLockedAtDate(new \DateTime('2020-06-16 00:00:01')));
+    }
+
+    public function testIsLockedAtDateIgnoresTheTimeOfTheLockDate(): void
+    {
+        // whatever time is handed over, the stored value is the day alone
+        foreach (['2020-06-15 00:00:00', '2020-06-15 12:34:56', '2020-06-15 23:59:59'] as $input) {
+            $sut = new Project();
+            $sut->setLockedUntil(new \DateTimeImmutable($input));
+
+            self::assertTrue($sut->isLockedAtDate(new \DateTime('2020-06-15 00:00:00')), $input);
+            self::assertTrue($sut->isLockedAtDate(new \DateTime('2020-06-15 23:59:59')), $input);
+            self::assertFalse($sut->isLockedAtDate(new \DateTime('2020-06-16 00:00:00')), $input);
+        }
+    }
+
+    public function testIsLockedAtDateIgnoresTheTimezoneOfTheLockDate(): void
+    {
+        // the same day, entered by users from very different timezones, must lock the same period
+        foreach (['UTC', 'Europe/Vienna', 'Pacific/Tahiti', 'Pacific/Kiritimati', 'Asia/Tokyo'] as $timezone) {
+            $sut = new Project();
+            $zone = new \DateTimeZone($timezone);
+            $sut->setLockedUntil(new \DateTimeImmutable('2020-06-15 23:59:59', $zone));
+
+            self::assertEquals('2020-06-15', $sut->getLockedUntil()?->format('Y-m-d'), $timezone);
+            self::assertTrue($sut->isLockedAtDate(new \DateTime('2020-06-15 22:00:00')), $timezone);
+            self::assertTrue($sut->isLockedAtDate(new \DateTime('2020-06-15 22:00:00', $zone)), $timezone);
+            self::assertFalse($sut->isLockedAtDate(new \DateTime('2020-06-16 01:00:00')), $timezone);
+            self::assertFalse($sut->isLockedAtDate(new \DateTime('2020-06-16 01:00:00', $zone)), $timezone);
+        }
+    }
+
+    public function testIsLockedAtDateComparesTheDayTheRecordIsShownAt(): void
+    {
+        $sut = new Project();
+        $sut->setLockedUntil(new \DateTimeImmutable('2020-06-15'));
+
+        // a record that a user sees on the 15th is locked, no matter in which timezone it was booked
+        foreach (['UTC', 'Europe/Vienna', 'Pacific/Tahiti', 'Asia/Tokyo'] as $timezone) {
+            $zone = new \DateTimeZone($timezone);
+            self::assertTrue($sut->isLockedAtDate(new \DateTime('2020-06-15 00:00:00', $zone)), $timezone);
+            self::assertTrue($sut->isLockedAtDate(new \DateTime('2020-06-15 23:59:59', $zone)), $timezone);
+            self::assertFalse($sut->isLockedAtDate(new \DateTime('2020-06-16 00:00:00', $zone)), $timezone);
+            self::assertFalse($sut->isLockedAtDate(new \DateTime('2020-06-16 23:59:59', $zone)), $timezone);
+        }
+    }
+
+    public function testIsLockedAtDateComparesDayMonthAndYear(): void
+    {
+        // guards the numeric day comparison: a format with separators would collapse
+        // every date of a year to the year itself and lock way too much
+        $sut = new Project();
+        $sut->setLockedUntil(new \DateTimeImmutable('2020-06-15'));
+
+        self::assertTrue($sut->isLockedAtDate(new \DateTime('2020-01-01')));
+        self::assertTrue($sut->isLockedAtDate(new \DateTime('2020-06-14')));
+        self::assertTrue($sut->isLockedAtDate(new \DateTime('2019-12-31')));
+        self::assertFalse($sut->isLockedAtDate(new \DateTime('2020-06-16')));
+        self::assertFalse($sut->isLockedAtDate(new \DateTime('2020-07-01')));
+        self::assertFalse($sut->isLockedAtDate(new \DateTime('2020-12-31')));
+        self::assertFalse($sut->isLockedAtDate(new \DateTime('2021-01-01')));
+
+        // the last day of a month and a year change must not confuse the comparison
+        $sut->setLockedUntil(new \DateTimeImmutable('2020-12-31'));
+        self::assertTrue($sut->isLockedAtDate(new \DateTime('2020-12-31')));
+        self::assertFalse($sut->isLockedAtDate(new \DateTime('2021-01-01')));
+
+        $sut->setLockedUntil(new \DateTimeImmutable('2020-01-31'));
+        self::assertTrue($sut->isLockedAtDate(new \DateTime('2020-01-31')));
+        self::assertFalse($sut->isLockedAtDate(new \DateTime('2020-02-01')));
+    }
+
+    public function testLockedUntilDoesNotChangeTheProjectTimezone(): void
+    {
+        // the lock date must not take part in the shared timezone of the other project dates
+        $sut = new Project();
+        $sut->setEnd(new \DateTime('2020-12-31 23:59:59', new \DateTimeZone('Europe/Vienna')));
+        $sut->setLockedUntil(new \DateTimeImmutable('2020-06-15', new \DateTimeZone('Pacific/Tahiti')));
+
+        self::assertEquals('Europe/Vienna', $sut->getEnd()?->getTimezone()->getName());
+        self::assertEquals('2020-12-31 23:59:59', $sut->getEnd()?->format('Y-m-d H:i:s'));
     }
 }

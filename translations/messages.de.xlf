@@ -750,6 +750,22 @@
         <source>project_end</source>
         <target state="final">Projekt-Ende</target>
       </trans-unit>
+      <trans-unit id="k8F51oP" resname="project_locked_until">
+        <source>project_locked_until</source>
+        <target>Zeiten gesperrt bis</target>
+      </trans-unit>
+      <trans-unit id="C_ZcSX2" resname="help.project_start">
+        <source>help.project_start</source>
+        <target>Zeiten vor diesem Datum können nicht erfasst werden.</target>
+      </trans-unit>
+      <trans-unit id="9A.4S.i" resname="help.project_end">
+        <source>help.project_end</source>
+        <target>Zeiten nach diesem Datum können nicht erfasst werden.</target>
+      </trans-unit>
+      <trans-unit id="ktmsI7g" resname="help.project_locked_until">
+        <source>help.project_locked_until</source>
+        <target>Zeiten bis inkl. diesem Datum können weder erfasst noch geändert werden.</target>
+      </trans-unit>
       <trans-unit id="tfOjLNp" resname="project_number">
         <source>Project number</source>
         <target>Projektnummer</target>
