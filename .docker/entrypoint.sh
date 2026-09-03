@@ -64,6 +64,53 @@ function handleStartup() {
     export APACHE_LOCK_DIR=/var/lock/apache2
     export APACHE_LOG_DIR=/var/log/apache2
     export LANG=C
+
+    # Real client IP behind a reverse proxy (issue #5021). mod_remoteip needs the
+    # trusted proxies as a static directive that cannot read env at parse time, so
+    # generate the RemoteIP* directives here from $TRUSTED_PROXIES. RemoteIPHeader is
+    # only enabled together with a trusted proxy list, otherwise mod_remoteip would
+    # trust X-Forwarded-For from ANY client and allow IP spoofing.
+    if [ -n "$TRUSTED_PROXIES" ]; then
+      # Keep only real IPv4/IPv6 addresses and CIDR ranges. Everything else is dropped:
+      # Symfony keywords (REMOTE_ADDR, PRIVATE_SUBNETS), typos, hostname-like tokens and
+      # out-of-range prefixes such as 10.0.0.0/99. RemoteIPTrustedProxy is evaluated while
+      # Apache parses its configuration, so a single value it cannot parse aborts startup.
+      APACHE_TRUSTED_PROXIES=$(php -r '
+        $valid = [];
+        foreach (explode(",", $argv[1]) as $proxy) {
+            $proxy = trim($proxy);
+            if ($proxy === "") {
+                continue;
+            }
+            $address = $proxy;
+            $prefix = null;
+            if (str_contains($address, "/")) {
+                [$address, $prefix] = explode("/", $address, 2);
+                if (!ctype_digit($prefix)) {
+                    continue;
+                }
+                $prefix = (int) $prefix;
+            }
+            if (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false) {
+                $maxPrefix = 32;
+            } elseif (filter_var($address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false) {
+                $maxPrefix = 128;
+            } else {
+                continue;
+            }
+            if ($prefix !== null && $prefix > $maxPrefix) {
+                continue;
+            }
+            $valid[] = $proxy;
+        }
+        echo implode(" ", $valid);
+      ' "$TRUSTED_PROXIES")
+
+      if [ -n "$APACHE_TRUSTED_PROXIES" ]; then
+        sed -i "s|# __KIMAI_REMOTEIP_TRUSTED_PROXY__|RemoteIPHeader X-Forwarded-For\n    RemoteIPTrustedProxy ${APACHE_TRUSTED_PROXIES}|" \
+          /etc/apache2/sites-available/000-default.conf
+      fi
+    fi
   elif [ -e /use_fpm ]; then
     sed -i "s/user = .*/user = $USER_ID/g" /usr/local/etc/php-fpm.d/www.conf
     sed -i "s/group = .*/group = $GROUP_ID/g" /usr/local/etc/php-fpm.d/www.conf
