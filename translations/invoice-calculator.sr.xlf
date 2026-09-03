@@ -4,55 +4,55 @@
     <body>
       <trans-unit id="MviRJeB" resname="invoice_calculator" xml:space="preserve">
         <source>invoice_calculator</source>
-        <target state="translated">Grupisanje stavki fakture</target>
+        <target state="translated">Груписање ставки фактуре</target>
       </trans-unit>
       <trans-unit id="KWX.j1b" resname="invoice_calculator.help" xml:space="preserve">
         <source>invoice_calculator.help</source>
-        <target state="translated">Izaberite prema kojim poljima treba grupisati stavke fakture</target>
+        <target state="translated">Изаберите према којим пољима треба груписати ставке фактуре</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
         <source>default</source>
-        <target state="translated">Podrazumevano (jedan red po unosu)</target>
+        <target state="translated">Подразумевано (један ред по уносу)</target>
       </trans-unit>
       <trans-unit id="_bAHi13" resname="short" xml:space="preserve">
         <source>short</source>
-        <target state="translated">Sve (jedan ukupan unos)</target>
+        <target state="translated">Све (један укупан унос)</target>
       </trans-unit>
       <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
         <source>user</source>
-        <target state="translated">Korisnik</target>
+        <target state="translated">Корисник</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve">
         <source>activity</source>
-        <target state="translated">Aktivnost</target>
+        <target state="translated">Активност</target>
       </trans-unit>
       <trans-unit id="oRa0mkz" resname="activity_user" xml:space="preserve">
         <source>activity_user</source>
-        <target state="translated">Aktivnost i korisnik</target>
+        <target state="translated">Активност и корисник</target>
       </trans-unit>
       <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
         <source>project</source>
-        <target state="translated">Projekat</target>
+        <target state="translated">Пројекат</target>
       </trans-unit>
       <trans-unit id="AJm1952" resname="project_user" xml:space="preserve">
         <source>project_user</source>
-        <target state="translated">Projekat i korisnik</target>
+        <target state="translated">Пројекат и корисник</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
         <source>date</source>
-        <target state="translated">Datum</target>
+        <target state="translated">Датум</target>
       </trans-unit>
       <trans-unit id="0l1P9cz" resname="date_user" xml:space="preserve">
         <source>date_user</source>
-        <target state="translated">Datum i korisnik</target>
+        <target state="translated">Датум и корисник</target>
       </trans-unit>
       <trans-unit id="iFDs7Zh" resname="weekly" xml:space="preserve">
         <source>weekly</source>
-        <target state="translated">Kalendarska nedelja</target>
+        <target state="translated">Календарска недеља</target>
       </trans-unit>
       <trans-unit id="aDtTH0H" resname="price" xml:space="preserve">
         <source>price</source>
-        <target state="translated">Cena</target>
+        <target state="translated">Цена</target>
       </trans-unit>
     </body>
   </file>

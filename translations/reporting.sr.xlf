@@ -4,51 +4,51 @@
     <body>
       <trans-unit id="XV3FBpu" resname="report_user_week" xml:space="preserve">
         <source>report_user_week</source>
-        <target state="translated">Nedeljni prikaz za jednog korisnika</target>
+        <target state="translated">Недељни приказ за једног корисника</target>
       </trans-unit>
       <trans-unit id="Ng47B75" resname="report_user_month" xml:space="preserve">
         <source>report_user_month</source>
-        <target state="translated">Mesečni prikaz za jednog korisnika</target>
+        <target state="translated">Месечни приказ за једног корисника</target>
       </trans-unit>
       <trans-unit id="3JLmvfB" resname="report_user_year" xml:space="preserve">
         <source>report_user_year</source>
-        <target state="translated">Godišnji prikaz za jednog korisnika</target>
+        <target state="translated">Годишњи приказ за једног корисника</target>
       </trans-unit>
       <trans-unit id="q_A4AHD" resname="report_weekly_users" xml:space="preserve">
         <source>report_weekly_users</source>
-        <target state="translated">Nedeljni prikaz za sve korisnike</target>
+        <target state="translated">Недељни приказ за све кориснике</target>
       </trans-unit>
       <trans-unit id="zk30bmP" resname="report_monthly_users" xml:space="preserve">
         <source>report_monthly_users</source>
-        <target state="translated">Mesečni prikaz za sve korisnike</target>
+        <target state="translated">Месечни приказ за све кориснике</target>
       </trans-unit>
       <trans-unit id="VD98UBN" resname="report_yearly_users" xml:space="preserve">
         <source>report_yearly_users</source>
-        <target state="translated">Godišnji prikaz za sve korisnike</target>
+        <target state="translated">Годишњи приказ за све кориснике</target>
       </trans-unit>
       <trans-unit id="R.9yUkf" resname="report_project_view" xml:space="preserve">
         <source>report_project_view</source>
-        <target state="translated">Pregled projekta</target>
+        <target state="translated">Преглед пројекта</target>
       </trans-unit>
       <trans-unit id="Yz_lySk" resname="report_customer_view" xml:space="preserve">
         <source>report_customer_view</source>
-        <target state="translated">Pregled klijenta</target>
+        <target state="translated">Преглед клијента</target>
       </trans-unit>
       <trans-unit id="518eY_l" resname="report_project_details" xml:space="preserve">
         <source>report_project_details</source>
-        <target state="translated">Detalji projekta</target>
+        <target state="translated">Детаљи пројекта</target>
       </trans-unit>
       <trans-unit id="BQAsynV" resname="report_project_daterange" xml:space="preserve">
         <source>report_project_daterange</source>
-        <target state="translated">Mesečni izveštaj</target>
+        <target state="translated">Месечни извештај</target>
       </trans-unit>
       <trans-unit id="1gBKwGH" resname="report_inactive_project" xml:space="preserve">
         <source>report_inactive_project</source>
-        <target state="translated">Neaktivni projekti</target>
+        <target state="translated">Неактивни пројекти</target>
       </trans-unit>
       <trans-unit id="8RaUHlW" resname="report_customer_monthly_projects" xml:space="preserve">
         <source>report_customer_monthly_projects</source>
-        <target state="translated">Projekti po mesecu, aktivnosti i korisniku</target>
+        <target state="translated">Пројекти по месецу, активности и кориснику</target>
       </trans-unit>
     </body>
   </file>

@@ -4,39 +4,39 @@
     <body>
       <trans-unit id="9XidDHG" resname="wizard.intro.title" xml:space="preserve">
         <source>wizard.intro.title</source>
-        <target state="translated">Dobrodošli u Kimai</target>
+        <target state="translated">Добродошли у Kimai</target>
       </trans-unit>
       <trans-unit id="X0ws5mu" resname="wizard.intro.description" xml:space="preserve">
         <source>wizard.intro.description</source>
-        <target state="translated">Ovaj čarobnjak će vam pomoći da prilagodite Kimai svojim potrebama.</target>
+        <target state="translated">Овај чаробњак ће вам помоћи да прилагодите Kimai својим потребама.</target>
       </trans-unit>
       <trans-unit id="FCMK0ph" resname="wizard.separator" xml:space="preserve">
         <source>wizard.separator</source>
-        <target state="translated">Vaša podešavanja</target>
+        <target state="translated">Ваша подешавања</target>
       </trans-unit>
       <trans-unit id="8_e6ApF" resname="wizard.profile.title" xml:space="preserve">
         <source>wizard.profile.title</source>
-        <target state="translated">Vaš profil</target>
+        <target state="translated">Ваш профил</target>
       </trans-unit>
       <trans-unit id="Mo1506M" resname="wizard.profile.description" xml:space="preserve">
         <source>wizard.profile.description</source>
-        <target state="translated">Neka osnovna podešavanja koja će vam olakšati rad sa Kimai-jem.</target>
+        <target state="translated">Нека основна подешавања која ће вам олакшати рад са Kimai-јем.</target>
       </trans-unit>
       <trans-unit id="7Vipfs7" resname="wizard.password.title" xml:space="preserve">
         <source>wizard.password.title</source>
-        <target state="translated">Vaša lozinka</target>
+        <target state="translated">Ваша лозинка</target>
       </trans-unit>
       <trans-unit id="zlNbbUg" resname="wizard.password.description" xml:space="preserve">
         <source>wizard.password.description</source>
-        <target state="translated">Unesite svoju novu lozinku, koja će se od sada koristiti za prijavu.</target>
+        <target state="translated">Унесите своју нову лозинку, која ће се од сада користити за пријаву.</target>
       </trans-unit>
       <trans-unit id="8p.2pXa" resname="wizard.done.title" xml:space="preserve">
         <source>wizard.done.title</source>
-        <target state="translated">Čestitamo</target>
+        <target state="translated">Честитамо</target>
       </trans-unit>
       <trans-unit id="k1SzMuI" resname="wizard.done.description" xml:space="preserve">
         <source>wizard.done.description</source>
-        <target state="translated">Najvažnija podešavanja su sada završena. Ima još mnogo toga što možete kasnije prilagoditi u svom korisničkom profilu.</target>
+        <target state="translated">Најважнија подешавања су сада завршена. Има још много тога што можете касније прилагодити у свом корисничком профилу.</target>
       </trans-unit>
     </body>
   </file>

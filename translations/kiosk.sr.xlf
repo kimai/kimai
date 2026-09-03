@@ -4,11 +4,11 @@
     <body>
       <trans-unit id="3349h0x" resname="Kiosk" xml:space="preserve" approved="no">
         <source>Kiosk</source>
-        <target state="translated">Kiosk režim</target>
+        <target state="translated">Киоск режим</target>
       </trans-unit>
       <trans-unit id="TcGAXSA" resname="kiosk.login" xml:space="preserve" approved="no">
         <source>kiosk.login</source>
-        <target state="translated">Ekran za prijavu</target>
+        <target state="translated">Екран за пријаву</target>
       </trans-unit>
     </body>
   </file>

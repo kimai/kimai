@@ -110,6 +110,14 @@
         <source>task.help.description</source>
         <target state="translated">Esta descrição será copiada para cada quadro de horários</target>
       </trans-unit>
+      <trans-unit id="aF2ajw." resname="boards" xml:space="preserve" approved="no">
+        <source>boards</source>
+        <target state="translated">Quadros</target>
+      </trans-unit>
+      <trans-unit id="TRpwk3n" resname="board.private" xml:space="preserve" approved="no">
+        <source>board.private</source>
+        <target state="translated">Quadro privado</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
