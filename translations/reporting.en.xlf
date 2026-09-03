@@ -26,6 +26,10 @@
         <source>report_yearly_users</source>
         <target>Yearly view for all users</target>
       </trans-unit>
+      <trans-unit id="7.486Fn" resname="report_activity_view">
+        <source>report_activity_view</source>
+        <target>Activity overview</target>
+      </trans-unit>
       <trans-unit id="R.9yUkf" resname="report_project_view">
         <source>report_project_view</source>
         <target>Project overview</target>
