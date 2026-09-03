@@ -709,6 +709,45 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         self::assertEquals('foo-bar', $timesheet->getDescription());
     }
 
+    public function testEditActionKeepsManualFixedRateWhenActivityChanges(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $fixture = new ActivityFixtures(2);
+        $fixture->setIsGlobal(true);
+        $fixture->setIsVisible(true);
+        $activities = $this->importFixture($fixture);
+
+        $fixture = new TimesheetFixtures($this->getUserByRole(User::ROLE_SUPER_ADMIN), 1);
+        $fixture->setActivities([$activities[0]]);
+        $fixture->setCallback(function (Timesheet $timesheet): void {
+            $timesheet->setFixedRate(80);
+            $timesheet->setHourlyRate(null);
+            $timesheet->setRate(80);
+        });
+        $timesheets = $this->importFixture($fixture);
+        $id = $timesheets[0]->getId();
+
+        $this->request($client, '/timesheet/' . $id . '/edit');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $values = $form->getPhpValues();
+        $values['timesheet_edit_form']['activity'] = $activities[1]->getId();
+        $client->submit($form, $values);
+
+        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        /** @var Timesheet $timesheet */
+        $timesheet = $em->getRepository(Timesheet::class)->find($id);
+        self::assertInstanceOf(Activity::class, $timesheet->getActivity());
+        self::assertSame($activities[1]->getId(), $timesheet->getActivity()->getId());
+        self::assertSame(80.0, $timesheet->getFixedRate());
+        self::assertSame(80.0, $timesheet->getRate());
+    }
+
     public function testMultiDeleteAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
