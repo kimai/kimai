@@ -125,6 +125,18 @@ services:
             $configuration: '@App\Configuration\SamlConfigurationInterface'
 
     # ================================================================================
+    # OIDC Services
+    # ================================================================================
+    App\Oidc\OidcProvider:
+        arguments:
+            $userProvider: '@security.user.provider.concrete.kimai_internal'
+            $configuration: '@App\Configuration\OidcConfigurationInterface'
+
+    App\Oidc\OidcClient:
+        arguments:
+            $cache: '@cache.app'
+
+    # ================================================================================
     # REPOSITORIES
     # ================================================================================
 
