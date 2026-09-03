@@ -1,0 +1,29 @@
+{% set url = null %}
+{% if options.route is defined %}
+    {% set url = path(options.route, options.routeOptions|default([])) %}
+{% endif %}
+
+<div class="card card-sm">
+    <div class="card-body">
+        <div class="row align-items-center">
+            <div class="col-auto">
+                {% if not url is empty %}<a href="{{ url }}">{% endif %}
+                <span class="bg-{{ options.color|default('green') }} text-white avatar">
+                    <i class="{{ options.icon|icon(true, options.icon) }}"></i>
+                </span>
+                {% if not url is empty %}</a>{% endif %}
+            </div>
+            <div class="col">
+
+                <div class="font-weight-medium">
+                    {{ title|trans }}
+                </div>
+                <div class="text-body-secondary">
+                    {% block widget_data %}
+                        {{ data }}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
