@@ -54,6 +54,7 @@ class InvoiceTest extends AbstractEntityTestCase
         self::assertFalse($sut->isOverdue());
         self::assertNull($sut->getPaymentDate());
         self::assertNull($sut->getComment());
+        self::assertNull($sut->getCompany());
     }
 
     public function testSetInvalidStatus(): void
@@ -129,9 +130,22 @@ class InvoiceTest extends AbstractEntityTestCase
         self::assertEquals(348.99, $sut->getTotal());
         self::assertNotNull($sut->getUser());
         self::assertEquals(19, $sut->getVat());
+        self::assertEquals('Test Company Inc.', $sut->getCompany());
 
         $sut->setComment('foo bar');
         self::assertEquals('foo bar', $sut->getComment());
+    }
+
+    public function testCompanySetterAndGetter(): void
+    {
+        $sut = new Invoice();
+        self::assertNull($sut->getCompany());
+
+        $sut->setCompany('Acme Corp');
+        self::assertEquals('Acme Corp', $sut->getCompany());
+
+        $sut->setCompany(null);
+        self::assertNull($sut->getCompany());
     }
 
     protected function getInvoiceModel(\DateTime $created): InvoiceModel
@@ -146,6 +160,7 @@ class InvoiceTest extends AbstractEntityTestCase
 
         $customer = new Customer('customer,with/special#name');
         $customer->setCurrency('USD');
+        $customer->setCompany('Test Company Inc.');
         $customer->setMetaField((new CustomerMeta())->setName('foo-customer')->setValue('bar-customer')->setIsVisible(true));
         $customer->setVatId('kjuo8967');
 
@@ -153,6 +168,7 @@ class InvoiceTest extends AbstractEntityTestCase
         $template->setTitle('a test invoice template title');
         $template->setVat(19);
         $template->setDueDays(9);
+        $template->setCustomer($customer);
 
         $project = new Project();
         $project->setName('project name');
