@@ -1,0 +1,1 @@
+(self.webpackChunkkimai=self.webpackChunkkimai||[]).push([[896],{1927:function(){}},function(i){i(1927)}]);
