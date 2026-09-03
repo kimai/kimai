@@ -2130,6 +2130,22 @@
         <source>reopen</source>
         <target state="translated">Heropenen</target>
       </trans-unit>
+      <trans-unit id="k8F51oP" resname="project_locked_until" xml:space="preserve">
+        <source>project_locked_until</source>
+        <target state="translated">Tijden vergrendeld tot</target>
+      </trans-unit>
+      <trans-unit id="C_ZcSX2" resname="help.project_start" xml:space="preserve">
+        <source>help.project_start</source>
+        <target state="translated">Tijden voor deze datum kunnen niet geregistreerd worden.</target>
+      </trans-unit>
+      <trans-unit id="9A.4S.i" resname="help.project_end" xml:space="preserve">
+        <source>help.project_end</source>
+        <target state="translated">Tijden na deze datum kunnen niet geregistreerd worden.</target>
+      </trans-unit>
+      <trans-unit id="ktmsI7g" resname="help.project_locked_until" xml:space="preserve">
+        <source>help.project_locked_until</source>
+        <target state="translated">Tijden tot en met deze datum kunnen niet aangemaakt of veranderd worden.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

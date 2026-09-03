@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="AdEC6w4" resname="daterangepicker.lastMonth" xml:space="preserve">
         <source>daterangepicker.lastMonth</source>
-        <target state="translated">آخرین ماه</target>
+        <target state="translated">ماه قبل</target>
       </trans-unit>
       <trans-unit id="mgJ2Z7M" resname="daterangepicker.thisFinancialYear" xml:space="preserve">
         <source>daterangepicker.thisFinancialYear</source>

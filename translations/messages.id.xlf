@@ -1596,7 +1596,7 @@
       </trans-unit>
       <trans-unit id="X_NRsed" resname="status.new" xml:space="preserve">
         <source>status.new</source>
-        <target state="translated">Ini dimaksud "Faktur baru" - dibandingkan dengan "faktur terbayar, faktur tertunda atau faktur jatuh tempo"</target>
+        <target state="translated">Baru</target>
       </trans-unit>
       <trans-unit id="PHJwR4w" resname="status.paid" xml:space="preserve">
         <source>status.paid</source>
@@ -2109,6 +2109,26 @@
       <trans-unit id="LfO_otF" resname="reopen" xml:space="preserve">
         <source>reopen</source>
         <target state="translated">Buka kembali</target>
+      </trans-unit>
+      <trans-unit id="TTL.5NF" resname="status.todo" xml:space="preserve">
+        <source>status.todo</source>
+        <target state="translated">Daftar Tugas</target>
+      </trans-unit>
+      <trans-unit id="j_0FPm3" resname="status.waiting" xml:space="preserve">
+        <source>status.waiting</source>
+        <target state="translated">Menunggu</target>
+      </trans-unit>
+      <trans-unit id="QdfOAGZ" resname="status.done" xml:space="preserve">
+        <source>status.done</source>
+        <target state="translated">Selesai</target>
+      </trans-unit>
+      <trans-unit id="G8ZoGoA" resname="api_token_qr_hint" xml:space="preserve">
+        <source>api_token_qr_hint</source>
+        <target state="translated">Pindai kode QR ini menggunakan aplikasi di ponsel untuk mengatur URL server dan token sekaligus.Jangan bagikan gambar ini kepada siapa pun karena berisi Token API Anda.</target>
+      </trans-unit>
+      <trans-unit id="nlJ2pW2" resname="invoice_email" xml:space="preserve">
+        <source>invoice_email</source>
+        <target state="translated">Email penagihan</target>
       </trans-unit>
     </body>
   </file>
