@@ -26,8 +26,17 @@
     'activity': {'class': 'd-none', 'orderBy': false},
     'description': {'class': 'd-none d-xl-table-cell timesheet-description', 'orderBy': false},
     'tags': {'class': 'd-none d-xl-table-cell', 'orderBy': false},
-    'duration': {'class': 'text-end text-nowrap', 'orderBy': false},
 } %}
+{% if metaColumns is defined %}
+    {% for field in metaColumns %}
+        {% set columns = columns|merge({
+            ('mf_' ~ field.name): {'class': 'd-none', 'orderBy': false, 'title': field.label},
+        }) %}
+    {% endfor %}
+{% endif %}
+{% set columns = columns|merge({
+    'duration': {'class': 'text-end text-nowrap', 'orderBy': false},
+}) %}
 {% if show_rates %}
     {% set columns = columns|merge({
         'unit_price': {'class': 'd-none text-nowrap text-end', 'orderBy': false},
@@ -260,6 +269,13 @@
                             {{ widgets.tag_list(entry.tags) }}
                         {% endif %}
                     </td>
+                    {% if metaColumns is defined %}
+                        {% for field in metaColumns %}
+                            <td class="{{ tables.data_table_column_class(tableName, columns, 'mf_' ~ field.name) }}">
+                                {{ tables.datatable_meta_column(entry, field) }}
+                            </td>
+                        {% endfor %}
+                    {% endif %}
                     <td class="{{ tables.data_table_column_class(tableName, columns, 'duration') }}" data-duration="{{ entry.duration }}">
                         {{ entry.duration|duration }}
                     </td>
@@ -303,7 +319,7 @@
             {% endfor %}
             {% if preview_limit and itemsAmount > preview_limit %}
                 <tr class="warning">
-                    <td colspan="10">&raquo; {{ 'preview.skipped_rows'|trans({'%rows%': (itemsAmount - preview_limit)}) }}</td>
+                    <td colspan="{{ columns|length }}">&raquo; {{ 'preview.skipped_rows'|trans({'%rows%': (itemsAmount - preview_limit)}) }}</td>
                 </tr>
             {% endif %}
             {{ tables.data_table_footer(entries) }}
