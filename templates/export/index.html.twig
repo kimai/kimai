@@ -319,7 +319,7 @@
             {% endfor %}
             {% if preview_limit and itemsAmount > preview_limit %}
                 <tr class="warning">
-                    <td colspan="10">&raquo; {{ 'preview.skipped_rows'|trans({'%rows%': (itemsAmount - preview_limit)}) }}</td>
+                    <td colspan="{{ columns|length }}">&raquo; {{ 'preview.skipped_rows'|trans({'%rows%': (itemsAmount - preview_limit)}) }}</td>
                 </tr>
             {% endif %}
             {{ tables.data_table_footer(entries) }}

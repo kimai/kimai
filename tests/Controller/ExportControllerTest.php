@@ -220,6 +220,40 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         self::assertTrue($found, 'Meta field column "mf_foo" not found in datatable header');
     }
 
+    public function testIndexActionSkippedRowsWarningSpansAllColumns(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = self::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new MetaFieldColumnSubscriberMock());
+
+        // the warning row is only rendered above the 500 entries preview limit
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setUser($this->getUserByRole(User::ROLE_USER))
+            ->setAmount(501)
+            ->setFixedStartDate(new \DateTime('first day of this month'))
+        ;
+        $this->importFixture($fixture);
+
+        $this->request($client, '/export/?performSearch=performSearch');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $warning = $client->getCrawler()->filter('section.content div.datatable_export table.dataTable tr.warning td');
+        self::assertEquals(1, $warning->count());
+
+        $fields = [];
+        /** @var \DOMElement $th */
+        foreach ($client->getCrawler()->filter('section.content div.datatable_export table.dataTable thead th') as $th) {
+            $fields[] = $th->getAttribute('data-field');
+        }
+
+        // plugin meta columns are part of the header, so the span is only correct when it is counted
+        self::assertContains('mf_foo', $fields);
+        self::assertEquals(\count($fields), (int) $warning->attr('colspan'));
+    }
+
     public function testExportActionWithMissingRenderer(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
