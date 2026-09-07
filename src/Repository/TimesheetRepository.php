@@ -785,23 +785,16 @@ class TimesheetRepository extends EntityRepository
      */
     public function getRecentActivityIds(User $user, ?\DateTimeInterface $startFrom = null, int $limit = 10): array
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-
-        // do NOT join the customer and do NOT check the customer visibility, as this
-        // will dramatically increase the speed of this (otherwise slow) query
-        // ->andWhere($qb->expr()->eq('c.visible', ':visible'))
-
-        // you might want to join activity and project to check their visibility
-        // but for now this is way slower than simply fetching more items
+        // find the highest timesheet ID per project/activity combination used by the user,
+        // then return the $limit most recently used combinations (highest ID = most recent).
         //
-        // ->andWhere($qb->expr()->eq('p.visible', ':visible'))
-        // ->join('t.activity', 'a')
-        // ->andWhere($qb->expr()->eq('a.visible', ':visible'))
-        // ->setParameter('visible', true, Types::BOOLEAN)
-
+        // visibility of the customer/project/activity is intentionally NOT checked here:
+        // joining them in would noticeably slow down this query for users with a large
+        // timesheet history. Invisible entries are filtered out afterwards, when the full
+        // Timesheet entities are hydrated in findTimesheetsById().
+        $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select($qb->expr()->max('t.id') . ' AS maxid')
             ->from(Timesheet::class, 't')
-            ->indexBy('t', 't.id')
             ->andWhere($qb->expr()->eq('t.user', ':user'))
             ->groupBy('t.project', 't.activity')
             ->orderBy('maxid', 'DESC')
@@ -814,13 +807,7 @@ class TimesheetRepository extends EntityRepository
                 ->setParameter('begin', \DateTimeImmutable::createFromInterface($startFrom), Types::DATETIME_IMMUTABLE);
         }
 
-        $results = $qb->getQuery()->getScalarResult();
-
-        if (empty($results)) {
-            return [];
-        }
-
-        return array_column($results, 'maxid');
+        return array_column($qb->getQuery()->getScalarResult(), 'maxid');
     }
 
     /**
