@@ -377,4 +377,78 @@ class TimesheetRepositoryTest extends AbstractRepositoryTestCase
 
         self::assertCount(0, $repository->findTimesheetsById($teamlead, [$restrictedId]));
     }
+
+    /**
+     * A team restriction can be added to a project/activity after timesheets were already
+     * recorded against it (or team membership can be revoked later). getRecentActivityIds()
+     * must not "spend" one of its $limit slots on such a now-invisible combination, otherwise
+     * the caller ends up with fewer than $limit recent activities even though older, visible
+     * ones exist. See GHSA-c6j4-35fc-x3hw for the underlying visibility boundary.
+     */
+    public function testGetRecentActivityIdsHidesForeignTeamRestrictedActivity(): void
+    {
+        $em = $this->getEntityManager();
+
+        $member = $this->getUserByRole(User::ROLE_USER);
+
+        $foreignTeam = new Team('recent-activities foreign team');
+        $foreignTeam->addTeamlead($this->getUserByRole(User::ROLE_TEAMLEAD));
+        $em->persist($foreignTeam);
+
+        $customer = new Customer('recent-activities customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('recent-activities project');
+        $project->setCustomer($customer);
+        $em->persist($project);
+
+        $visibleActivity = new Activity();
+        $visibleActivity->setName('recent-activities visible activity');
+        $visibleActivity->setProject($project);
+        $em->persist($visibleActivity);
+
+        // member is not part of the foreign team, so this activity is invisible to them
+        $restrictedActivity = new Activity();
+        $restrictedActivity->setName('recent-activities restricted activity');
+        $restrictedActivity->setProject($project);
+        $foreignTeam->addActivity($restrictedActivity);
+        $em->persist($restrictedActivity);
+
+        $em->flush();
+
+        $visible = new Timesheet();
+        $visible->setBegin(new \DateTime('2020-01-01 10:00:00'))
+            ->setEnd(new \DateTime('2020-01-01 11:00:00'))
+            ->setUser($member)
+            ->setProject($project)
+            ->setActivity($visibleActivity);
+        $em->persist($visible);
+
+        // recorded while the activity was still accessible, restricted afterwards
+        $restricted = new Timesheet();
+        $restricted->setBegin(new \DateTime('2020-01-01 12:00:00'))
+            ->setEnd(new \DateTime('2020-01-01 13:00:00'))
+            ->setUser($member)
+            ->setProject($project)
+            ->setActivity($restrictedActivity);
+        $em->persist($restricted);
+
+        $em->flush();
+        $visibleId = $visible->getId();
+        $restrictedId = $restricted->getId();
+        self::assertIsInt($visibleId);
+        self::assertIsInt($restrictedId);
+        $em->clear();
+
+        /** @var TimesheetRepository $repository */
+        $repository = $em->getRepository(Timesheet::class);
+
+        $ids = $repository->getRecentActivityIds($member, null, 1);
+
+        self::assertContains($visibleId, $ids);
+        self::assertNotContains($restrictedId, $ids);
+    }
 }

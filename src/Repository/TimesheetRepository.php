@@ -787,11 +787,6 @@ class TimesheetRepository extends EntityRepository
     {
         // find the highest timesheet ID per project/activity combination used by the user,
         // then return the $limit most recently used combinations (highest ID = most recent).
-        //
-        // visibility of the customer/project/activity is intentionally NOT checked here:
-        // joining them in would noticeably slow down this query for users with a large
-        // timesheet history. Invisible entries are filtered out afterwards, when the full
-        // Timesheet entities are hydrated in findTimesheetsById().
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select($qb->expr()->max('t.id') . ' AS maxid')
             ->from(Timesheet::class, 't')
@@ -805,6 +800,20 @@ class TimesheetRepository extends EntityRepository
         if (null !== $startFrom) {
             $qb->andWhere($qb->expr()->gte('t.begin', ':begin'))
                 ->setParameter('begin', \DateTimeImmutable::createFromInterface($startFrom), Types::DATETIME_IMMUTABLE);
+        }
+
+        $permissionAliases = $this->addPermissionCriteria($qb, $user);
+
+        if (\in_array('p', $permissionAliases, true) || \in_array('c', $permissionAliases, true)) {
+            $qb->join('t.project', 'p');
+        }
+
+        if (\in_array('c', $permissionAliases, true)) {
+            $qb->join('p.customer', 'c');
+        }
+
+        if (\in_array('a', $permissionAliases, true)) {
+            $qb->join('t.activity', 'a');
         }
 
         return array_column($qb->getQuery()->getScalarResult(), 'maxid');
