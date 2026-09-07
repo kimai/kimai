@@ -1429,17 +1429,6 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertApiResponseTypeStructure('TimesheetCollectionFull', $result[0]);
     }
 
-    public function testGetRecentActionThrowsExceptionOnTooLargeSize(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-
-        $this->request($client, '/api/timesheets/recent', 'GET', ['size' => 101]);
-        $this->assertApiException($client->getResponse(), [
-            'code' => Response::HTTP_BAD_REQUEST,
-            'message' => 'Bad Request'
-        ]);
-    }
-
     public function testActiveAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);

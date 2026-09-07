@@ -417,7 +417,7 @@ final class TimesheetController extends BaseApiController
         if (\is_string($reqLimit) && $reqLimit !== '') {
             $limit = (int) $reqLimit;
             if ($limit > self::RECENT_ACTIVITIES_MAX_SIZE) {
-                throw new BadRequestHttpException(\sprintf('Parameter "size" must not be greater than %s', self::RECENT_ACTIVITIES_MAX_SIZE));
+                $limit = self::RECENT_ACTIVITIES_MAX_SIZE;
             }
         }
 
