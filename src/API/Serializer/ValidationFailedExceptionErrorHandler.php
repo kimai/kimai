@@ -31,20 +31,26 @@ final class ValidationFailedExceptionErrorHandler implements SubscribingHandlerI
     {
     }
 
-    public static function getSubscribingMethods(): array
+    /**
+     * @return iterable<array{
+     *     type: string,
+     *     format: string,
+     *     direction?: GraphNavigatorInterface::DIRECTION_*,
+     *     method?: string,
+     * }>
+     */
+    public static function getSubscribingMethods(): iterable
     {
         return [[
             'direction' => GraphNavigatorInterface::DIRECTION_SERIALIZATION,
             'type' => FlattenException::class,
             'format' => 'json',
             'method' => 'serializeExceptionToJson',
-            'priority' => -1
         ], [
             'direction' => GraphNavigatorInterface::DIRECTION_SERIALIZATION,
             'type' => ValidationFailedException::class,
             'format' => 'json',
             'method' => 'serializeValidationExceptionToJson',
-            'priority' => -1
         ]];
     }
 
