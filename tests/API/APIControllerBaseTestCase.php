@@ -234,7 +234,8 @@ abstract class APIControllerBaseTestCase extends AbstractControllerBaseTestCase
     {
         self::assertFalse($response->isSuccessful());
         $result = json_decode($response->getContent(), true);
-        self::assertArrayHasKey('errors', $result);
+        self::assertIsArray($result, 'JSON result is not array: ' . get_debug_type($result));
+        self::assertArrayHasKey('errors', $result, 'Missing errors key in JSON result with keys: ' . implode(',', array_keys($result)));
 
         if ($extraFields) {
             self::assertArrayHasKey('errors', $result['errors']);
