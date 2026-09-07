@@ -434,9 +434,9 @@
         <source>alias</source>
         <target>名字</target>
       </trans-unit>
-      <trans-unit id="qvIyBkY" resname="title">
+      <trans-unit id="qvIyBkY" resname="title" xml:space="preserve">
         <source>title</source>
-        <target>职位</target>
+        <target state="translated">标题</target>
       </trans-unit>
       <trans-unit id="h7voece" resname="avatar">
         <source>avatar</source>
@@ -2057,6 +2057,14 @@
       <trans-unit id="nlJ2pW2" resname="invoice_email" xml:space="preserve" approved="no">
         <source>invoice_email</source>
         <target state="translated">付费邮箱</target>
+      </trans-unit>
+      <trans-unit id="DAMFhpR" resname="lock" xml:space="preserve">
+        <source>lock</source>
+        <target state="translated">锁定</target>
+      </trans-unit>
+      <trans-unit id="2ajb.ZU" resname="assign_self" xml:space="preserve">
+        <source>assign_self</source>
+        <target state="translated">分配给我</target>
       </trans-unit>
     </body>
   </file>
