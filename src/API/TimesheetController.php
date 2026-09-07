@@ -54,6 +54,7 @@ final class TimesheetController extends BaseApiController
     public const GROUPS_FORM = ['Default', 'Entity', 'Timesheet', 'Not_Expanded'];
     public const GROUPS_COLLECTION = ['Default', 'Collection', 'Timesheet', 'Not_Expanded'];
     public const GROUPS_COLLECTION_FULL = ['Default', 'Collection', 'Timesheet', 'Expanded'];
+    public const RECENT_ACTIVITIES_MAX_SIZE = 100;
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
@@ -405,7 +406,7 @@ final class TimesheetController extends BaseApiController
     #[OA\Response(response: 200, description: 'Returns a collection of recent user activities (always the latest entry of a unique working set grouped by customer, project and activity)', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/TimesheetCollectionExpanded')))]
     #[Route(methods: ['GET'], path: '/recent', name: 'recent_timesheet')]
     #[Rest\QueryParam(name: 'begin', requirements: [new Constraints\DateTime(format: 'Y-m-d\TH:i:s')], strict: true, nullable: true, description: 'Only records started at or after this date will be included. Default: today - 1 year (format: HTML5 datetime-local, e.g. YYYY-MM-DDThh:mm:ss)')]
-    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries (default: 10)')]
+    #[Rest\QueryParam(name: 'size', requirements: '\d+', strict: true, nullable: true, description: 'The amount of entries (default: 10, maximum: ' . self::RECENT_ACTIVITIES_MAX_SIZE . ')')]
     public function recentAction(ParamFetcherInterface $paramFetcher): Response
     {
         $user = $this->getUser();
@@ -415,6 +416,9 @@ final class TimesheetController extends BaseApiController
         $reqLimit = $paramFetcher->get('size');
         if (\is_string($reqLimit) && $reqLimit !== '') {
             $limit = (int) $reqLimit;
+            if ($limit > self::RECENT_ACTIVITIES_MAX_SIZE) {
+                throw new BadRequestHttpException(\sprintf('Parameter "size" must not be greater than %s', self::RECENT_ACTIVITIES_MAX_SIZE));
+            }
         }
 
         $reqBegin = $paramFetcher->get('begin');
