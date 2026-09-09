@@ -167,7 +167,11 @@ final class TeamController extends AbstractController
                 $this->flashSuccess('action.update.success');
 
                 if ($create) {
-                    return $this->redirectToRouteAfterCreate('admin_team_edit', ['id' => $team->getId()]);
+                    // a really weird combination of permissions makes this possible
+                    if ($this->isGranted('edit', $team)) {
+                        return $this->redirectToRouteAfterCreate('admin_team_edit', ['id' => $team->getId()]);
+                    }
+                    return $this->redirectToRoute('admin_team');
                 }
 
                 return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
