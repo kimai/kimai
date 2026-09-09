@@ -186,7 +186,6 @@ final class TeamController extends AbstractController
                     'label' => false,
                     'multiple' => true,
                     'expanded' => true,
-                    'query_builder_for_user' => false,
                 ]);
 
             $projectForm = $this->createFormWithName('team_project_form', FormType::class, $team)
@@ -194,7 +193,6 @@ final class TeamController extends AbstractController
                     'label' => false,
                     'multiple' => true,
                     'expanded' => true,
-                    'query_builder_for_user' => false,
                 ]);
         }
 

@@ -374,7 +374,6 @@ final class ActivityController extends AbstractController
 
         $options = [
             'projects' => $activity->getProject(),
-            'query_builder_for_user' => true,
             'ignore_activity' => $activity,
             'required' => false,
         ];
