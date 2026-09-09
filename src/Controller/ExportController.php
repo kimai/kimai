@@ -125,10 +125,25 @@ final class ExportController extends AbstractController
     #[Route(path: '/data', name: 'export_data', methods: ['POST'])]
     public function export(Request $request, SystemConfiguration $systemConfiguration): Response
     {
+        $token = $request->request->get('_token');
+        $token = \is_string($token) ? $token : null;
+
+        if (!$this->isCsrfTokenValid('export.data', $token)) {
+            throw $this->createAccessDeniedException('Invalid security token for export.');
+        }
+
+        // prevent the token from becoming part of the search query
+        $request->request->remove('_token');
+
         $query = $this->getDefaultQuery();
 
         $form = $this->getToolbarForm($query, 'POST');
         $form->handleRequest($request);
+
+        // shouldn't happen in regular use-cases, do not show form errors
+        if ($form->isSubmitted() && !$form->isValid()) {
+            throw $this->createAccessDeniedException('Export form validation failed.');
+        }
 
         $type = $query->getRenderer();
         if (null === $type) {
