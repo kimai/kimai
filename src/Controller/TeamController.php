@@ -171,6 +171,7 @@ final class TeamController extends AbstractController
                     if ($this->isGranted('edit', $team)) {
                         return $this->redirectToRouteAfterCreate('admin_team_edit', ['id' => $team->getId()]);
                     }
+
                     return $this->redirectToRoute('admin_team');
                 }
 
