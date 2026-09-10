@@ -27,8 +27,6 @@ controllers:
     resource: ../src/Controller/
     type: attribute
     prefix: /{_locale}
-    requirements:
-        _locale: '%app_locales%'
     defaults:
         _locale: '%locale%'
 
@@ -51,8 +49,6 @@ security:
     resource: ../src/Controller/Security/
     type: attribute
     prefix: /{_locale}
-    requirements:
-        _locale: '%app_locales%'
     defaults:
         _locale: '%locale%'
 
@@ -62,8 +58,6 @@ kernel:
 
 homeLocale:
     path: /{_locale}
-    requirements:
-        _locale: '%app_locales%'
     defaults:
         _controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
         _locale: '%locale%'
@@ -72,12 +66,8 @@ homeLocale:
 
 2fa_login:
     path: /{_locale}/auth/2fa
-    requirements:
-        _locale: '%app_locales%'
     defaults:
         _controller: "scheb_two_factor.form_controller::form"
 
 2fa_login_check:
     path: /{_locale}/auth/2fa_check
-    requirements:
-        _locale: '%app_locales%'
