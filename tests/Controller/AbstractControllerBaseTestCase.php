@@ -46,8 +46,33 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
     public const DEFAULT_DATE_FORMAT = 'n/j/Y';
     public const DEFAULT_TIME_FORMAT = 'h:mm a';
 
+    private ?string $defaultTimezone = null;
+    private ?string $defaultLocale = null;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // UserEnvironmentSubscriber switches the process wide timezone and locale to the ones of the
+        // authenticated user and never restores them. A test working with a user whose timezone differs
+        // from the configured default would otherwise leak that timezone into every following test of
+        // the same PHPUnit process, breaking unrelated tests that rely on date_default_timezone_get().
+        $this->defaultTimezone = date_default_timezone_get();
+        $this->defaultLocale = \Locale::getDefault();
+    }
+
     protected function tearDown(): void
     {
+        if ($this->defaultTimezone !== null) {
+            date_default_timezone_set($this->defaultTimezone);
+            $this->defaultTimezone = null;
+        }
+
+        if ($this->defaultLocale !== null) {
+            \Locale::setDefault($this->defaultLocale);
+            $this->defaultLocale = null;
+        }
+
         $this->clearConfigCache();
         parent::tearDown();
     }
