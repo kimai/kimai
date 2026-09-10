@@ -415,10 +415,7 @@ final class TimesheetController extends BaseApiController
 
         $reqLimit = $paramFetcher->get('size');
         if (\is_string($reqLimit) && $reqLimit !== '') {
-            $limit = (int) $reqLimit;
-            if ($limit > self::RECENT_ACTIVITIES_MAX_SIZE) {
-                $limit = self::RECENT_ACTIVITIES_MAX_SIZE;
-            }
+            $limit = min((int) $reqLimit, self::RECENT_ACTIVITIES_MAX_SIZE);
         }
 
         $reqBegin = $paramFetcher->get('begin');
