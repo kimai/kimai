@@ -76,7 +76,11 @@ final class RedirectToLocaleSubscriber implements EventSubscriberInterface
             $preferredLanguage = $request->getPreferredLanguage(array_unique($allLanguages));
         }
 
-        $response = new RedirectResponse($this->urlGenerator->generate('homepage', ['_locale' => $preferredLanguage ?? 'en']));
+        // the language from the user profile might not be a translated one (eg. for users that were not
+        // saved since language and formatting locale were split), which cannot be used in the URL
+        $preferredLanguage = $this->localeService->getNearestTranslationLocale($preferredLanguage ?? User::DEFAULT_LANGUAGE);
+
+        $response = new RedirectResponse($this->urlGenerator->generate('homepage', ['_locale' => $preferredLanguage]));
         $event->setResponse($response);
     }
 }
