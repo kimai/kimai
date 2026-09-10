@@ -380,7 +380,7 @@ class TimesheetRepositoryTest extends AbstractRepositoryTestCase
 
     /**
      * A team restriction can be added to a project/activity after timesheets were already recorded against it.
-     * getRecentActivityIds() must not "spend" one of its $limit slots on such a now-invisible combination, otherwise the caller 
+     * getRecentActivityIds() must not "spend" one of its $limit slots on such a now-invisible combination, otherwise the caller
      * ends up with fewer than $limit recent activities even though older, visible ones exist.
      */
     public function testGetRecentActivityIdsHidesForeignTeamRestrictedActivity(): void
