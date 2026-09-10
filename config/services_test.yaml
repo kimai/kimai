@@ -1,5 +1,6 @@
 parameters:
     locale: en
+    kimai_translated_locales: ['ar', 'cs', 'da', 'de', 'de_CH', 'en', 'eo', 'es', 'eu', 'fr', 'he', 'hu', 'it', 'ja', 'ko', 'nl', 'pl', 'pt_BR', 'ro', 'ru', 'sk', 'sv', 'tr', 'vi', 'zh_CN']
     kimai_locales: ['ar', 'cs', 'de', 'de_CH', 'da', 'en', 'eo', 'es', 'eu', 'fr', 'he', 'hu', 'it', 'ja', 'ko', 'nl', 'pl', 'pt_BR', 'ro', 'ru', 'sk', 'sv', 'tr', 'vi', 'zh_CN']
 
 services:
