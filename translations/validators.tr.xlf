@@ -178,6 +178,14 @@
         <source>A maximum duration of {{ value }} is allowed.</source>
         <target state="translated">En fazla {{ value }} süreye izin veriliyor.</target>
       </trans-unit>
+      <trans-unit id="5vkuQs2" resname="The project is locked until %date%, please choose a later date." xml:space="preserve">
+        <source>The project is locked until %date%, please choose a later date.</source>
+        <target state="translated">Proje %date% tarihine kadar kilitli, lütfen daha sonraki bir tarih seçin.</target>
+      </trans-unit>
+      <trans-unit id="vgsD_Cw" resname="The project is locked for the selected times." xml:space="preserve">
+        <source>The project is locked for the selected times.</source>
+        <target state="translated">Proje, seçilen zaman aralıkları için kilitlendi.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
