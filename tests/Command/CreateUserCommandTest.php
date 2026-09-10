@@ -18,6 +18,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
 #[CoversClass(CreateUserCommand::class)]
@@ -61,17 +62,23 @@ class CreateUserCommandTest extends KernelTestCase
         self::assertInstanceOf(User::class, $user);
     }
 
-    protected function createUser($username, $email, $role, $password): CommandTester
+    protected function createUser($username, $email, $role, $password, bool $ignoreExisting = false): CommandTester
     {
         $command = $this->application->find('kimai:user:create');
         $commandTester = new CommandTester($command);
-        $commandTester->execute([
+        $input = [
             'command' => $command->getName(),
             'username' => $username,
             'email' => $email,
             'role' => $role,
             'password' => $password
-        ]);
+        ];
+
+        if ($ignoreExisting) {
+            $input['--ignore-existing'] = true;
+        }
+
+        $commandTester->execute($input);
 
         return $commandTester;
     }
@@ -109,5 +116,42 @@ class CreateUserCommandTest extends KernelTestCase
 
         $output = $commandTester->getDisplay();
         self::assertStringContainsString('[ERROR] email: This value is not a valid email address', $output);
+    }
+
+    public function testIgnoreExistingSkipsExistingUsername(): void
+    {
+        $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar123');
+        $commandTester = $this->createUser('MyTestUser', 'user2@example.com', 'ROLE_USER', 'foobar123', true);
+
+        self::assertSame(Command::SUCCESS, $commandTester->getStatusCode());
+        $output = $commandTester->getDisplay();
+        self::assertStringContainsString('User "MyTestUser" already exists, skipping creation.', $output);
+        self::assertStringNotContainsString('[ERROR]', $output);
+    }
+
+    public function testIgnoreExistingSkipsExistingEmail(): void
+    {
+        $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar123');
+        $commandTester = $this->createUser('MyTestUser2', 'user@example.com', 'ROLE_USER', 'foobar123', true);
+
+        self::assertSame(Command::SUCCESS, $commandTester->getStatusCode());
+        self::assertStringNotContainsString('[ERROR]', $commandTester->getDisplay());
+    }
+
+    public function testIgnoreExistingStillCreatesMissingUser(): void
+    {
+        $commandTester = $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar123', true);
+
+        self::assertSame(Command::SUCCESS, $commandTester->getStatusCode());
+        self::assertStringContainsString('[OK] Success! Created user: MyTestUser', $commandTester->getDisplay());
+    }
+
+    public function testExistingUserFailsWithoutIgnoreExisting(): void
+    {
+        $this->createUser('MyTestUser', 'user@example.com', 'ROLE_USER', 'foobar123');
+        $commandTester = $this->createUser('MyTestUser', 'user2@example.com', 'ROLE_USER', 'foobar123');
+
+        self::assertSame(Command::FAILURE, $commandTester->getStatusCode());
+        self::assertStringContainsString('[ERROR] username: The username is already used.', $commandTester->getDisplay());
     }
 }

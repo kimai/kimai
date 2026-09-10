@@ -1,9 +1,11 @@
 <?php
-$DATABASE_HOST = urldecode($argv[1]);
-$DATABASE_BASE = urldecode($argv[2]);
-$DATABASE_PORT = $argv[3];
-$DATABASE_USER = urldecode($argv[4]);
-$DATABASE_PASS = urldecode($argv[5]);
+// The credentials are passed via environment variables and not as command line
+// arguments, so they neither show up in the container logs nor in the process list.
+$DATABASE_HOST = urldecode((string) getenv('DBTEST_HOST'));
+$DATABASE_BASE = urldecode((string) getenv('DBTEST_NAME'));
+$DATABASE_PORT = (string) getenv('DBTEST_PORT');
+$DATABASE_USER = urldecode((string) getenv('DBTEST_USER'));
+$DATABASE_PASS = urldecode((string) getenv('DBTEST_PASS'));
 
 echo "Testing DB:";
 
