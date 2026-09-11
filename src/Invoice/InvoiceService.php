@@ -384,15 +384,20 @@ class InvoiceService
      */
     public function createModel(InvoiceQuery $query): InvoiceModel
     {
-        $model = $this->createModelWithoutEntries($query);
+        $model = $this->createEmptyModel($query);
         $model->addEntries($this->getInvoiceItems($query));
 
-        $this->prepareModelQueryDates($model);
+        $this->finalizeModel($model);
 
         return $model;
     }
 
-    private function createModelWithoutEntries(InvoiceQuery $query): InvoiceModel
+    public function finalizeModel(InvoiceModel $model): void
+    {
+        $this->prepareModelQueryDates($model);
+    }
+
+    public function createEmptyModel(InvoiceQuery $query): InvoiceModel
     {
         $customer = $query->getCustomer();
         if ($customer === null) {
@@ -534,7 +539,7 @@ class InvoiceService
         foreach ($customerEntries as $settings) {
             $customerQuery = clone $query;
             $customerQuery->setCustomers([$settings['customer']]);
-            $model = $this->createModelWithoutEntries($customerQuery);
+            $model = $this->createEmptyModel($customerQuery);
             $model->addEntries($settings['entries']);
             $this->prepareModelQueryDates($model);
 
