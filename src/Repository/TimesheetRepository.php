@@ -785,23 +785,11 @@ class TimesheetRepository extends EntityRepository
      */
     public function getRecentActivityIds(User $user, ?\DateTimeInterface $startFrom = null, int $limit = 10): array
     {
+        // find the highest timesheet ID per project/activity combination used by the user,
+        // then return the $limit most recently used combinations (highest ID = most recent).
         $qb = $this->getEntityManager()->createQueryBuilder();
-
-        // do NOT join the customer and do NOT check the customer visibility, as this
-        // will dramatically increase the speed of this (otherwise slow) query
-        // ->andWhere($qb->expr()->eq('c.visible', ':visible'))
-
-        // you might want to join activity and project to check their visibility
-        // but for now this is way slower than simply fetching more items
-        //
-        // ->andWhere($qb->expr()->eq('p.visible', ':visible'))
-        // ->join('t.activity', 'a')
-        // ->andWhere($qb->expr()->eq('a.visible', ':visible'))
-        // ->setParameter('visible', true, Types::BOOLEAN)
-
         $qb->select($qb->expr()->max('t.id') . ' AS maxid')
             ->from(Timesheet::class, 't')
-            ->indexBy('t', 't.id')
             ->andWhere($qb->expr()->eq('t.user', ':user'))
             ->groupBy('t.project', 't.activity')
             ->orderBy('maxid', 'DESC')
@@ -814,13 +802,21 @@ class TimesheetRepository extends EntityRepository
                 ->setParameter('begin', \DateTimeImmutable::createFromInterface($startFrom), Types::DATETIME_IMMUTABLE);
         }
 
-        $results = $qb->getQuery()->getScalarResult();
+        $permissionAliases = $this->addPermissionCriteria($qb, $user);
 
-        if (empty($results)) {
-            return [];
+        if (\in_array('p', $permissionAliases, true) || \in_array('c', $permissionAliases, true)) {
+            $qb->join('t.project', 'p');
         }
 
-        return array_column($results, 'maxid');
+        if (\in_array('c', $permissionAliases, true)) {
+            $qb->join('p.customer', 'c');
+        }
+
+        if (\in_array('a', $permissionAliases, true)) {
+            $qb->join('t.activity', 'a');
+        }
+
+        return array_column($qb->getQuery()->getScalarResult(), 'maxid');
     }
 
     /**
