@@ -108,8 +108,10 @@ final class AppExtension extends Extension
     private function setLanguageFormats(ContainerBuilder $container): void
     {
         $locales = $container->getParameter('kimai_locales');
-        // @deprecated since 2.21.0
-        $container->setParameter('app_locales', implode('|', $locales));
+        // the locale in the URL is the one used for translating the UI, so only translated locales are allowed.
+        // the locales for formatting dates, times and money are configured in the user profile.
+        // @deprecated since 2.21.0 - only kept for (plugin) route requirements
+        $container->setParameter('app_locales', implode('|', $container->getParameter('kimai_translated_locales')));
 
         $directory = $container->getParameter('kernel.project_dir');
         $settings = include $directory . DIRECTORY_SEPARATOR . 'config/locales.php';

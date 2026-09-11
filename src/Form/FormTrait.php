@@ -31,7 +31,6 @@ trait FormTrait
     protected function addCustomer(FormBuilderInterface $builder, ?Customer $customer = null): void
     {
         $builder->add('customer', CustomerType::class, [
-            'query_builder_for_user' => true,
             'customers' => $customer,
             'data' => $customer,
             'required' => false,
@@ -46,7 +45,6 @@ trait FormTrait
         $options = array_merge([
             'placeholder' => '',
             'activity_enabled' => true,
-            'query_builder_for_user' => true,
             'join_customer' => true
         ], $options);
 
@@ -94,7 +92,7 @@ trait FormTrait
 
     protected function addActivity(FormBuilderInterface $builder, ?Activity $activity = null, ?Project $project = null, array $options = []): void
     {
-        $options = array_merge(['placeholder' => '', 'query_builder_for_user' => true], $options);
+        $options = array_merge(['placeholder' => ''], $options);
 
         $options['projects'] = $project;
         $options['activities'] = $activity;

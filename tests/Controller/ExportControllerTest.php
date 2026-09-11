@@ -18,6 +18,7 @@ use App\Tests\DataFixtures\TimesheetFixtures;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DomCrawler\Field\FormField;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 #[Group('integration')]
 class ExportControllerTest extends AbstractControllerBaseTestCase
@@ -179,8 +180,82 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
     public function testExportActionWithMissingRenderer(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
-        $this->request($client, '/export/data', 'POST');
+
+        $this->request($client, '/export/', 'GET');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $client->request('POST', $this->createUrl('/export/data'), ['_token' => $this->getExportToken($client)]);
         $this->assertRouteNotFound($client);
+    }
+
+    public function testExportActionRequiresValidToken(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $client->request('POST', $this->createUrl('/export/data'), ['renderer' => 'print', '_token' => 'not-a-valid-token']);
+
+        $this->assertAccessDenied($client);
+    }
+
+    public function testExportActionWithInvalidFormData(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $this->request($client, '/export/', 'GET');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $this->submitExport($client, ['renderer' => 'print', 'daterange' => 'sfsdfsdfsdf']);
+
+        $this->assertAccessDenied($client);
+    }
+
+    public function testExportActionRequiresTokenToMarkAsExported(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $begin = new \DateTime('first day of this month');
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setUser($this->getUserByRole(User::ROLE_USER))
+            ->setAmount(5)
+            ->setStartDate($begin)
+        ;
+        $this->importFixture($fixture);
+
+        // simulates a cross-site POST: no token, but all other fields are valid
+        $client->request('POST', $this->createUrl('/export/data'), ['renderer' => 'print', 'markAsExported' => 1]);
+
+        $this->assertAccessDenied($client);
+
+        $timesheets = $this->getEntityManager()->getRepository(Timesheet::class)->findAll();
+        self::assertCount(5, $timesheets);
+        /** @var Timesheet $timesheet */
+        foreach ($timesheets as $timesheet) {
+            self::assertFalse($timesheet->isExported());
+        }
+    }
+
+    private function getExportToken(HttpKernelBrowser $client): string
+    {
+        $token = $client->getCrawler()->filter('div#export-token')->attr('data-value');
+        self::assertIsString($token);
+
+        return $token;
+    }
+
+    /**
+     * Simulates the javascript behind the export buttons: it takes the current state of the
+     * toolbar form and posts it, together with the export only fields, to the export route.
+     *
+     * @param array<string, mixed> $params
+     */
+    private function submitExport(HttpKernelBrowser $client, array $params): void
+    {
+        $form = $client->getCrawler()->filter('#export-form')->form();
+        $params = array_merge($form->getValues(), $params);
+        $params['_token'] = $this->getExportToken($client);
+
+        $client->request('POST', $this->createUrl('/export/data'), $params);
     }
 
     public function testExportActionWithInvalidRenderer(): void
@@ -190,14 +265,7 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         $this->request($client, '/export/', 'GET');
         self::assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('#export-form')->form();
-        $node = $form->getFormNode();
-        $node->setAttribute('action', $this->createUrl('/export/data'));
-        $node->setAttribute('method', 'POST');
-
-        $client->submit($form, [
-            'renderer' => 'default'
-        ]);
+        $this->submitExport($client, ['renderer' => 'default']);
 
         $this->assertRouteNotFound($client);
     }
@@ -220,16 +288,8 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         $this->request($client, '/export/');
         self::assertTrue($client->getResponse()->isSuccessful());
 
-        $form = $client->getCrawler()->filter('#export-form')->form();
-        $node = $form->getFormNode();
-        $node->setAttribute('action', $this->createUrl('/export/data'));
-        $node->setAttribute('method', 'POST');
-
         // don't add daterange to make sure the current month is the default range
-        $client->submit($form, [
-            'renderer' => 'print',
-            'markAsExported' => 1
-        ]);
+        $this->submitExport($client, ['renderer' => 'print', 'markAsExported' => 1]);
 
         $response = $client->getResponse();
         self::assertTrue($response->isSuccessful());

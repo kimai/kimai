@@ -771,16 +771,16 @@
         },
         {
             "name": "doctrine/doctrine-bundle",
-            "version": "2.19.0",
+            "version": "2.19.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "07b90f707b82981097731c419f546e7ba97fba3c"
+                "reference": "72b53688c30451a7c65addd50b2167d31459724a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/07b90f707b82981097731c419f546e7ba97fba3c",
-                "reference": "07b90f707b82981097731c419f546e7ba97fba3c",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/72b53688c30451a7c65addd50b2167d31459724a",
+                "reference": "72b53688c30451a7c65addd50b2167d31459724a",
                 "shasum": ""
             },
             "require": {
@@ -875,7 +875,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/DoctrineBundle/issues",
-                "source": "https://github.com/doctrine/DoctrineBundle/tree/2.19.0"
+                "source": "https://github.com/doctrine/DoctrineBundle/tree/2.19.1"
             },
             "funding": [
                 {
@@ -891,7 +891,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-07-23T14:52:05+00:00"
+            "time": "2026-09-08T11:48:41+00:00"
         },
         {
             "name": "doctrine/doctrine-migrations-bundle",
@@ -2486,16 +2486,16 @@
         },
         {
             "name": "jms/serializer",
-            "version": "3.32.8",
+            "version": "3.32.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/serializer.git",
-                "reference": "74cb5e8930df5864609eaf08e05fd3b93a1f88f4"
+                "reference": "25cf987fa31d5f412feaae29745a5421cb803773"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/74cb5e8930df5864609eaf08e05fd3b93a1f88f4",
-                "reference": "74cb5e8930df5864609eaf08e05fd3b93a1f88f4",
+                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/25cf987fa31d5f412feaae29745a5421cb803773",
+                "reference": "25cf987fa31d5f412feaae29745a5421cb803773",
                 "shasum": ""
             },
             "require": {
@@ -2572,7 +2572,7 @@
             ],
             "support": {
                 "issues": "https://github.com/schmittjoh/serializer/issues",
-                "source": "https://github.com/schmittjoh/serializer/tree/3.32.8"
+                "source": "https://github.com/schmittjoh/serializer/tree/3.32.9"
             },
             "funding": [
                 {
@@ -2584,7 +2584,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-31T22:35:14+00:00"
+            "time": "2026-09-04T14:41:03+00:00"
         },
         {
             "name": "jms/serializer-bundle",
@@ -2677,16 +2677,16 @@
         },
         {
             "name": "kevinpapst/tabler-bundle",
-            "version": "2.3.1",
+            "version": "2.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/TablerBundle.git",
-                "reference": "266944842dffd5097fd5cb21bc5a7138a751cbb3"
+                "reference": "fb04201373e54aa41538039d5e1145fdb162f006"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/266944842dffd5097fd5cb21bc5a7138a751cbb3",
-                "reference": "266944842dffd5097fd5cb21bc5a7138a751cbb3",
+                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/fb04201373e54aa41538039d5e1145fdb162f006",
+                "reference": "fb04201373e54aa41538039d5e1145fdb162f006",
                 "shasum": ""
             },
             "require": {
@@ -2736,7 +2736,7 @@
             "description": "Admin/Backend theme bundle for Symfony based on Tabler.io",
             "support": {
                 "issues": "https://github.com/kevinpapst/TablerBundle/issues",
-                "source": "https://github.com/kevinpapst/TablerBundle/tree/2.3.1"
+                "source": "https://github.com/kevinpapst/TablerBundle/tree/2.3.2"
             },
             "funding": [
                 {
@@ -2748,7 +2748,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-10T14:28:23+00:00"
+            "time": "2026-09-03T16:45:17+00:00"
         },
         {
             "name": "league/csv",
@@ -3081,16 +3081,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "3.11.0",
+            "version": "3.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "147f303310f06334f03f409e49d7ad1e275ff05a"
+                "reference": "72c534fc0ab181ef52d92a68382318631e301608"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/147f303310f06334f03f409e49d7ad1e275ff05a",
-                "reference": "147f303310f06334f03f409e49d7ad1e275ff05a",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/72c534fc0ab181ef52d92a68382318631e301608",
+                "reference": "72c534fc0ab181ef52d92a68382318631e301608",
                 "shasum": ""
             },
             "require": {
@@ -3116,6 +3116,7 @@
                 "phpstan/phpstan-strict-rules": "^2",
                 "phpunit/phpunit": "^10.5.17 || ^11.0.7",
                 "predis/predis": "^1.1 || ^2",
+                "psr/clock": "^1.0",
                 "rollbar/rollbar": "^4.0",
                 "ruflin/elastica": "^7 || ^8",
                 "symfony/mailer": "^5.4 || ^6",
@@ -3134,6 +3135,7 @@
                 "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
                 "mongodb/mongodb": "Allow sending log messages to a MongoDB server (via library)",
                 "php-amqplib/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib",
+                "psr/clock": "Required to pass a clock to the Logger and control the timestamp of log records",
                 "rollbar/rollbar": "Allow sending log messages to Rollbar",
                 "ruflin/elastica": "Allow sending log messages to an Elastic Search server"
             },
@@ -3168,7 +3170,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/monolog/issues",
-                "source": "https://github.com/Seldaek/monolog/tree/3.11.0"
+                "source": "https://github.com/Seldaek/monolog/tree/3.12.0"
             },
             "funding": [
                 {
@@ -3180,7 +3182,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-09-02T12:39:56+00:00"
+            "time": "2026-09-09T08:34:20+00:00"
         },
         {
             "name": "mpdf/mpdf",
@@ -3418,16 +3420,16 @@
         },
         {
             "name": "nelmio/api-doc-bundle",
-            "version": "v5.12.0",
+            "version": "v5.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "a8ddb642c9ce1b134bf5084714d8475f79d8d06a"
+                "reference": "8c31d27439f41e16f55e83af6dea29cf2d21d4bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/a8ddb642c9ce1b134bf5084714d8475f79d8d06a",
-                "reference": "a8ddb642c9ce1b134bf5084714d8475f79d8d06a",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/8c31d27439f41e16f55e83af6dea29cf2d21d4bf",
+                "reference": "8c31d27439f41e16f55e83af6dea29cf2d21d4bf",
                 "shasum": ""
             },
             "require": {
@@ -3528,7 +3530,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nelmio/NelmioApiDocBundle/issues",
-                "source": "https://github.com/nelmio/NelmioApiDocBundle/tree/v5.12.0"
+                "source": "https://github.com/nelmio/NelmioApiDocBundle/tree/v5.12.1"
             },
             "funding": [
                 {
@@ -3536,7 +3538,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-03T13:29:16+00:00"
+            "time": "2026-09-07T10:57:11+00:00"
         },
         {
             "name": "nelmio/cors-bundle",
@@ -3819,16 +3821,16 @@
         },
         {
             "name": "pagerfanta/pagerfanta",
-            "version": "v4.8.0",
+            "version": "v4.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BabDev/Pagerfanta.git",
-                "reference": "72881e6839330b2961c574b3b4b20d409d6a0955"
+                "reference": "aa8aeff8d2f0e115901aa08368453d049605027e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BabDev/Pagerfanta/zipball/72881e6839330b2961c574b3b4b20d409d6a0955",
-                "reference": "72881e6839330b2961c574b3b4b20d409d6a0955",
+                "url": "https://api.github.com/repos/BabDev/Pagerfanta/zipball/aa8aeff8d2f0e115901aa08368453d049605027e",
+                "reference": "aa8aeff8d2f0e115901aa08368453d049605027e",
                 "shasum": ""
             },
             "require": {
@@ -3866,13 +3868,13 @@
                 "doctrine/phpcr-odm": "^1.7 || ^2.0",
                 "jackalope/jackalope-doctrine-dbal": "^1.9 || ^2.0",
                 "phpstan/extension-installer": "^1.4",
-                "phpstan/phpstan": "2.1.36",
-                "phpstan/phpstan-phpunit": "2.0.11",
-                "phpunit/phpunit": "10.5.60",
-                "rector/rector": "2.3.4",
+                "phpstan/phpstan": "2.2.13",
+                "phpstan/phpstan-phpunit": "2.0.18",
+                "phpunit/phpunit": "10.5.64",
+                "rector/rector": "2.6.6",
                 "ruflin/elastica": "^7.3 || ^8.0",
                 "solarium/solarium": "^6.2",
-                "symfony/cache": "^5.4 || ^6.4 || ^7.3 || ^8.0",
+                "symfony/cache": "^5.4 || ^6.4 || ^7.4 || ^8.1",
                 "twig/twig": "^2.13 || ^3.0"
             },
             "suggest": {
@@ -3908,7 +3910,7 @@
             ],
             "support": {
                 "issues": "https://github.com/BabDev/Pagerfanta/issues",
-                "source": "https://github.com/BabDev/Pagerfanta/tree/v4.8.0"
+                "source": "https://github.com/BabDev/Pagerfanta/tree/v4.9.0"
             },
             "funding": [
                 {
@@ -3916,7 +3918,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-01-22T13:58:52+00:00"
+            "time": "2026-09-08T18:12:20+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
@@ -4879,16 +4881,16 @@
         },
         {
             "name": "radebatz/type-info-extras",
-            "version": "1.0.7",
+            "version": "1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DerManoMann/type-info-extras.git",
-                "reference": "95a524a74a61648b44e355cb33d38db4b17ef5ce"
+                "reference": "519056728bcd4b4bd883c3ee5d78774d0384e757"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DerManoMann/type-info-extras/zipball/95a524a74a61648b44e355cb33d38db4b17ef5ce",
-                "reference": "95a524a74a61648b44e355cb33d38db4b17ef5ce",
+                "url": "https://api.github.com/repos/DerManoMann/type-info-extras/zipball/519056728bcd4b4bd883c3ee5d78774d0384e757",
+                "reference": "519056728bcd4b4bd883c3ee5d78774d0384e757",
                 "shasum": ""
             },
             "require": {
@@ -4935,9 +4937,9 @@
             ],
             "support": {
                 "issues": "https://github.com/DerManoMann/type-info-extras/issues",
-                "source": "https://github.com/DerManoMann/type-info-extras/tree/1.0.7"
+                "source": "https://github.com/DerManoMann/type-info-extras/tree/1.0.8"
             },
-            "time": "2026-03-06T22:40:29+00:00"
+            "time": "2026-09-08T08:46:24+00:00"
         },
         {
             "name": "robrichards/xmlseclibs",
@@ -11629,16 +11631,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.95.24",
+            "version": "v3.95.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "9a4b8050f8768646bf3693ee7416978ceeca6206"
+                "reference": "2cdfc1f3daf173d83a1ebb6177949b58c95de6ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/9a4b8050f8768646bf3693ee7416978ceeca6206",
-                "reference": "9a4b8050f8768646bf3693ee7416978ceeca6206",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/2cdfc1f3daf173d83a1ebb6177949b58c95de6ff",
+                "reference": "2cdfc1f3daf173d83a1ebb6177949b58c95de6ff",
                 "shasum": ""
             },
             "require": {
@@ -11721,7 +11723,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.95.24"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.95.25"
             },
             "funding": [
                 {
@@ -11729,7 +11731,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-31T15:31:12+00:00"
+            "time": "2026-09-08T11:11:37+00:00"
         },
         {
             "name": "masterminds/html5",
@@ -11918,11 +11920,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.2.12",
+            "version": "2.2.13",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/174b0d88710f00a42598886504dd7a146f91ace5",
-                "reference": "174b0d88710f00a42598886504dd7a146f91ace5",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9ba9ac76ee9c5cf5b56d58eb5deec6315b7a0260",
+                "reference": "9ba9ac76ee9c5cf5b56d58eb5deec6315b7a0260",
                 "shasum": ""
             },
             "require": {
@@ -11978,7 +11980,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-31T19:09:43+00:00"
+            "time": "2026-09-03T20:38:19+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",

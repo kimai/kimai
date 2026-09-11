@@ -438,7 +438,6 @@ final class ProjectController extends AbstractController
             ->add('project', ProjectType::class, [
                 'ignore_project' => $project,
                 'customers' => $project->getCustomer(),
-                'query_builder_for_user' => true,
                 'required' => false,
             ])
             ->setAction($this->generateUrl('admin_project_delete', ['id' => $project->getId()]))

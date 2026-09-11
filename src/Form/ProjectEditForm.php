@@ -111,7 +111,6 @@ class ProjectEditForm extends AbstractType
             ->add('customer', CustomerType::class, array_merge([
                 'placeholder' => ($isNew && null === $customer) ? '' : false,
                 'customers' => $customer,
-                'query_builder_for_user' => true,
             ], $customerOptions))
             ->add('globalActivities', YesNoType::class, [
                 'label' => 'globalActivities',

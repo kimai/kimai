@@ -34,13 +34,13 @@ class ValidationFailedExceptionErrorHandlerTest extends TestCase
             'type' => FlattenException::class,
             'format' => 'json',
             'method' => 'serializeExceptionToJson',
-            'priority' => -1
+            'priority' => -1,
         ], [
             'direction' => GraphNavigatorInterface::DIRECTION_SERIALIZATION,
             'type' => ValidationFailedException::class,
             'format' => 'json',
             'method' => 'serializeValidationExceptionToJson',
-            'priority' => -1
+            'priority' => -1,
         ]], ValidationFailedExceptionErrorHandler::getSubscribingMethods());
     }
 

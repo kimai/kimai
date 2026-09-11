@@ -25,29 +25,31 @@ final class ReleaseVersion
      */
     private function getReleasesFromGithub(): array
     {
-        $versionParser = new VersionParser();
         $opts = [
             'http' => [
                 'method' => 'GET',
                 'header' => [
                     'User-Agent: ' . Constants::SOFTWARE . ' ' . Constants::VERSION . ' Update-Check (PHP)',
                 ],
+                'timeout' => 5,
             ],
         ];
 
         $context = stream_context_create($opts);
 
-        $releases = file_get_contents('https://api.github.com/repos/' . Constants::GITHUB_REPO . '/releases', false, $context);
+        $releases = @file_get_contents('https://api.github.com/repos/' . Constants::GITHUB_REPO . '/releases', false, $context);
         if ($releases === false) {
             throw new \Exception('Could not load releases from GitHub repository: ' . Constants::GITHUB_REPO);
         }
-        /** @var array<string, array{url: non-empty-string, html_url: non-empty-string, tag_name: non-empty-string, name: non-empty-string, draft: bool, immutable: bool, prerelease: bool, created_at: non-empty-string, updated_at: non-empty-string, published_at: non-empty-string, zipball_url: non-empty-string, body: string}> $releases */
+
+        /** @var array<string, array{url: non-empty-string, html_url: non-empty-string, tag_name: non-empty-string, name: non-empty-string, draft: bool, immutable: bool, prerelease: bool, created_at: non-empty-string, updated_at: non-empty-string, published_at: non-empty-string, zipball_url: non-empty-string, body: string}>|false $releases */
         $releases = json_decode($releases, true);
 
         if ($releases === false) {
             throw new \Exception('Failed parsing release found at GitHub repository: ' . Constants::GITHUB_REPO);
         }
 
+        $versionParser = new VersionParser();
         $parsed = [];
         foreach ($releases as $release) {
             if ($release['draft'] || $release['prerelease']) {
