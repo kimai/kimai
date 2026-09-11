@@ -29,9 +29,14 @@
         'exported':         {'class': 'd-none d-xl-table-cell text-end hw-min w-min', 'title': 'not_exported'|trans, 'columnClass': 'w-min'},
     }) %}
 {% endif %}
-{% if showMoneyBudget and is_granted('view_invoice') %}
+{% if showMoneyBudget %}
+    {% if is_granted('view_invoice') %}
+        {% set availableColumns = availableColumns|merge({
+            'invoiced':         {'class': 'd-none d-xl-table-cell text-end hw-min w-min', 'title': 'not_invoiced'|trans, 'columnClass': 'w-min'},
+        }) %}
+    {% endif %}
     {% set availableColumns = availableColumns|merge({
-        'invoiced':         {'class': 'd-none d-xl-table-cell text-end hw-min w-min', 'title': 'not_invoiced'|trans, 'columnClass': 'w-min'},
+        'total':            {'class': 'd-none d-xl-table-cell text-end hw-min w-min', 'title': 'stats.amountTotal'|trans, 'columnClass': 'w-min'},
     }) %}
 {% endif %}
 {% set availableColumns = availableColumns|merge({
@@ -112,6 +117,8 @@
                                 <a href="{{ path('invoice', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': ''}) }}">
                                     {{ entry.notExportedRate|money(currency) }}
                                 </a>
+                            {% elseif name == 'total' %}
+                                {{ budgetStats.getBudgetSpent()|money(currency) }}
                             {% elseif name == 'projectStart' %}
                                 {% if project.start is not null %}{{ project.start|date_short }}{% endif %}
                             {% elseif name == 'projectEnd' %}

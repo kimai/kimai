@@ -31,20 +31,31 @@ final class ValidationFailedExceptionErrorHandler implements SubscribingHandlerI
     {
     }
 
-    public static function getSubscribingMethods(): array
+    /**
+     * Even though the field "priority" is not mentioned in the interface, it is used.
+     *
+     * @return iterable<array{
+     *     type: string,
+     *     format: string,
+     *     direction?: GraphNavigatorInterface::DIRECTION_*,
+     *     method?: string,
+     *     priority: int,
+     * }>
+     */
+    public static function getSubscribingMethods(): iterable // @phpstan-ignore method.childReturnType
     {
         return [[
             'direction' => GraphNavigatorInterface::DIRECTION_SERIALIZATION,
             'type' => FlattenException::class,
             'format' => 'json',
             'method' => 'serializeExceptionToJson',
-            'priority' => -1
+            'priority' => -1,
         ], [
             'direction' => GraphNavigatorInterface::DIRECTION_SERIALIZATION,
             'type' => ValidationFailedException::class,
             'format' => 'json',
             'method' => 'serializeValidationExceptionToJson',
-            'priority' => -1
+            'priority' => -1,
         ]];
     }
 

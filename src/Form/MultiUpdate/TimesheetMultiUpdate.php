@@ -64,7 +64,6 @@ final class TimesheetMultiUpdate extends AbstractType
 
         $builder
             ->add('customer', CustomerType::class, [
-                'query_builder_for_user' => true,
                 'customers' => $customer,
                 'data' => $customer,
                 'required' => false,
@@ -86,7 +85,6 @@ final class TimesheetMultiUpdate extends AbstractType
             'activity_enabled' => true,
             'customers' => $customer,
             'projects' => $project,
-            'query_builder_for_user' => true,
         ]));
 
         // replaces the project select after submission, to make sure only projects for the selected customer are displayed
@@ -105,7 +103,6 @@ final class TimesheetMultiUpdate extends AbstractType
                     'group_by' => null,
                     'customers' => $customer,
                     'projects' => $project,
-                    'query_builder_for_user' => true,
                 ]);
             }
         );
@@ -114,7 +111,6 @@ final class TimesheetMultiUpdate extends AbstractType
             'required' => false,
             'placeholder' => '',
             'activities' => $activity,
-            'query_builder_for_user' => true,
         ];
 
         $builder->add('activity', ActivityType::class, array_merge($activityOptions, [

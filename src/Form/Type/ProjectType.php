@@ -73,7 +73,7 @@ final class ProjectType extends AbstractType
 
                 return $this->customerHelper->getChoiceLabel($project->getCustomer());
             },
-            'query_builder_for_user' => true,
+            'query_builder_for_user' => true, // @deprecated since 2.67
             'activity_enabled' => false,
             'activity_select' => 'activity',
             'activity_visibility' => ActivityQuery::SHOW_VISIBLE,
@@ -94,9 +94,7 @@ final class ProjectType extends AbstractType
         $resolver->setDefault('query_builder', function (Options $options) {
             return function (ProjectRepository $repo) use ($options) {
                 $query = new ProjectFormTypeQuery($options['projects'], $options['customers']);
-                if (true === $options['query_builder_for_user']) {
-                    $query->setUser($options['user']);
-                }
+                $query->setUser($options['user']);
 
                 if (true === $options['ignore_date']) {
                     $query->setIgnoreDate(true);

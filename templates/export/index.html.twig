@@ -95,7 +95,10 @@
         {% block box_footer%}
             {{ search.searchButton(form) }}
         {% endblock %}
-        {% block box_after %}{{ form_end(form) }}{% endblock %}
+        {% block box_after %}
+            {{ form_end(form) }}
+            <div style="display: none" id="export-token" data-value="{{ csrf_token('export.data') }}"></div>
+        {% endblock %}
     {% endembed %}
 
     {% if too_many is same as (true) %}
@@ -354,19 +357,40 @@
                     Toggle the form, because by default it triggers the search
                 #}
                 if (node.matches('#export-buttons .startExportBtn')) {
-                    document.getElementById('renderer').value = node.dataset['type'];
-                    const form = document.getElementById("export-form");
-                    const previousAction = form.action;
-                    const previousMethod = form.method;
-                    const previousTarget = form.target;
-                    form.target = '_blank';
+                    event.preventDefault();
+
+                    /** @type {KimaiForm} */
+                    const FORM = kimai.getPlugin('form');
+                    const overwrites = {
+                        'renderer': node.dataset['type'],
+                        '_token': document.getElementById('export-token').dataset['value'],
+                    };
+
+                    const uri = FORM.convertFormDataToQueryString(document.getElementById('export-form'), overwrites);
+
+                    // remove the form of a previous export, it cannot be deleted right
+                    // after submitting it, as that might cancel the pending request
+                    const previous = document.getElementById('export-post-form');
+                    if (previous !== null) {
+                        previous.remove();
+                    }
+
+                    const form = document.createElement('form');
+                    form.id = 'export-post-form';
                     form.method = 'POST';
                     form.action = '{{ path('export_data') }}';
+                    form.target = '_blank';
+
+                    for (const [name, value] of new URLSearchParams(uri)) {
+                        const field = document.createElement('input');
+                        field.type = 'hidden';
+                        field.name = name;
+                        field.value = value;
+                        form.appendChild(field);
+                    }
+
+                    document.body.appendChild(form);
                     form.submit();
-                    document.getElementById('renderer').value = '';
-                    form.target = previousTarget;
-                    form.method = previousMethod;
-                    form.action = previousAction;
                 }
             }, false);
 

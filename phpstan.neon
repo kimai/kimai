@@ -98,11 +98,6 @@ parameters:
             path: src/API/ProjectController.php
 
         -
-            message: "#^Method App\\\\API\\\\Serializer\\\\ValidationFailedExceptionErrorHandler\\:\\:getSubscribingMethods\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/API/Serializer/ValidationFailedExceptionErrorHandler.php
-
-        -
             message: "#^Method App\\\\API\\\\Serializer\\\\ValidationFailedExceptionErrorHandler\\:\\:serializeExceptionToJson\\(\\) has no return type specified\\.$#"
             count: 1
             path: src/API/Serializer/ValidationFailedExceptionErrorHandler.php
@@ -206,26 +201,6 @@ parameters:
             message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
             count: 1
             path: src/Command/ChangePasswordCommand.php
-
-        -
-            message: "#^Parameter \\#1 \\$email of method App\\\\Entity\\\\User\\:\\:setEmail\\(\\) expects string\\|null, mixed given\\.$#"
-            count: 1
-            path: src/Command/CreateUserCommand.php
-
-        -
-            message: "#^Parameter \\#1 \\$identifier of method App\\\\Entity\\\\User\\:\\:setUserIdentifier\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/Command/CreateUserCommand.php
-
-        -
-            message: "#^Parameter \\#2 \\$string of function explode expects string, mixed given\\.$#"
-            count: 1
-            path: src/Command/CreateUserCommand.php
-
-        -
-            message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
-            count: 1
-            path: src/Command/CreateUserCommand.php
 
         -
             message: "#^Parameter \\#1 \\$username of method App\\\\User\\\\UserService\\:\\:findUserByUsernameOrThrowException\\(\\) expects string, mixed given\\.$#"

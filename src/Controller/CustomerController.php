@@ -392,7 +392,6 @@ final class CustomerController extends AbstractController
                 ]
             ])
             ->add('customer', CustomerType::class, [
-                'query_builder_for_user' => true,
                 'ignore_customer' => $customer,
                 'required' => false,
             ])
