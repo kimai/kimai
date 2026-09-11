@@ -2130,6 +2130,22 @@
         <source>invoice_email</source>
         <target state="translated">E-mail de faturamento</target>
       </trans-unit>
+      <trans-unit id="k8F51oP" resname="project_locked_until" xml:space="preserve">
+        <source>project_locked_until</source>
+        <target state="translated">Horários bloqueados até</target>
+      </trans-unit>
+      <trans-unit id="C_ZcSX2" resname="help.project_start" xml:space="preserve">
+        <source>help.project_start</source>
+        <target state="translated">Horários anteriores a esta data não podem ser registrados.</target>
+      </trans-unit>
+      <trans-unit id="9A.4S.i" resname="help.project_end" xml:space="preserve">
+        <source>help.project_end</source>
+        <target state="translated">Horários posteriores a esta data não podem ser registrados.</target>
+      </trans-unit>
+      <trans-unit id="ktmsI7g" resname="help.project_locked_until" xml:space="preserve">
+        <source>help.project_locked_until</source>
+        <target state="translated">Registros de tempo até e incluindo esta data não podem ser criados nem alterados.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
