@@ -40,6 +40,7 @@ security:
 
             custom_authenticators:
                 - App\Saml\SamlAuthenticator
+                - App\Oidc\OidcAuthenticator
 
             remember_me:
                 name: KIMAI_REMEMBER
