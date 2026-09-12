@@ -9,6 +9,7 @@
 
 namespace App\Tests\Controller\Reporting;
 
+use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
 use App\Tests\DataFixtures\TimesheetFixtures;
@@ -26,6 +27,23 @@ abstract class AbstractUserPeriodControllerTestCase extends AbstractControllerBa
         $fixture->setAmountRunning(10);
         $fixture->setUser($this->getUserByRole($role));
         $fixture->setStartDate(new \DateTime());
+        $this->importFixture($fixture);
+    }
+
+    protected function importRevenueFixture(User $user): void
+    {
+        $counter = 0;
+        $fixture = new TimesheetFixtures();
+        $fixture->setAmount(2);
+        $fixture->setUser($user);
+        $fixture->setFixedStartDate(new \DateTime('today 10:00'));
+        $fixture->setCallback(static function (Timesheet $timesheet) use (&$counter): void {
+            $rate = $counter === 0 ? 100.0 : 40.0;
+            $timesheet->setFixedRate($rate);
+            $timesheet->setRate($rate);
+            $timesheet->setBillable($counter === 0);
+            $counter++;
+        });
         $this->importFixture($fixture);
     }
 
@@ -95,5 +113,24 @@ abstract class AbstractUserPeriodControllerTestCase extends AbstractControllerBa
         self::assertEquals(0, $select->count());
         $cell = $client->getCrawler()->filterXPath("//th[contains(@class, 'reportDataTypeTitle')]");
         self::assertEquals('Total', $cell->text());
+    }
+
+    public function testRevenueExcludesNonBillableEntries(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+        $this->importRevenueFixture($user);
+
+        $this->assertAccessIsGranted($client, \sprintf(
+            '%s?user=%s&date=%s&sumType=rate',
+            $this->getReportUrl(),
+            $user->getId(),
+            (new \DateTime())->format('Y-m-d')
+        ));
+
+        $total = $client->getCrawler()->filterXPath("//table[contains(@class, 'dataTable')]/tfoot/tr[contains(@class, 'summary')]/td[contains(concat(' ', normalize-space(@class), ' '), ' total ')]");
+        self::assertCount(1, $total);
+        self::assertMatchesRegularExpression('/\\b100(?:[.,]00)?\\b/u', $total->text());
+        self::assertDoesNotMatchRegularExpression('/\\b140(?:[.,]00)?\\b/u', $total->text());
     }
 }
