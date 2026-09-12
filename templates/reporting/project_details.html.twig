@@ -426,6 +426,16 @@
                                             {{ progress.progressbar_timebudget(budgetStats) }}
                                         </td>
                                     </tr>
+                                    {% if activities is not empty %}
+                                        <tr>
+                                            <th class="w-min">
+                                                {{ 'activity'|trans }}
+                                            </th>
+                                            <td>
+                                                {{ progress.progressbar_timebudget_by_activity(budgetStats, activities) }}
+                                            </td>
+                                        </tr>
+                                    {% endif %}
                                 {% endif %}
                                 {% if showMoneyBudget and project.hasBudget() %}
                                     <tr>
