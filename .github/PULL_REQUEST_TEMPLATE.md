@@ -8,5 +8,5 @@ A clear and concise description of what this pull request adds or changes.
 
 ## Checklist
 - [ ] I verified that my code applies to the guidelines (`composer code-check`)
-- [ ] I updated the documentation (see [here](https://github.com/kimai/www.kimai.org/tree/master/_documentation))
+- [ ] I updated the documentation (see [here](https://github.com/kimai/www.kimai.org/tree/main/collections/_documentation))
 - [ ] I agree that this code is used in Kimai (see [license](https://github.com/kimai/kimai/blob/main/LICENSE))
