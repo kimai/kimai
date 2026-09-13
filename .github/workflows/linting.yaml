@@ -49,7 +49,7 @@ jobs:
                     key: ${{ runner.os }}-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
 
             - name: "Restore PHPStan result cache"
-              uses: actions/cache/restore@v3
+              uses: actions/cache/restore@v6
               with:
                   path: ./tmp
                   key: "result-cache-v1-${{ matrix.php-version }}-${{ github.run_id }}"
@@ -90,7 +90,7 @@ jobs:
                 run: symfony security:check
 
             - name: "Save result cache"
-              uses: actions/cache/save@v3
+              uses: actions/cache/save@v6
               if: always()
               with:
                   path: ./tmp
