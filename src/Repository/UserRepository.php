@@ -250,8 +250,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
                     }
                 }
             }
-            $userIds = array_unique($userIds);
-            $qb->setParameter('teamMember', $userIds);
+            $qb->setParameter('teamMember', array_unique($userIds));
             $or->add($qb->expr()->in('u.id', ':teamMember'));
         }
 
@@ -263,8 +262,7 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
                     $userIds[] = $teamMember->getId();
                 }
             }
-            $userIds = array_unique($userIds);
-            $qb->setParameter('userIds', $userIds);
+            $qb->setParameter('userIds', array_unique($userIds));
             $or->add($qb->expr()->in('u.id', ':userIds'));
         }
 
