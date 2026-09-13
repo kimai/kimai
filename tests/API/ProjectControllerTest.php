@@ -421,7 +421,9 @@ class ProjectControllerTest extends APIControllerBaseTestCase
             'teams' => [1],
         ];
         $this->request($client, '/api/projects', 'POST', [], json_encode($data));
-        self::assertTrue($client->getResponse()->isSuccessful());
+        // TODO 3.0 replace all occurrences
+        //self::assertTrue($client->getResponse()->isSuccessful());
+        self::assertResponseIsSuccessful();
 
         $content = $client->getResponse()->getContent();
         self::assertIsString($content);
@@ -432,7 +434,7 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         self::assertEquals('Test', $result['parentTitle']);
         self::assertNotEmpty($result['id']);
         self::assertIsArray($result['teams']);
-        self::assertEquals([['id' => 1, 'name' => 'Test team', 'color' => null, 'color-safe' => '#03A9F4']], $result['teams']);
+        self::assertEquals([['id' => 1, 'name' => 'Test team', 'visible' => true, 'color' => null, 'color-safe' => '#03A9F4']], $result['teams']);
         self::assertIsArray($result['metaFields']);
         self::assertEquals([], $result['metaFields']);
         self::assertEquals('foo', $result['name']);
