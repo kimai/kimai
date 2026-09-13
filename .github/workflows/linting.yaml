@@ -71,6 +71,9 @@ jobs:
             -   name: Check codestyles
                 run: vendor/bin/php-cs-fixer fix --dry-run --verbose --config=.php-cs-fixer.dist.php --using-cache=no --show-progress=none --format=checkstyle | cs2pr
 
+            -   name: Dump PHPStan parameters
+                run: vendor/bin/phpstan dump-parameters -c tests/phpstan.neon
+
             -   name: Run PHPStan for application
                 run: vendor/bin/phpstan analyse -c phpstan.neon --no-progress -vv
 
