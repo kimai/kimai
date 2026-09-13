@@ -50,9 +50,14 @@ class UserQuery extends BaseQuery implements VisibilityInterface
         return $this->searchTeams;
     }
 
+    public function hasSearchTeams(): bool
+    {
+        return \count($this->searchTeams) > 0;
+    }
+
     /**
      * Search teams are always used to limit the result set to all members of the these teams.
-     * Query "teams" in comparison also restrict access to the team-member but NOT for Admins.
+     * The "teams" in comparison restrict access to team-member but NOT for Admins.
      *
      * Use this method if you always want a filtered list, no matter the user permissions.
      *

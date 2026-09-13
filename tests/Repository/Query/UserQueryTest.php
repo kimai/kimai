@@ -36,11 +36,13 @@ class UserQueryTest extends BaseQueryTest
     protected function assertSearchTeam(UserQuery $sut): void
     {
         $team = new Team('foo');
+        self::assertFalse($sut->hasSearchTeams());
         self::assertIsArray($sut->getSearchTeams());
         self::assertEmpty($sut->getSearchTeams());
         $sut->setSearchTeams([$team, new Team('foo')]);
         self::assertCount(2, $sut->getSearchTeams());
         self::assertSame($team, $sut->getSearchTeams()[0]);
+        self::assertTrue($sut->hasSearchTeams());
     }
 
     public function testSystemAccount(): void
