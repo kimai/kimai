@@ -8,10 +8,12 @@ includes:
     - %rootDir%/../phpstan-deprecation-rules/rules.neon
 
 parameters:
+    phpVersion: 80233
     level: 9
     paths:
         - .
     tmpDir: %rootDir%/../../../var/cache/phpstan
+    resultCachePath: %tmpDir%/phpstan-tests.php
     excludePaths:
         - %rootDir%/../../../tests/Ldap/LdapDriverTest.php
     inferPrivatePropertyTypeFromConstructor: true
