@@ -178,6 +178,14 @@
         <source>Please select a value for {{ field }}</source>
         <target state="translated">Veuillez sélectionner une valeur pour {{ field }}</target>
       </trans-unit>
+      <trans-unit id="5vkuQs2" resname="The project is locked until %date%, please choose a later date." xml:space="preserve">
+        <source>The project is locked until %date%, please choose a later date.</source>
+        <target state="translated">Le projet est verrouillé jusqu'à %date%, veuillez choisir une date ultérieure.</target>
+      </trans-unit>
+      <trans-unit id="vgsD_Cw" resname="The project is locked for the selected times." xml:space="preserve">
+        <source>The project is locked for the selected times.</source>
+        <target state="translated">Le projet est verrouillé pour les temps sélectionnés.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
