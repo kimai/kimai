@@ -82,7 +82,10 @@ class TeamRepository extends EntityRepository
 
         $qb->select('t')
             ->from(Team::class, 't')
-            ->orderBy('t.name', 'ASC');
+            ->orderBy('t.name', 'ASC')
+            ->where($qb->expr()->eq('t.visible', ':visible'))
+            ->setParameter('visible', true)
+        ;
 
         $this->addPermissionCriteria($qb, $query->getCurrentUser(), $query->getTeams());
 

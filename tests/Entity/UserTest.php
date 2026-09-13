@@ -880,6 +880,101 @@ class UserTest extends TestCase
         self::assertGreaterThanOrEqual(20, \strlen($user->getSignatureDate()));
     }
 
+    public function testGetVisibleTeams(): void
+    {
+        $sut = new User();
+        self::assertSame([], $sut->getVisibleTeams());
+        self::assertSame([], $sut->getVisibleTeams(false));
+
+        $visibleLead = new Team('visible lead');
+        $visibleMember = new Team('visible member');
+        $hiddenLead = new Team('hidden lead');
+        $hiddenLead->setVisible(false);
+        $hiddenMember = new Team('hidden member');
+        $hiddenMember->setVisible(false);
+
+        $visibleLead->addTeamlead($sut);
+        $visibleMember->addUser($sut);
+        $hiddenLead->addTeamlead($sut);
+        $hiddenMember->addUser($sut);
+
+        // membership without a team is ignored
+        $sut->addMembership(new TeamMember());
+
+        self::assertCount(4, $sut->getMemberships());
+        self::assertCount(4, $sut->getTeams());
+
+        self::assertSame([$visibleLead], $sut->getVisibleTeams());
+        self::assertSame([$visibleLead], $sut->getVisibleTeams(true));
+        self::assertSame([$visibleLead, $visibleMember], $sut->getVisibleTeams(false));
+
+        $hiddenLead->setVisible(true);
+        self::assertSame([$visibleLead, $hiddenLead], $sut->getVisibleTeams());
+        self::assertSame([$visibleLead, $visibleMember, $hiddenLead], $sut->getVisibleTeams(false));
+    }
+
+    public function testGetVisibleTeamMember(): void
+    {
+        $sut = self::userWithId(1)->setEnabled(true);
+        self::assertSame([], $sut->getVisibleTeamMember());
+        self::assertSame([], $sut->getVisibleTeamMember(false));
+
+        $leadColleague = self::userWithId(2)->setEnabled(true);
+        $memberColleague = self::userWithId(3)->setEnabled(true);
+        $disabled = self::userWithId(4)->setEnabled(false);
+        $system = self::userWithId(5)->setEnabled(true);
+        $system->setSystemAccount(true);
+        $inBothTeams = self::userWithId(6)->setEnabled(true);
+
+        $leadTeam = new Team('lead');
+        $leadTeam->addTeamlead($sut);
+        $leadTeam->addUser($leadColleague);
+        $leadTeam->addUser($disabled);
+        $leadTeam->addUser($system);
+        $leadTeam->addUser($inBothTeams);
+
+        $memberTeam = new Team('member');
+        $memberTeam->addUser($sut);
+        $memberTeam->addUser($memberColleague);
+        $memberTeam->addUser($inBothTeams);
+
+        // membership without a team is ignored
+        $sut->addMembership(new TeamMember());
+
+        self::assertCount(2, $sut->getMemberships());
+
+        // only teams where the user is teamlead are considered by default
+        $users = $sut->getVisibleTeamMember();
+        self::assertSame([$sut, $leadColleague, $inBothTeams], $users);
+        self::assertSame($users, $sut->getVisibleTeamMember(true));
+
+        // all memberships, users appearing in multiple teams are returned only once
+        $users = $sut->getVisibleTeamMember(false);
+        self::assertSame([$sut, $leadColleague, $inBothTeams, $memberColleague], $users);
+
+        // disabled and system accounts are never returned
+        self::assertNotContains($disabled, $sut->getVisibleTeamMember(false));
+        self::assertNotContains($system, $sut->getVisibleTeamMember(false));
+
+        // the current user is excluded when disabled as well
+        $sut->setEnabled(false);
+        self::assertSame([$leadColleague, $inBothTeams], $sut->getVisibleTeamMember());
+    }
+
+    public function testGetVisibleTeamMemberIgnoresTeamVisibility(): void
+    {
+        $sut = self::userWithId(1)->setEnabled(true);
+        $colleague = self::userWithId(2)->setEnabled(true);
+
+        $team = new Team('hidden');
+        $team->setVisible(false);
+        $team->addTeamlead($sut);
+        $team->addUser($colleague);
+
+        self::assertSame([], $sut->getVisibleTeams());
+        self::assertSame([$sut, $colleague], $sut->getVisibleTeamMember());
+    }
+
     private static function userWithId(int $id): User
     {
         $user = new User();
