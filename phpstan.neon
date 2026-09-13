@@ -8,6 +8,7 @@ includes:
     - %rootDir%/../phpstan/conf/bleedingEdge.neon
 
 parameters:
+    phpVersion: 80233
     featureToggles:
         skipCheckGenericClasses:
             - Symfony\Component\Form\AbstractType
@@ -31,6 +32,7 @@ parameters:
     paths:
         - src
     tmpDir: %rootDir%/../../../var/cache/phpstan
+    resultCachePath: %tmpDir%/phpstan.php
     excludePaths:
         - %rootDir%/../../../src/Ldap/LdapDriver.php
         - %rootDir%/../../../src/Event/PageActionsEvent.php
