@@ -56,7 +56,7 @@
       </trans-unit>
       <trans-unit id="J258iS6" resname="update_multiple" xml:space="preserve">
         <source>update_multiple</source>
-        <target state="translated">%action% %count% ورودی ها</target>
+        <target state="translated">%action% %count% مورد</target>
       </trans-unit>
       <trans-unit id="OTDmccn" resname="attachments">
         <source>attachments</source>
@@ -468,7 +468,7 @@
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
-        <target state="translated">‌لینکی به ایمیل شما ارسال شد. جهت بازیابی رمز خود روی آن کلیک کنید. نکته: شما در طی %tokenLifetime% ساعت فقط یکبار می‌توانید رمز جدید درخواست کنید. اگر ایمیل برای شما ارسال نشد پوشه هرزنامه را بررسی کنید یا دوباره تلاش کنید.</target>
+        <target state="translated">ایمیلی حاوی لینک بازنشانی رمز عبور برای شما ارسال شده است. توجه: شما تنها هر %tokenLifetime% ساعت یک‌بار می‌توانید درخواست رمز عبور جدید کنید. اگر ایمیل را دریافت نکردید، لطفاً پوشه اسپم (هرزنامه) خود را بررسی کنید یا دوباره تلاش نمایید.</target>
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
         <source>error.too_many_entries</source>
@@ -506,9 +506,9 @@
         <source>ROLE_TEAMLEAD</source>
         <target state="translated">رهبر تیم</target>
       </trans-unit>
-      <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
+      <trans-unit id="lfSTZGe" resname="stats.workingTimeToday" xml:space="preserve">
         <source>stats.workingTimeToday</source>
-        <target state="translated">امروز %day%</target>
+        <target state="translated">امروز، %day%</target>
       </trans-unit>
       <trans-unit id="Nx9_QiO" resname="revenue">
         <source>revenue</source>
@@ -854,7 +854,7 @@
         <source>agendaDay</source>
         <target state="translated">روز</target>
       </trans-unit>
-      <trans-unit id="qvIyBkY" resname="title">
+      <trans-unit id="qvIyBkY" resname="title" xml:space="preserve">
         <source>title</source>
         <target state="translated">عنوان</target>
       </trans-unit>
@@ -1432,7 +1432,7 @@
       </trans-unit>
       <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
         <source>Settings</source>
-        <target state="needs-translation">ترجیحات</target>
+        <target state="translated">تنظیمات</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
@@ -2057,6 +2057,94 @@
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>Timesheet</source>
         <target state="translated">تایم شیت</target>
+      </trans-unit>
+      <trans-unit id="k8F51oP" resname="project_locked_until" xml:space="preserve">
+        <source>project_locked_until</source>
+        <target state="translated">زمان‌ قفل شد تا</target>
+      </trans-unit>
+      <trans-unit id="C_ZcSX2" resname="help.project_start" xml:space="preserve">
+        <source>help.project_start</source>
+        <target state="translated">زمان‌های پیش از این تاریخ قابل ثبت نیستند.</target>
+      </trans-unit>
+      <trans-unit id="9A.4S.i" resname="help.project_end" xml:space="preserve">
+        <source>help.project_end</source>
+        <target state="translated">زمان‌های پس از این تاریخ قابل ثبت نیستند.</target>
+      </trans-unit>
+      <trans-unit id="ktmsI7g" resname="help.project_locked_until" xml:space="preserve">
+        <source>help.project_locked_until</source>
+        <target state="translated">زمان‌های مربوط به این تاریخ و پیش از آن، نه قابل ایجاد هستند و نه قابل تغییر.</target>
+      </trans-unit>
+      <trans-unit id="TTL.5NF" resname="status.todo" xml:space="preserve">
+        <source>status.todo</source>
+        <target state="translated">کارهای لازم</target>
+      </trans-unit>
+      <trans-unit id="j_0FPm3" resname="status.waiting" xml:space="preserve">
+        <source>status.waiting</source>
+        <target state="translated">انتظار</target>
+      </trans-unit>
+      <trans-unit id="QdfOAGZ" resname="status.done" xml:space="preserve">
+        <source>status.done</source>
+        <target state="translated">انجام شد</target>
+      </trans-unit>
+      <trans-unit id="G8ZoGoA" resname="api_token_qr_hint" xml:space="preserve">
+        <source>api_token_qr_hint</source>
+        <target state="translated">می‌توانید این کد پویا را با یک اپلیکیشن موبایل اسکن کنید تا آدرس سرور و توکن را در یک مرحله پیکربندی نمایید. این تصویر را به اشتراک نگذارید؛ زیرا حاوی توکن API شماست.</target>
+      </trans-unit>
+      <trans-unit id="nlJ2pW2" resname="invoice_email" xml:space="preserve">
+        <source>invoice_email</source>
+        <target state="translated">ایمیل صورت‌حساب</target>
+      </trans-unit>
+      <trans-unit id="E470U8W" resname="tax.type.reverse" xml:space="preserve">
+        <source>tax.type.reverse</source>
+        <target state="translated">پرداخت معکوس</target>
+      </trans-unit>
+      <trans-unit id="hi31a3v" resname="tax.note.reverse_charge" xml:space="preserve">
+        <source>tax.note.reverse_charge</source>
+        <target state="translated">مالیات قابل پرداخت بر مبنای سازوکار پرداخت معکوس</target>
+      </trans-unit>
+      <trans-unit id="6w8kS.m" resname="user_access_all" xml:space="preserve">
+        <source>user_access_all</source>
+        <target state="translated">اجازه دسترسی برای همه کاربران</target>
+      </trans-unit>
+      <trans-unit id="DbF_j60" resname="count_as_expected_time" xml:space="preserve">
+        <source>count_as_expected_time</source>
+        <target state="translated">محاسبه به عنوان ساعات مورد انتظار: %type%</target>
+      </trans-unit>
+      <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
+        <source>count_as_expected_time_help</source>
+        <target state="translated">در صورت فعال بودن، %type% به عنوان ساعات کاری در محاسبه ساعات کاری مورد انتظار روزانه لحاظ می‌شود. در صورت غیرفعال بودن، ساعات مورد انتظار برای این روزها برابر با صفر در نظر گرفته می‌شود. هر دو تنظیم تعادلی خنثی ایجاد می‌کنند، اما تأثیر متفاوتی بر مجموع ساعات ماهانه دارند.</target>
+      </trans-unit>
+      <trans-unit id="WrNTzd7" resname="assign_timesheets" xml:space="preserve">
+        <source>assign_timesheets</source>
+        <target state="translated">اختصاص کاربرگ‌های زمانی</target>
+      </trans-unit>
+      <trans-unit id="zO0oxtw" resname="start" xml:space="preserve">
+        <source>start</source>
+        <target state="translated">شروع</target>
+      </trans-unit>
+      <trans-unit id="DAMFhpR" resname="lock" xml:space="preserve">
+        <source>lock</source>
+        <target state="translated">قفل‌</target>
+      </trans-unit>
+      <trans-unit id="pNRR7CN" resname="release" xml:space="preserve">
+        <source>release</source>
+        <target state="translated">آزاد‌کردن</target>
+      </trans-unit>
+      <trans-unit id="kwC00lZ" resname="assign" xml:space="preserve">
+        <source>assign</source>
+        <target state="translated">اختصاص دادن</target>
+      </trans-unit>
+      <trans-unit id="2ajb.ZU" resname="assign_self" xml:space="preserve">
+        <source>assign_self</source>
+        <target state="translated">به من اختصاص بده</target>
+      </trans-unit>
+      <trans-unit id="LfO_otF" resname="reopen" xml:space="preserve">
+        <source>reopen</source>
+        <target state="translated">بازکردن دوباره</target>
+      </trans-unit>
+      <trans-unit id="Mi7y8Q3" resname="tax.type.exempt" xml:space="preserve">
+        <source>tax.type.exempt</source>
+        <target state="translated">معاف</target>
       </trans-unit>
     </body>
   </file>

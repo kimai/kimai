@@ -2130,6 +2130,22 @@
         <source>api_token_qr_hint</source>
         <target state="translated">Vous pouvez scanner ce QR code avec une application mobile, pour configurer l'URL du serveur et le jeton en une seule étape. Ne partagez pas cette image : elle contient votre jeton d'API.</target>
       </trans-unit>
+      <trans-unit id="k8F51oP" resname="project_locked_until" xml:space="preserve">
+        <source>project_locked_until</source>
+        <target state="translated">Temps verrouillé jusqu'à</target>
+      </trans-unit>
+      <trans-unit id="C_ZcSX2" resname="help.project_start" xml:space="preserve">
+        <source>help.project_start</source>
+        <target state="translated">Les heures avant cette date ne peuvent pas être enregistrées.</target>
+      </trans-unit>
+      <trans-unit id="9A.4S.i" resname="help.project_end" xml:space="preserve">
+        <source>help.project_end</source>
+        <target state="translated">Les heures après cette date ne peuvent être enregistrés.</target>
+      </trans-unit>
+      <trans-unit id="ktmsI7g" resname="help.project_locked_until" xml:space="preserve">
+        <source>help.project_locked_until</source>
+        <target state="translated">Les temps jusqu'à et y compris cette date ne peuvent ni être créés ni modifiés.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

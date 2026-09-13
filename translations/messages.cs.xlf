@@ -2110,6 +2110,18 @@
         <source>reopen</source>
         <target state="needs-translation">Znovuotevřít</target>
       </trans-unit>
+      <trans-unit id="C_ZcSX2" resname="help.project_start" xml:space="preserve">
+        <source>help.project_start</source>
+        <target state="translated">Časy před tímto datem nemohou být zaznamenány.</target>
+      </trans-unit>
+      <trans-unit id="9A.4S.i" resname="help.project_end" xml:space="preserve">
+        <source>help.project_end</source>
+        <target state="translated">Časy po tomto datu nemohou být zaznamenány.</target>
+      </trans-unit>
+      <trans-unit id="ktmsI7g" resname="help.project_locked_until" xml:space="preserve">
+        <source>help.project_locked_until</source>
+        <target state="translated">Časy do tohoto data všetně nemohou být vytvářeny, ani upravovány.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
