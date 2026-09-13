@@ -19,7 +19,7 @@ jobs:
 
         strategy:
             matrix:
-                php: ['8.3'] # use lowest supported PHP version to prevent introducing syntax from newer PHP versions
+                php: ['8.3'] # usually lowest supported PHP version, but 8.2 is EOL in Dec. 2025 and PHPStan Turbo needs 8.3
 
         steps:
 
