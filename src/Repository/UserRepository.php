@@ -237,12 +237,11 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
             return;
         }
 
-        $or = $qb->expr()->orX();
+        $userIds = [];
 
         // if no explicit team was requested and the user is part of some teams
         // then find all members of his teams (where he is teamlead)
         if (null !== $user && $user->isTeamlead()) {
-            $userIds = [];
             foreach ($user->getTeams() as $team) {
                 if ($team->isTeamlead($user)) {
                     foreach ($team->getUsers() as $teamMember) {
@@ -250,30 +249,23 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
                     }
                 }
             }
-            $qb->setParameter('teamMember', array_unique($userIds));
-            $or->add($qb->expr()->in('u.id', ':teamMember'));
         }
 
         // if teams where requested, then select all team members
-        if (\count($teams) > 0) {
-            $userIds = [];
-            foreach ($teams as $team) {
-                foreach ($team->getUsers() as $teamMember) {
-                    $userIds[] = $teamMember->getId();
-                }
+        foreach ($teams as $team) {
+            foreach ($team->getUsers() as $teamMember) {
+                $userIds[] = $teamMember->getId();
             }
-            $qb->setParameter('userIds', array_unique($userIds));
-            $or->add($qb->expr()->in('u.id', ':userIds'));
         }
 
         // and make sure, that the user himself is always returned
         if (null !== $user) {
-            $or->add($qb->expr()->eq('u.id', ':self'));
-            $qb->setParameter('self', $user);
+            $userIds[] = $user->getId();
         }
 
-        if ($or->count() > 0) {
-            $qb->andWhere($or);
+        if (\count($userIds) > 0) {
+            $qb->andWhere($qb->expr()->in('u.id', ':userIds'));
+            $qb->setParameter('userIds', array_unique($userIds));
         }
     }
 
