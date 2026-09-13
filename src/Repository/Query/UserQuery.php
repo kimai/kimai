@@ -51,6 +51,11 @@ class UserQuery extends BaseQuery implements VisibilityInterface
     }
 
     /**
+     * Search teams are always used to limit the result set to all members of the these teams.
+     * Query "teams" in comparison also restrict access to the team-member but NOT for Admins.
+     *
+     * Use this method if you always want a filtered list, no matter the user permissions.
+     *
      * @param Team[] $searchTeams
      */
     public function setSearchTeams(array $searchTeams): void
