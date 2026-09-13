@@ -32,7 +32,7 @@ jobs:
                 uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
                 with:
                     php-version: ${{ matrix.php }}
-                    coverage: pcov
+                    coverage: none # coverage drivers turn php slow
                     extensions: ctype, gd, iconv, intl, mbstring, xml, zip
                     tools: cs2pr, symfony-cli
                 env:
@@ -47,6 +47,14 @@ jobs:
                 with:
                     path: "${{ env.composer_cache_directory }}"
                     key: ${{ runner.os }}-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+
+            - name: "Restore PHPStan result cache"
+              uses: actions/cache/restore@v3
+              with:
+                  path: ./tmp
+                  key: "result-cache-v1-${{ matrix.php-version }}-${{ github.run_id }}"
+                  restore-keys: |
+                      result-cache-v1-${{ matrix.php-version }}-
 
             -   name: Install dependencies
                 run: composer install
@@ -64,10 +72,10 @@ jobs:
                 run: vendor/bin/php-cs-fixer fix --dry-run --verbose --config=.php-cs-fixer.dist.php --using-cache=no --show-progress=none --format=checkstyle | cs2pr
 
             -   name: Run PHPStan for application
-                run: vendor/bin/phpstan analyse -c phpstan.neon --no-progress --error-format=checkstyle | cs2pr
+                run: vendor/bin/phpstan analyse -c phpstan.neon --no-progress -vv
 
             -   name: Run PHPStan for tests
-                run: vendor/bin/phpstan analyse -c tests/phpstan.neon --no-progress --error-format=checkstyle | cs2pr
+                run: vendor/bin/phpstan analyse -c tests/phpstan.neon --no-progress -vv
 
             -   name: Lint codebase
                 run: composer linting
@@ -77,3 +85,10 @@ jobs:
 
             -   name: Check for security issues in packages
                 run: symfony security:check
+
+            - name: "Save result cache"
+              uses: actions/cache/save@v3
+              if: always()
+              with:
+                  path: ./tmp
+                  key: "result-cache-v1-${{ matrix.php-version }}-${{ github.run_id }}"
