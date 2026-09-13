@@ -362,7 +362,7 @@ final class TimesheetController extends BaseApiController
             'include_rate' => $this->isGranted('edit_rate', $timesheet),
             'include_exported' => $this->isGranted('edit_export', $timesheet),
             'include_billable' => $this->isGranted('edit_billable', $timesheet),
-            'include_user' => $this->isGranted('edit', $timesheet),
+            'include_user' => $this->isGranted('edit_other_timesheet'),
             'allow_begin_datetime' => $mode->canUpdateTimesWithAPI(),
             'allow_end_datetime' => $mode->canUpdateTimesWithAPI(),
             'date_format' => self::DATE_FORMAT,
