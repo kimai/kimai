@@ -13,6 +13,8 @@ use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -120,5 +122,54 @@ abstract class AbstractUsersPeriodControllerTestCase extends AbstractControllerB
         self::assertCount(1, $total);
         self::assertMatchesRegularExpression('/\\b100(?:[.,]00)?\\b/u', $total->text());
         self::assertDoesNotMatchRegularExpression('/\\b140(?:[.,]00)?\\b/u', $total->text());
+    }
+
+    public function testRevenueExportExcludesNonBillableEntries(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->importRevenueFixture($this->getUserByRole(User::ROLE_SUPER_ADMIN));
+
+        $this->request($client, \sprintf(
+            '%s?date=%s&sumType=rate',
+            $this->getReportExportUrl(),
+            (new \DateTime())->format('Y-m-d')
+        ));
+
+        $response = $client->getResponse();
+        self::assertTrue($response->isSuccessful());
+        self::assertInstanceOf(BinaryFileResponse::class, $response);
+
+        // the temporary file is deleted while the response is sent, but its content was captured by the browser
+        $values = $this->getWorksheetValues($client->getInternalResponse()->getContent());
+
+        self::assertContains('100', $values);
+        self::assertNotContains('140', $values);
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getWorksheetValues(string $content): array
+    {
+        $filename = tempnam(sys_get_temp_dir(), 'kimai-export-test');
+        self::assertIsString($filename);
+        file_put_contents($filename, $content);
+
+        try {
+            $worksheet = IOFactory::createReader('Xlsx')->load($filename)->getActiveSheet();
+            $highestColumn = Coordinate::columnIndexFromString($worksheet->getHighestDataColumn());
+            $highestRow = $worksheet->getHighestDataRow();
+
+            $values = [];
+            for ($row = 1; $row <= $highestRow; $row++) {
+                for ($column = 1; $column <= $highestColumn; $column++) {
+                    $values[] = trim($worksheet->getCell([$column, $row])->getFormattedValue());
+                }
+            }
+
+            return $values;
+        } finally {
+            unlink($filename);
+        }
     }
 }
