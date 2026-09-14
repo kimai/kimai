@@ -29,6 +29,7 @@ use App\Form\Type\SkinType;
 use App\Form\Type\TimezoneType;
 use App\Form\Type\TrackingModeType;
 use App\Form\Type\UserLanguageType;
+use App\Form\Type\UserLocaleType;
 use App\Form\Type\WeekDaysType;
 use App\Form\Type\YesNoType;
 use App\Timesheet\LockdownService;
@@ -539,6 +540,11 @@ final class SystemConfigurationController extends AbstractController
                     (new Configuration('defaults.user.language'))
                         ->setLabel('language')
                         ->setType(UserLanguageType::class)
+                        ->setOptions(['help' => 'default_value_new']),
+                    (new Configuration('defaults.user.locale'))
+                        ->setLabel('locale')
+                        ->setType(UserLocaleType::class)
+                        ->setValue($this->systemConfiguration->getUserDefaultLocale())
                         ->setOptions(['help' => 'default_value_new']),
                     (new Configuration('defaults.user.theme'))
                         ->setLabel('skin')

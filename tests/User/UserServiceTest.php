@@ -43,6 +43,7 @@ class UserServiceTest extends TestCase
                     'user' => [
                         'timezone' => 'Europe/Berlin',
                         'language' => 'de',
+                        'locale' => 'de_AT',
                         'theme' => 'dark',
                     ],
                 ],
@@ -58,6 +59,7 @@ class UserServiceTest extends TestCase
         self::assertSame([User::ROLE_USER], $user->getRoles());
         self::assertSame('Europe/Berlin', $user->getTimezone());
         self::assertSame('de', $user->getLanguage());
+        self::assertSame('de_AT', $user->getLocale());
         self::assertSame('dark', $user->getSkin());
 
         self::assertSame(WorkingTimeModeNone::ID, $user->getWorkContractMode());

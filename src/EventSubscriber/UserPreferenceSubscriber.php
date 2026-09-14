@@ -90,7 +90,7 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setSection('locale')
                 ->setType(UserLanguageType::class),
 
-            (new UserPreference(UserPreference::LOCALE, $this->systemConfiguration->getUserDefaultLanguage()))
+            (new UserPreference(UserPreference::LOCALE, $this->systemConfiguration->getUserDefaultLocale()))
                 ->setOrder(250)
                 ->setSection('locale')
                 ->setType(UserLocaleType::class),
