@@ -9,6 +9,8 @@
 
 namespace App\Entity;
 
+use App\Form\Type\DatePickerType;
+use App\Form\Type\DateTimePickerType;
 use App\Form\Type\YesNoType;
 use App\Validator\Constraints as Constraints;
 use Doctrine\DBAL\Types\Types;
@@ -99,6 +101,7 @@ trait MetaTableTypeTrait
             YesNoType::class, CheckboxType::class => (\is_string($value) || \is_int($value)) ? (bool) $value : $value,
             IntegerType::class => (\is_string($value) || \is_int($value)) ? (int) $value : $value,
             NumberType::class => (\is_string($value) || \is_float($value)) ? (float) $value : $value,
+            DatePickerType::class, DateTimePickerType::class => (\is_string($value) && $value !== '') ? new \DateTime($value) : $value,
             default => $value
         };
     }
@@ -125,6 +128,8 @@ trait MetaTableTypeTrait
 
         if ($value === null) {
             $this->value = $value;
+        } elseif ($value instanceof \DateTimeInterface) {
+            $this->value = $value->format('Y-m-d H:i:s');
         } elseif (\is_scalar($value)) {
             $this->value = (string) $value;
         }
