@@ -380,6 +380,23 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         self::assertEquals('20:00', $all[1][2]);
     }
 
+    public function testIndexActionShowsDateRangeLabelAndTimezoneHint(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $user = $this->getUserByRole(User::ROLE_TEAMLEAD);
+        $user->setTimezone('America/New_York');
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+
+        $this->request($client, '/export/');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        self::assertStringContainsString('Date range', $content);
+        self::assertStringContainsString('Filter timesheets using your timezone (America/New_York)', $content);
+    }
+
     public function testCreateTemplateIsSecure(): void
     {
         $this->assertUrlIsSecured('/export/template-create');
