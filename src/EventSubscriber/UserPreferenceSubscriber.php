@@ -90,7 +90,9 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->setSection('locale')
                 ->setType(UserLanguageType::class),
 
-            (new UserPreference(UserPreference::LOCALE, $this->systemConfiguration->getUserDefaultLocale()))
+            // existing users without a stored locale are formatted with their language (see User::getLocale()),
+            // new users receive the system default via UserService::prepareNewUser()
+            (new UserPreference(UserPreference::LOCALE, $user->getLanguage()))
                 ->setOrder(250)
                 ->setSection('locale')
                 ->setType(UserLocaleType::class),

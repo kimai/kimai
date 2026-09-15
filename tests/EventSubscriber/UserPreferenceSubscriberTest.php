@@ -105,7 +105,33 @@ class UserPreferenceSubscriberTest extends TestCase
         }
     }
 
-    protected function getSubscriber(bool $seeHourlyRate): UserPreferenceSubscriber
+    public function testMissingLocaleDefaultsToUserLanguage(): void
+    {
+        $sut = $this->getSubscriber(false, 'en_AU');
+
+        // an existing user (created before the locale was split from the language) has no stored locale:
+        // formatting must keep using the language, the system default locale is only for new users
+        $user = new User();
+        $user->setLanguage('de');
+        $sut->loadUserPreferences(new PrepareUserEvent($user));
+
+        self::assertEquals('de', $user->getLocale());
+        self::assertEquals('de', $user->getPreferenceValue(UserPreference::LOCALE));
+    }
+
+    public function testStoredLocaleIsKept(): void
+    {
+        $sut = $this->getSubscriber(false, 'en_AU');
+
+        $user = new User();
+        $user->setLanguage('de');
+        $user->setLocale('de_CH');
+        $sut->loadUserPreferences(new PrepareUserEvent($user));
+
+        self::assertEquals('de_CH', $user->getLocale());
+    }
+
+    protected function getSubscriber(bool $seeHourlyRate, ?string $defaultLocale = null): UserPreferenceSubscriber
     {
         $authMock = $this->createMock(AuthorizationCheckerInterface::class);
         $authMock->method('isGranted')->willReturn($seeHourlyRate);
@@ -115,6 +141,7 @@ class UserPreferenceSubscriberTest extends TestCase
             'defaults' => [
                 'user' => [
                     'language' => 'en',
+                    'locale' => $defaultLocale,
                     'currency' => 'EUR',
                 ]
             ]

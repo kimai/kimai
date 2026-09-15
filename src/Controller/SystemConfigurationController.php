@@ -542,9 +542,9 @@ final class SystemConfigurationController extends AbstractController
                         ->setType(UserLanguageType::class)
                         ->setOptions(['help' => 'default_value_new']),
                     (new Configuration('defaults.user.locale'))
+                        ->setRequired(false)
                         ->setLabel('locale')
                         ->setType(UserLocaleType::class)
-                        ->setValue($this->systemConfiguration->getUserDefaultLocale())
                         ->setOptions(['help' => 'default_value_new']),
                     (new Configuration('defaults.user.theme'))
                         ->setLabel('skin')

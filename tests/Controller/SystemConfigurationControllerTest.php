@@ -287,6 +287,32 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
         self::assertEquals('de_CH', $configService->getUserDefaultLocale());
     }
 
+    public function testUpdateUserConfigWithoutLocaleKeepsLanguageFallback(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/system-config/edit/user');
+
+        // saving the section without touching the locale must not persist the resolved fallback
+        $form = $client->getCrawler()->filter('form[name=system_configuration_form_user]')->form();
+        $client->submit($form, [
+            'system_configuration_form_user' => [
+                'configuration' => [
+                    ['name' => 'defaults.user.timezone', 'value' => 'Pacific/Tahiti'],
+                    ['name' => 'defaults.user.language', 'value' => 'ru'],
+                ]
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/admin/system-config/edit/user'));
+        $client->followRedirect();
+        $this->assertHasFlashSaveSuccess($client);
+
+        $configService = $this->getSystemConfiguration();
+        self::assertEquals('ru', $configService->find('defaults.user.language'));
+        self::assertNull($configService->find('defaults.user.locale'));
+        self::assertEquals('ru', $configService->getUserDefaultLocale());
+    }
+
     public function testUpdateCustomerConfigValidation(): void
     {
         $this->assertFormHasValidationError(
