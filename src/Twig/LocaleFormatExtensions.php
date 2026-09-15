@@ -50,7 +50,10 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
             new TwigFilter('chart_duration', [$this, 'durationChart']),
             new TwigFilter('chart_money', [$this, 'moneyChart']),
             new TwigFilter('duration_decimal', [$this, 'durationDecimal']),
+            new TwigFilter('duration_decimal_value', [$this, 'durationDecimalValue']),
+            new TwigFilter('duration_decimal_format', [$this, 'formatDecimalValue']),
             new TwigFilter('money', [$this, 'money']),
+            new TwigFilter('money_value', [$this, 'moneyValue']),
             new TwigFilter('amount', [$this, 'amount']),
             new TwigFilter('js_format', [$this, 'convertJavascriptFormat']),
             new TwigFilter('pattern', [$this, 'convertHtmlPattern']),
@@ -264,6 +267,21 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
     public function durationDecimal(Timesheet|int|string|null $duration): string
     {
         return $this->getFormatter()->durationDecimal($duration);
+    }
+
+    public function durationDecimalValue(Timesheet|int|string|null $duration): float
+    {
+        return $this->getFormatter()->durationDecimalValue($duration);
+    }
+
+    public function formatDecimalValue(float $value): string
+    {
+        return $this->getFormatter()->formatDecimalValue($value);
+    }
+
+    public function moneyValue(null|int|float $amount): float
+    {
+        return $this->getFormatter()->moneyValue($amount);
     }
 
     /**

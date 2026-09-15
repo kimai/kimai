@@ -1,9 +1,11 @@
 {%- set with_avatar = avatar is defined ? avatar : true -%}
 {%- set show_empty_rows = true -%}
 {%- set absoluteDuration = 0 -%}
+{%- set absoluteDurationDecimal = 0 -%}
 {%- set absoluteInternalRate = 0 -%}
 {%- set absoluteRate = 0 -%}
 {%- set totalsDuration = {} -%}
+{%- set totalsDurationDecimal = {} -%}
 {%- set totalsInternalRate = {} -%}
 {%- set totalsRate = {} -%}
 {%- set showAccountNumber = showAccountNumber is defined ? showAccountNumber : false -%}
@@ -29,6 +31,7 @@
                 {% block period_name %}{% endblock %}
                 {% set columnKey = column|report_date %}
                 {% set totalsDuration = totalsDuration|merge({(columnKey): 0}) %}
+                {% set totalsDurationDecimal = totalsDurationDecimal|merge({(columnKey): 0}) %}
                 {% set totalsInternalRate = totalsInternalRate|merge({(columnKey): 0}) %}
                 {% set totalsRate = totalsRate|merge({(columnKey): 0}) %}
             {% endfor %}
@@ -37,17 +40,22 @@
     <tbody>
     {% for userPeriod in stats|filter(row => row.user is not null)|sort((a,b) => a.user.displayName|lower <=> b.user.displayName|lower) %}
         {% set usersTotalDuration = 0 %}
+        {% set usersTotalDurationDecimal = 0 %}
         {% set usersTotalInternalRate = 0 %}
         {% set usersTotalRate = 0 %}
         {% for period in userPeriod.data %}
+            {% set periodDurationDecimal = period.totalDuration|duration_decimal_value %}
             {% set usersTotalDuration = usersTotalDuration + period.totalDuration %}
+            {% set usersTotalDurationDecimal = usersTotalDurationDecimal + periodDurationDecimal %}
             {% set absoluteDuration = absoluteDuration + period.totalDuration %}
+            {% set absoluteDurationDecimal = absoluteDurationDecimal + periodDurationDecimal %}
             {% set usersTotalInternalRate = usersTotalInternalRate + period.totalInternalRate %}
             {% set absoluteInternalRate = absoluteInternalRate + period.totalInternalRate %}
             {% set usersTotalRate = usersTotalRate + period.totalRate %}
             {% set absoluteRate = absoluteRate + period.totalRate %}
             {% set reportDateKey = period.date|report_date %}
             {% set totalsDuration = totalsDuration|merge({(reportDateKey): (totalsDuration[reportDateKey] + period.totalDuration)}) %}
+            {% set totalsDurationDecimal = totalsDurationDecimal|merge({(reportDateKey): (totalsDurationDecimal[reportDateKey] + periodDurationDecimal)}) %}
             {% set totalsInternalRate = totalsInternalRate|merge({(reportDateKey): (totalsInternalRate[reportDateKey] + period.totalInternalRate)}) %}
             {% set totalsRate = totalsRate|merge({(reportDateKey): (totalsRate[reportDateKey] + period.totalRate)}) %}
         {% endfor %}
@@ -108,7 +116,7 @@
                     {% endblock %}
                 {% else %}
                     {% block total_duration %}
-                        {{ absoluteDuration|duration(decimal) }}
+                        {{ decimal ? absoluteDurationDecimal|duration_decimal_format : absoluteDuration|duration(false) }}
                     {% endblock %}
                 {% endif %}
             </td>
@@ -132,7 +140,7 @@
                 {% for id, total in totalsDuration %}
                     <td class="text-center text-nowrap{% block total_duration_period_cell_class %}{% endblock %}"{% block total_duration_period_cell_attribute %}{% endblock %}>
                         {% block total_duration_period %}
-                            {{ total|duration(decimal) }}
+                            {{ decimal ? totalsDurationDecimal[id]|duration_decimal_format : total|duration(false) }}
                         {% endblock %}
                     </td>
                 {% endfor %}

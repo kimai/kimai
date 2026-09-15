@@ -2950,7 +2950,7 @@ parameters:
             path: src/Utils/LocaleFormatter.php
 
         -
-            message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:durationDecimal\\(\\) should return string but returns string\\|false\\.$#"
+            message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:formatDecimalValue\\(\\) should return string but returns string\\|false\\.$#"
             count: 1
             path: src/Utils/LocaleFormatter.php
 

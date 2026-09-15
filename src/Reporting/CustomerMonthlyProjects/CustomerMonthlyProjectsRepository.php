@@ -86,6 +86,14 @@ final class CustomerMonthlyProjectsRepository
             $activityIds[$activityId] = $activityId;
             $userIds[$userId] = $userId;
 
+            // this row is the leaf: exactly one (project, activity, user) group, so its own
+            // duration/rate/internalRate need no reconciliation. Rounding and summing it here,
+            // instead of rounding the raw second/cent sums accumulated below, is what makes the
+            // activity and project totals equal the sum of the leaf values a reader adds up.
+            $durationDecimal = round(((int) $row['duration']) / 3600, 2);
+            $rateDecimal = round((float) $row['rate'], 2);
+            $internalRateDecimal = round((float) $row['internalRate'], 2);
+
             if (!isset($stats[$projectId])) {
                 $stats[$projectId] = [
                     'id' => $projectId,
@@ -94,15 +102,21 @@ final class CustomerMonthlyProjectsRepository
                     'name' => null,
                     'activities' => [],
                     'duration' => 0,
+                    'durationDecimal' => 0.0,
                     'rate' => 0,
+                    'rateDecimal' => 0.0,
                     'internalRate' => 0,
+                    'internalRateDecimal' => 0.0,
                     'max_users' => 0,
                 ];
             }
 
             $stats[$projectId]['duration'] += (int) $row['duration'];
+            $stats[$projectId]['durationDecimal'] += $durationDecimal;
             $stats[$projectId]['rate'] += (int) $row['rate'];
+            $stats[$projectId]['rateDecimal'] += $rateDecimal;
             $stats[$projectId]['internalRate'] += (int) $row['internalRate'];
+            $stats[$projectId]['internalRateDecimal'] += $internalRateDecimal;
 
             if (!isset($stats[$projectId]['activities'][$activityId])) {
                 $stats[$projectId]['activities'][$activityId] = [
@@ -110,14 +124,20 @@ final class CustomerMonthlyProjectsRepository
                     'name' => null,
                     'users' => [],
                     'duration' => 0,
+                    'durationDecimal' => 0.0,
                     'rate' => 0,
+                    'rateDecimal' => 0.0,
                     'internalRate' => 0,
+                    'internalRateDecimal' => 0.0,
                 ];
             }
 
             $stats[$projectId]['activities'][$activityId]['duration'] += (int) $row['duration'];
+            $stats[$projectId]['activities'][$activityId]['durationDecimal'] += $durationDecimal;
             $stats[$projectId]['activities'][$activityId]['rate'] += (int) $row['rate'];
+            $stats[$projectId]['activities'][$activityId]['rateDecimal'] += $rateDecimal;
             $stats[$projectId]['activities'][$activityId]['internalRate'] += (int) $row['internalRate'];
+            $stats[$projectId]['activities'][$activityId]['internalRateDecimal'] += $internalRateDecimal;
 
             if (!isset($stats[$projectId]['activities'][$activityId]['users'][$userId])) {
                 $stats[$projectId]['activities'][$activityId]['users'][$userId] = [

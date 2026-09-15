@@ -67,8 +67,11 @@ trait RendererTrait
                     'activities' => [],
                     'currency' => $currency,
                     'rate' => 0,
+                    'rateDecimal' => 0.0,
                     'rate_internal' => 0,
+                    'rate_internalDecimal' => 0.0,
                     'duration' => 0,
+                    'durationDecimal' => 0.0,
                     'type' => [],
                     'types' => [],
                     'users' => []
@@ -106,8 +109,11 @@ trait RendererTrait
                     'activity' => '',
                     'currency' => $currency,
                     'rate' => 0,
+                    'rateDecimal' => 0.0,
                     'rate_internal' => 0,
+                    'rate_internalDecimal' => 0.0,
                     'duration' => 0,
+                    'durationDecimal' => 0.0,
                     'users' => []
                 ];
 
@@ -142,28 +148,41 @@ trait RendererTrait
             $rate = $exportItem->getRate();
             $internalRate = $exportItem->getInternalRate() ?? 0;
 
+            // this export item is the leaf that print/PDF templates actually render as one row,
+            // so rounding it here - once per item - and summing those rounded values into the
+            // *Decimal fields below is what makes a printed total equal the sum of its printed rows
+            $rateDecimal = round($rate, 2);
+            $internalRateDecimal = round($internalRate, 2);
+            $durationDecimal = round($duration / 3600, 2);
+
             // rate
             $summary[$id]['rate'] += $rate;
+            $summary[$id]['rateDecimal'] += $rateDecimal;
             $summary[$id]['type'][$type]['rate'] += $rate;
             $summary[$id]['types'][$type][$category]['rate'] += $rate;
             $summary[$id]['users'][$userId]['rate'] += $rate;
             $summary[$id]['activities'][$activityId]['rate'] += $rate;
+            $summary[$id]['activities'][$activityId]['rateDecimal'] += $rateDecimal;
             $summary[$id]['activities'][$activityId]['users'][$userId]['rate'] += $rate;
 
             // internal rate
             $summary[$id]['rate_internal'] += $internalRate;
+            $summary[$id]['rate_internalDecimal'] += $internalRateDecimal;
             $summary[$id]['type'][$type]['rate_internal'] += $internalRate;
             $summary[$id]['types'][$type][$category]['rate_internal'] += $internalRate;
             $summary[$id]['users'][$userId]['rate_internal'] += $internalRate;
             $summary[$id]['activities'][$activityId]['rate_internal'] += $internalRate;
+            $summary[$id]['activities'][$activityId]['rate_internalDecimal'] += $internalRateDecimal;
             $summary[$id]['activities'][$activityId]['users'][$userId]['rate_internal'] += $internalRate;
 
             // duration
             $summary[$id]['duration'] += $duration;
+            $summary[$id]['durationDecimal'] += $durationDecimal;
             $summary[$id]['type'][$type]['duration'] += $duration;
             $summary[$id]['types'][$type][$category]['duration'] += $duration;
             $summary[$id]['users'][$userId]['duration'] += $duration;
             $summary[$id]['activities'][$activityId]['duration'] += $duration;
+            $summary[$id]['activities'][$activityId]['durationDecimal'] += $durationDecimal;
             $summary[$id]['activities'][$activityId]['users'][$userId]['duration'] += $duration;
         }
 

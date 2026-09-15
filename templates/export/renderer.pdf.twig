@@ -4,8 +4,11 @@
 {% set now = create_date('now', app.user) %}
 {# internal variables to keep stats #}
 {% set duration = 0 %}
+{% set durationDecimal = 0 %}
 {% set rate = 0 %}
+{% set rateDecimal = 0 %}
 {% set rateInternal = 0 %}
+{% set rateInternalDecimal = 0 %}
 {% set currency = false %}
 <head>
     <title>{{ title }}</title>
@@ -95,19 +98,28 @@ mpdf-->
             {% set showTotalSummary = true %}
             {% set customer = null %}
             {% set customerDuration = 0 %}
+            {% set customerDurationDecimal = 0 %}
             {% set customerRate = 0 %}
+            {% set customerRateDecimal = 0 %}
             {% set customerInternalRate = 0 %}
+            {% set customerInternalRateDecimal = 0 %}
             {% set customerCurrency = null %}
             {% set customerCount = 0 %}
             {% set multiCurrency = false %}
             {% set totalDuration = 0 %}
+            {% set totalDurationDecimal = 0 %}
             {% set totalInternalRate = 0 %}
+            {% set totalInternalRateDecimal = 0 %}
             {% set totalRate = 0 %}
+            {% set totalRateDecimal = 0 %}
             {% for id, summary in summaries %}
                 <!-- CONTENT_PART -->
                 {% set totalDuration = totalDuration + summary.duration %}
+                {% set totalDurationDecimal = totalDurationDecimal + summary.durationDecimal %}
                 {% set totalInternalRate = totalInternalRate + summary.rate_internal %}
+                {% set totalInternalRateDecimal = totalInternalRateDecimal + summary.rate_internalDecimal %}
                 {% set totalRate = totalRate + summary.rate %}
+                {% set totalRateDecimal = totalRateDecimal + summary.rateDecimal %}
                 {% if customerCurrency is not null and customerCurrency is not same as(summary.currency) %}
                     {% set multiCurrency = true %}
                 {% endif %}
@@ -121,11 +133,11 @@ mpdf-->
                             {% if summaryColumn == 'duration' %}
                                 <td class="totals duration">{{ customerDuration|duration }}</td>
                             {% elseif summaryColumn == 'duration_decimal' %}
-                                <td class="totals duration">{{ customerDuration|duration(true) }}</td>
+                                <td class="totals duration">{{ customerDurationDecimal|duration_decimal_format }}</td>
                             {% elseif summaryColumn == 'internalRate' %}
-                                <td class="totals cost">{{ customerInternalRate|money(customerCurrency) }}</td>
+                                <td class="totals cost">{{ customerInternalRateDecimal|money(customerCurrency) }}</td>
                             {% elseif summaryColumn == 'rate' %}
-                                <td class="totals cost">{{ customerRate|money(customerCurrency) }}</td>
+                                <td class="totals cost">{{ customerRateDecimal|money(customerCurrency) }}</td>
                             {% else %}
                                 <td></td>
                             {% endif %}
@@ -134,8 +146,11 @@ mpdf-->
                     {% set customerCurrency = summary.currency %}
                     {% set customer = summary.customer %}
                     {% set customerDuration = 0 %}
+                    {% set customerDurationDecimal = 0 %}
                     {% set customerRate = 0 %}
+                    {% set customerRateDecimal = 0 %}
                     {% set customerInternalRate = 0 %}
+                    {% set customerInternalRateDecimal = 0 %}
                     {% set customerCount = 0 %}
                 {% endif %}
                 <tr class="{{ cycle(['odd', 'even'], customerCount) }}">
@@ -162,17 +177,20 @@ mpdf-->
                         {% elseif summaryColumn == 'duration' %}
                             <td class="duration">{{ summary.duration|duration }}</td>
                         {% elseif summaryColumn == 'duration_decimal' %}
-                            <td class="duration">{{ summary.duration|duration(true) }}</td>
+                            <td class="duration">{{ summary.durationDecimal|duration_decimal_format }}</td>
                         {% elseif summaryColumn == 'internalRate' %}
-                            <td class="cost">{{ summary.rate_internal|money(summary.currency) }}</td>
+                            <td class="cost">{{ summary.rate_internalDecimal|money(summary.currency) }}</td>
                         {% elseif summaryColumn == 'rate' %}
-                            <td class="cost">{{ summary.rate|money(summary.currency) }}</td>
+                            <td class="cost">{{ summary.rateDecimal|money(summary.currency) }}</td>
                         {% endif %}
                     {% endfor %}
                 </tr>
                 {% set customerDuration = customerDuration + summary.duration %}
+                {% set customerDurationDecimal = customerDurationDecimal + summary.durationDecimal %}
                 {% set customerRate = customerRate + summary.rate %}
+                {% set customerRateDecimal = customerRateDecimal + summary.rateDecimal %}
                 {% set customerInternalRate = customerInternalRate + summary.rate_internal %}
+                {% set customerInternalRateDecimal = customerInternalRateDecimal + summary.rate_internalDecimal %}
                 {% set customerCount = customerCount + 1 %}
             {% endfor %}
             {% if showCustomerSummary and customer is not same as(null) %}
@@ -181,11 +199,11 @@ mpdf-->
                     {% if summaryColumn == 'duration' %}
                         <td class="totals duration">{{ customerDuration|duration }}</td>
                     {% elseif summaryColumn == 'duration_decimal' %}
-                        <td class="totals duration">{{ customerDuration|duration(true) }}</td>
+                        <td class="totals duration">{{ customerDurationDecimal|duration_decimal_format }}</td>
                     {% elseif summaryColumn == 'internalRate' %}
-                        <td class="totals cost">{{ customerInternalRate|money(customerCurrency) }}</td>
+                        <td class="totals cost">{{ customerInternalRateDecimal|money(customerCurrency) }}</td>
                     {% elseif summaryColumn == 'rate' %}
-                        <td class="totals cost">{{ customerRate|money(customerCurrency) }}</td>
+                        <td class="totals cost">{{ customerRateDecimal|money(customerCurrency) }}</td>
                     {% else %}
                         <td></td>
                     {% endif %}
@@ -201,17 +219,17 @@ mpdf-->
                     {% if summaryColumn == 'duration' %}
                         <td class="totals duration">{{ totalDuration|duration }}</td>
                     {% elseif summaryColumn == 'duration_decimal' %}
-                        <td class="totals duration">{{ totalDuration|duration(true) }}</td>
+                        <td class="totals duration">{{ totalDurationDecimal|duration_decimal_format }}</td>
                     {% elseif summaryColumn == 'internalRate' %}
                         <td class="totals cost">
                             {% if not multiCurrency %}
-                                {{ totalInternalRate|money(customerCurrency) }}
+                                {{ totalInternalRateDecimal|money(customerCurrency) }}
                             {% endif %}
                         </td>
                     {% elseif summaryColumn == 'rate' %}
                         <td class="totals cost">
                             {% if not multiCurrency %}
-                                {{ totalRate|money(customerCurrency) }}
+                                {{ totalRateDecimal|money(customerCurrency) }}
                             {% endif %}
                         </td>
                     {% elseif summaryColumn not in ['customer', 'project'] %}
@@ -253,6 +271,7 @@ mpdf-->
         {% for entry in entries %}
             <!-- CONTENT_PART -->
             {% set duration = duration + entry.duration %}
+            {% set durationDecimal = durationDecimal + (entry.duration|duration_decimal_value) %}
             {% set entryCurrency = entry.project.customer.currency %}
             {% if currency is same as(false) %}
                 {% set currency = entryCurrency %}
@@ -263,7 +282,9 @@ mpdf-->
             {# no check for is_granted('view_rate', entry) because it is only available for timesheets,
                but maybe missing for other potential export repositories #}
             {% set rate = rate + entry.rate %}
+            {% set rateDecimal = rateDecimal + (entry.rate|money_value) %}
             {% set rateInternal = rateInternal + entry.internalRate %}
+            {% set rateInternalDecimal = rateInternalDecimal + (entry.internalRate|money_value) %}
             <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
                 {% for id, col in columns %}
                     {% set column = col.name %}
@@ -308,12 +329,14 @@ mpdf-->
         {% endfor %}
         <tr class="summary">
             {% for id, column in columns %}
-                {% if id in ['duration', 'duration_decimal', 'duration_seconds'] %}
-                    <td class="totals duration">{{ duration|duration(id == 'duration_decimal') }}</td>
+                {% if id == 'duration_decimal' %}
+                    <td class="totals duration">{{ durationDecimal|duration_decimal_format }}</td>
+                {% elseif id in ['duration', 'duration_seconds'] %}
+                    <td class="totals duration">{{ duration|duration(false) }}</td>
                 {% elseif id == 'internal_rate' %}
-                    <td class="totals cost">{% if currency is not null %}{{ rateInternal|money(currency) }}{% endif %}</td>
+                    <td class="totals cost">{% if currency is not null %}{{ rateInternalDecimal|money(currency) }}{% endif %}</td>
                 {% elseif id == 'rate' %}
-                    <td class="totals cost">{% if currency is not null %}{{ rate|money(currency) }}{% endif %}</td>
+                    <td class="totals cost">{% if currency is not null %}{{ rateDecimal|money(currency) }}{% endif %}</td>
                 {% else %}
                     <td></td>
                 {% endif %}
