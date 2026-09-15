@@ -9,9 +9,12 @@
 
 namespace App\Tests\Controller\Reporting;
 
+use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -26,6 +29,23 @@ abstract class AbstractUsersPeriodControllerTestCase extends AbstractControllerB
         $fixture->setAmountRunning(10);
         $fixture->setUser($this->getUserByRole($role));
         $fixture->setStartDate(new \DateTime());
+        $this->importFixture($fixture);
+    }
+
+    protected function importRevenueFixture(User $user): void
+    {
+        $counter = 0;
+        $fixture = new TimesheetFixtures();
+        $fixture->setAmount(2);
+        $fixture->setUser($user);
+        $fixture->setFixedStartDate(new \DateTime('today 10:00'));
+        $fixture->setCallback(static function (Timesheet $timesheet) use (&$counter): void {
+            $rate = $counter === 0 ? 100.0 : 40.0;
+            $timesheet->setFixedRate($rate);
+            $timesheet->setRate($rate);
+            $timesheet->setBillable($counter === 0);
+            $counter++;
+        });
         $this->importFixture($fixture);
     }
 
@@ -85,5 +105,71 @@ abstract class AbstractUsersPeriodControllerTestCase extends AbstractControllerB
         self::assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));
         self::assertStringContainsString('attachment; filename=kimai-export-users-', $response->headers->get('Content-Disposition'));
         self::assertStringContainsString('.xlsx', $response->headers->get('Content-Disposition'));
+    }
+
+    public function testRevenueExcludesNonBillableEntries(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->importRevenueFixture($this->getUserByRole(User::ROLE_SUPER_ADMIN));
+
+        $this->assertAccessIsGranted($client, \sprintf(
+            '%s?date=%s&sumType=rate',
+            $this->getReportUrl(),
+            (new \DateTime())->format('Y-m-d')
+        ));
+
+        $total = $client->getCrawler()->filterXPath("//table[contains(@class, 'dataTable')]/tfoot/tr[contains(@class, 'summary')]/td[2]");
+        self::assertCount(1, $total);
+        self::assertMatchesRegularExpression('/\\b100(?:[.,]00)?\\b/u', $total->text());
+        self::assertDoesNotMatchRegularExpression('/\\b140(?:[.,]00)?\\b/u', $total->text());
+    }
+
+    public function testRevenueExportExcludesNonBillableEntries(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->importRevenueFixture($this->getUserByRole(User::ROLE_SUPER_ADMIN));
+
+        $this->request($client, \sprintf(
+            '%s?date=%s&sumType=rate',
+            $this->getReportExportUrl(),
+            (new \DateTime())->format('Y-m-d')
+        ));
+
+        $response = $client->getResponse();
+        self::assertTrue($response->isSuccessful());
+        self::assertInstanceOf(BinaryFileResponse::class, $response);
+
+        // the temporary file is deleted while the response is sent, but its content was captured by the browser
+        $values = $this->getWorksheetValues($client->getInternalResponse()->getContent());
+
+        self::assertContains('100', $values);
+        self::assertNotContains('140', $values);
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getWorksheetValues(string $content): array
+    {
+        $filename = tempnam(sys_get_temp_dir(), 'kimai-export-test');
+        self::assertIsString($filename);
+        file_put_contents($filename, $content);
+
+        try {
+            $worksheet = IOFactory::createReader('Xlsx')->load($filename)->getActiveSheet();
+            $highestColumn = Coordinate::columnIndexFromString($worksheet->getHighestDataColumn());
+            $highestRow = $worksheet->getHighestDataRow();
+
+            $values = [];
+            for ($row = 1; $row <= $highestRow; $row++) {
+                for ($column = 1; $column <= $highestColumn; $column++) {
+                    $values[] = trim($worksheet->getCell([$column, $row])->getFormattedValue());
+                }
+            }
+
+            return $values;
+        } finally {
+            unlink($filename);
+        }
     }
 }
