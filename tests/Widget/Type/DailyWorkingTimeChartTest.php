@@ -40,6 +40,8 @@ class DailyWorkingTimeChartTest extends TestCase
         self::assertNull($options['begin']);
         self::assertNull($options['end']);
         self::assertEquals('', $options['color']);
+        self::assertEquals('bar', $options['type']);
+        self::assertEquals('day', $options['groupBy']);
     }
 
     public function testSetter(): void
@@ -55,9 +57,10 @@ class DailyWorkingTimeChartTest extends TestCase
     {
         $sut = $this->createSut();
 
-        $options = $sut->getOptions(['type' => 'xxx']);
+        $options = $sut->getOptions(['type' => 'xxx', 'groupBy' => 'xxx']);
         self::assertIsString($options['id']);
         self::assertStringStartsWith('DailyWorkingTimeChart_', $options['id']);
-        self::assertEquals('xxx', $options['type']);
+        self::assertEquals('bar', $options['type']);
+        self::assertEquals('day', $options['groupBy']);
     }
 }
