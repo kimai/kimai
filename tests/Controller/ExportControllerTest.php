@@ -9,7 +9,10 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\Activity;
+use App\Entity\Customer;
 use App\Entity\ExportTemplate;
+use App\Entity\Project;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
@@ -18,6 +21,7 @@ use App\Tests\DataFixtures\TimesheetFixtures;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DomCrawler\Field\FormField;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 #[Group('integration')]
@@ -313,6 +317,67 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         foreach ($timesheets as $timesheet) {
             self::assertTrue($timesheet->isExported());
         }
+    }
+
+    public function testExportActionCsvRendersDateAndTimeInViewerTimezone(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $user = $this->getUserByRole(User::ROLE_ADMIN);
+        $user->setTimezone('America/New_York');
+        $em->persist($user);
+        $em->flush();
+
+        $customer = new Customer('Acme');
+        $customer->setCountry('US');
+        $customer->setCurrency('USD');
+        $customer->setTimezone('America/New_York');
+        $em->persist($customer);
+        $project = new Project();
+        $project->setName('Project');
+        $project->setCustomer($customer);
+        $em->persist($project);
+        $activity = new Activity();
+        $activity->setName('Activity');
+        $activity->setProject($project);
+        $em->persist($activity);
+        $em->flush();
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($user);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+        $timesheet->setBegin(new \DateTime('2026-08-21 01:00:00', new \DateTimeZone('Europe/Berlin')));
+        $timesheet->setEnd(new \DateTime('2026-08-21 02:00:00', new \DateTimeZone('Europe/Berlin')));
+        $em->persist($timesheet);
+        $em->flush();
+
+        $this->request($client, '/export/');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $this->submitExport($client, ['renderer' => 'csv', 'daterange' => '2026-08-20 - 2026-08-20']);
+
+        $response = $client->getResponse();
+        self::assertTrue($response->isSuccessful());
+        self::assertInstanceOf(BinaryFileResponse::class, $response);
+
+        // the file itself was already removed by BinaryFileResponse::deleteFileAfterSend()
+        $content = $client->getInternalResponse()->getContent();
+        self::assertIsString($content);
+        self::assertNotEmpty($content);
+
+        $rows = array_filter(explode(PHP_EOL, $content), fn (string $line) => $line !== '');
+        $all = [];
+        foreach ($rows as $row) {
+            $all[] = str_getcsv($row, ',', '"', '\\');
+        }
+
+        self::assertEquals('Date (America/New_York)', $all[0][0]);
+        self::assertEquals('2026-08-20', $all[1][0]);
+        self::assertEquals('19:00', $all[1][1]);
+        self::assertEquals('20:00', $all[1][2]);
     }
 
     public function testCreateTemplateIsSecure(): void
