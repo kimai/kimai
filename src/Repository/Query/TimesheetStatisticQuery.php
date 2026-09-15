@@ -9,12 +9,14 @@
 
 namespace App\Repository\Query;
 
+use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\User;
 
 final class TimesheetStatisticQuery
 {
     private ?Project $project = null;
+    private ?Customer $customer = null;
 
     /**
      * @param array<User> $users
@@ -53,5 +55,15 @@ final class TimesheetStatisticQuery
     public function setProject(?Project $project): void
     {
         $this->project = $project;
+    }
+
+    public function getCustomer(): ?Customer
+    {
+        return $this->customer;
+    }
+
+    public function setCustomer(?Customer $customer): void
+    {
+        $this->customer = $customer;
     }
 }

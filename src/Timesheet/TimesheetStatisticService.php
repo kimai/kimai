@@ -35,6 +35,7 @@ final class TimesheetStatisticService
         $end = $query->getEnd();
         $users = $query->getUsers();
         $project = $query->getProject();
+        $customer = $query->getCustomer();
 
         /** @var DailyStatistic[] $stats */
         $stats = [];
@@ -73,6 +74,14 @@ final class TimesheetStatisticService
             $qb
                 ->andWhere($qb->expr()->eq('t.project', ':project'))
                 ->setParameter('project', $project)
+            ;
+        }
+
+        if ($customer !== null) {
+            $qb
+                ->join('t.project', 'p')
+                ->andWhere($qb->expr()->eq('p.customer', ':customer'))
+                ->setParameter('customer', $customer)
             ;
         }
 
@@ -287,6 +296,7 @@ final class TimesheetStatisticService
         $end = $query->getEnd();
         $users = $query->getUsers();
         $project = $query->getProject();
+        $customer = $query->getCustomer();
 
         /** @var MonthlyStatistic[] $stats */
         $stats = [];
@@ -322,6 +332,14 @@ final class TimesheetStatisticService
             $qb
                 ->andWhere($qb->expr()->eq('t.project', ':project'))
                 ->setParameter('project', $project)
+            ;
+        }
+
+        if ($customer !== null) {
+            $qb
+                ->join('t.project', 'p')
+                ->andWhere($qb->expr()->eq('p.customer', ':customer'))
+                ->setParameter('customer', $customer)
             ;
         }
 

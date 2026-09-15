@@ -9,6 +9,7 @@
 
 namespace App\Reporting\WeeklyUserList;
 
+use App\Form\Type\CustomerType;
 use App\Form\Type\ProjectType;
 use App\Form\Type\ReportSumType;
 use App\Form\Type\TeamType;
@@ -31,6 +32,10 @@ final class WeeklyUserListForm extends AbstractType
         ]);
         $builder->add('team', TeamType::class, [
             'multiple' => false,
+            'required' => false,
+            'width' => false,
+        ]);
+        $builder->add('customer', CustomerType::class, [
             'required' => false,
             'width' => false,
         ]);
