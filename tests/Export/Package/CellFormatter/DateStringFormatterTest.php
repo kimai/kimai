@@ -43,6 +43,18 @@ class DateStringFormatterTest extends TestCase
         self::assertEquals('Europe/Berlin', $date->getTimezone()->getName());
     }
 
+    public function testFormatValueIsUnchangedWhenGivenTimezoneMatchesTheRecordedTimezone(): void
+    {
+        $withoutTimezone = new DateStringFormatter();
+        $withMatchingTimezone = new DateStringFormatter(new \DateTimeZone('Europe/Berlin'));
+
+        // 2026-10-25 03:30 CEST is the last wall-clock instant before Europe/Berlin falls back to CET
+        $date = new \DateTime('2026-10-25 03:30:00', new \DateTimeZone('Europe/Berlin'));
+
+        self::assertEquals($withoutTimezone->formatValue($date), $withMatchingTimezone->formatValue($date));
+        self::assertEquals('2026-10-25', $withMatchingTimezone->formatValue($date));
+    }
+
     public function testFormatValueUsesTheOffsetInEffectAtThatInstantAcrossDst(): void
     {
         $formatter = new DateStringFormatter(new \DateTimeZone('Europe/Berlin'));

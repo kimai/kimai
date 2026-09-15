@@ -113,6 +113,8 @@ class HtmlRendererTest extends AbstractRendererTestCase
         self::assertIsString($content);
 
         self::assertStringContainsString('Date (America/New_York)', $content);
+        self::assertStringContainsString('19:00', $content);
+        self::assertStringContainsString('20:00', $content);
         self::assertStringNotContainsString('2026-08-21', $content);
     }
 }

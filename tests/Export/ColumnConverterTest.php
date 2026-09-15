@@ -150,6 +150,37 @@ class ColumnConverterTest extends TestCase
         self::assertEquals(['%timezone%' => 'America/New_York'], $columns['date']->getHeaderParams());
     }
 
+    public function testAppliesTheSameQueryTimezoneRegardlessOfWhichUsersEntryIsRendered(): void
+    {
+        $dispatcher = new EventDispatcher();
+        $security = $this->createMock(Security::class);
+
+        $template = new DefaultTemplate($dispatcher, 'foo');
+        $query = new TimesheetQuery();
+        $query->setTimezone(new \DateTimeZone('America/New_York'));
+
+        $sut = new ColumnConverter($dispatcher, $security);
+        $columns = $sut->getColumns($template, $query);
+
+        // two entries, each recorded in a different user's own timezone
+        $entryFromBerlinUser = new Timesheet();
+        $entryFromBerlinUser->setBegin(new \DateTime('2026-08-21 01:00:00', new \DateTimeZone('Europe/Berlin')));
+
+        $entryFromTokyoUser = new Timesheet();
+        $entryFromTokyoUser->setBegin(new \DateTime('2026-08-21 08:00:00', new \DateTimeZone('Asia/Tokyo')));
+
+        $dateFromBerlinUser = $columns['date']->getValue($entryFromBerlinUser);
+        $dateFromTokyoUser = $columns['date']->getValue($entryFromTokyoUser);
+        self::assertInstanceOf(\DateTimeInterface::class, $dateFromBerlinUser);
+        self::assertInstanceOf(\DateTimeInterface::class, $dateFromTokyoUser);
+
+        // Europe/Berlin 2026-08-21 01:00 and Asia/Tokyo 2026-08-21 08:00 are the same instant
+        self::assertEquals('2026-08-20', $dateFromBerlinUser->format('Y-m-d'));
+        self::assertEquals('2026-08-20', $dateFromTokyoUser->format('Y-m-d'));
+        self::assertEquals('America/New_York', $dateFromBerlinUser->getTimezone()->getName());
+        self::assertEquals('America/New_York', $dateFromTokyoUser->getTimezone()->getName());
+    }
+
     public function testKeepsPlainDateHeaderWithoutQueryTimezone(): void
     {
         $dispatcher = new EventDispatcher();

@@ -42,6 +42,17 @@ class TimeFormatterTest extends TestCase
         self::assertEquals('Europe/Berlin', $date->getTimezone()->getName());
     }
 
+    public function testFormatValueIsUnchangedWhenGivenTimezoneMatchesTheRecordedTimezone(): void
+    {
+        $withoutTimezone = new TimeFormatter();
+        $withMatchingTimezone = new TimeFormatter(new \DateTimeZone('Europe/Berlin'));
+
+        $date = new \DateTime('2026-10-25 03:30:00', new \DateTimeZone('Europe/Berlin'));
+
+        self::assertEquals($withoutTimezone->formatValue($date), $withMatchingTimezone->formatValue($date));
+        self::assertEquals('03:30', $withMatchingTimezone->formatValue($date));
+    }
+
     public function testFormatValueThrowsExceptionForNonDateTimeInterface(): void
     {
         $this->expectException(\InvalidArgumentException::class);

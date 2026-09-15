@@ -243,6 +243,9 @@ class PdfTemplateRendererTest extends AbstractRendererTestCase
         self::assertIsString($content);
 
         self::assertStringContainsString('Date (America/New_York)', $content);
+        self::assertStringContainsString('8/20/2026', $content);
+        self::assertStringContainsString('7:00 PM', $content);
+        self::assertStringContainsString('8:00 PM', $content);
         self::assertStringNotContainsString('2026-08-21', $content);
     }
 }
