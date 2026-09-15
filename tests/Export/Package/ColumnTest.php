@@ -109,4 +109,20 @@ class ColumnTest extends TestCase
         $column = new Column('testName', new DateFormatter());
         self::assertEquals('yyyy-mm-dd', $column->getFormat());
     }
+
+    public function testGetHeaderParamsDefaultsToEmptyArray(): void
+    {
+        $formatter = $this->createMock(CellFormatterInterface::class);
+        $column = new Column('testName', $formatter);
+        self::assertEquals([], $column->getHeaderParams());
+    }
+
+    public function testWithHeaderStoresTranslationParams(): void
+    {
+        $formatter = $this->createMock(CellFormatterInterface::class);
+        $column = new Column('testName', $formatter);
+        $column->withHeader('testHeader', ['%timezone%' => 'America/New_York']);
+        self::assertEquals('testHeader', $column->getHeader());
+        self::assertEquals(['%timezone%' => 'America/New_York'], $column->getHeaderParams());
+    }
 }

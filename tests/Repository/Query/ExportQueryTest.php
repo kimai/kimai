@@ -34,6 +34,7 @@ class ExportQueryTest extends TimesheetQueryTest
         $this->assertExportedWith($sut, ExportQuery::STATE_NOT_EXPORTED);
         $this->assertRenderer($sut);
         $this->assertMarkAsExported($sut);
+        $this->assertTimezone($sut);
     }
 
     public function assertMarkAsExported(ExportQuery $sut): void

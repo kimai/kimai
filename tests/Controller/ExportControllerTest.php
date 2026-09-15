@@ -9,7 +9,10 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\Activity;
+use App\Entity\Customer;
 use App\Entity\ExportTemplate;
+use App\Entity\Project;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
@@ -18,6 +21,7 @@ use App\Tests\DataFixtures\TimesheetFixtures;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DomCrawler\Field\FormField;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 #[Group('integration')]
@@ -313,6 +317,136 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         foreach ($timesheets as $timesheet) {
             self::assertTrue($timesheet->isExported());
         }
+    }
+
+    /**
+     * Creates a customer/project/activity/timesheet fixture recorded in Europe/Berlin at
+     * 2026-08-21 01:00-02:00, and switches the given user to America/New_York, so the entry
+     * falls on 2026-08-20 19:00-20:00 when rendered in the viewer's timezone.
+     */
+    private function createBoundaryTimezoneFixture(EntityManager $em, User $user): Timesheet
+    {
+        $user->setTimezone('America/New_York');
+        $em->persist($user);
+        $em->flush();
+
+        $customer = new Customer('Acme');
+        $customer->setCountry('US');
+        $customer->setCurrency('USD');
+        $customer->setTimezone('America/New_York');
+        $em->persist($customer);
+        $project = new Project();
+        $project->setName('Project');
+        $project->setCustomer($customer);
+        $em->persist($project);
+        $activity = new Activity();
+        $activity->setName('Activity');
+        $activity->setProject($project);
+        $em->persist($activity);
+        $em->flush();
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($user);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+        $timesheet->setBegin(new \DateTime('2026-08-21 01:00:00', new \DateTimeZone('Europe/Berlin')));
+        $timesheet->setEnd(new \DateTime('2026-08-21 02:00:00', new \DateTimeZone('Europe/Berlin')));
+        $em->persist($timesheet);
+        $em->flush();
+
+        return $timesheet;
+    }
+
+    public function testExportActionCsvRendersDateAndTimeInViewerTimezone(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $this->createBoundaryTimezoneFixture($em, $this->getUserByRole(User::ROLE_ADMIN));
+
+        $this->request($client, '/export/');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $this->submitExport($client, ['renderer' => 'csv', 'daterange' => '2026-08-20 - 2026-08-20']);
+
+        $response = $client->getResponse();
+        self::assertTrue($response->isSuccessful());
+        self::assertInstanceOf(BinaryFileResponse::class, $response);
+
+        // the file itself was already removed by BinaryFileResponse::deleteFileAfterSend()
+        $content = $client->getInternalResponse()->getContent();
+        self::assertIsString($content);
+        self::assertNotEmpty($content);
+
+        $rows = array_filter(explode(PHP_EOL, $content), fn (string $line) => $line !== '');
+        $all = [];
+        foreach ($rows as $row) {
+            $all[] = str_getcsv($row, ',', '"', '\\');
+        }
+
+        self::assertEquals('Date (America/New_York)', $all[0][0]);
+        self::assertEquals('2026-08-20', $all[1][0]);
+        self::assertEquals('19:00', $all[1][1]);
+        self::assertEquals('20:00', $all[1][2]);
+    }
+
+    public function testPreviewAndCsvExportAgreeOnDateAndTimeForTheSameSearch(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $this->createBoundaryTimezoneFixture($em, $this->getUserByRole(User::ROLE_ADMIN));
+
+        $crawler = $this->request($client, '/export/?performSearch=performSearch&daterange=' . urlencode('2026-08-20 - 2026-08-20'));
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertHasDataTable($client);
+        $previewRow = $crawler->filter('section.content div.datatable_export table.dataTable tbody tr')->first();
+        $previewText = $previewRow->text();
+
+        // the preview renders in locale format (date_short/time filters), CSV in machine format,
+        // but both must agree on the same underlying date and times
+        self::assertStringContainsString('8/20/2026', $previewText);
+        self::assertStringContainsString('7:00 PM', $previewText);
+        self::assertStringContainsString('8:00 PM', $previewText);
+        self::assertStringNotContainsString('8/21/2026', $previewText);
+
+        $this->submitExport($client, ['renderer' => 'csv', 'daterange' => '2026-08-20 - 2026-08-20']);
+        $response = $client->getResponse();
+        self::assertTrue($response->isSuccessful());
+        self::assertInstanceOf(BinaryFileResponse::class, $response);
+
+        $csvContent = $client->getInternalResponse()->getContent();
+        self::assertIsString($csvContent);
+        $rows = array_filter(explode(PHP_EOL, $csvContent), fn (string $line) => $line !== '');
+        $all = [];
+        foreach ($rows as $row) {
+            $all[] = str_getcsv($row, ',', '"', '\\');
+        }
+
+        // preview and CSV must agree on the same date and times for this row
+        self::assertEquals('2026-08-20', $all[1][0]);
+        self::assertEquals('19:00', $all[1][1]);
+        self::assertEquals('20:00', $all[1][2]);
+    }
+
+    public function testIndexActionShowsDateRangeLabelAndTimezoneHint(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $user = $this->getUserByRole(User::ROLE_TEAMLEAD);
+        $user->setTimezone('America/New_York');
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+
+        $this->request($client, '/export/');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        self::assertStringContainsString('Date range', $content);
+        self::assertStringContainsString('Filter timesheets using your timezone (America/New_York)', $content);
     }
 
     public function testCreateTemplateIsSecure(): void
