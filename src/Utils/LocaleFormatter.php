@@ -192,8 +192,13 @@ final class LocaleFormatter
         // NumberFormatter::CURRENCY defaults to half-even rounding, which disagrees with
         // moneyValue() at exact half-cent boundaries (e.g. 2.505 -> ICU €2.50, round() 2.51),
         // so a row rendered here and a total reconciled through moneyValue() must round the
-        // same way or the printed total stops matching the sum of the printed rows.
-        $amount = $this->moneyValue($amount);
+        // same way or the printed total stops matching the sum of the printed rows. When
+        // formatting with a currency symbol, round to that currency's own fraction digits
+        // (3 for KWD/BHD/..., not always 2) so this stays a rounding-mode fix and never
+        // truncates a currency's real precision; the no-currency-symbol path has no currency
+        // to ask and keeps its existing fixed 2-digit precision.
+        $fractionDigits = $withCurrency ? Currencies::getFractionDigits((string) $currency) : 2;
+        $amount = round((float) ($amount ?? 0), $fractionDigits);
 
         if (false === $withCurrency) {
             if (null === $this->moneyFormatterNoCurrency) {

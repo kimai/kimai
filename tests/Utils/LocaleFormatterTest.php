@@ -121,6 +121,17 @@ class LocaleFormatterTest extends TestCase
         self::assertEqualsWithDelta(1.03, $sut->moneyValue(1.025), 0.00001);
     }
 
+    public function testMoneyKeepsThreeFractionDigitsForCurrenciesThatUseThem(): void
+    {
+        $sut = $this->getSut('en');
+
+        // KWD (Kuwaiti dinar) uses 3 fraction digits (fils), not 2. money() must round
+        // to the currency's own precision, not hardcode 2 - otherwise 1.235 prints as
+        // the wrong amount KWD 1.240 instead of the correct KWD 1.235.
+        // ICU separates the currency code from the amount with a non-breaking space (U+00A0).
+        self::assertSame("KWD\u{a0}1.235", $sut->money(1.235, 'KWD'));
+    }
+
     public function testCurrencyFormattingFallsBackToInput(): void
     {
         $sut = $this->getSut('de');
