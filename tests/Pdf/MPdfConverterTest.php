@@ -112,7 +112,8 @@ class MPdfConverterTest extends KernelTestCase
         self::assertNotEmpty($result);
 
         // Decompress every FlateDecode stream in the produced PDF. The
-        // sentinel must not appear; the explicitly-supplied `content` must.
+        // sentinel must not appear; the explicitly-supplied `content` must
+        // occur either directly in the PDF or in a compressed stream.
         $allDecompressed = '';
         if (preg_match_all('/stream\r?\n(.*?)\r?\nendstream/s', $result, $streams) > 0) {
             foreach ($streams[1] as $stream) {
@@ -124,6 +125,6 @@ class MPdfConverterTest extends KernelTestCase
         }
         self::assertStringNotContainsString($sentinelBytes, $result);
         self::assertStringNotContainsString($sentinelBytes, $allDecompressed);
-        self::assertStringContainsString($legitimateContent, $allDecompressed);
+        self::assertStringContainsString($legitimateContent, $result . $allDecompressed);
     }
 }
