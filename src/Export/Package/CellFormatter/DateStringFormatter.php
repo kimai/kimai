@@ -11,18 +11,12 @@ namespace App\Export\Package\CellFormatter;
 
 final class DateStringFormatter implements CellFormatterInterface
 {
-    public function __construct(private readonly ?\DateTimeZone $timezone = null)
-    {
-    }
+    use ConvertsTimezoneTrait;
 
     public function formatValue(mixed $value): mixed
     {
         if ($value instanceof \DateTimeInterface) {
-            if ($this->timezone !== null) {
-                $value = \DateTime::createFromInterface($value)->setTimezone($this->timezone);
-            }
-
-            return $value->format('Y-m-d');
+            return $this->convertToTimezone($value)->format('Y-m-d');
         }
 
         if ($value === null) {
