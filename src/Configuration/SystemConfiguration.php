@@ -158,8 +158,8 @@ final class SystemConfiguration
             return true;
         }
 
-        // if SAML is active, the login form can be deactivated
-        if (!$this->isSamlActive()) {
+        // if SAML or OIDC is active, the login form can be deactivated
+        if (!$this->isSamlActive() && !$this->isOidcActive()) {
             return true;
         }
 
@@ -251,6 +251,130 @@ final class SystemConfiguration
         }
 
         return (string) $attr;
+    }
+
+    public function isOidcActive(): bool
+    {
+        return (bool) $this->find('oidc.activate');
+    }
+
+    public function getOidcTitle(): string
+    {
+        return (string) $this->find('oidc.title');
+    }
+
+    public function getOidcProvider(): ?string
+    {
+        $provider = $this->find('oidc.provider');
+        if (empty($provider)) {
+            return null;
+        }
+
+        return (string) $provider;
+    }
+
+    public function getOidcClientId(): string
+    {
+        return (string) $this->find('oidc.client_id');
+    }
+
+    public function getOidcClientSecret(): string
+    {
+        return (string) $this->find('oidc.client_secret');
+    }
+
+    public function getOidcIssuer(): ?string
+    {
+        $issuer = $this->find('oidc.issuer');
+        if (empty($issuer)) {
+            return null;
+        }
+
+        return (string) $issuer;
+    }
+
+    public function getOidcAuthorizationUrl(): ?string
+    {
+        $url = $this->find('oidc.authorization_url');
+        if (empty($url)) {
+            return null;
+        }
+
+        return (string) $url;
+    }
+
+    public function getOidcTokenUrl(): ?string
+    {
+        $url = $this->find('oidc.token_url');
+        if (empty($url)) {
+            return null;
+        }
+
+        return (string) $url;
+    }
+
+    public function getOidcUserInfoUrl(): ?string
+    {
+        $url = $this->find('oidc.userinfo_url');
+        if (empty($url)) {
+            return null;
+        }
+
+        return (string) $url;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function getOidcScopes(): array
+    {
+        $scopes = $this->find('oidc.scopes');
+        if (empty($scopes)) {
+            return ['openid', 'profile', 'email'];
+        }
+
+        return array_values(array_filter(array_map('trim', explode(' ', (string) $scopes))));
+    }
+
+    public function getOidcUsernameClaim(): string
+    {
+        $claim = $this->find('oidc.username_claim');
+        if (empty($claim)) {
+            return 'preferred_username';
+        }
+
+        return (string) $claim;
+    }
+
+    /**
+     * @return array<int, array{oidc: string, kimai: string}>
+     */
+    public function getOidcAttributeMapping(): array
+    {
+        return $this->findArray('oidc.mapping');
+    }
+
+    public function getOidcRolesClaim(): ?string
+    {
+        $claim = $this->find('oidc.roles.claim');
+        if (empty($claim)) {
+            return null;
+        }
+
+        return (string) $claim;
+    }
+
+    /**
+     * @return array<int, array{oidc: string, kimai: string}>
+     */
+    public function getOidcRolesMapping(): array
+    {
+        return $this->findArray('oidc.roles.mapping');
+    }
+
+    public function isOidcRolesResetOnLogin(): bool
+    {
+        return (bool) $this->find('oidc.roles.resetOnLogin');
     }
 
     public function isLdapActive(): bool
