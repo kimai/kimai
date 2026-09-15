@@ -114,6 +114,20 @@ class TeamRepository extends EntityRepository
     }
 
     /**
+     * Fully hydrates a single Team that was resolved outside this repository, e.g. via
+     * Symfony's #[MapEntity] parameter conversion in the API controllers. Without this,
+     * serializing the team's members triggers two extra queries per member (the member's
+     * user and that user's preferences).
+     */
+    public function loadTeam(Team $team): Team
+    {
+        $loader = new TeamLoader($this->getEntityManager());
+        $loader->loadResults([$team]);
+
+        return $team;
+    }
+
+    /**
      * @return Team[]
      */
     public function getTeamsForQuery(TeamQuery $query): iterable

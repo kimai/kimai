@@ -11,6 +11,7 @@ namespace App\Repository\Loader;
 
 use App\Entity\Project;
 use App\Entity\Team;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -47,13 +48,36 @@ final class TeamLoader implements LoaderInterface
         // required wherever users are shown, e.g. on "Custom details" page
         if (\count($teamIds) > 0) {
             $qb = $em->createQueryBuilder();
-            $qb->select('PARTIAL team.{id}', 'members', 'user')
+            /** @var array<Team> $teamsWithMembers */
+            $teamsWithMembers = $qb->select('PARTIAL team.{id}', 'members', 'user')
                 ->from(Team::class, 'team')
                 ->leftJoin('team.members', 'members')
                 ->leftJoin('members.user', 'user')
                 ->andWhere($qb->expr()->in('team.id', $teamIds))
                 ->getQuery()
                 ->execute();
+
+            $userIds = [];
+            foreach ($teamsWithMembers as $team) {
+                foreach ($team->getMembers() as $member) {
+                    if (($user = $member->getUser()) !== null) {
+                        $userIds[] = $user->getId();
+                    }
+                }
+            }
+            $userIds = array_unique($userIds);
+
+            // used for the "locale" / "language" / "timezone" virtual properties on
+            // TeamMember::getUser(), which otherwise trigger one query per member
+            if (\count($userIds) > 0) {
+                $qb = $em->createQueryBuilder();
+                $qb->select('PARTIAL user.{id}', 'preferences')
+                    ->from(User::class, 'user')
+                    ->leftJoin('user.preferences', 'preferences')
+                    ->andWhere($qb->expr()->in('user.id', $userIds))
+                    ->getQuery()
+                    ->execute();
+            }
 
             // used in UserTeamProjects widget
             $qb = $em->createQueryBuilder();
