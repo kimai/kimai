@@ -12,6 +12,7 @@ namespace App\Form;
 use App\Entity\Team;
 use App\Form\Type\TeamMemberType;
 use App\Form\Type\UserType;
+use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -42,7 +43,11 @@ class TeamEditForm extends AbstractType
                     'type' => 'string',
                     'description' => 'Name of the team',
                 ],
-        ]);
+            ])
+            ->add('visible', YesNoType::class, [
+                'help' => 'team_visibility',
+            ])
+        ;
 
         $this->addColor($builder);
 

@@ -2146,6 +2146,10 @@
         <source>reopen</source>
         <target>Wieder öffnen</target>
       </trans-unit>
+      <trans-unit id="e80FZFi" resname="team_visibility">
+        <source>team_visibility</source>
+        <target>Unsichtbare Teams werden in Auswahldialogen nicht angezeigt und ihre Mitglieder werden in Listenansichten nicht berücksichtigt (z. B. für unternehmensweite Teams).</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
