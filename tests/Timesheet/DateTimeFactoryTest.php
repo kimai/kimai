@@ -21,13 +21,13 @@ class DateTimeFactoryTest extends TestCase
 {
     public const TEST_TIMEZONE = 'Europe/London';
 
-    protected static function createDateTimeFactory(?string $timezone = null, bool $sunday = false): DateTimeFactory
+    protected static function createDateTimeFactory(?string $timezone = null, bool|string $firstDayOfWeek = 'monday'): DateTimeFactory
     {
         if (null === $timezone) {
-            return new DateTimeFactory(null, $sunday);
+            return new DateTimeFactory(null, $firstDayOfWeek);
         }
 
-        return new DateTimeFactory(new DateTimeZone($timezone), $sunday);
+        return new DateTimeFactory(new DateTimeZone($timezone), $firstDayOfWeek);
     }
 
     public function testGetTimezone(): void
@@ -112,8 +112,8 @@ class DateTimeFactoryTest extends TestCase
     public static function getStartOfWeekData()
     {
         yield [self::createDateTimeFactory(self::TEST_TIMEZONE), 'Monday', 23, 1];
-        yield [self::createDateTimeFactory(self::TEST_TIMEZONE, false), 'Monday', 23, 1];
-        yield [self::createDateTimeFactory(self::TEST_TIMEZONE, true), 'Sunday', 22, 7];
+        yield [self::createDateTimeFactory(self::TEST_TIMEZONE, 'sunday'), 'Sunday', 22, 7];
+        yield [self::createDateTimeFactory(self::TEST_TIMEZONE, 'saturday'), 'Saturday', 21, 6];
     }
 
     #[DataProvider('getStartOfWeekData')]
@@ -133,6 +133,11 @@ class DateTimeFactoryTest extends TestCase
         self::assertEquals($expected->format('Y'), $dateTime->format('Y'));
         self::assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
 
+        if ($day === 6) {
+            self::assertSame('2018-07-28 00:00:00', $sut->getStartOfWeek('2018-07-28')->format('Y-m-d H:i:s'));
+            self::assertSame('2018-08-03 23:59:59', $sut->getEndOfWeek('2018-07-28')->format('Y-m-d H:i:s'));
+        }
+
         $dateTime = $sut->getStartOfWeek();
 
         self::assertEquals(0, $dateTime->format('H'));
@@ -147,8 +152,8 @@ class DateTimeFactoryTest extends TestCase
     public static function getEndOfWeekData()
     {
         yield [self::createDateTimeFactory(self::TEST_TIMEZONE), 'Sunday', 29, 7];
-        yield [self::createDateTimeFactory(self::TEST_TIMEZONE, false), 'Sunday', 29, 7];
-        yield [self::createDateTimeFactory(self::TEST_TIMEZONE, true), 'Saturday', 28, 6];
+        yield [self::createDateTimeFactory(self::TEST_TIMEZONE, 'sunday'), 'Saturday', 28, 6];
+        yield [self::createDateTimeFactory(self::TEST_TIMEZONE, 'saturday'), 'Friday', 27, 5];
     }
 
     #[DataProvider('getEndOfWeekData')]
@@ -177,6 +182,27 @@ class DateTimeFactoryTest extends TestCase
         self::assertEquals($dayName, $dateTime->format('l'));
         // month and year can be different when the week started at the end of the month
         self::assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
+    }
+
+    public static function getBooleanFirstDayOfWeekData(): iterable
+    {
+        return [[true, 'Sunday'], [false, 'Monday']];
+    }
+
+    #[DataProvider('getBooleanFirstDayOfWeekData')]
+    public function testBooleanFirstDayOfWeekIsDeprecated(bool $firstDayOfWeek, string $expected): void
+    {
+        $deprecation = null;
+        set_error_handler(static function (int $type, string $message) use (&$deprecation): bool {
+            $deprecation = $message;
+
+            return true;
+        }, E_USER_DEPRECATED);
+        $sut = self::createDateTimeFactory(self::TEST_TIMEZONE, $firstDayOfWeek);
+        restore_error_handler();
+
+        self::assertSame('Passing a boolean as first day of week is deprecated, pass "sunday" or "monday" instead.', $deprecation);
+        self::assertSame($expected, $sut->getStartOfWeek('2018-07-26')->format('l'));
     }
 
     public function testCreateDateTime(): void
