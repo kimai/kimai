@@ -14,6 +14,7 @@ use App\Entity\ExportableItem;
 use App\Model\TimesheetCountedStatistic;
 use App\Project\ProjectStatisticService;
 use App\Repository\Query\TimesheetQuery;
+use Symfony\Component\Intl\Currencies;
 
 trait RendererTrait
 {
@@ -150,9 +151,12 @@ trait RendererTrait
 
             // this export item is the leaf that print/PDF templates actually render as one row,
             // so rounding it here - once per item - and summing those rounded values into the
-            // *Decimal fields below is what makes a printed total equal the sum of its printed rows
-            $rateDecimal = round($rate, 2);
-            $internalRateDecimal = round($internalRate, 2);
+            // *Decimal fields below is what makes a printed total equal the sum of its printed
+            // rows. Round money to the currency's own fraction digits (3 for KWD/BHD/..., not
+            // always 2), matching money()/moneyValue() in the templates that render these rows.
+            $moneyFractionDigits = $currency !== null ? Currencies::getFractionDigits($currency) : 2;
+            $rateDecimal = round($rate, $moneyFractionDigits);
+            $internalRateDecimal = round($internalRate, $moneyFractionDigits);
             $durationDecimal = round($duration / 3600, 2);
 
             // rate

@@ -104,17 +104,23 @@ final class LocaleFormatter
     }
 
     /**
-     * Rounds a money amount to cent precision, without formatting it.
-     * Use this to reconcile a total against already-rounded, already-displayed row values:
-     * sum the values this returns for each row, then format the sum with money().
+     * Rounds a money amount to the given currency's own fraction digits (cent precision
+     * when no currency is given), without formatting it. Use this to reconcile a total
+     * against already-rounded, already-displayed row values: sum the values this returns
+     * for each row (with the same currency each row used), then format the sum with
+     * money(). Pass the same $currency the row was rendered with via money(), or the two
+     * stop rounding to the same precision for currencies with more than 2 fraction digits
+     * (e.g. KWD, BHD, OMR, JOD, TND).
      */
-    public function moneyValue(null|int|float $amount): float
+    public function moneyValue(null|int|float $amount, ?string $currency = null): float
     {
         if ($amount === null) {
             return 0.0;
         }
 
-        return round((float) $amount, 2);
+        $fractionDigits = $currency !== null ? Currencies::getFractionDigits($currency) : 2;
+
+        return round((float) $amount, $fractionDigits);
     }
 
     private function getSecondsForDuration(string|int|Timesheet|null $duration): int

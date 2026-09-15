@@ -115,6 +115,33 @@ class PrintDecimalReconciliationTest extends KernelTestCase
         self::assertStringNotContainsString('7.50', $content);
     }
 
+    public function testMoneyReconciliationHoldsForThreeDecimalCurrencies(): void
+    {
+        // KWD (Kuwaiti dinar) uses 3 fraction digits. Each row's rate prints via money(),
+        // which (since the fraction-digits fix) rounds to KWD's own 3 digits: 1.2231 ->
+        // 1.223, 1.2232 -> 1.223, 1.2237 -> 1.224, summing to a printed 3.670. If the
+        // reconciled total is accumulated via moneyValue() without the same currency, it
+        // rounds every row to 2 digits first (1.22 + 1.22 + 1.22 = 3.66) and prints 3.660 -
+        // the exact BUG-6039 mismatch, reintroduced for any currency with more than 2
+        // fraction digits.
+        $customer = new Customer('Customer KWD');
+        $customer->setCurrency('KWD');
+        $project = new Project();
+        $project->setName('project kwd');
+        $project->setCustomer($customer);
+
+        $entries = [
+            ...$this->createEntries(1, 600, 1.2231, $project),
+            ...$this->createEntries(1, 600, 1.2232, $project),
+            ...$this->createEntries(1, 600, 1.2237, $project),
+        ];
+
+        $content = $this->renderDecimal($entries);
+
+        self::assertStringContainsString('3.670', $content);
+        self::assertStringNotContainsString('3.660', $content);
+    }
+
     public function testNoResidueWhenRowsHaveNoRoundingRemainder(): void
     {
         // three exact 1800-second (0.50h) entries have no rounding residue at all,

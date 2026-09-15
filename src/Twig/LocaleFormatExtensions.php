@@ -279,9 +279,9 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         return $this->getFormatter()->formatDecimalValue($value);
     }
 
-    public function moneyValue(null|int|float $amount): float
+    public function moneyValue(null|int|float $amount, ?string $currency = null): float
     {
-        return $this->getFormatter()->moneyValue($amount);
+        return $this->getFormatter()->moneyValue($amount, $currency);
     }
 
     /**

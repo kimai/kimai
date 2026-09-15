@@ -282,9 +282,9 @@ mpdf-->
             {# no check for is_granted('view_rate', entry) because it is only available for timesheets,
                but maybe missing for other potential export repositories #}
             {% set rate = rate + entry.rate %}
-            {% set rateDecimal = rateDecimal + (entry.rate|money_value) %}
+            {% set rateDecimal = rateDecimal + (entry.rate|money_value(entryCurrency)) %}
             {% set rateInternal = rateInternal + entry.internalRate %}
-            {% set rateInternalDecimal = rateInternalDecimal + (entry.internalRate|money_value) %}
+            {% set rateInternalDecimal = rateInternalDecimal + (entry.internalRate|money_value(entryCurrency)) %}
             <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
                 {% for id, col in columns %}
                     {% set column = col.name %}

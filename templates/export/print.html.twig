@@ -449,13 +449,13 @@
                             {% set timeWorked = timeWorked + entry.duration %}
                             {% set timeWorkedDecimal = timeWorkedDecimal + (entry.duration|duration_decimal_value) %}
                             {% set rateTotal = rateTotal + entry.rate %}
-                            {% set rateTotalDecimal = rateTotalDecimal + (entry.rate|money_value) %}
+                            {% set rateTotalDecimal = rateTotalDecimal + (entry.rate|money_value(entry.project.customer.currency)) %}
                             {% if entry.internalRate is defined %}
                                 {% set rateInternalTotal = rateInternalTotal + entry.internalRate %}
-                                {% set rateInternalTotalDecimal = rateInternalTotalDecimal + (entry.internalRate|money_value) %}
+                                {% set rateInternalTotalDecimal = rateInternalTotalDecimal + (entry.internalRate|money_value(entry.project.customer.currency)) %}
                             {% else %}
                                 {% set rateInternalTotal = rateInternalTotal + entry.rate %}
-                                {% set rateInternalTotalDecimal = rateInternalTotalDecimal + (entry.rate|money_value) %}
+                                {% set rateInternalTotalDecimal = rateInternalTotalDecimal + (entry.rate|money_value(entry.project.customer.currency)) %}
                             {% endif %}
                             {% if currency is same as(false) %}
                                 {% set currency = entry.project.customer.currency %}

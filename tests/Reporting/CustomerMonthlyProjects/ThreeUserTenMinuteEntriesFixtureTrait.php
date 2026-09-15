@@ -19,14 +19,17 @@ use Doctrine\ORM\EntityManagerInterface;
 trait ThreeUserTenMinuteEntriesFixtureTrait
 {
     /**
-     * Persists three users, each with one 10-minute entry (rate 1.6666667) on the same
-     * project/activity: the finest granularity the customer-monthly-projects table prints,
-     * one row per (project, activity, user). Each row is 0.17h / EUR 1.67.
+     * Persists three users, each with one 10-minute entry on the same project/activity:
+     * the finest granularity the customer-monthly-projects table prints, one row per
+     * (project, activity, user). With the default $rates, each row is 0.17h / EUR 1.67.
      *
+     * @param float[]|null $rates one rate per user, defaults to 1.6666667 for all three
      * @return array{users: User[], customer: Customer, project: Project, activity: Activity}
      */
-    private function createThreeUserTenMinuteEntriesFixture(EntityManagerInterface $em, string $idPrefix): array
+    private function createThreeUserTenMinuteEntriesFixture(EntityManagerInterface $em, string $idPrefix, ?string $currency = null, ?array $rates = null): array
     {
+        $rates ??= [1.6666667, 1.6666667, 1.6666667];
+
         $users = [];
         for ($u = 0; $u < 3; $u++) {
             $user = new User();
@@ -40,6 +43,9 @@ trait ThreeUserTenMinuteEntriesFixtureTrait
         $customer = new Customer("{$idPrefix}-customer");
         $customer->setCountry('DE');
         $customer->setTimezone('Europe/Berlin');
+        if ($currency !== null) {
+            $customer->setCurrency($currency);
+        }
         $em->persist($customer);
 
         $project = new Project();
@@ -64,7 +70,7 @@ trait ThreeUserTenMinuteEntriesFixtureTrait
             $entry->setBegin((clone $begin)->modify("+{$i} hours"));
             $entry->setEnd((clone $begin)->modify("+{$i} hours +10 minutes"));
             $entry->setDuration(600);
-            $entry->setFixedRate(1.6666667);
+            $entry->setFixedRate($rates[$i]);
             $em->persist($entry);
         }
 
