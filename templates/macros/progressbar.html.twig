@@ -151,3 +151,41 @@
         {{ _self.progressbar_full(options) }}
     {% endif %}
 {% endmacro %}
+
+{#
+    @param \App\Model\BudgetStatisticModelInterface budgetStatisticModel
+    @param array activities array of \App\Model\ActivityStatistic
+#}
+{% macro progressbar_timebudget_by_activity(budgetStatisticModel, activities) %}
+    {% if budgetStatisticModel.hasTimeBudget() and activities is not empty %}
+        {% set max = budgetStatisticModel.getTimeBudget() %}
+        {% set sorted = activities|sort((a, b) => b.duration <=> a.duration) %}
+        <div class="progress-group">
+            <div class="progress">
+                {% for stat in sorted %}
+                    {% set percent = 0 %}
+                    {% if max > 0 and stat.duration > 0 %}
+                        {% set percent = (stat.duration / (max / 100)) %}
+                    {% endif %}
+                    {% if percent > 0 %}
+                        <div class="progress-bar" role="progressbar"
+                             style="width: {{ percent|number_format(2, '.', '') }}%; background-color: {{ stat.activity.color|colorize(stat.activity.name) }};"
+                             title="{{ stat.name }}: {{ stat.duration|duration }}{% if stat.activity.hasTimeBudget() %}/{{ stat.activity.timeBudget|duration }}{% endif %}"
+                             aria-valuenow="{{ percent|number_format(1) }}" aria-valuemin="0" aria-valuemax="100">
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <small>
+                {% for stat in sorted %}
+                    {% if stat.duration > 0 %}
+                        <span class="me-3">
+                            <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background-color: {{ stat.activity.color|colorize(stat.activity.name) }};"></span>
+                            {{ stat.name }} ({{ stat.duration|duration }}{% if stat.activity.hasTimeBudget() %}/{{ stat.activity.timeBudget|duration }}{% endif %})
+                        </span>
+                    {% endif %}
+                {% endfor %}
+            </small>
+        </div>
+    {% endif %}
+{% endmacro %}
