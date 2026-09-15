@@ -243,6 +243,83 @@ class QuickEntryControllerTest extends AbstractControllerBaseTestCase
     }
 
     /**
+     * Reproduction + billing check for BUG-5348: two quick-entry rows entered for the same day
+     * must chain back to back instead of both landing on the configured default start time.
+     */
+    public function testTwoRowsOnTheSameDayChainInsteadOfOverlapping(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/system-config/');
+
+        $form = $client->getCrawler()->filter('form[name=system_configuration_form_timesheet]')->form();
+        $client->submit($form, [
+            'system_configuration_form_timesheet' => [
+                'configuration' => [
+                    ['name' => 'timesheet.mode', 'value' => 'default'],
+                    ['name' => 'timesheet.default_begin', 'value' => '09:00'],
+                    ['name' => 'timesheet.rules.allow_future_times', 'value' => true],
+                    ['name' => 'timesheet.rules.allow_zero_duration', 'value' => true],
+                    ['name' => 'timesheet.rules.allow_overlapping_records', 'value' => false],
+                    ['name' => 'timesheet.rules.allow_overbooking_budget', 'value' => true],
+                    ['name' => 'timesheet.active_entries.hard_limit', 'value' => 1],
+                ],
+            ],
+        ]);
+
+        $customers = new CustomerFixtures();
+        $customers->setIsVisible(true);
+        $customers->setAmount(1);
+        $customers = $this->importFixture($customers);
+
+        $projects = new ProjectFixtures();
+        $projects->setCustomers($customers);
+        $projects->setIsVisible(true);
+        $projects->setAmount(2);
+        $projects = $this->importFixture($projects);
+
+        $activities = new ActivityFixtures();
+        $activities->setIsGlobal(true);
+        $activities->setIsVisible(true);
+        $activities->setAmount(1);
+        $activities = $this->importFixture($activities);
+
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+        $wednesday = (new \DateTime('monday this week'))->modify('+2 days');
+
+        $url = '/quick_entry/?date=' . $wednesday->format('Y-m-d');
+        $this->request($client, $url);
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=quick_entry_form]')->form();
+        $values = $form->getPhpValues();
+        $values['quick_entry_form']['rows'][0]['project'] = (string) $projects[0]->getId();
+        $values['quick_entry_form']['rows'][0]['activity'] = (string) $activities[0]->getId();
+        $values['quick_entry_form']['rows'][0]['timesheets'][2]['duration'] = '2:00';
+        $values['quick_entry_form']['rows'][1]['project'] = (string) $projects[1]->getId();
+        $values['quick_entry_form']['rows'][1]['activity'] = (string) $activities[0]->getId();
+        $values['quick_entry_form']['rows'][1]['timesheets'][2]['duration'] = '3:00';
+
+        $client->request('POST', $this->createUrl($url), $values);
+        $this->assertIsRedirect($client);
+        $client->followRedirect();
+        $this->assertHasFlashSuccess($client);
+
+        $stored = $this->findTimesheets($user);
+        self::assertCount(2, $stored);
+
+        usort($stored, fn (Timesheet $a, Timesheet $b) => $a->getBegin() <=> $b->getBegin());
+
+        self::assertSame('09:00', $stored[0]->getBegin()?->format('H:i'));
+        self::assertSame('11:00', $stored[0]->getEnd()?->format('H:i'));
+        self::assertSame('11:00', $stored[1]->getBegin()?->format('H:i'));
+        self::assertSame('14:00', $stored[1]->getEnd()?->format('H:i'));
+
+        // billing check: 5 distinct hours, never 5 hours squeezed into a 3-hour span
+        self::assertSame(7200, $stored[0]->getDuration());
+        self::assertSame(10800, $stored[1]->getDuration());
+    }
+
+    /**
      * @return array<Timesheet>
      */
     private function findTimesheets(User $user): array
