@@ -1,0 +1,1 @@
+export DATABASE_URL="mysql://kimai2_test:kimai2_test@127.0.0.1:3306/kimai2_test_BUG_5779_exported_timesheets_carry_date_4a7fa5fc?charset=utf8mb4&serverVersion=10.5.8-MariaDB"
