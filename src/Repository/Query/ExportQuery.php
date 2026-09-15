@@ -13,6 +13,7 @@ class ExportQuery extends TimesheetQuery
 {
     private ?string $renderer = null;
     private bool $markAsExported = false;
+    private ?\DateTimeZone $timezone = null;
 
     public function __construct()
     {
@@ -47,6 +48,22 @@ class ExportQuery extends TimesheetQuery
             $markAsExported = false;
         }
         $this->markAsExported = $markAsExported;
+
+        return $this;
+    }
+
+    /**
+     * The timezone the filter bounds were resolved in, used to render every date and time
+     * of the export in the same timezone.
+     */
+    public function getTimezone(): ?\DateTimeZone
+    {
+        return $this->timezone;
+    }
+
+    public function setTimezone(?\DateTimeZone $timezone): ExportQuery
+    {
+        $this->timezone = $timezone;
 
         return $this;
     }

@@ -34,6 +34,16 @@ class ExportQueryTest extends TimesheetQueryTest
         $this->assertExportedWith($sut, ExportQuery::STATE_NOT_EXPORTED);
         $this->assertRenderer($sut);
         $this->assertMarkAsExported($sut);
+        $this->assertTimezone($sut);
+    }
+
+    public function assertTimezone(ExportQuery $sut): void
+    {
+        self::assertNull($sut->getTimezone());
+
+        $timezone = new \DateTimeZone('America/New_York');
+        $sut->setTimezone($timezone);
+        self::assertSame($timezone, $sut->getTimezone());
     }
 
     public function assertMarkAsExported(ExportQuery $sut): void
