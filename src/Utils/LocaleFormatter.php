@@ -181,21 +181,33 @@ final class LocaleFormatter
         return $this->moneyFormatter->formatCurrency($amount, $currency);
     }
 
-    public function dateShort(\DateTimeInterface|string|null $date): ?string
+    public function dateShort(\DateTimeInterface|string|null $date, ?\DateTimeZone $timezone = null): ?string
     {
         if ($date === null || $date === '') {
             return null;
         }
 
-        if (null === $this->dateFormatter) {
-            $this->dateFormatter = new IntlDateFormatter(
+        if ($timezone !== null) {
+            $formatter = new IntlDateFormatter(
                 $this->locale,
                 self::DATE_PATTERN,
                 IntlDateFormatter::NONE,
-                date_default_timezone_get(),
+                $timezone->getName(),
                 IntlDateFormatter::GREGORIAN,
                 $this->localeService->getDateFormat($this->locale)
             );
+        } else {
+            if (null === $this->dateFormatter) {
+                $this->dateFormatter = new IntlDateFormatter(
+                    $this->locale,
+                    self::DATE_PATTERN,
+                    IntlDateFormatter::NONE,
+                    date_default_timezone_get(),
+                    IntlDateFormatter::GREGORIAN,
+                    $this->localeService->getDateFormat($this->locale)
+                );
+            }
+            $formatter = $this->dateFormatter;
         }
 
         if (!$date instanceof \DateTimeInterface) {
@@ -206,7 +218,7 @@ final class LocaleFormatter
             }
         }
 
-        $formatted = $this->dateFormatter->format($date);
+        $formatted = $formatter->format($date);
 
         if ($formatted === false) {
             return null;
@@ -249,7 +261,7 @@ final class LocaleFormatter
         return (string) $formatted;
     }
 
-    public function dateFormat(\DateTimeInterface|string|null $date, string $format): ?string
+    public function dateFormat(\DateTimeInterface|string|null $date, string $format, ?\DateTimeZone $timezone = null): ?string
     {
         if ($date === null || $date === '') {
             return null;
@@ -261,26 +273,42 @@ final class LocaleFormatter
             } catch (Exception $ex) {
                 return null;
             }
+        }
+
+        if ($timezone !== null) {
+            $date = \DateTime::createFromInterface($date)->setTimezone($timezone);
         }
 
         return $date->format($format);
     }
 
-    public function time(\DateTimeInterface|string|null $date): ?string
+    public function time(\DateTimeInterface|string|null $date, ?\DateTimeZone $timezone = null): ?string
     {
         if ($date === null || $date === '') {
             return null;
         }
 
-        if (null === $this->timeFormatter) {
-            $this->timeFormatter = new IntlDateFormatter(
+        if ($timezone !== null) {
+            $formatter = new IntlDateFormatter(
                 $this->locale,
                 IntlDateFormatter::NONE,
                 self::TIME_PATTERN,
-                date_default_timezone_get(),
+                $timezone->getName(),
                 IntlDateFormatter::GREGORIAN,
                 $this->localeService->getTimeFormat($this->locale)
             );
+        } else {
+            if (null === $this->timeFormatter) {
+                $this->timeFormatter = new IntlDateFormatter(
+                    $this->locale,
+                    IntlDateFormatter::NONE,
+                    self::TIME_PATTERN,
+                    date_default_timezone_get(),
+                    IntlDateFormatter::GREGORIAN,
+                    $this->localeService->getTimeFormat($this->locale)
+                );
+            }
+            $formatter = $this->timeFormatter;
         }
 
         if (!$date instanceof \DateTimeInterface) {
@@ -291,7 +319,7 @@ final class LocaleFormatter
             }
         }
 
-        $formatted = $this->timeFormatter->format($date);
+        $formatted = $formatter->format($date);
 
         if ($formatted === false) {
             return null;

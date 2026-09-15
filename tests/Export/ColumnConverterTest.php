@@ -12,6 +12,7 @@ namespace App\Tests\Export;
 use App\Entity\ActivityMeta;
 use App\Entity\CustomerMeta;
 use App\Entity\ProjectMeta;
+use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Entity\UserPreference;
@@ -119,6 +120,49 @@ class ColumnConverterTest extends TestCase
         ];
 
         self::assertEquals($expected, array_keys($columns));
+    }
+
+    public function testAppliesQueryTimezoneToDateAndTimeColumns(): void
+    {
+        $dispatcher = new EventDispatcher();
+        $security = $this->createMock(Security::class);
+
+        $template = new DefaultTemplate($dispatcher, 'foo');
+        $query = new TimesheetQuery();
+        $query->setTimezone(new \DateTimeZone('America/New_York'));
+
+        $sut = new ColumnConverter($dispatcher, $security);
+        $columns = $sut->getColumns($template, $query);
+
+        $timesheet = new Timesheet();
+        $timesheet->setBegin(new \DateTime('2026-08-21 01:00:00', new \DateTimeZone('Europe/Berlin')));
+        $timesheet->setEnd(new \DateTime('2026-08-21 02:00:00', new \DateTimeZone('Europe/Berlin')));
+
+        $date = $columns['date']->getValue($timesheet);
+        self::assertInstanceOf(\DateTimeInterface::class, $date);
+        self::assertEquals('2026-08-20', $date->format('Y-m-d'));
+        self::assertEquals('America/New_York', $date->getTimezone()->getName());
+
+        self::assertEquals('19:00', $columns['begin']->getValue($timesheet));
+        self::assertEquals('20:00', $columns['end']->getValue($timesheet));
+
+        self::assertEquals('export.date_column', $columns['date']->getHeader());
+        self::assertEquals(['%timezone%' => 'America/New_York'], $columns['date']->getHeaderParams());
+    }
+
+    public function testKeepsPlainDateHeaderWithoutQueryTimezone(): void
+    {
+        $dispatcher = new EventDispatcher();
+        $security = $this->createMock(Security::class);
+
+        $template = new DefaultTemplate($dispatcher, 'foo');
+        $query = new TimesheetQuery();
+
+        $sut = new ColumnConverter($dispatcher, $security);
+        $columns = $sut->getColumns($template, $query);
+
+        self::assertEquals('date', $columns['date']->getHeader());
+        self::assertEquals([], $columns['date']->getHeaderParams());
     }
 
     public function testWithMetaFields(): void
