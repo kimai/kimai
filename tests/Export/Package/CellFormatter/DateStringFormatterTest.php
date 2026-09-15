@@ -43,6 +43,18 @@ class DateStringFormatterTest extends TestCase
         self::assertEquals('Europe/Berlin', $date->getTimezone()->getName());
     }
 
+    public function testFormatValueUsesTheOffsetInEffectAtThatInstantAcrossDst(): void
+    {
+        $formatter = new DateStringFormatter(new \DateTimeZone('Europe/Berlin'));
+
+        // 2026-10-25 is the day Europe/Berlin switches from CEST (+02:00) to CET (+01:00)
+        $beforeDst = new \DateTime('2026-10-25 01:30:00', new \DateTimeZone('UTC'));
+        $afterDst = new \DateTime('2026-10-25 23:30:00', new \DateTimeZone('UTC'));
+
+        self::assertEquals('2026-10-25', $formatter->formatValue($beforeDst));
+        self::assertEquals('2026-10-26', $formatter->formatValue($afterDst));
+    }
+
     public function testFormatValueThrowsExceptionForNonDateTime(): void
     {
         $this->expectException(\InvalidArgumentException::class);
