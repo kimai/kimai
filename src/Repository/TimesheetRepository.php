@@ -941,6 +941,36 @@ class TimesheetRepository extends EntityRepository
         return $results;
     }
 
+    /**
+     * @return Timesheet[]
+     */
+    public function findForDay(User $user, \DateTimeInterface $begin, \DateTimeInterface $end): array
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb
+            ->select('t')
+            ->from(Timesheet::class, 't')
+            ->andWhere($qb->expr()->eq('t.user', ':user'))
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->andX(
+                    $qb->expr()->gte('t.begin', ':begin'),
+                    $qb->expr()->lt('t.begin', ':end')
+                ),
+                $qb->expr()->andX(
+                    $qb->expr()->isNull('t.end'),
+                    $qb->expr()->lt('t.begin', ':end')
+                )
+            ))
+            ->setParameter('user', $user->getId())
+            ->setParameter('begin', $begin)
+            ->setParameter('end', $end)
+        ;
+
+        /* @var Timesheet[] */
+        return $qb->getQuery()->getResult();
+    }
+
     public function hasRecordForTime(Timesheet $timesheet): bool
     {
         $qb = $this->getEntityManager()->createQueryBuilder();

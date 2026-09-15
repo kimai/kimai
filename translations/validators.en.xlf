@@ -186,6 +186,10 @@
         <source>A maximum duration of {{ value }} is allowed.</source>
         <target>A maximum duration of {{ value }} is allowed.</target>
       </trans-unit>
+      <trans-unit id="qEwk5348" resname="The entries for {{ day }} exceed the hours available on that day.">
+        <source>The entries for {{ day }} exceed the hours available on that day.</source>
+        <target>The entries for {{ day }} exceed the hours available on that day.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

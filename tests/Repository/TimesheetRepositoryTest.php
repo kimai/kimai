@@ -102,6 +102,72 @@ class TimesheetRepositoryTest extends AbstractRepositoryTestCase
         self::assertCount($amount, array_unique($collected), 'Pagination returned the same timesheet on more than one page');
     }
 
+    public function testFindForDayOnlyReturnsTimesheetsBeginningWithinTheGivenRange(): void
+    {
+        $em = $this->getEntityManager();
+        /** @var ActivityRepository $activityRepository */
+        $activityRepository = $em->getRepository(Activity::class);
+        $activity = $activityRepository->find(1);
+        /** @var ProjectRepository $projectRepository */
+        $projectRepository = $em->getRepository(Project::class);
+        $project = $projectRepository->find(1);
+
+        $user = $this->getUserByRole(User::ROLE_USER);
+        /** @var TimesheetRepository $repository */
+        $repository = $em->getRepository(Timesheet::class);
+
+        $inDay = new Timesheet();
+        $inDay->setBegin(new \DateTime('2026-08-19 09:00:00'))
+            ->setEnd(new \DateTime('2026-08-19 10:00:00'))
+            ->setUser($user)
+            ->setActivity($activity)
+            ->setProject($project);
+        $em->persist($inDay);
+
+        $otherDay = new Timesheet();
+        $otherDay->setBegin(new \DateTime('2026-08-20 09:00:00'))
+            ->setEnd(new \DateTime('2026-08-20 10:00:00'))
+            ->setUser($user)
+            ->setActivity($activity)
+            ->setProject($project);
+        $em->persist($otherDay);
+        $em->flush();
+
+        $result = $repository->findForDay($user, new \DateTime('2026-08-19 00:00:00'), new \DateTime('2026-08-20 00:00:00'));
+
+        self::assertCount(1, $result);
+        self::assertSame($inDay->getId(), $result[0]->getId());
+    }
+
+    public function testFindForDayAlsoReturnsARunningEntryThatBeganTheDayBefore(): void
+    {
+        $em = $this->getEntityManager();
+        /** @var ActivityRepository $activityRepository */
+        $activityRepository = $em->getRepository(Activity::class);
+        $activity = $activityRepository->find(1);
+        /** @var ProjectRepository $projectRepository */
+        $projectRepository = $em->getRepository(Project::class);
+        $project = $projectRepository->find(1);
+
+        $user = $this->getUserByRole(User::ROLE_USER);
+        /** @var TimesheetRepository $repository */
+        $repository = $em->getRepository(Timesheet::class);
+
+        $overnightRunning = new Timesheet();
+        $overnightRunning->setBegin(new \DateTime('2026-08-18 23:00:00'))
+            ->setEnd(null)
+            ->setUser($user)
+            ->setActivity($activity)
+            ->setProject($project);
+        $em->persist($overnightRunning);
+        $em->flush();
+
+        $result = $repository->findForDay($user, new \DateTime('2026-08-19 00:00:00'), new \DateTime('2026-08-20 00:00:00'));
+
+        self::assertCount(1, $result);
+        self::assertSame($overnightRunning->getId(), $result[0]->getId());
+    }
+
     public function testSave(): void
     {
         $em = $this->getEntityManager();
