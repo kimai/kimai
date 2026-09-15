@@ -31,6 +31,17 @@ class TimeFormatterTest extends TestCase
         self::assertNull($result);
     }
 
+    public function testFormatValueConvertsIntoGivenTimezone(): void
+    {
+        $formatter = new TimeFormatter(new \DateTimeZone('America/New_York'));
+        $date = new \DateTime('2026-08-21 01:00:00', new \DateTimeZone('Europe/Berlin'));
+        $result = $formatter->formatValue($date);
+        self::assertEquals('19:00', $result);
+
+        // the original object must stay untouched
+        self::assertEquals('Europe/Berlin', $date->getTimezone()->getName());
+    }
+
     public function testFormatValueThrowsExceptionForNonDateTimeInterface(): void
     {
         $this->expectException(\InvalidArgumentException::class);

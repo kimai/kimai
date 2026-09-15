@@ -32,6 +32,17 @@ class DateStringFormatterTest extends TestCase
         self::assertNull($result);
     }
 
+    public function testFormatValueConvertsIntoGivenTimezone(): void
+    {
+        $formatter = new DateStringFormatter(new \DateTimeZone('America/New_York'));
+        $date = new \DateTime('2026-08-21 01:00:00', new \DateTimeZone('Europe/Berlin'));
+        $result = $formatter->formatValue($date);
+        self::assertEquals('2026-08-20', $result);
+
+        // the original object must stay untouched
+        self::assertEquals('Europe/Berlin', $date->getTimezone()->getName());
+    }
+
     public function testFormatValueThrowsExceptionForNonDateTime(): void
     {
         $this->expectException(\InvalidArgumentException::class);

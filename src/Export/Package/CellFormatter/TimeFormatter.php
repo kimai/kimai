@@ -11,9 +11,17 @@ namespace App\Export\Package\CellFormatter;
 
 final class TimeFormatter implements CellFormatterInterface
 {
+    public function __construct(private readonly ?\DateTimeZone $timezone = null)
+    {
+    }
+
     public function formatValue(mixed $value): mixed
     {
         if ($value instanceof \DateTimeInterface) {
+            if ($this->timezone !== null) {
+                $value = \DateTime::createFromInterface($value)->setTimezone($this->timezone);
+            }
+
             return $value->format('H:i');
         }
 
