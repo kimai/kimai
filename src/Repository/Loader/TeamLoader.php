@@ -58,7 +58,7 @@ final class TeamLoader implements LoaderInterface
                 ->getQuery()
                 ->execute();
 
-            // only needed when the members are fully serialized, e.g. vie API
+            // only needed when the members are fully serialized, e.g. via API
             // virtual properties (like locale) of the user read the preferences
             if ($this->loadUserPreferences) {
                 $userIds = [];

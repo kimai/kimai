@@ -123,6 +123,7 @@ final class TeamController extends BaseApiController
 
         if ($form->isValid()) {
             $this->teamService->saveTeam($team);
+            $this->loadTeamWithDependencies($team);
 
             $view = new View($team, 200);
             $view->getContext()->setGroups(self::GROUPS_ENTITY);
