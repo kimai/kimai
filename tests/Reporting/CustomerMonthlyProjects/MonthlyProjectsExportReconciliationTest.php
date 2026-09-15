@@ -9,11 +9,6 @@
 
 namespace App\Tests\Reporting\CustomerMonthlyProjects;
 
-use App\Entity\Activity;
-use App\Entity\Customer;
-use App\Entity\Project;
-use App\Entity\Timesheet;
-use App\Entity\User;
 use App\Reporting\CustomerMonthlyProjects\CustomerMonthlyProjectsRepository;
 use App\Tests\Repository\AbstractRepositoryTestCase;
 use PHPUnit\Framework\Attributes\Group;
@@ -27,52 +22,14 @@ use Twig\Environment;
 #[Group('integration')]
 class MonthlyProjectsExportReconciliationTest extends AbstractRepositoryTestCase
 {
+    use ThreeUserTenMinuteEntriesFixtureTrait;
+
     private function renderExportTable(string $dataType): string
     {
         $em = $this->getEntityManager();
-
-        $users = [];
-        for ($u = 0; $u < 3; $u++) {
-            $user = new User();
-            $user->setUserIdentifier("bug-6039-export-user-{$u}");
-            $user->setEmail("bug-6039-export-user-{$u}@example.com");
-            $user->setPassword('foo');
-            $em->persist($user);
-            $users[] = $user;
-        }
-
-        $customer = new Customer('bug-6039-export-customer');
-        $customer->setCountry('DE');
-        $customer->setTimezone('Europe/Berlin');
-        $em->persist($customer);
-
-        $project = new Project();
-        $project->setName('bug-6039-export-project');
-        $project->setCustomer($customer);
-        $em->persist($project);
-
-        $activity = new Activity();
-        $activity->setName('bug-6039-export-activity');
-        $activity->setProject($project);
-        $em->persist($activity);
-
-        $em->flush();
-
-        $begin = new \DateTime('2020-01-01 08:00:00');
-
-        foreach ($users as $i => $user) {
-            $entry = new Timesheet();
-            $entry->setUser($user);
-            $entry->setProject($project);
-            $entry->setActivity($activity);
-            $entry->setBegin((clone $begin)->modify("+{$i} hours"));
-            $entry->setEnd((clone $begin)->modify("+{$i} hours +10 minutes"));
-            $entry->setDuration(600);
-            $entry->setFixedRate(1.6666667);
-            $em->persist($entry);
-        }
-
-        $em->flush();
+        $fixture = $this->createThreeUserTenMinuteEntriesFixture($em, 'bug-6039-export');
+        $users = $fixture['users'];
+        $customer = $fixture['customer'];
 
         /** @var CustomerMonthlyProjectsRepository $repository */
         $repository = self::getContainer()->get(CustomerMonthlyProjectsRepository::class);

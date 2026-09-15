@@ -9,11 +9,7 @@
 
 namespace App\Tests\Export\Base;
 
-use App\Entity\Activity;
-use App\Entity\Customer;
-use App\Entity\Project;
 use App\Entity\Timesheet;
-use App\Entity\User;
 use App\Export\Base\RendererTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -21,40 +17,11 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(RendererTrait::class)]
 class RendererTraitTest extends TestCase
 {
+    use TimesheetEntryFixtureTrait;
+
     private function getSut(): RendererTraitTestSubject
     {
         return new RendererTraitTestSubject();
-    }
-
-    /**
-     * @return Timesheet[]
-     */
-    private function createThreeTenMinuteEntries(): array
-    {
-        $customer = new Customer('Customer Name');
-        $project = new Project();
-        $project->setName('project name');
-        $project->setCustomer($customer);
-        $activity = new Activity();
-        $activity->setName('activity');
-        $activity->setProject($project);
-        $user = new User();
-        $user->setUserIdentifier('foo-bar');
-
-        $entries = [];
-        for ($i = 0; $i < 3; $i++) {
-            $entry = new Timesheet();
-            $entry->setDuration(600); // 10 minutes
-            $entry->setRate(1.6666667); // 10 minutes at 10.00/hour
-            $entry->setUser($user);
-            $entry->setActivity($activity);
-            $entry->setProject($project);
-            $entry->setBegin(new \DateTime());
-            $entry->setEnd(new \DateTime());
-            $entries[] = $entry;
-        }
-
-        return $entries;
     }
 
     public function testSummaryDurationDecimalReconcilesWithRoundedRowSum(): void

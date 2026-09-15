@@ -10,10 +10,8 @@
 namespace App\Tests\Export\Base;
 
 use App\Activity\ActivityStatisticService;
-use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
-use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Export\Base\HtmlRenderer;
 use App\Project\ProjectStatisticService;
@@ -32,6 +30,8 @@ use Twig\Environment;
 #[Group('integration')]
 class PrintDecimalReconciliationTest extends KernelTestCase
 {
+    use TimesheetEntryFixtureTrait;
+
     private function getRenderer(): HtmlRenderer
     {
         /** @var Environment $twig */
@@ -46,50 +46,6 @@ class PrintDecimalReconciliationTest extends KernelTestCase
             'print',
             'export/print.html.twig'
         );
-    }
-
-    /**
-     * @return Timesheet[]
-     */
-    private function createThreeTenMinuteEntries(): array
-    {
-        return $this->createEntries(3, 600, 1.6666667);
-    }
-
-    /**
-     * @return Timesheet[]
-     */
-    private function createEntries(int $count, int $durationSeconds, float $rate, ?Project $project = null): array
-    {
-        if ($project === null) {
-            $customer = new Customer('Customer Name');
-            $project = new Project();
-            $project->setName('project name');
-            $project->setCustomer($customer);
-        }
-
-        $activity = new Activity();
-        $activity->setName('activity');
-        $activity->setProject($project);
-
-        $user = new User();
-        $user->setUserIdentifier('foo-bar');
-
-        $entries = [];
-        for ($i = 0; $i < $count; $i++) {
-            $entry = new Timesheet();
-            $entry->setDuration($durationSeconds);
-            $entry->setRate($rate);
-            $entry->setInternalRate($rate);
-            $entry->setUser($user);
-            $entry->setActivity($activity);
-            $entry->setProject($project);
-            $entry->setBegin(new \DateTime());
-            $entry->setEnd(new \DateTime());
-            $entries[] = $entry;
-        }
-
-        return $entries;
     }
 
     private function renderDecimal(array $entries, bool $decimal = true): string
