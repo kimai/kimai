@@ -218,7 +218,20 @@ class SystemConfigurationTest extends TestCase
         self::assertEquals('foo/bar', $sut->getUserDefaultTimezone());
         self::assertEquals('blue', $sut->getUserDefaultTheme());
         self::assertEquals('IT', $sut->getUserDefaultLanguage());
+        self::assertEquals('IT', $sut->getUserDefaultLocale());
         self::assertNull($sut->getFinancialYearStart());
+    }
+
+    public function testUserDefaultLocaleFallsBackToLanguage(): void
+    {
+        $sut = $this->getSut($this->getDefaultSettings(), []);
+        self::assertEquals('IT', $sut->getUserDefaultLocale());
+
+        $sut = $this->getSut($this->getDefaultSettings(), [(new Configuration())->setName('defaults.user.locale')->setValue('')]);
+        self::assertEquals('IT', $sut->getUserDefaultLocale());
+
+        $sut = $this->getSut($this->getDefaultSettings(), [(new Configuration())->setName('defaults.user.locale')->setValue('en_AU')]);
+        self::assertEquals('en_AU', $sut->getUserDefaultLocale());
     }
 
     public function testFormDefaultWithLoader(): void
