@@ -9,6 +9,7 @@
 
 namespace App\Tests\API;
 
+use App\DataFixtures\UserFixtures;
 use App\Entity\Role;
 use App\Entity\User;
 use App\Tests\Mocks\PrepareUserEventSubscriberMock;
@@ -307,6 +308,67 @@ class UserControllerTest extends APIControllerBaseTestCase
         self::assertEquals('it', $result['language']);
         self::assertEquals('America/New_York', $result['timezone']);
         self::assertEquals(['ROLE_TEAMLEAD'], $result['roles']);
+    }
+
+    public function testPatchActionCannotChangeSystemAccountAndPasswordResetOnOwnProfile(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        $user->setRequiresPasswordReset(true);
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+        $this->getEntityManager()->clear();
+        self::assertTrue($this->loadUserFromDatabase(UserFixtures::USERNAME_USER)->requiresPasswordReset());
+
+        $data = [
+            'title' => 'qwertzui',
+            'systemAccount' => true,
+            'requiresPasswordReset' => false,
+        ];
+        $this->request($client, '/api/users/' . $user->getId(), 'PATCH', [], (string) json_encode($data));
+        $this->assertApiCallValidationError($client->getResponse(), [], true, [], [], ['systemAccount', 'requiresPasswordReset']);
+
+        $this->getEntityManager()->clear();
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        self::assertFalse($user->isSystemAccount());
+        self::assertTrue($user->requiresPasswordReset());
+        self::assertEquals('Developer', $user->getTitle());
+    }
+
+    public function testPatchActionCannotChangeSystemAccountAndPasswordResetAsTeamlead(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $user = $this->getUserByRole(User::ROLE_USER);
+
+        $data = [
+            'systemAccount' => true,
+            'requiresPasswordReset' => true,
+        ];
+        $this->request($client, '/api/users/' . $user->getId(), 'PATCH', [], (string) json_encode($data));
+        $this->assertApiResponseAccessDenied($client->getResponse(), 'Access denied.');
+
+        $this->getEntityManager()->clear();
+        $user = $this->getUserByRole(User::ROLE_USER);
+        self::assertFalse($user->isSystemAccount());
+        self::assertFalse($user->requiresPasswordReset());
+    }
+
+    public function testPatchActionSystemAccountAndPasswordResetAsSuperAdmin(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_USER);
+
+        $data = [
+            'systemAccount' => true,
+            'requiresPasswordReset' => true,
+        ];
+        $this->request($client, '/api/users/' . $user->getId(), 'PATCH', [], (string) json_encode($data));
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $this->getEntityManager()->clear();
+        $user = $this->getUserByRole(User::ROLE_USER);
+        self::assertTrue($user->isSystemAccount());
+        self::assertTrue($user->requiresPasswordReset());
     }
 
     public function testPatchActionWithUnknownUser(): void
