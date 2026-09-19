@@ -48,22 +48,21 @@ class WizardSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $uri = $event->getRequest()->getRequestUri();
-
-        // TODO 3.0 remove /register/
-        if (stripos($uri, '/register/') !== false) {
-            return;
-        }
+        $request = $event->getRequest();
 
         // never trigger wizard on API calls
-        if (str_starts_with($uri, '/api/')) {
+        if (str_starts_with($request->getPathInfo(), '/api/')) {
             return;
         }
 
-        // never trigger on wizard routes themselves — except the virtual /next/
+        // the matched route name is used on purpose: matching on the raw request URI
+        // would allow to bypass this check by adding e.g. "?foo=/wizard/" to any URL
+        $route = $request->attributes->get('_route');
+
+        // never trigger on wizard routes themselves — except the virtual "next"
         // route, which intentionally re-enters this subscriber so that the user
         // is redirected to the first step they have not seen yet.
-        if (stripos($uri, '/wizard/') !== false && stripos($uri, '/wizard/next/') === false) {
+        if (\is_string($route) && $route !== 'wizard_next' && PasswordResetSubscriber::isAllowedRoute($route)) {
             return;
         }
 

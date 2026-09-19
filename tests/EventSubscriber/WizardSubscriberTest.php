@@ -71,17 +71,23 @@ class WizardSubscriberTest extends TestCase
     }
 
     /**
-     * @return iterable<array{string}>
+     * @return iterable<array{string, string|null}>
      */
     public static function provideExcludedUris(): iterable
     {
-        yield ['/api/timesheets'];
-        yield ['/register/new'];
-        yield ['/wizard/intro'];
+        yield ['/api/timesheets', 'get_timesheets'];
+        yield ['/api/timesheets?foo=bar', 'get_timesheets'];
+        yield ['/register/', 'registration_register'];
+        yield ['/register/check-email', 'user_registration_check_email'];
+        yield ['/register/confirm/abc', 'registration_confirm'];
+        yield ['/register/confirmed', 'registration_confirmed'];
+        yield ['/wizard/intro', 'wizard_intro'];
+        yield ['/en/wizard/password', 'wizard_password'];
+        yield ['/logout', 'logout'];
     }
 
     #[DataProvider('provideExcludedUris')]
-    public function testOnKernelRequestIgnoresExcludedUris(string $uri): void
+    public function testOnKernelRequestIgnoresExcludedUris(string $uri, ?string $route): void
     {
         $token = $this->createMock(TokenInterface::class);
         $token->expects($this->never())->method('getUser');
@@ -94,7 +100,7 @@ class WizardSubscriberTest extends TestCase
         $storage->expects($this->once())->method('getToken')->willReturn($token);
 
         $sut = new WizardSubscriber($urlGenerator, $security, $storage, SystemConfigurationFactory::createStub(), $this->createWizardManager());
-        $event = $this->createRequestEvent($uri);
+        $event = $this->createRequestEvent($uri, true, $route);
 
         $sut->onKernelRequest($event);
 
@@ -213,6 +219,55 @@ class WizardSubscriberTest extends TestCase
         self::assertSame('/wizard/profile', $response->headers->get('Location'));
     }
 
+    /**
+     * @return iterable<array{string, string|null}>
+     */
+    public static function provideBypassAttempts(): iterable
+    {
+        yield ['/en/dashboard/?probe=/register/', 'dashboard'];
+        yield ['/en/dashboard/?probe=/wizard/', 'dashboard'];
+        yield ['/en/dashboard/?probe=/WiZaRd/', 'dashboard'];
+        yield ['/en/dashboard/?probe=/api/', 'dashboard'];
+        yield ['/en/register/../dashboard', 'dashboard'];
+        yield ['/en/wizard/next/', 'wizard_next'];
+        yield ['/en/dashboard/', null];
+    }
+
+    #[DataProvider('provideBypassAttempts')]
+    public function testOnKernelRequestRedirectsDespiteBypassAttempt(string $uri, ?string $route): void
+    {
+        $user = new User();
+        $user->setWizardAsSeen('intro');
+        $token = $this->createUserToken($user);
+
+        $urlGenerator = $this->createMock(UrlGeneratorInterface::class);
+        $urlGenerator->expects($this->once())->method('generate')->with('wizard_profile')->willReturn('/wizard/profile');
+
+        $security = $this->createMock(AuthorizationCheckerInterface::class);
+        $security->expects($this->once())->method('isGranted')->with('IS_AUTHENTICATED_FULLY')->willReturn(true);
+
+        $storage = $this->createMock(TokenStorageInterface::class);
+        $storage->expects($this->once())->method('getToken')->willReturn($token);
+
+        $manager = $this->createWizardManager(static function (WizardEvent $event): void {
+            $event->addStep(new WizardStep('intro', 'wizard_intro', 100));
+            $event->addStep(new WizardStep('profile', 'wizard_profile', 200));
+        });
+
+        $sut = new WizardSubscriber($urlGenerator, $security, $storage, SystemConfigurationFactory::createStub([
+            'user' => [
+                'wizard' => true,
+            ]
+        ]), $manager);
+        $event = $this->createRequestEvent($uri, true, $route);
+
+        $sut->onKernelRequest($event);
+
+        $response = $event->getResponse();
+        self::assertInstanceOf(RedirectResponse::class, $response);
+        self::assertSame('/wizard/profile', $response->headers->get('Location'));
+    }
+
     public function testOnKernelRequestDoesNotRedirectWhenAllStepsSeen(): void
     {
         $user = new User();
@@ -254,10 +309,13 @@ class WizardSubscriberTest extends TestCase
         return $token;
     }
 
-    private function createRequestEvent(string $uri, bool $mainRequest = true): RequestEvent
+    private function createRequestEvent(string $uri, bool $mainRequest = true, ?string $route = 'dashboard'): RequestEvent
     {
         $kernel = $this->createMock(HttpKernelInterface::class);
         $request = Request::create($uri);
+        if ($route !== null) {
+            $request->attributes->set('_route', $route);
+        }
 
         return new RequestEvent($kernel, $request, $mainRequest ? HttpKernelInterface::MAIN_REQUEST : HttpKernelInterface::SUB_REQUEST);
     }
