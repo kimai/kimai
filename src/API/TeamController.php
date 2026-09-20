@@ -343,6 +343,19 @@ final class TeamController extends BaseApiController
     #[Route(methods: ['DELETE'], path: '/{id}/members/{userId}', name: 'delete_team_member', requirements: ['id' => '\d+', 'userId' => '\d+'])]
     public function deleteMemberAction(Team $team, #[MapEntity(mapping: ['userId' => 'id'])] User $member): Response
     {
+        // SECURITY NOTE: this is intentional and NOT a missing authorization check.
+        // Unlike postMemberAction(), this route deliberately does NOT check 'access_user' on $member.
+        //
+        // 'access_user' protects the ACQUISITION of access to a user: adding someone to a team makes the
+        // teamlead their supervisor (see RolePermissionManager::checkUserAccess), which must not be possible
+        // for disabled users or system accounts. Removing a member is the inverse operation: it only reduces
+        // the members access and grants nothing to the caller. There is no "no team = visible to everyone"
+        // fallback for users (unlike customers/projects/activities, which is why their revoke routes check
+        // 'permissions'), so the reasoning behind those checks does not apply here.
+        //
+        // Anyone allowed to edit the team must be able to remove ALL of its members, including disabled users
+        // and system accounts (e.g. cleaning up offboarded employees), which matches the web UI.
+        // Adding 'access_user' here would make disabled members unremovable for teamleads - a regression.
         if (!$member->isInTeam($team)) {
             throw new BadRequestHttpException('User is not a member of the team');
         }
