@@ -392,7 +392,7 @@ abstract class TimesheetAbstractController extends AbstractController
 
                     return $this->redirectToRoute($this->getTimesheetRoute());
                 } catch (\Exception $ex) {
-                    $this->flashUpdateException($ex);
+                    $this->handleFormUpdateException($ex, $form);
                 }
             } else {
                 $this->flashSuccess(\sprintf('No changes for %s entries detected.', \count($timesheets)));
