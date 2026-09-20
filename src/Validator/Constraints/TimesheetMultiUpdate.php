@@ -22,6 +22,8 @@ final class TimesheetMultiUpdate extends Constraint
     public const DISABLED_CUSTOMER_ERROR = 'ts-multi-update-89';
     public const HOURLY_RATE_FIXED_RATE = 'ts-multi-update-90';
     public const LOCKED_PROJECT_ERROR = 'ts-multi-update-91';
+    public const PROJECT_ACCESS_ERROR = 'ts-multi-update-92';
+    public const ACTIVITY_ACCESS_ERROR = 'ts-multi-update-93';
 
     protected const ERROR_NAMES = [
         self::MISSING_ACTIVITY_ERROR => 'You need to choose an activity, if the project should be changed.',
@@ -32,6 +34,8 @@ final class TimesheetMultiUpdate extends Constraint
         self::DISABLED_CUSTOMER_ERROR => 'Cannot start a disabled customer.',
         self::HOURLY_RATE_FIXED_RATE => 'Cannot set hourly rate and fixed rate at the same time.',
         self::LOCKED_PROJECT_ERROR => 'The project is locked for the selected times.',
+        self::PROJECT_ACCESS_ERROR => 'You are not allowed to use this project.',
+        self::ACTIVITY_ACCESS_ERROR => 'You are not allowed to use this activity.',
     ];
 
     public string $message = 'This form has invalid settings.';
