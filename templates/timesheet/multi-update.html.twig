@@ -3,7 +3,7 @@
 {% block main %}
     {% set formEditTemplate = 'default/_form.html.twig' %}
     {% set formOptions = {
-        'title': 'edit'|trans,
+        'title': 'edit'|trans ~ ' (' ~ (dto.entities|length) ~ ')',
         'form': form,
         'back': path(back),
     } %}
