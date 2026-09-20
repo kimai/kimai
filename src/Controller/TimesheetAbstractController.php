@@ -387,6 +387,10 @@ abstract class TimesheetAbstractController extends AbstractController
 
             if ($execute) {
                 try {
+                    foreach ($timesheets as $timesheet) {
+                        $this->service->validateTimesheet($timesheet);
+                    }
+
                     $this->service->updateMultipleTimesheets($timesheets);
                     $this->flashSuccess('action.update.success');
 
