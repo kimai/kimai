@@ -72,7 +72,7 @@ final class TeamController extends BaseApiController
     /**
      * Fetch team
      */
-    #[IsGranted('view_team')]
+    #[IsGranted('view', 'team')]
     #[OA\Response(response: 200, description: 'Returns the team', content: new OA\JsonContent(ref: '#/components/schemas/Team'))]
     #[Route(methods: ['GET'], path: '/{id}', name: 'get_team', requirements: ['id' => '\d+'])]
     public function getAction(Team $team): Response
