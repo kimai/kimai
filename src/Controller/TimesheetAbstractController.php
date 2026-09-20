@@ -300,23 +300,17 @@ abstract class TimesheetAbstractController extends AbstractController
         $form = $this->getMultiUpdateForm($dto);
         $form->handleRequest($request);
 
-        // remove all, which are not allowed to be edited
+        // deny the entire batch if it contains a single timesheet that is not allowed to be edited
+        /** @var Timesheet[] $timesheets */
         $timesheets = [];
-        $disallowed = 0;
-        /** @var Timesheet $timesheet */
         foreach ($dto->getEntities() as $timesheet) {
-            if (!$this->isGranted('edit', $timesheet)) {
-                $disallowed++;
+            if (!$timesheet instanceof Timesheet) {
                 continue;
+            }
+            if (!$this->isGranted('edit', $timesheet)) {
             }
             $timesheets[] = $timesheet;
         }
-
-        if ($disallowed > 0) {
-            $this->flashWarning(\sprintf('You are missing the permission to edit %s timesheets', $disallowed));
-        }
-
-        $dto->setEntities($timesheets);
 
         if (\count($timesheets) === 0) {
             return $this->redirectToRoute($this->getTimesheetRoute());
@@ -324,7 +318,6 @@ abstract class TimesheetAbstractController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $execute = false;
-            /** @var Timesheet $timesheet */
             foreach ($timesheets as $timesheet) {
                 if ($dto->isReplaceDescription()) {
                     $timesheet->setDescription($dto->getDescription());
