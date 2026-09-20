@@ -13,6 +13,7 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Tag;
+use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
@@ -1034,6 +1035,55 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         $reloaded = $em->getRepository(Timesheet::class)->find($record->getId());
         self::assertInstanceOf(Timesheet::class, $reloaded);
         self::assertEquals($target->getId(), $reloaded->getProject()?->getId());
+    }
+
+    public function testMultiUpdateCannotMoveRecordsIntoForeignTeamProject(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
+        $em = $this->getEntityManager();
+
+        // the attacker is member of team A, which owns the source project
+        [$own, , $timesheet] = $this->createLockedProjectWithTimesheet($user, null, '-2 hours', '-1 hour', ' own');
+        $teamA = new Team('team A');
+        $teamA->addUser($user);
+        $teamA->addProject($own);
+        $em->persist($teamA);
+
+        // the target project belongs to team B, the attacker is not a member
+        [$foreign] = $this->createLockedProjectWithTimesheet($this->getUserByRole(User::ROLE_ADMIN), null, '-2 hours', '-1 hour', ' foreign');
+        $teamB = new Team('team B');
+        $teamB->addProject($foreign);
+        $em->persist($teamB);
+
+        // a global activity, which is allowed on every project
+        $global = new Activity();
+        $global->setName('global activity');
+        $em->persist($global);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/timesheet/');
+
+        $form = $client->getCrawler()->filter('form[name=multi_update_table]')->form();
+        $form->getFormNode()->setAttribute('action', $this->createUrl('/timesheet/multi-update'));
+        $client->submit($form, [
+            'multi_update_table' => [
+                'entities' => (string) $timesheet->getId()
+            ]
+        ]);
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        // the foreign project is not rendered in the choice list, so the id is posted directly
+        $form = $client->getCrawler()->filter('form[name=timesheet_multi_update]')->form();
+        $values = $form->getPhpValues();
+        $values['timesheet_multi_update']['project'] = $foreign->getId();
+        $values['timesheet_multi_update']['activity'] = $global->getId();
+        $this->request($client, '/timesheet/multi-update', 'POST', $values);
+
+        $em->clear();
+        $reloaded = $em->getRepository(Timesheet::class)->find($timesheet->getId());
+        self::assertInstanceOf(Timesheet::class, $reloaded);
+        self::assertEquals($own->getId(), $reloaded->getProject()?->getId(), 'A record was bulk-moved into a project of a foreign team.');
     }
 
     public function testTimesheetActionsAreHiddenForLockedProjectPeriod(): void
