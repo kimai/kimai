@@ -308,6 +308,7 @@ abstract class TimesheetAbstractController extends AbstractController
                 continue;
             }
             if (!$this->isGranted('edit', $timesheet)) {
+                throw $this->createAccessDeniedException('Not allowed to edit timesheet ' . $timesheet->getId());
             }
             $timesheets[] = $timesheet;
         }
