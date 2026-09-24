@@ -21,7 +21,7 @@
 {%- macro search_filter(route, options) -%}
     {% set opts = {'performSearch': 1} %}
     {% if options.begin is defined and options.end is defined %}
-        {% set opts = opts|merge({'daterange': (options.begin|report_date ~ ' - ' ~ options.end|report_date)}) %}
+        {% set opts = opts|merge({'daterange': date_range(options.begin, options.end)}) %}
     {% endif %}
     {% if options.customer is defined %}
         {% set opts = opts|merge({'customers[]': options.customer}) %}
