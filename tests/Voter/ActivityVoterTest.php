@@ -301,6 +301,133 @@ class ActivityVoterTest extends AbstractVoterTestCase
         $this->assertVote($user, $activity, 'access', VoterInterface::ACCESS_DENIED);
     }
 
+    /**
+     * Regression test: the customer team restriction must be respected, even if the
+     * teamlead's team is directly assigned to the project or activity.
+     */
+    public function testTeamleadDeniedWhenCustomerIsRestrictedToOtherTeam(): void
+    {
+        $ownTeam = new Team('own');
+        $user = new User();
+        $user->addRole(User::ROLE_TEAMLEAD);
+        $ownTeam->addTeamlead($user);
+
+        $customer = new Customer('foo');
+        $customer->addTeam(new Team('other'));
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam($ownTeam);
+
+        $activity = new Activity();
+        $activity->setProject($project);
+
+        foreach (['edit', 'budget', 'time'] as $attribute) {
+            $this->assertVote($user, $activity, $attribute, VoterInterface::ACCESS_DENIED);
+        }
+
+        $activity->addTeam($ownTeam);
+
+        foreach (['edit', 'budget', 'time'] as $attribute) {
+            $this->assertVote($user, $activity, $attribute, VoterInterface::ACCESS_DENIED);
+        }
+    }
+
+    /**
+     * Regression test: the project team restriction must be respected, even if the
+     * teamlead's team is assigned to the customer.
+     */
+    public function testTeamleadDeniedWhenProjectIsRestrictedToOtherTeam(): void
+    {
+        $ownTeam = new Team('own');
+        $user = new User();
+        $user->addRole(User::ROLE_TEAMLEAD);
+        $ownTeam->addTeamlead($user);
+
+        $customer = new Customer('foo');
+        $customer->addTeam($ownTeam);
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam(new Team('other'));
+
+        $activity = new Activity();
+        $activity->setProject($project);
+
+        foreach (['edit', 'budget', 'time'] as $attribute) {
+            $this->assertVote($user, $activity, $attribute, VoterInterface::ACCESS_DENIED);
+        }
+    }
+
+    public function testTeamleadDeniedWhenActivityIsRestrictedToOtherTeam(): void
+    {
+        $ownTeam = new Team('own');
+        $user = new User();
+        $user->addRole(User::ROLE_TEAMLEAD);
+        $ownTeam->addTeamlead($user);
+
+        $customer = new Customer('foo');
+        $customer->addTeam($ownTeam);
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam($ownTeam);
+
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activity->addTeam(new Team('other'));
+
+        $this->assertVote($user, $activity, 'edit', VoterInterface::ACCESS_DENIED);
+        $this->assertVote($user, $activity, 'budget', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testTeamMemberDeniedWhenCustomerIsRestrictedToOtherTeam(): void
+    {
+        $ownTeam = new Team('own');
+        $user = new User();
+        $user->addRole(User::ROLE_USER);
+        $ownTeam->addUser($user);
+
+        $customer = new Customer('foo');
+        $customer->addTeam(new Team('other'));
+
+        $project = new Project();
+        $project->setCustomer($customer);
+
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activity->addTeam($ownTeam);
+
+        $this->assertVote($user, $activity, 'view', VoterInterface::ACCESS_DENIED);
+        $this->assertVote($user, $activity, 'edit', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testTeamleadGrantedWhenMemberOfFullChainAndTeamleadOfOneLevel(): void
+    {
+        $customerTeam = new Team('customerTeam');
+        $projectTeam = new Team('projectTeam');
+        $activityTeam = new Team('activityTeam');
+        $user = new User();
+        $user->addRole(User::ROLE_TEAMLEAD);
+        $customerTeam->addUser($user);
+        $projectTeam->addUser($user);
+        $activityTeam->addTeamlead($user);
+
+        $customer = new Customer('foo');
+        $customer->addTeam($customerTeam);
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam($projectTeam);
+
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activity->addTeam($activityTeam);
+
+        $this->assertVote($user, $activity, 'view', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($user, $activity, 'edit', VoterInterface::ACCESS_GRANTED);
+    }
+
     public function testAccessDeniedForNonUserToken(): void
     {
         $activity = new Activity();

@@ -8,6 +8,23 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
+## [2.68.0](https://github.com/kimai/kimai/releases/tag/2.68.0)
+
+Team restrictions on customers, projects and activities are now consistently inherited
+when checking permissions on a single record (detail pages, edit forms, comments, rates,
+meta-fields and the `GET /api/projects/{id}` and `GET /api/activities/{id}` endpoints).
+
+Previously a team assignment on one level (e.g. the project) could grant `view`, `edit`,
+`budget`, `time` or `comments` on a record, even if the higher level (e.g. the customer) was
+restricted to a different team. Listings, filters and timesheets always applied the
+stricter rule, so the record was hidden there but reachable by ID.
+
+A user now needs to be a member of a team on every restricted level of the hierarchy
+(customer → project → activity) before a `*_teamlead_*` or `*_team_*` permission applies.
+Teamleads who are only assigned on the customer level lose access to projects and activities
+which were explicitly restricted to another team. If that was intended, add their team to
+the project or activity as well.
+
 ## [2.66.0](https://github.com/kimai/kimai/releases/tag/2.66.0)
 
 The timesheet API now honors the `view_rate_own_timesheet` and `view_rate_other_timesheet`
