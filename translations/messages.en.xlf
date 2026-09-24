@@ -1514,6 +1514,10 @@
         <source>quick_entry.title</source>
         <target>Weekly hours</target>
       </trans-unit>
+      <trans-unit id="qbYivWt" resname="quick_entry.overlapping_disabled">
+        <source>quick_entry.overlapping_disabled</source>
+        <target>Overlapping time entries are not allowed: saving two entries for the same day will fail with "You already have an entry for this time". An administrator can enable "Allow overlapping time entries" in the timesheet settings.</target>
+      </trans-unit>
       <trans-unit id="IPHM4iP" resname="updated_at">
         <source>Updated at</source>
         <target>Updated at</target>

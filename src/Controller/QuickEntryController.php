@@ -329,6 +329,7 @@ final class QuickEntryController extends AbstractController
             'locked' => $locked,
             'user' => $user,
             'query' => $query,
+            'allow_overlapping' => $this->configuration->isTimesheetAllowOverlappingRecords(),
         ]);
     }
 }

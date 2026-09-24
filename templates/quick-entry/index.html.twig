@@ -17,6 +17,9 @@
             {{ form_start(form, {attr: {id: 'quick-entries-form', class: 'form-dataTable quick-entries'}}) }}
             {{ form_widget(form._token) }}
             {{ form_errors(form) }}
+            {% if not allow_overlapping %}
+                {{ widgets.alert('warning', 'quick_entry.overlapping_disabled') }}
+            {% endif %}
         {% endblock %}
         {% block box_after %}
             {% if locked %}

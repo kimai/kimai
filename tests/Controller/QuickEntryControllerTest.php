@@ -65,6 +65,28 @@ class QuickEntryControllerTest extends AbstractControllerBaseTestCase
         self::assertCount(10, $columns);
     }
 
+    public function testIndexActionWarnsWhenOverlappingEntriesAreNotAllowed(): void
+    {
+        $client = $this->getClientForAuthenticatedUser();
+        $this->setSystemConfiguration('timesheet.rules.allow_overlapping_records', false);
+        $this->request($client, '/quick_entry/');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $alert = $client->getCrawler()->filter('section.content .alert-warning');
+        self::assertEquals(1, $alert->count());
+        self::assertStringContainsString('Allow overlapping time entries', $alert->text());
+    }
+
+    public function testIndexActionDoesNotWarnWhenOverlappingEntriesAreAllowed(): void
+    {
+        $client = $this->getClientForAuthenticatedUser();
+        $this->setSystemConfiguration('timesheet.rules.allow_overlapping_records', true);
+        $this->request($client, '/quick_entry/');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        self::assertEquals(0, $client->getCrawler()->filter('section.content .alert-warning')->count());
+    }
+
     public function testIndexActionWith(): void
     {
         $client = $this->getClientForAuthenticatedUser();
