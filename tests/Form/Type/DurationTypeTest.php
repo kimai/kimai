@@ -14,6 +14,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Test\TypeTestCase;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 
 #[CoversClass(DurationType::class)]
 class DurationTypeTest extends TypeTestCase
@@ -105,5 +106,31 @@ class DurationTypeTest extends TypeTestCase
 
         self::assertArrayHasKey('class', $view->vars['attr']);
         self::assertStringContainsString('duration-input testing', $view->vars['attr']['class']);
+    }
+
+    public function testDefaultParseMode(): void
+    {
+        $view = $this->factory->create(DurationType::class, 3600)->createView();
+
+        self::assertArrayHasKey('data-duration-mode', $view->vars['attr']);
+        self::assertEquals(DurationType::PARSE_MODE_DEFAULT, $view->vars['attr']['data-duration-mode']);
+    }
+
+    public function testIntegerMinutesParseMode(): void
+    {
+        $view = $this->factory->create(DurationType::class, 3600, [
+            'parse_mode' => DurationType::PARSE_MODE_INTEGER_MINUTES,
+        ])->createView();
+
+        self::assertEquals(DurationType::PARSE_MODE_INTEGER_MINUTES, $view->vars['attr']['data-duration-mode']);
+    }
+
+    public function testInvalidParseModeThrowsException(): void
+    {
+        $this->expectException(InvalidOptionsException::class);
+
+        $this->factory->create(DurationType::class, 3600, [
+            'parse_mode' => 'foo',
+        ]);
     }
 }
