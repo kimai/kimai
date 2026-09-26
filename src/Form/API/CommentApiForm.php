@@ -13,9 +13,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
-final class CommentApiForm extends AbstractType
+final class CommentApiForm extends AbstractType implements ApiFormInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -32,13 +31,6 @@ final class CommentApiForm extends AbstractType
             'documentation' => [
                 'description' => 'The actual comment (markdown is supported)'
             ],
-        ]);
-    }
-
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'csrf_protection' => false,
         ]);
     }
 }

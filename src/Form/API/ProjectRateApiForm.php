@@ -11,6 +11,6 @@ namespace App\Form\API;
 
 use App\Form\ProjectRateForm;
 
-final class ProjectRateApiForm extends ProjectRateForm
+final class ProjectRateApiForm extends ProjectRateForm implements ApiFormInterface
 {
 }

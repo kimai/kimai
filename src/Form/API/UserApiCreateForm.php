@@ -15,7 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-final class UserApiCreateForm extends UserCreateType
+final class UserApiCreateForm extends UserCreateType implements ApiFormInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -63,7 +63,6 @@ final class UserApiCreateForm extends UserCreateType
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'csrf_protection' => false,
             'include_roles' => true,
         ]);
     }
