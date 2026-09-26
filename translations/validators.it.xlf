@@ -178,6 +178,14 @@
         <source>A maximum duration of {{ value }} is allowed.</source>
         <target state="final">È consentita una durata massima di {{ value }}.</target>
       </trans-unit>
+      <trans-unit id="5vkuQs2" resname="The project is locked until %date%, please choose a later date." xml:space="preserve" approved="yes">
+        <source>The project is locked until %date%, please choose a later date.</source>
+        <target state="final">Il progetto è bloccato fino al %date%; scegli una data successiva.</target>
+      </trans-unit>
+      <trans-unit id="vgsD_Cw" resname="The project is locked for the selected times." xml:space="preserve" approved="yes">
+        <source>The project is locked for the selected times.</source>
+        <target state="final">Il progetto è bloccato per il periodo di tempo selezionato.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

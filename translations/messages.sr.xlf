@@ -2130,6 +2130,22 @@
         <source>reopen</source>
         <target state="translated">Поново отвори</target>
       </trans-unit>
+      <trans-unit id="k8F51oP" resname="project_locked_until" xml:space="preserve">
+        <source>project_locked_until</source>
+        <target state="translated">Времена закључана до</target>
+      </trans-unit>
+      <trans-unit id="C_ZcSX2" resname="help.project_start" xml:space="preserve">
+        <source>help.project_start</source>
+        <target state="translated">Времена пре овог датума не могу бити забележена.</target>
+      </trans-unit>
+      <trans-unit id="9A.4S.i" resname="help.project_end" xml:space="preserve">
+        <source>help.project_end</source>
+        <target state="translated">Времена после овог датума не могу бити забележена.</target>
+      </trans-unit>
+      <trans-unit id="ktmsI7g" resname="help.project_locked_until" xml:space="preserve">
+        <source>help.project_locked_until</source>
+        <target state="translated">Времена закључно са овим датумом не могу бити ни креирана ни измењена.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

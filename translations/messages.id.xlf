@@ -940,7 +940,7 @@
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
         <source>default</source>
-        <target state="translated">Default</target>
+        <target state="translated">Bawaan</target>
       </trans-unit>
       <trans-unit id="On18MKP" resname="plugin.installed" xml:space="preserve">
         <source>plugin.installed</source>
@@ -2129,6 +2129,22 @@
       <trans-unit id="nlJ2pW2" resname="invoice_email" xml:space="preserve">
         <source>invoice_email</source>
         <target state="translated">Email penagihan</target>
+      </trans-unit>
+      <trans-unit id="k8F51oP" resname="project_locked_until" xml:space="preserve">
+        <source>project_locked_until</source>
+        <target state="translated">Waktu terkunci hingga</target>
+      </trans-unit>
+      <trans-unit id="C_ZcSX2" resname="help.project_start" xml:space="preserve">
+        <source>help.project_start</source>
+        <target state="translated">Waktu sebelum tanggal ini tidak dapat dicatat.</target>
+      </trans-unit>
+      <trans-unit id="9A.4S.i" resname="help.project_end" xml:space="preserve">
+        <source>help.project_end</source>
+        <target state="translated">Waktu setelah tanggal ini tidak dapat dicatat.</target>
+      </trans-unit>
+      <trans-unit id="ktmsI7g" resname="help.project_locked_until" xml:space="preserve">
+        <source>help.project_locked_until</source>
+        <target state="translated">Waktu dan termasuk tanggal ini tidak dapat dibuat maupun diubah.</target>
       </trans-unit>
     </body>
   </file>
