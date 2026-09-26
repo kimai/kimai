@@ -357,6 +357,10 @@ abstract class TimesheetAbstractController extends AbstractController
                     $timesheet->setBillable($dto->isBillable());
                     $execute = true;
                 }
+                if (null !== $dto->getBreak()) {
+                    $timesheet->setBreak($dto->getBreak());
+                    $execute = true;
+                }
 
                 if ($dto->isRecalculateRates()) {
                     $timesheet->resetRates();

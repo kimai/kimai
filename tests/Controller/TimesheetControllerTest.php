@@ -26,6 +26,7 @@ use App\Timesheet\DateTimeFactory;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 #[Group('integration')]
 class TimesheetControllerTest extends AbstractControllerBaseTestCase
@@ -803,6 +804,118 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
             self::assertCount(2, $timesheet->getTags());
             self::assertTrue($timesheet->isExported());
             self::assertEquals(13, $timesheet->getFixedRate());
+        }
+    }
+
+    /**
+     * Creates 5 stopped timesheets with a duration of 4 hours and opens the multi-update form for them.
+     */
+    private function openMultiUpdateWithFourHourTimesheets(HttpKernelBrowser $client): void
+    {
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+        $fixture = new TimesheetFixtures();
+        $fixture->setAmount(5);
+        $fixture->setAmountRunning(0);
+        $fixture->setUser($user);
+        $fixture->setCallback(function (Timesheet $timesheet): void {
+            $begin = $timesheet->getBegin();
+            self::assertNotNull($begin);
+            $begin = clone $begin;
+            $begin->setTime(8, 0, 0);
+            $timesheet->setBegin($begin);
+            $end = clone $begin;
+            $end->modify('+ 4 hours');
+            $timesheet->setEnd($end);
+            $timesheet->setBreak(0);
+            $timesheet->setDuration(14400);
+        });
+        $this->importFixture($fixture);
+
+        $this->assertAccessIsGranted($client, '/timesheet/');
+
+        $form = $client->getCrawler()->filter('form[name=multi_update_table]')->form();
+        $node = $form->getFormNode();
+        $node->setAttribute('action', $this->createUrl('/timesheet/multi-update'));
+
+        $ids = [];
+        foreach ($this->getEntityManager()->getRepository(Timesheet::class)->findAll() as $timesheet) {
+            $ids[] = $timesheet->getId();
+        }
+        self::assertCount(5, $ids);
+
+        $client->submit($form, [
+            'multi_update_table' => [
+                'entities' => implode(',', $ids)
+            ]
+        ]);
+        self::assertTrue($client->getResponse()->isSuccessful());
+    }
+
+    public function testMultiUpdateWithoutBreakTime(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->setSystemConfiguration('timesheet.rules.break_time_active', false);
+
+        $this->openMultiUpdateWithFourHourTimesheets($client);
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_multi_update]');
+        self::assertEquals(0, $form->filter('input[name="timesheet_multi_update[break]"]')->count());
+    }
+
+    public function testMultiUpdateWithBreakTime(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->setSystemConfiguration('timesheet.rules.break_time_active', true);
+
+        $this->openMultiUpdateWithFourHourTimesheets($client);
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_multi_update]')->form();
+        $client->submit($form, [
+            'timesheet_multi_update' => [
+                'break' => '0:30',
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
+        $client->followRedirect();
+        $this->assertHasFlashSaveSuccess($client);
+
+        $em = $this->getEntityManager();
+        $em->clear();
+
+        /** @var Timesheet[] $timesheets */
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        self::assertCount(5, $timesheets);
+        foreach ($timesheets as $timesheet) {
+            self::assertEquals(1800, $timesheet->getBreak());
+            self::assertEquals(12600, $timesheet->getDuration());
+        }
+    }
+
+    public function testMultiUpdateWithBreakTimeLongerThanDuration(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->setSystemConfiguration('timesheet.rules.break_time_active', true);
+
+        $this->openMultiUpdateWithFourHourTimesheets($client);
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_multi_update]')->form();
+        $client->submit($form, [
+            'timesheet_multi_update' => [
+                'break' => '5:00',
+            ]
+        ]);
+        self::assertTrue($client->getResponse()->isSuccessful());
+        self::assertStringContainsString('Duration cannot be negative.', (string) $client->getResponse()->getContent());
+
+        $em = $this->getEntityManager();
+        $em->clear();
+
+        /** @var Timesheet[] $timesheets */
+        $timesheets = $em->getRepository(Timesheet::class)->findAll();
+        self::assertCount(5, $timesheets);
+        foreach ($timesheets as $timesheet) {
+            self::assertEquals(0, $timesheet->getBreak());
+            self::assertEquals(14400, $timesheet->getDuration());
         }
     }
 

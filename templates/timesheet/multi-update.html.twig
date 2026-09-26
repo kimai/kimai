@@ -45,6 +45,11 @@
                     {{ form_row(form.billable) }}
                 </fieldset>
             {% endif %}
+            {% if form.break is defined %}
+                <fieldset class="form-fieldset pb-0">
+                    {{ form_row(form.break) }}
+                </fieldset>
+            {% endif %}
             {% if form.recalculateRates is defined %}
                 <fieldset class="form-fieldset pb-0">
                     {{ form_row(form.recalculateRates) }}
