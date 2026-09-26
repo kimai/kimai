@@ -17,6 +17,7 @@ use App\Event\InvoiceDeleteEvent;
 use App\Event\InvoiceMetaDefinitionEvent;
 use App\Event\InvoicePostRenderEvent;
 use App\Event\InvoicePreRenderEvent;
+use App\Event\InvoiceStatusChangedEvent;
 use App\Event\InvoiceUpdatePostEvent;
 use App\Event\InvoiceUpdatePreEvent;
 use App\Export\Base\DispositionInlineInterface;
@@ -236,8 +237,17 @@ class InvoiceService
         return $filename;
     }
 
-    public function changeInvoiceStatus(Invoice $invoice, string $status): void
+    /**
+     * @param \DateTime|null $paymentDate only allowed for status "paid", an existing payment date is kept if null
+     */
+    public function changeInvoiceStatus(Invoice $invoice, string $status, ?\DateTime $paymentDate = null): void
     {
+        if ($paymentDate !== null && $status !== Invoice::STATUS_PAID) {
+            throw new \InvalidArgumentException('Payment date can only be set for paid invoices');
+        }
+
+        $before = $invoice->getStatus();
+
         switch ($status) {
             case Invoice::STATUS_NEW:
                 $invoice->setIsNew();
@@ -249,6 +259,9 @@ class InvoiceService
 
             case Invoice::STATUS_PAID:
                 $invoice->setIsPaid();
+                if ($paymentDate !== null) {
+                    $invoice->setPaymentDate($paymentDate);
+                }
                 break;
 
             case Invoice::STATUS_CANCELED:
@@ -259,7 +272,7 @@ class InvoiceService
                 throw new \InvalidArgumentException('Unknown invoice status');
         }
 
-        $this->saveInvoice($invoice);
+        $this->saveInvoice($invoice, $before);
     }
 
     /**
@@ -549,11 +562,15 @@ class InvoiceService
         return $models;
     }
 
-    public function saveInvoice(Invoice $invoice): void
+    public function saveInvoice(Invoice $invoice, ?string $statusBefore = null): void
     {
         $this->dispatcher->dispatch(new InvoiceUpdatePreEvent($invoice));
         $this->invoiceRepository->saveInvoice($invoice);
         $this->dispatcher->dispatch(new InvoiceUpdatePostEvent($invoice));
+
+        if ($statusBefore !== null && $statusBefore !== $invoice->getStatus()) {
+            $this->dispatcher->dispatch(new InvoiceStatusChangedEvent($invoice, $statusBefore));
+        }
     }
 
     public function loadMetaFields(Invoice $invoice): void

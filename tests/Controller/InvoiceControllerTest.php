@@ -15,11 +15,16 @@ use App\Entity\Role;
 use App\Entity\RolePermission;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Event\InvoiceStatusChangedEvent;
+use App\Event\InvoiceUpdatePostEvent;
+use App\Event\InvoiceUpdatePreEvent;
 use App\Tests\DataFixtures\InvoiceFixtures;
 use App\Tests\DataFixtures\InvoiceTemplateFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\User\PermissionService;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -467,6 +472,141 @@ class InvoiceControllerTest extends AbstractControllerBaseTestCase
         $reloaded = $em->getRepository(Invoice::class)->find($invoiceId);
         self::assertInstanceOf(Invoice::class, $reloaded);
         self::assertEquals(Invoice::STATUS_NEW, $reloaded->getStatus());
+    }
+
+    /**
+     * @return \ArrayObject<int, object>
+     */
+    private function recordInvoiceEvents(): \ArrayObject
+    {
+        /** @var \ArrayObject<int, object> $events */
+        $events = new \ArrayObject();
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = self::getContainer()->get('event_dispatcher');
+        foreach ([InvoiceUpdatePreEvent::class, InvoiceUpdatePostEvent::class, InvoiceStatusChangedEvent::class] as $eventName) {
+            $dispatcher->addListener($eventName, function (object $event) use ($events): void {
+                $events[] = $event;
+            });
+        }
+
+        return $events;
+    }
+
+    public function testChangeStatusDispatchesEvents(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        // the event listeners have to survive the second request
+        self::assertInstanceOf(KernelBrowser::class, $client);
+        $client->disableReboot();
+
+        $fixture = new InvoiceFixtures();
+        $fixture->setAmount(1);
+        $fixture->setStatus([Invoice::STATUS_NEW]);
+        $invoiceId = $this->importFixture($fixture)[0]->getId();
+        self::assertIsInt($invoiceId);
+
+        $this->request($client, '/invoice/show');
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $statusToken = $client->getCrawler()->filter('div#status-token')->attr('data-value');
+        self::assertIsString($statusToken);
+
+        $events = $this->recordInvoiceEvents();
+
+        $client->request('POST', $this->createUrl('/invoice/change-status/' . $invoiceId . '/pending'), ['_token' => $statusToken]);
+        $this->assertIsRedirect($client, '/invoice/show');
+
+        self::assertCount(3, $events);
+        self::assertInstanceOf(InvoiceUpdatePreEvent::class, $events[0]);
+        self::assertInstanceOf(InvoiceUpdatePostEvent::class, $events[1]);
+        $event = $events[2];
+        self::assertInstanceOf(InvoiceStatusChangedEvent::class, $event);
+        self::assertEquals($invoiceId, $event->getInvoice()->getId());
+        self::assertEquals(Invoice::STATUS_NEW, $event->getStatusBefore());
+        self::assertEquals(Invoice::STATUS_PENDING, $event->getInvoice()->getStatus());
+    }
+
+    public function testChangeStatusWithInvalidTokenDoesNotDispatchEvents(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $fixture = new InvoiceFixtures();
+        $fixture->setAmount(1);
+        $fixture->setStatus([Invoice::STATUS_NEW]);
+        $invoiceId = $this->importFixture($fixture)[0]->getId();
+
+        $events = $this->recordInvoiceEvents();
+
+        $client->request('POST', $this->createUrl('/invoice/change-status/' . $invoiceId . '/pending'), ['_token' => 'not-a-valid-token']);
+        $this->assertIsRedirect($client, '/invoice/show');
+
+        self::assertCount(0, $events);
+    }
+
+    public function testEditActionDispatchesStatusChangedEvent(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        // the event listeners have to survive the second request
+        self::assertInstanceOf(KernelBrowser::class, $client);
+        $client->disableReboot();
+
+        $fixture = new InvoiceFixtures();
+        $fixture->setAmount(1);
+        $fixture->setStatus([Invoice::STATUS_PENDING]);
+        $invoiceId = $this->importFixture($fixture)[0]->getId();
+        self::assertIsInt($invoiceId);
+
+        $this->request($client, '/invoice/edit/' . $invoiceId);
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $events = $this->recordInvoiceEvents();
+
+        $form = $client->getCrawler()->filter('form[name=invoice_edit_form]')->form();
+        $client->submit($form, [
+            'invoice_edit_form' => [
+                'status' => Invoice::STATUS_PAID,
+                'paymentDate' => (new \DateTime())->format(self::DEFAULT_DATE_FORMAT),
+            ]
+        ]);
+        $this->assertIsRedirect($client, '/invoice/show');
+
+        self::assertCount(3, $events);
+        self::assertInstanceOf(InvoiceUpdatePreEvent::class, $events[0]);
+        self::assertInstanceOf(InvoiceUpdatePostEvent::class, $events[1]);
+        $event = $events[2];
+        self::assertInstanceOf(InvoiceStatusChangedEvent::class, $event);
+        self::assertEquals($invoiceId, $event->getInvoice()->getId());
+        self::assertEquals(Invoice::STATUS_PENDING, $event->getStatusBefore());
+        self::assertEquals(Invoice::STATUS_PAID, $event->getInvoice()->getStatus());
+    }
+
+    public function testEditActionWithoutStatusChangeDoesNotDispatchStatusChangedEvent(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        // the event listeners have to survive the second request
+        self::assertInstanceOf(KernelBrowser::class, $client);
+        $client->disableReboot();
+
+        $fixture = new InvoiceFixtures();
+        $fixture->setAmount(1);
+        $fixture->setStatus([Invoice::STATUS_PENDING]);
+        $invoiceId = $this->importFixture($fixture)[0]->getId();
+
+        $this->request($client, '/invoice/edit/' . $invoiceId);
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $events = $this->recordInvoiceEvents();
+
+        $form = $client->getCrawler()->filter('form[name=invoice_edit_form]')->form();
+        $client->submit($form, [
+            'invoice_edit_form' => [
+                'comment' => 'foo bar',
+            ]
+        ]);
+        $this->assertIsRedirect($client, '/invoice/show');
+
+        self::assertCount(2, $events);
+        self::assertInstanceOf(InvoiceUpdatePreEvent::class, $events[0]);
+        self::assertInstanceOf(InvoiceUpdatePostEvent::class, $events[1]);
     }
 
     /**
