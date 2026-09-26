@@ -542,6 +542,37 @@ class InvoiceControllerTest extends AbstractControllerBaseTestCase
         self::assertCount(0, $events);
     }
 
+    /**
+     * The API uses the same form with disabled CSRF protection (see InvoiceApiEditForm),
+     * which must not affect the frontend form.
+     */
+    public function testEditActionRequiresValidToken(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $fixture = new InvoiceFixtures();
+        $fixture->setAmount(1);
+        $fixture->setStatus([Invoice::STATUS_PENDING]);
+        $invoiceId = $this->importFixture($fixture)[0]->getId();
+        self::assertIsInt($invoiceId);
+
+        $client->request('POST', $this->createUrl('/invoice/edit/' . $invoiceId), [
+            'invoice_edit_form' => [
+                'status' => Invoice::STATUS_CANCELED,
+                'comment' => 'foo',
+                '_token' => 'not-a-valid-token',
+            ]
+        ]);
+        self::assertFalse($client->getResponse()->isRedirection());
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        $reloaded = $em->getRepository(Invoice::class)->find($invoiceId);
+        self::assertInstanceOf(Invoice::class, $reloaded);
+        self::assertEquals(Invoice::STATUS_PENDING, $reloaded->getStatus());
+        self::assertNotEquals('foo', $reloaded->getComment());
+    }
+
     public function testEditActionDispatchesStatusChangedEvent(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);

@@ -165,67 +165,6 @@ class InvoiceServiceTest extends TestCase
         self::assertInstanceOf(InvoiceUpdatePostEvent::class, $events[1]);
     }
 
-    public function testChangeInvoiceStatusToPaidSetsPaymentDate(): void
-    {
-        $events = [];
-        $invoice = $this->createInvoiceWithStatus(Invoice::STATUS_PENDING);
-        $paymentDate = new \DateTime('2026-09-01');
-
-        $sut = $this->getSut([], null, $this->getRecordingDispatcher($events));
-        $sut->changeInvoiceStatus($invoice, Invoice::STATUS_PAID, $paymentDate);
-
-        self::assertEquals(Invoice::STATUS_PAID, $invoice->getStatus());
-        self::assertSame($paymentDate, $invoice->getPaymentDate());
-        self::assertCount(3, $events);
-        self::assertInstanceOf(InvoiceStatusChangedEvent::class, $events[2]);
-        self::assertEquals(Invoice::STATUS_PENDING, $events[2]->getStatusBefore());
-    }
-
-    public function testChangeInvoiceStatusToPaidKeepsExistingPaymentDate(): void
-    {
-        $invoice = $this->createInvoiceWithStatus(Invoice::STATUS_CANCELED);
-        $paymentDate = new \DateTime('2026-08-15');
-        $invoice->setPaymentDate($paymentDate);
-
-        $sut = $this->getSut([]);
-        $sut->changeInvoiceStatus($invoice, Invoice::STATUS_PAID);
-
-        self::assertEquals(Invoice::STATUS_PAID, $invoice->getStatus());
-        self::assertSame($paymentDate, $invoice->getPaymentDate());
-    }
-
-    /**
-     * @return iterable<string, array{0: string}>
-     */
-    public static function getStatusWithoutPaymentDate(): iterable
-    {
-        yield 'new' => [Invoice::STATUS_NEW];
-        yield 'pending' => [Invoice::STATUS_PENDING];
-        yield 'canceled' => [Invoice::STATUS_CANCELED];
-    }
-
-    #[DataProvider('getStatusWithoutPaymentDate')]
-    public function testPaymentDateIsOnlyAllowedForPaidStatus(string $status): void
-    {
-        $events = [];
-        $invoiceRepo = $this->createMock(InvoiceRepository::class);
-        $invoiceRepo->expects($this->never())->method('saveInvoice');
-
-        $invoice = $this->createInvoiceWithStatus(Invoice::STATUS_PAID);
-        $sut = $this->getSut([], $invoiceRepo, $this->getRecordingDispatcher($events));
-
-        try {
-            $sut->changeInvoiceStatus($invoice, $status, new \DateTime('2026-09-01'));
-            self::fail('Expected InvalidArgumentException');
-        } catch (\InvalidArgumentException $ex) {
-            self::assertEquals('Payment date can only be set for paid invoices', $ex->getMessage());
-        }
-
-        self::assertCount(0, $events);
-        self::assertEquals(Invoice::STATUS_PAID, $invoice->getStatus());
-        self::assertNull($invoice->getPaymentDate());
-    }
-
     public function testSaveInvoiceWithoutStatusBeforeDoesNotDispatchStatusEvent(): void
     {
         $events = [];

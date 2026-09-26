@@ -237,15 +237,8 @@ class InvoiceService
         return $filename;
     }
 
-    /**
-     * @param \DateTime|null $paymentDate only allowed for status "paid", an existing payment date is kept if null
-     */
-    public function changeInvoiceStatus(Invoice $invoice, string $status, ?\DateTime $paymentDate = null): void
+    public function changeInvoiceStatus(Invoice $invoice, string $status): void
     {
-        if ($paymentDate !== null && $status !== Invoice::STATUS_PAID) {
-            throw new \InvalidArgumentException('Payment date can only be set for paid invoices');
-        }
-
         $before = $invoice->getStatus();
 
         switch ($status) {
@@ -259,9 +252,6 @@ class InvoiceService
 
             case Invoice::STATUS_PAID:
                 $invoice->setIsPaid();
-                if ($paymentDate !== null) {
-                    $invoice->setPaymentDate($paymentDate);
-                }
                 break;
 
             case Invoice::STATUS_CANCELED:
