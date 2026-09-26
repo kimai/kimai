@@ -18,7 +18,7 @@ jobs:
         runs-on: ubuntu-latest
         services:
             mysql:
-                image: mysql@sha256:45abdd9b4144660b5c93a5b7d0ebb21e024f0ba9851ecb4ab43bf83c6bf83592 # 8.4.9
+                image: mysql@sha256:ade067ae2fb15eeb6143e81185afe22573e3b3addc58aaf90c41999fa6883991 # 8.4.9
                 env:
                     MYSQL_ALLOW_EMPTY_PASSWORD: false
                     MYSQL_ROOT_PASSWORD: kimai
