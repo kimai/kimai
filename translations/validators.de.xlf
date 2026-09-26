@@ -18,9 +18,9 @@
         <source>The username is already used.</source>
         <target>Dieser Benutzername wird bereits verwendet.</target>
       </trans-unit>
-      <trans-unit id="ekO5eXI" resname="An equal username is already used.">
+      <trans-unit id="ekO5eXI" resname="An equal username is already used." approved="yes">
         <source>An equal username is already used.</source>
-        <target>Eine gleichlautender Benutzername wird bereits verwendet.</target>
+        <target state="final">Ein gleichlautender Benutzername wird bereits verwendet.</target>
       </trans-unit>
       <trans-unit id="INlaCgW" resname="An equal email is already used.">
         <source>An equal email is already used.</source>

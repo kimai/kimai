@@ -558,9 +558,9 @@
         <source>mobile</source>
         <target>Mobitel</target>
       </trans-unit>
-      <trans-unit id="pcWhXux" resname="homepage">
+      <trans-unit id="pcWhXux" resname="homepage" xml:space="preserve">
         <source>homepage</source>
-        <target>Web-stranica</target>
+        <target state="translated">Početna stranica</target>
       </trans-unit>
       <trans-unit id="OWLt7pw" resname="timezone">
         <source>timezone</source>
@@ -1094,13 +1094,13 @@
         <source>status.canceled</source>
         <target state="translated">Otkazano</target>
       </trans-unit>
-      <trans-unit id="GzWKgBk" resname="error.directory_missing">
-        <source>error.directory_missing</source>
-        <target>Mapa „%dir%” ne postoji i nije je moguće stvoriti.</target>
+      <trans-unit id="GzWKgBk" resname="error.directory_missing" xml:space="preserve">
+        <source>The directory “%dir%” does not exist and could not be created.</source>
+        <target state="translated">Direktorij „%dir%” ne postoji i nije ga bilo moguće stvoriti.</target>
       </trans-unit>
-      <trans-unit id="C2TGff0" resname="error.directory_protected">
+      <trans-unit id="C2TGff0" resname="error.directory_protected" xml:space="preserve">
         <source>error.directory_protected</source>
-        <target>Mapa „%dir%” je zaštićena od pisanja.</target>
+        <target state="translated">Direktorij „%dir%” je zaštićen od pisanja.</target>
       </trans-unit>
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
         <source>stats.workingTimeWeekShort</source>
@@ -1794,9 +1794,9 @@
         <source>copy</source>
         <target>Stvori kopiju</target>
       </trans-unit>
-      <trans-unit id="TqFAWIF" resname="home">
+      <trans-unit id="TqFAWIF" resname="home" xml:space="preserve">
         <source>home</source>
-        <target>Web-stranica</target>
+        <target state="translated">Početna stranica</target>
       </trans-unit>
       <trans-unit id="PBlIO2x" resname="create-project">
         <source>create-project</source>
@@ -2129,6 +2129,22 @@
       <trans-unit id="nlJ2pW2" resname="invoice_email" xml:space="preserve">
         <source>invoice_email</source>
         <target state="translated">E-mail za naplatu</target>
+      </trans-unit>
+      <trans-unit id="C_ZcSX2" resname="help.project_start" xml:space="preserve">
+        <source>help.project_start</source>
+        <target state="translated">Vremena prije ovog datuma se ne mogu zabilježiti.</target>
+      </trans-unit>
+      <trans-unit id="9A.4S.i" resname="help.project_end" xml:space="preserve">
+        <source>help.project_end</source>
+        <target state="translated">Vremena nakon ovog datuma se ne mogu zabilježiti.</target>
+      </trans-unit>
+      <trans-unit id="ktmsI7g" resname="help.project_locked_until" xml:space="preserve">
+        <source>help.project_locked_until</source>
+        <target state="translated">Vremena do ovog datuma (uključujući i ovaj) se ne mogu zabilježiti niti mijenjati.</target>
+      </trans-unit>
+      <trans-unit id="k8F51oP" resname="project_locked_until" xml:space="preserve">
+        <source>project_locked_until</source>
+        <target state="translated">Vremena su zaključana do</target>
       </trans-unit>
     </body>
   </file>

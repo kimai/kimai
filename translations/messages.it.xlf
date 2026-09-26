@@ -2130,6 +2130,22 @@
         <source>release</source>
         <target state="final">Pubblica</target>
       </trans-unit>
+      <trans-unit id="k8F51oP" resname="project_locked_until" xml:space="preserve" approved="yes">
+        <source>project_locked_until</source>
+        <target state="final">Orari bloccati fino a</target>
+      </trans-unit>
+      <trans-unit id="C_ZcSX2" resname="help.project_start" xml:space="preserve" approved="yes">
+        <source>help.project_start</source>
+        <target state="final">Gli orari precedenti a questa data non possono essere registrati.</target>
+      </trans-unit>
+      <trans-unit id="9A.4S.i" resname="help.project_end" xml:space="preserve" approved="yes">
+        <source>help.project_end</source>
+        <target state="final">Gli orari successivi a questa data non possono essere registrati.</target>
+      </trans-unit>
+      <trans-unit id="ktmsI7g" resname="help.project_locked_until" xml:space="preserve" approved="yes">
+        <source>help.project_locked_until</source>
+        <target state="final">Gli orari fino a questa data (inclusa) non possono essere né creati né modificati.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -124,7 +124,7 @@
       </trans-unit>
       <trans-unit id="Wq09TUJ" resname="board.empty_state" xml:space="preserve" approved="no">
         <source>board.empty_state</source>
-        <target state="translated">Još nemate nijednu ploču. Kreirajte ploču da biste započeli.</target>
+        <target state="translated">Još nemaš nijednu ploču. Stvori jednu ploču i započni.</target>
       </trans-unit>
       <trans-unit id="7lJ6pzI" resname="board.limit_reached" xml:space="preserve" approved="no">
         <source>board.limit_reached</source>
