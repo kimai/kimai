@@ -354,6 +354,14 @@ final class SystemConfiguration
         return $this->getString('defaults.user.language', 'en');
     }
 
+    /**
+     * The locale used to format date, time and money for new users.
+     */
+    public function getUserDefaultLocale(): string
+    {
+        return $this->getString('defaults.user.locale', $this->getUserDefaultLanguage());
+    }
+
     public function getDefaultCurrency(): string
     {
         return $this->getString('defaults.customer.currency', 'EUR');

@@ -94,7 +94,7 @@
                     // turn a string like "quick_entry_form_rows_16_timesheets_3_duration" into "3"
                     // we can safely use -1 because there are only 0 (monday) to 6 (sunday) indexes
                     let id = durationInput.id.replace(/_duration/, '').slice(-1);
-                    totalsPerDay[id] += DATES.getSecondsFromDurationString(durationInput.value);
+                    totalsPerDay[id] += DATES.getSecondsFromDurationString(durationInput.value, durationInput.dataset.durationMode);
                 }
                 for (const [id, total] of Object.entries(totalsPerDay)) {
                     document.getElementById('qe-totals-day-' + id).innerText = DATES.formatSeconds(total);
@@ -107,7 +107,7 @@
                     let qeWeekRowFields = qeWeekRow.getElementsByClassName('duration-input');
                     let totalsRow = 0;
                     for (let durationInput of qeWeekRowFields) {
-                        totalsRow += DATES.getSecondsFromDurationString(durationInput.value);
+                        totalsRow += DATES.getSecondsFromDurationString(durationInput.value, durationInput.dataset.durationMode);
                     }
                     qeWeekRow.getElementsByClassName('qe-totals-row')[0].innerText = DATES.formatSeconds(totalsRow);
                 }

@@ -50,6 +50,12 @@ final class TeamController extends BaseApiController
     {
     }
 
+    private function loadTeamWithDependencies(Team $team): void
+    {
+        $loader = $this->repository->createTeamLoader(false, true);
+        $loader->loadResults([$team]);
+    }
+
     /**
      * Fetch teams
      */
@@ -77,6 +83,8 @@ final class TeamController extends BaseApiController
     #[Route(methods: ['GET'], path: '/{id}', name: 'get_team', requirements: ['id' => '\d+'])]
     public function getAction(Team $team): Response
     {
+        $this->loadTeamWithDependencies($team);
+
         $view = new View($team, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
@@ -115,6 +123,7 @@ final class TeamController extends BaseApiController
 
         if ($form->isValid()) {
             $this->teamService->saveTeam($team);
+            $this->loadTeamWithDependencies($team);
 
             $view = new View($team, 200);
             $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -158,6 +167,7 @@ final class TeamController extends BaseApiController
         }
 
         $this->teamService->saveTeam($team);
+        $this->loadTeamWithDependencies($team);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -326,6 +336,7 @@ final class TeamController extends BaseApiController
         $team->addUser($member);
 
         $this->teamService->saveTeam($team);
+        $this->loadTeamWithDependencies($team);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -367,6 +378,7 @@ final class TeamController extends BaseApiController
         $team->removeUser($member);
 
         $this->teamService->saveTeam($team);
+        $this->loadTeamWithDependencies($team);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -393,6 +405,7 @@ final class TeamController extends BaseApiController
 
         $team->addCustomer($customer);
         $customerRepository->saveCustomer($customer);
+        $this->loadTeamWithDependencies($team);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -419,6 +432,7 @@ final class TeamController extends BaseApiController
 
         $team->removeCustomer($customer);
         $customerRepository->saveCustomer($customer);
+        $this->loadTeamWithDependencies($team);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -445,6 +459,7 @@ final class TeamController extends BaseApiController
 
         $team->addProject($project);
         $projectRepository->saveProject($project);
+        $this->loadTeamWithDependencies($team);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -471,6 +486,7 @@ final class TeamController extends BaseApiController
 
         $team->removeProject($project);
         $projectRepository->saveProject($project);
+        $this->loadTeamWithDependencies($team);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -497,6 +513,7 @@ final class TeamController extends BaseApiController
 
         $team->addActivity($activity);
         $activityRepository->saveActivity($activity);
+        $this->loadTeamWithDependencies($team);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
@@ -523,6 +540,7 @@ final class TeamController extends BaseApiController
 
         $team->removeActivity($activity);
         $activityRepository->saveActivity($activity);
+        $this->loadTeamWithDependencies($team);
 
         $view = new View($team, Response::HTTP_OK);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);

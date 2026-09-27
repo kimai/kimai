@@ -172,11 +172,19 @@
       </trans-unit>
       <trans-unit id="Dp2KT8W" resname="The field {{ field }} is required, please select a value" xml:space="preserve" approved="no">
         <source>Please select a value for {{ field }}</source>
-        <target state="translated">Odaberite vrijednost za {{ field }}</target>
+        <target state="translated">Odaberi vrijednost za {{ field }}</target>
       </trans-unit>
       <trans-unit id="7hNS8l3" resname="A maximum duration of {{ value }} is allowed." xml:space="preserve">
         <source>A maximum duration of {{ value }} is allowed.</source>
         <target state="translated">Dopušteno je maksimalno trajanje od {{ value }}.</target>
+      </trans-unit>
+      <trans-unit id="5vkuQs2" resname="The project is locked until %date%, please choose a later date." xml:space="preserve">
+        <source>The project is locked until %date%, please choose a later date.</source>
+        <target state="translated">Projekt je zaključan do %date%. Odaberi jedan kasniji datum.</target>
+      </trans-unit>
+      <trans-unit id="vgsD_Cw" resname="The project is locked for the selected times." xml:space="preserve">
+        <source>The project is locked for the selected times.</source>
+        <target state="translated">Projekt je zaključan za odabrana vremena.</target>
       </trans-unit>
     </body>
   </file>
