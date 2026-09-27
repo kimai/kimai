@@ -310,6 +310,7 @@ class TimesheetEditForm extends AbstractType
             'attr' => [
                 'placeholder' => '0:00',
             ],
+            'parse_mode' => DurationType::PARSE_MODE_INTEGER_MINUTES,
         ];
 
         if ($autofocus) {

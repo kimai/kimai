@@ -93,6 +93,10 @@
  */
 
 /*!
+ * [KIMAI] KimaiDurationForm: parses and normalizes all duration input fields
+ */
+
+/*!
  * [KIMAI] KimaiEditTimesheetForm: responsible for the most important form in the application
  */
 
