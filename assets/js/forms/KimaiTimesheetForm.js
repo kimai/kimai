@@ -430,7 +430,7 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
      */
     _changedDuration()
     {
-        if (!this._isDurationConnected() || this._duration.value === '') {
+        if (!this._isDurationConnected() || this._duration.value === '' || this._duration.validity.patternMismatch) {
             return;
         }
 

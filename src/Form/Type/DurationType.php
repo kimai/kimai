@@ -63,6 +63,10 @@ final class DurationType extends AbstractType
         $view->vars['attr']['class'] = $class;
         $view->vars['attr']['autocomplete'] = 'off';
         $view->vars['attr']['data-duration-mode'] = $options['parse_mode'];
+        // allows the frontend to detect invalid values, using the same rules as the server-side validation
+        if (!isset($view->vars['attr']['pattern'])) {
+            $view->vars['attr']['pattern'] = (new DurationConstraint())->getHtmlPattern();
+        }
         $view->vars['toggle'] = $options['toggle'];
 
         if ($options['preset_hours'] !== null && $options['preset_minutes'] !== null) {

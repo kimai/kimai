@@ -96,16 +96,30 @@ export default class KimaiDurationForm extends KimaiFormPlugin {
     /**
      * Rewrites the value of the given field into the H:MM format, using the fields parsing mode.
      *
-     * Negative values are not allowed and will be removed, invalid values are converted to 0:00.
+     * Negative values are not allowed and will be removed.
+     * Invalid values are kept and marked, so the user can fix them: the "pattern" attribute prevents form submission.
      *
      * @param {HTMLInputElement} field
      * @private
      */
     _normalizeDuration(field)
     {
-        if (field.value.trim() === '') {
+        const value = field.value.trim();
+        if (value === '') {
+            field.classList.remove('is-invalid');
             return;
         }
+
+        if (value !== field.value) {
+            field.value = value;
+        }
+
+        if (field.validity.patternMismatch) {
+            field.classList.add('is-invalid');
+            return;
+        }
+
+        field.classList.remove('is-invalid');
 
         const seconds = this.getDateUtils().getSecondsFromDurationString(field.value, field.dataset['durationMode']);
         if (seconds < 0) {

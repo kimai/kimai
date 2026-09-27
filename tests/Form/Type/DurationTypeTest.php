@@ -10,6 +10,7 @@
 namespace App\Tests\Form\Type;
 
 use App\Form\Type\DurationType;
+use App\Validator\Constraints\Duration as DurationConstraint;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -123,6 +124,23 @@ class DurationTypeTest extends TypeTestCase
         ])->createView();
 
         self::assertEquals(DurationType::PARSE_MODE_INTEGER_MINUTES, $view->vars['attr']['data-duration-mode']);
+    }
+
+    public function testHasValidationPattern(): void
+    {
+        $view = $this->factory->create(DurationType::class, 3600)->createView();
+
+        self::assertArrayHasKey('pattern', $view->vars['attr']);
+        self::assertEquals((new DurationConstraint())->getHtmlPattern(), $view->vars['attr']['pattern']);
+    }
+
+    public function testValidationPatternCanBeOverwritten(): void
+    {
+        $view = $this->factory->create(DurationType::class, 3600, [
+            'attr' => ['pattern' => '[0-9]+']
+        ])->createView();
+
+        self::assertEquals('[0-9]+', $view->vars['attr']['pattern']);
     }
 
     public function testInvalidParseModeThrowsException(): void
