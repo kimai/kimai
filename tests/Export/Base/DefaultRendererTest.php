@@ -26,6 +26,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -51,6 +52,7 @@ class DefaultRendererTest extends AbstractRendererTestCase
             (new XlsxRendererFactoryMock($this))->create(),
             $repository,
             $logger,
+            $this->createMock(TranslatorInterface::class),
         );
     }
 

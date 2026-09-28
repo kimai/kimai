@@ -12,7 +12,6 @@ namespace App\Controller;
 use App\Configuration\SystemConfiguration;
 use App\Entity\ExportableItem;
 use App\Entity\ExportTemplate;
-use App\Event\TimesheetMetaDisplayEvent;
 use App\Export\Base\DispositionInlineInterface;
 use App\Export\ServiceExport;
 use App\Export\TooManyItemsExportException;
@@ -21,7 +20,6 @@ use App\Form\Toolbar\ExportToolbarForm;
 use App\Repository\ExportTemplateRepository;
 use App\Repository\Query\ExportQuery;
 use App\Utils\PageSetup;
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,7 +35,6 @@ final class ExportController extends AbstractController
 {
     public function __construct(
         private readonly ServiceExport $export,
-        private readonly EventDispatcherInterface $dispatcher,
     ) {
     }
 
@@ -50,6 +47,7 @@ final class ExportController extends AbstractController
         $tooManyResults = false;
         $maxItemsPreview = 500;
         $entries = [];
+        $metaColumns = [];
 
         $form = $this->getToolbarForm($query, 'GET');
         if ($this->handleSearch($form, $request)) {
@@ -61,6 +59,7 @@ final class ExportController extends AbstractController
         if ($form->isValid() && ($query->hasBookmark() || $request->query->has('performSearch'))) {
             try {
                 $showPreview = true;
+                $metaColumns = $this->export->getExportPreviewColumns($query);
                 $entries = $this->getEntries($query);
                 foreach ($entries as $entry) {
                     $cid = $entry->getProject()->getCustomer()->getId();
@@ -111,10 +110,6 @@ final class ExportController extends AbstractController
         } else {
             $showRates = $this->isGranted('view_rate_own_timesheet');
         }
-
-        $event = new TimesheetMetaDisplayEvent($query, TimesheetMetaDisplayEvent::EXPORT);
-        $this->dispatcher->dispatch($event);
-        $metaColumns = $event->getFields();
 
         return $this->render('export/index.html.twig', [
             'page_setup' => $page,

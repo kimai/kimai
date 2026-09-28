@@ -10,14 +10,27 @@
 namespace App\Export;
 
 use App\Entity\Timesheet;
+use App\Event\TimesheetMetaDisplayEvent;
 use App\Repository\Query\ExportQuery;
 use App\Repository\Query\TimesheetQueryHint;
 use App\Repository\TimesheetRepository;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
-final class TimesheetExportRepository implements ExportRepositoryInterface
+final class TimesheetExportRepository implements ExportRepositoryInterface, ExportPreviewColumnProviderInterface
 {
-    public function __construct(private readonly TimesheetRepository $repository)
+    public function __construct(
+        private readonly TimesheetRepository $repository,
+        private readonly EventDispatcherInterface $eventDispatcher,
+    )
     {
+    }
+
+    public function getExportPreviewColumns(ExportQuery $query): array
+    {
+        $event = new TimesheetMetaDisplayEvent($query, TimesheetMetaDisplayEvent::EXPORT);
+        $this->eventDispatcher->dispatch($event);
+
+        return $event->getFields();
     }
 
     /**

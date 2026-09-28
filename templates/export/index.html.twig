@@ -28,9 +28,9 @@
     'tags': {'class': 'd-none d-xl-table-cell', 'orderBy': false},
 } %}
 {% if metaColumns is defined %}
-    {% for field in metaColumns %}
+    {% for column in metaColumns %}
         {% set columns = columns|merge({
-            ('mf_' ~ field.name): {'class': 'd-none', 'orderBy': false, 'title': field.label},
+            (column.tableKey): {'class': 'd-none', 'orderBy': false, 'title': column.label, 'translate': false},
         }) %}
     {% endfor %}
 {% endif %}
@@ -273,9 +273,11 @@
                         {% endif %}
                     </td>
                     {% if metaColumns is defined %}
-                        {% for field in metaColumns %}
-                            <td class="{{ tables.data_table_column_class(tableName, columns, 'mf_' ~ field.name) }}">
-                                {{ tables.datatable_meta_column(entry, field) }}
+                        {% for column in metaColumns %}
+                            <td class="{{ tables.data_table_column_class(tableName, columns, column.tableKey) }}">
+                                {% if entry.type == column.repositoryType %}
+                                    {{ tables.datatable_meta_column(entry, column.field) }}
+                                {% endif %}
                             </td>
                         {% endfor %}
                     {% endif %}
