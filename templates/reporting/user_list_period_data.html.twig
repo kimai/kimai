@@ -14,12 +14,9 @@
 {% else %}
     {% set dataTypeTitle = 'stats.durationTotal' %}
 {% endif %}
-<table class="table table-hover dataTable">
+<table class="table table-hover dataTable table-sticky-first table-vcenter">
     <thead>
         <tr>
-            {% if with_avatar %}
-            <th class="w-avatar"></th>
-            {% endif %}
             <th>&nbsp;</th>
             {% if showAccountNumber %}
             <th>{{ 'account_number'|trans }}</th>
@@ -53,14 +50,16 @@
         {% endfor %}
         {% if (show_empty_rows and userPeriod.user.enabled) or usersTotalDuration != 0 %}
         <tr class="user">
-            {% if with_avatar %}
-                <td class="w-avatar">
-                    {% from "macros/widgets.html.twig" import user_avatar %}
-                    {{ user_avatar(userPeriod.user) }}
-                </td>
-            {% endif %}
             <td class="text-nowrap"{% block user_column_cell_attribute %}{% endblock %}>
-                {{ userPeriod.user.displayName|sanitize_dde }}
+                {% if with_avatar %}
+                    {% from "macros/widgets.html.twig" import user_avatar %}
+                    <div class="d-flex align-items-center gap-2">
+                        {{ user_avatar(userPeriod.user, false) }}
+                        <span>{{ userPeriod.user.displayName|sanitize_dde }}</span>
+                    </div>
+                {% else %}
+                    {{ userPeriod.user.displayName|sanitize_dde }}
+                {% endif %}
             </td>
             {% if showAccountNumber %}
                 <td>{{ userPeriod.user.accountNumber }}</td>
@@ -93,7 +92,7 @@
     </tbody>
     <tfoot>
         <tr class="summary">
-            <td{% if with_avatar %} colspan="2"{% endif %}>{{ dataTypeTitle|trans }}</td>
+            <td>{{ dataTypeTitle|trans }}</td>
             {% if showAccountNumber %}
                 <td></td>
             {% endif %}

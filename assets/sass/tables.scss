@@ -132,6 +132,52 @@ table.dataTable {
 }
 
 
+/*
+ * Keeps the first column visible while scrolling horizontally inside a .table-responsive container.
+ * The background must be opaque, otherwise the scrolled cells shine through.
+ * Colors are based on theme variables, so light and dark mode are both supported.
+ */
+table.table-sticky-first > * > tr > :first-child {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    /* bootstrap uses this as cell background, the hover/striped state is painted on top via inset box-shadow */
+    --tblr-table-bg: var(--tblr-bg-surface);
+
+    /* with border-collapse the cell borders scroll away, so the separator is drawn by a pseudo element */
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 1px;
+        background-color: var(--tblr-border-color);
+    }
+}
+/* the summary background is semi-transparent, so it is layered on top of the opaque surface color */
+table.table-sticky-first > * > tr.summary > :first-child {
+    background-color: var(--tblr-bg-surface);
+    background-image: linear-gradient(var(--tblr-secondary-lt), var(--tblr-secondary-lt));
+}
+/*
+ * A single cell spanning the whole row (e.g. a grouping row) has no room to move inside the table,
+ * so sticky has no effect on it. Instead, the content of that cell becomes sticky within the cell.
+ */
+table.table-sticky-first > * > tr > td[colspan]:only-child {
+    position: static;
+
+    &::after {
+        content: none;
+    }
+
+    > * {
+        position: sticky;
+        left: $table-cell-padding-x;
+        display: inline-block;
+    }
+}
+
 table.table-hover {
     tr {
         &.exported {
