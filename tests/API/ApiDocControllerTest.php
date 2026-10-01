@@ -48,7 +48,7 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
             }
         }
 
-        $expectedKeys = ['Actions', 'Activity', 'Dashboard', 'Default', 'Customer', 'Favorites', 'Project', 'Tag', 'Team', 'Timesheet', 'User', 'Invoice', 'Export'];
+        $expectedKeys = ['Actions', 'Activity', 'Dashboard', 'Default', 'Customer', 'Favorites', 'Project', 'Tag', 'Team', 'Timesheet', 'User', 'Invoice', 'Export', 'WorkingTime'];
         $actual = array_keys($tags);
 
         sort($actual);
@@ -126,6 +126,7 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
             '/api/users/roles/{id}',
             '/api/users/api-token/{id}',
             '/api/users/{id}/preferences',
+            '/api/working-times/{id}/{year}',
         ];
 
         self::assertArrayHasKey('openapi', $json);
