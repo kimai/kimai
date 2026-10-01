@@ -139,7 +139,7 @@ table.dataTable {
  */
 table.table-sticky-first > * > tr > :first-child {
     position: sticky;
-    left: 0;
+    inset-inline-start: 0;
     z-index: 2;
     /* bootstrap uses this as cell background, the hover/striped state is painted on top via inset box-shadow */
     --tblr-table-bg: var(--tblr-bg-surface);
@@ -149,7 +149,7 @@ table.table-sticky-first > * > tr > :first-child {
         content: '';
         position: absolute;
         top: 0;
-        right: 0;
+        inset-inline-end: 0;
         bottom: 0;
         width: 1px;
         background-color: var(--tblr-border-color);
@@ -173,7 +173,7 @@ table.table-sticky-first > * > tr > td[colspan]:only-child {
 
     > * {
         position: sticky;
-        left: $table-cell-padding-x;
+        inset-inline-start: $table-cell-padding-x;
         display: inline-block;
     }
 }
