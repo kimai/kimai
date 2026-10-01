@@ -54,8 +54,8 @@
                 {% if with_avatar %}
                     {% from "macros/widgets.html.twig" import user_avatar %}
                     <div class="d-flex align-items-center gap-2">
-                        {{ user_avatar(userPeriod.user, false) }}
-                        <span>{{ userPeriod.user.displayName|sanitize_dde }}</span>
+                        {{ user_avatar(userPeriod.user, false, 'flex-shrink-0') }}
+                        <span class="first-column-sticky">{{ userPeriod.user.displayName|sanitize_dde }}</span>
                     </div>
                 {% else %}
                     {{ userPeriod.user.displayName|sanitize_dde }}

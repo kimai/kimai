@@ -177,6 +177,24 @@ table.table-sticky-first > * > tr > td[colspan]:only-child {
         display: inline-block;
     }
 }
+/*
+ * The sticky column should not grow wider than its content, but long names must not take up the whole screen.
+ * The direct child of the cell is limited and truncated, text nodes without a wrapping element are not.
+ * Content which is nested deeper (e.g. a name next to an avatar in a flex container) uses the .first-column-sticky class.
+ */
+table.table-sticky-first > tbody > tr > :first-child {
+    white-space: nowrap;
+
+    > *,
+    .first-column-sticky {
+        display: inline-block;
+        min-width: 0;
+        max-width: min(20rem, 40vw);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+    }
+}
 
 table.table-hover {
     tr {
