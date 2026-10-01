@@ -177,9 +177,9 @@ final class InvoiceController extends BaseApiController
         ]
     )]
     #[Route(path: '/{id}/download', name: 'download_invoice', requirements: ['id' => '\d+'], methods: ['GET'])]
-    public function downloadAction(Invoice $invoice, InvoiceService $service): Response
+    public function downloadAction(Invoice $invoice, InvoiceService $invoiceService): Response
     {
-        $file = $service->getInvoiceFile($invoice);
+        $file = $invoiceService->getInvoiceFile($invoice);
 
         if (null === $file) {
             throw $this->createNotFoundException(
@@ -197,9 +197,9 @@ final class InvoiceController extends BaseApiController
     #[OA\Delete(description: 'Deletes the invoice and its generated document.', responses: [new OA\Response(response: 204, description: 'Empty')])]
     #[OA\Parameter(name: 'id', description: 'Invoice ID to delete', in: 'path', required: true)]
     #[Route(path: '/{id}', name: 'delete_invoice', requirements: ['id' => '\d+'], methods: ['DELETE'])]
-    public function deleteInvoice(Invoice $invoice, InvoiceService $service): Response
+    public function deleteInvoice(Invoice $invoice, InvoiceService $invoiceService): Response
     {
-        $service->deleteInvoice($invoice);
+        $invoiceService->deleteInvoice($invoice);
 
         $view = new View(null, Response::HTTP_NO_CONTENT);
 
