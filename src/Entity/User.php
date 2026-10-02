@@ -107,7 +107,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      */
     #[ORM\Column(name: 'avatar', type: Types::STRING, length: 255, nullable: true)]
     #[Assert\Url]
-    #[Assert\Length(max: 255, groups: ['Profile'])]
+    #[Assert\Length(max: 255)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     private ?string $avatar = null;
