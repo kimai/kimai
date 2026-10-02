@@ -65,7 +65,8 @@ class ProjectEditForm extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'name',
                 'attr' => [
-                    'autofocus' => 'autofocus'
+                    'autofocus' => 'autofocus',
+                    'maxlength' => 150,
                 ],
             ])
             ->add('number', TextType::class, [

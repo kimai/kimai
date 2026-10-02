@@ -62,6 +62,8 @@ final class CustomerHelper
             $name = $customer->getName() ?? '';
         }
 
-        return substr($name, 0, 110);
+        // this is a rather arbitrary length limitation, which was original introduced with 110 in 2022
+        // in 2026 it was bumped to 180, to allow the 150 char name plus addons like the number
+        return substr($name, 0, 180);
     }
 }
