@@ -1,0 +1,21 @@
+{% extends 'reporting/activity_list_data.html.twig' %}
+
+{% block report_form_layout %}
+    {{ form_widget(form.project, {'label': false, 'placeholder': 'please_choose'}) }}
+    <div class="dropdown">
+        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ icon('filter', true) }}
+        </button>
+        <ul class="dropdown-menu checkbox-menu">
+            {% for option in form.budgetType.children %}
+                <li class="dropdown-item">
+                    {{ form_widget(option) }}
+                </li>
+            {% endfor %}
+            <li class="dropdown-divider"></li>
+            <li class="dropdown-item">
+                {{ form_widget(form.includeNoWork) }}
+            </li>
+        </ul>
+    </div>
+{% endblock %}
