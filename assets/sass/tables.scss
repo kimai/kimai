@@ -132,6 +132,70 @@ table.dataTable {
 }
 
 
+/*
+ * Keeps the first column visible while scrolling horizontally inside a .table-responsive container.
+ * The background must be opaque, otherwise the scrolled cells shine through.
+ * Colors are based on theme variables, so light and dark mode are both supported.
+ */
+table.table-sticky-first > * > tr > :first-child {
+    position: sticky;
+    inset-inline-start: 0;
+    z-index: 2;
+    /* bootstrap uses this as cell background, the hover/striped state is painted on top via inset box-shadow */
+    --tblr-table-bg: var(--tblr-bg-surface);
+
+    /* with border-collapse the cell borders scroll away, so the separator is drawn by a pseudo element */
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        inset-inline-end: 0;
+        bottom: 0;
+        width: 1px;
+        background-color: var(--tblr-border-color);
+    }
+}
+/* the summary background is semi-transparent, so it is layered on top of the opaque surface color */
+table.table-sticky-first > * > tr.summary > :first-child {
+    background-color: var(--tblr-bg-surface);
+    background-image: linear-gradient(var(--tblr-secondary-lt), var(--tblr-secondary-lt));
+}
+/*
+ * A single cell spanning the whole row (e.g. a grouping row) has no room to move inside the table,
+ * so sticky has no effect on it. Instead, the content of that cell becomes sticky within the cell.
+ */
+table.table-sticky-first > * > tr > td[colspan]:only-child {
+    position: static;
+
+    &::after {
+        content: none;
+    }
+
+    > * {
+        position: sticky;
+        inset-inline-start: $table-cell-padding-x;
+        display: inline-block;
+    }
+}
+/*
+ * The sticky column should not grow wider than its content, but long names must not take up the whole screen.
+ * The direct child of the cell is limited and truncated, text nodes without a wrapping element are not.
+ * Content which is nested deeper (e.g. a name next to an avatar in a flex container) uses the .first-column-sticky class.
+ */
+table.table-sticky-first > tbody > tr > :first-child {
+    white-space: nowrap;
+
+    > *,
+    .first-column-sticky {
+        display: inline-block;
+        min-width: 0;
+        max-width: min(20rem, 40vw);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+    }
+}
+
 table.table-hover {
     tr {
         &.exported {
