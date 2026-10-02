@@ -170,6 +170,7 @@ RUN apt-get update && \
         unzip && \
     echo "Listen 8001" > /etc/apache2/ports.conf && \
     a2enmod rewrite && \
+    a2enmod remoteip && \
     touch /use_apache
 
 COPY .docker/000-default.conf /etc/apache2/sites-available/000-default.conf
