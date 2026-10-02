@@ -50,7 +50,8 @@ class CustomerEditForm extends AbstractType
                 'label' => 'name',
                 'attr' => [
                     'autofocus' => 'autofocus',
-                    'maxlength' => 150,
+                    // deactivated: browser use utf16 to calculate maxlength, which can interfere with backend validation
+                    // 'maxlength' => 150,
                 ],
             ])
             ->add('number', TextType::class, [
