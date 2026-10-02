@@ -9,6 +9,7 @@
 
 namespace App\Tests\Controller\Security;
 
+use App\Configuration\OidcConfiguration;
 use App\Configuration\SamlConfiguration;
 use App\Configuration\SystemConfiguration;
 use App\Controller\Security\SecurityController;
@@ -124,7 +125,8 @@ class SecurityControllerTest extends AbstractControllerBaseTestCase
         $csrf = $this->createMock(CsrfTokenManagerInterface::class);
         $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['saml' => ['activate' => true]]);
         $samlConfig = new SamlConfiguration($systemConfig);
-        $sut = new SecurityController($csrf, $samlConfig);
+        $oidcConfig = new OidcConfiguration($systemConfig);
+        $sut = new SecurityController($csrf, $samlConfig, $oidcConfig);
         $sut->checkAction();
     }
 
@@ -137,7 +139,8 @@ class SecurityControllerTest extends AbstractControllerBaseTestCase
         $csrf = $this->createMock(CsrfTokenManagerInterface::class);
         $systemConfig = new SystemConfiguration(new TestConfigLoader([]), ['saml' => ['activate' => true]]);
         $samlConfig = new SamlConfiguration($systemConfig);
-        $sut = new SecurityController($csrf, $samlConfig);
+        $oidcConfig = new OidcConfiguration($systemConfig);
+        $sut = new SecurityController($csrf, $samlConfig, $oidcConfig);
         $sut->logoutAction();
     }
 }
