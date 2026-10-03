@@ -29,7 +29,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity('invoiceNumber')]
 #[UniqueEntity('invoiceFilename')]
 #[Serializer\ExclusionPolicy('all')]
-#[Exporter\Order(['id', 'createdAt', 'invoiceNumber', 'status', 'customer', 'subtotal', 'total', 'tax', 'currency', 'vat', 'dueDays', 'dueDate', 'paymentDate', 'user', 'invoiceFilename', 'customerNumber', 'comment'])]
+#[Exporter\Order(['id', 'createdAt', 'invoiceNumber', 'status', 'customer', 'company', 'subtotal', 'total', 'tax', 'currency', 'vat', 'dueDays', 'dueDate', 'paymentDate', 'user', 'invoiceFilename', 'customerNumber', 'comment'])]
 #[Exporter\Expose(name: 'customer', label: 'customer', exp: 'object.getCustomer() === null ? null : object.getCustomer().getName()')]
 #[Exporter\Expose(name: 'customerNumber', label: 'number', exp: 'object.getCustomer() === null ? null : object.getCustomer().getNumber()')]
 #[Exporter\Expose(name: 'dueDate', label: 'invoice.due_days', type: 'datetime', exp: 'object.getDueDate() === null ? null : object.getDueDate()')]
@@ -115,6 +115,11 @@ class Invoice implements EntityWithMetaFields
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'tax_rate', type: 'float')]
     private float $vat = 0.00;
+    #[ORM\Column(name: 'company', type: Types::STRING, length: 255, nullable: true)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'company', type: 'string')]
+    private ?string $company = null;
     #[ORM\Column(name: 'status', type: Types::STRING, length: 20, nullable: false)]
     #[Assert\NotNull]
     #[Serializer\Expose]
@@ -248,6 +253,7 @@ class Invoice implements EntityWithMetaFields
         $this->setCreatedAt($model->getInvoiceDate());
         $this->setDueDays($template->getDueDays());
         $this->setVat($template->getVat());
+        $this->setCompany($template->getCompany());
 
         return $this;
     }
@@ -418,6 +424,16 @@ class Invoice implements EntityWithMetaFields
     public function setVat(float $vat): void
     {
         $this->vat = $vat;
+    }
+
+    public function getCompany(): ?string
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?string $company): void
+    {
+        $this->company = $company;
     }
 
     public function setInvoiceNumber(string $invoiceNumber): void
