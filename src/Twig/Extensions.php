@@ -94,7 +94,7 @@ final class Extensions extends AbstractExtension
 
     public function buildDateRange(\DateTimeInterface $begin, \DateTimeInterface $end): string
     {
-        return $begin->format(self::REPORT_DATE) . DateRangeType::DATE_SPACER . $end->format(self::REPORT_DATE);
+        return DateRangeType::formatQueryString($begin, $end);
     }
 
     public function getIsoDayByName(string $weekDay): int

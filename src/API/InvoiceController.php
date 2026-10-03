@@ -12,6 +12,7 @@ namespace App\API;
 use App\Entity\Invoice;
 use App\Entity\InvoiceMeta;
 use App\Entity\InvoiceTemplate;
+use App\Form\API\InvoiceApiEditForm;
 use App\Invoice\InvoiceService;
 use App\Repository\CustomerRepository;
 use App\Repository\InvoiceDocumentRepository;
@@ -148,6 +149,37 @@ final class InvoiceController extends BaseApiController
         if ($dirty) {
             $invoiceService->saveInvoice($invoice);
         }
+
+        $view = new View($invoice, 200);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Update invoice
+     */
+    #[IsGranted('edit_invoice', 'invoice')]
+    #[OA\Patch(description: 'Update an existing invoice, you can pass all or just a subset of all attributes', responses: [new OA\Response(response: 200, description: 'Returns the updated invoice', content: new OA\JsonContent(ref: '#/components/schemas/Invoice'))])]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/InvoiceEditForm'))]
+    #[OA\Parameter(name: 'id', description: 'Invoice ID to update', in: 'path', required: true)]
+    #[Route(path: '/{id}', name: 'patch_invoice', requirements: ['id' => '\d+'], methods: ['PATCH'])]
+    public function patchAction(Invoice $invoice, Request $request, InvoiceService $invoiceService): Response
+    {
+        $statusBefore = $invoice->getStatus();
+
+        $form = $this->createForm(InvoiceApiEditForm::class, $invoice, [
+            'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
+        ]);
+
+        $form->setData($invoice);
+        $form->submit($request->request->all(), false);
+
+        if (false === $form->isValid()) {
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
+        }
+
+        $invoiceService->saveInvoice($invoice, $statusBefore);
 
         $view = new View($invoice, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);

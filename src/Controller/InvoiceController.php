@@ -240,7 +240,7 @@ final class InvoiceController extends AbstractController
 
     #[Route(path: '/change-status/{id}/{status}', name: 'admin_invoice_status', methods: ['POST'])]
     #[IsGranted('edit_invoice', 'invoice')]
-    public function changeStatusAction(Invoice $invoice, string $status, Request $request, CsrfTokenManagerInterface $csrfTokenManager, InvoiceService $InvoiceService): Response
+    public function changeStatusAction(Invoice $invoice, string $status, Request $request, CsrfTokenManagerInterface $csrfTokenManager, InvoiceService $invoiceService): Response
     {
         if (!$csrfTokenManager->isTokenValid(new CsrfToken('invoice.status', $this->getRequestToken($request)))) {
             $this->flashError('action.csrf.error');
@@ -249,7 +249,7 @@ final class InvoiceController extends AbstractController
         }
 
         try {
-            $InvoiceService->changeInvoiceStatus($invoice, $status);
+            $invoiceService->changeInvoiceStatus($invoice, $status);
             $this->flashSuccess('action.update.success');
         } catch (Exception $ex) {
             $this->flashUpdateException($ex);
@@ -260,14 +260,15 @@ final class InvoiceController extends AbstractController
 
     #[Route(path: '/edit/{id}', name: 'admin_invoice_edit', methods: ['GET', 'POST'])]
     #[IsGranted('edit_invoice', 'invoice')]
-    public function editAction(Invoice $invoice, Request $request, InvoiceService $InvoiceService): Response
+    public function editAction(Invoice $invoice, Request $request, InvoiceService $invoiceService): Response
     {
-        $form = $this->createInvoiceEditForm($invoice, $InvoiceService);
+        $statusBefore = $invoice->getStatus();
+        $form = $this->createInvoiceEditForm($invoice, $invoiceService);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $InvoiceService->saveInvoice($invoice);
+                $invoiceService->saveInvoice($invoice, $statusBefore);
                 $this->flashSuccess('action.update.success');
 
                 return $this->redirectToRoute('admin_invoice_list');
@@ -723,9 +724,9 @@ final class InvoiceController extends AbstractController
         return \is_string($token) ? $token : null;
     }
 
-    private function createInvoiceEditForm(Invoice $invoice, InvoiceService $InvoiceService): FormInterface
+    private function createInvoiceEditForm(Invoice $invoice, InvoiceService $invoiceService): FormInterface
     {
-        $InvoiceService->loadMetaFields($invoice);
+        $invoiceService->loadMetaFields($invoice);
 
         return $this->createForm(InvoiceEditForm::class, $invoice, [
             'action' => $this->generateUrl('admin_invoice_edit', ['id' => $invoice->getId()]),

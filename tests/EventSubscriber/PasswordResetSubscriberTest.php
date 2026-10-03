@@ -75,17 +75,23 @@ class PasswordResetSubscriberTest extends TestCase
     }
 
     /**
-     * @return iterable<array{string}>
+     * @return iterable<array{string, string|null}>
      */
     public static function provideExcludedUris(): iterable
     {
-        yield ['/api/timesheets'];
-        yield ['/register/new'];
-        yield ['/wizard/intro'];
+        yield ['/api/timesheets', 'get_timesheets'];
+        yield ['/api/timesheets?foo=bar', 'get_timesheets'];
+        yield ['/register/', 'registration_register'];
+        yield ['/register/check-email', 'user_registration_check_email'];
+        yield ['/register/confirm/abc', 'registration_confirm'];
+        yield ['/register/confirmed', 'registration_confirmed'];
+        yield ['/wizard/intro', 'wizard_intro'];
+        yield ['/en/wizard/password', 'wizard_password'];
+        yield ['/logout', 'logout'];
     }
 
     #[DataProvider('provideExcludedUris')]
-    public function testOnKernelRequestIgnoresExcludedUris(string $uri): void
+    public function testOnKernelRequestIgnoresExcludedUris(string $uri, ?string $route): void
     {
         $token = $this->createMock(TokenInterface::class);
         $token->expects($this->never())->method('getUser');
@@ -98,7 +104,7 @@ class PasswordResetSubscriberTest extends TestCase
         $storage->expects($this->once())->method('getToken')->willReturn($token);
 
         $sut = new PasswordResetSubscriber($urlGenerator, $security, $storage);
-        $event = $this->createRequestEvent($uri);
+        $event = $this->createRequestEvent($uri, true, $route);
 
         $sut->onKernelRequest($event);
 
@@ -198,6 +204,81 @@ class PasswordResetSubscriberTest extends TestCase
         self::assertSame('/wizard/password', $response->headers->get('Location'));
     }
 
+    /**
+     * @return iterable<array{string, string|null}>
+     */
+    public static function provideBypassAttempts(): iterable
+    {
+        // see GHSA: the raw request URI must never be used to detect exempted routes
+        yield ['/en/dashboard/?probe=/register/', 'dashboard'];
+        yield ['/en/dashboard/?probe=/wizard/', 'dashboard'];
+        yield ['/en/dashboard/?probe=/ReGiStEr/', 'dashboard'];
+        yield ['/en/dashboard/?probe=/WiZaRd/password', 'dashboard'];
+        yield ['/en/profile/u_reset/create-access-token?probe=/register/', 'user_profile_access_token'];
+        yield ['/en/profile/u_reset/create-access-token?probe=/wizard/', 'user_profile_access_token'];
+        yield ['/en/wizard/password/../../dashboard', 'dashboard'];
+        yield ['/en/register/../dashboard', 'dashboard'];
+        yield ['/en/dashboard/?probe=/api/', 'dashboard'];
+        // no matched route (fail closed)
+        yield ['/en/dashboard/?probe=/register/', null];
+        yield ['/en/dashboard/', null];
+    }
+
+    #[DataProvider('provideBypassAttempts')]
+    public function testOnKernelRequestRedirectsDespiteBypassAttempt(string $uri, ?string $route): void
+    {
+        $user = new User();
+        $user->setEnabled(true);
+        $user->setRequiresPasswordReset();
+        $token = $this->createUserToken($user);
+
+        $urlGenerator = $this->createMock(UrlGeneratorInterface::class);
+        $urlGenerator->expects($this->once())->method('generate')->with('wizard_password')->willReturn('/en/wizard/password');
+
+        $security = $this->createMock(AuthorizationCheckerInterface::class);
+        $security->expects($this->once())->method('isGranted')->with('IS_AUTHENTICATED_FULLY')->willReturn(true);
+
+        $storage = $this->createMock(TokenStorageInterface::class);
+        $storage->expects($this->once())->method('getToken')->willReturn($token);
+
+        $sut = new PasswordResetSubscriber($urlGenerator, $security, $storage);
+        $event = $this->createRequestEvent($uri, true, $route);
+
+        $sut->onKernelRequest($event);
+
+        $response = $event->getResponse();
+        self::assertInstanceOf(RedirectResponse::class, $response);
+        self::assertSame('/en/wizard/password', $response->headers->get('Location'));
+    }
+
+    /**
+     * @return iterable<array{string, bool}>
+     */
+    public static function provideAllowedRoutes(): iterable
+    {
+        yield ['logout', true];
+        yield ['wizard_next', true];
+        yield ['wizard_password', true];
+        yield ['wizard_intro', true];
+        yield ['registration_register', true];
+        yield ['registration_confirm', true];
+        yield ['registration_confirmed', true];
+        yield ['user_registration_check_email', true];
+        yield ['dashboard', false];
+        yield ['user_profile_access_token', false];
+        yield ['user_profile_password', false];
+        yield ['wizard', false];
+        yield ['Wizard_intro', false];
+        yield ['my_wizard_intro', false];
+        yield ['', false];
+    }
+
+    #[DataProvider('provideAllowedRoutes')]
+    public function testIsAllowedRoute(string $route, bool $expected): void
+    {
+        self::assertSame($expected, PasswordResetSubscriber::isAllowedRoute($route));
+    }
+
     private function createUserToken(User $user): TokenInterface
     {
         $token = $this->createMock(TokenInterface::class);
@@ -206,10 +287,13 @@ class PasswordResetSubscriberTest extends TestCase
         return $token;
     }
 
-    private function createRequestEvent(string $uri, bool $mainRequest = true): RequestEvent
+    private function createRequestEvent(string $uri, bool $mainRequest = true, ?string $route = 'dashboard'): RequestEvent
     {
         $kernel = $this->createMock(HttpKernelInterface::class);
         $request = Request::create($uri);
+        if ($route !== null) {
+            $request->attributes->set('_route', $route);
+        }
 
         return new RequestEvent($kernel, $request, $mainRequest ? HttpKernelInterface::MAIN_REQUEST : HttpKernelInterface::SUB_REQUEST);
     }

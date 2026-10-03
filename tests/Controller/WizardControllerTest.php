@@ -10,9 +10,11 @@
 namespace App\Tests\Controller;
 
 use App\DataFixtures\UserFixtures;
+use App\Entity\AccessToken;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Tests\Mocks\UserUpdateCounterSubscriberMock;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -47,6 +49,75 @@ class WizardControllerTest extends AbstractControllerBaseTestCase
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
         $this->assertAccessIsGranted($client, '/wizard/password');
+    }
+
+    public function testPasswordResetRedirectsToPasswordWizard(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->requirePasswordReset(UserFixtures::USERNAME_USER);
+
+        $this->request($client, '/timesheet/');
+        $this->assertIsRedirect($client, '/wizard/password');
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/create-access-token');
+        $this->assertIsRedirect($client, '/wizard/password');
+
+        // the wizard itself and logout must stay reachable
+        $this->assertAccessIsGranted($client, '/wizard/password');
+    }
+
+    /**
+     * @return iterable<array{string}>
+     */
+    public static function providePasswordResetBypassAttempts(): iterable
+    {
+        yield ['/timesheet/?probe=/register/'];
+        yield ['/timesheet/?probe=/wizard/'];
+        yield ['/timesheet/?probe=/ReGiStEr/'];
+        yield ['/timesheet/?probe=/WiZaRd/'];
+        yield ['/timesheet/?probe=/api/'];
+        yield ['/profile/' . UserFixtures::USERNAME_USER . '/create-access-token?probe=/register/'];
+        yield ['/profile/' . UserFixtures::USERNAME_USER . '/create-access-token?probe=/wizard/'];
+    }
+
+    #[DataProvider('providePasswordResetBypassAttempts')]
+    public function testPasswordResetCannotBeBypassedViaQueryString(string $url): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->requirePasswordReset(UserFixtures::USERNAME_USER);
+
+        $this->request($client, $url);
+        $this->assertIsRedirect($client, '/wizard/password');
+    }
+
+    public function testPasswordResetPreventsAccessTokenCreation(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        // fetch a valid CSRF token while no reset is pending
+        $crawler = $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/create-access-token');
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $form = $crawler->filter('form[name=access_token_form]')->form();
+        $values = $form->getPhpValues();
+        $values['access_token_form']['name'] = 'bypass';
+
+        $this->requirePasswordReset(UserFixtures::USERNAME_USER);
+
+        $before = \count($this->getEntityManager()->getRepository(AccessToken::class)->findAll());
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/create-access-token?probe=/register/', 'POST', $values);
+        $this->assertIsRedirect($client, '/wizard/password');
+
+        $after = \count($this->getEntityManager()->getRepository(AccessToken::class)->findAll());
+        self::assertSame($before, $after, 'No access token must be created while a password reset is pending');
+    }
+
+    private function requirePasswordReset(string $username): void
+    {
+        $user = $this->loadUserFromDatabase($username);
+        $user->setRequiresPasswordReset(true);
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
     }
 
     public function testFinishWizard(): void

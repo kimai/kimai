@@ -253,7 +253,7 @@ ENV DATABASE_URL="mysql://kimai:kimai@127.0.0.1:3306/kimai?charset=utf8mb4&serve
 # would create a real env var that always wins over .env*, breaking `docker exec`
 # console invocations.
 # The default container name for nginx is nginx
-ENV TRUSTED_PROXIES=nginx,localhost,127.0.0.1
+ENV TRUSTED_PROXIES=127.0.0.1
 ENV MAILER_FROM=kimai@example.com
 ENV MAILER_URL=null://localhost
 ENV ADMINPASS=

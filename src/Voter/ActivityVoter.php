@@ -85,6 +85,12 @@ final class ActivityVoter extends Voter
             return false;
         }
 
+        // a team assignment on any level (customer, project or activity) must be
+        // fulfilled, before a team based permission can be granted
+        if (!$this->permissionManager->checkTeamAccessActivity($subject, $user)) {
+            return false;
+        }
+
         /** @var Team $team */
         foreach ($subject->getTeams() as $team) {
             if ($hasTeamleadPermission && $user->isTeamleadOf($team)) {

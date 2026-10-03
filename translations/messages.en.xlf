@@ -2146,6 +2146,10 @@
         <source>reopen</source>
         <target>Reopen</target>
       </trans-unit>
+      <trans-unit id="DI8vH1J" resname="copy_to_clipboard">
+        <source>copy_to_clipboard</source>
+        <target>Copy to clipboard</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

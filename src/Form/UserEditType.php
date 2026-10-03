@@ -131,7 +131,7 @@ class UserEditType extends AbstractType
             'include_preferences' => true,
             'include_supervisor' => true,
             'include_username' => false,
-            'include_password_reset' => true,
+            'include_password_reset' => false,
         ]);
     }
 }

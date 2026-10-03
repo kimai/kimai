@@ -163,6 +163,55 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         self::assertTrue($user->isEnabled());
     }
 
+    public function testEditActionCannotChangeSystemAccountAndPasswordResetOnOwnProfile(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/edit');
+
+        $node = $client->getCrawler()->filter('form[name=user_edit]');
+        self::assertCount(0, $node->filter('#user_edit_systemAccount'));
+        self::assertCount(0, $node->filter('#user_edit_requiresPasswordReset'));
+
+        $form = $node->form();
+        $values = $form->getPhpValues();
+        $values['user_edit']['systemAccount'] = '1';
+        $values['user_edit']['requiresPasswordReset'] = '0';
+        $client->request($form->getMethod(), $form->getUri(), $values);
+
+        // the form is rejected because of the extra fields
+        self::assertTrue($client->getResponse()->isSuccessful());
+        self::assertStringContainsString('This form should not contain extra fields.', (string) $client->getResponse()->getContent());
+
+        $this->getEntityManager()->clear();
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        self::assertFalse($user->isSystemAccount());
+    }
+
+    public function testEditActionWithSystemAccountAndPasswordReset(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/edit');
+
+        $node = $client->getCrawler()->filter('form[name=user_edit]');
+        self::assertCount(1, $node->filter('#user_edit_systemAccount'));
+        self::assertCount(1, $node->filter('#user_edit_requiresPasswordReset'));
+
+        $form = $node->form();
+        $client->submit($form, [
+            'user_edit' => [
+                'systemAccount' => '1',
+                'requiresPasswordReset' => '1',
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/edit'));
+
+        $this->getEntityManager()->clear();
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        self::assertTrue($user->isSystemAccount());
+        self::assertTrue($user->requiresPasswordReset());
+    }
+
     public function testEditActionWithActiveFlag(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);

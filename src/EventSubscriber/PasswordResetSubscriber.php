@@ -42,11 +42,17 @@ class PasswordResetSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $uri = $event->getRequest()->getRequestUri();
+        $request = $event->getRequest();
 
         // never trigger password reset on API calls
-        // TODO 3.0 remove /register/
-        if (str_starts_with($uri, '/api/') || stripos($uri, '/register/') !== false || stripos($uri, '/wizard/') !== false) {
+        if (str_starts_with($request->getPathInfo(), '/api/')) {
+            return;
+        }
+
+        // the matched route name is used on purpose: matching on the raw request URI
+        // would allow to bypass this check by adding e.g. "?foo=/wizard/" to any URL
+        $route = $request->attributes->get('_route');
+        if (\is_string($route) && self::isAllowedRoute($route)) {
             return;
         }
 
@@ -66,5 +72,17 @@ class PasswordResetSubscriber implements EventSubscriberInterface
 
         $response = new RedirectResponse($this->urlGenerator->generate('wizard_password'));
         $event->setResponse($response);
+    }
+
+    /**
+     * Routes that must be reachable while a password reset is pending.
+     */
+    public static function isAllowedRoute(string $route): bool
+    {
+        // TODO 3.0 remove registration routes
+        return $route === 'logout'
+            || $route === 'user_registration_check_email'
+            || str_starts_with($route, 'wizard_')
+            || str_starts_with($route, 'registration_');
     }
 }
