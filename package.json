@@ -49,7 +49,7 @@
     "highlight.js": "^11.12.0",
     "litepicker": "^2.0.12",
     "luxon": "^3.7.2",
-    "sass": "^1.105.0",
+    "sass": "^1.105.1",
     "sass-loader": "^16.0.8",
     "tom-select": "2.5.2",
     "webpack": "^5.111.1",
