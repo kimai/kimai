@@ -20,6 +20,7 @@ use App\Repository\ExportTemplateRepository;
 use App\Repository\Query\ExportQuery;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class ServiceExport
 {
@@ -48,6 +49,7 @@ final class ServiceExport
         private readonly XlsxRendererFactory $xlsxRendererFactory,
         private readonly ExportTemplateRepository $exportTemplateRepository,
         private readonly LoggerInterface $logger,
+        private readonly TranslatorInterface $translator,
     )
     {
     }
@@ -216,6 +218,70 @@ final class ServiceExport
     public function addExportRepository(ExportRepositoryInterface $repository): void
     {
         $this->repositories[] = $repository;
+    }
+
+    /**
+     * @return ExportPreviewColumn[]
+     */
+    public function getExportPreviewColumns(ExportQuery $query): array
+    {
+        $candidates = [];
+        $seen = [];
+
+        foreach ($this->repositories as $repository) {
+            if (!$repository instanceof ExportPreviewColumnProviderInterface) {
+                continue;
+            }
+
+            $repositoryType = $repository->getType();
+            foreach ($repository->getExportPreviewColumns($query) as $field) {
+                $name = $field->getName();
+                if ($name === null) {
+                    continue;
+                }
+
+                $identity = $repositoryType . "\0" . $name;
+                if (isset($seen[$identity])) {
+                    $this->logger->warning('Duplicate export preview column ignored.', [
+                        'repositoryType' => $repositoryType,
+                        'name' => $name,
+                    ]);
+
+                    continue;
+                }
+
+                $seen[$identity] = true;
+                $label = $field->getLabel() ?? $name;
+                $candidates[] = [
+                    'repositoryType' => $repositoryType,
+                    'name' => $name,
+                    'label' => $this->translator->trans($label),
+                    'field' => $field,
+                ];
+            }
+        }
+
+        $labelRepositoryTypes = [];
+        foreach ($candidates as $candidate) {
+            $labelRepositoryTypes[$candidate['label']][$candidate['repositoryType']] = true;
+        }
+
+        $columns = [];
+        foreach ($candidates as $candidate) {
+            $label = $candidate['label'];
+            if (\count($labelRepositoryTypes[$label]) > 1) {
+                $label = $candidate['repositoryType'] . ': ' . $label;
+            }
+
+            $columns[] = new ExportPreviewColumn(
+                $candidate['repositoryType'],
+                $candidate['name'],
+                $label,
+                $candidate['field'],
+            );
+        }
+
+        return $columns;
     }
 
     /**

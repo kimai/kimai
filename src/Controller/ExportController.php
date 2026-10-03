@@ -33,8 +33,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('create_export')]
 final class ExportController extends AbstractController
 {
-    public function __construct(private readonly ServiceExport $export)
-    {
+    public function __construct(
+        private readonly ServiceExport $export,
+    ) {
     }
 
     #[Route(path: '/', name: 'export', methods: ['GET'])]
@@ -46,6 +47,7 @@ final class ExportController extends AbstractController
         $tooManyResults = false;
         $maxItemsPreview = 500;
         $entries = [];
+        $metaColumns = [];
 
         $form = $this->getToolbarForm($query, 'GET');
         if ($this->handleSearch($form, $request)) {
@@ -57,6 +59,7 @@ final class ExportController extends AbstractController
         if ($form->isValid() && ($query->hasBookmark() || $request->query->has('performSearch'))) {
             try {
                 $showPreview = true;
+                $metaColumns = $this->export->getExportPreviewColumns($query);
                 $entries = $this->getEntries($query);
                 foreach ($entries as $entry) {
                     $cid = $entry->getProject()->getCustomer()->getId();
@@ -119,6 +122,7 @@ final class ExportController extends AbstractController
             'preview_limit' => $maxItemsPreview,
             'preview_show' => $showPreview,
             'show_rates' => $showRates,
+            'metaColumns' => $metaColumns,
         ]);
     }
 
