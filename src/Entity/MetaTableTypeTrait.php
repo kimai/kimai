@@ -17,6 +17,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Validator\Constraint;
@@ -101,9 +103,29 @@ trait MetaTableTypeTrait
             YesNoType::class, CheckboxType::class => (\is_string($value) || \is_int($value)) ? (bool) $value : $value,
             IntegerType::class => (\is_string($value) || \is_int($value)) ? (int) $value : $value,
             NumberType::class => (\is_string($value) || \is_float($value)) ? (float) $value : $value,
-            DatePickerType::class, DateTimePickerType::class => (\is_string($value) && $value !== '') ? new \DateTime($value) : $value,
+            DatePickerType::class, DateTimePickerType::class, DateType::class, DateTimeType::class => $this->convertToDateTime($value),
             default => $value
         };
+    }
+
+    private function convertToDateTime(mixed $value): mixed
+    {
+        if (!\is_string($value) || $value === '') {
+            return $value;
+        }
+
+        $date = \DateTime::createFromFormat(self::DATETIME_FORMAT, $value);
+
+        if ($date !== false) {
+            return $date;
+        }
+
+        // BC for values stored without timezone (e.g. 'Y-m-d H:i:s')
+        try {
+            return new \DateTime($value);
+        } catch (\Exception) {
+            return $value;
+        }
     }
 
     /**
@@ -129,7 +151,7 @@ trait MetaTableTypeTrait
         if ($value === null) {
             $this->value = $value;
         } elseif ($value instanceof \DateTimeInterface) {
-            $this->value = $value->format('Y-m-d H:i:s');
+            $this->value = $value->format(self::DATETIME_FORMAT);
         } elseif (\is_scalar($value)) {
             $this->value = (string) $value;
         }

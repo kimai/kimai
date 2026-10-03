@@ -13,7 +13,10 @@ use App\Entity\EntityWithMetaFields;
 use App\Entity\MetaTableTypeInterface;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\DateTimePickerType;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
@@ -92,31 +95,36 @@ abstract class AbstractMetaEntityTestCase extends TestCase
         self::assertNull($sut->getSection());
     }
 
-    public function testDateTimeSetValueAndGetValue(): void
+    public static function getDateTimeTypes(): iterable
     {
-        $sut = $this->getMetaEntity();
-        $sut->setType(DateTimePickerType::class);
-
-        $date = new \DateTime('2026-01-15 14:30:00');
-        $sut->setValue($date);
-
-        // getValue returns a DateTime instance restored from the stored string
-        $result = $sut->getValue();
-        self::assertInstanceOf(\DateTime::class, $result);
-        self::assertEquals('2026-01-15 14:30:00', $result->format('Y-m-d H:i:s'));
+        yield [DateTimePickerType::class];
+        yield [DatePickerType::class];
+        yield [DateTimeType::class];
+        yield [DateType::class];
     }
 
-    public function testDatePickerSetValueAndGetValue(): void
+    #[DataProvider('getDateTimeTypes')]
+    public function testDateTimeRoundTrip(string $type): void
     {
-        $sut = $this->getMetaEntity();
-        $sut->setType(DatePickerType::class);
+        $date = new \DateTime('2026-01-15 14:30:00', new \DateTimeZone('Europe/Berlin'));
+        $stored = $date->format(MetaTableTypeInterface::DATETIME_FORMAT);
 
-        $date = new \DateTime('2026-03-20 00:00:00');
+        $sut = $this->getMetaEntity();
+        $sut->setType($type);
         $sut->setValue($date);
 
         $result = $sut->getValue();
         self::assertInstanceOf(\DateTime::class, $result);
-        self::assertEquals('2026-03-20 00:00:00', $result->format('Y-m-d H:i:s'));
+        self::assertEquals($stored, $result->format(MetaTableTypeInterface::DATETIME_FORMAT));
+
+        // emulates a freshly hydrated entity: persisted string must restore to DateTime
+        $fresh = $this->getMetaEntity();
+        $fresh->setType($type);
+        $fresh->setValue($stored);
+
+        $restored = $fresh->getValue();
+        self::assertInstanceOf(\DateTime::class, $restored);
+        self::assertEquals($stored, $restored->format(MetaTableTypeInterface::DATETIME_FORMAT));
     }
 
     public function testDateTimeGetValueWithNull(): void
@@ -126,6 +134,17 @@ abstract class AbstractMetaEntityTestCase extends TestCase
         $sut->setValue(null);
 
         self::assertNull($sut->getValue());
+    }
+
+    public function testDateTimeGetValueWithLegacyFormatWithoutTimezone(): void
+    {
+        $sut = $this->getMetaEntity();
+        $sut->setType(DateTimePickerType::class);
+        $sut->setValue('2026-01-15 14:30:00');
+
+        $result = $sut->getValue();
+        self::assertInstanceOf(\DateTime::class, $result);
+        self::assertEquals('2026-01-15 14:30:00', $result->format('Y-m-d H:i:s'));
     }
 
     public function testMerge(): void
