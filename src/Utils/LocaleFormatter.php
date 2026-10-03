@@ -181,38 +181,61 @@ final class LocaleFormatter
         return $this->moneyFormatter->formatCurrency($amount, $currency);
     }
 
-    public function dateShort(\DateTimeInterface|string|null $date): ?string
+    /**
+     * Resolves an IntlDateFormatter for an explicit timezone (never cached, since the timezone
+     * varies per call), or reuses the cached instance keyed to the process default timezone.
+     */
+    private function resolveIntlFormatter(?\DateTimeZone $timezone, int $datePattern, int $timePattern, string $pattern, ?IntlDateFormatter &$cache): IntlDateFormatter
     {
-        if ($date === null || $date === '') {
+        if ($timezone !== null) {
+            return new IntlDateFormatter($this->locale, $datePattern, $timePattern, $timezone->getName(), IntlDateFormatter::GREGORIAN, $pattern);
+        }
+
+        if (null === $cache) {
+            $cache = new IntlDateFormatter($this->locale, $datePattern, $timePattern, date_default_timezone_get(), IntlDateFormatter::GREGORIAN, $pattern);
+        }
+
+        return $cache;
+    }
+
+    private function toDateTimeOrNull(\DateTimeInterface|string $date): ?\DateTimeInterface
+    {
+        if ($date instanceof \DateTimeInterface) {
+            return $date;
+        }
+
+        try {
+            return new \DateTimeImmutable($date);
+        } catch (Exception $ex) {
+            return null;
+        }
+    }
+
+    private function formatWithIntl(IntlDateFormatter $formatter, \DateTimeInterface|string $date): ?string
+    {
+        $date = $this->toDateTimeOrNull($date);
+        if ($date === null) {
             return null;
         }
 
-        if (null === $this->dateFormatter) {
-            $this->dateFormatter = new IntlDateFormatter(
-                $this->locale,
-                self::DATE_PATTERN,
-                IntlDateFormatter::NONE,
-                date_default_timezone_get(),
-                IntlDateFormatter::GREGORIAN,
-                $this->localeService->getDateFormat($this->locale)
-            );
-        }
-
-        if (!$date instanceof \DateTimeInterface) {
-            try {
-                $date = new \DateTimeImmutable($date);
-            } catch (Exception $ex) {
-                return null;
-            }
-        }
-
-        $formatted = $this->dateFormatter->format($date);
+        $formatted = $formatter->format($date);
 
         if ($formatted === false) {
             return null;
         }
 
         return (string) $formatted;
+    }
+
+    public function dateShort(\DateTimeInterface|string|null $date, ?\DateTimeZone $timezone = null): ?string
+    {
+        if ($date === null || $date === '') {
+            return null;
+        }
+
+        $formatter = $this->resolveIntlFormatter($timezone, self::DATE_PATTERN, IntlDateFormatter::NONE, $this->localeService->getDateFormat($this->locale), $this->dateFormatter);
+
+        return $this->formatWithIntl($formatter, $date);
     }
 
     public function dateTime(DateTimeInterface|string|null $date): ?string
@@ -221,83 +244,38 @@ final class LocaleFormatter
             return null;
         }
 
-        if (null === $this->dateTimeFormatter) {
-            $this->dateTimeFormatter = new IntlDateFormatter(
-                $this->locale,
-                self::DATE_PATTERN,
-                self::TIME_PATTERN,
-                date_default_timezone_get(),
-                IntlDateFormatter::GREGORIAN,
-                $this->localeService->getDateTimeFormat($this->locale)
-            );
-        }
+        $formatter = $this->resolveIntlFormatter(null, self::DATE_PATTERN, self::TIME_PATTERN, $this->localeService->getDateTimeFormat($this->locale), $this->dateTimeFormatter);
 
-        if (!$date instanceof \DateTimeInterface) {
-            try {
-                $date = new \DateTimeImmutable($date);
-            } catch (Exception $ex) {
-                return null;
-            }
-        }
-
-        $formatted = $this->dateTimeFormatter->format($date);
-
-        if ($formatted === false) {
-            return null;
-        }
-
-        return (string) $formatted;
+        return $this->formatWithIntl($formatter, $date);
     }
 
-    public function dateFormat(\DateTimeInterface|string|null $date, string $format): ?string
+    public function dateFormat(\DateTimeInterface|string|null $date, string $format, ?\DateTimeZone $timezone = null): ?string
     {
         if ($date === null || $date === '') {
             return null;
         }
 
-        if (!$date instanceof \DateTimeInterface) {
-            try {
-                $date = new \DateTimeImmutable($date);
-            } catch (Exception $ex) {
-                return null;
-            }
+        $date = $this->toDateTimeOrNull($date);
+        if ($date === null) {
+            return null;
+        }
+
+        if ($timezone !== null) {
+            $date = \DateTime::createFromInterface($date)->setTimezone($timezone);
         }
 
         return $date->format($format);
     }
 
-    public function time(\DateTimeInterface|string|null $date): ?string
+    public function time(\DateTimeInterface|string|null $date, ?\DateTimeZone $timezone = null): ?string
     {
         if ($date === null || $date === '') {
             return null;
         }
 
-        if (null === $this->timeFormatter) {
-            $this->timeFormatter = new IntlDateFormatter(
-                $this->locale,
-                IntlDateFormatter::NONE,
-                self::TIME_PATTERN,
-                date_default_timezone_get(),
-                IntlDateFormatter::GREGORIAN,
-                $this->localeService->getTimeFormat($this->locale)
-            );
-        }
+        $formatter = $this->resolveIntlFormatter($timezone, IntlDateFormatter::NONE, self::TIME_PATTERN, $this->localeService->getTimeFormat($this->locale), $this->timeFormatter);
 
-        if (!$date instanceof \DateTimeInterface) {
-            try {
-                $date = new \DateTimeImmutable($date);
-            } catch (Exception $ex) {
-                return null;
-            }
-        }
-
-        $formatted = $this->timeFormatter->format($date);
-
-        if ($formatted === false) {
-            return null;
-        }
-
-        return (string) $formatted;
+        return $this->formatWithIntl($formatter, $date);
     }
 
     /**

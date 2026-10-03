@@ -47,8 +47,18 @@ class TimesheetQueryTest extends BaseQueryTest
         self::assertFalse($sut->isBillable());
         self::assertFalse($sut->isNotBillable());
         $this->assertBillable($sut);
+        $this->assertTimezone($sut);
 
         $this->assertResetByFormError(new TimesheetQuery(), 'begin', 'DESC');
+    }
+
+    protected function assertTimezone(TimesheetQuery $sut): void
+    {
+        self::assertNull($sut->getTimezone());
+
+        $timezone = new \DateTimeZone('America/New_York');
+        $sut->setTimezone($timezone);
+        self::assertSame($timezone, $sut->getTimezone());
     }
 
     protected function assertMaxResults(TimesheetQuery $sut): void

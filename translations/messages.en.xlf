@@ -1322,6 +1322,18 @@
         <source>export.period</source>
         <target>Period</target>
       </trans-unit>
+      <trans-unit id="k7VdX02" resname="export.date_column">
+        <source>export.date_column</source>
+        <target>Date (%timezone%)</target>
+      </trans-unit>
+      <trans-unit id="p3RhY84" resname="export.daterange">
+        <source>export.daterange</source>
+        <target>Date range</target>
+      </trans-unit>
+      <trans-unit id="q8TmZ51" resname="export.daterange.help">
+        <source>export.daterange.help</source>
+        <target>Filter timesheets using your timezone (%timezone%)</target>
+      </trans-unit>
       <trans-unit id="3CQ7A2m" resname="export.document_title">
         <source>export.document_title</source>
         <target>Export of timesheets</target>

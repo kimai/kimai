@@ -49,6 +49,7 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
      * @var array<TimesheetQueryHint>
      */
     private array $queryHints = [];
+    private ?\DateTimeZone $timezone = null;
 
     public function __construct(bool $resetTimes = true)
     {
@@ -70,6 +71,22 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
     public function addQueryHint(TimesheetQueryHint $hint): void
     {
         $this->queryHints[] = $hint;
+    }
+
+    /**
+     * The timezone the filter bounds were resolved in, used to render every date and time
+     * derived from this query in the same timezone.
+     */
+    public function getTimezone(): ?\DateTimeZone
+    {
+        return $this->timezone;
+    }
+
+    public function setTimezone(?\DateTimeZone $timezone): static
+    {
+        $this->timezone = $timezone;
+
+        return $this;
     }
 
     public function hasQueryHint(TimesheetQueryHint $hint): bool
