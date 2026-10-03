@@ -28,6 +28,7 @@ parameters:
         - message: '#^Call to deprecated method setApiToken\(\) of class App\\Entity\\User#'
         - message: '#^Call to deprecated method getPlainApiToken\(\) of class App\\Entity\\User#'
         - message: '#^Call to deprecated method setPlainApiToken\(\) of class App\\Entity\\User#'
+        - message: '#^Call to deprecated method enableSandbox\(\) of class Twig\\Extension\\SandboxExtension#'
 
         -
             identifier: classConstant.deprecatedClass
@@ -265,7 +266,7 @@ parameters:
             path: API/TagControllerTest.php
         -
             message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
-            count: 38
+            count: 40
             path: API/TeamControllerTest.php
 
         -
