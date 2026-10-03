@@ -10,8 +10,23 @@
  */
 
 import KimaiFormPlugin from './KimaiFormPlugin';
+import { initialize } from '@orchidjs/unicode-variants';
 
 export default class KimaiFormTomselectPlugin extends KimaiFormPlugin {
+
+    /**
+     * Must be called before TomSelect searches, e.g. inside the "score" setting.
+     *
+     * @param {string} search
+     */
+    static initializeDiacritics(search)
+    {
+        if (search.trim() === '') {
+            return;
+        }
+        // default map covers 0-65535, skipping CJK, Yi, Hangul, surrogates and private use (they never fold) builds it much faster
+        initialize([[0x0000, 0x33FF], [0xA640, 0xABFF], [0xF900, 0xFFFF]]);
+    }
 
     /**
      * @param {string} rendererType

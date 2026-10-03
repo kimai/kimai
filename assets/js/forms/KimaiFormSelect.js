@@ -90,6 +90,7 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
             // an option's "optgroup" property holds the group id, not its label, so we
             // resolve the label from the optgroups registry inside a custom score.
             score: function(search) {
+                KimaiFormTomselectPlugin.initializeDiacritics(search);
                 const scoreFn = this.getScoreFunction(search);
                 const needle = search.trim().toLowerCase();
                 const labelField = this.settings.optgroupLabelField;

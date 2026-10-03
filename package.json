@@ -36,6 +36,7 @@
     "@fullcalendar/icalendar": "^5.11.5",
     "@fullcalendar/interaction": "^5.11.5",
     "@fullcalendar/timegrid": "^5.11.5",
+    "@orchidjs/unicode-variants": "^1.1.2",
     "@popperjs/core": "^2.11.8",
     "@symfony/webpack-encore": "^6.0.0",
     "@tabler/core": "1.4.0",

@@ -71,6 +71,10 @@ export default class KimaiAutocomplete extends KimaiFormTomselectPlugin {
                 load: (query, callback) => {
                     this.loadData(apiUrl, query, callback);
                 },
+                score: function(search) {
+                    KimaiFormTomselectPlugin.initializeDiacritics(search);
+                    return this.getScoreFunction(search);
+                },
             };
 
             let render = {
