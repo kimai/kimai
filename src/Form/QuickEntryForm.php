@@ -13,6 +13,7 @@ use App\Configuration\SystemConfiguration;
 use App\Form\Type\QuickEntryWeekType;
 use App\Model\QuickEntryWeek;
 use App\Validator\Constraints\QuickEntryModel;
+use App\Validator\Constraints\QuickEntryWeek as QuickEntryWeekConstraint;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -160,6 +161,7 @@ final class QuickEntryForm extends AbstractType
             'start_date' => $start,
             'end_date' => $end,
             'prototype_data' => null,
+            'constraints' => [new QuickEntryWeekConstraint()],
         ]);
     }
 }
