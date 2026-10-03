@@ -48,6 +48,14 @@ parameters:
         - message: '#^Method .*\(\) has parameter \$builder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'
         - message: '#^Call to deprecated method setApiToken\(\) of class App\\Entity\\User#'
         - message: '#^Call to deprecated method getPlainApiToken\(\) of class App\\Entity\\User#'
+        - message: '#^Access to constant on internal class Twig\\Extension\\SandboxExtension#'
+        - message: '#^Instantiation of internal class Twig\\Extension\\SandboxExtension#'
+        - message: '#^Call to method disableSandbox\(\) of internal class Twig\\Extension\\SandboxExtension from outside its root namespace Twig#'
+        - message: '#^Call to method enableSandbox\(\) of internal class Twig\\Extension\\SandboxExtension from outside its root namespace Twig#'
+        - message: '#^Call to method isSandboxed\(\) of internal class Twig\\Extension\\SandboxExtension from outside its root namespace Twig#'
+        - message: '#^Call to deprecated method enableSandbox\(\) of class Twig\\Extension\\SandboxExtension#'
+        - message: '#^Call to deprecated method disableSandbox\(\) of class Twig\\Extension\\SandboxExtension#'
+        - message: '#^Call to method __construct\(\) of internal class Twig\\Extension\\SandboxExtension from outside its root namespace Twig#'
 
         -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Activity\\:\\:getMetaField\\(\\) expects string, mixed given\\.$#"
