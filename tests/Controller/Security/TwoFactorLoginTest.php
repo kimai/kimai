@@ -10,11 +10,17 @@
 namespace App\Tests\Controller\Security;
 
 use App\DataFixtures\UserFixtures;
+use App\Entity\User;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
 use OTPHP\TOTP;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\DomCrawler\Field\FormField;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
+use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
+use Symfony\Component\Security\Http\RememberMe\RememberMeDetails;
 
 /**
  * Makes sure the two-factor authentication form is usable, even if the
@@ -121,6 +127,35 @@ class TwoFactorLoginTest extends AbstractControllerBaseTestCase
     {
         $this->request($client, self::URL_ADMIN_ONLY);
         self::assertNotEquals(200, $client->getResponse()->getStatusCode(), 'Attacker gained access to the victims account');
+    }
+
+    /**
+     * Creates a login link, like the one which is sent in the password reset email.
+     *
+     * @return array{user: string, expires: int, hash: string}
+     */
+    private function createLoginLinkParameters(string $username): array
+    {
+        // the login link handler is firewall-aware and needs an active request on the stack
+        $request = Request::create('http://localhost/');
+        $stack = self::getContainer()->get(RequestStack::class);
+        self::assertInstanceOf(RequestStack::class, $stack);
+        $stack->push($request);
+
+        try {
+            $handler = self::getContainer()->get(LoginLinkHandlerInterface::class);
+            self::assertInstanceOf(LoginLinkHandlerInterface::class, $handler);
+            $link = $handler->createLoginLink($this->getUserByName($username), $request);
+        } finally {
+            $stack->pop();
+        }
+
+        parse_str((string) parse_url($link->getUrl(), PHP_URL_QUERY), $query);
+        self::assertIsString($query['user'] ?? null);
+        self::assertIsString($query['expires'] ?? null);
+        self::assertIsString($query['hash'] ?? null);
+
+        return ['user' => $query['user'], 'expires' => (int) $query['expires'], 'hash' => $query['hash']];
     }
 
     public function testTwoFactorFormIsRenderedWithActiveLoginForm(): void
@@ -280,6 +315,67 @@ class TwoFactorLoginTest extends AbstractControllerBaseTestCase
             '_csrf_token' => $csrfToken,
         ]);
         $this->assertIsRedirect($client, $this->createUrl('/login'));
+
+        $this->assertHasNoAdminAccess($client);
+    }
+
+    /**
+     * A login link (e.g. from the password reset email) must not be usable as remember-me cookie.
+     *
+     * Both are signed by Symfony's SignatureHasher. With the same secret and signature properties, the hash of a
+     * login link is a valid remember-me cookie value. A remember-me login does not trigger the 2FA, which would allow
+     * skipping the TOTP code and the "max_uses" limit of the login link.
+     */
+    public function testLoginLinkCannotBeUsedAsRememberMeCookie(): void
+    {
+        $client = self::createClient();
+        $this->activateTwoFactor(UserFixtures::USERNAME_SUPER_ADMIN);
+
+        // the attacker has access to the victims mailbox and triggers a password reset
+        $link = $this->createLoginLinkParameters(UserFixtures::USERNAME_SUPER_ADMIN);
+
+        // instead of opening the link (which requires the TOTP code), the attacker forges a remember-me cookie from it
+        $details = new RememberMeDetails(User::class, $link['user'], $link['expires'], $link['hash']);
+        $client->getCookieJar()->set(new Cookie(self::REMEMBER_ME_COOKIE, $details->toString()));
+
+        $this->request($client, '/homepage');
+        $this->assertIsRedirect($client, '/login');
+
+        $this->assertHasNoAdminAccess($client);
+    }
+
+    /**
+     * A remember-me cookie must not be usable as login link.
+     *
+     * Both are signed by Symfony's SignatureHasher. With the same secret and signature properties, the hash of a
+     * remember-me cookie is a valid login link. This would turn a stolen remember-me cookie into a fully authenticated
+     * session (without password and TOTP code), which allows changing the password and deactivating the 2FA.
+     */
+    public function testRememberMeCookieCannotBeUsedAsLoginLink(): void
+    {
+        $client = self::createClient();
+        $this->activateTwoFactor(UserFixtures::USERNAME_SUPER_ADMIN);
+
+        // the victim logs in and receives a remember-me cookie, which is stolen by the attacker
+        $this->startTwoFactorLogin($client, UserFixtures::USERNAME_SUPER_ADMIN);
+        $this->completeTwoFactorLogin($client);
+        $this->assertIsFullyAuthenticated($client);
+        $this->expireSession($client);
+
+        // the attacker is only remembered, which does not grant access to pages requiring a full authentication
+        $this->assertHasNoAdminAccess($client);
+
+        $cookie = $client->getCookieJar()->get(self::REMEMBER_ME_COOKIE);
+        self::assertNotNull($cookie, 'Missing remember-me cookie');
+        $details = RememberMeDetails::fromRawCookie($cookie->getValue());
+
+        // now try to upgrade the remembered session, by using the cookie hash as login link
+        $this->request($client, '/auth/link/check?' . http_build_query([
+            'user' => $details->getUserIdentifier(),
+            'expires' => $details->getExpires(),
+            'hash' => $details->getValue(),
+        ]));
+        $this->assertIsRedirect($client, '/login');
 
         $this->assertHasNoAdminAccess($client);
     }
