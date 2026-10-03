@@ -45,6 +45,16 @@ export default class KimaiPaginatedBoxWidget {
                 this.loadPage(link.href);
             }
         });
+
+        document.body.addEventListener('submit', (event) => {
+            const form = event.target;
+
+            if (form.matches(this.selector + ' form.pagination-form')) {
+                event.preventDefault();
+                const separator = form.action.includes('?') ? '&' : '?';
+                this.loadPage(form.action + separator + new URLSearchParams(new FormData(form)).toString());
+            }
+        });
     }
     
     static create(elementId) {

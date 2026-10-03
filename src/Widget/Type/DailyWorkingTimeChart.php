@@ -55,13 +55,24 @@ final class DailyWorkingTimeChart extends AbstractWidget
      */
     public function getOptions(array $options = []): array
     {
-        return array_merge([
+        $options = array_merge([
             'begin' => null,
             'end' => null,
             'color' => '',
             'type' => 'bar',
+            'groupBy' => 'day',
             'id' => uniqid('DailyWorkingTimeChart_'),
         ], parent::getOptions($options));
+
+        if (($options['type'] ?? null) !== 'bar') {
+            $options['type'] = 'bar';
+        }
+
+        if (!\in_array($options['groupBy'] ?? null, ['day', 'week'], true)) {
+            $options['groupBy'] = 'day';
+        }
+
+        return $options;
     }
 
     /**
@@ -69,6 +80,7 @@ final class DailyWorkingTimeChart extends AbstractWidget
      */
     public function getData(array $options = []): mixed
     {
+        $options = $this->getOptions($options);
         $user = $this->getUser();
         $dateTimeFactory = DateTimeFactory::createByUser($user);
 
@@ -93,6 +105,10 @@ final class DailyWorkingTimeChart extends AbstractWidget
         $activities = [];
         $statistics = $this->getPreparedData($user, $begin, $end);
 
+        if (($options['groupBy'] ?? 'day') === 'week') {
+            $statistics = $this->getWeeklyData($statistics, $dateTimeFactory);
+        }
+
         foreach ($statistics as $day) {
             foreach ($day->getDetails() as $entry) {
                 /** @var Activity $activity */
@@ -109,10 +125,46 @@ final class DailyWorkingTimeChart extends AbstractWidget
             }
         }
 
+        $activities = $this->sortActivitiesByProject($activities);
+
         return [
             'activities' => $activities,
             'data' => $statistics,
         ];
+    }
+
+    /**
+     * @param array<string, array{activity: Activity, project: Project}> $activities
+     * @return array<string, array{activity: Activity, project: Project}>
+     */
+    private function sortActivitiesByProject(array $activities): array
+    {
+        uasort($activities, static function (array $left, array $right): int {
+            $leftProject = $left['project'];
+            $rightProject = $right['project'];
+            $leftActivity = $left['activity'];
+            $rightActivity = $right['activity'];
+            $leftCustomer = $leftProject->getCustomer();
+            $rightCustomer = $rightProject->getCustomer();
+
+            return [
+                $leftCustomer?->getName() ?? '',
+                $leftProject->getName() ?? '',
+                $leftActivity->getName() ?? '',
+                $leftCustomer?->getId() ?? 0,
+                $leftProject->getId() ?? 0,
+                $leftActivity->getId() ?? 0,
+            ] <=> [
+                $rightCustomer?->getName() ?? '',
+                $rightProject->getName() ?? '',
+                $rightActivity->getName() ?? '',
+                $rightCustomer?->getId() ?? 0,
+                $rightProject->getId() ?? 0,
+                $rightActivity->getId() ?? 0,
+            ];
+        });
+
+        return $activities;
     }
 
     public function getTitle(): string
@@ -203,6 +255,73 @@ final class DailyWorkingTimeChart extends AbstractWidget
         }
 
         return array_values($results);
+    }
+
+    /**
+     * @param Day[] $days
+     * @return Day[]
+     */
+    private function getWeeklyData(array $days, DateTimeFactory $dateTimeFactory): array
+    {
+        /** @var array<string, Day> $weeks */
+        $weeks = [];
+        /** @var array<string, array<string, array{project: Project, activity: Activity, duration: int, billable: int}>> $weekDetails */
+        $weekDetails = [];
+
+        foreach ($days as $day) {
+            $weekBegin = $dateTimeFactory->getStartOfWeek($day->getDay());
+            $weekKey = $weekBegin->format('Ymd');
+
+            if (!isset($weeks[$weekKey])) {
+                $weeks[$weekKey] = new Day($weekBegin, 0, 0.00);
+                $weekDetails[$weekKey] = [];
+            }
+
+            $weeks[$weekKey]->setTotalDuration($weeks[$weekKey]->getTotalDuration() + $day->getTotalDuration());
+            $weeks[$weekKey]->setTotalDurationBillable($weeks[$weekKey]->getTotalDurationBillable() + $day->getTotalDurationBillable());
+
+            foreach ($day->getDetails() as $entry) {
+                if (!isset($entry['project'], $entry['activity'])) {
+                    continue;
+                }
+
+                $project = $entry['project'];
+                $activity = $entry['activity'];
+
+                if (!$project instanceof Project || !$activity instanceof Activity) {
+                    continue;
+                }
+
+                $customer = $project->getCustomer();
+                if ($customer === null) {
+                    continue;
+                }
+
+                $detailsId =
+                    $customer->getId()
+                    . '_' . ($project->getId() ?? '')
+                    . '_' . ($activity->getId() ?? '')
+                ;
+
+                if (!isset($weekDetails[$weekKey][$detailsId])) {
+                    $weekDetails[$weekKey][$detailsId] = [
+                        'project' => $project,
+                        'activity' => $activity,
+                        'duration' => 0,
+                        'billable' => 0,
+                    ];
+                }
+
+                $weekDetails[$weekKey][$detailsId]['duration'] += (int) ($entry['duration'] ?? 0);
+                $weekDetails[$weekKey][$detailsId]['billable'] += (int) ($entry['billable'] ?? 0);
+            }
+        }
+
+        foreach ($weeks as $weekKey => $week) {
+            $week->setDetails(array_values($weekDetails[$weekKey]));
+        }
+
+        return array_values($weeks);
     }
 
     /**
