@@ -17,6 +17,8 @@
         {% endfor %}
     {% elseif column == 'amount' %}
         {{ widgets.badge_counted(entry.members|length) }}
+    {% elseif column == 'visible' %}
+        {{ widgets.label_boolean(entry.visible) }}
     {% elseif column == 'actions' %}
         {% set event = actions(app.user, 'team', 'index', {'team': entry}) %}
         {{ widgets.table_actions(event.actions) }}

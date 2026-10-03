@@ -87,6 +87,14 @@ class Team
     #[Serializer\Groups(['Team_Entity', 'Expanded'])]
     #[OA\Property(type: 'array', items: new OA\Items(ref: '#/components/schemas/Activity'))]
     private Collection $activities;
+    /**
+     * Invisible teams cannot be selected from dropdowns and their members will not be included in listings that collect all memberships of a user
+     */
+    #[ORM\Column(name: 'visible', type: Types::BOOLEAN, nullable: false, options: ['default' => true])]
+    #[Assert\NotNull]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    private bool $visible = true;
 
     use ColorTrait;
 
@@ -427,5 +435,15 @@ class Team
         foreach ($activities as $activity) {
             $this->addActivity($activity);
         }
+    }
+
+    public function isVisible(): bool
+    {
+        return $this->visible;
+    }
+
+    public function setVisible(bool $visible): void
+    {
+        $this->visible = $visible;
     }
 }

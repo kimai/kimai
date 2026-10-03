@@ -743,6 +743,49 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     }
 
     /**
+     * @return array<Team>
+     */
+    public function getVisibleTeams(bool $teamleadOnly = true): array
+    {
+        $teams = [];
+        foreach ($this->memberships as $membership) {
+            if ($teamleadOnly && !$membership->isTeamlead()) {
+                continue;
+            }
+            if ($membership->getTeam() !== null && $membership->getTeam()->isVisible()) {
+                $teams[] = $membership->getTeam();
+            }
+        }
+
+        return $teams;
+    }
+
+    /**
+     * @return array<User>
+     */
+    public function getVisibleTeamMember(bool $teamleadOnly = true): array
+    {
+        $users = [];
+
+        foreach ($this->memberships as $membership) {
+            if ($teamleadOnly && !$membership->isTeamlead()) {
+                continue;
+            }
+            $members = $membership->getTeam()?->getUsers();
+            if ($members === null) {
+                continue;
+            }
+            foreach ($members as $user) {
+                if ($user->isEnabled() && !$user->isSystemAccount()) {
+                    $users[$user->getId()] = $user;
+                }
+            }
+        }
+
+        return array_values($users);
+    }
+
+    /**
      * Required in the User profile screen to edit his teams.
      */
     public function addTeam(Team $team): void

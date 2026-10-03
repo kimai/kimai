@@ -29,6 +29,7 @@ class TeamTest extends TestCase
         self::assertNull($sut->getId());
         self::assertFalse($sut->hasUsers());
         self::assertFalse($sut->hasTeamleads());
+        self::assertTrue($sut->isVisible());
         self::assertIsArray($sut->getTeamleads());
         self::assertEmpty($sut->getTeamleads());
         self::assertInstanceOf(Collection::class, $sut->getCustomers());
@@ -129,6 +130,10 @@ class TeamTest extends TestCase
         $sut = new Team('foo-bar');
         self::assertEquals('foo-bar', $sut->getName());
         self::assertEquals('foo-bar', (string) $sut);
+
+        self::assertTrue($sut->isVisible());
+        $sut->setVisible(false);
+        self::assertFalse($sut->isVisible());
 
         $user = $this->createMock(User::class);
         $user->method('getId')->willReturn(99);

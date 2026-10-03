@@ -359,7 +359,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
         self::assertNotEmpty($result['id']);
         self::assertIsArray($result['teams']);
-        self::assertEquals([['id' => 1, 'name' => 'Test team', 'color' => null, 'color-safe' => '#03A9F4']], $result['teams']);
+        self::assertEquals([['id' => 1, 'name' => 'Test team', 'visible' => true, 'color' => null, 'color-safe' => '#03A9F4']], $result['teams']);
         self::assertIsArray($result['metaFields']);
         self::assertEquals([], $result['metaFields']);
         self::assertEquals('foo', $result['name']);

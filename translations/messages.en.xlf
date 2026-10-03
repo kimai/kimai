@@ -2146,6 +2146,10 @@
         <source>reopen</source>
         <target>Reopen</target>
       </trans-unit>
+      <trans-unit id="e80FZFi" resname="team_visibility">
+        <source>team_visibility</source>
+        <target>Invisible teams do not appear in selection dialogs, and their members are not included in list views (e.g., for company-wide teams).</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
