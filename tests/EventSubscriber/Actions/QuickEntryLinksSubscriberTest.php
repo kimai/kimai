@@ -110,7 +110,7 @@ class QuickEntryLinksSubscriberTest extends AbstractActionsSubscriberTestCase
 
         self::assertEquals(['filter'], array_keys($actions));
         self::assertEquals(
-            ['title' => 'timesheet.filter', 'url' => 'admin_timesheet?' . http_build_query(['users' => [5]])],
+            ['title' => 'timesheet.filter', 'url' => 'admin_timesheet?' . http_build_query(['users' => [5]]), 'icon' => 'timesheet-team'],
             $actions['filter']
         );
     }
@@ -132,7 +132,7 @@ class QuickEntryLinksSubscriberTest extends AbstractActionsSubscriberTestCase
         $actions = $this->getActions(['user' => $this->createUser(5), 'query' => $this->createQuery('2026-01-01', '2026-01-31')], ['view_other_timesheet']);
 
         self::assertEquals(
-            ['title' => 'timesheet.filter', 'url' => 'admin_timesheet?' . http_build_query(['users' => [5], 'daterange' => '2026-01-01 - 2026-01-31'])],
+            ['title' => 'timesheet.filter', 'url' => 'admin_timesheet?' . http_build_query(['users' => [5], 'daterange' => '2026-01-01 - 2026-01-31']), 'icon' => 'timesheet-team'],
             $actions['filter']
         );
     }
