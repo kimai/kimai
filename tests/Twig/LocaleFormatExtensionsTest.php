@@ -78,7 +78,10 @@ class LocaleFormatExtensionsTest extends TestCase
             'chart_duration',
             'chart_money',
             'duration_decimal',
+            'duration_decimal_value',
+            'duration_decimal_format',
             'money',
+            'money_value',
             'amount',
             'js_format',
             'pattern',
@@ -524,6 +527,25 @@ class LocaleFormatExtensionsTest extends TestCase
         $sut = $this->getSut('en', $this->localeEn);
 
         self::assertEquals('0.00', $sut->durationDecimal(null));
+    }
+
+    public function testDurationDecimalValueAndFormatReconcileRoundedRowSum(): void
+    {
+        $sut = $this->getSut('en', $this->localeEn);
+
+        $rowValue = $sut->durationDecimalValue(600);
+        self::assertEqualsWithDelta(0.17, $rowValue, 0.00001);
+
+        $sum = $rowValue + $rowValue + $rowValue;
+        self::assertEquals('0.51', $sut->formatDecimalValue($sum));
+    }
+
+    public function testMoneyValueRoundsToCentPrecision(): void
+    {
+        $sut = $this->getSut('en', $this->localeEn);
+
+        self::assertEqualsWithDelta(1.67, $sut->moneyValue(1.6666666), 0.00001);
+        self::assertEqualsWithDelta(0.0, $sut->moneyValue(null), 0.00001);
     }
 
     private function getTest(LocaleFormatExtensions $sut, string $name): TwigTest

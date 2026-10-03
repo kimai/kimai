@@ -6,13 +6,13 @@
         {{ period.totalDuration|duration(true) }}
     {%- endblock %}
     {% block total_duration -%}
-        {{ absoluteDuration|duration(true) }}
+        {{ absoluteDurationDecimal|duration_decimal_format }}
     {%- endblock %}
     {% block total_duration_user -%}
-        {{ usersTotalDuration|duration(true) }}
+        {{ usersTotalDurationDecimal|duration_decimal_format }}
     {%- endblock %}
     {% block total_duration_period -%}
-        {{ total|duration(true) }}
+        {{ totalsDurationDecimal[id]|duration_decimal_format }}
     {%- endblock %}
     {% block rate %}
         {{ period.totalRate }}
