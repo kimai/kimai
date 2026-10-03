@@ -29,7 +29,7 @@
             {% endblock %}
             {% block box_body_classes %}card-table table-responsive{% endblock %}
             {% block box_body %}
-                <table class="table table-vcenter table-hover dataTable">
+                <table class="table table-vcenter table-hover dataTable table-sticky-first">
                     <thead>
                     <tr>
                         <th></th>
@@ -114,12 +114,9 @@
                 {% endif %}
             {% endblock %}
             {% block body %}
-                <table id="working_times_details" class="table table-vcenter table-hover dataTable">
+                <table id="working_times_details" class="table table-vcenter table-hover dataTable table-sticky-first">
                     <thead>
                     <tr>
-                        {% if withWorkHourConfiguration %}
-                        <th></th>
-                        {% endif %}
                         <th>{{ 'month'|trans }}</th>
                         <th class="text-end total">{{ 'sum.total'|trans }}</th>
                         <th class="text-end hw-min">{{ 'work_times_should'|trans }}</th>
@@ -135,16 +132,12 @@
                         {% set monthShould = month.expectedTime(now) %}
                         {% set monthIs = month.actualTime %}
                         <tr>
-                            {% if withWorkHourConfiguration %}
-                            <td class="w-min">
-                                {% if month.locked %}
-                                    <i class="{{ 'locked'|icon }}" data-toggle="tooltip" title="{% if month.lockedBy is not null %}{{ month.lockedBy.displayName }}{% else %}{{ 'deleted'|trans }}{% endif %}: {{ month.lockDate|date_short }}"></i>
-                                {% else %}
-                                    <i class="bg-yellow-lt {{ 'unlocked'|icon }}"></i>
-                                {% endif %}
-                            </td>
-                            {% endif %}
                             <td class="text-nowrap w-min">
+                                {% if month.locked %}
+                                    <i class="me-1 {{ 'locked'|icon }}" data-toggle="tooltip" title="{% if month.lockedBy is not null %}{{ month.lockedBy.displayName }}{% else %}{{ 'deleted'|trans }}{% endif %}: {{ month.lockDate|date_short }}"></i>
+                                {% else %}
+                                    <i class="me-1 bg-yellow-lt {{ 'unlocked'|icon }}"></i>
+                                {% endif %}
                                 {{ month.month|month_name }}
                             </td>
                             <td class="text-end total w-min">
@@ -205,9 +198,6 @@
                     </tbody>
                     <tfoot>
                         <tr class="summary">
-                            {% if withWorkHourConfiguration %}
-                            <td></td>
-                            {% endif %}
                             <td></td>
                             <td class="text-end total">
                                 {{ work_times_result(yearShould, yearIs, decimal) }}

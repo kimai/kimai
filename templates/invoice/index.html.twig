@@ -151,7 +151,7 @@
                                         {% set entries = model.calculator.entries %}
                                         {% set currency = model.currency %}
                                         {% set itemsAmount = entries|length %}
-                                        {{ tables.datatable_header(tableName, columns, model.query, {'boxClass': ''}) }}
+                                        {{ tables.datatable_header(tableName, columns, model.query, {'boxClass': '', columnConfig: false}) }}
                                         {% if limit_preview %}
                                             {% set entries = entries|slice(0, 100) %}
                                         {% endif %}

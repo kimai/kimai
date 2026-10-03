@@ -11,7 +11,9 @@ namespace App\Saml;
 
 use App\Configuration\SamlConfigurationInterface;
 use App\Entity\User;
+use App\User\ExternalUserSanitizer;
 use App\User\UserService;
+use App\Validator\ValidationFailedException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
@@ -26,6 +28,7 @@ final class SamlProvider
         private readonly UserService $userService,
         private readonly UserProviderInterface $userProvider,
         private readonly SamlConfigurationInterface $configuration,
+        private readonly ExternalUserSanitizer $userSanitizer,
         private readonly LoggerInterface $logger
     ) {
     }
@@ -52,9 +55,12 @@ final class SamlProvider
             $this->hydrateUser($user, $token);
             $this->userService->saveUser($user);
         } catch (\Exception $ex) {
-            $this->logger->error($ex->getMessage());
+            $reason = $ex instanceof ValidationFailedException ? $ex->getViolationsAsString() : $ex->getMessage();
+            $this->logger->error(
+                \sprintf('Failed creating or hydrating SAML user "%s": %s', $token->getUserIdentifier() ?? '*unknown*', $reason)
+            );
             throw new AuthenticationException(
-                \sprintf('Failed creating or hydrating user "%s": %s', $token->getUserIdentifier() ?? '*unknown*', $ex->getMessage())
+                \sprintf('Failed creating or hydrating user "%s": %s', $token->getUserIdentifier() ?? '*unknown*', $reason)
             );
         }
 
@@ -118,6 +124,9 @@ final class SamlProvider
 
         $user->setUserIdentifier($token->getUserIdentifier());
         $user->setAuth(User::AUTH_SAML);
+
+        // a broken attribute mapping must not prevent the login
+        $this->userSanitizer->sanitize($user);
     }
 
     private function getPropertyValue(SamlLoginAttributes $token, $attribute): ?string
