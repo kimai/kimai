@@ -51,6 +51,7 @@ class DefaultRendererTest extends AbstractRendererTestCase
             (new XlsxRendererFactoryMock($this))->create(),
             $repository,
             $logger,
+            \App\Tests\Mocks\SystemConfigurationFactory::createStub(['export' => ['show_default_templates' => true]]),
         );
     }
 

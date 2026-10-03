@@ -318,6 +318,10 @@
         <source>invoice.rounding_mode</source>
         <target>Rounding mode</target>
       </trans-unit>
+      <trans-unit id="xP0rtT5" resname="export.show_default_templates">
+        <source>export.show_default_templates</source>
+        <target>Show default export templates</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
