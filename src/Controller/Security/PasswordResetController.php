@@ -17,8 +17,10 @@ use App\Event\UserEmailEvent;
 use App\User\UserService;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
@@ -45,8 +47,30 @@ final class PasswordResetController extends AbstractController
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly UserService $userService,
-        private readonly SystemConfiguration $configuration
+        private readonly SystemConfiguration $configuration,
+        /** @var array<string> */
+        #[Autowire(param: 'kernel.trusted_hosts')]
+        private readonly array $trustedHosts
     ) {
+    }
+
+    private function checkIsEnabled(): void
+    {
+        if (!$this->configuration->isPasswordResetActive()) {
+            throw $this->createNotFoundException();
+        }
+
+        // the login link is generated from the request host, which can only be trusted if TRUSTED_HOSTS is configured
+        if (\count(array_filter($this->trustedHosts, fn ($host) => $host !== '')) === 0) {
+            // the message is not shown to users, but logged by Symfony with level critical (status code >= 500)
+            throw new ServiceUnavailableHttpException(
+                null,
+                'Password reset is deactivated, because "TRUSTED_HOSTS" is not configured. ' .
+                'Set the environment variable "TRUSTED_HOSTS" to the domain(s) of your Kimai installation, ' .
+                'e.g. TRUSTED_HOSTS="localhost|kimai.example.com", or deactivate "Password reset" in the system configuration. ' .
+                'See https://www.kimai.org/documentation/configurations.html'
+            );
+        }
     }
 
     /**
@@ -55,9 +79,7 @@ final class PasswordResetController extends AbstractController
     #[Route(path: '/request', name: 'resetting_request', methods: ['GET'])]
     public function requestAction(): Response
     {
-        if (!$this->configuration->isPasswordResetActive()) {
-            throw $this->createNotFoundException();
-        }
+        $this->checkIsEnabled();
 
         if ($this->isGranted('IS_AUTHENTICATED')) {
             return $this->redirectToRoute('homepage');
@@ -78,9 +100,7 @@ final class PasswordResetController extends AbstractController
         RateLimiterFactory $resetPasswordLimiter
     ): Response
     {
-        if (!$this->configuration->isPasswordResetActive()) {
-            throw $this->createNotFoundException();
-        }
+        $this->checkIsEnabled();
 
         if ($this->isGranted('IS_AUTHENTICATED')) {
             return $this->redirectToRoute('homepage');
@@ -140,9 +160,7 @@ final class PasswordResetController extends AbstractController
     #[Route(path: '/check-email', name: 'resetting_check_email', methods: ['GET'])]
     public function checkEmailAction(): Response
     {
-        if (!$this->configuration->isPasswordResetActive()) {
-            throw $this->createNotFoundException();
-        }
+        $this->checkIsEnabled();
 
         return $this->render('security/password-reset/check_email.html.twig', [
             'tokenLifetime' => $this->configuration->getPasswordResetRetryLifetime(),
