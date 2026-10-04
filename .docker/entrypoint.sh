@@ -1,37 +1,9 @@
 #!/bin/bash
 
-# Command tracing (set -x) is deliberately NOT enabled by default:
-# this script handles the database credentials, the admin password and the
-# APP_SECRET. With tracing on, all of them are written to stdout and end up in logs
-# Set ENTRYPOINT_DEBUG=1 to trace the startup while troubleshooting - even then
-# the sections below that touch secrets stay untraced.
-if [ -n "$ENTRYPOINT_DEBUG" ]; then
-  set -x
-fi
-
-# Turn off tracing before touching a secret. The braces around "set +x" keep
-# the disable command itself from being traced.
-function hideSecrets() {
-  XTRACE_ENABLED=false
-  case $- in
-    *x*) XTRACE_ENABLED=true ;;
-  esac
-  { set +x; } 2>/dev/null
-}
-
-# Restore the previous tracing state - only re-enables it if it was on before.
-function unhideSecrets() {
-  if [ "$XTRACE_ENABLED" = true ]; then
-    set -x
-  fi
-}
-
 KIMAI=$(cat /opt/kimai/version.txt)
 echo $KIMAI
 
 function waitForDB() {
-  hideSecrets
-
   # Parse sql connection data
   DATABASE_USER=$(awk -F '[/:@]' '{print $4}' <<< "$DATABASE_URL")
   DATABASE_PASS=$(awk -F '[/:@]' '{print $5}' <<< "$DATABASE_URL")
@@ -45,17 +17,14 @@ function waitForDB() {
   fi
 
   echo "Wait for database connection ..."
-  # Credentials are handed over as environment variables of that single command
-  # instead of as command line arguments, so they are neither logged nor visible
-  # in the process list.
+  # Credentials are handed over as environment variables of that single command instead of
+  # command line arguments, so they are neither logged nor visible in the process list.
   until DBTEST_HOST="$DATABASE_HOST" DBTEST_NAME="$DATABASE_BASE" DBTEST_PORT="$DATABASE_PORT" \
         DBTEST_USER="$DATABASE_USER" DBTEST_PASS="$DATABASE_PASS" php /dbtest.php; do
     echo Checking DB: $?
     sleep 3
   done
   echo "Connection established"
-
-  unhideSecrets
 }
 
 function handleStartup() {
@@ -111,41 +80,28 @@ function prepareKimai() {
   # These are idempotent, so we can run them on every start-up
   /opt/kimai/bin/console -n kimai:install
   if [ -n "$ADMINPASS" ] && [ -n "$ADMINMAIL" ]; then
-    # ADMINPASS must not show up in the logs.
-    # --ignore-existing keeps this call idempotent: on every restart after the
-    # first one the admin exists already and the command exits successfully.
-    hideSecrets
+    # --ignore-existing is idempotent: it will only create the admin on the first container start
     /opt/kimai/bin/console kimai:user:create --ignore-existing admin "$ADMINMAIL" ROLE_SUPER_ADMIN "$ADMINPASS"
-    unhideSecrets
   fi
   echo "$KIMAI" > /opt/kimai/var/installed
   echo "Kimai is ready"
 }
 
 function ensureAppSecret() {
-  # GHSA-jr9p-4h4j-6c58
   # Make sure the container never runs with the publicly-known default APP_SECRET.
   # If the user provided their own value (via -e APP_SECRET=...) it is kept untouched.
   # Otherwise a unique secret is generated once and persisted below var/data, which
-  # is the directory mounted as a named volume in the documented Docker setup, so it
-  # stays stable across container restarts and re-creations.
-  #
-  # Tracing is disabled around all reads/writes of APP_SECRET so the secret never
-  # appears in container logs.
-  hideSecrets
-
+  # should be a mounted volume and stable across container restarts and re-creations.
   local SECRET_FILE=/opt/kimai/var/data/.appsecret
   local ENV_LOCAL=/opt/kimai/.env.local
 
   # Always remove any prior .env.local before deciding which secret applies.
-  # This prevents a stale auto-generated value from lingering after a user
-  # later sets APP_SECRET via docker env / compose. It is regenerated below
-  # in the auto-secret path; in the user-provided path it stays absent so
-  # the real env var remains the single source of truth.
+  # This prevents a stale auto-generated value from lingering after a user later sets
+  # APP_SECRET via docker env / compose. It is regenerated below in the auto-secret path; in
+  # the user-provided path it stays absent so the real env remains the single source of truth.
   rm -f "$ENV_LOCAL"
 
   if [ -n "$APP_SECRET" ] && [ "$APP_SECRET" != "change_this_to_something_unique" ]; then
-    unhideSecrets
     return
   fi
 
@@ -172,8 +128,6 @@ function ensureAppSecret() {
   # would otherwise be 0600 root:root and unreadable to the web user, causing
   # Symfony's Dotenv to throw PathException at boot.
   chown "$USER_ID:$GROUP_ID" "$ENV_LOCAL"
-
-  unhideSecrets
 }
 
 function runServer() {
