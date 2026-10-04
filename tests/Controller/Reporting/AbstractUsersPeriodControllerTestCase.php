@@ -111,8 +111,52 @@ abstract class AbstractUsersPeriodControllerTestCase extends AbstractControllerB
         $select = $client->getCrawler()->filterXPath("//select[@id='customer']");
         self::assertEquals(1, $select->count());
         self::assertEquals('project', $select->attr('data-related-select'));
-        self::assertStringContainsString('ignoreDates=1', (string) $select->attr('data-api-url'));
-        self::assertStringContainsString('ignoreDates=1', (string) $select->attr('data-empty-url'));
+        self::assertStringContainsString('customer=%25customer%25', (string) $select->attr('data-api-url'));
+    }
+
+    public function testUsersPeriodReportReloadedProjectsMatchProjectSelect(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $customers = new CustomerFixtures();
+        $customers->setIsVisible(true);
+        $customers->setAmount(1);
+        $customers = $this->importFixture($customers);
+        $customer = $customers[0];
+        self::assertInstanceOf(Customer::class, $customer);
+
+        $projects = new ProjectFixtures();
+        $projects->setCustomers([$customer]);
+        $projects->setIsVisible(true);
+        $projects->setAmount(2);
+        /** @var Project[] $projects */
+        $projects = $this->importFixture($projects);
+
+        $active = $projects[0];
+        $ended = $projects[1];
+        $ended->setStart(new \DateTime('-2 years'));
+        $ended->setEnd(new \DateTime('-1 year'));
+        $this->getEntityManager()->persist($ended);
+        $this->getEntityManager()->flush();
+
+        $this->assertAccessIsGranted($client, \sprintf('%s?customer=%s', $this->getReportUrl(), $customer->getId()));
+
+        // projects offered by the server-side project select
+        $options = $client->getCrawler()->filterXPath("//select[@id='project']//option[@value!='']");
+        $selectIds = $options->each(fn ($option) => (int) $option->attr('value'));
+
+        // projects the browser loads when the customer changes
+        $apiUrl = (string) $client->getCrawler()->filterXPath("//select[@id='customer']")->attr('data-api-url');
+        $this->requestPure($client, str_replace('%25customer%25', (string) $customer->getId(), $apiUrl));
+        self::assertTrue($client->getResponse()->isSuccessful());
+        /** @var array<array{id: int}> $apiProjects */
+        $apiProjects = json_decode((string) $client->getResponse()->getContent(), true);
+        $apiIds = array_column($apiProjects, 'id');
+
+        sort($selectIds);
+        sort($apiIds);
+        self::assertEquals([$active->getId()], $selectIds);
+        self::assertEquals($selectIds, $apiIds);
     }
 
     public function testUsersPeriodReportProjectsLimitedToCustomer(): void

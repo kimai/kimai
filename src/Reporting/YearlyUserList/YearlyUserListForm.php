@@ -41,7 +41,9 @@ final class YearlyUserListForm extends AbstractType
             'required' => false,
             'width' => false,
             'project_enabled' => true,
-            'ignore_date' => true,
+            // the project select only offers projects active today, so the reloaded list must not use dates either
+            'start_date_param' => null,
+            'end_date_param' => null,
         ]);
         $projectOptions = [
             'multiple' => false,
