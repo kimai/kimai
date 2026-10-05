@@ -897,6 +897,21 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this->auth === null || $this->auth === self::AUTH_INTERNAL;
     }
 
+    /**
+     * Switches an LDAP or SAML account back to the internal authentication.
+     * Values of the previous authentication are removed and the password is cleared.
+     */
+    public function switchToInternalAuth(): void
+    {
+        if ($this->isInternalUser()) {
+            return;
+        }
+
+        $this->auth = self::AUTH_INTERNAL;
+        $this->password = '';
+        $this->getPreference('ldap_dn')?->setValue(null);
+    }
+
     public function addRole(string $role): void
     {
         $role = strtoupper($role);

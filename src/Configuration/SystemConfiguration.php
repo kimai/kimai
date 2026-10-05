@@ -258,6 +258,23 @@ final class SystemConfiguration
         return (bool) $this->find('ldap.activate');
     }
 
+    /**
+     * Whether a super-admin may switch LDAP and SAML accounts back to the internal authentication.
+     */
+    public function isUserAuthChangeAllowed(): bool
+    {
+        if (!$this->isExternalLoginActive()) {
+            return false;
+        }
+
+        return (bool) $this->find('user.auth_change');
+    }
+
+    public function isExternalLoginActive(): bool
+    {
+        return $this->isLdapActive() || $this->isSamlActive();
+    }
+
     // ========== Calendar configurations ==========
 
     public function getCalendarBusinessTimeBegin(): string

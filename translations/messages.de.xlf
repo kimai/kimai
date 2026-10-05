@@ -854,6 +854,18 @@
         <source>system_account.help</source>
         <target>Wird in Berichten und Auswahlboxen ausgeblendet</target>
       </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target>Authentifizierung</target>
+      </trans-unit>
+      <trans-unit id="LQXTGjm" resname="authentication.help">
+        <source>authentication.help</source>
+        <target>Beim Wechsel auf „Intern“ wird das Passwort gelöscht. Legen Sie ein neues Passwort fest oder nutzen Sie die Funktion „Passwort vergessen“.</target>
+      </trans-unit>
+      <trans-unit id="NvQBTxG" resname="authentication.internal">
+        <source>authentication.internal</source>
+        <target>Intern</target>
+      </trans-unit>
       <trans-unit id="Zs9VE7N" resname="roles">
         <source>roles</source>
         <target>Rolle</target>
