@@ -270,7 +270,7 @@ zip 12345 looney toon', $sut->getFormattedAddress());
             ['number', 'string'],
             ['vat_id', 'string'],
             ['address', 'string'],
-            ['contact_person', 'string'],
+            ['contact', 'string'],
             ['email', 'string'],
             ['phone', 'string'],
             ['mobile', 'string'],

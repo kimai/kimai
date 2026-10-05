@@ -96,7 +96,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Assert\Length(max: 100)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
-    #[Exporter\Expose(label: 'contact_person')]
+    #[Exporter\Expose(label: 'contact')]
     private ?string $contact = null;
     /**
      * Unstructured address, better use the fields: addressLine1-3, postcode, city, country

@@ -2146,6 +2146,10 @@
         <source>help.project_locked_until</source>
         <target state="translated">Времена закључно са овим датумом не могу бити ни креирана ни измењена.</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info" approved="no" xml:space="preserve">
+        <source>contact_info</source>
+        <target state="translated">Контакт</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
