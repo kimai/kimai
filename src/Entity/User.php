@@ -715,10 +715,14 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * This will reset all security signatures and therefor invalidate:
      * - login links
      * - remember me cookies
+     * - sessions
+     *
+     * @see \App\Doctrine\UserSecuritySignatureSubscriber
      */
     public function resetSecuritySignature(): void
     {
-        $this->signatureDate = new \DateTimeImmutable('now', $this->getDateTimezone());
+        // UTC without microseconds: same value before and after persisting, which is required for a stable signature
+        $this->signatureDate = new \DateTimeImmutable('@' . time());
     }
 
     /**
@@ -1125,6 +1129,11 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             return false;
         }
 
+        // a reset security signature (e.g. after changing the email) invalidates all existing sessions
+        if ($this->getSignatureDate() !== $user->getSignatureDate()) {
+            return false;
+        }
+
         return true;
     }
 
@@ -1136,6 +1145,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             'enabled' => $this->enabled,
             'email' => $this->email,
             'password' => $this->password,
+            'signatureDate' => $this->signatureDate,
         ];
     }
 
@@ -1149,6 +1159,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         $this->enabled = $data['enabled'];
         $this->email = $data['email'];
         $this->password = $data['password'];
+        $this->signatureDate = $data['signatureDate'] ?? null;
     }
 
     public function __toString(): string

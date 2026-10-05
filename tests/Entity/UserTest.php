@@ -726,6 +726,14 @@ class UserTest extends TestCase
         $sut2->setEnabled(true);
         self::assertTrue($sut->isEqualTo($sut2));
         self::assertTrue($sut2->isEqualTo($sut));
+
+        // a reset security signature invalidates existing sessions
+        $sut->resetSecuritySignature();
+        self::assertFalse($sut->isEqualTo($sut2));
+        self::assertFalse($sut2->isEqualTo($sut));
+        $sut2 = clone $sut;
+        self::assertTrue($sut->isEqualTo($sut2));
+        self::assertTrue($sut2->isEqualTo($sut));
     }
 
     public function testSerialize(): void
@@ -735,6 +743,7 @@ class UserTest extends TestCase
         $sut->setUserIdentifier('foo-BAR');
         $sut->setEmail('hello@world.com');
         $sut->setEnabled(false);
+        $sut->resetSecuritySignature();
 
         $data = serialize($sut);
 
@@ -743,6 +752,7 @@ class UserTest extends TestCase
             false,
             null,
             'hello@world.com',
+            $sut->getSignatureDate(),
         ];
 
         /** @var User $unserialized */
@@ -753,9 +763,28 @@ class UserTest extends TestCase
             $unserialized->isEnabled(),
             $unserialized->getId(),
             $unserialized->getEmail(),
+            $unserialized->getSignatureDate(),
         ];
 
         self::assertEquals($expected, $actual);
+        self::assertTrue($sut->isEqualTo($unserialized));
+    }
+
+    /**
+     * Sessions created before the signature date was serialized must stay valid.
+     */
+    public function testUnserializeWithoutSignatureDate(): void
+    {
+        $sut = new User();
+        $sut->__unserialize([
+            'id' => 1,
+            'username' => 'foo-BAR',
+            'enabled' => true,
+            'email' => 'hello@world.com',
+            'password' => 'ABC-1234567890',
+        ]);
+
+        self::assertEquals('', $sut->getSignatureDate());
     }
 
     public function testTeamMemberships(): void
@@ -878,6 +907,8 @@ class UserTest extends TestCase
         $user->resetSecuritySignature();
         // shortest possible result: 2026-05-31T01:18:19Z
         self::assertGreaterThanOrEqual(20, \strlen($user->getSignatureDate()));
+        // always UTC, independent of the users timezone: the value must not change when loaded from the database
+        self::assertStringEndsWith('+00:00', $user->getSignatureDate());
     }
 
     private static function userWithId(int $id): User
