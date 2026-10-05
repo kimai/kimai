@@ -167,6 +167,35 @@ class SystemConfigurationTest extends TestCase
         self::assertEquals('2020-03-27', $sut->getFinancialYearStart());
     }
 
+    public function testIsUserAuthChangeAllowed(): void
+    {
+        $sut = $this->getSut($this->getDefaultSettings(), []);
+        self::assertFalse($sut->isUserAuthChangeAllowed());
+
+        $sut = $this->getSut($this->getDefaultSettings(), [
+            (new Configuration())->setName('user.auth_change')->setValue(true),
+        ]);
+        self::assertFalse($sut->isUserAuthChangeAllowed());
+
+        $sut = $this->getSut($this->getDefaultSettings(), [
+            (new Configuration())->setName('user.auth_change')->setValue(true),
+            (new Configuration())->setName('saml.activate')->setValue(true),
+        ]);
+        self::assertTrue($sut->isUserAuthChangeAllowed());
+
+        $sut = $this->getSut($this->getDefaultSettings(), [
+            (new Configuration())->setName('user.auth_change')->setValue(true),
+            (new Configuration())->setName('ldap.activate')->setValue(true),
+        ]);
+        self::assertTrue($sut->isUserAuthChangeAllowed());
+
+        $sut = $this->getSut($this->getDefaultSettings(), [
+            (new Configuration())->setName('user.auth_change')->setValue(false),
+            (new Configuration())->setName('ldap.activate')->setValue(true),
+        ]);
+        self::assertFalse($sut->isUserAuthChangeAllowed());
+    }
+
     public function testUnknownConfigs(): void
     {
         $sut = $this->getSut($this->getDefaultSettings(), [
