@@ -2146,6 +2146,10 @@
         <source>help.project_locked_until</source>
         <target state="translated">Tijden tot en met deze datum kunnen niet aangemaakt of veranderd worden.</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info" approved="no">
+        <source>contact_info</source>
+        <target state="translated">Contact</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

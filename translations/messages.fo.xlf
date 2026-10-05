@@ -1038,6 +1038,10 @@
         <source>invoice.paid</source>
         <target state="translated">Goldið</target>
       </trans-unit>
+      <trans-unit id="ZwBNTZ." resname="contact_info">
+        <source>contact_info</source>
+        <target state="translated">Samband</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
