@@ -33,11 +33,16 @@ class TwoFactorConditionTest extends TestCase
         return $user;
     }
 
-    private function createContext(User $user, string $uri = '/en/login_check'): AuthenticationContextInterface
+    private function createContext(User $user, string $uri = '/en/login_check', ?string $route = null): AuthenticationContextInterface
     {
+        $request = Request::create($uri, 'POST');
+        if ($route !== null) {
+            $request->attributes->set('_route', $route);
+        }
+
         $context = $this->createMock(AuthenticationContextInterface::class);
         $context->method('getUser')->willReturn($user);
-        $context->method('getRequest')->willReturn(Request::create($uri, 'POST'));
+        $context->method('getRequest')->willReturn($request);
 
         return $context;
     }
@@ -114,6 +119,18 @@ class TwoFactorConditionTest extends TestCase
         $user = $this->createUser('john');
         $sut = $this->createSut(new UsernamePasswordToken($user, 'secured_area', ['ROLE_USER']));
         $context = $this->createContext($user);
+
+        self::assertTrue($sut->shouldPerformTwoFactorAuthentication($context));
+    }
+
+    /**
+     * A login link (e.g. from the password reset email) opened in a remembered session must not skip the 2FA.
+     */
+    public function testRememberedUserCannotSkipTwoFactorWithLoginLink(): void
+    {
+        $user = $this->createUser('john');
+        $sut = $this->createSut(new RememberMeToken($user, 'secured_area', 'secret'));
+        $context = $this->createContext($user, '/en/auth/link/check', 'link_login_check');
 
         self::assertTrue($sut->shouldPerformTwoFactorAuthentication($context));
     }
