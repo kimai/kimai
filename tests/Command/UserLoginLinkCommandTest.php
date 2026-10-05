@@ -16,6 +16,7 @@ use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 
 #[CoversClass(UserLoginLinkCommand::class)]
@@ -33,8 +34,9 @@ class UserLoginLinkCommandTest extends KernelTestCase
         $loginLinkHandler = $this->createMock(LoginLinkHandlerInterface::class);
         $userRepository = $this->createMock(UserRepository::class);
         $requestStack = $this->createMock(RequestStack::class);
+        $urlGenerator = $this->createMock(UrlGeneratorInterface::class);
 
-        $this->application->add(new UserLoginLinkCommand($loginLinkHandler, $userRepository, $requestStack));
+        $this->application->add(new UserLoginLinkCommand($loginLinkHandler, $userRepository, $requestStack, $urlGenerator));
     }
 
     public function testCommandName(): void
@@ -43,5 +45,15 @@ class UserLoginLinkCommandTest extends KernelTestCase
 
         $command = $application->find('kimai:user:login-link');
         self::assertInstanceOf(UserLoginLinkCommand::class, $command);
+    }
+
+    public function testAbsoluteOptionIsDisabledByDefault(): void
+    {
+        $command = $this->application->find('kimai:user:login-link');
+        $definition = $command->getDefinition();
+
+        self::assertTrue($definition->hasOption('absolute'));
+        self::assertFalse($definition->getOption('absolute')->acceptValue());
+        self::assertFalse($definition->getOption('absolute')->getDefault());
     }
 }
