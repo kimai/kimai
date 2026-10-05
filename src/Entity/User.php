@@ -722,7 +722,8 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function resetSecuritySignature(): void
     {
         // UTC without microseconds: same value before and after persisting, which is required for a stable signature
-        $this->signatureDate = new \DateTimeImmutable('@' . time());
+        $timestamp = max(time(), ($this->signatureDate?->getTimestamp() ?? 0) + 1);
+        $this->signatureDate = new \DateTimeImmutable('@' . $timestamp);
     }
 
     /**
