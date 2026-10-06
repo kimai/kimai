@@ -109,8 +109,6 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
             dropdownParent: 'body',
         };
 
-        let render = {};
-
         // onOptionAdd is a top-level TomSelect callback, NOT a render function
         options.onOptionAdd = (value) => {
             node.dispatchEvent(new CustomEvent('create', {detail: {'value': value}}));
