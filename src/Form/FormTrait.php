@@ -114,8 +114,10 @@ trait FormTrait
 
                 // Preserve api_data option when recreating activity field
                 $optionsForAdd = $options;
+                // Only set api_data if it was explicitly provided in options
+                // Otherwise let ActivityType use its default (which enables inline creation when allow_create is true)
                 if (!isset($optionsForAdd['api_data'])) {
-                    $optionsForAdd['api_data'] = [];
+                    unset($optionsForAdd['api_data']);
                 }
 
                 $event->getForm()->add('activity', ActivityType::class, $optionsForAdd);

@@ -21,6 +21,17 @@ parameters:
     doctrine:
         objectManagerLoader: %rootDir%/../../../tests/phpstan-doctrine.php
     ignoreErrors:
+        # Ignore PHPUnit mock return type issues
+        - identifier: method.unresolvableReturnType
+
+        # Ignore UrlGeneratorInterface mock issues in ActivityTypeTest
+        - message: "#^Call to an undefined method Symfony\\\\Component\\\\Routing\\\\Generator\\\\UrlGeneratorInterface::expects\\(\\)\\.$#"
+          path: Form/Type/ActivityTypeTest.php
+
+        # Ignore FormType class-string issues in ActivityTypeTest
+        - message: "#^Parameter .* of method Symfony\\\\Component\\\\Form\\\\FormFactoryInterface::create\\(\\) expects.*ActivityType given\\.$#"
+          path: Form/Type/ActivityTypeTest.php
+
         - identifier: missingType.iterableValue
         - message: "#^Call to static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertInstanceOf\\(\\) with '(.*)' and (.*) will always evaluate to true\\.$#"
         - message: "#^PHPDoc tag @var with type App\\\\(.*) is not subtype of native type PHPUnit\\\\Framework\\\\MockObject\\\\MockObject\\.$#"

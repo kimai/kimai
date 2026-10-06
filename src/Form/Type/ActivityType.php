@@ -20,14 +20,18 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Custom form field type to select an activity.
  */
 final class ActivityType extends AbstractType
 {
-    public function __construct(private readonly ActivityHelper $activityHelper, private readonly ProjectHelper $projectHelper)
-    {
+    public function __construct(
+        private readonly ActivityHelper $activityHelper,
+        private readonly ProjectHelper $projectHelper,
+        private readonly UrlGeneratorInterface $router
+    ) {
     }
 
     public function getChoiceLabel(Activity $activity): string
@@ -111,6 +115,13 @@ final class ActivityType extends AbstractType
         $view->vars['attr'] = array_merge($view->vars['attr'], [
             'data-option-pattern' => $this->activityHelper->getChoicePattern(),
         ]);
+
+        if ($options['allow_create'] && isset($options['api_data']) && \is_array($options['api_data'])) {
+            $routeName = $options['api_data']['create'] ?? null;
+            if (\is_string($routeName)) {
+                $view->vars['attr']['data-create'] = $this->router->generate($routeName, [], UrlGeneratorInterface::ABSOLUTE_PATH);
+            }
+        }
     }
 
     public function getParent(): string

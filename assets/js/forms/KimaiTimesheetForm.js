@@ -92,6 +92,18 @@ export default class KimaiTimesheetForm extends KimaiFormPlugin {
                     ts.addItem(realId, true); // silent=true to avoid re-firing create
                 }
                 this._project.dispatchEvent(new Event('change'));
+            }, (error) => {
+                // API call failed - remove the temporary option to prevent validation errors
+                const ts = this._activity.tomselect;
+                if (ts) {
+                    // Remove the temporary option and item
+                    ts.removeOption(tempName);
+                    ts.removeItem(tempName);
+                    // Clear the input field
+                    ts.clear();
+                }
+                // Optionally: show an error message to the user
+                console.error('Failed to create activity:', error);
             });
         };
         this._activity.addEventListener('create', this._activityListener);
