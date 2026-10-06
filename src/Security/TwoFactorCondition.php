@@ -27,6 +27,11 @@ final class TwoFactorCondition implements TwoFactorConditionInterface
             return false;
         }
 
+        // a login link (e.g. from the password reset email) always requires the TOTP code
+        if ($context->getRequest()->attributes->get('_route') === 'link_login_check') {
+            return true;
+        }
+
         // this is called BEFORE the new token is stored, so the token storage still holds
         // the token of the previous request (e.g. a remember-me or a fully authenticated session)
         $current = $this->tokenStorage->getToken();

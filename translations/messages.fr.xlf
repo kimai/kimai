@@ -2146,6 +2146,14 @@
         <source>help.project_locked_until</source>
         <target state="translated">Les temps jusqu'à et y compris cette date ne peuvent ni être créés ni modifiés.</target>
       </trans-unit>
+      <trans-unit id="LHDhK3o" resname="key">
+        <source>key</source>
+        <target>Nom intern</target>
+      </trans-unit>
+      <trans-unit id="Q3gmLM6" resname="key_help">
+        <source>key_help</source>
+        <target>Cette valeur sera utilisée en interne, par exemple dans les modèles de facture. Les charactères autorisés sont : lettres minuscules (a-z), les chiffres (0-9) et le tiret bas (_).</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

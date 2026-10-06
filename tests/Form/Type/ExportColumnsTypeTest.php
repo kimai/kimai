@@ -15,6 +15,7 @@ use App\Tests\Mocks\SystemConfigurationFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Form\ChoiceList\View\ChoiceGroupView;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -70,5 +71,37 @@ class ExportColumnsTypeTest extends TypeTestCase
 
         self::assertTrue($form->isSynchronized());
         self::assertEquals($expected, $model);
+    }
+
+    public function testViewKeepsOrderOfSelectedColumns(): void
+    {
+        $columns = ['project.name', 'user.name', 'duration', 'hourly_rate', 'rate'];
+        $model = new TypeTestModel(['columns' => $columns]);
+
+        $form = $this->factory->createBuilder(FormType::class, $model);
+        $form->add('columns', ExportColumnsType::class);
+        $view = $form->getForm()->createView();
+
+        self::assertArrayHasKey('data-items', $view['columns']->vars['attr']);
+        self::assertEquals($columns, json_decode($view['columns']->vars['attr']['data-items'], true));
+
+        // the choice list itself keeps its groups and order
+        $groups = [];
+        foreach ($view['columns']->vars['choices'] as $label => $choice) {
+            self::assertInstanceOf(ChoiceGroupView::class, $choice);
+            $groups[] = $label;
+        }
+        self::assertEquals(['timesheet', 'user', 'customer', 'project', 'activity'], $groups);
+    }
+
+    public function testViewWithoutSelectedColumns(): void
+    {
+        $model = new TypeTestModel(['columns' => []]);
+
+        $form = $this->factory->createBuilder(FormType::class, $model);
+        $form->add('columns', ExportColumnsType::class);
+        $view = $form->getForm()->createView();
+
+        self::assertArrayNotHasKey('data-items', $view['columns']->vars['attr']);
     }
 }

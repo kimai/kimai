@@ -64,14 +64,41 @@ export default class KimaiDurationForm extends KimaiFormPlugin {
     }
 
     /**
-     * Negative durations are not allowed: blocks typing, pasting and dropping a minus character.
+     * Negative durations are only allowed, if the field explicitly enables them (see DurationType option "allow_negative").
+     *
+     * @param {HTMLInputElement} field
+     * @return {boolean}
+     * @private
+     */
+    _allowsNegative(field)
+    {
+        return field.dataset['durationNegative'] === '1';
+    }
+
+    /**
+     * @param {int} seconds
+     * @return {string}
+     * @private
+     */
+    _formatSeconds(seconds)
+    {
+        const sign = seconds < 0 ? '-' : '';
+        seconds = Math.abs(seconds);
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds - (hours * 3600)) / 60);
+
+        return sign + hours + ':' + minutes.toString().padStart(2, '0');
+    }
+
+    /**
+     * If negative durations are not allowed: blocks typing, pasting and dropping a minus character.
      *
      * @param {InputEvent} event
      * @private
      */
     _preventNegativeDuration(event)
     {
-        if (!this._isDurationField(event.target)) {
+        if (!this._isDurationField(event.target) || this._allowsNegative(event.target)) {
             return;
         }
 
@@ -96,7 +123,7 @@ export default class KimaiDurationForm extends KimaiFormPlugin {
     /**
      * Rewrites the value of the given field into the H:MM format, using the fields parsing mode.
      *
-     * Negative values are not allowed and will be removed.
+     * Negative values will be removed, unless the field allows them.
      * Invalid values are kept and marked, so the user can fix them: the "pattern" attribute prevents form submission.
      *
      * @param {HTMLInputElement} field
@@ -122,14 +149,12 @@ export default class KimaiDurationForm extends KimaiFormPlugin {
         field.classList.remove('is-invalid');
 
         const seconds = this.getDateUtils().getSecondsFromDurationString(field.value, field.dataset['durationMode']);
-        if (seconds < 0) {
+        if (seconds < 0 && !this._allowsNegative(field)) {
             field.value = '';
             return;
         }
 
-        const hours = Math.floor(seconds / 3600);
-        const minutes = Math.floor((seconds - (hours * 3600)) / 60);
-        const formatted = hours + ':' + minutes.toString().padStart(2, '0');
+        const formatted = this._formatSeconds(seconds);
 
         // changing the value moves the cursor to the end, so only write if required
         if (formatted !== field.value) {
@@ -170,7 +195,7 @@ export default class KimaiDurationForm extends KimaiFormPlugin {
      * - Write the new duration back to the field
      * - If the field is empty or invalid it uses 00:00 as start-time
      * - Duration cannot exceed maxtime (which is given in minutes)
-     * - Duration cannot drop below 00:00
+     * - Duration cannot drop below 00:00, unless the field allows negative values (then it cannot drop below -maxtime)
      * - Read the position of the cursor and decide whether to increase minutes or hours: if the cursor is in the hour section (before the colon) change hours, if the cursor is in the minute section (after the colon) change minutes
      * - It reads the pressed key from the given KeyboardEvent and changes the duration accordingly to the rules below
      *
@@ -192,65 +217,51 @@ export default class KimaiDurationForm extends KimaiFormPlugin {
     {
         // Parse current value or default to 00:00
         let value = timeField.value || '00:00';
-        let [hours, minutes] = value.split(':').map(Number);
+        const sign = value.startsWith('-') ? -1 : 1;
+        let [hours, minutes] = value.replace(/^-/, '').split(':').map(Number);
         if (isNaN(hours)) { hours = 0; }
         if (isNaN(minutes)) { minutes = 0; }
+        // all calculations are done in minutes
+        let total = sign * (hours * 60 + minutes);
 
         // Cursor position: before or after colon
         const cursorPos = timeField.selectionStart || 0;
         const colonPos = value.indexOf(':');
         const inHour = cursorPos <= colonPos;
 
-        // Helper to clamp values
-        const clamp = (h, m) => {
-            let total = h * 60 + m;
-            if (total < 0) { total = 0; }
-            if (total > maxTime) { total = maxTime; }
-            h = Math.floor(total / 60);
-            m = total % 60;
-            return [h, m];
-        };
-
         switch (event.key) {
             case 'ArrowUp':
-                if (inHour) {
-                    [hours, minutes] = clamp(hours + 1, minutes);
-                } else {
-                    [hours, minutes] = clamp(hours, minutes + 5);
-                }
+                total += inHour ? 60 : 5;
                 break;
             case 'ArrowDown':
-                if (inHour) {
-                    [hours, minutes] = clamp(hours - 1, minutes);
-                } else {
-                    [hours, minutes] = clamp(hours, minutes - 5);
-                }
+                total -= inHour ? 60 : 5;
                 break;
             case 'PageUp':
-                [hours, minutes] = clamp(hours + 1, minutes);
+                total += 60;
                 event.preventDefault();
                 break;
             case 'PageDown':
-                [hours, minutes] = clamp(hours - 1, minutes);
+                total -= 60;
                 event.preventDefault();
                 break;
             case 'Home':
                 // TODO this should use the configured working time for today
-                hours = 8;
-                minutes = 0;
+                total = 480;
                 event.preventDefault();
                 break;
             case 'End':
-                hours = 0;
-                minutes = 0;
+                total = 0;
                 event.preventDefault();
                 break;
             default:
                 return; // Ignore other keys
         }
 
+        const minTime = this._allowsNegative(timeField) ? -maxTime : 0;
+        total = Math.min(Math.max(total, minTime), maxTime);
+
         // Format and set value
-        timeField.value = `${hours}:${minutes.toString().padStart(2, '0')}`;
+        timeField.value = this._formatSeconds(total * 60);
         // trigger update of linked fields (e.g. end time in timesheet form or totals in quick-entry)
         timeField.dispatchEvent(new Event('change', {bubbles: true}));
         // Move cursor to original position if possible
