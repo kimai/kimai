@@ -15,6 +15,8 @@ use App\Tests\Mocks\SystemConfigurationFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Form\ChoiceList\View\ChoiceGroupView;
+use Symfony\Component\Form\ChoiceList\View\ChoiceView;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -70,5 +72,28 @@ class ExportColumnsTypeTest extends TypeTestCase
 
         self::assertTrue($form->isSynchronized());
         self::assertEquals($expected, $model);
+    }
+
+    public function testViewKeepsOrderOfSelectedColumns(): void
+    {
+        $columns = ['project.name', 'user.name', 'duration', 'hourly_rate', 'rate'];
+        $model = new TypeTestModel(['columns' => $columns]);
+
+        $form = $this->factory->createBuilder(FormType::class, $model);
+        $form->add('columns', ExportColumnsType::class);
+        $view = $form->getForm()->createView();
+
+        $selected = [];
+        foreach ($view['columns']->vars['choices'] as $choice) {
+            $choices = $choice instanceof ChoiceGroupView ? $choice->choices : [$choice];
+            foreach ($choices as $item) {
+                self::assertInstanceOf(ChoiceView::class, $item);
+                if (\in_array($item->value, $columns, true)) {
+                    $selected[] = $item->value;
+                }
+            }
+        }
+
+        self::assertEquals($columns, $selected);
     }
 }
