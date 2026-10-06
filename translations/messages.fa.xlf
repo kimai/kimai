@@ -2146,6 +2146,10 @@
         <source>tax.type.exempt</source>
         <target state="translated">معاف</target>
       </trans-unit>
+      <trans-unit id="DI8vH1J" resname="copy_to_clipboard">
+        <source>copy_to_clipboard</source>
+        <target state="translated">کپی در کلیبورد</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

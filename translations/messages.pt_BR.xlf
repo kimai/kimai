@@ -2146,6 +2146,10 @@
         <source>help.project_locked_until</source>
         <target state="translated">Registros de tempo até e incluindo esta data não podem ser criados nem alterados.</target>
       </trans-unit>
+      <trans-unit id="DI8vH1J" resname="copy_to_clipboard">
+        <source>copy_to_clipboard</source>
+        <target state="translated">Copiar para a área de transferência</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
