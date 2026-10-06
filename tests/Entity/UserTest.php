@@ -240,6 +240,29 @@ class UserTest extends TestCase
         self::assertTrue($user->isInternalUser());
     }
 
+    public function testSwitchToInternalAuth(): void
+    {
+        $user = new User();
+        $user->setPassword('foo-bar');
+        $user->switchToInternalAuth();
+        self::assertTrue($user->isInternalUser());
+        self::assertEquals('foo-bar', $user->getPassword());
+
+        $user->setAuth(User::AUTH_LDAP);
+        $user->setPreferenceValue('ldap_dn', 'uid=foo,ou=users,dc=kimai,dc=org');
+        $user->switchToInternalAuth();
+        self::assertTrue($user->isInternalUser());
+        self::assertEquals(User::AUTH_INTERNAL, $user->getAuth());
+        self::assertEquals('', $user->getPassword());
+        self::assertNull($user->getPreferenceValue('ldap_dn'));
+
+        $user->setPassword('foo-bar');
+        $user->setAuth(User::AUTH_SAML);
+        $user->switchToInternalAuth();
+        self::assertTrue($user->isInternalUser());
+        self::assertEquals('', $user->getPassword());
+    }
+
     public function testDatetime(): void
     {
         $date = new \DateTime('+1 day');

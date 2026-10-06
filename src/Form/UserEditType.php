@@ -19,6 +19,7 @@ use App\Form\Type\UserLocaleType;
 use App\Form\Type\UserType;
 use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -117,6 +118,24 @@ class UserEditType extends AbstractType
                 'required' => false,
             ]);
         }
+
+        // allows super-admins to switch external accounts back to the internal authentication
+        if ($options['include_auth'] && $user instanceof User && !$user->isInternalUser() && $this->configuration->isUserAuthChangeAllowed()) {
+            $currentAuth = (string) $user->getAuth();
+            $builder->add('auth', ChoiceType::class, [
+                'label' => 'authentication',
+                'help' => 'authentication.help',
+                'choices' => [
+                    strtoupper($currentAuth) => $currentAuth,
+                    'authentication.internal' => User::AUTH_INTERNAL,
+                ],
+                'setter' => static function (User $user, ?string $auth): void {
+                    if ($auth === User::AUTH_INTERNAL) {
+                        $user->switchToInternalAuth();
+                    }
+                },
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -132,6 +151,7 @@ class UserEditType extends AbstractType
             'include_supervisor' => true,
             'include_username' => false,
             'include_password_reset' => false,
+            'include_auth' => false,
         ]);
     }
 }

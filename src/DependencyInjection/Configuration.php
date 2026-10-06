@@ -580,6 +580,9 @@ final class Configuration implements ConfigurationInterface
                 ->integerNode('password_reset_token_ttl')
                     ->defaultValue(86400)
                 ->end()
+                ->booleanNode('auth_change')
+                    ->defaultFalse()
+                ->end()
             ->end()
         ;
 

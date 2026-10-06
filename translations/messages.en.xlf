@@ -854,6 +854,18 @@
         <source>system_account.help</source>
         <target>Will be hidden in reports and dropdowns</target>
       </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target>Authentication</target>
+      </trans-unit>
+      <trans-unit id="LQXTGjm" resname="authentication.help">
+        <source>authentication.help</source>
+        <target>Switching to "Internal" removes the password. Afterward set a new password or use "Forgot password".</target>
+      </trans-unit>
+      <trans-unit id="NvQBTxG" resname="authentication.internal">
+        <source>authentication.internal</source>
+        <target>Internal</target>
+      </trans-unit>
       <trans-unit id="Zs9VE7N" resname="roles">
         <source>roles</source>
         <target>Role</target>

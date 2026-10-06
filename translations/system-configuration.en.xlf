@@ -278,6 +278,14 @@
         <source>user_auth_password_reset_token_ttl</source>
         <target>Forgotten password - seconds before a reset link expires</target>
       </trans-unit>
+      <trans-unit id="iobaZJS" resname="user_auth_change">
+        <source>user_auth_change</source>
+        <target>Change authentication of users with external login</target>
+      </trans-unit>
+      <trans-unit id="iMmgno5" resname="user_auth_change.help">
+        <source>user_auth_change.help</source>
+        <target>Allows Super-Admins to switch users with external logins back to the internal login in the user profile.</target>
+      </trans-unit>
       <trans-unit id="ihORk9W" resname="ldap_activate">
         <source>ldap_activate</source>
         <target>LDAP login</target>

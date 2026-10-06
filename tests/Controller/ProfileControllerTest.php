@@ -242,6 +242,106 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         self::assertFalse($user->isEnabled());
     }
 
+    private function prepareLdapUser(string $username): void
+    {
+        $user = $this->loadUserFromDatabase($username);
+        $user->setAuth(User::AUTH_LDAP);
+        $user->setPreferenceValue('ldap_dn', 'uid=' . $username . ',ou=users,dc=kimai,dc=org');
+        $em = $this->getEntityManager();
+        $em->persist($user);
+        $em->flush();
+    }
+
+    public function testEditActionHidesAuthWithoutSystemConfiguration(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->prepareLdapUser(UserFixtures::USERNAME_USER);
+
+        // the setting itself is ignored as long as neither LDAP nor SAML is active
+        $this->setSystemConfiguration('user.auth_change', true);
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/edit');
+        self::assertCount(0, $client->getCrawler()->filter('form[name=user_edit] #user_edit_auth'));
+
+        $this->setSystemConfiguration('user.auth_change', false);
+        $this->setSystemConfiguration('ldap.activate', true);
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/edit');
+        self::assertCount(0, $client->getCrawler()->filter('form[name=user_edit] #user_edit_auth'));
+    }
+
+    public function testEditActionHidesAuthForAdmin(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->grantPermissionToAdmin('edit_other_profile');
+        $this->prepareLdapUser(UserFixtures::USERNAME_USER);
+        $this->setSystemConfiguration('ldap.activate', true);
+        $this->setSystemConfiguration('user.auth_change', true);
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/edit');
+        self::assertTrue($client->getResponse()->isSuccessful());
+        self::assertCount(0, $client->getCrawler()->filter('form[name=user_edit] #user_edit_auth'));
+    }
+
+    public function testEditActionHidesAuthForInternalUser(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->setSystemConfiguration('saml.activate', true);
+        $this->setSystemConfiguration('user.auth_change', true);
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/edit');
+        self::assertTrue($client->getResponse()->isSuccessful());
+        self::assertCount(0, $client->getCrawler()->filter('form[name=user_edit] #user_edit_auth'));
+    }
+
+    public function testEditActionSwitchesLdapUserToInternal(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->prepareLdapUser(UserFixtures::USERNAME_USER);
+        $this->setSystemConfiguration('ldap.activate', true);
+        $this->setSystemConfiguration('user.auth_change', true);
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/edit');
+        $node = $client->getCrawler()->filter('form[name=user_edit]');
+        self::assertCount(1, $node->filter('#user_edit_auth'));
+        // only the current authentication and the internal one can be selected
+        self::assertCount(2, $node->filter('#user_edit_auth option'));
+
+        $form = $node->form();
+        $client->submit($form, [
+            'user_edit' => [
+                'auth' => User::AUTH_INTERNAL,
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/edit'));
+
+        $this->getEntityManager()->clear();
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        self::assertTrue($user->isInternalUser());
+        self::assertEquals('', $user->getPassword());
+        self::assertNull($user->getPreferenceValue('ldap_dn'));
+    }
+
+    public function testEditActionCannotSwitchToOtherAuth(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->prepareLdapUser(UserFixtures::USERNAME_USER);
+        $this->setSystemConfiguration('ldap.activate', true);
+        $this->setSystemConfiguration('user.auth_change', true);
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/edit');
+        $form = $client->getCrawler()->filter('form[name=user_edit]')->form();
+        $values = $form->getPhpValues();
+        $values['user_edit']['auth'] = User::AUTH_SAML;
+        $client->request($form->getMethod(), $form->getUri(), $values);
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $this->getEntityManager()->clear();
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        self::assertTrue($user->isLdapUser());
+        self::assertNotEmpty($user->getPassword());
+    }
+
     public function testPasswordAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
@@ -468,8 +568,16 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
      */
     private function grantRolesOtherProfileToAdmin(): void
     {
+        $this->grantPermissionToAdmin('roles_other_profile');
+    }
+
+    /**
+     * Grants ROLE_ADMIN a (non-default) permission and busts the cache.
+     */
+    private function grantPermissionToAdmin(string $permissionName): void
+    {
         $role = (new Role())->setName(User::ROLE_ADMIN);
-        $permission = (new RolePermission())->setRole($role)->setPermission('roles_other_profile')->setAllowed(true);
+        $permission = (new RolePermission())->setRole($role)->setPermission($permissionName)->setAllowed(true);
         $em = $this->getEntityManager();
         $em->persist($role);
         $em->flush();
