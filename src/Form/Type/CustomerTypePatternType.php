@@ -12,7 +12,6 @@ namespace App\Form\Type;
 use App\Form\DataTransformer\StringToArrayTransformer;
 use App\Form\Helper\CustomerHelper;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\ReversedTransformer;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -41,7 +40,6 @@ final class CustomerTypePatternType extends AbstractType
 
         $resolver->setDefaults([
             'label' => 'choice_pattern',
-            'multiple' => true,
             'choices' => [
                 $number => CustomerHelper::PATTERN_NUMBER,
                 $name => CustomerHelper::PATTERN_NAME,
@@ -53,6 +51,6 @@ final class CustomerTypePatternType extends AbstractType
 
     public function getParent(): string
     {
-        return ChoiceType::class;
+        return ChoiceOrderedType::class;
     }
 }
