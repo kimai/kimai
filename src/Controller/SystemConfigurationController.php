@@ -281,6 +281,11 @@ final class SystemConfigurationController extends AbstractController
                 (new Configuration('user.theme'))
                     ->setLabel('skin')
                     ->setType(SkinType::class),
+                (new Configuration('user.auth_change'))
+                    ->setLabel('user_auth_change')
+                    ->setTranslationDomain('system-configuration')
+                    ->setOptions(['help' => 'user_auth_change.help'])
+                    ->setType(YesNoType::class),
             ]);
 
         $allowRegistration = $this->systemConfiguration->find('features.user_registration');
@@ -290,6 +295,10 @@ final class SystemConfigurationController extends AbstractController
 
         if (!$this->systemConfiguration->isSamlActive()) {
             $authentication->getConfigurationByName('user.login')?->setEnabled(false);
+        }
+
+        if (!$this->systemConfiguration->isExternalLoginActive()) {
+            $authentication->getConfigurationByName('user.auth_change')?->setEnabled(false);
         }
 
         if (!$this->systemConfiguration->isPasswordResetActive()) {

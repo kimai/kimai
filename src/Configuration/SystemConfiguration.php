@@ -263,11 +263,16 @@ final class SystemConfiguration
      */
     public function isUserAuthChangeAllowed(): bool
     {
-        if (!$this->isLdapActive() && !$this->isSamlActive()) {
+        if (!$this->isExternalLoginActive()) {
             return false;
         }
 
         return (bool) $this->find('user.auth_change');
+    }
+
+    public function isExternalLoginActive(): bool
+    {
+        return $this->isLdapActive() || $this->isSamlActive();
     }
 
     // ========== Calendar configurations ==========
