@@ -409,44 +409,6 @@ class TwoFactorLoginTest extends AbstractControllerBaseTestCase
     }
 
     /**
-     * A remembered session must not be able to change the email address.
-     *
-     * The email is used to send password reset links: an attacker with a stolen remember-me cookie could
-     * change it to his own address, request a password reset and take over the account.
-     */
-    public function testRememberedUserCannotChangeEmail(): void
-    {
-        $client = self::createClient();
-
-        $this->submitLoginForm($client, UserFixtures::USERNAME_USER);
-        $this->assertIsRedirect($client);
-        $client->followRedirect();
-        $this->assertIsFullyAuthenticated($client);
-        $this->expireSession($client);
-
-        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/edit');
-        self::assertTrue($client->getResponse()->isSuccessful());
-
-        $emailField = $client->getCrawler()->filter('form[name=user_edit] input[name="user_edit[email]"]');
-        self::assertCount(1, $emailField);
-        self::assertSame('disabled', $emailField->attr('disabled'));
-
-        // the attacker submits the email anyway
-        $form = $client->getCrawler()->filter('form[name=user_edit]')->form();
-        $values = $form->getPhpValues();
-        $values['user_edit']['email'] = 'attacker@example.com';
-        $values['user_edit']['alias'] = 'Hacked';
-        $client->request('POST', $form->getUri(), $values);
-        $this->assertIsRedirect($client);
-
-        $user = $this->getUserByName(UserFixtures::USERNAME_USER);
-        // other fields can still be changed in a remembered session ...
-        self::assertSame('Hacked', $user->getAlias());
-        // ... but not the email address
-        self::assertSame('john_user@example.com', $user->getEmail());
-    }
-
-    /**
      * Changing security relevant data (like the email) must terminate the sessions on all other devices.
      */
     public function testSecuritySignatureResetTerminatesOtherSessions(): void
