@@ -23,22 +23,11 @@ use App\Repository\Query\ProjectQuery;
 use App\Repository\Query\TimesheetQuery;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class ExportColumnsType extends AbstractType
 {
-    /**
-     * @var array<int, string>
-     */
-    private array $ordered = [];
-
     public function __construct(
         private readonly EventDispatcherInterface $dispatcher,
         private readonly TranslatorInterface $translator,
@@ -137,48 +126,7 @@ final class ExportColumnsType extends AbstractType
         $resolver->setDefaults([
             'choices' => $columns,
             'label' => 'modal.columns.label',
-            'multiple' => true,
-            'order' => true,
         ]);
-    }
-
-    /**
-     * @param array<string, mixed> $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
-        $builder->addEventListener(
-            FormEvents::PRE_SUBMIT,
-            function (FormEvent $event): void {
-                $data = $event->getData();
-                if (\is_array($data)) {
-                    $this->ordered = $data; // @phpstan-ignore assign.propertyType
-                }
-            }
-        );
-        $builder->addEventListener(
-            FormEvents::SUBMIT,
-            function (FormEvent $event): void {
-                $event->setData($this->ordered);
-            }
-        );
-    }
-
-    /**
-     * The select widget reads the selected options in the order they appear in the HTML,
-     * which is the order of the choice list. Pass the saved column order to the widget,
-     * otherwise editing a template would show (and save) the columns in the wrong order.
-     *
-     * @param array<string, mixed> $options
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options): void
-    {
-        $values = $view->vars['value'];
-        if (!\is_array($values) || \count($values) === 0) {
-            return;
-        }
-
-        $view->vars['attr']['data-items'] = json_encode(array_values($values));
     }
 
     /**
@@ -193,6 +141,6 @@ final class ExportColumnsType extends AbstractType
 
     public function getParent(): string
     {
-        return ChoiceType::class;
+        return ChoiceOrderedType::class;
     }
 }
