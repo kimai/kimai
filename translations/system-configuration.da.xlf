@@ -258,10 +258,6 @@
         <source>calendar.title_pattern</source>
         <target state="translated">Visning af titlet på kalender indtastninger</target>
       </trans-unit>
-      <trans-unit id="12sQGSo" resname="activity.allow_inline_create" xml:space="preserve">
-        <source>activity.allow_inline_create</source>
-        <target state="translated">Tillad oprettelse af aktiviteter in tidsregistrerings formularen</target>
-      </trans-unit>
       <trans-unit id="pBxkAF_" resname="copy_teams_on_create" approved="no" xml:space="preserve">
         <source>copy_teams_on_create</source>
         <target state="translated">Brug teamet fra den bruger der er logget ind når der oprettes nye rækker</target>

@@ -290,10 +290,6 @@
         <source>customer.number_format</source>
         <target state="final">תצורת מספר לקוח</target>
       </trans-unit>
-      <trans-unit id="12sQGSo" resname="activity.allow_inline_create">
-        <source>activity.allow_inline_create</source>
-        <target state="translated">לאפשר יצירת פעילויות בצורה של מעקב אחר שעות</target>
-      </trans-unit>
       <trans-unit id="1cAQPNS" resname="customer.allow_duplicate_number" xml:space="preserve" approved="yes">
         <source>customer.allow_duplicate_number</source>
         <target state="final">לאפשר מספר חשבון כפול</target>
