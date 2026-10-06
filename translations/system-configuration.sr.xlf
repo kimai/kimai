@@ -256,7 +256,7 @@
       </trans-unit>
       <trans-unit id="udkGKEU" resname="authentication" xml:space="preserve">
         <source>authentication</source>
-        <target state="translated">Аутентификација</target>
+        <target state="translated">Аутентикација</target>
       </trans-unit>
       <trans-unit id="BGHQ8YO" resname="user_auth_login" xml:space="preserve">
         <source>user_auth_login</source>
@@ -317,6 +317,14 @@
       <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="no" xml:space="preserve">
         <source>invoice.rounding_mode</source>
         <target state="translated">Режим заокруживања</target>
+      </trans-unit>
+      <trans-unit id="iobaZJS" resname="user_auth_change">
+        <source>user_auth_change</source>
+        <target state="translated">Промемите аутентикацију корисника са вањским пријављивањем</target>
+      </trans-unit>
+      <trans-unit id="iMmgno5" resname="user_auth_change.help">
+        <source>user_auth_change.help</source>
+        <target state="translated">Омогућава супер администраторима да пребацују кориснике са вањског пријављивања назад на интерно пријављивање у корисничком профилу.</target>
       </trans-unit>
     </body>
   </file>

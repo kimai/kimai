@@ -2146,6 +2146,74 @@
         <source>help.project_locked_until</source>
         <target state="translated">Времена закључно са овим датумом не могу бити ни креирана ни измењена.</target>
       </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target state="translated">Аутентикација</target>
+      </trans-unit>
+      <trans-unit id="LQXTGjm" resname="authentication.help">
+        <source>authentication.help</source>
+        <target state="translated">Пребацивање на "Интерно" уклања лозинку. После тога поставите нову лозинку или кликните на "Заборавили сте лозинку".</target>
+      </trans-unit>
+      <trans-unit id="NvQBTxG" resname="authentication.internal">
+        <source>authentication.internal</source>
+        <target state="translated">Интерно</target>
+      </trans-unit>
+      <trans-unit id="DI8vH1J" resname="copy_to_clipboard">
+        <source>copy_to_clipboard</source>
+        <target state="translated">Копирај у привремену меморију</target>
+      </trans-unit>
+      <trans-unit id="LHDhK3o" resname="key">
+        <source>key</source>
+        <target state="translated">Интерни наслов</target>
+      </trans-unit>
+      <trans-unit id="Q3gmLM6" resname="key_help">
+        <source>key_help</source>
+        <target state="translated">Јединствено техничко име које се касније не може променити. Дозвољена су мала слова (a-z), цифре (0-9) и доње црте (_).</target>
+      </trans-unit>
+      <trans-unit id="netluHi" resname="approval">
+        <source>approval</source>
+        <target state="translated">Одобрење</target>
+      </trans-unit>
+      <trans-unit id="9SkAbbx" resname="approval_required">
+        <source>approval_required</source>
+        <target state="translated">Потребно је одобрење</target>
+      </trans-unit>
+      <trans-unit id="7dLJTuj" resname="fill_day">
+        <source>fill_day</source>
+        <target state="translated">Употпуњује очекивано време рада</target>
+      </trans-unit>
+      <trans-unit id="O6IGTDm" resname="Absence types">
+        <source>Absence types</source>
+        <target state="translated">Типови одсуства</target>
+      </trans-unit>
+      <trans-unit id="2mFc5.v" resname="absence_type.category.help">
+        <source>absence_type.category.help</source>
+        <target state="translated">Категорија описује како су заказивања израчуната (нпр. по основу годишњег одмора или радног времена) и где је тип приказан. Не може се променити касније.</target>
+      </trans-unit>
+      <trans-unit id="4YKqwfo" resname="absence_type.half_day">
+        <source>absence_type.half_day</source>
+        <target state="translated">Дозволи полудане</target>
+      </trans-unit>
+      <trans-unit id="ukwjp0C" resname="absence_type.date_range">
+        <source>absence_type.date_range</source>
+        <target state="translated">Дозволи заказивање више дана</target>
+      </trans-unit>
+      <trans-unit id="j6S5GDf" resname="absence_type.duration">
+        <source>absence_type.duration</source>
+        <target state="translated">Омогући унос трајања</target>
+      </trans-unit>
+      <trans-unit id="E7XVJxv" resname="absence_type.duration_required">
+        <source>absence_type.duration_required</source>
+        <target state="translated">Трајање је обавезно поље</target>
+      </trans-unit>
+      <trans-unit id="W_6BSlE" resname="absence_type.max_days">
+        <source>absence_type.max_days</source>
+        <target state="translated">Максималан број дана по заказивању</target>
+      </trans-unit>
+      <trans-unit id="_cQHZDu" resname="fill_day.help">
+        <source>fill_day.help</source>
+        <target state="translated">Уколико трајање није унето, користи се остатак очекиваног радног времена.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

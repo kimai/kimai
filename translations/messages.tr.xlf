@@ -2146,6 +2146,10 @@
         <source>help.project_locked_until</source>
         <target state="translated">Bu tarihe kadar olan zaman aralıkları oluşturulamaz ve değiştirilemez.</target>
       </trans-unit>
+      <trans-unit id="DI8vH1J" resname="copy_to_clipboard">
+        <source>copy_to_clipboard</source>
+        <target state="translated">Panoya kopyala</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

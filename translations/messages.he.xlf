@@ -2130,6 +2130,26 @@
         <source>reopen</source>
         <target state="final">פתיחה מחדש</target>
       </trans-unit>
+      <trans-unit id="DI8vH1J" resname="copy_to_clipboard">
+        <source>copy_to_clipboard</source>
+        <target state="translated">העתקה ללוח הגזירים</target>
+      </trans-unit>
+      <trans-unit id="k8F51oP" resname="project_locked_until">
+        <source>project_locked_until</source>
+        <target state="translated">הזמנים נעולים עד</target>
+      </trans-unit>
+      <trans-unit id="C_ZcSX2" resname="help.project_start">
+        <source>help.project_start</source>
+        <target state="translated">לא ניתן לתעד זמנים לפני התאריך הזה.</target>
+      </trans-unit>
+      <trans-unit id="9A.4S.i" resname="help.project_end" approved="yes">
+        <source>help.project_end</source>
+        <target state="final">אי אפשר לתעד זמנים אחרי התאריך הזה.</target>
+      </trans-unit>
+      <trans-unit id="ktmsI7g" resname="help.project_locked_until" approved="yes">
+        <source>help.project_locked_until</source>
+        <target state="final">זמנים עד וכולל התאריך הזה אי אפשר ליצור או לערוך.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
