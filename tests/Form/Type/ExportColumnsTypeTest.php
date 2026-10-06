@@ -16,7 +16,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\ChoiceList\View\ChoiceGroupView;
-use Symfony\Component\Form\ChoiceList\View\ChoiceView;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -83,17 +82,26 @@ class ExportColumnsTypeTest extends TypeTestCase
         $form->add('columns', ExportColumnsType::class);
         $view = $form->getForm()->createView();
 
-        $selected = [];
-        foreach ($view['columns']->vars['choices'] as $choice) {
-            $choices = $choice instanceof ChoiceGroupView ? $choice->choices : [$choice];
-            foreach ($choices as $item) {
-                self::assertInstanceOf(ChoiceView::class, $item);
-                if (\in_array($item->value, $columns, true)) {
-                    $selected[] = $item->value;
-                }
-            }
-        }
+        self::assertArrayHasKey('data-items', $view['columns']->vars['attr']);
+        self::assertEquals($columns, json_decode($view['columns']->vars['attr']['data-items'], true));
 
-        self::assertEquals($columns, $selected);
+        // the choice list itself keeps its groups and order
+        $groups = [];
+        foreach ($view['columns']->vars['choices'] as $label => $choice) {
+            self::assertInstanceOf(ChoiceGroupView::class, $choice);
+            $groups[] = $label;
+        }
+        self::assertEquals(['timesheet', 'user', 'customer', 'project', 'activity'], $groups);
+    }
+
+    public function testViewWithoutSelectedColumns(): void
+    {
+        $model = new TypeTestModel(['columns' => []]);
+
+        $form = $this->factory->createBuilder(FormType::class, $model);
+        $form->add('columns', ExportColumnsType::class);
+        $view = $form->getForm()->createView();
+
+        self::assertArrayNotHasKey('data-items', $view['columns']->vars['attr']);
     }
 }

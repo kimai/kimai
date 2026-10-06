@@ -23,8 +23,6 @@ use App\Repository\Query\ProjectQuery;
 use App\Repository\Query\TimesheetQuery;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\ChoiceList\View\ChoiceGroupView;
-use Symfony\Component\Form\ChoiceList\View\ChoiceView;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -140,8 +138,7 @@ final class ExportColumnsType extends AbstractType
             'choices' => $columns,
             'label' => 'modal.columns.label',
             'multiple' => true,
-            // does not work in the frontend
-            //'order' => true,
+            'order' => true,
         ]);
     }
 
@@ -168,9 +165,9 @@ final class ExportColumnsType extends AbstractType
     }
 
     /**
-     * The select widget shows the selected options in the order they appear in the HTML.
-     * Render the selected columns first and in their saved order, otherwise editing a
-     * template would show (and save) the columns in the order of the choice list.
+     * The select widget reads the selected options in the order they appear in the HTML,
+     * which is the order of the choice list. Pass the saved column order to the widget,
+     * otherwise editing a template would show (and save) the columns in the wrong order.
      *
      * @param array<string, mixed> $options
      */
@@ -181,33 +178,7 @@ final class ExportColumnsType extends AbstractType
             return;
         }
 
-        $selected = [];
-        $choices = [];
-        foreach ($view->vars['choices'] as $key => $choice) {
-            if ($choice instanceof ChoiceGroupView) {
-                $groupChoices = [];
-                foreach ($choice->choices as $groupKey => $groupChoice) {
-                    if ($groupChoice instanceof ChoiceView && \in_array($groupChoice->value, $values, true)) {
-                        $selected[] = $groupChoice;
-                    } else {
-                        $groupChoices[$groupKey] = $groupChoice;
-                    }
-                }
-                if (\count($groupChoices) > 0) {
-                    $choices[$key] = new ChoiceGroupView($choice->label, $groupChoices);
-                }
-            } elseif ($choice instanceof ChoiceView && \in_array($choice->value, $values, true)) {
-                $selected[] = $choice;
-            } else {
-                $choices[$key] = $choice;
-            }
-        }
-
-        usort($selected, function (ChoiceView $a, ChoiceView $b) use ($values): int {
-            return array_search($a->value, $values, true) <=> array_search($b->value, $values, true);
-        });
-
-        $view->vars['choices'] = array_merge($selected, $choices);
+        $view->vars['attr']['data-items'] = json_encode(array_values($values));
     }
 
     /**
