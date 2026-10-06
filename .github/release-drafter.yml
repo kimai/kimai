@@ -1,10 +1,5 @@
 name-template: '$RESOLVED_VERSION'
 tag-template: '$RESOLVED_VERSION'
-exclude-labels:
-    - 'duplicate'
-    - 'invalid'
-    - 'wontfix'
-    - 'infrastructure'
 exclude-contributors:
     - 'dependabot'
     - 'weblate'
@@ -12,30 +7,41 @@ exclude-contributors:
 change-template: '- $TITLE (#$NUMBER)'
 change-title-escapes: '\<*_&`#@'
 categories:
+    - type: "pre-exclude"
+      when:
+          labels:
+              - "duplicate"
+              - "invalid"
+              - "wontfix"
+              - "infrastructure"
     - title: "Features"
       semver-increment: minor
-      labels:
-          - "feature request"
-          - "enhancement"
-          - "translation"
-          - "release"
+      when:
+          labels:
+              - "feature request"
+              - "enhancement"
+              - "translation"
+              - "release"
     - title: "Bugfixes"
       semver-increment: minor
-      labels:
-          - "fix"
-          - "bugfix"
-          - "bug"
+      when:
+          labels:
+              - "fix"
+              - "bugfix"
+              - "bug"
     - title: "Maintenance"
       semver-increment: minor
-      labels:
-          - "maintenance"
-          - "infrastructure"
+      when:
+          labels:
+              - "maintenance"
+              - "infrastructure"
     - title: "🚨 Security"
       semver-increment: minor
-      labels:
-          - "security"
-version-resolver:
-    default: minor
+      when:
+          labels:
+              - "security"
+    - type: "version-resolver"
+      semver-increment: minor
 template: |
     **Compatible with PHP 8.2 to 8.5**
     
