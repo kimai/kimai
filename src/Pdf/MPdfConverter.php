@@ -9,6 +9,7 @@
 
 namespace App\Pdf;
 
+use App\Configuration\SystemConfiguration;
 use App\Constants;
 use App\Utils\FileHelper;
 use Mpdf\Config\ConfigVariables;
@@ -24,6 +25,7 @@ final class MPdfConverter implements HtmlToPdfConverter
         private readonly FileHelper $fileHelper,
         private readonly string $cacheDirectory,
         private readonly ?ClientInterface $httpClient = null,
+        private readonly ?SystemConfiguration $systemConfiguration = null,
     )
     {
     }
@@ -77,6 +79,11 @@ final class MPdfConverter implements HtmlToPdfConverter
 
         // large amount of data take time
         @ini_set('max_execution_time', '120');
+
+        $logoData = $this->getBrandingLogoData();
+        if ($logoData !== null) {
+            $mpdf->imageVars['branding_logo'] = $logoData;
+        }
 
         // reduce the size of content parts that are passed to MPDF, to prevent
         // https://mpdf.github.io/troubleshooting/known-issues.html#blank-pages-or-some-sections-missing
@@ -167,6 +174,36 @@ final class MPdfConverter implements HtmlToPdfConverter
         $fontDirectories[] = rtrim($this->fileHelper->getDataDirectory('fonts'), DIRECTORY_SEPARATOR);
 
         return $fontDirectories;
+    }
+
+    private function getBrandingLogoData(): ?string
+    {
+        if ($this->systemConfiguration === null) {
+            return null;
+        }
+
+        $logo = $this->systemConfiguration->find('theme.branding.logo');
+
+        if ($logo === null || $logo === '') {
+            return null;
+        }
+
+        $logo = (string) $logo;
+
+        if (str_starts_with($logo, 'http://') || str_starts_with($logo, 'https://')) {
+            return null;
+        }
+
+        $directory = $this->fileHelper->getDataDirectory('images');
+        $file = $directory . basename($logo);
+
+        if (!file_exists($file)) {
+            return null;
+        }
+
+        $contents = file_get_contents($file);
+
+        return $contents === false ? null : $contents;
     }
 
     /**

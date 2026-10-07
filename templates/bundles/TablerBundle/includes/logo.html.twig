@@ -1,5 +1,5 @@
 <a href="{{ path('tabler_welcome'|tabler_route) }}" title="{{ 'dashboard.title'|trans }}">
-    {% set logo = config('theme.branding.logo') %}
+    {% set logo = branding_logo_url() %}
     {% set company = config('theme.branding.company') %}
     {% if company is not empty %}
         <span>{{ company }}</span>
