@@ -9,16 +9,31 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\ExportableItem;
 use App\Entity\ExportTemplate;
+use App\Entity\MetaTableTypeInterface;
 use App\Entity\Team;
 use App\Entity\Timesheet;
+use App\Entity\TimesheetMeta;
 use App\Entity\User;
+use App\Event\TimesheetMetaDisplayEvent;
+use App\Export\ExportPreviewColumnProviderInterface;
+use App\Export\ExportRepositoryInterface;
+use App\Export\ServiceExport;
+use App\Repository\Query\ExportQuery;
 use App\Tests\DataFixtures\ExportTemplateFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use App\Tests\Mocks\MetaFieldColumnSubscriberMock;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\DomCrawler\Field\FormField;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
+use Symfony\Component\Translation\DataCollectorTranslator;
+use Symfony\Component\Translation\Loader\ArrayLoader;
+use Symfony\Component\Translation\Translator;
 
 #[Group('integration')]
 class ExportControllerTest extends AbstractControllerBaseTestCase
@@ -68,7 +83,10 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
             ->setAmount(20)
             ->setStartDate($begin)
             ->setCallback(function (Timesheet $timesheet) use ($team, $em): void {
-                $team->addProject($timesheet->getProject());
+                $project = $timesheet->getProject();
+                if ($project !== null) {
+                    $team->addProject($project);
+                }
                 $em->persist($team);
             })
         ;
@@ -175,6 +193,255 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
             unset($expected[$type]);
         }
         self::assertEmpty($expected);
+    }
+
+    public function testIndexActionShowsMetaFieldColumns(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = self::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new MetaFieldColumnSubscriberMock());
+
+        $begin = new \DateTime('first day of this month');
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setUser($this->getUserByRole(User::ROLE_USER))
+            ->setAmount(2)
+            ->setStartDate($begin)
+            ->setCallback(function (Timesheet $timesheet): void {
+                $timesheet->setMetaField(
+                    (new TimesheetMeta())
+                        ->setName('foo')
+                        ->setValue('Timesheet value')
+                        ->setIsVisible(true)
+                );
+            })
+        ;
+        $this->importFixture($fixture);
+
+        $this->request($client, '/export/?performSearch=performSearch');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $modal = $client->getCrawler()->filter('#modal_export');
+        self::assertEquals(1, $modal->count());
+
+        $html = $modal->html();
+        self::assertStringContainsString('column_mf_74696d657368656574_666f6f', $html);
+        self::assertStringContainsString('column_mf_74696d657368656574_666f6f32', $html);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        self::assertStringContainsString('Timesheet value', $content);
+
+        $columns = $client->getCrawler()->filter('section.content div.datatable_export table.dataTable thead th');
+        $found = false;
+        /** @var \DOMElement $th */
+        foreach ($columns as $th) {
+            if ($th->getAttribute('data-field') === 'mf_74696d657368656574_666f6f') {
+                $found = true;
+                break;
+            }
+        }
+        self::assertTrue($found, 'Typed meta field column not found in datatable header');
+    }
+
+    public function testIndexActionDoesNotRequestPreviewColumnsWithoutSearch(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = self::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new MetaFieldColumnSubscriberMock());
+
+        $this->request($client, '/export/');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $modal = $client->getCrawler()->filter('#modal_export');
+        self::assertEquals(1, $modal->count());
+        self::assertStringNotContainsString('column_mf_', $modal->html());
+    }
+
+    public function testIndexActionDoesNotTranslateResolvedColumnLabelsTwice(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        self::assertInstanceOf(KernelBrowser::class, $client);
+        $client->disableReboot();
+
+        $translator = new Translator('en');
+        $translator->addLoader('array', new ArrayLoader());
+        $translator->addResource('array', [
+            'Working place' => 'Resolved label',
+            'Resolved label' => 'Translated twice',
+        ], 'en');
+        self::getContainer()->set('translator', new DataCollectorTranslator($translator));
+
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = self::getContainer()->get('event_dispatcher');
+        $dispatcher->addListener(TimesheetMetaDisplayEvent::class, static function (TimesheetMetaDisplayEvent $event): void {
+            $event->addField(
+                (new TimesheetMeta())
+                    ->setName('foo')
+                    ->setLabel('Working place')
+                    ->setType(TextType::class)
+                    ->setIsVisible(true)
+            );
+        });
+
+        $this->request($client, '/export/?performSearch=performSearch');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $modal = $client->getCrawler()->filter('#modal_export')->text();
+        self::assertStringContainsString('Resolved label', $modal);
+        self::assertStringNotContainsString('Translated twice', $modal);
+    }
+
+    public function testIndexActionKeepsMixedRepositoryMetaColumnsTypedAndAligned(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = self::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new MetaFieldColumnSubscriberMock());
+
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setUser($this->getUserByRole(User::ROLE_USER))
+            ->setAmount(1)
+            ->setStartDate(new \DateTime('first day of this month'))
+            ->setCallback(function (Timesheet $timesheet): void {
+                $timesheet->setMetaField(
+                    (new TimesheetMeta())
+                        ->setName('foo')
+                        ->setValue('Timesheet value')
+                        ->setIsVisible(true)
+                );
+            })
+        ;
+        $timesheets = $this->importFixture($fixture);
+        $source = $timesheets[0];
+        $begin = $source->getBegin();
+        $end = $source->getEnd();
+        self::assertNotNull($begin);
+        self::assertNotNull($end);
+
+        $field = $this->createMock(MetaTableTypeInterface::class);
+        $field->method('getName')->willReturn('foo');
+        $field->method('getLabel')->willReturn('Working place');
+        $field->method('getType')->willReturn(TextType::class);
+
+        $expenseMeta = $this->createMock(MetaTableTypeInterface::class);
+        $expenseMeta->method('merge')->with($field)->willReturnSelf();
+        $expenseMeta->method('getType')->willReturn(TextType::class);
+        $expenseMeta->method('getValue')->willReturn('Expense value');
+
+        $expense = $this->createMock(ExportableItem::class);
+        $expense->method('getType')->willReturn('expense');
+        $expense->method('getUser')->willReturn($source->getUser());
+        $expense->method('getProject')->willReturn($source->getProject());
+        $expense->method('getActivity')->willReturn($source->getActivity());
+        $expense->method('getBegin')->willReturn(clone $begin);
+        $expense->method('getEnd')->willReturn(clone $end);
+        $expense->method('getDuration')->willReturn($source->getDuration());
+        $expense->method('getRate')->willReturn($source->getRate());
+        $expense->method('getInternalRate')->willReturn($source->getInternalRate());
+        $expense->method('getHourlyRate')->willReturn($source->getHourlyRate());
+        $expense->method('getFixedRate')->willReturn($source->getFixedRate());
+        $expense->method('getMetaField')->with('foo')->willReturn($expenseMeta);
+
+        $repository = new class($expense, $field) implements ExportRepositoryInterface, ExportPreviewColumnProviderInterface {
+            public function __construct(
+                private readonly ExportableItem $item,
+                private readonly MetaTableTypeInterface $field,
+            ) {
+            }
+
+            public function setExported(array $items): void
+            {
+            }
+
+            public function getExportItemsForQuery(ExportQuery $query): iterable
+            {
+                return [$this->item];
+            }
+
+            public function getType(): string
+            {
+                return 'expense';
+            }
+
+            public function getExportPreviewColumns(ExportQuery $query): array
+            {
+                return [$this->field];
+            }
+        };
+
+        /** @var ServiceExport $service */
+        $service = self::getContainer()->get(ServiceExport::class);
+        $service->addExportRepository($repository);
+
+        $this->request($client, '/export/?performSearch=performSearch');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $headers = $client->getCrawler()->filter('section.content div.datatable_export table.dataTable thead th');
+        $fields = [];
+        $titles = [];
+        /** @var \DOMElement $header */
+        foreach ($headers as $header) {
+            $fields[] = $header->getAttribute('data-field');
+            $titles[] = trim($header->textContent);
+        }
+
+        self::assertContains('mf_74696d657368656574_666f6f', $fields);
+        self::assertContains('mf_657870656e7365_666f6f', $fields);
+        self::assertContains('timesheet: Working place', $titles);
+        self::assertContains('expense: Working place', $titles);
+
+        $rows = $client->getCrawler()->filter('section.content div.datatable_export table.dataTable tbody tr');
+        self::assertCount(2, $rows);
+
+        $rowTexts = [];
+        /** @var \DOMElement $row */
+        foreach ($rows as $row) {
+            self::assertCount($headers->count(), $row->getElementsByTagName('td'));
+            $rowTexts[] = trim($row->textContent);
+        }
+
+        self::assertCount(1, array_filter($rowTexts, static fn (string $text): bool => str_contains($text, 'Timesheet value') && !str_contains($text, 'Expense value')));
+        self::assertCount(1, array_filter($rowTexts, static fn (string $text): bool => str_contains($text, 'Expense value') && !str_contains($text, 'Timesheet value')));
+    }
+
+    public function testIndexActionSkippedRowsWarningSpansAllColumns(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = self::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new MetaFieldColumnSubscriberMock());
+
+        // the warning row is only rendered above the 500 entries preview limit
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setUser($this->getUserByRole(User::ROLE_USER))
+            ->setAmount(501)
+            ->setFixedStartDate(new \DateTime('first day of this month'))
+        ;
+        $this->importFixture($fixture);
+
+        $this->request($client, '/export/?performSearch=performSearch');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $warning = $client->getCrawler()->filter('section.content div.datatable_export table.dataTable tr.warning td');
+        self::assertEquals(1, $warning->count());
+
+        $fields = [];
+        /** @var \DOMElement $th */
+        foreach ($client->getCrawler()->filter('section.content div.datatable_export table.dataTable thead th') as $th) {
+            $fields[] = $th->getAttribute('data-field');
+        }
+
+        // plugin meta columns are part of the header, so the span is only correct when it is counted
+        self::assertContains('mf_74696d657368656574_666f6f', $fields);
+        self::assertEquals(\count($fields), (int) $warning->attr('colspan'));
     }
 
     public function testExportActionWithMissingRenderer(): void
@@ -294,6 +561,7 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         $response = $client->getResponse();
         self::assertTrue($response->isSuccessful());
         $content = $response->getContent();
+        self::assertIsString($content);
         $node = $client->getCrawler()->filter('body');
         self::assertEquals(1, $node->count());
 
@@ -362,6 +630,7 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         $templates = $this->getEntityManager()->getRepository(ExportTemplate::class)->findAll();
         self::assertCount(1, $templates);
         $template = array_pop($templates);
+        self::assertNotNull($template);
         $id = $template->getId();
 
         $this->request($client, $this->createUrl('/export/template-edit/' . $id));
