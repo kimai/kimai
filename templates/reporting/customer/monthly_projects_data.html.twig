@@ -64,11 +64,14 @@
                         {% if loop.parent.loop.first %}
                             <td{% if rowspan > 1 %} rowspan="{{ rowspan }}"{% endif %} class="text-center text-nowrap">
                                 {% set value = project.activities[activity.id][dataType] %}
+                                {% set valueDecimal = dataType == 'rate' ? project.activities[activity.id].rateDecimal : (dataType == 'internalRate' ? project.activities[activity.id].internalRateDecimal : project.activities[activity.id].durationDecimal) %}
                                 {% block project_activity %}
                                     {% if dataType == 'rate' or dataType == 'internalRate' %}
-                                        {{ value|money(currency) }}
+                                        {{ valueDecimal|money(currency) }}
+                                    {% elseif decimal %}
+                                        {{ valueDecimal|duration_decimal_format }}
                                     {% else %}
-                                        {{ value|duration(decimal) }}
+                                        {{ value|duration(false) }}
                                     {% endif %}
                                 {% endblock %}
                             </td>
@@ -84,11 +87,14 @@
                 {% if loop.first %}
                     <th{% if rowspan > 1 %} rowspan="{{ rowspan }}" style="{{ rowspanStyle }}"{% endif %} class="text-center text-nowrap">
                         {% set value = project[dataType] %}
+                        {% set valueDecimal = dataType == 'rate' ? project.rateDecimal : (dataType == 'internalRate' ? project.internalRateDecimal : project.durationDecimal) %}
                         {% block project_total %}
                             {% if dataType == 'rate' or dataType == 'internalRate' %}
-                                {{ value|money(currency) }}
+                                {{ valueDecimal|money(currency) }}
+                            {% elseif decimal %}
+                                {{ valueDecimal|duration_decimal_format }}
                             {% else %}
-                                {{ value|duration(decimal) }}
+                                {{ value|duration(false) }}
                             {% endif %}
                         {% endblock %}
                     </th>

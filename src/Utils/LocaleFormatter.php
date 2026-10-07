@@ -75,16 +75,52 @@ final class LocaleFormatter
      */
     public function durationDecimal(Timesheet|int|string|null $duration): string
     {
+        return $this->formatDecimalValue($this->durationDecimalValue($duration));
+    }
+
+    /**
+     * Rounds a duration to a decimal hours value (2 fraction digits), without formatting it.
+     * Use this to reconcile a total against already-rounded, already-displayed row values:
+     * sum the values this returns for each row, then format the sum with formatDecimalValue().
+     */
+    public function durationDecimalValue(Timesheet|int|string|null $duration): float
+    {
+        $seconds = $this->getSecondsForDuration($duration);
+
+        return round($seconds / 3600, 2);
+    }
+
+    /**
+     * Formats an already-rounded decimal value (e.g. the sum of durationDecimalValue() results).
+     */
+    public function formatDecimalValue(float $value): string
+    {
         if (null === $this->decimalFormatter) {
             $this->decimalFormatter = new NumberFormatter($this->locale, NumberFormatter::DECIMAL);
             $this->decimalFormatter->setAttribute(NumberFormatter::FRACTION_DIGITS, 2);
         }
 
-        $seconds = $this->getSecondsForDuration($duration);
+        return $this->decimalFormatter->format(round($value, 2));
+    }
 
-        $value = round($seconds / 3600, 2);
+    /**
+     * Rounds a money amount to the given currency's own fraction digits (cent precision
+     * when no currency is given), without formatting it. Use this to reconcile a total
+     * against already-rounded, already-displayed row values: sum the values this returns
+     * for each row (with the same currency each row used), then format the sum with
+     * money(). Pass the same $currency the row was rendered with via money(), or the two
+     * stop rounding to the same precision for currencies with more than 2 fraction digits
+     * (e.g. KWD, BHD, OMR, JOD, TND).
+     */
+    public function moneyValue(null|int|float $amount, ?string $currency = null): float
+    {
+        if ($amount === null) {
+            return 0.0;
+        }
 
-        return $this->decimalFormatter->format($value);
+        $fractionDigits = $currency !== null ? Currencies::getFractionDigits($currency) : 2;
+
+        return round((float) $amount, $fractionDigits);
     }
 
     private function getSecondsForDuration(string|int|Timesheet|null $duration): int
@@ -158,9 +194,17 @@ final class LocaleFormatter
             $withCurrency = false;
         }
 
-        if ($amount === null) {
-            $amount = 0;
-        }
+        // round with PHP round() (half-away-from-zero) before formatting: ICU's
+        // NumberFormatter::CURRENCY defaults to half-even rounding, which disagrees with
+        // moneyValue() at exact half-cent boundaries (e.g. 2.505 -> ICU €2.50, round() 2.51),
+        // so a row rendered here and a total reconciled through moneyValue() must round the
+        // same way or the printed total stops matching the sum of the printed rows. When
+        // formatting with a currency symbol, round to that currency's own fraction digits
+        // (3 for KWD/BHD/..., not always 2) so this stays a rounding-mode fix and never
+        // truncates a currency's real precision; the no-currency-symbol path has no currency
+        // to ask and keeps its existing fixed 2-digit precision.
+        $fractionDigits = $withCurrency ? Currencies::getFractionDigits((string) $currency) : 2;
+        $amount = round((float) ($amount ?? 0), $fractionDigits);
 
         if (false === $withCurrency) {
             if (null === $this->moneyFormatterNoCurrency) {

@@ -17,6 +17,7 @@ use App\Repository\TimesheetRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Symfony\Component\Intl\Currencies;
 
 final class CustomerMonthlyProjectsRepository
 {
@@ -78,13 +79,39 @@ final class CustomerMonthlyProjectsRepository
         $userIds = [];
 
         foreach ($results as $row) {
+            $projectIds[$row['project']] = $row['project'];
+            $activityIds[$row['activity']] = $row['activity'];
+            $userIds[$row['user']] = $row['user'];
+        }
+
+        // fetched before the accumulation loop below so each row's money rounding can use
+        // its own project's currency fraction digits (2 for EUR, 3 for KWD/BHD/..., ...)
+        // instead of a hardcoded 2, which would silently truncate 3-decimal currencies.
+        $qb = $this->entityManager->createQueryBuilder();
+        $qb
+            ->select('p.id, p.name, c.id as customer_id, c.name as customer, c.currency')
+            ->from(Project::class, 'p', 'p.id')
+            ->leftJoin(Customer::class, 'c', Join::WITH, 'c.id = p.customer')
+            ->where($qb->expr()->in('p.id', ':id'))
+            ->setParameter('id', array_values($projectIds))
+        ;
+        $projects = $qb->getQuery()->getResult();
+
+        foreach ($results as $row) {
             $projectId = $row['project'];
             $activityId = $row['activity'];
             $userId = $row['user'];
 
-            $projectIds[$projectId] = $projectId;
-            $activityIds[$activityId] = $activityId;
-            $userIds[$userId] = $userId;
+            $currency = $projects[$projectId]['currency'] ?? null;
+            $moneyFractionDigits = $currency !== null ? Currencies::getFractionDigits($currency) : 2;
+
+            // this row is the leaf: exactly one (project, activity, user) group, so its own
+            // duration/rate/internalRate need no reconciliation. Rounding and summing it here,
+            // instead of rounding the raw second/cent sums accumulated below, is what makes the
+            // activity and project totals equal the sum of the leaf values a reader adds up.
+            $durationDecimal = round(((int) $row['duration']) / 3600, 2);
+            $rateDecimal = round((float) $row['rate'], $moneyFractionDigits);
+            $internalRateDecimal = round((float) $row['internalRate'], $moneyFractionDigits);
 
             if (!isset($stats[$projectId])) {
                 $stats[$projectId] = [
@@ -94,15 +121,21 @@ final class CustomerMonthlyProjectsRepository
                     'name' => null,
                     'activities' => [],
                     'duration' => 0,
+                    'durationDecimal' => 0.0,
                     'rate' => 0,
+                    'rateDecimal' => 0.0,
                     'internalRate' => 0,
+                    'internalRateDecimal' => 0.0,
                     'max_users' => 0,
                 ];
             }
 
             $stats[$projectId]['duration'] += (int) $row['duration'];
+            $stats[$projectId]['durationDecimal'] += $durationDecimal;
             $stats[$projectId]['rate'] += (int) $row['rate'];
+            $stats[$projectId]['rateDecimal'] += $rateDecimal;
             $stats[$projectId]['internalRate'] += (int) $row['internalRate'];
+            $stats[$projectId]['internalRateDecimal'] += $internalRateDecimal;
 
             if (!isset($stats[$projectId]['activities'][$activityId])) {
                 $stats[$projectId]['activities'][$activityId] = [
@@ -110,14 +143,20 @@ final class CustomerMonthlyProjectsRepository
                     'name' => null,
                     'users' => [],
                     'duration' => 0,
+                    'durationDecimal' => 0.0,
                     'rate' => 0,
+                    'rateDecimal' => 0.0,
                     'internalRate' => 0,
+                    'internalRateDecimal' => 0.0,
                 ];
             }
 
             $stats[$projectId]['activities'][$activityId]['duration'] += (int) $row['duration'];
+            $stats[$projectId]['activities'][$activityId]['durationDecimal'] += $durationDecimal;
             $stats[$projectId]['activities'][$activityId]['rate'] += (int) $row['rate'];
+            $stats[$projectId]['activities'][$activityId]['rateDecimal'] += $rateDecimal;
             $stats[$projectId]['activities'][$activityId]['internalRate'] += (int) $row['internalRate'];
+            $stats[$projectId]['activities'][$activityId]['internalRateDecimal'] += $internalRateDecimal;
 
             if (!isset($stats[$projectId]['activities'][$activityId]['users'][$userId])) {
                 $stats[$projectId]['activities'][$activityId]['users'][$userId] = [
@@ -142,16 +181,6 @@ final class CustomerMonthlyProjectsRepository
             ->setParameter('id', array_values($activityIds))
         ;
         $activities = $qb->getQuery()->getResult();
-
-        $qb = $this->entityManager->createQueryBuilder();
-        $qb
-            ->select('p.id, p.name, c.id as customer_id, c.name as customer, c.currency')
-            ->from(Project::class, 'p', 'p.id')
-            ->leftJoin(Customer::class, 'c', Join::WITH, 'c.id = p.customer')
-            ->where($qb->expr()->in('p.id', ':id'))
-            ->setParameter('id', array_values($projectIds))
-        ;
-        $projects = $qb->getQuery()->getResult();
 
         $qb = $this->entityManager->createQueryBuilder();
         $qb
