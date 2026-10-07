@@ -83,7 +83,7 @@ final class CsvRenderer extends AbstractSpreadsheetRenderer implements ExportRen
         $spreadsheet = new SpoutSpreadsheet(new Writer($options), $this->translator, $this->template->getLocale());
         $spreadsheet->open($filename);
 
-        $this->columnConverter->registerFormatter('date', new DateStringFormatter());
+        $this->columnConverter->registerFormatter('date', new DateStringFormatter($query->getTimezone()));
         $this->columnConverter->registerFormatter('duration', new DurationPlainFormatter(false));
         $this->columnConverter->registerFormatter('duration_seconds', new DurationPlainFormatter(true));
 

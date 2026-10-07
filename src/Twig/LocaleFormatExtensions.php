@@ -122,9 +122,9 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         return ($day === 6 || $day === 7);
     }
 
-    public function dateShort(\DateTimeInterface|string|null $date): string
+    public function dateShort(\DateTimeInterface|string|null $date, ?\DateTimeZone $timezone = null): string
     {
-        return (string) $this->getFormatter()->dateShort($date);
+        return (string) $this->getFormatter()->dateShort($date, $timezone);
     }
 
     public function dateTime(DateTimeInterface|string|null $date): string
@@ -139,9 +139,9 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         return new DateTime($date, new \DateTimeZone($timezone));
     }
 
-    public function dateFormat(\DateTimeInterface|string|null $date, string $format): string
+    public function dateFormat(\DateTimeInterface|string|null $date, string $format, ?\DateTimeZone $timezone = null): string
     {
-        return (string) $this->getFormatter()->dateFormat($date, $format);
+        return (string) $this->getFormatter()->dateFormat($date, $format, $timezone);
     }
 
     public function dateWeekday(\DateTimeInterface $date, string $spacer = ' '): string
@@ -149,9 +149,9 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
         return $this->dayName($date, true) . $spacer . $this->getFormatter()->dateFormat($date, 'd');
     }
 
-    public function time(\DateTimeInterface|string|null $date): string
+    public function time(\DateTimeInterface|string|null $date, ?\DateTimeZone $timezone = null): string
     {
-        return (string) $this->getFormatter()->time($date);
+        return (string) $this->getFormatter()->time($date, $timezone);
     }
 
     /**

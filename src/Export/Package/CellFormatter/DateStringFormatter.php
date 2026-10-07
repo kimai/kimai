@@ -11,10 +11,12 @@ namespace App\Export\Package\CellFormatter;
 
 final class DateStringFormatter implements CellFormatterInterface
 {
+    use ConvertsTimezoneTrait;
+
     public function formatValue(mixed $value): mixed
     {
         if ($value instanceof \DateTimeInterface) {
-            return $value->format('Y-m-d');
+            return $this->convertToTimezone($value)->format('Y-m-d');
         }
 
         if ($value === null) {

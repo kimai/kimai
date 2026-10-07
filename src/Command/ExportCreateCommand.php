@@ -221,6 +221,7 @@ final class ExportCreateCommand extends Command
         }
 
         $query = new ExportQuery();
+        $query->setTimezone($timezone);
 
         $username = $input->getOption('username');
         if (\is_string($username) && !empty($username)) {

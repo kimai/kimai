@@ -179,6 +179,18 @@ trait ToolbarFormTrait
             $params['timezone'] = $options['timezone'];
         }
 
+        if (\array_key_exists('label', $options)) {
+            $params['label'] = $options['label'];
+        }
+
+        if (\array_key_exists('help', $options)) {
+            $params['help'] = $options['help'];
+        }
+
+        if (\array_key_exists('help_translation_parameters', $options)) {
+            $params['help_translation_parameters'] = $options['help_translation_parameters'];
+        }
+
         $builder->add('daterange', DateRangeType::class, $params);
     }
 

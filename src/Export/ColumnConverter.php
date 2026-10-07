@@ -83,15 +83,15 @@ final class ColumnConverter
         $this->formatter[$name] = $cellFormatter;
     }
 
-    private function getFormatter(string $name): CellFormatterInterface
+    private function getFormatter(string $name, ?\DateTimeZone $timezone = null): CellFormatterInterface
     {
         if (\array_key_exists($name, $this->formatter)) {
             return $this->formatter[$name];
         }
 
         return match ($name) {
-            'date' => new DateFormatter(),
-            'time' => new TimeFormatter(),
+            'date' => new DateFormatter($timezone),
+            'time' => new TimeFormatter($timezone),
             'duration' => new DurationFormatter('[hh]:mm'),
             'duration_decimal' => new DurationDecimalFormatter(),
             'duration_seconds' => new DurationFormatter('[hh]:mm:ss'),
@@ -105,6 +105,7 @@ final class ColumnConverter
     public function getColumns(TemplateInterface $template, TimesheetQuery $query): array
     {
         $showRates = $this->isRenderRate($query);
+        $timezone = $query->getTimezone();
 
         $timesheetMeta = [];
         foreach ($this->findMetaColumns(new TimesheetMetaDisplayEvent($query, TimesheetMetaDisplayEvent::EXPORT)) as $metaField) {
@@ -170,11 +171,14 @@ final class ColumnConverter
 
         foreach ($template->getColumns($query) as $column) {
             if ($column === 'date') {
-                $columns[$column] = (new Column('date', $this->getFormatter('date')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getBegin());
+                $columns[$column] = (new Column('date', $this->getFormatter('date', $timezone)))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getBegin());
+                if ($timezone !== null) {
+                    $columns[$column]->withHeader('export.date_column', ['%timezone%' => $timezone->getName()]);
+                }
             } elseif ($column === 'begin') {
-                $columns[$column] = (new Column('begin', $this->getFormatter('time')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getBegin())->withColumnWidth(ColumnWidth::SMALL);
+                $columns[$column] = (new Column('begin', $this->getFormatter('time', $timezone)))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getBegin())->withColumnWidth(ColumnWidth::SMALL);
             } elseif ($column === 'end') {
-                $columns[$column] = (new Column('end', $this->getFormatter('time')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getEnd())->withColumnWidth(ColumnWidth::SMALL);
+                $columns[$column] = (new Column('end', $this->getFormatter('time', $timezone)))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getEnd())->withColumnWidth(ColumnWidth::SMALL);
             } elseif ($column === 'duration') {
                 $columns[$column] = (new Column('duration', $this->getFormatter('duration')))->withExtractor(fn (ExportableItem $exportableItem) => $exportableItem->getDuration())->withColumnWidth(ColumnWidth::SMALL);
             } elseif ($column === 'duration_decimal') {

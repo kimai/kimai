@@ -51,7 +51,7 @@ class SpoutSpreadsheet implements SpreadsheetPackage
         $tmp = [];
         $i = 0;
         foreach ($columns as $column) {
-            $title = $this->translator->trans($column->getHeader(), [], null, $this->locale);
+            $title = $this->translator->trans($column->getHeader(), $column->getHeaderParams(), null, $this->locale);
             $tmp[] = Cell::fromValue($title);
             $style = null;
             if (($format = $column->getFormat()) !== null) {

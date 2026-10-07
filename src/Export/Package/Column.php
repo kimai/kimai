@@ -16,6 +16,10 @@ use App\Export\Package\CellFormatter\CellWithFormatInterface;
 class Column
 {
     private ?string $header = null;
+    /**
+     * @var array<string, string>
+     */
+    private array $headerParams = [];
     private \Closure|null $extractor = null;
     private ColumnWidth $columnWidth = ColumnWidth::DEFAULT;
 
@@ -28,11 +32,23 @@ class Column
         return $this->name;
     }
 
-    public function withHeader(?string $header): Column
+    /**
+     * @param array<string, string> $params translation parameters for the header
+     */
+    public function withHeader(?string $header, array $params = []): Column
     {
         $this->header = $header;
+        $this->headerParams = $params;
 
         return $this;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getHeaderParams(): array
+    {
+        return $this->headerParams;
     }
 
     public function withColumnWidth(ColumnWidth $columnWidth): Column
