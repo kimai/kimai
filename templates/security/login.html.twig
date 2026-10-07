@@ -47,7 +47,7 @@
 {% endblock %}
 
 {% block login_social_auth %}
-    {% if saml_config.isActivated() %}
+    {% if saml_config.isActivated() or oidc_config.isActivated() %}
         {% if config('loginFormActive') %}
             <div class="hr-text">{{ 'or'|trans({}, 'TablerBundle') }}</div>
         {% endif %}
@@ -56,19 +56,36 @@
                 {% if not config('loginFormActive') %}
                     <h2 class="card-title text-center mb-4">{{ block('login_box_msg') }}</h2>
                 {% endif %}
-                <div class="col text-center">
-                    <a href="{{ path('saml_login') }}" id="social-login-button" tabindex="50" class="btn btn-white w-50">
-                        {% set provider = saml_config.getProvider() %}
-                        {% if provider is not null %}
-                            {% if 'fa-' in provider %}
-                                <i class="icon {{ provider }} text-{{ provider|replace({'fas ': '', 'far ': '', 'fab ': ''}) }}"></i>
-                            {% else %}
-                                <i class="icon fab fa-{{ provider }} text-{{ provider }}"></i>
+                {% if saml_config.isActivated() %}
+                    <div class="col text-center">
+                        <a href="{{ path('saml_login') }}" id="social-login-button" tabindex="50" class="btn btn-white w-50">
+                            {% set provider = saml_config.getProvider() %}
+                            {% if provider is not null %}
+                                {% if 'fa-' in provider %}
+                                    <i class="icon {{ provider }} text-{{ provider|replace({'fas ': '', 'far ': '', 'fab ': ''}) }}"></i>
+                                {% else %}
+                                    <i class="icon fab fa-{{ provider }} text-{{ provider }}"></i>
+                                {% endif %}
                             {% endif %}
-                        {% endif %}
-                        {{ saml_config.getTitle()|trans }}
-                    </a>
-                </div>
+                            {{ saml_config.getTitle()|trans }}
+                        </a>
+                    </div>
+                {% endif %}
+                {% if oidc_config.isActivated() %}
+                    <div class="col text-center">
+                        <a href="{{ path('oidc_login') }}" id="oidc-login-button" tabindex="51" class="btn btn-white w-50">
+                            {% set provider = oidc_config.getProvider() %}
+                            {% if provider is not null %}
+                                {% if 'fa-' in provider %}
+                                    <i class="icon {{ provider }} text-{{ provider|replace({'fas ': '', 'far ': '', 'fab ': ''}) }}"></i>
+                                {% else %}
+                                    <i class="icon fab fa-{{ provider }} text-{{ provider }}"></i>
+                                {% endif %}
+                            {% endif %}
+                            {{ oidc_config.getTitle()|trans }}
+                        </a>
+                    </div>
+                {% endif %}
             </div>
         </div>
     {% endif %}

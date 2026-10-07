@@ -4,6 +4,7 @@ scheb_two_factor:
         - Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken
         - Symfony\Component\Security\Http\Authenticator\Token\PostAuthenticationToken
         - App\Saml\SamlToken
+        - App\Oidc\OidcToken
 
     totp:
         enabled: true
