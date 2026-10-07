@@ -9,6 +9,7 @@
 
 namespace App\Controller\Security;
 
+use App\Configuration\OidcConfigurationInterface;
 use App\Configuration\SamlConfigurationInterface;
 use App\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +19,11 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 final class SecurityController extends AbstractController
 {
-    public function __construct(private CsrfTokenManagerInterface $tokenManager, private SamlConfigurationInterface $samlConfiguration)
+    public function __construct(
+        private CsrfTokenManagerInterface $tokenManager,
+        private OidcConfigurationInterface $oidcConfiguration,
+        private SamlConfigurationInterface $samlConfiguration
+    )
     {
     }
 
@@ -44,6 +49,7 @@ final class SecurityController extends AbstractController
             'last_username' => $lastUsername,
             'error' => $error,
             'csrf_token' => $csrfToken,
+            'oidc_config' => $this->oidcConfiguration,
             'saml_config' => $this->samlConfiguration,
         ]);
     }
