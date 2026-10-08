@@ -2146,6 +2146,74 @@
         <source>help.project_locked_until</source>
         <target state="translated">Tijden tot en met deze datum kunnen niet aangemaakt of veranderd worden.</target>
       </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target state="translated">Authenticatie</target>
+      </trans-unit>
+      <trans-unit id="LQXTGjm" resname="authentication.help">
+        <source>authentication.help</source>
+        <target state="translated">Wisselen van "Intern" verwijdert het wachtwoord. Daarna stelt u een nieuw wachtwoord in of gebruikt u "Wachtwoord vergeten".</target>
+      </trans-unit>
+      <trans-unit id="NvQBTxG" resname="authentication.internal">
+        <source>authentication.internal</source>
+        <target state="translated">Intern</target>
+      </trans-unit>
+      <trans-unit id="DI8vH1J" resname="copy_to_clipboard">
+        <source>copy_to_clipboard</source>
+        <target state="translated">Kopiëer naar klembord</target>
+      </trans-unit>
+      <trans-unit id="LHDhK3o" resname="key">
+        <source>key</source>
+        <target state="translated">Interne titel</target>
+      </trans-unit>
+      <trans-unit id="Q3gmLM6" resname="key_help">
+        <source>key_help</source>
+        <target state="translated">Unieke technische naam welke later niet veranderd kan worden. Kleine letters (a-z), cijfers (0-9) en underscore (_) zijn toegestaan.</target>
+      </trans-unit>
+      <trans-unit id="netluHi" resname="approval">
+        <source>approval</source>
+        <target state="translated">Goedkeuring</target>
+      </trans-unit>
+      <trans-unit id="9SkAbbx" resname="approval_required">
+        <source>approval_required</source>
+        <target state="translated">Goedkeuring vereist</target>
+      </trans-unit>
+      <trans-unit id="7dLJTuj" resname="fill_day">
+        <source>fill_day</source>
+        <target state="translated">Vult de verwachtte werktijd op</target>
+      </trans-unit>
+      <trans-unit id="O6IGTDm" resname="Absence types">
+        <source>Absence types</source>
+        <target state="translated">Types absenties</target>
+      </trans-unit>
+      <trans-unit id="2mFc5.v" resname="absence_type.category.help">
+        <source>absence_type.category.help</source>
+        <target state="translated">Deze categorie bepaalt hoe boekingen worden berekend (bvb. tegen vakantiedagen of werktijdenrekening) en waar het type wordt getoond. Het kan later niet veranderd worden.</target>
+      </trans-unit>
+      <trans-unit id="4YKqwfo" resname="absence_type.half_day">
+        <source>absence_type.half_day</source>
+        <target state="translated">Sta halve dagen toe</target>
+      </trans-unit>
+      <trans-unit id="ukwjp0C" resname="absence_type.date_range">
+        <source>absence_type.date_range</source>
+        <target state="translated">Sta boeking van meerdere dagen toe</target>
+      </trans-unit>
+      <trans-unit id="j6S5GDf" resname="absence_type.duration">
+        <source>absence_type.duration</source>
+        <target state="translated">Sta invullen van een looptijd toe</target>
+      </trans-unit>
+      <trans-unit id="E7XVJxv" resname="absence_type.duration_required">
+        <source>absence_type.duration_required</source>
+        <target state="translated">Looptijd is een vereist veld</target>
+      </trans-unit>
+      <trans-unit id="W_6BSlE" resname="absence_type.max_days">
+        <source>absence_type.max_days</source>
+        <target state="translated">Maximale aantal dagen per boeking</target>
+      </trans-unit>
+      <trans-unit id="_cQHZDu" resname="fill_day.help">
+        <source>fill_day.help</source>
+        <target state="translated">Als geen looptijd is ingevuld wordt de verwachtte werktijd van die dag gebruikt.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

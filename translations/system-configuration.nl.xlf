@@ -318,6 +318,14 @@
         <source>invoice.rounding_mode</source>
         <target state="translated">Afrondingsmodus</target>
       </trans-unit>
+      <trans-unit id="iobaZJS" resname="user_auth_change">
+        <source>user_auth_change</source>
+        <target state="translated">Verander authenticatie van gebruikers met externe aanmelding</target>
+      </trans-unit>
+      <trans-unit id="iMmgno5" resname="user_auth_change.help">
+        <source>user_auth_change.help</source>
+        <target state="translated">Staat Super-Beheerders toe om gebruikers met externe aanmeldignen terug te zetten op interne aanmeldingen vanuit het gebruikersprofiel.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
