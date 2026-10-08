@@ -318,6 +318,14 @@
         <source>user_auth_wizard</source>
         <target state="translated">Afficher l'assistant de configuration pour les nouveaux utilisateurs</target>
       </trans-unit>
+      <trans-unit id="iobaZJS" resname="user_auth_change">
+        <source>user_auth_change</source>
+        <target state="translated">Modifier l'authentification des utilisateurs se connectant depuis un système externe</target>
+      </trans-unit>
+      <trans-unit id="iMmgno5" resname="user_auth_change.help">
+        <source>user_auth_change.help</source>
+        <target state="translated">Permet aux super-administrateurs de faire passer les utilisateurs disposant d'identifiants externes à l'identifiant interne dans le profil utilisateur.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

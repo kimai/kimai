@@ -318,6 +318,14 @@
         <source>user_auth_wizard</source>
         <target state="translated">Yeni kullanıcılar için kurulum sihirbazını göster</target>
       </trans-unit>
+      <trans-unit id="iobaZJS" resname="user_auth_change">
+        <source>user_auth_change</source>
+        <target state="translated">Harici oturum açan kullanıcıların kimlik doğrulama yöntemini değiştir</target>
+      </trans-unit>
+      <trans-unit id="iMmgno5" resname="user_auth_change.help">
+        <source>user_auth_change.help</source>
+        <target state="translated">Süper Yöneticilerin, harici oturum açan kullanıcıları kullanıcı profilinde yeniden dahili oturum açmaya geçirmelerine izin verir.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

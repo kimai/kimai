@@ -2150,6 +2150,70 @@
         <source>copy_to_clipboard</source>
         <target state="translated">Panoya kopyala</target>
       </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target state="translated">Kimlik doğrulama</target>
+      </trans-unit>
+      <trans-unit id="LQXTGjm" resname="authentication.help">
+        <source>authentication.help</source>
+        <target state="translated">"Dahili" seçeneğine geçildiğinde parola silinir. Ardından yeni bir parola belirleyin veya "Parolamı unuttum" seçeneğini kullanın.</target>
+      </trans-unit>
+      <trans-unit id="NvQBTxG" resname="authentication.internal">
+        <source>authentication.internal</source>
+        <target state="translated">Dahili</target>
+      </trans-unit>
+      <trans-unit id="LHDhK3o" resname="key">
+        <source>key</source>
+        <target state="translated">Dahili başlık</target>
+      </trans-unit>
+      <trans-unit id="Q3gmLM6" resname="key_help">
+        <source>key_help</source>
+        <target state="translated">Daha sonra değiştirilemeyen benzersiz teknik ad. Küçük harfler (a-z), rakamlar (0-9) ve alt çizgi (_) kullanılabilir.</target>
+      </trans-unit>
+      <trans-unit id="netluHi" resname="approval">
+        <source>approval</source>
+        <target state="translated">Onay</target>
+      </trans-unit>
+      <trans-unit id="9SkAbbx" resname="approval_required">
+        <source>approval_required</source>
+        <target state="translated">Onay gerekli</target>
+      </trans-unit>
+      <trans-unit id="7dLJTuj" resname="fill_day">
+        <source>fill_day</source>
+        <target state="translated">Beklenen çalışma süresini doldurur</target>
+      </trans-unit>
+      <trans-unit id="O6IGTDm" resname="Absence types">
+        <source>Absence types</source>
+        <target state="translated">Devamsızlık türleri</target>
+      </trans-unit>
+      <trans-unit id="2mFc5.v" resname="absence_type.category.help">
+        <source>absence_type.category.help</source>
+        <target state="translated">Bu kategori, rezervasyonların nasıl hesaplanacağını (örneğin, tatil günlerinden mi yoksa çalışma süresi hesabından mı) ve bu türün nerede gösterileceğini belirler. Daha sonra değiştirilemez.</target>
+      </trans-unit>
+      <trans-unit id="4YKqwfo" resname="absence_type.half_day">
+        <source>absence_type.half_day</source>
+        <target state="translated">Yarım günlere izin ver</target>
+      </trans-unit>
+      <trans-unit id="ukwjp0C" resname="absence_type.date_range">
+        <source>absence_type.date_range</source>
+        <target state="translated">Birden fazla gün için rezervasyona izin ver</target>
+      </trans-unit>
+      <trans-unit id="j6S5GDf" resname="absence_type.duration">
+        <source>absence_type.duration</source>
+        <target state="translated">Süre girilmesine izin ver</target>
+      </trans-unit>
+      <trans-unit id="E7XVJxv" resname="absence_type.duration_required">
+        <source>absence_type.duration_required</source>
+        <target state="translated">Süre, zorunlu bir alandır</target>
+      </trans-unit>
+      <trans-unit id="W_6BSlE" resname="absence_type.max_days">
+        <source>absence_type.max_days</source>
+        <target state="translated">Rezervasyon başına en fazla gün sayısı</target>
+      </trans-unit>
+      <trans-unit id="_cQHZDu" resname="fill_day.help">
+        <source>fill_day.help</source>
+        <target state="translated">Süre girilmezse, o günün kalan tahmini çalışma süresi kullanılır.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
