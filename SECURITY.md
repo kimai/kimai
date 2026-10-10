@@ -34,6 +34,9 @@ the advisory is published and you are credited, unless you prefer not to be name
 Please check the [latest release](https://github.com/kimai/kimai/releases) before reporting:
 the issue you found may already be fixed.
 
+Credit goes to the first valid report. 
+Duplicates received before publication are closed and notified, but not credited, unless they add significant new information.
+
 ## AI-assisted reports
 
 Using AI tools to find or write up a vulnerability is fine. Submitting their raw output is not.
