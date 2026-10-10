@@ -10,11 +10,14 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Validator\Constraints\NotCurrentPassword;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 
 /**
  * Defines the form used to set the user password.
@@ -24,6 +27,17 @@ final class UserPasswordType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        if ($options['require_current_password'] === true) {
+            $builder->add('currentPassword', PasswordType::class, [
+                'label' => 'password_current',
+                'mapped' => false,
+                'attr' => ['autocomplete' => 'current-password'],
+                'block_prefix' => 'secret',
+                // also reports an empty value as violation
+                'constraints' => [new UserPassword(groups: ['PasswordUpdate'])],
+            ]);
+        }
+
         $builder
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -49,6 +63,25 @@ final class UserPasswordType extends AbstractType
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'edit_user_password',
+            // only for users changing their own password, as UserPassword validates against the logged-in user
+            'require_current_password' => false,
+            // only for users changing their own password, otherwise the error message reveals the current password
+            'deny_current_password' => false,
         ]);
+
+        $resolver->setAllowedTypes('require_current_password', 'bool');
+        $resolver->setAllowedTypes('deny_current_password', 'bool');
+
+        $resolver->setNormalizer('constraints', function (Options $options, mixed $constraints): array {
+            if (!\is_array($constraints)) {
+                $constraints = $constraints === null ? [] : [$constraints];
+            }
+
+            if ($options['deny_current_password'] === true) {
+                $constraints[] = new NotCurrentPassword(groups: ['PasswordUpdate']);
+            }
+
+            return $constraints;
+        });
     }
 }

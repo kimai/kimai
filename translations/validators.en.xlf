@@ -186,6 +186,10 @@
         <source>A maximum duration of {{ value }} is allowed.</source>
         <target>A maximum duration of {{ value }} is allowed.</target>
       </trans-unit>
+      <trans-unit id="uGhV9ku" resname="The new password must be different from the current password.">
+        <source>The new password must be different from the current password.</source>
+        <target>The new password must be different from the current password.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

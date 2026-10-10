@@ -130,6 +130,10 @@
         <source>password_repeat</source>
         <target>Passwort wiederholen</target>
       </trans-unit>
+      <trans-unit id="VYX5DAW" resname="password_current">
+        <source>password_current</source>
+        <target>Aktuelles Passwort</target>
+      </trans-unit>
       <trans-unit id="ACcM9j_" resname="logout">
         <source>logout</source>
         <target>Abmelden</target>

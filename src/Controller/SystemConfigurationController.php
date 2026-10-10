@@ -281,6 +281,21 @@ final class SystemConfigurationController extends AbstractController
                 (new Configuration('user.theme'))
                     ->setLabel('skin')
                     ->setType(SkinType::class),
+                (new Configuration('user.password_strength'))
+                    ->setTranslationDomain('system-configuration')
+                    ->setLabel('user_auth_password_strength')
+                    ->setType(ChoiceType::class)
+                    ->setOptions([
+                        'help' => 'user_auth_password_strength.help',
+                        'choices' => [
+                            'password_strength.none' => 0,
+                            'password_strength.normal' => 1,
+                            'password_strength.medium' => 2,
+                            'password_strength.strong' => 3,
+                            'password_strength.very_strong' => 4,
+                        ],
+                    ])
+                    ->setConstraints([new NotNull(), new Range(['min' => 0, 'max' => 4])]),
                 (new Configuration('user.auth_change'))
                     ->setLabel('user_auth_change')
                     ->setTranslationDomain('system-configuration')
