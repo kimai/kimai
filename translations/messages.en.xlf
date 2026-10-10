@@ -130,7 +130,7 @@
         <source>password_repeat</source>
         <target>Repeat password</target>
       </trans-unit>
-      <trans-unit id="VYX5DAW" resname="password_current">
+      <trans-unit id="fxkWjGQ" resname="password_current">
         <source>password_current</source>
         <target>Current password</target>
       </trans-unit>

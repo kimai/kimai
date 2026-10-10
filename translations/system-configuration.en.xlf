@@ -278,29 +278,33 @@
         <source>user_auth_password_reset_token_ttl</source>
         <target>Forgotten password - seconds before a reset link expires</target>
       </trans-unit>
-      <trans-unit id="UErITvS" resname="user_auth_password_strength">
+      <trans-unit id="6pqJCWV" resname="user_auth_password_strength">
         <source>user_auth_password_strength</source>
         <target>Password strength</target>
       </trans-unit>
-      <trans-unit id="qCAHkto" resname="user_auth_password_strength.help">
+      <trans-unit id="0hLoKXm" resname="user_auth_password_strength.help">
         <source>user_auth_password_strength.help</source>
         <target>Applies whenever a password is set. The strength is estimated based on length and used character types.</target>
       </trans-unit>
-      <trans-unit id="jMAuN1E" resname="password_strength.none">
+      <trans-unit id="svXdXTq" resname="password_strength.none">
         <source>password_strength.none</source>
         <target>No requirements (only minimum length)</target>
       </trans-unit>
-      <trans-unit id="L2LL0H7" resname="password_strength.normal">
+      <trans-unit id="3jD52PB" resname="password_strength.normal">
         <source>password_strength.normal</source>
         <target>Normal</target>
       </trans-unit>
-      <trans-unit id="zeK5ABb" resname="password_strength.medium">
+      <trans-unit id="0e4HBxu" resname="password_strength.medium">
         <source>password_strength.medium</source>
         <target>Medium</target>
       </trans-unit>
-      <trans-unit id="Tzg3TrW" resname="password_strength.strong">
+      <trans-unit id="VlOVWX7" resname="password_strength.strong">
         <source>password_strength.strong</source>
         <target>Strong</target>
+      </trans-unit>
+      <trans-unit id="R5QYeOG" resname="password_strength.very_strong">
+        <source>password_strength.very_strong</source>
+        <target>Very strong</target>
       </trans-unit>
       <trans-unit id="iobaZJS" resname="user_auth_change">
         <source>user_auth_change</source>
