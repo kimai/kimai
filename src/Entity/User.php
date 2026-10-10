@@ -199,6 +199,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      */
     #[Assert\NotBlank(groups: ['Registration', 'PasswordUpdate', 'UserCreate'])]
     #[Assert\Length(min: 8, max: 60, groups: ['Registration', 'PasswordUpdate', 'UserCreate', 'ResetPassword', 'ChangePassword'])]
+    #[Constraints\PasswordPolicy(groups: ['Registration', 'PasswordUpdate', 'UserCreate', 'ResetPassword', 'ChangePassword'])]
     private ?string $plainPassword = null;
     #[ORM\Column(name: 'last_login', type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTime $lastLogin = null;
