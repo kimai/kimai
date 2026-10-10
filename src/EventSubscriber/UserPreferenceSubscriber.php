@@ -129,6 +129,12 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
                 ->addConstraint(new Length(['max' => 150]))
                 ->setType(FavoriteMenuType::class),
 
+            (new UserPreference('edit_after_stop', false))
+                ->setOrder(750)
+                ->setSection('behaviour')
+                ->setEnabled($this->voter->isGranted('edit_own_timesheet'))
+                ->setType(YesNoType::class),
+
             (new UserPreference('daily_stats', false))
                 ->setOrder(800)
                 ->setSection('behaviour')

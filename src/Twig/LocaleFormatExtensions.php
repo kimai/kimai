@@ -186,6 +186,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
     public function getJavascriptConfiguration(?User $user = null, ?string $language = null): array
     {
         $browserTitle = false;
+        $editAfterStop = false;
         $id = null;
         $name = 'anonymous';
         $admin = false;
@@ -195,6 +196,8 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
 
         if ($user !== null) {
             $browserTitle = (bool) $user->getPreferenceValue('update_browser_title');
+            $editAfterStopPreference = $user->getPreference('edit_after_stop');
+            $editAfterStop = $editAfterStopPreference !== null && $editAfterStopPreference->isEnabled() && (bool) $editAfterStopPreference->getValue();
             $language ??= $user->getLanguage();
             $id = $user->getId();
             $name = $user->getDisplayName();
@@ -214,6 +217,7 @@ final class LocaleFormatExtensions extends AbstractExtension implements LocaleAw
             'defaultColor' => Constants::DEFAULT_COLOR,
             'twentyFourHours' => $this->localeService->is24Hour($this->locale),
             'updateBrowserTitle' => $browserTitle,
+            'editAfterStop' => $editAfterStop,
             'timezone' => $timezone,
             'user' => ['id' => $id, 'name' => $name, 'admin' => $admin, 'superAdmin' => $superAdmin, 'roles' => $roles],
         ];

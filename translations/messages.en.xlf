@@ -734,6 +734,10 @@
         <source>export_decimal</source>
         <target>Use decimal duration in export</target>
       </trans-unit>
+      <trans-unit id="TnYM7m0" resname="edit_after_stop">
+        <source>edit_after_stop</source>
+        <target>Edit time entry after stopping it</target>
+      </trans-unit>
       <trans-unit id="7zptTeh" resname="update_browser_title">
         <source>update_browser_title</source>
         <target>Update browser title</target>

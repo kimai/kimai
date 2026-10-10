@@ -372,6 +372,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             'calendar_initial_view',
             'login_initial_view',
             'update_browser_title',
+            'edit_after_stop',
             'daily_stats',
             'export_decimal',
         ];
