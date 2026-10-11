@@ -286,6 +286,10 @@ final class UserController extends BaseApiController
                 throw $this->createNotFoundException(\sprintf('Unknown custom-field "%s" requested', $name));
             }
 
+            if (str_starts_with($name, '__')) {
+                throw $this->createAccessDeniedException('Cannot modify internal preference: ' . $name);
+            }
+
             if (!$meta->isEnabled()) {
                 throw $this->createAccessDeniedException('User tried to update preference: ' . $name);
             }
