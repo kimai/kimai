@@ -235,6 +235,35 @@ class WizardControllerTest extends AbstractControllerBaseTestCase
         self::assertFalse($user->requiresPasswordReset());
     }
 
+    public function testPasswordWizardFailsIfNewPasswordIsCurrentPassword(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        $user->setRequiresPasswordReset(true);
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+
+        $this->assertHasValidationError(
+            $client,
+            '/wizard/password',
+            'form[name=user_password]',
+            [
+                'user_password' => [
+                    'plainPassword' => [
+                        'first' => UserFixtures::DEFAULT_PASSWORD,
+                        'second' => UserFixtures::DEFAULT_PASSWORD,
+                    ]
+                ]
+            ],
+            ['#user_password_plainPassword_first']
+        );
+
+        $this->getEntityManager()->clear();
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        self::assertTrue($user->requiresPasswordReset());
+    }
+
     public function testNextRedirectsToFirstUnseenStep(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);

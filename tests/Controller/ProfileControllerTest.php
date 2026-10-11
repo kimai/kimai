@@ -360,6 +360,7 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         $form = $client->getCrawler()->filter('form[name=user_password]')->form();
         $client->submit($form, [
             'user_password' => [
+                'currentPassword' => UserFixtures::DEFAULT_PASSWORD,
                 'plainPassword' => [
                     'first' => 'test1234',
                     'second' => 'test1234',
@@ -384,6 +385,7 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
             'form[name=user_password]',
             [
                 'user_password' => [
+                    'currentPassword' => UserFixtures::DEFAULT_PASSWORD,
                     'plainPassword' => [
                         'first' => 'abcdef1',
                         'second' => 'abcdef1',
@@ -392,6 +394,85 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
             ],
             ['#user_password_plainPassword_first']
         );
+    }
+
+    public function testPasswordActionFailsWithWrongCurrentPassword(): void
+    {
+        $this->assertFormHasValidationError(
+            User::ROLE_USER,
+            '/profile/' . UserFixtures::USERNAME_USER . '/password',
+            'form[name=user_password]',
+            [
+                'user_password' => [
+                    'currentPassword' => 'wrong-password',
+                    'plainPassword' => [
+                        'first' => 'test1234',
+                        'second' => 'test1234',
+                    ]
+                ]
+            ],
+            ['#user_password_currentPassword']
+        );
+    }
+
+    public function testPasswordActionFailsWithoutCurrentPassword(): void
+    {
+        $this->assertFormHasValidationError(
+            User::ROLE_USER,
+            '/profile/' . UserFixtures::USERNAME_USER . '/password',
+            'form[name=user_password]',
+            [
+                'user_password' => [
+                    'currentPassword' => '',
+                    'plainPassword' => [
+                        'first' => 'test1234',
+                        'second' => 'test1234',
+                    ]
+                ]
+            ],
+            ['#user_password_currentPassword']
+        );
+    }
+
+    public function testPasswordActionFailsIfNewPasswordIsCurrentPassword(): void
+    {
+        $this->assertFormHasValidationError(
+            User::ROLE_USER,
+            '/profile/' . UserFixtures::USERNAME_USER . '/password',
+            'form[name=user_password]',
+            [
+                'user_password' => [
+                    'currentPassword' => UserFixtures::DEFAULT_PASSWORD,
+                    'plainPassword' => [
+                        'first' => UserFixtures::DEFAULT_PASSWORD,
+                        'second' => UserFixtures::DEFAULT_PASSWORD,
+                    ]
+                ]
+            ],
+            ['#user_password_plainPassword_first']
+        );
+    }
+
+    public function testPasswordActionForOtherUserDoesNotCheckCurrentPassword(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/password');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=user_password]')->form();
+        self::assertFalse($form->has('user_password[currentPassword]'));
+
+        // re-using the current password is allowed, the result must not reveal the current password of other users
+        $client->submit($form, [
+            'user_password' => [
+                'plainPassword' => [
+                    'first' => UserFixtures::DEFAULT_PASSWORD,
+                    'second' => UserFixtures::DEFAULT_PASSWORD,
+                ]
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/password'));
     }
 
     public function testCreateApiToken(): void

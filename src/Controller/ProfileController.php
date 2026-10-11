@@ -500,12 +500,18 @@ final class ProfileController extends AbstractController
 
     private function createPasswordForm(User $user): FormInterface
     {
+        // users changing their own password must know the current one and are not allowed to re-use it,
+        // these checks are skipped for admins changing the password of other users
+        $isOwnProfile = $user->getId() === $this->getUser()->getId();
+
         return $this->createForm(
             UserPasswordType::class,
             $user,
             [
                 'action' => $this->generateUrl('user_profile_password', ['username' => $user->getUserIdentifier()]),
-                'method' => 'POST'
+                'method' => 'POST',
+                'require_current_password' => $isOwnProfile,
+                'deny_current_password' => $isOwnProfile,
             ]
         );
     }
