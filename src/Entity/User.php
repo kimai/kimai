@@ -51,6 +51,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Constraints\User(groups: ['UserCreate', 'Registration', 'Default', 'Profile'])]
 class User implements UserInterface, EquatableInterface, ThemeUserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
 {
+    public const PREFERENCE_PASSWORD_RESET = '__pw_reset__';
+
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_TEAMLEAD = 'ROLE_TEAMLEAD';
     public const ROLE_ADMIN = 'ROLE_ADMIN';
@@ -1254,12 +1256,12 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             return false;
         }
 
-        return $this->getPreferenceValue('__pw_reset__') === '1';
+        return $this->getPreferenceValue(self::PREFERENCE_PASSWORD_RESET) === '1';
     }
 
     public function setRequiresPasswordReset(bool $require = true): void
     {
-        $this->setPreferenceValue('__pw_reset__', ($require ? '1' : '0'));
+        $this->setPreferenceValue(self::PREFERENCE_PASSWORD_RESET, ($require ? '1' : '0'));
 
         if (!$require) {
             $this->passwordRequestedAt = null;

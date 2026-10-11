@@ -18,6 +18,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 #[Group('integration')]
 class WizardControllerTest extends AbstractControllerBaseTestCase
@@ -54,7 +55,7 @@ class WizardControllerTest extends AbstractControllerBaseTestCase
     public function testPasswordResetRedirectsToPasswordWizard(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->requirePasswordReset(UserFixtures::USERNAME_USER);
+        $this->requirePasswordReset(UserFixtures::USERNAME_USER, $client);
 
         $this->request($client, '/timesheet/');
         $this->assertIsRedirect($client, '/wizard/password');
@@ -84,7 +85,7 @@ class WizardControllerTest extends AbstractControllerBaseTestCase
     public function testPasswordResetCannotBeBypassedViaQueryString(string $url): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->requirePasswordReset(UserFixtures::USERNAME_USER);
+        $this->requirePasswordReset(UserFixtures::USERNAME_USER, $client);
 
         $this->request($client, $url);
         $this->assertIsRedirect($client, '/wizard/password');
@@ -101,7 +102,14 @@ class WizardControllerTest extends AbstractControllerBaseTestCase
         $values = $form->getPhpValues();
         $values['access_token_form']['name'] = 'bypass';
 
-        $this->requirePasswordReset(UserFixtures::USERNAME_USER);
+        // bypass the ORM, which would reset the security signature and end the session: this test makes sure
+        // that the PasswordResetSubscriber blocks a session with a valid CSRF token, while a reset is pending
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        $this->getEntityManager()->getConnection()->insert('kimai2_user_preferences', [
+            'user_id' => $user->getId(),
+            'name' => '__pw_reset__',
+            'value' => '1',
+        ]);
 
         $before = \count($this->getEntityManager()->getRepository(AccessToken::class)->findAll());
 
@@ -159,12 +167,20 @@ class WizardControllerTest extends AbstractControllerBaseTestCase
         $this->assertIsRedirect($client, '/wizard/password');
     }
 
-    private function requirePasswordReset(string $username): void
+    /**
+     * Requiring a password reset ends all sessions of the user: pass the client to log in again.
+     */
+    private function requirePasswordReset(string $username, ?HttpKernelBrowser $client = null): void
     {
         $user = $this->loadUserFromDatabase($username);
         $user->setRequiresPasswordReset(true);
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
+
+        if ($client !== null) {
+            self::assertInstanceOf(KernelBrowser::class, $client);
+            $client->loginUser($user, 'secured_area');
+        }
     }
 
     public function testFinishWizard(): void
@@ -263,10 +279,7 @@ class WizardControllerTest extends AbstractControllerBaseTestCase
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
-        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
-        $user->setRequiresPasswordReset(true);
-        $this->getEntityManager()->persist($user);
-        $this->getEntityManager()->flush();
+        $this->requirePasswordReset(UserFixtures::USERNAME_USER, $client);
 
         $crawler = $this->request($client, '/wizard/password');
         $form = $crawler->filter('form[name=user_password]')->form();
@@ -286,10 +299,7 @@ class WizardControllerTest extends AbstractControllerBaseTestCase
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
-        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
-        $user->setRequiresPasswordReset(true);
-        $this->getEntityManager()->persist($user);
-        $this->getEntityManager()->flush();
+        $this->requirePasswordReset(UserFixtures::USERNAME_USER, $client);
 
         $this->assertHasValidationError(
             $client,
