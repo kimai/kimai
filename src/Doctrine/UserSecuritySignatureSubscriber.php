@@ -50,8 +50,10 @@ final class UserSecuritySignatureSubscriber implements EventSubscriber
 
         foreach ($uow->getScheduledEntityUpdates() as $entity) {
             if ($entity instanceof User) {
-                $changes = array_intersect(self::FIELDS, array_keys($uow->getEntityChangeSet($entity)));
-                if (\count($changes) > 0) {
+                $changeSet = $uow->getEntityChangeSet($entity);
+                $changes = array_intersect(self::FIELDS, array_keys($changeSet));
+                // a new secret is only security relevant for an active 2FA, it is generated when opening the 2FA screen
+                if (\count($changes) > 0 || (\array_key_exists('totpSecret', $changeSet) && $entity->isTotpAuthenticationEnabled())) {
                     $users[spl_object_id($entity)] = $entity;
                 }
             } elseif ($entity instanceof UserPreference) {

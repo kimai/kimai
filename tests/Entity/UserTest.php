@@ -22,6 +22,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
+use Scheb\TwoFactorBundle\Model\Totp\TotpConfiguration;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -920,6 +921,55 @@ class UserTest extends TestCase
 
         self::assertTrue($user->isPasswordRequestNonExpired(3600));
         self::assertTrue($user->isPasswordRequestNonExpired(7200));
+    }
+
+    public function testTotpAuthentication(): void
+    {
+        $user = new User();
+        $user->setUserIdentifier('foo');
+        self::assertFalse($user->isTotpAuthenticationEnabled());
+        self::assertSame('foo', $user->getTotpAuthenticationUsername());
+
+        $user->setTotpSecret('JBSWY3DPEHPK3PXP');
+        $user->enableTotpAuthentication();
+        self::assertTrue($user->isTotpAuthenticationEnabled());
+        self::assertTrue($user->hasTotpSecret());
+
+        $config = $user->getTotpAuthenticationConfiguration();
+        self::assertSame('JBSWY3DPEHPK3PXP', $config->getSecret());
+        self::assertSame(TotpConfiguration::ALGORITHM_SHA1, $config->getAlgorithm());
+        self::assertSame(30, $config->getPeriod());
+        self::assertSame(6, $config->getDigits());
+
+        // deactivation removes the secret, so a re-activation requires a new one
+        $user->disableTotpAuthentication();
+        self::assertFalse($user->isTotpAuthenticationEnabled());
+        self::assertFalse($user->hasTotpSecret());
+        self::assertNull($user->getTotpSecret());
+    }
+
+    public function testCreateTotpAuthenticationConfiguration(): void
+    {
+        $user = new User();
+        $user->setTotpSecret('JBSWY3DPEHPK3PXP');
+
+        $config = $user->createTotpAuthenticationConfiguration('KRSXG5CTMVRXEZLU');
+        self::assertSame('KRSXG5CTMVRXEZLU', $config->getSecret());
+        self::assertSame(TotpConfiguration::ALGORITHM_SHA1, $config->getAlgorithm());
+        self::assertSame(30, $config->getPeriod());
+        self::assertSame(6, $config->getDigits());
+
+        // the given secret must not be stored in the user
+        self::assertSame('JBSWY3DPEHPK3PXP', $user->getTotpSecret());
+        self::assertEquals($user->getTotpAuthenticationConfiguration(), $user->createTotpAuthenticationConfiguration('JBSWY3DPEHPK3PXP'));
+    }
+
+    public function testGetTotpAuthenticationConfigurationWithoutSecret(): void
+    {
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('Cannot create TOTP configuration, user has no TOTP secret');
+
+        (new User())->getTotpAuthenticationConfiguration();
     }
 
     public function testSignatureDate(): void

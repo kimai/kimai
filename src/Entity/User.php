@@ -1069,14 +1069,14 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
-    public function setPassword($password): User
+    public function setPassword(#[\SensitiveParameter] $password): User
     {
         $this->password = $password;
 
         return $this;
     }
 
-    public function setPlainPassword($password): User
+    public function setPlainPassword(#[\SensitiveParameter] $password): User
     {
         $this->plainPassword = $password;
 
@@ -1094,7 +1094,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
-    public function setConfirmationToken($confirmationToken): void
+    public function setConfirmationToken(#[\SensitiveParameter] $confirmationToken): void
     {
         $this->confirmationToken = $confirmationToken;
     }
@@ -1300,7 +1300,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     // --------------- 2 Factor Authentication ---------------
 
-    public function setTotpSecret(?string $secret): void
+    public function setTotpSecret(#[\SensitiveParameter] ?string $secret): void
     {
         $this->totpSecret = $secret;
     }
@@ -1328,6 +1328,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function disableTotpAuthentication(): void
     {
         $this->totpEnabled = false;
+        $this->totpSecret = null;
     }
 
     public function getTotpAuthenticationUsername(): string
@@ -1337,7 +1338,16 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function getTotpAuthenticationConfiguration(): TotpConfigurationInterface
     {
-        return new TotpConfiguration($this->totpSecret, TotpConfiguration::ALGORITHM_SHA1, 30, 6);
+        if ($this->totpSecret === null) {
+            throw new \LogicException('Cannot create TOTP configuration, user has no TOTP secret');
+        }
+
+        return $this->createTotpAuthenticationConfiguration($this->totpSecret);
+    }
+
+    public function createTotpAuthenticationConfiguration(#[\SensitiveParameter] string $secret): TotpConfigurationInterface
+    {
+        return new TotpConfiguration($secret, TotpConfiguration::ALGORITHM_SHA1, 30, 6);
     }
 
     /**

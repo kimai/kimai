@@ -19,6 +19,7 @@ use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\User\PermissionService;
 use App\WorkingTime\Mode\WorkingTimeModeDay;
+use OTPHP\TOTP;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
@@ -831,8 +832,9 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
         self::assertTrue($client->getResponse()->isSuccessful());
 
+        // the secret is only stored in the user after the code was confirmed
         $user = $this->getUserByName(UserFixtures::USERNAME_USER);
-        self::assertTrue($user->hasTotpSecret());
+        self::assertFalse($user->hasTotpSecret());
 
         $formUrl = $this->createUrl('/profile/' . UserFixtures::USERNAME_USER . '/2fa');
         $content = $client->getResponse()->getContent();
@@ -840,11 +842,77 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
 
         self::assertStringContainsString(' data-toggle="tooltip" title="Click to show code" alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" src="', $content);
         self::assertStringContainsString('<form name="user_two_factor" method="post" action="' . $formUrl . '" id="user_two_factor_form">', $content);
+
+        // the pending secret is kept in the session, reloading the page shows the same secret
+        $secret = $client->getCrawler()->filter('#totp_secret')->text();
+        self::assertNotEmpty($secret);
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
+        self::assertSame($secret, $client->getCrawler()->filter('#totp_secret')->text());
+    }
+
+    public function testActivateTwoFactor(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $secret = $client->getCrawler()->filter('#totp_secret')->text();
+        self::assertNotEmpty($secret);
+
+        $form = $client->getCrawler()->filter('form[name=user_two_factor]')->form();
+        $client->submit($form, [
+            'user_two_factor' => [
+                'code' => TOTP::createFromSecret($secret)->now(),
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/profile/' . UserFixtures::USERNAME_USER . '/2fa'));
+        $client->followRedirect();
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $user = $this->getUserByName(UserFixtures::USERNAME_USER);
+        self::assertTrue($user->isTotpAuthenticationEnabled());
+        self::assertSame($secret, $user->getTotpSecret());
+
+        $content = $client->getResponse()->getContent();
+        self::assertNotFalse($content);
+        self::assertStringNotContainsString($secret, $content);
     }
 
     public function testTwoFactorAsAdmin(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
+    }
+
+    /**
+     * Must be called before the client is created: activating 2FA resets the security signature and would invalidate the session.
+     */
+    private function activateTwoFactor(string $username): void
+    {
+        $user = $this->getUserByName($username);
+        $user->setTotpSecret('JBSWY3DPEHPK3PXP');
+        $user->enableTotpAuthentication();
+        $em = $this->getEntityManager();
+        $em->persist($user);
+        $em->flush();
+
+        self::ensureKernelShutdown();
+    }
+
+    public function testTwoFactorHidesSecretWhenActivated(): void
+    {
+        $this->activateTwoFactor(UserFixtures::USERNAME_USER);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+        self::assertNotFalse($content);
+
+        self::assertStringNotContainsString('alt="TOTP QR Code"', $content);
+        self::assertStringNotContainsString('JBSWY3DPEHPK3PXP', $content);
+        self::assertStringNotContainsString('<form name="user_two_factor"', $content);
+        self::assertStringContainsString('id="user_two_factor_button"', $content);
     }
 
     public function testTwoFactorAsSuperAdmin(): void
@@ -856,10 +924,52 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
 
         $content = $client->getResponse()->getContent();
         self::assertNotFalse($content);
-        $formUrl = $this->createUrl('/profile/' . UserFixtures::USERNAME_USER . '/2fa');
 
-        self::assertStringContainsString(' data-toggle="tooltip" title="Click to show code" alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" src="', $content);
-        self::assertStringContainsString('<form name="user_two_factor" method="post" action="' . $formUrl . '" id="user_two_factor_form">', $content);
+        // super-admins must never see the secret of other users
+        self::assertStringNotContainsString('alt="TOTP QR Code"', $content);
+        self::assertStringNotContainsString('<form name="user_two_factor"', $content);
+        self::assertStringNotContainsString('id="user_two_factor_button"', $content);
+        self::assertFalse($this->getUserByName(UserFixtures::USERNAME_USER)->hasTotpSecret());
+    }
+
+    public function testTwoFactorAsSuperAdminForActivatedUser(): void
+    {
+        $this->activateTwoFactor(UserFixtures::USERNAME_USER);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+        self::assertNotFalse($content);
+        $deactivateUrl = $this->createUrl('/profile/' . UserFixtures::USERNAME_USER . '/2fa_deactivate');
+
+        self::assertStringNotContainsString('alt="TOTP QR Code"', $content);
+        self::assertStringNotContainsString('JBSWY3DPEHPK3PXP', $content);
+        // super-admins can still deactivate 2FA, e.g. if the user lost the device
+        self::assertStringContainsString('action="' . $deactivateUrl . '"', $content);
+    }
+
+    public function testDeactivateTwoFactorResetsSecret(): void
+    {
+        $this->activateTwoFactor(UserFixtures::USERNAME_USER);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
+        $form = $client->getCrawler()->filter('#user_two_factor_form')->form();
+        $client->submit($form);
+        $this->assertIsRedirect($client, $this->createUrl('/profile/' . UserFixtures::USERNAME_USER . '/2fa'));
+        $client->followRedirect();
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $user = $this->getUserByName(UserFixtures::USERNAME_USER);
+        self::assertFalse($user->isTotpAuthenticationEnabled());
+        self::assertFalse($user->hasTotpSecret());
+
+        // re-activation must use a new secret, the old one might have been seen by someone else
+        $secret = $client->getCrawler()->filter('#totp_secret')->text();
+        self::assertNotEmpty($secret);
+        self::assertNotEquals('JBSWY3DPEHPK3PXP', $secret);
     }
 
     public function testActivateTwoFactorWithEmptyToken(): void

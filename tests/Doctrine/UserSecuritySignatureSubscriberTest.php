@@ -109,6 +109,22 @@ class UserSecuritySignatureSubscriberTest extends KernelTestCase
         self::assertNotEquals($oldSignature, $user->getSignatureDate());
     }
 
+    public function testChangeTotpSecretOfActiveTwoFactorResetsSignature(): void
+    {
+        self::bootKernel();
+        $user = $this->getUserByRole(User::ROLE_USER);
+        $user->setTotpSecret('JBSWY3DPEHPK3PXP');
+        $user->enableTotpAuthentication();
+        $this->saveUser($user);
+
+        $oldSignature = $this->setOldSignature($user);
+
+        $user->setTotpSecret('KRSXG5CTMVRXEZLU');
+        $this->saveUser($user);
+
+        self::assertNotEquals($oldSignature, $user->getSignatureDate());
+    }
+
     public function testDisableUserResetsSignature(): void
     {
         self::bootKernel();
