@@ -112,6 +112,53 @@ class WizardControllerTest extends AbstractControllerBaseTestCase
         self::assertSame($before, $after, 'No access token must be created while a password reset is pending');
     }
 
+    /**
+     * Closing the browser (no session cookie, only remember-me cookie stays) must not skip the password reset.
+     * The remembered user has to unlock the session with the password and is then sent to the wizard.
+     */
+    public function testPasswordResetCannotBeBypassedWithRememberMeCookie(): void
+    {
+        $client = self::createClient();
+        $this->requirePasswordReset(UserFixtures::USERNAME_USER);
+
+        $this->request($client, '/login');
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $client->submit($client->getCrawler()->filter('body form')->form(), [
+            '_username' => UserFixtures::USERNAME_USER,
+            '_password' => UserFixtures::DEFAULT_PASSWORD,
+        ]);
+        $this->assertIsRedirect($client);
+
+        $this->request($client, '/timesheet/');
+        $this->assertIsRedirect($client, '/wizard/password');
+
+        // simulate a closed browser: the session is gone, only the remember-me cookie survives
+        self::assertNotNull($client->getCookieJar()->get('KIMAI_REMEMBER'), 'Missing remember-me cookie');
+        foreach ($client->getCookieJar()->all() as $cookie) {
+            if ($cookie->getName() !== 'KIMAI_REMEMBER') {
+                $client->getCookieJar()->expire($cookie->getName(), $cookie->getPath(), $cookie->getDomain());
+            }
+        }
+
+        $this->request($client, '/timesheet/');
+        $this->assertIsRedirect($client, '/wizard/password');
+
+        // the wizard requires full authentication: the user must unlock the session with the password
+        $this->request($client, '/wizard/password');
+        $this->assertIsRedirect($client, '/login');
+
+        $this->request($client, '/login');
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $client->submit($client->getCrawler()->filter('body form')->form(), [
+            '_password' => UserFixtures::DEFAULT_PASSWORD,
+        ]);
+        $this->assertIsRedirect($client, '/wizard/password');
+
+        $this->assertAccessIsGranted($client, '/wizard/password');
+        $this->request($client, '/timesheet/');
+        $this->assertIsRedirect($client, '/wizard/password');
+    }
+
     private function requirePasswordReset(string $username): void
     {
         $user = $this->loadUserFromDatabase($username);

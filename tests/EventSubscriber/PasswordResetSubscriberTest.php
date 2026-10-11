@@ -88,6 +88,8 @@ class PasswordResetSubscriberTest extends TestCase
         yield ['/wizard/intro', 'wizard_intro'];
         yield ['/en/wizard/password', 'wizard_password'];
         yield ['/logout', 'logout'];
+        yield ['/en/login', 'login'];
+        yield ['/en/login_check', 'security_check'];
     }
 
     #[DataProvider('provideExcludedUris')]
@@ -131,14 +133,17 @@ class PasswordResetSubscriberTest extends TestCase
         self::assertNull($event->getResponse());
     }
 
-    public function testOnKernelRequestIgnoresUserWithoutFullAuthentication(): void
+    /**
+     * Users with a pending 2FA challenge are not granted IS_AUTHENTICATED_REMEMBERED.
+     */
+    public function testOnKernelRequestIgnoresUserWithoutAuthentication(): void
     {
         $user = new User();
         $token = $this->createUserToken($user);
 
         $urlGenerator = $this->createMock(UrlGeneratorInterface::class);
         $security = $this->createMock(AuthorizationCheckerInterface::class);
-        $security->expects($this->once())->method('isGranted')->with('IS_AUTHENTICATED_FULLY')->willReturn(false);
+        $security->expects($this->once())->method('isGranted')->with('IS_AUTHENTICATED_REMEMBERED')->willReturn(false);
 
         $storage = $this->createMock(TokenStorageInterface::class);
         $storage->expects($this->once())->method('getToken')->willReturn($token);
@@ -161,7 +166,7 @@ class PasswordResetSubscriberTest extends TestCase
         $urlGenerator->expects($this->never())->method('generate');
 
         $security = $this->createMock(AuthorizationCheckerInterface::class);
-        $security->expects($this->once())->method('isGranted')->with('IS_AUTHENTICATED_FULLY')->willReturn(true);
+        $security->expects($this->once())->method('isGranted')->with('IS_AUTHENTICATED_REMEMBERED')->willReturn(true);
 
         $storage = $this->createMock(TokenStorageInterface::class);
         $storage->expects($this->once())->method('getToken')->willReturn($token);
@@ -189,7 +194,40 @@ class PasswordResetSubscriberTest extends TestCase
             ->willReturn('/wizard/password');
 
         $security = $this->createMock(AuthorizationCheckerInterface::class);
-        $security->expects($this->once())->method('isGranted')->with('IS_AUTHENTICATED_FULLY')->willReturn(true);
+        $security->expects($this->once())->method('isGranted')->with('IS_AUTHENTICATED_REMEMBERED')->willReturn(true);
+
+        $storage = $this->createMock(TokenStorageInterface::class);
+        $storage->expects($this->once())->method('getToken')->willReturn($token);
+
+        $sut = new PasswordResetSubscriber($urlGenerator, $security, $storage);
+        $event = $this->createRequestEvent('/dashboard');
+
+        $sut->onKernelRequest($event);
+
+        $response = $event->getResponse();
+        self::assertInstanceOf(RedirectResponse::class, $response);
+        self::assertSame('/wizard/password', $response->headers->get('Location'));
+    }
+
+    /**
+     * Regression test: closing the browser must not skip the password reset, the remember-me
+     * cookie re-authenticates the user without full authentication on the next visit.
+     */
+    public function testOnKernelRequestRedirectsRememberedUserToPasswordWizard(): void
+    {
+        $user = new User();
+        $user->setEnabled(true);
+        $user->setRequiresPasswordReset();
+        $token = $this->createUserToken($user);
+
+        $urlGenerator = $this->createMock(UrlGeneratorInterface::class);
+        $urlGenerator->expects($this->once())->method('generate')->with('wizard_password')->willReturn('/wizard/password');
+
+        $security = $this->createMock(AuthorizationCheckerInterface::class);
+        $security
+            ->expects($this->once())
+            ->method('isGranted')
+            ->willReturnCallback(fn (string $attribute) => $attribute === 'IS_AUTHENTICATED_REMEMBERED');
 
         $storage = $this->createMock(TokenStorageInterface::class);
         $storage->expects($this->once())->method('getToken')->willReturn($token);
@@ -236,7 +274,7 @@ class PasswordResetSubscriberTest extends TestCase
         $urlGenerator->expects($this->once())->method('generate')->with('wizard_password')->willReturn('/en/wizard/password');
 
         $security = $this->createMock(AuthorizationCheckerInterface::class);
-        $security->expects($this->once())->method('isGranted')->with('IS_AUTHENTICATED_FULLY')->willReturn(true);
+        $security->expects($this->once())->method('isGranted')->with('IS_AUTHENTICATED_REMEMBERED')->willReturn(true);
 
         $storage = $this->createMock(TokenStorageInterface::class);
         $storage->expects($this->once())->method('getToken')->willReturn($token);
@@ -257,6 +295,8 @@ class PasswordResetSubscriberTest extends TestCase
     public static function provideAllowedRoutes(): iterable
     {
         yield ['logout', true];
+        yield ['login', true];
+        yield ['security_check', true];
         yield ['wizard_next', true];
         yield ['wizard_password', true];
         yield ['wizard_intro', true];
@@ -268,6 +308,9 @@ class PasswordResetSubscriberTest extends TestCase
         yield ['user_profile_access_token', false];
         yield ['user_profile_password', false];
         yield ['wizard', false];
+        yield ['login_link', false];
+        yield ['link_login_check', false];
+        yield ['saml_login', false];
         yield ['Wizard_intro', false];
         yield ['my_wizard_intro', false];
         yield ['', false];

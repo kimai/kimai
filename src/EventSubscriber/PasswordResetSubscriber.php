@@ -62,7 +62,9 @@ class PasswordResetSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if (!$this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
+        // remembered users must be redirected as well, otherwise closing the browser would skip the reset.
+        // users with a pending 2FA challenge are not granted this attribute and must finish the login first.
+        if (!$this->security->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return;
         }
 
@@ -80,7 +82,10 @@ class PasswordResetSubscriber implements EventSubscriberInterface
     public static function isAllowedRoute(string $route): bool
     {
         // TODO 3.0 remove registration routes
+        // remembered users are sent from the wizard (requires full authentication) to the login form to unlock their session
         return $route === 'logout'
+            || $route === 'login'
+            || $route === 'security_check'
             || $route === 'user_registration_check_email'
             || str_starts_with($route, 'wizard_')
             || str_starts_with($route, 'registration_');
