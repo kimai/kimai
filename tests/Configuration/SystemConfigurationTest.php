@@ -275,6 +275,18 @@ class SystemConfigurationTest extends TestCase
         self::assertEquals('IT', $sut->getUserDefaultLanguage());
     }
 
+    public function testPasswordStrength(): void
+    {
+        $sut = $this->getSut($this->getDefaultSettings(), []);
+        self::assertEquals(0, $sut->getPasswordStrength());
+
+        $sut = $this->getSut(['user' => ['password_strength' => 3]], []);
+        self::assertEquals(3, $sut->getPasswordStrength());
+
+        $sut = $this->getSut(['user' => ['password_strength' => 3]], [(new Configuration())->setName('user.password_strength')->setValue('2')]);
+        self::assertEquals(2, $sut->getPasswordStrength());
+    }
+
     public function testUserWizardWithoutLoader(): void
     {
         $sut = $this->getSut($this->getDefaultSettings(), []);

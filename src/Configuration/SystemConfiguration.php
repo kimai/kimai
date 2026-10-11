@@ -190,6 +190,14 @@ final class SystemConfiguration
         return (int) $this->find('user.password_reset_retry_ttl');
     }
 
+    /**
+     * Minimum password strength (see PasswordStrength constants), 0 means the check is disabled.
+     */
+    public function getPasswordStrength(): int
+    {
+        return (int) $this->find('user.password_strength');
+    }
+
     public function isPasswordResetActive(): bool
     {
         if (!$this->isLoginFormActive()) {
