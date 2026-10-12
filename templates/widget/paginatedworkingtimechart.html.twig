@@ -1,1 +1,11 @@
-{{ render_widget('PaginatedWorkingTimeChart', {'user': user, 'year': year, 'week': week}) }}
+{{ render_widget('PaginatedWorkingTimeChart', {
+    'user': user,
+    'year': year,
+    'week': week,
+    'period': period|default('week'),
+    'groupBy': groupBy|default('day'),
+    'type': type|default('bar'),
+    'date': date|default(''),
+    'begin': begin|default(''),
+    'end': end|default('')
+}) }}

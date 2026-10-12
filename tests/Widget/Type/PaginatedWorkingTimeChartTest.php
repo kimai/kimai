@@ -9,8 +9,6 @@
 
 namespace App\Tests\Widget\Type;
 
-use App\Entity\Activity;
-use App\Entity\Project;
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
@@ -55,22 +53,21 @@ class PaginatedWorkingTimeChartTest extends TestCase
     {
         $sut = $this->createSut();
 
-        $options = $sut->getOptions(['type' => 'xxx']);
+        $options = $sut->getOptions(['type' => 'xxx', 'period' => 'xxx', 'groupBy' => 'xxx']);
         self::assertEquals('bar', $options['type']);
+        self::assertEquals('week', $options['period']);
+        self::assertEquals('day', $options['groupBy']);
     }
 
     public function testGetData(): void
     {
-        $activity = $this->createMock(Activity::class);
-        $activity->method('getId')->willReturn(42);
-
-        $project = $this->createMock(Project::class);
-        $project->method('getId')->willReturn(4711);
-
         $repository = $this->createMock(TimesheetRepository::class);
+        $repository->method('getDurationForTimeRange')->willReturn(0);
 
         $expectedKeys = [
-            'begin', 'end', 'dateYear', 'thisMonth', 'lastWeekInYear', 'lastWeekInLastYear', 'day', 'week', 'month', 'year', 'financial', 'financialBegin'
+            'begin', 'end', 'date', 'dateYear', 'thisMonth', 'lastWeekInYear', 'lastWeekInLastYear', 'period',
+            'groupBy', 'type', 'previous', 'next', 'periods', 'groupings', 'current', 'day', 'week', 'month',
+            'year', 'financial', 'financialBegin'
         ];
 
         $configuration = SystemConfigurationFactory::createStub(['company' => ['financial_year' => null]]);
@@ -85,20 +82,22 @@ class PaginatedWorkingTimeChartTest extends TestCase
             self::assertArrayHasKey($key, $data);
         }
         self::assertNull($data['financialBegin']);
+        self::assertSame('week', $data['period']);
+        self::assertSame('day', $data['groupBy']);
+        self::assertSame('bar', $data['type']);
+        self::assertCount(6, $data['periods']);
+        self::assertCount(2, $data['groupings']);
     }
 
     public function testGetDataWithFinancialYear(): void
     {
-        $activity = $this->createMock(Activity::class);
-        $activity->method('getId')->willReturn(42);
-
-        $project = $this->createMock(Project::class);
-        $project->method('getId')->willReturn(4711);
-
         $repository = $this->createMock(TimesheetRepository::class);
+        $repository->method('getDurationForTimeRange')->willReturn(0);
 
         $expectedKeys = [
-            'begin', 'end', 'dateYear', 'thisMonth', 'lastWeekInYear', 'lastWeekInLastYear', 'day', 'week', 'month', 'year', 'financial', 'financialBegin'
+            'begin', 'end', 'date', 'dateYear', 'thisMonth', 'lastWeekInYear', 'lastWeekInLastYear', 'period',
+            'groupBy', 'type', 'previous', 'next', 'periods', 'groupings', 'current', 'day', 'week', 'month',
+            'year', 'financial', 'financialBegin'
         ];
 
         $configuration = SystemConfigurationFactory::createStub(['company' => ['financial_year' => '2020-01-01']]);
@@ -113,5 +112,73 @@ class PaginatedWorkingTimeChartTest extends TestCase
             self::assertArrayHasKey($key, $data);
         }
         self::assertInstanceOf(\DateTime::class, $data['financialBegin']);
+    }
+
+    public function testGetDataWithCustomRange(): void
+    {
+        $repository = $this->createMock(TimesheetRepository::class);
+        $repository->method('getDurationForTimeRange')->willReturn(0);
+
+        $configuration = SystemConfigurationFactory::createStub(['company' => ['financial_year' => null]]);
+
+        $sut = new PaginatedWorkingTimeChart($repository, $configuration);
+        $sut->setUser(new User());
+
+        $data = $sut->getData($sut->getOptions([
+            'period' => 'custom',
+            'groupBy' => 'week',
+            'begin' => '2020-02-10',
+            'end' => '2020-02-12',
+        ]));
+
+        self::assertIsArray($data);
+        self::assertSame('custom', $data['period']);
+        self::assertSame('week', $data['groupBy']);
+
+        $begin = $data['begin'];
+        $end = $data['end'];
+        self::assertInstanceOf(\DateTime::class, $begin);
+        self::assertInstanceOf(\DateTime::class, $end);
+        self::assertSame('2020-02-10', $begin->format('Y-m-d'));
+        self::assertSame('2020-02-12', $end->format('Y-m-d'));
+
+        $previous = $data['previous'];
+        $next = $data['next'];
+        self::assertIsArray($previous);
+        self::assertIsArray($next);
+        self::assertSame('2020-02-07', $previous['begin']);
+        self::assertSame('2020-02-13', $next['begin']);
+    }
+
+    public function testGetDataWithHistoricalAnchorKeepsAnchorForYtdPeriodLink(): void
+    {
+        $repository = $this->createMock(TimesheetRepository::class);
+        $repository->method('getDurationForTimeRange')->willReturn(0);
+
+        $configuration = SystemConfigurationFactory::createStub(['company' => ['financial_year' => null]]);
+
+        $sut = new PaginatedWorkingTimeChart($repository, $configuration);
+        $sut->setUser(new User());
+
+        $data = $sut->getData($sut->getOptions([
+            'period' => 'year',
+            'date' => '2024-05-15',
+        ]));
+
+        $ytdPeriod = null;
+        foreach ($data['periods'] as $period) {
+            if ($period['period'] === 'ytd') {
+                $ytdPeriod = $period;
+                break;
+            }
+        }
+
+        if ($ytdPeriod === null) {
+            self::fail('Could not find YTD period option');
+        }
+
+        self::assertSame('ytd', $ytdPeriod['routeOptions']['period']);
+        self::assertSame(2024, $ytdPeriod['routeOptions']['year']);
+        self::assertSame('2024-05-15', $ytdPeriod['routeOptions']['date']);
     }
 }
