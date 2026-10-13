@@ -131,6 +131,11 @@ final class PasswordResetController extends AbstractController
             }
 
             if (!$user->isPasswordRequestNonExpired($this->configuration->getPasswordResetRetryLifetime())) {
+                // must be saved before the login link is created: requiring a password reset changes the
+                // security signature of the user, which is part of the login link hash
+                $user->setRequiresPasswordReset(true);
+                $this->userService->saveUser($user);
+
                 $loginLinkDetails = $loginLinkHandler->createLoginLink($user, $request, $this->configuration->getPasswordResetRetryLifetime()); // @phpstan-ignore-line
                 $loginLink = $loginLinkDetails->getUrl();
 
@@ -141,8 +146,8 @@ final class PasswordResetController extends AbstractController
                 // this will send the email
                 $this->eventDispatcher->dispatch(new UserEmailEvent($user, $event->getEmail()));
 
+                // only after the email was sent, otherwise the user could not request a new one
                 $user->markPasswordRequested();
-                $user->setRequiresPasswordReset(true);
                 $this->userService->saveUser($user);
             }
         } catch (\Exception $ex) {

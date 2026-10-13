@@ -73,6 +73,14 @@ final class UserLoginLinkCommand extends Command
             return Command::FAILURE;
         }
 
+        // must be saved before the login link is created: requiring a password reset changes the
+        // security signature of the user, which is part of the login link hash
+        if ($input->getOption('password-reset') === true) {
+            $user->markPasswordRequested();
+            $user->setRequiresPasswordReset(true);
+            $this->userRepository->saveUser($user);
+        }
+
         // the URL is generated from the router context (configured via DEFAULT_URI), passing a Request to
         // createLoginLink() would replace it and fail with "Untrusted Host" if TRUSTED_HOSTS is configured
         $context = $this->urlGenerator->getContext();
@@ -95,12 +103,6 @@ final class UserLoginLinkCommand extends Command
             $path = parse_url($loginLink, PHP_URL_PATH);
             $query = parse_url($loginLink, PHP_URL_QUERY);
             $loginLink = (\is_string($path) ? $path : '/') . (\is_string($query) ? '?' . $query : '');
-        }
-
-        if ($input->getOption('password-reset') === true) {
-            $user->markPasswordRequested();
-            $user->setRequiresPasswordReset(true);
-            $this->userRepository->saveUser($user);
         }
 
         $output->writeln($loginLink);

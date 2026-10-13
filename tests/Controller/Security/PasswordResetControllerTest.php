@@ -11,6 +11,7 @@ namespace App\Tests\Controller\Security;
 
 use App\Tests\Controller\AbstractControllerBaseTestCase;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -197,6 +198,38 @@ class PasswordResetControllerTest extends AbstractControllerBaseTestCase
 
         $user = $this->loadUserFromDatabase('john_user');
         self::assertTrue($user->requiresPasswordReset());
+    }
+
+    /**
+     * Regression test: requiring the password reset changes the security signature, which is part of the
+     * login link hash. The link must be created afterwards, otherwise the emailed link is invalid immediately.
+     */
+    public function testLoginLinkFromEmailIsValid(): void
+    {
+        $client = self::createClient();
+
+        $this->request($client, '/resetting/request');
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $form = $client->getCrawler()->filter('form')->form();
+        $client->submit($form, [
+            'username' => 'john_user',
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/resetting/check-email'));
+
+        self::assertEmailCount(1);
+        $email = self::getMailerMessage();
+        self::assertInstanceOf(TemplatedEmail::class, $email);
+        // the context is removed after rendering the email
+        preg_match('#href="([^"]+/auth/link/check\?[^"]+)"#', (string) $email->getHtmlBody(), $matches);
+        self::assertArrayHasKey(1, $matches, 'Missing login link in email');
+        $loginLink = html_entity_decode($matches[1]);
+
+        $this->requestPure($client, $loginLink);
+        $this->assertIsRedirect($client);
+        self::assertStringNotContainsString('/login', (string) $client->getResponse()->headers->get('Location'), 'The login link is invalid');
+
+        $client->followRedirect();
+        $this->assertIsRedirect($client, '/wizard/password');
     }
 
     public function testPartiallyMatchingHostIsRejected(): void
