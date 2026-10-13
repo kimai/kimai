@@ -41,7 +41,7 @@ final class InvoiceCreateCommand extends Command
     private bool $previewUniqueFile = false;
 
     public function __construct(
-        private readonly InvoiceService $InvoiceService,
+        private readonly InvoiceService $invoiceService,
         private readonly CustomerRepository $customerRepository,
         private readonly ProjectRepository $projectRepository,
         private readonly InvoiceTemplateRepository $invoiceTemplateRepository,
@@ -283,16 +283,16 @@ final class InvoiceCreateCommand extends Command
             $query->setTemplate($tpl);
 
             try {
-                $model = $this->InvoiceService->createModel($query);
+                $model = $this->invoiceService->createModel($query);
                 // this check makes sure to only fetch invoices with records
                 if (\count($model->getEntries()) === 0) {
                     continue;
                 }
 
                 if (null !== $this->previewDirectory) {
-                    $invoices[] = $this->saveInvoicePreview($this->InvoiceService->renderInvoice($model, $this->eventDispatcher));
+                    $invoices[] = $this->saveInvoicePreview($this->invoiceService->renderInvoice($model, $this->eventDispatcher));
                 } else {
-                    $invoices[] = $this->InvoiceService->createInvoice($model, $this->eventDispatcher);
+                    $invoices[] = $this->invoiceService->createInvoice($model, $this->eventDispatcher);
                 }
             } catch (\Exception $ex) {
                 $io->error(\sprintf('Failed to create invoice for project with: %s', $ex->getMessage()));
@@ -358,16 +358,16 @@ final class InvoiceCreateCommand extends Command
             $query->setTemplate($tpl);
 
             try {
-                $model = $this->InvoiceService->createModel($query);
+                $model = $this->invoiceService->createModel($query);
                 // this check makes sure to only fetch invoices with records
                 if (\count($model->getEntries()) === 0) {
                     continue;
                 }
 
                 if (null !== $this->previewDirectory) {
-                    $invoices[] = $this->saveInvoicePreview($this->InvoiceService->renderInvoice($model, $this->eventDispatcher));
+                    $invoices[] = $this->saveInvoicePreview($this->invoiceService->renderInvoice($model, $this->eventDispatcher));
                 } else {
-                    $invoices[] = $this->InvoiceService->createInvoice($model, $this->eventDispatcher);
+                    $invoices[] = $this->invoiceService->createInvoice($model, $this->eventDispatcher);
                 }
             } catch (\Exception $ex) {
                 $io->error(\sprintf('Failed to create invoice for customer with: %s', $ex->getMessage()));
@@ -413,7 +413,7 @@ final class InvoiceCreateCommand extends Command
         $table->setHeaders($columns);
 
         foreach ($invoices as $invoice) {
-            $file = $this->InvoiceService->getInvoiceFile($invoice);
+            $file = $this->invoiceService->getInvoiceFile($invoice);
             if (null === $file) {
                 $io->warning(
                     \sprintf('Created invoice with ID %s, but file was not found %s', $invoice->getId() ?? 'unknown', $invoice->getInvoiceFilename() ?? 'unknown')
@@ -456,7 +456,7 @@ final class InvoiceCreateCommand extends Command
      */
     private function getActiveCustomers(InvoiceQuery $invoiceQuery): array
     {
-        $results = $this->InvoiceService->getInvoiceItems($invoiceQuery);
+        $results = $this->invoiceService->getInvoiceItems($invoiceQuery);
 
         $customers = [];
 
@@ -473,7 +473,7 @@ final class InvoiceCreateCommand extends Command
      */
     private function getActiveProjects(InvoiceQuery $invoiceQuery): array
     {
-        $results = $this->InvoiceService->getInvoiceItems($invoiceQuery);
+        $results = $this->invoiceService->getInvoiceItems($invoiceQuery);
 
         $projects = [];
 
