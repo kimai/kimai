@@ -11,7 +11,7 @@ Perform EACH version specific task between your version and the new one, otherwi
 ## [2.70.0](https://github.com/kimai/kimai/releases/tag/2.70.0)
 
 Kimai showed invalid examples in the `.env.dist` and on the documentation website.
-We strongly urge everyone to check and fix the `TRUSTED_HOSTS` env setting.
+We strongly urge everyone to check and fix your `TRUSTED_HOSTS` env setting.
 
 The most used version is a hostname like `kimai.example.com` which you should rewrite as `^kimai\.example\.com$`.
 
