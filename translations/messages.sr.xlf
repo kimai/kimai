@@ -2214,6 +2214,10 @@
         <source>fill_day.help</source>
         <target state="translated">Уколико трајање није унето, користи се остатак очекиваног радног времена.</target>
       </trans-unit>
+      <trans-unit id="fxkWjGQ" resname="password_current">
+        <source>password_current</source>
+        <target state="translated">Тренутна лозинка</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

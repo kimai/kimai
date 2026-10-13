@@ -186,6 +186,10 @@
         <source>The project is locked for the selected times.</source>
         <target state="translated">Пројекат је закључан за изабрана времена.</target>
       </trans-unit>
+      <trans-unit id="5Yso.63" resname="The new password must be different from the current password.">
+        <source>The new password must be different from the current password.</source>
+        <target state="translated">Нова лозинка мора да се разликује од тренутне лозинке.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

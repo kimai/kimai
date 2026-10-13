@@ -28,11 +28,11 @@
       </trans-unit>
       <trans-unit id="DYHuW58" resname="confirm.delete">
         <source>confirm.delete</source>
-        <target state="translated">Êtes-vous sûr·e de vouloir le supprimer ?</target>
+        <target state="translated">Êtes-vous sûr·e de vouloir le supprimer ?</target>
       </trans-unit>
       <trans-unit id="vDd3alC" resname="admin_entity.delete_confirm">
         <source>admin_entity.delete_confirm</source>
-        <target state="translated">Ces données seront également supprimées ! Vous pouvez toutefois sélectionner une entrée vers laquelle toutes les données seront transférées :</target>
+        <target state="translated">Ces données seront également supprimées ! Vous pouvez toutefois sélectionner une entrée vers laquelle toutes les données seront transférées :</target>
       </trans-unit>
       <trans-unit id="COyxNde" resname="delete.not_in_use">
         <source>delete.not_in_use</source>
@@ -1020,7 +1020,7 @@
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
-        <target state="translated">Un courriel a été envoyé. Suivez le lien s'y trouvant pour réinitialiser votre mot de passe. Remarque : Vous ne pouvez demander un nouveau mot de passe qu'une fois toutes les %tokenLifetime% heures. Si vous ne recevez pas de courriel, vérifiez vos spams ou réessayez.</target>
+        <target state="translated">Un courriel a été envoyé. Suivez le lien s'y trouvant pour réinitialiser votre mot de passe. Remarque : Vous ne pouvez demander un nouveau mot de passe qu'une fois toutes les %tokenLifetime% heures. Si vous ne recevez pas de courriel, vérifiez vos spams ou réessayez.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
@@ -2153,6 +2153,66 @@
       <trans-unit id="Q3gmLM6" resname="key_help">
         <source>key_help</source>
         <target>Cette valeur sera utilisée en interne, par exemple dans les modèles de facture. Les charactères autorisés sont : lettres minuscules (a-z), les chiffres (0-9) et le tiret bas (_).</target>
+      </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target state="translated">Authentification</target>
+      </trans-unit>
+      <trans-unit id="LQXTGjm" resname="authentication.help">
+        <source>authentication.help</source>
+        <target state="translated">En sélectionnant « Interne », le mot de passe est supprimé. Vous pouvez ensuite définir un nouveau mot de passe ou utiliser la fonction « Mot de passe oublié ».</target>
+      </trans-unit>
+      <trans-unit id="NvQBTxG" resname="authentication.internal">
+        <source>authentication.internal</source>
+        <target state="translated">Interne</target>
+      </trans-unit>
+      <trans-unit id="DI8vH1J" resname="copy_to_clipboard">
+        <source>copy_to_clipboard</source>
+        <target state="translated">copier dans le presse-papiers</target>
+      </trans-unit>
+      <trans-unit id="netluHi" resname="approval">
+        <source>approval</source>
+        <target state="translated">Approbation</target>
+      </trans-unit>
+      <trans-unit id="9SkAbbx" resname="approval_required">
+        <source>approval_required</source>
+        <target state="translated">Approbation requise</target>
+      </trans-unit>
+      <trans-unit id="7dLJTuj" resname="fill_day">
+        <source>fill_day</source>
+        <target state="translated">Couvre la durée de travail prévue</target>
+      </trans-unit>
+      <trans-unit id="O6IGTDm" resname="Absence types">
+        <source>Absence types</source>
+        <target state="translated">Types d'absences</target>
+      </trans-unit>
+      <trans-unit id="2mFc5.v" resname="absence_type.category.help">
+        <source>absence_type.category.help</source>
+        <target state="translated">Cette catégorie définit la manière dont les réservations sont calculées (par exemple, par rapport aux jours de congé ou au compte de temps de travail) et l'endroit où le type est affiché. Elle ne peut pas être modifiée ultérieurement.</target>
+      </trans-unit>
+      <trans-unit id="4YKqwfo" resname="absence_type.half_day">
+        <source>absence_type.half_day</source>
+        <target state="translated">Prévoyez des demi-journées</target>
+      </trans-unit>
+      <trans-unit id="ukwjp0C" resname="absence_type.date_range">
+        <source>absence_type.date_range</source>
+        <target state="translated">Autoriser les réservations sur plusieurs jours</target>
+      </trans-unit>
+      <trans-unit id="j6S5GDf" resname="absence_type.duration">
+        <source>absence_type.duration</source>
+        <target state="translated">Autoriser la saisie d'une durée</target>
+      </trans-unit>
+      <trans-unit id="E7XVJxv" resname="absence_type.duration_required">
+        <source>absence_type.duration_required</source>
+        <target state="translated">La durée est un champ obligatoire</target>
+      </trans-unit>
+      <trans-unit id="W_6BSlE" resname="absence_type.max_days">
+        <source>absence_type.max_days</source>
+        <target state="translated">Nombre maximal de jours par réservation</target>
+      </trans-unit>
+      <trans-unit id="_cQHZDu" resname="fill_day.help">
+        <source>fill_day.help</source>
+        <target state="translated">Si aucune durée n'est saisie, c'est le temps de travail restant prévu pour la journée qui est pris en compte.</target>
       </trans-unit>
     </body>
   </file>

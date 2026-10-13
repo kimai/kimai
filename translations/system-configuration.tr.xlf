@@ -318,6 +318,42 @@
         <source>user_auth_wizard</source>
         <target state="translated">Yeni kullanıcılar için kurulum sihirbazını göster</target>
       </trans-unit>
+      <trans-unit id="iobaZJS" resname="user_auth_change">
+        <source>user_auth_change</source>
+        <target state="translated">Harici oturum açan kullanıcıların kimlik doğrulama yöntemini değiştir</target>
+      </trans-unit>
+      <trans-unit id="iMmgno5" resname="user_auth_change.help">
+        <source>user_auth_change.help</source>
+        <target state="translated">Süper Yöneticilerin, harici oturum açan kullanıcıları kullanıcı profilinde yeniden dahili oturum açmaya geçirmelerine izin verir.</target>
+      </trans-unit>
+      <trans-unit id="6pqJCWV" resname="user_auth_password_strength">
+        <source>user_auth_password_strength</source>
+        <target state="translated">Parola güçlülüğü</target>
+      </trans-unit>
+      <trans-unit id="0hLoKXm" resname="user_auth_password_strength.help">
+        <source>user_auth_password_strength.help</source>
+        <target state="translated">Bir parola belirlendiğinde uygulanır. Parolanın gücü, uzunluğu ve kullanılan karakter türlerine göre hesaplanır.</target>
+      </trans-unit>
+      <trans-unit id="svXdXTq" resname="password_strength.none">
+        <source>password_strength.none</source>
+        <target state="translated">Bir gereklilik yok (yalnızca asgari uzunluk)</target>
+      </trans-unit>
+      <trans-unit id="3jD52PB" resname="password_strength.normal">
+        <source>password_strength.normal</source>
+        <target state="translated">Normal</target>
+      </trans-unit>
+      <trans-unit id="0e4HBxu" resname="password_strength.medium">
+        <source>password_strength.medium</source>
+        <target state="translated">Orta</target>
+      </trans-unit>
+      <trans-unit id="VlOVWX7" resname="password_strength.strong">
+        <source>password_strength.strong</source>
+        <target state="translated">Güçlü</target>
+      </trans-unit>
+      <trans-unit id="R5QYeOG" resname="password_strength.very_strong">
+        <source>password_strength.very_strong</source>
+        <target state="translated">Çok güçlü</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
