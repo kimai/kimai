@@ -57,6 +57,11 @@ class TrustedHostsEnvVarProcessorTest extends TestCase
             [' kimai.example.com ', '^(?:.+\.)?(?:kimai\.example\.com)$'],
             ['localhost|127.0.0.1|kimai.example.com', '^(?:.+\.)?(?:localhost|127\.0\.0\.1|kimai\.example\.com)$'],
             ['localhost|[::1]', '^(?:.+\.)?(?:localhost|\[\:\:1\])$'],
+            // whitespace around the separator is ignored
+            ['localhost |kimai.example.com', '^(?:.+\.)?(?:localhost|kimai\.example\.com)$'],
+            ['localhost| kimai.example.com', '^(?:.+\.)?(?:localhost|kimai\.example\.com)$'],
+            ['localhost | kimai.example.com', '^(?:.+\.)?(?:localhost|kimai\.example\.com)$'],
+            ["^localhost\t|\t^kimai.example.com$", '^(?:localhost|kimai\.example\.com)$'],
             // anchored host names with unescaped dots: escaped, no subdomains
             ['^kimai.example.com$', '^(?:kimai\.example\.com)$'],
             ['^kimai.example.com\z', '^(?:kimai\.example\.com)$'],
@@ -124,6 +129,11 @@ class TrustedHostsEnvVarProcessorTest extends TestCase
             ['^kimai.example.com$', 'kimai-example.com', false],
             ['^kimai.example.com\z', 'kimai.example.com', true],
             ['^kimai.example.com\z', 'kimai.example.com.attacker.lab', false],
+            // whitespace around the separator
+            ['localhost |kimai.example.com', 'kimai.example.com', true],
+            ['localhost |kimai.example.com', 'localhost', true],
+            ['localhost |kimai.example.com', 'kimai.example.com.attacker.tld', false],
+            ['localhost| kimai.example.com', 'localhost.attacker.tld', false],
             // only a start anchor
             ['^kimai.example.com', 'kimai.example.com', true],
             ['^kimai.example.com', 'www.kimai.example.com', false],

@@ -51,7 +51,7 @@ final class TrustedHostsEnvVarProcessor implements EnvVarProcessorInterface
         $exact = [];
         $subdomains = [];
 
-        foreach (explode('|', $value) as $entry) {
+        foreach (array_map('trim', explode('|', $value)) as $entry) {
             if (preg_match(self::ENTRY, $entry, $matches) !== 1) {
                 return $value;
             }
