@@ -8,6 +8,29 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
+## [2.70.0](https://github.com/kimai/kimai/releases/tag/2.70.0)
+
+Kimai showed invalid examples in the `.env.dist` and on the documentation website.
+We strongly urge everyone to check and fix the `TRUSTED_HOSTS` env setting.
+
+The most used version is a hostname like `kimai.example.com` which you should rewrite as `^kimai\.example\.com$`.
+
+For all installations that do not read this warning, we added a parser.
+
+`TRUSTED_HOSTS` values that only contain host names are now matched against the complete host name.
+Previously Symfony matched them as unanchored regular expressions, so `kimai.example.com` also trusted 
+`kimai.example.com.attacker.tld` and `kimai-example.com`.
+
+Examples:
+
+- `kimai.example.com` or `localhost|kimai.example.com` trust these hosts and their subdomains (the parser converts `kimai.example.com` to `^(?:.+\.)?(?:kimai\.example\.com)$`)
+- `^kimai.example.com$` trusts exactly this host
+- values containing other regular expression characters (like `^kimai\.example\.com$` or `.*\.example\.com`) are not changed
+
+If you used a partial host name (e.g. `TRUSTED_HOSTS=kimai` for `kimai.example.com`), Kimai now answers 
+with "400 Bad Request". Configure the full host name instead. If you really need the old behavior, use a 
+regular expression like `.*kimai.*`, which is not changed.
+
 ## [2.68.0](https://github.com/kimai/kimai/releases/tag/2.68.0)
 
 Team restrictions on customers, projects and activities are now consistently inherited
