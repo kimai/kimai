@@ -118,6 +118,66 @@
         <source>board.private</source>
         <target state="translated">Quadro privado</target>
       </trans-unit>
+      <trans-unit id="hZFps4G" resname="board" approved="no">
+        <source>board</source>
+        <target state="translated">Quadro</target>
+      </trans-unit>
+      <trans-unit id="TuoG.8m" resname="board.remove_task" approved="no">
+        <source>board.remove_task</source>
+        <target state="translated">Remover do quadro</target>
+      </trans-unit>
+      <trans-unit id="hhrw1nb" resname="board.columns" approved="no">
+        <source>board.columns</source>
+        <target state="translated">Colunas</target>
+      </trans-unit>
+      <trans-unit id="9.F1FZS" resname="board.add_column" approved="no">
+        <source>board.add_column</source>
+        <target state="translated">Adicionar coluna</target>
+      </trans-unit>
+      <trans-unit id="9rA4ixj" resname="board.only_mine" approved="no">
+        <source>board.only_mine</source>
+        <target state="translated">Apenas as minhas tarefas</target>
+      </trans-unit>
+      <trans-unit id="lu5uNlv" resname="board.filter" approved="no">
+        <source>board.filter</source>
+        <target state="translated">Filtrar tarefas</target>
+      </trans-unit>
+      <trans-unit id="ad2nQdr" resname="board.columns_invalid" approved="no">
+        <source>board.columns_invalid</source>
+        <target state="translated">A configuração da coluna é inválida.</target>
+      </trans-unit>
+      <trans-unit id="SPiQMlQ" resname="board.column.limit" approved="no">
+        <source>board.column.limit</source>
+        <target state="translated">Limite de WIP</target>
+      </trans-unit>
+      <trans-unit id="wkzeXtZ" resname="board.move_to" approved="no">
+        <source>board.move_to</source>
+        <target state="translated">Mover para</target>
+      </trans-unit>
+      <trans-unit id="e3APxiK" resname="board.remove_task_confirm" approved="no">
+        <source>board.remove_task_confirm</source>
+        <target state="translated">Remover esta tarefa do quadro?</target>
+      </trans-unit>
+      <trans-unit id="_H1KEu_" resname="board.unassign_user" approved="no">
+        <source>board.unassign_user</source>
+        <target state="translated">Remover o usuário atribuído desta tarefa?</target>
+      </trans-unit>
+      <trans-unit id="Hj3qdDA" resname="board.delete_confirm" approved="no">
+        <source>board.delete_confirm</source>
+        <target state="translated">Deletar esse quadro?</target>
+      </trans-unit>
+      <trans-unit id="K.9A2XH" resname="board.close_task" approved="no">
+        <source>board.close_task</source>
+        <target state="translated">Completar esta tarefa?</target>
+      </trans-unit>
+      <trans-unit id="7lJ6pzI" resname="board.limit_reached" approved="no">
+        <source>board.limit_reached</source>
+        <target state="translated">Você atingiu o limite de %limit% quadros privados.</target>
+      </trans-unit>
+      <trans-unit id="Wq09TUJ" resname="board.empty_state" approved="no">
+        <source>board.empty_state</source>
+        <target state="translated">Você ainda não tem nenhum quadro. Crie um para começar.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

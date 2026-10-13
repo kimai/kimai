@@ -186,6 +186,10 @@
         <source>The project is locked for the selected times.</source>
         <target state="translated">Het project is vergrendeld voor de geselecteerde tijden.</target>
       </trans-unit>
+      <trans-unit id="5Yso.63" resname="The new password must be different from the current password.">
+        <source>The new password must be different from the current password.</source>
+        <target state="translated">Het nieuwe wachtwoord moet anders zijn dan het huidige wachtwoord.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

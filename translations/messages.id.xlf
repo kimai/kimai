@@ -2146,6 +2146,74 @@
         <source>help.project_locked_until</source>
         <target state="translated">Waktu dan termasuk tanggal ini tidak dapat dibuat maupun diubah.</target>
       </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target state="translated">Autentikasi</target>
+      </trans-unit>
+      <trans-unit id="LQXTGjm" resname="authentication.help">
+        <source>authentication.help</source>
+        <target state="translated">Beralih ke "Internal" akan menghapus kata sandi. Setelah itu, tetapkan kata sandi baru atau gunakan "Lupa kata sandi".</target>
+      </trans-unit>
+      <trans-unit id="NvQBTxG" resname="authentication.internal">
+        <source>authentication.internal</source>
+        <target state="translated">Internal</target>
+      </trans-unit>
+      <trans-unit id="DI8vH1J" resname="copy_to_clipboard">
+        <source>copy_to_clipboard</source>
+        <target state="translated">Salin ke papan klip</target>
+      </trans-unit>
+      <trans-unit id="LHDhK3o" resname="key">
+        <source>key</source>
+        <target state="translated">Judul internal</target>
+      </trans-unit>
+      <trans-unit id="Q3gmLM6" resname="key_help">
+        <source>key_help</source>
+        <target state="translated">Nama teknis unik yang tidak dapat diubah setelah ditetapkan. Karakter yang diizinkan adalah huruf kecil (a-z), angka (0-9), dan garis bawah (_).</target>
+      </trans-unit>
+      <trans-unit id="netluHi" resname="approval">
+        <source>approval</source>
+        <target state="translated">Persetujuan</target>
+      </trans-unit>
+      <trans-unit id="9SkAbbx" resname="approval_required">
+        <source>approval_required</source>
+        <target state="translated">Memerlukan persetujuan</target>
+      </trans-unit>
+      <trans-unit id="7dLJTuj" resname="fill_day">
+        <source>fill_day</source>
+        <target state="translated">Melengkapi waktu kerja yang diharapkan</target>
+      </trans-unit>
+      <trans-unit id="O6IGTDm" resname="Absence types">
+        <source>Absence types</source>
+        <target state="translated">Jenis ketidakhadiran</target>
+      </trans-unit>
+      <trans-unit id="2mFc5.v" resname="absence_type.category.help">
+        <source>absence_type.category.help</source>
+        <target state="translated">Kategori menentukan cara pengajuan diperhitungkan (misalnya terhadap jatah cuti atau saldo waktu kerja) dan tempat jenis ketidakhadiran ditampilkan. Kategori tidak dapat diubah setelah ditetapkan.</target>
+      </trans-unit>
+      <trans-unit id="4YKqwfo" resname="absence_type.half_day">
+        <source>absence_type.half_day</source>
+        <target state="translated">Izinkan pengajuan setengah hari</target>
+      </trans-unit>
+      <trans-unit id="ukwjp0C" resname="absence_type.date_range">
+        <source>absence_type.date_range</source>
+        <target state="translated">Izinkan pengajuan beberapa hari</target>
+      </trans-unit>
+      <trans-unit id="j6S5GDf" resname="absence_type.duration">
+        <source>absence_type.duration</source>
+        <target state="translated">Izinkan pengisian durasi</target>
+      </trans-unit>
+      <trans-unit id="E7XVJxv" resname="absence_type.duration_required">
+        <source>absence_type.duration_required</source>
+        <target state="translated">Durasi wajib diisi</target>
+      </trans-unit>
+      <trans-unit id="W_6BSlE" resname="absence_type.max_days">
+        <source>absence_type.max_days</source>
+        <target state="translated">Jumlah hari maksimum per pengajuan</target>
+      </trans-unit>
+      <trans-unit id="_cQHZDu" resname="fill_day.help">
+        <source>fill_day.help</source>
+        <target state="translated">Jika durasi tidak diisi, sisa waktu kerja yang diharapkan pada hari tersebut akan digunakan.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
