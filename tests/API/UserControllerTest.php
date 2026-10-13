@@ -513,6 +513,37 @@ class UserControllerTest extends APIControllerBaseTestCase
         self::assertApiResponseAccessDenied($client->getResponse());
     }
 
+    /**
+     * Regression test: internal preferences (prefixed with "__") must never be writable through the API,
+     * otherwise a user could clear the password reset flag that was set by an administrator.
+     */
+    public function testUpdateUserPreferenceCannotChangeInternalPreference(): void
+    {
+        $role = User::ROLE_USER;
+        $id = $this->getAuthenticatedUserId($role);
+        $client = $this->getClientForAuthenticatedUser($role);
+
+        $em = $this->getEntityManager();
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        self::assertSame($id, $user->getId());
+        $user->setRequiresPasswordReset(true);
+        $em->persist($user);
+        $em->flush();
+        $em->clear();
+
+        $data = [
+            [
+                'name' => '__pw_reset__',
+                'value' => '0'
+            ]
+        ];
+        $this->request($client, '/api/users/' . $id . '/preferences', 'PATCH', [], (string) json_encode($data));
+        self::assertApiResponseAccessDenied($client->getResponse());
+
+        $em->clear();
+        self::assertTrue($this->loadUserFromDatabase(UserFixtures::USERNAME_USER)->requiresPasswordReset());
+    }
+
     public function testDeleteRoleIsSecure(): void
     {
         $this->assertRequestIsSecured(self::createClient(), '/api/users/roles/1', 'DELETE');

@@ -65,7 +65,7 @@ final class InvoiceController extends AbstractController
 
     #[Route(path: '/', name: 'invoice', methods: ['GET', 'POST'])]
     #[IsGranted('create_invoice')]
-    public function indexAction(Request $request, InvoiceService $service, InvoiceTemplateRepository $templateRepository): Response
+    public function indexAction(Request $request, InvoiceService $invoiceService, InvoiceTemplateRepository $templateRepository): Response
     {
         if (!$templateRepository->hasTemplate()) {
             if ($this->isGranted('manage_invoice_template')) {
@@ -90,7 +90,7 @@ final class InvoiceController extends AbstractController
 
         if ($form->isValid() && $query->getTemplate() !== null) {
             try {
-                $models = $service->createModels($query);
+                $models = $invoiceService->createModels($query);
                 $searched = true;
             } catch (Exception $ex) {
                 $this->flashUpdateException($ex);
@@ -134,7 +134,7 @@ final class InvoiceController extends AbstractController
     #[Route(path: '/preview/{customer}/{token}', name: 'invoice_preview', methods: ['GET'])]
     #[IsGranted('create_invoice')]
     #[IsGranted('access', 'customer')]
-    public function previewAction(Customer $customer, string $token, Request $request, InvoiceService $service): Response
+    public function previewAction(Customer $customer, string $token, Request $request, InvoiceService $invoiceService): Response
     {
         if (!$this->isCsrfTokenValid('invoice.preview', $token)) {
             $this->flashError('action.csrf.error');
@@ -155,10 +155,10 @@ final class InvoiceController extends AbstractController
         if ($form->isValid()) {
             try {
                 $query->setCustomers([$customer]);
-                $model = $service->createModel($query);
+                $model = $invoiceService->createModel($query);
                 $model->setPreview(true);
 
-                return $service->renderInvoice($model, $this->dispatcher, true);
+                return $invoiceService->renderInvoice($model, $this->dispatcher, true);
             } catch (Exception $ex) {
                 $this->flashUpdateException($ex);
             }
@@ -172,7 +172,7 @@ final class InvoiceController extends AbstractController
     #[Route(path: '/save-invoice/{customer}', name: 'invoice_create', methods: ['POST'])]
     #[IsGranted('create_invoice')]
     #[IsGranted('access', 'customer')]
-    public function createInvoiceAction(Customer $customer, Request $request, CustomerRepository $customerRepository, InvoiceService $service): Response
+    public function createInvoiceAction(Customer $customer, Request $request, CustomerRepository $customerRepository, InvoiceService $invoiceService): Response
     {
         if (!$this->isCsrfTokenValid('invoice.create', $this->getRequestToken($request))) {
             $this->flashError('action.csrf.error');
@@ -180,7 +180,7 @@ final class InvoiceController extends AbstractController
             return $this->redirectToRoute('invoice');
         }
 
-        // prevezt the token from becoming part of the search query
+        // prevent the token from becoming part of the search query
         $request->request->remove('_token');
 
         $query = $this->getDefaultQuery();
@@ -193,7 +193,7 @@ final class InvoiceController extends AbstractController
         if ($form->isValid()) {
             try {
                 $query->setCustomers([$customer]);
-                $model = $service->createModel($query);
+                $model = $invoiceService->createModel($query);
 
                 // save default template for customer if not yet set
                 if ($customer->getInvoiceTemplate() === null) {
@@ -201,7 +201,7 @@ final class InvoiceController extends AbstractController
                     $customerRepository->saveCustomer($customer);
                 }
 
-                $invoice = $service->createInvoice($model, $this->dispatcher);
+                $invoice = $invoiceService->createInvoice($model, $this->dispatcher);
 
                 $this->flashSuccess('action.update.success');
 
@@ -286,9 +286,9 @@ final class InvoiceController extends AbstractController
 
     #[Route(path: '/download/{id}', name: 'admin_invoice_download', methods: ['GET'])]
     #[IsGranted('view_invoice', 'invoice')]
-    public function downloadAction(Invoice $invoice, InvoiceService $service): Response
+    public function downloadAction(Invoice $invoice, InvoiceService $invoiceService): Response
     {
-        $file = $service->getInvoiceFile($invoice);
+        $file = $invoiceService->getInvoiceFile($invoice);
 
         if (null === $file) {
             throw $this->createNotFoundException(
@@ -430,9 +430,9 @@ final class InvoiceController extends AbstractController
 
     #[Route(path: '/document_download/{document}', name: 'admin_invoice_document_download', methods: ['GET'])]
     #[IsGranted('upload_invoice_template')]
-    public function downloadDocument(string $document, InvoiceService $service): Response
+    public function downloadDocument(string $document, InvoiceService $invoiceService): Response
     {
-        $event = new InvoiceDocumentsEvent($service->getDocuments(true));
+        $event = new InvoiceDocumentsEvent($invoiceService->getDocuments(true));
         $this->dispatcher->dispatch($event);
 
         foreach ($event->getInvoiceDocuments() as $doc) {
@@ -446,7 +446,7 @@ final class InvoiceController extends AbstractController
 
     #[Route(path: '/document_upload', name: 'admin_invoice_document_upload', methods: ['GET', 'POST'])]
     #[IsGranted('upload_invoice_template')]
-    public function uploadDocumentAction(Request $request, string $projectDirectory, InvoiceDocumentRepository $documentRepository, Environment $twig, SystemConfiguration $systemConfiguration, InvoiceService $service, InvoiceTemplateRepository $templateRepository): Response
+    public function uploadDocumentAction(Request $request, string $projectDirectory, InvoiceDocumentRepository $documentRepository, Environment $twig, SystemConfiguration $systemConfiguration, InvoiceService $invoiceService, InvoiceTemplateRepository $templateRepository): Response
     {
         $dir = $documentRepository->getUploadDirectory();
         $invoiceDir = $dir;
@@ -462,7 +462,7 @@ final class InvoiceController extends AbstractController
             $used[$template->getRenderer()] = $template;
         }
 
-        $event = new InvoiceDocumentsEvent($service->getDocuments(true));
+        $event = new InvoiceDocumentsEvent($invoiceService->getDocuments(true));
         $this->dispatcher->dispatch($event);
 
         $documents = [];

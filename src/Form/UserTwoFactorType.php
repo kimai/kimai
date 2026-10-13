@@ -58,7 +58,7 @@ final class UserTwoFactorType extends AbstractType
             return;
         }
 
-        if (!$this->totpAuthenticator->checkCode($data->getUser(), $data->getCode())) {
+        if (!$this->totpAuthenticator->checkCode($data, $data->getCode())) {
             $context
                 ->buildViolation('The given code is not the correct TOTP token.')
                 ->addViolation();

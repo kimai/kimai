@@ -432,4 +432,36 @@ class TwoFactorLoginTest extends AbstractControllerBaseTestCase
         $this->request($client, '/homepage');
         $this->assertIsRedirect($client, '/login');
     }
+
+    /**
+     * Requiring a password reset must terminate all sessions and remember-me cookies of the user,
+     * e.g. a stolen session must not be able to set a new password through the password wizard.
+     */
+    public function testRequirePasswordResetTerminatesOtherSessions(): void
+    {
+        $client = self::createClient();
+
+        $this->submitLoginForm($client, UserFixtures::USERNAME_USER);
+        $this->assertIsRedirect($client);
+        $client->followRedirect();
+        $this->assertIsFullyAuthenticated($client);
+
+        // an administrator requires a password reset
+        $em = $this->getEntityManager();
+        $user = $this->getUserByName(UserFixtures::USERNAME_USER);
+        $user->setRequiresPasswordReset(true);
+        $em->persist($user);
+        $em->flush();
+        self::assertNotEquals('', $user->getSignatureDate());
+
+        // session and remember-me cookie are both invalid
+        $this->request($client, '/homepage');
+        $this->assertIsRedirect($client, '/login');
+
+        // after the next login the password must be changed
+        $this->submitLoginForm($client, UserFixtures::USERNAME_USER);
+        $this->assertIsRedirect($client);
+        $client->followRedirect();
+        $this->assertIsRedirect($client, '/wizard/password');
+    }
 }

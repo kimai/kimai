@@ -66,9 +66,7 @@ final class PasswordResetController extends AbstractController
             throw new ServiceUnavailableHttpException(
                 null,
                 'Password reset is deactivated, because "TRUSTED_HOSTS" is not configured. ' .
-                'Set the environment variable "TRUSTED_HOSTS" to the domain(s) of your Kimai installation, ' .
-                'e.g. TRUSTED_HOSTS="localhost|kimai.example.com", or deactivate "Password reset" in the system configuration. ' .
-                'See https://www.kimai.org/documentation/configurations.html'
+                'Set the environment variable or deactivate "Password reset" in the system configuration.'
             );
         }
     }

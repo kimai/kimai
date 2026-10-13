@@ -51,6 +51,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Constraints\User(groups: ['UserCreate', 'Registration', 'Default', 'Profile'])]
 class User implements UserInterface, EquatableInterface, ThemeUserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
 {
+    public const PREFERENCE_PASSWORD_RESET = '__pw_reset__';
+
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_TEAMLEAD = 'ROLE_TEAMLEAD';
     public const ROLE_ADMIN = 'ROLE_ADMIN';
@@ -1067,14 +1069,14 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
-    public function setPassword($password): User
+    public function setPassword(#[\SensitiveParameter] $password): User
     {
         $this->password = $password;
 
         return $this;
     }
 
-    public function setPlainPassword($password): User
+    public function setPlainPassword(#[\SensitiveParameter] $password): User
     {
         $this->plainPassword = $password;
 
@@ -1092,7 +1094,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
         return $this;
     }
 
-    public function setConfirmationToken($confirmationToken): void
+    public function setConfirmationToken(#[\SensitiveParameter] $confirmationToken): void
     {
         $this->confirmationToken = $confirmationToken;
     }
@@ -1254,12 +1256,12 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
             return false;
         }
 
-        return $this->getPreferenceValue('__pw_reset__') === '1';
+        return $this->getPreferenceValue(self::PREFERENCE_PASSWORD_RESET) === '1';
     }
 
     public function setRequiresPasswordReset(bool $require = true): void
     {
-        $this->setPreferenceValue('__pw_reset__', ($require ? '1' : '0'));
+        $this->setPreferenceValue(self::PREFERENCE_PASSWORD_RESET, ($require ? '1' : '0'));
 
         if (!$require) {
             $this->passwordRequestedAt = null;
@@ -1298,7 +1300,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     // --------------- 2 Factor Authentication ---------------
 
-    public function setTotpSecret(?string $secret): void
+    public function setTotpSecret(#[\SensitiveParameter] ?string $secret): void
     {
         $this->totpSecret = $secret;
     }
@@ -1326,6 +1328,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     public function disableTotpAuthentication(): void
     {
         $this->totpEnabled = false;
+        $this->totpSecret = null;
     }
 
     public function getTotpAuthenticationUsername(): string
@@ -1335,7 +1338,16 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
 
     public function getTotpAuthenticationConfiguration(): TotpConfigurationInterface
     {
-        return new TotpConfiguration($this->totpSecret, TotpConfiguration::ALGORITHM_SHA1, 30, 6);
+        if ($this->totpSecret === null) {
+            throw new \LogicException('Cannot create TOTP configuration, user has no TOTP secret');
+        }
+
+        return $this->createTotpAuthenticationConfiguration($this->totpSecret);
+    }
+
+    public function createTotpAuthenticationConfiguration(#[\SensitiveParameter] string $secret): TotpConfigurationInterface
+    {
+        return new TotpConfiguration($secret, TotpConfiguration::ALGORITHM_SHA1, 30, 6);
     }
 
     /**
