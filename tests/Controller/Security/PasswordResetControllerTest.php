@@ -198,4 +198,16 @@ class PasswordResetControllerTest extends AbstractControllerBaseTestCase
         $user = $this->loadUserFromDatabase('john_user');
         self::assertTrue($user->requiresPasswordReset());
     }
+
+    public function testPartiallyMatchingHostIsRejected(): void
+    {
+        // the login link is generated from the request host: TRUSTED_HOSTS="localhost" may not trust "localhost.attacker.example"
+        $client = self::createClient([], ['HTTP_HOST' => 'localhost.attacker.example']);
+
+        $this->request($client, '/resetting/request');
+        self::assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
+
+        $this->request($client, '/resetting/send-email', 'POST', ['username' => 'john_user']);
+        self::assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
+    }
 }
