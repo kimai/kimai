@@ -15,7 +15,7 @@ framework:
         enable_attributes: true
 
     trusted_proxies: '%env(string:TRUSTED_PROXIES)%'
-    trusted_hosts: '%env(string:TRUSTED_HOSTS)%'
+    trusted_hosts: '%env(trusted_hosts:TRUSTED_HOSTS)%'
 
     exceptions:
         App\Validator\ValidationFailedException:
