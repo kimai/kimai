@@ -7,20 +7,27 @@
 {% set rate = 0 %}
 {% set rateInternal = 0 %}
 {% set currency = false %}
+{% set accentColor = config('theme.branding.accent_color') %}
 <head>
     <title>{{ title }}</title>
     <style>
         {{ encore_entry_css_source('export-pdf')|raw }}
         body { font-family: {{ font }} !important; }
+        {{ branding_accent_css(['table.summary th', 'table.items th'])|raw }}
     </style>
 </head>
 <body>
 <!--mpdf
 <htmlpageheader name="header">
-<table style="font-size: 10pt; width: 100%; border-bottom: 1px solid #000000" cellspacing="0">
+<table style="font-size: 10pt; width: 100%; border-bottom: 1px solid {% if accentColor is not empty %}{{ accentColor }}{% else %}#000000{% endif %}" cellspacing="0">
     <tr>
         <td style="text-align: left; padding-left: 0; font-weight: bold;">
-            {{ title }}
+            {% set logoImg = branding_logo_img('', 24) %}
+            {% if logoImg is not empty %}
+                {{ logoImg|raw }}
+            {% else %}
+                {{ title }}
+            {% endif %}
         </td>
         <td style="text-align: right; padding-right: 0;">
             {% if query is defined %}
@@ -33,7 +40,7 @@
 </htmlpageheader>
 <sethtmlpageheader name="header" page="ALL" value="on" show-this-page="1" />
 <htmlpagefooter name="myfooter">
-<table style="border-top: 1px solid #000000; font-size: 9pt; padding-top: 3mm; width: 100%" cellspacing="0">
+<table style="border-top: 1px solid {% if accentColor is not empty %}{{ accentColor }}{% else %}#000000{% endif %}; font-size: 9pt; padding-top: 3mm; width: 100%" cellspacing="0">
 <tr>
     <td style="text-align: left; padding-left: 0;">
         {{ 'export.page_of'|trans({'%page%': '{PAGENO}', '%pages%': '{nb}'}) }}
