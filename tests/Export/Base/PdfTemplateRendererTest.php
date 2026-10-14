@@ -190,4 +190,62 @@ class PdfTemplateRendererTest extends AbstractRendererTestCase
         $content = $response->getContent();
         self::assertIsString($content);
     }
+
+    public function testRenderConvertsDateAndTimeIntoQueryTimezone(): void
+    {
+        /** @var Environment $twig */
+        $twig = $this->getContainer()->get(Environment::class);
+
+        $dispatcher = new EventDispatcher();
+        $security = $this->createMock(Security::class);
+        $security->method('getUser')->willReturn(new User());
+        $security->method('isGranted')->willReturn(true);
+        $converter = new ColumnConverter($dispatcher, $security);
+        $template = new DefaultTemplate($dispatcher, 'test', 'en', 'bar');
+
+        // returns the rendered HTML unchanged instead of a real PDF binary, so the test
+        // can assert on the real Twig output without needing a PDF text extractor
+        $htmlConverter = $this->createMock(HtmlToPdfConverter::class);
+        $htmlConverter->method('convertToPdf')->willReturnArgument(0);
+
+        $sut = new PdfTemplateRenderer(
+            $twig,
+            $htmlConverter,
+            $this->createMock(ProjectStatisticService::class),
+            $converter,
+            $this->createMock(LocaleSwitcher::class),
+            $template
+        );
+
+        $customer = new \App\Entity\Customer('Customer Name');
+        $project = new \App\Entity\Project();
+        $project->setName('project name');
+        $project->setCustomer($customer);
+        $activity = new \App\Entity\Activity();
+        $activity->setName('activity');
+        $activity->setProject($project);
+
+        $user = new User();
+        $user->setUserIdentifier('foo-bar');
+
+        $timesheet = new \App\Entity\Timesheet();
+        $timesheet->setUser($user);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+        $timesheet->setBegin(new \DateTime('2026-08-21 01:00:00', new \DateTimeZone('Europe/Berlin')));
+        $timesheet->setEnd(new \DateTime('2026-08-21 02:00:00', new \DateTimeZone('Europe/Berlin')));
+
+        $query = new \App\Repository\Query\ExportQuery();
+        $query->setTimezone(new \DateTimeZone('America/New_York'));
+
+        $response = $sut->render([$timesheet], $query);
+        $content = $response->getContent();
+        self::assertIsString($content);
+
+        self::assertStringContainsString('Date (America/New_York)', $content);
+        self::assertStringContainsString('8/20/2026', $content);
+        self::assertStringContainsString('7:00 PM', $content);
+        self::assertStringContainsString('8:00 PM', $content);
+        self::assertStringNotContainsString('2026-08-21', $content);
+    }
 }
