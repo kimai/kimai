@@ -17,7 +17,7 @@
             <a href="{{ path(subReportRoute, {'sumType': dataType, 'date': subReportDate|report_date, 'user': userPeriod.user.id}) }}">{{ usersTotalDuration|duration(decimal) }}</a>
         {% endblock %}
         {% block rate %}
-            {{ period.totalRate|money }}
+            {{ period.billableRate|money }}
         {% endblock %}
         {% block internal_rate %}
             {{ period.totalInternalRate|money }}
