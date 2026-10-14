@@ -15,6 +15,7 @@ use App\Entity\Project;
 use App\Entity\Tag;
 use App\Entity\Team;
 use App\Entity\Timesheet;
+use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
@@ -22,6 +23,7 @@ use App\Repository\Query\TimesheetQuery;
 use App\Repository\Query\TimesheetQueryHint;
 use App\Repository\TimesheetRepository;
 use App\Utils\Pagination;
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\PersistentCollection;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
@@ -50,6 +52,33 @@ class TimesheetRepositoryTest extends AbstractRepositoryTestCase
         self::assertTrue($query->hasQueryHint(TimesheetQueryHint::PROJECT_META_FIELDS));
         self::assertTrue($query->hasQueryHint(TimesheetQueryHint::ACTIVITY_META_FIELDS));
         self::assertIsArray($result);
+    }
+
+    public function testTimesheetMetaCollectionsAreBatchLoaded(): void
+    {
+        $userId = $this->createTimesheetsWithMetaFields(1);
+        $em = $this->getEntityManager();
+
+        $singleResultQueryCount = $this->countTimesheetMetaQueries($userId, 1);
+
+        $this->createTimesheetsWithMetaFields(2);
+        $em->clear();
+
+        /** @var TimesheetRepository $repository */
+        $repository = $em->getRepository(Timesheet::class);
+        $connection = $em->getConnection();
+        $queriesBefore = $this->getExecutedQueryCount($connection);
+        $results = $repository->getTimesheetResult($this->createTimesheetMetaQuery($userId))->getResults();
+
+        self::assertCount(3, $results);
+        foreach ($results as $timesheet) {
+            $metaFields = $timesheet->getMetaFields();
+            self::assertInstanceOf(PersistentCollection::class, $metaFields);
+            self::assertTrue($metaFields->isInitialized());
+            self::assertCount(1, $metaFields);
+        }
+
+        self::assertSame($singleResultQueryCount, $this->getExecutedQueryCount($connection) - $queriesBefore);
     }
 
     public function testPaginationReturnsDistinctResultsWithIdenticalBegin(): void
@@ -448,5 +477,78 @@ class TimesheetRepositoryTest extends AbstractRepositoryTestCase
 
         self::assertContains($visibleId, $ids);
         self::assertNotContains($restrictedId, $ids);
+    }
+
+    private function countTimesheetMetaQueries(int $userId, int $expectedResults): int
+    {
+        $em = $this->getEntityManager();
+        $em->clear();
+
+        /** @var TimesheetRepository $repository */
+        $repository = $em->getRepository(Timesheet::class);
+        $connection = $em->getConnection();
+        $queriesBefore = $this->getExecutedQueryCount($connection);
+        $results = $repository->getTimesheetResult($this->createTimesheetMetaQuery($userId))->getResults();
+        self::assertCount($expectedResults, $results);
+        foreach ($results as $timesheet) {
+            self::assertCount(1, $timesheet->getMetaFields());
+        }
+
+        return $this->getExecutedQueryCount($connection) - $queriesBefore;
+    }
+
+    private function getExecutedQueryCount(Connection $connection): int
+    {
+        $status = $connection->fetchAssociative("SHOW SESSION STATUS LIKE 'Questions'");
+        self::assertIsArray($status);
+        self::assertArrayHasKey('Value', $status);
+        self::assertIsString($status['Value']);
+
+        return (int) $status['Value'];
+    }
+
+    private function createTimesheetsWithMetaFields(int $amount): int
+    {
+        $em = $this->getEntityManager();
+        $user = $this->getUserByRole(User::ROLE_USER);
+        $activity = $em->getRepository(Activity::class)->find(1);
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Activity::class, $activity);
+        self::assertInstanceOf(Project::class, $project);
+
+        for ($i = 0; $i < $amount; $i++) {
+            $begin = new \DateTime('2042-01-01 10:00:00');
+            $begin->modify('+' . $i . ' hours');
+            $end = clone $begin;
+            $end->modify('+1 hour');
+
+            $timesheet = new Timesheet();
+            $timesheet->setBegin($begin)
+                ->setEnd($end)
+                ->setUser($user)
+                ->setProject($project)
+                ->setActivity($activity)
+                ->setMetaField((new TimesheetMeta())->setName('place')->setValue('Office ' . $i));
+            $em->persist($timesheet);
+        }
+
+        $em->flush();
+        $userId = $user->getId();
+        self::assertIsInt($userId);
+
+        return $userId;
+    }
+
+    private function createTimesheetMetaQuery(int $userId): TimesheetQuery
+    {
+        $user = $this->getEntityManager()->getRepository(User::class)->find($userId);
+        self::assertInstanceOf(User::class, $user);
+
+        $query = new TimesheetQuery();
+        $query->setUser($user);
+        $query->setBegin(new \DateTime('2042-01-01 00:00:00'));
+        $query->setEnd(new \DateTime('2042-01-02 00:00:00'));
+
+        return $query;
     }
 }

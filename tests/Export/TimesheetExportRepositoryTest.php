@@ -13,10 +13,14 @@ use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
+use App\Entity\TimesheetMeta;
+use App\Event\TimesheetMetaDisplayEvent;
 use App\Export\TimesheetExportRepository;
+use App\Repository\Query\ExportQuery;
 use App\Repository\TimesheetRepository;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Psr\EventDispatcher\EventDispatcherInterface;
 
 #[CoversClass(TimesheetExportRepository::class)]
 class TimesheetExportRepositoryTest extends TestCase
@@ -28,7 +32,7 @@ class TimesheetExportRepositoryTest extends TestCase
             self::assertCount(2, $items);
         });
 
-        $sut = new TimesheetExportRepository($repository);
+        $sut = new TimesheetExportRepository($repository, $this->createMock(EventDispatcherInterface::class));
 
         $sut->setExported([new Timesheet(), null, new \stdClass(), new Timesheet(), new Activity()]);
         // test else for empty array
@@ -39,7 +43,31 @@ class TimesheetExportRepositoryTest extends TestCase
     public function testSetType(): void
     {
         $repository = $this->createMock(TimesheetRepository::class);
-        $sut = new TimesheetExportRepository($repository);
+        $sut = new TimesheetExportRepository($repository, $this->createMock(EventDispatcherInterface::class));
         self::assertEquals('timesheet', $sut->getType());
+    }
+
+    public function testGetExportPreviewColumnsDispatchesEvent(): void
+    {
+        $repository = $this->createMock(TimesheetRepository::class);
+        $query = new ExportQuery();
+        $field = (new TimesheetMeta())->setName('workplace');
+        $dispatcher = $this->createMock(EventDispatcherInterface::class);
+        $dispatcher->expects($this->once())
+            ->method('dispatch')
+            ->with($this->callback(static function (object $event) use ($query): bool {
+                return $event instanceof TimesheetMetaDisplayEvent
+                    && $event->getQuery() === $query
+                    && $event->getLocation() === TimesheetMetaDisplayEvent::EXPORT;
+            }))
+            ->willReturnCallback(static function (TimesheetMetaDisplayEvent $event) use ($field): TimesheetMetaDisplayEvent {
+                $event->addField($field);
+
+                return $event;
+            });
+
+        $sut = new TimesheetExportRepository($repository, $dispatcher);
+
+        self::assertSame([$field], $sut->getExportPreviewColumns($query));
     }
 }
