@@ -33,6 +33,7 @@ class UserPreferenceSubscriberTest extends TestCase
         'update_browser_title',
         'calendar_initial_view',
         'login_initial_view',
+        'edit_after_stop',
         'daily_stats',
         'export_decimal',
         'favorite_routes',
@@ -131,10 +132,29 @@ class UserPreferenceSubscriberTest extends TestCase
         self::assertEquals('de_CH', $user->getLocale());
     }
 
-    protected function getSubscriber(bool $seeHourlyRate, ?string $defaultLocale = null): UserPreferenceSubscriber
+    public function testEditAfterStopNotAllowed(): void
+    {
+        $sut = $this->getSubscriber(true, null, false);
+        $user = new User();
+
+        $sut->loadUserPreferences(new PrepareUserEvent($user));
+
+        $preference = $user->getPreference('edit_after_stop');
+        self::assertNotNull($preference);
+        self::assertFalse($preference->isEnabled());
+        self::assertFalse($preference->getValue());
+    }
+
+    protected function getSubscriber(bool $seeHourlyRate, ?string $defaultLocale = null, bool $editOwnTimesheet = true): UserPreferenceSubscriber
     {
         $authMock = $this->createMock(AuthorizationCheckerInterface::class);
-        $authMock->method('isGranted')->willReturn($seeHourlyRate);
+        $authMock->method('isGranted')->willReturnCallback(function (string $attribute) use ($seeHourlyRate, $editOwnTimesheet): bool {
+            if ($attribute === 'edit_own_timesheet') {
+                return $editOwnTimesheet;
+            }
+
+            return $seeHourlyRate;
+        });
 
         $eventMock = $this->createMock(EventDispatcherInterface::class);
         $formConfigMock = SystemConfigurationFactory::createStub([
