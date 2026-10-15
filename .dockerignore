@@ -47,6 +47,7 @@ nbproject/
 
 # Dev-only configs
 tests/
+e2e/
 .php-cs-fixer.dist.php
 php-cs-fixer.sh
 phpstan.sh
