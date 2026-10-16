@@ -216,7 +216,7 @@
       </trans-unit>
       <trans-unit id="udkGKEU" resname="authentication">
         <source>authentication</source>
-        <target>Авторизация</target>
+        <target state="translated">Аутентификация</target>
       </trans-unit>
       <trans-unit id="aUc3uU1" resname="help.theme.color_choices">
         <source>help.theme.color_choices</source>
