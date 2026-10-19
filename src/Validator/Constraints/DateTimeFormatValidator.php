@@ -54,7 +54,7 @@ final class DateTimeFormatValidator extends ConstraintValidator
             $valid = false;
         } else {
             try {
-                $test = new \DateTime($value);
+                new \DateTime($value);
             } catch (\Exception $ex) {
                 $valid = false;
             }

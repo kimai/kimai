@@ -14,6 +14,8 @@ Kimai showed invalid examples in the `.env.dist` and on the documentation websit
 We strongly urge everyone to check and fix your `TRUSTED_HOSTS` env setting.
 
 The most used version is a hostname like `kimai.example.com` which you should rewrite as `^kimai\.example\.com$`.
+Multiple hosts have to be grouped, so the anchors apply to all of them: `^(localhost|kimai\.example\.com)$` 
+(`^localhost|kimai\.example\.com$` would still trust `kimai.example.com.attacker.tld`).
 
 For all installations that do not read this warning, we added a parser.
 
@@ -23,8 +25,9 @@ Previously Symfony matched them as unanchored regular expressions, so `kimai.exa
 
 Examples:
 
-- `kimai.example.com` or `localhost|kimai.example.com` trust these hosts and their subdomains (the parser converts `kimai.example.com` to `^(?:.+\.)?(?:kimai\.example\.com)$`)
+- `kimai.example.com` or `localhost|kimai.example.com` trust these hosts and their subdomains (the parser converts `kimai.example.com` to `^(?:.+\.)?(?:kimai\.example\.com)\.?$`)
 - `^kimai.example.com$` trusts exactly this host
+- converted values also accept the fully qualified host name with a trailing dot (`kimai.example.com.`)
 - values containing other regular expression characters (like `^kimai\.example\.com$` or `.*\.example\.com`) are not changed
 
 If you used a partial host name (e.g. `TRUSTED_HOSTS=kimai` for `kimai.example.com`), Kimai now answers 

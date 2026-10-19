@@ -137,7 +137,7 @@ class Invoice implements EntityWithMetaFields
     /**
      * Meta fields registered with the invoice
      *
-     * @var Collection<InvoiceMeta>
+     * @var Collection<int, InvoiceMeta>
      */
     #[ORM\OneToMany(mappedBy: 'invoice', targetEntity: InvoiceMeta::class, cascade: ['persist'])]
     #[Serializer\Expose]
@@ -409,6 +409,11 @@ class Invoice implements EntityWithMetaFields
     public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields
     {
         if (null === ($current = $this->getMetaField($meta->getName()))) {
+            if (!($meta instanceof InvoiceMeta)) {
+                throw new \InvalidArgumentException(
+                    \sprintf('Expected instanceof InvoiceMeta, received "%s"', \get_class($meta))
+                );
+            }
             $meta->setEntity($this);
             $this->meta->add($meta);
 

@@ -56,7 +56,7 @@ trait FormTrait
         // replaces the project select after submission, to make sure only projects for the selected customer are displayed
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($builder, $project, $customer, $isNew, $options): void {
+            function (FormEvent $event) use ($builder, $project, $isNew, $options): void {
                 /** @var array<string, mixed> $data */
                 $data = $event->getData();
                 $customer = \array_key_exists('customer', $data) && $data['customer'] !== '' ? $data['customer'] : null;

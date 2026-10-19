@@ -92,9 +92,9 @@ final class TimesheetTeamController extends TimesheetAbstractController
 
         if ($createForm->isSubmitted() && $createForm->isValid()) {
             try {
-                /** @var ArrayCollection<User> $users */
+                /** @var ArrayCollection<int, User> $users */
                 $users = $createForm->get('users')->getData();
-                /** @var ArrayCollection<Team> $teams */
+                /** @var ArrayCollection<int, Team> $teams */
                 $teams = $createForm->get('teams')->getData();
 
                 /** @var array<User> $allUsers */

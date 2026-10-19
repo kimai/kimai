@@ -213,10 +213,10 @@ final class RegenerateLocalesCommand extends Command
             $removableDuplicates[] = $locale;
         }
 
-        /*
         $io->title('Redundant locales that could be skipped');
         $io->writeln(implode('|', $removableDuplicates));
 
+        /*
         foreach ($removableDuplicates as $duplicate) {
             unset($appLocales[$duplicate]);
         }

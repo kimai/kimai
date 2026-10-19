@@ -148,7 +148,7 @@ final class AppExtension extends Extension
         $names = [];
         // this does not include all possible permission, as plugins do not register them and Kimai defines a couple of
         // permissions as well, which are off by default for all roles
-        foreach ($config['sets'] as $set => $permNames) {
+        foreach ($config['sets'] as $permNames) {
             foreach ($permNames as $name) {
                 $names[$name] = true;
             }
@@ -179,7 +179,7 @@ final class AppExtension extends Extension
         }
 
         // make sure to apply all other permissions that might have been registered through plugins
-        foreach ($config['roles'] as $role => $perms) {
+        foreach ($config['roles'] as $perms) {
             $names = array_merge($names, $perms);
         }
 

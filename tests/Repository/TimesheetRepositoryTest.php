@@ -161,10 +161,14 @@ class TimesheetRepositoryTest extends AbstractRepositoryTestCase
         $repository->save($timesheet);
         self::assertNotNull($timesheet->getId());
         self::assertEquals(2, $timesheet->getTags()->count());
-        self::assertEquals('Travel', $timesheet->getTags()->get(0)->getName());
-        self::assertNotNull($timesheet->getTags()->get(0)->getId());
-        self::assertEquals('Picture', $timesheet->getTags()->get(1)->getName());
-        self::assertNotNull($timesheet->getTags()->get(1)->getId());
+        $firstTag = $timesheet->getTags()->get(0);
+        self::assertInstanceOf(Tag::class, $firstTag);
+        self::assertEquals('Travel', $firstTag->getName());
+        self::assertNotNull($firstTag->getId());
+        $secondTag = $timesheet->getTags()->get(1);
+        self::assertInstanceOf(Tag::class, $secondTag);
+        self::assertEquals('Picture', $secondTag->getName());
+        self::assertNotNull($secondTag->getId());
     }
 
     /**

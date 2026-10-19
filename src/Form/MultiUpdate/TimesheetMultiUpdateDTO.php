@@ -42,7 +42,7 @@ final class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO implements Entit
     private ?float $fixedRate = null;
     private ?float $hourlyRate = null;
     /**
-     * @var Collection<TimesheetMeta>
+     * @var Collection<int|string, TimesheetMeta|MetaTableTypeInterface>
      */
     private Collection $meta;
     /**
@@ -192,7 +192,7 @@ final class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO implements Entit
     }
 
     /**
-     * @return TimesheetMeta[]|Collection
+     * @return Collection<int|string, MetaTableTypeInterface>
      */
     public function getMetaFields(): Collection
     {

@@ -97,7 +97,7 @@ final class TimesheetMultiUpdate extends AbstractType
         // TODO replace me with FormTrait
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($project, $customer): void {
+            function (FormEvent $event) use ($project): void {
                 $data = $event->getData();
                 $customer = isset($data['customer']) && !empty($data['customer']) ? $data['customer'] : null;
                 $project = isset($data['project']) && !empty($data['project']) ? $data['project'] : $project;

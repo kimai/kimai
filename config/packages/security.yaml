@@ -76,6 +76,8 @@ security:
                 lifetime: 900
                 login_path: login
                 max_uses: 3
+                # requires a password change for links which were requested as password reset
+                success_handler: App\Security\LoginLinkSuccessHandler
                 # 'password' binds the HMAC signature to the password hash, so a
                 # link becomes invalid as soon as the user changes the password
                 signature_properties: ['email', 'password', 'signatureDate']
