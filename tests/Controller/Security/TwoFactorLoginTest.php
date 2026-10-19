@@ -19,6 +19,7 @@ use Symfony\Component\DomCrawler\Field\FormField;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 use Symfony\Component\Security\Http\RememberMe\RememberMeDetails;
 
@@ -463,5 +464,58 @@ class TwoFactorLoginTest extends AbstractControllerBaseTestCase
         $this->assertIsRedirect($client);
         $client->followRedirect();
         $this->assertIsRedirect($client, '/wizard/password');
+    }
+
+    /**
+     * A password reset link of a user with 2FA: the TOTP code is required before the password can be changed.
+     */
+    public function testPasswordResetWithTwoFactor(): void
+    {
+        // the password reset requires trusted hosts, as the login link is generated from the request host
+        $_ENV['TRUSTED_HOSTS'] = 'localhost';
+        $_SERVER['TRUSTED_HOSTS'] = 'localhost';
+
+        try {
+            $client = self::createClient();
+            $this->activateTwoFactor(UserFixtures::USERNAME_USER);
+
+            $this->request($client, '/resetting/request');
+            self::assertTrue($client->getResponse()->isSuccessful());
+            $client->submit($client->getCrawler()->filter('form')->form(), [
+                'username' => UserFixtures::USERNAME_USER,
+            ]);
+            $this->assertIsRedirect($client, '/resetting/check-email');
+
+            self::assertEmailCount(1);
+            $email = self::getMailerMessage();
+            self::assertInstanceOf(Email::class, $email);
+            preg_match('#href="([^"]+/auth/link/check\?[^"]+)"#', (string) $email->getHtmlBody(), $matches);
+            self::assertArrayHasKey(1, $matches, 'Missing login link in email');
+
+            $this->requestPure($client, html_entity_decode($matches[1]));
+            $this->assertIsRedirect($client);
+            $client->followRedirect();
+            $this->assertIsRedirect($client, $this->createUrl(self::URL_2FA));
+
+            // the password wizard is not reachable before the TOTP code was entered
+            $this->request($client, '/wizard/password');
+            $this->assertIsRedirect($client, $this->createUrl(self::URL_2FA));
+
+            // redirects to the previously requested password wizard
+            $this->completeTwoFactorLogin($client);
+            $this->assertIsRedirect($client, '/wizard/password');
+            $this->assertAccessIsGranted($client, '/wizard/password');
+
+            // any other page redirects to the password wizard
+            $this->request($client, '/timesheet/');
+            $this->assertIsRedirect($client, '/wizard/password');
+
+            $this->getEntityManager()->clear();
+            self::assertTrue($this->getUserByName(UserFixtures::USERNAME_USER)->requiresPasswordReset());
+        } finally {
+            unset($_ENV['TRUSTED_HOSTS'], $_SERVER['TRUSTED_HOSTS']);
+            // the kernel sets the trusted hosts process wide, reset them so they do not leak into other tests
+            Request::setTrustedHosts([]);
+        }
     }
 }

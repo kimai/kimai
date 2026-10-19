@@ -73,11 +73,9 @@ final class UserLoginLinkCommand extends Command
             return Command::FAILURE;
         }
 
-        // must be saved before the login link is created: requiring a password reset changes the
-        // security signature of the user, which is part of the login link hash
+        // the password reset is required after the login link was used, see LoginLinkSuccessHandler
         if ($input->getOption('password-reset') === true) {
             $user->markPasswordRequested();
-            $user->setRequiresPasswordReset(true);
             $this->userRepository->saveUser($user);
         }
 

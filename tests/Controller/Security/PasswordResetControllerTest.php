@@ -113,10 +113,12 @@ class PasswordResetControllerTest extends AbstractControllerBaseTestCase
         $client->followRedirect();
         self::assertTrue($client->getResponse()->isSuccessful());
 
-        // TODO test the actual email and provided login link
-
+        // requesting a password reset does not require authentication: it must not change the account,
+        // the password reset is required after the login link was used
         $user = $this->loadUserFromDatabase('john_user');
-        self::assertTrue($user->requiresPasswordReset());
+        self::assertFalse($user->requiresPasswordReset());
+        self::assertTrue($user->isPasswordRequestNonExpired(3600));
+        self::assertEquals('', $user->getSignatureDate());
     }
 
     public function testRequestAsLoggedInUserRedirects(): void
@@ -194,10 +196,12 @@ class PasswordResetControllerTest extends AbstractControllerBaseTestCase
         self::assertStringContainsString('An email has been sent with a link to reset your password.', $content);
         self::assertStringContainsString('Note: You can only request a new password once every 1:00 hours.', $content);
 
-        // TODO test the actual email and provided login link
-
+        // requesting a password reset does not require authentication: it must not change the account,
+        // the password reset is required after the login link was used
         $user = $this->loadUserFromDatabase('john_user');
-        self::assertTrue($user->requiresPasswordReset());
+        self::assertFalse($user->requiresPasswordReset());
+        self::assertTrue($user->isPasswordRequestNonExpired(3600));
+        self::assertEquals('', $user->getSignatureDate());
     }
 
     /**
@@ -224,12 +228,28 @@ class PasswordResetControllerTest extends AbstractControllerBaseTestCase
         self::assertArrayHasKey(1, $matches, 'Missing login link in email');
         $loginLink = html_entity_decode($matches[1]);
 
+        $user = $this->loadUserFromDatabase('john_user');
+        self::assertFalse($user->requiresPasswordReset());
+        self::assertEquals('', $user->getSignatureDate());
+
         $this->requestPure($client, $loginLink);
         $this->assertIsRedirect($client);
         self::assertStringNotContainsString('/login', (string) $client->getResponse()->headers->get('Location'), 'The login link is invalid');
 
+        // using the login link requires the password reset, which changes the security signature
+        $this->getEntityManager()->clear();
+        $user = $this->loadUserFromDatabase('john_user');
+        self::assertTrue($user->requiresPasswordReset());
+        self::assertNotEquals('', $user->getSignatureDate());
+
         $client->followRedirect();
         $this->assertIsRedirect($client, '/wizard/password');
+        $this->assertAccessIsGranted($client, '/wizard/password');
+
+        // the changed security signature invalidates the login link
+        $client->getCookieJar()->clear();
+        $this->requestPure($client, $loginLink);
+        $this->assertIsRedirect($client, '/login');
     }
 
     public function testPartiallyMatchingHostIsRejected(): void

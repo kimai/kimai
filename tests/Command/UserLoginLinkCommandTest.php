@@ -97,7 +97,10 @@ class UserLoginLinkCommandTest extends KernelTestCase
         $commandTester->assertCommandIsSuccessful();
         $loginLink = trim($commandTester->getDisplay());
 
-        self::assertSame($passwordReset, $user->requiresPasswordReset());
+        // the password reset is required after the login link was used, see LoginLinkSuccessHandler
+        self::assertFalse($user->requiresPasswordReset());
+        self::assertSame($passwordReset, $user->isPasswordRequestNonExpired(3600));
+        self::assertEquals('', $user->getSignatureDate());
 
         $request = Request::create($loginLink);
         $requestStack->push($request);
