@@ -147,6 +147,11 @@ final class WizardController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
+        // the new password is set without the current one: only allowed while a password reset is required
+        if (!$user->requiresPasswordReset()) {
+            return $this->redirectToRoute('homepage');
+        }
+
         $form = $this->createForm(UserPasswordType::class, $user, [
             'action' => $this->generateUrl('wizard_password'),
             'method' => 'POST',
