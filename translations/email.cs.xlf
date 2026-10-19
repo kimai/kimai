@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
         <source>automated_email_dont_answer</source>
-        <target>Toto je automaticky generovaný e-mail. Prosím neodpovídejte, e-mail příjemce není sledován.</target>
+        <target state="translated">Toto je automaticky generovaný e-mail. Prosím neodpovídejte, zprávy zaslané na tuto adresu se nečtou.</target>
       </trans-unit>
       <trans-unit id="pjr3FDv" resname="registration.subject">
         <source>registration.subject</source>
@@ -12,15 +12,15 @@
       </trans-unit>
       <trans-unit id="QtcznHC" resname="registration.title">
         <source>registration.title</source>
-        <target>Vítej %username%</target>
+        <target state="translated">Vítejte, %username%</target>
       </trans-unit>
       <trans-unit id="YMLel3P" resname="registration.button">
         <source>registration.button</source>
         <target>Aktivujte váš účet</target>
       </trans-unit>
       <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target>Zaregistrovali jste se do Kimai time-tracker s e-mailovou adresou %email%. Nyní je potřeba váš účet aktivovat v několika nejbližších hodinách, jinak odkaz expiruje.</target>
+        <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
+        <target state="translated">Do aplikace Kimai pro sledování času jste se zaregistrovali s e-mailovou adresou %email%. Svůj účet prosím aktivujte během několika následujících hodin, než platnost odkazu vyprší.</target>
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
@@ -68,7 +68,7 @@ Všechny žádosti naleznete zde: %url%</target>
       </trans-unit>
       <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
         <source>approval_requested_message</source>
-        <target state="translated">Žádost o schválení pro %user% bylo zadáno.
+        <target state="translated">Žádost o schválení pro %user% byla zadána.
 
 %list%
 

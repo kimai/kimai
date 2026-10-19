@@ -8,11 +8,11 @@
       </trans-unit>
       <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
         <source>The end date must not be earlier than the start date.</source>
-        <target state="needs-translation">Datum ukončení nesmí být dříve než datum začátku.</target>
+        <target state="translated">Datum ukončení nesmí být dříve než datum začátku.</target>
       </trans-unit>
       <trans-unit id="ePrqiLM" resname="The begin date cannot be in the future.">
         <source>The begin date cannot be in the future.</source>
-        <target>Datum zažátku nemůže být v budoucnosti.</target>
+        <target state="translated">Datum začátku nemůže být v budoucnosti.</target>
       </trans-unit>
       <trans-unit id="VJSZSD0" resname="The given value is not a valid time.">
         <source>The given value is not a valid time.</source>
@@ -27,8 +27,8 @@
         <target>Toto období je zamčeno, prosím vyberte pozdější datum.</target>
       </trans-unit>
       <trans-unit id="yDlKSRw" resname="This invoice document cannot be used, please rename the file and upload it again.">
-        <source>This invoice document cannot be used, please rename the file and upload it again.</source>
-        <target>Faktura nemůže být použita, prosím přejmenujte soubor a nahrajte znovu.</target>
+        <source>This invoice document cannot be used. Please rename the file and upload it again.</source>
+        <target state="translated">Tento dokument faktury nelze použít. Přejmenujte soubor a nahrajte jej znovu.</target>
       </trans-unit>
       <trans-unit id="1V6BsD_" resname="You must select at least one user or team.">
         <source>You must select at least one user or team.</source>
@@ -39,16 +39,16 @@
         <target>Zadaná hesla se neshodují.</target>
       </trans-unit>
       <trans-unit id="6u6oCwB" resname="The email is already used.">
-        <source>The email is already used.</source>
-        <target>Emailová adresa je již použita.</target>
+        <source>This e-mail address is already in use.</source>
+        <target state="translated">E-mailová adresa je již použita.</target>
       </trans-unit>
       <trans-unit id="S14XECA" resname="The username is already used.">
         <source>The username is already used.</source>
         <target>Uživatelské jméno je již použito.</target>
       </trans-unit>
       <trans-unit id="INlaCgW" resname="An equal email is already used.">
-        <source>An equal email is already used.</source>
-        <target>Stejná emailová adresa je již použita.</target>
+        <source>An equal e-mail address is already in use.</source>
+        <target state="translated">Stejná e-mailová adresa je již použita.</target>
       </trans-unit>
       <trans-unit id="6rO8GZ1" resname="Maximum duration of {{ value }} hours exceeded.">
         <source>Maximum duration of {{ value }} hours exceeded.</source>
@@ -72,7 +72,7 @@
       </trans-unit>
       <trans-unit id="mjlH0la" resname="This timesheet is already exported.">
         <source>This timesheet is already exported.</source>
-        <target state="translated">Tento pracovní výkaz už byl exportován.</target>
+        <target state="translated">Tento časový záznam už byl exportován.</target>
       </trans-unit>
       <trans-unit id="to1Q85W" resname="An activity needs to be selected.">
         <source>An activity needs to be selected.</source>
@@ -124,7 +124,7 @@
       </trans-unit>
       <trans-unit id="SZO4xjC" resname="An absence cannot be booked before your first working day." xml:space="preserve">
         <source>An absence cannot be booked before your first working day.</source>
-        <target state="needs-translation">Absenci nelze rezervovat před prvním pracovním dnem.</target>
+        <target state="translated">Absenci nelze zadat před prvním pracovním dnem.</target>
       </trans-unit>
       <trans-unit id="IN37g5N" resname="Not enough holidays left.">
         <source>Not enough holidays left.</source>
@@ -132,7 +132,7 @@
       </trans-unit>
       <trans-unit id="ByeEMxW" resname="You do not have enough overtime, remaining are {{ value }}.">
         <source>You do not have enough overtime, remaining are {{ value }}.</source>
-        <target state="translated">Nemáte dostatek přesčasů, zbývá {{ hodnota }}.</target>
+        <target state="translated">Nemáte dostatek přesčasů, zbývá {{ value }}.</target>
       </trans-unit>
       <trans-unit id="DiaaRa1" resname="You cannot have two absences of this type at one day.">
         <source>You cannot have two absences of this type at one day.</source>
@@ -144,7 +144,7 @@
       </trans-unit>
       <trans-unit id="c2B6.lW" resname="You can book a maximum of {{ value }} days at once.">
         <source>You can book a maximum of {{ value }} days at once.</source>
-        <target state="translated">Najednou si můžete rezervovat maximálně {{ hodnota }} dnů, které jste aktuálně vybrali {{ vybrané }}.</target>
+        <target state="translated">Maximální počet dnů zadaných najednou je {{ value }}. Aktuálně jste vybrali {{ selected }}.</target>
       </trans-unit>
       <trans-unit id="BztgSSP" resname="The period of absence must not extend beyond the turn of the year.">
         <source>The period of absence must not extend beyond the turn of the year.</source>
@@ -156,7 +156,7 @@
       </trans-unit>
       <trans-unit id="G2wt0aW" resname="An absence cannot be booked after the last working day." xml:space="preserve">
         <source>An absence cannot be booked after the last working day.</source>
-        <target state="translated">Absenci nelze rezervovat po posledním pracovním dni.</target>
+        <target state="translated">Absenci nelze zadat po posledním pracovním dni.</target>
       </trans-unit>
       <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve">
         <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
@@ -164,11 +164,31 @@
       </trans-unit>
       <trans-unit id="KVyAzBQ" resname="Duration cannot be negative." xml:space="preserve">
         <source>Duration cannot be negative.</source>
-        <target state="translated">Trvání nemůže být záporné.</target>
+        <target state="translated">Doba trvání nemůže být záporná.</target>
       </trans-unit>
       <trans-unit id="EDEDQtZ" resname="These characters are not allowed: {{ chars }}" xml:space="preserve">
         <source>These characters are not allowed: {{ chars }}</source>
-        <target state="needs-translation">Následující znaky nejsou povoleny: {{ chars }}</target>
+        <target state="translated">Následující znaky nejsou povoleny: {{ chars }}</target>
+      </trans-unit>
+      <trans-unit id="5Yso.63" resname="The new password must be different from the current password.">
+        <source>The new password must be different from the current password.</source>
+        <target state="translated">Nové heslo se musí lišit od současného hesla.</target>
+      </trans-unit>
+      <trans-unit id="Dp2KT8W" resname="The field {{ field }} is required, please select a value" xml:space="preserve" approved="no">
+        <source>Please select a value for {{ field }}</source>
+        <target state="translated">Vyberte prosím hodnotu pro {{ field }}</target>
+      </trans-unit>
+      <trans-unit id="7hNS8l3" resname="A maximum duration of {{ value }} is allowed.">
+        <source>A maximum duration of {{ value }} is allowed.</source>
+        <target state="translated">Povolena je maximální doba trvání {{ value }}.</target>
+      </trans-unit>
+      <trans-unit id="5vkuQs2" resname="The project is locked until %date%, please choose a later date.">
+        <source>The project is locked until %date%, please choose a later date.</source>
+        <target state="translated">Projekt je uzamčen do %date%, vyberte prosím pozdější datum.</target>
+      </trans-unit>
+      <trans-unit id="vgsD_Cw" resname="The project is locked for the selected times.">
+        <source>The project is locked for the selected times.</source>
+        <target state="translated">Projekt je pro vybrané časy uzamčen.</target>
       </trans-unit>
     </body>
   </file>
