@@ -15,8 +15,8 @@
         <target state="translated">Další rozšíření</target>
       </trans-unit>
       <trans-unit id="zVtBsSo" resname="plugin.marketplace">
-        <source>plugin.marketplace</source>
-        <target state="translated">Nové pluginy z obchodu</target>
+        <source>Available plugins</source>
+        <target state="translated">Dostupné doplňky</target>
       </trans-unit>
       <trans-unit id="aNvGEaj" resname="update_available" xml:space="preserve">
         <source>Update available</source>

@@ -2146,6 +2146,10 @@
         <source>help.project_locked_until</source>
         <target state="translated">無法建立或修改此日期與之前的工時紀錄。</target>
       </trans-unit>
+      <trans-unit id="fxkWjGQ" resname="password_current">
+        <source>password_current</source>
+        <target state="translated">目前的密碼</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
