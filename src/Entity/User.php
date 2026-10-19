@@ -139,14 +139,14 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * if a currently logged-in user will be deleted and then refreshed from the session from one of the UserProvider
      * e.g. see LdapUserProvider::refreshUser() it might crash if $user->getPreferenceValue() is called
      *
-     * @var Collection<UserPreference>|null
+     * @var Collection<int, UserPreference>|null
      */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserPreference::class, cascade: ['persist'])]
     private ?Collection $preferences = null;
     /**
      * List of all team memberships.
      *
-     * @var Collection<TeamMember>
+     * @var Collection<int, TeamMember>
      */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: TeamMember::class, cascade: ['persist'], fetch: 'LAZY', orphanRemoval: true)]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
@@ -397,7 +397,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     }
 
     /**
-     * @return Collection<UserPreference>
+     * @return Collection<int, UserPreference>
      */
     public function getPreferences(): Collection
     {
@@ -621,7 +621,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     }
 
     /**
-     * @return Collection<TeamMember>
+     * @return Collection<int, TeamMember>
      */
     public function getMemberships(): Collection
     {

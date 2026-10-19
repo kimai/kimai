@@ -192,7 +192,7 @@ final class TimesheetMultiUpdateDTO extends MultiUpdateTableDTO implements Entit
     }
 
     /**
-     * @return Collection<MetaTableTypeInterface>
+     * @return Collection<int|string, MetaTableTypeInterface>
      */
     public function getMetaFields(): Collection
     {

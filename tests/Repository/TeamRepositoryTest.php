@@ -10,6 +10,7 @@
 namespace App\Tests\Repository;
 
 use App\Entity\Team;
+use App\Entity\TeamMember;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Repository\TeamRepository;
@@ -80,6 +81,7 @@ class TeamRepositoryTest extends AbstractRepositoryTestCase
         self::assertCount($expectedMembers, $members);
 
         foreach ($members as $member) {
+            self::assertInstanceOf(TeamMember::class, $member);
             $user = $member->getUser();
             self::assertInstanceOf(User::class, $user);
             self::assertFalse($uow->isUninitializedObject($user), 'Member user was not preloaded');
