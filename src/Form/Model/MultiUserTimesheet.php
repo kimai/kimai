@@ -20,13 +20,13 @@ use Doctrine\Common\Collections\Collection;
 final class MultiUserTimesheet extends Timesheet
 {
     /**
-     * @var Collection<User>
+     * @var ArrayCollection<int, User>
      */
-    private Collection $users;
+    private ArrayCollection $users;
     /**
-     * @var Collection<Team>
+     * @var ArrayCollection<int, Team>
      */
-    private Collection $teams;
+    private ArrayCollection $teams;
 
     public function __construct()
     {
@@ -36,7 +36,7 @@ final class MultiUserTimesheet extends Timesheet
     }
 
     /**
-     * @return Collection<User>
+     * @return Collection<int, User>
      */
     public function getUsers(): Collection
     {
@@ -45,18 +45,22 @@ final class MultiUserTimesheet extends Timesheet
 
     public function addUser(User $user): void
     {
-        $this->users->add($user);
+        if ($user->getId() === null) {
+            throw new \InvalidArgumentException('Cannot use unpersisted $user');
+        }
+        $this->users->set($user->getId(), $user);
     }
 
     public function removeUser(User $user): void
     {
-        if ($this->users->contains($user)) {
-            $this->users->removeElement($user);
+        if ($user->getId() === null) {
+            throw new \InvalidArgumentException('Cannot use unpersisted $user');
         }
+        $this->users->remove($user->getId());
     }
 
     /**
-     * @return Collection<Team>
+     * @return Collection<int, Team>
      */
     public function getTeams(): Collection
     {
@@ -65,13 +69,17 @@ final class MultiUserTimesheet extends Timesheet
 
     public function addTeam(Team $team): void
     {
-        $this->teams->add($team);
+        if ($team->getId() === null) {
+            throw new \InvalidArgumentException('Cannot use unpersisted $team');
+        }
+        $this->teams->set($team->getId(), $team);
     }
 
     public function removeTeam(Team $team): void
     {
-        if ($this->teams->contains($team)) {
-            $this->teams->removeElement($team);
+        if ($team->getId() === null) {
+            throw new \InvalidArgumentException('Cannot use unpersisted $team');
         }
+        $this->teams->remove($team->getId());
     }
 }

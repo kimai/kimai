@@ -205,9 +205,6 @@ final class InvoiceCreateCommand extends Command
         $defaultQuery->setSearchTerm($searchTerm);
         $defaultQuery->setExported($exportedFilter);
 
-        /** @var Invoice[] $invoices */
-        $invoices = [];
-
         if (!empty($customersIDs)) {
             /** @var Customer[] $customers */
             $customers = [];

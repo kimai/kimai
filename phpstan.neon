@@ -1623,26 +1623,6 @@ parameters:
             path: src/Form/InvoiceDocumentUploadForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Model\\\\MultiUserTimesheet\\:\\:getTeams\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Form/Model/MultiUserTimesheet.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Model\\\\MultiUserTimesheet\\:\\:getUsers\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Form/Model/MultiUserTimesheet.php
-
-        -
-            message: "#^Property App\\\\Form\\\\Model\\\\MultiUserTimesheet\\:\\:\\$teams with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Form/Model/MultiUserTimesheet.php
-
-        -
-            message: "#^Property App\\\\Form\\\\Model\\\\MultiUserTimesheet\\:\\:\\$users with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Form/Model/MultiUserTimesheet.php
-
-        -
             message: "#^Method App\\\\Form\\\\Model\\\\SystemConfiguration\\:\\:getTranslation\\(\\) should return string but returns string\\|null\\.$#"
             count: 1
             path: src/Form/Model/SystemConfiguration.php
@@ -1694,11 +1674,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$string of function strtolower expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Form/MultiUpdate/TimesheetMultiUpdateDTO.php
-
-        -
-            message: "#^Property App\\\\Form\\\\MultiUpdate\\\\TimesheetMultiUpdateDTO\\:\\:\\$meta with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Form/MultiUpdate/TimesheetMultiUpdateDTO.php
 
@@ -2964,11 +2939,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$num of method NumberFormatter\\:\\:format\\(\\) expects float\\|int, float\\|int\\|string given\\.$#"
-            count: 1
-            path: src/Utils/LocaleFormatter.php
-
-        -
-            message: "#^Parameter \\#2 \\$currency of method NumberFormatter\\:\\:formatCurrency\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Utils/LocaleFormatter.php
 
