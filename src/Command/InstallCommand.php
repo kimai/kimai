@@ -53,7 +53,7 @@ final class InstallCommand extends Command
 
         try {
             // creates the database if it is not yet existing
-            $this->createDatabase($io, $output);
+            $this->createDatabase($output);
         } catch (\Exception $ex) {
             $io->error('Failed to create database: ' . $ex->getMessage());
 
@@ -71,7 +71,7 @@ final class InstallCommand extends Command
 
         if (!$input->getOption('no-cache')) {
             // show manual steps in case this fails
-            $cacheResult = $this->rebuildCaches($environment, $io, $input, $output);
+            $cacheResult = $this->rebuildCaches($environment, $io, $output);
 
             if ($cacheResult !== Command::SUCCESS) {
                 $io->warning(
@@ -91,7 +91,7 @@ final class InstallCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function rebuildCaches(string $environment, SymfonyStyle $io, InputInterface $input, OutputInterface $output): int
+    private function rebuildCaches(string $environment, SymfonyStyle $io, OutputInterface $output): int
     {
         $io->text('Rebuilding cache ...');
 
@@ -134,7 +134,7 @@ final class InstallCommand extends Command
         }
     }
 
-    private function createDatabase(SymfonyStyle $io, OutputInterface $output): void
+    private function createDatabase(OutputInterface $output): void
     {
         try {
             if ($this->connection->isConnected()) {

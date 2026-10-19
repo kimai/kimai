@@ -112,7 +112,7 @@ final class DailyStatistic implements DateStatisticInterface
         $this->setupDays();
         $all = [];
 
-        foreach ($this->days as $id => $day) {
+        foreach ($this->days as $day) {
             $all[] = $day->getDate();
         }
 

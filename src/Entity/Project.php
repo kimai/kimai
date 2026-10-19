@@ -149,7 +149,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     /**
      * Meta fields registered with the project
      *
-     * @var Collection<ProjectMeta>
+     * @var Collection<int, ProjectMeta>
      */
     #[ORM\OneToMany(mappedBy: 'project', targetEntity: ProjectMeta::class, cascade: ['persist'])]
     #[Serializer\Expose]
@@ -161,7 +161,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     /**
      * Teams with access to the project
      *
-     * @var Collection<Team>
+     * @var Collection<int, Team>
      */
     #[ORM\JoinTable(name: 'kimai2_projects_teams')]
     #[ORM\JoinColumn(name: 'project_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
@@ -441,6 +441,11 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields
     {
         if (null === ($current = $this->getMetaField($meta->getName()))) {
+            if (!($meta instanceof ProjectMeta)) {
+                throw new \InvalidArgumentException(
+                    \sprintf('Expected instanceof ProjectMeta, received "%s"', \get_class($meta))
+                );
+            }
             $meta->setEntity($this);
             $this->meta->add($meta);
 
@@ -472,7 +477,7 @@ class Project implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     }
 
     /**
-     * @return Collection<Team>
+     * @return Collection<int, Team>
      */
     public function getTeams(): Collection
     {

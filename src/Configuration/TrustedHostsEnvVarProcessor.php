@@ -69,10 +69,11 @@ final class TrustedHostsEnvVarProcessor implements EnvVarProcessorInterface
             $hosts[] = '(?:.+\.)?(?:' . implode('|', $subdomains) . ')';
         }
 
+        // a trailing dot is the fully qualified form of the same host name (e.g. "kimai.example.com.")
         if (\count($hosts) === 1 && $exact === []) {
-            return '^' . $hosts[0] . '$';
+            return '^' . $hosts[0] . '\.?$';
         }
 
-        return '^(?:' . implode('|', $hosts) . ')$';
+        return '^(?:' . implode('|', $hosts) . ')\.?$';
     }
 }

@@ -908,6 +908,36 @@ class UserTest extends TestCase
         self::assertEquals('Europe/Berlin', $lastLogin->getTimezone()->getName());
     }
 
+    public function testPasswordResetLink(): void
+    {
+        $sut = new User();
+        self::assertFalse($sut->isPasswordResetLink('abc'));
+
+        $sut->markPasswordResetLink('/en/auth/link/check?user=foo&expires=1234&hash=abc');
+        self::assertTrue($sut->isPasswordResetLink('abc'));
+        self::assertFalse($sut->isPasswordResetLink('abd'));
+        self::assertFalse($sut->isPasswordResetLink(''));
+        // the hash is not stored in plain text
+        self::assertNotEquals('abc', $sut->getPreferenceValue(User::PREFERENCE_PASSWORD_RESET_LINK));
+
+        // the link is used up when the reset is required (link consumed or admin) ...
+        $sut->setRequiresPasswordReset(true);
+        self::assertFalse($sut->isPasswordResetLink('abc'));
+
+        // ... and when the password was changed
+        $sut->markPasswordResetLink('http://localhost/en/auth/link/check?user=foo&expires=1234&hash=abc');
+        self::assertTrue($sut->isPasswordResetLink('abc'));
+        $sut->setRequiresPasswordReset(false);
+        self::assertFalse($sut->isPasswordResetLink('abc'));
+    }
+
+    public function testMarkPasswordResetLinkWithoutHash(): void
+    {
+        $sut = new User();
+        $this->expectException(\RuntimeException::class);
+        $sut->markPasswordResetLink('/en/auth/link/check?user=foo&expires=1234');
+    }
+
     public function testIsPasswordRequestNonExpiredIsTimezoneIndependent(): void
     {
         $user = new User();

@@ -489,7 +489,7 @@ class ProjectStatisticService
                 }
             }
 
-            foreach ($users as $userId => $statistic) {
+            foreach ($users as $statistic) {
                 foreach ($model->getYears() as $year) {
                     $statYear = $model->getUserYear($year->getYear(), $statistic->getUser());
                     if ($statYear === null) {
@@ -588,7 +588,7 @@ class ProjectStatisticService
         }
 
         foreach ($yearActivities as $year => $yearlyActivities) {
-            foreach ($yearlyActivities as $activityId => $activityStatistic) {
+            foreach ($yearlyActivities as $activityStatistic) {
                 $model->addYearActivity($year, $activityStatistic);
             }
         }

@@ -75,7 +75,6 @@ final class ExportController extends AbstractController
             } catch (TooManyItemsExportException $ex) {
                 $tooManyResults = true;
                 $showPreview = false;
-                $entries = [];
                 $this->logException($ex);
             }
         }

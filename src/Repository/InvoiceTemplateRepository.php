@@ -39,7 +39,7 @@ class InvoiceTemplateRepository extends EntityRepository
         return $qb;
     }
 
-    private function getQueryBuilderForQuery(BaseQuery $query): QueryBuilder
+    private function getQueryBuilderForQuery(BaseQuery $query): QueryBuilder // @phpstan-ignore method.unusedParameter
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 

@@ -286,7 +286,10 @@ final class UserController extends BaseApiController
                 throw $this->createNotFoundException(\sprintf('Unknown custom-field "%s" requested', $name));
             }
 
-            if (str_starts_with($name, '__')) {
+            // the name is normalized and dots (.) are replaced with underscores (_)
+            // a string like ..pw_reset.. is normalized to __pw_reset__
+
+            if (str_starts_with($meta->getName(), '__')) {
                 throw $this->createAccessDeniedException('Cannot modify internal preference: ' . $name);
             }
 

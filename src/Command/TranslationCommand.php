@@ -312,7 +312,6 @@ final class TranslationCommand extends Command
                 return Command::FAILURE;
             }
 
-            $allKeys = 0;
             $enFiles = glob($bases['core'] . '/*.en.xlf');
 
             $baseUrl = 'https://api-free.deepl.com/v2/translate';
@@ -331,7 +330,6 @@ final class TranslationCommand extends Command
                         'source' => (string) $unit->source,
                         'target' => (string) $unit->target
                     ];
-                    $allKeys++;
                 }
 
                 $localeFile = $bases['core'] . '/' . $domain . '.' . $locale . '.xlf';
@@ -374,7 +372,6 @@ final class TranslationCommand extends Command
                         'target_lang' => $deeplySupportedLanguages[$locale],
                     ];
 
-                    $rawResponseData = null;
                     try {
                         $rawResponseData = $client->request('POST', $baseUrl, ['body' => $params]);
                     } catch (\Exception $exception) {

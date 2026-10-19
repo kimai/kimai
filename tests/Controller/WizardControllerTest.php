@@ -48,8 +48,32 @@ class WizardControllerTest extends AbstractControllerBaseTestCase
     public function testPasswordWizard(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->requirePasswordReset(UserFixtures::USERNAME_USER, $client);
 
         $this->assertAccessIsGranted($client, '/wizard/password');
+    }
+
+    /**
+     * The wizard sets a new password without asking for the current one: it must only be reachable
+     * while a password reset is required, otherwise any login link could be used to take over the account.
+     */
+    public function testPasswordWizardIsNotReachableWithoutRequiredReset(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $password = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER)->getPassword();
+
+        $this->request($client, '/wizard/password');
+        $this->assertIsRedirect($client, '/homepage');
+
+        $this->request($client, '/wizard/password', 'POST', [
+            'user_password' => [
+                'plainPassword' => ['first' => 'new-pa$$word-123', 'second' => 'new-pa$$word-123'],
+            ],
+        ]);
+        $this->assertIsRedirect($client, '/homepage');
+
+        $this->getEntityManager()->clear();
+        self::assertSame($password, $this->loadUserFromDatabase(UserFixtures::USERNAME_USER)->getPassword());
     }
 
     public function testPasswordResetRedirectsToPasswordWizard(): void

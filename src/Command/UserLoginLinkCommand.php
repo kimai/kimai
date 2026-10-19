@@ -91,16 +91,17 @@ final class UserLoginLinkCommand extends Command
             $context->setParameter('_locale', $previousLocale);
         }
 
+        // only this link requires a password change when used, see LoginLinkSuccessHandler
+        if ($input->getOption('password-reset') === true) {
+            $user->markPasswordRequested();
+            $user->markPasswordResetLink($loginLink);
+            $this->userRepository->saveUser($user);
+        }
+
         if ($input->getOption('absolute') !== true) {
             $path = parse_url($loginLink, PHP_URL_PATH);
             $query = parse_url($loginLink, PHP_URL_QUERY);
             $loginLink = (\is_string($path) ? $path : '/') . (\is_string($query) ? '?' . $query : '');
-        }
-
-        if ($input->getOption('password-reset') === true) {
-            $user->markPasswordRequested();
-            $user->setRequiresPasswordReset(true);
-            $this->userRepository->saveUser($user);
         }
 
         $output->writeln($loginLink);
