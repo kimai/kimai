@@ -133,6 +133,8 @@ final class PasswordResetController extends AbstractController
             if (!$user->isPasswordRequestNonExpired($this->configuration->getPasswordResetRetryLifetime())) {
                 $loginLinkDetails = $loginLinkHandler->createLoginLink($user, $request, $this->configuration->getPasswordResetRetryLifetime()); // @phpstan-ignore-line
                 $loginLink = $loginLinkDetails->getUrl();
+                // only this link requires a password change when used, see LoginLinkSuccessHandler
+                $user->markPasswordResetLink($loginLink);
 
                 $mail = $this->generateResettingEmailMessage($user, $translator, $loginLink);
                 $event = new EmailPasswordResetEvent($user, $mail);
@@ -141,8 +143,7 @@ final class PasswordResetController extends AbstractController
                 // this will send the email
                 $this->eventDispatcher->dispatch(new UserEmailEvent($user, $event->getEmail()));
 
-                // only after the email was sent, otherwise the user could not request a new one.
-                // the password reset is required after the login link was used, see LoginLinkSuccessHandler
+                // only after the email was sent, otherwise the user could not request a new one
                 $user->markPasswordRequested();
                 $this->userService->saveUser($user);
             }

@@ -52,6 +52,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 class User implements UserInterface, EquatableInterface, ThemeUserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
 {
     public const PREFERENCE_PASSWORD_RESET = '__pw_reset__';
+    /**
+     * Hash of the login link that was created as password reset, see LoginLinkSuccessHandler
+     */
+    public const PREFERENCE_PASSWORD_RESET_LINK = '__pw_reset_link__';
 
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_TEAMLEAD = 'ROLE_TEAMLEAD';
@@ -138,7 +142,7 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
      * @var Collection<UserPreference>|null
      */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserPreference::class, cascade: ['persist'])]
-    private ?Collection $preferences = null;
+    private ?Collection $preferences;
     /**
      * List of all team memberships.
      *
@@ -1263,9 +1267,49 @@ class User implements UserInterface, EquatableInterface, ThemeUserInterface, Pas
     {
         $this->setPreferenceValue(self::PREFERENCE_PASSWORD_RESET, ($require ? '1' : '0'));
 
+        // the reset link is used up: it was consumed, an admin required the reset or the password was changed
+        if (null !== ($link = $this->getPreference(self::PREFERENCE_PASSWORD_RESET_LINK))) {
+            $link->setValue(null);
+        }
+
         if (!$require) {
             $this->passwordRequestedAt = null;
         }
+    }
+
+    /**
+     * Binds the password reset to one specific login link: only this link requires a password change when used.
+     * The hash is not stored in plain text, as it would allow to recreate the login link.
+     */
+    public function markPasswordResetLink(string $loginLink): void
+    {
+        $this->setPreferenceValue(self::PREFERENCE_PASSWORD_RESET_LINK, hash('sha256', $this->getLoginLinkHash($loginLink)));
+    }
+
+    /**
+     * The hash identifies the login link, it is validated by the LoginLinkHandler when the link is used.
+     */
+    private function getLoginLinkHash(string $loginLink): string
+    {
+        parse_str((string) parse_url($loginLink, PHP_URL_QUERY), $query);
+        $hash = $query['hash'] ?? null;
+
+        if (!\is_string($hash) || $hash === '') {
+            throw new \RuntimeException('Login link without hash');
+        }
+
+        return $hash;
+    }
+
+    public function isPasswordResetLink(string $loginLinkHash): bool
+    {
+        $stored = $this->getPreferenceValue(self::PREFERENCE_PASSWORD_RESET_LINK);
+
+        if (!\is_string($stored) || $stored === '') {
+            return false;
+        }
+
+        return hash_equals($stored, hash('sha256', $loginLinkHash));
     }
 
     public function hasSeenWizard(string $wizard): bool

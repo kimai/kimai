@@ -102,6 +102,11 @@ class UserLoginLinkCommandTest extends KernelTestCase
         self::assertSame($passwordReset, $user->isPasswordRequestNonExpired(3600));
         self::assertEquals('', $user->getSignatureDate());
 
+        // the reset is bound to this link
+        parse_str((string) parse_url($loginLink, PHP_URL_QUERY), $query);
+        self::assertIsString($query['hash'] ?? null);
+        self::assertSame($passwordReset, $user->isPasswordResetLink($query['hash']));
+
         $request = Request::create($loginLink);
         $requestStack->push($request);
         try {

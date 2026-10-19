@@ -73,12 +73,6 @@ final class UserLoginLinkCommand extends Command
             return Command::FAILURE;
         }
 
-        // the password reset is required after the login link was used, see LoginLinkSuccessHandler
-        if ($input->getOption('password-reset') === true) {
-            $user->markPasswordRequested();
-            $this->userRepository->saveUser($user);
-        }
-
         // the URL is generated from the router context (configured via DEFAULT_URI), passing a Request to
         // createLoginLink() would replace it and fail with "Untrusted Host" if TRUSTED_HOSTS is configured
         $context = $this->urlGenerator->getContext();
@@ -95,6 +89,13 @@ final class UserLoginLinkCommand extends Command
         } finally {
             $this->requestStack->pop();
             $context->setParameter('_locale', $previousLocale);
+        }
+
+        // only this link requires a password change when used, see LoginLinkSuccessHandler
+        if ($input->getOption('password-reset') === true) {
+            $user->markPasswordRequested();
+            $user->markPasswordResetLink($loginLink);
+            $this->userRepository->saveUser($user);
         }
 
         if ($input->getOption('absolute') !== true) {

@@ -9,7 +9,6 @@
 
 namespace App\Security;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,9 +21,11 @@ use Symfony\Component\Security\Http\HttpUtils;
 /**
  * Called after a login link was validated, see "login_link.success_handler" in security.yaml.
  *
- * A login link that was requested as password reset (via email or the "kimai:user:login-link --password-reset" command)
- * requires the user to set a new password. This is done here and not when requesting the link, because requesting a
- * password reset does not require authentication and must not have any effect on the account.
+ * A login link that was created as password reset (via email or the "kimai:user:login-link --password-reset" command)
+ * requires the user to set a new password. The reset is bound to that one link (see User::markPasswordResetLink()):
+ * any other login link is a normal login, even while a password reset request is pending. This is done here and not
+ * when requesting the link, because requesting a password reset does not require authentication and must not have
+ * any effect on the account.
  *
  * Requiring a password reset changes the security signature: all other sessions of the user end and the login link
  * becomes invalid. If 2FA is active, this is called before the TOTP code was entered.
@@ -35,7 +36,6 @@ final class LoginLinkSuccessHandler implements AuthenticationSuccessHandlerInter
 
     public function __construct(
         HttpUtils $httpUtils,
-        private readonly SystemConfiguration $configuration,
         private readonly UserRepository $userRepository,
     )
     {
@@ -43,7 +43,7 @@ final class LoginLinkSuccessHandler implements AuthenticationSuccessHandlerInter
     }
 
     /**
-     * Called by Symfony with the firewall options (e.g. "default_target_path").
+     * Called by Symfony (CustomAuthenticationSuccessHandler) with the firewall options, e.g. "default_target_path".
      *
      * @param array<string, mixed> $options
      */
@@ -52,6 +52,9 @@ final class LoginLinkSuccessHandler implements AuthenticationSuccessHandlerInter
         $this->defaultHandler->setOptions($options);
     }
 
+    /**
+     * Called by Symfony (CustomAuthenticationSuccessHandler), required to find the target path saved in the session.
+     */
     public function setFirewallName(string $firewallName): void
     {
         $this->defaultHandler->setFirewallName($firewallName);
@@ -60,8 +63,10 @@ final class LoginLinkSuccessHandler implements AuthenticationSuccessHandlerInter
     public function onAuthenticationSuccess(Request $request, TokenInterface $token): ?Response
     {
         $user = $token->getUser();
+        // the hash identifies the link, it was validated by the LoginLinkHandler before
+        $hash = $request->query->get('hash');
 
-        if ($user instanceof User && !$user->requiresPasswordReset() && $user->isPasswordRequestNonExpired($this->configuration->getPasswordResetRetryLifetime())) {
+        if ($user instanceof User && \is_string($hash) && $user->isPasswordResetLink($hash)) {
             $user->setRequiresPasswordReset(true);
             $this->userRepository->saveUser($user);
         }
