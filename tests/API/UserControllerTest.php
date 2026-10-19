@@ -9,6 +9,7 @@
 
 namespace App\Tests\API;
 
+use App\DataFixtures\UserFixtures;
 use App\Entity\Role;
 use App\Entity\User;
 use App\Tests\Mocks\PrepareUserEventSubscriberMock;
@@ -309,6 +310,67 @@ class UserControllerTest extends APIControllerBaseTestCase
         self::assertEquals(['ROLE_TEAMLEAD'], $result['roles']);
     }
 
+    public function testPatchActionCannotChangeSystemAccountAndPasswordResetOnOwnProfile(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        $user->setRequiresPasswordReset(true);
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+        $this->getEntityManager()->clear();
+        self::assertTrue($this->loadUserFromDatabase(UserFixtures::USERNAME_USER)->requiresPasswordReset());
+
+        $data = [
+            'title' => 'qwertzui',
+            'systemAccount' => true,
+            'requiresPasswordReset' => false,
+        ];
+        $this->request($client, '/api/users/' . $user->getId(), 'PATCH', [], (string) json_encode($data));
+        $this->assertApiCallValidationError($client->getResponse(), [], true, [], [], ['systemAccount', 'requiresPasswordReset']);
+
+        $this->getEntityManager()->clear();
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        self::assertFalse($user->isSystemAccount());
+        self::assertTrue($user->requiresPasswordReset());
+        self::assertEquals('Developer', $user->getTitle());
+    }
+
+    public function testPatchActionCannotChangeSystemAccountAndPasswordResetAsTeamlead(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $user = $this->getUserByRole(User::ROLE_USER);
+
+        $data = [
+            'systemAccount' => true,
+            'requiresPasswordReset' => true,
+        ];
+        $this->request($client, '/api/users/' . $user->getId(), 'PATCH', [], (string) json_encode($data));
+        $this->assertApiResponseAccessDenied($client->getResponse(), 'Access denied.');
+
+        $this->getEntityManager()->clear();
+        $user = $this->getUserByRole(User::ROLE_USER);
+        self::assertFalse($user->isSystemAccount());
+        self::assertFalse($user->requiresPasswordReset());
+    }
+
+    public function testPatchActionSystemAccountAndPasswordResetAsSuperAdmin(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_USER);
+
+        $data = [
+            'systemAccount' => true,
+            'requiresPasswordReset' => true,
+        ];
+        $this->request($client, '/api/users/' . $user->getId(), 'PATCH', [], (string) json_encode($data));
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $this->getEntityManager()->clear();
+        $user = $this->getUserByRole(User::ROLE_USER);
+        self::assertTrue($user->isSystemAccount());
+        self::assertTrue($user->requiresPasswordReset());
+    }
+
     public function testPatchActionWithUnknownUser(): void
     {
         $this->assertEntityNotFoundForPatch(User::ROLE_SUPER_ADMIN, '/api/users/255', []);
@@ -449,6 +511,37 @@ class UserControllerTest extends APIControllerBaseTestCase
         ];
         $this->request($client, '/api/users/' . $id . '/preferences', 'PATCH', [], (string) json_encode($data));
         self::assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    /**
+     * Regression test: internal preferences (prefixed with "__") must never be writable through the API,
+     * otherwise a user could clear the password reset flag that was set by an administrator.
+     */
+    public function testUpdateUserPreferenceCannotChangeInternalPreference(): void
+    {
+        $role = User::ROLE_USER;
+        $id = $this->getAuthenticatedUserId($role);
+        $client = $this->getClientForAuthenticatedUser($role);
+
+        $em = $this->getEntityManager();
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        self::assertSame($id, $user->getId());
+        $user->setRequiresPasswordReset(true);
+        $em->persist($user);
+        $em->flush();
+        $em->clear();
+
+        $data = [
+            [
+                'name' => '__pw_reset__',
+                'value' => '0'
+            ]
+        ];
+        $this->request($client, '/api/users/' . $id . '/preferences', 'PATCH', [], (string) json_encode($data));
+        self::assertApiResponseAccessDenied($client->getResponse());
+
+        $em->clear();
+        self::assertTrue($this->loadUserFromDatabase(UserFixtures::USERNAME_USER)->requiresPasswordReset());
     }
 
     public function testDeleteRoleIsSecure(): void

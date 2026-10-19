@@ -10,12 +10,15 @@
 namespace App\Tests\Controller;
 
 use App\DataFixtures\UserFixtures;
+use App\Entity\AccessToken;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Tests\Mocks\UserUpdateCounterSubscriberMock;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 #[Group('integration')]
 class WizardControllerTest extends AbstractControllerBaseTestCase
@@ -47,6 +50,137 @@ class WizardControllerTest extends AbstractControllerBaseTestCase
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
         $this->assertAccessIsGranted($client, '/wizard/password');
+    }
+
+    public function testPasswordResetRedirectsToPasswordWizard(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->requirePasswordReset(UserFixtures::USERNAME_USER, $client);
+
+        $this->request($client, '/timesheet/');
+        $this->assertIsRedirect($client, '/wizard/password');
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/create-access-token');
+        $this->assertIsRedirect($client, '/wizard/password');
+
+        // the wizard itself and logout must stay reachable
+        $this->assertAccessIsGranted($client, '/wizard/password');
+    }
+
+    /**
+     * @return iterable<array{string}>
+     */
+    public static function providePasswordResetBypassAttempts(): iterable
+    {
+        yield ['/timesheet/?probe=/register/'];
+        yield ['/timesheet/?probe=/wizard/'];
+        yield ['/timesheet/?probe=/ReGiStEr/'];
+        yield ['/timesheet/?probe=/WiZaRd/'];
+        yield ['/timesheet/?probe=/api/'];
+        yield ['/profile/' . UserFixtures::USERNAME_USER . '/create-access-token?probe=/register/'];
+        yield ['/profile/' . UserFixtures::USERNAME_USER . '/create-access-token?probe=/wizard/'];
+    }
+
+    #[DataProvider('providePasswordResetBypassAttempts')]
+    public function testPasswordResetCannotBeBypassedViaQueryString(string $url): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->requirePasswordReset(UserFixtures::USERNAME_USER, $client);
+
+        $this->request($client, $url);
+        $this->assertIsRedirect($client, '/wizard/password');
+    }
+
+    public function testPasswordResetPreventsAccessTokenCreation(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        // fetch a valid CSRF token while no reset is pending
+        $crawler = $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/create-access-token');
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $form = $crawler->filter('form[name=access_token_form]')->form();
+        $values = $form->getPhpValues();
+        $values['access_token_form']['name'] = 'bypass';
+
+        // bypass the ORM, which would reset the security signature and end the session: this test makes sure
+        // that the PasswordResetSubscriber blocks a session with a valid CSRF token, while a reset is pending
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        $this->getEntityManager()->getConnection()->insert('kimai2_user_preferences', [
+            'user_id' => $user->getId(),
+            'name' => '__pw_reset__',
+            'value' => '1',
+        ]);
+
+        $before = \count($this->getEntityManager()->getRepository(AccessToken::class)->findAll());
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/create-access-token?probe=/register/', 'POST', $values);
+        $this->assertIsRedirect($client, '/wizard/password');
+
+        $after = \count($this->getEntityManager()->getRepository(AccessToken::class)->findAll());
+        self::assertSame($before, $after, 'No access token must be created while a password reset is pending');
+    }
+
+    /**
+     * Closing the browser (no session cookie, only remember-me cookie stays) must not skip the password reset.
+     * The remembered user has to unlock the session with the password and is then sent to the wizard.
+     */
+    public function testPasswordResetCannotBeBypassedWithRememberMeCookie(): void
+    {
+        $client = self::createClient();
+        $this->requirePasswordReset(UserFixtures::USERNAME_USER);
+
+        $this->request($client, '/login');
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $client->submit($client->getCrawler()->filter('body form')->form(), [
+            '_username' => UserFixtures::USERNAME_USER,
+            '_password' => UserFixtures::DEFAULT_PASSWORD,
+        ]);
+        $this->assertIsRedirect($client);
+
+        $this->request($client, '/timesheet/');
+        $this->assertIsRedirect($client, '/wizard/password');
+
+        // simulate a closed browser: the session is gone, only the remember-me cookie survives
+        self::assertNotNull($client->getCookieJar()->get('KIMAI_REMEMBER'), 'Missing remember-me cookie');
+        foreach ($client->getCookieJar()->all() as $cookie) {
+            if ($cookie->getName() !== 'KIMAI_REMEMBER') {
+                $client->getCookieJar()->expire($cookie->getName(), $cookie->getPath(), $cookie->getDomain());
+            }
+        }
+
+        $this->request($client, '/timesheet/');
+        $this->assertIsRedirect($client, '/wizard/password');
+
+        // the wizard requires full authentication: the user must unlock the session with the password
+        $this->request($client, '/wizard/password');
+        $this->assertIsRedirect($client, '/login');
+
+        $this->request($client, '/login');
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $client->submit($client->getCrawler()->filter('body form')->form(), [
+            '_password' => UserFixtures::DEFAULT_PASSWORD,
+        ]);
+        $this->assertIsRedirect($client, '/wizard/password');
+
+        $this->assertAccessIsGranted($client, '/wizard/password');
+        $this->request($client, '/timesheet/');
+        $this->assertIsRedirect($client, '/wizard/password');
+    }
+
+    /**
+     * Requiring a password reset ends all sessions of the user: pass the client to log in again.
+     */
+    private function requirePasswordReset(string $username, ?HttpKernelBrowser $client = null): void
+    {
+        $user = $this->loadUserFromDatabase($username);
+        $user->setRequiresPasswordReset(true);
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+
+        if ($client !== null) {
+            self::assertInstanceOf(KernelBrowser::class, $client);
+            $client->loginUser($user, 'secured_area');
+        }
     }
 
     public function testFinishWizard(): void
@@ -145,10 +279,7 @@ class WizardControllerTest extends AbstractControllerBaseTestCase
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
 
-        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
-        $user->setRequiresPasswordReset(true);
-        $this->getEntityManager()->persist($user);
-        $this->getEntityManager()->flush();
+        $this->requirePasswordReset(UserFixtures::USERNAME_USER, $client);
 
         $crawler = $this->request($client, '/wizard/password');
         $form = $crawler->filter('form[name=user_password]')->form();
@@ -162,6 +293,32 @@ class WizardControllerTest extends AbstractControllerBaseTestCase
         $this->getEntityManager()->clear();
         $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
         self::assertFalse($user->requiresPasswordReset());
+    }
+
+    public function testPasswordWizardFailsIfNewPasswordIsCurrentPassword(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $this->requirePasswordReset(UserFixtures::USERNAME_USER, $client);
+
+        $this->assertHasValidationError(
+            $client,
+            '/wizard/password',
+            'form[name=user_password]',
+            [
+                'user_password' => [
+                    'plainPassword' => [
+                        'first' => UserFixtures::DEFAULT_PASSWORD,
+                        'second' => UserFixtures::DEFAULT_PASSWORD,
+                    ]
+                ]
+            ],
+            ['#user_password_plainPassword_first']
+        );
+
+        $this->getEntityManager()->clear();
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        self::assertTrue($user->requiresPasswordReset());
     }
 
     public function testNextRedirectsToFirstUnseenStep(): void

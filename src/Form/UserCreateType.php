@@ -81,6 +81,8 @@ class UserCreateType extends UserEditType
             'validation_groups' => ['UserCreate', 'Registration', 'Default'],
             'include_roles' => false,
             'include_teams' => false,
+            // creating users requires the create_user permission, so the admin flags can be shown
+            'include_password_reset' => true,
         ]);
     }
 }

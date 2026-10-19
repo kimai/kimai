@@ -4,7 +4,7 @@
     <body>
       <trans-unit id="tLV1hoP" resname="report_tasks_assigned" xml:space="preserve" approved="no">
         <source>report_tasks_assigned</source>
-        <target state="translated">Meine Aufgaben</target>
+        <target state="translated">Aufgaben pro Benutzer</target>
       </trans-unit>
       <trans-unit id="8c0YWZm" resname="report_tasks_teams" xml:space="preserve" approved="no">
         <source>report_tasks_teams</source>
@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="XjAwhoV" resname="task.start" xml:space="preserve" approved="no">
         <source>task.start</source>
-        <target state="translated">Verarbeitung starten</target>
+        <target state="translated">Bearbeitung beginnen</target>
       </trans-unit>
       <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
         <source>task_todo</source>
@@ -64,11 +64,11 @@
       </trans-unit>
       <trans-unit id="SzbkpWy" resname="task.help.description" xml:space="preserve" approved="no">
         <source>task.help.description</source>
-        <target state="translated">Diese Beschreibung wird in jeden Stundenzettel-Datensatz kopiert</target>
+        <target state="translated">Diese Beschreibung wird in jeden erfassten Zeiteintrag kopiert</target>
       </trans-unit>
       <trans-unit id="zJvuPBv" resname="task.help.tags" xml:space="preserve" approved="no">
         <source>task.help.tags</source>
-        <target state="translated">Diese Tags werden in jeden Stundenzettel-Datensatz kopiert</target>
+        <target state="translated">Diese Schlagworte werden in jeden erfassten Zeiteintrag kopiert</target>
       </trans-unit>
       <trans-unit id="agwwK.J" resname="task_no_estimation" xml:space="preserve" approved="no">
         <source>task_no_estimation</source>
@@ -84,7 +84,7 @@
       </trans-unit>
       <trans-unit id="XD7TZh7" resname="task.stop" xml:space="preserve" approved="no">
         <source>task.stop</source>
-        <target state="translated">Verarbeitung pausieren</target>
+        <target state="translated">Bearbeitung pausieren</target>
       </trans-unit>
       <trans-unit id="qLewfPg" resname="task.unassign" xml:space="preserve" approved="no">
         <source>task.unassign</source>
@@ -96,7 +96,7 @@
       </trans-unit>
       <trans-unit id="ZCSPtzc" resname="task.help.estimation" xml:space="preserve" approved="no">
         <source>task.help.estimation</source>
-        <target state="translated">Geschätzte Zeit, die benötigt wird, um die Aufgabe in hh:mm abzuschließen</target>
+        <target state="translated">Geschätzte Dauer zur Erledigung der Aufgabe in hh:mm</target>
       </trans-unit>
       <trans-unit id="sG_9DvK" resname="task.assign" xml:space="preserve" approved="no">
         <source>task.assign</source>
@@ -132,7 +132,7 @@
       </trans-unit>
       <trans-unit id="K.9A2XH" resname="board.close_task" xml:space="preserve" approved="no">
         <source>board.close_task</source>
-        <target state="translated">Diese Aufgabe abschließen?</target>
+        <target state="translated">Diese Aufgabe abschliessen?</target>
       </trans-unit>
       <trans-unit id="Hj3qdDA" resname="board.delete_confirm" xml:space="preserve" approved="no">
         <source>board.delete_confirm</source>

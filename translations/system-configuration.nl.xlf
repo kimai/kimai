@@ -318,6 +318,42 @@
         <source>invoice.rounding_mode</source>
         <target state="translated">Afrondingsmodus</target>
       </trans-unit>
+      <trans-unit id="iobaZJS" resname="user_auth_change">
+        <source>user_auth_change</source>
+        <target state="translated">Verander authenticatie van gebruikers met externe aanmelding</target>
+      </trans-unit>
+      <trans-unit id="iMmgno5" resname="user_auth_change.help">
+        <source>user_auth_change.help</source>
+        <target state="translated">Staat Super-Beheerders toe om gebruikers met externe aanmeldignen terug te zetten op interne aanmeldingen vanuit het gebruikersprofiel.</target>
+      </trans-unit>
+      <trans-unit id="6pqJCWV" resname="user_auth_password_strength">
+        <source>user_auth_password_strength</source>
+        <target state="translated">Wachtwoordsterkte</target>
+      </trans-unit>
+      <trans-unit id="0hLoKXm" resname="user_auth_password_strength.help">
+        <source>user_auth_password_strength.help</source>
+        <target state="translated">Van toepassing wanneer een wachtwoord wordt ingesteld. De sterkte wordt bepaald op basis van de lengte en gebruikte types tekens.</target>
+      </trans-unit>
+      <trans-unit id="svXdXTq" resname="password_strength.none">
+        <source>password_strength.none</source>
+        <target state="translated">Geen vereisten (alleen minimumlengte)</target>
+      </trans-unit>
+      <trans-unit id="3jD52PB" resname="password_strength.normal">
+        <source>password_strength.normal</source>
+        <target state="translated">Normaal</target>
+      </trans-unit>
+      <trans-unit id="0e4HBxu" resname="password_strength.medium">
+        <source>password_strength.medium</source>
+        <target state="translated">Gemiddeld</target>
+      </trans-unit>
+      <trans-unit id="VlOVWX7" resname="password_strength.strong">
+        <source>password_strength.strong</source>
+        <target state="translated">Sterk</target>
+      </trans-unit>
+      <trans-unit id="R5QYeOG" resname="password_strength.very_strong">
+        <source>password_strength.very_strong</source>
+        <target state="translated">Heel sterk</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

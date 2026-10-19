@@ -22,6 +22,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
+use Scheb\TwoFactorBundle\Model\Totp\TotpConfiguration;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -238,6 +239,29 @@ class UserTest extends TestCase
         self::assertFalse($user->isLdapUser());
         self::assertFalse($user->isSamlUser());
         self::assertTrue($user->isInternalUser());
+    }
+
+    public function testSwitchToInternalAuth(): void
+    {
+        $user = new User();
+        $user->setPassword('foo-bar');
+        $user->switchToInternalAuth();
+        self::assertTrue($user->isInternalUser());
+        self::assertEquals('foo-bar', $user->getPassword());
+
+        $user->setAuth(User::AUTH_LDAP);
+        $user->setPreferenceValue('ldap_dn', 'uid=foo,ou=users,dc=kimai,dc=org');
+        $user->switchToInternalAuth();
+        self::assertTrue($user->isInternalUser());
+        self::assertEquals(User::AUTH_INTERNAL, $user->getAuth());
+        self::assertEquals('', $user->getPassword());
+        self::assertNull($user->getPreferenceValue('ldap_dn'));
+
+        $user->setPassword('foo-bar');
+        $user->setAuth(User::AUTH_SAML);
+        $user->switchToInternalAuth();
+        self::assertTrue($user->isInternalUser());
+        self::assertEquals('', $user->getPassword());
     }
 
     public function testDatetime(): void
@@ -726,6 +750,14 @@ class UserTest extends TestCase
         $sut2->setEnabled(true);
         self::assertTrue($sut->isEqualTo($sut2));
         self::assertTrue($sut2->isEqualTo($sut));
+
+        // a reset security signature invalidates existing sessions
+        $sut->resetSecuritySignature();
+        self::assertFalse($sut->isEqualTo($sut2));
+        self::assertFalse($sut2->isEqualTo($sut));
+        $sut2 = clone $sut;
+        self::assertTrue($sut->isEqualTo($sut2));
+        self::assertTrue($sut2->isEqualTo($sut));
     }
 
     public function testSerialize(): void
@@ -735,6 +767,7 @@ class UserTest extends TestCase
         $sut->setUserIdentifier('foo-BAR');
         $sut->setEmail('hello@world.com');
         $sut->setEnabled(false);
+        $sut->resetSecuritySignature();
 
         $data = serialize($sut);
 
@@ -743,6 +776,7 @@ class UserTest extends TestCase
             false,
             null,
             'hello@world.com',
+            $sut->getSignatureDate(),
         ];
 
         /** @var User $unserialized */
@@ -753,9 +787,28 @@ class UserTest extends TestCase
             $unserialized->isEnabled(),
             $unserialized->getId(),
             $unserialized->getEmail(),
+            $unserialized->getSignatureDate(),
         ];
 
         self::assertEquals($expected, $actual);
+        self::assertTrue($sut->isEqualTo($unserialized));
+    }
+
+    /**
+     * Sessions created before the signature date was serialized must stay valid.
+     */
+    public function testUnserializeWithoutSignatureDate(): void
+    {
+        $sut = new User();
+        $sut->__unserialize([
+            'id' => 1,
+            'username' => 'foo-BAR',
+            'enabled' => true,
+            'email' => 'hello@world.com',
+            'password' => 'ABC-1234567890',
+        ]);
+
+        self::assertEquals('', $sut->getSignatureDate());
     }
 
     public function testTeamMemberships(): void
@@ -870,6 +923,55 @@ class UserTest extends TestCase
         self::assertTrue($user->isPasswordRequestNonExpired(7200));
     }
 
+    public function testTotpAuthentication(): void
+    {
+        $user = new User();
+        $user->setUserIdentifier('foo');
+        self::assertFalse($user->isTotpAuthenticationEnabled());
+        self::assertSame('foo', $user->getTotpAuthenticationUsername());
+
+        $user->setTotpSecret('JBSWY3DPEHPK3PXP');
+        $user->enableTotpAuthentication();
+        self::assertTrue($user->isTotpAuthenticationEnabled());
+        self::assertTrue($user->hasTotpSecret());
+
+        $config = $user->getTotpAuthenticationConfiguration();
+        self::assertSame('JBSWY3DPEHPK3PXP', $config->getSecret());
+        self::assertSame(TotpConfiguration::ALGORITHM_SHA1, $config->getAlgorithm());
+        self::assertSame(30, $config->getPeriod());
+        self::assertSame(6, $config->getDigits());
+
+        // deactivation removes the secret, so a re-activation requires a new one
+        $user->disableTotpAuthentication();
+        self::assertFalse($user->isTotpAuthenticationEnabled());
+        self::assertFalse($user->hasTotpSecret());
+        self::assertNull($user->getTotpSecret());
+    }
+
+    public function testCreateTotpAuthenticationConfiguration(): void
+    {
+        $user = new User();
+        $user->setTotpSecret('JBSWY3DPEHPK3PXP');
+
+        $config = $user->createTotpAuthenticationConfiguration('KRSXG5CTMVRXEZLU');
+        self::assertSame('KRSXG5CTMVRXEZLU', $config->getSecret());
+        self::assertSame(TotpConfiguration::ALGORITHM_SHA1, $config->getAlgorithm());
+        self::assertSame(30, $config->getPeriod());
+        self::assertSame(6, $config->getDigits());
+
+        // the given secret must not be stored in the user
+        self::assertSame('JBSWY3DPEHPK3PXP', $user->getTotpSecret());
+        self::assertEquals($user->getTotpAuthenticationConfiguration(), $user->createTotpAuthenticationConfiguration('JBSWY3DPEHPK3PXP'));
+    }
+
+    public function testGetTotpAuthenticationConfigurationWithoutSecret(): void
+    {
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('Cannot create TOTP configuration, user has no TOTP secret');
+
+        (new User())->getTotpAuthenticationConfiguration();
+    }
+
     public function testSignatureDate(): void
     {
         $user = new User();
@@ -878,6 +980,8 @@ class UserTest extends TestCase
         $user->resetSecuritySignature();
         // shortest possible result: 2026-05-31T01:18:19Z
         self::assertGreaterThanOrEqual(20, \strlen($user->getSignatureDate()));
+        // always UTC, independent of the users timezone: the value must not change when loaded from the database
+        self::assertStringEndsWith('+00:00', $user->getSignatureDate());
     }
 
     private static function userWithId(int $id): User

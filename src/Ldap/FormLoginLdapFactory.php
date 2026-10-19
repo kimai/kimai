@@ -10,6 +10,7 @@
 namespace App\Ldap;
 
 use App\Configuration\LdapConfiguration;
+use App\User\ExternalUserSanitizer;
 use App\User\UserService;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\AbstractFactory;
@@ -66,6 +67,8 @@ final class FormLoginLdapFactory extends AbstractFactory implements Authenticato
             ->addTag('kernel.event_subscriber', ['dispatcher' => 'security.event_dispatcher.' . $firewallName])
             ->addArgument(new Reference(LdapManager::class))
             ->addArgument(new Reference(UserService::class))
+            ->addArgument(new Reference(ExternalUserSanitizer::class))
+            ->addArgument(new Reference(LoggerInterface::class))
         ;
 
         $ldapAuthenticatorId = 'security.authenticator.' . $key . '.' . $firewallName;

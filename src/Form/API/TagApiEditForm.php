@@ -11,6 +11,6 @@ namespace App\Form\API;
 
 use App\Form\TagEditForm;
 
-final class TagApiEditForm extends TagEditForm
+final class TagApiEditForm extends TagEditForm implements ApiFormInterface
 {
 }

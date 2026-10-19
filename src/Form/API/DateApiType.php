@@ -11,6 +11,7 @@ namespace App\Form\API;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -22,14 +23,19 @@ final class DateApiType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'documentation' => [
-                'type' => 'string',
-                'format' => 'date',
-                'example' => (new \DateTime())->format('Y-m-d'),
-            ],
+            'description' => null,
             'widget' => 'single_text',
             'html5' => true, // for the correct format
         ]);
+
+        $resolver->setDefault('documentation', function (Options $options): array {
+            return [
+                'type' => 'string',
+                'format' => 'date',
+                'example' => (new \DateTime())->format('Y-m-d'),
+                'description' => $options['description']
+            ];
+        });
     }
 
     public function getParent(): string

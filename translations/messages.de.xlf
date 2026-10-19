@@ -130,6 +130,10 @@
         <source>password_repeat</source>
         <target>Passwort wiederholen</target>
       </trans-unit>
+      <trans-unit id="fxkWjGQ" resname="password_current">
+        <source>password_current</source>
+        <target>Aktuelles Passwort</target>
+      </trans-unit>
       <trans-unit id="ACcM9j_" resname="logout">
         <source>logout</source>
         <target>Abmelden</target>
@@ -853,6 +857,18 @@
       <trans-unit id="0Hhg4zQ" resname="system_account.help">
         <source>system_account.help</source>
         <target>Wird in Berichten und Auswahlboxen ausgeblendet</target>
+      </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target>Authentifizierung</target>
+      </trans-unit>
+      <trans-unit id="LQXTGjm" resname="authentication.help">
+        <source>authentication.help</source>
+        <target>Beim Wechsel auf „Intern“ wird das Passwort gelöscht. Legen Sie ein neues Passwort fest oder nutzen Sie die Funktion „Passwort vergessen“.</target>
+      </trans-unit>
+      <trans-unit id="NvQBTxG" resname="authentication.internal">
+        <source>authentication.internal</source>
+        <target>Intern</target>
       </trans-unit>
       <trans-unit id="Zs9VE7N" resname="roles">
         <source>roles</source>
@@ -2145,6 +2161,62 @@
       <trans-unit id="LfO_otF" resname="reopen">
         <source>reopen</source>
         <target>Wieder öffnen</target>
+      </trans-unit>
+      <trans-unit id="DI8vH1J" resname="copy_to_clipboard">
+        <source>copy_to_clipboard</source>
+        <target>In Zwischenablage kopieren</target>
+      </trans-unit>
+      <trans-unit id="LHDhK3o" resname="key">
+        <source>key</source>
+        <target>Interner Titel</target>
+      </trans-unit>
+      <trans-unit id="Q3gmLM6" resname="key_help">
+        <source>key_help</source>
+        <target>Eindeutiger technischer Name, der später nicht mehr geändert werden kann. Erlaubt sind Kleinbuchstaben (a-z), Ziffern (0-9) und Unterstrich (_).</target>
+      </trans-unit>
+      <trans-unit id="netluHi" resname="approval">
+        <source>approval</source>
+        <target>Genehmigung</target>
+      </trans-unit>
+      <trans-unit id="9SkAbbx" resname="approval_required">
+        <source>approval_required</source>
+        <target>Genehmigung erforderlich</target>
+      </trans-unit>
+      <trans-unit id="7dLJTuj" resname="fill_day">
+        <source>fill_day</source>
+        <target>Füllt die Sollstunden des Tages auf</target>
+      </trans-unit>
+      <trans-unit id="O6IGTDm" resname="Absence types">
+        <source>Absence types</source>
+        <target>Abwesenheitsarten</target>
+      </trans-unit>
+      <trans-unit id="2mFc5.v" resname="absence_type.category.help">
+        <source>absence_type.category.help</source>
+        <target>Die Kategorie legt fest, wie Buchungen verrechnet werden (z. B. gegen die Urlaubstage oder das Arbeitszeitkonto) und wo die Abwesenheitsart angezeigt wird. Sie kann später nicht mehr geändert werden.</target>
+      </trans-unit>
+      <trans-unit id="4YKqwfo" resname="absence_type.half_day">
+        <source>absence_type.half_day</source>
+        <target>Halbe Tage erlauben</target>
+      </trans-unit>
+      <trans-unit id="ukwjp0C" resname="absence_type.date_range">
+        <source>absence_type.date_range</source>
+        <target>Buchung mehrerer Tage erlauben</target>
+      </trans-unit>
+      <trans-unit id="j6S5GDf" resname="absence_type.duration">
+        <source>absence_type.duration</source>
+        <target>Eingabe einer Dauer erlauben</target>
+      </trans-unit>
+      <trans-unit id="E7XVJxv" resname="absence_type.duration_required">
+        <source>absence_type.duration_required</source>
+        <target>Dauer ist ein Pflichtfeld</target>
+      </trans-unit>
+      <trans-unit id="W_6BSlE" resname="absence_type.max_days">
+        <source>absence_type.max_days</source>
+        <target>Maximale Anzahl Tage pro Buchung</target>
+      </trans-unit>
+      <trans-unit id="_cQHZDu" resname="fill_day.help">
+        <source>fill_day.help</source>
+        <target>Wird keine Dauer angegeben, wird die verbleibende Sollzeit des Tages verwendet.</target>
       </trans-unit>
     </body>
   </file>

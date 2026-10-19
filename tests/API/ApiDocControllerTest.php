@@ -21,7 +21,7 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
         $this->assertUrlIsSecured('/api/doc');
     }
 
-    public function testGetDocs(): void
+    private function getApiSpec(): array
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/doc');
@@ -37,7 +37,15 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
         self::assertIsArray($swaggerJson);
         self::assertArrayHasKey('spec', $swaggerJson);
         $json = $swaggerJson['spec'];
+        self::assertIsArray($json);
         self::assertArrayHasKey('paths', $json);
+
+        return $json;
+    }
+
+    public function testGetDocs(): void
+    {
+        $json = $this->getApiSpec();
 
         $tags = [];
         foreach ($json['paths'] as $path) {

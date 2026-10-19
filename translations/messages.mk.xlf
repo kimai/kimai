@@ -2050,6 +2050,26 @@
         <source>Timesheet</source>
         <target state="translated">Временски лист</target>
       </trans-unit>
+      <trans-unit id="k8F51oP" resname="project_locked_until">
+        <source>project_locked_until</source>
+        <target state="translated">Времиња заклучени до</target>
+      </trans-unit>
+      <trans-unit id="C_ZcSX2" resname="help.project_start">
+        <source>help.project_start</source>
+        <target state="translated">Времиња пред овој датум не можат да се снимат.</target>
+      </trans-unit>
+      <trans-unit id="9A.4S.i" resname="help.project_end">
+        <source>help.project_end</source>
+        <target state="translated">Времиња по овој датум не можат да се снимат.</target>
+      </trans-unit>
+      <trans-unit id="ktmsI7g" resname="help.project_locked_until">
+        <source>help.project_locked_until</source>
+        <target state="translated">Времиња до и заклучно со овој датум не можат ниту да се креираат, ниту да се менуваат.</target>
+      </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target state="translated">Автентикација</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -16,6 +16,7 @@ use App\Entity\Role;
 use App\Entity\RolePermission;
 use App\Entity\Team;
 use App\Entity\User;
+use App\Event\InvoiceStatusChangedEvent;
 use App\Repository\TeamRepository;
 use App\Tests\DataFixtures\InvoiceFixtures;
 use App\Tests\DataFixtures\InvoiceTemplateFixtures;
@@ -26,6 +27,7 @@ use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 #[Group('integration')]
 class InvoiceControllerTest extends APIControllerBaseTestCase
@@ -357,6 +359,216 @@ class InvoiceControllerTest extends APIControllerBaseTestCase
         $invoice = $em->getRepository(Invoice::class)->find($id);
         self::assertEquals('another,testing,bar', $invoice->getMetaField('metatestmock')?->getValue());
         self::assertEquals(13081978, $invoice->getMetaField('foobar')?->getValue());
+    }
+
+    // ------------------------------------- [PATCH] -------------------------------------
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function patchInvoice(HttpKernelBrowser $client, int $id, array $data): void
+    {
+        $this->request($client, '/api/invoices/' . $id, 'PATCH', [], (string) json_encode($data));
+    }
+
+    /**
+     * @return \ArrayObject<int, InvoiceStatusChangedEvent>
+     */
+    private function recordStatusChangedEvents(): \ArrayObject
+    {
+        /** @var \ArrayObject<int, InvoiceStatusChangedEvent> $events */
+        $events = new \ArrayObject();
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addListener(InvoiceStatusChangedEvent::class, function (InvoiceStatusChangedEvent $event) use ($events): void {
+            $events[] = $event;
+        });
+
+        return $events;
+    }
+
+    public function testPatchIsSecure(): void
+    {
+        $this->assertUrlIsSecured('/api/invoices/1', 'PATCH');
+    }
+
+    public function testPatchNotFound(): void
+    {
+        $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/invoices/' . PHP_INT_MAX, ['status' => Invoice::STATUS_PAID]);
+    }
+
+    public function testPatchIsSecureForRole(): void
+    {
+        // a user without "view_invoice" and "create_invoice" permissions
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $id = $this->importInvoiceFixtures(1, [Invoice::STATUS_NEW])[0]->getId();
+        self::assertIsInt($id);
+
+        $this->patchInvoice($client, $id, ['status' => Invoice::STATUS_PAID]);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->assertInvoiceStatus($id, Invoice::STATUS_NEW);
+    }
+
+    public function testPatchRespectsCustomerPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $invoice = $this->importInvoiceFixtures(1, [Invoice::STATUS_NEW])[0];
+        $id = $invoice->getId();
+        self::assertIsInt($id);
+        $customer = $invoice->getCustomer();
+        self::assertInstanceOf(Customer::class, $customer);
+
+        // restrict the customer to a team, which the teamlead is not part of
+        $team = new Team('foo');
+        $team->addTeamlead($this->getUserByRole(User::ROLE_ADMIN));
+        $team->addCustomer($customer);
+
+        $em = $this->getEntityManager();
+        /** @var TeamRepository $repository */
+        $repository = $em->getRepository(Team::class);
+        $repository->saveTeam($team);
+
+        $this->patchInvoice($client, $id, ['status' => Invoice::STATUS_PAID]);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->assertInvoiceStatus($id, Invoice::STATUS_NEW);
+    }
+
+    public function testPatchIsNotReachableWithPost(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+
+        $this->request($client, '/api/invoices/' . $id, 'POST', [], (string) json_encode(['status' => Invoice::STATUS_PAID]));
+        self::assertEquals(Response::HTTP_METHOD_NOT_ALLOWED, $client->getResponse()->getStatusCode());
+    }
+
+    public function testPatchWithInvalidStatus(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1, [Invoice::STATUS_NEW])[0]->getId();
+        self::assertIsInt($id);
+
+        $this->patchInvoice($client, $id, ['status' => 'foo']);
+        $this->assertApiCallValidationError($client->getResponse(), ['status']);
+
+        $this->assertInvoiceStatus($id, Invoice::STATUS_NEW);
+    }
+
+    public function testPatchWithInvalidPaymentDate(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1, [Invoice::STATUS_PENDING])[0]->getId();
+        self::assertIsInt($id);
+
+        foreach (['foo', '2026-13-01', '01.09.2026'] as $paymentDate) {
+            $this->patchInvoice($client, $id, ['status' => Invoice::STATUS_PAID, 'paymentDate' => $paymentDate]);
+            $this->assertApiCallValidationError($client->getResponse(), ['paymentDate']);
+        }
+
+        $this->assertInvoiceStatus($id, Invoice::STATUS_PENDING);
+    }
+
+    public function testPatchDoesNotAllowReadOnlyFields(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $invoice = $this->importInvoiceFixtures(1, [Invoice::STATUS_NEW])[0];
+        $id = $invoice->getId();
+        self::assertIsInt($id);
+        $number = $invoice->getInvoiceNumber();
+
+        $this->patchInvoice($client, $id, ['invoiceNumber' => 'foo-123', 'total' => 1.23]);
+        // custom-fields are handled by their own endpoint and are not part of this form
+        $this->assertApiCallValidationError($client->getResponse(), [], true, [], ['comment', 'status', 'paymentDate'], ['metaFields']);
+
+        $reloaded = $this->assertInvoiceStatus($id, Invoice::STATUS_NEW);
+        self::assertEquals($number, $reloaded->getInvoiceNumber());
+    }
+
+    public function testPatchComment(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $id = $this->importInvoiceFixtures(1, [Invoice::STATUS_PENDING])[0]->getId();
+        self::assertIsInt($id);
+
+        $events = $this->recordStatusChangedEvents();
+
+        $this->patchInvoice($client, $id, ['comment' => 'Paid in two installments']);
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('Invoice', $result);
+        self::assertEquals('Paid in two installments', $result['comment']);
+        self::assertEquals(Invoice::STATUS_PENDING, $result['status']);
+
+        // partial update: the status was not sent and did not change
+        self::assertCount(0, $events);
+
+        $invoice = $this->assertInvoiceStatus($id, Invoice::STATUS_PENDING);
+        self::assertEquals('Paid in two installments', $invoice->getComment());
+    }
+
+    public function testPatchStatusAndPaymentDate(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $id = $this->importInvoiceFixtures(1, [Invoice::STATUS_PENDING])[0]->getId();
+        self::assertIsInt($id);
+
+        $events = $this->recordStatusChangedEvents();
+
+        $this->patchInvoice($client, $id, ['status' => Invoice::STATUS_PAID, 'paymentDate' => '2026-09-01']);
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('Invoice', $result);
+        self::assertEquals(Invoice::STATUS_PAID, $result['status']);
+        self::assertIsString($result['paymentDate']);
+        self::assertStringStartsWith('2026-09-01', $result['paymentDate']);
+
+        self::assertCount(1, $events);
+        $event = $events[0];
+        self::assertInstanceOf(InvoiceStatusChangedEvent::class, $event);
+        self::assertEquals($id, $event->getInvoice()->getId());
+        self::assertEquals(Invoice::STATUS_PENDING, $event->getStatusBefore());
+
+        $invoice = $this->assertInvoiceStatus($id, Invoice::STATUS_PAID);
+        self::assertEquals('2026-09-01', $invoice->getPaymentDate()?->format('Y-m-d'));
+    }
+
+    public function testPatchWithSameStatusDoesNotDispatchEvent(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1, [Invoice::STATUS_PAID])[0]->getId();
+        self::assertIsInt($id);
+
+        $events = $this->recordStatusChangedEvents();
+
+        $this->patchInvoice($client, $id, ['status' => Invoice::STATUS_PAID]);
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+        self::assertCount(0, $events);
+
+        $this->assertInvoiceStatus($id, Invoice::STATUS_PAID);
+    }
+
+    private function assertInvoiceStatus(int $id, string $expected): Invoice
+    {
+        $em = $this->getEntityManager();
+        $em->clear();
+        $invoice = $em->getRepository(Invoice::class)->find($id);
+        self::assertInstanceOf(Invoice::class, $invoice);
+        self::assertEquals($expected, $invoice->getStatus());
+
+        return $invoice;
     }
 
     public function testDeleteIsSecure(): void

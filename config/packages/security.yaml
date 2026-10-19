@@ -43,11 +43,11 @@ security:
 
             remember_me:
                 name: KIMAI_REMEMBER
-                secret: '%kernel.secret%'
+                secret: '%kernel.secret%_remember_me'
                 lifetime: 604800
                 path: /
                 always_remember_me: true
-                signature_properties: ['email', 'password', 'signatureDate']
+                signature_properties: ['id', 'email', 'password', 'signatureDate']
 
             # activate all configured user provider
             provider: chain_provider

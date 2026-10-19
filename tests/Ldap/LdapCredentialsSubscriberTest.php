@@ -13,10 +13,13 @@ use App\Entity\User;
 use App\Ldap\LdapBadge;
 use App\Ldap\LdapCredentialsSubscriber;
 use App\Ldap\LdapManager;
+use App\User\ExternalUserSanitizer;
 use App\User\UserService;
+use App\Validator\ValidationFailedException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface;
@@ -24,6 +27,10 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Event\CheckPassportEvent;
+use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[CoversClass(LdapCredentialsSubscriber::class)]
 class LdapCredentialsSubscriberTest extends TestCase
@@ -59,6 +66,15 @@ class LdapCredentialsSubscriberTest extends TestCase
         return $this->getMockBuilder(UserService::class)->disableOriginalConstructor()->onlyMethods(['prepareNewUser', 'saveUser'])->getMock();
     }
 
+    private function createSut(LdapManager $ldapManager, UserService $userService, ?LoggerInterface $logger = null): LdapCredentialsSubscriber
+    {
+        $validator = $this->createMock(ValidatorInterface::class);
+        $validator->method('validateProperty')->willReturn(new ConstraintViolationList());
+        $sanitizer = new ExternalUserSanitizer($validator, $this->createMock(LoggerInterface::class));
+
+        return new LdapCredentialsSubscriber($ldapManager, $userService, $sanitizer, $logger ?? $this->createMock(LoggerInterface::class));
+    }
+
     public function testNewUserIsPreparedAndSaved(): void
     {
         $user = new User();
@@ -69,7 +85,7 @@ class LdapCredentialsSubscriberTest extends TestCase
         $userService->expects($this->once())->method('prepareNewUser')->with($user)->willReturn($user);
         $userService->expects($this->once())->method('saveUser')->with($user)->willReturn($user);
 
-        $sut = new LdapCredentialsSubscriber($this->createLdapManager(), $userService);
+        $sut = $this->createSut($this->createLdapManager(), $userService);
         $sut->onCheckPassport($this->createEvent($user));
 
         // a plain password is required by the validator, when creating a new user
@@ -88,7 +104,7 @@ class LdapCredentialsSubscriberTest extends TestCase
         $userService->expects($this->never())->method('prepareNewUser');
         $userService->expects($this->once())->method('saveUser')->with($user)->willReturn($user);
 
-        $sut = new LdapCredentialsSubscriber($this->createLdapManager(), $userService);
+        $sut = $this->createSut($this->createLdapManager(), $userService);
         $sut->onCheckPassport($this->createEvent($user));
     }
 
@@ -118,7 +134,7 @@ class LdapCredentialsSubscriberTest extends TestCase
             return $user;
         });
 
-        $sut = new LdapCredentialsSubscriber($manager, $userService);
+        $sut = $this->createSut($manager, $userService);
         $sut->onCheckPassport($this->createEvent($user));
 
         // the roles and attributes from LDAP must not be overwritten by the system defaults
@@ -137,8 +153,55 @@ class LdapCredentialsSubscriberTest extends TestCase
         $userService = $this->createUserService();
         $userService->expects($this->once())->method('saveUser')->willThrowException(new \RuntimeException('Duplicate username'));
 
-        $sut = new LdapCredentialsSubscriber($this->createLdapManager(), $userService);
+        $sut = $this->createSut($this->createLdapManager(), $userService);
         $sut->onCheckPassport($this->createEvent($user));
+    }
+
+    public function testInvalidAvatarIsRemovedBeforeSaving(): void
+    {
+        $user = new User();
+        $user->setUserIdentifier('foobar');
+        $user->setAuth(User::AUTH_LDAP);
+        // a relative URL, which could have been set by the LDAP attribute mapping
+        $user->setAvatar('/images/avatar.png');
+
+        $userService = $this->createUserService();
+        $userService->expects($this->once())->method('saveUser')->willReturnArgument(0);
+
+        $validator = Validation::createValidatorBuilder()->enableAttributeMapping()->getValidator();
+        $sanitizer = new ExternalUserSanitizer($validator, $this->createMock(LoggerInterface::class));
+
+        $sut = new LdapCredentialsSubscriber($this->createLdapManager(), $userService, $sanitizer, $this->createMock(LoggerInterface::class));
+        $sut->onCheckPassport($this->createEvent($user));
+
+        self::assertNull($user->getAvatar());
+    }
+
+    public function testFailingValidationIsLogged(): void
+    {
+        $user = new User();
+        $user->setUserIdentifier('foobar');
+        $user->setAuth(User::AUTH_LDAP);
+
+        $violations = new ConstraintViolationList([
+            new ConstraintViolation('This value is not a valid URL.', null, [], null, 'avatar', 'foo'),
+        ]);
+
+        $userService = $this->createUserService();
+        $userService->expects($this->once())->method('saveUser')->willThrowException(new ValidationFailedException($violations));
+
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects($this->once())->method('error')
+            ->with('Failed creating or updating LDAP user "foobar": avatar: This value is not a valid URL.');
+
+        $sut = $this->createSut($this->createLdapManager(), $userService, $logger);
+
+        try {
+            $sut->onCheckPassport($this->createEvent($user));
+            self::fail('Expected AuthenticationException was not thrown');
+        } catch (AuthenticationException $ex) {
+            self::assertEquals('Failed creating or updating user "foobar": avatar: This value is not a valid URL.', $ex->getMessage());
+        }
     }
 
     public function testUserIsNotSavedWithoutLdapBadge(): void
@@ -149,7 +212,7 @@ class LdapCredentialsSubscriberTest extends TestCase
         $userService = $this->createUserService();
         $userService->expects($this->never())->method('saveUser');
 
-        $sut = new LdapCredentialsSubscriber($this->createLdapManager(), $userService);
+        $sut = $this->createSut($this->createLdapManager(), $userService);
         $sut->onCheckPassport($this->createEvent($user, false));
     }
 
@@ -162,7 +225,7 @@ class LdapCredentialsSubscriberTest extends TestCase
         $userService = $this->createUserService();
         $userService->expects($this->never())->method('saveUser');
 
-        $sut = new LdapCredentialsSubscriber($this->createLdapManager(false), $userService);
+        $sut = $this->createSut($this->createLdapManager(false), $userService);
         $sut->onCheckPassport($this->createEvent($user));
     }
 
@@ -178,7 +241,7 @@ class LdapCredentialsSubscriberTest extends TestCase
         $userService = $this->createUserService();
         $userService->expects($this->never())->method('saveUser');
 
-        $sut = new LdapCredentialsSubscriber($this->createLdapManager(false), $userService);
+        $sut = $this->createSut($this->createLdapManager(false), $userService);
         $sut->onCheckPassport($this->createEvent($user));
     }
 }

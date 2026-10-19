@@ -74,6 +74,8 @@ final class EntityMultiRoleVoter extends Voter
 
         if ($attribute === 'details') {
             $permissions[] = 'details';
+            $permissions[] = 'details_teamlead';
+            $permissions[] = 'details_team';
         }
 
         if ($attribute === 'budget_money' || $attribute === 'budget_any') {

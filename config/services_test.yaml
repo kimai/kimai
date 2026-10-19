@@ -24,3 +24,13 @@ services:
     App\User\UserService:
         public: true
         arguments: ['@App\Repository\UserRepository', '@event_dispatcher', '@validator', '@App\Configuration\SystemConfiguration', '@security.user_password_hasher']
+
+    # volatile permission cache: the persistent app cache would survive the database rollback and leak permissions between tests
+    kimai.test.permission_cache:
+        class: Symfony\Component\Cache\Adapter\ArrayAdapter
+        tags: [{ name: 'kernel.reset', method: 'reset' }]
+
+    App\User\PermissionService:
+        autowire: true
+        arguments:
+            $cache: '@kimai.test.permission_cache'

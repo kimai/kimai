@@ -1,8 +1,8 @@
 {% extends 'reporting/project_list_data.html.twig' %}
 
 {% block report_form_layout %}
-    {% form_theme form 'form/horizontal.html.twig' %}
-    {{ form_row(form.lastChange, {'row_attr': {'class': 'row'}}) }}
-{% endblock %}
+    {% import "macros/datatables.html.twig" as tables %}
+    {{ tables.datatable_column_modal_link(tableName) }}
 
-{% block report_form_container_class %}w-100{% endblock %}
+    {{ form_widget(form.lastChange, {attr: {title: 'last_record_before', 'data-toggle': 'tooltip'}}) }}
+{% endblock %}

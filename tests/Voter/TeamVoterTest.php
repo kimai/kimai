@@ -55,26 +55,61 @@ class TeamVoterTest extends AbstractVoterTestCase
 
         $denied = VoterInterface::ACCESS_DENIED;
 
-        yield [$user0, $team, 'view', $abstain];
+        yield [$user0, $team, 'view', $denied];
         yield [$user0, $team, 'edit', $denied];
         yield [$user0, $team, 'delete', $denied];
 
-        yield [$user1, $team, 'view', $abstain];
+        yield [$user1, $team, 'view', $denied];
         yield [$user1, $team, 'edit', $denied];
         yield [$user1, $team, 'delete', $denied];
 
-        yield [$user2, $team, 'view', $abstain];
+        yield [$user2, $team, 'view', $denied];
         yield [$user2, $team, 'edit', $denied];
         yield [$user2, $team, 'delete', $denied];
 
         $granted = VoterInterface::ACCESS_GRANTED;
 
-        yield [$user3, $team, 'view', $abstain];
+        yield [$user3, $team, 'view', $granted];
         yield [$user3, $team, 'edit', $granted];
         yield [$user3, $team, 'delete', $granted];
 
-        yield [$user4, $team, 'view', $abstain];
+        yield [$user4, $team, 'view', $granted];
         yield [$user4, $team, 'edit', $granted];
         yield [$user4, $team, 'delete', $granted];
+    }
+
+    /**
+     * Simulates an installation that grants the team permissions to teamleads: access is limited to
+     * the teams they lead, plain membership is not enough.
+     */
+    #[DataProvider('getTeamleadTestData')]
+    public function testVoteForTeamleadWithTeamPermissions(User $user, Team $team, string $attribute, int $result): void
+    {
+        $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
+        $sut = new TeamVoter($this->getRolePermissionManager([
+            'ROLE_TEAMLEAD' => ['view_team', 'edit_team', 'delete_team'],
+        ], true));
+
+        self::assertEquals($result, $sut->vote($token, $team, [$attribute]));
+    }
+
+    public static function getTeamleadTestData(): iterable
+    {
+        $teamlead = self::getUser(1, User::ROLE_TEAMLEAD);
+        $member = self::getUser(2, User::ROLE_TEAMLEAD);
+        $outsider = self::getUser(3, User::ROLE_TEAMLEAD);
+
+        $team = new Team('foo');
+        $team->addTeamlead($teamlead);
+        $team->addUser($member);
+
+        $denied = VoterInterface::ACCESS_DENIED;
+        $granted = VoterInterface::ACCESS_GRANTED;
+
+        foreach (['view', 'edit', 'delete'] as $attribute) {
+            yield [$teamlead, $team, $attribute, $granted];
+            yield [$member, $team, $attribute, $denied];
+            yield [$outsider, $team, $attribute, $denied];
+        }
     }
 }

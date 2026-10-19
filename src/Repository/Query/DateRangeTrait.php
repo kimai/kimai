@@ -44,4 +44,9 @@ trait DateRangeTrait
     {
         $this->dateRange = $dateRange;
     }
+
+    public function hasFullDateRange(): bool
+    {
+        return $this->dateRange !== null && $this->dateRange->getBegin() !== null && $this->dateRange->getEnd() !== null;
+    }
 }

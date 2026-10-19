@@ -266,6 +266,111 @@ class ProjectVoterTest extends AbstractVoterTestCase
         $this->assertVote($user, $project, 'access', VoterInterface::ACCESS_DENIED);
     }
 
+    /**
+     * Regression test: the customer team restriction must be respected, even if the
+     * teamlead's team is directly assigned to the project.
+     */
+    public function testTeamleadDeniedWhenCustomerIsRestrictedToOtherTeam(): void
+    {
+        $ownTeam = new Team('own');
+        $user = new User();
+        $user->addRole(User::ROLE_TEAMLEAD);
+        $ownTeam->addTeamlead($user);
+
+        $customer = new Customer('foo');
+        $customer->addTeam(new Team('other'));
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam($ownTeam);
+
+        foreach (['view', 'edit', 'budget', 'time', 'comments', 'details', 'permissions'] as $attribute) {
+            $this->assertVote($user, $project, $attribute, VoterInterface::ACCESS_DENIED);
+        }
+    }
+
+    /**
+     * Regression test: the project team restriction must be respected, even if the
+     * teamlead's team is assigned to the customer.
+     */
+    public function testTeamleadDeniedWhenProjectIsRestrictedToOtherTeam(): void
+    {
+        $ownTeam = new Team('own');
+        $user = new User();
+        $user->addRole(User::ROLE_TEAMLEAD);
+        $ownTeam->addTeamlead($user);
+
+        $customer = new Customer('foo');
+        $customer->addTeam($ownTeam);
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam(new Team('other'));
+
+        foreach (['view', 'edit', 'budget', 'time', 'comments', 'details', 'permissions'] as $attribute) {
+            $this->assertVote($user, $project, $attribute, VoterInterface::ACCESS_DENIED);
+        }
+    }
+
+    public function testTeamMemberDeniedWhenCustomerIsRestrictedToOtherTeam(): void
+    {
+        $ownTeam = new Team('own');
+        $user = new User();
+        $user->addRole(User::ROLE_USER);
+        $ownTeam->addUser($user);
+
+        $customer = new Customer('foo');
+        $customer->addTeam(new Team('other'));
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam($ownTeam);
+
+        $this->assertVote($user, $project, 'view', VoterInterface::ACCESS_DENIED);
+        $this->assertVote($user, $project, 'edit', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testTeamleadGrantedWhenMemberOfCustomerTeamAndTeamleadOfProjectTeam(): void
+    {
+        $customerTeam = new Team('customerTeam');
+        $projectTeam = new Team('projectTeam');
+        $user = new User();
+        $user->addRole(User::ROLE_TEAMLEAD);
+        $customerTeam->addUser($user);
+        $projectTeam->addTeamlead($user);
+
+        $customer = new Customer('foo');
+        $customer->addTeam($customerTeam);
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam($projectTeam);
+
+        $this->assertVote($user, $project, 'view', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($user, $project, 'edit', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testTeamleadDeniedWhenOnlyMemberButNotTeamleadOfRestrictedTeams(): void
+    {
+        $customerTeam = new Team('customerTeam');
+        $projectTeam = new Team('projectTeam');
+        $user = new User();
+        $user->addRole(User::ROLE_TEAMLEAD);
+        $customerTeam->addUser($user);
+        $projectTeam->addUser($user);
+
+        $customer = new Customer('foo');
+        $customer->addTeam($customerTeam);
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam($projectTeam);
+
+        // full hierarchy access, but the teamlead permission requires being teamlead of a team
+        $this->assertVote($user, $project, 'access', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($user, $project, 'permissions', VoterInterface::ACCESS_DENIED);
+    }
+
     public function testAccessDeniedForNonUserToken(): void
     {
         $project = new Project();

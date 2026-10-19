@@ -8,6 +8,46 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
+## [2.70.0](https://github.com/kimai/kimai/releases/tag/2.70.0)
+
+Kimai showed invalid examples in the `.env.dist` and on the documentation website.
+We strongly urge everyone to check and fix your `TRUSTED_HOSTS` env setting.
+
+The most used version is a hostname like `kimai.example.com` which you should rewrite as `^kimai\.example\.com$`.
+
+For all installations that do not read this warning, we added a parser.
+
+`TRUSTED_HOSTS` values that only contain host names are now matched against the complete host name.
+Previously Symfony matched them as unanchored regular expressions, so `kimai.example.com` also trusted 
+`kimai.example.com.attacker.tld` and `kimai-example.com`.
+
+Examples:
+
+- `kimai.example.com` or `localhost|kimai.example.com` trust these hosts and their subdomains (the parser converts `kimai.example.com` to `^(?:.+\.)?(?:kimai\.example\.com)$`)
+- `^kimai.example.com$` trusts exactly this host
+- values containing other regular expression characters (like `^kimai\.example\.com$` or `.*\.example\.com`) are not changed
+
+If you used a partial host name (e.g. `TRUSTED_HOSTS=kimai` for `kimai.example.com`), Kimai now answers 
+with "400 Bad Request". Configure the full host name instead. If you really need the old behavior, use a 
+regular expression like `.*kimai.*`, which is not changed.
+
+## [2.68.0](https://github.com/kimai/kimai/releases/tag/2.68.0)
+
+Team restrictions on customers, projects and activities are now consistently inherited
+when checking permissions on a single record (detail pages, edit forms, comments, rates,
+meta-fields and the `GET /api/projects/{id}` and `GET /api/activities/{id}` endpoints).
+
+Previously a team assignment on one level (e.g. the project) could grant `view`, `edit`,
+`budget`, `time` or `comments` on a record, even if the higher level (e.g. the customer) was
+restricted to a different team. Listings, filters and timesheets always applied the
+stricter rule, so the record was hidden there but reachable by ID.
+
+A user now needs to be a member of a team on every restricted level of the hierarchy
+(customer → project → activity) before a `*_teamlead_*` or `*_team_*` permission applies.
+Teamleads who are only assigned on the customer level lose access to projects and activities
+which were explicitly restricted to another team. If that was intended, add their team to
+the project or activity as well.
+
 ## [2.66.0](https://github.com/kimai/kimai/releases/tag/2.66.0)
 
 The timesheet API now honors the `view_rate_own_timesheet` and `view_rate_other_timesheet`

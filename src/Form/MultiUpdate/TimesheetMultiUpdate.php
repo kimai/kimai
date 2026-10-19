@@ -9,9 +9,11 @@
 
 namespace App\Form\MultiUpdate;
 
+use App\Configuration\SystemConfiguration;
 use App\Form\Type\ActivityType;
 use App\Form\Type\CustomerType;
 use App\Form\Type\DescriptionType;
+use App\Form\Type\DurationType;
 use App\Form\Type\FixedRateType;
 use App\Form\Type\HourlyRateType;
 use App\Form\Type\MetaFieldsCollectionType;
@@ -32,7 +34,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class TimesheetMultiUpdate extends AbstractType
 {
-    public function __construct(private TimesheetRepository $timesheet, private CustomerRepository $customers)
+    public function __construct(
+        private readonly TimesheetRepository $timesheet,
+        private readonly CustomerRepository $customers,
+        private readonly SystemConfiguration $systemConfiguration
+    )
     {
     }
 
@@ -207,6 +213,10 @@ final class TimesheetMultiUpdate extends AbstractType
                     'currency' => $currency,
                 ])
             ;
+        }
+
+        if ($this->systemConfiguration->isBreakTimeEnabled()) {
+            $builder->add('break', DurationType::class, ['label' => 'break', 'required' => false, 'icon' => 'break']);
         }
 
         // meta fields only if at least one exists

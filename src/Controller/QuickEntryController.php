@@ -319,6 +319,7 @@ final class QuickEntryController extends AbstractController
         $page->setHelp('weekly-times.html');
         $page->setPaginationForm($weeklyForm);
         $page->setActionName('weekly-times');
+        $page->setActionPayload(['user' => $user, 'query' => $query]);
 
         return $this->render('quick-entry/index.html.twig', [
             'page_setup' => $page,
@@ -326,6 +327,8 @@ final class QuickEntryController extends AbstractController
             'form' => $form->createView(),
             'metaColumns' => $metaFields,
             'locked' => $locked,
+            'user' => $user,
+            'query' => $query,
         ]);
     }
 }

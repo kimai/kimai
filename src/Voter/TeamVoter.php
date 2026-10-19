@@ -24,6 +24,7 @@ final class TeamVoter extends Voter
      * support rules based on the given $subject (here: Team)
      */
     private const ALLOWED_ATTRIBUTES = [
+        'view',
         'edit',
         'delete',
     ];

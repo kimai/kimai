@@ -143,6 +143,36 @@ class DurationTypeTest extends TypeTestCase
         self::assertEquals('[0-9]+', $view->vars['attr']['pattern']);
     }
 
+    public function testNegativeValuesAreNotAllowedByDefault(): void
+    {
+        $view = $this->factory->create(DurationType::class, 3600)->createView();
+
+        self::assertArrayNotHasKey('data-duration-negative', $view->vars['attr']);
+    }
+
+    public function testAllowNegativeValues(): void
+    {
+        $view = $this->factory->create(DurationType::class, 3600, [
+            'allow_negative' => true,
+        ])->createView();
+
+        self::assertEquals('1', $view->vars['attr']['data-duration-negative']);
+    }
+
+    public function testSubmitNegativeValue(): void
+    {
+        $model = new TypeTestModel(['duration' => 3600]);
+
+        $form = $this->factory->createBuilder(FormType::class, $model);
+        $form->add('duration', DurationType::class, ['allow_negative' => true]);
+        $form = $form->getForm();
+
+        $form->submit(['duration' => '-1:30']);
+
+        self::assertTrue($form->isSynchronized());
+        self::assertEquals(new TypeTestModel(['duration' => -5400]), $model);
+    }
+
     public function testInvalidParseModeThrowsException(): void
     {
         $this->expectException(InvalidOptionsException::class);

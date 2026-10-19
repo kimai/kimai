@@ -2146,6 +2146,74 @@
         <source>help.project_locked_until</source>
         <target state="translated">Registros de tempo até e incluindo esta data não podem ser criados nem alterados.</target>
       </trans-unit>
+      <trans-unit id="DI8vH1J" resname="copy_to_clipboard">
+        <source>copy_to_clipboard</source>
+        <target state="translated">Copiar para a área de transferência</target>
+      </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target state="translated">Autenticação</target>
+      </trans-unit>
+      <trans-unit id="NvQBTxG" resname="authentication.internal">
+        <source>authentication.internal</source>
+        <target state="translated">Interno</target>
+      </trans-unit>
+      <trans-unit id="LHDhK3o" resname="key">
+        <source>key</source>
+        <target state="translated">Título interno</target>
+      </trans-unit>
+      <trans-unit id="LQXTGjm" resname="authentication.help">
+        <source>authentication.help</source>
+        <target state="translated">Mudar para "Interno" remove a senha. Em seguida, defina uma nova senha ou use a opção "Esqueci a senha".</target>
+      </trans-unit>
+      <trans-unit id="W_6BSlE" resname="absence_type.max_days">
+        <source>absence_type.max_days</source>
+        <target state="translated">Número máximo de dias por reserva</target>
+      </trans-unit>
+      <trans-unit id="_cQHZDu" resname="fill_day.help">
+        <source>fill_day.help</source>
+        <target state="translated">Se nenhuma duração for informada, utiliza-se o tempo de trabalho restante previsto para o dia.</target>
+      </trans-unit>
+      <trans-unit id="E7XVJxv" resname="absence_type.duration_required">
+        <source>absence_type.duration_required</source>
+        <target state="translated">A duração é um campo obrigatório</target>
+      </trans-unit>
+      <trans-unit id="j6S5GDf" resname="absence_type.duration">
+        <source>absence_type.duration</source>
+        <target state="translated">Permitir inserir uma duração</target>
+      </trans-unit>
+      <trans-unit id="Q3gmLM6" resname="key_help">
+        <source>key_help</source>
+        <target state="translated">Nome técnico exclusivo, que não pode ser alterado posteriormente. São permitidas letras minúsculas (a-z), dígitos (0-9) e sublinhado (_).</target>
+      </trans-unit>
+      <trans-unit id="netluHi" resname="approval">
+        <source>approval</source>
+        <target state="translated">Aprovação</target>
+      </trans-unit>
+      <trans-unit id="9SkAbbx" resname="approval_required">
+        <source>approval_required</source>
+        <target state="translated">Aprovação necessária</target>
+      </trans-unit>
+      <trans-unit id="7dLJTuj" resname="fill_day">
+        <source>fill_day</source>
+        <target state="translated">Preenche o tempo de trabalho previsto</target>
+      </trans-unit>
+      <trans-unit id="O6IGTDm" resname="Absence types">
+        <source>Absence types</source>
+        <target state="translated">Tipos de ausência</target>
+      </trans-unit>
+      <trans-unit id="2mFc5.v" resname="absence_type.category.help">
+        <source>absence_type.category.help</source>
+        <target state="translated">A categoria define como os lançamentos são calculados (por exemplo, descontando dos dias de férias ou da conta de horas de trabalho) e onde o tipo é exibido. Ela não pode ser alterada posteriormente.</target>
+      </trans-unit>
+      <trans-unit id="4YKqwfo" resname="absence_type.half_day">
+        <source>absence_type.half_day</source>
+        <target state="translated">Permitir meios-períodos</target>
+      </trans-unit>
+      <trans-unit id="ukwjp0C" resname="absence_type.date_range">
+        <source>absence_type.date_range</source>
+        <target state="translated">Permitir o agendamento de vários dias</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

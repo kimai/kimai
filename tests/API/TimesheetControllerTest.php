@@ -1280,6 +1280,77 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $this->assertApiResponseAccessDenied($response);
     }
 
+    /**
+     * A ROLE_USER who was made teamlead of a team (membership flag, not the
+     * ROLE_TEAMLEAD role) holds neither create_other_timesheet nor
+     * edit_other_timesheet => do not allow to change the user of his own timesheet.
+     */
+    public function testPatchActionRejectsUserChangeForTeamleadFlaggedUserWithoutOtherTimesheetPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $em = $this->getEntityManager();
+        $attacker = $this->getUserByRole(User::ROLE_USER);
+        $victim = $this->getUserByRole(User::ROLE_TEAMLEAD);
+
+        $team = new Team('timesheet-patch-user-flag');
+        $team->addTeamlead($attacker);
+        $team->addUser($victim);
+        $em->persist($team);
+        $em->flush();
+
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $project);
+        $activity = $em->getRepository(Activity::class)->find(1);
+        self::assertInstanceOf(Activity::class, $activity);
+
+        $timesheet = $this->persistFinishedTimesheet($attacker, $project, $activity, 'patch-user-flag');
+        $timesheetId = $timesheet->getId();
+        self::assertNotNull($timesheetId);
+
+        $json = json_encode(['user' => $victim->getId()]);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $timesheetId, 'PATCH', [], $json);
+        $this->assertApiCallValidationError($client->getResponse(), [], true, [], [], ['user']);
+
+        $em->clear();
+        $reloaded = $em->getRepository(Timesheet::class)->find($timesheetId);
+        self::assertInstanceOf(Timesheet::class, $reloaded);
+        self::assertSame($attacker->getId(), $reloaded->getUser()?->getId());
+    }
+
+    public function testPatchActionAllowsUserChangeForTeamleadOfOwnerTeam(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+        $member = $this->getUserByRole(User::ROLE_USER);
+
+        $team = new Team('timesheet-patch-user-teamlead');
+        $team->addTeamlead($teamlead);
+        $team->addUser($member);
+        $em->persist($team);
+        $em->flush();
+
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $project);
+        $activity = $em->getRepository(Activity::class)->find(1);
+        self::assertInstanceOf(Activity::class, $activity);
+
+        $timesheet = $this->persistFinishedTimesheet($teamlead, $project, $activity, 'patch-user-teamlead');
+        $timesheetId = $timesheet->getId();
+        self::assertNotNull($timesheetId);
+
+        $json = json_encode(['user' => $member->getId()]);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $timesheetId, 'PATCH', [], $json);
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $em->clear();
+        $reloaded = $em->getRepository(Timesheet::class)->find($timesheetId);
+        self::assertInstanceOf(Timesheet::class, $reloaded);
+        self::assertSame($member->getId(), $reloaded->getUser()?->getId());
+    }
+
     public function testPatchActionWithUnknownTimesheet(): void
     {
         $this->assertEntityNotFoundForPatch(User::ROLE_USER, '/api/timesheets/255', []);

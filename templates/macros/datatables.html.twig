@@ -19,9 +19,7 @@
 {% macro actions(dataTable) %}
     <div class="btn-list">
     {% if dataTable.hasConfiguration() %}
-        <a class="btn btn-icon" href="#" data-bs-toggle="modal" data-bs-target="#modal_{{ dataTable.getTableName() }}" title="{{ 'modal.columns.title'|trans }}">
-            {{ icon('columns', true) }}
-        </a>
+        {{ _self.datatable_column_modal_link(dataTable.getTableName()) }}
     {% endif %}
     {% set form = dataTable.getSearchForm() %}
     {% if form is not null %}
@@ -169,15 +167,17 @@
     {% set reloadEvent = options.reload|default('') %}
     {% set boxClass = options.boxClass ?? 'card data_table' %}
     {% set columnModal = options.columnConfig ?? true %}
-    {% set responsive = options.responsive ?? false %}
+    {% set stickyFirst = options.stickyFirst ?? false %} {#  Turns on responsive automatically #}
+    {% set responsive = options.responsive ?? stickyFirst %}
     {% set sticky = options.sticky ?? true %}
+    {% set tableClasses = options.tableClasses ?? '' %}
     {% set contextMenuId = options.contextMenuId is defined ? options.contextMenuId : 'datatable_' ~ tableName ~ '_contextmenu' %}
 
     <div class="{{ boxClass }} datatable_{{ tableName }}">
         <div class="card-body p-0{% if responsive %} table-responsive{% endif %}">
             <div class="dataTables_wrapper form-inline">
                 <div id="{{ contextMenuId }}" class="dropdown-menu d-none"></div>
-                <table class="table table-hover dataTable" role="grid" data-reload-event="kimai.reset_column_visibility {{ reloadEvent }}" data-context-menu="{{ contextMenuId }}">
+                <table class="table table-hover dataTable{% if stickyFirst %} table-sticky-first{% endif %}{% if tableClasses != '' %} {{ tableClasses }}{% endif %}" role="grid" data-reload-event="kimai.reset_column_visibility {{ reloadEvent }}" data-context-menu="{{ contextMenuId }}">
                     <thead{% if sticky %} class="sticky-top"{% endif %}>
                         <tr>
                         {%- for title, headerOptions in columns -%}
@@ -217,11 +217,7 @@
                             {% endif %}
                             <th data-field="{{ title }}" {% if not headerOptions.orderBy is same as(false) %}data-order="{{ headerOptions.orderBy }}" {% endif %}class="{{ headerClass }}"{% if ariaSort is defined %} aria-sort="{{ ariaSort }}"{% endif %}>
                             {% if title is not empty and title == 'actions' and columnModal is not same as (false) %}
-
-                                <a class="link-secondary" href="#" data-bs-toggle="modal" data-bs-target="#modal_{{ tableName }}">
-                                    {{ icon('columns', true) }}
-                                </a>
-
+                                {{ _self.datatable_column_modal_link(tableName, 'link-secondary') }}
                             {% else %}
                                 {% if headerOptions.batchUpdate is defined %}
                                     <input type="checkbox" id="multi_update_all_{{ tableName }}" class="multi_update_all multiupdater form-check-input m-0 align-middle" title="{{ 'batch_table_checkbox_all'|trans }}">
@@ -280,4 +276,10 @@
 
 {% macro datatable_multiupdate_row(id) %}
     <input type="checkbox" name="id" value="{{ id }}" class="multi_update_single multiupdater form-check-input m-0 align-middle" title="{{ 'batch_table_checkbox'|trans }}">
+{% endmacro %}
+
+{% macro datatable_column_modal_link(tableName, class) %}
+    <a class="{{ class ?? 'btn btn-icon' }}" href="#" data-bs-toggle="modal" data-bs-target="#modal_{{ tableName }}" data-toggle="tooltip" title="{{ 'modal.columns.title'|trans }}">
+        {{ icon('columns', true) }}
+    </a>
 {% endmacro %}

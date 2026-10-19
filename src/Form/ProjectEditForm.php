@@ -65,7 +65,9 @@ class ProjectEditForm extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'name',
                 'attr' => [
-                    'autofocus' => 'autofocus'
+                    'autofocus' => 'autofocus',
+                    // deactivated: browser use utf16 to calculate maxlength, which can interfere with backend validation
+                    // 'maxlength' => 150,
                 ],
             ])
             ->add('number', TextType::class, [

@@ -18,6 +18,7 @@ use App\Saml\SamlLoginAttributes;
 use App\Saml\SamlProvider;
 use App\Saml\Security\SamlAuthenticationFailureHandler;
 use App\Saml\Security\SamlAuthenticationSuccessHandler;
+use App\User\ExternalUserSanitizer;
 use App\User\UserService;
 use OneLogin\Saml2\Auth;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -36,6 +37,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 use Symfony\Component\Security\Http\HttpUtils;
+use Symfony\Component\Validator\Validation;
 
 final class TestSamlConfiguration implements SamlConfigurationInterface
 {
@@ -355,7 +357,14 @@ class SamlAuthenticatorTest extends TestCase
         $userService->expects($this->once())->method('saveUser')->with($user);
         $userService->expects($this->never())->method('createNewUser');
 
-        return new SamlProvider($userService, $userProvider, $configuration, $this->createMock(LoggerInterface::class));
+        return new SamlProvider($userService, $userProvider, $configuration, $this->createUserSanitizer(), $this->createMock(LoggerInterface::class));
+    }
+
+    private function createUserSanitizer(): ExternalUserSanitizer
+    {
+        $validator = Validation::createValidatorBuilder()->enableAttributeMapping()->getValidator();
+
+        return new ExternalUserSanitizer($validator, $this->createMock(LoggerInterface::class));
     }
 
     private function createUnusedProvider(TestSamlConfiguration $configuration): SamlProvider
@@ -371,7 +380,7 @@ class SamlAuthenticatorTest extends TestCase
         $userService->expects($this->never())->method('createNewUser');
         $userService->expects($this->never())->method('saveUser');
 
-        return new SamlProvider($userService, $userProvider, $configuration, $this->createMock(LoggerInterface::class));
+        return new SamlProvider($userService, $userProvider, $configuration, $this->createUserSanitizer(), $this->createMock(LoggerInterface::class));
     }
 
     private function createTokenForUser(User $user): TokenInterface

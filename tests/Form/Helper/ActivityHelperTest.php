@@ -58,4 +58,42 @@ class ActivityHelperTest extends TestCase
         $activity->setComment('Lorem Ipsum');
         self::assertEquals('FOO BAR - Lorem Ipsum', $helper->getChoiceLabel($activity));
     }
+
+    public function testGetChoiceLabelKeepsMaxLengthName(): void
+    {
+        $helper = $this->createSut(ActivityHelper::PATTERN_NAME);
+
+        $name = str_repeat('a', 150);
+        $activity = new Activity();
+        $activity->setName($name);
+        self::assertEquals($name, $helper->getChoiceLabel($activity));
+    }
+
+    public function testGetChoiceLabelKeepsMaxLengthNameWithNumber(): void
+    {
+        $helper = $this->createSut(ActivityHelper::PATTERN_NUMBER . ActivityHelper::PATTERN_SPACER . ActivityHelper::PATTERN_NAME);
+
+        $name = str_repeat('a', 150);
+        $activity = new Activity();
+        $activity->setName($name);
+        $activity->setNumber('1234567890');
+
+        $label = $helper->getChoiceLabel($activity);
+        self::assertEquals('1234567890 - ' . $name, $label);
+        self::assertEquals(163, \strlen($label));
+    }
+
+    public function testGetChoiceLabelIsTruncated(): void
+    {
+        $helper = $this->createSut(ActivityHelper::PATTERN_NAME . ActivityHelper::PATTERN_SPACER . ActivityHelper::PATTERN_COMMENT);
+
+        $name = str_repeat('a', 150);
+        $activity = new Activity();
+        $activity->setName($name);
+        $activity->setComment(str_repeat('b', 100));
+
+        $label = $helper->getChoiceLabel($activity);
+        self::assertEquals(180, \strlen($label));
+        self::assertEquals($name . ' - ' . str_repeat('b', 27), $label);
+    }
 }

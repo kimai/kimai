@@ -15,6 +15,9 @@ use App\Entity\Invoice;
 use App\Entity\InvoiceTemplate;
 use App\Entity\Project;
 use App\Entity\Timesheet;
+use App\Event\InvoiceStatusChangedEvent;
+use App\Event\InvoiceUpdatePostEvent;
+use App\Event\InvoiceUpdatePreEvent;
 use App\Invoice\Calculator\DefaultCalculator;
 use App\Invoice\InvoiceItemRepositoryInterface;
 use App\Invoice\InvoiceModel;
@@ -29,6 +32,7 @@ use App\Repository\Query\InvoiceQuery;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use App\Utils\FileHelper;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Twig\Environment;
@@ -37,7 +41,7 @@ use Twig\Environment;
 #[CoversClass(ServiceInvoice::class)] // @phpstan-ignore-line
 class InvoiceServiceTest extends TestCase
 {
-    private function getSut(array $paths): InvoiceService
+    private function getSut(array $paths, ?InvoiceRepository $invoiceRepo = null, ?EventDispatcherInterface $dispatcher = null): InvoiceService
     {
         $languages = [
             'en' => LocaleService::DEFAULT_SETTINGS
@@ -46,7 +50,7 @@ class InvoiceServiceTest extends TestCase
         $formattings = new LocaleService($languages);
 
         $repo = new InvoiceDocumentRepository($paths);
-        $invoiceRepo = $this->createMock(InvoiceRepository::class);
+        $invoiceRepo ??= $this->createMock(InvoiceRepository::class);
 
         return new InvoiceService(
             $repo,
@@ -54,8 +58,31 @@ class InvoiceServiceTest extends TestCase
             $invoiceRepo,
             $formattings,
             (new InvoiceModelFactoryFactory($this))->create(),
-            $this->createMock(EventDispatcherInterface::class)
+            $dispatcher ?? $this->createMock(EventDispatcherInterface::class)
         );
+    }
+
+    /**
+     * @param array<object> $events
+     */
+    private function getRecordingDispatcher(array &$events): EventDispatcherInterface
+    {
+        $dispatcher = $this->createMock(EventDispatcherInterface::class);
+        $dispatcher->method('dispatch')->willReturnCallback(function (object $event) use (&$events): object {
+            $events[] = $event;
+
+            return $event;
+        });
+
+        return $dispatcher;
+    }
+
+    private function createInvoiceWithStatus(string $status): Invoice
+    {
+        $invoice = new Invoice();
+        $invoice->setStatus($status);
+
+        return $invoice;
     }
 
     public function testInvalidExceptionOnChangeState(): void
@@ -64,6 +91,125 @@ class InvoiceServiceTest extends TestCase
         $this->expectExceptionMessage('Unknown invoice status');
         $sut = $this->getSut([]);
         $sut->changeInvoiceStatus(new Invoice(), 'foo');
+    }
+
+    public function testInvalidStatusDoesNotSaveOrDispatch(): void
+    {
+        $events = [];
+        $invoiceRepo = $this->createMock(InvoiceRepository::class);
+        $invoiceRepo->expects($this->never())->method('saveInvoice');
+
+        $invoice = $this->createInvoiceWithStatus(Invoice::STATUS_PENDING);
+        $sut = $this->getSut([], $invoiceRepo, $this->getRecordingDispatcher($events));
+
+        try {
+            $sut->changeInvoiceStatus($invoice, 'foo');
+            self::fail('Expected InvalidArgumentException');
+        } catch (\InvalidArgumentException) {
+        }
+
+        self::assertCount(0, $events);
+        self::assertEquals(Invoice::STATUS_PENDING, $invoice->getStatus());
+    }
+
+    /**
+     * @return iterable<string, array{0: string, 1: string}>
+     */
+    public static function getStatusChanges(): iterable
+    {
+        yield 'new to pending' => [Invoice::STATUS_NEW, Invoice::STATUS_PENDING];
+        yield 'pending to paid' => [Invoice::STATUS_PENDING, Invoice::STATUS_PAID];
+        yield 'paid to canceled' => [Invoice::STATUS_PAID, Invoice::STATUS_CANCELED];
+        yield 'canceled to new' => [Invoice::STATUS_CANCELED, Invoice::STATUS_NEW];
+    }
+
+    #[DataProvider('getStatusChanges')]
+    public function testChangeInvoiceStatusDispatchesEvents(string $before, string $after): void
+    {
+        $events = [];
+        $invoice = $this->createInvoiceWithStatus($before);
+
+        $invoiceRepo = $this->createMock(InvoiceRepository::class);
+        $invoiceRepo->expects($this->once())->method('saveInvoice')->with($invoice);
+
+        $sut = $this->getSut([], $invoiceRepo, $this->getRecordingDispatcher($events));
+        $sut->changeInvoiceStatus($invoice, $after);
+
+        self::assertEquals($after, $invoice->getStatus());
+        self::assertCount(3, $events);
+
+        self::assertInstanceOf(InvoiceUpdatePreEvent::class, $events[0]);
+        self::assertSame($invoice, $events[0]->getInvoice());
+
+        self::assertInstanceOf(InvoiceUpdatePostEvent::class, $events[1]);
+        self::assertSame($invoice, $events[1]->getInvoice());
+
+        self::assertInstanceOf(InvoiceStatusChangedEvent::class, $events[2]);
+        self::assertSame($invoice, $events[2]->getInvoice());
+        self::assertEquals($before, $events[2]->getStatusBefore());
+    }
+
+    public function testChangeInvoiceStatusWithoutChangeDoesNotDispatchStatusEvent(): void
+    {
+        $events = [];
+        $invoice = $this->createInvoiceWithStatus(Invoice::STATUS_PAID);
+
+        $invoiceRepo = $this->createMock(InvoiceRepository::class);
+        $invoiceRepo->expects($this->once())->method('saveInvoice')->with($invoice);
+
+        $sut = $this->getSut([], $invoiceRepo, $this->getRecordingDispatcher($events));
+        $sut->changeInvoiceStatus($invoice, Invoice::STATUS_PAID);
+
+        self::assertCount(2, $events);
+        self::assertInstanceOf(InvoiceUpdatePreEvent::class, $events[0]);
+        self::assertInstanceOf(InvoiceUpdatePostEvent::class, $events[1]);
+    }
+
+    public function testSaveInvoiceWithoutStatusBeforeDoesNotDispatchStatusEvent(): void
+    {
+        $events = [];
+        $invoice = $this->createInvoiceWithStatus(Invoice::STATUS_PAID);
+
+        $invoiceRepo = $this->createMock(InvoiceRepository::class);
+        $invoiceRepo->expects($this->once())->method('saveInvoice')->with($invoice);
+
+        $sut = $this->getSut([], $invoiceRepo, $this->getRecordingDispatcher($events));
+        $sut->saveInvoice($invoice);
+
+        self::assertCount(2, $events);
+        self::assertInstanceOf(InvoiceUpdatePreEvent::class, $events[0]);
+        self::assertSame($invoice, $events[0]->getInvoice());
+        self::assertInstanceOf(InvoiceUpdatePostEvent::class, $events[1]);
+        self::assertSame($invoice, $events[1]->getInvoice());
+    }
+
+    public function testSaveInvoiceWithStatusBeforeDispatchesStatusEvent(): void
+    {
+        $events = [];
+        $invoice = $this->createInvoiceWithStatus(Invoice::STATUS_PAID);
+
+        $sut = $this->getSut([], null, $this->getRecordingDispatcher($events));
+        $sut->saveInvoice($invoice, Invoice::STATUS_PENDING);
+
+        self::assertCount(3, $events);
+        self::assertInstanceOf(InvoiceUpdatePreEvent::class, $events[0]);
+        self::assertInstanceOf(InvoiceUpdatePostEvent::class, $events[1]);
+        self::assertInstanceOf(InvoiceStatusChangedEvent::class, $events[2]);
+        self::assertSame($invoice, $events[2]->getInvoice());
+        self::assertEquals(Invoice::STATUS_PENDING, $events[2]->getStatusBefore());
+    }
+
+    public function testSaveInvoiceWithUnchangedStatusBeforeDoesNotDispatchStatusEvent(): void
+    {
+        $events = [];
+        $invoice = $this->createInvoiceWithStatus(Invoice::STATUS_PENDING);
+
+        $sut = $this->getSut([], null, $this->getRecordingDispatcher($events));
+        $sut->saveInvoice($invoice, Invoice::STATUS_PENDING);
+
+        self::assertCount(2, $events);
+        self::assertInstanceOf(InvoiceUpdatePreEvent::class, $events[0]);
+        self::assertInstanceOf(InvoiceUpdatePostEvent::class, $events[1]);
     }
 
     public function testEmptyObject(): void

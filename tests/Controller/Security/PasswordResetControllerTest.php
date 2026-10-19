@@ -11,10 +11,56 @@ namespace App\Tests\Controller\Security;
 
 use App\Tests\Controller\AbstractControllerBaseTestCase;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 #[Group('integration')]
 class PasswordResetControllerTest extends AbstractControllerBaseTestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->setTrustedHosts('localhost');
+    }
+
+    protected function tearDown(): void
+    {
+        unset($_ENV['TRUSTED_HOSTS'], $_SERVER['TRUSTED_HOSTS']);
+        // the kernel sets the trusted hosts process wide, reset them so they do not leak into other tests
+        Request::setTrustedHosts([]);
+        parent::tearDown();
+    }
+
+    private function setTrustedHosts(string $trustedHosts): void
+    {
+        $_ENV['TRUSTED_HOSTS'] = $trustedHosts;
+        $_SERVER['TRUSTED_HOSTS'] = $trustedHosts;
+    }
+
+    private function testResetActionWithoutTrustedHosts(string $route, string $method = 'GET'): void
+    {
+        $this->setTrustedHosts('');
+        $client = self::createClient();
+        $this->setSystemConfiguration('user.password_reset', true);
+        $this->request($client, $route, $method);
+        self::assertEquals(Response::HTTP_SERVICE_UNAVAILABLE, $client->getResponse()->getStatusCode());
+    }
+
+    public function testResetRequestWithoutTrustedHosts(): void
+    {
+        $this->testResetActionWithoutTrustedHosts('/resetting/request');
+    }
+
+    public function testSendEmailRequestWithoutTrustedHosts(): void
+    {
+        $this->testResetActionWithoutTrustedHosts('/resetting/send-email', 'POST');
+    }
+
+    public function testCheckEmailWithoutTrustedHosts(): void
+    {
+        $this->testResetActionWithoutTrustedHosts('/resetting/check-email');
+    }
+
     private function testResetActionWithDeactivatedFeature(string $route, string $method = 'GET'): void
     {
         $client = self::createClient();
@@ -151,5 +197,17 @@ class PasswordResetControllerTest extends AbstractControllerBaseTestCase
 
         $user = $this->loadUserFromDatabase('john_user');
         self::assertTrue($user->requiresPasswordReset());
+    }
+
+    public function testPartiallyMatchingHostIsRejected(): void
+    {
+        // the login link is generated from the request host: TRUSTED_HOSTS="localhost" may not trust "localhost.attacker.example"
+        $client = self::createClient([], ['HTTP_HOST' => 'localhost.attacker.example']);
+
+        $this->request($client, '/resetting/request');
+        self::assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
+
+        $this->request($client, '/resetting/send-email', 'POST', ['username' => 'john_user']);
+        self::assertEquals(Response::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
     }
 }

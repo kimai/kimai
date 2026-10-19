@@ -21,7 +21,7 @@
     {% set filter_route = 'admin_timesheet' %}
     {% set filter_options = filter_options|merge({'user': user.id}) %}
 {% endif %}
-<table class="table table-hover dataTable">
+<table class="table table-hover dataTable table-sticky-first">
     <thead>
         <tr>
             <th>{% block upper_left %}{{ user.displayName|sanitize_dde }}{% endblock %}</th>

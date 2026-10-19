@@ -25,4 +25,18 @@ final class ValidationFailedException extends \RuntimeException
     {
         return $this->violations;
     }
+
+    /**
+     * Returns all violations in a human readable format, e.g. to be used in log messages.
+     */
+    public function getViolationsAsString(): string
+    {
+        $messages = [];
+
+        foreach ($this->violations as $violation) {
+            $messages[] = \sprintf('%s: %s', $violation->getPropertyPath(), $violation->getMessage());
+        }
+
+        return implode(', ', $messages);
+    }
 }

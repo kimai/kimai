@@ -19,6 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 
 /**
@@ -30,13 +31,15 @@ final class UserLoginLinkCommand extends Command
     public function __construct(
         private readonly LoginLinkHandlerInterface $loginLink,
         private readonly UserRepository $userRepository,
-        private readonly RequestStack $requestStack
+        private readonly RequestStack $requestStack,
+        private readonly UrlGeneratorInterface $urlGenerator
     )
     {
         parent::__construct();
         $this->addArgument('email', InputArgument::REQUIRED, 'The email of the user');
         $this->addOption('password-reset', null, InputOption::VALUE_NONE, 'Whether the user needs to reset the password afterwards');
         $this->addOption('all-auth', null, InputOption::VALUE_NONE, 'Ignore that the user is using an external authentication system');
+        $this->addOption('absolute', null, InputOption::VALUE_NONE, 'Generate an absolute URL including scheme and host (configured via DEFAULT_URI)');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -70,12 +73,29 @@ final class UserLoginLinkCommand extends Command
             return Command::FAILURE;
         }
 
-        $request = new Request();
+        // the URL is generated from the router context (configured via DEFAULT_URI), passing a Request to
+        // createLoginLink() would replace it and fail with "Untrusted Host" if TRUSTED_HOSTS is configured
+        $context = $this->urlGenerator->getContext();
+        $previousLocale = $context->getParameter('_locale');
+        $context->setParameter('_locale', $user->getLanguage());
+
+        // the firewall-aware login link handler needs an active request to determine the firewall
+        $request = Request::create($context->getScheme() . '://' . $context->getHost() . $context->getBaseUrl() . '/');
         $request->setLocale($user->getLanguage());
         $this->requestStack->push($request);
 
-        $loginLinkDetails = $this->loginLink->createLoginLink($user, $request);
-        $loginLink = $loginLinkDetails->getUrl();
+        try {
+            $loginLink = $this->loginLink->createLoginLink($user)->getUrl();
+        } finally {
+            $this->requestStack->pop();
+            $context->setParameter('_locale', $previousLocale);
+        }
+
+        if ($input->getOption('absolute') !== true) {
+            $path = parse_url($loginLink, PHP_URL_PATH);
+            $query = parse_url($loginLink, PHP_URL_QUERY);
+            $loginLink = (\is_string($path) ? $path : '/') . (\is_string($query) ? '?' . $query : '');
+        }
 
         if ($input->getOption('password-reset') === true) {
             $user->markPasswordRequested();

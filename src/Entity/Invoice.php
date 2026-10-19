@@ -132,6 +132,7 @@ class Invoice implements EntityWithMetaFields
     #[ORM\Column(name: 'payment_date', type: 'date', nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
+    #[Serializer\Type(name: "DateTime<'Y-m-d'>")]
     private ?\DateTime $paymentDate = null;
     /**
      * Meta fields registered with the invoice
@@ -345,13 +346,17 @@ class Invoice implements EntityWithMetaFields
         return $this->total - $this->tax;
     }
 
-    public function getPaymentDate(): ?\DateTime
+    public function getPaymentDate(): ?\DateTimeInterface
     {
         return $this->paymentDate;
     }
 
-    public function setPaymentDate(?\DateTime $paymentDate): Invoice
+    public function setPaymentDate(?\DateTimeInterface $paymentDate): Invoice
     {
+        if ($paymentDate !== null) {
+            $paymentDate = \DateTime::createFromInterface($paymentDate);
+        }
+
         $this->paymentDate = $paymentDate;
 
         return $this;

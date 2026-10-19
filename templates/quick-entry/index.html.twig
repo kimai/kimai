@@ -2,6 +2,12 @@
 
 {% block page_class %}quick-entry-page{% endblock %}
 
+{% block form_addon %}
+    {% from "macros/widgets.html.twig" import actions as action_links %}
+    {% set event = actions(app.user, 'quick_entry_links', 'index', {user: user, query: query}) %}
+    {{ action_links(event.actions, {button_class: '', large: false}) }}
+{% endblock %}
+
 {% block main %}
     {% embed '@theme/embeds/card.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}

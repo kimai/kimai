@@ -10,8 +10,11 @@
 namespace App\Validator\Constraints;
 
 use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Form\MultiUpdate\TimesheetMultiUpdateDTO;
+use App\Security\RolePermissionManager;
 use App\Validator\Constraints\TimesheetMultiUpdate as TimesheetMultiUpdateConstraint;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -19,6 +22,13 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 final class TimesheetMultiUpdateValidator extends ConstraintValidator
 {
+    public function __construct(
+        private readonly Security $security,
+        private readonly RolePermissionManager $permissionManager,
+    )
+    {
+    }
+
     /**
      * @param TimesheetMultiUpdateDTO|mixed $value
      */
@@ -33,6 +43,7 @@ final class TimesheetMultiUpdateValidator extends ConstraintValidator
         }
 
         $this->validateActivityAndProject($value, $this->context);
+        $this->validateTeamAccess($value, $this->context);
 
         if (null !== $value->getFixedRate() && null !== $value->getHourlyRate()) {
             $this->context->buildViolation('Cannot set hourly rate and fixed rate at the same time.')
@@ -45,6 +56,37 @@ final class TimesheetMultiUpdateValidator extends ConstraintValidator
                 ->atPath('hourlyRate')
                 ->setTranslationDomain('validators')
                 ->setCode(TimesheetMultiUpdateConstraint::HOURLY_RATE_FIXED_RATE)
+                ->addViolation();
+        }
+    }
+
+    /**
+     * The batch update form seeds its choice lists with the submitted IDs, so the form type does not prevent
+     * a user from posting a project or activity of a team he is not a member of (see TimesheetTeamAccessValidator,
+     * which performs the same check for the single-edit form).
+     */
+    private function validateTeamAccess(TimesheetMultiUpdateDTO $dto, ExecutionContextInterface $context): void
+    {
+        $user = $this->security->getUser();
+        if (!($user instanceof User) || $user->canSeeAllData()) {
+            return;
+        }
+
+        $project = $dto->getProject();
+        if ($project !== null && !$this->permissionManager->checkTeamAccessProject($project, $user)) {
+            $context->buildViolation(TimesheetMultiUpdateConstraint::getErrorName(TimesheetMultiUpdateConstraint::PROJECT_ACCESS_ERROR))
+                ->atPath('project')
+                ->setTranslationDomain('validators')
+                ->setCode(TimesheetMultiUpdateConstraint::PROJECT_ACCESS_ERROR)
+                ->addViolation();
+        }
+
+        $activity = $dto->getActivity();
+        if ($activity !== null && !$this->permissionManager->checkTeamAccessActivity($activity, $user)) {
+            $context->buildViolation(TimesheetMultiUpdateConstraint::getErrorName(TimesheetMultiUpdateConstraint::ACTIVITY_ACCESS_ERROR))
+                ->atPath('activity')
+                ->setTranslationDomain('validators')
+                ->setCode(TimesheetMultiUpdateConstraint::ACTIVITY_ACCESS_ERROR)
                 ->addViolation();
         }
     }

@@ -87,6 +87,60 @@ class TeamControllerTest extends APIControllerBaseTestCase
         self::assertApiResponseTypeStructure('TeamEntity', $result);
     }
 
+    #[DataProvider('getRoleTestData')]
+    public function testGetEntityIsSecureForRole(string $role): void
+    {
+        $client = $this->getClientForAuthenticatedUser($role);
+        $teams = $this->importTeamFixtures();
+
+        $this->request($client, '/api/teams/' . $teams[0]->getId());
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    /**
+     * A teamlead who was granted view_team (but not view_all_data) may only read the teams he leads,
+     * mirroring the filter of the collection: neither foreign teams nor teams he is a plain member of.
+     */
+    public function testGetEntityIsLimitedToLeadTeams(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $ownTeam = $this->prepareAttackerTeamleadWithEditTeam('GET', 'view_team');
+        $teamlead = $this->getUserByName(UserFixtures::USERNAME_TEAMLEAD);
+        $superAdmin = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_USER);
+
+        $memberTeam = new Team('member team');
+        $memberTeam->addUser($teamlead);
+        $memberTeam->addTeamlead($superAdmin);
+        $em->persist($memberTeam);
+
+        $foreignTeam = new Team('foreign team');
+        $foreignTeam->addUser($user);
+        $foreignTeam->addTeamlead($superAdmin);
+        $em->persist($foreignTeam);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/api/teams/' . $ownTeam->getId());
+        $result = json_decode($client->getResponse()->getContent(), true);
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('TeamEntity', $result);
+        self::assertEquals($ownTeam->getId(), $result['id']);
+
+        $this->request($client, '/api/teams/' . $memberTeam->getId());
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->request($client, '/api/teams/' . $foreignTeam->getId());
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        // the collection must expose exactly the same team
+        $this->assertAccessIsGranted($client, '/api/teams');
+        $result = json_decode($client->getResponse()->getContent(), true);
+        self::assertIsArray($result);
+        self::assertEquals([$ownTeam->getId()], array_column($result, 'id'));
+    }
+
     public function testNotFound(): void
     {
         $this->assertEntityNotFound(User::ROLE_USER, '/api/teams/' . PHP_INT_MAX);
@@ -909,13 +963,13 @@ class TeamControllerTest extends APIControllerBaseTestCase
      *
      * @return Team the team the attacker is teamlead of
      */
-    private function prepareAttackerTeamleadWithEditTeam(string $suffix): Team
+    private function prepareAttackerTeamleadWithEditTeam(string $suffix, string $permission = 'edit_team'): Team
     {
         $em = $this->getEntityManager();
 
-        $roleName = 'TEST_EDIT_TEAM_' . $suffix;
+        $roleName = 'TEST_' . strtoupper($permission) . '_' . $suffix;
         $role = (new Role())->setName($roleName);
-        $permission = (new RolePermission())->setRole($role)->setPermission('edit_team')->setAllowed(true);
+        $permission = (new RolePermission())->setRole($role)->setPermission($permission)->setAllowed(true);
         $em->persist($role);
         $p = self::getContainer()->get(PermissionService::class);
         self::assertInstanceOf(PermissionService::class, $p);

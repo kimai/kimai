@@ -19,14 +19,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class InvoiceCalculatorType extends AbstractType
 {
-    public function __construct(private InvoiceService $service)
+    public function __construct(private InvoiceService $invoiceService)
     {
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $renderer = [];
-        foreach ($this->service->getCalculator() as $calculator) {
+        foreach ($this->invoiceService->getCalculator() as $calculator) {
             $renderer[$calculator->getId()] = $calculator->getId();
         }
 
