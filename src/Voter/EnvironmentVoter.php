@@ -9,7 +9,6 @@
 
 namespace App\Voter;
 
-use App\Entity\Invoice;
 use App\Entity\User;
 use App\Security\RolePermissionManager;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -19,13 +18,10 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  * A voter to check permissions that might rely on external resources,
  * like environment variables or PHP ini settings.
  *
- * @extends Voter<string, Invoice>
+ * @extends Voter<string, null>
  */
 final class EnvironmentVoter extends Voter
 {
-    /**
-     * support rules based on the given invoice
-     */
     private const ALLOWED_ATTRIBUTES = [
         'upload_invoice_template',
     ];
