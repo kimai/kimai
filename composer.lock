@@ -2278,16 +2278,16 @@
         },
         {
             "name": "horstoeko/zugferd",
-            "version": "v1.0.132",
+            "version": "v1.0.133",
             "source": {
                 "type": "git",
                 "url": "https://github.com/horstoeko/zugferd.git",
-                "reference": "5bb8ad1ea5e27ab9ccb3132f2668e4f54823fbbc"
+                "reference": "7ae81641e2ca1992b5b0afbce00309ed4d989e4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/horstoeko/zugferd/zipball/5bb8ad1ea5e27ab9ccb3132f2668e4f54823fbbc",
-                "reference": "5bb8ad1ea5e27ab9ccb3132f2668e4f54823fbbc",
+                "url": "https://api.github.com/repos/horstoeko/zugferd/zipball/7ae81641e2ca1992b5b0afbce00309ed4d989e4c",
+                "reference": "7ae81641e2ca1992b5b0afbce00309ed4d989e4c",
                 "shasum": ""
             },
             "require": {
@@ -2315,7 +2315,7 @@
                 "goetas-webservices/xsd2php": "^0",
                 "nette/php-generator": "*",
                 "php-parallel-lint/php-parallel-lint": "^1.4",
-                "phpdocumentor/reflection-docblock": "^5",
+                "phpdocumentor/reflection-docblock": "^6",
                 "phpstan/phpstan": "^1|^2.1",
                 "phpstan/phpstan-deprecation-rules": "^1|^2",
                 "phpstan/phpstan-strict-rules": "^1|^2",
@@ -2350,9 +2350,15 @@
             ],
             "support": {
                 "issues": "https://github.com/horstoeko/zugferd/issues",
-                "source": "https://github.com/horstoeko/zugferd/tree/v1.0.132"
+                "source": "https://github.com/horstoeko/zugferd/tree/v1.0.133"
             },
-            "time": "2026-08-30T14:11:24+00:00"
+            "funding": [
+                {
+                    "url": "https://paypal.me/horstoeko",
+                    "type": "custom"
+                }
+            ],
+            "time": "2026-10-20T12:44:04+00:00"
         },
         {
             "name": "horstoeko/zugferdublbridge",
@@ -10931,16 +10937,16 @@
         },
         {
             "name": "zircote/swagger-php",
-            "version": "6.17.0",
+            "version": "6.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zircote/swagger-php.git",
-                "reference": "3e4aafd750204f668b1a516c788acca03e731319"
+                "reference": "c93b7430193dc461602a2a3f4f6a0791a3a0608a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/3e4aafd750204f668b1a516c788acca03e731319",
-                "reference": "3e4aafd750204f668b1a516c788acca03e731319",
+                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/c93b7430193dc461602a2a3f4f6a0791a3a0608a",
+                "reference": "c93b7430193dc461602a2a3f4f6a0791a3a0608a",
                 "shasum": ""
             },
             "require": {
@@ -11009,7 +11015,7 @@
             ],
             "support": {
                 "issues": "https://github.com/zircote/swagger-php/issues",
-                "source": "https://github.com/zircote/swagger-php/tree/6.17.0"
+                "source": "https://github.com/zircote/swagger-php/tree/6.18.0"
             },
             "funding": [
                 {
@@ -11017,7 +11023,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-10-19T02:41:07+00:00"
+            "time": "2026-10-20T22:51:12+00:00"
         }
     ],
     "packages-dev": [
