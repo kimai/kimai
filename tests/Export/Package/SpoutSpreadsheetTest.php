@@ -49,4 +49,22 @@ class SpoutSpreadsheetTest extends TestCase
 
         self::assertGreaterThan(0, filesize($this->filename));
     }
+
+    public function testSaveTranslatesHeaderWithParams(): void
+    {
+        $translator = $this->createMock(TranslatorInterface::class);
+        $translator->expects(self::once())
+            ->method('trans')
+            ->with('export.date_column', ['%timezone%' => 'America/New_York'], null, null)
+            ->willReturn('Date (America/New_York)');
+
+        $spreadsheetPackage = new SpoutSpreadsheet(new Writer(), $translator);
+        $spreadsheetPackage->open($this->filename);
+        $column = (new Column('date', new DefaultFormatter()))->withHeader('export.date_column', ['%timezone%' => 'America/New_York']);
+        $spreadsheetPackage->setColumns([$column]);
+        $spreadsheetPackage->addRow(['Data1']);
+        $spreadsheetPackage->save();
+
+        self::assertGreaterThan(0, filesize($this->filename));
+    }
 }

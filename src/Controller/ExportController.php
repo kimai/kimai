@@ -184,6 +184,7 @@ final class ExportController extends AbstractController
         $query->setBegin($begin);
         $query->setEnd($end);
         $query->setCurrentUser($this->getUser());
+        $query->setTimezone($this->getDateTimeFactory()->getTimezone());
 
         return $query;
     }

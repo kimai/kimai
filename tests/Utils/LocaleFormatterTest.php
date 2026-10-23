@@ -87,6 +87,18 @@ class LocaleFormatterTest extends TestCase
         self::assertSame('13:27:55', $sut->time($date));
     }
 
+    public function testDateAndTimeFormattingConvertsIntoExplicitTimezone(): void
+    {
+        $sut = $this->getSut('en');
+        // process default timezone is Europe/Vienna (see setUp()), the entry itself is Europe/Berlin
+        $date = new \DateTimeImmutable('2026-08-21 01:00:00', new \DateTimeZone('Europe/Berlin'));
+        $timezone = new \DateTimeZone('America/New_York');
+
+        self::assertSame('2026-08-20', $sut->dateShort($date, $timezone));
+        self::assertSame('19:00', $sut->time($date, $timezone));
+        self::assertSame('2026-08-20', $sut->dateFormat($date, 'Y-m-d', $timezone));
+    }
+
     public function testInvalidDateInputReturnsNull(): void
     {
         $sut = $this->getSut('en');
