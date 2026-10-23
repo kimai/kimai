@@ -19,6 +19,8 @@ authentication via SAML/LDAP/Database, two-factor authentication (2FA) with TOTP
 user/customer/project specific rates, advanced search & filtering, money and time budgets, advanced reporting, support for [plugins](https://www.kimai.org/store/)
 and so much more.
 
+[![Deploy to Railyard](https://app.railyard.run/deploy/badge)](https://app.railyard.run/deploy?repo=https://github.com/kimai/kimai)
+
 ### Links
 
 - [Home](https://www.kimai.org) — Kimai project homepage
