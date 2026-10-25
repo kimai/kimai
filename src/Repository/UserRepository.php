@@ -332,12 +332,13 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
         }
 
         if ($query->getRole() !== null) {
+            // roles are stored as JSON list, the quotes prevent partial matches like ROLE_ADMIN in ROLE_ADMIN_FOO
             $rolesWhere = 'u.roles LIKE :role';
-            $qb->setParameter('role', '%' . $query->getRole() . '%');
+            $qb->setParameter('role', '%"' . $query->getRole() . '"%');
             // a workaround, because ROLE_USER is not saved in the database
             if ($query->getRole() === User::ROLE_USER) {
                 $rolesWhere .= ' OR u.roles LIKE :role1';
-                $qb->setParameter('role1', '%{}');
+                $qb->setParameter('role1', '[]');
             }
             $qb->andWhere($rolesWhere);
         }
