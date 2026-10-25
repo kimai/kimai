@@ -1143,12 +1143,15 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
     {
         return [
             ['duration_fixed_begin', User::ROLE_USER, false],
+            ['duration_fixed_begin', User::ROLE_TEAMLEAD, true],
             ['duration_fixed_begin', User::ROLE_ADMIN, true],
             ['duration_fixed_begin', User::ROLE_SUPER_ADMIN, true],
             ['punch', User::ROLE_USER, false],
+            ['punch', User::ROLE_TEAMLEAD, true],
             ['punch', User::ROLE_ADMIN, true],
             ['punch', User::ROLE_SUPER_ADMIN, true],
             ['default', User::ROLE_USER, true],
+            ['default', User::ROLE_TEAMLEAD, true],
             ['default', User::ROLE_ADMIN, true],
             ['default', User::ROLE_SUPER_ADMIN, true]
         ];
@@ -1159,6 +1162,45 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
     {
         $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
         $client = $this->getClientForAuthenticatedUser($user);
+        $this->setSystemConfiguration('timesheet.mode', $trackingMode);
+        $data = [
+            'activity' => 1,
+            'project' => 1,
+            'begin' => ($dateTime->createDateTime('-8 hours'))->format('Y-m-d H:m:0'),
+            'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
+            'description' => 'foo',
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets', 'POST', [], $json);
+        $response = $client->getResponse();
+
+        if ($showTimes) {
+            self::assertTrue($response->isSuccessful());
+        } else {
+            $this->assertApiCallValidationError($response, [], true, [], [], ['begin', 'end']);
+        }
+    }
+
+    /**
+     * @return array<int, array{0: string, 1: string, 2: bool}>
+     */
+    public static function getTrackingModePermissionTestData(): array
+    {
+        return [
+            ['duration_fixed_begin', 'view_other_timesheet', false],
+            ['duration_fixed_begin', 'edit_other_timesheet', true],
+            ['punch', 'view_other_timesheet', false],
+            ['punch', 'edit_other_timesheet', true],
+        ];
+    }
+
+    #[DataProvider('getTrackingModePermissionTestData')]
+    public function testCreateActionWithTrackingModeRequiresEditOtherTimesheet(string $trackingMode, string $permission, bool $showTimes): void
+    {
+        $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->grantPermissions(User::ROLE_USER, 'TEST_API_TIMES', [$permission]);
         $this->setSystemConfiguration('timesheet.mode', $trackingMode);
         $data = [
             'activity' => 1,
@@ -1744,6 +1786,25 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $client = $this->getClientForAuthenticatedUser($user);
         $this->setSystemConfiguration('timesheet.mode', $trackingMode);
         $timesheets = $this->importFixtureForUser($user);
+        $id = $timesheets[0]->getId();
+
+        $begin = new \DateTime('2019-11-27 13:55:00');
+        $this->request($client, '/api/timesheets/' . $id . '/restart', 'PATCH', ['begin' => $begin->format(BaseApiController::DATE_FORMAT_PHP)]);
+
+        if ($allowBegin) {
+            self::assertTrue($client->getResponse()->isSuccessful());
+        } else {
+            $this->assertApiResponseAccessDenied($client->getResponse());
+        }
+    }
+
+    #[DataProvider('getTrackingModePermissionTestData')]
+    public function testRestartActionWithBeginRequiresEditOtherTimesheet(string $trackingMode, string $permission, bool $allowBegin): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->grantPermissions(User::ROLE_USER, 'TEST_API_TIMES', [$permission]);
+        $this->setSystemConfiguration('timesheet.mode', $trackingMode);
+        $timesheets = $this->importFixtureForUser(User::ROLE_USER);
         $id = $timesheets[0]->getId();
 
         $begin = new \DateTime('2019-11-27 13:55:00');

@@ -43,7 +43,7 @@ final class DurationFixedBeginMode implements TrackingModeInterface
 
     public function canUpdateTimesWithAPI(): bool
     {
-        return $this->authorizationChecker->isGranted('view_other_timesheet');
+        return $this->authorizationChecker->isGranted('edit_other_timesheet');
     }
 
     public function create(Timesheet $timesheet, ?Request $request = null): void
