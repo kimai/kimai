@@ -32,7 +32,7 @@ parameters:
 
         -
             identifier: classConstant.deprecatedClass
-            count: 2
+            count: 1
             path: API/Authentication/TokenAuthenticatorTest.php
 
         -
@@ -47,12 +47,7 @@ parameters:
 
         -
             identifier: method.deprecatedClass
-            count: 13
-            path: API/Authentication/TokenAuthenticatorTest.php
-
-        -
-            identifier: method.deprecated
-            count: 2
+            count: 8
             path: API/Authentication/TokenAuthenticatorTest.php
 
         -
