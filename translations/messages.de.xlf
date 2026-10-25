@@ -172,7 +172,7 @@
       </trans-unit>
       <trans-unit id="853W5Iu" resname="security.unlock.button">
         <source>security.unlock.button</source>
-        <target>Freischalten</target>
+        <target state="translated">Entsperren</target>
       </trans-unit>
       <trans-unit id="UoOv6mx" approved="yes" resname="menu.homepage">
         <source>menu.homepage</source>
