@@ -12,11 +12,11 @@
       </trans-unit>
       <trans-unit id="FaGqoTT" resname="timesheet.mode">
         <source>timesheet.mode</source>
-        <target>タイムトラッキング モード</target>
+        <target state="translated">時間計測モード</target>
       </trans-unit>
       <trans-unit id="A11vhSN" resname="timesheet.mode_default">
         <source>timesheet.mode_default</source>
-        <target>[デフォルト] 開始日時と終了日時を入力する</target>
+        <target state="translated">[デフォルト] 開始日時と終了日時を編集する</target>
       </trans-unit>
       <trans-unit id="CJZhtYx" resname="timesheet.mode_duration_fixed_begin">
         <source>timesheet.mode_duration_fixed_begin</source>
@@ -61,6 +61,50 @@
       <trans-unit id="SnkW0Pk" resname="theme.avatar_url" xml:space="preserve">
         <source>theme.avatar_url</source>
         <target state="translated">アバター画像にURLが使用できるようにする</target>
+      </trans-unit>
+      <trans-unit id="4h8.Nyp" resname="Friday">
+        <source>Friday</source>
+        <target state="translated">金曜日</target>
+      </trans-unit>
+      <trans-unit id="tNxm3eg" resname="off">
+        <source>off</source>
+        <target state="translated">オフ</target>
+      </trans-unit>
+      <trans-unit id="0e4HBxu" resname="password_strength.medium">
+        <source>password_strength.medium</source>
+        <target state="translated">通常</target>
+      </trans-unit>
+      <trans-unit id="3jD52PB" resname="password_strength.normal">
+        <source>password_strength.normal</source>
+        <target state="translated">ノーマル</target>
+      </trans-unit>
+      <trans-unit id="fYrx3hJ" resname="Tuesday">
+        <source>Tuesday</source>
+        <target state="translated">火曜日</target>
+      </trans-unit>
+      <trans-unit id=".CZiBi." resname="Thursday">
+        <source>Thursday</source>
+        <target state="translated">木曜日</target>
+      </trans-unit>
+      <trans-unit id="VlOVWX7" resname="password_strength.strong">
+        <source>password_strength.strong</source>
+        <target state="translated">強力</target>
+      </trans-unit>
+      <trans-unit id="2_Ncc2P" resname="Saturday">
+        <source>Saturday</source>
+        <target state="translated">土曜日</target>
+      </trans-unit>
+      <trans-unit id="agDfwdy" resname="Monday">
+        <source>Monday</source>
+        <target state="translated">月曜日</target>
+      </trans-unit>
+      <trans-unit id="wKbMgpz" resname="Wednesday">
+        <source>Wednesday</source>
+        <target state="translated">水曜日</target>
+      </trans-unit>
+      <trans-unit id="hz.vdg5" resname="Sunday">
+        <source>Sunday</source>
+        <target state="translated">日曜日</target>
       </trans-unit>
     </body>
   </file>
