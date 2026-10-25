@@ -1738,6 +1738,36 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertEmpty($timesheet->getTags());
     }
 
+    #[DataProvider('getTrackingModeTestData')]
+    public function testRestartActionWithBeginAndTrackingMode(string $trackingMode, string $user, bool $allowBegin): void
+    {
+        $client = $this->getClientForAuthenticatedUser($user);
+        $this->setSystemConfiguration('timesheet.mode', $trackingMode);
+        $timesheets = $this->importFixtureForUser($user);
+        $id = $timesheets[0]->getId();
+
+        $begin = new \DateTime('2019-11-27 13:55:00');
+        $this->request($client, '/api/timesheets/' . $id . '/restart', 'PATCH', ['begin' => $begin->format(BaseApiController::DATE_FORMAT_PHP)]);
+
+        if ($allowBegin) {
+            self::assertTrue($client->getResponse()->isSuccessful());
+        } else {
+            $this->assertApiResponseAccessDenied($client->getResponse());
+        }
+    }
+
+    #[DataProvider('getTrackingModeTestData')]
+    public function testRestartActionWithoutBeginAndTrackingMode(string $trackingMode, string $user): void
+    {
+        $client = $this->getClientForAuthenticatedUser($user);
+        $this->setSystemConfiguration('timesheet.mode', $trackingMode);
+        $timesheets = $this->importFixtureForUser($user);
+        $id = $timesheets[0]->getId();
+
+        $this->request($client, '/api/timesheets/' . $id . '/restart', 'PATCH');
+        self::assertTrue($client->getResponse()->isSuccessful());
+    }
+
     public function testRestartActionWithCopyData(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);

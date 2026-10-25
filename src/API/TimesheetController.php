@@ -486,6 +486,9 @@ final class TimesheetController extends BaseApiController
         $begin = $factory->createDateTime();
         $beginTmp = $paramFetcher->get('begin');
         if (\is_string($beginTmp)) {
+            if (!$this->getTrackingMode()->canUpdateTimesWithAPI()) {
+                throw $this->createAccessDeniedException('Cannot set begin in the current tracking mode');
+            }
             $begin = $factory->createDateTime($beginTmp);
         }
 
