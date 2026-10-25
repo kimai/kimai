@@ -13,6 +13,7 @@ use App\Entity\User;
 use App\Event\UserInteractiveLoginEvent;
 use App\EventSubscriber\LastLoginSubscriber;
 use App\Repository\UserRepository;
+use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Types\Types;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
@@ -22,12 +23,16 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('integration')]
 class UserRepositoryTest extends AbstractRepositoryTestCase
 {
-    private function createUser(string $username): User
+    /**
+     * @param array<string> $roles
+     */
+    private function createUser(string $username, array $roles = []): User
     {
         $user = new User();
         $user->setUserIdentifier($username);
         $user->setEmail($username . '@example.com');
         $user->setPassword('foo');
+        $user->setRoles($roles);
 
         /** @var UserRepository $repository */
         $repository = $this->getEntityManager()->getRepository(User::class);
@@ -145,5 +150,67 @@ class UserRepositoryTest extends AbstractRepositoryTestCase
         self::assertNotNull($updated);
         self::assertGreaterThan($twentyMinutesAgo, $updated);
         self::assertEqualsWithDelta((new \DateTime())->getTimestamp(), $updated->getTimestamp(), 60);
+    }
+
+    public function testRolesAreStoredAsJson(): void
+    {
+        $user = $this->createUser('json_roles', ['ROLE_TEAMLEAD', 'ROLE_ADMIN']);
+        $id = $user->getId();
+        self::assertIsInt($id);
+
+        $raw = $this->getEntityManager()->getConnection()->fetchOne('SELECT roles FROM kimai2_users WHERE id = ?', [$id], [Types::INTEGER]);
+        self::assertIsString($raw);
+        self::assertSame(['ROLE_TEAMLEAD', 'ROLE_ADMIN'], json_decode($raw, true, 512, JSON_THROW_ON_ERROR));
+
+        self::assertSame(['ROLE_TEAMLEAD', 'ROLE_ADMIN', 'ROLE_USER'], $this->reloadUser($id)->getRoles());
+    }
+
+    /**
+     * Serialized PHP values must never be unserialized, as they could contain objects (PHP object injection).
+     */
+    public function testSerializedRolesAreNotUnserialized(): void
+    {
+        $user = $this->createUser('serialized_roles');
+        $id = $user->getId();
+        self::assertIsInt($id);
+
+        $this->expectException(Exception::class);
+
+        // MySQL rejects the value already for its JSON column, MariaDB stores it in a LONGTEXT column and loading fails
+        $this->getEntityManager()->getConnection()->executeStatement(
+            'UPDATE kimai2_users SET roles = ? WHERE id = ?',
+            ['a:1:{i:0;O:8:"stdClass":0:{}}', $id],
+            [Types::STRING, Types::INTEGER]
+        );
+        $this->reloadUser($id);
+    }
+
+    public function testFindUsersWithRole(): void
+    {
+        $this->createUser('role_none');
+        $this->createUser('role_teamlead', ['ROLE_TEAMLEAD']);
+        $this->createUser('role_admin', ['ROLE_ADMIN', 'ROLE_TEAMLEAD']);
+        $this->createUser('role_admin_foo', ['ROLE_ADMIN_FOO']);
+
+        /** @var UserRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(User::class);
+
+        $find = function (string $role) use ($repository): array {
+            $names = [];
+            foreach ($repository->findUsersWithRole($role) as $user) {
+                if (str_starts_with($user->getUserIdentifier(), 'role_')) {
+                    $names[] = $user->getUserIdentifier();
+                }
+            }
+            sort($names);
+
+            return $names;
+        };
+
+        self::assertSame(['role_none'], $find(User::ROLE_USER));
+        self::assertSame(['role_admin', 'role_teamlead'], $find(User::ROLE_TEAMLEAD));
+        self::assertSame(['role_admin'], $find(User::ROLE_ADMIN));
+        self::assertSame(['role_admin_foo'], $find('ROLE_ADMIN_FOO'));
+        self::assertSame([], $find(User::ROLE_SUPER_ADMIN));
     }
 }
