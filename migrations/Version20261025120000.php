@@ -16,10 +16,9 @@ use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
 
 /**
- * The "array" type uses unserialize() without restricting allowed classes,
- * which allows PHP object injection through manipulated database values.
+ * Doctrine deprecated the column type: Types::ARRAY
  *
- * @version 2.72
+ * @version 2.71.0
  */
 final class Version20261025120000 extends AbstractMigration
 {
@@ -77,7 +76,6 @@ final class Version20261025120000 extends AbstractMigration
         $decoded = json_decode($roles, true);
 
         if (!\is_array($decoded)) {
-            // the @ suppresses the notice for invalid strings, objects are never instantiated
             $decoded = @unserialize($roles, ['allowed_classes' => false]);
         }
 
@@ -100,7 +98,6 @@ final class Version20261025120000 extends AbstractMigration
 
         $result = [];
         foreach ($roles as $role) {
-            // anything else than a string can only be the result of a manipulated value
             if (!\is_string($role)) {
                 return null;
             }
