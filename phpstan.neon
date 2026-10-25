@@ -63,16 +63,6 @@ parameters:
             path: src/API/ActivityController.php
 
         -
-            message: "#^Method App\\\\API\\\\Authentication\\\\TokenAuthenticator\\:\\:getCredentials\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/API/Authentication/TokenAuthenticator.php
-
-        -
-            message: "#^Parameter \\#2 \\$plainPassword of method Symfony\\\\Component\\\\PasswordHasher\\\\PasswordHasherInterface\\:\\:verify\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/API/Authentication/TokenAuthenticator.php
-
-        -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Customer\\:\\:getMetaField\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/API/CustomerController.php
