@@ -22,7 +22,8 @@ final class FirstWeekDayType extends AbstractType
     {
         $choices = [
             'Monday' => 'monday',
-            'Sunday' => 'sunday'
+            'Sunday' => 'sunday',
+            'Saturday' => 'saturday',
         ];
 
         $resolver->setDefaults([
