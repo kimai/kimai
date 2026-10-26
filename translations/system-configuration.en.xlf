@@ -120,11 +120,15 @@
       </trans-unit>
       <trans-unit id="o9mON14" resname="theme.branding.logo">
         <source>theme.branding.logo</source>
-        <target>Logo URL (replaces the company name in login screen)</target>
+        <target>Company logo (used in navbar, exports and invoices)</target>
       </trans-unit>
       <trans-unit id="en0.Ahu" resname="theme.branding.company">
         <source>theme.branding.company</source>
         <target>Company name</target>
+      </trans-unit>
+      <trans-unit id="xBr4ndC" resname="theme.branding.accent_color">
+        <source>theme.branding.accent_color</source>
+        <target>Accent color (used in export and invoice templates)</target>
       </trans-unit>
       <trans-unit id="AzOiQES" resname="company.financial_year">
         <source>company.financial_year</source>
