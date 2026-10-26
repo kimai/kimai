@@ -18,6 +18,8 @@ use Symfony\Component\Validator\Constraint;
  */
 interface MetaTableTypeInterface
 {
+    public const DATETIME_FORMAT = 'Y-m-d H:i:s e';
+
     /**
      * Returns the name of this entry.
      */
