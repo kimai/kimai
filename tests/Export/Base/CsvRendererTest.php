@@ -9,11 +9,17 @@
 
 namespace App\Tests\Export\Base;
 
+use App\Entity\Activity;
+use App\Entity\Customer;
+use App\Entity\Project;
+use App\Entity\Timesheet;
+use App\Entity\User;
 use App\Export\Base\AbstractSpreadsheetRenderer;
 use App\Export\Base\CsvRenderer;
 use App\Export\ColumnConverter;
 use App\Export\DefaultTemplate;
 use App\Export\Package\SpoutSpreadsheet;
+use App\Repository\Query\ExportQuery;
 use App\Tests\Export\Renderer\AbstractRendererTestCase;
 use App\Tests\Mocks\MetaFieldColumnSubscriberMock;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -200,5 +206,49 @@ class CsvRendererTest extends AbstractRendererTestCase
         self::assertEquals($expected2, $all[6]);
         self::assertEquals(\count($expected), \count($all[0]));
         self::assertEquals('foo', $all[4][18]);
+    }
+
+    public function testRenderConvertsDateAndTimeIntoQueryTimezone(): void
+    {
+        $sut = $this->getAbstractRenderer('en');
+
+        $customer = new Customer('Customer Name');
+        $project = new Project();
+        $project->setName('project name');
+        $project->setCustomer($customer);
+        $activity = new Activity();
+        $activity->setName('activity');
+        $activity->setProject($project);
+
+        $user = new User();
+        $user->setUserIdentifier('foo-bar');
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($user);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+        $timesheet->setBegin(new \DateTime('2026-08-21 01:00:00', new \DateTimeZone('Europe/Berlin')));
+        $timesheet->setEnd(new \DateTime('2026-08-21 02:00:00', new \DateTimeZone('Europe/Berlin')));
+
+        $query = new ExportQuery();
+        $query->setTimezone(new \DateTimeZone('America/New_York'));
+
+        $response = $sut->render([$timesheet], $query);
+        self::assertInstanceOf(BinaryFileResponse::class, $response);
+
+        $file = $response->getFile();
+        $content = file_get_contents($file->getRealPath());
+        self::assertIsString($content);
+
+        $rows = array_filter(explode(PHP_EOL, $content), fn (string $line) => $line !== '');
+        $all = [];
+        foreach ($rows as $row) {
+            $all[] = str_getcsv($row, ',', '"', '\\');
+        }
+
+        self::assertEquals('Date (America/New_York)', $all[0][0]);
+        self::assertEquals('2026-08-20', $all[1][0]);
+        self::assertEquals('19:00', $all[1][1]);
+        self::assertEquals('20:00', $all[1][2]);
     }
 }
