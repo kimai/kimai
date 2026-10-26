@@ -403,6 +403,9 @@ final class Configuration implements ConfigurationInterface
                 ->integerNode('timeout')
                     ->defaultValue(60)
                 ->end()
+                ->booleanNode('show_default_templates')
+                    ->defaultValue(true)
+                ->end()
 
             ->end()
         ;
