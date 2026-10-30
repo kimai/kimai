@@ -836,6 +836,74 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertFalse($result['billable']);
     }
 
+    /**
+     * @see https://github.com/kimai/kimai/issues/6153
+     */
+    public function testPostActionWithFutureProject(): void
+    {
+        $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->setProjectDateRange($dateTime, 1, '+10 days', '+20 days');
+
+        $data = [
+            'activity' => 1,
+            'project' => 1,
+            'begin' => $dateTime->createDateTime('+15 days 10:00:00')->format(self::DATE_FORMAT_HTML5),
+            'end' => $dateTime->createDateTime('+15 days 11:00:00')->format(self::DATE_FORMAT_HTML5),
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets', 'POST', [], $json);
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        self::assertNotEmpty($result['id']);
+        self::assertEquals(1, $result['project']);
+
+        $timesheet = $this->getEntityManager()->getRepository(Timesheet::class)->find($result['id']);
+        self::assertInstanceOf(Timesheet::class, $timesheet);
+        self::assertEquals(1, $timesheet->getProject()?->getId());
+    }
+
+    /**
+     * @see https://github.com/kimai/kimai/issues/6153
+     */
+    public function testPostActionWithFutureProjectBeforeProjectStart(): void
+    {
+        $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->setProjectDateRange($dateTime, 1, '+10 days', '+20 days');
+
+        $data = [
+            'activity' => 1,
+            'project' => 1,
+            'begin' => $dateTime->createDateTime('+5 days 10:00:00')->format(self::DATE_FORMAT_HTML5),
+            'end' => $dateTime->createDateTime('+5 days 11:00:00')->format(self::DATE_FORMAT_HTML5),
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets', 'POST', [], $json);
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        self::assertStringNotContainsString('The selected choice is invalid.', (string) $response->getContent());
+        $this->assertApiCallValidationError($response, [], false, ['The project has not started at that time.']);
+    }
+
+    private function setProjectDateRange(DateTimeFactory $dateTime, int $projectId, string $start, string $end): void
+    {
+        $em = $this->getEntityManager();
+        $project = $em->getRepository(Project::class)->find($projectId);
+        self::assertInstanceOf(Project::class, $project);
+        $project->setStart($dateTime->createDateTime($start));
+        $project->setEnd($dateTime->createDateTime($end));
+        $em->persist($project);
+        $em->flush();
+    }
+
     public function testPostActionWithFullExpandedResponse(): void
     {
         $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));

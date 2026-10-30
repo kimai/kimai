@@ -82,6 +82,9 @@ trait FormTrait
                         $query = new ProjectFormTypeQuery($project, $customer);
                         $query->setUser($builder->getOption('user'));
                         $query->setWithCustomer(true);
+                        // the date range is validated by the timesheet constraints, filtering by "now"
+                        // would reject projects that start in the future or ended in the past
+                        $query->setIgnoreDate(true);
 
                         return $repo->getQueryBuilderForFormType($query);
                     },

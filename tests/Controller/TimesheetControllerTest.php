@@ -371,6 +371,86 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         self::assertEquals($expected->format(\DateTimeInterface::ATOM), $timesheet->getEnd()->format(\DateTimeInterface::ATOM));
     }
 
+    /**
+     * @see https://github.com/kimai/kimai/issues/6153
+     */
+    public function testCreateActionWithFutureProject(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $em = $this->getEntityManager();
+        $this->setProjectDateRange(1, '+10 days', '+20 days');
+
+        $begin = new \DateTime('+15 days 10:00:00');
+        $end = new \DateTime('+15 days 11:00:00');
+
+        $this->request($client, '/timesheet/create?from=' . urlencode($begin->format('Y-m-d\TH:i:s')) . '&to=' . urlencode($end->format('Y-m-d\TH:i:s')));
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        // the project is loaded via API in the browser, the initial choices are limited to the current date
+        $form->disableValidation();
+        $client->submit($form, [
+            'timesheet_edit_form' => [
+                'project' => 1,
+                'activity' => 1,
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/timesheet/'));
+        $client->followRedirect();
+        $this->assertHasFlashSuccess($client);
+
+        /** @var Timesheet $timesheet */
+        $timesheet = $em->getRepository(Timesheet::class)->findAll()[0];
+        self::assertEquals(1, $timesheet->getProject()?->getId());
+        self::assertEquals($begin->format(\DateTimeInterface::ATOM), $timesheet->getBegin()?->format(\DateTimeInterface::ATOM));
+        self::assertEquals($end->format(\DateTimeInterface::ATOM), $timesheet->getEnd()?->format(\DateTimeInterface::ATOM));
+    }
+
+    private function setProjectDateRange(int $projectId, string $start, string $end): void
+    {
+        $em = $this->getEntityManager();
+        $project = $em->getRepository(Project::class)->find($projectId);
+        self::assertInstanceOf(Project::class, $project);
+        $project->setStart(new \DateTime($start));
+        $project->setEnd(new \DateTime($end));
+        $em->persist($project);
+        $em->flush();
+    }
+
+    /**
+     * @see https://github.com/kimai/kimai/issues/6153
+     */
+    public function testCreateActionWithFutureProjectBeforeProjectStart(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $em = $this->getEntityManager();
+        $this->setProjectDateRange(1, '+10 days', '+20 days');
+
+        $begin = new \DateTime('+5 days 10:00:00');
+        $end = new \DateTime('+5 days 11:00:00');
+
+        $this->request($client, '/timesheet/create?from=' . urlencode($begin->format('Y-m-d\TH:i:s')) . '&to=' . urlencode($end->format('Y-m-d\TH:i:s')));
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]')->form();
+        $form->disableValidation();
+        $client->submit($form, [
+            'timesheet_edit_form' => [
+                'project' => 1,
+                'activity' => 1,
+            ]
+        ]);
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $content = (string) $client->getResponse()->getContent();
+        self::assertStringContainsString('The project has not started at that time.', $content);
+        self::assertStringNotContainsString('The selected choice is invalid.', $content);
+        self::assertCount(0, $em->getRepository(Timesheet::class)->findAll());
+    }
+
     public function testCreateActionWithFromAndToValuesTwice(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
