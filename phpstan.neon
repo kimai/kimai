@@ -663,16 +663,6 @@ parameters:
             path: src/Controller/DoctorController.php
 
         -
-            message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 2
-            path: src/Controller/ExportController.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
-            count: 1
-            path: src/Controller/ExportController.php
-
-        -
             message: "#^Cannot call method getEntries\\(\\) on App\\\\Invoice\\\\CalculatorInterface\\|null\\.$#"
             count: 1
             path: src/Controller/InvoiceController.php
