@@ -90,6 +90,23 @@ class InvoiceControllerTest extends AbstractControllerBaseTestCase
         $this->assertHasNoEntriesWithFilter($client);
     }
 
+    public function testIndexActionHasSearchAsDefaultSubmitButton(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $fixture = new InvoiceTemplateFixtures();
+        $this->importFixture($fixture);
+
+        $this->request($client, '/invoice/');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        // pressing enter in a filter field submits the form with its first submit button,
+        // which has to run the search and must not save the filter as default
+        $buttons = $client->getCrawler()->filter('form#invoice-print-form button[type="submit"]');
+        self::assertGreaterThan(1, $buttons->count());
+        self::assertEquals('performSearch', $buttons->first()->attr('name'));
+    }
+
     public function testListTemplateAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
