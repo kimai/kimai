@@ -155,7 +155,7 @@
 </div>
 {% endmacro %}
 
-{% macro datatable_header(tableName, columns, query, options) %}
+{% macro datatable_header(tableName, columns, query = null, options = {}) %}
     {% set visibility = initialize_datatable(app.user, app.session, tableName, columns) %}
     {% if query is not null %}
         {% set orderBy = options.orderBy|default(query.orderBy) %}
@@ -238,7 +238,7 @@
 {{- datatable_column_class(name, column) -}}
 {% endmacro %}
 
-{% macro data_table_footer(entries, route, multi_update_form) %}
+{% macro data_table_footer(entries, route = null, multi_update_form = null) %}
                 </tbody>
             </table>
         </div>
@@ -278,7 +278,7 @@
     <input type="checkbox" name="id" value="{{ id }}" class="multi_update_single multiupdater form-check-input m-0 align-middle" title="{{ 'batch_table_checkbox'|trans }}">
 {% endmacro %}
 
-{% macro datatable_column_modal_link(tableName, class) %}
+{% macro datatable_column_modal_link(tableName, class = null) %}
     <a class="{{ class ?? 'btn btn-icon' }}" href="#" data-bs-toggle="modal" data-bs-target="#modal_{{ tableName }}" data-toggle="tooltip" title="{{ 'modal.columns.title'|trans }}">
         {{ icon('columns', true) }}
     </a>
