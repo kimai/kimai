@@ -20,7 +20,7 @@ export default class KimaiPaginatedBoxWidget {
         if (widget.dataset['reload'] !== undefined) {
             this.events = widget.dataset['reload'].split(' ');
             const reloadPage = () => {
-                let url = null;
+                let url;
                 if (document.querySelector(this.selector).dataset['reloadHref'] !== undefined) {
                     url = document.querySelector(this.selector).dataset['reloadHref'];
                 } else {

@@ -212,7 +212,7 @@ final class LocaleFormatter
             return null;
         }
 
-        return (string) $formatted;
+        return $formatted;
     }
 
     public function dateTime(DateTimeInterface|string|null $date): ?string
@@ -246,7 +246,7 @@ final class LocaleFormatter
             return null;
         }
 
-        return (string) $formatted;
+        return $formatted;
     }
 
     public function dateFormat(\DateTimeInterface|string|null $date, string $format): ?string
@@ -297,7 +297,7 @@ final class LocaleFormatter
             return null;
         }
 
-        return (string) $formatted;
+        return $formatted;
     }
 
     /**
@@ -320,7 +320,7 @@ final class LocaleFormatter
             throw new \Exception('Invalid dateformat given for formatIntl()');
         }
 
-        return (string) $formatted;
+        return $formatted;
     }
 
     public function monthName(\DateTimeInterface $dateTime, bool $withYear = false): string

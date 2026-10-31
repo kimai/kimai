@@ -578,7 +578,7 @@ final class Configuration implements ConfigurationInterface
                     ->defaultValue(3600)
                 ->end()
                 ->integerNode('password_reset_token_ttl')
-                    ->defaultValue(86400)
+                    ->defaultValue(1800)
                 ->end()
                 ->integerNode('password_strength')
                     ->info('Minimum password strength: 0 = disabled, 1 = weak, 2 = medium, 3 = strong, 4 = very strong')

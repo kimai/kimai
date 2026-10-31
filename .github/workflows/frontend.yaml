@@ -39,3 +39,6 @@ jobs:
 
             - name: Check for security issues in frontend dependencies
               run: pnpm audit
+
+            - name: Check for code styles
+              run: pnpm lint

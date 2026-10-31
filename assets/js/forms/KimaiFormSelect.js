@@ -326,7 +326,7 @@ export default class KimaiFormSelect extends KimaiFormTomselectPlugin {
         const DATE_UTILS = this.getDateUtils();
         const regexp = new RegExp('{[^}]*?}','g');
         let title = pattern;
-        let match = null;
+        let match;
 
         while ((match = regexp.exec(pattern)) !== null) {
             // cutting a string like "{name}" into "name"
