@@ -2214,6 +2214,10 @@
         <source>absence_type.date_range</source>
         <target state="translated">Permitir o agendamento de vários dias</target>
       </trans-unit>
+      <trans-unit id="fxkWjGQ" resname="password_current">
+        <source>password_current</source>
+        <target state="translated">Senha atual</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -186,6 +186,10 @@
         <source>The project is locked for the selected times.</source>
         <target state="translated">O projeto está bloqueado para os horários selecionados.</target>
       </trans-unit>
+      <trans-unit id="5Yso.63" resname="The new password must be different from the current password.">
+        <source>The new password must be different from the current password.</source>
+        <target state="translated">A nova senha deve ser diferente da senha atual.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
