@@ -68,7 +68,7 @@ export default class KimaiTeamForm extends KimaiFormPlugin {
         /** @type {KimaiEscape} ESCAPER */
         const ESCAPER = this.getPlugin('escape');
         const prototype = this._getPrototype();
-        let counter = prototype.dataset['widgetCounter'] || prototype.childNodes.length;
+        const counter = prototype.dataset['widgetCounter'] || prototype.childNodes.length;
         let newWidget = prototype.dataset['prototype'];
 
         newWidget = newWidget.replace(/__name__/g, counter);
@@ -80,7 +80,7 @@ export default class KimaiTeamForm extends KimaiFormPlugin {
         newWidget = newWidget.replace(/__TITLE__/g, ESCAPER.escapeForHtml(option.dataset.title));
         newWidget = newWidget.replace(/__USERNAME__/g, ESCAPER.escapeForHtml(option.text));
 
-        prototype.dataset['widgetCounter'] = (++counter).toString();
+        prototype.dataset['widgetCounter'] = (counter + 1).toString();
 
         const temp = document.createElement('div');
         temp.innerHTML = ESCAPER.sanitize(newWidget);
