@@ -258,6 +258,10 @@
         <source>error.too_many_entries</source>
         <target>The request could not be processed. Too many results were found.</target>
       </trans-unit>
+      <trans-unit id="8MwThZv" resname="export.too_many_entries">
+        <source>export.too_many_entries</source>
+        <target>The requested search returns %count% results. Since a maximum of %limit% entries can be exported at a time, the search must be further narrowed down.</target>
+      </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target>The directory “%dir%” does not exist and could not be created.</target>

@@ -4,9 +4,13 @@
 
 {% set totalDuration = 0 %}
 {% set totalRates = {} %}
+{% set totalItems = 0 %}
+{% set entries = preview.exportItems %}
+{% set preview_items = entries|length %}
 
-{% if too_many is not same as (true) and preview_show and entries is not empty %}
-    {% for row in by_customer %}
+{% if preview is not null %}
+    {% for row in preview.statistic %}
+        {% set totalItems = totalItems + row.count %}
         {% set totalDuration = totalDuration + row.duration %}
         {% set customerCurrency = row.customer.currency %}
         {% if totalRates[customerCurrency] is not defined %}
@@ -43,9 +47,9 @@
 {% set editExported = is_granted('edit_exported_timesheet') %}
 {% set showMarkAsExportedButton = false %}
 {% set showToggleButton = false %}
-{% if entries is not empty and form.markAsExported is defined %}
+{% if preview is not null and form.markAsExported is defined %}
     {% set showMarkAsExportedButton = form.exported.vars.value != constant('App\\Repository\\Query\\TimesheetQuery::STATE_EXPORTED') %}
-    {% set showToggleButton = preview_show and form.exported.vars.value != constant('App\\Repository\\Query\\TimesheetQuery::STATE_ALL') %}
+    {% set showToggleButton = form.exported.vars.value != constant('App\\Repository\\Query\\TimesheetQuery::STATE_ALL') %}
 {% endif %}
 
 {% block status %}
@@ -101,9 +105,7 @@
         {% endblock %}
     {% endembed %}
 
-    {% if too_many is same as (true) %}
-        {{ widgets.callout('danger', 'error.too_many_entries') }}
-    {% elseif preview_show %}
+    {% if preview is not null %}
         {% if entries is empty %}
             {{ widgets.nothing_found() }}
         {% else %}
@@ -125,7 +127,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for row in by_customer %}
+                        {% for row in preview.statistic %}
                             {% set currency = row.customer.currency %}
                             <tr>
                                 <td>
@@ -146,71 +148,73 @@
                 {% endblock %}
             {% endembed %}
 
-            <div class="btn-list w-100 mb-3">
-                {{ tables.datatable_column_modal_link(tableName) }}
-                <div class="btn-group{% if not showMarkAsExportedButton %} me-auto{% endif %}" id="export-buttons" role="group">
-                    {% set allowCreate = is_granted('create_export_template') %}
-                    {% for type, group in buttons %}
-                        {% if type == 'html' %}
-                            {% set type = 'print' %}
-                        {% endif %}
-                        {% set btnTitle = type|trans %}
-                        {% if group|length == 1 %}
-                            {% for id, cfg in group %}
-                                {% set title = cfg.title %}
-                                <button type="button" id="export-{{ id }}-button" class="btn btn-primary startExportBtn" data-type="{{ id }}">
-                                    {{ btnTitle }}
-                                </button>
-                            {% endfor %}
-                        {% else %}
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {{ btnTitle }}
-                                </button>
-                                <div class="dropdown-menu">
+
+            {% if preview is not null %}
+                {% if totalItems > max_export_items %}
+                    {{ widgets.callout('danger', 'export.too_many_entries'|trans({'%limit%': max_export_items, '%count%': totalItems})) }}
+                {% else %}
+                    <div class="btn-list w-100 mb-3">
+                        {{ tables.datatable_column_modal_link(tableName) }}
+                        <div class="btn-group{% if not showMarkAsExportedButton %} me-auto{% endif %}" id="export-buttons" role="group">
+                            {% set allowCreate = is_granted('create_export_template') %}
+                            {% for type, group in buttons %}
+                                {% if type == 'html' %}
+                                    {% set type = 'print' %}
+                                {% endif %}
+                                {% set btnTitle = type|trans %}
+                                {% if group|length == 1 %}
                                     {% for id, cfg in group %}
-                                        {% set btnTitle = (cfg.title)|trans %}
-                                        {% if id == type %}
-                                            {% set btnTitle = 'default'|trans %}
-                                        {% endif %}
-                                        <a href="#" class="dropdown-item startExportBtn" data-type="{{ id }}">
+                                        {% set title = cfg.title %}
+                                        <button type="button" id="export-{{ id }}-button" class="btn btn-primary startExportBtn" data-type="{{ id }}">
                                             {{ btnTitle }}
-                                            {% if allowCreate and cfg.internal %}
-                                                <span class="dropdown-action modal-ajax-form open-edit ps-2 ms-auto" data-href="{{ path('export_template_edit', {exportTemplate: id}) }}">{{ icon('edit') }}</span>
-                                                <span class="dropdown-action api-link text-red dd-ts-trash text-danger ms-2" href="{{ path('delete_export_template', {id: id}) }}" data-event="kimai.exportTemplate" data-method="DELETE" data-question="confirm.delete" data-msg-error="action.delete.error">{{ icon('delete') }}</span>
-                                            {% endif %}
-                                        </a>
+                                        </button>
                                     {% endfor %}
-                                </div>
+                                {% else %}
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            {{ btnTitle }}
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            {% for id, cfg in group %}
+                                                {% set btnTitle = (cfg.title)|trans %}
+                                                {% if id == type %}
+                                                    {% set btnTitle = 'default'|trans %}
+                                                {% endif %}
+                                                <a href="#" class="dropdown-item startExportBtn" data-type="{{ id }}">
+                                                    {{ btnTitle }}
+                                                    {% if allowCreate and cfg.internal %}
+                                                        <span class="dropdown-action modal-ajax-form open-edit ps-2 ms-auto" data-href="{{ path('export_template_edit', {exportTemplate: id}) }}">{{ icon('edit') }}</span>
+                                                        <span class="dropdown-action api-link text-red dd-ts-trash text-danger ms-2" href="{{ path('delete_export_template', {id: id}) }}" data-event="kimai.exportTemplate" data-method="DELETE" data-question="confirm.delete" data-msg-error="action.delete.error">{{ icon('delete') }}</span>
+                                                    {% endif %}
+                                                </a>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            {% if allowCreate %}
+                                {{ widgets.action_button('create', {'url': path('export_template_create'), 'class': 'btn modal-ajax-form open-edit', 'title': 'create'|trans}) }}
+                            {% endif %}
+                        </div>
+                        {% if showMarkAsExportedButton %}
+                            <div class="form-check form-switch d-flex align-items-center mb-0 me-auto">
+                                <input type="checkbox" id="markAsExportedCheck" name="markAsExportedCheck" class="form-check-input mt-0" value="1" {% if form.markAsExported.vars.value == '1' %} checked="checked"{% endif %}>
+                                <label class="form-check-label ms-2" for="markAsExportedCheck">{{ 'mark_as_exported'|trans }}</label>
                             </div>
                         {% endif %}
-                    {% endfor %}
-                    {% if allowCreate %}
-                        {{ widgets.action_button('create', {'url': path('export_template_create'), 'class': 'btn modal-ajax-form open-edit', 'title': 'create'|trans}) }}
-                    {% endif %}
-                </div>
-                {% if showMarkAsExportedButton %}
-                    <div class="form-check form-switch d-flex align-items-center mb-0 me-auto">
-                        <input type="checkbox" id="markAsExportedCheck" name="markAsExportedCheck" class="form-check-input mt-0" value="1" {% if form.markAsExported.vars.value == '1' %} checked="checked"{% endif %}>
-                        <label class="form-check-label ms-2" for="markAsExportedCheck">{{ 'mark_as_exported'|trans }}</label>
+                        {% if showToggleButton %}
+                            <button id="toggle-button" class="btn ms-auto d-none d-sm-inline-flex">
+                                {% if form.exported.vars.value == '5' %}
+                                    {{ icon('off', true) }}
+                                    {{ 'mark_as_exported'|trans }}
+                                {% elseif form.exported.vars.value == '4' %}
+                                    {{ icon('on', true) }}
+                                    {{ 'mark_as_open'|trans }}
+                                {% endif %}
+                            </button>
+                        {% endif %}
                     </div>
                 {% endif %}
-                {% if showToggleButton %}
-                    <button id="toggle-button" class="btn ms-auto d-none d-sm-inline-flex">
-                        {% if form.exported.vars.value == '5' %}
-                            {{ icon('off', true) }}
-                            {{ 'mark_as_exported'|trans }}
-                        {% elseif form.exported.vars.value == '4' %}
-                            {{ icon('on', true) }}
-                            {{ 'mark_as_open'|trans }}
-                        {% endif %}
-                    </button>
-                {% endif %}
-            </div>
-
-            {% set itemsAmount = entries|length %}
-            {% if preview_limit %}
-                {% set entries = entries|slice(0, preview_limit) %}
             {% endif %}
 
             {{ tables.datatable_header(tableName, columns, query, {columnConfig: false}) }}
@@ -302,9 +306,9 @@
                     </td>
                 </tr>
             {% endfor %}
-            {% if preview_limit and itemsAmount > preview_limit %}
+            {% if totalItems > preview_items %}
                 <tr class="warning">
-                    <td colspan="10">&raquo; {{ 'preview.skipped_rows'|trans({'%rows%': (itemsAmount - preview_limit)}) }}</td>
+                    <td colspan="10">&raquo; {{ 'preview.skipped_rows'|trans({'%rows%': (totalItems - preview_items)}) }}</td>
                 </tr>
             {% endif %}
             {{ tables.data_table_footer(entries) }}

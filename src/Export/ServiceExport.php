@@ -227,17 +227,44 @@ final class ServiceExport
         $items = [];
 
         $max = $this->getMaximumResults($query);
+        $count = 0;
 
         foreach ($this->repositories as $repository) {
-            $items = array_merge($items, $repository->getExportItemsForQuery($query));
-            if ($max !== null && \count($items) > $max) {
+            $repoItems = $repository->getExportItemsForQuery($query);
+            if (($count += \count($repoItems)) > $max) {  // @phpstan-ignore argument.type
                 throw new TooManyItemsExportException(
-                    \sprintf('Limit reached! Expected max. %s items but got %s', $max, \count($items))
+                    \sprintf('Limit reached! Expected max. %s items but got %s', $max, $count)
                 );
             }
+            $items = array_merge($items, $repoItems);
         }
 
         return $items;
+    }
+
+    public function getExportPreview(ExportQuery $query, int $maxItems): ExportableResultInterface
+    {
+        /** @var array<ExportableResultInterface> $results */
+        $results = [];
+
+        foreach ($this->repositories as $repository) {
+            if ($repository instanceof ExportableRepositoryInterface) {
+                $result = $repository->getPreview($query, $maxItems);
+                $count = \count($result->getExportItems());
+            } else {
+                @trigger_error(\sprintf('Export repository "%s" is deprecated, implement ExportableRepositoryInterface', $repository->getType()), E_USER_DEPRECATED);
+                $repoItems = $repository->getExportItemsForQuery($query);
+                $repoItems = \array_slice($repoItems, 0, $maxItems); // @phpstan-ignore argument.type
+                $count = \count($repoItems);
+                $result = new ExportableArrayResult($repoItems);
+            }
+
+            $maxItems = $maxItems - $count;
+
+            $results[] = $result;
+        }
+
+        return new ExportableResult($results);
     }
 
     public function setExported(array $items): void
@@ -247,11 +274,11 @@ final class ServiceExport
         }
     }
 
-    public function getMaximumResults(ExportQuery $query): ?int
+    public function getMaximumResults(ExportQuery $query): int
     {
         $event = new ExportItemsQueryEvent($query);
         $this->eventDispatcher->dispatch($event);
 
-        return $event->getExportQuery()->getMaxResults();
+        return $event->getExportQuery()->getMaxResults() ?? 9999;//PHP_INT_MAX;
     }
 }

@@ -258,6 +258,10 @@
         <source>error.too_many_entries</source>
         <target>Die Anfrage konnte nicht verarbeitet werden. Es wurden zu viele Ergebnisse gefunden.</target>
       </trans-unit>
+      <trans-unit id="8MwThZv" resname="export.too_many_entries">
+        <source>export.too_many_entries</source>
+        <target>Die angefragte Suche ergibt %count% Treffer. Da maximal %limit% Einträge auf einmal exportiert werden können, muss die Suche weiter eingeschränkt werden.</target>
+      </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing" xml:space="preserve" approved="yes">
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target state="final">Das Verzeichnis „%dir%“ existiert nicht und konnte nicht erstellt werden.</target>
