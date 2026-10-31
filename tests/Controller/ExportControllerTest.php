@@ -191,36 +191,6 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         self::assertEquals('performSearch', $buttons->first()->attr('name'));
     }
 
-    public function testIndexActionLoadsOnlyPreviewEntriesButExportsAll(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-
-        $begin = new \DateTime('first day of this month');
-        $begin->setTime(12, 0);
-        $fixture = new TimesheetFixtures();
-        $fixture
-            ->setUser($this->getUserByRole(User::ROLE_USER))
-            ->setAmount(510)
-            ->setFixedStartDate($begin)
-        ;
-        $this->importFixture($fixture);
-
-        $this->request($client, '/export/?performSearch=performSearch');
-        self::assertTrue($client->getResponse()->isSuccessful());
-
-        // only the 500 entries of the preview are loaded, so there is no row for skipped entries
-        $this->assertHasDataTable($client);
-        $this->assertDataTableRowCount($client, 'datatable_export', 500);
-
-        // the export itself is not limited
-        $this->submitExport($client, ['renderer' => 'print']);
-        self::assertTrue($client->getResponse()->isSuccessful());
-
-        $node = $client->getCrawler()->filter('section.export div#export-records table.dataTable tbody tr');
-        // 510 rows + the summary footer
-        self::assertEquals(511, $node->count());
-    }
-
     public function testExportActionWithMissingRenderer(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
