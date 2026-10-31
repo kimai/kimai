@@ -57,6 +57,8 @@ final class ExportController extends AbstractController
         if ($form->isValid() && ($query->hasBookmark() || $request->query->has('performSearch'))) {
             try {
                 $showPreview = true;
+                // the preview shows a limited amount of entries only, loading all of them can exhaust the memory
+                $query->setMaxResults($maxItemsPreview);
                 $entries = $this->getEntries($query);
                 foreach ($entries as $entry) {
                     $cid = $entry->getProject()->getCustomer()->getId();
