@@ -243,6 +243,24 @@ class PasswordResetControllerTest extends AbstractControllerBaseTestCase
         $this->assertIsRedirect($client, '/login');
     }
 
+    public function testLoginLinkFromEmailUsesTokenLifetime(): void
+    {
+        $client = self::createClient();
+        $this->setSystemConfiguration('user.password_reset_retry_ttl', 7200);
+        $this->setSystemConfiguration('user.password_reset_token_ttl', 900);
+
+        $before = time();
+        $loginLink = $this->requestPasswordReset($client);
+        $after = time();
+
+        parse_str((string) parse_url($loginLink, PHP_URL_QUERY), $query);
+        self::assertArrayHasKey('expires', $query);
+        self::assertIsString($query['expires']);
+        $expires = (int) $query['expires'];
+        self::assertGreaterThanOrEqual($before + 900, $expires);
+        self::assertLessThanOrEqual($after + 900, $expires);
+    }
+
     private function requestPasswordReset(HttpKernelBrowser $client, string $username = 'john_user'): string
     {
         $this->request($client, '/resetting/request');

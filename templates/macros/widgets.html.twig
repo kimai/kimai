@@ -1,24 +1,24 @@
-{%- macro duration(timesheet, options) -%}
+{%- macro duration(timesheet, options = {}) -%}
     <span
-    {%- if options and options.title is defined %} data-replacer="duration" data-title="true"{% endif -%}
+    {%- if options.title is defined %} data-replacer="duration" data-title="true"{% endif -%}
     {%- if not timesheet.end %} data-since="{{ timesheet.begin is null ? '' : timesheet.begin.format(constant('DATE_ISO8601')) }}"{% endif -%}
     {# TODO calculate break and add as data-duration #}
-    class="duration {% if options and options.class is defined %} {{ options.class }}{% endif %}">
+    class="duration {% if options.class is defined %} {{ options.class }}{% endif %}">
     {{- timesheet.begin is null ? 0|duration : timesheet|duration -}}
     </span>
 {% endmacro %}
 
-{%- macro duration_seconds(seconds, options) -%}
+{%- macro duration_seconds(seconds, options = {}) -%}
     <span
-    {%- if options and options.title is defined %} data-replacer="duration" data-title="true" {% endif -%}
-    {%- if options and options.active is defined and options.active %} data-since="{{ create_date('- '~seconds~' seconds').format(constant('DATE_ISO8601')) }}" {% endif -%}
+    {%- if options.title is defined %} data-replacer="duration" data-title="true" {% endif -%}
+    {%- if options.active is defined and options.active %} data-since="{{ create_date('- '~seconds~' seconds').format(constant('DATE_ISO8601')) }}" {% endif -%}
     {# TODO calculate break and add as data-duration #}
-    class="duration {% if options and options.class is defined %} {{ options.class }}{% endif %}">
+    class="duration {% if options.class is defined %} {{ options.class }}{% endif %}">
     {{- seconds|duration -}}
     </span>
 {% endmacro %}
 
-{%- macro search_filter(route, options) -%}
+{%- macro search_filter(route, options = {}) -%}
     {% set opts = {'performSearch': 1} %}
     {% if options.begin is defined and options.end is defined %}
         {% set opts = opts|merge({'daterange': date_range(options.begin, options.end)}) %}
@@ -53,7 +53,7 @@
     </div>
 {%- endmacro -%}
 
-{%- macro actions(actions, options) -%}
+{%- macro actions(actions, options = {}) -%}
     {% set large = options.large ?? true %}
     {% set btnClasses = options.button_class ?? 'btn-primary' %}
     {%- for icon, values in actions  %}
@@ -120,7 +120,7 @@
     {{ _self.label_color(team.name, team.color|colorize(team.name)) }}
 {% endmacro %}
 
-{% macro user_avatar(user, tooltip, class, badge) %}
+{% macro user_avatar(user, tooltip = false, class = '', badge = null) %}
     {% set avatar = null %}
     {% if user.avatar is not empty and config('themeAllowAvatarUrls') %}
         {% set avatar = asset(user.avatar, 'avatars') %}
@@ -140,7 +140,7 @@
     </span>
 {% endmacro %}
 
-{% macro avatar(initials, color, tooltip, class) %}
+{% macro avatar(initials, color = null, tooltip = null, class = null) %}
     {% set color = color|colorize(initials) %}
     <span class="avatar {{ class ?? '' }}" style="background-color: {{ color }}; color: {{ color|font_contrast }}"
     {%- if tooltip is not same as null %} data-toggle="tooltip" data-placement="top" title="{{ tooltip }}"{% endif -%}>{{ initials }}</span>
@@ -157,7 +157,7 @@
 {#
     options = {'inherit': true}
 #}
-{% macro label_activity(activity, options) %}
+{% macro label_activity(activity, options = {}) %}
     {% set inherit = options.inherit ?? true %}
     {% set isVisible = activity.visible %}
     {% set color = activity.color %}
@@ -179,7 +179,7 @@
 {#
     options = {'inherit': true}
 #}
-{% macro label_project(project, options) %}
+{% macro label_project(project, options = {}) %}
     {% set inherit = options.inherit ?? true %}
     {% set isVisible = false %}
     {% if project.visible and project.customer.visible %}
@@ -214,7 +214,7 @@
 {% endmacro %}
 
 {# for @internal use only #}
-{% macro label_color_dot(type, isVisible, name, url, color) %}
+{% macro label_color_dot(type, isVisible, name, url = null, color = null) %}
     {%- if url is not empty -%}<a href="{{ url }}">{% endif %}
     <span class="pe-1 label-{{ type }}{{ isVisible is same as (false) ? ' label-invisible' : '' }}">
         <span class="badge me-1" {% if color is not empty %} style="background-color:{{ color }}"{% endif %}></span>
@@ -235,7 +235,7 @@
     {% endif %}
 {% endmacro %}
 
-{% macro badge_counter(count, url, type) %}
+{% macro badge_counter(count, url = null, type = null) %}
     {% if url is not null %}
         <a href="{{ url }}">{{ _self.badge_type(count, type|default('blue')) }}</a>
     {% else %}
@@ -243,8 +243,8 @@
     {% endif %}
 {% endmacro %}
 
-{% macro label(title, type, tooltip) %}
-    <span {% if tooltip %}data-toggle="tooltip" data-placement="top" title="{{ tooltip }}" {% endif %}class="badge bg-{{ type|default('success') }} text-{{ type|default('success') }}-fg">{{ title }}</span>
+{% macro label(title, type = null, tooltip = null) %}
+    <span {% if tooltip is not null %}data-toggle="tooltip" data-placement="top" title="{{ tooltip }}" {% endif %}class="badge bg-{{ type|default('success') }} text-{{ type|default('success') }}-fg">{{ title }}</span>
 {% endmacro %}
 
 {% macro label_color(title, color) %}
@@ -255,7 +255,7 @@
     <span class="badge"{% if color is not null %} style="background-color:{{ color }}; color:{{ color|font_contrast }}"{% endif %}>{{ title }}</span>
 {% endmacro %}
 
-{% macro badge_type(title, type) %}
+{% macro badge_type(title, type = null) %}
     {% set class = (type is not empty ? 'bg-' ~ type ~ ' text-' ~ type ~ '-fg' : '') %}
     <span class="badge {{ class }}">{{ title }}</span>
 {% endmacro %}
@@ -275,17 +275,17 @@
     {% endif %}
 {% endmacro %}
 
-{% macro alert(type, description, title, icon, dismissible) %}
+{% macro alert(type, description, title, icon = null, dismissible = false) %}
     {% from '@theme/components/alert.html.twig' import alert %}
     {{ alert({type: type, description: description|trans, title: title|trans, icon: icon, dismissible: dismissible, important: true}) }}
 {% endmacro %}
 
-{% macro callout(type, description, title, icon, important) %}
+{% macro callout(type, description, title, icon = null, important = false) %}
     {% from '@theme/components/alert.html.twig' import alert %}
     {{ alert({type: type|default('danger'), description: description|trans, title: title|trans, icon: icon, dismissible: false, important: important ?? true}) }}
 {% endmacro %}
 
-{% macro table_actions(actions, class) %}
+{% macro table_actions(actions, class = null) %}
     {% if actions|length >= 1 %}
         {% import '@theme/components/actions.html.twig' as macro %}
         {{ macro.actions(actions, {'class': class|default('btn-sm'), translationDomain: 'actions'}) }}
@@ -306,7 +306,7 @@
     {{ _self.card_tool_button('create', {'url': create_url, 'class': 'modal-ajax-form open-edit', 'title': 'create'|trans}) }}
 {% endmacro %}
 
-{% macro action_button(icon, values, type) %}
+{% macro action_button(icon, values = null, type = null) %}
     {% import '@theme/components/button.html.twig' as macro %}
     {% set values = (values ?? {})|merge({'tooltip_attr': 'data-toggle'}) %}
     {{ macro.button(icon, values, type) }}

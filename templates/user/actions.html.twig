@@ -1,4 +1,4 @@
-{% macro user(user, view, options) %}
+{% macro user(user, view) %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% set event = actions(app.user, 'user', view, {'user': user}) %}
     {% if view == 'index' %}

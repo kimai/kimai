@@ -2318,11 +2318,6 @@ parameters:
             path: src/Repository/TimesheetRepository.php
 
         -
-            message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 1
-            path: src/Repository/TimesheetRepository.php
-
-        -
             message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\User\\|null\\.$#"
             count: 1
             path: src/Repository/TimesheetRepository.php
