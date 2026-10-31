@@ -326,6 +326,34 @@
         <source>user_auth_change.help</source>
         <target state="translated">Permite que superadministradores alterem usuários com logins externos de volta para o login interno no perfil do usuário.</target>
       </trans-unit>
+      <trans-unit id="6pqJCWV" resname="user_auth_password_strength">
+        <source>user_auth_password_strength</source>
+        <target state="translated">Força da senha</target>
+      </trans-unit>
+      <trans-unit id="0hLoKXm" resname="user_auth_password_strength.help">
+        <source>user_auth_password_strength.help</source>
+        <target state="translated">Aplica-se sempre que uma senha é definida. A força é estimada com base no comprimento e nos tipos de caracteres utilizados.</target>
+      </trans-unit>
+      <trans-unit id="svXdXTq" resname="password_strength.none">
+        <source>password_strength.none</source>
+        <target state="translated">Sem requisitos (apenas extensão mínima)</target>
+      </trans-unit>
+      <trans-unit id="3jD52PB" resname="password_strength.normal">
+        <source>password_strength.normal</source>
+        <target state="translated">Normal</target>
+      </trans-unit>
+      <trans-unit id="0e4HBxu" resname="password_strength.medium">
+        <source>password_strength.medium</source>
+        <target state="translated">Médio</target>
+      </trans-unit>
+      <trans-unit id="VlOVWX7" resname="password_strength.strong">
+        <source>password_strength.strong</source>
+        <target state="translated">Forte</target>
+      </trans-unit>
+      <trans-unit id="R5QYeOG" resname="password_strength.very_strong">
+        <source>password_strength.very_strong</source>
+        <target state="translated">Muito forte</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
