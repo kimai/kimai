@@ -5,7 +5,7 @@
 {% set totalDuration = 0 %}
 {% set totalRates = {} %}
 {% set totalItems = 0 %}
-{% set entries = preview.exportItems %}
+{% set entries = preview is not null ? preview.exportItems : [] %}
 {% set preview_items = entries|length %}
 
 {% if preview is not null %}

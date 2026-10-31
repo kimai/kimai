@@ -260,7 +260,7 @@
       </trans-unit>
       <trans-unit id="8MwThZv" resname="export.too_many_entries">
         <source>export.too_many_entries</source>
-        <target>Die angefragte Suche ergibt %count% Treffer. Da maximal %limit% Einträge auf einmal exportiert werden können, muss die Suche weiter eingeschränkt werden.</target>
+        <target>Die angefragte Suche ergibt %count% Treffer. Es können maximal %limit% Einträge auf einmal exportiert werden, daher muss die Suche weiter eingeschränkt werden.</target>
       </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing" xml:space="preserve" approved="yes">
         <source>The directory “%dir%” does not exist and could not be created.</source>
