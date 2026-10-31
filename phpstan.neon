@@ -57,6 +57,12 @@ parameters:
         - message: '#^Call to deprecated method disableSandbox\(\) of class Twig\\Extension\\SandboxExtension#'
         - message: '#^Call to method __construct\(\) of internal class Twig\\Extension\\SandboxExtension from outside its root namespace Twig#'
 
+        # temporary to silence the OpenAPI deprecations
+        - message: '#^Attribute class OpenApi\\Attributes(.*)#'
+        - message: '#^Attribute references deprecated class OpenApi\\Attributes(.*)#'
+        - message: '#^Call to method __construct\(\) of deprecated class OpenApi\\Attributes(.*)#'
+        - message: '#^Instantiation of deprecated class OpenApi\\Attributes(.*)#'
+
         -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Activity\\:\\:getMetaField\\(\\) expects string, mixed given\\.$#"
             count: 1
