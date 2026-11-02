@@ -13,6 +13,7 @@
     "url": "git+https://github.com/kimai/kimai.git"
   },
   "scripts": {
+    "test": "node --test tests/JavaScript/*.mjs",
     "dev-server": "encore dev-server",
     "dev": "encore dev",
     "watch": "encore dev --watch",
