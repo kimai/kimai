@@ -279,6 +279,6 @@ final class ServiceExport
         $event = new ExportItemsQueryEvent($query);
         $this->eventDispatcher->dispatch($event);
 
-        return $event->getExportQuery()->getMaxResults() ?? 9999;//PHP_INT_MAX;
+        return $event->getExportQuery()->getMaxResults() ?? PHP_INT_MAX;
     }
 }
