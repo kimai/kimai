@@ -73,15 +73,15 @@ final class TimesheetExportRepository implements ExportRepositoryInterface, Expo
             ->addSelect('IDENTITY(p.customer) as customer')
             ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
             ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
-            ->leftJoin('t.project', 'p')
             ->groupBy('p.customer')
         ;
 
         if (!\in_array('p', $qb->getAllAliases(), true)) {
+            $qb->leftJoin('t.project', 'p');
         }
 
         /** @var array<int, array{duration: non-negative-int, counter: non-negative-int, customer: non-negative-int, rate: float}> $results */
-        $results = $qb->getQuery()->getResult(); // @phpstan-ignore-line doctrine.dql
+        $results = $qb->getQuery()->getResult();
         $ids = [];
         foreach ($results as $result) {
             $ids[] = $result['customer'];
