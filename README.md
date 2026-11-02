@@ -22,10 +22,9 @@ and so much more.
 ### Links
 
 - [Home](https://www.kimai.org) — Kimai project homepage
-- [Blog](https://www.kimai.org/blog/) — Read the latest news
+- [Blog](https://www.kimai.org/en/blog/) — Read the latest news
 - [Documentation](https://www.kimai.org/documentation/) — Learn how to use Kimai
 - [Newsletter](https://www.kimai.org/en/newsletter) - Subscribe and get notified about new releases and important updates
-
 
 ### Requirements
 
@@ -58,7 +57,7 @@ And if you don't want to host Kimai, you can use the [Cloud version](https://www
 
 ## Roadmap and releases
 
-You can see a rough development [roadmap](https://github.com/orgs/kimai/projects/2), which is open for changes and input from the community, your [ideas](https://github.com/kimai/kimai/issues) are welcome.
+You can see a rough development [roadmap](https://roadmap.kimai.org/roadmap), which is open for changes and input from the community, your [ideas](https://roadmap.kimai.org/) are welcome.
 
 Release versions will be created on a regular basis, every couple of weeks latest.
 Every code change, whether it's a new feature or a bugfix, will be done on the `main` branch.
@@ -66,7 +65,7 @@ Every code change, whether it's a new feature or a bugfix, will be done on the `
 ## Contributing
 
 You want to contribute to this repository? This is so great!
-The best way to start is to [open a new issue](https://github.com/kimai/kimai/issues) for bugs or feature requests or a [discussion](https://github.com/kimai/kimai/discussions) for questions, support and such.
+The best way to start is to open a [bug report](https://github.com/kimai/kimai/issues) or [feature request](https://roadmap.kimai.org) or a [discussion](https://github.com/kimai/kimai/discussions) for questions, support and such.
 
 In case you want to contribute, but you wouldn't know how, here are some suggestions:
 
