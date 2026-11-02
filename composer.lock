@@ -2391,33 +2391,36 @@
         },
         {
             "name": "horstoeko/zugferdublbridge",
-            "version": "v1.0.19",
+            "version": "v1.0.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/horstoeko/zugferdublbridge.git",
-                "reference": "96f721c239e57789eb41b647bffec7f08cdf2953"
+                "reference": "d488533064b32503215dfe19d640679355e1943c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/horstoeko/zugferdublbridge/zipball/96f721c239e57789eb41b647bffec7f08cdf2953",
-                "reference": "96f721c239e57789eb41b647bffec7f08cdf2953",
+                "url": "https://api.github.com/repos/horstoeko/zugferdublbridge/zipball/d488533064b32503215dfe19d640679355e1943c",
+                "reference": "d488533064b32503215dfe19d640679355e1943c",
                 "shasum": ""
             },
             "require": {
+                "ext-dom": "*",
+                "ext-libxml": "*",
                 "php": ">=7.3"
             },
             "require-dev": {
+                "ext-json": "*",
+                "ext-simplexml": "*",
+                "friendsofphp/php-cs-fixer": "^3",
                 "horstoeko/stringmanagement": "^1",
                 "nette/php-generator": "*",
-                "pdepend/pdepend": "^2",
-                "phpdocumentor/reflection-docblock": "^5",
-                "phploc/phploc": "^7",
-                "phpmd/phpmd": "^2",
-                "phpstan/phpstan": "^1|^2",
-                "phpunit/phpunit": "^9",
-                "rector/rector": "*",
-                "sebastian/phpcpd": "^6",
-                "squizlabs/php_codesniffer": "^3"
+                "php-parallel-lint/php-parallel-lint": "^1.4",
+                "phpdocumentor/reflection-docblock": "^6",
+                "phpstan/phpstan": "^1|^2.1",
+                "phpstan/phpstan-deprecation-rules": "^1|^2",
+                "phpstan/phpstan-strict-rules": "^1|^2",
+                "phpunit/phpunit": "^9.6",
+                "rector/rector": "^2"
             },
             "type": "package",
             "autoload": {
@@ -2450,10 +2453,16 @@
             ],
             "support": {
                 "issues": "https://github.com/horstoeko/zugferdublbridge/issues",
-                "source": "https://github.com/horstoeko/zugferdublbridge/tree/v1.0.19"
+                "source": "https://github.com/horstoeko/zugferdublbridge/tree/v1.0.20"
             },
-            "time": "2026-09-17T14:32:42+00:00",
-            "published-time": "2026-09-17T15:09:01+00:00"
+            "funding": [
+                {
+                    "url": "https://paypal.me/horstoeko",
+                    "type": "custom"
+                }
+            ],
+            "time": "2026-11-01T10:57:01+00:00",
+            "published-time": "2026-11-01T10:59:45+00:00"
         },
         {
             "name": "jms/metadata",
@@ -2715,16 +2724,16 @@
         },
         {
             "name": "kevinpapst/tabler-bundle",
-            "version": "2.4.1",
+            "version": "2.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinpapst/TablerBundle.git",
-                "reference": "f1b9b89bac2a471eea484f413d354fb84d96e65f"
+                "reference": "e13b0afe68fcf6a16243c03299090807b588f06a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/f1b9b89bac2a471eea484f413d354fb84d96e65f",
-                "reference": "f1b9b89bac2a471eea484f413d354fb84d96e65f",
+                "url": "https://api.github.com/repos/kevinpapst/TablerBundle/zipball/e13b0afe68fcf6a16243c03299090807b588f06a",
+                "reference": "e13b0afe68fcf6a16243c03299090807b588f06a",
                 "shasum": ""
             },
             "require": {
@@ -2774,7 +2783,7 @@
             "description": "Admin/Backend theme bundle for Symfony based on Tabler.io",
             "support": {
                 "issues": "https://github.com/kevinpapst/TablerBundle/issues",
-                "source": "https://github.com/kevinpapst/TablerBundle/tree/2.4.1"
+                "source": "https://github.com/kevinpapst/TablerBundle/tree/2.4.2"
             },
             "funding": [
                 {
@@ -2786,8 +2795,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-24T15:01:36+00:00",
-            "published-time": "2026-09-24T15:02:50+00:00"
+            "time": "2026-11-01T00:09:12+00:00",
+            "published-time": "2026-11-01T00:10:57+00:00"
         },
         {
             "name": "league/csv",
@@ -12347,16 +12356,16 @@
         },
         {
             "name": "phpstan/phpstan-strict-rules",
-            "version": "2.1.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-strict-rules.git",
-                "reference": "24ec51589f896f048d0d36de373d993b5cf71786"
+                "reference": "fe4a0afae773eedf178fab17ed9361c0061d2804"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/24ec51589f896f048d0d36de373d993b5cf71786",
-                "reference": "24ec51589f896f048d0d36de373d993b5cf71786",
+                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/fe4a0afae773eedf178fab17ed9361c0061d2804",
+                "reference": "fe4a0afae773eedf178fab17ed9361c0061d2804",
                 "shasum": ""
             },
             "require": {
@@ -12393,10 +12402,10 @@
             ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-strict-rules/issues",
-                "source": "https://github.com/phpstan/phpstan-strict-rules/tree/2.1.0"
+                "source": "https://github.com/phpstan/phpstan-strict-rules/tree/2.1.1"
             },
-            "time": "2026-10-01T21:30:37+00:00",
-            "published-time": "2026-10-06T07:32:29+00:00"
+            "time": "2026-11-02T08:16:15+00:00",
+            "published-time": "2026-11-02T10:55:07+00:00"
         },
         {
             "name": "phpstan/phpstan-symfony",
