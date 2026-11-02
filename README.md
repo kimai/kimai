@@ -60,7 +60,6 @@ And if you don't want to host Kimai, you can use the [Cloud version](https://www
 You can see a rough development [roadmap](https://roadmap.kimai.org/roadmap), which is open for changes and input from the community, your [ideas](https://roadmap.kimai.org/) are welcome.
 
 Release versions will be created on a regular basis, every couple of weeks latest.
-Every code change, whether it's a new feature or a bugfix, will be done on the `main` branch.
 
 ## Contributing
 
