@@ -204,12 +204,12 @@
 {% endmacro %}
 
 {# Use for list views and the main column (if the entity has something like a name) #}
-{% macro label_name(label, color, isVisible) %}
+{% macro label_name(label, color, isVisible = true) %}
     {{ _self.label_color_dot('color', isVisible, label, null, color) }}
 {% endmacro %}
 
 {# Use in datatables to show linked entity names #}
-{% macro label_dot(label, color, isVisible) %}
+{% macro label_dot(label, color, isVisible = true) %}
     {{ _self.label_color_dot('color', isVisible, label, null, color|colorize(label)) }}
 {% endmacro %}
 
@@ -275,14 +275,14 @@
     {% endif %}
 {% endmacro %}
 
-{% macro alert(type, description, title, icon = null, dismissible = false) %}
+{% macro alert(type, description, title = null, icon = null, dismissible = false) %}
     {% from '@theme/components/alert.html.twig' import alert %}
-    {{ alert({type: type, description: description|trans, title: title|trans, icon: icon, dismissible: dismissible, important: true}) }}
+    {{ alert({type: type, description: description|trans, title: (title is not null ? title|trans : null), icon: icon, dismissible: dismissible, important: true}) }}
 {% endmacro %}
 
-{% macro callout(type, description, title, icon = null, important = false) %}
+{% macro callout(type, description, title = null, icon = null, important = false) %}
     {% from '@theme/components/alert.html.twig' import alert %}
-    {{ alert({type: type|default('danger'), description: description|trans, title: title|trans, icon: icon, dismissible: false, important: important ?? true}) }}
+    {{ alert({type: type|default('danger'), description: description|trans, title: (title is not null ? title|trans : null), icon: icon, dismissible: false, important: important ?? true}) }}
 {% endmacro %}
 
 {% macro table_actions(actions, class = null) %}
@@ -420,7 +420,7 @@
     </table>
 {% endmacro %}
 
-{% macro nothing_found(events) %}
+{% macro nothing_found(events = null) %}
     {{ _self.callout('info', 'error.no_entries_found', null, 'info', false) }}
     {% if events is not empty %}
     <script type="text/javascript">
