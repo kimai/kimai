@@ -50,7 +50,7 @@ final class MonthlyStatistic implements DateStatisticInterface
         $day = (int) $begin->format('d');
 
         while ($tmp < $this->end) {
-            $curYear = (string) $tmp->format('Y');
+            $curYear = $tmp->format('Y');
             if (!isset($years[$curYear])) {
                 $year = [];
                 for ($i = 1; $i < 13; $i++) {
