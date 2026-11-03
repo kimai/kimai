@@ -177,6 +177,20 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         self::assertEmpty($expected);
     }
 
+    public function testIndexActionHasSearchAsDefaultSubmitButton(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $this->request($client, '/export/');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        // pressing enter in a filter field submits the form with its first submit button,
+        // which has to run the search and must not save the filter as default
+        $buttons = $client->getCrawler()->filter('form#export-form button[type="submit"]');
+        self::assertGreaterThan(1, $buttons->count());
+        self::assertEquals('performSearch', $buttons->first()->attr('name'));
+    }
+
     public function testExportActionWithMissingRenderer(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);

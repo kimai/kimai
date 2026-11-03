@@ -54,7 +54,7 @@
     </div>
 {% endmacro %}
 
-{% macro progressbar(max, current, title, subTitle, reverseColors) %}
+{% macro progressbar(max, current, title, subTitle = null, reverseColors = false) %}
     {% set percentReached = 0 %}
     {% if max > 0 %}
         {% set percentReached = (current / (max / 100)) %}
@@ -85,7 +85,7 @@
     </div>
 {% endmacro %}
 
-{% macro progressbar_small(max, current, leftValue, leftFormatted, reverseColors) %}
+{% macro progressbar_small(max, current, leftValue, leftFormatted, reverseColors = false) %}
     {% set percentReached = 0 %}
     {% if max > 0 %}
         {% set percentReached = (current / (max / 100)) %}
