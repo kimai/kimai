@@ -11,6 +11,8 @@ namespace App\Tests\Validator;
 
 use App\Entity\Customer;
 use App\Entity\CustomerMeta;
+use App\Entity\User;
+use App\Entity\UserPreference;
 use App\Validator\MetaFieldValidator;
 use App\Validator\ValidationFailedException;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -20,6 +22,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Url;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Validation;
@@ -132,5 +135,55 @@ class MetaFieldValidatorTest extends TestCase
         // invalid customer: the name must not be blank
         $meta = (new CustomerMeta())->setName('homepage')->setType(UrlType::class)->addConstraint(new Url());
         $sut->validate(new Customer(''), $meta, 'https://www.kimai.org');
+    }
+
+    public function testValidateUserPreferenceWithoutConstraints(): void
+    {
+        $this->expectNotToPerformAssertions();
+
+        $this->createSut()->validateUserPreference(new User(), new UserPreference('foo'), -5);
+    }
+
+    public function testValidateUserPreferenceAcceptsValidValues(): void
+    {
+        $this->expectNotToPerformAssertions();
+
+        $preference = (new UserPreference(UserPreference::HOURLY_RATE))->addConstraint(new Range(['min' => 0]));
+        $sut = $this->createSut();
+
+        $sut->validateUserPreference(new User(), $preference, null);
+        $sut->validateUserPreference(new User(), $preference, '');
+        $sut->validateUserPreference(new User(), $preference, 0);
+        $sut->validateUserPreference(new User(), $preference, '12.5');
+    }
+
+    public function testValidateUserPreferenceRunsAllRegisteredConstraints(): void
+    {
+        $preference = (new UserPreference(UserPreference::HOURLY_RATE))
+            ->addConstraint(new Range(['min' => 0]))
+            ->addConstraint(new Length(['max' => 1]));
+
+        try {
+            $this->createSut()->validateUserPreference(new User(), $preference, -5);
+            self::fail('Expected ValidationFailedException');
+        } catch (ValidationFailedException $ex) {
+            self::assertCount(2, $ex->getViolations());
+            self::assertEquals(UserPreference::HOURLY_RATE, $ex->getViolations()->get(0)->getPropertyPath());
+        }
+    }
+
+    public function testValidateUserPreferenceUsesUserAsRoot(): void
+    {
+        $user = new User();
+        $root = null;
+
+        $preference = (new UserPreference('foo'))
+            ->addConstraint(new Callback(function (mixed $value, ExecutionContextInterface $context) use (&$root): void {
+                $root = $context->getRoot();
+            }));
+
+        $this->createSut()->validateUserPreference($user, $preference, 'bar');
+
+        self::assertSame($user, $root);
     }
 }

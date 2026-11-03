@@ -492,6 +492,97 @@ class UserControllerTest extends APIControllerBaseTestCase
         self::assertEquals(99, $user->getPreferenceValue('hourly_rate'));
     }
 
+    public function testUpdateUserPreferenceValidatesConfiguredConstraints(): void
+    {
+        $role = User::ROLE_SUPER_ADMIN;
+        $id = $this->getAuthenticatedUserId($role);
+        $client = $this->getClientForAuthenticatedUser($role);
+
+        $data = [
+            [
+                'name' => 'hourly_rate',
+                'value' => -5
+            ]
+        ];
+        $this->request($client, '/api/users/' . $id . '/preferences', 'PATCH', [], (string) json_encode($data));
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['hourly_rate']);
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        /** @var User $user */
+        $user = $em->getRepository(User::class)->find($id);
+        self::assertEquals(46, $user->getPreferenceValue('hourly_rate'));
+    }
+
+    public function testUpdateUserPreferenceValidatesConstraintsOfRegisteredPreference(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new PrepareUserEventSubscriberMock());
+
+        $data = [
+            [
+                'name' => 'metatestmock',
+                'value' => str_repeat('x', 201)
+            ]
+        ];
+        $this->request($client, '/api/users/1/preferences', 'PATCH', [], (string) json_encode($data));
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['metatestmock']);
+    }
+
+    public function testUpdateUserPreferenceStoresNothingIfOneValueIsInvalid(): void
+    {
+        $role = User::ROLE_SUPER_ADMIN;
+        $id = $this->getAuthenticatedUserId($role);
+        $client = $this->getClientForAuthenticatedUser($role);
+
+        $data = [
+            [
+                'name' => 'hourly_rate',
+                'value' => 99
+            ],
+            [
+                'name' => 'internal_rate',
+                'value' => -5
+            ]
+        ];
+        $this->request($client, '/api/users/' . $id . '/preferences', 'PATCH', [], (string) json_encode($data));
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['internal_rate']);
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        /** @var User $user */
+        $user = $em->getRepository(User::class)->find($id);
+        self::assertEquals(46, $user->getPreferenceValue('hourly_rate'));
+    }
+
+    public function testUpdateUserPreferenceAcceptsNullForOptionalValue(): void
+    {
+        $role = User::ROLE_SUPER_ADMIN;
+        $id = $this->getAuthenticatedUserId($role);
+        $client = $this->getClientForAuthenticatedUser($role);
+
+        $data = [
+            [
+                'name' => 'internal_rate',
+                'value' => null
+            ]
+        ];
+        $this->request($client, '/api/users/' . $id . '/preferences', 'PATCH', [], (string) json_encode($data));
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+    }
+
     public function testUpdateUserPreferenceWithDisabledPreference(): void
     {
         $role = User::ROLE_USER;

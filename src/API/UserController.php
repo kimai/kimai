@@ -22,6 +22,7 @@ use App\Repository\RoleRepository;
 use App\Repository\UserRepository;
 use App\User\UserService;
 use App\Utils\SearchTerm;
+use App\Validator\MetaFieldValidator;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
@@ -47,7 +48,7 @@ final class UserController extends BaseApiController
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
-        private readonly UserRepository $repository,
+        private readonly UserRepository $repository
     ) {
     }
 
@@ -263,7 +264,7 @@ final class UserController extends BaseApiController
     #[OA\Parameter(name: 'id', description: 'User ID to set the custom-field value for', in: 'path', required: true)]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(type: 'array', items: new OA\Items(new Model(type: UserPreference::class))))]
     #[Route(path: '/{id}/preferences', requirements: ['id' => '\d+'], methods: ['PATCH'])]
-    public function updateUserPreference(User $profile, Request $request, EventDispatcherInterface $dispatcher, UserService $userService): Response
+    public function updateUserPreference(User $profile, Request $request, EventDispatcherInterface $dispatcher, UserService $userService, MetaFieldValidator $metaFieldValidator): Response
     {
         $event = new PrepareUserEvent($profile, false);
         $dispatcher->dispatch($event);
@@ -297,6 +298,7 @@ final class UserController extends BaseApiController
                 throw $this->createAccessDeniedException('User tried to update preference: ' . $name);
             }
 
+            $metaFieldValidator->validateUserPreference($profile, $meta, $value);
             $meta->setValue($value);
             $dirty = true;
         }
