@@ -78,7 +78,7 @@ RUN apk add --no-cache \
     libxslt-dev
 
 # apache debian php extension base
-FROM php:8.3-apache-bookworm AS apache-php-ext-base
+FROM php:8.3-apache-trixie AS apache-php-ext-base
 RUN apt-get update && \
     apt-get install -y \
         libldap2-dev \
@@ -155,16 +155,16 @@ HEALTHCHECK --interval=20s --timeout=10s --retries=3 \
 # apache base build
 ###########################
 
-FROM php:8.3-apache-bookworm AS apache-base
+FROM php:8.3-apache-trixie AS apache-base
 ARG TIMEZONE
 RUN apt-get update && \
     apt-get install -y \
         bash \
         haveged \
-        libicu72 \
+        libicu76 \
         libldap-common \
-        libpng16-16 \
-        libzip4 \
+        libpng16-16t64 \
+        libzip5 \
         libxslt1.1 \
         libfreetype6 \
         unzip && \
