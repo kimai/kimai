@@ -49,7 +49,7 @@ final class ExportController extends AbstractController
             return $this->redirectToRoute('export');
         }
 
-        if ($form->isValid() && ($query->hasBookmark() || $request->query->has('performSearch'))) {
+        if ($form->isSubmitted() && $form->isValid() && ($query->hasBookmark() || $request->query->has('performSearch'))) {
             $preview = $this->getPreview($query, 500);
         }
 
