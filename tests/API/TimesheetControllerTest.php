@@ -2090,8 +2090,8 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $id = $timesheets[0]->getId();
 
         $this->assertExceptionForMethod($client, '/api/timesheets/' . $id . '/meta', 'PATCH', ['name' => 'X'], [
-            'code' => Response::HTTP_NOT_FOUND,
-            'message' => 'Not Found'
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
         ]);
     }
 
