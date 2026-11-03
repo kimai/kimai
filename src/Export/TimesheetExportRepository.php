@@ -79,7 +79,7 @@ final class TimesheetExportRepository implements ExportRepositoryInterface, Expo
         }
 
         /** @var array<int, array{duration: non-negative-int, counter: non-negative-int, customer: non-negative-int, rate: float}> $results */
-        $results = $qb->getQuery()->getResult();
+        $results = $qb->getQuery()->getResult(); // @phpstan-ignore-line doctrine.dql
         $ids = [];
         foreach ($results as $result) {
             $ids[] = $result['customer'];
