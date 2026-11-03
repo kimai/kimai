@@ -56,7 +56,7 @@ export default class KimaiDateUtils extends KimaiPlugin {
      */
     format(format, dateTime)
     {
-        let newDate = null;
+        let newDate;
 
         if (dateTime === null || dateTime === undefined) {
             newDate = DateTime.now();
@@ -154,7 +154,7 @@ export default class KimaiDateUtils extends KimaiPlugin {
     addHumanDuration(date, duration)
     {
         /** @type {DateTime} newDate */
-        let newDate = null;
+        let newDate;
 
         if (date instanceof Date) {
             newDate = DateTime.fromJSDate(date);
@@ -177,7 +177,7 @@ export default class KimaiDateUtils extends KimaiPlugin {
      */
     formatDuration(since)
     {
-        let duration = null;
+        let duration;
 
         if (typeof since === 'string') {
             duration = DateTime.now().diff(DateTime.fromISO(since));

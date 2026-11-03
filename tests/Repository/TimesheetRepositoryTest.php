@@ -10,8 +10,12 @@
 namespace App\Tests\Repository;
 
 use App\Entity\Activity;
+use App\Entity\ActivityRate;
 use App\Entity\Customer;
+use App\Entity\CustomerRate;
 use App\Entity\Project;
+use App\Entity\ProjectRate;
+use App\Entity\RateInterface;
 use App\Entity\Tag;
 use App\Entity\Team;
 use App\Entity\Timesheet;
@@ -452,5 +456,133 @@ class TimesheetRepositoryTest extends AbstractRepositoryTestCase
 
         self::assertContains($visibleId, $ids);
         self::assertNotContains($restrictedId, $ids);
+    }
+
+    /**
+     * @return array{0: Customer, 1: Project, 2: Activity}
+     */
+    private function createRatesFixture(User $user, User $otherUser): array
+    {
+        $em = $this->getEntityManager();
+
+        $customer = new Customer('rates customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('rates project');
+        $project->setCustomer($customer);
+        $em->persist($project);
+
+        $activity = new Activity();
+        $activity->setName('rates activity');
+        $activity->setProject($project);
+        $em->persist($activity);
+
+        // global rate: matches every user
+        $activityRate = new ActivityRate();
+        $activityRate->setActivity($activity);
+        $activityRate->setRate(11.0);
+        $em->persist($activityRate);
+
+        // user specific rate: matches only $user
+        $projectRate = new ProjectRate();
+        $projectRate->setProject($project);
+        $projectRate->setUser($user);
+        $projectRate->setRate(22.0);
+        $em->persist($projectRate);
+
+        // user specific rate for another user: never matches $user
+        $customerRate = new CustomerRate();
+        $customerRate->setCustomer($customer);
+        $customerRate->setUser($otherUser);
+        $customerRate->setRate(33.0);
+        $em->persist($customerRate);
+
+        $em->flush();
+
+        return [$customer, $project, $activity];
+    }
+
+    /**
+     * @param array<RateInterface> $rates
+     * @return array<float>
+     */
+    private function getRateValues(array $rates): array
+    {
+        $values = array_map(fn (RateInterface $rate) => $rate->getRate(), $rates);
+        sort($values);
+
+        return $values;
+    }
+
+    public function testFindMatchingRates(): void
+    {
+        $user = $this->getUserByRole(User::ROLE_USER);
+        $otherUser = $this->getUserByRole(User::ROLE_TEAMLEAD);
+        [, $project, $activity] = $this->createRatesFixture($user, $otherUser);
+
+        /** @var TimesheetRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Timesheet::class);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($user)->setProject($project)->setActivity($activity);
+        self::assertEquals([11.0, 22.0], $this->getRateValues($repository->findMatchingRates($timesheet)));
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($otherUser)->setProject($project)->setActivity($activity);
+        self::assertEquals([11.0, 33.0], $this->getRateValues($repository->findMatchingRates($timesheet)));
+    }
+
+    public function testFindMatchingRatesWithUnsavedUser(): void
+    {
+        $user = $this->getUserByRole(User::ROLE_USER);
+        $otherUser = $this->getUserByRole(User::ROLE_TEAMLEAD);
+        [, $project, $activity] = $this->createRatesFixture($user, $otherUser);
+
+        /** @var TimesheetRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Timesheet::class);
+
+        $newUser = new User();
+        $newUser->setUserIdentifier('unsaved-rate-user');
+
+        // only global rates can match a user that was not yet saved
+        $timesheet = new Timesheet();
+        $timesheet->setUser($newUser)->setProject($project)->setActivity($activity);
+        self::assertEquals([11.0], $this->getRateValues($repository->findMatchingRates($timesheet)));
+    }
+
+    public function testFindMatchingRatesWithUnsavedEntities(): void
+    {
+        $user = $this->getUserByRole(User::ROLE_USER);
+        $otherUser = $this->getUserByRole(User::ROLE_TEAMLEAD);
+        [$customer, $project] = $this->createRatesFixture($user, $otherUser);
+
+        /** @var TimesheetRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Timesheet::class);
+
+        // unsaved activity, e.g. created during an import
+        $newActivity = new Activity();
+        $newActivity->setName('unsaved activity');
+        $timesheet = new Timesheet();
+        $timesheet->setUser($user)->setProject($project)->setActivity($newActivity);
+        self::assertEquals([22.0], $this->getRateValues($repository->findMatchingRates($timesheet)));
+
+        // unsaved project for a saved customer
+        $newProject = new Project();
+        $newProject->setName('unsaved project');
+        $newProject->setCustomer($customer);
+        $timesheet = new Timesheet();
+        $timesheet->setUser($otherUser)->setProject($newProject)->setActivity($newActivity);
+        self::assertEquals([33.0], $this->getRateValues($repository->findMatchingRates($timesheet)));
+
+        // unsaved customer, project and activity
+        $newProject = new Project();
+        $newProject->setName('unsaved project');
+        $newProject->setCustomer(new Customer('unsaved customer'));
+        $timesheet = new Timesheet();
+        $timesheet->setUser($user)->setProject($newProject)->setActivity($newActivity);
+        self::assertEquals([], $repository->findMatchingRates($timesheet));
     }
 }

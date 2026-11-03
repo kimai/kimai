@@ -131,7 +131,7 @@ final class PasswordResetController extends AbstractController
             }
 
             if (!$user->isPasswordRequestNonExpired($this->configuration->getPasswordResetRetryLifetime())) {
-                $loginLinkDetails = $loginLinkHandler->createLoginLink($user, $request, $this->configuration->getPasswordResetRetryLifetime()); // @phpstan-ignore-line
+                $loginLinkDetails = $loginLinkHandler->createLoginLink($user, $request, $this->configuration->getPasswordResetTokenLifetime()); // @phpstan-ignore-line
                 $loginLink = $loginLinkDetails->getUrl();
                 // only this link requires a password change when used, see LoginLinkSuccessHandler
                 $user->markPasswordResetLink($loginLink);

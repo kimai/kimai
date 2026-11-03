@@ -1,4 +1,4 @@
-{% macro project(project, view, isTable, params) %}
+{% macro project(project, view, isTable = null, params = {}) %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% set event = actions(app.user, 'project', view, params|default({})|merge({'project': project})) %}
     {% if view == 'index' or view == 'custom' or isTable is not null %}

@@ -873,72 +873,76 @@ class TimesheetRepository extends EntityRepository
     }
 
     /**
-     * @param Timesheet $timesheet
      * @return RateInterface[]
      */
     public function findMatchingRates(Timesheet $timesheet): array
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('r, u, a')
-            ->from(ActivityRate::class, 'r')
-            ->leftJoin('r.user', 'u')
-            ->leftJoin('r.activity', 'a')
-            ->andWhere(
-                $qb->expr()->orX(
-                    $qb->expr()->eq('r.user', ':user'),
-                    $qb->expr()->isNull('r.user')
-                ),
-                $qb->expr()->orX(
-                    $qb->expr()->eq('r.activity', ':activity'),
-                    $qb->expr()->isNull('r.activity')
-                )
-            )
-            ->setParameter('user', $timesheet->getUser())
-            ->setParameter('activity', $timesheet->getActivity())
-        ;
-        $results = $qb->getQuery()->getResult();
+        $user = $timesheet->getUser();
+        $activity = $timesheet->getActivity();
+        $project = $timesheet->getProject();
+        $customer = $project?->getCustomer();
 
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('r, u, p')
-            ->from(ProjectRate::class, 'r')
-            ->leftJoin('r.user', 'u')
-            ->leftJoin('r.project', 'p')
-            ->andWhere(
-                $qb->expr()->orX(
-                    $qb->expr()->eq('r.user', ':user'),
-                    $qb->expr()->isNull('r.user')
-                ),
-                $qb->expr()->orX(
-                    $qb->expr()->eq('r.project', ':project'),
-                    $qb->expr()->isNull('r.project')
-                )
-            )
-            ->setParameter('user', $timesheet->getUser())
-            ->setParameter('project', $timesheet->getProject())
-        ;
-        $results = array_merge($results, $qb->getQuery()->getResult());
+        $results = [];
 
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('r, u, c')
-            ->from(CustomerRate::class, 'r')
-            ->leftJoin('r.user', 'u')
-            ->leftJoin('r.customer', 'c')
-            ->andWhere(
-                $qb->expr()->orX(
-                    $qb->expr()->eq('r.user', ':user'),
-                    $qb->expr()->isNull('r.user')
-                ),
-                $qb->expr()->orX(
-                    $qb->expr()->eq('r.customer', ':customer'),
-                    $qb->expr()->isNull('r.customer')
-                )
-            )
-            ->setParameter('user', $timesheet->getUser())
-            ->setParameter('customer', $timesheet->getProject()->getCustomer())
-        ;
-        $results = array_merge($results, $qb->getQuery()->getResult());
+        if ($activity?->getId() !== null) {
+            $qb = $this->getEntityManager()->createQueryBuilder();
+            $qb->select('r, u, a')
+                ->from(ActivityRate::class, 'r')
+                ->leftJoin('r.user', 'u')
+                ->leftJoin('r.activity', 'a')
+                ->andWhere($qb->expr()->eq('r.activity', ':activity'))
+                ->setParameter('activity', $activity)
+            ;
+            $this->addRateUserCriteria($qb, $user);
+            $results = array_merge($results, $qb->getQuery()->getResult());
+        }
+
+        if ($project?->getId() !== null) {
+            $qb = $this->getEntityManager()->createQueryBuilder();
+            $qb->select('r, u, p')
+                ->from(ProjectRate::class, 'r')
+                ->leftJoin('r.user', 'u')
+                ->leftJoin('r.project', 'p')
+                ->andWhere($qb->expr()->eq('r.project', ':project'))
+                ->setParameter('project', $project)
+            ;
+            $this->addRateUserCriteria($qb, $user);
+            $results = array_merge($results, $qb->getQuery()->getResult());
+        }
+
+        if ($customer?->getId() !== null) {
+            $qb = $this->getEntityManager()->createQueryBuilder();
+            $qb->select('r, u, c')
+                ->from(CustomerRate::class, 'r')
+                ->leftJoin('r.user', 'u')
+                ->leftJoin('r.customer', 'c')
+                ->andWhere($qb->expr()->eq('r.customer', ':customer'))
+                ->setParameter('customer', $customer)
+            ;
+            $this->addRateUserCriteria($qb, $user);
+            $results = array_merge($results, $qb->getQuery()->getResult());
+        }
 
         return $results;
+    }
+
+    private function addRateUserCriteria(QueryBuilder $qb, ?User $user): void
+    {
+        if ($user?->getId() === null) {
+            $qb->andWhere($qb->expr()->isNull('r.user'));
+
+            return;
+        }
+
+        $qb
+            ->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->eq('r.user', ':user'),
+                    $qb->expr()->isNull('r.user')
+                )
+            )
+            ->setParameter('user', $user)
+        ;
     }
 
     public function hasRecordForTime(Timesheet $timesheet): bool
