@@ -22,6 +22,7 @@ use App\Entity\User;
 use App\Repository\CustomerRateRepository;
 use App\Repository\CustomerRepository;
 use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
+use App\Tests\Mocks\CustomerTestUrlMetaFieldSubscriberMock;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
@@ -565,6 +566,77 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         /** @var Customer $customer */
         $customer = $em->getRepository(Customer::class)->find(1);
         self::assertEquals('another,testing,bar', $customer->getMetaField('metatestmock')->getValue());
+    }
+
+    public function testMetaActionValidatesConfiguredConstraints(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new CustomerTestMetaFieldSubscriberMock());
+
+        $data = [
+            'name' => 'metatestmock',
+            'value' => str_repeat('x', 201)
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/customers/1/meta', 'PATCH', [], $json);
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['metatestmock']);
+    }
+
+    public function testMetaActionRejectsUnsafeUrl(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new CustomerTestUrlMetaFieldSubscriberMock());
+
+        $data = [
+            'name' => 'homepage',
+            'value' => 'javascript:alert(1)'
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/customers/1/meta', 'PATCH', [], $json);
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['homepage']);
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        /** @var Customer $customer */
+        $customer = $em->getRepository(Customer::class)->find(1);
+        self::assertNull($customer->getMetaField('homepage'));
+    }
+
+    public function testMetaActionAcceptsValidUrl(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new CustomerTestUrlMetaFieldSubscriberMock());
+
+        $data = [
+            'name' => 'homepage',
+            'value' => 'https://www.kimai.org'
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/customers/1/meta', 'PATCH', [], $json);
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $em = $this->getEntityManager();
+        /** @var Customer $customer */
+        $customer = $em->getRepository(Customer::class)->find(1);
+        $meta = $customer->getMetaField('homepage');
+        self::assertNotNull($meta);
+        self::assertEquals('https://www.kimai.org', $meta->getValue());
     }
 
     // ------------------------------- [DELETE] -------------------------------

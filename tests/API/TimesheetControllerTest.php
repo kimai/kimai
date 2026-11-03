@@ -22,6 +22,7 @@ use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\TimesheetTestMetaFieldSubscriberMock;
+use App\Tests\Mocks\TimesheetTestUrlMetaFieldSubscriberMock;
 use App\Timesheet\DateTimeFactory;
 use App\User\PermissionService;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -2104,6 +2105,24 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
             'code' => Response::HTTP_NOT_FOUND,
             'message' => 'Not Found'
         ]);
+    }
+
+    public function testMetaActionRejectsUnsafeUrl(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $timesheets = $this->importFixtureForUser(User::ROLE_USER);
+        $id = $timesheets[0]->getId();
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new TimesheetTestUrlMetaFieldSubscriberMock());
+
+        $json = json_encode(['name' => 'homepage', 'value' => 'javascript://%0Aalert(1)']);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $id . '/meta', 'PATCH', [], $json);
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['homepage']);
     }
 
     public function testMetaAction(): void
