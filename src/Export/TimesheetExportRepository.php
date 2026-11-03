@@ -10,13 +10,11 @@
 namespace App\Export;
 
 use App\Entity\ExportableItem;
-use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Repository\CustomerRepository;
 use App\Repository\Query\ExportQuery;
 use App\Repository\Query\TimesheetQueryHint;
 use App\Repository\TimesheetRepository;
-use Doctrine\ORM\Query\Expr\Join;
 
 final class TimesheetExportRepository implements ExportRepositoryInterface, ExportableRepositoryInterface
 {
