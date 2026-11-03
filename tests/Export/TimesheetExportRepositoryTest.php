@@ -14,6 +14,7 @@ use App\Entity\Customer;
 use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Export\TimesheetExportRepository;
+use App\Repository\CustomerRepository;
 use App\Repository\TimesheetRepository;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -23,12 +24,14 @@ class TimesheetExportRepositoryTest extends TestCase
 {
     public function testSetExported(): void
     {
-        $repository = $this->createMock(TimesheetRepository::class);
-        $repository->expects($this->once())->method('setExported')->willReturnCallback(function (array $items): void {
+        $timesheetRepository = $this->createMock(TimesheetRepository::class);
+        $timesheetRepository->expects($this->once())->method('setExported')->willReturnCallback(function (array $items): void {
             self::assertCount(2, $items);
         });
 
-        $sut = new TimesheetExportRepository($repository);
+        $customerRepository = $this->createMock(CustomerRepository::class);
+
+        $sut = new TimesheetExportRepository($timesheetRepository, $customerRepository);
 
         $sut->setExported([new Timesheet(), null, new \stdClass(), new Timesheet(), new Activity()]);
         // test else for empty array
@@ -38,8 +41,10 @@ class TimesheetExportRepositoryTest extends TestCase
 
     public function testSetType(): void
     {
-        $repository = $this->createMock(TimesheetRepository::class);
-        $sut = new TimesheetExportRepository($repository);
+        $sut = new TimesheetExportRepository(
+            $this->createMock(TimesheetRepository::class),
+            $this->createMock(CustomerRepository::class)
+        );
         self::assertEquals('timesheet', $sut->getType());
     }
 }
