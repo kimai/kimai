@@ -108,9 +108,9 @@
                                         {% set headerOptions = {'class': headerOptions} %}
                                     {% endif %}
                                     {% if headerOptions.title is defined and headerOptions.title is not empty %}
-                                        {% set headerTitle = headerOptions.title|trans({}, translationDomain) %}
+                                        {% set headerTitle = (headerOptions.translate ?? true) ? headerOptions.title|trans({}, translationDomain) : headerOptions.title %}
                                     {% else %}
-                                        {% set headerTitle = title|trans({}, translationDomain) %}
+                                        {% set headerTitle = (headerOptions.translate ?? true) ? title|trans({}, translationDomain) : title %}
                                     {% endif %}
                                     {% if 'alwaysVisible' not in headerOptions.class %}
                                         <label class="form-selectgroup-item">
@@ -208,9 +208,9 @@
                             {% set headerTitle = '' %}
                             {% set translationDomain = headerOptions.translation_domain ?? 'messages' %}
                             {% if headerOptions.title is defined %}
-                                {% set headerTitle = headerOptions.title|trans({}, translationDomain) %}
+                                {% set headerTitle = (headerOptions.translate ?? true) ? headerOptions.title|trans({}, translationDomain) : headerOptions.title %}
                             {% elseif title is not empty and not isActions %}
-                                {% set headerTitle = title|trans({}, translationDomain) %}
+                                {% set headerTitle = (headerOptions.translate ?? true) ? title|trans({}, translationDomain) : title %}
                             {% endif %}
                             {% if isActions %}
                                 {% set headerClass = headerClass ~ ' text-center' %}

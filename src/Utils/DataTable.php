@@ -127,6 +127,7 @@ final class DataTable implements \Countable, \IteratorAggregate
      * Supported $column options:
      * - class
      * - title
+     * - translate
      * - translation_domain
      * - orderBy (string|false)
      * - order (desc, asc)
