@@ -20,6 +20,7 @@ use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityQuery;
 use App\Utils\SearchTerm;
+use App\Validator\MetaFieldValidator;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
@@ -222,7 +223,7 @@ final class ActivityController extends BaseApiController
     #[Route(methods: ['PATCH'], path: '/{id}/meta', requirements: ['id' => '\d+'])]
     #[Rest\RequestParam(name: 'name', strict: true, nullable: false, description: 'The meta-field name')]
     #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
-    public function metaAction(Activity $activity, ParamFetcherInterface $paramFetcher): Response
+    public function metaAction(Activity $activity, ParamFetcherInterface $paramFetcher, MetaFieldValidator $metaFieldValidator): Response
     {
         $this->activityService->loadMetaFields($activity);
 
@@ -233,6 +234,7 @@ final class ActivityController extends BaseApiController
             throw $this->createNotFoundException('Unknown meta-field requested');
         }
 
+        $metaFieldValidator->validate($activity, $meta, $value);
         $meta->setValue($value);
 
         $this->activityService->saveActivity($activity);
