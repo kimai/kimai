@@ -21,6 +21,7 @@ use App\Repository\TeamRepository;
 use App\Tests\DataFixtures\InvoiceFixtures;
 use App\Tests\DataFixtures\InvoiceTemplateFixtures;
 use App\Tests\Mocks\InvoiceTestMetaFieldSubscriberMock;
+use App\Tests\Mocks\InvoiceTestUrlMetaFieldSubscriberMock;
 use App\User\PermissionService;
 use App\Utils\FileHelper;
 use PHPUnit\Framework\Attributes\Group;
@@ -319,6 +320,111 @@ class InvoiceControllerTest extends APIControllerBaseTestCase
             'code' => Response::HTTP_NOT_FOUND,
             'message' => 'Not Found'
         ]);
+    }
+
+    public function testUpdateInvoiceMetaFieldsValidatesConfiguredConstraints(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new InvoiceTestMetaFieldSubscriberMock());
+
+        $data = [
+            [
+                'name' => 'metatestmock',
+                'value' => str_repeat('x', 201)
+            ],
+        ];
+        $this->request($client, '/api/invoices/' . $id . '/custom-fields', 'PATCH', [], (string) json_encode($data));
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['metatestmock']);
+    }
+
+    public function testUpdateInvoiceMetaFieldsRejectsUnsafeUrl(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new InvoiceTestUrlMetaFieldSubscriberMock());
+
+        $data = [
+            [
+                'name' => 'homepage',
+                'value' => 'javascript:alert(1)'
+            ],
+        ];
+        $this->request($client, '/api/invoices/' . $id . '/custom-fields', 'PATCH', [], (string) json_encode($data));
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['homepage']);
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        /** @var Invoice $invoice */
+        $invoice = $em->getRepository(Invoice::class)->find($id);
+        self::assertNull($invoice->getMetaField('homepage'));
+    }
+
+    public function testUpdateInvoiceMetaFieldsAcceptsValidUrl(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new InvoiceTestUrlMetaFieldSubscriberMock());
+
+        $data = [
+            [
+                'name' => 'homepage',
+                'value' => 'https://www.kimai.org'
+            ],
+        ];
+        $this->request($client, '/api/invoices/' . $id . '/custom-fields', 'PATCH', [], (string) json_encode($data));
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $em = $this->getEntityManager();
+        /** @var Invoice $invoice */
+        $invoice = $em->getRepository(Invoice::class)->find($id);
+        self::assertEquals('https://www.kimai.org', $invoice->getMetaField('homepage')?->getValue());
+    }
+
+    public function testUpdateInvoiceMetaFieldsStoresNothingIfOneFieldIsInvalid(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new InvoiceTestMetaFieldSubscriberMock());
+        $dispatcher->addSubscriber(new InvoiceTestUrlMetaFieldSubscriberMock());
+
+        $data = [
+            [
+                'name' => 'metatestmock',
+                'value' => 'valid value'
+            ],
+            [
+                'name' => 'homepage',
+                'value' => 'javascript:alert(1)'
+            ],
+        ];
+        $this->request($client, '/api/invoices/' . $id . '/custom-fields', 'PATCH', [], (string) json_encode($data));
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['homepage']);
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        /** @var Invoice $invoice */
+        $invoice = $em->getRepository(Invoice::class)->find($id);
+        self::assertNull($invoice->getMetaField('metatestmock'));
+        self::assertNull($invoice->getMetaField('homepage'));
     }
 
     public function testUpdateInvoiceMetaFields(): void
