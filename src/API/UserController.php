@@ -299,7 +299,9 @@ final class UserController extends BaseApiController
             }
 
             $metaFieldValidator->validateUserPreference($profile, $meta, $value);
-            $meta->setValue($value);
+            // like the form layer: the JSON decoder converts null to an empty string, which is
+            // not the same as "not configured" for preferences with a fallback like internal_rate
+            $meta->setValue($value === '' ? null : $value);
             $dirty = true;
         }
 

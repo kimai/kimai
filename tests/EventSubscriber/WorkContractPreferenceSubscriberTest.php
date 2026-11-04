@@ -15,9 +15,12 @@ use App\Event\UserCreateEvent;
 use App\Event\UserPreferenceEvent;
 use App\EventSubscriber\WorkContractPreferenceSubscriber;
 use App\WorkingTime\Calculator\WorkingTimeCalculatorDay;
+use App\WorkingTime\Mode\WorkingTimeModeDay;
+use App\WorkingTime\Mode\WorkingTimeModeFactory;
 use App\WorkingTime\Mode\WorkingTimeModeNone;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 #[CoversClass(WorkContractPreferenceSubscriber::class)]
@@ -28,7 +31,34 @@ class WorkContractPreferenceSubscriberTest extends TestCase
         $voter = $this->createMock(AuthorizationCheckerInterface::class);
         $voter->method('isGranted')->with('contract', self::isInstanceOf(User::class))->willReturn($isGranted);
 
-        return new WorkContractPreferenceSubscriber($voter);
+        return new WorkContractPreferenceSubscriber($voter, new WorkingTimeModeFactory([new WorkingTimeModeNone(), new WorkingTimeModeDay()], $this->createMock(LoggerInterface::class)));
+    }
+
+    public function testPreferencesRegisterConstraints(): void
+    {
+        $user = new User();
+        $this->getSut()->registerNewUserPreferences(new UserCreateEvent($user));
+
+        $names = [
+            UserPreference::WORK_CONTRACT_TYPE,
+            WorkingTimeCalculatorDay::WORK_HOURS_MONDAY,
+            WorkingTimeCalculatorDay::WORK_HOURS_TUESDAY,
+            WorkingTimeCalculatorDay::WORK_HOURS_WEDNESDAY,
+            WorkingTimeCalculatorDay::WORK_HOURS_THURSDAY,
+            WorkingTimeCalculatorDay::WORK_HOURS_FRIDAY,
+            WorkingTimeCalculatorDay::WORK_HOURS_SATURDAY,
+            WorkingTimeCalculatorDay::WORK_HOURS_SUNDAY,
+            UserPreference::PUBLIC_HOLIDAY_GROUP,
+            UserPreference::HOLIDAYS_PER_YEAR,
+            'work_start_day',
+            'work_last_day',
+        ];
+
+        foreach ($names as $name) {
+            $pref = $user->getPreference($name);
+            self::assertNotNull($pref, $name);
+            self::assertNotEmpty($pref->getConstraints(), $name);
+        }
     }
 
     public function testGetSubscribedEvents(): void
