@@ -130,6 +130,10 @@
         <source>password_repeat</source>
         <target>Repeat password</target>
       </trans-unit>
+      <trans-unit id="fxkWjGQ" resname="password_current">
+        <source>password_current</source>
+        <target>Current password</target>
+      </trans-unit>
       <trans-unit id="ACcM9j_" resname="logout">
         <source>logout</source>
         <target>Logout</target>
@@ -750,6 +754,22 @@
         <source>project_end</source>
         <target>Project end</target>
       </trans-unit>
+      <trans-unit id="k8F51oP" resname="project_locked_until">
+        <source>project_locked_until</source>
+        <target>Times locked until</target>
+      </trans-unit>
+      <trans-unit id="C_ZcSX2" resname="help.project_start">
+        <source>help.project_start</source>
+        <target>Times before this date cannot be recorded.</target>
+      </trans-unit>
+      <trans-unit id="9A.4S.i" resname="help.project_end">
+        <source>help.project_end</source>
+        <target>Times after this date cannot be recorded.</target>
+      </trans-unit>
+      <trans-unit id="ktmsI7g" resname="help.project_locked_until">
+        <source>help.project_locked_until</source>
+        <target>Times up to and including this date can neither be created nor changed.</target>
+      </trans-unit>
       <trans-unit id="tfOjLNp" resname="project_number">
         <source>Project number</source>
         <target>Project number</target>
@@ -837,6 +857,18 @@
       <trans-unit id="0Hhg4zQ" resname="system_account.help">
         <source>system_account.help</source>
         <target>Will be hidden in reports and dropdowns</target>
+      </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target>Authentication</target>
+      </trans-unit>
+      <trans-unit id="LQXTGjm" resname="authentication.help">
+        <source>authentication.help</source>
+        <target>Switching to "Internal" removes the password. Afterward set a new password or use "Forgot password".</target>
+      </trans-unit>
+      <trans-unit id="NvQBTxG" resname="authentication.internal">
+        <source>authentication.internal</source>
+        <target>Internal</target>
       </trans-unit>
       <trans-unit id="Zs9VE7N" resname="roles">
         <source>roles</source>
@@ -1254,6 +1286,18 @@
         <source>status.closed</source>
         <target>Completed</target>
       </trans-unit>
+      <trans-unit id="TTL.5NF" resname="status.todo">
+        <source>status.todo</source>
+        <target>To Do</target>
+      </trans-unit>
+      <trans-unit id="j_0FPm3" resname="status.waiting">
+        <source>status.waiting</source>
+        <target>Waiting</target>
+      </trans-unit>
+      <trans-unit id="QdfOAGZ" resname="status.done">
+        <source>status.done</source>
+        <target>Done</target>
+      </trans-unit>
       <trans-unit id="opDmYAa" resname="status.approved">
         <source>status.approved</source>
         <target>Approved</target>
@@ -1644,7 +1688,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro">
         <source>absence_other.intro</source>
-        <target>Family events, moving house, weather chaos etc.</target>
+        <target>Training, continuing education and other work-related or personal commitments.</target>
       </trans-unit>
       <trans-unit id="TTnaBm4" resname="day_full">
         <source>day_full</source>
@@ -1769,6 +1813,10 @@
       <trans-unit id="Z9IIn_b" resname="api_token_hidden">
         <source>api_token_hidden</source>
         <target>This is the only time this key will ever be displayed! So keep it safe and make sure you've copied it down before closing this window.</target>
+      </trans-unit>
+      <trans-unit id="G8ZoGoA" resname="api_token_qr_hint">
+        <source>api_token_qr_hint</source>
+        <target>You can scan this QR code with a mobile app, to configure server URL and token in one step. Do not share this image: it contains your API token.</target>
       </trans-unit>
       <trans-unit id="TCr2ArH" resname="api_password_deprecated">
         <source>api_password_deprecated</source>
@@ -1994,6 +2042,10 @@
         <source>address_row</source>
         <target>Line %row%</target>
       </trans-unit>
+      <trans-unit id="nlJ2pW2" resname="invoice_email">
+        <source>invoice_email</source>
+        <target>Billing email</target>
+      </trans-unit>
       <trans-unit id="_Ep8Ogx" resname="buyerReference">
         <source>buyerReference</source>
         <target>Buyer reference</target>
@@ -2081,6 +2133,102 @@
       <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help">
         <source>count_as_expected_time_help</source>
         <target>When enabled, %type% will count as worked hours towards the expected daily hours. When disabled, the expected hours for these days will be set to 0. Both settings maintain a neutral balance but affect monthly totals differently.</target>
+      </trans-unit>
+      <trans-unit id="WrNTzd7" resname="assign_timesheets">
+        <source>assign_timesheets</source>
+        <target>Assign timesheets</target>
+      </trans-unit>
+      <trans-unit id="zO0oxtw" resname="start">
+        <source>start</source>
+        <target>Start</target>
+      </trans-unit>
+      <trans-unit id="DAMFhpR" resname="lock">
+        <source>lock</source>
+        <target>Lock</target>
+      </trans-unit>
+      <trans-unit id="pNRR7CN" resname="release">
+        <source>release</source>
+        <target>Release</target>
+      </trans-unit>
+      <trans-unit id="kwC00lZ" resname="assign">
+        <source>assign</source>
+        <target>Assign</target>
+      </trans-unit>
+      <trans-unit id="2ajb.ZU" resname="assign_self">
+        <source>assign_self</source>
+        <target>Assign to me</target>
+      </trans-unit>
+      <trans-unit id="LfO_otF" resname="reopen">
+        <source>reopen</source>
+        <target>Reopen</target>
+      </trans-unit>
+      <trans-unit id="DI8vH1J" resname="copy_to_clipboard">
+        <source>copy_to_clipboard</source>
+        <target>Copy to clipboard</target>
+      </trans-unit>
+      <trans-unit id="LHDhK3o" resname="key">
+        <source>key</source>
+        <target>Internal title</target>
+      </trans-unit>
+      <trans-unit id="Q3gmLM6" resname="key_help">
+        <source>key_help</source>
+        <target>Unique technical name, which cannot be changed later. Allowed are lowercase letters (a-z), digits (0-9) and underscore (_).</target>
+      </trans-unit>
+      <trans-unit id="netluHi" resname="approval">
+        <source>approval</source>
+        <target>Approval</target>
+      </trans-unit>
+      <trans-unit id="9SkAbbx" resname="approval_required">
+        <source>approval_required</source>
+        <target>Approval required</target>
+      </trans-unit>
+      <trans-unit id="7dLJTuj" resname="fill_day">
+        <source>fill_day</source>
+        <target>Fills up the expected working time</target>
+      </trans-unit>
+      <trans-unit id="O6IGTDm" resname="Absence types">
+        <source>Absence types</source>
+        <target>Absence types</target>
+      </trans-unit>
+      <trans-unit id="2mFc5.v" resname="absence_type.category.help">
+        <source>absence_type.category.help</source>
+        <target>The category defines how bookings are calculated (e.g. against the vacation days or the working time account) and where the type is shown. It cannot be changed later.</target>
+      </trans-unit>
+      <trans-unit id="4YKqwfo" resname="absence_type.half_day">
+        <source>absence_type.half_day</source>
+        <target>Allow half days</target>
+      </trans-unit>
+      <trans-unit id="ukwjp0C" resname="absence_type.date_range">
+        <source>absence_type.date_range</source>
+        <target>Allow booking of multiple days</target>
+      </trans-unit>
+      <trans-unit id="j6S5GDf" resname="absence_type.duration">
+        <source>absence_type.duration</source>
+        <target>Allow entering a duration</target>
+      </trans-unit>
+      <trans-unit id="E7XVJxv" resname="absence_type.duration_required">
+        <source>absence_type.duration_required</source>
+        <target>Duration is a mandatory field</target>
+      </trans-unit>
+      <trans-unit id="W_6BSlE" resname="absence_type.max_days">
+        <source>absence_type.max_days</source>
+        <target>Maximum number of days per booking</target>
+      </trans-unit>
+      <trans-unit id="_cQHZDu" resname="fill_day.help">
+        <source>fill_day.help</source>
+        <target>If no duration is entered, the remaining expected working time of the day is used.</target>
+      </trans-unit>
+      <trans-unit id="dIuCbHU" resname="absence_type.overbooking">
+        <source>absence_type.overbooking</source>
+        <target>Allow overbooking up to</target>
+      </trans-unit>
+      <trans-unit id="Y9NoM.U" resname="absence_type.overbooking.help.holiday">
+        <source>absence_type.overbooking.help.holiday</source>
+        <target>0 = overbooking is not allowed. Number of days that can be booked beyond the available vacation days.</target>
+      </trans-unit>
+      <trans-unit id="c1z3ItA" resname="absence_type.overbooking.help.time_off">
+        <source>absence_type.overbooking.help.time_off</source>
+        <target>0 = overbooking is not allowed. Number of hours the working time account may go into the negative.</target>
       </trans-unit>
     </body>
   </file>

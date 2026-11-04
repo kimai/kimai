@@ -24,19 +24,19 @@
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target state="needs-translation">Reset uw wachtwoord</target>
+        <target state="translated">Meld je aan bij Kimai</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="needs-translation">Paswoord vergeten?</target>
+        <target state="translated">Log in op uw account</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
-        <target state="needs-translation">Reset uw wachtwoord</target>
+        <target state="translated">Aanmelden</target>
       </trans-unit>
       <trans-unit id="rhkMAep" resname="reset.intro" xml:space="preserve">
         <source>Don't worry, Kimai will help you create a new one!</source>
-        <target state="needs-translation">Maakt u zich geen zorgen, Kimai zal u helpen om er een nieuw te maken!</target>
+        <target state="translated">Deze koppeling is alleen voor de komende 15 minuten geldig.</target>
       </trans-unit>
       <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
         <source>absence_created_supervisor_subject</source>
@@ -53,6 +53,42 @@ Please review them at: %url%</source>
 %list%
 
 Bekijk ze op: %url%</target>
+      </trans-unit>
+      <trans-unit id="1q.VHdU" resname="approval_requested_subject" xml:space="preserve">
+        <source>approval_requested_subject</source>
+        <target state="translated">Toestemming aangevraagd: %user%</target>
+      </trans-unit>
+      <trans-unit id="Z172mQ8" resname="approval_requested_message" xml:space="preserve">
+        <source>approval_requested_message</source>
+        <target state="translated">Een toestemming voor %user% is aangevraagd.
+
+%list%
+
+Bekijk ze op: %url%</target>
+      </trans-unit>
+      <trans-unit id="dvPkiia" resname="approval_rejected_subject" xml:space="preserve">
+        <source>approval_rejected_subject</source>
+        <target state="translated">Uw verzoek is afgewezen</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">Uw verzoek tot authorizatie is afgewezen door %created_by%
+
+%list%
+
+Bekijk uw verzoeken op: %url%</target>
+      </trans-unit>
+      <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
+        <source>approval_approved_subject</source>
+        <target state="translated">Uw verzoek is goedgekeurd</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="translated">Uw verzoek is goedgekeurd door %created_by%.
+
+%list%
+
+U kunt al uw aanvragen vinden op: %url%</target>
       </trans-unit>
     </body>
   </file>

@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 KIMAI=$(cat /opt/kimai/version.txt)
 echo $KIMAI
@@ -17,7 +17,10 @@ function waitForDB() {
   fi
 
   echo "Wait for database connection ..."
-  until php /dbtest.php "$DATABASE_HOST" "$DATABASE_BASE" "$DATABASE_PORT" "$DATABASE_USER" "$DATABASE_PASS"; do
+  # Credentials are handed over as environment variables of that single command instead of
+  # command line arguments, so they are neither logged nor visible in the process list.
+  until DBTEST_HOST="$DATABASE_HOST" DBTEST_NAME="$DATABASE_BASE" DBTEST_PORT="$DATABASE_PORT" \
+        DBTEST_USER="$DATABASE_USER" DBTEST_PASS="$DATABASE_PASS" php /dbtest.php; do
     echo Checking DB: $?
     sleep 3
   done
@@ -76,11 +79,55 @@ function handleStartup() {
 function prepareKimai() {
   # These are idempotent, so we can run them on every start-up
   /opt/kimai/bin/console -n kimai:install
-  if [ ! -z "$ADMINPASS" ] && [ ! -a "$ADMINMAIL" ]; then
-    /opt/kimai/bin/console kimai:user:create admin "$ADMINMAIL" ROLE_SUPER_ADMIN "$ADMINPASS"
+  if [ -n "$ADMINPASS" ] && [ -n "$ADMINMAIL" ]; then
+    # --ignore-existing is idempotent: it will only create the admin on the first container start
+    /opt/kimai/bin/console kimai:user:create --ignore-existing admin "$ADMINMAIL" ROLE_SUPER_ADMIN "$ADMINPASS"
   fi
   echo "$KIMAI" > /opt/kimai/var/installed
   echo "Kimai is ready"
+}
+
+function ensureAppSecret() {
+  # Make sure the container never runs with the publicly-known default APP_SECRET.
+  # If the user provided their own value (via -e APP_SECRET=...) it is kept untouched.
+  # Otherwise a unique secret is generated once and persisted below var/data, which
+  # should be a mounted volume and stable across container restarts and re-creations.
+  local SECRET_FILE=/opt/kimai/var/data/.appsecret
+  local ENV_LOCAL=/opt/kimai/.env.local
+
+  # Always remove any prior .env.local before deciding which secret applies.
+  # This prevents a stale auto-generated value from lingering after a user later sets
+  # APP_SECRET via docker env / compose. It is regenerated below in the auto-secret path; in
+  # the user-provided path it stays absent so the real env remains the single source of truth.
+  rm -f "$ENV_LOCAL"
+
+  if [ -n "$APP_SECRET" ] && [ "$APP_SECRET" != "change_this_to_something_unique" ]; then
+    return
+  fi
+
+  if [ -s "$SECRET_FILE" ]; then
+    APP_SECRET=$(cat "$SECRET_FILE")
+    echo "APP_SECRET: using persisted auto-generated secret"
+  else
+    mkdir -p "$(dirname "$SECRET_FILE")"
+    APP_SECRET=$(php -r 'echo bin2hex(random_bytes(32));')
+    ( umask 077 && echo "$APP_SECRET" > "$SECRET_FILE" )
+    chown "$USER_ID:$GROUP_ID" "$SECRET_FILE"
+    echo "APP_SECRET: generated a new unique secret, persisted to var/data volume"
+  fi
+  export APP_SECRET
+
+  # Mirror the resolved secret into .env.local so Symfony's Dotenv picks up
+  # the right value when commands are run via `docker exec` (which does not
+  # inherit the entrypoint's exported env). .env.local is Symfony's official
+  # override file and is loaded before .env. Rewritten on every container
+  # start; the source of truth is the persisted SECRET_FILE above.
+  ( umask 077 && echo "APP_SECRET=$APP_SECRET" > "$ENV_LOCAL" )
+  # The PHP runtime (apache/php-fpm) runs as $USER_ID:$GROUP_ID and must be
+  # able to read .env.local; the entrypoint itself runs as root, so the file
+  # would otherwise be 0600 root:root and unreadable to the web user, causing
+  # Symfony's Dotenv to throw PathException at boot.
+  chown "$USER_ID:$GROUP_ID" "$ENV_LOCAL"
 }
 
 function runServer() {
@@ -98,5 +145,6 @@ function runServer() {
 
 waitForDB
 handleStartup
+ensureAppSecret
 prepareKimai
 runServer

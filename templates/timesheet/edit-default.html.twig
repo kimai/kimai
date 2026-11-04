@@ -74,6 +74,11 @@
                 {{ form_row(form.teams, {'row_attr': {'class': 'mb-3 ' ~ form.vars.name ~ '_row_' ~ form.teams.vars.name}}) }}
             {% endif %}
             {% if form.metaFields is defined and form.metaFields is not empty %}
+                {% for meta in form.metaFields.children %}
+                    {% if meta.vars.data.formTheme is not null %}
+                        {% form_theme meta meta.vars.data.formTheme %}
+                    {% endif %}
+                {% endfor %}
                 {{ form_row(form.metaFields) }}
             {% endif %}
             {% if form.fixedRate is defined or form.hourlyRate is defined or form.internalRate is defined or form.billable is defined or form.billableMode is defined or form.exported is defined %}

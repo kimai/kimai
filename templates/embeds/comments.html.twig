@@ -1,4 +1,4 @@
-{% embed '@theme/embeds/card.html.twig' with {'form': form, 'comments': comments, 'route_pin': route_pin|default(null), 'route_delete': route_delete|default(null), 'delete_by_user': delete_by_user|default(false)} %}
+{% embed '@theme/embeds/card.html.twig' with {'form': form, 'comments': comments, 'route_pin': route_pin|default(null), 'route_delete': route_delete|default(null), 'route_api_options': route_api_options|default(null), 'delete_by_user': delete_by_user|default(false)} %}
     {% import "macros/widgets.html.twig" as widgets %}
     {% block box_title %}{{ 'comment'|trans }}{% endblock %}
     {% block box_attributes %}id="comments_box"{% endblock %}
@@ -26,12 +26,31 @@
                         </div>
                         <div class="col-auto align-self-center">
                             {% if route_pin is not null %}
-                                <a href="{{ path(route_pin, {'id': comment.id, 'token': csrf_token('comment.pin')}) }}" class="btn{% if not comment.pinned %} btn-ghost-secondary{% else %} btn-ghost-info{% endif%} btn-icon {% if comment.pinned %}active{% endif %} pin-comment-link">{{ icon('pin') }}</a>
+                                {% if route_api_options is not null %}
+                                    <a href="#" data-href="{{ path(route_pin, {'comment': comment.id}|merge(route_api_options)) }}" class="btn btn-action pin-comment-link api-link" data-event="kimai.commentUpdate" data-method="PATCH" data-msg-error="action.update.error">
+                                {% else %}
+                                    <a href="{{ path(route_pin, {'id': comment.id, 'token': csrf_token('comment.pin')}) }}" class="btn btn-action pin-comment-link">
+                                {% endif %}
+
+                                {% if comment.pinned %}
+                                    <i class="text-primary {{ 'pin'|icon }}"></i>
+                                {% else %}
+                                    {{ icon('pin') }}
+                                {% endif %}
+
+                                </a>
                             {% elseif comment.pinned %}
                                 {{ icon('pin') }}
                             {% endif %}
+
                             {% if route_delete is not null and ((not delete_by_user) or (delete_by_user and comment.createdBy.id == app.user.id)) %}
-                                <a href="{{ path(route_delete, {'id': comment.id, 'token': csrf_token('comment.delete')}) }}" class="confirmation-link btn btn-ghost-secondary btn-icon delete-comment-link" data-question="confirm.delete">{{ icon('delete') }}</a>
+                                {% if route_api_options is not null %}
+                                    <a href="#" data-href="{{ path(route_delete, {'comment': comment.id}|merge(route_api_options)) }}" class="btn btn-action pin-comment-link api-link" data-event="kimai.commentUpdate" data-method="DELETE" data-question="confirm.delete" data-msg-error="action.delete.error">
+                                {% else %}
+                                    <a href="{{ path(route_delete, {'id': comment.id, 'token': csrf_token('comment.delete')}) }}" class="confirmation-link btn btn-action delete-comment-link" data-question="confirm.delete">
+                                {% endif %}
+                                {{ icon('delete') }}
+                                    </a>
                             {% endif %}
                         </div>
                     </div>

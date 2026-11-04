@@ -10,6 +10,7 @@
 namespace App\API;
 
 use App\Entity\AccessToken;
+use App\Entity\Role;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
@@ -17,9 +18,11 @@ use App\Form\API\UserApiCreateForm;
 use App\Form\API\UserApiEditForm;
 use App\Repository\AccessTokenRepository;
 use App\Repository\Query\UserQuery;
+use App\Repository\RoleRepository;
 use App\Repository\UserRepository;
 use App\User\UserService;
 use App\Utils\SearchTerm;
+use App\Validator\MetaFieldValidator;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
@@ -45,7 +48,7 @@ final class UserController extends BaseApiController
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
-        private readonly UserRepository $repository,
+        private readonly UserRepository $repository
     ) {
     }
 
@@ -135,9 +138,9 @@ final class UserController extends BaseApiController
      * Create user
      */
     #[IsGranted('create_user')]
-    #[OA\Post(description: 'Creates a new user and returns it afterwards')]
+    #[OA\Post(description: 'Creates a new user and returns it afterwards', responses: [new OA\Response(response: 200, description: 'Returns the new created user', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))])]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/UserCreateForm'))]
-    #[Route(methods: ['POST'], path: '', name: 'post_user')]
+    #[Route(path: '', name: 'post_user', methods: ['POST'])]
     public function postAction(Request $request, UserService $userService): Response
     {
         $user = $userService->createNewUser();
@@ -180,7 +183,7 @@ final class UserController extends BaseApiController
             'include_active_flag' => ($profile->getId() !== $this->getUser()->getId()),
             'include_preferences' => $this->isGranted('preferences', $profile),
             'include_supervisor' => $this->isGranted('supervisor', $profile),
-            'include_password_reset' => $this->isGranted('password', $profile),
+            'include_password_reset' => $this->isGranted('roles', $profile),
         ]);
 
         $form->setData($profile);
@@ -199,6 +202,31 @@ final class UserController extends BaseApiController
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Delete a user role
+     */
+    #[IsGranted('role_permissions')]
+    #[OA\Delete(description: 'Deletes the role and removes it from every user owning it.', responses: [new OA\Response(response: 204, description: 'Empty')], x: ['internal' => true])]
+    #[OA\Parameter(name: 'id', description: 'The role ID to delete', in: 'path', required: true)]
+    #[Route(path: '/roles/{id}', name: 'delete_user_role', requirements: ['id' => '\d+'], methods: ['DELETE'])]
+    public function deleteRole(Role $role, RoleRepository $roleRepository): Response
+    {
+        $name = $role->getName();
+
+        // workaround, as roles is still a string array on users table
+        // until this is changed, the users must be manually updated
+        if ($name !== null) {
+            foreach ($this->repository->findUsersWithRole($name) as $user) {
+                $user->removeRole($name);
+                $this->repository->saveUser($user);
+            }
+        }
+
+        $roleRepository->deleteRole($role);
+
+        return $this->viewHandler->handle(new View(null, Response::HTTP_NO_CONTENT));
     }
 
     /**
@@ -231,23 +259,29 @@ final class UserController extends BaseApiController
     /**
      * Update user preferences
      */
-    #[IsGranted('edit', 'profile')]
-    #[OA\Response(response: 200, description: 'Sets the value of a consifgured preference. You cannot create unknown preferences: if the given name is not configured, an exception will be raised.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
-    #[OA\Parameter(name: 'id', in: 'path', description: 'User ID to set the custom-field value for', required: true)]
+    #[IsGranted('preferences', 'profile')]
+    #[OA\Response(response: 200, description: 'Sets the value of a configured preference. You cannot create unknown or update disabled preferences.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
+    #[OA\Parameter(name: 'id', description: 'User ID to set the custom-field value for', in: 'path', required: true)]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(type: 'array', items: new OA\Items(new Model(type: UserPreference::class))))]
-    #[Route(methods: ['PATCH'], path: '/{id}/preferences', requirements: ['id' => '\d+'])]
-    public function updateUserPreference(User $profile, Request $request, EventDispatcherInterface $dispatcher): Response
+    #[Route(path: '/{id}/preferences', requirements: ['id' => '\d+'], methods: ['PATCH'])]
+    public function updateUserPreference(User $profile, Request $request, EventDispatcherInterface $dispatcher, UserService $userService, MetaFieldValidator $metaFieldValidator): Response
     {
         $event = new PrepareUserEvent($profile, false);
         $dispatcher->dispatch($event);
+        $dirty = false;
 
         foreach ($request->request->all() as $preference) {
             // why is this not handled by FosRestBundle ?
             if (!\is_array($preference)) {
                 throw new BadRequestHttpException('Invalid request, array expected');
             }
+
             if (!\array_key_exists('name', $preference) || !\array_key_exists('value', $preference)) {
                 throw new BadRequestHttpException('Missing required parameter "name" or "value"');
+            }
+
+            if (!\is_string($preference['name'])) {
+                throw new BadRequestHttpException('Invalid parameter "name", string expected');
             }
 
             $name = $preference['name'];
@@ -257,10 +291,27 @@ final class UserController extends BaseApiController
                 throw $this->createNotFoundException(\sprintf('Unknown custom-field "%s" requested', $name));
             }
 
-            $meta->setValue($value);
+            // the name is normalized and dots (.) are replaced with underscores (_)
+            // a string like ..pw_reset.. is normalized to __pw_reset__
+
+            if (str_starts_with($meta->getName(), '__')) {
+                throw $this->createAccessDeniedException('Cannot modify internal preference: ' . $name);
+            }
+
+            if (!$meta->isEnabled()) {
+                throw $this->createAccessDeniedException('User tried to update preference: ' . $name);
+            }
+
+            $metaFieldValidator->validateUserPreference($profile, $meta, $value);
+            // like the form layer: the JSON decoder converts null to an empty string, which is
+            // not the same as "not configured" for preferences with a fallback like internal_rate
+            $meta->setValue($value === '' ? null : $value);
+            $dirty = true;
         }
 
-        $this->repository->saveUser($profile);
+        if ($dirty) {
+            $userService->saveUser($profile);
+        }
 
         $view = new View($profile, 200);
         $view->getContext()->setGroups(self::GROUPS_ENTITY);

@@ -4,4 +4,16 @@
             {{ icon('repeat', true) }}
         </a>
     </div>
+    <script type="text/javascript">
+        document.addEventListener('kimai.initialized', function() {
+            // the favorite buttons live inside the modal and change the list they are rendered in,
+            // so the modal content is re-fetched after the API call succeeded
+            document.addEventListener('kimai.favoriteUpdate', function() {
+                const button = document.querySelector('a.recent-activities-btn');
+                if (button !== null) {
+                    button.click();
+                }
+            });
+        });
+    </script>
 {% endif %}

@@ -9,7 +9,7 @@
 
 namespace App\Form\Type;
 
-use App\Invoice\ServiceInvoice;
+use App\Invoice\InvoiceService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,14 +19,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class InvoiceNumberGeneratorType extends AbstractType
 {
-    public function __construct(private ServiceInvoice $service)
+    public function __construct(private InvoiceService $invoiceService)
     {
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $renderer = [];
-        foreach ($this->service->getNumberGenerator() as $generator) {
+        foreach ($this->invoiceService->getNumberGenerator() as $generator) {
             $renderer[$generator->getId()] = $generator->getId();
         }
 

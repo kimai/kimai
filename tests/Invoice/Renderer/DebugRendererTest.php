@@ -31,7 +31,7 @@ class DebugRendererTest extends TestCase
     }
 
     #[DataProvider('getTestModel')]
-    public function testRender(callable $invoiceModel, $expectedRate, $expectedRows, $expectedDescriptions, $expectedUser1, $expectedUser2, $expectedUser3, $hasProject, $metaFields = []): void
+    public function testRender(callable $invoiceModel, string $expectedRate, int $expectedRows, int $expectedDescriptions, int $expectedUser1, int $expectedUser2, int $expectedUser3, bool $hasProject, array $metaFields = []): void
     {
         /** @var InvoiceModel $model */
         $model = $invoiceModel($this);
@@ -67,10 +67,12 @@ class DebugRendererTest extends TestCase
 
         $this->assertModelStructure($data['model'], \count($model->getQuery()->getProjects()), \count($model->getQuery()->getActivities()));
         $rows = $data['entries'];
+        self::assertIsArray($rows);
         self::assertEquals($expectedRows, \count($rows));
 
         $i = 0;
         foreach ($rows as $row) {
+            self::assertIsArray($row);
             $meta = isset($metaFields[$i]) ? $metaFields[$i++] : [];
             $this->assertEntryStructure($row, $meta);
         }
@@ -102,8 +104,12 @@ class DebugRendererTest extends TestCase
             'invoice.total_time',
             'invoice.duration_decimal',
             'invoice.first',
+            'invoice.first_month',
+            'invoice.first_year',
             'invoice.first_process',
             'invoice.last',
+            'invoice.last_month',
+            'invoice.last_year',
             'invoice.last_process',
             'invoice.total',
             'invoice.total_nc',
@@ -115,6 +121,7 @@ class DebugRendererTest extends TestCase
             'issuer.address_line1',
             'issuer.address_line2',
             'issuer.address_line3',
+            'issuer.invoice_email',
             'issuer.buyer_reference',
             'issuer.city',
             'issuer.comment',
@@ -166,6 +173,7 @@ class DebugRendererTest extends TestCase
             'customer.address_line1',
             'customer.address_line2',
             'customer.address_line3',
+            'customer.invoice_email',
             'customer.buyer_reference',
             'customer.city',
             'customer.postcode',
@@ -189,6 +197,7 @@ class DebugRendererTest extends TestCase
             'customer.mobile',
             'customer.meta.foo-customer',
             'customer.invoice_text',
+            'customer.language',
             'activity.id',
             'activity.name',
             'activity.comment',
@@ -199,6 +208,7 @@ class DebugRendererTest extends TestCase
             'activity.budget_open_plain',
             'activity.time_budget_open',
             'activity.time_budget_open_plain',
+            'user.account',
             'user.alias',
             'user.display',
             'user.email',
@@ -208,6 +218,8 @@ class DebugRendererTest extends TestCase
             'user.meta.hello',
             'user.meta.kitty',
             'testFromModelHydrator',
+            'project.counter',
+            'activity.counter',
         ];
 
         if ($activityCounter === 1) {
@@ -334,6 +346,7 @@ class DebugRendererTest extends TestCase
             'entry.user_display',
             'entry.user_alias',
             'entry.user_title',
+            'entry.user_account',
             'entry.user_preference.foo',
             'entry.user_preference.mad',
             'entry.activity',

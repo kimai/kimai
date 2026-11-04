@@ -207,6 +207,11 @@ class InvoiceRepository extends EntityRepository
             $qb->setParameter('status', $query->getStatus());
         }
 
+        if ($query->hasUsers()) {
+            $qb->andWhere($qb->expr()->in('i.user', ':users'));
+            $qb->setParameter('users', $query->getUsers());
+        }
+
         $orderBy = $query->getOrderBy();
         switch ($orderBy) {
             case 'date':
@@ -237,7 +242,7 @@ class InvoiceRepository extends EntityRepository
             $qb->leftJoin('i.customer', 'customer');
 
             $configuration = new SearchConfiguration(
-                ['i.comment', 'customer.name', 'customer.company'],
+                ['i.invoiceNumber', 'i.comment', 'customer.name', 'customer.company'],
                 InvoiceMeta::class,
                 'invoice'
             );

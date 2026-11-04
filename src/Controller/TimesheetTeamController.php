@@ -92,9 +92,9 @@ final class TimesheetTeamController extends TimesheetAbstractController
 
         if ($createForm->isSubmitted() && $createForm->isValid()) {
             try {
-                /** @var ArrayCollection<User> $users */
+                /** @var ArrayCollection<int, User> $users */
                 $users = $createForm->get('users')->getData();
-                /** @var ArrayCollection<Team> $teams */
+                /** @var ArrayCollection<int, Team> $teams */
                 $teams = $createForm->get('teams')->getData();
 
                 /** @var array<User> $allUsers */
@@ -219,6 +219,10 @@ final class TimesheetTeamController extends TimesheetAbstractController
     {
         if ($formName === 'toolbar') {
             return true;
+        }
+
+        if ($formName === 'create') {
+            return $this->isGranted('create_other_timesheet');
         }
 
         return $this->isGranted('edit_other_timesheet');

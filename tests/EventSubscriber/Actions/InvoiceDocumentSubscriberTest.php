@@ -33,6 +33,6 @@ class InvoiceDocumentSubscriberTest extends AbstractActionsSubscriberTestCase
         $actions = $event->getActions();
         self::assertGreaterThanOrEqual(1, \count($actions));
         self::assertArrayHasKey('trash', $actions);
-        self::assertEquals('invoice_document_delete', $actions['trash']['url']);
+        self::assertEquals('delete_invoice_document', $actions['trash']['url']);
     }
 }

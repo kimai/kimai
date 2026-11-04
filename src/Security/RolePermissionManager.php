@@ -9,8 +9,14 @@
 
 namespace App\Security;
 
+use App\Entity\Activity;
+use App\Entity\Customer;
+use App\Entity\Project;
+use App\Entity\Team;
+use App\Entity\Timesheet;
 use App\Entity\User;
 use App\User\PermissionService;
+use Doctrine\Common\Collections\Collection;
 
 final class RolePermissionManager
 {
@@ -107,5 +113,123 @@ final class RolePermissionManager
     public function getPermissions(): array
     {
         return array_keys($this->permissionNames);
+    }
+
+    /**
+     * @param array<int, Team>|Collection<int, Team> $teams
+     */
+    private function checkTeamAccess(Collection|array $teams, User $user): bool
+    {
+        if ($user->canSeeAllData()) {
+            return true;
+        }
+
+        if (\count($teams) === 0) {
+            return true;
+        }
+
+        foreach ($teams as $team) {
+            if ($user->isInTeam($team)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param array<int, Team>|Collection<int, Team> $teams
+     */
+    private function checkTeamLeadAccess(Collection|array $teams, User $user): bool
+    {
+        if ($user->canSeeAllData()) {
+            return true;
+        }
+
+        if (\count($teams) === 0) {
+            return true;
+        }
+
+        foreach ($teams as $team) {
+            if ($user->isTeamleadOf($team)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function checkTeamAccessCustomer(Customer $customer, User $user): bool
+    {
+        return $this->checkTeamAccess($customer->getTeams(), $user);
+    }
+
+    public function checkTeamAccessProject(Project $project, User $user): bool
+    {
+        if ($project->getCustomer() !== null && !$this->checkTeamAccessCustomer($project->getCustomer(), $user)) {
+            return false;
+        }
+
+        return $this->checkTeamAccess($project->getTeams(), $user);
+    }
+
+    public function checkTeamAccessActivity(Activity $activity, User $user): bool
+    {
+        if ($activity->getProject() !== null && !$this->checkTeamAccessProject($activity->getProject(), $user)) {
+            return false;
+        }
+
+        return $this->checkTeamAccess($activity->getTeams(), $user);
+    }
+
+    public function checkTeamAccessTimesheet(Timesheet $timesheet, User $user): bool
+    {
+        if ($user->getId() !== null && $user->getId() === $timesheet->getUser()?->getId()) {
+            return true;
+        }
+
+        if ($timesheet->getProject() !== null && !$this->checkTeamAccessProject($timesheet->getProject(), $user)) {
+            return false;
+        }
+
+        if ($timesheet->getActivity() !== null && !$this->checkTeamAccessActivity($timesheet->getActivity(), $user)) {
+            return false;
+        }
+
+        return $this->checkTeamLeadAccess($timesheet->getUser()?->getTeams() ?? [], $user);
+    }
+
+    public function checkUserAccess(User $subject, User $user, bool $onlyEnabled = true): bool
+    {
+        if ($subject->getId() === $user->getId()) {
+            return true;
+        }
+
+        if ($user->isSuperAdmin() || $user->canSeeAllData()) {
+            return true;
+        }
+
+        if ($onlyEnabled && !$subject->isEnabled()) {
+            return false;
+        }
+
+        // system accounts are used for admins or API-only accounts
+        // and should not be accessed by less-privileged users (e.g. teamleads)
+        if (!$user->isSystemAccount() && $subject->isSystemAccount()) {
+            return false;
+        }
+
+        if ($user->isTeamleadOfUser($subject)) {
+            return true;
+        }
+
+        // special case: the requested user is in no team and the current user is a teamlead.
+        // this configuration is likely in new installations with small teams, and
+        // it is allowed for teamleads to see other users data by definition
+        if (($user->hasTeamleadRole() || $user->isAdmin()) && $subject->isRegularUserOnly()) {
+            return \count($subject->getTeams()) === 0;
+        }
+
+        return false;
     }
 }

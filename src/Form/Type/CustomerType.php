@@ -52,7 +52,7 @@ final class CustomerType extends AbstractType
             'class' => Customer::class,
             'choice_label' => [$this, 'getChoiceLabel'],
             'choice_attr' => [$this, 'getChoiceAttributes'],
-            'query_builder_for_user' => true,
+            'query_builder_for_user' => true, // @deprecated since 2.67
             'project_enabled' => false,
             'project_select' => 'project',
             'start_date_param' => '%begin_date%',
@@ -69,13 +69,10 @@ final class CustomerType extends AbstractType
         $resolver->setDefault('query_builder', function (Options $options) {
             return function (CustomerRepository $repo) use ($options) {
                 $query = new CustomerFormTypeQuery($options['customers']);
+                $query->setUser($options['user']);
 
                 if (true === $options['pre_select_customer']) {
                     $query->setAllowCustomerPreselect(true);
-                }
-
-                if (true === $options['query_builder_for_user']) {
-                    $query->setUser($options['user']);
                 }
 
                 if (null !== $options['ignore_customer']) {

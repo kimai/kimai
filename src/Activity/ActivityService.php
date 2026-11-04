@@ -31,6 +31,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class ActivityService
 {
+    private int $generatedNumbers = 0;
+
     public function __construct(
         private readonly ActivityRepository $repository,
         private readonly SystemConfiguration $configuration,
@@ -138,7 +140,8 @@ class ActivityService
         }
 
         // we cannot use max(number) because a varchar column returns unexpected results
-        $start = $this->repository->countActivity();
+        $count = $this->repository->countActivity();
+        $start = $count + $this->generatedNumbers;
         $i = 0;
         $createDate = new \DateTimeImmutable();
 
@@ -169,6 +172,10 @@ class ActivityService
         if ($activity !== null) {
             return null;
         }
+
+        // Remember how far we advanced — including iterations spent skipping numbers that
+        // already exist — so the next call on this instance starts beyond the issued number.
+        $this->generatedNumbers = $start - $count;
 
         return $number;
     }

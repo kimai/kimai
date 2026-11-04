@@ -199,6 +199,7 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
 
         $configService = $this->getSystemConfiguration();
         self::assertNull($configService->find('defaults.customer.timezone'));
+        self::assertEquals('en', $configService->find('defaults.customer.language'));
         self::assertEquals('DE', $configService->find('defaults.customer.country'));
         self::assertEquals('EUR', $configService->find('defaults.customer.currency'));
 
@@ -206,8 +207,10 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
         $client->submit($form, [
             'system_configuration_form_customer' => [
                 'configuration' => [
+                    // The order of the fields must match the order of the actual form fields!
                     ['name' => 'defaults.customer.timezone', 'value' => 'Atlantic/Canary'],
                     ['name' => 'defaults.customer.country', 'value' => 'BB'],
+                    ['name' => 'defaults.customer.language', 'value' => 'es'],
                 ]
             ]
         ]);
@@ -219,6 +222,7 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
 
         $configService = $this->getSystemConfiguration();
         self::assertEquals('Atlantic/Canary', $configService->find('defaults.customer.timezone'));
+        self::assertEquals('es', $configService->find('defaults.customer.language'));
         self::assertEquals('BB', $configService->find('defaults.customer.country'));
     }
 
@@ -232,8 +236,10 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
         $client->submit($form, [
             'system_configuration_form_customer' => [
                 'configuration' => [
+                    // The order of the fields must match the order of the actual form fields!
                     ['name' => 'defaults.customer.timezone', 'value' => 'Atlantic/Canary'],
                     ['name' => 'defaults.customer.country', 'value' => 'BB'],
+                    ['name' => 'defaults.customer.language', 'value' => 'de'],
                 ]
             ]
         ]);
@@ -253,6 +259,8 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
         self::assertNull($configService->find('defaults.user.timezone'));
         self::assertEquals('auto', $configService->find('defaults.user.theme'));
         self::assertEquals('en', $configService->find('defaults.user.language'));
+        self::assertNull($configService->find('defaults.user.locale'));
+        self::assertEquals('en', $configService->getUserDefaultLocale());
 
         $form = $client->getCrawler()->filter('form[name=system_configuration_form_user]')->form();
         $client->submit($form, [
@@ -260,6 +268,7 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
                 'configuration' => [
                     ['name' => 'defaults.user.timezone', 'value' => 'Pacific/Tahiti'],
                     ['name' => 'defaults.user.language', 'value' => 'ru'],
+                    ['name' => 'defaults.user.locale', 'value' => 'de_CH'],
                     ['name' => 'defaults.user.theme', 'value' => 'dark'],
                 ]
             ]
@@ -274,6 +283,34 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
         self::assertEquals('Pacific/Tahiti', $configService->find('defaults.user.timezone'));
         self::assertEquals('dark', $configService->find('defaults.user.theme'));
         self::assertEquals('ru', $configService->find('defaults.user.language'));
+        self::assertEquals('de_CH', $configService->find('defaults.user.locale'));
+        self::assertEquals('de_CH', $configService->getUserDefaultLocale());
+    }
+
+    public function testUpdateUserConfigWithoutLocaleKeepsLanguageFallback(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/system-config/edit/user');
+
+        // saving the section without touching the locale must not persist the resolved fallback
+        $form = $client->getCrawler()->filter('form[name=system_configuration_form_user]')->form();
+        $client->submit($form, [
+            'system_configuration_form_user' => [
+                'configuration' => [
+                    ['name' => 'defaults.user.timezone', 'value' => 'Pacific/Tahiti'],
+                    ['name' => 'defaults.user.language', 'value' => 'ru'],
+                ]
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/admin/system-config/edit/user'));
+        $client->followRedirect();
+        $this->assertHasFlashSaveSuccess($client);
+
+        $configService = $this->getSystemConfiguration();
+        self::assertEquals('ru', $configService->find('defaults.user.language'));
+        self::assertNull($configService->find('defaults.user.locale'));
+        self::assertEquals('ru', $configService->getUserDefaultLocale());
     }
 
     public function testUpdateCustomerConfigValidation(): void
@@ -287,12 +324,14 @@ class SystemConfigurationControllerTest extends AbstractControllerBaseTestCase
                     'configuration' => [
                         ['name' => 'defaults.customer.timezone', 'value' => 'XX'],
                         ['name' => 'defaults.customer.country', 'value' => 1],
+                        ['name' => 'defaults.customer.language', 'value' => 1],
                     ]
                 ]
             ],
             [
                 '#system_configuration_form_customer_configuration_0_value',
                 '#system_configuration_form_customer_configuration_1_value',
+                '#system_configuration_form_customer_configuration_2_value',
             ]
         );
     }

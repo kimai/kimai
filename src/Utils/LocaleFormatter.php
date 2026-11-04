@@ -75,7 +75,7 @@ final class LocaleFormatter
      */
     public function durationDecimal(Timesheet|int|string|null $duration): string
     {
-        if (null === $this->numberFormatter) {
+        if (null === $this->decimalFormatter) {
             $this->decimalFormatter = new NumberFormatter($this->locale, NumberFormatter::DECIMAL);
             $this->decimalFormatter->setAttribute(NumberFormatter::FRACTION_DIGITS, 2);
         }
@@ -212,7 +212,7 @@ final class LocaleFormatter
             return null;
         }
 
-        return (string) $formatted;
+        return $formatted;
     }
 
     public function dateTime(DateTimeInterface|string|null $date): ?string
@@ -246,7 +246,7 @@ final class LocaleFormatter
             return null;
         }
 
-        return (string) $formatted;
+        return $formatted;
     }
 
     public function dateFormat(\DateTimeInterface|string|null $date, string $format): ?string
@@ -287,7 +287,7 @@ final class LocaleFormatter
             try {
                 $date = new \DateTimeImmutable($date);
             } catch (Exception $ex) {
-                return $date;
+                return null;
             }
         }
 
@@ -297,7 +297,7 @@ final class LocaleFormatter
             return null;
         }
 
-        return (string) $formatted;
+        return $formatted;
     }
 
     /**
@@ -320,7 +320,7 @@ final class LocaleFormatter
             throw new \Exception('Invalid dateformat given for formatIntl()');
         }
 
-        return (string) $formatted;
+        return $formatted;
     }
 
     public function monthName(\DateTimeInterface $dateTime, bool $withYear = false): string

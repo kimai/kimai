@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use App\Form\Type\YesNoType;
+use App\Validator\Constraints as Constraints;
 use App\WorkingTime\Calculator\WorkingTimeCalculatorDay;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -61,6 +62,7 @@ class UserPreference
     #[Assert\NotNull]
     private ?User $user = null;
     #[ORM\Column(name: 'name', type: Types::STRING, length: 50, nullable: false)]
+    #[Constraints\NoSpecialCharacters]
     #[Assert\NotNull]
     #[Assert\Length(min: 2, max: 50)]
     #[Serializer\Expose]

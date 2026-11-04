@@ -43,11 +43,11 @@ final class HomepageController extends AbstractController
             $userLanguage = $requestLanguage;
         }
 
-        // if a user somehow managed to get a wrong locale into hos account (eg. an imported user from Kimai 1)
-        // make sure that he will still see a beautiful page and not a 404
-        if (!$service->isKnownLocale($userLanguage)) {
-            $userLanguage = 'en';
-        }
+        // the locale in the URL is the one used for translating the UI, so only translated locales can be used.
+        // a user might still have a non-translated language stored (eg. an imported user from Kimai 1 or a
+        // profile that was not saved since language and formatting locale were split), which would end in a 404.
+        $userLanguage = $service->getNearestTranslationLocale($userLanguage);
+        $requestLanguage = $service->getNearestTranslationLocale($requestLanguage);
 
         $routes = [];
 

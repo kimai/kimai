@@ -1,5 +1,6 @@
 parameters:
     locale: en
+    kimai_translated_locales: ['ar', 'cs', 'da', 'de', 'de_CH', 'en', 'eo', 'es', 'eu', 'fr', 'he', 'hu', 'it', 'ja', 'ko', 'nl', 'pl', 'pt_BR', 'ro', 'ru', 'sk', 'sv', 'tr', 'vi', 'zh_CN']
     kimai_locales: ['ar', 'cs', 'de', 'de_CH', 'da', 'en', 'eo', 'es', 'eu', 'fr', 'he', 'hu', 'it', 'ja', 'ko', 'nl', 'pl', 'pt_BR', 'ro', 'ru', 'sk', 'sv', 'tr', 'vi', 'zh_CN']
 
 services:
@@ -23,3 +24,13 @@ services:
     App\User\UserService:
         public: true
         arguments: ['@App\Repository\UserRepository', '@event_dispatcher', '@validator', '@App\Configuration\SystemConfiguration', '@security.user_password_hasher']
+
+    # volatile permission cache: the persistent app cache would survive the database rollback and leak permissions between tests
+    kimai.test.permission_cache:
+        class: Symfony\Component\Cache\Adapter\ArrayAdapter
+        tags: [{ name: 'kernel.reset', method: 'reset' }]
+
+    App\User\PermissionService:
+        autowire: true
+        arguments:
+            $cache: '@kimai.test.permission_cache'

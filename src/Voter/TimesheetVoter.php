@@ -9,6 +9,8 @@
 
 namespace App\Voter;
 
+use App\Entity\Activity;
+use App\Entity\Project;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Form\Model\MultiUserTimesheet;
@@ -24,6 +26,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
  */
 final class TimesheetVoter extends Voter
 {
+    public const CREATE = 'create';
     public const VIEW = 'view';
     public const START = 'start';
     public const STOP = 'stop';
@@ -48,7 +51,9 @@ final class TimesheetVoter extends Voter
         self::EDIT_RATE,
         self::EDIT_EXPORT,
         'edit_billable',
-        'duplicate'
+        'duplicate',
+        'is_owner',
+        self::CREATE
     ];
 
     private ?bool $lockdownGrace = null;
@@ -82,15 +87,25 @@ final class TimesheetVoter extends Voter
     {
         $user = $token->getUser();
 
-        if (!($user instanceof User)) {
+        if (!($user instanceof User) || $user->getId() === null) {
             return false;
         }
 
         $permission = '';
 
         switch ($attribute) {
+            case 'is_owner':
+                return (!$subject instanceof MultiUserTimesheet) && $user->getId() === $subject->getUser()?->getId();
+
+            case self::CREATE:
+                if (!$this->canCreate($user, $subject)) {
+                    return false;
+                }
+                $permission .= $attribute;
+                break;
+
             case self::START:
-                if (!$this->canStart($subject)) {
+                if (!$this->canStart($user, $subject)) {
                     return false;
                 }
                 $permission .= $attribute;
@@ -111,15 +126,21 @@ final class TimesheetVoter extends Voter
                 break;
 
             case 'duplicate':
-                if (!$this->canStart($subject)) {
+                if (!$this->canDuplicate($user, $subject)) {
                     return false;
                 }
-                $permission = self::EDIT;
+                $permission = self::CREATE;
+                break;
+
+            case self::STOP:
+                if (!$this->canStop($subject)) {
+                    return false;
+                }
+                $permission .= $attribute;
                 break;
 
             case self::VIEW_RATE:
             case self::EDIT_RATE:
-            case self::STOP:
             case self::VIEW:
             case self::EXPORT:
             case self::EDIT_EXPORT:
@@ -131,43 +152,117 @@ final class TimesheetVoter extends Voter
                 return false;
         }
 
-        $permission .= '_';
-
-        // extend me for "team" support later on
         if ($subject->getUser()?->getId() === $user->getId()) {
-            $permission .= 'own';
-        } else {
-            $permission .= 'other';
+            return $this->permissionManager->hasRolePermission($user, $permission . '_own_timesheet');
         }
 
-        $permission .= '_timesheet';
+        if (!$this->permissionManager->checkTeamAccessTimesheet($subject, $user)) {
+            return false;
+        }
 
-        return $this->permissionManager->hasRolePermission($user, $permission);
+        return $this->permissionManager->hasRolePermission($user, $permission . '_other_timesheet');
     }
 
-    private function canStart(Timesheet $timesheet): bool
+    private function canCreate(User $user, Timesheet $timesheet): bool
     {
-        // possible improvements for the future:
-        // we could check the amount of active entries (maybe slow)
-        // if a teamlead starts an entry for another user, check that this user is part of his team (needs to be done for teams)
-
-        if (null === $timesheet->getActivity()) {
+        $activity = $timesheet->getActivity();
+        if (null !== $activity && !$this->checkActivity($user, $activity)) {
             return false;
         }
 
-        if (null === $timesheet->getProject()) {
+        $project = $timesheet->getProject();
+        if (null !== $project && !$this->checkProject($user, $project)) {
             return false;
         }
 
-        if (!$timesheet->getProject()->isVisible()) {
+        return !$this->isProjectLocked($timesheet, $timesheet->getBegin());
+    }
+
+    private function canStart(User $user, Timesheet $timesheet): bool
+    {
+        if (!$this->checkProjectAndActivity($user, $timesheet)) {
             return false;
         }
 
-        if (!$timesheet->getProject()->getCustomer()->isVisible()) {
+        // a running timesheet is the record itself, so its begin date is the one that will be stored.
+        // a stopped timesheet is only used as template for a new record, which will begin "now".
+        $begin = $timesheet->isRunning() ? $timesheet->getBegin() : $this->getNow($user);
+
+        return !$this->isProjectLocked($timesheet, $begin);
+    }
+
+    private function canDuplicate(User $user, Timesheet $timesheet): bool
+    {
+        if (!$this->checkProjectAndActivity($user, $timesheet)) {
             return false;
         }
 
-        if (!$timesheet->getActivity()->isVisible()) {
+        // the copy is created with the dates of the original record
+        return !$this->isProjectLocked($timesheet, $timesheet->getBegin());
+    }
+
+    private function canStop(Timesheet $timesheet): bool
+    {
+        return !$this->isProjectLocked($timesheet, $timesheet->getBegin());
+    }
+
+    private function checkProjectAndActivity(User $user, Timesheet $timesheet): bool
+    {
+        $activity = $timesheet->getActivity();
+        if (null === $activity || !$this->checkActivity($user, $activity)) {
+            return false;
+        }
+
+        $project = $timesheet->getProject();
+        if (null === $project || !$this->checkProject($user, $project)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Timesheets within a locked project period cannot be changed by anyone, admins included.
+     */
+    private function isProjectLocked(Timesheet $timesheet, ?\DateTimeInterface $begin): bool
+    {
+        $project = $timesheet->getProject();
+
+        if ($project === null || $begin === null) {
+            return false;
+        }
+
+        return $project->isLockedAtDate($begin);
+    }
+
+    private function checkProject(User $user, Project $project): bool
+    {
+        if (!$project->isVisible()) {
+            return false;
+        }
+
+        if (!$project->getCustomer()->isVisible()) {
+            return false;
+        }
+
+        // starting and duplicating both create a NEW record under the referenced
+        // project and activity, so the current user must still have team-based
+        // access to them - historical ownership of the original timesheet is not
+        // sufficient (otherwise old entries would survive an access revocation).
+        if (!$this->permissionManager->checkTeamAccessProject($project, $user)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private function checkActivity(User $user, Activity $activity): bool
+    {
+        if (!$activity->isVisible()) {
+            return false;
+        }
+
+        if (!$this->permissionManager->checkTeamAccessActivity($activity, $user)) {
             return false;
         }
 
@@ -184,7 +279,14 @@ final class TimesheetVoter extends Voter
             return false;
         }
 
-        return true;
+        // if a project is "locked until" the timesheet cannot be stopped.
+        // the user needs to be able to edit it, in order to change the start date.
+        // do not change order of calls: the check is here, because the isProjectLocked() comes directly afterward.
+        if ($timesheet->isRunning()) {
+            return true;
+        }
+
+        return !$this->isProjectLocked($timesheet, $timesheet->getBegin());
     }
 
     private function canDelete(User $user, Timesheet $timesheet): bool
@@ -197,7 +299,7 @@ final class TimesheetVoter extends Voter
             return false;
         }
 
-        return true;
+        return !$this->isProjectLocked($timesheet, $timesheet->getBegin());
     }
 
     private function isAllowedExported(User $user, Timesheet $timesheet): bool
@@ -231,10 +333,15 @@ final class TimesheetVoter extends Voter
             $this->lockdownGrace = $this->permissionManager->hasRolePermission($user, 'lockdown_grace_timesheet');
         }
 
+        return $this->lockdownService->isEditable($timesheet, $this->getNow($user), $this->lockdownGrace);
+    }
+
+    private function getNow(User $user): \DateTime
+    {
         if ($this->now === null) {
             $this->now = new \DateTime('now', new \DateTimeZone($user->getTimezone()));
         }
 
-        return $this->lockdownService->isEditable($timesheet, $this->now, $this->lockdownGrace);
+        return $this->now;
     }
 }

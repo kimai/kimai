@@ -10,8 +10,9 @@
 namespace App\Tests\Controller;
 
 use App\Entity\Customer;
-use App\Entity\CustomerComment;
 use App\Entity\CustomerMeta;
+use App\Entity\CustomerRate;
+use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\CustomerFixtures;
@@ -19,6 +20,7 @@ use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
+use App\Tests\Mocks\CustomerTestUrlMetaFieldSubscriberMock;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -108,6 +110,55 @@ class CustomerControllerTest extends AbstractControllerBaseTestCase
         $this->assertExcelExportResponse($client, 'kimai-customers_');
     }
 
+    /**
+     * Regression test for GHSA-hr8v-m742-9mph.
+     *
+     * The export is protected by "listing" only. It must apply the same budget rules as the
+     * listing table, which hides those columns unless the budget permissions are granted.
+     */
+    public function testExportHidesBudgetsWithoutPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->grantPermissions(User::ROLE_USER, 'TEST_CUSTOMER_LISTING_ONLY', ['view_customer']);
+
+        $em = $this->getEntityManager();
+        /** @var Customer $entity */
+        $entity = $em->getRepository(Customer::class)->find(1);
+        $entity->setBudget(123456.78);
+        $entity->setTimeBudget(987654);
+        $entity->setBudgetType('month');
+        $em->persist($entity);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/admin/customer/export');
+        $content = $this->getExcelExportContent($client);
+
+        self::assertStringNotContainsString('123456.78', $content);
+        self::assertStringNotContainsString('987654', $content);
+        self::assertStringNotContainsString('month', $content);
+    }
+
+    public function testExportShowsBudgetsWithPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $em = $this->getEntityManager();
+        /** @var Customer $entity */
+        $entity = $em->getRepository(Customer::class)->find(1);
+        $entity->setBudget(123456.78);
+        $entity->setTimeBudget(987654);
+        $entity->setBudgetType('month');
+        $em->persist($entity);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/admin/customer/export');
+        $content = $this->getExcelExportContent($client);
+
+        self::assertStringContainsString('123456.78', $content);
+        self::assertStringContainsString('987654', $content);
+        self::assertStringContainsString('month', $content);
+    }
+
     public function testExportActionWithSearchTermQuery(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
@@ -132,6 +183,49 @@ class CustomerControllerTest extends AbstractControllerBaseTestCase
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAccessIsGranted($client, '/admin/customer/1/details');
         $this->assertDetailsPage($client);
+    }
+
+    /**
+     * @return array<int, array<string>>
+     */
+    public static function getUrlMetaFieldValues(): array
+    {
+        return [
+            ['javascript:alert(1)', 'href="javascript:alert(1)"'],
+            ['JavaScript://%0Aalert(1)', 'href="JavaScript://%0Aalert(1)"'],
+            ['data:text/html,test', 'href="data:text/html,test"'],
+            ['https://www.kimai.org', '<a href="https://www.kimai.org" target="_blank" rel="noopener noreferrer">https://www.kimai.org</a>'],
+        ];
+    }
+
+    /**
+     * Values might have been stored before validation was in place (or by plugins without URL constraint).
+     */
+    #[DataProvider('getUrlMetaFieldValues')]
+    public function testDetailsActionRendersOnlySafeUrlMetaFieldsAsLink(string $value, string $html): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new CustomerTestUrlMetaFieldSubscriberMock());
+
+        $em = $this->getEntityManager();
+        /** @var Customer $customer */
+        $customer = $em->getRepository(Customer::class)->find(1);
+        $customer->setMetaField((new CustomerMeta())->setName('homepage')->setValue($value)->setIsVisible(true));
+        $em->persist($customer);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/admin/customer/1/details');
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        self::assertStringContainsString($value, $content);
+
+        if (str_starts_with($value, 'https://')) {
+            self::assertStringContainsString($html, $content);
+        } else {
+            self::assertStringNotContainsString($html, $content);
+        }
     }
 
     private function assertDetailsPage(HttpKernelBrowser $client)
@@ -175,6 +269,24 @@ class CustomerControllerTest extends AbstractControllerBaseTestCase
         self::assertStringContainsString('123.45', $node->text(null, true));
     }
 
+    public function testEditRateActionDeniesForeignRate(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $customer = $this->importFixture(new CustomerFixtures(1))[0];
+        $rate = new CustomerRate();
+        $rate->setCustomer($customer);
+        $rate->setRate(123.45);
+
+        $em = $this->getEntityManager();
+        $em->persist($rate);
+        $em->flush();
+
+        $this->request($client, '/admin/customer/1/rate/' . $rate->getId());
+
+        $this->assertAccessDenied($client);
+    }
+
     public function testAddCommentAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
@@ -196,94 +308,6 @@ class CustomerControllerTest extends AbstractControllerBaseTestCase
         $this->assertAccessIsGranted($client, '/admin/customer/1/details');
         $node = $client->getCrawler()->filter('div.card#comments_box .direct-chat-text');
         self::assertStringContainsString('<p>A beautiful and short comment <strong>with some</strong> markdown formatting</p>', $node->html());
-    }
-
-    public function testDeleteCommentAction(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/customer/1/details');
-        $form = $client->getCrawler()->filter('form[name=customer_comment_form]')->form();
-        $client->submit($form, [
-            'customer_comment_form' => [
-                'message' => 'Blah foo bar',
-            ]
-        ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
-        $client->followRedirect();
-
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
-        self::assertStringContainsString('Blah foo bar', $node->html());
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.delete-comment-link');
-
-        $this->request($client, $node->attr('href'));
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
-        self::assertStringContainsString('There were no comments posted yet', $node->html());
-    }
-
-    public function testDeleteCommentActionWithoutToken(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/customer/1/details');
-        $form = $client->getCrawler()->filter('form[name=customer_comment_form]')->form();
-        $client->submit($form, [
-            'customer_comment_form' => [
-                'message' => 'Blah foo bar',
-            ]
-        ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
-        $client->followRedirect();
-
-        $comments = $this->getEntityManager()->getRepository(CustomerComment::class)->findAll();
-        $id = $comments[0]->getId();
-
-        $this->request($client, '/admin/customer/' . $id . '/comment_delete');
-
-        $this->assertRouteNotFound($client);
-    }
-
-    public function testPinCommentAction(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/customer/1/details');
-        $form = $client->getCrawler()->filter('form[name=customer_comment_form]')->form();
-        $client->submit($form, [
-            'customer_comment_form' => [
-                'message' => 'Blah foo bar',
-            ]
-        ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
-        self::assertStringContainsString('Blah foo bar', $node->html());
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.pin-comment-link.active');
-        self::assertEquals(0, $node->count());
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.pin-comment-link');
-        self::assertEquals(1, $node->count());
-        $this->request($client, $node->attr('href'));
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.pin-comment-link.active');
-        self::assertEquals(1, $node->count());
-        self::assertStringContainsString('/admin/customer/', $node->attr('href'));
-        self::assertStringContainsString('/comment_pin/', $node->attr('href'));
-    }
-
-    public function testCreateDefaultTeamAction(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/customer/1/details');
-        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-body');
-        self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text(null, true));
-
-        $this->request($client, '/admin/customer/1/create_team');
-        $this->assertIsRedirect($client, $this->createUrl('/admin/customer/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-title');
-        self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text(null, true));
-        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-body table tbody tr');
-        self::assertEquals(1, $node->count());
     }
 
     public function testProjectsAction(): void
@@ -395,6 +419,111 @@ class CustomerControllerTest extends AbstractControllerBaseTestCase
         /** @var Customer $customer */
         $customer = $em->getRepository(Customer::class)->find(1);
         self::assertEquals(2, $customer->getTeams()->count());
+    }
+
+    public function testCreateTeamActionIsSecure(): void
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/admin/customer/1/team-create');
+    }
+
+    /**
+     * "create_team" alone is not enough, the caller also has to be allowed to manage the
+     * permissions of the customer the team is created for.
+     */
+    public function testCreateTeamActionNeedsCustomerPermissions(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->grantPermissions(User::ROLE_USER, 'TEST_CUSTOMER_TEAM_CREATE_ONLY', ['create_team', 'view_customer']);
+
+        $this->request($client, '/admin/customer/1/team-create');
+        $this->assertAccessDenied($client);
+    }
+
+    /**
+     * Regression test for GHSA-hvq2-5gh2-rgvv.
+     *
+     * The endpoint once looked up a team by the customer name and reused it, which made the
+     * caller a teamlead of an unrelated team that happened to share that name. A team is now
+     * always created from scratch, so an existing team with the same name must stay untouched.
+     */
+    public function testCreateTeamActionDoesNotTouchForeignTeamWithSameName(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $em = $this->getEntityManager();
+
+        /** @var Customer $customer */
+        $customer = $em->getRepository(Customer::class)->find(1);
+        $name = $customer->getName();
+        self::assertIsString($name);
+
+        // a pre-existing team with the very same name, led by somebody else
+        $victimId = $this->getUserByRole(User::ROLE_USER)->getId();
+        $foreignTeam = new Team($name);
+        $foreignTeam->addTeamlead($this->getUserByRole(User::ROLE_USER));
+        $em->persist($foreignTeam);
+        $em->flush();
+
+        $foreignTeamId = $foreignTeam->getId();
+        self::assertIsInt($foreignTeamId);
+
+        $this->assertAccessIsGranted($client, '/admin/customer/1/team-create');
+        $form = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
+        $client->submit($form);
+
+        // the team name is unique, so the collision surfaces as a validation error
+        self::assertFalse($client->getResponse()->isRedirect());
+
+        $em->clear();
+
+        $reloaded = $em->getRepository(Team::class)->find($foreignTeamId);
+        self::assertInstanceOf(Team::class, $reloaded);
+
+        $memberIds = array_map(static function (User $user) { return $user->getId(); }, $reloaded->getUsers());
+        self::assertEquals([$victimId], $memberIds, 'The foreign team must not have gained a member');
+
+        $bound = [];
+        foreach ($reloaded->getCustomers() as $entity) {
+            $bound[] = $entity->getId();
+        }
+        self::assertEquals([], $bound, 'The foreign team must not have been bound to the customer');
+
+        /** @var Customer $reloadedCustomer */
+        $reloadedCustomer = $em->getRepository(Customer::class)->find(1);
+        self::assertEquals(0, $reloadedCustomer->getTeams()->count());
+    }
+
+    public function testCreateTeamAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $em = $this->getEntityManager();
+
+        /** @var Customer $customer */
+        $customer = $em->getRepository(Customer::class)->find(1);
+        self::assertEquals(0, $customer->getTeams()->count());
+
+        $this->assertAccessIsGranted($client, '/admin/customer/1/team-create');
+        $form = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
+        self::assertEquals('Test', $form->get('team_edit_form[name]')->getValue());
+
+        $client->submit($form);
+
+        $location = $this->assertIsModalRedirect($client, '/admin/customer/1/details');
+        $this->requestPure($client, $location);
+        $this->assertHasFlashSuccess($client);
+
+        $em->clear();
+
+        /** @var Customer $customer */
+        $customer = $em->getRepository(Customer::class)->find(1);
+        self::assertEquals(1, $customer->getTeams()->count());
+
+        $team = $em->getRepository(Team::class)->findOneBy(['name' => 'Test']);
+        self::assertInstanceOf(Team::class, $team);
+        self::assertTrue($team->hasCustomer($customer));
+
+        $teamleads = $team->getTeamleads();
+        self::assertCount(1, $teamleads);
+        self::assertEquals($this->getUserByRole(User::ROLE_ADMIN)->getId(), $teamleads[0]->getId());
     }
 
     public function testDeleteAction(): void

@@ -86,7 +86,10 @@ final class CalendarController extends AbstractController
         $isPunchMode = !$mode->canEditDuration() && !$mode->canEditBegin() && !$mode->canEditEnd();
         $dragAndDrop = [];
 
-        if ($mode->canEditBegin()) {
+        // drag and drop should be hidden if the user cannot create timesheets
+        $permission = $profile === $currentUser ? 'create_own_timesheet' : 'create_other_timesheet';
+        // also hide if the current time-tracking mode does not allow to change the start time
+        if ($mode->canEditBegin() && $this->isGranted($permission)) {
             try {
                 $dragAndDrop = $this->calendarService->getDragAndDropResources($profile);
             } catch (\Exception $ex) {

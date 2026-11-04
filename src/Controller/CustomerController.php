@@ -23,6 +23,7 @@ use App\Form\CustomerCommentForm;
 use App\Form\CustomerEditForm;
 use App\Form\CustomerRateForm;
 use App\Form\CustomerTeamPermissionForm;
+use App\Form\TeamEditForm;
 use App\Form\Toolbar\CustomerToolbarForm;
 use App\Form\Type\CustomerType;
 use App\Repository\CustomerRateRepository;
@@ -42,10 +43,7 @@ use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Csrf\CsrfToken;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
@@ -90,14 +88,17 @@ final class CustomerController extends AbstractController
         $table->addColumn('company', ['class' => 'd-none']);
         $table->addColumn('vat_id', ['class' => 'd-none w-min']);
         $table->addColumn('contact', ['class' => 'd-none']);
+        $table->addColumn('street', ['class' => 'd-none', 'title' => 'address']);
         $table->addColumn('city', ['class' => 'd-none']);
         $table->addColumn('country', ['class' => 'd-none w-min']);
+        $table->addColumn('language', ['class' => 'd-none w-min']);
         $table->addColumn('currency', ['class' => 'd-none w-min']);
         $table->addColumn('phone', ['class' => 'd-none']);
         $table->addColumn('fax', ['class' => 'd-none']);
         $table->addColumn('mobile', ['class' => 'd-none']);
         $table->addColumn('email', ['class' => 'd-none']);
         $table->addColumn('homepage', ['class' => 'd-none']);
+        $table->addColumn('invoice_email', ['class' => 'd-none']);
 
         foreach ($metaColumns as $metaColumn) {
             $table->addColumn('mf_' . $metaColumn->getName(), ['title' => $metaColumn->getLabel(), 'class' => 'd-none', 'orderBy' => false, 'data' => $metaColumn]);
@@ -170,27 +171,38 @@ final class CustomerController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{id}/comment_delete/{token}', name: 'customer_comment_delete', methods: ['GET'])]
-    #[IsGranted(new Expression("is_granted('edit', subject.getCustomer()) and is_granted('comments', subject.getCustomer())"), 'comment')]
-    public function deleteCommentAction(CustomerComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
+    #[Route(path: '/{id}/team-create', name: 'customer_team_create', methods: ['GET', 'POST'])]
+    #[IsGranted('create_team')]
+    #[IsGranted('permissions', 'customer')]
+    public function createTeam(Customer $customer, Request $request, TeamService $teamService): Response
     {
-        $customerId = $comment->getCustomer()->getId();
+        $team = $teamService->createNewTeam($customer->getName() ?? '');
+        $team->addTeamlead($this->getUser());
+        $team->addCustomer($customer);
 
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('comment.delete', $token))) {
-            $this->flashError('action.csrf.error');
+        $form = $this->createForm(TeamEditForm::class, $team, [
+            'action' => $this->generateUrl('customer_team_create', ['id' => $customer->getId()]),
+            'method' => 'POST',
+        ]);
 
-            return $this->redirectToRoute('customer_details', ['id' => $customerId]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $teamService->saveTeam($team);
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRouteAfterCreate('customer_details', ['id' => $customer->getId()]);
+            } catch (\Exception $ex) {
+                $this->flashUpdateException($ex);
+            }
         }
 
-        $csrfTokenManager->refreshToken('comment.delete');
-
-        try {
-            $this->repository->deleteComment($comment);
-        } catch (\Exception $ex) {
-            $this->flashDeleteException($ex);
-        }
-
-        return $this->redirectToRoute('customer_details', ['id' => $customerId]);
+        return $this->render('customer/form.html.twig', [
+            'page_setup' => $this->createPageSetup(),
+            'customer' => $customer,
+            'form' => $form->createView()
+        ]);
     }
 
     #[Route(path: '/{id}/comment_add', name: 'customer_comment_add', methods: ['POST'])]
@@ -208,58 +220,6 @@ final class CustomerController extends AbstractController
             } catch (\Exception $ex) {
                 $this->flashUpdateException($ex);
             }
-        }
-
-        return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
-    }
-
-    #[Route(path: '/{id}/comment_pin/{token}', name: 'customer_comment_pin', methods: ['GET'])]
-    #[IsGranted(new Expression("is_granted('edit', subject.getCustomer()) and is_granted('comments', subject.getCustomer())"), 'comment')]
-    public function pinCommentAction(CustomerComment $comment, string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
-    {
-        $customerId = $comment->getCustomer()->getId();
-
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('comment.pin', $token))) {
-            $this->flashError('action.csrf.error');
-
-            return $this->redirectToRoute('customer_details', ['id' => $customerId]);
-        }
-
-        $csrfTokenManager->refreshToken('comment.pin');
-
-        $comment->setPinned(!$comment->isPinned());
-        try {
-            $this->repository->saveComment($comment);
-        } catch (\Exception $ex) {
-            $this->flashUpdateException($ex);
-        }
-
-        return $this->redirectToRoute('customer_details', ['id' => $customerId]);
-    }
-
-    #[Route(path: '/{id}/create_team', name: 'customer_team_create', methods: ['GET'])]
-    #[IsGranted('create_team')]
-    #[IsGranted('permissions', 'customer')]
-    public function createDefaultTeamAction(Customer $customer, TeamService $teamService): Response
-    {
-        $name = $customer->getName();
-        if ($name === null) {
-            throw new BadRequestHttpException('Cannot create default team for customer with empty name: ' . $customer->getId());
-        }
-
-        $defaultTeam = $teamService->findTeamByName($name);
-
-        if (null === $defaultTeam) {
-            $defaultTeam = $teamService->createNewTeam($name);
-        }
-
-        $defaultTeam->addTeamlead($this->getUser());
-        $defaultTeam->addCustomer($customer);
-
-        try {
-            $teamService->saveTeam($defaultTeam);
-        } catch (\Exception $ex) {
-            $this->flashUpdateException($ex);
         }
 
         return $this->redirectToRoute('customer_details', ['id' => $customer->getId()]);
@@ -296,7 +256,6 @@ final class CustomerController extends AbstractController
 
         $stats = null;
         $timezone = null;
-        $defaultTeam = null;
         $commentForm = null;
         $attachments = [];
         $comments = null;
@@ -314,9 +273,6 @@ final class CustomerController extends AbstractController
         }
 
         if ($this->isGranted('edit', $customer)) {
-            if ($this->isGranted('create_team')) {
-                $defaultTeam = $teamRepository->findOneBy(['name' => $customer->getName()]);
-            }
             $rates = $rateRepository->getRatesForCustomer($customer);
         }
 
@@ -356,7 +312,6 @@ final class CustomerController extends AbstractController
             'commentForm' => $commentForm,
             'attachments' => $attachments,
             'stats' => $stats,
-            'team' => $defaultTeam,
             'teams' => $teams,
             'customer_now' => new \DateTime('now', $timezone),
             'rates' => $rates,
@@ -371,6 +326,10 @@ final class CustomerController extends AbstractController
     #[IsGranted('edit', 'customer')]
     public function editRateAction(Customer $customer, CustomerRate $rate, Request $request, CustomerRateRepository $repository): Response
     {
+        if ($rate->getCustomer() !== $customer) {
+            throw $this->createAccessDeniedException('Trying to edit rate and customer that do not belong together.');
+        }
+
         return $this->rateFormAction($customer, $rate, $request, $repository, $this->generateUrl('admin_customer_rate_edit', ['id' => $customer->getId(), 'rate' => $rate->getId()]));
     }
 
@@ -404,7 +363,7 @@ final class CustomerController extends AbstractController
             }
         }
 
-        return $this->render('customer/rates.html.twig', [
+        return $this->render('customer/form.html.twig', [
             'page_setup' => $this->createPageSetup(),
             'customer' => $customer,
             'form' => $form->createView()
@@ -434,7 +393,6 @@ final class CustomerController extends AbstractController
                 ]
             ])
             ->add('customer', CustomerType::class, [
-                'query_builder_for_user' => true,
                 'ignore_customer' => $customer,
                 'required' => false,
             ])

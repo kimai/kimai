@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraint;
 /**
  * @method null|string getSection()
  * @method void setSection(?string $name)
+ * @method string|null getFormTheme()
  */
 interface MetaTableTypeInterface
 {
@@ -147,6 +148,11 @@ interface MetaTableTypeInterface
      * FIXME activate with 3.0
      */
     //public function getSection(): ?string;
+
+    /**
+     * FIXME activate with 3.0
+     */
+    // public function getFormTheme(): ?string;
 
     /**
      * Whether true if this field is defined by a plugin, or false if it is a value stored in the database.

@@ -14,6 +14,7 @@ use Doctrine\Persistence\ObjectManager;
 
 /**
  * Defines the sample data to load in during controller tests.
+ * @implements TestFixture<Tag>
  */
 final class TagFixtures implements TestFixture
 {

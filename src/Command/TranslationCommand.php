@@ -312,7 +312,6 @@ final class TranslationCommand extends Command
                 return Command::FAILURE;
             }
 
-            $allKeys = 0;
             $enFiles = glob($bases['core'] . '/*.en.xlf');
 
             $baseUrl = 'https://api-free.deepl.com/v2/translate';
@@ -331,7 +330,6 @@ final class TranslationCommand extends Command
                         'source' => (string) $unit->source,
                         'target' => (string) $unit->target
                     ];
-                    $allKeys++;
                 }
 
                 $localeFile = $bases['core'] . '/' . $domain . '.' . $locale . '.xlf';
@@ -374,7 +372,6 @@ final class TranslationCommand extends Command
                         'target_lang' => $deeplySupportedLanguages[$locale],
                     ];
 
-                    $rawResponseData = null;
                     try {
                         $rawResponseData = $client->request('POST', $baseUrl, ['body' => $params]);
                     } catch (\Exception $exception) {
@@ -607,6 +604,10 @@ final class TranslationCommand extends Command
     private function moveResname(SymfonyStyle $io, string $resname, array $sources, array $targets): int
     {
         foreach ($sources as $source) {
+            if (\strlen($source) === 0 || !file_exists($source)) {
+                throw new \RuntimeException('Invalid source: ' . $source);
+            }
+
             $tmp = basename($source);
             $pos = strpos($tmp, '.');
             if ($pos === false) {
@@ -677,6 +678,10 @@ final class TranslationCommand extends Command
     private function copyResname(SymfonyStyle $io, string $resname, string $target, array $sources): int
     {
         foreach ($sources as $source) {
+            if (\strlen($source) === 0 || !file_exists($source)) {
+                throw new \RuntimeException('Invalid source: ' . $source);
+            }
+
             $tmp = basename($source);
             $pos = strpos($tmp, '.');
             if ($pos === false) {
@@ -734,6 +739,10 @@ final class TranslationCommand extends Command
     private function moveAll(SymfonyStyle $io, array $sources, array $targets): int
     {
         foreach ($sources as $source) {
+            if (\strlen($source) === 0 || !file_exists($source)) {
+                throw new \RuntimeException('Invalid source: ' . $source);
+            }
+
             $tmp = basename($source);
             $pos = strpos($tmp, '.');
             if ($pos === false) {

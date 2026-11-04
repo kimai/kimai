@@ -39,6 +39,7 @@ class Team
      * Team name
      */
     #[ORM\Column(name: 'name', type: Types::STRING, length: 100, nullable: false)]
+    #[Constraints\NoSpecialCharacters]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 100)]
     #[Serializer\Expose]
@@ -47,7 +48,7 @@ class Team
     /**
      * All team member (including team leads)
      *
-     * @var Collection<TeamMember>
+     * @var Collection<int, TeamMember>
      */
     #[ORM\OneToMany(mappedBy: 'team', targetEntity: TeamMember::class, cascade: ['persist', 'remove'], fetch: 'LAZY', orphanRemoval: true)]
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
@@ -59,7 +60,7 @@ class Team
     /**
      * Customers assigned to the team
      *
-     * @var Collection<Customer>
+     * @var Collection<int, Customer>
      */
     #[ORM\ManyToMany(targetEntity: Customer::class, mappedBy: 'teams', cascade: ['persist'], fetch: 'EXTRA_LAZY')]
     #[Serializer\Expose]
@@ -69,7 +70,7 @@ class Team
     /**
      * Projects assigned to the team
      *
-     * @var Collection<Project>
+     * @var Collection<int, Project>
      */
     #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'teams', cascade: ['persist'], fetch: 'EXTRA_LAZY')]
     #[Serializer\Expose]
@@ -79,7 +80,7 @@ class Team
     /**
      * Activities assigned to the team
      *
-     * @var Collection<Activity>
+     * @var Collection<int, Activity>
      */
     #[ORM\ManyToMany(targetEntity: Activity::class, mappedBy: 'teams', cascade: ['persist'], fetch: 'EXTRA_LAZY')]
     #[Serializer\Expose]
@@ -116,7 +117,7 @@ class Team
     }
 
     /**
-     * @return Collection<TeamMember>
+     * @return Collection<int, TeamMember>
      */
     public function getMembers(): Collection
     {
@@ -315,7 +316,7 @@ class Team
 
     /**
      * @internal
-     * @return Collection<Customer>
+     * @return Collection<int, Customer>
      */
     public function getCustomers(): iterable
     {
@@ -349,7 +350,7 @@ class Team
 
     /**
      * @internal
-     * @return Collection<Project>
+     * @return Collection<int, Project>
      */
     public function getProjects(): iterable
     {
@@ -383,7 +384,7 @@ class Team
 
     /**
      * @internal
-     * @return Collection<Activity>
+     * @return Collection<int, Activity>
      */
     public function getActivities(): iterable
     {

@@ -18,6 +18,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * @template-implements UserProviderInterface<User>
+ * @internal
  */
 final class LdapUserProvider implements UserProviderInterface
 {
@@ -29,7 +30,7 @@ final class LdapUserProvider implements UserProviderInterface
     {
         $user = $this->ldapManager->findUserByUsername($identifier);
 
-        if (empty($user)) {
+        if (null === $user) {
             $this->logDebug('User {username} {result} on LDAP', [
                 'action' => 'loadUserByIdentifier',
                 'username' => $identifier,

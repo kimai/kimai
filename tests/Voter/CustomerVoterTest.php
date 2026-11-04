@@ -16,6 +16,7 @@ use App\Voter\CustomerVoter;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+use Symfony\Component\Security\Core\User\InMemoryUser;
 
 #[CoversClass(CustomerVoter::class)]
 class CustomerVoterTest extends AbstractVoterTestCase
@@ -162,5 +163,53 @@ class CustomerVoterTest extends AbstractVoterTestCase
         $customer->addTeam(new Team('foo'));
 
         $this->assertVote($user, $customer, 'access', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testAccessGrantedForCanSeeAllDataDespiteRestrictiveTeams(): void
+    {
+        $customer = new Customer('foo');
+        $customer->addTeam(new Team('locked'));
+
+        $user = new User();
+        $user->initCanSeeAllData(true);
+
+        $this->assertVote($user, $customer, 'access', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testAccessGrantedWhenUserMatchesOneOfMultipleCustomerTeams(): void
+    {
+        $sharedTeam = new Team('shared');
+        $foreignTeam = new Team('foreign');
+
+        $customer = new Customer('foo');
+        $customer->addTeam($foreignTeam);
+        $customer->addTeam($sharedTeam);
+
+        $user = new User();
+        $sharedTeam->addUser($user);
+
+        $this->assertVote($user, $customer, 'access', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testAccessDeniedWhenUserOnlyInUnrelatedTeams(): void
+    {
+        $customer = new Customer('foo');
+        $customer->addTeam(new Team('customerTeam'));
+
+        $user = new User();
+        $unrelated = new Team('unrelated');
+        $unrelated->addUser($user);
+        $unrelated->addTeamlead($user);
+
+        $this->assertVote($user, $customer, 'access', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testAccessDeniedForNonUserToken(): void
+    {
+        $customer = new Customer('foo');
+        $token = new UsernamePasswordToken(new InMemoryUser('anon', null), 'bar', []);
+        $sut = $this->getVoter(CustomerVoter::class);
+
+        self::assertEquals(VoterInterface::ACCESS_DENIED, $sut->vote($token, $customer, ['access']));
     }
 }

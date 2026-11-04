@@ -74,7 +74,7 @@ interface ExportableItem
     public function getVisibleMetaFields(): array;
 
     /**
-     * @return Collection<MetaTableTypeInterface>
+     * @return Collection|MetaTableTypeInterface[]
      */
     public function getMetaFields(): Collection;
 
@@ -93,14 +93,14 @@ interface ExportableItem
     /*
      * Returns all assigned tags.
      * @TODO activate for 3.0
-     * @return Collection<Tag>
+     * @return Collection<int, Tag>
      */
     //public function getTags(): array;
 
     /*
      * Returns the break duration.
      * @TODO activate for 3.0
-     * @return Collection<Tag>
+     * @return Collection<int, Tag>
      */
     //public function getBreak(): int;
 }

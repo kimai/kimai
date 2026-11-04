@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="gkQA1YG" resname="daterangepicker.yesterday">
         <source>daterangepicker.yesterday</source>
-        <target>Zítra</target>
+        <target state="translated">Včera</target>
       </trans-unit>
       <trans-unit id="CAvVEbc" resname="daterangepicker.lastWeek">
         <source>daterangepicker.lastWeek</source>

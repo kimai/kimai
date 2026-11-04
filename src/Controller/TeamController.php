@@ -38,15 +38,9 @@ final class TeamController extends AbstractController
     {
     }
 
-    /**
-     * @param TeamRepository $repository
-     * @param Request $request
-     * @param int $page
-     * @return Response
-     */
     #[Route(path: '/', defaults: ['page' => 1], name: 'admin_team', methods: ['GET'])]
     #[Route(path: '/page/{page}', requirements: ['page' => '[1-9]\d*'], name: 'admin_team_paginated', methods: ['GET'])]
-    public function listTeams(TeamRepository $repository, Request $request, $page): Response
+    public function listTeams(int $page, TeamRepository $repository, Request $request): Response
     {
         $query = new TeamQuery();
         $query->setPage($page);
@@ -81,10 +75,6 @@ final class TeamController extends AbstractController
         ]);
     }
 
-    /**
-     * @param Request $request
-     * @return Response
-     */
     #[Route(path: '/create', name: 'admin_team_create', methods: ['GET', 'POST'])]
     #[IsGranted('create_team')]
     public function createTeam(Request $request): Response
@@ -177,7 +167,12 @@ final class TeamController extends AbstractController
                 $this->flashSuccess('action.update.success');
 
                 if ($create) {
-                    return $this->redirectToRouteAfterCreate('admin_team_edit', ['id' => $team->getId()]);
+                    // a really weird combination of permissions makes this possible
+                    if ($this->isGranted('edit', $team)) {
+                        return $this->redirectToRouteAfterCreate('admin_team_edit', ['id' => $team->getId()]);
+                    }
+
+                    return $this->redirectToRoute('admin_team');
                 }
 
                 return $this->redirectToRoute('admin_team_edit', ['id' => $team->getId()]);
@@ -192,7 +187,6 @@ final class TeamController extends AbstractController
                     'label' => false,
                     'multiple' => true,
                     'expanded' => true,
-                    'query_builder_for_user' => false,
                 ]);
 
             $projectForm = $this->createFormWithName('team_project_form', FormType::class, $team)
@@ -200,7 +194,6 @@ final class TeamController extends AbstractController
                     'label' => false,
                     'multiple' => true,
                     'expanded' => true,
-                    'query_builder_for_user' => false,
                 ]);
         }
 

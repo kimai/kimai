@@ -24,11 +24,11 @@
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
-        <target state="needs-translation">Сбросить пароль</target>
+        <target state="translated">Зайти через Kimai</target>
       </trans-unit>
       <trans-unit id="G2mhn_2" resname="reset.title" xml:space="preserve">
         <source>Forgot your password?</source>
-        <target state="needs-translation">Это может произойти …</target>
+        <target state="translated">Зайдите в ваш аккаунт</target>
       </trans-unit>
       <trans-unit id="qbt.84Y" resname="reset.button" xml:space="preserve">
         <source>reset.button</source>
@@ -49,6 +49,26 @@
       <trans-unit id="YdGZyer" resname="approval_approved_subject" xml:space="preserve">
         <source>approval_approved_subject</source>
         <target state="translated">Ваш запрос был одобрен</target>
+      </trans-unit>
+      <trans-unit id="yohIAA_" resname="absence_created_supervisor_subject" xml:space="preserve">
+        <source>absence_created_supervisor_subject</source>
+        <target state="translated">Отсутствует: %user% (%type%)</target>
+      </trans-unit>
+      <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
+        <source>approval_rejected_message</source>
+        <target state="translated">Ваш запрос на авторизацию был отказан %created_by%.
+
+%list%
+
+Пожалуйста проверьте свой запрос здесь: %url%</target>
+      </trans-unit>
+      <trans-unit id="4nn7Vi1" resname="approval_approved_message" xml:space="preserve">
+        <source>approval_approved_message</source>
+        <target state="needs-translation">Ваш запрос был одабрён %created_by%.
+
+%list%
+
+Вы можете найти все свои запросы под: %url%</target>
       </trans-unit>
     </body>
   </file>

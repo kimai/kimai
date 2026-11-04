@@ -144,19 +144,19 @@
       </trans-unit>
       <trans-unit id="jmsE4EY" resname="Ceil" xml:space="preserve">
         <source>Ceil</source>
-        <target state="needs-translation">Plafond: begin, einde en duur worden naar boven afgerond</target>
+        <target state="translated">Begin, einde en tijdsduur worden naar boven afgerond</target>
       </trans-unit>
       <trans-unit id="Y_qmsDz" resname="Closest" xml:space="preserve">
         <source>Closest</source>
-        <target state="needs-translation">Dichtstbijzijnde: wiskundige afronding op de dichtstbijzijnde waarde</target>
+        <target state="translated">Wiskundige afronding naar de dichtstbijzijnde waarde</target>
       </trans-unit>
       <trans-unit id="IbERy.5" resname="Default" xml:space="preserve">
         <source>Default</source>
-        <target state="needs-translation">Standaard: begin wordt naar beneden afgerond, einde en duur naar boven</target>
+        <target state="translated">Begin wordt naar beneden afgerond, einde en tijdsduur naar boven</target>
       </trans-unit>
       <trans-unit id="0mjJxEk" resname="Floor" xml:space="preserve">
         <source>Floor</source>
-        <target state="needs-translation">Vloer: begin, einde en duur worden naar beneden afgerond</target>
+        <target state="translated">Begin, einde en tijdsduur worden naar beneden afgerond</target>
       </trans-unit>
       <trans-unit id="_0OBfZf" resname="timesheet.default_begin">
         <source>timesheet.default_begin</source>
@@ -309,6 +309,50 @@
       <trans-unit id="12sQGSo" resname="activity.allow_inline_create" xml:space="preserve">
         <source>activity.allow_inline_create</source>
         <target state="translated">Sta het creëren van activiteiten toe via het tijdsregistratie formulier</target>
+      </trans-unit>
+      <trans-unit id="uf2_qIW" resname="user_auth_wizard" xml:space="preserve">
+        <source>user_auth_wizard</source>
+        <target state="translated">Toon installatietool voor nieuwe gebruikers</target>
+      </trans-unit>
+      <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="no" xml:space="preserve">
+        <source>invoice.rounding_mode</source>
+        <target state="translated">Afrondingsmodus</target>
+      </trans-unit>
+      <trans-unit id="iobaZJS" resname="user_auth_change">
+        <source>user_auth_change</source>
+        <target state="translated">Verander authenticatie van gebruikers met externe aanmelding</target>
+      </trans-unit>
+      <trans-unit id="iMmgno5" resname="user_auth_change.help">
+        <source>user_auth_change.help</source>
+        <target state="translated">Staat Super-Beheerders toe om gebruikers met externe aanmeldignen terug te zetten op interne aanmeldingen vanuit het gebruikersprofiel.</target>
+      </trans-unit>
+      <trans-unit id="6pqJCWV" resname="user_auth_password_strength">
+        <source>user_auth_password_strength</source>
+        <target state="translated">Wachtwoordsterkte</target>
+      </trans-unit>
+      <trans-unit id="0hLoKXm" resname="user_auth_password_strength.help">
+        <source>user_auth_password_strength.help</source>
+        <target state="translated">Van toepassing wanneer een wachtwoord wordt ingesteld. De sterkte wordt bepaald op basis van de lengte en gebruikte types tekens.</target>
+      </trans-unit>
+      <trans-unit id="svXdXTq" resname="password_strength.none">
+        <source>password_strength.none</source>
+        <target state="translated">Geen vereisten (alleen minimumlengte)</target>
+      </trans-unit>
+      <trans-unit id="3jD52PB" resname="password_strength.normal">
+        <source>password_strength.normal</source>
+        <target state="translated">Normaal</target>
+      </trans-unit>
+      <trans-unit id="0e4HBxu" resname="password_strength.medium">
+        <source>password_strength.medium</source>
+        <target state="translated">Gemiddeld</target>
+      </trans-unit>
+      <trans-unit id="VlOVWX7" resname="password_strength.strong">
+        <source>password_strength.strong</source>
+        <target state="translated">Sterk</target>
+      </trans-unit>
+      <trans-unit id="R5QYeOG" resname="password_strength.very_strong">
+        <source>password_strength.very_strong</source>
+        <target state="translated">Heel sterk</target>
       </trans-unit>
     </body>
   </file>

@@ -92,7 +92,7 @@
       </trans-unit>
       <trans-unit id="1ltxm9V" resname="task_todo" xml:space="preserve" approved="no">
         <source>task_todo</source>
-        <target state="needs-translation">وصف المهمة</target>
+        <target state="translated">المهمة</target>
       </trans-unit>
       <trans-unit id="XjAwhoV" resname="task.start" xml:space="preserve" approved="no">
         <source>task.start</source>
@@ -105,6 +105,10 @@
       <trans-unit id="qLewfPg" resname="task.unassign" xml:space="preserve" approved="no">
         <source>task.unassign</source>
         <target state="translated">إصدار المهمة</target>
+      </trans-unit>
+      <trans-unit id="zJvuPBv" resname="task.help.tags" xml:space="preserve" approved="no">
+        <source>task.help.tags</source>
+        <target state="translated">هذه البطاقات ستُنسخ في كل سجل من سجلات صحيفة الزمن</target>
       </trans-unit>
     </body>
   </file>

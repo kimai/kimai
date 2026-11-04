@@ -50,9 +50,9 @@
         <source>upload</source>
         <target>Prenesi</target>
       </trans-unit>
-      <trans-unit id="JBkykGe" resname="search">
+      <trans-unit id="JBkykGe" resname="search" xml:space="preserve">
         <source>search</source>
-        <target state="translated">Pretraga</target>
+        <target state="translated">Pretraži</target>
       </trans-unit>
       <trans-unit id="8W_TZI0" resname="searchTerm">
         <source>searchTerm</source>
@@ -402,9 +402,9 @@
         <source>end</source>
         <target>Do</target>
       </trans-unit>
-      <trans-unit id="iNOVZRh" resname="daterange">
+      <trans-unit id="iNOVZRh" resname="daterange" xml:space="preserve">
         <source>daterange</source>
-        <target>Vremenski raspon</target>
+        <target state="translated">Razdoblje</target>
       </trans-unit>
       <trans-unit id="UbnqJLn" resname="modal.columns.title">
         <source>modal.columns.title</source>
@@ -522,9 +522,9 @@
         <source>company</source>
         <target>Ime poduzeća</target>
       </trans-unit>
-      <trans-unit id="fFErSLq" resname="vat">
+      <trans-unit id="fFErSLq" resname="vat" xml:space="preserve">
         <source>vat</source>
-        <target>PDV</target>
+        <target state="translated">Porez</target>
       </trans-unit>
       <trans-unit id="EJDS9HY" resname="vat_id">
         <source>vat_id</source>
@@ -558,9 +558,9 @@
         <source>mobile</source>
         <target>Mobitel</target>
       </trans-unit>
-      <trans-unit id="pcWhXux" resname="homepage">
+      <trans-unit id="pcWhXux" resname="homepage" xml:space="preserve">
         <source>homepage</source>
-        <target>Web-stranica</target>
+        <target state="translated">Početna stranica</target>
       </trans-unit>
       <trans-unit id="OWLt7pw" resname="timezone">
         <source>timezone</source>
@@ -630,9 +630,9 @@
         <source>stats.workingTimeWeek</source>
         <target state="translated">%week%. kalendarski tjedan</target>
       </trans-unit>
-      <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth">
+      <trans-unit id="JIKNAYP" resname="stats.workingTimeMonth" xml:space="preserve">
         <source>stats.workingTimeMonth</source>
-        <target>%month% %year%.</target>
+        <target state="translated">%month% %year%</target>
       </trans-unit>
       <trans-unit id="JnUFsNi" resname="stats.workingTimeYear">
         <source>stats.workingTimeYear</source>
@@ -836,11 +836,11 @@
       </trans-unit>
       <trans-unit id="86KyrKO" resname="invoice.subtotal" xml:space="preserve">
         <source>invoice.subtotal</source>
-        <target state="translated">Iznos bez PDV- a</target>
+        <target state="translated">Iznos bez poreza</target>
       </trans-unit>
-      <trans-unit id="EO57yXg" resname="invoice.tax">
+      <trans-unit id="EO57yXg" resname="invoice.tax" xml:space="preserve">
         <source>invoice.tax</source>
-        <target>PDV</target>
+        <target state="translated">Porez</target>
       </trans-unit>
       <trans-unit id="N68vyvo" resname="invoice.total">
         <source>invoice.total</source>
@@ -1094,13 +1094,13 @@
         <source>status.canceled</source>
         <target state="translated">Otkazano</target>
       </trans-unit>
-      <trans-unit id="GzWKgBk" resname="error.directory_missing">
-        <source>error.directory_missing</source>
-        <target>Mapa „%dir%” ne postoji i nije je moguće stvoriti.</target>
+      <trans-unit id="GzWKgBk" resname="error.directory_missing" xml:space="preserve">
+        <source>The directory “%dir%” does not exist and could not be created.</source>
+        <target state="translated">Direktorij „%dir%” ne postoji i nije ga bilo moguće stvoriti.</target>
       </trans-unit>
-      <trans-unit id="C2TGff0" resname="error.directory_protected">
+      <trans-unit id="C2TGff0" resname="error.directory_protected" xml:space="preserve">
         <source>error.directory_protected</source>
-        <target>Mapa „%dir%” je zaštićena od pisanja.</target>
+        <target state="translated">Direktorij „%dir%” je zaštićen od pisanja.</target>
       </trans-unit>
       <trans-unit id="HPhRbtc" resname="stats.workingTimeWeekShort">
         <source>stats.workingTimeWeekShort</source>
@@ -1314,9 +1314,9 @@
         <source>help.globalActivity</source>
         <target state="translated">Ako ne odabereš projekt, ova aktivnost postaje globalna i može se kombinirati s bilo kojim projektom. Ako odabereš projekt, aktivnost se može koristiti samo s tim projektom. Postavka se kasnije ne može promijeniti.</target>
       </trans-unit>
-      <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer">
+      <trans-unit id="GxuKjNb" resname="help.invoiceTemplate_customer" xml:space="preserve">
         <source>help.invoiceTemplate_customer</source>
-        <target state="translated">Računi za ovog klijenta se standardno generiraju pomoću ovog predloška. Po potrebi se može promijeniti tijekom generiranja računa.</target>
+        <target state="translated">Računi za ovu mušteriju se standardno generiraju pomoću ovog predloška. Po potrebi se može promijeniti tijekom generiranja računa.</target>
       </trans-unit>
       <trans-unit id="Fkrev.q" resname="help.globalActivities">
         <source>help.globalActivities</source>
@@ -1482,9 +1482,9 @@
         <source>completed_month_pdf</source>
         <target state="translated">PDF završenog mjeseca</target>
       </trans-unit>
-      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
+      <trans-unit id="s9NPI3v" resname="work_times_should.none_configured" xml:space="preserve">
         <source>work_times_should.none_configured</source>
-        <target state="translated">U postavkama ugovora o radu nisu konfigurirani ciljani sati za ovog korisnika.</target>
+        <target state="translated">U postavkama radnog ugovora nisu konfigurirani ciljani sati za ovog korisnika.</target>
       </trans-unit>
       <trans-unit id="t1r372x" resname="invisible">
         <source>invisible</source>
@@ -1736,7 +1736,7 @@
       </trans-unit>
       <trans-unit id="M_WE1pa" resname="booking_allow_only_work_days" xml:space="preserve">
         <source>booking_allow_only_work_days</source>
-        <target state="translated">Dozvoli unose vremena samo za dane za koje je predviđeno radno vrijeme definirano ugovorom o radu</target>
+        <target state="translated">Dozvoli unose vremena samo za dane za koje je predviđeno radno vrijeme definirano radnim ugovorom</target>
       </trans-unit>
       <trans-unit id="dOIWgOr" resname="approve" xml:space="preserve">
         <source>approve</source>
@@ -1794,9 +1794,9 @@
         <source>copy</source>
         <target>Stvori kopiju</target>
       </trans-unit>
-      <trans-unit id="TqFAWIF" resname="home">
+      <trans-unit id="TqFAWIF" resname="home" xml:space="preserve">
         <source>home</source>
-        <target>Web-stranica</target>
+        <target state="translated">Početna stranica</target>
       </trans-unit>
       <trans-unit id="PBlIO2x" resname="create-project">
         <source>create-project</source>
@@ -1868,7 +1868,7 @@
       </trans-unit>
       <trans-unit id="2qbRs28" resname="hours_per_day" xml:space="preserve">
         <source>hours_per_day</source>
-        <target state="translated">Sata na dan</target>
+        <target state="translated">Sati na dan</target>
       </trans-unit>
       <trans-unit id="2pbkbn_" resname="work_hours_mode" xml:space="preserve">
         <source>work_hours_mode</source>
@@ -1884,7 +1884,7 @@
       </trans-unit>
       <trans-unit id="y7KtuSS" resname="hours_per_week" xml:space="preserve">
         <source>hours_per_week</source>
-        <target state="translated">Sata na tjedan</target>
+        <target state="translated">Sati na tjedan</target>
       </trans-unit>
       <trans-unit id="CE6ZCkm" resname="reject" xml:space="preserve">
         <source>reject</source>
@@ -1908,7 +1908,7 @@
       </trans-unit>
       <trans-unit id="07e8ywS" resname="hours_per_month" xml:space="preserve">
         <source>hours_per_month</source>
-        <target state="translated">Sata na mjesec</target>
+        <target state="translated">Sati na mjesec</target>
       </trans-unit>
       <trans-unit id="0jvo0RQ" resname="profit" xml:space="preserve">
         <source>profit</source>
@@ -2081,6 +2081,70 @@
       <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
         <source>count_as_expected_time_help</source>
         <target state="translated">Kada je aktivirano, %type% će se računati kao odrađeni sati u odnosu na očekivane dnevne sate. Kada je aktivirano, očekivani sati za te dane će se postaviti na 0. Obje postavke održavaju neutralnu ravnotežu, ali različito utječu na mjesečne ukupne iznose.</target>
+      </trans-unit>
+      <trans-unit id="WrNTzd7" resname="assign_timesheets" xml:space="preserve">
+        <source>assign_timesheets</source>
+        <target state="translated">Dodijeli vremenske tablice</target>
+      </trans-unit>
+      <trans-unit id="zO0oxtw" resname="start" xml:space="preserve">
+        <source>start</source>
+        <target state="translated">Pokreni</target>
+      </trans-unit>
+      <trans-unit id="DAMFhpR" resname="lock" xml:space="preserve">
+        <source>lock</source>
+        <target state="translated">Zaključaj</target>
+      </trans-unit>
+      <trans-unit id="pNRR7CN" resname="release" xml:space="preserve">
+        <source>release</source>
+        <target state="translated">Objavi</target>
+      </trans-unit>
+      <trans-unit id="kwC00lZ" resname="assign" xml:space="preserve">
+        <source>assign</source>
+        <target state="translated">Dodijeli</target>
+      </trans-unit>
+      <trans-unit id="2ajb.ZU" resname="assign_self" xml:space="preserve">
+        <source>assign_self</source>
+        <target state="translated">Dodijeli meni</target>
+      </trans-unit>
+      <trans-unit id="LfO_otF" resname="reopen" xml:space="preserve">
+        <source>reopen</source>
+        <target state="translated">Otvori ponovo</target>
+      </trans-unit>
+      <trans-unit id="TTL.5NF" resname="status.todo" xml:space="preserve">
+        <source>status.todo</source>
+        <target state="translated">Za uraditi</target>
+      </trans-unit>
+      <trans-unit id="j_0FPm3" resname="status.waiting" xml:space="preserve">
+        <source>status.waiting</source>
+        <target state="translated">Čeka se</target>
+      </trans-unit>
+      <trans-unit id="QdfOAGZ" resname="status.done" xml:space="preserve">
+        <source>status.done</source>
+        <target state="translated">Završeno</target>
+      </trans-unit>
+      <trans-unit id="G8ZoGoA" resname="api_token_qr_hint" xml:space="preserve">
+        <source>api_token_qr_hint</source>
+        <target state="translated">Ovaj QR kod možete skenirati mobilnom aplikacijom kako biste u jednom koraku podesili URL poslužitelja i token. Ne dijelite ovu sliku: ona sadrži vaš API token.</target>
+      </trans-unit>
+      <trans-unit id="nlJ2pW2" resname="invoice_email" xml:space="preserve">
+        <source>invoice_email</source>
+        <target state="translated">E-mail za naplatu</target>
+      </trans-unit>
+      <trans-unit id="C_ZcSX2" resname="help.project_start" xml:space="preserve">
+        <source>help.project_start</source>
+        <target state="translated">Vremena prije ovog datuma se ne mogu zabilježiti.</target>
+      </trans-unit>
+      <trans-unit id="9A.4S.i" resname="help.project_end" xml:space="preserve">
+        <source>help.project_end</source>
+        <target state="translated">Vremena nakon ovog datuma se ne mogu zabilježiti.</target>
+      </trans-unit>
+      <trans-unit id="ktmsI7g" resname="help.project_locked_until" xml:space="preserve">
+        <source>help.project_locked_until</source>
+        <target state="translated">Vremena do ovog datuma (uključujući i ovaj) se ne mogu zabilježiti niti mijenjati.</target>
+      </trans-unit>
+      <trans-unit id="k8F51oP" resname="project_locked_until" xml:space="preserve">
+        <source>project_locked_until</source>
+        <target state="translated">Vremena su zaključana do</target>
       </trans-unit>
     </body>
   </file>

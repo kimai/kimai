@@ -100,6 +100,35 @@ final class InvoiceModel
         return $this->entries;
     }
 
+    public function getInvoicePeriod(): InvoicePeriod
+    {
+        $min = null;
+        $max = null;
+
+        foreach ($this->getEntries() as $entry) {
+            if ($min === null || $min > $entry->getBegin()) {
+                $min = $entry->getBegin();
+            }
+
+            if ($max === null || $max < $entry->getEnd()) {
+                $max = $entry->getEnd();
+            }
+        }
+
+        if ($min === null) {
+            $min = $this->getQuery()?->getBegin() ?? $this->invoiceDate;
+        }
+
+        if ($max === null) {
+            $max = $this->getQuery()?->getEnd() ?? $this->invoiceDate;
+        }
+
+        return new InvoicePeriod(
+            \DateTimeImmutable::createFromInterface($min),
+            \DateTimeImmutable::createFromInterface($max)
+        );
+    }
+
     /**
      * @param ExportableItem[] $entries
      * @return InvoiceModel

@@ -66,6 +66,13 @@ final class PageSetup
         return $this->help;
     }
 
+    /**
+     * Setting a relative URL will prepend:
+     * https://www.kimai.org/documentation/
+     *
+     * If you host your documentation on an external page,
+     * you can also set an absolute URL.
+     */
     public function setHelp(?string $help): void
     {
         $this->help = $help;

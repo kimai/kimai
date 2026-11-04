@@ -75,7 +75,6 @@ final class ExportController extends AbstractController
             } catch (TooManyItemsExportException $ex) {
                 $tooManyResults = true;
                 $showPreview = false;
-                $entries = [];
                 $this->logException($ex);
             }
         }
@@ -125,10 +124,25 @@ final class ExportController extends AbstractController
     #[Route(path: '/data', name: 'export_data', methods: ['POST'])]
     public function export(Request $request, SystemConfiguration $systemConfiguration): Response
     {
+        $token = $request->request->get('_token');
+        $token = \is_string($token) ? $token : null;
+
+        if (!$this->isCsrfTokenValid('export.data', $token)) {
+            throw $this->createAccessDeniedException('Invalid security token for export.');
+        }
+
+        // prevent the token from becoming part of the search query
+        $request->request->remove('_token');
+
         $query = $this->getDefaultQuery();
 
         $form = $this->getToolbarForm($query, 'POST');
         $form->handleRequest($request);
+
+        // shouldn't happen in regular use-cases, do not show form errors
+        if ($form->isSubmitted() && !$form->isValid()) {
+            throw $this->createAccessDeniedException('Export form validation failed.');
+        }
 
         $type = $query->getRenderer();
         if (null === $type) {
@@ -208,12 +222,14 @@ final class ExportController extends AbstractController
     }
 
     #[Route(path: '/template-create', name: 'export_template_create', methods: ['GET', 'POST'])]
+    #[IsGranted('create_export_template')]
     public function createExportTemplate(Request $request, ExportTemplateRepository $repository): Response
     {
         return $this->editExportForm($this->generateUrl('export_template_create'), $request, $repository, new ExportTemplate());
     }
 
     #[Route(path: '/template-edit/{exportTemplate}', name: 'export_template_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('create_export_template')]
     public function editExportTemplate(ExportTemplate $exportTemplate, Request $request, ExportTemplateRepository $repository): Response
     {
         return $this->editExportForm($this->generateUrl('export_template_edit', ['exportTemplate' => $exportTemplate->getId()]), $request, $repository, $exportTemplate);

@@ -2,45 +2,45 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="ca" datatype="plaintext" original="invoice-calculator.en.xlf">
     <body>
-      <trans-unit id="MviRJeB" resname="invoice_calculator" xml:space="preserve">
+      <trans-unit id="MviRJeB" resname="invoice_calculator" xml:space="preserve" approved="yes">
         <source>invoice_calculator</source>
-        <target state="translated">Agrupació de línies de factura</target>
+        <target state="final">Agrupació de línies de factura</target>
       </trans-unit>
-      <trans-unit id="KWX.j1b" resname="invoice_calculator.help" xml:space="preserve">
+      <trans-unit id="KWX.j1b" resname="invoice_calculator.help" xml:space="preserve" approved="yes">
         <source>invoice_calculator.help</source>
-        <target state="translated">Seleccioneu els camps per agrupar els elements de la factura</target>
+        <target state="final">Seleccioneu els camps per agrupar els elements de la factura</target>
       </trans-unit>
-      <trans-unit id="N6juwc4" resname="default" xml:space="preserve">
+      <trans-unit id="N6juwc4" resname="default" xml:space="preserve" approved="yes">
         <source>default</source>
-        <target state="translated">Per defecte (una fila per entrada)</target>
+        <target state="final">Per defecte (una fila per entrada)</target>
       </trans-unit>
-      <trans-unit id="_bAHi13" resname="short" xml:space="preserve">
+      <trans-unit id="_bAHi13" resname="short" xml:space="preserve" approved="yes">
         <source>short</source>
-        <target state="translated">Tot (una entrada en total)</target>
+        <target state="final">Tot (una entrada en total)</target>
       </trans-unit>
-      <trans-unit id="BPiZbad" resname="user" xml:space="preserve">
+      <trans-unit id="BPiZbad" resname="user" xml:space="preserve" approved="yes">
         <source>user</source>
-        <target state="translated">Usuari</target>
+        <target state="final">Usuari</target>
       </trans-unit>
-      <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve">
+      <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve" approved="yes">
         <source>activity</source>
-        <target state="translated">Activitat</target>
+        <target state="final">Activitat</target>
       </trans-unit>
-      <trans-unit id="oRa0mkz" resname="activity_user" xml:space="preserve">
+      <trans-unit id="oRa0mkz" resname="activity_user" xml:space="preserve" approved="yes">
         <source>activity_user</source>
-        <target state="translated">Activitat i usuari</target>
+        <target state="final">Activitat i usuari</target>
       </trans-unit>
-      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve">
+      <trans-unit id="JEIQ5IQ" resname="project" xml:space="preserve" approved="yes">
         <source>project</source>
-        <target state="translated">Projecte</target>
+        <target state="final">Projecte</target>
       </trans-unit>
       <trans-unit id="AJm1952" resname="project_user" xml:space="preserve">
         <source>project_user</source>
         <target state="translated">Projecte i usuari</target>
       </trans-unit>
-      <trans-unit id="DodjLNR" resname="date" xml:space="preserve">
+      <trans-unit id="DodjLNR" resname="date" xml:space="preserve" approved="yes">
         <source>date</source>
-        <target state="translated">Data</target>
+        <target state="final">Data</target>
       </trans-unit>
       <trans-unit id="0l1P9cz" resname="date_user" xml:space="preserve">
         <source>date_user</source>

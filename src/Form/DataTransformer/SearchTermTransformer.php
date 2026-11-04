@@ -13,6 +13,9 @@ use App\Utils\SearchTerm;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
+/**
+ * @implements DataTransformerInterface<SearchTerm, string>
+ */
 final class SearchTermTransformer implements DataTransformerInterface
 {
     /**

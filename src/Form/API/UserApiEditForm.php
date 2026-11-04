@@ -14,7 +14,7 @@ use App\Form\UserEditType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-final class UserApiEditForm extends UserEditType
+final class UserApiEditForm extends UserEditType implements ApiFormInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -26,6 +26,7 @@ final class UserApiEditForm extends UserEditType
                 'required' => false,
                 'multiple' => true,
                 'expanded' => false,
+                'restrict_to_assignable' => true,
             ]);
         }
     }
@@ -35,7 +36,6 @@ final class UserApiEditForm extends UserEditType
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'csrf_protection' => false,
             'include_roles' => true,
         ]);
     }

@@ -23,6 +23,7 @@ use App\Export\Spreadsheet\Writer\XlsxWriter;
 use App\Form\ActivityEditForm;
 use App\Form\ActivityRateForm;
 use App\Form\ActivityTeamPermissionForm;
+use App\Form\TeamEditForm;
 use App\Form\Toolbar\ActivityToolbarForm;
 use App\Form\Type\ActivityType;
 use App\Repository\ActivityRateRepository;
@@ -40,7 +41,6 @@ use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -125,7 +125,6 @@ final class ActivityController extends AbstractController
         $stats = null;
         $rates = [];
         $teams = null;
-        $defaultTeam = null;
         $now = $this->getDateTimeFactory()->createDateTime();
 
         $exportUrl = null;
@@ -145,9 +144,6 @@ final class ActivityController extends AbstractController
         }
 
         if ($this->isGranted('edit', $activity)) {
-            if ($this->isGranted('create_team')) {
-                $defaultTeam = $teamRepository->findOneBy(['name' => $activity->getName()]);
-            }
             $rates = $rateRepository->getRatesForActivity($activity);
         }
 
@@ -176,7 +172,6 @@ final class ActivityController extends AbstractController
             'activity' => $activity,
             'stats' => $stats,
             'rates' => $rates,
-            'team' => $defaultTeam,
             'teams' => $teams,
             'now' => $now,
             'boxes' => $boxes,
@@ -189,6 +184,10 @@ final class ActivityController extends AbstractController
     #[IsGranted('edit', 'activity')]
     public function editRateAction(Activity $activity, ActivityRate $rate, Request $request, ActivityRateRepository $repository): Response
     {
+        if ($rate->getActivity() !== $activity) {
+            throw $this->createAccessDeniedException('Trying to edit rate and activity that do not belong together.');
+        }
+
         return $this->rateFormAction($activity, $rate, $request, $repository, $this->generateUrl('admin_activity_rate_edit', ['id' => $activity->getId(), 'rate' => $rate->getId()]));
     }
 
@@ -222,7 +221,7 @@ final class ActivityController extends AbstractController
             }
         }
 
-        return $this->render('activity/rates.html.twig', [
+        return $this->render('activity/form.html.twig', [
             'page_setup' => $this->createPageSetup(),
             'activity' => $activity,
             'form' => $form->createView()
@@ -231,6 +230,7 @@ final class ActivityController extends AbstractController
 
     #[Route(path: '/create/{project}', name: 'admin_activity_create_with_project', methods: ['GET', 'POST'])]
     #[IsGranted('create_activity')]
+    #[IsGranted('view', 'project')]
     public function createWithProjectAction(Project $project, Request $request, ActivityService $activityService, SystemConfiguration $configuration): Response
     {
         return $this->createActivity($request, $activityService, $configuration, $project);
@@ -301,32 +301,38 @@ final class ActivityController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{id}/create_team', name: 'activity_team_create', methods: ['GET'])]
+    #[Route(path: '/{id}/team-create', name: 'activity_team_create', methods: ['GET', 'POST'])]
     #[IsGranted('create_team')]
     #[IsGranted('permissions', 'activity')]
-    public function createDefaultTeamAction(Activity $activity, TeamService $teamService): Response
+    public function createTeam(Activity $activity, Request $request, TeamService $teamService): Response
     {
-        $name = $activity->getName();
-        if ($name === null) {
-            throw new BadRequestHttpException('Cannot create default team for activity with empty name: ' . $activity->getId());
+        $team = $teamService->createNewTeam($activity->getName() ?? '');
+        $team->addTeamlead($this->getUser());
+        $team->addActivity($activity);
+
+        $form = $this->createForm(TeamEditForm::class, $team, [
+            'action' => $this->generateUrl('activity_team_create', ['id' => $activity->getId()]),
+            'method' => 'POST',
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $teamService->saveTeam($team);
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRouteAfterCreate('activity_details', ['id' => $activity->getId()]);
+            } catch (\Exception $ex) {
+                $this->flashUpdateException($ex);
+            }
         }
 
-        $defaultTeam = $teamService->findTeamByName($name);
-
-        if (null === $defaultTeam) {
-            $defaultTeam = $teamService->createNewTeam($name);
-        }
-
-        $defaultTeam->addTeamlead($this->getUser());
-        $defaultTeam->addActivity($activity);
-
-        try {
-            $teamService->saveTeam($defaultTeam);
-        } catch (Exception $ex) {
-            $this->flashUpdateException($ex);
-        }
-
-        return $this->redirectToRoute('activity_details', ['id' => $activity->getId()]);
+        return $this->render('activity/form.html.twig', [
+            'page_setup' => $this->createPageSetup(),
+            'activity' => $activity,
+            'form' => $form->createView()
+        ]);
     }
 
     #[Route(path: '/{id}/edit', name: 'admin_activity_edit', methods: ['GET', 'POST'])]
@@ -368,7 +374,6 @@ final class ActivityController extends AbstractController
 
         $options = [
             'projects' => $activity->getProject(),
-            'query_builder_for_user' => true,
             'ignore_activity' => $activity,
             'required' => false,
         ];

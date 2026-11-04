@@ -17,11 +17,14 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @template T of object
+ */
 final class MultiUpdateTable extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var EntityRepository $repository */
+        /** @var EntityRepository<T> $repository */
         $repository = $options['repository'];
         /** @var MultiUpdateTableDTO $dto */
         $dto = $options['data'];

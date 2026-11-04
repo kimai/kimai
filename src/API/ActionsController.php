@@ -71,6 +71,7 @@ final class ActionsController extends BaseApiController
     #[OA\Parameter(name: 'locale', in: 'path', description: 'Language to translate the action title to (e.g. de, en)', required: true)]
     #[OA\Get(x: ['internal' => true])]
     #[Route(methods: ['GET'], path: '/timesheet/{id}/{view}/{locale}', name: 'get_timesheet_actions', requirements: ['id' => '\d+'])]
+    #[IsGranted('view', 'timesheet')]
     public function getTimesheetActions(Timesheet $timesheet, string $view, string $locale): Response
     {
         $event = new PageActionsEvent($this->getUser(), ['timesheet' => $timesheet], 'timesheet', $view);
@@ -90,6 +91,7 @@ final class ActionsController extends BaseApiController
     #[OA\Parameter(name: 'locale', in: 'path', description: 'Language to translate the action title to (e.g. de, en)', required: true)]
     #[OA\Get(x: ['internal' => true])]
     #[Route(methods: ['GET'], path: '/activity/{id}/{view}/{locale}', name: 'get_activity_actions', requirements: ['id' => '\d+'])]
+    #[IsGranted('view', 'activity')]
     public function getActivityActions(Activity $activity, string $view, string $locale): Response
     {
         $event = new PageActionsEvent($this->getUser(), ['activity' => $activity], 'activity', $view);
@@ -109,6 +111,7 @@ final class ActionsController extends BaseApiController
     #[OA\Parameter(name: 'locale', in: 'path', description: 'Language to translate the action title to (e.g. de, en)', required: true)]
     #[OA\Get(x: ['internal' => true])]
     #[Route(methods: ['GET'], path: '/project/{id}/{view}/{locale}', name: 'get_project_actions', requirements: ['id' => '\d+'])]
+    #[IsGranted('view', 'project')]
     public function getProjectActions(Project $project, string $view, string $locale): Response
     {
         $event = new PageActionsEvent($this->getUser(), ['project' => $project], 'project', $view);
@@ -128,6 +131,7 @@ final class ActionsController extends BaseApiController
     #[OA\Parameter(name: 'locale', in: 'path', description: 'Language to translate the action title to (e.g. de, en)', required: true)]
     #[OA\Get(x: ['internal' => true])]
     #[Route(methods: ['GET'], path: '/customer/{id}/{view}/{locale}', name: 'get_customer_actions', requirements: ['id' => '\d+'])]
+    #[IsGranted('view', 'customer')]
     public function getCustomerActions(Customer $customer, string $view, string $locale): Response
     {
         $event = new PageActionsEvent($this->getUser(), ['customer' => $customer], 'customer', $view);

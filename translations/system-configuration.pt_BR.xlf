@@ -310,6 +310,22 @@
         <source>allow_duplicate_number</source>
         <target state="translated">Permitir vários usos da mesma numeração</target>
       </trans-unit>
+      <trans-unit id="6AaVxB2" resname="invoice.rounding_mode" approved="no" xml:space="preserve">
+        <source>invoice.rounding_mode</source>
+        <target state="translated">Modo de arredondamento</target>
+      </trans-unit>
+      <trans-unit id="uf2_qIW" resname="user_auth_wizard" xml:space="preserve">
+        <source>user_auth_wizard</source>
+        <target state="translated">Exibir o assistente de configuração para novos usuários</target>
+      </trans-unit>
+      <trans-unit id="iobaZJS" resname="user_auth_change">
+        <source>user_auth_change</source>
+        <target state="translated">Alterar a autenticação de usuários com login externo</target>
+      </trans-unit>
+      <trans-unit id="iMmgno5" resname="user_auth_change.help">
+        <source>user_auth_change.help</source>
+        <target state="translated">Permite que superadministradores alterem usuários com logins externos de volta para o login interno no perfil do usuário.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -13,11 +13,14 @@ use Doctrine\Persistence\ObjectManager;
 
 /**
  * Defines the sample data to load in during controller tests.
+ * @template TEntity
  */
 interface TestFixture
 {
     /**
      * Load data fixtures with the passed EntityManager and returns the created objects.
+     *
+     * @return non-empty-array<TEntity>
      */
     public function load(ObjectManager $manager): array;
 }

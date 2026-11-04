@@ -2,7 +2,7 @@
 <html lang="{{ invoice['invoice.language'] }}">
 <head>
     <meta charset="utf-8">
-    <title>{% block title %}{{ invoice['invoice.number'] }}-{{ invoice['customer.company']|default(invoice['customer.name'])|u.snake }}{% endblock %}</title>
+    <title>{{ invoice['invoice.number'] }}-{{ invoice['customer.company']|default(invoice['customer.name'])|u.snake }}</title>
     <style>
         {{ encore_entry_css_source('invoice')|raw }}
     </style>

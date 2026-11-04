@@ -434,9 +434,9 @@
         <source>alias</source>
         <target>名字</target>
       </trans-unit>
-      <trans-unit id="qvIyBkY" resname="title">
+      <trans-unit id="qvIyBkY" resname="title" xml:space="preserve">
         <source>title</source>
-        <target>职位</target>
+        <target state="translated">标题</target>
       </trans-unit>
       <trans-unit id="h7voece" resname="avatar">
         <source>avatar</source>
@@ -1418,9 +1418,9 @@
         <source>completed_month_pdf</source>
         <target state="translated">完成月份 PDF</target>
       </trans-unit>
-      <trans-unit id="M.zFjwe" resname="pto_year_holiday">
+      <trans-unit id="M.zFjwe" resname="pto_year_holiday" xml:space="preserve">
         <source>Holidays per year</source>
-        <target state="translated">每年的假期</target>
+        <target state="translated">每年的假期数</target>
       </trans-unit>
       <trans-unit id="s9NPI3v" resname="work_times_should.none_configured">
         <source>work_times_should.none_configured</source>
@@ -1532,7 +1532,7 @@
       </trans-unit>
       <trans-unit id="YDrWFFP" resname="sickness.intro" xml:space="preserve">
         <source>Incapacity for work, medically necessary appointments, care leave, etc.</source>
-        <target state="needs-translation">生病、看病、照顾近亲等。</target>
+        <target state="translated">无法工作、医疗必要的就诊、护理假等。</target>
       </trans-unit>
       <trans-unit id="yJg6P3m" resname="holiday.intro" xml:space="preserve">
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
@@ -1784,7 +1784,7 @@
       </trans-unit>
       <trans-unit id="zeD7Dew" resname="settings" xml:space="preserve">
         <source>Settings</source>
-        <target state="needs-translation">参数选择</target>
+        <target state="translated">设置</target>
       </trans-unit>
       <trans-unit id="anCjtwe" resname="timesheet.filter" xml:space="preserve">
         <source>Filter timesheets</source>
@@ -1928,7 +1928,7 @@
       </trans-unit>
       <trans-unit id="HQ2YM1b" resname="attendance_only_project" xml:space="preserve">
         <source>attendance_only_project</source>
-        <target state="needs-translation">只会将当前项目记录于工作时长</target>
+        <target state="translated">只会将当前选中的项目记录于工作时长</target>
       </trans-unit>
       <trans-unit id="rD4oQRR" resname="postcode" xml:space="preserve">
         <source>Postcode</source>
@@ -1940,15 +1940,15 @@
       </trans-unit>
       <trans-unit id="y1XHR1Q" resname="address_deprecated" xml:space="preserve">
         <source>address_deprecated</source>
-        <target state="translated">该字段即将被删除，请转移地址以继续生成有效发票（例如：电子发票）</target>
+        <target state="translated">该字段即将被删除，请转移地址以继续生成有效发票（例如：电子发票）。</target>
       </trans-unit>
       <trans-unit id="Uzll0ps" resname="Customer portal" xml:space="preserve">
         <source>Customer portal</source>
-        <target state="needs-translation">顾客链接</target>
+        <target state="translated">顾客入口网站</target>
       </trans-unit>
       <trans-unit id="cDOQMYv" resname="Beta" xml:space="preserve">
         <source>Beta</source>
-        <target state="translated">启用对实验性功能的预览</target>
+        <target state="translated">启用对实验性功能的预览。</target>
       </trans-unit>
       <trans-unit id="4WlKIfD" resname="unlock_month" xml:space="preserve" approved="no">
         <source>Unlock month</source>
@@ -1960,7 +1960,7 @@
       </trans-unit>
       <trans-unit id="nsbR30p" resname="sending_company" xml:space="preserve">
         <source>sending_company</source>
-        <target state="needs-translation">发送发票者</target>
+        <target state="translated">发票发行者</target>
       </trans-unit>
       <trans-unit id="NA9GMDP" resname="Code" xml:space="preserve">
         <source>Code</source>
@@ -1969,6 +1969,138 @@
       <trans-unit id="lt2Y2LO" resname="timesheet">
         <source>Timesheet</source>
         <target state="translated">时间表</target>
+      </trans-unit>
+      <trans-unit id="xZzzKxM" resname="orientation" xml:space="preserve">
+        <source>Orientation</source>
+        <target state="translated">屏幕方向</target>
+      </trans-unit>
+      <trans-unit id="UcWoKWo" resname="portrait" xml:space="preserve">
+        <source>Portrait</source>
+        <target state="translated">纵向</target>
+      </trans-unit>
+      <trans-unit id="rLlV34K" resname="landscape" xml:space="preserve">
+        <source>Landscape</source>
+        <target state="translated">横向</target>
+      </trans-unit>
+      <trans-unit id="UZUFKZg" resname="remaining_budget" xml:space="preserve">
+        <source>remaining_budget</source>
+        <target state="translated">剩余预算</target>
+      </trans-unit>
+      <trans-unit id="eV6j76Q" resname="font" xml:space="preserve">
+        <source>font</source>
+        <target state="translated">字体</target>
+      </trans-unit>
+      <trans-unit id="4toQj2M" resname="Cash" xml:space="preserve">
+        <source>Cash</source>
+        <target state="translated">现金</target>
+      </trans-unit>
+      <trans-unit id="cWZZc6D" resname="Cheque" xml:space="preserve">
+        <source>Cheque</source>
+        <target state="translated">支票</target>
+      </trans-unit>
+      <trans-unit id="E470U8W" resname="tax.type.reverse" xml:space="preserve">
+        <source>tax.type.reverse</source>
+        <target state="translated">撤去收款</target>
+      </trans-unit>
+      <trans-unit id="pNRR7CN" resname="release" xml:space="preserve">
+        <source>release</source>
+        <target state="translated">释放</target>
+      </trans-unit>
+      <trans-unit id="kwC00lZ" resname="assign" xml:space="preserve">
+        <source>assign</source>
+        <target state="translated">分配</target>
+      </trans-unit>
+      <trans-unit id="nPJWKwW" resname="payment_type" xml:space="preserve">
+        <source>payment_type</source>
+        <target state="translated">支付方式</target>
+      </trans-unit>
+      <trans-unit id="_Ep8Ogx" resname="buyerReference" xml:space="preserve">
+        <source>buyerReference</source>
+        <target state="translated">买家推荐</target>
+      </trans-unit>
+      <trans-unit id="TJQbc0a" resname="Payment To Bank Account" xml:space="preserve">
+        <source>Payment To Bank Account</source>
+        <target state="translated">用银行账户付款</target>
+      </trans-unit>
+      <trans-unit id="rIdfGxM" resname="payment_account_name" xml:space="preserve">
+        <source>payment_account_name</source>
+        <target state="translated">账户或持卡人</target>
+      </trans-unit>
+      <trans-unit id="QnN_ONc" resname="invoice_tax_type" xml:space="preserve">
+        <source>invoice_tax_type</source>
+        <target state="translated">税务状况</target>
+      </trans-unit>
+      <trans-unit id="PciSBv9" resname="address_row" xml:space="preserve">
+        <source>address_row</source>
+        <target state="translated">行%row%</target>
+      </trans-unit>
+      <trans-unit id="LfO_otF" resname="reopen" xml:space="preserve">
+        <source>reopen</source>
+        <target state="translated">重新打开</target>
+      </trans-unit>
+      <trans-unit id="s42A2gm" resname="SEPA Direct Debit" xml:space="preserve">
+        <source>SEPA Direct Debit</source>
+        <target state="translated">SEPA直接扣款</target>
+      </trans-unit>
+      <trans-unit id="TTL.5NF" resname="status.todo" xml:space="preserve">
+        <source>status.todo</source>
+        <target state="translated">待办</target>
+      </trans-unit>
+      <trans-unit id="QdfOAGZ" resname="status.done" xml:space="preserve">
+        <source>status.done</source>
+        <target state="translated">已完成</target>
+      </trans-unit>
+      <trans-unit id="j_0FPm3" resname="status.waiting" xml:space="preserve" approved="no">
+        <source>status.waiting</source>
+        <target state="translated">等待中</target>
+      </trans-unit>
+      <trans-unit id="nlJ2pW2" resname="invoice_email" xml:space="preserve" approved="no">
+        <source>invoice_email</source>
+        <target state="translated">付费邮箱</target>
+      </trans-unit>
+      <trans-unit id="DAMFhpR" resname="lock" xml:space="preserve">
+        <source>lock</source>
+        <target state="translated">锁定</target>
+      </trans-unit>
+      <trans-unit id="2ajb.ZU" resname="assign_self" xml:space="preserve">
+        <source>assign_self</source>
+        <target state="translated">分配给我</target>
+      </trans-unit>
+      <trans-unit id="k8F51oP" resname="project_locked_until" xml:space="preserve">
+        <source>project_locked_until</source>
+        <target state="translated">工作时间记录锁定至</target>
+      </trans-unit>
+      <trans-unit id="C_ZcSX2" resname="help.project_start" xml:space="preserve">
+        <source>help.project_start</source>
+        <target state="translated">无法记录此日期前的工作时间。</target>
+      </trans-unit>
+      <trans-unit id="9A.4S.i" resname="help.project_end" xml:space="preserve">
+        <source>help.project_end</source>
+        <target state="translated">此日期之后的时间无法记录。</target>
+      </trans-unit>
+      <trans-unit id="uXB48Vj" resname="SEPA Credit Transfer" xml:space="preserve">
+        <source>SEPA Credit Transfer</source>
+        <target state="translated">SEPA信用转账</target>
+      </trans-unit>
+      <trans-unit id="jMvh7bn" resname="Credit Transfer" xml:space="preserve">
+        <source>Credit Transfer</source>
+        <target state="translated">信用转账</target>
+      </trans-unit>
+      <trans-unit id=".UIt099" resname="Card Payment" xml:space="preserve">
+        <source>Card Payment</source>
+        <target state="translated">刷信用卡付款</target>
+      </trans-unit>
+      <trans-unit id="Wnb_qF0" resname="Direct Debit" xml:space="preserve">
+        <source>Direct Debit</source>
+        <target state="translated">直接扣款</target>
+      </trans-unit>
+      <trans-unit id="jcT9Og6" resname="payment_account_number" xml:space="preserve">
+        <source>payment_account_name</source>
+        <target state="translated">IBAN或卡号</target>
+      </trans-unit>
+      <trans-unit id="N_ZNih_" resname="electronic_invoice" xml:space="preserve">
+        <source>electronic_invoice</source>
+        <target state="translated">电子发票</target>
       </trans-unit>
     </body>
   </file>

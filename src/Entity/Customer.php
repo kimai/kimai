@@ -27,11 +27,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: CustomerRepository::class)]
 #[ORM\ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
 #[Serializer\ExclusionPolicy('all')]
-#[Exporter\Order(['id', 'name', 'company', 'number', 'vatId', 'address', 'contact', 'email', 'phone', 'mobile', 'fax', 'homepage', 'addressLine1', 'addressLine2', 'addressLine3', 'postCode', 'city', 'country', 'currency', 'timezone', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable'])]
+#[Exporter\Order(['id', 'name', 'company', 'number', 'vatId', 'address', 'contact', 'email', 'phone', 'mobile', 'fax', 'homepage', 'addressLine1', 'addressLine2', 'addressLine3', 'postCode', 'city', 'country', 'language', 'currency', 'timezone', 'budget', 'timeBudget', 'budgetType', 'color', 'visible', 'comment', 'billable', 'invoiceEmail', 'buyerReference'])]
 #[Constraints\Customer]
 class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
 {
     public const DEFAULT_CURRENCY = 'EUR';
+    public const DEFAULT_LANGUAGE = 'en';
 
     use BudgetTrait;
     use ColorTrait;
@@ -45,6 +46,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Exporter\Expose(label: 'id', type: 'integer')]
     private ?int $id = null;
     #[ORM\Column(name: 'name', type: Types::STRING, length: 150, nullable: false)]
+    #[Constraints\NoSpecialCharacters]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 150)]
     #[Serializer\Expose]
@@ -52,6 +54,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Exporter\Expose(label: 'name')]
     private ?string $name = null;
     #[ORM\Column(name: 'number', type: Types::STRING, length: 50, nullable: true)]
+    #[Constraints\NoSpecialCharacters]
     #[Assert\Length(max: 50)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -83,7 +86,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[ORM\Column(name: 'vat_id', type: Types::STRING, length: 50, nullable: true)]
     #[Assert\Length(max: 50)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer_Entity'])]
+    #[Serializer\Groups(['Customer_Entity', 'Customer_Details'])]
     #[Exporter\Expose(label: 'vat_id')]
     private ?string $vatId = null;
     /**
@@ -111,6 +114,13 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'country')]
     private ?string $country = null;
+    #[ORM\Column(name: 'language', type: Types::STRING, length: 35, nullable: false)]
+    #[Assert\Length(min: 2, max: 35)]
+    #[Assert\NotBlank]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
+    #[Exporter\Expose(label: 'language')]
+    private ?string $language = self::DEFAULT_LANGUAGE;
     #[ORM\Column(name: 'currency', type: Types::STRING, length: 3, nullable: false)]
     #[Assert\NotBlank]
     #[Assert\Currency]
@@ -141,6 +151,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
      * Contact email
      */
     #[ORM\Column(name: 'email', type: Types::STRING, length: 75, nullable: true)]
+    #[Assert\Email(mode: 'html5')]
     #[Assert\Length(max: 75)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Customer_Entity'])]
@@ -148,6 +159,8 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     private ?string $email = null;
     #[ORM\Column(name: 'homepage', type: Types::STRING, length: 100, nullable: true)]
     #[Assert\Length(max: 100)]
+    #[Assert\Url]
+    #[Assert\NoSuspiciousCharacters]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'homepage')]
@@ -166,7 +179,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     /**
      * Meta fields registered with the customer
      *
-     * @var Collection<CustomerMeta>
+     * @var Collection<int, CustomerMeta>
      */
     #[ORM\OneToMany(mappedBy: 'customer', targetEntity: CustomerMeta::class, cascade: ['persist'])]
     #[Serializer\Expose]
@@ -178,7 +191,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     /**
      * Teams with access to the customer
      *
-     * @var Collection<Team>
+     * @var Collection<int, Team>
      */
     #[ORM\JoinTable(name: 'kimai2_customers_teams')]
     #[ORM\JoinColumn(name: 'customer_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
@@ -199,34 +212,44 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[ORM\Column(name: 'address_line1', type: Types::STRING, length: 150, nullable: true)]
     #[Assert\Length(max: 150)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer_Entity'])]
+    #[Serializer\Groups(['Customer_Entity', 'Customer_Details'])]
     #[Exporter\Expose(label: 'address_line1')]
     private ?string $addressLine1 = null;
     #[ORM\Column(name: 'address_line2', type: Types::STRING, length: 150, nullable: true)]
     #[Assert\Length(max: 150)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer_Entity'])]
+    #[Serializer\Groups(['Customer_Entity', 'Customer_Details'])]
     #[Exporter\Expose(label: 'address_line2')]
     private ?string $addressLine2 = null;
     #[ORM\Column(name: 'address_line3', type: Types::STRING, length: 150, nullable: true)]
     #[Assert\Length(max: 150)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer_Entity'])]
+    #[Serializer\Groups(['Customer_Entity', 'Customer_Details'])]
     #[Exporter\Expose(label: 'address_line3')]
     private ?string $addressLine3 = null;
     #[ORM\Column(name: 'postcode', type: Types::STRING, length: 20, nullable: true)]
     #[Assert\Length(max: 20)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer_Entity'])]
+    #[Serializer\Groups(['Customer_Entity', 'Customer_Details'])]
     #[Exporter\Expose(label: 'postcode')]
     private ?string $postCode = null;
     // this should be more than enough to cover 99.99% - https://en.wikipedia.org/wiki/List_of_long_place_names
     #[ORM\Column(name: 'city', type: Types::STRING, length: 50, nullable: true)]
     #[Assert\Length(max: 50)]
     #[Serializer\Expose]
-    #[Serializer\Groups(['Customer_Entity'])]
+    #[Serializer\Groups(['Customer_Entity', 'Customer_Details'])]
     #[Exporter\Expose(label: 'city')]
     private ?string $city = null;
+    /**
+     * Invoice email
+     */
+    #[ORM\Column(name: 'invoice_email', type: Types::STRING, length: 75, nullable: true)]
+    #[Assert\Email(mode: 'html5')]
+    #[Assert\Length(max: 75)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Customer_Entity'])]
+    #[Exporter\Expose(label: 'invoice_email')]
+    private ?string $invoiceEmail = null;
     #[ORM\Column(name: 'buyer_reference', type: Types::STRING, length: 50, nullable: true)]
     #[Assert\Length(max: 50)]
     #[Serializer\Expose]
@@ -381,6 +404,16 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
         return $this->country;
     }
 
+    public function getLanguage(): ?string
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(?string $language): void
+    {
+        $this->language = $language;
+    }
+
     public function setCurrency(?string $currency): void
     {
         $this->currency = $currency;
@@ -513,6 +546,11 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields
     {
         if (null === ($current = $this->getMetaField($meta->getName()))) {
+            if (!($meta instanceof CustomerMeta)) {
+                throw new \InvalidArgumentException(
+                    \sprintf('Expected instanceof CustomerMeta, received "%s"', \get_class($meta))
+                );
+            }
             $meta->setEntity($this);
             $this->meta->add($meta);
 
@@ -544,7 +582,7 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     }
 
     /**
-     * @return Collection<Team>
+     * @return Collection<int, Team>
      */
     public function getTeams(): Collection
     {
@@ -599,6 +637,16 @@ class Customer implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     public function setCity(?string $city): void
     {
         $this->city = $city;
+    }
+
+    public function getInvoiceEmail(): ?string
+    {
+        return $this->invoiceEmail;
+    }
+
+    public function setInvoiceEmail(?string $invoiceEmail): void
+    {
+        $this->invoiceEmail = $invoiceEmail;
     }
 
     public function getBuyerReference(): ?string

@@ -60,6 +60,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
      * Name of this activity
      */
     #[ORM\Column(name: 'name', type: Types::STRING, length: 150, nullable: false)]
+    #[Constraints\NoSpecialCharacters]
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 150)]
     #[Serializer\Expose]
@@ -92,7 +93,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     /**
      * Meta fields registered with the activity
      *
-     * @var Collection<ActivityMeta>
+     * @var Collection<int, ActivityMeta>
      */
     #[ORM\OneToMany(mappedBy: 'activity', targetEntity: ActivityMeta::class, cascade: ['persist'])]
     #[Serializer\Expose]
@@ -104,7 +105,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     /**
      * Teams with access to the activity
      *
-     * @var Collection<Team>
+     * @var Collection<int, Team>
      */
     #[ORM\JoinTable(name: 'kimai2_activities_teams')]
     #[ORM\JoinColumn(name: 'activity_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
@@ -117,6 +118,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     #[ORM\Column(name: 'invoice_text', type: Types::TEXT, nullable: true)]
     private ?string $invoiceText = null;
     #[ORM\Column(name: 'number', type: Types::STRING, length: 10, nullable: true)]
+    #[Constraints\NoSpecialCharacters]
     #[Assert\Length(max: 10)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
@@ -240,6 +242,11 @@ class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields
     {
         if (null === ($current = $this->getMetaField($meta->getName()))) {
+            if (!($meta instanceof ActivityMeta)) {
+                throw new \InvalidArgumentException(
+                    \sprintf('Expected instanceof ActivityMeta, received "%s"', \get_class($meta))
+                );
+            }
             $meta->setEntity($this);
             $this->meta->add($meta);
 
@@ -271,7 +278,7 @@ class Activity implements EntityWithMetaFields, EntityWithBudget, CreatedAt
     }
 
     /**
-     * @return Collection<Team>
+     * @return Collection<int, Team>
      */
     public function getTeams(): Collection
     {

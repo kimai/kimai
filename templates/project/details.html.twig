@@ -84,6 +84,14 @@
                         </td>
                     </tr>
                     {% endif %}
+                    {% if project.lockedUntil is not empty %}
+                    <tr>
+                        <th>{{ 'project_locked_until'|trans }}</th>
+                        <td colspan="3">
+                            {{ project.lockedUntil|date_short }}
+                        </td>
+                    </tr>
+                    {% endif %}
                     {% if project.number is not empty %}
                     <tr>
                         <th>{{ 'project_number'|trans }}</th>
@@ -152,9 +160,12 @@
     {% endfor %}
 
     {% if teams is not null%}
-        {% set options = {'teams': teams, 'team': team} %}
+        {% set options = {'teams': teams} %}
         {% if is_granted('permissions', project) %}
-            {% set options = options|merge({'route_create': path('project_team_create', {'id': project.id}), 'route_edit': path('admin_project_permissions', {'id': project.id})}) %}
+            {% if is_granted('create_team') %}
+                {% set options = options|merge({'route_create': path('project_team_create', {'id': project.id})}) %}
+            {% endif %}
+            {% set options = options|merge({'route_edit': path('admin_project_permissions', {'id': project.id})}) %}
         {% endif %}
         {% if project.customer.teams|length > 0 %}
             {% set options = options|merge({'empty_message': 'team.project_visibility_inherited'}) %}
@@ -165,7 +176,7 @@
     {% if comments is not null %}
         {% set options = {'form': commentForm, 'comments': comments} %}
         {% if can_edit %}
-            {% set options = options|merge({'route_pin': 'project_comment_pin', 'route_delete': 'project_comment_delete'}) %}
+            {% set options = options|merge({'route_pin': 'toggle_project_comment_pin', 'route_api_options': {'id': project.id}, 'route_delete': 'delete_project_comment'}) %}
         {% endif %}
         {{ include('embeds/comments.html.twig', options) }}
     {% endif %}
@@ -176,7 +187,8 @@
     {{ parent() }}
     <script type="text/javascript">
         document.addEventListener('kimai.initialized', function() {
-            KimaiReloadPageWidget.create('kimai.customerTeamUpdate kimai.projectTeamUpdate kimai.activityTeamUpdate kimai.projectUpdate kimai.teamUpdate kimai.customerUpdate kimai.rateUpdate');
+            KimaiReloadPageWidget.create('kimai.commentUpdate kimai.customerTeamUpdate kimai.projectTeamUpdate kimai.activityTeamUpdate kimai.projectUpdate kimai.teamUpdate kimai.customerUpdate kimai.rateUpdate');
         });
     </script>
+    {{ include('project/duplicate-redirect.html.twig') }}
 {% endblock %}

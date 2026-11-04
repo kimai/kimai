@@ -24,11 +24,11 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/reporting/project_view')]
+#[IsGranted('report:project')]
+#[IsGranted(new Expression("is_granted('budget_any', 'project')"))]
 final class ProjectViewController extends AbstractController
 {
     #[Route(path: '', name: 'report_project_view', methods: ['GET', 'POST'])]
-    #[IsGranted('report:project')]
-    #[IsGranted(new Expression("is_granted('budget_any', 'project')"))]
     public function __invoke(Request $request, ProjectStatisticService $service): Response
     {
         $data = $this->getData($request, $service);

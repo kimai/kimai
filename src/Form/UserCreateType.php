@@ -62,6 +62,7 @@ class UserCreateType extends UserEditType
                 'multiple' => true,
                 'expanded' => false,
                 'required' => false,
+                'restrict_to_assignable' => true,
             ]);
         }
 
@@ -77,9 +78,11 @@ class UserCreateType extends UserEditType
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'validation_groups' => ['UserCreate', 'Registration'],
+            'validation_groups' => ['UserCreate', 'Registration', 'Default'],
             'include_roles' => false,
             'include_teams' => false,
+            // creating users requires the create_user permission, so the admin flags can be shown
+            'include_password_reset' => true,
         ]);
     }
 }

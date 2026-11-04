@@ -4,27 +4,31 @@ on:
     push:
         branches:
             - main
+    workflow_dispatch:
 
-permissions:
-    contents: read
+concurrency:
+    group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+    cancel-in-progress: true
+
+permissions: {}
 
 jobs:
     correct_repository:
-        permissions:
-            contents: none
         runs-on: ubuntu-latest
+        name: Verify repository
         steps:
             - name: fail on fork
               if: github.repository_owner != 'kimai'
               run: exit 1
 
     update_release_draft:
+        name: Draft next release
         permissions:
-            contents: write  # for release-drafter/release-drafter to create a github release
-            pull-requests: write  # for release-drafter/release-drafter to add label to PR
+            contents: write # to create a github release draft
+            pull-requests: read # to identify changes that occurred
         needs: correct_repository
         runs-on: ubuntu-latest
         steps:
-            - uses: release-drafter/release-drafter@v6
+            - uses: release-drafter/release-drafter@978bb0b30c5ee8cdd332ced253758157150d43f0 # v7.10.0
               env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  token: ${{ secrets.GITHUB_TOKEN }}

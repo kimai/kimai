@@ -87,32 +87,40 @@ final class QuickEntryForm extends AbstractType
             }
         ));
 
-        $builder->add('rows', CollectionType::class, [
+        $newOptions = [
             'label' => false,
             'entry_type' => QuickEntryWeekType::class,
-            'entry_options' => [
-                'label' => false,
-                'duration_minutes' => $this->configuration->getTimesheetIncrementDuration(),
-                // this is NOT the start_date, because it would prevent projects from appearing in the
-                // first days of the week if the project ends at the end of the week.
-                // the validation still triggers if the user selects days outside the project range.
-                'start_date' => $options['end_date'],
-                'end_date' => $options['end_date'],
-                'empty_data' => function (FormInterface $form) use ($options) {
-                    if ($options['prototype_data'] instanceof QuickEntryModel) {
-                        return clone $options['prototype_data'];
-                    }
-                    throw new \Exception('Invalid Prototype given');
-                },
-                'prototype_data' => clone $options['prototype_data'],
-            ],
             'prototype_data' => $options['prototype_data'],
-            'allow_add' => true,
             'constraints' => [
                 new Valid(),
                 new All(['constraints' => [new QuickEntryModel()]])
             ],
-        ]);
+        ];
+
+        $entryOptions = [
+            'label' => false,
+            'duration_minutes' => $this->configuration->getTimesheetIncrementDuration(),
+            // this is NOT the start_date, because it would prevent projects from appearing in the
+            // first days of the week if the project ends at the end of the week.
+            // the validation still triggers if the user selects days outside the project range.
+            'start_date' => $options['end_date'],
+            'end_date' => $options['end_date'],
+        ];
+
+        if ($options['prototype_data'] !== null) {
+            $entryOptions['prototype_data'] = clone $options['prototype_data'];
+            $entryOptions['empty_data'] = function (FormInterface $form) use ($options) {
+                if ($options['prototype_data'] instanceof QuickEntryModel) {
+                    return clone $options['prototype_data'];
+                }
+                throw new \Exception('Invalid Prototype given');
+            };
+            $newOptions['allow_add'] = true;
+        }
+
+        $newOptions['entry_options'] = $entryOptions;
+
+        $builder->add('rows', CollectionType::class, $newOptions);
     }
 
     public function finishView(FormView $view, FormInterface $form, array $options): void

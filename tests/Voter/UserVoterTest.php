@@ -10,6 +10,7 @@
 namespace App\Tests\Voter;
 
 use App\Entity\InvoiceTemplate;
+use App\Entity\Team;
 use App\Entity\User;
 use App\Voter\UserVoter;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -118,5 +119,198 @@ class UserVoterTest extends AbstractVoterTestCase
 
         self::assertEquals(VoterInterface::ACCESS_GRANTED, $sut->vote($token, $user, ['view_team_member']));
         self::assertEquals(VoterInterface::ACCESS_DENIED, $sut->vote($token, $userMock, ['view_team_member']));
+    }
+
+    /**
+     * Even with the "<attribute>_other_profile" role permission, access to another user's
+     * profile must additionally pass the team-membership check in
+     * RolePermissionManager::checkUserAccess().
+     */
+    public function testOtherProfileRequiresTeamRelation(): void
+    {
+        $teamlead = self::getUser(10, User::ROLE_TEAMLEAD);
+        $teamlead->setEnabled(true);
+        $foreignUser = self::getUser(11, User::ROLE_USER);
+        $foreignUser->setEnabled(true);
+
+        // give the foreign user a team that the teamlead is NOT part of,
+        // so the special "subject has no teams" fallback does not kick in
+        $team = new Team('foreign team');
+        $foreignUser->addTeam($team);
+
+        $permissions = [
+            'ROLE_TEAMLEAD' => ['view_other_profile', 'edit_other_profile'],
+        ];
+        $rpm = $this->getRolePermissionManager($permissions, true);
+        $voter = new UserVoter($rpm);
+
+        $token = new UsernamePasswordToken($teamlead, 'bar', $teamlead->getRoles());
+
+        // the role permission "view_other_profile" exists, but the team relation is missing
+        self::assertEquals(VoterInterface::ACCESS_DENIED, $voter->vote($token, $foreignUser, ['view']));
+        self::assertEquals(VoterInterface::ACCESS_DENIED, $voter->vote($token, $foreignUser, ['edit']));
+    }
+
+    /**
+     * Same setup as above, but the current user IS teamlead of one of the subject's
+     * teams — access should then be granted.
+     */
+    public function testOtherProfileGrantedWhenUserIsTeamleadOfSubject(): void
+    {
+        $teamlead = self::getUser(20, User::ROLE_TEAMLEAD);
+        $teamlead->setEnabled(true);
+        $member = self::getUser(21, User::ROLE_USER);
+        $member->setEnabled(true);
+
+        $team = new Team('shared team');
+        $team->addUser($member);
+        $team->addTeamlead($teamlead);
+
+        $permissions = [
+            'ROLE_TEAMLEAD' => ['view_other_profile', 'edit_other_profile'],
+        ];
+        $rpm = $this->getRolePermissionManager($permissions, true);
+        $voter = new UserVoter($rpm);
+
+        $token = new UsernamePasswordToken($teamlead, 'bar', $teamlead->getRoles());
+
+        self::assertEquals(VoterInterface::ACCESS_GRANTED, $voter->vote($token, $member, ['view']));
+        self::assertEquals(VoterInterface::ACCESS_GRANTED, $voter->vote($token, $member, ['edit']));
+    }
+
+    /**
+     * Verify that disabled profiles can still be edited (e.g. to reactivate them or check historic data).
+     */
+    public function testOtherProfileAllowedForDisabledSubject(): void
+    {
+        $teamlead = self::getUser(30, User::ROLE_TEAMLEAD);
+        $teamlead->setEnabled(true);
+        $member = self::getUser(31, User::ROLE_USER);
+        $member->setEnabled(false);
+
+        $team = new Team('shared team');
+        $team->addUser($member);
+        $team->addTeamlead($teamlead);
+
+        $permissions = [
+            'ROLE_TEAMLEAD' => ['view_other_profile', 'edit_other_profile'],
+        ];
+        $rpm = $this->getRolePermissionManager($permissions, true);
+        $voter = new UserVoter($rpm);
+
+        $token = new UsernamePasswordToken($teamlead, 'bar', $teamlead->getRoles());
+
+        self::assertEquals(VoterInterface::ACCESS_GRANTED, $voter->vote($token, $member, ['view']));
+        self::assertEquals(VoterInterface::ACCESS_GRANTED, $voter->vote($token, $member, ['edit']));
+    }
+
+    /**
+     * Special case in checkUserAccess(): if the subject has no teams at all and the
+     * current user is a teamlead/admin, access is granted (small-installation case).
+     */
+    public function testOtherProfileGrantedForTeamlessSubjectWhenUserIsTeamlead(): void
+    {
+        $teamlead = self::getUser(40, User::ROLE_TEAMLEAD);
+        $teamlead->setEnabled(true);
+        $lonelyUser = self::getUser(41, User::ROLE_USER);
+        $lonelyUser->setEnabled(true);
+
+        $permissions = [
+            'ROLE_TEAMLEAD' => ['view_other_profile', 'edit_other_profile'],
+        ];
+        $rpm = $this->getRolePermissionManager($permissions, true);
+        $voter = new UserVoter($rpm);
+
+        $token = new UsernamePasswordToken($teamlead, 'bar', $teamlead->getRoles());
+
+        self::assertEquals(VoterInterface::ACCESS_GRANTED, $voter->vote($token, $lonelyUser, ['view']));
+        self::assertEquals(VoterInterface::ACCESS_GRANTED, $voter->vote($token, $lonelyUser, ['edit']));
+    }
+
+    /**
+     * A user with the "roles_other_profile" permission must not be able to edit the roles of a
+     * subject who holds a role the user cannot assign themselves (privilege escalation guard).
+     *
+     * @param string|null $actorRole the role of the acting user
+     * @param string|null $subjectRole the role held by the edited subject
+     * @param int $result expected voter result for the "roles" attribute
+     */
+    #[DataProvider('getRolesManagementTestData')]
+    public function testRolesManagementRespectsRoleHierarchy(?string $actorRole, ?string $subjectRole, int $result): void
+    {
+        $actor = self::getUser(60, $actorRole);
+        $actor->setEnabled(true);
+        // grant "see all data" so RolePermissionManager::checkUserAccess() passes and the new
+        // hierarchy guard is the only thing that can still deny access
+        $actor->initCanSeeAllData(true);
+
+        $subject = self::getUser(61, $subjectRole);
+        $subject->setEnabled(true);
+
+        $permissions = [
+            'ROLE_TEAMLEAD' => ['roles_other_profile', 'edit_other_profile'],
+            'ROLE_ADMIN' => ['roles_other_profile', 'edit_other_profile'],
+            'ROLE_SUPER_ADMIN' => ['roles_other_profile', 'edit_other_profile'],
+        ];
+        $voter = new UserVoter($this->getRolePermissionManager($permissions, true));
+
+        $token = new UsernamePasswordToken($actor, 'bar', $actor->getRoles());
+
+        self::assertEquals($result, $voter->vote($token, $subject, ['roles']));
+
+        // the "edit" attribute has no hierarchy guard, so it must stay granted in every case,
+        // proving the denial above is specific to role management
+        self::assertEquals(VoterInterface::ACCESS_GRANTED, $voter->vote($token, $subject, ['edit']));
+    }
+
+    public static function getRolesManagementTestData(): \Generator
+    {
+        $granted = VoterInterface::ACCESS_GRANTED;
+        $denied = VoterInterface::ACCESS_DENIED;
+
+        // a super admin may manage everyone
+        yield [User::ROLE_SUPER_ADMIN, User::ROLE_SUPER_ADMIN, $granted];
+        yield [User::ROLE_SUPER_ADMIN, User::ROLE_ADMIN, $granted];
+        yield [User::ROLE_SUPER_ADMIN, User::ROLE_TEAMLEAD, $granted];
+        yield [User::ROLE_SUPER_ADMIN, User::ROLE_USER, $granted];
+
+        // an admin may manage admins and below, but not super admins
+        yield [User::ROLE_ADMIN, User::ROLE_SUPER_ADMIN, $denied];
+        yield [User::ROLE_ADMIN, User::ROLE_ADMIN, $granted];
+        yield [User::ROLE_ADMIN, User::ROLE_TEAMLEAD, $granted];
+        yield [User::ROLE_ADMIN, User::ROLE_USER, $granted];
+
+        // a teamlead may manage teamleads and below, but not admins or super admins
+        yield [User::ROLE_TEAMLEAD, User::ROLE_SUPER_ADMIN, $denied];
+        yield [User::ROLE_TEAMLEAD, User::ROLE_ADMIN, $denied];
+        yield [User::ROLE_TEAMLEAD, User::ROLE_TEAMLEAD, $granted];
+        yield [User::ROLE_TEAMLEAD, User::ROLE_USER, $granted];
+    }
+
+    /**
+     * Without the role permission "<attribute>_other_profile" the voter must deny,
+     * regardless of any team relation between user and subject.
+     */
+    public function testOtherProfileDeniedWithoutRolePermissionEvenWithTeamRelation(): void
+    {
+        $teamlead = self::getUser(50, User::ROLE_TEAMLEAD);
+        $teamlead->setEnabled(true);
+        $member = self::getUser(51, User::ROLE_USER);
+        $member->setEnabled(true);
+
+        $team = new Team('shared team');
+        $team->addUser($member);
+        $team->addTeamlead($teamlead);
+
+        // no "view_other_profile" permission for ROLE_TEAMLEAD
+        $permissions = [
+            'ROLE_TEAMLEAD' => ['view_own_profile'],
+        ];
+        $rpm = $this->getRolePermissionManager($permissions, true);
+        $voter = new UserVoter($rpm);
+
+        $token = new UsernamePasswordToken($teamlead, 'bar', $teamlead->getRoles());
+
+        self::assertEquals(VoterInterface::ACCESS_DENIED, $voter->vote($token, $member, ['view']));
     }
 }

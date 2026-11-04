@@ -1,6 +1,8 @@
 {% macro searchButton(form) %}
     <input type="hidden" name="_token" value="{{ csrf_token('search') }}">
-    <div class="btn-group me-auto">
+    {# pressing enter submits the form with the first submit button, so it must be the search and not the bookmark #}
+    <button type="submit" name="performSearch" value="performSearch" class="performSearch btn btn-primary" data-type="submit">{{ 'search'|trans }}</button>
+    <div class="btn-group">
         {% if form.vars.data.bookmark %}
             <button type="submit" id="setDefaultQuery" name="setDefaultQuery" class="btn btn-outline-secondary" data-toggle="tooltip" title="{{ 'set_as_default'|trans }}">
                 {{ icon('bookmarked', true) }}
@@ -19,5 +21,4 @@
             <a href="{{ path(app.request.attributes.get('_route')) }}" class="btn btn-icon btn-outline-secondary" data-toggle="tooltip" title="{{ 'remove_filter'|trans }}">{{ icon('cancel', true) }}</a>
         {% endif %}
     </div>
-    <button type="submit" name="performSearch" value="performSearch" class="performSearch btn btn-primary ms-auto" data-type="submit">{{ 'search'|trans }}</button>
 {% endmacro %}

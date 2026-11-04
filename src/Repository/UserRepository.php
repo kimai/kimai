@@ -50,6 +50,28 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
         }
     }
 
+    public function updateLastLogin(User $user): void
+    {
+        if ($user->getId() === null) {
+            return;
+        }
+
+        // the exact moment is not relevant (e.g. each API call)
+        // we just want to know roughly when the user was last seen in the auth process
+        $minWindow = new \DateTime('-15 minute', $user->getDateTimezone());
+        $lastLogin = $user->getLastLogin();
+        if ($lastLogin !== null && $lastLogin >= $minWindow) {
+            return;
+        }
+
+        // prevent using entity manager and calculating changesets
+        $this->getEntityManager()->getConnection()->executeStatement(
+            'UPDATE kimai2_users SET last_login = ? WHERE id = ?',
+            [new \DateTime('now', $user->getDateTimezone()), $user->getId()],
+            [Types::DATETIME_MUTABLE, Types::INTEGER],
+        );
+    }
+
     public function saveUser(User $user): void
     {
         $entityManager = $this->getEntityManager();
@@ -310,12 +332,13 @@ class UserRepository extends EntityRepository implements UserLoaderInterface, Us
         }
 
         if ($query->getRole() !== null) {
+            // roles are stored as JSON list, the quotes prevent partial matches like ROLE_ADMIN in ROLE_ADMIN_FOO
             $rolesWhere = 'u.roles LIKE :role';
-            $qb->setParameter('role', '%' . $query->getRole() . '%');
+            $qb->setParameter('role', '%"' . $query->getRole() . '"%');
             // a workaround, because ROLE_USER is not saved in the database
             if ($query->getRole() === User::ROLE_USER) {
                 $rolesWhere .= ' OR u.roles LIKE :role1';
-                $qb->setParameter('role1', '%{}');
+                $qb->setParameter('role1', '[]');
             }
             $qb->andWhere($rolesWhere);
         }

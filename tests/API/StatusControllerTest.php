@@ -70,4 +70,26 @@ class StatusControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result);
         // no asserts, as plugins are disabled in tests
     }
+
+    public function testCorsExposesPaginationHeaders(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $client->request('GET', '/api/ping', [], [], ['HTTP_ORIGIN' => 'http://example.com']);
+
+        $response = $client->getResponse();
+        self::assertTrue($response->isSuccessful());
+
+        $expose = $response->headers->get('Access-Control-Expose-Headers');
+        self::assertNotNull($expose, 'Missing "Access-Control-Expose-Headers" response header');
+
+        // Header values are case-insensitive; the test client lowercases them
+        $exposeLower = strtolower($expose);
+        foreach (['x-page', 'x-total-count', 'x-total-pages', 'x-per-page'] as $header) {
+            self::assertStringContainsString(
+                $header,
+                $exposeLower,
+                \sprintf('Pagination header "%s" is not exposed via CORS', $header)
+            );
+        }
+    }
 }

@@ -124,17 +124,20 @@ class Invoice implements EntityWithMetaFields
     #[ORM\Column(name: 'invoice_filename', type: Types::STRING, length: 150, nullable: false)]
     #[Assert\NotNull]
     #[Assert\Length(min: 1, max: 150)]
+    #[Serializer\Expose]
+    #[Serializer\Groups(['Default'])]
     #[Exporter\Expose(label: 'file', type: 'string')]
     private ?string $invoiceFilename = null;
     private bool $localized = false;
     #[ORM\Column(name: 'payment_date', type: 'date', nullable: true)]
     #[Serializer\Expose]
     #[Serializer\Groups(['Default'])]
+    #[Serializer\Type(name: "DateTime<'Y-m-d'>")]
     private ?\DateTime $paymentDate = null;
     /**
      * Meta fields registered with the invoice
      *
-     * @var Collection<InvoiceMeta>
+     * @var Collection<int, InvoiceMeta>
      */
     #[ORM\OneToMany(mappedBy: 'invoice', targetEntity: InvoiceMeta::class, cascade: ['persist'])]
     #[Serializer\Expose]
@@ -343,13 +346,17 @@ class Invoice implements EntityWithMetaFields
         return $this->total - $this->tax;
     }
 
-    public function getPaymentDate(): ?\DateTime
+    public function getPaymentDate(): ?\DateTimeInterface
     {
         return $this->paymentDate;
     }
 
-    public function setPaymentDate(?\DateTime $paymentDate): Invoice
+    public function setPaymentDate(?\DateTimeInterface $paymentDate): Invoice
     {
+        if ($paymentDate !== null) {
+            $paymentDate = \DateTime::createFromInterface($paymentDate);
+        }
+
         $this->paymentDate = $paymentDate;
 
         return $this;
@@ -402,6 +409,11 @@ class Invoice implements EntityWithMetaFields
     public function setMetaField(MetaTableTypeInterface $meta): EntityWithMetaFields
     {
         if (null === ($current = $this->getMetaField($meta->getName()))) {
+            if (!($meta instanceof InvoiceMeta)) {
+                throw new \InvalidArgumentException(
+                    \sprintf('Expected instanceof InvoiceMeta, received "%s"', \get_class($meta))
+                );
+            }
             $meta->setEntity($this);
             $this->meta->add($meta);
 

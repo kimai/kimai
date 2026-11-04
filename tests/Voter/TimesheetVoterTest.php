@@ -13,8 +13,10 @@ use App\Configuration\ConfigLoaderInterface;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Form\Model\MultiUserTimesheet;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Timesheet\LockdownService;
 use App\Voter\TimesheetVoter;
@@ -31,7 +33,7 @@ class TimesheetVoterTest extends AbstractVoterTestCase
         return $this->getLockdownVoter();
     }
 
-    protected function assertVote(User $user, $subject, $attribute, $result): void
+    private function assertVote(User $user, Timesheet $subject, string $attribute, int $result): void
     {
         $token = new UsernamePasswordToken($user, 'bar', $user->getRoles());
         $sut = $this->getVoter(TimesheetVoter::class);
@@ -39,28 +41,27 @@ class TimesheetVoterTest extends AbstractVoterTestCase
         self::assertEquals($result, $sut->vote($token, $subject, [$attribute]));
     }
 
-    public function testVote(): void
+    #[DataProvider('getTestData')]
+    public function testVote(User $user, Timesheet $subject, string $attribute, int $result): void
     {
-        foreach ($this->getTestData() as $row) {
-            $this->assertVote($row[0], $row[1], $row[2], $row[3]);
-        }
+        $this->assertVote($user, $subject, $attribute, $result);
     }
 
-    public function getTestData()
+    public static function getTestData()
     {
-        $user0 = $this->getTestUser(0, 'unknown');
-        $user1 = $this->getTestUser(1, User::ROLE_USER);
-        $user2 = $this->getTestUser(2, User::ROLE_TEAMLEAD);
-        $user3 = $this->getTestUser(3, User::ROLE_ADMIN);
-        $user4 = $this->getTestUser(4, User::ROLE_SUPER_ADMIN);
+        $user0 = self::getTestUser(0, 'unknown');
+        $user1 = self::getTestUser(1, User::ROLE_USER);
+        $user2 = self::getTestUser(2, User::ROLE_TEAMLEAD);
+        $user3 = self::getTestUser(3, User::ROLE_ADMIN);
+        $user4 = self::getTestUser(4, User::ROLE_SUPER_ADMIN);
 
-        $timesheet1 = $this->getTimesheet($user1);
-        $timesheet2 = $this->getTimesheet($user2);
-        $timesheet3 = $this->getTimesheet($user3);
-        $timesheet4 = $this->getTimesheet($user4);
-        $timesheet5 = $this->getTimesheet($user2);
+        $timesheet1 = self::getTimesheet($user1);
+        $timesheet2 = self::getTimesheet($user2);
+        $timesheet3 = self::getTimesheet($user3);
+        $timesheet4 = self::getTimesheet($user4);
+        $timesheet5 = self::getTimesheet($user2);
         $timesheet5->setExported(true);
-        $timesheet6 = $this->getTimesheet($user1);
+        $timesheet6 = self::getTimesheet($user1);
         $timesheet6->getActivity()?->setVisible(false);
 
         $result = VoterInterface::ACCESS_GRANTED;
@@ -97,7 +98,7 @@ class TimesheetVoterTest extends AbstractVoterTestCase
     #[DataProvider('getLockDownTestData')]
     public function testWithLockdown(string $permission, int $expected, string $beginModifier, string $lockdownBegin, string $lockdownEnd, ?string $lockdownGrace): void
     {
-        $user = $this->getTestUser(1, User::ROLE_USER);
+        $user = self::getTestUser(1, User::ROLE_USER);
 
         $begin = new \DateTime('now');
         $begin->modify($beginModifier);
@@ -125,16 +126,16 @@ class TimesheetVoterTest extends AbstractVoterTestCase
 
     public function testSpecialCases(): void
     {
-        $user1 = $this->getTestUser(1, User::ROLE_USER);
-        $user2 = $this->getTestUser(2, User::ROLE_TEAMLEAD);
-        $user3 = $this->getTestUser(3, User::ROLE_ADMIN);
-        $user4 = $this->getTestUser(4, User::ROLE_SUPER_ADMIN);
+        $user1 = self::getTestUser(1, User::ROLE_USER);
+        $user2 = self::getTestUser(2, User::ROLE_TEAMLEAD);
+        $user3 = self::getTestUser(3, User::ROLE_ADMIN);
+        $user4 = self::getTestUser(4, User::ROLE_SUPER_ADMIN);
 
         // unknown attribute
-        $timesheet = $this->getTimesheet($user3);
+        $timesheet = self::getTimesheet($user3);
         $this->assertVote($user3, $timesheet, 'edit2', VoterInterface::ACCESS_ABSTAIN);
 
-        $timesheet = $this->getTimesheet($user2);
+        $timesheet = self::getTimesheet($user2);
         $timesheet->setExported(true);
         // edit exported timesheet disallowed for teamleads
         $this->assertVote($user2, $timesheet, 'edit', VoterInterface::ACCESS_DENIED);
@@ -144,17 +145,17 @@ class TimesheetVoterTest extends AbstractVoterTestCase
         $this->assertVote($user4, $timesheet, 'delete', VoterInterface::ACCESS_GRANTED);
 
         // hidden activities might not be started
-        $timesheet = $this->getTimesheet($user1);
+        $timesheet = self::getTimesheet($user1);
         $timesheet->getActivity()?->setVisible(false);
         $this->assertVote($user2, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
 
         // hidden projects might not be started
-        $timesheet = $this->getTimesheet($user1);
+        $timesheet = self::getTimesheet($user1);
         $timesheet->getProject()?->setVisible(false);
         $this->assertVote($user2, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
 
         // hidden customers might not be started
-        $timesheet = $this->getTimesheet($user1);
+        $timesheet = self::getTimesheet($user1);
         $timesheet->getProject()?->getCustomer()?->setVisible(false);
         $this->assertVote($user2, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
         // cannot start timesheet without activity
@@ -169,38 +170,273 @@ class TimesheetVoterTest extends AbstractVoterTestCase
         $this->assertVote($user2, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
     }
 
-    protected function getTimesheet($user): Timesheet
+    /**
+     * @return \Generator<array{0: string, 1: int}>
+     */
+    public static function getProjectLockedAttributes(): \Generator
     {
+        // everything that changes a stopped timesheet is forbidden inside a locked project period
+        yield ['create', VoterInterface::ACCESS_DENIED];
+        yield ['edit', VoterInterface::ACCESS_DENIED];
+        yield ['delete', VoterInterface::ACCESS_DENIED];
+        yield ['duplicate', VoterInterface::ACCESS_DENIED];
+        // reading a locked record stays possible, the project remains visible for reporting and invoicing
+        yield ['view', VoterInterface::ACCESS_GRANTED];
+        yield ['export', VoterInterface::ACCESS_GRANTED];
+        yield ['view_rate', VoterInterface::ACCESS_GRANTED];
+        yield ['is_owner', VoterInterface::ACCESS_GRANTED];
+    }
+
+    #[DataProvider('getProjectLockedAttributes')]
+    public function testProjectLockedUntil(string $attribute, int $expected): void
+    {
+        $user = self::getUser(1, User::ROLE_SUPER_ADMIN);
+
+        $timesheet = self::getTimesheet($user);
+        $timesheet->setBegin(new \DateTime('2020-06-15 10:00:00'));
+        $timesheet->setEnd(new \DateTime('2020-06-15 12:00:00'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTimeImmutable('2020-06-30 23:59:59'));
+
+        $this->assertVote($user, $timesheet, $attribute, $expected);
+    }
+
+    /**
+     * @return \Generator<array{0: string, 1: int}>
+     */
+    public static function getProjectLockedAttributesForRunningRecord(): \Generator
+    {
+        yield ['create', VoterInterface::ACCESS_DENIED];
+        yield ['start', VoterInterface::ACCESS_DENIED];
+        yield ['stop', VoterInterface::ACCESS_DENIED];
+        yield ['delete', VoterInterface::ACCESS_DENIED];
+        yield ['duplicate', VoterInterface::ACCESS_DENIED];
+        // a running record must stay editable, otherwise it could neither be stopped nor
+        // moved out of the locked period - the validator rejects saving it with a locked begin date
+        yield ['edit', VoterInterface::ACCESS_GRANTED];
+        yield ['view', VoterInterface::ACCESS_GRANTED];
+    }
+
+    #[DataProvider('getProjectLockedAttributesForRunningRecord')]
+    public function testProjectLockedUntilForRunningRecord(string $attribute, int $expected): void
+    {
+        $user = self::getUser(1, User::ROLE_SUPER_ADMIN);
+
+        // started inside the locked period and never stopped
+        $timesheet = self::getTimesheet($user);
+        $timesheet->setBegin(new \DateTime('2020-06-15 10:00:00'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTimeImmutable('2020-06-30 23:59:59'));
+
+        $this->assertVote($user, $timesheet, $attribute, $expected);
+    }
+
+    /**
+     * @return \Generator<array{0: string}>
+     */
+    public static function getProjectUnlockedAttributes(): \Generator
+    {
+        yield ['create'];
+        yield ['start'];
+        yield ['stop'];
+        yield ['edit'];
+        yield ['delete'];
+        yield ['duplicate'];
+        yield ['view'];
+    }
+
+    #[DataProvider('getProjectUnlockedAttributes')]
+    public function testTimesheetAfterLockedPeriodIsNotAffected(string $attribute): void
+    {
+        $user = self::getUser(1, User::ROLE_USER);
+
+        $timesheet = self::getTimesheet($user);
+        $timesheet->setBegin(new \DateTime('2020-07-01 00:00:00'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTimeImmutable('2020-06-30 23:59:59'));
+
+        $this->assertVote($user, $timesheet, $attribute, VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testProjectLockDateIsIncluded(): void
+    {
+        $user = self::getUser(1, User::ROLE_USER);
+
+        $timesheet = self::getTimesheet($user);
+        // the very last second of the lock date is still locked
+        $timesheet->setBegin(new \DateTime('2020-06-30 23:59:59'));
+        $timesheet->setEnd(new \DateTime('2020-07-02 10:00:00'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTimeImmutable('2020-06-30 23:59:59'));
+
+        $this->assertVote($user, $timesheet, 'edit', VoterInterface::ACCESS_DENIED);
+
+        // the first second of the next day is not
+        $timesheet->setBegin(new \DateTime('2020-07-01 00:00:00'));
+        $this->assertVote($user, $timesheet, 'edit', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testProjectLockAppliesToEveryRole(): void
+    {
+        // the lock has no exceptions, not even for admins
+        foreach ([User::ROLE_USER, User::ROLE_TEAMLEAD, User::ROLE_ADMIN, User::ROLE_SUPER_ADMIN] as $role) {
+            $user = self::getUser(1, $role);
+
+            $timesheet = self::getTimesheet($user);
+            $timesheet->setBegin(new \DateTime('2020-06-15 10:00:00'));
+            $timesheet->setEnd(new \DateTime('2020-06-15 12:00:00'));
+            $timesheet->getProject()?->setLockedUntil(new \DateTimeImmutable('2020-06-30 23:59:59'));
+
+            $this->assertVote($user, $timesheet, 'edit', VoterInterface::ACCESS_DENIED);
+            $this->assertVote($user, $timesheet, 'delete', VoterInterface::ACCESS_DENIED);
+            $this->assertVote($user, $timesheet, 'duplicate', VoterInterface::ACCESS_DENIED);
+        }
+    }
+
+    public function testRunningTimesheetInLockedPeriodCannotBeStopped(): void
+    {
+        $user = self::getUser(1, User::ROLE_SUPER_ADMIN);
+
+        // started before the lock date and still running
+        $timesheet = self::getTimesheet($user);
+        $timesheet->setBegin(new \DateTime('-2 months'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTimeImmutable('-1 month'));
+
+        $this->assertVote($user, $timesheet, 'stop', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testRunningTimesheetAfterLockedPeriodCanBeStopped(): void
+    {
+        $user = self::getUser(1, User::ROLE_USER);
+
+        $timesheet = self::getTimesheet($user);
+        $timesheet->setBegin(new \DateTime('-2 days'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTimeImmutable('-1 month'));
+
+        $this->assertVote($user, $timesheet, 'stop', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testRestartingAnOldRecordUsesTheDateOfTheNewRecord(): void
+    {
+        $user = self::getUser(1, User::ROLE_USER);
+
+        // a stopped record is only the template for a new record, which will begin "now".
+        // the lock is in the past, so a new record can be created from it.
+        $timesheet = self::getTimesheet($user);
+        $timesheet->setBegin(new \DateTime('-2 months'));
+        $timesheet->setEnd(new \DateTime('-2 months +1 hour'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTimeImmutable('-1 month'));
+
+        $this->assertVote($user, $timesheet, 'start', VoterInterface::ACCESS_GRANTED);
+        // copying keeps the original dates and is therefore forbidden
+        $this->assertVote($user, $timesheet, 'duplicate', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testRestartingIsDeniedWhenLockDateIsInTheFuture(): void
+    {
+        $user = self::getUser(1, User::ROLE_USER);
+
+        // the whole project is frozen up to a future date, so nothing can be booked at all
+        $timesheet = self::getTimesheet($user);
+        $timesheet->setBegin(new \DateTime('-2 months'));
+        $timesheet->setEnd(new \DateTime('-2 months +1 hour'));
+        $timesheet->getProject()?->setLockedUntil(new \DateTimeImmutable('+1 month'));
+
+        $this->assertVote($user, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testProjectWithoutLockDateIsNotAffected(): void
+    {
+        $user = self::getUser(1, User::ROLE_USER);
+
+        $timesheet = self::getTimesheet($user);
+        $timesheet->setBegin(new \DateTime('2010-01-01 10:00:00'));
+
+        $this->assertVote($user, $timesheet, 'edit', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($user, $timesheet, 'delete', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($user, $timesheet, 'stop', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($user, $timesheet, 'duplicate', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testTimesheetWithoutProjectIsNotAffected(): void
+    {
+        $user = self::getUser(1, User::ROLE_USER);
+
         $timesheet = new Timesheet();
         $timesheet->setUser($user);
+        $timesheet->setBegin(new \DateTime('2020-06-15 10:00:00'));
 
+        $this->assertVote($user, $timesheet, 'edit', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($user, $timesheet, 'stop', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testIsOwnerGrantedForOwnTimesheet(): void
+    {
+        // is_owner bypasses the RolePermissionManager entirely: a user with no
+        // role/permissions at all must still be recognised as the owner.
+        $owner = self::getUser(1, 'unknown');
+
+        $timesheet = self::getTimesheet($owner);
+
+        $this->assertVote($owner, $timesheet, 'is_owner', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testIsOwnerDeniedForOtherUsersTimesheet(): void
+    {
+        $owner = self::getUser(1, User::ROLE_USER);
+        $other = self::getUser(2, User::ROLE_SUPER_ADMIN);
+
+        $timesheet = self::getTimesheet($owner);
+
+        // even a super admin is not the *owner* of someone else's timesheet
+        $this->assertVote($other, $timesheet, 'is_owner', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testIsOwnerDeniedWhenTimesheetHasNoUser(): void
+    {
+        $user = self::getUser(1, User::ROLE_USER);
+
+        $timesheet = new Timesheet();
+
+        $this->assertVote($user, $timesheet, 'is_owner', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testIsOwnerDeniedForMultiUserTimesheetEvenWhenSameUser(): void
+    {
+        // A MultiUserTimesheet is explicitly excluded from being "owned",
+        // regardless of the assigned user.
+        $owner = self::getUser(1, User::ROLE_USER);
+
+        $timesheet = new MultiUserTimesheet();
+        $timesheet->setUser($owner);
+
+        $this->assertVote($owner, $timesheet, 'is_owner', VoterInterface::ACCESS_DENIED);
+    }
+
+    private static function getTimesheet($user): Timesheet
+    {
         $activity = new Activity();
         $project = new Project();
+        $customer = new Customer('foo');
         $activity->setProject($project);
+        $project->setCustomer($customer);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($user);
         $timesheet->setProject($project);
         $timesheet->setActivity($activity);
-        $customer = new Customer('foo');
-        $project->setCustomer($customer);
 
         return $timesheet;
     }
 
-    /**
-     * @param int $id
-     * @param string $role
-     * @return User
-     */
-    protected function getTestUser(int $id, string $role): User
+    private static function getTestUser(int $id, string $role): User
     {
-        $user = $this->createMock(User::class);
+        $user = self::createStub(User::class);
         $user->method('getId')->willReturn($id);
         $user->method('getRoles')->willReturn([$role]);
+        $user->method('getTeams')->willReturn([]);
         $user->method('getTimezone')->willReturn(date_default_timezone_get());
 
         return $user;
     }
 
-    protected function getLockdownVoter(?string $lockdownBegin = null, ?string $lockdownEnd = null, ?string $lockdownGrace = null): TimesheetVoter
+    private function getLockdownVoter(?string $lockdownBegin = null, ?string $lockdownEnd = null, ?string $lockdownGrace = null): TimesheetVoter
     {
         $loader = $this->createMock(ConfigLoaderInterface::class);
         $config = SystemConfigurationFactory::create($loader, [
@@ -214,5 +450,507 @@ class TimesheetVoterTest extends AbstractVoterTestCase
         ]);
 
         return new TimesheetVoter($this->getRolePermissionManager(), new LockdownService($config));
+    }
+
+    /**
+     * @return array<string>
+     */
+    public static function teamCheckedAttributes(): array
+    {
+        // Attributes that go through the new checkTeamAccessTimesheet() gate when
+        // accessing another user's timesheet. 'start' is excluded because it
+        // additionally requires visibility on project/activity (canStart()).
+        return ['view', 'edit', 'delete', 'export', 'view_rate', 'edit_rate', 'edit_export', 'edit_billable', 'stop'];
+    }
+
+    public function testOwnerCanAccessOwnTimesheetEvenWithRestrictiveTeams(): void
+    {
+        // Owner short-circuit: the team gate must NOT apply to the user's own timesheet.
+        $owner = self::getUser(1, User::ROLE_USER);
+
+        $customer = new Customer('Acme');
+        $customer->addTeam(new Team('locked customer team'));
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam(new Team('locked project team'));
+
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activity->addTeam(new Team('locked activity team'));
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        $this->assertVote($owner, $timesheet, 'view', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($owner, $timesheet, 'edit', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($owner, $timesheet, 'delete', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($owner, $timesheet, 'export', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testTeamleadDeniedWhenOnlyPlainMemberOfOwnerTeam(): void
+    {
+        // Headline new behaviour: a TEAMLEAD role with view_other_timesheet must
+        // not access another user's timesheet by being a plain team member —
+        // they must be the team's teamlead.
+        $owner = self::getUser(1, User::ROLE_USER);
+        $requester = self::getUser(2, User::ROLE_TEAMLEAD);
+
+        $sharedTeam = new Team('shared');
+        $sharedTeam->addUser($owner);
+        $sharedTeam->addUser($requester);
+
+        $timesheet = self::getTimesheetFor($owner);
+
+        foreach (self::teamCheckedAttributes() as $attribute) {
+            $this->assertVote($requester, $timesheet, $attribute, VoterInterface::ACCESS_DENIED);
+        }
+    }
+
+    public function testTeamleadGrantedWhenTeamleadOfOwnerTeam(): void
+    {
+        $owner = self::getUser(1, User::ROLE_USER);
+        $requester = self::getUser(2, User::ROLE_TEAMLEAD);
+
+        $sharedTeam = new Team('shared');
+        $sharedTeam->addUser($owner);
+        $sharedTeam->addTeamlead($requester);
+
+        $timesheet = self::getTimesheetFor($owner);
+
+        $this->assertVote($requester, $timesheet, 'view', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($requester, $timesheet, 'edit', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($requester, $timesheet, 'delete', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($requester, $timesheet, 'export', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testTeamleadDeniedWhenOnlyTeamleadOfUnrelatedTeam(): void
+    {
+        $owner = self::getUser(1, User::ROLE_USER);
+        $requester = self::getUser(2, User::ROLE_TEAMLEAD);
+
+        $ownerTeam = new Team('owner team');
+        $ownerTeam->addUser($owner);
+
+        $unrelated = new Team('unrelated');
+        $unrelated->addTeamlead($requester);
+
+        $timesheet = self::getTimesheetFor($owner);
+
+        $this->assertVote($requester, $timesheet, 'view', VoterInterface::ACCESS_DENIED);
+        $this->assertVote($requester, $timesheet, 'edit', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testTeamleadGrantedWhenOwnerHasNoTeams(): void
+    {
+        // Owner has no teams -> teamlead gate is permissive.
+        $owner = self::getUser(1, User::ROLE_USER);
+        $requester = self::getUser(2, User::ROLE_TEAMLEAD);
+
+        $timesheet = self::getTimesheetFor($owner);
+
+        $this->assertVote($requester, $timesheet, 'view', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($requester, $timesheet, 'edit', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testTeamleadDeniedWhenCustomerTeamBlocks(): void
+    {
+        $owner = self::getUser(1, User::ROLE_USER);
+        $requester = self::getUser(2, User::ROLE_TEAMLEAD);
+
+        // Even though requester is a teamlead of the owner's team, the customer
+        // team blocks access.
+        $sharedTeam = new Team('shared');
+        $sharedTeam->addUser($owner);
+        $sharedTeam->addTeamlead($requester);
+
+        $customer = new Customer('Acme');
+        $customer->addTeam(new Team('locked customer team'));
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $activity = new Activity();
+        $activity->setProject($project);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        $this->assertVote($requester, $timesheet, 'view', VoterInterface::ACCESS_DENIED);
+        $this->assertVote($requester, $timesheet, 'edit', VoterInterface::ACCESS_DENIED);
+        $this->assertVote($requester, $timesheet, 'delete', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testTeamleadDeniedWhenProjectTeamBlocks(): void
+    {
+        $owner = self::getUser(1, User::ROLE_USER);
+        $requester = self::getUser(2, User::ROLE_TEAMLEAD);
+
+        $sharedTeam = new Team('shared');
+        $sharedTeam->addUser($owner);
+        $sharedTeam->addTeamlead($requester);
+
+        $project = new Project();
+        $project->setCustomer(new Customer('Acme'));
+        $project->addTeam(new Team('locked project team'));
+
+        $activity = new Activity();
+        $activity->setProject($project);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        $this->assertVote($requester, $timesheet, 'view', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testTeamleadDeniedWhenActivityTeamBlocks(): void
+    {
+        $owner = self::getUser(1, User::ROLE_USER);
+        $requester = self::getUser(2, User::ROLE_TEAMLEAD);
+
+        $sharedTeam = new Team('shared');
+        $sharedTeam->addUser($owner);
+        $sharedTeam->addTeamlead($requester);
+
+        $project = new Project();
+        $project->setCustomer(new Customer('Acme'));
+
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activity->addTeam(new Team('locked activity team'));
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        $this->assertVote($requester, $timesheet, 'view', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testTeamleadGrantedThroughFullTeamChainAsMemberAndTeamlead(): void
+    {
+        $owner = self::getUser(1, User::ROLE_USER);
+        $requester = self::getUser(2, User::ROLE_TEAMLEAD);
+
+        $customerTeam = new Team('customer team');
+        $customer = new Customer('Acme');
+        $customer->addTeam($customerTeam);
+        $customerTeam->addUser($requester);
+
+        $projectTeam = new Team('project team');
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam($projectTeam);
+        $projectTeam->addUser($requester);
+
+        $activityTeam = new Team('activity team');
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activity->addTeam($activityTeam);
+        $activityTeam->addUser($requester);
+
+        $ownerTeam = new Team('owner team');
+        $ownerTeam->addUser($owner);
+        $ownerTeam->addTeamlead($requester);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        $this->assertVote($requester, $timesheet, 'view', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($requester, $timesheet, 'edit', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($requester, $timesheet, 'delete', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($requester, $timesheet, 'export', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($requester, $timesheet, 'view_rate', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testSuperAdminCanAccessOtherTimesheetDespiteRestrictiveTeams(): void
+    {
+        // SUPER_ADMIN gets canSeeAllData via isSuperAdmin() — short-circuits every team gate.
+        $owner = self::getUser(1, User::ROLE_USER);
+        $admin = self::getUser(99, User::ROLE_SUPER_ADMIN);
+
+        $ownerTeam = new Team('owner team');
+        $ownerTeam->addUser($owner);
+
+        $customer = new Customer('Acme');
+        $customer->addTeam(new Team('locked customer team'));
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam(new Team('locked project team'));
+
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activity->addTeam(new Team('locked activity team'));
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        self::assertTrue($admin->canSeeAllData());
+        $this->assertVote($admin, $timesheet, 'view', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($admin, $timesheet, 'edit', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($admin, $timesheet, 'delete', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($admin, $timesheet, 'export', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testAdminWithoutCanSeeAllDataIsBlockedByCustomerTeam(): void
+    {
+        // ROLE_ADMIN does NOT automatically have canSeeAllData() — only SUPER_ADMIN does.
+        // An ADMIN without the flag is subject to the team gate just like everyone else.
+        // Documents that the new check tightens admin access too.
+        $owner = self::getUser(1, User::ROLE_USER);
+        $admin = self::getUser(3, User::ROLE_ADMIN);
+        self::assertFalse($admin->canSeeAllData());
+
+        $customer = new Customer('Acme');
+        $customer->addTeam(new Team('locked customer team'));
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $activity = new Activity();
+        $activity->setProject($project);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        $this->assertVote($admin, $timesheet, 'view', VoterInterface::ACCESS_DENIED);
+        $this->assertVote($admin, $timesheet, 'edit', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testAdminCanSeeAllDataBypassesAllTeamGates(): void
+    {
+        // Activating canSeeAllData on a non-super-admin must restore full access.
+        $owner = self::getUser(1, User::ROLE_USER);
+        $admin = self::getUser(3, User::ROLE_ADMIN);
+        $admin->initCanSeeAllData(true);
+
+        $ownerTeam = new Team('owner team');
+        $ownerTeam->addUser($owner);
+
+        $customer = new Customer('Acme');
+        $customer->addTeam(new Team('locked customer team'));
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam(new Team('locked project team'));
+
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activity->addTeam(new Team('locked activity team'));
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        $this->assertVote($admin, $timesheet, 'view', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($admin, $timesheet, 'edit', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testRoleUserDeniedOnOtherTimesheetEvenWhenTeamGatePasses(): void
+    {
+        // ROLE_USER has only *_own_timesheet permissions. The team gate may pass,
+        // but the role still has no _other permission → denied. Defence-in-depth check.
+        $owner = self::getUser(1, User::ROLE_USER);
+        $requester = self::getUser(2, User::ROLE_USER);
+
+        // No teams anywhere — team gate is fully permissive.
+        $timesheet = self::getTimesheetFor($owner);
+
+        $this->assertVote($requester, $timesheet, 'view', VoterInterface::ACCESS_DENIED);
+        $this->assertVote($requester, $timesheet, 'edit', VoterInterface::ACCESS_DENIED);
+        $this->assertVote($requester, $timesheet, 'export', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testTeamleadGrantedWhenTeamleadOfOneOfMultipleOwnerTeams(): void
+    {
+        $owner = self::getUser(1, User::ROLE_USER);
+        $requester = self::getUser(2, User::ROLE_TEAMLEAD);
+
+        $teamA = new Team('A');
+        $teamB = new Team('B');
+        $teamA->addUser($owner);
+        $teamB->addUser($owner);
+
+        // Plain member of A, teamlead of B — granted because at least one match.
+        $teamA->addUser($requester);
+        $teamB->addTeamlead($requester);
+
+        $timesheet = self::getTimesheetFor($owner);
+
+        $this->assertVote($requester, $timesheet, 'view', VoterInterface::ACCESS_GRANTED);
+    }
+
+    public function testTeamleadDeniedWhenMemberOfAllButTeamleadOfNoneOfOwnerTeams(): void
+    {
+        $owner = self::getUser(1, User::ROLE_USER);
+        $requester = self::getUser(2, User::ROLE_TEAMLEAD);
+
+        $teamA = new Team('A');
+        $teamB = new Team('B');
+        $teamA->addUser($owner);
+        $teamB->addUser($owner);
+        $teamA->addUser($requester);
+        $teamB->addUser($requester);
+
+        $timesheet = self::getTimesheetFor($owner);
+
+        $this->assertVote($requester, $timesheet, 'view', VoterInterface::ACCESS_DENIED);
+    }
+
+    public function testTeamleadGrantedWhenOwnerTeamHasNoTeamsAndChainsAreMemberOnly(): void
+    {
+        // Confirms that the customer/project/activity gate uses the simpler
+        // "is member" rule (not teamlead) — only the final owner-team gate
+        // requires teamlead.
+        $owner = self::getUser(1, User::ROLE_USER);
+        $requester = self::getUser(2, User::ROLE_TEAMLEAD);
+
+        $customerTeam = new Team('customer team');
+        $customer = new Customer('Acme');
+        $customer->addTeam($customerTeam);
+        $customerTeam->addUser($requester); // plain member is enough here
+
+        $project = new Project();
+        $project->setCustomer($customer);
+        $activity = new Activity();
+        $activity->setProject($project);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        // Owner has no teams -> teamlead gate is permissive.
+        $this->assertVote($requester, $timesheet, 'view', VoterInterface::ACCESS_GRANTED);
+    }
+
+    /**
+     * Reproduces GHSA-c6w6-57jj-62vh.
+     *
+     * After a user loses team access to a project, "restart" (start) and
+     * "duplicate" must NOT be allowed on one of their own historical timesheets:
+     * both operations derive a brand-new record from the old entry and would
+     * therefore create a new write under the now-unauthorized project/activity.
+     *
+     * The "_own_timesheet" branch in the voter currently short-circuits before
+     * checkTeamAccess*() runs, so this test FAILS on vulnerable code (the voter
+     * returns ACCESS_GRANTED) and documents the expected secure behaviour.
+     */
+    public function testStartAndDuplicateDeniedAfterProjectAccessRevoked(): void
+    {
+        $owner = self::getUser(1, User::ROLE_USER);
+
+        // The project is now restricted to a team the owner is NOT a member of.
+        // This is the post-revocation state from the advisory's PoC.
+        $restrictedTeam = new Team('restricted after revocation');
+
+        $customer = new Customer('Acme');
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam($restrictedTeam);
+
+        $activity = new Activity();
+        $activity->setProject($project);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        $this->assertVote($owner, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
+        $this->assertVote($owner, $timesheet, 'duplicate', VoterInterface::ACCESS_DENIED);
+    }
+
+    /**
+     * Reproduces GHSA-c6w6-57jj-62vh for activity-level restriction.
+     *
+     * Even if the project is unrestricted, a restricted activity (a team the
+     * owner is no longer in) must block restart/duplicate.
+     */
+    public function testStartAndDuplicateDeniedAfterActivityAccessRevoked(): void
+    {
+        $owner = self::getUser(1, User::ROLE_USER);
+
+        $customer = new Customer('Acme');
+        $project = new Project();
+        $project->setCustomer($customer);
+
+        $activity = new Activity();
+        $activity->setProject($project);
+        $activity->addTeam(new Team('restricted after revocation'));
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        $this->assertVote($owner, $timesheet, 'start', VoterInterface::ACCESS_DENIED);
+        $this->assertVote($owner, $timesheet, 'duplicate', VoterInterface::ACCESS_DENIED);
+    }
+
+    /**
+     * Positive control for GHSA-c6w6-57jj-62vh: when the owner still has team
+     * access to the project and activity, restart/duplicate stay allowed.
+     * Guards the fix against over-restriction.
+     */
+    public function testStartAndDuplicateGrantedWhenOwnerStillHasProjectAccess(): void
+    {
+        $owner = self::getUser(1, User::ROLE_USER);
+
+        $team = new Team('still a member');
+        $team->addUser($owner);
+
+        $customer = new Customer('Acme');
+        $project = new Project();
+        $project->setCustomer($customer);
+        $project->addTeam($team);
+
+        $activity = new Activity();
+        $activity->setProject($project);
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        $this->assertVote($owner, $timesheet, 'start', VoterInterface::ACCESS_GRANTED);
+        $this->assertVote($owner, $timesheet, 'duplicate', VoterInterface::ACCESS_GRANTED);
+    }
+
+    private static function getTimesheetFor(User $owner, ?Team $customerTeam = null, ?Team $projectTeam = null, ?Team $activityTeam = null): Timesheet
+    {
+        $customer = new Customer('Acme');
+        if ($customerTeam !== null) {
+            $customer->addTeam($customerTeam);
+        }
+        $project = new Project();
+        $project->setCustomer($customer);
+        if ($projectTeam !== null) {
+            $project->addTeam($projectTeam);
+        }
+        $activity = new Activity();
+        $activity->setProject($project);
+        if ($activityTeam !== null) {
+            $activity->addTeam($activityTeam);
+        }
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+
+        return $timesheet;
     }
 }

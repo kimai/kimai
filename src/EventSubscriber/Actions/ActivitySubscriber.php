@@ -23,10 +23,14 @@ final class ActivitySubscriber extends AbstractActionsSubscriber
     {
         $payload = $event->getPayload();
 
+        if (!isset($payload['activity'])) {
+            return;
+        }
+
         /** @var Activity $activity */
         $activity = $payload['activity'];
 
-        if ($activity->getId() === null) {
+        if (!$activity instanceof Activity || $activity->getId() === null) {
             return;
         }
 
@@ -60,12 +64,26 @@ final class ActivitySubscriber extends AbstractActionsSubscriber
             $event->addDivider();
         }
 
-        if ($activity->isVisible() && $this->isGranted('create_other_timesheet')) {
-            $parameters = ['activity' => $activity->getId()];
-            if (!$activity->isGlobal()) {
-                $parameters['project'] = $activity->getProject()->getId();
+        if ($activity->isVisible()) {
+            $route = null;
+            if ($this->isGranted('create_other_timesheet')) {
+                $route = 'admin_timesheet_create';
+            } elseif ($this->isGranted('create_own_timesheet')) {
+                $route = 'timesheet_create';
             }
-            $event->addAction('create-timesheet', ['title' => 'create-timesheet', 'icon' => 'start', 'url' => $this->path('admin_timesheet_create', $parameters), 'class' => 'modal-ajax-form']);
+
+            if ($route !== null) {
+                $parameters = ['activity' => $activity->getId()];
+                if (!$activity->isGlobal()) {
+                    $parameters['project'] = $activity->getProject()->getId();
+                }
+                $event->addAction('create-timesheet', [
+                    'title' => 'create-timesheet',
+                    'icon' => 'start',
+                    'url' => $this->path($route, $parameters),
+                    'class' => 'modal-ajax-form'
+                ]);
+            }
         }
 
         if (($event->isIndexView() || $event->isView('project_details')) && $this->isGranted('delete', $activity)) {

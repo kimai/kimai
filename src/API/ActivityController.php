@@ -10,6 +10,7 @@
 namespace App\API;
 
 use App\Activity\ActivityService;
+use App\API\Serializer\BudgetExclusionStrategy;
 use App\Entity\Activity;
 use App\Entity\ActivityRate;
 use App\Form\API\ActivityApiEditForm;
@@ -19,6 +20,7 @@ use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ActivityQuery;
 use App\Utils\SearchTerm;
+use App\Validator\MetaFieldValidator;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
@@ -27,24 +29,48 @@ use OpenApi\Attributes as OA;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\GoneHttpException;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Validator\Constraints;
 
 #[Route(path: '/activities')]
 #[IsGranted('API')]
 #[OA\Tag(name: 'Activity')]
 final class ActivityController extends BaseApiController
 {
-    public const GROUPS_ENTITY = ['Default', 'Entity', 'Activity', 'Activity_Entity'];
-    public const GROUPS_COLLECTION = ['Default', 'Collection', 'Activity'];
-    public const GROUPS_RATE = ['Default', 'Entity', 'Activity_Rate'];
+    private const GROUPS_ENTITY = ['Default', 'Entity', 'Activity', 'Activity_Entity'];
+    private const GROUPS_COLLECTION = ['Default', 'Collection', 'Activity'];
+    private const GROUPS_RATE = ['Default', 'Entity', 'Activity_Rate'];
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
         private readonly ActivityRepository $repository,
         private readonly ActivityRateRepository $activityRateRepository,
-        private readonly ActivityService $activityService
+        private readonly ActivityService $activityService,
+        private readonly AuthorizationCheckerInterface $security
     ) {
+    }
+
+    /**
+     * The budget groups are always requested, the per-record permission filtering
+     * is applied by the BudgetExclusionStrategy.
+     *
+     * @param array<string> $groups
+     */
+    private function renderBudgetAwareView(View $view, array $groups): Response
+    {
+        $context = $view->getContext();
+        $context->setGroups(array_merge($groups, ['Budget_Money', 'Budget_Time']));
+        $context->addExclusionStrategy(new BudgetExclusionStrategy($this->security));
+
+        return $this->viewHandler->handle($view);
+    }
+
+    private function renderEntity(Activity $activity): Response
+    {
+        return $this->renderBudgetAwareView(new View($activity, Response::HTTP_OK), self::GROUPS_ENTITY);
     }
 
     /**
@@ -72,15 +98,14 @@ final class ActivityController extends BaseApiController
 
         /** @var array<int> $projects */
         $projects = $paramFetcher->get('projects');
-        $project = $paramFetcher->get('project');
-        if (\is_string($project) && $project !== '') {
-            $projects[] = $project;
+        $pr = $paramFetcher->get('project');
+        if (\is_string($pr) && $pr !== '') {
+            $projects[] = $pr;
         }
 
-        foreach (array_unique($projects) as $projectId) {
-            $project = $projectRepository->find($projectId);
-            if ($project === null) {
-                throw $this->createNotFoundException('Unknown project: ' . $projectId);
+        foreach ($projectRepository->findByIds(array_unique($projects)) as $project) {
+            if (!$this->isGranted('access', $project)) {
+                throw $this->createAccessDeniedException('Cannot access Project: ' . $project->getId());
             }
             $query->addProject($project);
         }
@@ -96,10 +121,8 @@ final class ActivityController extends BaseApiController
         }
 
         $data = $this->repository->getActivitiesForQuery($query);
-        $view = new View($data, 200);
-        $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
-        return $this->viewHandler->handle($view);
+        return $this->renderBudgetAwareView(new View($data, Response::HTTP_OK), self::GROUPS_COLLECTION);
     }
 
     /**
@@ -111,10 +134,7 @@ final class ActivityController extends BaseApiController
     #[IsGranted('view', 'activity')]
     public function getAction(Activity $activity): Response
     {
-        $view = new View($activity, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($activity);
     }
 
     /**
@@ -136,21 +156,15 @@ final class ActivityController extends BaseApiController
             'include_time' => $this->isGranted('time', $activity),
         ]);
 
-        $form->submit($request->request->all());
+        $form->submit($request->request->all(), false);
 
-        if ($form->isValid()) {
-            $this->activityService->saveActivity($activity);
-
-            $view = new View($activity, 200);
-            $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-            return $this->viewHandler->handle($view);
+        if (false === $form->isValid()) {
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
-        $view = new View($form);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+        $this->activityService->saveActivity($activity);
 
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($activity);
     }
 
     /**
@@ -174,25 +188,19 @@ final class ActivityController extends BaseApiController
         $form->submit($request->request->all(), false);
 
         if (false === $form->isValid()) {
-            $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-            return $this->viewHandler->handle($view);
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
         $this->activityService->saveActivity($activity);
 
-        $view = new View($activity, Response::HTTP_OK);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($activity);
     }
 
     /**
      * Delete activity
      *
      * [DANGER] This will also delete ALL linked timesheets.
-     * Do you want to use `PATCH` instead and mark it as inactive with `{visible: false}` instead?
+     * Do you want to use `PATCH` instead and mark it as inactive with `{visible: false}`?
      */
     #[IsGranted('delete', 'activity')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Delete one activity')])]
@@ -214,9 +222,9 @@ final class ActivityController extends BaseApiController
     #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/ActivityEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Activity record ID to set the meta-field value for', required: true)]
     #[Route(methods: ['PATCH'], path: '/{id}/meta', requirements: ['id' => '\d+'])]
-    #[Rest\RequestParam(name: 'name', strict: true, nullable: false, description: 'The meta-field name')]
+    #[Rest\RequestParam(name: 'name', requirements: [new Constraints\Type('string')], strict: true, nullable: false, description: 'The meta-field name')]
     #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
-    public function metaAction(Activity $activity, ParamFetcherInterface $paramFetcher): Response
+    public function metaAction(Activity $activity, ParamFetcherInterface $paramFetcher, MetaFieldValidator $metaFieldValidator): Response
     {
         $this->activityService->loadMetaFields($activity);
 
@@ -227,14 +235,12 @@ final class ActivityController extends BaseApiController
             throw $this->createNotFoundException('Unknown meta-field requested');
         }
 
+        $metaFieldValidator->validate($activity, $meta, $value);
         $meta->setValue($value);
 
         $this->activityService->saveActivity($activity);
 
-        $view = new View($activity, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($activity);
     }
 
     /**
@@ -296,10 +302,7 @@ final class ActivityController extends BaseApiController
         $form->submit($request->request->all(), false);
 
         if (false === $form->isValid()) {
-            $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_RATE);
-
-            return $this->viewHandler->handle($view);
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
         $this->activityRateRepository->saveRate($rate);
@@ -308,5 +311,18 @@ final class ActivityController extends BaseApiController
         $view->getContext()->setGroups(self::GROUPS_RATE);
 
         return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Create team for activity
+     *
+     * REMOVED: this endpoint was removed, use `POST /api/teams/` instead.
+     */
+    #[OA\Post(description: 'REMOVED: this endpoint was removed, use `POST /api/teams/` instead.', responses: [new OA\Response(response: 410, description: 'This endpoint was removed')], deprecated: true)]
+    #[OA\Parameter(name: 'id', description: 'The activity to create a default team for', in: 'path', required: true)]
+    #[Route(path: '/{id}/team', name: 'post_activity_team', requirements: ['id' => '\d+'], methods: ['POST'])]
+    public function postDefaultTeamAction(): Response
+    {
+        throw new GoneHttpException('This endpoint was removed, use "POST /api/teams/" instead.');
     }
 }

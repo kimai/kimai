@@ -15,6 +15,7 @@ use Doctrine\Persistence\ObjectManager;
 
 /**
  * Defines the sample data to load in during controller tests.
+ * @implements TestFixture<Team>
  */
 final class TeamFixtures implements TestFixture
 {

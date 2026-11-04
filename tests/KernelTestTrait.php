@@ -32,6 +32,12 @@ trait KernelTestTrait
         return $em;
     }
 
+    /**
+     * @template TEntity
+     * @param TestFixture<TEntity> $fixture
+     * @return non-empty-array<TEntity>
+     * @throws \Exception
+     */
     protected function importFixture(TestFixture $fixture): array
     {
         return $fixture->load($this->getEntityManager());

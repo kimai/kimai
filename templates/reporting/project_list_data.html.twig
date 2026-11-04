@@ -29,9 +29,14 @@
         'exported':         {'class': 'd-none d-xl-table-cell text-end hw-min w-min', 'title': 'not_exported'|trans, 'columnClass': 'w-min'},
     }) %}
 {% endif %}
-{% if showMoneyBudget and is_granted('view_invoice') %}
+{% if showMoneyBudget %}
+    {% if is_granted('view_invoice') %}
+        {% set availableColumns = availableColumns|merge({
+            'invoiced':         {'class': 'd-none d-xl-table-cell text-end hw-min w-min', 'title': 'not_invoiced'|trans, 'columnClass': 'w-min'},
+        }) %}
+    {% endif %}
     {% set availableColumns = availableColumns|merge({
-        'invoiced':         {'class': 'd-none d-xl-table-cell text-end hw-min w-min', 'title': 'not_invoiced'|trans, 'columnClass': 'w-min'},
+        'total':            {'class': 'd-none d-xl-table-cell text-end hw-min w-min', 'title': 'stats.amountTotal'|trans, 'columnClass': 'w-min'},
     }) %}
 {% endif %}
 {% set availableColumns = availableColumns|merge({
@@ -67,7 +72,7 @@
             {% if not hasData %}
                 {{ widgets.nothing_found() }}
             {% else %}
-                {{ tables.datatable_header(tableName, columns, null, {boxClass: ''}) }}
+                {{ tables.datatable_header(tableName, columns, null, {boxClass: '', stickyFirst: true, columnConfig: false}) }}
 
                 {% for id, mapping in entries|sort((a, b) => a.customer.name <=> b.customer.name) %}
                     <tr class="summary">
@@ -112,6 +117,8 @@
                                 <a href="{{ path('invoice', {'customers[]': project.customer.id, 'projects[]': project.id, 'daterange': ''}) }}">
                                     {{ entry.notExportedRate|money(currency) }}
                                 </a>
+                            {% elseif name == 'total' %}
+                                {{ budgetStats.getBudgetSpent()|money(currency) }}
                             {% elseif name == 'projectStart' %}
                                 {% if project.start is not null %}{{ project.start|date_short }}{% endif %}
                             {% elseif name == 'projectEnd' %}

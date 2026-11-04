@@ -10,16 +10,25 @@
 namespace App\API;
 
 use App\Entity\Invoice;
+use App\Entity\InvoiceMeta;
+use App\Entity\InvoiceTemplate;
+use App\Form\API\InvoiceApiEditForm;
+use App\Invoice\InvoiceService;
 use App\Repository\CustomerRepository;
+use App\Repository\InvoiceDocumentRepository;
 use App\Repository\InvoiceRepository;
+use App\Repository\InvoiceTemplateRepository;
 use App\Repository\Query\InvoiceArchiveQuery;
+use App\Validator\MetaFieldValidator;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
-use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints;
@@ -35,6 +44,7 @@ final class InvoiceController extends BaseApiController
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
         private readonly InvoiceRepository $repository,
+        private readonly MetaFieldValidator $metaFieldValidator,
     ) {
     }
 
@@ -93,8 +103,7 @@ final class InvoiceController extends BaseApiController
     /**
      * Fetch invoice
      */
-    #[IsGranted('view_invoice')]
-    #[IsGranted(new Expression("is_granted('access', subject.getCustomer())"), 'invoice')]
+    #[IsGranted('view_invoice', 'invoice')]
     #[OA\Response(response: 200, description: 'Returns one invoice', content: new OA\JsonContent(ref: '#/components/schemas/Invoice'))]
     #[Route(methods: ['GET'], path: '/{id}', name: 'get_invoice', requirements: ['id' => '\d+'])]
     public function getAction(Invoice $invoice): Response
@@ -103,5 +112,184 @@ final class InvoiceController extends BaseApiController
         $view->getContext()->setGroups(self::GROUPS_ENTITY);
 
         return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Update invoice custom-fields
+     */
+    #[IsGranted('edit_invoice', 'invoice')]
+    #[OA\Response(response: 200, description: 'Sets the value of configured custom-fields. You cannot create unknown custom-fields.', content: new OA\JsonContent(ref: '#/components/schemas/Invoice'))]
+    #[OA\Parameter(name: 'id', description: 'Invoice ID to set the custom-fields for', in: 'path', required: true)]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(type: 'array', items: new OA\Items(new Model(type: InvoiceMeta::class))))]
+    #[Route(path: '/{id}/custom-fields', requirements: ['id' => '\d+'], methods: ['PATCH'])]
+    public function updateMetaFields(Invoice $invoice, Request $request, InvoiceService $invoiceService): Response
+    {
+        $invoiceService->loadMetaFields($invoice);
+        $dirty = false;
+
+        foreach ($request->request->all() as $preference) {
+            // why is this not handled by FosRestBundle ?
+            if (!\is_array($preference)) {
+                throw new BadRequestHttpException('Invalid request, array expected');
+            }
+
+            if (!\array_key_exists('name', $preference) || !\array_key_exists('value', $preference)) {
+                throw new BadRequestHttpException('Missing required parameter "name" or "value"');
+            }
+
+            if (!\is_string($preference['name'])) {
+                throw new BadRequestHttpException('Invalid parameter "name", string expected');
+            }
+
+            $name = $preference['name'];
+            $value = $preference['value'];
+
+            if (null === ($meta = $invoice->getMetaField($name))) {
+                throw $this->createNotFoundException(\sprintf('Unknown custom-field "%s" requested', $name));
+            }
+
+            $this->metaFieldValidator->validate($invoice, $meta, $value);
+            $meta->setValue($value);
+            $dirty = true;
+        }
+
+        if ($dirty) {
+            $invoiceService->saveInvoice($invoice);
+        }
+
+        $view = new View($invoice, 200);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Update invoice
+     */
+    #[IsGranted('edit_invoice', 'invoice')]
+    #[OA\Patch(description: 'Update an existing invoice, you can pass all or just a subset of all attributes', responses: [new OA\Response(response: 200, description: 'Returns the updated invoice', content: new OA\JsonContent(ref: '#/components/schemas/Invoice'))])]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/InvoiceEditForm'))]
+    #[OA\Parameter(name: 'id', description: 'Invoice ID to update', in: 'path', required: true)]
+    #[Route(path: '/{id}', name: 'patch_invoice', requirements: ['id' => '\d+'], methods: ['PATCH'])]
+    public function patchAction(Invoice $invoice, Request $request, InvoiceService $invoiceService): Response
+    {
+        $statusBefore = $invoice->getStatus();
+
+        $form = $this->createForm(InvoiceApiEditForm::class, $invoice, [
+            'timezone' => $this->getDateTimeFactory()->getTimezone()->getName(),
+        ]);
+
+        $form->setData($invoice);
+        $form->submit($request->request->all(), false);
+
+        if (false === $form->isValid()) {
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
+        }
+
+        $invoiceService->saveInvoice($invoice, $statusBefore);
+
+        $view = new View($invoice, 200);
+        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Download invoice
+     */
+    #[IsGranted('view_invoice', 'invoice')]
+    #[OA\Response(
+        response: 200,
+        description: 'Downloads the invoice document as an attachment. The content type depends on the configured invoice renderer.',
+        headers: [
+            new OA\Header(header: 'Content-Disposition', description: 'Attachment filename', schema: new OA\Schema(type: 'string')),
+        ],
+        content: [
+            new OA\MediaType(mediaType: 'application/pdf', schema: new OA\Schema(type: 'string', format: 'binary')),
+            new OA\MediaType(mediaType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', schema: new OA\Schema(type: 'string', format: 'binary')),
+            new OA\MediaType(mediaType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', schema: new OA\Schema(type: 'string', format: 'binary')),
+            new OA\MediaType(mediaType: 'application/vnd.oasis.opendocument.spreadsheet', schema: new OA\Schema(type: 'string', format: 'binary')),
+            new OA\MediaType(mediaType: 'text/html', schema: new OA\Schema(type: 'string')),
+            new OA\MediaType(mediaType: 'application/xml', schema: new OA\Schema(type: 'string')),
+            new OA\MediaType(mediaType: 'text/xml', schema: new OA\Schema(type: 'string')),
+            new OA\MediaType(mediaType: 'application/octet-stream', schema: new OA\Schema(type: 'string', format: 'binary')),
+        ]
+    )]
+    #[Route(path: '/{id}/download', name: 'download_invoice', requirements: ['id' => '\d+'], methods: ['GET'])]
+    public function downloadAction(Invoice $invoice, InvoiceService $invoiceService): Response
+    {
+        $file = $invoiceService->getInvoiceFile($invoice);
+
+        if (null === $file) {
+            throw $this->createNotFoundException(
+                \sprintf('Invoice file could not be found for invoice ID "%s"', $invoice->getId())
+            );
+        }
+
+        return $this->file($file->getRealPath(), $file->getBasename());
+    }
+
+    /**
+     * Delete invoice
+     */
+    #[IsGranted('delete_invoice', 'invoice')]
+    #[OA\Delete(description: 'Deletes the invoice and its generated document.', responses: [new OA\Response(response: 204, description: 'Empty')])]
+    #[OA\Parameter(name: 'id', description: 'Invoice ID to delete', in: 'path', required: true)]
+    #[Route(path: '/{id}', name: 'delete_invoice', requirements: ['id' => '\d+'], methods: ['DELETE'])]
+    public function deleteInvoice(Invoice $invoice, InvoiceService $invoiceService): Response
+    {
+        $invoiceService->deleteInvoice($invoice);
+
+        $view = new View(null, Response::HTTP_NO_CONTENT);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Delete an invoice document
+     *
+     * Invoice documents are the files used to render an invoice, they cannot be created
+     * through the API. This endpoint is used by the invoice document screen.
+     */
+    #[IsGranted('manage_invoice_template')]
+    #[OA\Delete(description: 'Deletes an uploaded invoice document. Built-in documents and documents which are used by a template cannot be deleted.', responses: [new OA\Response(response: 204, description: 'Empty')], x: ['internal' => true])]
+    #[OA\Parameter(name: 'id', description: 'Invoice document ID to delete', in: 'path', required: true)]
+    #[Route(path: '/documents/{id}', name: 'delete_invoice_document', methods: ['DELETE'])]
+    public function deleteDocument(string $id, InvoiceDocumentRepository $documentRepository, InvoiceTemplateRepository $templateRepository): Response
+    {
+        $document = $documentRepository->findByName($id);
+        if ($document === null) {
+            throw $this->createNotFoundException('Unknown invoice document: ' . $id);
+        }
+
+        foreach ($documentRepository->findBuiltIn() as $doc) {
+            if ($doc->getId() === $id) {
+                throw new BadRequestHttpException('Document is built-in and cannot be deleted.');
+            }
+        }
+
+        foreach ($templateRepository->findAll() as $template) {
+            if ($template->getRenderer() === $id) {
+                throw new BadRequestHttpException('Document is used and cannot be deleted.');
+            }
+        }
+
+        $documentRepository->remove($document);
+
+        return $this->viewHandler->handle(new View(null, Response::HTTP_NO_CONTENT));
+    }
+
+    /**
+     * Delete an invoice template
+     */
+    #[IsGranted('manage_invoice_template')]
+    #[OA\Delete(description: 'Deletes an invoice template.', responses: [new OA\Response(response: 204, description: 'Empty')], x: ['internal' => true])]
+    #[OA\Parameter(name: 'id', description: 'Invoice template ID to delete', in: 'path', required: true)]
+    #[Route(path: '/templates/{id}', name: 'delete_invoice_template', requirements: ['id' => '\d+'], methods: ['DELETE'])]
+    public function deleteTemplate(InvoiceTemplate $template, InvoiceTemplateRepository $templateRepository): Response
+    {
+        $templateRepository->removeTemplate($template);
+
+        return $this->viewHandler->handle(new View(null, Response::HTTP_NO_CONTENT));
     }
 }

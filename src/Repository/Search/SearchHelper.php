@@ -51,6 +51,7 @@ final class SearchHelper
             $i = 0;
             $c = 0;
             $j = 0;
+            $k = 0;
             foreach ($searchTerm->getParts() as $part) {
                 // we do NOT search for unspecific/global terms as of now, because it is not clear if the user wants that
                 if (($metaName = $part->getField()) === null) {
@@ -61,7 +62,7 @@ final class SearchHelper
                 $metaValue = $part->getTerm();
                 $paramName = 'metaName' . $i++;
                 $paramValue = 'metaValue' . $c++;
-                $subqueryName = 'metaNotExists' . $metaName;
+                $subqueryName = 'metaNotExists' . $k++;
                 $field = $alias . '.value';
 
                 $and = $qb->expr()->andX();

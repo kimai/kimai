@@ -2,6 +2,12 @@
 
 {% block page_class %}quick-entry-page{% endblock %}
 
+{% block form_addon %}
+    {% from "macros/widgets.html.twig" import actions as action_links %}
+    {% set event = actions(app.user, 'quick_entry_links', 'index', {user: user, query: query}) %}
+    {{ action_links(event.actions, {button_class: '', large: false}) }}
+{% endblock %}
+
 {% block main %}
     {% embed '@theme/embeds/card.html.twig' %}
         {% import "macros/widgets.html.twig" as widgets %}
@@ -16,11 +22,13 @@
             {% if locked %}
                 {{ widgets.alert('warning', 'The chosen date is already locked.'|trans({}, 'validators')) }}
             {% else %}
-            <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
-            <button type="button" class="btn btn-success add-item-link" data-collection-prototype="{{ form.rows.vars.id }}" data-collection-holder="ts-collection">
-                {{ icon('create', true) }}
-                {{ 'action.add'|trans }}
-            </button>
+                <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" />
+                {% if form.children.rows.vars.allow_add %}
+                    <button type="button" class="btn btn-success add-item-link" data-collection-prototype="{{ form.rows.vars.id }}" data-collection-holder="ts-collection">
+                        {{ icon('create', true) }}
+                        {{ 'action.add'|trans }}
+                    </button>
+                {% endif %}
             {% endif %}
             {{ form_end(form) }}
         {% endblock %}
@@ -86,7 +94,7 @@
                     // turn a string like "quick_entry_form_rows_16_timesheets_3_duration" into "3"
                     // we can safely use -1 because there are only 0 (monday) to 6 (sunday) indexes
                     let id = durationInput.id.replace(/_duration/, '').slice(-1);
-                    totalsPerDay[id] += DATES.getSecondsFromDurationString(durationInput.value);
+                    totalsPerDay[id] += DATES.getSecondsFromDurationString(durationInput.value, durationInput.dataset.durationMode);
                 }
                 for (const [id, total] of Object.entries(totalsPerDay)) {
                     document.getElementById('qe-totals-day-' + id).innerText = DATES.formatSeconds(total);
@@ -99,7 +107,7 @@
                     let qeWeekRowFields = qeWeekRow.getElementsByClassName('duration-input');
                     let totalsRow = 0;
                     for (let durationInput of qeWeekRowFields) {
-                        totalsRow += DATES.getSecondsFromDurationString(durationInput.value);
+                        totalsRow += DATES.getSecondsFromDurationString(durationInput.value, durationInput.dataset.durationMode);
                     }
                     qeWeekRow.getElementsByClassName('qe-totals-row')[0].innerText = DATES.formatSeconds(totalsRow);
                 }
@@ -109,6 +117,7 @@
             document.getElementById('quick-entries-form').addEventListener('click', recalculateTotals);
             document.getElementById('quick-entries-form').addEventListener('change', recalculateTotals);
 
+            {% if form.children.rows.vars.allow_add %}
             const addFormToCollection = function(e) {
                 const collectionHolder = document.getElementById(e.currentTarget.dataset.collectionHolder);
                 const collectionPrototype = document.getElementById(e.currentTarget.dataset.collectionPrototype);
@@ -138,6 +147,7 @@
             };
 
             document.querySelectorAll('.add-item-link').forEach(btn => btn.addEventListener("click", addFormToCollection));
+            {% endif %}
         });
     </script>
 {% endblock %}

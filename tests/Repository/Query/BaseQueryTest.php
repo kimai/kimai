@@ -18,6 +18,7 @@ use App\Form\Model\DateRange;
 use App\Repository\Query\ActivityQuery;
 use App\Repository\Query\BaseQuery;
 use App\Repository\Query\DateRangeInterface;
+use App\Repository\Query\DateRangeTrait;
 use App\Repository\Query\TimesheetQuery;
 use App\Repository\Query\VisibilityInterface;
 use App\Utils\SearchTerm;
@@ -357,10 +358,21 @@ class BaseQueryTest extends TestCase
         self::assertEquals(VisibilityInterface::SHOW_VISIBLE, $sut->getVisibility());
     }
 
+    public function testHasFullDateRangeWithoutDateRange(): void
+    {
+        $sut = new class() {
+            use DateRangeTrait;
+        };
+
+        self::assertNull($sut->getDateRange());
+        self::assertFalse($sut->hasFullDateRange());
+    }
+
     protected function assertDateRangeTrait(DateRangeInterface $sut): void
     {
         self::assertNull($sut->getBegin());
         self::assertNull($sut->getEnd());
+        self::assertFalse($sut->hasFullDateRange());
 
         $dateRange = new DateRange();
         $sut->setDateRange($dateRange);
@@ -368,9 +380,13 @@ class BaseQueryTest extends TestCase
         self::assertSame($dateRange, $sut->getDateRange());
         self::assertNull($sut->getBegin());
         self::assertNull($sut->getEnd());
+        self::assertFalse($sut->hasFullDateRange());
 
         $dateRange->setBegin(new \DateTimeImmutable('2013-11-23 13:45:07'));
+        self::assertFalse($sut->hasFullDateRange());
+
         $dateRange->setEnd(new \DateTimeImmutable('2014-01-01 23:45:11'));
+        self::assertTrue($sut->hasFullDateRange());
 
         $begin1 = new \DateTimeImmutable('2013-11-23 00:00:00');
         $end1 = new \DateTimeImmutable('2014-01-01 23:59:59');

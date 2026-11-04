@@ -2,13 +2,13 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="messages.en.xlf">
     <body>
-      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve">
+      <trans-unit id="N7mikjJ" resname="time_tracking" xml:space="preserve" approved="yes">
         <source>Time Tracking</source>
-        <target state="translated">Zeiterfassung</target>
+        <target state="final">Zeiterfassung</target>
       </trans-unit>
-      <trans-unit id="inmIkP6" resname="yes">
+      <trans-unit id="inmIkP6" resname="yes" xml:space="preserve" approved="yes">
         <source>yes</source>
-        <target>Ja</target>
+        <target state="final">Ja</target>
       </trans-unit>
       <trans-unit id="k5Apjz_" resname="no">
         <source>no</source>
@@ -130,6 +130,10 @@
         <source>password_repeat</source>
         <target>Passwort wiederholen</target>
       </trans-unit>
+      <trans-unit id="fxkWjGQ" resname="password_current">
+        <source>password_current</source>
+        <target>Aktuelles Passwort</target>
+      </trans-unit>
       <trans-unit id="ACcM9j_" resname="logout">
         <source>logout</source>
         <target>Abmelden</target>
@@ -168,7 +172,7 @@
       </trans-unit>
       <trans-unit id="853W5Iu" resname="security.unlock.button">
         <source>security.unlock.button</source>
-        <target>Freischalten</target>
+        <target state="translated">Entsperren</target>
       </trans-unit>
       <trans-unit id="UoOv6mx" approved="yes" resname="menu.homepage">
         <source>menu.homepage</source>
@@ -750,6 +754,22 @@
         <source>project_end</source>
         <target state="final">Projekt-Ende</target>
       </trans-unit>
+      <trans-unit id="k8F51oP" resname="project_locked_until">
+        <source>project_locked_until</source>
+        <target>Zeiten gesperrt bis</target>
+      </trans-unit>
+      <trans-unit id="C_ZcSX2" resname="help.project_start">
+        <source>help.project_start</source>
+        <target>Zeiten vor diesem Datum können nicht erfasst werden.</target>
+      </trans-unit>
+      <trans-unit id="9A.4S.i" resname="help.project_end">
+        <source>help.project_end</source>
+        <target>Zeiten nach diesem Datum können nicht erfasst werden.</target>
+      </trans-unit>
+      <trans-unit id="ktmsI7g" resname="help.project_locked_until">
+        <source>help.project_locked_until</source>
+        <target>Zeiten bis inkl. diesem Datum können weder erfasst noch geändert werden.</target>
+      </trans-unit>
       <trans-unit id="tfOjLNp" resname="project_number">
         <source>Project number</source>
         <target>Projektnummer</target>
@@ -837,6 +857,18 @@
       <trans-unit id="0Hhg4zQ" resname="system_account.help">
         <source>system_account.help</source>
         <target>Wird in Berichten und Auswahlboxen ausgeblendet</target>
+      </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target>Authentifizierung</target>
+      </trans-unit>
+      <trans-unit id="LQXTGjm" resname="authentication.help">
+        <source>authentication.help</source>
+        <target>Beim Wechsel auf „Intern“ wird das Passwort gelöscht. Legen Sie ein neues Passwort fest oder nutzen Sie die Funktion „Passwort vergessen“.</target>
+      </trans-unit>
+      <trans-unit id="NvQBTxG" resname="authentication.internal">
+        <source>authentication.internal</source>
+        <target>Intern</target>
       </trans-unit>
       <trans-unit id="Zs9VE7N" resname="roles">
         <source>roles</source>
@@ -1254,6 +1286,18 @@
         <source>status.closed</source>
         <target>Erledigt</target>
       </trans-unit>
+      <trans-unit id="TTL.5NF" resname="status.todo">
+        <source>status.todo</source>
+        <target>To Do</target>
+      </trans-unit>
+      <trans-unit id="j_0FPm3" resname="status.waiting">
+        <source>status.waiting</source>
+        <target>Wartend</target>
+      </trans-unit>
+      <trans-unit id="QdfOAGZ" resname="status.done">
+        <source>status.done</source>
+        <target>Erledigt</target>
+      </trans-unit>
       <trans-unit id="opDmYAa" resname="status.approved">
         <source>status.approved</source>
         <target>Genehmigt</target>
@@ -1644,7 +1688,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target state="translated">Aus- und Weiterbildung, sonstige betriebliche oder private Verhinderungen (z. B. Umzug, familiäre Anlässe) etc.</target>
+        <target state="translated">Aus- und Weiterbildung, sonstige betriebliche oder private Verhinderungen etc.</target>
       </trans-unit>
       <trans-unit id="TTnaBm4" resname="day_full">
         <source>day_full</source>
@@ -1769,6 +1813,10 @@
       <trans-unit id="Z9IIn_b" resname="api_token_hidden">
         <source>api_token_hidden</source>
         <target>Dies ist das einzige Mal, dass der Token angezeigt wird! Bewahren Sie ihn gut auf und vergewissern Sie sich, dass Sie ihn notiert haben, bevor Sie dieses Fenster schließen.</target>
+      </trans-unit>
+      <trans-unit id="G8ZoGoA" resname="api_token_qr_hint">
+        <source>api_token_qr_hint</source>
+        <target>Sie können diesen QR-Code mit einer mobilen App scannen, um Server-URL und Token in einem Schritt zu konfigurieren. Teilen Sie dieses Bild nicht: Es enthält Ihren API-Token.</target>
       </trans-unit>
       <trans-unit id="TCr2ArH" resname="api_password_deprecated" xml:space="preserve" approved="yes">
         <source>api_password_deprecated</source>
@@ -1994,6 +2042,10 @@
         <source>address_row</source>
         <target>Zeile %row%</target>
       </trans-unit>
+      <trans-unit id="nlJ2pW2" resname="invoice_email">
+        <source>invoice_email</source>
+        <target>Rechnungs-E-Mail</target>
+      </trans-unit>
       <trans-unit id="_Ep8Ogx" resname="buyerReference">
         <source>buyerReference</source>
         <target>Bestellreferenz</target>
@@ -2081,6 +2133,102 @@
       <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help">
         <source>count_as_expected_time_help</source>
         <target>Wenn diese Option aktiviert ist, wird %type% als gearbeitete Stunden auf die erwarteten täglichen Stunden angerechnet. Wenn diese Option deaktiviert ist, werden die erwarteten Stunden für diese Tage auf 0 gesetzt. Beide Einstellungen sorgen für ein ausgeglichenes Stundenkonto, wirken sich jedoch unterschiedlich auf die Gesamtzahlen des Monats aus.</target>
+      </trans-unit>
+      <trans-unit id="WrNTzd7" resname="assign_timesheets">
+        <source>assign_timesheets</source>
+        <target>Zeiteinträge zuweisen</target>
+      </trans-unit>
+      <trans-unit id="zO0oxtw" resname="start">
+        <source>start</source>
+        <target>Starten</target>
+      </trans-unit>
+      <trans-unit id="DAMFhpR" resname="lock">
+        <source>lock</source>
+        <target>Abschließen</target>
+      </trans-unit>
+      <trans-unit id="pNRR7CN" resname="release">
+        <source>release</source>
+        <target>Freigeben</target>
+      </trans-unit>
+      <trans-unit id="kwC00lZ" resname="assign">
+        <source>assign</source>
+        <target>Zuweisen</target>
+      </trans-unit>
+      <trans-unit id="2ajb.ZU" resname="assign_self">
+        <source>assign_self</source>
+        <target>Mir zuweisen</target>
+      </trans-unit>
+      <trans-unit id="LfO_otF" resname="reopen">
+        <source>reopen</source>
+        <target>Wieder öffnen</target>
+      </trans-unit>
+      <trans-unit id="DI8vH1J" resname="copy_to_clipboard">
+        <source>copy_to_clipboard</source>
+        <target>In Zwischenablage kopieren</target>
+      </trans-unit>
+      <trans-unit id="LHDhK3o" resname="key">
+        <source>key</source>
+        <target>Interner Titel</target>
+      </trans-unit>
+      <trans-unit id="Q3gmLM6" resname="key_help">
+        <source>key_help</source>
+        <target>Eindeutiger technischer Name, der später nicht mehr geändert werden kann. Erlaubt sind Kleinbuchstaben (a-z), Ziffern (0-9) und Unterstrich (_).</target>
+      </trans-unit>
+      <trans-unit id="netluHi" resname="approval">
+        <source>approval</source>
+        <target>Genehmigung</target>
+      </trans-unit>
+      <trans-unit id="9SkAbbx" resname="approval_required">
+        <source>approval_required</source>
+        <target>Genehmigung erforderlich</target>
+      </trans-unit>
+      <trans-unit id="7dLJTuj" resname="fill_day">
+        <source>fill_day</source>
+        <target>Füllt die Sollstunden des Tages auf</target>
+      </trans-unit>
+      <trans-unit id="O6IGTDm" resname="Absence types">
+        <source>Absence types</source>
+        <target>Abwesenheitsarten</target>
+      </trans-unit>
+      <trans-unit id="2mFc5.v" resname="absence_type.category.help">
+        <source>absence_type.category.help</source>
+        <target>Die Kategorie legt fest, wie Buchungen verrechnet werden (z. B. gegen die Urlaubstage oder das Arbeitszeitkonto) und wo die Abwesenheitsart angezeigt wird. Sie kann später nicht mehr geändert werden.</target>
+      </trans-unit>
+      <trans-unit id="4YKqwfo" resname="absence_type.half_day">
+        <source>absence_type.half_day</source>
+        <target>Halbe Tage erlauben</target>
+      </trans-unit>
+      <trans-unit id="ukwjp0C" resname="absence_type.date_range">
+        <source>absence_type.date_range</source>
+        <target>Buchung mehrerer Tage erlauben</target>
+      </trans-unit>
+      <trans-unit id="j6S5GDf" resname="absence_type.duration">
+        <source>absence_type.duration</source>
+        <target>Eingabe einer Dauer erlauben</target>
+      </trans-unit>
+      <trans-unit id="E7XVJxv" resname="absence_type.duration_required">
+        <source>absence_type.duration_required</source>
+        <target>Dauer ist ein Pflichtfeld</target>
+      </trans-unit>
+      <trans-unit id="W_6BSlE" resname="absence_type.max_days">
+        <source>absence_type.max_days</source>
+        <target>Maximale Anzahl Tage pro Buchung</target>
+      </trans-unit>
+      <trans-unit id="_cQHZDu" resname="fill_day.help">
+        <source>fill_day.help</source>
+        <target>Wird keine Dauer angegeben, wird die verbleibende Sollzeit des Tages verwendet.</target>
+      </trans-unit>
+      <trans-unit id="dIuCbHU" resname="absence_type.overbooking">
+        <source>absence_type.overbooking</source>
+        <target>Überbuchung erlauben bis</target>
+      </trans-unit>
+      <trans-unit id="Y9NoM.U" resname="absence_type.overbooking.help.holiday">
+        <source>absence_type.overbooking.help.holiday</source>
+        <target>0 = keine Überbuchung erlaubt. Anzahl Tage, die über die verfügbaren Urlaubstage hinaus gebucht werden dürfen.</target>
+      </trans-unit>
+      <trans-unit id="c1z3ItA" resname="absence_type.overbooking.help.time_off">
+        <source>absence_type.overbooking.help.time_off</source>
+        <target>0 = keine Überbuchung erlaubt. Anzahl Stunden, die das Arbeitszeitkonto ins Minus gehen darf.</target>
       </trans-unit>
     </body>
   </file>

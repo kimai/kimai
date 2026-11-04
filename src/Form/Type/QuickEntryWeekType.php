@@ -30,7 +30,6 @@ final class QuickEntryWeekType extends AbstractType
             'label' => false,
             'required' => false,
             'join_customer' => true,
-            'query_builder_for_user' => true,
             'placeholder' => '',
             'activity_enabled' => true,
             'project_date_start' => $options['start_date'],
@@ -57,7 +56,6 @@ final class QuickEntryWeekType extends AbstractType
             'label' => false,
             'required' => false,
             'placeholder' => '',
-            'query_builder_for_user' => true,
         ];
 
         $builder->add('activity', ActivityType::class, $activityOptions);
@@ -90,7 +88,11 @@ final class QuickEntryWeekType extends AbstractType
                 }
             }
 
-            $event->getForm()->add('activity', ActivityType::class, $activityOptions);
+            // exported entries cause the dropdown to be deactivated
+            // we need to make sure to fetch the info before the field is replaced
+            // see https://github.com/kimai/kimai/issues/5642
+            $disabled = $event->getForm()->get('activity')->isDisabled();
+            $event->getForm()->add('activity', ActivityType::class, array_merge(['disabled' => $disabled], $activityOptions));
         };
         $builder->addEventListener(FormEvents::PRE_SUBMIT, $activityPreSubmitFunction);
 

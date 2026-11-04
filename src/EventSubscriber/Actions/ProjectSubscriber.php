@@ -81,11 +81,18 @@ final class ProjectSubscriber extends AbstractActionsSubscriber
             }
         }
 
-        if (\array_key_exists('token', $payload) && $this->isGranted('edit', $project) && $this->isGranted('create_project')) {
-            $event->addAction(
-                'copy',
-                ['title' => 'copy', 'url' => $this->path('admin_project_duplicate', ['id' => $project->getId(), 'token' => $payload['token']])]
-            );
+        if ($this->isGranted('edit', $project) && $this->isGranted('create_project') && $this->isGranted('create_activity')) {
+            // duplicating uses the API, the views listening to the event reload themselves
+            $event->addAction('copy', [
+                'title' => 'copy',
+                'url' => $this->path('post_project_duplicate', ['id' => $project->getId()]),
+                'class' => 'api-link',
+                'attr' => [
+                    'data-method' => 'POST',
+                    'data-event' => 'kimai.projectDuplicate',
+                    'data-msg-error' => 'action.update.error',
+                ],
+            ]);
         }
 
         if (($event->isIndexView() || $event->isView('customer_details')) && $this->isGranted('delete', $project)) {

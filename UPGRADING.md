@@ -8,6 +8,119 @@ you can upgrade your Kimai installation to the latest stable release.
 Check below if there are more version specific steps required, which need to be executed after the normal update process.
 Perform EACH version specific task between your version and the new one, otherwise you risk data inconsistency or a broken installation.
 
+## [2.70.0](https://github.com/kimai/kimai/releases/tag/2.70.0)
+
+Kimai showed invalid examples in the `.env.dist` and on the documentation website.
+We strongly urge everyone to check and fix your `TRUSTED_HOSTS` env setting.
+
+The most used version is a hostname like `kimai.example.com` which you should rewrite as `^kimai\.example\.com$`.
+Multiple hosts have to be grouped, so the anchors apply to all of them: `^(localhost|kimai\.example\.com)$` 
+(`^localhost|kimai\.example\.com$` would still trust `kimai.example.com.attacker.tld`).
+
+For all installations that do not read this warning, we added a parser.
+
+`TRUSTED_HOSTS` values that only contain host names are now matched against the complete host name.
+Previously Symfony matched them as unanchored regular expressions, so `kimai.example.com` also trusted 
+`kimai.example.com.attacker.tld` and `kimai-example.com`.
+
+Examples:
+
+- `kimai.example.com` or `localhost|kimai.example.com` trust these hosts and their subdomains (the parser converts `kimai.example.com` to `^(?:.+\.)?(?:kimai\.example\.com)\.?$`)
+- `^kimai.example.com$` trusts exactly this host
+- converted values also accept the fully qualified host name with a trailing dot (`kimai.example.com.`)
+- values containing other regular expression characters (like `^kimai\.example\.com$` or `.*\.example\.com`) are not changed
+
+If you used a partial host name (e.g. `TRUSTED_HOSTS=kimai` for `kimai.example.com`), Kimai now answers 
+with "400 Bad Request". Configure the full host name instead. If you really need the old behavior, use a 
+regular expression like `.*kimai.*`, which is not changed.
+
+## [2.68.0](https://github.com/kimai/kimai/releases/tag/2.68.0)
+
+Team restrictions on customers, projects and activities are now consistently inherited
+when checking permissions on a single record (detail pages, edit forms, comments, rates,
+meta-fields and the `GET /api/projects/{id}` and `GET /api/activities/{id}` endpoints).
+
+Previously a team assignment on one level (e.g. the project) could grant `view`, `edit`,
+`budget`, `time` or `comments` on a record, even if the higher level (e.g. the customer) was
+restricted to a different team. Listings, filters and timesheets always applied the
+stricter rule, so the record was hidden there but reachable by ID.
+
+A user now needs to be a member of a team on every restricted level of the hierarchy
+(customer → project → activity) before a `*_teamlead_*` or `*_team_*` permission applies.
+Teamleads who are only assigned on the customer level lose access to projects and activities
+which were explicitly restricted to another team. If that was intended, add their team to
+the project or activity as well.
+
+## [2.66.0](https://github.com/kimai/kimai/releases/tag/2.66.0)
+
+The timesheet API now honors the `view_rate_own_timesheet` and `view_rate_other_timesheet`
+permissions, which the UI, the export and the reporting always enforced.
+
+The fields `rate`, `internalRate`, `hourlyRate` and `fixedRate` are no longer part of the
+JSON response for records the user may not see the rates of. The permission is applied per
+record, so a collection can contain records with and without these fields - treat them as
+optional. The default `ROLE_USER` does not hold the permissions, so API clients running
+with a plain user account have to grant them if they rely on those fields.
+
+The customer, project and activity APIs apply the `budget` and `time` permissions per
+record as well. The budget fields `budget`, `timeBudget` and `budgetType` are now also part 
+of the collection responses (`GET /api/customers`, `GET /api/projects`, `GET /api/activities`)
+for records the user may see the budgets of.
+Like the rate fields: treat them as optional.
+
+## [2.65.0](https://github.com/kimai/kimai/releases/tag/2.65.0)
+
+These three API endpoints were removed, because they were technically broken and could not be fixed without breaking changes:
+
+- `POST /api/customers/{id}/team`
+- `POST /api/projects/{id}/team`
+- `POST /api/activities/{id}/team`
+
+They still exist as routes, but every call now fails with `410 Gone` instead of creating a team.
+If one of your applications uses them, switch to `POST /api/teams/` to create the team and then 
+`PATCH /api/teams/` to assign the customer, project or activity to it.
+
+## [2.64.0](https://github.com/kimai/kimai/releases/tag/2.65.0)
+
+The base URL, which is used to generate links outside of a browser request (e.g. in emails or CLI commands),
+is now configured with the new `DEFAULT_URI` environment variable, e.g. in your `.env` file:
+
+```
+DEFAULT_URI=https://kimai.example.com
+```
+
+The previously documented way of configuring it via `config/packages/local.yaml` is deprecated and should be removed:
+
+```yaml
+parameters:
+    router.request_context.host: 'kimai.example.com'
+    router.request_context.scheme: 'https'
+    router.request_context.base_url: ''
+```
+
+These parameters still take precedence for now, so as long as `router.request_context.base_url` is defined
+in your `local.yaml`, the `DEFAULT_URI` setting has no effect. Delete the entire block and use `DEFAULT_URI` instead.
+
+## [2.58.0](https://github.com/kimai/kimai/releases/tag/2.58.0)
+
+The official Docker image no longer runs with the default `APP_SECRET=change_this_to_something_unique`.
+If you did not explicitly set your own `APP_SECRET` (via `-e APP_SECRET=...` or your compose/environment
+config), the container now generates a unique secret on first start and persists it as `var/data/.appsecret`
+inside the `data` volume that the documented Docker setup already mounts.
+
+As a one-time effect of this upgrade, all existing sessions, "remember me" cookies and pending
+password-reset links become invalid — every user has to log in again once. No manual action is required;
+the container starts as before. It is recommended to configure your own `APP_SECRET` explicitly.
+
+## [2.56.0](https://github.com/kimai/kimai/releases/tag/2.56.0)
+
+The required minimum PHP version is now 8.2, read https://www.php.net/supported-versions.php
+
+If you are still using PHP 8.1, please be aware it is EOL and does not receive any security updates.
+
+If you have to upgrade to a newer version, do yourself the favor and upgrade directly to PHP 8.5.
+The requirement for 8.2 is an intermediate solution for the near future, and the requirement will be raised to 8.5 rather sooner than later. 
+
 ## [2.0.30](https://github.com/kimai/kimai/releases/tag/2.0.30)
 
 The `DATABASE_URL` in your environment settings (e.g. [.env](https://github.com/kimai/kimai/issues/4246), [docker-compose.yaml](https://github.com/tobybatch/kimai2/issues/531) or webserver config)

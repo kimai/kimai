@@ -36,6 +36,7 @@ final class SelectWithApiDataExtension extends AbstractTypeExtension
             return;
         }
 
+        /** @var array{create: string, select: bool, route: string, route_params: array<string, string>, empty_route_params: array<string, string>, reload: string} $apiData */
         $apiData = $options['api_data'];
 
         if (!\is_array($apiData)) {

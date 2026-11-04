@@ -50,7 +50,7 @@ final class MonthlyStatistic implements DateStatisticInterface
         $day = (int) $begin->format('d');
 
         while ($tmp < $this->end) {
-            $curYear = (string) $tmp->format('Y');
+            $curYear = $tmp->format('Y');
             if (!isset($years[$curYear])) {
                 $year = [];
                 for ($i = 1; $i < 13; $i++) {
@@ -98,8 +98,8 @@ final class MonthlyStatistic implements DateStatisticInterface
         $this->setupYears();
         $all = [];
 
-        foreach ($this->years as $number => $months) {
-            foreach ($months as $monthNumber => $statisticDate) {
+        foreach ($this->years as $months) {
+            foreach ($months as $statisticDate) {
                 $all[] = $statisticDate;
             }
         }
@@ -148,8 +148,8 @@ final class MonthlyStatistic implements DateStatisticInterface
         $this->setupYears();
         $all = [];
 
-        foreach ($this->years as $number => $months) {
-            foreach ($months as $monthNumber => $statisticDate) {
+        foreach ($this->years as $months) {
+            foreach ($months as $statisticDate) {
                 $all[] = $statisticDate->getDate();
             }
         }

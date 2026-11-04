@@ -18,6 +18,7 @@ use App\Export\Spreadsheet\Extractor\AnnotationExtractor;
 use App\Export\Spreadsheet\Extractor\MetaFieldExtractor;
 use App\Export\Spreadsheet\SpreadsheetExporter;
 use App\Repository\Query\ProjectQuery;
+use App\Tests\Mocks\AuthorizationCheckerFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -37,7 +38,7 @@ class EntityWithMetaFieldsExporterTest extends TestCase
             return $event;
         });
 
-        $spreadsheetExporter = new SpreadsheetExporter($this->createMock(TranslatorInterface::class));
+        $spreadsheetExporter = new SpreadsheetExporter($this->createMock(TranslatorInterface::class), (new AuthorizationCheckerFactory($this))->create());
         $annotationExtractor = new AnnotationExtractor();
         $metaFieldExtractor = new MetaFieldExtractor($dispatcher);
 
@@ -64,6 +65,7 @@ class EntityWithMetaFieldsExporterTest extends TestCase
         self::assertEquals('test project', $worksheet->getCell([++$i, 2])->getValue());
         self::assertEquals('A customer', $worksheet->getCell([++$i, 2])->getValue());
         self::assertEquals(1234567890, $worksheet->getCell([++$i, 2])->getValue());
+        self::assertEquals('', $worksheet->getCell([++$i, 2])->getValue());
         self::assertEquals('', $worksheet->getCell([++$i, 2])->getValue());
         self::assertEquals('', $worksheet->getCell([++$i, 2])->getValue());
         self::assertEquals('', $worksheet->getCell([++$i, 2])->getValue());

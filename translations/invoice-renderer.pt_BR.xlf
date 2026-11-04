@@ -2,29 +2,29 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="pt-BR" datatype="plaintext" original="invoice-renderer.en.xlf">
     <body>
-      <trans-unit id="hOcTt2G" resname="invoice_renderer">
+      <trans-unit id="hOcTt2G" resname="invoice_renderer" xml:space="preserve">
         <source>invoice_renderer</source>
-        <target state="translated">Modelo de fatura</target>
+        <target state="translated">Modelo da fatura</target>
       </trans-unit>
       <trans-unit id="Utbj3k_" resname="invoice">
         <source>invoice</source>
         <target>Fatura</target>
       </trans-unit>
-      <trans-unit id="lt2Y2LO" resname="timesheet">
+      <trans-unit id="lt2Y2LO" resname="timesheet" xml:space="preserve">
         <source>timesheet</source>
-        <target state="translated">Quadro de horários</target>
+        <target state="translated">Quadro de horário</target>
       </trans-unit>
-      <trans-unit id="m1UyfD9" resname="service-date">
-        <source>service-date</source>
-        <target>Freelancer</target>
+      <trans-unit id="m1UyfD9" resname="service-date" xml:space="preserve">
+        <source>Single service date</source>
+        <target state="translated">Data do serviço</target>
       </trans-unit>
-      <trans-unit id="7mEUv6C" resname="help.upload">
+      <trans-unit id="7mEUv6C" resname="help.upload" xml:space="preserve">
         <source>help.upload</source>
-        <target>Atenção: os arquivos já existentes serão substituídos. Os tipos dos arquivos permitidos são: %extensions%.</target>
+        <target state="translated">Atenção: os arquivos existentes serão substituídos. Os tipos dos arquivos permitidos são: %extensions%.</target>
       </trans-unit>
-      <trans-unit id="E5BwZHT" resname="programmatic">
+      <trans-unit id="E5BwZHT" resname="programmatic" xml:space="preserve">
         <source>programmatic</source>
-        <target>Para processamento posterior</target>
+        <target state="translated">Para processamento adicional</target>
       </trans-unit>
       <trans-unit id="N6juwc4" resname="default">
         <source>default</source>
@@ -34,9 +34,9 @@
         <source>text</source>
         <target>Texto</target>
       </trans-unit>
-      <trans-unit id="22pt8Gs" resname="download_invoice_renderer">
+      <trans-unit id="22pt8Gs" resname="download_invoice_renderer" xml:space="preserve">
         <source>download_invoice_renderer</source>
-        <target state="translated">Você pode baixar outros modelos aqui</target>
+        <target state="translated">Você pode baixar mais modelos aqui</target>
       </trans-unit>
     </body>
   </file>

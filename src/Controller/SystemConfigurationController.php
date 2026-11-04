@@ -29,6 +29,7 @@ use App\Form\Type\SkinType;
 use App\Form\Type\TimezoneType;
 use App\Form\Type\TrackingModeType;
 use App\Form\Type\UserLanguageType;
+use App\Form\Type\UserLocaleType;
 use App\Form\Type\WeekDaysType;
 use App\Form\Type\YesNoType;
 use App\Timesheet\LockdownService;
@@ -277,6 +278,29 @@ final class SystemConfigurationController extends AbstractController
                     ->setLabel('user_auth_password_reset_token_ttl')
                     ->setConstraints([new NotNull(), new GreaterThanOrEqual(['value' => 60])])
                     ->setType(IntegerType::class),
+                (new Configuration('user.theme'))
+                    ->setLabel('skin')
+                    ->setType(SkinType::class),
+                (new Configuration('user.password_strength'))
+                    ->setTranslationDomain('system-configuration')
+                    ->setLabel('user_auth_password_strength')
+                    ->setType(ChoiceType::class)
+                    ->setOptions([
+                        'help' => 'user_auth_password_strength.help',
+                        'choices' => [
+                            'password_strength.none' => 0,
+                            'password_strength.normal' => 1,
+                            'password_strength.medium' => 2,
+                            'password_strength.strong' => 3,
+                            'password_strength.very_strong' => 4,
+                        ],
+                    ])
+                    ->setConstraints([new NotNull(), new Range(['min' => 0, 'max' => 4])]),
+                (new Configuration('user.auth_change'))
+                    ->setLabel('user_auth_change')
+                    ->setTranslationDomain('system-configuration')
+                    ->setOptions(['help' => 'user_auth_change.help'])
+                    ->setType(YesNoType::class),
             ]);
 
         $allowRegistration = $this->systemConfiguration->find('features.user_registration');
@@ -286,6 +310,10 @@ final class SystemConfigurationController extends AbstractController
 
         if (!$this->systemConfiguration->isSamlActive()) {
             $authentication->getConfigurationByName('user.login')?->setEnabled(false);
+        }
+
+        if (!$this->systemConfiguration->isExternalLoginActive()) {
+            $authentication->getConfigurationByName('user.auth_change')?->setEnabled(false);
         }
 
         if (!$this->systemConfiguration->isPasswordResetActive()) {
@@ -467,6 +495,9 @@ final class SystemConfigurationController extends AbstractController
                         ->setLabel('country')
                         ->setType(CountryType::class)
                         ->setOptions(['help' => 'default_value_new']),
+                    (new Configuration('defaults.customer.language'))
+                        ->setLabel('language')
+                        ->setType(UserLanguageType::class),
                     (new Configuration('customer.choice_pattern'))
                         ->setLabel('choice_pattern')
                         ->setType(CustomerTypePatternType::class),
@@ -534,6 +565,11 @@ final class SystemConfigurationController extends AbstractController
                         ->setLabel('language')
                         ->setType(UserLanguageType::class)
                         ->setOptions(['help' => 'default_value_new']),
+                    (new Configuration('defaults.user.locale'))
+                        ->setRequired(false)
+                        ->setLabel('locale')
+                        ->setType(UserLocaleType::class)
+                        ->setOptions(['help' => 'default_value_new']),
                     (new Configuration('defaults.user.theme'))
                         ->setLabel('skin')
                         ->setType(SkinType::class)
@@ -541,6 +577,10 @@ final class SystemConfigurationController extends AbstractController
                     (new Configuration('theme.avatar_url'))
                         ->setRequired(false)
                         ->setLabel('theme.avatar_url')
+                        ->setType(YesNoType::class)
+                        ->setTranslationDomain('system-configuration'),
+                    (new Configuration('user.wizard'))
+                        ->setLabel('user_auth_wizard')
                         ->setType(YesNoType::class)
                         ->setTranslationDomain('system-configuration'),
                 ]),

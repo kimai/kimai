@@ -1,6 +1,10 @@
 {% if form_theme is defined %}
     {% form_theme form form_theme %}
 {% endif %}
+{% set bodyClasses = 'card-body' %}
+{% if fullsize ?? false %}
+    {% set bodyClasses = bodyClasses ~ ' p-0' %}
+{% endif %}
 {% set _back = back is defined and back is not same as (false) ? back : false %}
 {% set _reset = reset is defined and reset is same as (false) ? false : true %}
 <div class="card mb-3">
@@ -10,11 +14,11 @@
         <h3 class="card-title">
             {{ title }}
             {% if form.vars.docu_chapter is defined and form.vars.docu_chapter is not empty %}
-                <a class="form-help" href="{{ form.vars.docu_chapter|docu_link }}" target="_blank">?</a>
+                <a class="form-help" href="{{ form.vars.docu_chapter|docu_link('form') }}" target="_blank">?</a>
             {% endif %}
         </h3>
     </div>
-    <div class="card-body">
+    <div class="{{ bodyClasses }}">
         {% block form_body_outer %}
             {% block form_body_pre %}
                 {{ form_errors(form) }}

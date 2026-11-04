@@ -12,11 +12,11 @@
       </trans-unit>
       <trans-unit id="tLV1hoP" resname="report_tasks_assigned" xml:space="preserve" approved="no">
         <source>report_tasks_assigned</source>
-        <target state="translated">Moje úkoly</target>
+        <target state="translated">Úkoly podle uživatelů</target>
       </trans-unit>
       <trans-unit id="WCaBimL" resname="task.help.end" xml:space="preserve" approved="no">
         <source>task.help.end</source>
-        <target state="translated">Úkol musí být splněn do</target>
+        <target state="translated">Úkol musí být splněn do tohoto data</target>
       </trans-unit>
       <trans-unit id="XD7TZh7" resname="task.stop" xml:space="preserve" approved="no">
         <source>task.stop</source>
@@ -40,11 +40,11 @@
       </trans-unit>
       <trans-unit id="kMOottI" resname="task.widget_rows" xml:space="preserve" approved="no">
         <source>task.widget_rows</source>
-        <target state="translated">Množství úkolů na stránku ve widgetu ovládacího panelu</target>
+        <target state="translated">Množství úkolů na stránku ve widgetu nástěnky</target>
       </trans-unit>
       <trans-unit id="H.zMNfb" resname="task_started" xml:space="preserve" approved="no">
         <source>task_started</source>
-        <target state="translated">Prace zahájena</target>
+        <target state="translated">Práce zahájena</target>
       </trans-unit>
       <trans-unit id="cu1.2JS" resname="task_not_started" xml:space="preserve" approved="no">
         <source>task_not_started</source>
@@ -68,11 +68,11 @@
       </trans-unit>
       <trans-unit id="SzbkpWy" resname="task.help.description" xml:space="preserve" approved="no">
         <source>task.help.description</source>
-        <target state="translated">Tento popis se zkopíruje do každého záznamu v timesheetu</target>
+        <target state="translated">Tento popis se zkopíruje do každého časového záznamu</target>
       </trans-unit>
       <trans-unit id="zJvuPBv" resname="task.help.tags" xml:space="preserve" approved="no">
         <source>task.help.tags</source>
-        <target state="translated">Tyto značky se zkopírují do každého záznamu timesheetu</target>
+        <target state="translated">Tyto štítky se zkopírují do každého časového záznamu</target>
       </trans-unit>
       <trans-unit id="8c0YWZm" resname="report_tasks_teams" xml:space="preserve" approved="no">
         <source>report_tasks_teams</source>
@@ -109,6 +109,74 @@
       <trans-unit id="agwwK.J" resname="task_no_estimation" xml:space="preserve" approved="no">
         <source>task_no_estimation</source>
         <target state="translated">Bez časového odhadu</target>
+      </trans-unit>
+      <trans-unit id="hZFps4G" resname="board" approved="no">
+        <source>board</source>
+        <target state="translated">Tabule</target>
+      </trans-unit>
+      <trans-unit id="aF2ajw." resname="boards" approved="no">
+        <source>boards</source>
+        <target state="translated">Tabule</target>
+      </trans-unit>
+      <trans-unit id="TRpwk3n" resname="board.private" approved="no">
+        <source>board.private</source>
+        <target state="translated">Soukromá tabule</target>
+      </trans-unit>
+      <trans-unit id="Wq09TUJ" resname="board.empty_state" approved="no">
+        <source>board.empty_state</source>
+        <target state="translated">Zatím nemáte žádné tabule. Začněte vytvořením nové.</target>
+      </trans-unit>
+      <trans-unit id="7lJ6pzI" resname="board.limit_reached" approved="no">
+        <source>board.limit_reached</source>
+        <target state="translated">Dosáhli jste limitu pro soukromé tabule (%limit%).</target>
+      </trans-unit>
+      <trans-unit id="K.9A2XH" resname="board.close_task" approved="no">
+        <source>board.close_task</source>
+        <target state="translated">Dokončit tento úkol?</target>
+      </trans-unit>
+      <trans-unit id="Hj3qdDA" resname="board.delete_confirm" approved="no">
+        <source>board.delete_confirm</source>
+        <target state="translated">Odstranit tuto tabuli?</target>
+      </trans-unit>
+      <trans-unit id="_H1KEu_" resname="board.unassign_user" approved="no">
+        <source>board.unassign_user</source>
+        <target state="translated">Odebrat z tohoto úkolu přiřazeného uživatele?</target>
+      </trans-unit>
+      <trans-unit id="TuoG.8m" resname="board.remove_task" approved="no">
+        <source>board.remove_task</source>
+        <target state="translated">Odebrat z tabule</target>
+      </trans-unit>
+      <trans-unit id="e3APxiK" resname="board.remove_task_confirm" approved="no">
+        <source>board.remove_task_confirm</source>
+        <target state="translated">Odebrat tento úkol z tabule?</target>
+      </trans-unit>
+      <trans-unit id="wkzeXtZ" resname="board.move_to" approved="no">
+        <source>board.move_to</source>
+        <target state="translated">Přesunout do</target>
+      </trans-unit>
+      <trans-unit id="hhrw1nb" resname="board.columns" approved="no">
+        <source>board.columns</source>
+        <target state="translated">Sloupce</target>
+      </trans-unit>
+      <trans-unit id="9.F1FZS" resname="board.add_column" approved="no">
+        <source>board.add_column</source>
+        <target state="translated">Přidat sloupec</target>
+      </trans-unit>
+      <trans-unit id="SPiQMlQ" resname="board.column.limit" approved="no">
+        <source>board.column.limit</source>
+        <target state="translated">Limit rozpracovanosti (WIP)</target>
+      </trans-unit>
+      <trans-unit id="ad2nQdr" resname="board.columns_invalid" approved="no">
+        <source>board.columns_invalid</source>
+        <target state="translated">Konfigurace sloupců je neplatná.</target>
+      </trans-unit>
+      <trans-unit id="lu5uNlv" resname="board.filter" approved="no">
+        <source>board.filter</source>
+        <target state="translated">Filtrovat úkoly</target>
+      </trans-unit>
+      <trans-unit id="9rA4ixj" resname="board.only_mine" approved="no">
+        <source>board.only_mine</source>
+        <target state="translated">Pouze moje úkoly</target>
       </trans-unit>
     </body>
   </file>

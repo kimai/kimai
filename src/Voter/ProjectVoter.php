@@ -35,6 +35,7 @@ final class ProjectVoter extends Voter
         'permissions',
         'comments',
         'details',
+        'access',
     ];
 
     public function __construct(private readonly RolePermissionManager $permissionManager)
@@ -64,6 +65,12 @@ final class ProjectVoter extends Voter
             return false;
         }
 
+        // this is a virtual permission, only meant to be used by developer
+        // it checks if access to the given project is potentially possible
+        if ($attribute === 'access') {
+            return $this->permissionManager->checkTeamAccessProject($subject, $user);
+        }
+
         if ($this->permissionManager->hasRolePermission($user, $attribute . '_project')) {
             return true;
         }
@@ -77,6 +84,12 @@ final class ProjectVoter extends Voter
         $hasTeamPermission = $this->permissionManager->hasRolePermission($user, $attribute . '_team_project');
 
         if (!$hasTeamleadPermission && !$hasTeamPermission) {
+            return false;
+        }
+
+        // a team assignment on any level (customer, project or activity) must be
+        // fulfilled, before a team based permission can be granted
+        if (!$this->permissionManager->checkTeamAccessProject($subject, $user)) {
             return false;
         }
 

@@ -31,7 +31,6 @@ trait FormTrait
     protected function addCustomer(FormBuilderInterface $builder, ?Customer $customer = null): void
     {
         $builder->add('customer', CustomerType::class, [
-            'query_builder_for_user' => true,
             'customers' => $customer,
             'data' => $customer,
             'required' => false,
@@ -46,7 +45,6 @@ trait FormTrait
         $options = array_merge([
             'placeholder' => '',
             'activity_enabled' => true,
-            'query_builder_for_user' => true,
             'join_customer' => true
         ], $options);
 
@@ -58,33 +56,23 @@ trait FormTrait
         // replaces the project select after submission, to make sure only projects for the selected customer are displayed
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($builder, $project, $customer, $isNew, $options): void {
+            function (FormEvent $event) use ($builder, $project, $isNew, $options): void {
                 /** @var array<string, mixed> $data */
                 $data = $event->getData();
                 $customer = \array_key_exists('customer', $data) && $data['customer'] !== '' ? $data['customer'] : null;
-                $project = \array_key_exists('project', $data) && $data['project'] !== '' ? $data['project'] : $project;
 
                 $event->getForm()->add('project', ProjectType::class, array_merge($options, [
                     'group_by' => null,
                     'query_builder' => function (ProjectRepository $repo) use ($builder, $project, $customer, $isNew) {
                         // is there a better way to prevent starting a record with a hidden project ?
-                        $project = \is_string($project) ? (int) $project : $project;
                         $customer = \is_string($customer) ? (int) $customer : $customer;
-                        if ($isNew && \is_int($project)) {
-                            /** @var Project $project */
-                            $project = $repo->find($project);
-                            if ($project !== null) {
-                                if (!$project->getCustomer()->isVisible()) {
-                                    $customer = null;
-                                    $project = null;
-                                } elseif (!$project->isVisible()) {
-                                    $project = null;
-                                }
+                        if ($isNew && $project instanceof Project) {
+                            if (!$project->getCustomer()->isVisible()) {
+                                $customer = null;
+                                $project = null;
+                            } elseif (!$project->isVisible()) {
+                                $project = null;
                             }
-                        }
-
-                        if ($project !== null && !\is_int($project) && !($project instanceof Project)) {
-                            throw new \InvalidArgumentException('Project type needs a project object or an ID');
                         }
 
                         if ($customer !== null && !\is_int($customer) && !($customer instanceof Customer)) {
@@ -104,7 +92,7 @@ trait FormTrait
 
     protected function addActivity(FormBuilderInterface $builder, ?Activity $activity = null, ?Project $project = null, array $options = []): void
     {
-        $options = array_merge(['placeholder' => '', 'query_builder_for_user' => true], $options);
+        $options = array_merge(['placeholder' => ''], $options);
 
         $options['projects'] = $project;
         $options['activities'] = $activity;

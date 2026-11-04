@@ -17,8 +17,10 @@ use App\Event\UserEmailEvent;
 use App\User\UserService;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
@@ -28,6 +30,15 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * This is the anonymous "password forgotten" flow.
+ * The flow itself can be deactivated via a system-configuration.
+ *
+ * When a user enters his username or email:
+ * - a login link will be generated
+ * - the user will be flagged as "a new password is required during next login"
+ * - the login link will be sent to the user via email
+ */
 #[Route(path: '/resetting')]
 final class PasswordResetController extends AbstractController
 {
@@ -36,8 +47,28 @@ final class PasswordResetController extends AbstractController
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly UserService $userService,
-        private readonly SystemConfiguration $configuration
+        private readonly SystemConfiguration $configuration,
+        /** @var array<string> */
+        #[Autowire(param: 'kernel.trusted_hosts')]
+        private readonly array $trustedHosts
     ) {
+    }
+
+    private function checkIsEnabled(): void
+    {
+        if (!$this->configuration->isPasswordResetActive()) {
+            throw $this->createNotFoundException();
+        }
+
+        // the login link is generated from the request host, which can only be trusted if TRUSTED_HOSTS is configured
+        if (\count(array_filter($this->trustedHosts, fn ($host) => $host !== '')) === 0) {
+            // the message is not shown to users, but logged by Symfony with level critical (status code >= 500)
+            throw new ServiceUnavailableHttpException(
+                null,
+                'Password reset is deactivated, because "TRUSTED_HOSTS" is not configured. ' .
+                'Set the environment variable or deactivate "Password reset" in the system configuration.'
+            );
+        }
     }
 
     /**
@@ -46,9 +77,7 @@ final class PasswordResetController extends AbstractController
     #[Route(path: '/request', name: 'resetting_request', methods: ['GET'])]
     public function requestAction(): Response
     {
-        if (!$this->configuration->isPasswordResetActive()) {
-            throw $this->createNotFoundException();
-        }
+        $this->checkIsEnabled();
 
         if ($this->isGranted('IS_AUTHENTICATED')) {
             return $this->redirectToRoute('homepage');
@@ -69,9 +98,7 @@ final class PasswordResetController extends AbstractController
         RateLimiterFactory $resetPasswordLimiter
     ): Response
     {
-        if (!$this->configuration->isPasswordResetActive()) {
-            throw $this->createNotFoundException();
-        }
+        $this->checkIsEnabled();
 
         if ($this->isGranted('IS_AUTHENTICATED')) {
             return $this->redirectToRoute('homepage');
@@ -104,8 +131,10 @@ final class PasswordResetController extends AbstractController
             }
 
             if (!$user->isPasswordRequestNonExpired($this->configuration->getPasswordResetRetryLifetime())) {
-                $loginLinkDetails = $loginLinkHandler->createLoginLink($user, $request, $this->configuration->getPasswordResetRetryLifetime()); // @phpstan-ignore-line
+                $loginLinkDetails = $loginLinkHandler->createLoginLink($user, $request, $this->configuration->getPasswordResetTokenLifetime()); // @phpstan-ignore-line
                 $loginLink = $loginLinkDetails->getUrl();
+                // only this link requires a password change when used, see LoginLinkSuccessHandler
+                $user->markPasswordResetLink($loginLink);
 
                 $mail = $this->generateResettingEmailMessage($user, $translator, $loginLink);
                 $event = new EmailPasswordResetEvent($user, $mail);
@@ -114,8 +143,8 @@ final class PasswordResetController extends AbstractController
                 // this will send the email
                 $this->eventDispatcher->dispatch(new UserEmailEvent($user, $event->getEmail()));
 
+                // only after the email was sent, otherwise the user could not request a new one
                 $user->markPasswordRequested();
-                $user->setRequiresPasswordReset(true);
                 $this->userService->saveUser($user);
             }
         } catch (\Exception $ex) {
@@ -131,9 +160,7 @@ final class PasswordResetController extends AbstractController
     #[Route(path: '/check-email', name: 'resetting_check_email', methods: ['GET'])]
     public function checkEmailAction(): Response
     {
-        if (!$this->configuration->isPasswordResetActive()) {
-            throw $this->createNotFoundException();
-        }
+        $this->checkIsEnabled();
 
         return $this->render('security/password-reset/check_email.html.twig', [
             'tokenLifetime' => $this->configuration->getPasswordResetRetryLifetime(),

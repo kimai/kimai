@@ -8,6 +8,7 @@ includes:
     - %rootDir%/../phpstan/conf/bleedingEdge.neon
 
 parameters:
+    phpVersion: 80233
     featureToggles:
         skipCheckGenericClasses:
             - Symfony\Component\Form\AbstractType
@@ -31,6 +32,7 @@ parameters:
     paths:
         - src
     tmpDir: %rootDir%/../../../var/cache/phpstan
+    resultCachePath: %tmpDir%/phpstan.php
     excludePaths:
         - %rootDir%/../../../src/Ldap/LdapDriver.php
         - %rootDir%/../../../src/Event/PageActionsEvent.php
@@ -43,22 +45,28 @@ parameters:
         containerXmlPath: %rootDir%/../../../var/cache/dev/App_KernelDevDebugContainer.xml
     ignoreErrors:
         - identifier: offsetAccess.notFound
-        - '#^Method .*\(\) has parameter \$builder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'
+        - message: '#^Method .*\(\) has parameter \$builder with generic interface Symfony\\Component\\Form\\FormBuilderInterface but does not specify its types\: TData$#'
+        - message: '#^Call to deprecated method setApiToken\(\) of class App\\Entity\\User#'
+        - message: '#^Call to deprecated method getPlainApiToken\(\) of class App\\Entity\\User#'
+        - message: '#^Access to constant on internal class Twig\\Extension\\SandboxExtension#'
+        - message: '#^Instantiation of internal class Twig\\Extension\\SandboxExtension#'
+        - message: '#^Call to method disableSandbox\(\) of internal class Twig\\Extension\\SandboxExtension from outside its root namespace Twig#'
+        - message: '#^Call to method enableSandbox\(\) of internal class Twig\\Extension\\SandboxExtension from outside its root namespace Twig#'
+        - message: '#^Call to method isSandboxed\(\) of internal class Twig\\Extension\\SandboxExtension from outside its root namespace Twig#'
+        - message: '#^Call to deprecated method enableSandbox\(\) of class Twig\\Extension\\SandboxExtension#'
+        - message: '#^Call to deprecated method disableSandbox\(\) of class Twig\\Extension\\SandboxExtension#'
+        - message: '#^Call to method __construct\(\) of internal class Twig\\Extension\\SandboxExtension from outside its root namespace Twig#'
+
+        # temporary to silence the OpenAPI deprecations
+        - message: '#^Attribute class OpenApi\\Attributes(.*)#'
+        - message: '#^Attribute references deprecated class OpenApi\\Attributes(.*)#'
+        - message: '#^Call to method __construct\(\) of deprecated class OpenApi\\Attributes(.*)#'
+        - message: '#^Instantiation of deprecated class OpenApi\\Attributes(.*)#'
 
         -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Activity\\:\\:getMetaField\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/API/ActivityController.php
-
-        -
-            message: "#^Method App\\\\API\\\\Authentication\\\\TokenAuthenticator\\:\\:getCredentials\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/API/Authentication/TokenAuthenticator.php
-
-        -
-            message: "#^Parameter \\#2 \\$plainPassword of method Symfony\\\\Component\\\\PasswordHasher\\\\PasswordHasherInterface\\:\\:verify\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/API/Authentication/TokenAuthenticator.php
 
         -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Customer\\:\\:getMetaField\\(\\) expects string, mixed given\\.$#"
@@ -94,11 +102,6 @@ parameters:
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Project\\:\\:getMetaField\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/API/ProjectController.php
-
-        -
-            message: "#^Method App\\\\API\\\\Serializer\\\\ValidationFailedExceptionErrorHandler\\:\\:getSubscribingMethods\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/API/Serializer/ValidationFailedExceptionErrorHandler.php
 
         -
             message: "#^Method App\\\\API\\\\Serializer\\\\ValidationFailedExceptionErrorHandler\\:\\:serializeExceptionToJson\\(\\) has no return type specified\\.$#"
@@ -206,26 +209,6 @@ parameters:
             path: src/Command/ChangePasswordCommand.php
 
         -
-            message: "#^Parameter \\#1 \\$email of method App\\\\Entity\\\\User\\:\\:setEmail\\(\\) expects string\\|null, mixed given\\.$#"
-            count: 1
-            path: src/Command/CreateUserCommand.php
-
-        -
-            message: "#^Parameter \\#1 \\$identifier of method App\\\\Entity\\\\User\\:\\:setUserIdentifier\\(\\) expects string, mixed given\\.$#"
-            count: 1
-            path: src/Command/CreateUserCommand.php
-
-        -
-            message: "#^Parameter \\#2 \\$string of function explode expects string, mixed given\\.$#"
-            count: 1
-            path: src/Command/CreateUserCommand.php
-
-        -
-            message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
-            count: 1
-            path: src/Command/CreateUserCommand.php
-
-        -
             message: "#^Parameter \\#1 \\$username of method App\\\\User\\\\UserService\\:\\:findUserByUsernameOrThrowException\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/Command/DeactivateUserCommand.php
@@ -301,7 +284,7 @@ parameters:
             path: src/Command/InstallCommand.php
 
         -
-            message: "#^Binary operation \"\\.\" between non\\-empty\\-string and non\\-empty\\-list\\<string\\>\\|string results in an error\\.$#"
+            message: "#^Binary operation \"\\.\" between non\\-falsy\\-string and non\\-empty\\-list\\<string\\>\\|string results in an error\\.$#"
             count: 1
             path: src/Command/InvoiceCreateCommand.php
 
@@ -481,8 +464,13 @@ parameters:
             path: src/Command/TranslationCommand.php
 
         -
-            message: "#^Parameter \\#1 \\$source of method DOMDocument\\:\\:loadXML\\(\\) expects string, string\\|false given\\.$#"
+            message: "#^Parameter \\#1 \\$source of method DOMDocument\\:\\:loadXML\\(\\) expects non-empty-string, string\\|false given\\.$#"
             count: 5
+            path: src/Command/TranslationCommand.php
+
+        -
+            message: "#^Parameter \\#1 \\$filename of method DOMDocument\\:\\:load\\(\\) expects non-empty-string, string given\\.$#"
+            count: 2
             path: src/Command/TranslationCommand.php
 
         -
@@ -636,16 +624,6 @@ parameters:
             path: src/Controller/DashboardController.php
 
         -
-            message: "#^Method App\\\\Controller\\\\DashboardController\\:\\:getDefaultConfig\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Controller/DashboardController.php
-
-        -
-            message: "#^Method App\\\\Controller\\\\DashboardController\\:\\:saveBookmark\\(\\) has parameter \\$widgets with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Controller/DashboardController.php
-
-        -
             message: "#^Parameter \\#1 \\$name of method App\\\\Widget\\\\WidgetInterface\\:\\:setOption\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/Controller/DashboardController.php
@@ -691,11 +669,6 @@ parameters:
             path: src/Controller/DoctorController.php
 
         -
-            message: "#^Parameter \\#2 \\$subject of function preg_match_all expects string, string\\|false given\\.$#"
-            count: 1
-            path: src/Controller/DoctorController.php
-
-        -
             message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
             count: 2
             path: src/Controller/ExportController.php
@@ -731,11 +704,6 @@ parameters:
             path: src/Controller/PermissionController.php
 
         -
-            message: "#^Parameter \\#1 \\$role of method App\\\\Repository\\\\UserRepository\\:\\:findUsersWithRole\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Controller/PermissionController.php
-
-        -
             message: "#^Method App\\\\Controller\\\\PluginController\\:\\:getPluginInformation\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Controller/PluginController.php
@@ -748,16 +716,6 @@ parameters:
         -
             message: "#^Cannot call method format\\(\\) on DateTime\\|null\\.$#"
             count: 1
-            path: src/Controller/QuickEntryController.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Activity\\|null\\.$#"
-            count: 3
-            path: src/Controller/QuickEntryController.php
-
-        -
-            message: "#^Cannot call method getId\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
-            count: 3
             path: src/Controller/QuickEntryController.php
 
         -
@@ -881,16 +839,6 @@ parameters:
             path: src/Controller/TimesheetAbstractController.php
 
         -
-            message: "#^PHPDoc tag @var for variable \\$teams contains generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Controller/TimesheetTeamController.php
-
-        -
-            message: "#^PHPDoc tag @var for variable \\$users contains generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Controller/TimesheetTeamController.php
-
-        -
             message: "#^Parameter \\#2 \\$replace of method App\\\\User\\\\UserService\\:\\:deleteUser\\(\\) expects App\\\\Entity\\\\User\\|null, mixed given\\.$#"
             count: 1
             path: src/Controller/UserController.php
@@ -961,27 +909,12 @@ parameters:
             path: src/Entity/Activity.php
 
         -
-            message: "#^Method App\\\\Entity\\\\Activity\\:\\:getTeams\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Activity.php
-
-        -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Activity\\:\\:getMetaField\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Entity/Activity.php
 
         -
             message: "#^Parameter \\#1 \\$string of function strtolower expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Entity/Activity.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\Activity\\:\\:\\$meta with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Activity.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\Activity\\:\\:\\$teams with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/Activity.php
 
@@ -1016,27 +949,12 @@ parameters:
             path: src/Entity/Customer.php
 
         -
-            message: "#^Method App\\\\Entity\\\\Customer\\:\\:getTeams\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Customer.php
-
-        -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Customer\\:\\:getMetaField\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Entity/Customer.php
 
         -
             message: "#^Parameter \\#1 \\$string of function strtolower expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Entity/Customer.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\Customer\\:\\:\\$meta with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Customer.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\Customer\\:\\:\\$teams with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/Customer.php
 
@@ -1076,11 +994,6 @@ parameters:
             path: src/Entity/Invoice.php
 
         -
-            message: "#^Property App\\\\Entity\\\\Invoice\\:\\:\\$meta with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Invoice.php
-
-        -
             message: "#^Method App\\\\Entity\\\\InvoiceTemplate\\:\\:__toString\\(\\) should return string but returns string\\|null\\.$#"
             count: 1
             path: src/Entity/InvoiceTemplate.php
@@ -1096,27 +1009,12 @@ parameters:
             path: src/Entity/Project.php
 
         -
-            message: "#^Method App\\\\Entity\\\\Project\\:\\:getTeams\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Project.php
-
-        -
             message: "#^Parameter \\#1 \\$name of method App\\\\Entity\\\\Project\\:\\:getMetaField\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Entity/Project.php
 
         -
             message: "#^Parameter \\#1 \\$string of function strtolower expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Entity/Project.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\Project\\:\\:\\$meta with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Project.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\Project\\:\\:\\$teams with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/Project.php
 
@@ -1136,57 +1034,12 @@ parameters:
             path: src/Entity/Team.php
 
         -
-            message: "#^Method App\\\\Entity\\\\Team\\:\\:getActivities\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Team.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Team\\:\\:getCustomers\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Team.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Team\\:\\:getMembers\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Team.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Team\\:\\:getProjects\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Team.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\Team\\:\\:\\$activities with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Team.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\Team\\:\\:\\$customers with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Team.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\Team\\:\\:\\$members with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Team.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\Team\\:\\:\\$projects with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Team.php
-
-        -
             message: "#^Method App\\\\Entity\\\\Timesheet\\:\\:getCategory\\(\\) should return string but returns string\\|null\\.$#"
             count: 1
             path: src/Entity/Timesheet.php
 
         -
             message: "#^Method App\\\\Entity\\\\Timesheet\\:\\:getMetaFields\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/Timesheet.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\Timesheet\\:\\:getTags\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/Timesheet.php
 
@@ -1206,17 +1059,17 @@ parameters:
             path: src/Entity/Timesheet.php
 
         -
-            message: "#^Property App\\\\Entity\\\\Timesheet\\:\\:\\$meta with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
+            message: "#^Property App\\\\Entity\\\\User\\:\\:\\$preferences type mapping mismatch\\: database can contain Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\UserPreference\\> but property expects Doctrine\\\\Common\\\\Collections\\\\Collection\\<int, App\\\\Entity\\\\UserPreference\\>\\|null\\.$#"
             count: 1
-            path: src/Entity/Timesheet.php
+            path: src/Entity/User.php
 
         -
-            message: "#^Property App\\\\Entity\\\\Timesheet\\:\\:\\$tags with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
+            message: "#^Argument of an invalid type Doctrine\\\\Common\\\\Collections\\\\Collection\\<int, App\\\\Entity\\\\UserPreference\\>\\|null supplied for foreach, only iterables are supported\\.$#"
             count: 1
-            path: src/Entity/Timesheet.php
+            path: src/Entity/User.php
 
         -
-            message: "#^Argument of an invalid type \\(Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\UserPreference\\>\\)\\|null supplied for foreach, only iterables are supported\\.$#"
+            message: "#^Method App\\\\Entity\\\\User\\:\\:getPreferences\\(\\) should return Doctrine\\\\Common\\\\Collections\\\\Collection\\<int, App\\\\Entity\\\\UserPreference\\> but returns Doctrine\\\\Common\\\\Collections\\\\Collection\\<int, App\\\\Entity\\\\UserPreference\\>\\|null\\.$#"
             count: 1
             path: src/Entity/User.php
 
@@ -1227,21 +1080,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Entity\\\\User\\:\\:getFirstDayOfWeek\\(\\) should return string but returns bool\\|float\\|int\\|string\\|null\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:getMemberships\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:getPreferences\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Method App\\\\Entity\\\\User\\:\\:getPreferences\\(\\) should return Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\UserPreference\\> but returns \\(Doctrine\\\\Common\\\\Collections\\\\Collection&iterable\\<App\\\\Entity\\\\UserPreference\\>\\)\\|null\\.$#"
             count: 1
             path: src/Entity/User.php
 
@@ -1282,21 +1120,6 @@ parameters:
 
         -
             message: "#^Method App\\\\Entity\\\\User\\:\\:setRoles\\(\\) has parameter \\$roles with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Parameter \\#1 \\$secret of class Scheb\\\\TwoFactorBundle\\\\Model\\\\Totp\\\\TotpConfiguration constructor expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\User\\:\\:\\$memberships with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Entity/User.php
-
-        -
-            message: "#^Property App\\\\Entity\\\\User\\:\\:\\$preferences with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Entity/User.php
 
@@ -1526,11 +1349,6 @@ parameters:
             path: src/Export/Spreadsheet/Extractor/UserPreferenceExtractor.php
 
         -
-            message: "#^Method App\\\\Export\\\\Spreadsheet\\\\SpreadsheetExporter\\:\\:export\\(\\) has parameter \\$entries with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Export/Spreadsheet/SpreadsheetExporter.php
-
-        -
             message: "#^Method App\\\\Export\\\\Spreadsheet\\\\Writer\\\\BinaryFileResponseWriter\\:\\:getFileResponse\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Export/Spreadsheet/Writer/BinaryFileResponseWriter.php
@@ -1641,32 +1459,12 @@ parameters:
             path: src/Form/CustomerEditForm.php
 
         -
-            message: "#^Class App\\\\Form\\\\DataTransformer\\\\SearchTermTransformer implements generic interface Symfony\\\\Component\\\\Form\\\\DataTransformerInterface but does not specify its types\\: T, R$#"
-            count: 1
-            path: src/Form/DataTransformer/SearchTermTransformer.php
-
-        -
-            message: "#^Parameter \\#1 \\$searchTerm \\(App\\\\Utils\\\\SearchTerm\\|null\\) of method App\\\\Form\\\\DataTransformer\\\\SearchTermTransformer\\:\\:transform\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<mixed,mixed\\>\\:\\:transform\\(\\)$#"
-            count: 1
-            path: src/Form/DataTransformer/SearchTermTransformer.php
-
-        -
-            message: "#^Parameter \\#1 \\$searchTerm \\(string\\|null\\) of method App\\\\Form\\\\DataTransformer\\\\SearchTermTransformer\\:\\:reverseTransform\\(\\) should be contravariant with parameter \\$value \\(mixed\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<mixed,mixed\\>\\:\\:reverseTransform\\(\\)$#"
-            count: 1
-            path: src/Form/DataTransformer/SearchTermTransformer.php
-
-        -
             message: "#^Parameter \\#1 \\$value \\(array\\<string\\>\\) of method App\\\\Form\\\\DataTransformer\\\\StringToArrayTransformer\\:\\:transform\\(\\) should be contravariant with parameter \\$value \\(array\\|null\\) of method Symfony\\\\Component\\\\Form\\\\DataTransformerInterface\\<array,string\\>\\:\\:transform\\(\\)$#"
             count: 1
             path: src/Form/DataTransformer/StringToArrayTransformer.php
 
         -
             message: "#^Cannot call method getName\\(\\) on Symfony\\\\Component\\\\Form\\\\FormInterface\\|null\\.$#"
-            count: 1
-            path: src/Form/Extension/SelectWithApiDataExtension.php
-
-        -
-            message: "#^Parameter \\#1 \\$name of method Symfony\\\\Component\\\\Routing\\\\Generator\\\\UrlGeneratorInterface\\:\\:generate\\(\\) expects string, mixed given\\.$#"
             count: 1
             path: src/Form/Extension/SelectWithApiDataExtension.php
 
@@ -1691,34 +1489,9 @@ parameters:
             path: src/Form/InvoiceDocumentUploadForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Model\\\\MultiUserTimesheet\\:\\:getTeams\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Form/Model/MultiUserTimesheet.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Model\\\\MultiUserTimesheet\\:\\:getUsers\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Form/Model/MultiUserTimesheet.php
-
-        -
-            message: "#^Property App\\\\Form\\\\Model\\\\MultiUserTimesheet\\:\\:\\$teams with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Form/Model/MultiUserTimesheet.php
-
-        -
-            message: "#^Property App\\\\Form\\\\Model\\\\MultiUserTimesheet\\:\\:\\$users with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Form/Model/MultiUserTimesheet.php
-
-        -
             message: "#^Method App\\\\Form\\\\Model\\\\SystemConfiguration\\:\\:getTranslation\\(\\) should return string but returns string\\|null\\.$#"
             count: 1
             path: src/Form/Model/SystemConfiguration.php
-
-        -
-            message: "#^PHPDoc tag @var for variable \\$repository contains generic class Doctrine\\\\ORM\\\\EntityRepository but does not specify its types\\: TEntityClass$#"
-            count: 1
-            path: src/Form/MultiUpdate/MultiUpdateTable.php
 
         -
             message: "#^Cannot access offset 'customer' on mixed\\.$#"
@@ -1739,11 +1512,6 @@ parameters:
             message: "#^Parameter \\#1 \\$name of method App\\\\Form\\\\MultiUpdate\\\\TimesheetMultiUpdateDTO\\:\\:getMetaField\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Form/MultiUpdate/TimesheetMultiUpdate.php
-
-        -
-            message: "#^Method App\\\\Form\\\\MultiUpdate\\\\TimesheetMultiUpdateDTO\\:\\:getMetaFields\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Form/MultiUpdate/TimesheetMultiUpdateDTO.php
 
         -
             message: "#^Method App\\\\Entity\\\\ExportableItem\\:\\:getMetaFields\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
@@ -1767,11 +1535,6 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$string of function strtolower expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Form/MultiUpdate/TimesheetMultiUpdateDTO.php
-
-        -
-            message: "#^Property App\\\\Form\\\\MultiUpdate\\\\TimesheetMultiUpdateDTO\\:\\:\\$meta with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Form/MultiUpdate/TimesheetMultiUpdateDTO.php
 
@@ -1941,611 +1704,6 @@ parameters:
             path: src/Form/TimesheetPreCreateForm.php
 
         -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addProjectSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\AbstractToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/AbstractToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addProjectSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ActivityToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/ActivityToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addProjectSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\CustomerToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/CustomerToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addProjectSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ExportToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/ExportToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addProjectSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceArchiveForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/InvoiceArchiveForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addProjectSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\InvoiceToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/InvoiceToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addProjectSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\ProjectToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/ProjectToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addProjectSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TagToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/TagToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addProjectSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TeamToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/TeamToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addProjectSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\TimesheetToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/TimesheetToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addActivityMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addActivitySelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addCustomerMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addCustomerSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addDateRange\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addOrderBy\\(\\) has parameter \\$allowedColumns with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addProjectMultiChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addProjectSelect\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addTeamsChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Method App\\\\Form\\\\Toolbar\\\\UserToolbarForm\\:\\:addUsersChoice\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
-            message: "#^Parameter \\#1 \\$user of method App\\\\Repository\\\\Query\\\\BaseFormTypeQuery\\:\\:setUser\\(\\) expects App\\\\Entity\\\\User, mixed given\\.$#"
-            count: 2
-            path: src/Form/Toolbar/UserToolbarForm.php
-
-        -
             message: "#^Method App\\\\Form\\\\Type\\\\ActivityType\\:\\:groupBy\\(\\) has parameter \\$index with no type specified\\.$#"
             count: 1
             path: src/Form/Type/ActivityType.php
@@ -2554,16 +1712,6 @@ parameters:
             message: "#^Method App\\\\Form\\\\Type\\\\ActivityType\\:\\:groupBy\\(\\) has parameter \\$key with no type specified\\.$#"
             count: 1
             path: src/Form/Type/ActivityType.php
-
-        -
-            message: "#^Class App\\\\Form\\\\Type\\\\ColorChoiceType implements generic interface Symfony\\\\Component\\\\Form\\\\DataTransformerInterface but does not specify its types\\: T, R$#"
-            count: 1
-            path: src/Form/Type/ColorChoiceType.php
-
-        -
-            message: "#^Class App\\\\Form\\\\Type\\\\ColorPickerType implements generic interface Symfony\\\\Component\\\\Form\\\\DataTransformerInterface but does not specify its types\\: T, R$#"
-            count: 1
-            path: src/Form/Type/ColorPickerType.php
 
         -
             message: "#^Method App\\\\Form\\\\Type\\\\CustomerType\\:\\:getChoiceAttributes\\(\\) has parameter \\$key with no type specified\\.$#"
@@ -2601,12 +1749,7 @@ parameters:
             path: src/Form/Type/EntityMetaDefinitionType.php
 
         -
-            message: "#^PHPDoc tag @var for variable \\$collection contains generic class Doctrine\\\\Common\\\\Collections\\\\ArrayCollection but does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Form/Type/MetaFieldsCollectionType.php
-
-        -
-            message: "#^Parameter \\#1 \\$key of method Doctrine\\\\Common\\\\Collections\\\\ArrayCollection\\<\\(int\\|string\\),mixed\\>\\:\\:set\\(\\) expects \\(int\\|string\\), string\\|null given\\.$#"
+            message: "#^Parameter \\#1 \\$key of method Doctrine\\\\Common\\\\Collections\\\\ArrayCollection\\<int\\|string,App\\\\Entity\\\\MetaTableTypeInterface\\>\\:\\:set\\(\\) expects int\\|string, string\\|null given\\.$#"
             count: 1
             path: src/Form/Type/MetaFieldsCollectionType.php
 
@@ -2716,11 +1859,6 @@ parameters:
             path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
 
         -
-            message: "#^Parameter \\#1 \\$date of method App\\\\Invoice\\\\InvoiceFormatter\\:\\:getFormattedDateTime\\(\\) expects DateTimeInterface, DateTime\\|null given\\.$#"
-            count: 2
-            path: src/Invoice/Hydrator/InvoiceModelDefaultHydrator.php
-
-        -
             message: "#^Method App\\\\Invoice\\\\Hydrator\\\\InvoiceModelProjectHydrator\\:\\:getBudgetValues\\(\\) return type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Invoice/Hydrator/InvoiceModelProjectHydrator.php
@@ -2787,7 +1925,7 @@ parameters:
 
         -
             message: "#^Parameter \\#1 \\$haystack of function stripos expects string, mixed given\\.$#"
-            count: 5
+            count: 4
             path: src/Invoice/Renderer/AbstractSpreadsheetRenderer.php
 
         -
@@ -2828,62 +1966,42 @@ parameters:
         -
             message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
             count: 1
-            path: src/Invoice/ServiceInvoice.php
+            path: src/Invoice/InvoiceService.php
 
         -
             message: "#^Cannot call method hasInvoiceTemplate\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
-            path: src/Invoice/ServiceInvoice.php
+            path: src/Invoice/InvoiceService.php
 
         -
             message: "#^Cannot call method setBegin\\(\\) on App\\\\Repository\\\\Query\\\\InvoiceQuery\\|null\\.$#"
             count: 1
-            path: src/Invoice/ServiceInvoice.php
+            path: src/Invoice/InvoiceService.php
 
         -
             message: "#^Cannot call method setEnd\\(\\) on App\\\\Repository\\\\Query\\\\InvoiceQuery\\|null\\.$#"
             count: 1
-            path: src/Invoice/ServiceInvoice.php
+            path: src/Invoice/InvoiceService.php
 
         -
             message: "#^Cannot call method setInvoiceTemplate\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
             count: 1
-            path: src/Invoice/ServiceInvoice.php
+            path: src/Invoice/InvoiceService.php
 
         -
             message: "#^Parameter \\#1 \\$key of function array_key_exists expects int\\|string, int\\|null given\\.$#"
             count: 1
-            path: src/Invoice/ServiceInvoice.php
-
-        -
-            message: "#^Parameter \\#1 \\$string1 of function strcmp expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Invoice/ServiceInvoice.php
+            path: src/Invoice/InvoiceService.php
 
         -
             message: "#^Parameter \\#2 \\$locale of class App\\\\Invoice\\\\DefaultInvoiceFormatter constructor expects string, string\\|null given\\.$#"
             count: 1
-            path: src/Invoice/ServiceInvoice.php
-
-        -
-            message: "#^Parameter \\#2 \\$string of function explode expects string, string\\|null given\\.$#"
-            count: 2
-            path: src/Invoice/ServiceInvoice.php
-
-        -
-            message: "#^Parameter \\#2 \\$string2 of function strcmp expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Invoice/ServiceInvoice.php
+            path: src/Invoice/InvoiceService.php
 
         -
             message: "#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, iterable\\<App\\\\Entity\\\\ExportableItem\\> given\\.$#"
             count: 1
-            path: src/Invoice/ServiceInvoice.php
-
-        -
-            message: "#^Property App\\\\Invoice\\\\ServiceInvoice\\:\\:\\$invoiceItemRepositories type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Invoice/ServiceInvoice.php
+            path: src/Invoice/InvoiceService.php
 
         -
             message: "#^Generator expects value type Symfony\\\\Component\\\\HttpKernel\\\\Bundle\\\\BundleInterface, object given\\.$#"
@@ -2921,11 +2039,6 @@ parameters:
             path: src/Ldap/LdapManager.php
 
         -
-            message: "#^Method App\\\\Ldap\\\\LdapManager\\:\\:hydrate\\(\\) has parameter \\$ldapEntry with no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Ldap/LdapManager.php
-
-        -
             message: "#^Method App\\\\Ldap\\\\LdapManager\\:\\:hydrateRoles\\(\\) has parameter \\$entries with no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Ldap/LdapManager.php
@@ -2947,11 +2060,6 @@ parameters:
 
         -
             message: "#^PHPDoc tag @var for variable \\$attr has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Ldap/LdapManager.php
-
-        -
-            message: "#^Parameter \\#1 \\$baseDn of method App\\\\Ldap\\\\LdapDriver\\:\\:search\\(\\) expects string, bool\\|float\\|int\\|string given\\.$#"
             count: 1
             path: src/Ldap/LdapManager.php
 
@@ -2999,11 +2107,6 @@ parameters:
             message: "#^Property App\\\\Model\\\\Statistic\\\\Day\\:\\:\\$details type has no value type specified in iterable type array\\.$#"
             count: 1
             path: src/Model/Statistic/Day.php
-
-        -
-            message: "#^Parameter \\#1 \\$string of function str_pad expects string, int\\|string given\\.$#"
-            count: 1
-            path: src/Model/Statistic/Month.php
 
         -
             message: "#^Method App\\\\Pdf\\\\PdfContext\\:\\:getOption\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -3217,11 +2320,6 @@ parameters:
 
         -
             message: "#^Cannot access offset 'revenue' on mixed\\.$#"
-            count: 1
-            path: src/Repository/TimesheetRepository.php
-
-        -
-            message: "#^Cannot call method getCustomer\\(\\) on App\\\\Entity\\\\Project\\|null\\.$#"
             count: 1
             path: src/Repository/TimesheetRepository.php
 
@@ -3466,11 +2564,6 @@ parameters:
             path: src/Twig/Configuration.php
 
         -
-            message: "#^Parameter \\#1 \\$callback of function call_user_func expects callable\\(\\)\\: mixed, array\\{App\\\\Configuration\\\\SystemConfiguration, mixed\\} given\\.$#"
-            count: 1
-            path: src/Twig/Configuration.php
-
-        -
             message: "#^Parameter \\#1 \\$string of function strtolower expects string, string\\|null given\\.$#"
             count: 2
             path: src/Twig/Context.php
@@ -3681,11 +2774,6 @@ parameters:
             path: src/Utils/JavascriptFormatConverter.php
 
         -
-            message: "#^Cannot call method format\\(\\) on NumberFormatter\\|null\\.$#"
-            count: 1
-            path: src/Utils/LocaleFormatter.php
-
-        -
             message: "#^Cannot call method getTimestamp\\(\\) on DateTime\\|null\\.$#"
             count: 1
             path: src/Utils/LocaleFormatter.php
@@ -3696,22 +2784,12 @@ parameters:
             path: src/Utils/LocaleFormatter.php
 
         -
-            message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:formatDuration\\(\\) should return string but returns string\\|null\\.$#"
-            count: 1
-            path: src/Utils/LocaleFormatter.php
-
-        -
             message: "#^Method App\\\\Utils\\\\LocaleFormatter\\:\\:money\\(\\) should return string but returns string\\|false\\.$#"
             count: 2
             path: src/Utils/LocaleFormatter.php
 
         -
             message: "#^Parameter \\#1 \\$num of method NumberFormatter\\:\\:format\\(\\) expects float\\|int, float\\|int\\|string given\\.$#"
-            count: 1
-            path: src/Utils/LocaleFormatter.php
-
-        -
-            message: "#^Parameter \\#2 \\$currency of method NumberFormatter\\:\\:formatCurrency\\(\\) expects string, string\\|null given\\.$#"
             count: 1
             path: src/Utils/LocaleFormatter.php
 
@@ -3781,16 +2859,6 @@ parameters:
             path: src/Utils/Parsedown.php
 
         -
-            message: "#^Method App\\\\Utils\\\\ParsedownExtension\\:\\:inlineUrl\\(\\) has parameter \\$Excerpt with no type specified\\.$#"
-            count: 1
-            path: src/Utils/ParsedownExtension.php
-
-        -
-            message: "#^Method App\\\\Utils\\\\ParsedownExtension\\:\\:inlineUrl\\(\\) return type has no value type specified in iterable type array\\.$#"
-            count: 1
-            path: src/Utils/ParsedownExtension.php
-
-        -
             message: "#^Parameter \\#1 \\$str of function strtr expects string, string\\|null given\\.$#"
             count: 1
             path: src/Utils/Parsedown.php
@@ -3836,7 +2904,7 @@ parameters:
             path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
 
         -
-            message: "#^Parameter \\#4 \\$duration of method App\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidator\\:\\:checkBudgets\\(\\) expects int, float\\|int\\|null given\\.$#"
+            message: "#^Parameter \\#4 \\$durationDelta of method App\\\\Validator\\\\Constraints\\\\TimesheetBudgetUsedValidator\\:\\:checkBudgets\\(\\) expects int, float\\|int\\|null given\\.$#"
             count: 3
             path: src/Validator/Constraints/TimesheetBudgetUsedValidator.php
 
@@ -3849,11 +2917,6 @@ parameters:
             message: "#^Cannot call method getTimezone\\(\\) on DateTime\\|null\\.$#"
             count: 1
             path: src/Validator/Constraints/TimesheetFutureTimesValidator.php
-
-        -
-            message: "#^Parameter \\#2 \\$value of method Symfony\\\\Component\\\\Validator\\\\Violation\\\\ConstraintViolationBuilderInterface\\:\\:setParameter\\(\\) expects string, string\\|null given\\.$#"
-            count: 1
-            path: src/Validator/Constraints/TimesheetLongRunningValidator.php
 
         -
             message: "#^Cannot call method isVisible\\(\\) on App\\\\Entity\\\\Customer\\|null\\.$#"
@@ -3926,16 +2989,6 @@ parameters:
             path: src/Widget/WidgetService.php
 
         -
-            message: "#^Property App\\\\Form\\\\MultiUpdate\\\\MultiUpdateTableDTO\\:\\:\\$entities with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Form/MultiUpdate/MultiUpdateTableDTO.php
-
-        -
             message: "#^Method App\\\\Form\\\\MultiUpdate\\\\MultiUpdateTableDTO\\:\\:getEntities\\(\\) return type with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection does not specify its types\\: TKey, T$#"
-            count: 1
-            path: src/Form/MultiUpdate/MultiUpdateTableDTO.php
-
-        -
-            message: "#^Method App\\\\Form\\\\MultiUpdate\\\\MultiUpdateTableDTO\\:\\:setEntities\\(\\) has parameter \\$entities with generic interface Doctrine\\\\Common\\\\Collections\\\\Collection but does not specify its types\\: TKey, T$#"
             count: 1
             path: src/Form/MultiUpdate/MultiUpdateTableDTO.php

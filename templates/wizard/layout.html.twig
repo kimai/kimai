@@ -27,7 +27,7 @@
 
 {% block wizard_previous_button %}
     {% if previous is defined and previous is not null %}
-        {{ button(false, { title : 'Previous'|trans({}, 'TablerBundle'), combined: true, url: path('wizard', {'wizard': previous}) }, 'link') }}
+        {{ button(false, { title : 'Previous'|trans({}, 'TablerBundle'), combined: true, url: path(previous) }, 'link') }}
     {% endif %}
 {% endblock %}
 
@@ -36,7 +36,7 @@
         {{ submit_button(false, { title : 'Next'|trans({}, 'TablerBundle'), combined: true }, 'primary') }}
     {% else %}
         {% if next is defined and next is not null %}
-            {{ button(false, { title : 'Next'|trans({}, 'TablerBundle'), combined: true, url: path('wizard', {'wizard': next}) }, 'primary') }}
+            {{ button(false, { title : 'Next'|trans({}, 'TablerBundle'), combined: true, url: path(next) }, 'primary') }}
         {% endif %}
     {% endif %}
 {% endblock %}

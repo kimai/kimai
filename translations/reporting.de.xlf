@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="reporting.en.xlf">
     <body>
-      <trans-unit id="XV3FBpu" resname="report_user_week">
+      <trans-unit id="XV3FBpu" resname="report_user_week" xml:space="preserve" approved="yes">
         <source>report_user_week</source>
-        <target>Wochenansicht für einen Benutzer</target>
+        <target state="final">Wochenansicht für einen Benutzer</target>
       </trans-unit>
-      <trans-unit id="Ng47B75" resname="report_user_month">
+      <trans-unit id="Ng47B75" resname="report_user_month" xml:space="preserve" approved="yes">
         <source>report_user_month</source>
-        <target>Monatsansicht für einen Benutzer</target>
+        <target state="final">Monatsansicht für einen Benutzer</target>
       </trans-unit>
       <trans-unit id="3JLmvfB" resname="report_user_year">
         <source>report_user_year</source>

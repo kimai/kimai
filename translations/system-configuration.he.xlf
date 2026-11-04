@@ -314,6 +314,10 @@
         <source>invoice.rounding_mode</source>
         <target state="final">מצב עיגול</target>
       </trans-unit>
+      <trans-unit id="uf2_qIW" resname="user_auth_wizard" xml:space="preserve" approved="yes">
+        <source>user_auth_wizard</source>
+        <target state="final">הצגת אשף הגדרות למשתמשים חדשים</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

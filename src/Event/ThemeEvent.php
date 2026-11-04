@@ -12,7 +12,7 @@ namespace App\Event;
 use App\Entity\User;
 use Symfony\Contracts\EventDispatcher\Event;
 
-class ThemeEvent extends Event
+class ThemeEvent extends Event implements \Stringable
 {
     public const JAVASCRIPT = 'app.theme.javascript';
     public const STYLESHEET = 'app.theme.css';
@@ -60,5 +60,10 @@ class ThemeEvent extends Event
     public function getPayload(): array
     {
         return $this->payload;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getContent();
     }
 }

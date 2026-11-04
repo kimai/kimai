@@ -9,9 +9,11 @@
 
 namespace App\Form\MultiUpdate;
 
+use App\Configuration\SystemConfiguration;
 use App\Form\Type\ActivityType;
 use App\Form\Type\CustomerType;
 use App\Form\Type\DescriptionType;
+use App\Form\Type\DurationType;
 use App\Form\Type\FixedRateType;
 use App\Form\Type\HourlyRateType;
 use App\Form\Type\MetaFieldsCollectionType;
@@ -32,7 +34,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class TimesheetMultiUpdate extends AbstractType
 {
-    public function __construct(private TimesheetRepository $timesheet, private CustomerRepository $customers)
+    public function __construct(
+        private readonly TimesheetRepository $timesheet,
+        private readonly CustomerRepository $customers,
+        private readonly SystemConfiguration $systemConfiguration
+    )
     {
     }
 
@@ -64,7 +70,6 @@ final class TimesheetMultiUpdate extends AbstractType
 
         $builder
             ->add('customer', CustomerType::class, [
-                'query_builder_for_user' => true,
                 'customers' => $customer,
                 'data' => $customer,
                 'required' => false,
@@ -86,14 +91,13 @@ final class TimesheetMultiUpdate extends AbstractType
             'activity_enabled' => true,
             'customers' => $customer,
             'projects' => $project,
-            'query_builder_for_user' => true,
         ]));
 
         // replaces the project select after submission, to make sure only projects for the selected customer are displayed
         // TODO replace me with FormTrait
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($project, $customer): void {
+            function (FormEvent $event) use ($project): void {
                 $data = $event->getData();
                 $customer = isset($data['customer']) && !empty($data['customer']) ? $data['customer'] : null;
                 $project = isset($data['project']) && !empty($data['project']) ? $data['project'] : $project;
@@ -105,7 +109,6 @@ final class TimesheetMultiUpdate extends AbstractType
                     'group_by' => null,
                     'customers' => $customer,
                     'projects' => $project,
-                    'query_builder_for_user' => true,
                 ]);
             }
         );
@@ -114,7 +117,6 @@ final class TimesheetMultiUpdate extends AbstractType
             'required' => false,
             'placeholder' => '',
             'activities' => $activity,
-            'query_builder_for_user' => true,
         ];
 
         $builder->add('activity', ActivityType::class, array_merge($activityOptions, [
@@ -211,6 +213,10 @@ final class TimesheetMultiUpdate extends AbstractType
                     'currency' => $currency,
                 ])
             ;
+        }
+
+        if ($this->systemConfiguration->isBreakTimeEnabled()) {
+            $builder->add('break', DurationType::class, ['label' => 'break', 'required' => false, 'icon' => 'break']);
         }
 
         // meta fields only if at least one exists

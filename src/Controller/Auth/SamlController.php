@@ -66,13 +66,20 @@ final class SamlController extends AbstractController
             throw new ServiceUnavailableHttpException(message: 'Unknown firewall.');
         }
 
+        // this can be an absolute URL including query parameters
         $redirectTarget = $this->getTargetPath($session, $firewallName);
         if ($redirectTarget === null || $redirectTarget === '') {
             $redirectTarget = $this->generateUrl('homepage', [], UrlGeneratorInterface::ABSOLUTE_URL);
         }
 
-        $url = $this->authFactory->create()->login($redirectTarget, [], false, false, true);
+        // the protocol defines max 80 byte for RelayState, even if most IdP support more - see #5752
+        if (method_exists($this->samlConfiguration, 'cleanupLongRelayState') && $this->samlConfiguration->cleanupLongRelayState()) {
+            if (\strlen($redirectTarget) > 80 && ($pos = stripos($redirectTarget, '?')) !== false) {
+                $redirectTarget = substr($redirectTarget, 0, $pos);
+            }
+        }
 
+        $url = $this->authFactory->create()->login($redirectTarget, [], false, false, true);
         if ($url === null) {
             throw new \RuntimeException('SAML login failed');
         }

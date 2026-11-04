@@ -22,7 +22,7 @@
 .time-off { color: var(--kimai-time-off); }
 .other, .parental, .unpaid-vacation { color: var(--kimai-other); }
 
-.bg-public-holiday{ background-color: var(--kimai-public-holiday-bg); --tblr-table-bg: var(--kimai-public-holiday-bg); i.fas{ color: var(--kimai-public-holiday); } };
+.bg-public-holiday { background-color: var(--kimai-public-holiday-bg); --tblr-table-bg: var(--kimai-public-holiday-bg); i.fas{ color: var(--kimai-public-holiday); } };
 .bg-holiday { background-color: var(--kimai-holiday-bg); --tblr-table-bg: var(--kimai-holiday-bg); i.fas{ color: var(--kimai-holiday); } };
 .bg-sickness, .bg-sickness-child { background-color: var(--kimai-sickness-bg); --tblr-table-bg: var(--kimai-sickness-bg); i.fas{ color: var(--kimai-sickness); } };
 .bg-time-off { background-color: var(--kimai-time-off-bg); --tblr-table-bg: var(--kimai-time-off-bg); i.fas{ color: var(--kimai-time-off); } };

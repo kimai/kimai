@@ -22,12 +22,13 @@ and so much more.
 ### Links
 
 - [Home](https://www.kimai.org) — Kimai project homepage
-- [Blog](https://www.kimai.org/blog/) — Read the latest news
+- [Blog](https://www.kimai.org/en/blog/) — Read the latest news
 - [Documentation](https://www.kimai.org/documentation/) — Learn how to use Kimai
+- [Newsletter](https://www.kimai.org/en/newsletter) - Subscribe and get notified about new releases and important updates
 
 ### Requirements
 
-- PHP 8.1.3 minimum with support for 8.2, 8.3, 8.4, 8.5
+- PHP 8.2 minimum with support for 8.3, 8.4, 8.5
 - MariaDB / MySQL: oldest maintained LTS release (MariaDB >= [10.6](https://endoflife.date/mariadb) or MySQL >= [8.4](https://endoflife.date/mysql)) or newer
 - A webserver and subdomain (subdirectory is not supported)
 - PHP extensions: `gd`, `intl`, `json`, `mbstring`, `pdo`, `tokenizer`, `xml`, `xsl`, `zip`
@@ -56,15 +57,14 @@ And if you don't want to host Kimai, you can use the [Cloud version](https://www
 
 ## Roadmap and releases
 
-You can see a rough development [roadmap](https://github.com/orgs/kimai/projects/2), which is open for changes and input from the community, your [ideas](https://github.com/kimai/kimai/issues) are welcome.
+You can see a rough development [roadmap](https://roadmap.kimai.org/roadmap), which is open for changes and input from the community, your [ideas](https://roadmap.kimai.org/) are welcome.
 
 Release versions will be created on a regular basis, every couple of weeks latest.
-Every code change, whether it's a new feature or a bugfix, will be done on the `main` branch.
 
 ## Contributing
 
 You want to contribute to this repository? This is so great!
-The best way to start is to [open a new issue](https://github.com/kimai/kimai/issues) for bugs or feature requests or a [discussion](https://github.com/kimai/kimai/discussions) for questions, support and such.
+The best way to start is to open a [bug report](https://github.com/kimai/kimai/issues) or [feature request](https://roadmap.kimai.org) or a [discussion](https://github.com/kimai/kimai/discussions) for questions, support and such.
 
 In case you want to contribute, but you wouldn't know how, here are some suggestions:
 
@@ -83,6 +83,7 @@ There is one simple rule in our "Code of conduct": Don't be an ass!
 - Mastodon: [@kimai](https://phpc.social/@kimai)
 - Youtube: [@kimai_org](https://www.youtube.com/@kimai_org)
 - LinkedIn: [@kimai-org](https://www.linkedin.com/company/kimai-org/)
+- Reddit: [r/kimai](https://www.reddit.com/r/kimai/)
 
 ### Credits
 

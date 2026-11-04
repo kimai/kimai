@@ -21,7 +21,7 @@ use Twig\Environment;
 
 final class PdfRenderer extends AbstractTwigRenderer implements DispositionInlineInterface
 {
-    use PDFRendererTrait;
+    use PdfRendererTrait;
 
     public function __construct(Environment $twig, private readonly HtmlToPdfConverter $converter)
     {

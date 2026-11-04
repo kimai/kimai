@@ -10,12 +10,16 @@
 namespace App\Tests\Controller;
 
 use App\DataFixtures\UserFixtures;
+use App\Entity\Role;
+use App\Entity\RolePermission;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Repository\AccessTokenRepository;
 use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use App\User\PermissionService;
 use App\WorkingTime\Mode\WorkingTimeModeDay;
+use OTPHP\TOTP;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
@@ -160,6 +164,55 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         self::assertTrue($user->isEnabled());
     }
 
+    public function testEditActionCannotChangeSystemAccountAndPasswordResetOnOwnProfile(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/edit');
+
+        $node = $client->getCrawler()->filter('form[name=user_edit]');
+        self::assertCount(0, $node->filter('#user_edit_systemAccount'));
+        self::assertCount(0, $node->filter('#user_edit_requiresPasswordReset'));
+
+        $form = $node->form();
+        $values = $form->getPhpValues();
+        $values['user_edit']['systemAccount'] = '1';
+        $values['user_edit']['requiresPasswordReset'] = '0';
+        $client->request($form->getMethod(), $form->getUri(), $values);
+
+        // the form is rejected because of the extra fields
+        self::assertTrue($client->getResponse()->isSuccessful());
+        self::assertStringContainsString('This form should not contain extra fields.', (string) $client->getResponse()->getContent());
+
+        $this->getEntityManager()->clear();
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        self::assertFalse($user->isSystemAccount());
+    }
+
+    public function testEditActionWithSystemAccountAndPasswordReset(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/edit');
+
+        $node = $client->getCrawler()->filter('form[name=user_edit]');
+        self::assertCount(1, $node->filter('#user_edit_systemAccount'));
+        self::assertCount(1, $node->filter('#user_edit_requiresPasswordReset'));
+
+        $form = $node->form();
+        $client->submit($form, [
+            'user_edit' => [
+                'systemAccount' => '1',
+                'requiresPasswordReset' => '1',
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/edit'));
+
+        $this->getEntityManager()->clear();
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        self::assertTrue($user->isSystemAccount());
+        self::assertTrue($user->requiresPasswordReset());
+    }
+
     public function testEditActionWithActiveFlag(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
@@ -190,6 +243,106 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         self::assertFalse($user->isEnabled());
     }
 
+    private function prepareLdapUser(string $username): void
+    {
+        $user = $this->loadUserFromDatabase($username);
+        $user->setAuth(User::AUTH_LDAP);
+        $user->setPreferenceValue('ldap_dn', 'uid=' . $username . ',ou=users,dc=kimai,dc=org');
+        $em = $this->getEntityManager();
+        $em->persist($user);
+        $em->flush();
+    }
+
+    public function testEditActionHidesAuthWithoutSystemConfiguration(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->prepareLdapUser(UserFixtures::USERNAME_USER);
+
+        // the setting itself is ignored as long as neither LDAP nor SAML is active
+        $this->setSystemConfiguration('user.auth_change', true);
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/edit');
+        self::assertCount(0, $client->getCrawler()->filter('form[name=user_edit] #user_edit_auth'));
+
+        $this->setSystemConfiguration('user.auth_change', false);
+        $this->setSystemConfiguration('ldap.activate', true);
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/edit');
+        self::assertCount(0, $client->getCrawler()->filter('form[name=user_edit] #user_edit_auth'));
+    }
+
+    public function testEditActionHidesAuthForAdmin(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->grantPermissionToAdmin('edit_other_profile');
+        $this->prepareLdapUser(UserFixtures::USERNAME_USER);
+        $this->setSystemConfiguration('ldap.activate', true);
+        $this->setSystemConfiguration('user.auth_change', true);
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/edit');
+        self::assertTrue($client->getResponse()->isSuccessful());
+        self::assertCount(0, $client->getCrawler()->filter('form[name=user_edit] #user_edit_auth'));
+    }
+
+    public function testEditActionHidesAuthForInternalUser(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->setSystemConfiguration('saml.activate', true);
+        $this->setSystemConfiguration('user.auth_change', true);
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/edit');
+        self::assertTrue($client->getResponse()->isSuccessful());
+        self::assertCount(0, $client->getCrawler()->filter('form[name=user_edit] #user_edit_auth'));
+    }
+
+    public function testEditActionSwitchesLdapUserToInternal(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->prepareLdapUser(UserFixtures::USERNAME_USER);
+        $this->setSystemConfiguration('ldap.activate', true);
+        $this->setSystemConfiguration('user.auth_change', true);
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/edit');
+        $node = $client->getCrawler()->filter('form[name=user_edit]');
+        self::assertCount(1, $node->filter('#user_edit_auth'));
+        // only the current authentication and the internal one can be selected
+        self::assertCount(2, $node->filter('#user_edit_auth option'));
+
+        $form = $node->form();
+        $client->submit($form, [
+            'user_edit' => [
+                'auth' => User::AUTH_INTERNAL,
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/edit'));
+
+        $this->getEntityManager()->clear();
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        self::assertTrue($user->isInternalUser());
+        self::assertEquals('', $user->getPassword());
+        self::assertNull($user->getPreferenceValue('ldap_dn'));
+    }
+
+    public function testEditActionCannotSwitchToOtherAuth(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->prepareLdapUser(UserFixtures::USERNAME_USER);
+        $this->setSystemConfiguration('ldap.activate', true);
+        $this->setSystemConfiguration('user.auth_change', true);
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/edit');
+        $form = $client->getCrawler()->filter('form[name=user_edit]')->form();
+        $values = $form->getPhpValues();
+        $values['user_edit']['auth'] = User::AUTH_SAML;
+        $client->request($form->getMethod(), $form->getUri(), $values);
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $this->getEntityManager()->clear();
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        self::assertTrue($user->isLdapUser());
+        self::assertNotEmpty($user->getPassword());
+    }
+
     public function testPasswordAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
@@ -208,6 +361,7 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         $form = $client->getCrawler()->filter('form[name=user_password]')->form();
         $client->submit($form, [
             'user_password' => [
+                'currentPassword' => UserFixtures::DEFAULT_PASSWORD,
                 'plainPassword' => [
                     'first' => 'test1234',
                     'second' => 'test1234',
@@ -232,6 +386,7 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
             'form[name=user_password]',
             [
                 'user_password' => [
+                    'currentPassword' => UserFixtures::DEFAULT_PASSWORD,
                     'plainPassword' => [
                         'first' => 'abcdef1',
                         'second' => 'abcdef1',
@@ -240,6 +395,85 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
             ],
             ['#user_password_plainPassword_first']
         );
+    }
+
+    public function testPasswordActionFailsWithWrongCurrentPassword(): void
+    {
+        $this->assertFormHasValidationError(
+            User::ROLE_USER,
+            '/profile/' . UserFixtures::USERNAME_USER . '/password',
+            'form[name=user_password]',
+            [
+                'user_password' => [
+                    'currentPassword' => 'wrong-password',
+                    'plainPassword' => [
+                        'first' => 'test1234',
+                        'second' => 'test1234',
+                    ]
+                ]
+            ],
+            ['#user_password_currentPassword']
+        );
+    }
+
+    public function testPasswordActionFailsWithoutCurrentPassword(): void
+    {
+        $this->assertFormHasValidationError(
+            User::ROLE_USER,
+            '/profile/' . UserFixtures::USERNAME_USER . '/password',
+            'form[name=user_password]',
+            [
+                'user_password' => [
+                    'currentPassword' => '',
+                    'plainPassword' => [
+                        'first' => 'test1234',
+                        'second' => 'test1234',
+                    ]
+                ]
+            ],
+            ['#user_password_currentPassword']
+        );
+    }
+
+    public function testPasswordActionFailsIfNewPasswordIsCurrentPassword(): void
+    {
+        $this->assertFormHasValidationError(
+            User::ROLE_USER,
+            '/profile/' . UserFixtures::USERNAME_USER . '/password',
+            'form[name=user_password]',
+            [
+                'user_password' => [
+                    'currentPassword' => UserFixtures::DEFAULT_PASSWORD,
+                    'plainPassword' => [
+                        'first' => UserFixtures::DEFAULT_PASSWORD,
+                        'second' => UserFixtures::DEFAULT_PASSWORD,
+                    ]
+                ]
+            ],
+            ['#user_password_plainPassword_first']
+        );
+    }
+
+    public function testPasswordActionForOtherUserDoesNotCheckCurrentPassword(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/password');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=user_password]')->form();
+        self::assertFalse($form->has('user_password[currentPassword]'));
+
+        // re-using the current password is allowed, the result must not reveal the current password of other users
+        $client->submit($form, [
+            'user_password' => [
+                'plainPassword' => [
+                    'first' => UserFixtures::DEFAULT_PASSWORD,
+                    'second' => UserFixtures::DEFAULT_PASSWORD,
+                ]
+            ]
+        ]);
+
+        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/password'));
     }
 
     public function testCreateApiToken(): void
@@ -281,61 +515,16 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         self::assertCount(2, $tokens);
         self::assertEquals('Demo', $tokens[1]->getName());
         self::assertEquals($code->innerText(), $tokens[1]->getToken());
-    }
 
-    #[Group('legacy')]
-    public function testCreateApiPassword(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        // the base URL for manual configuration, the QR code contains it without the "/api" suffix
+        self::assertStringContainsString('URL: http://localhost/api', $crawler->text());
+
+        // the QR code is only rendered together with the one-time token display
+        self::assertEquals(1, $crawler->filter('img[src^="data:image/png"]')->count());
+
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/api-token');
-
-        $user = $this->getUserByRole(User::ROLE_USER);
-        /** @var PasswordHasherFactoryInterface $passwordEncoder */
-        $passwordEncoder = self::getContainer()->get('security.password_hasher_factory');
-
-        self::assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), UserFixtures::DEFAULT_API_TOKEN));
-        self::assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), 'test1234'));
-        self::assertEquals(UserFixtures::USERNAME_USER, $user->getUserIdentifier());
-
-        $form = $client->getCrawler()->filter('form[name=user_api_password]')->form();
-        $client->submit($form, [
-            'user_api_password' => [
-                'plainApiToken' => [
-                    'first' => 'test1234',
-                    'second' => 'test1234',
-                ]
-            ]
-        ]);
-
-        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode(UserFixtures::USERNAME_USER) . '/api-token'));
-        $client->followRedirect();
         self::assertTrue($client->getResponse()->isSuccessful());
-
-        $this->assertHasFlashSuccess($client);
-
-        $user = $this->getUserByRole(User::ROLE_USER);
-
-        self::assertFalse($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), UserFixtures::DEFAULT_API_TOKEN));
-        self::assertTrue($passwordEncoder->getPasswordHasher($user)->verify($user->getApiToken(), 'test1234'));
-    }
-
-    #[Group('legacy')]
-    public function testCreateApiPasswordFailsIfPasswordLengthToShort(): void
-    {
-        $this->assertFormHasValidationError(
-            User::ROLE_USER,
-            '/profile/' . UserFixtures::USERNAME_USER . '/api-token',
-            'form[name=user_api_password]',
-            [
-                'user_api_password' => [
-                    'plainApiToken' => [
-                        'first' => 'abcdef1',
-                        'second' => 'abcdef1',
-                    ]
-                ]
-            ],
-            ['#user_api_password_plainApiToken_first']
-        );
+        self::assertEquals(0, $client->getCrawler()->filter('img[src^="data:image/png"]')->count());
     }
 
     public function testRolesActionIsSecured(): void
@@ -343,6 +532,85 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/roles');
         self::assertFalse($client->getResponse()->isSuccessful());
+    }
+
+    /**
+     * A lower-privileged actor must not be able to edit the roles of a user who holds a role the
+     * actor cannot assign - otherwise they could strip that higher role from the subject.
+     *
+     * Setup mirrors an installation that granted "roles_other_profile" to ROLE_ADMIN. As ROLE_ADMIN
+     * also has "view_all_data", such an admin passes the general profile access check, but the
+     * UserVoter must still deny access to a super admin's roles form.
+     */
+    public function testRolesActionDeniesEditingHigherPrivilegedUser(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->grantRolesOtherProfileToAdmin();
+
+        // the target is a super admin, a role the admin may not assign
+        $target = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+        self::assertContains(User::ROLE_SUPER_ADMIN, $target->getRoles());
+
+        $this->request($client, '/profile/' . $target->getUserIdentifier() . '/roles');
+
+        $this->assertAccessDenied($client);
+    }
+
+    /**
+     * Counterpart to the test above: editing the roles of a user the admin outranks stays allowed,
+     * so the new voter guard does not over-block legitimate role management.
+     */
+    public function testRolesActionAllowsEditingLowerPrivilegedUser(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->grantRolesOtherProfileToAdmin();
+
+        $target = $this->getUserByRole(User::ROLE_USER);
+        $targetName = $target->getUserIdentifier();
+        self::assertEquals([User::ROLE_USER], $target->getRoles());
+
+        $this->request($client, '/profile/' . $targetName . '/roles');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        // the admin may assign the teamlead role, but not the super admin role
+        $rendered = $client->getResponse()->getContent();
+        self::assertIsString($rendered);
+        self::assertStringNotContainsString('value="ROLE_SUPER_ADMIN"', $rendered);
+
+        $form = $client->getCrawler()->filter('form[name=user_roles]')->form();
+        $client->submit($form, [
+            'user_roles[roles]' => [
+                'ROLE_TEAMLEAD',
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/profile/' . urlencode($targetName) . '/roles'));
+        $client->followRedirect();
+
+        $target = $this->getUserByName($targetName);
+        self::assertContains(User::ROLE_TEAMLEAD, $target->getRoles());
+    }
+
+    /**
+     * Grants ROLE_ADMIN the (non-default) permission to edit other users' roles and busts the cache.
+     */
+    private function grantRolesOtherProfileToAdmin(): void
+    {
+        $this->grantPermissionToAdmin('roles_other_profile');
+    }
+
+    /**
+     * Grants ROLE_ADMIN a (non-default) permission and busts the cache.
+     */
+    private function grantPermissionToAdmin(string $permissionName): void
+    {
+        $role = (new Role())->setName(User::ROLE_ADMIN);
+        $permission = (new RolePermission())->setRole($role)->setPermission($permissionName)->setAllowed(true);
+        $em = $this->getEntityManager();
+        $em->persist($role);
+        $em->flush();
+        /** @var PermissionService $permissionService */
+        $permissionService = $this->getPrivateService(PermissionService::class);
+        $permissionService->saveRolePermission($permission);
     }
 
     public function testRolesAction(): void
@@ -509,8 +777,9 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
         self::assertTrue($client->getResponse()->isSuccessful());
 
+        // the secret is only stored in the user after the code was confirmed
         $user = $this->getUserByName(UserFixtures::USERNAME_USER);
-        self::assertTrue($user->hasTotpSecret());
+        self::assertFalse($user->hasTotpSecret());
 
         $formUrl = $this->createUrl('/profile/' . UserFixtures::USERNAME_USER . '/2fa');
         $content = $client->getResponse()->getContent();
@@ -518,11 +787,77 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
 
         self::assertStringContainsString(' data-toggle="tooltip" title="Click to show code" alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" src="', $content);
         self::assertStringContainsString('<form name="user_two_factor" method="post" action="' . $formUrl . '" id="user_two_factor_form">', $content);
+
+        // the pending secret is kept in the session, reloading the page shows the same secret
+        $secret = $client->getCrawler()->filter('#totp_secret')->text();
+        self::assertNotEmpty($secret);
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
+        self::assertSame($secret, $client->getCrawler()->filter('#totp_secret')->text());
+    }
+
+    public function testActivateTwoFactor(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $secret = $client->getCrawler()->filter('#totp_secret')->text();
+        self::assertNotEmpty($secret);
+
+        $form = $client->getCrawler()->filter('form[name=user_two_factor]')->form();
+        $client->submit($form, [
+            'user_two_factor' => [
+                'code' => TOTP::createFromSecret($secret)->now(),
+            ]
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/profile/' . UserFixtures::USERNAME_USER . '/2fa'));
+        $client->followRedirect();
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $user = $this->getUserByName(UserFixtures::USERNAME_USER);
+        self::assertTrue($user->isTotpAuthenticationEnabled());
+        self::assertSame($secret, $user->getTotpSecret());
+
+        $content = $client->getResponse()->getContent();
+        self::assertNotFalse($content);
+        self::assertStringNotContainsString($secret, $content);
     }
 
     public function testTwoFactorAsAdmin(): void
     {
         $this->assertUrlIsSecuredForRole(User::ROLE_ADMIN, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
+    }
+
+    /**
+     * Must be called before the client is created: activating 2FA resets the security signature and would invalidate the session.
+     */
+    private function activateTwoFactor(string $username): void
+    {
+        $user = $this->getUserByName($username);
+        $user->setTotpSecret('JBSWY3DPEHPK3PXP');
+        $user->enableTotpAuthentication();
+        $em = $this->getEntityManager();
+        $em->persist($user);
+        $em->flush();
+
+        self::ensureKernelShutdown();
+    }
+
+    public function testTwoFactorHidesSecretWhenActivated(): void
+    {
+        $this->activateTwoFactor(UserFixtures::USERNAME_USER);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+        self::assertNotFalse($content);
+
+        self::assertStringNotContainsString('alt="TOTP QR Code"', $content);
+        self::assertStringNotContainsString('JBSWY3DPEHPK3PXP', $content);
+        self::assertStringNotContainsString('<form name="user_two_factor"', $content);
+        self::assertStringContainsString('id="user_two_factor_button"', $content);
     }
 
     public function testTwoFactorAsSuperAdmin(): void
@@ -534,10 +869,52 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
 
         $content = $client->getResponse()->getContent();
         self::assertNotFalse($content);
-        $formUrl = $this->createUrl('/profile/' . UserFixtures::USERNAME_USER . '/2fa');
 
-        self::assertStringContainsString(' data-toggle="tooltip" title="Click to show code" alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" src="', $content);
-        self::assertStringContainsString('<form name="user_two_factor" method="post" action="' . $formUrl . '" id="user_two_factor_form">', $content);
+        // super-admins must never see the secret of other users
+        self::assertStringNotContainsString('alt="TOTP QR Code"', $content);
+        self::assertStringNotContainsString('<form name="user_two_factor"', $content);
+        self::assertStringNotContainsString('id="user_two_factor_button"', $content);
+        self::assertFalse($this->getUserByName(UserFixtures::USERNAME_USER)->hasTotpSecret());
+    }
+
+    public function testTwoFactorAsSuperAdminForActivatedUser(): void
+    {
+        $this->activateTwoFactor(UserFixtures::USERNAME_USER);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+        self::assertNotFalse($content);
+        $deactivateUrl = $this->createUrl('/profile/' . UserFixtures::USERNAME_USER . '/2fa_deactivate');
+
+        self::assertStringNotContainsString('alt="TOTP QR Code"', $content);
+        self::assertStringNotContainsString('JBSWY3DPEHPK3PXP', $content);
+        // super-admins can still deactivate 2FA, e.g. if the user lost the device
+        self::assertStringContainsString('action="' . $deactivateUrl . '"', $content);
+    }
+
+    public function testDeactivateTwoFactorResetsSecret(): void
+    {
+        $this->activateTwoFactor(UserFixtures::USERNAME_USER);
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/2fa');
+        $form = $client->getCrawler()->filter('#user_two_factor_form')->form();
+        $client->submit($form);
+        $this->assertIsRedirect($client, $this->createUrl('/profile/' . UserFixtures::USERNAME_USER . '/2fa'));
+        $client->followRedirect();
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $user = $this->getUserByName(UserFixtures::USERNAME_USER);
+        self::assertFalse($user->isTotpAuthenticationEnabled());
+        self::assertFalse($user->hasTotpSecret());
+
+        // re-activation must use a new secret, the old one might have been seen by someone else
+        $secret = $client->getCrawler()->filter('#totp_secret')->text();
+        self::assertNotEmpty($secret);
+        self::assertNotEquals('JBSWY3DPEHPK3PXP', $secret);
     }
 
     public function testActivateTwoFactorWithEmptyToken(): void
@@ -580,6 +957,22 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
         $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/contract');
         self::assertFalse($client->getResponse()->isSuccessful());
+    }
+
+    public function testContractActionWithTooManyHours(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $crawler = $this->request($client, '/profile/' . UserFixtures::USERNAME_USER . '/contract');
+        $form = $crawler->filter('form[name=user_contract]')->form();
+
+        $result = $client->submit($form, [
+            'user_contract[workHoursMonday]' => '25:00',
+        ]);
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $validationErrors = $result->filter('form[name=user_contract] div.invalid-feedback.d-block');
+        self::assertCount(1, $validationErrors);
+        self::assertSame('A maximum duration of 24:00 is allowed.', $validationErrors->text(null, true));
     }
 
     public function testContractAction(): void

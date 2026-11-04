@@ -3,33 +3,36 @@ nelmio_api_doc:
     models:
         use_jms: true
         names:
+            - { alias: Comment,                     type: App\Entity\CommentTableTypeTrait,         groups: [Default] }
+            - { alias: CommentForm,                 type: App\Form\API\CommentApiForm,              groups: [Default] }
             - { alias: CustomerEditForm,            type: App\Form\API\CustomerApiEditForm,         groups: [Default, Entity, Customer, Customer_Entity] }
-            - { alias: CustomerEntity,              type: App\Entity\Customer,                      groups: [Default, Entity, Customer, Customer_Entity, Not_Expanded] }
+            - { alias: CustomerEntity,              type: App\Entity\Customer,                      groups: [Default, Entity, Customer, Customer_Entity, Budget_Money, Budget_Time, Not_Expanded] }
             - { alias: Customer,                    type: App\Entity\Customer,                      groups: [Default, Not_Expanded] }
             - { alias: CustomerRate,                type: App\Entity\CustomerRate,                  groups: [Default, Entity, Customer_Rate] }
             - { alias: CustomerRateForm,            type: App\Form\API\CustomerRateApiForm,         groups: [Default, Entity, Customer_Rate] }
-            - { alias: CustomerCollection,          type: App\Entity\Customer,                      groups: [Default, Collection, Customer] }
+            - { alias: InvoiceEditForm,             type: App\Form\API\InvoiceApiEditForm,          groups: [Default] }
+            - { alias: CustomerCollection,          type: App\Entity\Customer,                      groups: [Default, Collection, Customer, Budget_Money, Budget_Time] }
             - { alias: ProjectEditForm,             type: App\Form\API\ProjectApiEditForm,          groups: [Default, Entity, Project, Project_Entity] }
-            - { alias: ProjectEntity,               type: App\Entity\Project,                       groups: [Default, Entity, Project, Project_Entity, Not_Expanded] }
+            - { alias: ProjectEntity,               type: App\Entity\Project,                       groups: [Default, Entity, Project, Project_Entity, Budget_Money, Budget_Time, Not_Expanded] }
             - { alias: Project,                     type: App\Entity\Project,                       groups: [Default, Not_Expanded] }
             - { alias: ProjectExpanded,             type: App\Entity\Project,                       groups: [Default, Expanded] }
             - { alias: ProjectRate,                 type: App\Entity\ProjectRate,                   groups: [Default, Entity, Project_Rate] }
             - { alias: ProjectRateForm,             type: App\Form\API\ProjectRateApiForm,          groups: [Default, Entity, Project_Rate] }
-            - { alias: ProjectCollection,           type: App\Entity\Project,                       groups: [Default, Collection, Project] }
+            - { alias: ProjectCollection,           type: App\Entity\Project,                       groups: [Default, Collection, Project, Budget_Money, Budget_Time] }
             - { alias: ActivityEditForm,            type: App\Form\API\ActivityApiEditForm,         groups: [Default, Entity, Activity, Activity_Entity] }
-            - { alias: ActivityEntity,              type: App\Entity\Activity,                      groups: [Default, Entity, Activity, Activity_Entity, Not_Expanded] }
+            - { alias: ActivityEntity,              type: App\Entity\Activity,                      groups: [Default, Entity, Activity, Activity_Entity, Budget_Money, Budget_Time, Not_Expanded] }
             - { alias: Activity,                    type: App\Entity\Activity,                      groups: [Default, Not_Expanded] }
             - { alias: ActivityExpanded,            type: App\Entity\Activity,                      groups: [Default, Expanded] }
             - { alias: ActivityRate,                type: App\Entity\ActivityRate,                  groups: [Default, Entity, Activity_Rate] }
             - { alias: ActivityRateForm,            type: App\Form\API\ActivityRateApiForm,         groups: [Default, Entity, Activity_Rate] }
-            - { alias: ActivityCollection,          type: App\Entity\Activity,                      groups: [Default, Collection, Activity] }
+            - { alias: ActivityCollection,          type: App\Entity\Activity,                      groups: [Default, Collection, Activity, Budget_Money, Budget_Time] }
             - { alias: TagEditForm,                 type: App\Form\API\TagApiEditForm,              groups: [Default, Entity, Tag] }
             - { alias: TagEntity,                   type: App\Entity\Tag,                           groups: [Default, Entity, Tag] }
             - { alias: TimesheetEditForm,           type: App\Form\API\TimesheetApiEditForm,        groups: [Default, Entity, Timesheet, Not_Expanded] }
-            - { alias: TimesheetEntity,             type: App\Entity\Timesheet,                     groups: [Default, Entity, Timesheet, Timesheet_Entity, Not_Expanded] }
-            - { alias: TimesheetExpanded,           type: App\Entity\Timesheet,                     groups: [Default, Entity, Timesheet, Timesheet_Entity, Expanded] }
-            - { alias: TimesheetCollection,         type: App\Entity\Timesheet,                     groups: [Default, Collection, Timesheet, Not_Expanded] }
-            - { alias: TimesheetCollectionExpanded, type: App\Entity\Timesheet,                     groups: [Default, Collection, Timesheet, Expanded] }
+            - { alias: TimesheetEntity,             type: App\Entity\Timesheet,                     groups: [Default, Entity, Timesheet, Timesheet_Entity, Timesheet_Rate, Timesheet_Entity_Rate, Not_Expanded] }
+            - { alias: TimesheetExpanded,           type: App\Entity\Timesheet,                     groups: [Default, Entity, Timesheet, Timesheet_Entity, Timesheet_Rate, Timesheet_Entity_Rate, Expanded] }
+            - { alias: TimesheetCollection,         type: App\Entity\Timesheet,                     groups: [Default, Collection, Timesheet, Timesheet_Rate, Not_Expanded] }
+            - { alias: TimesheetCollectionExpanded, type: App\Entity\Timesheet,                     groups: [Default, Collection, Timesheet, Timesheet_Rate, Expanded] }
             - { alias: UserCreateForm,              type: App\Form\API\UserApiCreateForm,           groups: [Default, Entity, User, User_Entity] }
             - { alias: UserEditForm,                type: App\Form\API\UserApiEditForm,             groups: [Default, Entity, User, User_Entity] }
             - { alias: User,                        type: App\Entity\User,                          groups: [Default] }
@@ -67,5 +70,7 @@ nelmio_api_doc:
         swagger_ui_config: []
         # https://redocly.com/docs/redoc/config/
         redocly_config: []
+        # https://scalar.com/products/api-references/configuration
+        scalar_config: []
         # https://docs.stoplight.io/docs/elements/b074dc47b2826-elements-configuration-options
         stoplight_config: { basePath: '/api/doc', router: 'memory', logo: '/touch-icon-192x192.png', hideInternal: true }

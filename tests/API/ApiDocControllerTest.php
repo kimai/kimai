@@ -21,7 +21,7 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
         $this->assertUrlIsSecured('/api/doc');
     }
 
-    public function testGetDocs(): void
+    private function getApiSpec(): array
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
         $this->assertAccessIsGranted($client, '/api/doc');
@@ -32,11 +32,20 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
         self::assertStringContainsString('const config = {"basePath":"/api/doc","router":"memory","logo":"/touch-icon-192x192.png","hideInternal":true};', $content);
         $results = preg_match('/docs\.apiDescriptionDocument\ \=\ (.*)\.spec;/', $content, $matches);
         self::assertNotFalse($results);
+        self::assertArrayHasKey(1, $matches);
         $swaggerJson = json_decode($matches[1], true);
         self::assertIsArray($swaggerJson);
         self::assertArrayHasKey('spec', $swaggerJson);
         $json = $swaggerJson['spec'];
+        self::assertIsArray($json);
         self::assertArrayHasKey('paths', $json);
+
+        return $json;
+    }
+
+    public function testGetDocs(): void
+    {
+        $json = $this->getApiSpec();
 
         $tags = [];
         foreach ($json['paths'] as $path) {
@@ -47,7 +56,7 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
             }
         }
 
-        $expectedKeys = ['Actions', 'Activity', 'Default', 'Customer', 'Project', 'Tag', 'Team', 'Timesheet', 'User', 'Invoice', 'Export'];
+        $expectedKeys = ['Actions', 'Activity', 'Dashboard', 'Default', 'Customer', 'Favorites', 'Project', 'Tag', 'Team', 'Timesheet', 'User', 'Invoice', 'Export'];
         $actual = array_keys($tags);
 
         sort($actual);
@@ -65,6 +74,7 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
             '/api/activities/{id}/meta',
             '/api/activities/{id}/rates',
             '/api/activities/{id}/rates/{rateId}',
+            '/api/activities/{id}/team',
             '/api/config/timesheet',
             '/api/config/colors',
             '/api/customers',
@@ -72,14 +82,31 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
             '/api/customers/{id}/meta',
             '/api/customers/{id}/rates',
             '/api/customers/{id}/rates/{rateId}',
+            '/api/customers/{id}/comments',
+            '/api/customers/{id}/comments/{comment}/pin',
+            '/api/customers/{id}/comments/{comment}',
+            '/api/customers/{id}/team',
+            '/api/dashboard/widgets/{widget}',
+            '/api/dashboard/widgets',
             '/api/export/{id}',
+            '/api/favorites/timesheets',
+            '/api/favorites/timesheets/{id}',
             '/api/invoices',
             '/api/invoices/{id}',
+            '/api/invoices/{id}/custom-fields',
+            '/api/invoices/{id}/download',
+            '/api/invoices/documents/{id}',
+            '/api/invoices/templates/{id}',
+            '/api/projects/{id}/duplicate',
             '/api/projects',
             '/api/projects/{id}',
             '/api/projects/{id}/meta',
             '/api/projects/{id}/rates',
             '/api/projects/{id}/rates/{rateId}',
+            '/api/projects/{id}/comments',
+            '/api/projects/{id}/comments/{comment}/pin',
+            '/api/projects/{id}/comments/{comment}',
+            '/api/projects/{id}/team',
             '/api/ping',
             '/api/version',
             '/api/plugins',
@@ -104,6 +131,7 @@ class ApiDocControllerTest extends AbstractControllerBaseTestCase
             '/api/users',
             '/api/users/{id}',
             '/api/users/me',
+            '/api/users/roles/{id}',
             '/api/users/api-token/{id}',
             '/api/users/{id}/preferences',
         ];

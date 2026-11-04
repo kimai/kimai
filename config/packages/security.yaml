@@ -43,10 +43,11 @@ security:
 
             remember_me:
                 name: KIMAI_REMEMBER
-                secret: '%kernel.secret%'
+                secret: '%kernel.secret%_remember_me'
                 lifetime: 604800
                 path: /
                 always_remember_me: true
+                signature_properties: ['id', 'email', 'password', 'signatureDate']
 
             # activate all configured user provider
             provider: chain_provider
@@ -72,9 +73,14 @@ security:
 
             login_link:
                 check_route: link_login_check
-                signature_properties: ['id']
                 lifetime: 900
+                login_path: login
                 max_uses: 3
+                # requires a password change for links which were requested as password reset
+                success_handler: App\Security\LoginLinkSuccessHandler
+                # 'password' binds the HMAC signature to the password hash, so a
+                # link becomes invalid as soon as the user changes the password
+                signature_properties: ['email', 'password', 'signatureDate']
 
     access_decision_manager:
         # only grants access if there is no voter denying access
@@ -90,13 +96,15 @@ security:
     access_control:
         - {path: '^/auth/2fa', role: IS_AUTHENTICATED_2FA_IN_PROGRESS}
         - {path: '^/auth', roles: PUBLIC_ACCESS}
+        - {path: '^/login', roles: PUBLIC_ACCESS}
+        - {path: '^/logout', roles: PUBLIC_ACCESS}
         - {path: '^/{_locale}$', role: PUBLIC_ACCESS}
         - {path: '^/{_locale}/auth', role: PUBLIC_ACCESS}
         - {path: '^/{_locale}/login', role: PUBLIC_ACCESS}
         - {path: '^/{_locale}/register', role: PUBLIC_ACCESS}
         - {path: '^/{_locale}/resetting', role: PUBLIC_ACCESS}
         - {path: '^/{_locale}/', roles: ROLE_USER}
-        - {path: '^/api', roles: IS_AUTHENTICATED}
+        - {path: '^/api', roles: IS_AUTHENTICATED_REMEMBERED}
 
 when@test:
     # this configuration simplifies testing URLs protected by the security mechanism

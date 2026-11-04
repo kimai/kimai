@@ -11,17 +11,32 @@ namespace App\Tests\API;
 
 use App\Entity\Customer;
 use App\Entity\Invoice;
+use App\Entity\InvoiceTemplate;
+use App\Entity\Role;
+use App\Entity\RolePermission;
 use App\Entity\Team;
 use App\Entity\User;
+use App\Event\InvoiceStatusChangedEvent;
 use App\Repository\TeamRepository;
 use App\Tests\DataFixtures\InvoiceFixtures;
+use App\Tests\DataFixtures\InvoiceTemplateFixtures;
+use App\Tests\Mocks\InvoiceTestMetaFieldSubscriberMock;
+use App\Tests\Mocks\InvoiceTestUrlMetaFieldSubscriberMock;
+use App\User\PermissionService;
+use App\Utils\FileHelper;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 #[Group('integration')]
 class InvoiceControllerTest extends APIControllerBaseTestCase
 {
     /**
-     * @return Invoice[]
+     * @param int<1, 999> $amount
+     * @return non-empty-array<Invoice>
      */
     protected function importInvoiceFixtures(int $amount, ?array $status = null): array
     {
@@ -120,6 +135,8 @@ class InvoiceControllerTest extends APIControllerBaseTestCase
 
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('Invoice', $result);
+        self::assertArrayHasKey('metaFields', $result);
+        self::assertCount(0, $result['metaFields']);
     }
 
     public function testNotFound(): void
@@ -127,7 +144,7 @@ class InvoiceControllerTest extends APIControllerBaseTestCase
         $this->assertEntityNotFound(User::ROLE_USER, '/api/invoices/' . PHP_INT_MAX);
     }
 
-    public function testDownloadRespectsCustomerPermission(): void
+    public function testGetEntityRespectsCustomerPermission(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
 
@@ -157,6 +174,79 @@ class InvoiceControllerTest extends APIControllerBaseTestCase
         $this->assertApiAccessDenied($client, '/api/invoices/' . $invoice->getId());
     }
 
+    public function testDownload(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $invoice = $this->importInvoiceFixtures(1)[0];
+        $filename = $invoice->getInvoiceFilename() . '.pdf';
+        $invoice->setFilename($filename);
+
+        $em = $this->getEntityManager();
+        $em->persist($invoice);
+        $em->flush();
+
+        /** @var FileHelper $fileHelper */
+        $fileHelper = $this->getPrivateService(FileHelper::class);
+        $path = $fileHelper->getDataDirectory('invoices') . $filename;
+        file_put_contents($path, '%PDF-1.4 test');
+
+        try {
+            $this->assertAccessIsGranted($client, '/api/invoices/' . $invoice->getId() . '/download');
+
+            $response = $client->getResponse();
+            self::assertInstanceOf(BinaryFileResponse::class, $response);
+            self::assertEquals('application/pdf', $response->headers->get('Content-Type'));
+            self::assertStringContainsString('attachment; filename=' . $filename, $response->headers->get('Content-Disposition') ?? '');
+        } finally {
+            $fileHelper->removeFile($path);
+        }
+    }
+
+    public function testDownloadIsSecure(): void
+    {
+        $client = $this->getClientForAuthenticatedUser();
+        $invoices = $this->importInvoiceFixtures(1);
+
+        $this->assertApiAccessDenied($client, '/api/invoices/' . $invoices[0]->getId() . '/download');
+    }
+
+    public function testDownloadRespectsCustomerPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $invoice = $this->importInvoiceFixtures(1, [Invoice::STATUS_NEW])[0];
+        $filename = $invoice->getInvoiceFilename() . '.pdf';
+        $invoice->setFilename($filename);
+
+        $em = $this->getEntityManager();
+        $em->persist($invoice);
+        $em->flush();
+
+        /** @var FileHelper $fileHelper */
+        $fileHelper = $this->getPrivateService(FileHelper::class);
+        $path = $fileHelper->getDataDirectory('invoices') . $filename;
+        file_put_contents($path, '%PDF-1.4 test');
+
+        try {
+            $this->assertAccessIsGranted($client, '/api/invoices/' . $invoice->getId() . '/download');
+
+            $customer = $invoice->getCustomer();
+            self::assertInstanceOf(Customer::class, $customer);
+
+            $team = new Team('foo');
+            $team->addTeamlead($this->getUserByRole(User::ROLE_ADMIN));
+            $team->addCustomer($customer);
+
+            /** @var TeamRepository $repository */
+            $repository = $em->getRepository(Team::class);
+            $repository->saveTeam($team);
+
+            $this->assertApiAccessDenied($client, '/api/invoices/' . $invoice->getId() . '/download');
+        } finally {
+            $fileHelper->removeFile($path);
+        }
+    }
+
     public function testCollectionRespectsCustomerPermission(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
@@ -179,6 +269,629 @@ class InvoiceControllerTest extends APIControllerBaseTestCase
         $repository->saveTeam($team);
 
         $this->request($client, '/api/invoices', 'GET', $query);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    // ------------------------------------- [META FIELDS] -------------------------------------
+
+    public function testUpdateInvoiceMetaFieldsThrowsNotFound(): void
+    {
+        $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/invoices/42/custom-fields', []);
+    }
+
+    public function testUpdateInvoiceMetaFieldsThrowsExceptionOnWrongStructure(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+
+        $this->assertExceptionForPatchAction($client, '/api/invoices/' . $id . '/custom-fields', ['name' => 'X', 'value' => 'X'], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
+    public function testUpdateInvoiceMetaFieldsThrowsExceptionOnMissingName(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+
+        $this->assertExceptionForPatchAction($client, '/api/invoices/' . $id . '/custom-fields', [['value' => 'X']], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
+    /**
+     * @return array<int, array{array<string>|false}>
+     */
+    public static function getInvalidMetaFieldNames(): array
+    {
+        return [
+            [['X']],
+            [false],
+        ];
+    }
+
+    /**
+     * @param array<string>|false $name
+     */
+    #[DataProvider('getInvalidMetaFieldNames')]
+    public function testUpdateInvoiceMetaFieldsThrowsExceptionOnInvalidName(array|false $name): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+
+        $this->assertExceptionForPatchAction($client, '/api/invoices/' . $id . '/custom-fields', [['name' => $name, 'value' => 'X']], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
+    public function testUpdateInvoiceMetaFieldsThrowsExceptionOnMissingValue(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+
+        $this->assertExceptionForPatchAction($client, '/api/invoices/' . $id . '/custom-fields', [['name' => 'X']], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
+    public function testUpdateInvoiceMetaFieldsThrowsExceptionOnMissingMetafield(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+
+        $this->assertExceptionForPatchAction($client, '/api/invoices/' . $id . '/custom-fields', [['name' => 'X', 'value' => 'Y']], [
+            'code' => Response::HTTP_NOT_FOUND,
+            'message' => 'Not Found'
+        ]);
+    }
+
+    public function testUpdateInvoiceMetaFieldsValidatesConfiguredConstraints(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new InvoiceTestMetaFieldSubscriberMock());
+
+        $data = [
+            [
+                'name' => 'metatestmock',
+                'value' => str_repeat('x', 201)
+            ],
+        ];
+        $this->request($client, '/api/invoices/' . $id . '/custom-fields', 'PATCH', [], (string) json_encode($data));
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['metatestmock']);
+    }
+
+    public function testUpdateInvoiceMetaFieldsRejectsUnsafeUrl(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new InvoiceTestUrlMetaFieldSubscriberMock());
+
+        $data = [
+            [
+                'name' => 'homepage',
+                'value' => 'javascript:alert(1)'
+            ],
+        ];
+        $this->request($client, '/api/invoices/' . $id . '/custom-fields', 'PATCH', [], (string) json_encode($data));
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['homepage']);
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        /** @var Invoice $invoice */
+        $invoice = $em->getRepository(Invoice::class)->find($id);
+        self::assertNull($invoice->getMetaField('homepage'));
+    }
+
+    public function testUpdateInvoiceMetaFieldsRejectsNonScalarValue(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new InvoiceTestUrlMetaFieldSubscriberMock());
+
+        $data = [
+            [
+                'name' => 'homepage',
+                'value' => ['https://www.kimai.org']
+            ],
+        ];
+        $this->request($client, '/api/invoices/' . $id . '/custom-fields', 'PATCH', [], (string) json_encode($data));
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['homepage']);
+    }
+
+    public function testUpdateInvoiceMetaFieldsAcceptsValidUrl(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new InvoiceTestUrlMetaFieldSubscriberMock());
+
+        $data = [
+            [
+                'name' => 'homepage',
+                'value' => 'https://www.kimai.org'
+            ],
+        ];
+        $this->request($client, '/api/invoices/' . $id . '/custom-fields', 'PATCH', [], (string) json_encode($data));
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $em = $this->getEntityManager();
+        /** @var Invoice $invoice */
+        $invoice = $em->getRepository(Invoice::class)->find($id);
+        self::assertEquals('https://www.kimai.org', $invoice->getMetaField('homepage')?->getValue());
+    }
+
+    public function testUpdateInvoiceMetaFieldsStoresNothingIfOneFieldIsInvalid(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new InvoiceTestMetaFieldSubscriberMock());
+        $dispatcher->addSubscriber(new InvoiceTestUrlMetaFieldSubscriberMock());
+
+        $data = [
+            [
+                'name' => 'metatestmock',
+                'value' => 'valid value'
+            ],
+            [
+                'name' => 'homepage',
+                'value' => 'javascript:alert(1)'
+            ],
+        ];
+        $this->request($client, '/api/invoices/' . $id . '/custom-fields', 'PATCH', [], (string) json_encode($data));
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['homepage']);
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        /** @var Invoice $invoice */
+        $invoice = $em->getRepository(Invoice::class)->find($id);
+        self::assertNull($invoice->getMetaField('metatestmock'));
+        self::assertNull($invoice->getMetaField('homepage'));
+    }
+
+    public function testUpdateInvoiceMetaFields(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $invoices = $this->importInvoiceFixtures(1);
+        $id = $invoices[0]->getId();
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new InvoiceTestMetaFieldSubscriberMock());
+
+        $data = [
+            [
+                'name' => 'metatestmock',
+                'value' => 'another,testing,bar'
+            ],
+            [
+                'name' => 'foobar',
+                'value' => 13081978
+            ],
+        ];
+        $this->request($client, '/api/invoices/' . $id . '/custom-fields', 'PATCH', [], (string) json_encode($data));
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('Invoice', $result);
+        self::assertArrayHasKey('metaFields', $result);
+        // only visible should be returned
+        self::assertCount(1, $result['metaFields']);
+        self::assertEquals(['name' => 'metatestmock', 'value' => 'another,testing,bar'], $result['metaFields'][0]);
+
+        $em = $this->getEntityManager();
+        /** @var Invoice $invoice */
+        $invoice = $em->getRepository(Invoice::class)->find($id);
+        self::assertEquals('another,testing,bar', $invoice->getMetaField('metatestmock')?->getValue());
+        self::assertEquals(13081978, $invoice->getMetaField('foobar')?->getValue());
+    }
+
+    // ------------------------------------- [PATCH] -------------------------------------
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function patchInvoice(HttpKernelBrowser $client, int $id, array $data): void
+    {
+        $this->request($client, '/api/invoices/' . $id, 'PATCH', [], (string) json_encode($data));
+    }
+
+    /**
+     * @return \ArrayObject<int, InvoiceStatusChangedEvent>
+     */
+    private function recordStatusChangedEvents(): \ArrayObject
+    {
+        /** @var \ArrayObject<int, InvoiceStatusChangedEvent> $events */
+        $events = new \ArrayObject();
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addListener(InvoiceStatusChangedEvent::class, function (InvoiceStatusChangedEvent $event) use ($events): void {
+            $events[] = $event;
+        });
+
+        return $events;
+    }
+
+    public function testPatchIsSecure(): void
+    {
+        $this->assertUrlIsSecured('/api/invoices/1', 'PATCH');
+    }
+
+    public function testPatchNotFound(): void
+    {
+        $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/invoices/' . PHP_INT_MAX, ['status' => Invoice::STATUS_PAID]);
+    }
+
+    public function testPatchIsSecureForRole(): void
+    {
+        // a user without "view_invoice" and "create_invoice" permissions
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $id = $this->importInvoiceFixtures(1, [Invoice::STATUS_NEW])[0]->getId();
+        self::assertIsInt($id);
+
+        $this->patchInvoice($client, $id, ['status' => Invoice::STATUS_PAID]);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->assertInvoiceStatus($id, Invoice::STATUS_NEW);
+    }
+
+    public function testPatchRespectsCustomerPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $invoice = $this->importInvoiceFixtures(1, [Invoice::STATUS_NEW])[0];
+        $id = $invoice->getId();
+        self::assertIsInt($id);
+        $customer = $invoice->getCustomer();
+        self::assertInstanceOf(Customer::class, $customer);
+
+        // restrict the customer to a team, which the teamlead is not part of
+        $team = new Team('foo');
+        $team->addTeamlead($this->getUserByRole(User::ROLE_ADMIN));
+        $team->addCustomer($customer);
+
+        $em = $this->getEntityManager();
+        /** @var TeamRepository $repository */
+        $repository = $em->getRepository(Team::class);
+        $repository->saveTeam($team);
+
+        $this->patchInvoice($client, $id, ['status' => Invoice::STATUS_PAID]);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->assertInvoiceStatus($id, Invoice::STATUS_NEW);
+    }
+
+    public function testPatchIsNotReachableWithPost(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+
+        $this->request($client, '/api/invoices/' . $id, 'POST', [], (string) json_encode(['status' => Invoice::STATUS_PAID]));
+        self::assertEquals(Response::HTTP_METHOD_NOT_ALLOWED, $client->getResponse()->getStatusCode());
+    }
+
+    public function testPatchWithInvalidStatus(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1, [Invoice::STATUS_NEW])[0]->getId();
+        self::assertIsInt($id);
+
+        $this->patchInvoice($client, $id, ['status' => 'foo']);
+        $this->assertApiCallValidationError($client->getResponse(), ['status']);
+
+        $this->assertInvoiceStatus($id, Invoice::STATUS_NEW);
+    }
+
+    public function testPatchWithInvalidPaymentDate(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1, [Invoice::STATUS_PENDING])[0]->getId();
+        self::assertIsInt($id);
+
+        foreach (['foo', '2026-13-01', '01.09.2026'] as $paymentDate) {
+            $this->patchInvoice($client, $id, ['status' => Invoice::STATUS_PAID, 'paymentDate' => $paymentDate]);
+            $this->assertApiCallValidationError($client->getResponse(), ['paymentDate']);
+        }
+
+        $this->assertInvoiceStatus($id, Invoice::STATUS_PENDING);
+    }
+
+    public function testPatchDoesNotAllowReadOnlyFields(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $invoice = $this->importInvoiceFixtures(1, [Invoice::STATUS_NEW])[0];
+        $id = $invoice->getId();
+        self::assertIsInt($id);
+        $number = $invoice->getInvoiceNumber();
+
+        $this->patchInvoice($client, $id, ['invoiceNumber' => 'foo-123', 'total' => 1.23]);
+        // custom-fields are handled by their own endpoint and are not part of this form
+        $this->assertApiCallValidationError($client->getResponse(), [], true, [], ['comment', 'status', 'paymentDate'], ['metaFields']);
+
+        $reloaded = $this->assertInvoiceStatus($id, Invoice::STATUS_NEW);
+        self::assertEquals($number, $reloaded->getInvoiceNumber());
+    }
+
+    public function testPatchComment(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $id = $this->importInvoiceFixtures(1, [Invoice::STATUS_PENDING])[0]->getId();
+        self::assertIsInt($id);
+
+        $events = $this->recordStatusChangedEvents();
+
+        $this->patchInvoice($client, $id, ['comment' => 'Paid in two installments']);
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('Invoice', $result);
+        self::assertEquals('Paid in two installments', $result['comment']);
+        self::assertEquals(Invoice::STATUS_PENDING, $result['status']);
+
+        // partial update: the status was not sent and did not change
+        self::assertCount(0, $events);
+
+        $invoice = $this->assertInvoiceStatus($id, Invoice::STATUS_PENDING);
+        self::assertEquals('Paid in two installments', $invoice->getComment());
+    }
+
+    public function testPatchStatusAndPaymentDate(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $id = $this->importInvoiceFixtures(1, [Invoice::STATUS_PENDING])[0]->getId();
+        self::assertIsInt($id);
+
+        $events = $this->recordStatusChangedEvents();
+
+        $this->patchInvoice($client, $id, ['status' => Invoice::STATUS_PAID, 'paymentDate' => '2026-09-01']);
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('Invoice', $result);
+        self::assertEquals(Invoice::STATUS_PAID, $result['status']);
+        self::assertIsString($result['paymentDate']);
+        self::assertStringStartsWith('2026-09-01', $result['paymentDate']);
+
+        self::assertCount(1, $events);
+        $event = $events[0];
+        self::assertInstanceOf(InvoiceStatusChangedEvent::class, $event);
+        self::assertEquals($id, $event->getInvoice()->getId());
+        self::assertEquals(Invoice::STATUS_PENDING, $event->getStatusBefore());
+
+        $invoice = $this->assertInvoiceStatus($id, Invoice::STATUS_PAID);
+        self::assertEquals('2026-09-01', $invoice->getPaymentDate()?->format('Y-m-d'));
+    }
+
+    public function testPatchWithSameStatusDoesNotDispatchEvent(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1, [Invoice::STATUS_PAID])[0]->getId();
+        self::assertIsInt($id);
+
+        $events = $this->recordStatusChangedEvents();
+
+        $this->patchInvoice($client, $id, ['status' => Invoice::STATUS_PAID]);
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+        self::assertCount(0, $events);
+
+        $this->assertInvoiceStatus($id, Invoice::STATUS_PAID);
+    }
+
+    private function assertInvoiceStatus(int $id, string $expected): Invoice
+    {
+        $em = $this->getEntityManager();
+        $em->clear();
+        $invoice = $em->getRepository(Invoice::class)->find($id);
+        self::assertInstanceOf(Invoice::class, $invoice);
+        self::assertEquals($expected, $invoice->getStatus());
+
+        return $invoice;
+    }
+
+    public function testDeleteIsSecure(): void
+    {
+        $this->assertUrlIsSecured('/api/invoices/1', 'DELETE');
+    }
+
+    public function testDeleteIsSecureForRole(): void
+    {
+        // no default role holds "delete_invoice", not even the super-admin
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $invoices = $this->importInvoiceFixtures(1);
+
+        $this->request($client, '/api/invoices/' . $invoices[0]->getId(), 'DELETE');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    public function testDeleteNotFound(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertNotFoundForDelete($client, '/api/invoices/' . PHP_INT_MAX);
+    }
+
+    public function testDelete(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->grantDeleteInvoicePermission();
+        $invoices = $this->importInvoiceFixtures(1);
+        $id = $invoices[0]->getId();
+        self::assertIsInt($id);
+
+        $this->request($client, '/api/invoices/' . $id, 'DELETE');
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+        self::assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
+        self::assertEmpty($client->getResponse()->getContent());
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        self::assertNull($em->getRepository(Invoice::class)->find($id));
+    }
+
+    /**
+     * The "delete_invoice" permission is not part of any default role.
+     */
+    private function grantDeleteInvoicePermission(): void
+    {
+        $em = $this->getEntityManager();
+
+        $role = (new Role())->setName(User::ROLE_SUPER_ADMIN);
+        $em->persist($role);
+        $em->flush();
+
+        $permissionService = self::getContainer()->get(PermissionService::class);
+        self::assertInstanceOf(PermissionService::class, $permissionService);
+        $permissionService->saveRolePermission(
+            (new RolePermission())->setRole($role)->setPermission('delete_invoice')->setAllowed(true)
+        );
+    }
+
+    public function testDeleteTemplateIsSecure(): void
+    {
+        $this->assertRequestIsSecured(self::createClient(), '/api/invoices/templates/1', 'DELETE');
+    }
+
+    public function testDeleteDocumentIsSecure(): void
+    {
+        $this->assertRequestIsSecured(self::createClient(), '/api/invoices/documents/invoice', 'DELETE');
+    }
+
+    public function testDeleteTemplateIsSecureForRole(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $fixture = new InvoiceTemplateFixtures();
+        $templates = $this->importFixture($fixture);
+        $id = $templates[0]->getId();
+
+        $this->request($client, '/api/invoices/templates/' . $id, 'DELETE');
+
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->getEntityManager()->clear();
+        self::assertNotNull($this->getEntityManager()->getRepository(InvoiceTemplate::class)->find($id));
+    }
+
+    public function testDeleteTemplate(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $fixture = new InvoiceTemplateFixtures();
+        $templates = $this->importFixture($fixture);
+        $id = $templates[0]->getId();
+
+        $this->request($client, '/api/invoices/templates/' . $id, 'DELETE');
+
+        self::assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
+
+        $this->getEntityManager()->clear();
+        self::assertNull($this->getEntityManager()->getRepository(InvoiceTemplate::class)->find($id));
+    }
+
+    /**
+     * The predecessor of this endpoint carried its CSRF token in the URL and accepted GET.
+     */
+    public function testDeleteTemplateWithGetIsNotAllowed(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $fixture = new InvoiceTemplateFixtures();
+        $templates = $this->importFixture($fixture);
+        $id = $templates[0]->getId();
+
+        $this->request($client, '/api/invoices/templates/' . $id, 'GET');
+
+        self::assertEquals(Response::HTTP_METHOD_NOT_ALLOWED, $client->getResponse()->getStatusCode());
+
+        $this->getEntityManager()->clear();
+        self::assertNotNull($this->getEntityManager()->getRepository(InvoiceTemplate::class)->find($id));
+    }
+
+    public function testDeleteTemplateNotFound(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertNotFoundForDelete($client, '/api/invoices/templates/' . PHP_INT_MAX);
+    }
+
+    public function testDeleteUnknownDocument(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertNotFoundForDelete($client, '/api/invoices/documents/this-does-not-exist');
+    }
+
+    /**
+     * Shipped documents live in the source tree and may never be deleted.
+     */
+    public function testDeleteBuiltInDocumentIsRejected(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $this->request($client, '/api/invoices/documents/invoice', 'DELETE');
+
+        $this->assertBadRequestResponse($client->getResponse());
+        self::assertFileExists(__DIR__ . '/../../templates/invoice/renderer/invoice.html.twig');
+    }
+
+    /**
+     * A document which is used by a template may not be deleted.
+     */
+    public function testDeleteUsedDocumentIsRejected(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $fixture = new InvoiceTemplateFixtures();
+        $templates = $this->importFixture($fixture);
+        $renderer = $templates[0]->getRenderer();
+        self::assertNotNull($renderer);
+
+        $this->request($client, '/api/invoices/documents/' . $renderer, 'DELETE');
+
+        $this->assertBadRequestResponse($client->getResponse());
+    }
+
+    public function testDeleteDocumentIsSecureForRole(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $this->request($client, '/api/invoices/documents/invoice', 'DELETE');
+
         $this->assertApiResponseAccessDenied($client->getResponse());
     }
 }

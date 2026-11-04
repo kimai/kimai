@@ -1,6 +1,8 @@
 {% extends 'reporting/project_list_data.html.twig' %}
 
 {% block report_form_layout %}
+    {% import "macros/datatables.html.twig" as tables %}
+    {{ tables.datatable_column_modal_link(tableName) }}
     {{ form_widget(form.customer, {'label': false, 'placeholder': 'customer'}) }}
     <div class="dropdown">
         <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

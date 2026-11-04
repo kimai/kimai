@@ -13,7 +13,7 @@ use App\Form\ProjectEditForm;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-final class ProjectApiEditForm extends AbstractType
+final class ProjectApiEditForm extends AbstractType implements ApiFormInterface
 {
     public function getParent(): string
     {

@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" target-language="de" datatype="plaintext" original="email.en.xlf">
     <body>
-      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer">
+      <trans-unit id="8jDJmrK" resname="automated_email_dont_answer" xml:space="preserve" approved="yes">
         <source>automated_email_dont_answer</source>
-        <target>Dies ist eine automatisch generierte E-Mail. Bitte antworten Sie nicht, die Adresse wird nicht gelesen.</target>
+        <target state="final">Dies ist eine automatisch generierte E-Mail. Bitte antworten Sie nicht, die Adresse wird nicht gelesen.</target>
       </trans-unit>
       <trans-unit id="pjr3FDv" resname="registration.subject">
         <source>registration.subject</source>

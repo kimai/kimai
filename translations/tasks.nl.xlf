@@ -110,6 +110,74 @@
         <source>task_no_estimation</source>
         <target state="translated">Zonder geschatte tijd</target>
       </trans-unit>
+      <trans-unit id="hZFps4G" resname="board" xml:space="preserve" approved="no">
+        <source>board</source>
+        <target state="translated">Bord</target>
+      </trans-unit>
+      <trans-unit id="aF2ajw." resname="boards" xml:space="preserve" approved="no">
+        <source>boards</source>
+        <target state="translated">Borden</target>
+      </trans-unit>
+      <trans-unit id="TRpwk3n" resname="board.private" xml:space="preserve" approved="no">
+        <source>board.private</source>
+        <target state="translated">Privébord</target>
+      </trans-unit>
+      <trans-unit id="Wq09TUJ" resname="board.empty_state" xml:space="preserve" approved="no">
+        <source>board.empty_state</source>
+        <target state="translated">U heeft ng geen borden. Maak er één om te beginnen.</target>
+      </trans-unit>
+      <trans-unit id="7lJ6pzI" resname="board.limit_reached" xml:space="preserve" approved="no">
+        <source>board.limit_reached</source>
+        <target state="translated">U heeft de limiet van %limit% privéborden bereikt.</target>
+      </trans-unit>
+      <trans-unit id="K.9A2XH" resname="board.close_task" xml:space="preserve" approved="no">
+        <source>board.close_task</source>
+        <target state="translated">Voltooi deze taak?</target>
+      </trans-unit>
+      <trans-unit id="Hj3qdDA" resname="board.delete_confirm" xml:space="preserve" approved="no">
+        <source>board.delete_confirm</source>
+        <target state="translated">Verwijder dit bord?</target>
+      </trans-unit>
+      <trans-unit id="_H1KEu_" resname="board.unassign_user" xml:space="preserve" approved="no">
+        <source>board.unassign_user</source>
+        <target state="translated">Verwijder de toegewezen gebruiker uit deze taak?</target>
+      </trans-unit>
+      <trans-unit id="TuoG.8m" resname="board.remove_task" xml:space="preserve" approved="no">
+        <source>board.remove_task</source>
+        <target state="translated">Verwijder van het bord</target>
+      </trans-unit>
+      <trans-unit id="e3APxiK" resname="board.remove_task_confirm" xml:space="preserve" approved="no">
+        <source>board.remove_task_confirm</source>
+        <target state="translated">Deze taak van het bord verwijderen?</target>
+      </trans-unit>
+      <trans-unit id="wkzeXtZ" resname="board.move_to" xml:space="preserve" approved="no">
+        <source>board.move_to</source>
+        <target state="translated">Verplaatsen naar</target>
+      </trans-unit>
+      <trans-unit id="hhrw1nb" resname="board.columns" xml:space="preserve" approved="no">
+        <source>board.columns</source>
+        <target state="translated">Kolommen</target>
+      </trans-unit>
+      <trans-unit id="9.F1FZS" resname="board.add_column" xml:space="preserve" approved="no">
+        <source>board.add_column</source>
+        <target state="translated">Kolom toevoegen</target>
+      </trans-unit>
+      <trans-unit id="SPiQMlQ" resname="board.column.limit" xml:space="preserve" approved="no">
+        <source>board.column.limit</source>
+        <target state="translated">WIP-limiet</target>
+      </trans-unit>
+      <trans-unit id="ad2nQdr" resname="board.columns_invalid" xml:space="preserve" approved="no">
+        <source>board.columns_invalid</source>
+        <target state="translated">De kolomconfiguratie is ongeldig.</target>
+      </trans-unit>
+      <trans-unit id="lu5uNlv" resname="board.filter" xml:space="preserve" approved="no">
+        <source>board.filter</source>
+        <target state="translated">Taken filteren</target>
+      </trans-unit>
+      <trans-unit id="9rA4ixj" resname="board.only_mine" xml:space="preserve" approved="no">
+        <source>board.only_mine</source>
+        <target state="translated">Alleen mijn taken</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

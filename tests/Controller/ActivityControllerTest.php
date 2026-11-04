@@ -11,13 +11,20 @@ namespace App\Tests\Controller;
 
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
+use App\Entity\ActivityRate;
 use App\Entity\Project;
+use App\Entity\Role;
+use App\Entity\RolePermission;
+use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
 use App\Tests\DataFixtures\ActivityFixtures;
+use App\Tests\DataFixtures\CustomerFixtures;
+use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\ActivityTestMetaFieldSubscriberMock;
+use App\Tests\Mocks\ActivityTestUrlMetaFieldSubscriberMock;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -105,6 +112,55 @@ class ActivityControllerTest extends AbstractControllerBaseTestCase
         $this->assertExcelExportResponse($client, 'kimai-activities_');
     }
 
+    /**
+     * Regression test for GHSA-hr8v-m742-9mph.
+     *
+     * The export is protected by "listing" only. It must apply the same budget rules as the
+     * listing table, which hides those columns unless the budget permissions are granted.
+     */
+    public function testExportHidesBudgetsWithoutPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->grantPermissions(User::ROLE_USER, 'TEST_ACTIVITY_LISTING_ONLY', ['view_activity']);
+
+        $em = $this->getEntityManager();
+        /** @var Activity $entity */
+        $entity = $em->getRepository(Activity::class)->find(1);
+        $entity->setBudget(123456.78);
+        $entity->setTimeBudget(987654);
+        $entity->setBudgetType('month');
+        $em->persist($entity);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/admin/activity/export');
+        $content = $this->getExcelExportContent($client);
+
+        self::assertStringNotContainsString('123456.78', $content);
+        self::assertStringNotContainsString('987654', $content);
+        self::assertStringNotContainsString('month', $content);
+    }
+
+    public function testExportShowsBudgetsWithPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $em = $this->getEntityManager();
+        /** @var Activity $entity */
+        $entity = $em->getRepository(Activity::class)->find(1);
+        $entity->setBudget(123456.78);
+        $entity->setTimeBudget(987654);
+        $entity->setBudgetType('month');
+        $em->persist($entity);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/admin/activity/export');
+        $content = $this->getExcelExportContent($client);
+
+        self::assertStringContainsString('123456.78', $content);
+        self::assertStringContainsString('987654', $content);
+        self::assertStringContainsString('month', $content);
+    }
+
     public function testExportActionWithSearchTermQuery(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
@@ -158,6 +214,49 @@ class ActivityControllerTest extends AbstractControllerBaseTestCase
         $this->assertDetailsPage($client);
     }
 
+    /**
+     * @return array<int, array<string>>
+     */
+    public static function getUrlMetaFieldValues(): array
+    {
+        return [
+            ['javascript:alert(1)', 'href="javascript:alert(1)"'],
+            ['JavaScript://%0Aalert(1)', 'href="JavaScript://%0Aalert(1)"'],
+            ['data:text/html,test', 'href="data:text/html,test"'],
+            ['https://www.kimai.org', '<a href="https://www.kimai.org" target="_blank" rel="noopener noreferrer">https://www.kimai.org</a>'],
+        ];
+    }
+
+    /**
+     * Values might have been stored before validation was in place (or by plugins without URL constraint).
+     */
+    #[DataProvider('getUrlMetaFieldValues')]
+    public function testDetailsActionRendersOnlySafeUrlMetaFieldsAsLink(string $value, string $html): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new ActivityTestUrlMetaFieldSubscriberMock());
+
+        $em = $this->getEntityManager();
+        /** @var Activity $activity */
+        $activity = $em->getRepository(Activity::class)->find(1);
+        $activity->setMetaField((new ActivityMeta())->setName('homepage')->setValue($value)->setIsVisible(true));
+        $em->persist($activity);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/admin/activity/1/details');
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        self::assertStringContainsString($value, $content);
+
+        if (str_starts_with($value, 'https://')) {
+            self::assertStringContainsString($html, $content);
+        } else {
+            self::assertStringNotContainsString($html, $content);
+        }
+    }
+
     private function assertDetailsPage(HttpKernelBrowser $client)
     {
         self::assertHasProgressbar($client);
@@ -189,6 +288,54 @@ class ActivityControllerTest extends AbstractControllerBaseTestCase
         $node = $client->getCrawler()->filter('div.card#activity_rates_box table.dataTable tbody tr:not(.summary)');
         self::assertEquals(1, $node->count());
         self::assertStringContainsString('123.45', $node->text(null, true));
+    }
+
+    public function testEditRateActionDeniesForeignRate(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $project = $this->getEntityManager()->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $project);
+
+        $activity = $this->importFixture((new ActivityFixtures(1))->setProjects([$project]))[0];
+        $rate = new ActivityRate();
+        $rate->setActivity($activity);
+        $rate->setRate(123.45);
+
+        $em = $this->getEntityManager();
+        $em->persist($rate);
+        $em->flush();
+
+        $this->request($client, '/admin/activity/1/rate/' . $rate->getId());
+
+        $this->assertAccessDenied($client);
+    }
+
+    public function testCreateWithProjectActionDeniesUserWithoutEditProjectPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
+
+        $customer = $this->importFixture(new CustomerFixtures(1))[0];
+        $project = $this->importFixture((new ProjectFixtures(1))->setCustomers([$customer]))[0];
+
+        $em = $this->getEntityManager();
+
+        $role = (new Role())->setName('TEST_CREATE_ACTIVITY_ONLY');
+        $permission = (new RolePermission())->setRole($role)->setPermission('create_activity')->setAllowed(true);
+
+        $roleName = $role->getName();
+        self::assertNotNull($roleName);
+        $user->addRole($roleName);
+
+        $em->persist($role);
+        $em->persist($permission);
+        $em->persist($user);
+        $em->flush();
+
+        $this->request($client, '/admin/activity/create/' . $project->getId());
+
+        $this->assertAccessDenied($client);
     }
 
     public function testCreateAction(): void
@@ -297,20 +444,109 @@ class ActivityControllerTest extends AbstractControllerBaseTestCase
         self::assertEquals(2, $activity->getTeams()->count());
     }
 
-    public function testCreateDefaultTeamAction(): void
+    public function testCreateTeamActionIsSecure(): void
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/admin/activity/1/team-create');
+    }
+
+    /**
+     * "create_team" alone is not enough, the caller also has to be allowed to manage the
+     * permissions of the activity the team is created for.
+     */
+    public function testCreateTeamActionNeedsActivityPermissions(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->grantPermissions(User::ROLE_USER, 'TEST_ACTIVITY_TEAM_CREATE_ONLY', ['create_team', 'view_activity']);
+
+        $this->request($client, '/admin/activity/1/team-create');
+        $this->assertAccessDenied($client);
+    }
+
+    /**
+     * Regression test for GHSA-hvq2-5gh2-rgvv.
+     *
+     * The endpoint once looked up a team by the activity name and reused it, which made the
+     * caller a teamlead of an unrelated team that happened to share that name. A team is now
+     * always created from scratch, so an existing team with the same name must stay untouched.
+     */
+    public function testCreateTeamActionDoesNotTouchForeignTeamWithSameName(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/activity/1/details');
-        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-body');
-        self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text());
+        $em = $this->getEntityManager();
 
-        $this->request($client, '/admin/activity/1/create_team');
-        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-title');
-        self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text());
-        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-body table tbody tr');
-        self::assertEquals(1, $node->count());
+        /** @var Activity $activity */
+        $activity = $em->getRepository(Activity::class)->find(1);
+        $name = $activity->getName();
+        self::assertIsString($name);
+
+        // a pre-existing team with the very same name, led by somebody else
+        $victimId = $this->getUserByRole(User::ROLE_USER)->getId();
+        $foreignTeam = new Team($name);
+        $foreignTeam->addTeamlead($this->getUserByRole(User::ROLE_USER));
+        $em->persist($foreignTeam);
+        $em->flush();
+
+        $foreignTeamId = $foreignTeam->getId();
+        self::assertIsInt($foreignTeamId);
+
+        $this->assertAccessIsGranted($client, '/admin/activity/1/team-create');
+        $form = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
+        $client->submit($form);
+
+        // the team name is unique, so the collision surfaces as a validation error
+        self::assertFalse($client->getResponse()->isRedirect());
+
+        $em->clear();
+
+        $reloaded = $em->getRepository(Team::class)->find($foreignTeamId);
+        self::assertInstanceOf(Team::class, $reloaded);
+
+        $memberIds = array_map(static function (User $user) { return $user->getId(); }, $reloaded->getUsers());
+        self::assertEquals([$victimId], $memberIds, 'The foreign team must not have gained a member');
+
+        $bound = [];
+        foreach ($reloaded->getActivities() as $entity) {
+            $bound[] = $entity->getId();
+        }
+        self::assertEquals([], $bound, 'The foreign team must not have been bound to the activity');
+
+        /** @var Activity $reloadedActivity */
+        $reloadedActivity = $em->getRepository(Activity::class)->find(1);
+        self::assertEquals(0, $reloadedActivity->getTeams()->count());
+    }
+
+    public function testCreateTeamAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $em = $this->getEntityManager();
+
+        /** @var Activity $activity */
+        $activity = $em->getRepository(Activity::class)->find(1);
+        self::assertEquals(0, $activity->getTeams()->count());
+
+        $this->assertAccessIsGranted($client, '/admin/activity/1/team-create');
+        $form = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
+        self::assertEquals('Test', $form->get('team_edit_form[name]')->getValue());
+
+        $client->submit($form);
+
+        $location = $this->assertIsModalRedirect($client, '/admin/activity/1/details');
+        $this->requestPure($client, $location);
+        $this->assertHasFlashSuccess($client);
+
+        $em->clear();
+
+        /** @var Activity $activity */
+        $activity = $em->getRepository(Activity::class)->find(1);
+        self::assertEquals(1, $activity->getTeams()->count());
+
+        $team = $em->getRepository(Team::class)->findOneBy(['name' => 'Test']);
+        self::assertInstanceOf(Team::class, $team);
+        self::assertTrue($team->hasActivity($activity));
+
+        $teamleads = $team->getTeamleads();
+        self::assertCount(1, $teamleads);
+        self::assertEquals($this->getUserByRole(User::ROLE_ADMIN)->getId(), $teamleads[0]->getId());
     }
 
     public function testDeleteAction(): void

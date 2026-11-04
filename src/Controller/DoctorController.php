@@ -14,10 +14,10 @@ use App\Utils\FileHelper;
 use App\Utils\PageSetup;
 use App\Utils\ReleaseVersion;
 use Composer\InstalledVersions;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Csrf\CsrfToken;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
@@ -27,41 +27,44 @@ use Symfony\Contracts\Cache\ItemInterface;
 final class DoctorController extends AbstractController
 {
     /**
-     * Required PHP extensions for Kimai.
-     */
-    public const REQUIRED_EXTENSIONS = [
-        'intl',
-        'json',
-        'mbstring',
-        'pdo',
-        'xml',
-        'xsl',
-        'zip',
-    ];
-
-    /**
      * Directories which need to be writable by the webserver.
      */
     public const DIRECTORIES_WRITABLE = [
         'var/cache/',
         'var/log/',
+        'var/packages/',
     ];
 
     public function __construct(private string $projectDirectory, private string $kernelEnvironment, private FileHelper $fileHelper, private CacheInterface $cache)
     {
     }
 
-    #[Route(path: '/flush-log/{token}', name: 'doctor_flush_log', methods: ['GET'])]
-    #[IsGranted('system_configuration')]
-    public function deleteLogfileAction(string $token, CsrfTokenManagerInterface $csrfTokenManager): Response
+    /**
+     * Emptying the logfile changes data, so it must not be possible with a GET request.
+     * The form carries the CSRF token in its body instead of the URL.
+     *
+     * @return FormInterface<mixed>
+     */
+    private function createFlushLogForm(): FormInterface
     {
-        if (!$csrfTokenManager->isTokenValid(new CsrfToken('doctor.flush_log', $token))) {
+        return $this->createFormBuilder(null, [
+            'action' => $this->generateUrl('doctor_flush_log'),
+            'method' => 'POST',
+        ])->getForm();
+    }
+
+    #[Route(path: '/flush-log', name: 'doctor_flush_log', methods: ['POST'])]
+    #[IsGranted('system_configuration')]
+    public function deleteLogfileAction(Request $request): Response
+    {
+        $form = $this->createFlushLogForm();
+        $form->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
             $this->flashError('action.csrf.error');
 
             return $this->redirectToRoute('doctor');
         }
-
-        $csrfTokenManager->refreshToken('doctor.flush_log');
 
         $logfile = $this->getLogFilename();
 
@@ -104,6 +107,7 @@ final class DoctorController extends AbstractController
             'extensions' => $this->getLoadedExtensions(),
             'directories' => $this->getFilePermissions(),
             'log_delete' => $canDeleteLogfile,
+            'log_delete_form' => $canDeleteLogfile ? $this->createFlushLogForm()->createView() : null,
             'logs' => $this->getLog(),
             'logLines' => $logLines,
             'logSize' => $this->getLogSize(),
@@ -114,19 +118,21 @@ final class DoctorController extends AbstractController
     }
 
     /**
-     * @return array{enabled: bool, status: false|array<mixed>}
+     * @return array{unknown: bool, enabled: bool, status: false|array<mixed>}
      */
     private function getOpcacheConfiguration(): array
     {
-        $status = \function_exists('opcache_get_status') ? opcache_get_status() : false;
+        $known = \function_exists('opcache_get_status');
+        $status = $known ? opcache_get_status() : false;
 
         $enabled = \is_array($status) && $status['opcache_enabled'];
 
-        if ($enabled && \array_key_exists('scripts', $status)) {
+        if ($enabled && \is_array($status) && \array_key_exists('scripts', $status)) {
             unset($status['scripts']);
         }
 
         return [
+            'unknown' => !$known,
             'enabled' => $enabled,
             'status' => $status,
         ];
@@ -168,9 +174,27 @@ final class DoctorController extends AbstractController
      */
     private function getLoadedExtensions(): array
     {
+        $json = file_get_contents(__DIR__ . '/../../composer.json');
+        if ($json === false) {
+            return ['Failed loading composer.json' => false];
+        }
+
+        $composer = json_decode($json, true);
+        if (!\is_array($composer)) {
+            return ['Failed parsing composer.json' => false];
+        }
+
+        if (!\array_key_exists('require', $composer)) {
+            return ['Missing requirements in composer.json' => false];
+        }
+
         $results = [];
 
-        foreach (self::REQUIRED_EXTENSIONS as $extName) {
+        foreach ($composer['require'] as $name => $version) {
+            if (!str_starts_with($name, 'ext-')) {
+                continue;
+            }
+            $extName = str_replace('ext-', '', $name);
             $results[$extName] = false;
             if (\extension_loaded($extName)) {
                 $results[$extName] = true;

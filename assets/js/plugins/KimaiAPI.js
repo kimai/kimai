@@ -24,6 +24,29 @@ export default class KimaiAPI extends KimaiPlugin {
         return headers;
     }
 
+    /**
+     * Passes the parsed response body to the success callback.
+     * A 204 (No Content) response calls the success callback without an argument.
+     *
+     * @param {Response} response
+     * @param {function} callbackSuccess
+     * @param {function} callbackError
+     * @private
+     */
+    _handleResponse(response, callbackSuccess, callbackError) {
+        if (response.status === 204) {
+            callbackSuccess();
+
+            return;
+        }
+
+        response.json().then((json) => {
+            callbackSuccess(json);
+        }).catch((error) => {
+            callbackError(error);
+        });
+    }
+
     get(url, data, callbackSuccess, callbackError) {
         if (data !== undefined) {
             const params = (new URLSearchParams(data)).toString();
@@ -42,9 +65,7 @@ export default class KimaiAPI extends KimaiPlugin {
             method: 'GET',
             headers: this._headers()
         }).then((response) => {
-            response.json().then((json) => {
-                callbackSuccess(json);
-            });
+            this._handleResponse(response, callbackSuccess, callbackError);
         }).catch((error) => {
             callbackError(error);
         });
@@ -62,9 +83,7 @@ export default class KimaiAPI extends KimaiPlugin {
             body: this._parseData(data),
             headers: this._headers()
         }).then((response) => {
-            response.json().then((json) => {
-                callbackSuccess(json);
-            });
+            this._handleResponse(response, callbackSuccess, callbackError);
         }).catch((error) => {
             callbackError(error);
         });
@@ -82,13 +101,7 @@ export default class KimaiAPI extends KimaiPlugin {
             body: this._parseData(data),
             headers: this._headers()
         }).then((response) => {
-            if (response.statusCode === 204) {
-                callbackSuccess();
-            } else {
-                response.json().then((json) => {
-                    callbackSuccess(json);
-                });
-            }
+            this._handleResponse(response, callbackSuccess, callbackError);
         }).catch((error) => {
             callbackError(error);
         });
@@ -168,7 +181,7 @@ export default class KimaiAPI extends KimaiPlugin {
             });
         } else {
             response.text().then(() => {
-                const resultError = '[' + response.statusCode + '] ' + response.statusText;
+                const resultError = '[' + response.status + '] ' + response.statusText;
                 this.getPlugin('alert').error(message, resultError);
             });
         }

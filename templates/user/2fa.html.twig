@@ -4,23 +4,26 @@
 {% block form_body %}
     <div class="card-body">
         <div class="row mb-3">
-            <p>
-                {{ 'profile.2fa_intro'|trans }}
-            </p>
-            <p>
-                <img onclick="document.getElementById('totp_secret').classList.toggle('d-none');" data-toggle="tooltip" title="Click to show code" alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" src="{{ qr_code.dataUri }}" />
-                <span id="totp_secret" style="display: block" class="d-none">{{ secret }}</span>
-            </p>
-            {% if not user.totpAuthenticationEnabled %}
+            {% if user.totpAuthenticationEnabled %}
+                <strong><i class="{{ 'success'|icon(true) }} text-success"></i> {{ 'activated'|trans }}</strong>
+            {% elseif form is not null %}
+                <p>
+                    {{ 'profile.2fa_intro'|trans }}
+                </p>
+                <p>
+                    <img onclick="document.getElementById('totp_secret').classList.toggle('d-none');" data-toggle="tooltip" title="Click to show code" alt="TOTP QR Code" style="max-width: 200px; max-height: 200px;" src="{{ qr_code.dataUri }}" />
+                    <span id="totp_secret" style="display: block" class="d-none">{{ secret }}</span>
+                </p>
                 {{ form_start(form, {'attr': {'id': 'user_two_factor_form'}}) }}
                 <p>{{ 'profile.2fa_confirmation'|trans }}</p>
                 {{ form_widget(form) }}
                 {{ form_end(form) }}
             {% else %}
-                <strong><i class="{{ 'success'|icon(true) }} text-success"></i> {{ 'activated'|trans }}</strong>
+                <strong>{{ 'deactivated'|trans }}</strong>
             {% endif %}
         </div>
     </div>
+    {% if user.totpAuthenticationEnabled or form is not null %}
     <div class="card-footer">
         {% if user.totpAuthenticationEnabled %}
             {{ form_start(deactivate, {'attr': {'id': 'user_two_factor_form'}}) }}
@@ -30,12 +33,13 @@
             <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary" id="user_two_factor_button" />
         {% endif %}
     </div>
+    {% endif %}
 
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {% if not user.totpAuthenticationEnabled %}
+    {% if form is not null %}
     <script>
         document.getElementById('user_two_factor_button').addEventListener('click', function(){
             document.getElementById('user_two_factor_form').submit();

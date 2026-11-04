@@ -38,6 +38,20 @@ final class DateRangeType extends AbstractType
     {
     }
 
+    public static function toQueryString(DateRange $dateRange): string
+    {
+        if ($dateRange->getBegin() === null || $dateRange->getEnd() === null) {
+            return '';
+        }
+
+        return self::formatQueryString($dateRange->getBegin(), $dateRange->getEnd());
+    }
+
+    public static function formatQueryString(\DateTimeInterface $begin, \DateTimeInterface $end): string
+    {
+        return $begin->format('Y-m-d') . DateRangeType::DATE_SPACER . $end->format('Y-m-d');
+    }
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

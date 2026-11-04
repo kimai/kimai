@@ -32,13 +32,32 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% if download is not null %}
-    <script type="text/javascript">
+    <div style="display: none" id="status-token" data-value="{{ csrf_token('invoice.status') }}"></div>
+    <script>
+        function kimaiInvoiceStatus(link)
+        {
+            const form = document.createElement('form');
+            form.method = 'post';
+            form.action = link.dataset['href'];
+
+            const token = document.createElement('input');
+            token.type = 'hidden';
+            token.name = '_token';
+            token.value = document.getElementById('status-token').dataset['value'];
+            form.appendChild(token);
+
+            document.body.appendChild(form);
+            form.submit();
+
+            return false;
+        }
+
+        {% if download is not null %}
         document.addEventListener('kimai.initialized', function() {
             location.href = '{{ path('admin_invoice_download', {'id': download.id}) }}';
         });
+        {% endif %}
     </script>
-    {% endif %}
 {% endblock %}
 
 {% macro invoice_status(invoice) %}

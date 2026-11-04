@@ -24,8 +24,9 @@
 
 # Source base, one of: fpm, apache
 ARG BASE="fpm"
-# Kimai branch/tag to run
-ARG KIMAI="main"
+# Kimai version label (used for OCI labels and the KIMAI env var inside the image).
+# The actual source is read from the local build context, not fetched by version.
+ARG KIMAI="dev"
 # Timezone for images
 ARG TIMEZONE="Europe/Berlin"
 
@@ -218,20 +219,6 @@ COPY --from=php-ext-intl /usr/local/lib/php/extensions/no-debug-non-zts-20230831
 COPY --from=php-ext-opcache /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini  /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
 ###########################
-# fetch Kimai sources
-###########################
-
-FROM alpine:latest AS git-prod
-ARG KIMAI
-ARG TIMEZONE
-# the convention in the Kimai repository is: tags are always version numbers, branch names always start with a letter
-# if the KIMAI variable starts with a number (e.g. 2.24.0) we assume its a tag, otherwise its a branch
-RUN [[ $KIMAI =~ ^[0-9] ]] && export REF='tags' || export REF='heads' && \
-    wget -O "/opt/kimai.tar.gz" "https://github.com/kimai/kimai/archive/refs/${REF}/${KIMAI}.tar.gz" && \
-    tar -xpzf /opt/kimai.tar.gz -C /opt/ && \
-    mv /opt/kimai-${KIMAI} /opt/kimai
-
-###########################
 # global base build
 ###########################
 
@@ -260,9 +247,13 @@ COPY .docker/dbtest.php /dbtest.php
 COPY .docker/entrypoint.sh /entrypoint.sh
 
 ENV DATABASE_URL="mysql://kimai:kimai@127.0.0.1:3306/kimai?charset=utf8mb4&serverVersion=8.3"
-ENV APP_SECRET=change_this_to_something_unique
+# APP_SECRET is intentionally not set here. The entrypoint resolves it (user-provided
+# via -e APP_SECRET=... wins; otherwise a unique value is generated and persisted to
+# the var/data volume and mirrored into .env.local). Setting it as a Dockerfile ENV
+# would create a real env var that always wins over .env*, breaking `docker exec`
+# console invocations.
 # The default container name for nginx is nginx
-ENV TRUSTED_PROXIES=nginx,localhost,127.0.0.1
+ENV TRUSTED_PROXIES=127.0.0.1
 ENV MAILER_FROM=kimai@example.com
 ENV MAILER_URL=null://localhost
 ENV ADMINPASS=
@@ -283,36 +274,37 @@ CMD [ "/entrypoint.sh" ]
 
 # development build
 FROM base AS dev
-# copy kimai develop source
-COPY --from=git-prod --chown=www-data:www-data /opt/kimai /opt/kimai
+# copy kimai source from local build context (see .dockerignore for what is excluded)
+COPY --chown=www-data:www-data . /opt/kimai
 COPY .docker /assets
 # do the composer deps installation
 RUN \
     export COMPOSER_HOME=/composer && \
     composer --no-ansi install --working-dir=/opt/kimai --optimize-autoloader && \
-    composer --no-ansi clearcache && \
     composer --no-ansi require --working-dir=/opt/kimai laminas/laminas-ldap && \
+    composer --no-ansi clearcache && \
     cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini && \
     chown -R www-data:www-data /opt/kimai /usr/local/etc/php/php.ini && \
-    mkdir -p /opt/kimai/var/logs && chmod 777 /opt/kimai/var/logs && \
+    mkdir -p /opt/kimai/var/log && chmod 777 /opt/kimai/var/log && \
     sed "s/128M/-1/g" /usr/local/etc/php/php.ini-development > /opt/kimai/php-cli.ini && \
     sed -i "s/env php/env -S php -c \/opt\/kimai\/php-cli.ini/g" /opt/kimai/bin/console && \
-    /opt/kimai/bin/console kimai:version | awk '{print $2}' > /opt/kimai/version.txt
+    /opt/kimai/bin/console kimai:version | awk '{print $2}' > /opt/kimai/version.txt && \
+    rm -rf /opt/kimai/var/cache/*
 ENV APP_ENV=dev
 ENV DATABASE_URL=
 ENV memory_limit=512M
 
 # the "prod" stage (production build) is configured as last stage in the file, as this is the default target in BuildKit
 FROM base AS prod
-# copy kimai production source
-COPY --from=git-prod --chown=www-data:www-data /opt/kimai /opt/kimai
+# copy kimai source from local build context (see .dockerignore for what is excluded)
+COPY --chown=www-data:www-data . /opt/kimai
 COPY .docker /assets
 # do the composer deps installation
 RUN \
     export COMPOSER_HOME=/composer && \
     composer --no-ansi install --working-dir=/opt/kimai --no-dev --optimize-autoloader && \
-    composer --no-ansi clearcache && \
     composer --no-ansi require --update-no-dev --working-dir=/opt/kimai laminas/laminas-ldap && \
+    composer --no-ansi clearcache && \
     cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini && \
     sed -i "s/expose_php = On/expose_php = Off/g" /usr/local/etc/php/php.ini && \
     sed -i "s/;opcache.enable=1/opcache.enable=1/g" /usr/local/etc/php/php.ini && \
@@ -321,10 +313,11 @@ RUN \
     sed -i "s/;opcache.max_accelerated_files=10000/opcache.max_accelerated_files=100000/g" /usr/local/etc/php/php.ini && \
     sed -i "s/opcache.validate_timestamps=1/opcache.validate_timestamps=0/g" /usr/local/etc/php/php.ini && \
     sed -i "s/session.gc_maxlifetime = 1440/session.gc_maxlifetime = 604800/g" /usr/local/etc/php/php.ini && \
-    mkdir -p /opt/kimai/var/logs && chmod 777 /opt/kimai/var/logs && \
+    mkdir -p /opt/kimai/var/log && chmod 777 /opt/kimai/var/log && \
     sed "s/128M/-1/g" /usr/local/etc/php/php.ini-development > /opt/kimai/php-cli.ini && \
     chown -R www-data:www-data /opt/kimai /usr/local/etc/php/php.ini && \
-    /opt/kimai/bin/console kimai:version | awk '{print $2}' > /opt/kimai/version.txt
+    /opt/kimai/bin/console kimai:version | awk '{print $2}' > /opt/kimai/version.txt && \
+    rm -rf /opt/kimai/var/cache/*
 ENV APP_ENV=prod
 ENV DATABASE_URL=
 ENV memory_limit=512M

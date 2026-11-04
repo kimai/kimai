@@ -94,11 +94,13 @@ class ExtensionsTest extends TestCase
 
     public function testDocuLink(): void
     {
+        $query = '?utm_source=kimai&utm_medium=app';
+
         $data = [
-            'timesheet.html' => 'https://www.kimai.org/documentation/timesheet.html',
-            'timesheet.html#duration-format' => 'https://www.kimai.org/documentation/timesheet.html#duration-format',
-            'invoice.html' => 'https://www.kimai.org/documentation/invoice.html',
-            '' => 'https://www.kimai.org/documentation/',
+            'timesheet.html' => 'https://www.kimai.org/documentation/timesheet.html' . $query,
+            'timesheet.html#duration-format' => 'https://www.kimai.org/documentation/timesheet.html' . $query . '#duration-format',
+            'invoice.html' => 'https://www.kimai.org/documentation/invoice.html' . $query,
+            '' => 'https://www.kimai.org/documentation/' . $query,
         ];
 
         $sut = $this->getSut();
@@ -106,6 +108,11 @@ class ExtensionsTest extends TestCase
             $result = $sut->documentationLink($input);
             self::assertEquals($expected, $result);
         }
+
+        self::assertEquals(
+            'https://www.kimai.org/documentation/timesheet.html?utm_source=kimai&utm_medium=float-help',
+            $sut->documentationLink('timesheet.html', 'float-help')
+        );
     }
 
     public function testGetClassName(): void

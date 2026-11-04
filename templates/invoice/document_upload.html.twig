@@ -74,3 +74,12 @@
         {% endembed %}
     {% endif %}
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        document.addEventListener('kimai.initialized', function() {
+            KimaiReloadPageWidget.create('kimai.invoiceDocumentUpdate', true);
+        });
+    </script>
+{% endblock %}

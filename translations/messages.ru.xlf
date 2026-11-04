@@ -262,9 +262,9 @@
         <source>company</source>
         <target>Название компании</target>
       </trans-unit>
-      <trans-unit id="fFErSLq" resname="vat">
+      <trans-unit id="fFErSLq" resname="vat" xml:space="preserve">
         <source>vat</source>
-        <target>Налог НДС</target>
+        <target state="translated">НДС</target>
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact" approved="yes">
         <source>Contact</source>
@@ -306,9 +306,9 @@
         <source>alias</source>
         <target>Имя</target>
       </trans-unit>
-      <trans-unit id="qvIyBkY" resname="title">
+      <trans-unit id="qvIyBkY" resname="title" xml:space="preserve">
         <source>title</source>
-        <target>Заголовок</target>
+        <target state="translated">Заголовок</target>
       </trans-unit>
       <trans-unit id="h7voece" resname="avatar">
         <source>avatar</source>
@@ -1052,11 +1052,11 @@
       </trans-unit>
       <trans-unit id="tvV0NhL" resname="delete_warning.short_stats" xml:space="preserve">
         <source>delete_warning.short_stats</source>
-        <target state="needs-translation">В настоящее время существует %records% записей учета времени, общая длительность которых составляет %duration%.</target>
+        <target state="translated">В настоящее время существует %records% записей времени, общая продолжительность которых составляет %duration%.</target>
       </trans-unit>
       <trans-unit id="W92QGbY" resname="export.warn_result_amount" xml:space="preserve">
         <source>export.warn_result_amount</source>
-        <target state="needs-translation">Ваш поиск дал %count% результатов. Если экспорт не удается, вам необходимо уменьшить область поиска.</target>
+        <target state="translated">Ваш поиск даёт %count% результатов. Если экспорт не удастся, вам придётся сузить поиск.</target>
       </trans-unit>
       <trans-unit id="vWJPpYU" resname="stats.percentUsedLeft_month">
         <source>stats.percentUsedLeft_month</source>
@@ -2081,6 +2081,142 @@
       <trans-unit id="Rz4ZiyB" resname="count_as_expected_time_help" xml:space="preserve">
         <source>count_as_expected_time_help</source>
         <target state="translated">При активации, %type% учтётся в рабочие часы в расчёте ожидаемых дневных часов. При отключении, ожидаемые часы для этих дней будут обнулены. Обе настройки сохраняют нейтральный баланс, но по-разному влияют на месячные итоги.</target>
+      </trans-unit>
+      <trans-unit id="DAMFhpR" resname="lock" xml:space="preserve">
+        <source>lock</source>
+        <target state="translated">Заблокировать</target>
+      </trans-unit>
+      <trans-unit id="LfO_otF" resname="reopen" xml:space="preserve">
+        <source>reopen</source>
+        <target state="translated">Открыть снова</target>
+      </trans-unit>
+      <trans-unit id="zO0oxtw" resname="start" xml:space="preserve">
+        <source>start</source>
+        <target state="translated">Старт</target>
+      </trans-unit>
+      <trans-unit id="WrNTzd7" resname="assign_timesheets" xml:space="preserve">
+        <source>assign_timesheets</source>
+        <target state="translated">Назначить учёт времени</target>
+      </trans-unit>
+      <trans-unit id="pNRR7CN" resname="release" xml:space="preserve">
+        <source>release</source>
+        <target state="translated">Релиз</target>
+      </trans-unit>
+      <trans-unit id="kwC00lZ" resname="assign" xml:space="preserve">
+        <source>assign</source>
+        <target state="translated">Назначить</target>
+      </trans-unit>
+      <trans-unit id="2ajb.ZU" resname="assign_self" xml:space="preserve">
+        <source>assign_self</source>
+        <target state="translated">Назначить мне</target>
+      </trans-unit>
+      <trans-unit id="TTL.5NF" resname="status.todo" xml:space="preserve">
+        <source>status.todo</source>
+        <target state="translated">Сделать</target>
+      </trans-unit>
+      <trans-unit id="j_0FPm3" resname="status.waiting" xml:space="preserve">
+        <source>status.waiting</source>
+        <target state="translated">Ожидание</target>
+      </trans-unit>
+      <trans-unit id="QdfOAGZ" resname="status.done" xml:space="preserve">
+        <source>status.done</source>
+        <target state="translated">Готово</target>
+      </trans-unit>
+      <trans-unit id="G8ZoGoA" resname="api_token_qr_hint" xml:space="preserve">
+        <source>api_token_qr_hint</source>
+        <target state="translated">Вы можете отсканировать этот QR-код в мобильном приложении, чтобы одним шагом настроить URL-адрес сервера и токен. Не передавайте это изображение другим лицам: оно содержит ваш API-токен.</target>
+      </trans-unit>
+      <trans-unit id="nlJ2pW2" resname="invoice_email" xml:space="preserve">
+        <source>invoice_email</source>
+        <target state="translated">Почта для оплаты</target>
+      </trans-unit>
+      <trans-unit id="fxkWjGQ" resname="password_current">
+        <source>password_current</source>
+        <target state="translated">Текущий пароль</target>
+      </trans-unit>
+      <trans-unit id="k8F51oP" resname="project_locked_until">
+        <source>project_locked_until</source>
+        <target state="translated">Время заблокировано до</target>
+      </trans-unit>
+      <trans-unit id="C_ZcSX2" resname="help.project_start">
+        <source>help.project_start</source>
+        <target state="translated">Время до этой даты не может быть записано.</target>
+      </trans-unit>
+      <trans-unit id="9A.4S.i" resname="help.project_end">
+        <source>help.project_end</source>
+        <target state="translated">Время после этой даты не может быть записано.</target>
+      </trans-unit>
+      <trans-unit id="ktmsI7g" resname="help.project_locked_until">
+        <source>help.project_locked_until</source>
+        <target state="translated">Время до этой даты включительно не может быть ни создано, ни изменено.</target>
+      </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target state="translated">Аутентификация</target>
+      </trans-unit>
+      <trans-unit id="LQXTGjm" resname="authentication.help">
+        <source>authentication.help</source>
+        <target state="translated">Переключение на «Internal» удаляет пароль. После этого задайте новый пароль или используйте «Забыли пароль».</target>
+      </trans-unit>
+      <trans-unit id="NvQBTxG" resname="authentication.internal">
+        <source>authentication.internal</source>
+        <target state="translated">Internal</target>
+      </trans-unit>
+      <trans-unit id="DI8vH1J" resname="copy_to_clipboard">
+        <source>copy_to_clipboard</source>
+        <target state="translated">Копировать в буфер обмена</target>
+      </trans-unit>
+      <trans-unit id="LHDhK3o" resname="key">
+        <source>key</source>
+        <target state="translated">Внутреннее название</target>
+      </trans-unit>
+      <trans-unit id="Q3gmLM6" resname="key_help">
+        <source>key_help</source>
+        <target state="translated">Уникальное техническое имя, которое нельзя изменить позже. Допускаются строчные буквы (a-z), цифры (0-9) и символ подчёркивания (_).</target>
+      </trans-unit>
+      <trans-unit id="netluHi" resname="approval">
+        <source>approval</source>
+        <target state="translated">Утверждение</target>
+      </trans-unit>
+      <trans-unit id="9SkAbbx" resname="approval_required">
+        <source>approval_required</source>
+        <target state="translated">Требуется утверждение</target>
+      </trans-unit>
+      <trans-unit id="7dLJTuj" resname="fill_day">
+        <source>fill_day</source>
+        <target state="translated">Заполняет ожидаемое рабочее время</target>
+      </trans-unit>
+      <trans-unit id="O6IGTDm" resname="Absence types">
+        <source>Absence types</source>
+        <target state="translated">Типы отсутствия</target>
+      </trans-unit>
+      <trans-unit id="2mFc5.v" resname="absence_type.category.help">
+        <source>absence_type.category.help</source>
+        <target state="translated">Категория определяет, как рассчитываются записи (например, по дням отпуска или по счёту рабочего времени) и где отображается тип. Её нельзя изменить позже.</target>
+      </trans-unit>
+      <trans-unit id="4YKqwfo" resname="absence_type.half_day">
+        <source>absence_type.half_day</source>
+        <target state="translated">Разрешить половину дня</target>
+      </trans-unit>
+      <trans-unit id="ukwjp0C" resname="absence_type.date_range">
+        <source>absence_type.date_range</source>
+        <target state="translated">Разрешить запись на несколько дней</target>
+      </trans-unit>
+      <trans-unit id="j6S5GDf" resname="absence_type.duration">
+        <source>absence_type.duration</source>
+        <target state="translated">Разрешить ввод длительности</target>
+      </trans-unit>
+      <trans-unit id="E7XVJxv" resname="absence_type.duration_required">
+        <source>absence_type.duration_required</source>
+        <target state="translated">Длительность — обязательное поле</target>
+      </trans-unit>
+      <trans-unit id="W_6BSlE" resname="absence_type.max_days">
+        <source>absence_type.max_days</source>
+        <target state="translated">Максимальное количество дней на одну запись</target>
+      </trans-unit>
+      <trans-unit id="_cQHZDu" resname="fill_day.help">
+        <source>fill_day.help</source>
+        <target state="translated">Если длительность не указана, используется оставшееся ожидаемое рабочее время дня.</target>
       </trans-unit>
     </body>
   </file>

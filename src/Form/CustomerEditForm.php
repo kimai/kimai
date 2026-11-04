@@ -14,6 +14,7 @@ use App\Form\Type\InvoiceTemplateType;
 use App\Form\Type\MailType;
 use App\Form\Type\TeamType;
 use App\Form\Type\TimezoneType;
+use App\Form\Type\UserLanguageType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
@@ -48,7 +49,9 @@ class CustomerEditForm extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'name',
                 'attr' => [
-                    'autofocus' => 'autofocus'
+                    'autofocus' => 'autofocus',
+                    // deactivated: browser use utf16 to calculate maxlength, which can interfere with backend validation
+                    // 'maxlength' => 150,
                 ],
             ])
             ->add('number', TextType::class, [
@@ -109,6 +112,10 @@ class CustomerEditForm extends AbstractType
             ->add('country', CountryType::class, [
                 'label' => 'country',
             ])
+            ->add('language', UserLanguageType::class, [
+                'label' => 'language',
+                'required' => true,
+            ])
             ->add('currency', CurrencyType::class, [
                 'label' => 'currency',
             ])
@@ -148,6 +155,10 @@ class CustomerEditForm extends AbstractType
             ])
             ->add('invoiceTemplate', InvoiceTemplateType::class, [
                 'help' => 'help.invoiceTemplate_customer',
+                'required' => false,
+            ])
+            ->add('invoiceEmail', MailType::class, [
+                'label' => 'invoice_email',
                 'required' => false,
             ])
             ->add('buyerReference', TextType::class, [

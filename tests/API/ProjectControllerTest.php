@@ -12,15 +12,18 @@ namespace App\Tests\API;
 use App\DataFixtures\UserFixtures;
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\ProjectComment;
 use App\Entity\ProjectMeta;
 use App\Entity\ProjectRate;
 use App\Entity\RateInterface;
 use App\Entity\Team;
 use App\Entity\User;
+use App\Entity\UserPreference;
 use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\VisibilityInterface;
 use App\Tests\Mocks\ProjectTestMetaFieldSubscriberMock;
+use App\Tests\Mocks\ProjectTestUrlMetaFieldSubscriberMock;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -30,6 +33,11 @@ use Symfony\Component\HttpFoundation\Response;
 #[Group('integration')]
 class ProjectControllerTest extends APIControllerBaseTestCase
 {
+    /**
+     * Budget fields are only visible for users with the "budget" / "time" permission
+     */
+    private const BUDGET_FIELDS = ['budget', 'timeBudget', 'budgetType'];
+
     use RateControllerTestTrait;
 
     protected function getRateUrlByRate(RateInterface $rate, bool $isCollection): string
@@ -94,6 +102,49 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         $this->assertUrlIsSecured('/api/projects');
     }
 
+    /**
+     * Budget fields are part of the collection for users with the "budget" and
+     * "time" permission, they were missing completely before 2.66.
+     */
+    public function testGetCollectionIncludesBudgetsWithPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $em = $this->getEntityManager();
+
+        $customer = new Customer('budget customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('with budgets');
+        $project->setCustomer($customer);
+        $project->setBudget(1234.56);
+        $project->setTimeBudget(3600);
+        $project->setBudgetType('month');
+        $em->persist($project);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/api/projects');
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        $found = false;
+        foreach ($result as $row) {
+            self::assertIsArray($row);
+            self::assertApiResponseTypeStructure('ProjectCollection', $row);
+            if ($row['id'] === $project->getId()) {
+                $found = true;
+                self::assertEquals(1234.56, $row['budget']);
+                self::assertEquals(3600, $row['timeBudget']);
+                self::assertEquals('month', $row['budgetType']);
+            }
+        }
+        self::assertTrue($found);
+    }
+
     public function testGetCollection(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
@@ -107,7 +158,7 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(1, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('ProjectCollection', $result[0]);
+        self::assertApiResponseTypeStructure('ProjectCollection', $result[0], self::BUDGET_FIELDS);
     }
 
     /**
@@ -227,10 +278,16 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result);
         self::assertEquals(\count($expected), \count($result), 'Found wrong amount of projects');
 
+        // the fixture team of the current user covers this customer, so the
+        // "time_team_project" permission of a ROLE_USER reveals the time budget
+        // fields of its projects - but never the monetary budget
+        $teamCustomerId = $imports[4]->getCustomer()?->getId();
+
         for ($i = 0; $i < \count($expected); $i++) {
             $project = $result[$i];
             self::assertIsArray($project);
-            self::assertApiResponseTypeStructure('ProjectCollection', $project);
+            $removeFields = $project['customer'] === $teamCustomerId ? ['budget'] : self::BUDGET_FIELDS;
+            self::assertApiResponseTypeStructure('ProjectCollection', $project, $removeFields);
             if ($customerId !== null) {
                 self::assertEquals($customerId, $project['customer']);
             }
@@ -299,6 +356,7 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         $project->setOrderDate($orderDate);
         $project->setStart($startDate);
         $project->setEnd($endDate);
+        $project->setLockedUntil(new \DateTimeImmutable('2021-01-31 23:59:59', new \DateTimeZone('Pacific/Tongatapu')));
         $em->persist($project);
         $em->flush();
 
@@ -322,6 +380,7 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         self::assertEquals('2019-11-29', $result['orderDate']);
         self::assertEquals('2020-01-07', $result['start']);
         self::assertEquals('2021-03-23', $result['end']);
+        self::assertEquals('2021-01-31', $result['lockedUntil']);
         self::assertEquals(0.0, $result['budget']);
         self::assertEquals(0, $result['timeBudget']);
         self::assertNull($result['budgetType']);
@@ -490,9 +549,12 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         self::assertApiResponseTypeStructure('ProjectEntity', $result);
         self::assertNotEmpty($result['id']);
         self::assertEquals('foo', $result['name']);
-        self::assertFalse($result['globalActivities']);
-        self::assertFalse($result['billable']);
-        self::assertFalse($result['visible']);
+        self::assertEquals('0003', $result['number']);
+        self::assertTrue($result['billable']);
+        self::assertTrue($result['visible']);
+        self::assertNull($result['color']);
+        self::assertNull($result['budgetType']);
+        self::assertTrue($result['globalActivities']);
     }
 
     public function testPostActionWithInvalidUser(): void
@@ -593,6 +655,14 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         ]);
     }
 
+    public function testMetaActionThrowsExceptionOnNonScalarName(): void
+    {
+        $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/projects/1/meta', ['name' => ['X'], 'value' => 'X'], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
     public function testMetaActionThrowsExceptionOnMissingValue(): void
     {
         $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/projects/1/meta', ['name' => 'X'], [
@@ -628,6 +698,93 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         /** @var Project $project */
         $project = $em->getRepository(Project::class)->find(1);
         self::assertEquals('another,testing,bar', $project->getMetaField('metatestmock')->getValue());
+    }
+
+    public function testMetaActionValidatesConfiguredConstraints(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new ProjectTestMetaFieldSubscriberMock());
+
+        $data = [
+            'name' => 'metatestmock',
+            'value' => str_repeat('x', 201)
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/projects/1/meta', 'PATCH', [], $json);
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['metatestmock']);
+    }
+
+    public function testMetaActionRejectsUnsafeUrl(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new ProjectTestUrlMetaFieldSubscriberMock());
+
+        $data = [
+            'name' => 'homepage',
+            'value' => 'javascript:alert(1)'
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/projects/1/meta', 'PATCH', [], $json);
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['homepage']);
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        /** @var Project $project */
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertNull($project->getMetaField('homepage'));
+    }
+
+    public function testMetaActionRejectsNonScalarValue(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new ProjectTestUrlMetaFieldSubscriberMock());
+
+        $json = json_encode(['name' => 'homepage', 'value' => ['https://www.kimai.org']]);
+        self::assertIsString($json);
+        $this->request($client, '/api/projects/1/meta', 'PATCH', [], $json);
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['homepage']);
+    }
+
+    public function testMetaActionAcceptsValidUrl(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new ProjectTestUrlMetaFieldSubscriberMock());
+
+        $data = [
+            'name' => 'homepage',
+            'value' => 'https://www.kimai.org'
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/projects/1/meta', 'PATCH', [], $json);
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $em = $this->getEntityManager();
+        /** @var Project $project */
+        $project = $em->getRepository(Project::class)->find(1);
+        $meta = $project->getMetaField('homepage');
+        self::assertNotNull($meta);
+        self::assertEquals('https://www.kimai.org', $meta->getValue());
     }
 
     // ------------------------------- [DELETE] -------------------------------
@@ -686,5 +843,511 @@ class ProjectControllerTest extends APIControllerBaseTestCase
             'code' => Response::HTTP_NOT_FOUND,
             'message' => 'Not Found'
         ]);
+    }
+
+    // ------------------------------- [COMMENTS] -------------------------------
+
+    private function createComment(string $message = 'A project comment', bool $pinned = false, int $projectId = 1): ProjectComment
+    {
+        /** @var ProjectRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Project::class);
+        /** @var Project|null $project */
+        $project = $repository->find($projectId);
+
+        self::assertInstanceOf(Project::class, $project);
+
+        $comment = new ProjectComment($project);
+        $comment->setMessage($message);
+        $comment->setPinned($pinned);
+        $comment->setCreatedBy($this->getUserByRole(User::ROLE_ADMIN));
+
+        $repository->saveComment($comment);
+
+        return $comment;
+    }
+
+    public function testGetCommentsIsSecure(): void
+    {
+        $this->assertUrlIsSecured('/api/projects/1/comments');
+    }
+
+    public function testGetCommentsIsSecureForRole(): void
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/api/projects/1/comments');
+    }
+
+    public function testGetCommentsActionWithUnknownProject(): void
+    {
+        $this->assertEntityNotFound(User::ROLE_ADMIN, '/api/projects/' . PHP_INT_MAX . '/comments');
+    }
+
+    public function testGetCommentsAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $comment = $this->createComment('Visible comment', true);
+        $this->request($client, '/api/projects/1/comments');
+        self::assertTrue(
+            $client->getResponse()->isSuccessful(),
+            $client->getResponse()->getStatusCode() . ' ' . (string) $client->getResponse()->getContent()
+        );
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertCount(1, $result);
+        self::assertIsArray($result[0]);
+        self::assertApiResponseTypeStructure('Comment', $result[0]);
+
+        $first = $result[0];
+        self::assertSame($comment->getId(), $first['id']);
+        self::assertSame('Visible comment', $first['message']);
+        self::assertTrue($first['pinned']);
+        self::assertIsArray($first['createdBy']);
+        self::assertSame($this->getAuthenticatedUserId(User::ROLE_ADMIN), $first['createdBy']['id']);
+        self::assertSame(UserFixtures::USERNAME_ADMIN, $first['createdBy']['username']);
+        self::assertIsString($first['createdAt']);
+    }
+
+    public function testPostCommentIsSecure(): void
+    {
+        $this->assertUrlIsSecured('/api/projects/1/comments', Request::METHOD_POST);
+    }
+
+    public function testPostCommentIsSecureForRole(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $json = json_encode(['message' => 'Denied']);
+        self::assertIsString($json);
+
+        $this->request($client, '/api/projects/1/comments', Request::METHOD_POST, [], $json);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    public function testPostCommentActionWithUnknownProject(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertEntityNotFoundForPost($client, '/api/projects/' . PHP_INT_MAX . '/comments', ['message' => 'Missing project']);
+    }
+
+    public function testPostCommentActionWithInvalidData(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'unexpected' => 'field',
+        ];
+
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/projects/1/comments', Request::METHOD_POST, [], $json);
+
+        $response = $client->getResponse();
+        self::assertSame(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['message'], true);
+    }
+
+    public function testPostCommentAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'message' => 'Created from API',
+            'pinned' => true,
+        ];
+
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/projects/1/comments', 'POST', [], $json);
+        self::assertTrue(
+            $client->getResponse()->isSuccessful(),
+            $client->getResponse()->getStatusCode() . ' ' . (string) $client->getResponse()->getContent()
+        );
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertIsArray($result['createdBy']);
+        self::assertIsInt($result['id']);
+        self::assertNotEmpty($result['id']);
+        self::assertSame('Created from API', $result['message']);
+        self::assertTrue($result['pinned']);
+        self::assertSame($this->getAuthenticatedUserId(User::ROLE_ADMIN), $result['createdBy']['id']);
+
+        /** @var ProjectComment|null $comment */
+        $comment = $this->getEntityManager()->getRepository(ProjectComment::class)->find($result['id']);
+        self::assertInstanceOf(ProjectComment::class, $comment);
+        self::assertSame('Created from API', $comment->getMessage());
+        self::assertTrue($comment->isPinned());
+    }
+
+    public function testToggleCommentPinIsSecure(): void
+    {
+        $comment = $this->createComment('Secured pin');
+        self::assertNotNull($comment->getId());
+
+        self::ensureKernelShutdown();
+
+        $client = self::createClient();
+        $this->request($client, '/api/projects/1/comments/' . $comment->getId() . '/pin', Request::METHOD_PATCH);
+        $this->assertApiException($client->getResponse(), [
+            'code' => Response::HTTP_UNAUTHORIZED,
+            'message' => 'Unauthorized'
+        ]);
+    }
+
+    public function testToggleCommentPinIsSecureForRole(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $comment = $this->createComment('Cannot pin');
+        self::assertNotNull($comment->getId());
+
+        $this->request($client, '/api/projects/1/comments/' . $comment->getId() . '/pin', Request::METHOD_PATCH);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    public function testToggleCommentPinActionWithUnknownProject(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $comment = $this->createComment('Pin me');
+        self::assertNotNull($comment->getId());
+
+        $this->request($client, '/api/projects/' . PHP_INT_MAX . '/comments/' . $comment->getId() . '/pin', Request::METHOD_PATCH);
+        $this->assertApiException($client->getResponse(), [
+            'code' => Response::HTTP_NOT_FOUND,
+            'message' => 'Not Found'
+        ]);
+    }
+
+    public function testToggleCommentPinActionWithUnknownComment(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/api/projects/1/comments/' . PHP_INT_MAX . '/pin', Request::METHOD_PATCH);
+        $this->assertApiException($client->getResponse(), [
+            'code' => Response::HTTP_NOT_FOUND,
+            'message' => 'Not Found'
+        ]);
+    }
+
+    public function testToggleCommentPinActionDeniesForeignComment(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        [, $project] = $this->loadProjectTestData();
+        $projectId = $project->getId();
+        self::assertNotNull($projectId);
+
+        $comment = $this->createComment('Foreign comment', false, $projectId);
+        self::assertNotNull($comment->getId());
+
+        $this->request($client, '/api/projects/1/comments/' . $comment->getId() . '/pin', Request::METHOD_PATCH);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    public function testToggleCommentPinAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $comment = $this->createComment('Toggle me');
+        self::assertNotNull($comment->getId());
+
+        $this->request($client, '/api/projects/1/comments/' . $comment->getId() . '/pin', Request::METHOD_PATCH);
+        self::assertTrue(
+            $client->getResponse()->isSuccessful(),
+            $client->getResponse()->getStatusCode() . ' ' . (string) $client->getResponse()->getContent()
+        );
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertSame($comment->getId(), $result['id']);
+        self::assertSame('Toggle me', $result['message']);
+        self::assertTrue($result['pinned']);
+
+        /** @var ProjectComment|null $updated */
+        $updated = $this->getEntityManager()->getRepository(ProjectComment::class)->find($comment->getId());
+        self::assertInstanceOf(ProjectComment::class, $updated);
+        self::assertTrue($updated->isPinned());
+    }
+
+    public function testDeleteCommentIsSecure(): void
+    {
+        $comment = $this->createComment('Secured delete');
+        self::assertNotNull($comment->getId());
+
+        self::ensureKernelShutdown();
+
+        $client = self::createClient();
+        $this->request($client, '/api/projects/1/comments/' . $comment->getId(), Request::METHOD_DELETE);
+        $this->assertApiException($client->getResponse(), [
+            'code' => Response::HTTP_UNAUTHORIZED,
+            'message' => 'Unauthorized'
+        ]);
+    }
+
+    public function testDeleteCommentIsSecureForRole(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $comment = $this->createComment('Cannot delete');
+        self::assertNotNull($comment->getId());
+
+        $this->request($client, '/api/projects/1/comments/' . $comment->getId(), Request::METHOD_DELETE);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    public function testDeleteCommentActionWithUnknownProject(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $comment = $this->createComment('Delete me later');
+        self::assertNotNull($comment->getId());
+
+        $this->assertNotFoundForDelete($client, '/api/projects/' . PHP_INT_MAX . '/comments/' . $comment->getId());
+    }
+
+    public function testDeleteCommentActionWithUnknownComment(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertNotFoundForDelete($client, '/api/projects/1/comments/' . PHP_INT_MAX);
+    }
+
+    public function testDeleteCommentActionDeniesForeignComment(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        [, $project] = $this->loadProjectTestData();
+        $projectId = $project->getId();
+        self::assertNotNull($projectId);
+
+        $comment = $this->createComment('Foreign comment', false, $projectId);
+        self::assertNotNull($comment->getId());
+
+        $this->request($client, '/api/projects/1/comments/' . $comment->getId(), Request::METHOD_DELETE);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    public function testDeleteCommentAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $comment = $this->createComment('Delete me');
+        self::assertNotNull($comment->getId());
+        $commentId = $comment->getId();
+
+        $this->request($client, '/api/projects/1/comments/' . $commentId, Request::METHOD_DELETE);
+        self::assertTrue($client->getResponse()->isSuccessful());
+        self::assertSame(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
+        self::assertEmpty($client->getResponse()->getContent());
+
+        self::assertNull($this->getEntityManager()->getRepository(ProjectComment::class)->find($commentId));
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testPostDefaultTeamActionWasRemoved(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        // the endpoint was removed: it fails for an existing as well as for an unknown project
+        foreach (['/api/projects/1/team', '/api/projects/' . PHP_INT_MAX . '/team'] as $url) {
+            $this->request($client, $url, 'POST');
+            $this->assertApiException($client->getResponse(), [
+                'code' => Response::HTTP_GONE,
+                'message' => 'This endpoint was removed, use "POST /api/teams/" instead.'
+            ]);
+        }
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testPostDefaultTeamActionWasRemovedForUserWithoutPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        // the permission checks were removed as well, so every caller learns that the endpoint is gone
+        $this->request($client, '/api/projects/1/team', 'POST');
+        $this->assertApiException($client->getResponse(), [
+            'code' => Response::HTTP_GONE,
+            'message' => 'This endpoint was removed, use "POST /api/teams/" instead.'
+        ]);
+    }
+
+    public function testDuplicateIsSecure(): void
+    {
+        $this->assertRequestIsSecured(self::createClient(), '/api/projects/1/duplicate', 'POST');
+    }
+
+    public function testDuplicateIsSecureForRole(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->request($client, '/api/projects/1/duplicate', 'POST');
+
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    public function testDuplicateNotFound(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertEntityNotFoundForPost($client, '/api/projects/' . PHP_INT_MAX . '/duplicate');
+    }
+
+    public function testDuplicate(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $before = $this->getEntityManager()->getRepository(Project::class)->count([]);
+
+        $this->request($client, '/api/projects/1/duplicate', 'POST');
+
+        self::assertEquals(Response::HTTP_CREATED, $client->getResponse()->getStatusCode());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('ProjectEntity', $result);
+        self::assertIsString($result['name']);
+        self::assertStringEndsWith(' [COPY]', $result['name']);
+        self::assertIsInt($result['id']);
+        self::assertNotEquals(1, $result['id'], 'the copy has to be a new project');
+
+        $this->getEntityManager()->clear();
+        self::assertEquals($before + 1, $this->getEntityManager()->getRepository(Project::class)->count([]));
+    }
+
+    public function testPostActionWithLockedUntil(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'name' => 'locked project',
+            'customer' => 1,
+            'lockedUntil' => '2020-06-30',
+            'visible' => true,
+            'billable' => true,
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/projects', 'POST', [], $json);
+        self::assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('ProjectEntity', $result);
+        self::assertEquals('2020-06-30', $result['lockedUntil']);
+
+        // the entire lock day must be locked, the API stores the end of the day
+        $em = $this->getEntityManager();
+        $project = $em->getRepository(Project::class)->find($result['id']);
+        self::assertInstanceOf(Project::class, $project);
+        self::assertTrue($project->isLockedAtDate(new \DateTime('2020-06-30 23:00:00', new \DateTimeZone($project->getLockedUntil()?->getTimezone()->getName() ?? 'UTC'))));
+        self::assertFalse($project->isLockedAtDate(new \DateTime('2020-07-01 00:00:00', new \DateTimeZone($project->getLockedUntil()?->getTimezone()->getName() ?? 'UTC'))));
+    }
+
+    public function testPatchActionSetsAndRemovesLockedUntil(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        // PATCH uses the HTML5 date-time format, just like "start" and "end"
+        $json = json_encode(['lockedUntil' => '2020-06-30T00:00:00']);
+        self::assertIsString($json);
+        $this->request($client, '/api/projects/1', 'PATCH', [], $json);
+        self::assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        self::assertEquals('2020-06-30', $result['lockedUntil']);
+
+        // re-opening the period by removing the date
+        $json = json_encode(['lockedUntil' => null]);
+        self::assertIsString($json);
+        $this->request($client, '/api/projects/1', 'PATCH', [], $json);
+        self::assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        self::assertNull($result['lockedUntil']);
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $project);
+        self::assertNull($project->getLockedUntil());
+        self::assertFalse($project->isLockedAtDate(new \DateTime('2020-06-30 12:00:00')));
+    }
+
+    /**
+     * @return \Generator<array{0: string, 1: string}>
+     */
+    public static function getLockedUntilTimezones(): \Generator
+    {
+        // [timezone of the acting user, value submitted in the HTML5 date-time format]
+        yield ['Pacific/Kiritimati', '2026-08-06T00:00:00'];
+        yield ['Pacific/Kiritimati', '2026-08-06T23:59:59'];
+        yield ['Pacific/Kiritimati', '2026-08-06T12:34:56'];
+        yield ['Pacific/Midway', '2026-08-06T00:00:00'];
+        yield ['Pacific/Midway', '2026-08-06T23:59:59'];
+        yield ['Europe/Vienna', '2026-08-06T23:59:59'];
+        yield ['Asia/Tokyo', '2026-08-06T23:59:59'];
+        yield ['UTC', '2026-08-06T23:59:59'];
+    }
+
+    /**
+     * The lock date is a calendar day. Handing over a time of day - from any timezone -
+     * must never move it to another day, neither in the database nor in the response.
+     */
+    #[DataProvider('getLockedUntilTimezones')]
+    public function testLockedUntilKeepsTheDayWhenATimeIsSubmitted(string $timezone, string $value): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $em = $this->getEntityManager();
+        $user = $em->getRepository(User::class)->findOneBy(['username' => UserFixtures::USERNAME_ADMIN]);
+        self::assertInstanceOf(User::class, $user);
+        $user->setPreferenceValue(UserPreference::TIMEZONE, $timezone);
+        $em->persist($user);
+        $em->flush();
+
+        $json = json_encode(['lockedUntil' => $value]);
+        self::assertIsString($json);
+        $this->request($client, '/api/projects/1', 'PATCH', [], $json);
+        self::assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        self::assertEquals('2026-08-06', $result['lockedUntil'], 'The API response shifted the day in ' . $timezone);
+
+        $stored = $em->getConnection()->fetchOne('SELECT locked_until FROM kimai2_projects WHERE id = 1');
+        self::assertEquals('2026-08-06', $stored, 'The stored day shifted in ' . $timezone);
+
+        $em->clear();
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $project);
+        $zone = new \DateTimeZone($timezone);
+        self::assertTrue($project->isLockedAtDate(new \DateTime('2026-08-06 00:00:00', $zone)), $timezone);
+        self::assertTrue($project->isLockedAtDate(new \DateTime('2026-08-06 23:59:59', $zone)), $timezone);
+        self::assertFalse($project->isLockedAtDate(new \DateTime('2026-08-07 00:00:00', $zone)), $timezone);
+    }
+
+    public function testProjectWithoutLockedUntilIsNull(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/api/projects/1');
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertArrayHasKey('lockedUntil', $result);
+        self::assertNull($result['lockedUntil']);
     }
 }

@@ -36,7 +36,7 @@ abstract class BaseApiController extends AbstractController
     }
 
     /**
-     * @template TFormType of FormTypeInterface<TData>
+     * @template TFormType of FormTypeInterface<BaseQuery>
      * @template TData of BaseQuery
      * @param class-string<TFormType> $type
      * @param TData $data

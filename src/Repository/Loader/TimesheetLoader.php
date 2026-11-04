@@ -73,12 +73,30 @@ final class TimesheetLoader implements LoaderInterface
                 ->getQuery()
                 ->execute();
 
-            if ($this->query !== null && $this->query->hasQueryHint(TimesheetQueryHint::CUSTOMER_META_FIELDS)) {
-                $customerIds = array_filter(array_unique(array_map(function (Project $project) {
-                    return $project->getCustomer()?->getId();
-                }, $projects)), function ($value) { return $value !== null; });
+            // the voter checks the teams of project, customer and activity for every row that
+            // is rendered, so load them upfront instead of once per record
+            $qb = $em->createQueryBuilder();
+            $qb->select('PARTIAL p.{id}', 'teams')
+                ->from(Project::class, 'p')
+                ->leftJoin('p.teams', 'teams')
+                ->andWhere($qb->expr()->in('p.id', $projectIds))
+                ->getQuery()
+                ->execute();
 
-                if (\count($customerIds) > 0) {
+            $customerIds = array_filter(array_unique(array_map(function (Project $project) {
+                return $project->getCustomer()?->getId();
+            }, $projects)), function ($value) { return $value !== null; });
+
+            if (\count($customerIds) > 0) {
+                $qb = $em->createQueryBuilder();
+                $qb->select('PARTIAL c.{id}', 'teams')
+                    ->from(Customer::class, 'c')
+                    ->leftJoin('c.teams', 'teams')
+                    ->andWhere($qb->expr()->in('c.id', $customerIds))
+                    ->getQuery()
+                    ->execute();
+
+                if ($this->query !== null && $this->query->hasQueryHint(TimesheetQueryHint::CUSTOMER_META_FIELDS)) {
                     $qb = $em->createQueryBuilder();
                     $qb->select('PARTIAL c.{id}', 'meta')
                         ->from(Customer::class, 'c')
@@ -90,32 +108,50 @@ final class TimesheetLoader implements LoaderInterface
             }
         }
 
-        if ($this->query !== null && $this->query->hasQueryHint(TimesheetQueryHint::ACTIVITY_META_FIELDS)) {
-            $activityIds = array_filter(array_map(function (Timesheet $timesheet) {
-                return $timesheet->getActivity()?->getId();
-            }, $results), function ($id): bool {
-                return $id !== null;
-            });
+        $activityIds = array_filter(array_unique(array_map(function (Timesheet $timesheet) {
+            return $timesheet->getActivity()?->getId();
+        }, $results)), function ($value) { return $value !== null; });
 
-            if (\count($activityIds) > 0) {
-                $qb = $em->createQueryBuilder();
-                $qb->select('PARTIAL a.{id}', 'meta')
-                    ->from(Activity::class, 'a')
-                    ->leftJoin('a.meta', 'meta')
-                    ->andWhere($qb->expr()->in('a.id', $activityIds))
-                    ->getQuery()
-                    ->execute();
-            }
+        if (\count($activityIds) > 0) {
+            $qb = $em->createQueryBuilder();
+            $qb->select('PARTIAL a.{id}', 'teams')
+                ->from(Activity::class, 'a')
+                ->leftJoin('a.teams', 'teams')
+                ->andWhere($qb->expr()->in('a.id', $activityIds))
+                ->getQuery()
+                ->execute();
         }
 
-        if ($this->query !== null && $this->query->hasQueryHint(TimesheetQueryHint::USER_PREFERENCES)) {
-            $userIds = array_filter(array_map(function (Timesheet $timesheet) {
-                return $timesheet->getUser()?->getId();
-            }, $results), function ($id): bool {
-                return $id !== null;
-            });
+        if (\count($activityIds) > 0 && $this->query !== null && $this->query->hasQueryHint(TimesheetQueryHint::ACTIVITY_META_FIELDS)) {
+            $qb = $em->createQueryBuilder();
+            $qb->select('PARTIAL a.{id}', 'meta')
+                ->from(Activity::class, 'a')
+                ->leftJoin('a.meta', 'meta')
+                ->andWhere($qb->expr()->in('a.id', $activityIds))
+                ->getQuery()
+                ->execute();
+        }
 
-            if (\count($userIds) > 0) {
+        $userIds = array_filter(array_unique(array_map(function (Timesheet $timesheet) {
+            return $timesheet->getUser()?->getId();
+        }, $results)), function ($id): bool {
+            return $id !== null;
+        });
+
+        if (\count($userIds) > 0) {
+            // the voter checks the team memberships of the record owner for every
+            // row (RolePermissionManager::checkTeamLeadAccess), load them upfront
+            // instead of once per user
+            $qb = $em->createQueryBuilder();
+            $qb->select('PARTIAL u.{id}', 'memberships', 'PARTIAL team.{id}')
+                ->from(User::class, 'u')
+                ->leftJoin('u.memberships', 'memberships')
+                ->leftJoin('memberships.team', 'team')
+                ->andWhere($qb->expr()->in('u.id', $userIds))
+                ->getQuery()
+                ->execute();
+
+            if ($this->query !== null && $this->query->hasQueryHint(TimesheetQueryHint::USER_PREFERENCES)) {
                 $qb = $em->createQueryBuilder();
                 $qb->select('PARTIAL u.{id}', 'preferences')
                     ->from(User::class, 'u')

@@ -24,6 +24,7 @@ use App\Security\RoleService;
 use App\User\PermissionService;
 use App\Utils\PageSetup;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Exception\JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -201,41 +202,36 @@ final class PermissionController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/roles/{role}/delete/{csrfToken}', name: 'admin_user_role_delete', methods: ['GET', 'POST'])]
-    public function deleteRole(Role $role, string $csrfToken, UserRepository $userRepository, CsrfTokenManagerInterface $csrfTokenManager): Response
+    /**
+     * @return array<string, mixed>
+     */
+    private function getRequestPayload(Request $request): array
     {
-        if (!$this->isCsrfTokenValid(self::TOKEN_NAME, $csrfToken)) {
-            $this->flashError('action.csrf.error');
-
-            return $this->redirectToRoute('admin_user_permissions');
-        }
-
-        // make sure that the token can only be used once, so refresh it after successful submission
-        $csrfTokenManager->refreshToken(self::TOKEN_NAME)->getValue();
-
         try {
-            // workaround, as roles is still a string array on users table
-            // until this is fixed, the users must be manually updated
-            $users = $userRepository->findUsersWithRole($role->getName());
-            foreach ($users as $user) {
-                $user->removeRole($role->getName());
-                $userRepository->saveUser($user);
-            }
-            $this->roleRepository->deleteRole($role);
-            $this->flashSuccess('action.delete.success');
-        } catch (\Exception $ex) {
-            $this->flashDeleteException($ex);
+            return $request->toArray();
+        } catch (JsonException) {
+            return [];
         }
-
-        return $this->redirectToRoute('admin_user_permissions');
     }
 
-    #[Route(path: '/roles/{role}/{name}/{value}/{csrfToken}', name: 'admin_user_permission_save', methods: ['POST'])]
-    public function savePermission(Role $role, string $name, bool $value, string $csrfToken, PermissionService $permissionService, CsrfTokenManagerInterface $csrfTokenManager): Response
+    #[Route(path: '/roles/{role}/{name}', name: 'admin_user_permission_save', methods: ['POST'])]
+    public function savePermission(Role $role, string $name, Request $request, PermissionService $permissionService, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
-        if (!$this->isCsrfTokenValid(self::TOKEN_NAME, $csrfToken)) {
+        $payload = $this->getRequestPayload($request);
+
+        // the token is sent in the request body and must not become part of the URL,
+        // where it would end up in server logs and the browser history
+        $token = \array_key_exists('token', $payload) ? $payload['token'] : null;
+
+        if (!\is_string($token) || !$this->isCsrfTokenValid(self::TOKEN_NAME, $token)) {
             throw new BadRequestHttpException('Invalid CSRF token');
         }
+
+        if (!\array_key_exists('value', $payload) || !\is_bool($payload['value'])) {
+            throw new BadRequestHttpException('Missing or invalid parameter "value"');
+        }
+
+        $value = $payload['value'];
 
         if (!$this->manager->isRegisteredPermission($name)) {
             throw $this->createNotFoundException('Unknown permission: ' . $name);

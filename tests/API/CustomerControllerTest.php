@@ -12,6 +12,7 @@ namespace App\Tests\API;
 use App\DataFixtures\UserFixtures;
 use App\Entity\Activity;
 use App\Entity\Customer;
+use App\Entity\CustomerComment;
 use App\Entity\CustomerMeta;
 use App\Entity\CustomerRate;
 use App\Entity\Project;
@@ -21,6 +22,7 @@ use App\Entity\User;
 use App\Repository\CustomerRateRepository;
 use App\Repository\CustomerRepository;
 use App\Tests\Mocks\CustomerTestMetaFieldSubscriberMock;
+use App\Tests\Mocks\CustomerTestUrlMetaFieldSubscriberMock;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,6 +31,11 @@ use Symfony\Component\HttpFoundation\Response;
 #[Group('integration')]
 class CustomerControllerTest extends APIControllerBaseTestCase
 {
+    /**
+     * Budget fields are only visible for users with the "budget" / "time" permission
+     */
+    private const BUDGET_FIELDS = ['budget', 'timeBudget', 'budgetType'];
+
     use RateControllerTestTrait;
 
     protected function getRateUrlByRate(RateInterface $rate, bool $isCollection): string
@@ -145,7 +152,40 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(1, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('CustomerCollection', $result[0]);
+        self::assertApiResponseTypeStructure('CustomerCollection', $result[0], self::BUDGET_FIELDS);
+    }
+
+    public function testGetCollectionFull(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/api/customers?full=1');
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+        self::assertEquals(1, \count($result));
+        self::assertIsArray($result[0]);
+        self::assertApiResponseTypeStructure('CustomerCollectionFull', $result[0]);
+    }
+
+    public function testGetCollectionFullNeedsPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->assertAccessIsGranted($client, '/api/customers?full=1');
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+        self::assertEquals(1, \count($result));
+        self::assertIsArray($result[0]);
+        // make sure that regular user cannot access detail fields
+        self::assertApiResponseTypeStructure('CustomerCollection', $result[0], self::BUDGET_FIELDS);
     }
 
     public function testGetCollectionWithQuery(): void
@@ -162,7 +202,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(1, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('CustomerCollection', $result[0]);
+        self::assertApiResponseTypeStructure('CustomerCollection', $result[0], self::BUDGET_FIELDS);
     }
 
     public function testGetEntityIsSecure(): void
@@ -260,6 +300,8 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertEquals('test@example.com', $result['email']);
         self::assertNull($result['homepage']);
         self::assertEquals('Europe/Berlin', $result['timezone']);
+        self::assertEquals('en', $result['language']);
+        self::assertNull($result['invoiceEmail']);
         self::assertNull($result['buyerReference']);
         self::assertNull($result['color']);
         self::assertEquals('#5319e7', $result['color-safe']);
@@ -291,6 +333,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
             'postCode' => '12345',
             'city' => 'Acme Town',
             'country' => 'DE',
+            'language' => 'de',
             'currency' => 'EUR',
             'phone' => '666667787778999909087',
             'fax' => '0987654321',
@@ -299,6 +342,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
             'homepage' => 'https://www.example.com/',
             'timezone' => 'Europe/Berlin',
             'invoiceText' => 'Some random text, pay fast please!',
+            'invoiceEmail' => 'invoice@example.com',
             'buyerReference' => 'REF-0123456789',
             'color' => '#ff0000',
             'visible' => true,
@@ -335,6 +379,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertEquals('12345', $result['postCode']);
         self::assertEquals('Acme Town', $result['city']);
         self::assertEquals('DE', $result['country']);
+        self::assertEquals('de', $result['language']);
         self::assertEquals('EUR', $result['currency']);
         self::assertEquals('666667787778999909087', $result['phone']);
         self::assertEquals('0987654321', $result['fax']);
@@ -342,6 +387,7 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertEquals('admin@example.com', $result['email']);
         self::assertEquals('https://www.example.com/', $result['homepage']);
         self::assertEquals('Europe/Berlin', $result['timezone']);
+        self::assertEquals('invoice@example.com', $result['invoiceEmail']);
         self::assertEquals('REF-0123456789', $result['buyerReference']);
         self::assertEquals('#ff0000', $result['color']);
         self::assertTrue($result['visible']);
@@ -353,9 +399,6 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $data = [
             'name' => 'foo',
-            'country' => 'DE',
-            'currency' => 'EUR',
-            'timezone' => 'Europe/Berlin',
         ];
         $this->request($client, '/api/customers', 'POST', [], json_encode($data));
         self::assertTrue($client->getResponse()->isSuccessful());
@@ -367,6 +410,10 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         self::assertIsArray($result);
         self::assertApiResponseTypeStructure('CustomerEntity', $result);
         self::assertNotEmpty($result['id']);
+        self::assertEquals('0003', $result['number']);
+        self::assertEquals('foo', $result['name']);
+        self::assertTrue($result['billable']);
+        self::assertTrue($result['visible']);
     }
 
     public function testPostActionWithInvalidUser(): void
@@ -484,6 +531,14 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         ]);
     }
 
+    public function testMetaActionThrowsExceptionOnNonScalarName(): void
+    {
+        $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/customers/1/meta', ['name' => ['X'], 'value' => 'X'], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
     public function testMetaActionThrowsExceptionOnMissingValue(): void
     {
         $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/customers/1/meta', ['name' => 'X'], [
@@ -519,6 +574,93 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         /** @var Customer $customer */
         $customer = $em->getRepository(Customer::class)->find(1);
         self::assertEquals('another,testing,bar', $customer->getMetaField('metatestmock')->getValue());
+    }
+
+    public function testMetaActionValidatesConfiguredConstraints(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new CustomerTestMetaFieldSubscriberMock());
+
+        $data = [
+            'name' => 'metatestmock',
+            'value' => str_repeat('x', 201)
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/customers/1/meta', 'PATCH', [], $json);
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['metatestmock']);
+    }
+
+    public function testMetaActionRejectsUnsafeUrl(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new CustomerTestUrlMetaFieldSubscriberMock());
+
+        $data = [
+            'name' => 'homepage',
+            'value' => 'javascript:alert(1)'
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/customers/1/meta', 'PATCH', [], $json);
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['homepage']);
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        /** @var Customer $customer */
+        $customer = $em->getRepository(Customer::class)->find(1);
+        self::assertNull($customer->getMetaField('homepage'));
+    }
+
+    public function testMetaActionRejectsNonScalarValue(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new CustomerTestUrlMetaFieldSubscriberMock());
+
+        $json = json_encode(['name' => 'homepage', 'value' => ['https://www.kimai.org']]);
+        self::assertIsString($json);
+        $this->request($client, '/api/customers/1/meta', 'PATCH', [], $json);
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['homepage']);
+    }
+
+    public function testMetaActionAcceptsValidUrl(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new CustomerTestUrlMetaFieldSubscriberMock());
+
+        $data = [
+            'name' => 'homepage',
+            'value' => 'https://www.kimai.org'
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/customers/1/meta', 'PATCH', [], $json);
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $em = $this->getEntityManager();
+        /** @var Customer $customer */
+        $customer = $em->getRepository(Customer::class)->find(1);
+        $meta = $customer->getMetaField('homepage');
+        self::assertNotNull($meta);
+        self::assertEquals('https://www.kimai.org', $meta->getValue());
     }
 
     // ------------------------------- [DELETE] -------------------------------
@@ -576,6 +718,333 @@ class CustomerControllerTest extends APIControllerBaseTestCase
         $this->assertApiException($client->getResponse(), [
             'code' => Response::HTTP_NOT_FOUND,
             'message' => 'Not Found'
+        ]);
+    }
+
+    // ------------------------------- [COMMENTS] -------------------------------
+
+    private function createComment(string $message = 'A customer comment', bool $pinned = false, int $customerId = 1): CustomerComment
+    {
+        /** @var CustomerRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Customer::class);
+        /** @var Customer|null $customer */
+        $customer = $repository->find($customerId);
+
+        self::assertInstanceOf(Customer::class, $customer);
+
+        $comment = new CustomerComment($customer);
+        $comment->setMessage($message);
+        $comment->setPinned($pinned);
+        $comment->setCreatedBy($this->getUserByRole(User::ROLE_ADMIN));
+
+        $repository->saveComment($comment);
+
+        return $comment;
+    }
+
+    public function testGetCommentsIsSecure(): void
+    {
+        $this->assertUrlIsSecured('/api/customers/1/comments');
+    }
+
+    public function testGetCommentsIsSecureForRole(): void
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/api/customers/1/comments');
+    }
+
+    public function testGetCommentsActionWithUnknownCustomer(): void
+    {
+        $this->assertEntityNotFound(User::ROLE_ADMIN, '/api/customers/' . PHP_INT_MAX . '/comments');
+    }
+
+    public function testGetCommentsAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $comment = $this->createComment('Visible comment', true);
+        $this->request($client, '/api/customers/1/comments');
+        self::assertTrue(
+            $client->getResponse()->isSuccessful(),
+            $client->getResponse()->getStatusCode() . ' ' . (string) $client->getResponse()->getContent()
+        );
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertCount(1, $result);
+        self::assertIsArray($result[0]);
+        self::assertApiResponseTypeStructure('Comment', $result[0]);
+
+        $first = $result[0];
+        self::assertSame($comment->getId(), $first['id']);
+        self::assertSame('Visible comment', $first['message']);
+        self::assertTrue($first['pinned']);
+        self::assertIsArray($first['createdBy']);
+        self::assertSame($this->getAuthenticatedUserId(User::ROLE_ADMIN), $first['createdBy']['id']);
+        self::assertSame(UserFixtures::USERNAME_ADMIN, $first['createdBy']['username']);
+        self::assertIsString($first['createdAt']);
+    }
+
+    public function testPostCommentIsSecure(): void
+    {
+        $this->assertUrlIsSecured('/api/customers/1/comments', Request::METHOD_POST);
+    }
+
+    public function testPostCommentIsSecureForRole(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $json = json_encode(['message' => 'Denied']);
+        self::assertIsString($json);
+
+        $this->request($client, '/api/customers/1/comments', Request::METHOD_POST, [], $json);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    public function testPostCommentActionWithUnknownCustomer(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertEntityNotFoundForPost($client, '/api/customers/' . PHP_INT_MAX . '/comments', ['message' => 'Missing customer']);
+    }
+
+    public function testPostCommentActionWithInvalidData(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'unexpected' => 'field',
+        ];
+
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/customers/1/comments', Request::METHOD_POST, [], $json);
+
+        $response = $client->getResponse();
+        self::assertSame(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['message'], true);
+    }
+
+    public function testPostCommentAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $data = [
+            'message' => 'Created from API',
+            'pinned' => true,
+        ];
+
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/customers/1/comments', 'POST', [], $json);
+        self::assertTrue(
+            $client->getResponse()->isSuccessful(),
+            $client->getResponse()->getStatusCode() . ' ' . (string) $client->getResponse()->getContent()
+        );
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertIsArray($result['createdBy']);
+        self::assertIsInt($result['id']);
+        self::assertNotEmpty($result['id']);
+        self::assertSame('Created from API', $result['message']);
+        self::assertTrue($result['pinned']);
+        self::assertSame($this->getAuthenticatedUserId(User::ROLE_ADMIN), $result['createdBy']['id']);
+
+        /** @var CustomerComment|null $comment */
+        $comment = $this->getEntityManager()->getRepository(CustomerComment::class)->find($result['id']);
+        self::assertInstanceOf(CustomerComment::class, $comment);
+        self::assertSame('Created from API', $comment->getMessage());
+        self::assertTrue($comment->isPinned());
+    }
+
+    public function testToggleCommentPinIsSecure(): void
+    {
+        $comment = $this->createComment('Secured pin');
+        self::assertNotNull($comment->getId());
+
+        self::ensureKernelShutdown();
+
+        $client = self::createClient();
+        $this->request($client, '/api/customers/1/comments/' . $comment->getId() . '/pin', Request::METHOD_PATCH);
+        $this->assertApiException($client->getResponse(), [
+            'code' => Response::HTTP_UNAUTHORIZED,
+            'message' => 'Unauthorized'
+        ]);
+    }
+
+    public function testToggleCommentPinIsSecureForRole(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $comment = $this->createComment('Cannot pin');
+        self::assertNotNull($comment->getId());
+
+        $this->request($client, '/api/customers/1/comments/' . $comment->getId() . '/pin', Request::METHOD_PATCH);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    public function testToggleCommentPinActionWithUnknownCustomer(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $comment = $this->createComment('Pin me');
+        self::assertNotNull($comment->getId());
+
+        $this->request($client, '/api/customers/' . PHP_INT_MAX . '/comments/' . $comment->getId() . '/pin', Request::METHOD_PATCH);
+        $this->assertApiException($client->getResponse(), [
+            'code' => Response::HTTP_NOT_FOUND,
+            'message' => 'Not Found'
+        ]);
+    }
+
+    public function testToggleCommentPinActionWithUnknownComment(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->request($client, '/api/customers/1/comments/' . PHP_INT_MAX . '/pin', Request::METHOD_PATCH);
+        $this->assertApiException($client->getResponse(), [
+            'code' => Response::HTTP_NOT_FOUND,
+            'message' => 'Not Found'
+        ]);
+    }
+
+    public function testToggleCommentPinActionDeniesForeignComment(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        [, $customer] = $this->loadCustomerData();
+        $customerId = $customer->getId();
+        self::assertNotNull($customerId);
+
+        $comment = $this->createComment('Foreign comment', false, $customerId);
+        self::assertNotNull($comment->getId());
+
+        $this->request($client, '/api/customers/1/comments/' . $comment->getId() . '/pin', Request::METHOD_PATCH);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    public function testToggleCommentPinAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $comment = $this->createComment('Toggle me');
+        self::assertNotNull($comment->getId());
+
+        $this->request($client, '/api/customers/1/comments/' . $comment->getId() . '/pin', Request::METHOD_PATCH);
+        self::assertTrue(
+            $client->getResponse()->isSuccessful(),
+            $client->getResponse()->getStatusCode() . ' ' . (string) $client->getResponse()->getContent()
+        );
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertSame($comment->getId(), $result['id']);
+        self::assertSame('Toggle me', $result['message']);
+        self::assertTrue($result['pinned']);
+
+        /** @var CustomerComment|null $updated */
+        $updated = $this->getEntityManager()->getRepository(CustomerComment::class)->find($comment->getId());
+        self::assertInstanceOf(CustomerComment::class, $updated);
+        self::assertTrue($updated->isPinned());
+    }
+
+    public function testDeleteCommentIsSecure(): void
+    {
+        $comment = $this->createComment('Secured delete');
+        self::assertNotNull($comment->getId());
+
+        self::ensureKernelShutdown();
+
+        $client = self::createClient();
+        $this->request($client, '/api/customers/1/comments/' . $comment->getId(), Request::METHOD_DELETE);
+        $this->assertApiException($client->getResponse(), [
+            'code' => Response::HTTP_UNAUTHORIZED,
+            'message' => 'Unauthorized'
+        ]);
+    }
+
+    public function testDeleteCommentIsSecureForRole(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $comment = $this->createComment('Cannot delete');
+        self::assertNotNull($comment->getId());
+
+        $this->request($client, '/api/customers/1/comments/' . $comment->getId(), Request::METHOD_DELETE);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    public function testDeleteCommentActionWithUnknownCustomer(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $comment = $this->createComment('Delete me later');
+        self::assertNotNull($comment->getId());
+
+        $this->assertNotFoundForDelete($client, '/api/customers/' . PHP_INT_MAX . '/comments/' . $comment->getId());
+    }
+
+    public function testDeleteCommentActionWithUnknownComment(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertNotFoundForDelete($client, '/api/customers/1/comments/' . PHP_INT_MAX);
+    }
+
+    public function testDeleteCommentActionDeniesForeignComment(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        [, $customer] = $this->loadCustomerData();
+        $customerId = $customer->getId();
+        self::assertNotNull($customerId);
+
+        $comment = $this->createComment('Foreign comment', false, $customerId);
+        self::assertNotNull($comment->getId());
+
+        $this->request($client, '/api/customers/1/comments/' . $comment->getId(), Request::METHOD_DELETE);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    public function testDeleteCommentAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $comment = $this->createComment('Delete me');
+        self::assertNotNull($comment->getId());
+        $commentId = $comment->getId();
+
+        $this->request($client, '/api/customers/1/comments/' . $commentId, Request::METHOD_DELETE);
+        self::assertTrue($client->getResponse()->isSuccessful());
+        self::assertSame(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
+        self::assertEmpty($client->getResponse()->getContent());
+
+        self::assertNull($this->getEntityManager()->getRepository(CustomerComment::class)->find($commentId));
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testPostDefaultTeamActionWasRemoved(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        // the endpoint was removed: it fails for an existing as well as for an unknown customer
+        foreach (['/api/customers/1/team', '/api/customers/' . PHP_INT_MAX . '/team'] as $url) {
+            $this->request($client, $url, 'POST');
+            $this->assertApiException($client->getResponse(), [
+                'code' => Response::HTTP_GONE,
+                'message' => 'This endpoint was removed, use "POST /api/teams/" instead.'
+            ]);
+        }
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testPostDefaultTeamActionWasRemovedForUserWithoutPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        // the permission checks were removed as well, so every caller learns that the endpoint is gone
+        $this->request($client, '/api/customers/1/team', 'POST');
+        $this->assertApiException($client->getResponse(), [
+            'code' => Response::HTTP_GONE,
+            'message' => 'This endpoint was removed, use "POST /api/teams/" instead.'
         ]);
     }
 }

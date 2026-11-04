@@ -24,7 +24,10 @@ final class WeeklyInvoiceCalculator extends AbstractSumInvoiceCalculator impleme
         }
 
         return [
-            $invoiceItem->getBegin()->format('W')
+            // The ISO week-numbering year ("o"), not the calendar year, because an
+            // ISO week can span two calendar years. Without a year the same week
+            // number from different years would be summed into one invoice entry.
+            $invoiceItem->getBegin()->format('o-W')
         ];
     }
 

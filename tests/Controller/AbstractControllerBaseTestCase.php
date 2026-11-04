@@ -12,11 +12,15 @@ namespace App\Tests\Controller;
 use App\Configuration\ConfigurationService;
 use App\DataFixtures\UserFixtures;
 use App\Entity\Configuration;
+use App\Entity\Role;
+use App\Entity\RolePermission;
 use App\Entity\User;
 use App\Form\Type\DateRangeType;
 use App\Repository\UserRepository;
 use App\Tests\KernelTestTrait;
+use App\User\PermissionService;
 use Doctrine\Bundle\DoctrineBundle\Registry;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -42,8 +46,33 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
     public const DEFAULT_DATE_FORMAT = 'n/j/Y';
     public const DEFAULT_TIME_FORMAT = 'h:mm a';
 
+    private ?string $defaultTimezone = null;
+    private ?string $defaultLocale = null;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // UserEnvironmentSubscriber switches the process wide timezone and locale to the ones of the
+        // authenticated user and never restores them. A test working with a user whose timezone differs
+        // from the configured default would otherwise leak that timezone into every following test of
+        // the same PHPUnit process, breaking unrelated tests that rely on date_default_timezone_get().
+        $this->defaultTimezone = date_default_timezone_get();
+        $this->defaultLocale = \Locale::getDefault();
+    }
+
     protected function tearDown(): void
     {
+        if ($this->defaultTimezone !== null) {
+            date_default_timezone_set($this->defaultTimezone);
+            $this->defaultTimezone = null;
+        }
+
+        if ($this->defaultLocale !== null) {
+            \Locale::setDefault($this->defaultLocale);
+            $this->defaultLocale = null;
+        }
+
         $this->clearConfigCache();
         parent::tearDown();
     }
@@ -179,6 +208,35 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
         return $client->request($method, $url, $parameters, [], [], $content);
     }
 
+    /**
+     * Adds a new role with the given permissions to the user behind $role, to test
+     * permission combinations which no default role has.
+     *
+     * @param array<string> $permissions
+     */
+    protected function grantPermissions(string $role, string $roleName, array $permissions): void
+    {
+        $em = $this->getEntityManager();
+
+        $newRole = (new Role())->setName($roleName);
+        $em->persist($newRole);
+
+        $user = $this->getUserByRole($role);
+        $user->addRole($roleName);
+        $em->persist($user);
+        $em->flush();
+
+        $permissionService = self::getContainer()->get(PermissionService::class);
+        self::assertInstanceOf(PermissionService::class, $permissionService);
+
+        foreach ($permissions as $permission) {
+            // routed through the service, so the shared permission cache is invalidated
+            $permissionService->saveRolePermission(
+                (new RolePermission())->setRole($newRole)->setPermission($permission)->setAllowed(true)
+            );
+        }
+    }
+
     protected function assertRequestIsSecured(HttpKernelBrowser $client, string $url, string $method = 'GET'): void
     {
         $this->request($client, $url, $method);
@@ -303,6 +361,7 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
         $crawler = $client->request('GET', $this->createUrl($url));
         $form = $crawler->filter($formSelector)->form();
         if ($disableValidation) {
+            // needed for setting invalid values e.g. in dropdowns
             $form->disableValidation();
         }
         $result = $client->submit($form, $formData);
@@ -313,7 +372,13 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
         self::assertEquals(
             \count($fieldNames),
             \count($validationErrors),
-            \sprintf('Expected %s validation errors, found %s', \count($fieldNames), \count($validationErrors))
+            \sprintf(
+                'Expected %s validation errors, found %s. Expected: %s. Found: %s.',
+                \count($fieldNames),
+                \count($validationErrors),
+                implode(',', $fieldNames),
+                implode(',', $validationErrors->extract(['_text']))
+            )
         );
 
         foreach ($fieldNames as $name) {
@@ -438,6 +503,42 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
         self::assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));
         self::assertStringContainsString('attachment; filename=' . $prefix, $disposition);
         self::assertStringContainsString('.xlsx', $disposition);
+    }
+
+    /**
+     * Returns all cell values of the exported spreadsheet as one string, so tests
+     * can assert on the presence (or absence) of exported values.
+     */
+    protected function getExcelExportContent(HttpKernelBrowser $client): string
+    {
+        self::assertInstanceOf(BinaryFileResponse::class, $client->getResponse());
+
+        // the file itself was already removed by BinaryFileResponse::deleteFileAfterSend()
+        $binary = $client->getInternalResponse()->getContent();
+        self::assertNotEmpty($binary);
+
+        $tmp = tempnam(sys_get_temp_dir(), 'kimai-test-export');
+        self::assertIsString($tmp);
+
+        try {
+            file_put_contents($tmp, $binary);
+            $spreadsheet = IOFactory::load($tmp, 0, ['Xlsx']);
+        } finally {
+            unlink($tmp);
+        }
+
+        $content = '';
+
+        foreach ($spreadsheet->getActiveSheet()->toArray(null, false, false, false) as $row) {
+            foreach ($row as $cell) {
+                if ($cell === null) {
+                    continue;
+                }
+                $content .= (string) $cell . "\n";
+            }
+        }
+
+        return $content;
     }
 
     protected function assertInvalidCsrfToken(HttpKernelBrowser $client, string $url, string $expectedRedirect): void

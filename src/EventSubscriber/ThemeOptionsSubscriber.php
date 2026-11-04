@@ -10,6 +10,7 @@
 namespace App\EventSubscriber;
 
 use App\Configuration\LocaleService;
+use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use KevinPapst\TablerBundle\Helper\ContextHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -25,7 +26,8 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
     public function __construct(
         private readonly TokenStorageInterface $storage,
         private readonly ContextHelper $helper,
-        private readonly LocaleService $localeService
+        private readonly LocaleService $localeService,
+        private readonly SystemConfiguration $systemConfiguration,
     )
     {
     }
@@ -48,18 +50,13 @@ final class ThemeOptionsSubscriber implements EventSubscriberInterface
             $this->helper->setIsRightToLeft(true);
         }
 
-        // ignore events like the toolbar where we do not have a token
-        if (null === $this->storage->getToken()) {
-            return;
+        $skin = $this->systemConfiguration->getAuthenticationTheme();
+
+        $user = $this->storage->getToken()?->getUser();
+        if ($user instanceof User) {
+            $skin = $user->getSkin();
         }
 
-        $user = $this->storage->getToken()->getUser();
-
-        if (!($user instanceof User)) {
-            return;
-        }
-
-        $skin = $user->getSkin();
         if ($skin === 'dark') {
             $this->helper->setIsDarkMode(true);
             $this->helper->setThemeAuto(false);

@@ -19,7 +19,7 @@
             {% endif %}
         </div>
         {% block unlock_form %}
-            {% if kimai_config.loginFormActive %}
+            {% if config('loginFormActive') %}
             <form action="{{ path('tabler_login_check'|tabler_route) }}" method="post" autocomplete="off" class="login-box-body security-login">
                 <input type="hidden" name="_remember_me" value="on">
                 <input type="hidden" name="_username" value="{{ app.user.userIdentifier }}">

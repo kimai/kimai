@@ -119,8 +119,9 @@ final class TimesheetService
             throw new InvalidArgumentException('Cannot create timesheet, already persisted');
         }
 
-        if (null === $timesheet->getEnd() && !$this->auth->isGranted('start', $timesheet)) {
-            throw new AccessDeniedException('You are not allowed to start this timesheet record');
+        $permission = ($timesheet->isRunning()) ? 'start' : 'create';
+        if (!$this->auth->isGranted($permission, $timesheet)) {
+            throw new AccessDeniedException(\sprintf('You are not allowed to %s this timesheet record', $permission));
         }
 
         $this->repository->begin();

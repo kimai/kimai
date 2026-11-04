@@ -700,7 +700,7 @@
       </trans-unit>
       <trans-unit id="rvO5ZXf" resname="ROLE_USER" xml:space="preserve">
         <source>ROLE_USER</source>
-        <target state="translated">Kasutaja:</target>
+        <target state="translated">Kasutaja</target>
       </trans-unit>
       <trans-unit id="lfSTZGe" resname="stats.workingTimeToday" xml:space="preserve">
         <source>stats.workingTimeToday</source>

@@ -14,6 +14,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
+/**
+ * @deprecated since 2.54 - see https://www.kimai.org/en/blog/2026/removing-api-passwords
+ */
 final class ApiTokenMigratingListener implements EventSubscriberInterface
 {
     public function __construct(private PasswordHasherFactoryInterface $hasherFactory)

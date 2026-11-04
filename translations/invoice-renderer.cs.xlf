@@ -15,8 +15,8 @@
         <target state="translated">Pracovní výkaz</target>
       </trans-unit>
       <trans-unit id="m1UyfD9" resname="service-date">
-        <source>service-date</source>
-        <target>Živnostník</target>
+        <source>Single service date</source>
+        <target state="translated">Datum poskytnutí služby</target>
       </trans-unit>
       <trans-unit id="7mEUv6C" resname="help.upload">
         <source>help.upload</source>

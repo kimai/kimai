@@ -72,7 +72,7 @@
       </trans-unit>
       <trans-unit id="kMOottI" resname="task.widget_rows" xml:space="preserve" approved="no">
         <source>task.widget_rows</source>
-        <target state="needs-translation">Количество заданий на странице в виджете дашборда</target>
+        <target state="translated">Количество заданий на странице в виджете дашборда</target>
       </trans-unit>
       <trans-unit id="SzbkpWy" resname="task.help.description" xml:space="preserve" approved="no">
         <source>task.help.description</source>

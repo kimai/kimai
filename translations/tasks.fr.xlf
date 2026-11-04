@@ -110,6 +110,46 @@
         <source>task_todo</source>
         <target state="translated">Tâche</target>
       </trans-unit>
+      <trans-unit id="TRpwk3n" resname="board.private" approved="no">
+        <source>board.private</source>
+        <target state="needs-translation">Forum privé</target>
+      </trans-unit>
+      <trans-unit id="K.9A2XH" resname="board.close_task" approved="no">
+        <source>board.close_task</source>
+        <target state="translated">Réaliser cette tâche ?</target>
+      </trans-unit>
+      <trans-unit id="_H1KEu_" resname="board.unassign_user" approved="no">
+        <source>board.unassign_user</source>
+        <target state="translated">Souhaitez-vous supprimer l'utilisateur affecté à cette tâche ?</target>
+      </trans-unit>
+      <trans-unit id="wkzeXtZ" resname="board.move_to" approved="no">
+        <source>board.move_to</source>
+        <target state="translated">Aller à</target>
+      </trans-unit>
+      <trans-unit id="hhrw1nb" resname="board.columns" approved="no">
+        <source>board.columns</source>
+        <target state="translated">Colonnes</target>
+      </trans-unit>
+      <trans-unit id="9.F1FZS" resname="board.add_column" approved="no">
+        <source>board.add_column</source>
+        <target state="translated">Ajouter une colonne</target>
+      </trans-unit>
+      <trans-unit id="SPiQMlQ" resname="board.column.limit" approved="no">
+        <source>board.column.limit</source>
+        <target state="needs-translation">Limite des travaux en cours</target>
+      </trans-unit>
+      <trans-unit id="ad2nQdr" resname="board.columns_invalid" approved="no">
+        <source>board.columns_invalid</source>
+        <target state="translated">La configuration de la colonne n'est pas valide.</target>
+      </trans-unit>
+      <trans-unit id="lu5uNlv" resname="board.filter" approved="no">
+        <source>board.filter</source>
+        <target state="translated">Filtrer les tâches</target>
+      </trans-unit>
+      <trans-unit id="9rA4ixj" resname="board.only_mine" approved="no">
+        <source>board.only_mine</source>
+        <target state="translated">Mes tâches uniquement</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

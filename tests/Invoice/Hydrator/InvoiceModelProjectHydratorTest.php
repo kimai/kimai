@@ -36,6 +36,7 @@ class InvoiceModelProjectHydratorTest extends TestCase
             'project.id',
             'project.name',
             'project.comment',
+            'project.counter',
             'project.number',
             'project.invoice_text',
             'project.order_date',

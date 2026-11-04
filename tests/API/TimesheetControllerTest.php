@@ -13,17 +13,24 @@ use App\API\BaseApiController;
 use App\Entity\Activity;
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\Role;
+use App\Entity\RolePermission;
 use App\Entity\Tag;
+use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\TimesheetTestMetaFieldSubscriberMock;
+use App\Tests\Mocks\TimesheetTestUrlMetaFieldSubscriberMock;
 use App\Timesheet\DateTimeFactory;
+use App\User\PermissionService;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
+use Symfony\Contracts\Cache\CacheInterface;
 
 #[Group('integration')]
 class TimesheetControllerTest extends APIControllerBaseTestCase
@@ -31,17 +38,29 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
     public const DATE_FORMAT = 'Y-m-d H:i:s';
     public const DATE_FORMAT_HTML5 = 'Y-m-d\TH:i:s';
     public const TEST_TIMEZONE = 'Europe/London';
+    /**
+     * Rate fields only for users with the "view_rate" permission: GHSA-fq95-vwvx-w88f
+     */
+    private const TIMESHEET_RATE_FIELDS = ['rate', 'internalRate', 'fixedRate', 'hourlyRate'];
 
     /**
      * @return Timesheet[]
      */
-    protected function importFixtureForUser(string $role, int $amount = 10): array
+    protected function importFixtureForUser(User|string $user, int $amount = 10): array
     {
-        $fixture = new TimesheetFixtures($this->getUserByRole($role), $amount);
+        if (\is_string($user)) {
+            $role = $user;
+            $user = $this->getUserByRole($role);
+        }
+
+        $start = DateTimeFactory::createByUser($user)->createDateTime('first day of this month');
+        $start = $start->setTime(0, 0, 1);
+
+        $fixture = new TimesheetFixtures($user, $amount);
         $fixture->setFixedRate(true);
         $fixture->setHourlyRate(true);
         $fixture->setAllowEmptyDescriptions(false);
-        $fixture->setStartDate((new \DateTime('first day of this month'))->setTime(0, 0, 1));
+        $fixture->setStartDate($start);
 
         return $this->importFixture($fixture);
     }
@@ -65,7 +84,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(10, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0], self::TIMESHEET_RATE_FIELDS);
     }
 
     public function testGetCollectionFull(): void
@@ -82,7 +101,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(10, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('TimesheetCollectionFull', $result[0]);
+        self::assertApiResponseTypeStructure('TimesheetCollectionFull', $result[0], self::TIMESHEET_RATE_FIELDS);
     }
 
     public function testGetCollectionForOtherUser(): void
@@ -121,6 +140,68 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertEquals(10, \count($result));
         self::assertIsArray($result[0]);
         self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
+    }
+
+    public function testGetCollectionForOtherUserDeniedWhenTeamleadIsOnlyPlainMemberOfOwnerTeam(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+
+        $sharedTeam = new Team('timesheet-list-shared');
+        $sharedTeam->addUser($owner);
+        $sharedTeam->addUser($teamlead);
+        $em->persist($sharedTeam);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [], running: false);
+        $ownerId = $owner->getId();
+        self::assertIsInt($ownerId);
+        self::assertNotNull($timesheet->getId());
+
+        $this->request($client, '/api/timesheets', 'GET', ['user' => (string) $ownerId]);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->request($client, '/api/timesheets', 'GET', ['users' => [(string) $ownerId]]);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    public function testGetCollectionForOtherUserAllowedWhenTeamleadOfOwnerTeam(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+
+        $sharedTeam = new Team('timesheet-list-teamlead');
+        $sharedTeam->addUser($owner);
+        $sharedTeam->addTeamlead($teamlead);
+        $em->persist($sharedTeam);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [], running: false);
+        $ownerId = $owner->getId();
+        self::assertIsInt($ownerId);
+        self::assertNotNull($timesheet->getId());
+
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', ['user' => (string) $ownerId]);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertCount(1, $result);
+        self::assertIsArray($result[0]);
+        self::assertSame($ownerId, $result[0]['user']);
+
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', ['users' => [(string) $ownerId]]);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertCount(1, $result);
+        self::assertIsArray($result[0]);
+        self::assertSame($ownerId, $result[0]['user']);
     }
 
     public function testGetCollectionForAllUserIsSecure(): void
@@ -168,7 +249,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(10, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0], self::TIMESHEET_RATE_FIELDS);
     }
 
     public function testGetCollectionForAllUser(): void
@@ -212,18 +293,25 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
 
     public function testGetCollectionWithQuery(): void
     {
-        $modifiedAfter = new \DateTime('-1 hour');
-        $begin = new \DateTime('first day of this month');
-        $begin->setTime(0, 0, 0);
-        $end = new \DateTime('last day of this month');
-        $end->setTime(23, 59, 59);
+        $role = User::ROLE_USER;
+        $client = $this->getClientForAuthenticatedUser($role);
+        $user = $this->getUserByRole($role);
+        $factory = DateTimeFactory::createByUser($user);
+
+        $begin = $factory->createDateTime('first day of this month');
+        $begin = $begin->setTime(0, 0, 0);
+
+        $end = $factory->createDateTime('last day of this month');
+        $end = $end->setTime(23, 59, 59);
+
+        $modifiedAfter = $factory->createDateTime('-20 hour');
 
         $query = [
             'customers' => ['1'],
             'projects' => ['1'],
             'activities' => ['1'],
-            'page' => 2,
-            'size' => 4,
+            'page' => '2',
+            'size' => '4',
             'order' => 'DESC',
             'orderBy' => 'rate',
             'active' => 0,
@@ -233,8 +321,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
             'exported' => 0,
         ];
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importFixtureForUser(User::ROLE_USER, 22);
+        $this->importFixtureForUser($user, 22);
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
         $content = $client->getResponse()->getContent();
         self::assertIsString($content);
@@ -245,16 +332,11 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(4, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0], self::TIMESHEET_RATE_FIELDS);
     }
 
     public function testGetCollectionWithQueryFailsWith404OnOutOfRangedPage(): void
     {
-        $begin = new \DateTime('first day of this month');
-        $begin->setTime(0, 0, 0);
-        $end = new \DateTime('last day of this month');
-        $end->setTime(23, 59, 59);
-
         $query = [
             'page' => 19,
             'size' => 50,
@@ -268,10 +350,16 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
 
     public function testGetCollectionWithSingleParamsQuery(): void
     {
-        $begin = new \DateTime('first day of this month');
-        $begin->setTime(0, 0, 0);
-        $end = new \DateTime('last day of this month');
-        $end->setTime(23, 59, 59);
+        $role = User::ROLE_USER;
+        $client = $this->getClientForAuthenticatedUser($role);
+        $user = $this->getUserByRole($role);
+        $factory = DateTimeFactory::createByUser($user);
+
+        $begin = $factory->create('first day of this month');
+        $begin = $begin->setTime(0, 0, 0);
+
+        $end = $factory->create('last day of this month');
+        $end = $end->setTime(23, 59, 59);
 
         $query = [
             'customer' => '1',
@@ -287,8 +375,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
             'exported' => 0,
         ];
 
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importFixtureForUser(User::ROLE_USER);
+        $this->importFixtureForUser($user);
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
         $content = $client->getResponse()->getContent();
         self::assertIsString($content);
@@ -298,24 +385,28 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(5, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0], self::TIMESHEET_RATE_FIELDS);
     }
 
     public function testExportedFilter(): void
     {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
-        $this->importFixtureForUser(User::ROLE_USER);
+        $role = User::ROLE_USER;
+        $client = $this->getClientForAuthenticatedUser($role);
+        $user = $this->getUserByRole($role);
+        $factory = DateTimeFactory::createByUser($user);
+        $this->importFixtureForUser($user);
 
-        $fixture = new TimesheetFixtures($this->getUserByRole(User::ROLE_USER), 7);
+        $fixture = new TimesheetFixtures($user, 7);
         $fixture->setExported(true);
-        $fixture->setStartDate(new \DateTime('first day of this month'));
+        $fixture->setStartDate($factory->createDateTime('first day of this month 00:00:01'));
         $fixture->setAllowEmptyDescriptions(false);
         $this->importFixture($fixture);
 
-        $begin = new \DateTime('first day of this month');
-        $begin->setTime(0, 0, 0);
-        $end = new \DateTime('last day of this month');
-        $end->setTime(23, 59, 59);
+        $begin = $factory->create('first day of this month');
+        $begin = $begin->setTime(0, 0, 0);
+
+        $end = $factory->create('last day of this month');
+        $end = $end->setTime(23, 59, 59);
 
         $query = [
             'page' => 1,
@@ -334,7 +425,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(7, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0], self::TIMESHEET_RATE_FIELDS);
 
         $query = [
             'page' => 1,
@@ -353,7 +444,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(10, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0], self::TIMESHEET_RATE_FIELDS);
 
         $query = [
             'page' => 1,
@@ -370,7 +461,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(17, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0], self::TIMESHEET_RATE_FIELDS);
     }
 
     public function testGetEntity(): void
@@ -408,7 +499,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $result = json_decode($content, true);
 
         self::assertIsArray($result);
-        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result, self::TIMESHEET_RATE_FIELDS);
 
         $expected = [
             'activity' => 1,
@@ -425,13 +516,265 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
             'duration' => 46500, // 12,916 => rounded 12,92 * 137,21 = 46512
             'exported' => true,
             'metaFields' => [],
-            'hourlyRate' => 137.21,
-            'rate' => 1772.2958,
-            'internalRate' => 1772.2958,
         ];
 
         foreach ($expected as $key => $value) {
             self::assertEquals($value, $result[$key], \sprintf('Field %s has invalid value', $key));
+        }
+
+        // a plain user does not hold "view_rate_own_timesheet", so the monetary
+        // values must not be part of the response, see GHSA-fq95-vwvx-w88f
+        foreach (self::TIMESHEET_RATE_FIELDS as $field) {
+            self::assertArrayNotHasKey($field, $result);
+        }
+    }
+
+    /**
+     * Regression test for GHSA-fq95-vwvx-w88f: the API has to honour the
+     * "view_rate" permission, which the UI, the export and the reporting enforce.
+     */
+    public function testGetEntityRatesAreVisibleWithPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $timesheet = $this->createRatedTimesheet($this->getUserByRole(User::ROLE_TEAMLEAD));
+
+        $this->assertAccessIsGranted($client, '/api/timesheets/' . $timesheet->getId());
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        self::assertEquals(137.21, $result['hourlyRate']);
+        self::assertEquals(1772.2958, $result['rate']);
+        self::assertEquals(1772.2958, $result['internalRate']);
+    }
+
+    /**
+     * Regression test for GHSA-fq95-vwvx-w88f: the collection endpoint must not
+     * leak rate data either.
+     */
+    public function testGetCollectionHidesRatesWithoutPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->importFixtureForUser(User::ROLE_USER, 3);
+
+        $this->assertAccessIsGranted($client, '/api/timesheets');
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+
+        foreach ($result as $row) {
+            self::assertIsArray($row);
+            foreach (self::TIMESHEET_RATE_FIELDS as $field) {
+                self::assertArrayNotHasKey($field, $row);
+            }
+        }
+    }
+
+    /**
+     * Creates a stopped timesheet for the given owner, whose calculated rate
+     * and internal rate are known upfront: 12,92h * 137,21 = 1772,2958.
+     */
+    private function createRatedTimesheet(User $owner): Timesheet
+    {
+        $em = $this->getEntityManager();
+
+        $startDate = new \DateTime('2020-03-27 14:35:59', new \DateTimeZone('Pacific/Tongatapu'));
+        $endDate = (clone $startDate)->modify('+ 46385 seconds');
+
+        $timesheet = new Timesheet();
+        $timesheet
+            ->setHourlyRate(137.21)
+            ->setBegin($startDate)
+            ->setEnd($endDate)
+            ->setUser($owner)
+            ->setProject($em->getRepository(Project::class)->find(1))
+            ->setActivity($em->getRepository(Activity::class)->find(1))
+        ;
+        $em->persist($timesheet);
+        $em->flush();
+
+        return $timesheet;
+    }
+
+    /**
+     * GHSA-fq95-vwvx-w88f: a teamlead holds "view_rate_other_timesheet", so the
+     * rates of another users record (without restricting teams) are serialized.
+     */
+    public function testGetEntityRatesAreVisibleForOtherUsersRecordWithPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $timesheet = $this->createRatedTimesheet($this->getUserByRole(User::ROLE_USER));
+
+        $this->assertAccessIsGranted($client, '/api/timesheets/' . $timesheet->getId());
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        self::assertEquals(137.21, $result['hourlyRate']);
+        self::assertEquals(1772.2958, $result['rate']);
+        self::assertEquals(1772.2958, $result['internalRate']);
+    }
+
+    /**
+     * GHSA-fq95-vwvx-w88f, the high impact configuration from the advisory: a
+     * custom role may see the records of other users ("view_other_timesheet"),
+     * but not their monetary values (no "view_rate_other_timesheet").
+     */
+    public function testGetEntityHidesRatesForOtherUsersRecordWithoutRatePermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->grantPermissions(User::ROLE_USER, 'TEST_VIEW_OTHER_NO_RATES', ['view_other_timesheet']);
+
+        $timesheet = $this->createRatedTimesheet($this->getUserByRole(User::ROLE_TEAMLEAD));
+
+        $this->assertAccessIsGranted($client, '/api/timesheets/' . $timesheet->getId());
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result, self::TIMESHEET_RATE_FIELDS);
+
+        foreach (self::TIMESHEET_RATE_FIELDS as $field) {
+            self::assertArrayNotHasKey($field, $result);
+        }
+    }
+
+    /**
+     * GHSA-fq95-vwvx-w88f: the rate permission is applied per record. A teamlead
+     * whose role has "view_rate_other_timesheet" revoked may see his own rates,
+     * but not the rates of his team members - so a mixed page contains the rate
+     * fields only on his own records.
+     */
+    public function testGetCollectionWithMixedRatePermissionShowsOnlyOwnRates(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+        $owner = $this->getUserByRole(User::ROLE_USER);
+
+        $team = new Team('GHSA-fq95 mixed team');
+        $team->addTeamlead($teamlead);
+        $team->addUser($owner);
+        $em->persist($team);
+        $em->flush();
+
+        // revoke the rate permission for other users records, as an admin would
+        // do it in the permission screen: with a DB override for the built-in role
+        $role = (new Role())->setName(User::ROLE_TEAMLEAD);
+        $em->persist($role);
+        $permissionService = self::getContainer()->get(PermissionService::class);
+        self::assertInstanceOf(PermissionService::class, $permissionService);
+        $revoked = (new RolePermission())->setRole($role)->setPermission('view_rate_other_timesheet')->setAllowed(false);
+        $permissionService->saveRolePermission($revoked);
+
+        try {
+            $own = $this->createRatedTimesheet($teamlead);
+            $this->createRatedTimesheet($owner);
+
+            $query = ['user' => 'all'];
+            $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
+            $content = $client->getResponse()->getContent();
+            self::assertIsString($content);
+            $result = json_decode($content, true);
+
+            self::assertIsArray($result);
+            self::assertCount(2, $result);
+
+            foreach ($result as $row) {
+                self::assertIsArray($row);
+                if ($row['user'] === $teamlead->getId()) {
+                    self::assertEquals(1772.2958, $row['rate']);
+                    self::assertEquals(1772.2958, $row['internalRate']);
+                } else {
+                    self::assertEquals($owner->getId(), $row['user']);
+                    foreach (self::TIMESHEET_RATE_FIELDS as $field) {
+                        self::assertArrayNotHasKey($field, $row);
+                    }
+                }
+            }
+
+            // the single-record route serializes the rates of the own record
+            $this->assertAccessIsGranted($client, '/api/timesheets/' . $own->getId());
+            $content = $client->getResponse()->getContent();
+            self::assertIsString($content);
+            $result = json_decode($content, true);
+
+            self::assertIsArray($result);
+            self::assertEquals(1772.2958, $result['rate']);
+        } finally {
+            // the DB override is rolled back with the test transaction, but the
+            // shared permission cache (PermissionService) survives the test run:
+            // reset it, so later tests (and runs) see the default permissions again
+            $cache = self::getContainer()->get('cache.app');
+            self::assertInstanceOf(CacheInterface::class, $cache);
+            $cache->delete('permissions');
+        }
+    }
+
+    /**
+     * GHSA-fq95-vwvx-w88f: the recent endpoint must not leak rate data either.
+     */
+    public function testRecentActionHidesRatesWithoutPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->createRatedTimesheet($this->getUserByRole(User::ROLE_USER));
+
+        $query = ['begin' => '2020-01-01T00:00:00'];
+        $this->assertAccessIsGranted($client, '/api/timesheets/recent', 'GET', $query);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertNotEmpty($result);
+
+        foreach ($result as $row) {
+            self::assertIsArray($row);
+            self::assertApiResponseTypeStructure('TimesheetCollectionFull', $row, self::TIMESHEET_RATE_FIELDS);
+            foreach (self::TIMESHEET_RATE_FIELDS as $field) {
+                self::assertArrayNotHasKey($field, $row);
+            }
+        }
+    }
+
+    /**
+     * GHSA-fq95-vwvx-w88f: the active endpoint must not leak rate data either.
+     */
+    public function testActiveActionHidesRatesWithoutPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+
+        $fixture = new TimesheetFixtures($this->getUserByRole(User::ROLE_USER));
+        $fixture->setFixedRate(true);
+        $fixture->setHourlyRate(true);
+        $fixture->setStartDate(new \DateTime('-2 hours'));
+        $fixture->setAmountRunning(1);
+        $this->importFixture($fixture);
+
+        $this->request($client, '/api/timesheets/active');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertCount(1, $result);
+
+        foreach ($result as $row) {
+            self::assertIsArray($row);
+            foreach (self::TIMESHEET_RATE_FIELDS as $field) {
+                self::assertArrayNotHasKey($field, $row);
+            }
         }
     }
 
@@ -646,6 +989,39 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $this->assertApiCallValidationError($client->getResponse(), ['project']);
     }
 
+    public function testPostActionRejectsTeamRestrictedVisibleProjectOutsideUsersScope(): void
+    {
+        $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $owner = $this->getUserByRole(User::ROLE_USER);
+        [$restrictedProject] = $this->createTeamRestrictedProjectFixture('post');
+        $globalActivity = $this->getEntityManager()->getRepository(Activity::class)->find(1);
+        self::assertInstanceOf(Activity::class, $globalActivity);
+        self::assertNull($globalActivity->getProject(), 'Sanity check: fixture activity 1 must stay global for the POST PoC.');
+
+        $this->assertProjectIsHiddenFromApi($client, $restrictedProject);
+
+        $data = [
+            'activity' => $globalActivity->getId(),
+            'project' => $restrictedProject->getId(),
+            'begin' => ($dateTime->createDateTime('-8 hours'))->format(self::DATE_FORMAT),
+            'end' => ($dateTime->createDateTime())->format(self::DATE_FORMAT),
+            'description' => 'GHSA-vrr2-create-attempt',
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets', 'POST', [], $json);
+        $this->assertApiCallValidationError($client->getResponse(), ['project' => 'The selected choice is invalid.']);
+
+        self::assertSame(
+            0,
+            $this->getEntityManager()->getRepository(Timesheet::class)->count([
+                'user' => $owner,
+                'description' => 'GHSA-vrr2-create-attempt',
+            ])
+        );
+    }
+
     // check for activity, as this is a required field. It will not be included in the select, as it is
     // already filtered within the repository due to the hidden flag
     public function testPostActionWithInvisibleActivity(): void
@@ -768,12 +1144,15 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
     {
         return [
             ['duration_fixed_begin', User::ROLE_USER, false],
+            ['duration_fixed_begin', User::ROLE_TEAMLEAD, true],
             ['duration_fixed_begin', User::ROLE_ADMIN, true],
             ['duration_fixed_begin', User::ROLE_SUPER_ADMIN, true],
             ['punch', User::ROLE_USER, false],
+            ['punch', User::ROLE_TEAMLEAD, true],
             ['punch', User::ROLE_ADMIN, true],
             ['punch', User::ROLE_SUPER_ADMIN, true],
             ['default', User::ROLE_USER, true],
+            ['default', User::ROLE_TEAMLEAD, true],
             ['default', User::ROLE_ADMIN, true],
             ['default', User::ROLE_SUPER_ADMIN, true]
         ];
@@ -784,6 +1163,45 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
     {
         $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
         $client = $this->getClientForAuthenticatedUser($user);
+        $this->setSystemConfiguration('timesheet.mode', $trackingMode);
+        $data = [
+            'activity' => 1,
+            'project' => 1,
+            'begin' => ($dateTime->createDateTime('-8 hours'))->format('Y-m-d H:m:0'),
+            'end' => ($dateTime->createDateTime())->format('Y-m-d H:m:0'),
+            'description' => 'foo',
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets', 'POST', [], $json);
+        $response = $client->getResponse();
+
+        if ($showTimes) {
+            self::assertTrue($response->isSuccessful());
+        } else {
+            $this->assertApiCallValidationError($response, [], true, [], [], ['begin', 'end']);
+        }
+    }
+
+    /**
+     * @return array<int, array{0: string, 1: string, 2: bool}>
+     */
+    public static function getTrackingModePermissionTestData(): array
+    {
+        return [
+            ['duration_fixed_begin', 'view_other_timesheet', false],
+            ['duration_fixed_begin', 'edit_other_timesheet', true],
+            ['punch', 'view_other_timesheet', false],
+            ['punch', 'edit_other_timesheet', true],
+        ];
+    }
+
+    #[DataProvider('getTrackingModePermissionTestData')]
+    public function testCreateActionWithTrackingModeRequiresEditOtherTimesheet(string $trackingMode, string $permission, bool $showTimes): void
+    {
+        $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->grantPermissions(User::ROLE_USER, 'TEST_API_TIMES', [$permission]);
         $this->setSystemConfiguration('timesheet.mode', $trackingMode);
         $data = [
             'activity' => 1,
@@ -834,6 +1252,46 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertFalse($result['billable']);
     }
 
+    public function testPatchActionRejectsReassigningOwnTimesheetToTeamRestrictedVisibleProject(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $owner = $this->getUserByRole(User::ROLE_USER);
+        $em = $this->getEntityManager();
+
+        $allowedProject = $em->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $allowedProject);
+        $globalActivity = $em->getRepository(Activity::class)->find(1);
+        self::assertInstanceOf(Activity::class, $globalActivity);
+        self::assertNull($globalActivity->getProject(), 'Sanity check: fixture activity 1 must stay global for the PATCH PoC.');
+
+        $timesheet = $this->persistFinishedTimesheet($owner, $allowedProject, $globalActivity, 'GHSA-vrr2-patch-baseline');
+        [$restrictedProject] = $this->createTeamRestrictedProjectFixture('patch');
+
+        $this->assertProjectIsHiddenFromApi($client, $restrictedProject);
+
+        $json = json_encode(['project' => $restrictedProject->getId()]);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $timesheet->getId(), 'PATCH', [], $json);
+        $this->assertApiCallValidationError($client->getResponse(), ['project' => 'The selected choice is invalid.']);
+
+        $em->clear();
+        $reloaded = $em->getRepository(Timesheet::class)->find($timesheet->getId());
+        self::assertInstanceOf(Timesheet::class, $reloaded);
+        self::assertSame($allowedProject->getId(), $reloaded->getProject()?->getId());
+
+        $this->request($client, '/api/timesheets/' . $timesheet->getId(), 'GET', ['full' => 'true']);
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result, self::TIMESHEET_RATE_FIELDS);
+        self::assertSame($allowedProject->getId(), $result['project']);
+        self::assertNotSame($restrictedProject->getId(), $result['project']);
+    }
+
     public function testPatchActionWithInvalidUser(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
@@ -863,6 +1321,77 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $this->request($client, '/api/timesheets/' . $timesheets[0]->getId(), 'PATCH', [], $json);
         $response = $client->getResponse();
         $this->assertApiResponseAccessDenied($response);
+    }
+
+    /**
+     * A ROLE_USER who was made teamlead of a team (membership flag, not the
+     * ROLE_TEAMLEAD role) holds neither create_other_timesheet nor
+     * edit_other_timesheet => do not allow to change the user of his own timesheet.
+     */
+    public function testPatchActionRejectsUserChangeForTeamleadFlaggedUserWithoutOtherTimesheetPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $em = $this->getEntityManager();
+        $attacker = $this->getUserByRole(User::ROLE_USER);
+        $victim = $this->getUserByRole(User::ROLE_TEAMLEAD);
+
+        $team = new Team('timesheet-patch-user-flag');
+        $team->addTeamlead($attacker);
+        $team->addUser($victim);
+        $em->persist($team);
+        $em->flush();
+
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $project);
+        $activity = $em->getRepository(Activity::class)->find(1);
+        self::assertInstanceOf(Activity::class, $activity);
+
+        $timesheet = $this->persistFinishedTimesheet($attacker, $project, $activity, 'patch-user-flag');
+        $timesheetId = $timesheet->getId();
+        self::assertNotNull($timesheetId);
+
+        $json = json_encode(['user' => $victim->getId()]);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $timesheetId, 'PATCH', [], $json);
+        $this->assertApiCallValidationError($client->getResponse(), [], true, [], [], ['user']);
+
+        $em->clear();
+        $reloaded = $em->getRepository(Timesheet::class)->find($timesheetId);
+        self::assertInstanceOf(Timesheet::class, $reloaded);
+        self::assertSame($attacker->getId(), $reloaded->getUser()?->getId());
+    }
+
+    public function testPatchActionAllowsUserChangeForTeamleadOfOwnerTeam(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+        $member = $this->getUserByRole(User::ROLE_USER);
+
+        $team = new Team('timesheet-patch-user-teamlead');
+        $team->addTeamlead($teamlead);
+        $team->addUser($member);
+        $em->persist($team);
+        $em->flush();
+
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $project);
+        $activity = $em->getRepository(Activity::class)->find(1);
+        self::assertInstanceOf(Activity::class, $activity);
+
+        $timesheet = $this->persistFinishedTimesheet($teamlead, $project, $activity, 'patch-user-teamlead');
+        $timesheetId = $timesheet->getId();
+        self::assertNotNull($timesheetId);
+
+        $json = json_encode(['user' => $member->getId()]);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $timesheetId, 'PATCH', [], $json);
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $em->clear();
+        $reloaded = $em->getRepository(Timesheet::class)->find($timesheetId);
+        self::assertInstanceOf(Timesheet::class, $reloaded);
+        self::assertSame($member->getId(), $reloaded->getUser()?->getId());
     }
 
     public function testPatchActionWithUnknownTimesheet(): void
@@ -904,7 +1433,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $result = json_decode($content, true);
 
         self::assertIsArray($result);
-        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result, self::TIMESHEET_RATE_FIELDS);
         self::assertNotEmpty($result['id']);
         self::assertIsNumeric($result['id']);
         $id = $result['id'];
@@ -1037,7 +1566,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertEquals(3, \count($result));
         foreach ($result as $timesheet) {
             self::assertIsArray($timesheet);
-            self::assertApiResponseTypeStructure('TimesheetCollectionFull', $timesheet);
+            self::assertApiResponseTypeStructure('TimesheetCollectionFull', $timesheet, self::TIMESHEET_RATE_FIELDS);
         }
     }
 
@@ -1069,7 +1598,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
 
         self::assertIsArray($result);
         self::assertNotEmpty($result);
-        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result, self::TIMESHEET_RATE_FIELDS);
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
@@ -1156,7 +1685,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(10, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0], self::TIMESHEET_RATE_FIELDS);
 
         $query = ['tags' => ['Test', 'Admin']];
         $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', $query);
@@ -1169,7 +1698,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertNotEmpty($result);
         self::assertEquals(10, \count($result));
         self::assertIsArray($result[0]);
-        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0]);
+        self::assertApiResponseTypeStructure('TimesheetCollection', $result[0], self::TIMESHEET_RATE_FIELDS);
 
         $query = ['tags' => ['Nothing-2-see', 'not-existing-here']];
         $this->request($client, '/api/timesheets', 'GET', $query);
@@ -1198,7 +1727,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $result = json_decode($content, true);
 
         self::assertIsArray($result);
-        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result, self::TIMESHEET_RATE_FIELDS);
         self::assertEmpty($result['description']);
         self::assertEmpty($result['tags']);
 
@@ -1236,7 +1765,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $result = json_decode($content, true);
 
         self::assertIsArray($result);
-        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result, self::TIMESHEET_RATE_FIELDS);
         self::assertEmpty($result['description']);
         self::assertEmpty($result['tags']);
 
@@ -1250,6 +1779,55 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         self::assertEquals(1, $timesheet->getProject()->getId());
         self::assertEmpty($timesheet->getDescription());
         self::assertEmpty($timesheet->getTags());
+    }
+
+    #[DataProvider('getTrackingModeTestData')]
+    public function testRestartActionWithBeginAndTrackingMode(string $trackingMode, string $user, bool $allowBegin): void
+    {
+        $client = $this->getClientForAuthenticatedUser($user);
+        $this->setSystemConfiguration('timesheet.mode', $trackingMode);
+        $timesheets = $this->importFixtureForUser($user);
+        $id = $timesheets[0]->getId();
+
+        $begin = new \DateTime('2019-11-27 13:55:00');
+        $this->request($client, '/api/timesheets/' . $id . '/restart', 'PATCH', ['begin' => $begin->format(BaseApiController::DATE_FORMAT_PHP)]);
+
+        if ($allowBegin) {
+            self::assertTrue($client->getResponse()->isSuccessful());
+        } else {
+            $this->assertApiResponseAccessDenied($client->getResponse());
+        }
+    }
+
+    #[DataProvider('getTrackingModePermissionTestData')]
+    public function testRestartActionWithBeginRequiresEditOtherTimesheet(string $trackingMode, string $permission, bool $allowBegin): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->grantPermissions(User::ROLE_USER, 'TEST_API_TIMES', [$permission]);
+        $this->setSystemConfiguration('timesheet.mode', $trackingMode);
+        $timesheets = $this->importFixtureForUser(User::ROLE_USER);
+        $id = $timesheets[0]->getId();
+
+        $begin = new \DateTime('2019-11-27 13:55:00');
+        $this->request($client, '/api/timesheets/' . $id . '/restart', 'PATCH', ['begin' => $begin->format(BaseApiController::DATE_FORMAT_PHP)]);
+
+        if ($allowBegin) {
+            self::assertTrue($client->getResponse()->isSuccessful());
+        } else {
+            $this->assertApiResponseAccessDenied($client->getResponse());
+        }
+    }
+
+    #[DataProvider('getTrackingModeTestData')]
+    public function testRestartActionWithoutBeginAndTrackingMode(string $trackingMode, string $user): void
+    {
+        $client = $this->getClientForAuthenticatedUser($user);
+        $this->setSystemConfiguration('timesheet.mode', $trackingMode);
+        $timesheets = $this->importFixtureForUser($user);
+        $id = $timesheets[0]->getId();
+
+        $this->request($client, '/api/timesheets/' . $id . '/restart', 'PATCH');
+        self::assertTrue($client->getResponse()->isSuccessful());
     }
 
     public function testRestartActionWithCopyData(): void
@@ -1282,7 +1860,7 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $result = json_decode($content, true);
 
         self::assertIsArray($result);
-        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result, self::TIMESHEET_RATE_FIELDS);
         self::assertEquals('foo', $result['description']);
         self::assertEquals([['name' => 'sdfsdf', 'value' => 'nnnnn'], ['name' => '1234567890', 'value' => '1234567890']], $result['metaFields']);
         self::assertEquals(['another', 'testing', 'bar'], $result['tags']);
@@ -1373,6 +1951,72 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $this->assertEntityNotFoundForPatch(User::ROLE_ADMIN, '/api/timesheets/11/duplicate', []);
     }
 
+    // ------------------------------------------------------------------
+    // GHSA-c6w6-57jj-62vh — restart/duplicate after project access revocation.
+    //
+    // "restart" and "duplicate" derive a NEW timesheet from a historical
+    // entry the user still owns. Once the user's team access to the underlying
+    // project/activity is revoked, neither operation may create a new record
+    // under it. The data write itself is already blocked by
+    // TimesheetTeamAccessValidator (since 2.57); these tests additionally pin
+    // that the TimesheetVoter denies the request at the authorization layer —
+    // a clean 403, not an incidental 400 from downstream validation.
+    // ------------------------------------------------------------------
+
+    public function testRestartAndDuplicateDeniedAfterProjectAccessRevoked(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+
+        // The customer is restricted to a team the user is NOT a member of:
+        // the user's access to this project/activity has been revoked, but
+        // their historical timesheet still references it.
+        $revokedTeam = new Team('GHSA-c6w6 team without access');
+        $em->persist($revokedTeam);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [$revokedTeam], running: false);
+        $id = $timesheet->getId();
+        self::assertIsInt($id);
+
+        $before = $this->getEntityManager()->getRepository(Timesheet::class)->count([]);
+
+        // PATCH + GET .../restart
+        $this->request($client, '/api/timesheets/' . $id . '/restart', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        // PATCH .../duplicate
+        $this->request($client, '/api/timesheets/' . $id . '/duplicate', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        // No new record may have been persisted under the revoked project.
+        $after = $this->getEntityManager()->getRepository(Timesheet::class)->count([]);
+        self::assertSame($before, $after, 'restart/duplicate leaked through and created a new timesheet under the revoked project');
+    }
+
+    public function testRestartAndDuplicateAllowedWhenUserStillHasProjectAccess(): void
+    {
+        // Positive control: as long as the user still has team access to the
+        // project/activity, restart and duplicate keep working.
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+
+        $team = new Team('GHSA-c6w6 team with access');
+        $team->addUser($owner);
+        $em->persist($team);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [$team], running: false);
+        $id = $timesheet->getId();
+        self::assertIsInt($id);
+
+        $this->request($client, '/api/timesheets/' . $id . '/restart', 'PATCH');
+        self::assertTrue($client->getResponse()->isSuccessful(), 'restart must succeed while the user still has project access');
+
+        $this->request($client, '/api/timesheets/' . $id . '/duplicate', 'PATCH');
+        self::assertTrue($client->getResponse()->isSuccessful(), 'duplicate must succeed while the user still has project access');
+    }
+
     public function testExportAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
@@ -1439,6 +2083,18 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         ]);
     }
 
+    public function testMetaActionThrowsExceptionOnNonScalarName(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $timesheets = $this->importFixtureForUser(User::ROLE_USER);
+        $id = $timesheets[0]->getId();
+
+        $this->assertExceptionForMethod($client, '/api/timesheets/' . $id . '/meta', 'PATCH', ['name' => ['X'], 'value' => 'X'], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
     public function testMetaActionThrowsExceptionOnMissingValue(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
@@ -1446,8 +2102,8 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $id = $timesheets[0]->getId();
 
         $this->assertExceptionForMethod($client, '/api/timesheets/' . $id . '/meta', 'PATCH', ['name' => 'X'], [
-            'code' => Response::HTTP_NOT_FOUND,
-            'message' => 'Not Found'
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
         ]);
     }
 
@@ -1461,6 +2117,42 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
             'code' => Response::HTTP_NOT_FOUND,
             'message' => 'Not Found'
         ]);
+    }
+
+    public function testMetaActionRejectsUnsafeUrl(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $timesheets = $this->importFixtureForUser(User::ROLE_USER);
+        $id = $timesheets[0]->getId();
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new TimesheetTestUrlMetaFieldSubscriberMock());
+
+        $json = json_encode(['name' => 'homepage', 'value' => 'javascript://%0Aalert(1)']);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $id . '/meta', 'PATCH', [], $json);
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['homepage']);
+    }
+
+    public function testMetaActionRejectsNonScalarValue(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $timesheets = $this->importFixtureForUser(User::ROLE_USER);
+        $id = $timesheets[0]->getId();
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new TimesheetTestUrlMetaFieldSubscriberMock());
+
+        $json = json_encode(['name' => 'homepage', 'value' => ['https://www.kimai.org']]);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $id . '/meta', 'PATCH', [], $json);
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['homepage']);
     }
 
     public function testMetaAction(): void
@@ -1487,12 +2179,763 @@ class TimesheetControllerTest extends APIControllerBaseTestCase
         $result = json_decode($content, true);
 
         self::assertIsArray($result);
-        self::assertApiResponseTypeStructure('TimesheetEntity', $result);
+        self::assertApiResponseTypeStructure('TimesheetEntity', $result, self::TIMESHEET_RATE_FIELDS);
         self::assertEquals(['name' => 'metatestmock', 'value' => 'another,testing,bar'], $result['metaFields'][0]);
 
         $em = $this->getEntityManager();
         /** @var Timesheet $timesheet */
         $timesheet = $em->getRepository(Timesheet::class)->find($id);
         self::assertEquals('another,testing,bar', $timesheet->getMetaField('metatestmock')->getValue());
+    }
+
+    // ------------------------------------------------------------------
+    // CVE-2024-29200 / GHSA-cj3c-5xpm-cx94 — per-record IDOR regression suite.
+    //
+    // The list endpoint fix (TimesheetRepository::addPermissionCriteria) covers
+    // GET /api/timesheets only. The per-record routes load a Timesheet by id
+    // and rely entirely on TimesheetVoter for authorisation. Previously
+    // the voter only asked "is this the caller's own entry?" — so a teamlead
+    // with view_other_timesheet could read, mutate or delete any timesheet by
+    // id, regardless of team scope. These tests pin the new team-scoped
+    // behaviour (RolePermissionManager::checkTeamAccessTimesheet) on every
+    // affected route.
+    // ------------------------------------------------------------------
+
+    public function testCveIdorTeamleadCannotReachAnyPerRecordRouteWhenCustomerTeamRestricts(): void
+    {
+        // Direct reproduction of the security advisory's PoC. The customer
+        // belongs to a team the teamlead is not in; the timesheet owner is
+        // a different user; the teamlead must be denied on every per-record
+        // route, not just on GET /api/timesheets.
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+
+        $ownerTeam = new Team('owner team');
+        $ownerTeam->addUser($owner);
+        $em->persist($ownerTeam);
+
+        $customerTeam = new Team('customer team');
+        $customerTeam->addUser($owner);
+        $em->persist($customerTeam);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [$customerTeam], running: false);
+        $id = $timesheet->getId();
+        self::assertIsInt($id);
+
+        // 1) GET /api/timesheets/{id}
+        $this->assertApiAccessDenied($client, '/api/timesheets/' . $id);
+
+        // 2) PATCH /api/timesheets/{id}
+        $patch = json_encode(['description' => 'HIJACKED_BY_BOB']);
+        self::assertIsString($patch);
+        $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], $patch);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        // 3) PATCH /api/timesheets/{id}/stop is access-denied; 4) GET .../stop is no longer routable
+        $this->request($client, '/api/timesheets/' . $id . '/stop', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+        $this->request($client, '/api/timesheets/' . $id . '/stop', 'GET');
+        self::assertEquals(Response::HTTP_METHOD_NOT_ALLOWED, $client->getResponse()->getStatusCode());
+
+        // 5) PATCH /api/timesheets/{id}/restart is access-denied; 6) GET .../restart is no longer routable
+        $this->request($client, '/api/timesheets/' . $id . '/restart', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+        $this->request($client, '/api/timesheets/' . $id . '/restart', 'GET');
+        self::assertEquals(Response::HTTP_METHOD_NOT_ALLOWED, $client->getResponse()->getStatusCode());
+
+        // 7) PATCH /api/timesheets/{id}/duplicate
+        $this->request($client, '/api/timesheets/' . $id . '/duplicate', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        // 8) PATCH /api/timesheets/{id}/export
+        $this->request($client, '/api/timesheets/' . $id . '/export', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        // 9) PATCH /api/timesheets/{id}/meta
+        $meta = json_encode(['name' => 'metatestmock', 'value' => 'pwned']);
+        self::assertIsString($meta);
+        $this->request($client, '/api/timesheets/' . $id . '/meta', 'PATCH', [], $meta);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        // 10) DELETE /api/timesheets/{id}  — verified last because it is destructive.
+        $this->request($client, '/api/timesheets/' . $id, 'DELETE');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        // The timesheet must still be in the database after every attempted attack.
+        self::assertNotNull(
+            $this->getEntityManager()->getRepository(Timesheet::class)->find($id),
+            'PoC: DELETE leaked through and the row was removed from the database.'
+        );
+    }
+
+    public function testCveIdorTeamleadAsPlainMemberOfOwnerTeamCannotReachAnyPerRecordRoute(): void
+    {
+        // No customer/project/activity team restriction — only the owner is in
+        // a team. The teamlead is a plain member of that same team. Plain
+        // membership must NOT be enough to reach a foreign user's timesheet
+        // via per-record routes (RolePermissionManager::checkTeamLeadAccess).
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+
+        $sharedTeam = new Team('shared');
+        $sharedTeam->addUser($owner);
+        $sharedTeam->addUser($teamlead); // plain member, not addTeamlead()
+        $em->persist($sharedTeam);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [], running: false);
+        $id = $timesheet->getId();
+        self::assertIsInt($id);
+
+        $this->assertApiAccessDenied($client, '/api/timesheets/' . $id);
+
+        $patch = json_encode(['description' => 'HIJACKED_BY_BOB']);
+        self::assertIsString($patch);
+        $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], $patch);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->request($client, '/api/timesheets/' . $id . '/stop', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->request($client, '/api/timesheets/' . $id . '/restart', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->request($client, '/api/timesheets/' . $id . '/duplicate', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->request($client, '/api/timesheets/' . $id . '/export', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $meta = json_encode(['name' => 'metatestmock', 'value' => 'pwned']);
+        self::assertIsString($meta);
+        $this->request($client, '/api/timesheets/' . $id . '/meta', 'PATCH', [], $meta);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->request($client, '/api/timesheets/' . $id, 'DELETE');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    public function testTeamleadOfOwnerTeamCanAccessTimesheetOnPerRecordRoutes(): void
+    {
+        // Positive control: when the teamlead is actually the teamlead of the
+        // owner's team and there is no customer/project/activity restriction,
+        // they pass the new team gate.
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+
+        $sharedTeam = new Team('shared');
+        $sharedTeam->addUser($owner);
+        $sharedTeam->addTeamlead($teamlead);
+        $em->persist($sharedTeam);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [], running: false);
+        $id = $timesheet->getId();
+        self::assertIsInt($id);
+
+        // GET — read access succeeds.
+        $this->assertAccessIsGranted($client, '/api/timesheets/' . $id);
+
+        // PATCH — mutation succeeds.
+        $patch = json_encode(['description' => 'edited by teamlead']);
+        self::assertIsString($patch);
+        $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], $patch);
+        self::assertTrue($client->getResponse()->isSuccessful(), 'PATCH should succeed when teamlead is teamlead of owner team');
+
+        // /duplicate — succeeds (project + activity visible).
+        $this->request($client, '/api/timesheets/' . $id . '/duplicate', 'PATCH');
+        self::assertTrue($client->getResponse()->isSuccessful(), 'duplicate should succeed for legitimate teamlead');
+
+        // /export — succeeds, ROLE_TEAMLEAD has edit_export_other_timesheet.
+        $this->request($client, '/api/timesheets/' . $id . '/export', 'PATCH');
+        self::assertTrue($client->getResponse()->isSuccessful(), 'export should succeed for legitimate teamlead');
+    }
+
+    public function testCustomerTeamRestrictionStillBlocksLegitimateTeamleadOfOwnerTeam(): void
+    {
+        // Even with the teamlead being the teamlead of the owner's team, the
+        // customer-level team gate must still apply. A teamlead may not bypass
+        // a customer's team restriction just because they happen to lead the
+        // owner's team.
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+
+        $ownerTeam = new Team('owner team');
+        $ownerTeam->addUser($owner);
+        $ownerTeam->addTeamlead($teamlead);
+        $em->persist($ownerTeam);
+
+        // Customer team has only the owner; the teamlead is NOT a member.
+        $customerTeam = new Team('customer team');
+        $customerTeam->addUser($owner);
+        $em->persist($customerTeam);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [$customerTeam], running: false);
+        $id = $timesheet->getId();
+        self::assertIsInt($id);
+
+        $this->assertApiAccessDenied($client, '/api/timesheets/' . $id);
+
+        $patch = json_encode(['description' => 'should not work']);
+        self::assertIsString($patch);
+        $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], $patch);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->request($client, '/api/timesheets/' . $id, 'DELETE');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    public function testOwnerCanAlwaysAccessOwnTimesheetEvenWithRestrictiveTeams(): void
+    {
+        // Owner short-circuit: the team gate must NOT apply when the caller is
+        // also the timesheet's user. Even a customer team locked to other
+        // users plus an owner-only team must not prevent self-access.
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+
+        $customerTeam = new Team('customer team excluding owner');
+        // owner is NOT a member of the customer team — checkTeamAccessProject
+        // would normally deny. Owner short-circuit must bypass it.
+        $em->persist($customerTeam);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [$customerTeam], running: false);
+        $id = $timesheet->getId();
+        self::assertIsInt($id);
+
+        $this->assertAccessIsGranted($client, '/api/timesheets/' . $id);
+
+        $patch = json_encode(['description' => 'self edit']);
+        self::assertIsString($patch);
+        $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], $patch);
+        self::assertTrue($client->getResponse()->isSuccessful(), 'Owner must be able to edit own timesheet');
+    }
+
+    public function testSuperAdminCanAccessTimesheetDespiteRestrictiveTeams(): void
+    {
+        // canSeeAllData via isSuperAdmin() — bypasses every team gate, on
+        // every per-record route.
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+
+        $ownerTeam = new Team('owner team');
+        $ownerTeam->addUser($owner);
+        $em->persist($ownerTeam);
+
+        $customerTeam = new Team('customer team excluding super admin');
+        $customerTeam->addUser($owner);
+        $em->persist($customerTeam);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [$customerTeam], running: false);
+        $id = $timesheet->getId();
+        self::assertIsInt($id);
+
+        $this->assertAccessIsGranted($client, '/api/timesheets/' . $id);
+
+        $patch = json_encode(['description' => 'super admin edit']);
+        self::assertIsString($patch);
+        $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], $patch);
+        self::assertTrue($client->getResponse()->isSuccessful(), 'SUPER_ADMIN must be able to edit any timesheet');
+
+        $this->request($client, '/api/timesheets/' . $id, 'DELETE');
+        self::assertEquals(Response::HTTP_NO_CONTENT, $client->getResponse()->getStatusCode());
+    }
+
+    public function testCveIdorOnRunningTimesheetStopRoutesAreBlocked(): void
+    {
+        // /stop targets a running timesheet. Verifies that even when the route
+        // would otherwise be functional, the team gate denies access.
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+
+        $customerTeam = new Team('customer team');
+        $customerTeam->addUser($owner);
+        $em->persist($customerTeam);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [$customerTeam], running: true);
+        $id = $timesheet->getId();
+        self::assertIsInt($id);
+        self::assertNull($timesheet->getEnd(), 'sanity: timesheet must be running for /stop');
+
+        $this->request($client, '/api/timesheets/' . $id . '/stop', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->request($client, '/api/timesheets/' . $id . '/stop', 'GET');
+        self::assertEquals(Response::HTTP_METHOD_NOT_ALLOWED, $client->getResponse()->getStatusCode());
+
+        // Confirm side-effect-free: timesheet must still be running.
+        $em->clear();
+        $reloaded = $em->getRepository(Timesheet::class)->find($id);
+        self::assertInstanceOf(Timesheet::class, $reloaded);
+        self::assertNull($reloaded->getEnd(), '/stop must not have stopped the timesheet behind the team gate');
+    }
+
+    public function testTeamleadFromUnrelatedTeamCannotAccessTimesheetById(): void
+    {
+        // Mirrors the "bob-from-TeamB attacks alice-in-TeamA" PoC from the
+        // advisory: both users have teams, but those teams are completely
+        // unrelated. The attacker happens to be a teamlead of his own team.
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+        $owner = $this->getUserByRole(User::ROLE_USER);
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+
+        $teamA = new Team('TeamA — owner only');
+        $teamA->addUser($owner);
+
+        $teamB = new Team('TeamB — attacker only');
+        $teamB->addTeamlead($teamlead);
+
+        $customerTeam = new Team('customer team — TeamA scope');
+        $customerTeam->addUser($owner);
+
+        $em->persist($teamA);
+        $em->persist($teamB);
+        $em->persist($customerTeam);
+
+        $timesheet = $this->persistRestrictedTimesheet($owner, [$customerTeam], running: false);
+        $id = $timesheet->getId();
+        self::assertIsInt($id);
+
+        $this->assertApiAccessDenied($client, '/api/timesheets/' . $id);
+
+        $patch = json_encode(['description' => 'HIJACKED_BY_BOB']);
+        self::assertIsString($patch);
+        $this->request($client, '/api/timesheets/' . $id, 'PATCH', [], $patch);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $this->request($client, '/api/timesheets/' . $id, 'DELETE');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        // Description must not have been mutated.
+        $em->clear();
+        $reloaded = $em->getRepository(Timesheet::class)->find($id);
+        self::assertInstanceOf(Timesheet::class, $reloaded);
+        self::assertSame('ALICE_SECRET', $reloaded->getDescription(), 'PATCH leaked through and rewrote the description.');
+    }
+
+    /**
+     * @param list<Team> $customerTeams teams to attach to the customer (= the project's customer)
+     */
+    private function persistRestrictedTimesheet(User $owner, array $customerTeams, bool $running): Timesheet
+    {
+        $em = $this->getEntityManager();
+
+        $customer = new Customer('CVE-2024-29200 customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone(self::TEST_TIMEZONE);
+        $customer->setVisible(true);
+        foreach ($customerTeams as $team) {
+            $customer->addTeam($team);
+        }
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('CVE-2024-29200 project');
+        $project->setCustomer($customer);
+        $project->setVisible(true);
+        $em->persist($project);
+
+        $activity = new Activity();
+        $activity->setName('CVE-2024-29200 activity');
+        $activity->setProject($project);
+        $activity->setVisible(true);
+        $em->persist($activity);
+
+        // Flush the catalog entities first so they have ids before any Doctrine
+        // subscriber tries to query them while persisting the timesheet
+        // (RateService re-loads the activity inside the timesheet onFlush hook).
+        $em->flush();
+
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+        $timesheet->setBegin(new \DateTime('-2 hours'));
+        $timesheet->setDescription('ALICE_SECRET');
+        if (!$running) {
+            $end = new \DateTime('-1 hour');
+            $timesheet->setEnd($end);
+            $timesheet->setDuration(3600);
+        }
+        $em->persist($timesheet);
+        $em->flush();
+
+        return $timesheet;
+    }
+
+    /**
+     * @return array{0: Project, 1: Activity}
+     */
+    private function createTeamRestrictedProjectFixture(string $suffix): array
+    {
+        $em = $this->getEntityManager();
+
+        $restrictedTeam = new Team('GHSA-vrr2 team ' . $suffix);
+        $restrictedTeam->addUser($this->getUserByRole(User::ROLE_TEAMLEAD));
+        $em->persist($restrictedTeam);
+
+        $customer = new Customer('GHSA-vrr2 customer ' . $suffix);
+        $customer->setCountry('DE');
+        $customer->setCurrency('CHF');
+        $customer->setTimezone(self::TEST_TIMEZONE);
+        $customer->setVisible(true);
+        $customer->addTeam($restrictedTeam);
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('GHSA-vrr2 project ' . $suffix);
+        $project->setCustomer($customer);
+        $project->setVisible(true);
+        $em->persist($project);
+
+        $activity = new Activity();
+        $activity->setName('GHSA-vrr2 activity ' . $suffix);
+        $activity->setProject($project);
+        $activity->setVisible(true);
+        $em->persist($activity);
+
+        $em->flush();
+
+        return [$project, $activity];
+    }
+
+    private function assertProjectIsHiddenFromApi(HttpKernelBrowser $client, Project $project): void
+    {
+        $this->assertAccessIsGranted($client, '/api/projects');
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+
+        self::assertIsArray($result);
+        self::assertNotContains($project->getId(), array_column($result, 'id'));
+    }
+
+    /**
+     * Regression test for GHSA-c6j4-35fc-x3hw.
+     *
+     * The collection endpoint has to apply the same activity team boundary as the
+     * voter, which protects the single entity endpoint.
+     */
+    public function testGetCollectionHidesForeignActivityTeams(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $em = $this->getEntityManager();
+
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+        $member = $this->getUserByRole(User::ROLE_USER);
+
+        $ownTeam = new Team('GHSA-c6j4 api own team');
+        $ownTeam->addTeamlead($teamlead);
+        $ownTeam->addUser($member);
+        $em->persist($ownTeam);
+
+        $foreignTeam = new Team('GHSA-c6j4 api foreign team');
+        $foreignTeam->addTeamlead($member);
+        $em->persist($foreignTeam);
+
+        $customer = new Customer('GHSA-c6j4 api customer');
+        $customer->setCountry('DE');
+        $customer->setTimezone('Europe/Berlin');
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('GHSA-c6j4 api project');
+        $project->setCustomer($customer);
+        $em->persist($project);
+
+        $restrictedActivity = new Activity();
+        $restrictedActivity->setName('GHSA-c6j4 api restricted activity');
+        $restrictedActivity->setProject($project);
+        $foreignTeam->addActivity($restrictedActivity);
+        $em->persist($restrictedActivity);
+
+        $em->flush();
+
+        $timesheet = $this->persistFinishedTimesheet($member, $project, $restrictedActivity, 'GHSA-c6j4');
+        $timesheetId = $timesheet->getId();
+        self::assertIsInt($timesheetId);
+
+        // the single entity endpoint denies the record ...
+        $this->assertApiAccessDenied($client, '/api/timesheets/' . $timesheetId, 'Access denied.');
+
+        // ... so the collection must not return it either
+        $this->assertAccessIsGranted($client, '/api/timesheets', 'GET', ['user' => $member->getId()]);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+
+        foreach ($result as $row) {
+            self::assertIsArray($row);
+            self::assertNotEquals($timesheetId, $row['id']);
+        }
+    }
+
+    private function persistFinishedTimesheet(User $owner, Project $project, Activity $activity, string $description): Timesheet
+    {
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+        $timesheet->setBegin(new \DateTime('-2 hours'));
+        $timesheet->setEnd(new \DateTime('-1 hour'));
+        $timesheet->setDuration(3600);
+        $timesheet->setDescription($description);
+
+        $em = $this->getEntityManager();
+        $em->persist($timesheet);
+        $em->flush();
+
+        return $timesheet;
+    }
+
+    /**
+     * @return array{0: Project, 1: Activity}
+     */
+    private function createLockedProjectFixture(string $suffix, ?string $lockedUntil): array
+    {
+        $em = $this->getEntityManager();
+
+        $customer = new Customer('locked customer ' . $suffix);
+        $customer->setCountry('DE');
+        $customer->setCurrency('EUR');
+        $customer->setTimezone(self::TEST_TIMEZONE);
+        $customer->setVisible(true);
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('locked project ' . $suffix);
+        $project->setCustomer($customer);
+        $project->setVisible(true);
+        if ($lockedUntil !== null) {
+            $project->setLockedUntil(new \DateTimeImmutable($lockedUntil, new \DateTimeZone(self::TEST_TIMEZONE)));
+        }
+        $em->persist($project);
+
+        $activity = new Activity();
+        $activity->setName('locked activity ' . $suffix);
+        $activity->setProject($project);
+        $activity->setVisible(true);
+        $em->persist($activity);
+
+        $em->flush();
+
+        return [$project, $activity];
+    }
+
+    private function persistTimesheetForProject(User $owner, Project $project, Activity $activity, string $begin, ?string $end): Timesheet
+    {
+        $timesheet = new Timesheet();
+        $timesheet->setUser($owner);
+        $timesheet->setProject($project);
+        $timesheet->setActivity($activity);
+        $timesheet->setBegin(new \DateTime($begin, new \DateTimeZone(self::TEST_TIMEZONE)));
+        $timesheet->setDescription('LOCKED_RECORD');
+        if ($end !== null) {
+            $timesheet->setEnd(new \DateTime($end, new \DateTimeZone(self::TEST_TIMEZONE)));
+        }
+
+        $em = $this->getEntityManager();
+        $em->persist($timesheet);
+        $em->flush();
+
+        return $timesheet;
+    }
+
+    public function testPatchIsDeniedForLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+        [$project, $activity] = $this->createLockedProjectFixture('patch', '-1 month');
+        $timesheet = $this->persistTimesheetForProject($user, $project, $activity, '-2 months', '-2 months +1 hour');
+
+        $json = json_encode(['description' => 'changed']);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $timesheet->getId(), 'PATCH', [], $json);
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        $reloaded = $em->getRepository(Timesheet::class)->find($timesheet->getId());
+        self::assertInstanceOf(Timesheet::class, $reloaded);
+        self::assertSame('LOCKED_RECORD', $reloaded->getDescription());
+    }
+
+    public function testDeleteIsDeniedForLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+        [$project, $activity] = $this->createLockedProjectFixture('delete', '-1 month');
+        $timesheet = $this->persistTimesheetForProject($user, $project, $activity, '-2 months', '-2 months +1 hour');
+
+        $this->request($client, '/api/timesheets/' . $timesheet->getId(), 'DELETE');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        self::assertInstanceOf(Timesheet::class, $em->getRepository(Timesheet::class)->find($timesheet->getId()));
+    }
+
+    public function testDuplicateIsDeniedForLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+        [$project, $activity] = $this->createLockedProjectFixture('duplicate', '-1 month');
+        $timesheet = $this->persistTimesheetForProject($user, $project, $activity, '-2 months', '-2 months +1 hour');
+
+        $this->request($client, '/api/timesheets/' . $timesheet->getId() . '/duplicate', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+    }
+
+    public function testStopIsDeniedForLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+        [$project, $activity] = $this->createLockedProjectFixture('stop', '-1 month');
+        // started before the lock date and still running
+        $timesheet = $this->persistTimesheetForProject($user, $project, $activity, '-2 months', null);
+
+        $this->request($client, '/api/timesheets/' . $timesheet->getId() . '/stop', 'PATCH');
+        $this->assertApiResponseAccessDenied($client->getResponse());
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        $reloaded = $em->getRepository(Timesheet::class)->find($timesheet->getId());
+        self::assertInstanceOf(Timesheet::class, $reloaded);
+        self::assertTrue($reloaded->isRunning(), 'The running record was stopped inside a locked period.');
+    }
+
+    public function testRunningTimesheetCanBeMovedOutOfLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+        [$project, $activity] = $this->createLockedProjectFixture('rebook', '-1 month');
+        // started before the lock date and still running, so it cannot be stopped
+        $timesheet = $this->persistTimesheetForProject($user, $project, $activity, '-2 months', null);
+
+        // it must stay possible to move it to a date after the lock, otherwise it is stuck forever
+        $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
+        $json = json_encode([
+            'begin' => ($dateTime->createDateTime('-2 hours'))->format('Y-m-d\TH:i:s'),
+            'end' => ($dateTime->createDateTime('-1 hour'))->format('Y-m-d\TH:i:s'),
+        ]);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $timesheet->getId(), 'PATCH', [], $json);
+        self::assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        $reloaded = $em->getRepository(Timesheet::class)->find($timesheet->getId());
+        self::assertInstanceOf(Timesheet::class, $reloaded);
+        self::assertFalse($reloaded->isRunning());
+        $begin = $reloaded->getBegin();
+        self::assertInstanceOf(\DateTime::class, $begin);
+        self::assertFalse($project->isLockedAtDate($begin));
+    }
+
+    public function testRunningTimesheetCannotBeChangedInsideLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+        [$project, $activity] = $this->createLockedProjectFixture('rebook-fail', '-1 month');
+        $timesheet = $this->persistTimesheetForProject($user, $project, $activity, '-2 months', null);
+
+        // editing is allowed, but saving is rejected as long as the begin date stays inside the lock
+        $json = json_encode(['description' => 'changed']);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $timesheet->getId(), 'PATCH', [], $json);
+
+        $this->assertApiCallValidationError($client->getResponse(), []);
+        self::assertStringContainsString('The project is locked until', (string) $client->getResponse()->getContent());
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        $reloaded = $em->getRepository(Timesheet::class)->find($timesheet->getId());
+        self::assertInstanceOf(Timesheet::class, $reloaded);
+        self::assertSame('LOCKED_RECORD', $reloaded->getDescription());
+    }
+
+    public function testPostIsRejectedForLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        [$project, $activity] = $this->createLockedProjectFixture('post', '-1 month');
+
+        $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
+        $data = [
+            'activity' => $activity->getId(),
+            'project' => $project->getId(),
+            'begin' => ($dateTime->createDateTime('-2 months'))->format('Y-m-d\TH:i:s'),
+            'end' => ($dateTime->createDateTime('-2 months +1 hour'))->format('Y-m-d\TH:i:s'),
+            'description' => 'must not be created',
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets', 'POST', [], $json);
+
+        $this->assertApiCallValidationError($client->getResponse(), []);
+        // the error message names the date up to which the project is locked
+        self::assertStringContainsString('The project is locked until', (string) $client->getResponse()->getContent());
+    }
+
+    public function testPostIsAllowedAfterLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        [$project, $activity] = $this->createLockedProjectFixture('post-after', '-1 month');
+
+        $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
+        $data = [
+            'activity' => $activity->getId(),
+            'project' => $project->getId(),
+            'begin' => ($dateTime->createDateTime('-2 hours'))->format('Y-m-d\TH:i:s'),
+            'end' => ($dateTime->createDateTime('-1 hour'))->format('Y-m-d\TH:i:s'),
+            'description' => 'after the lock',
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets', 'POST', [], $json);
+        self::assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
+    }
+
+    public function testPatchCannotMoveRecordIntoLockedProjectPeriod(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+        [$project, $activity] = $this->createLockedProjectFixture('patch-into', '-1 month');
+        // the record itself is not locked, it starts after the lock date
+        $timesheet = $this->persistTimesheetForProject($user, $project, $activity, '-2 hours', '-1 hour');
+
+        $dateTime = new DateTimeFactory(new \DateTimeZone(self::TEST_TIMEZONE));
+        $json = json_encode([
+            'begin' => ($dateTime->createDateTime('-2 months'))->format('Y-m-d\TH:i:s'),
+            'end' => ($dateTime->createDateTime('-2 months +1 hour'))->format('Y-m-d\TH:i:s'),
+        ]);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $timesheet->getId(), 'PATCH', [], $json);
+
+        $this->assertApiCallValidationError($client->getResponse(), []);
+        // the error message names the date up to which the project is locked
+        self::assertStringContainsString('The project is locked until', (string) $client->getResponse()->getContent());
+    }
+
+    public function testTimesheetOfUnlockedProjectStaysEditable(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $user = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+        [$project, $activity] = $this->createLockedProjectFixture('unlocked', null);
+        $timesheet = $this->persistTimesheetForProject($user, $project, $activity, '-2 months', '-2 months +1 hour');
+
+        $json = json_encode(['description' => 'changed']);
+        self::assertIsString($json);
+        $this->request($client, '/api/timesheets/' . $timesheet->getId(), 'PATCH', [], $json);
+        self::assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
     }
 }

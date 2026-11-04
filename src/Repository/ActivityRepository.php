@@ -37,7 +37,7 @@ use Doctrine\ORM\QueryBuilder;
 class ActivityRepository extends EntityRepository
 {
     /**
-     * @param int[] $activityIds
+     * @param array<int, string|int> $activityIds
      * @return array<Activity>
      */
     public function findByIds(array $activityIds): array

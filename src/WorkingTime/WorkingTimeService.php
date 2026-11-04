@@ -27,7 +27,10 @@ use App\WorkingTime\Model\Year;
 use App\WorkingTime\Model\YearPerUserSummary;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
-final class WorkingTimeService
+/**
+ * @final not final for mocking in tests
+ */
+class WorkingTimeService
 {
     private const LATEST_APPROVAL_PREF = '_latest_approval';
     private const LATEST_APPROVAL_FORMAT = 'Y-m-d H:i:s';

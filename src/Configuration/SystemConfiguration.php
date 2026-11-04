@@ -91,7 +91,6 @@ final class SystemConfiguration
             $array = &$replaced;
             while (\count($keys) > 1) {
                 $search = array_shift($keys);
-                /* @phpstan-ignore-next-line  */
                 if (!\array_key_exists($search, $array) || !\is_array($array[$search])) {
                     $array[$search] = [];
                 }
@@ -176,6 +175,11 @@ final class SystemConfiguration
         return (bool) $this->find('user.registration');
     }
 
+    public function getAuthenticationTheme(): string
+    {
+        return $this->getString('user.theme', 'auto');
+    }
+
     public function getPasswordResetTokenLifetime(): int
     {
         return (int) $this->find('user.password_reset_token_ttl');
@@ -184,6 +188,14 @@ final class SystemConfiguration
     public function getPasswordResetRetryLifetime(): int
     {
         return (int) $this->find('user.password_reset_retry_ttl');
+    }
+
+    /**
+     * Minimum password strength (see PasswordStrength constants), 0 means the check is disabled.
+     */
+    public function getPasswordStrength(): int
+    {
+        return (int) $this->find('user.password_strength');
     }
 
     public function isPasswordResetActive(): bool
@@ -252,6 +264,23 @@ final class SystemConfiguration
     public function isLdapActive(): bool
     {
         return (bool) $this->find('ldap.activate');
+    }
+
+    /**
+     * Whether a super-admin may switch LDAP and SAML accounts back to the internal authentication.
+     */
+    public function isUserAuthChangeAllowed(): bool
+    {
+        if (!$this->isExternalLoginActive()) {
+            return false;
+        }
+
+        return (bool) $this->find('user.auth_change');
+    }
+
+    public function isExternalLoginActive(): bool
+    {
+        return $this->isLdapActive() || $this->isSamlActive();
     }
 
     // ========== Calendar configurations ==========
@@ -328,6 +357,11 @@ final class SystemConfiguration
         return $this->find('defaults.customer.country');
     }
 
+    public function getCustomerDefaultLanguage(): string
+    {
+        return $this->getString('defaults.customer.language', 'en');
+    }
+
     // ========== User configurations ==========
 
     public function getUserDefaultTimezone(): ?string
@@ -343,6 +377,14 @@ final class SystemConfiguration
     public function getUserDefaultLanguage(): string
     {
         return $this->getString('defaults.user.language', 'en');
+    }
+
+    /**
+     * The locale used to format date, time and money for new users.
+     */
+    public function getUserDefaultLocale(): string
+    {
+        return $this->getString('defaults.user.locale', $this->getUserDefaultLanguage());
     }
 
     public function getDefaultCurrency(): string
@@ -364,6 +406,11 @@ final class SystemConfiguration
     public function getUserDefaultCurrency(): string
     {
         return $this->getDefaultCurrency();
+    }
+
+    public function isUserWizardActive(): bool
+    {
+        return (bool) $this->find('user.wizard');
     }
 
     // ========== Timesheet configurations ==========

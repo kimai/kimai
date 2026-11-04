@@ -16,7 +16,6 @@ use App\Event\PrepareUserEvent;
 use App\Form\AccessTokenForm;
 use App\Form\Model\TotpActivation;
 use App\Form\Model\UserContractModel;
-use App\Form\UserApiPasswordType;
 use App\Form\UserContractType;
 use App\Form\UserEditType;
 use App\Form\UserPasswordType;
@@ -24,6 +23,7 @@ use App\Form\UserPreferencesForm;
 use App\Form\UserRolesType;
 use App\Form\UserTeamsType;
 use App\Form\UserTwoFactorType;
+use App\Model\AppConnectPayload;
 use App\Repository\AccessTokenRepository;
 use App\Repository\Query\TimesheetStatisticQuery;
 use App\Repository\TeamRepository;
@@ -46,6 +46,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
@@ -55,6 +56,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted(new Expression("is_granted('view_own_profile') or is_granted('view_other_profile')"))]
 final class ProfileController extends AbstractController
 {
+    private const SESSION_TOTP_SECRET = '_totp_pending_secret';
+
     #[Route(path: '/', name: 'my_profile', methods: ['GET'])]
     public function profileAction(): Response
     {
@@ -216,22 +219,6 @@ final class ProfileController extends AbstractController
         AccessTokenRepository $accessTokenRepository
     ): Response
     {
-        $form = $this->createForm(UserApiPasswordType::class, $profile, [
-            'action' => $this->generateUrl('user_profile_api_token', ['username' => $profile->getUserIdentifier()]),
-            'method' => 'POST'
-        ]);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            @trigger_error('User ' . $profile->getUsername() . ' created deprecated API password.', E_USER_DEPRECATED);
-
-            $userService->saveUser($profile);
-
-            $this->flashSuccess('action.update.success');
-
-            return $this->redirectToRoute('user_profile_api_token', ['username' => $profile->getUserIdentifier()]);
-        }
-
         $accessTokens = $accessTokenRepository->findForUser($profile);
 
         $createdToken = null;
@@ -248,13 +235,24 @@ final class ProfileController extends AbstractController
             }
         }
 
+        $baseUrl = rtrim($this->generateUrl('home', [], UrlGeneratorInterface::ABSOLUTE_URL), '/');
+        $qrCodePayload = null;
+
+        if ($createdToken !== null) {
+            $qrCodePayload = (new AppConnectPayload($baseUrl, $createdToken->getToken()))->toJson();
+        }
+
+        $pageSetup = $this->getPageSetup($profile, 'api-token');
+        $pageSetup->setHelp('user-api.html');
+
         return $this->render('user/api-token.html.twig', [
             'tab' => 'api-token',
             'created_token' => $createdToken,
             'access_tokens' => $accessTokens,
-            'page_setup' => $this->getPageSetup($profile, 'api-token'),
+            'page_setup' => $pageSetup,
             'user' => $profile,
-            'form' => $form->createView(),
+            'api_url' => $baseUrl . '/api',
+            'qr_code_payload' => $qrCodePayload,
         ]);
     }
 
@@ -454,7 +452,8 @@ final class ProfileController extends AbstractController
                 'include_preferences' => true,
                 'include_supervisor' => $this->isGranted('supervisor', $user),
                 'include_username' => $currentUser->isSuperAdmin() && $currentUser !== $user,
-                'include_password_reset' => $this->isGranted('password', $user),
+                'include_password_reset' => $this->isGranted('roles', $user),
+                'include_auth' => $currentUser->isSuperAdmin(),
             ]
         );
     }
@@ -485,12 +484,18 @@ final class ProfileController extends AbstractController
 
     private function createPasswordForm(User $user): FormInterface
     {
+        // users changing their own password must know the current one and are not allowed to re-use it,
+        // these checks are skipped for admins changing the password of other users
+        $isOwnProfile = $user->getId() === $this->getUser()->getId();
+
         return $this->createForm(
             UserPasswordType::class,
             $user,
             [
                 'action' => $this->generateUrl('user_profile_password', ['username' => $user->getUserIdentifier()]),
-                'method' => 'POST'
+                'method' => 'POST',
+                'require_current_password' => $isOwnProfile,
+                'deny_current_password' => $isOwnProfile,
             ]
         );
     }
@@ -506,50 +511,62 @@ final class ProfileController extends AbstractController
         TotpAuthenticatorInterface $totpAuthenticator
     ): Response
     {
-        if (!$profile->hasTotpSecret()) {
-            $profile->setTotpSecret($totpAuthenticator->generateSecret());
-            $userService->saveUser($profile);
+        $form = null;
+        $qrCode = null;
+        $secret = null;
+
+        // the secret must only be visible to the user while activating 2FA, never afterwards and never to other users (super-admins)
+        if ($profile->getId() === $this->getUser()->getId() && !$profile->isTotpAuthenticationEnabled()) {
+            // the pending secret is only stored in the user after the code was confirmed
+            $session = $request->getSession();
+            $pendingSecret = $session->get(self::SESSION_TOTP_SECRET);
+            if (!\is_string($pendingSecret) || $pendingSecret === '') {
+                $pendingSecret = $totpAuthenticator->generateSecret();
+                $session->set(self::SESSION_TOTP_SECRET, $pendingSecret);
+            }
+
+            $data = new TotpActivation($profile, $pendingSecret);
+
+            $form = $this->createForm(UserTwoFactorType::class, $data, [
+                'action' => $this->generateUrl('user_profile_2fa', ['username' => $profile->getUserIdentifier()]),
+                'method' => 'POST'
+            ]);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $profile->setTotpSecret($data->getSecret());
+                $profile->enableTotpAuthentication();
+                $userService->saveUser($profile);
+                $session->remove(self::SESSION_TOTP_SECRET);
+
+                $this->flashSuccess('action.update.success');
+
+                return $this->redirectToRoute('user_profile_2fa', ['username' => $profile->getUserIdentifier()]);
+            }
+
+            $qrCode = Builder::create()
+                ->writer(new PngWriter())
+                ->writerOptions([])
+                ->data($totpAuthenticator->getQRContent($data))
+                ->encoding(new Encoding('UTF-8'))
+                ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
+                ->size(200)
+                ->margin(0)
+                ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
+                ->build();
+
+            $secret = $data->getSecret();
         }
-
-        $data = new TotpActivation($profile);
-
-        $form = $this->createForm(UserTwoFactorType::class, $data, [
-            'action' => $this->generateUrl('user_profile_2fa', ['username' => $profile->getUserIdentifier()]),
-            'method' => 'POST'
-        ]);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $profile->enableTotpAuthentication();
-            $userService->saveUser($profile);
-
-            $this->flashSuccess('action.update.success');
-
-            return $this->redirectToRoute('user_profile_2fa', ['username' => $profile->getUserIdentifier()]);
-        }
-
-        $qrCodeContent = $totpAuthenticator->getQRContent($profile);
-
-        $result = Builder::create()
-            ->writer(new PngWriter())
-            ->writerOptions([])
-            ->data($qrCodeContent)
-            ->encoding(new Encoding('UTF-8'))
-            ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
-            ->size(200)
-            ->margin(0)
-            ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
-            ->build();
 
         return $this->render('user/2fa.html.twig', [
             'tab' => '2fa',
             'page_setup' => $this->getPageSetup($profile, '2fa'),
             'user' => $profile,
-            'form' => $form->createView(),
+            'form' => $form?->createView(),
             'deactivate' => $this->getTwoFactorDeactivationForm($profile)->createView(),
-            'qr_code' => $result,
-            'secret' => $profile->getTotpSecret(),
+            'qr_code' => $qrCode,
+            'secret' => $secret,
         ]);
     }
 

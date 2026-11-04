@@ -33,8 +33,6 @@ trait RendererTrait
             $activityId = 'none';
             $userId = 'none';
             $customer = null;
-            $project = null;
-            $activity = null;
             $currency = null;
 
             if (null !== ($project = $exportItem->getProject())) {
@@ -185,16 +183,13 @@ trait RendererTrait
         $empty = new TimesheetCountedStatistic();
 
         foreach ($exportItems as $exportItem) {
-            $customer = null;
-            $project = null;
             $customerId = 'none';
             $projectId = 'none';
             $time = 0;
             $money = 0;
 
             if (null !== ($project = $exportItem->getProject())) {
-                $customer = $project->getCustomer();
-                $customerId = $customer?->getId();
+                $customerId = $project->getCustomer()?->getId();
                 $projectId = $project->getId();
                 $projects[] = $project;
                 $time = $project->getTimeBudget();
@@ -279,8 +274,6 @@ trait RendererTrait
         foreach ($exportItems as $exportItem) {
             $customerId = 'none';
             $projectId = 'none';
-            $project = null;
-            $activity = null;
 
             if (null === ($activity = $exportItem->getActivity())) {
                 continue;

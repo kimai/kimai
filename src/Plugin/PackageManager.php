@@ -36,6 +36,10 @@ final class PackageManager
      */
     private function findAvailablePackages(string $path): array
     {
+        if (!file_exists($path) || !is_readable($path) || !is_dir($path)) {
+            return [];
+        }
+
         $packages = [];
 
         $directory = new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::FOLLOW_SYMLINKS);

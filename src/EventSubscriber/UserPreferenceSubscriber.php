@@ -9,6 +9,7 @@
 
 namespace App\EventSubscriber;
 
+use App\Configuration\LocaleService;
 use App\Configuration\SystemConfiguration;
 use App\Controller\HomepageController;
 use App\Entity\User;
@@ -28,12 +29,15 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Range;
+use Symfony\Component\Validator\Constraints\Timezone;
 
 final class UserPreferenceSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private EventDispatcherInterface $eventDispatcher, private AuthorizationCheckerInterface $voter, private SystemConfiguration $systemConfiguration)
+    public function __construct(private EventDispatcherInterface $eventDispatcher, private AuthorizationCheckerInterface $voter, private SystemConfiguration $systemConfiguration, private LocaleService $localeService)
     {
     }
 
@@ -83,27 +87,39 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
             (new UserPreference(UserPreference::TIMEZONE, $timezone))
                 ->setOrder(200)
                 ->setSection('locale')
-                ->setType(TimezoneType::class),
+                ->setType(TimezoneType::class)
+                ->addConstraint(new NotBlank())
+                ->addConstraint(new Timezone()),
 
             (new UserPreference(UserPreference::LANGUAGE, $this->systemConfiguration->getUserDefaultLanguage()))
                 ->setOrder(250)
                 ->setSection('locale')
-                ->setType(UserLanguageType::class),
+                ->setType(UserLanguageType::class)
+                ->addConstraint(new NotBlank())
+                ->addConstraint(new Choice(choices: $this->localeService->getTranslatedLocales())),
 
-            (new UserPreference(UserPreference::LOCALE, $this->systemConfiguration->getUserDefaultLanguage()))
+            // existing users without a stored locale are formatted with their language (see User::getLocale()),
+            // new users receive the system default via UserService::prepareNewUser()
+            (new UserPreference(UserPreference::LOCALE, $user->getLanguage()))
                 ->setOrder(250)
                 ->setSection('locale')
-                ->setType(UserLocaleType::class),
+                ->setType(UserLocaleType::class)
+                ->addConstraint(new NotBlank())
+                ->addConstraint(new Choice(choices: $this->localeService->getAllLocales())),
 
             (new UserPreference(UserPreference::FIRST_WEEKDAY, User::DEFAULT_FIRST_WEEKDAY))
                 ->setOrder(300)
                 ->setSection('locale')
-                ->setType(FirstWeekDayType::class),
+                ->setType(FirstWeekDayType::class)
+                ->addConstraint(new NotBlank())
+                ->addConstraint(new Choice(choices: array_values(FirstWeekDayType::CHOICES))),
 
             (new UserPreference(UserPreference::SKIN, $this->systemConfiguration->getUserDefaultTheme()))
                 ->setOrder(400)
                 ->setSection('theme')
-                ->setType(SkinType::class),
+                ->setType(SkinType::class)
+                ->addConstraint(new NotBlank())
+                ->addConstraint(new Choice(choices: array_values(SkinType::CHOICES))),
 
             (new UserPreference('update_browser_title', true))
                 ->setOrder(550)
@@ -113,12 +129,16 @@ final class UserPreferenceSubscriber implements EventSubscriberInterface
             (new UserPreference('calendar_initial_view', CalendarViewType::DEFAULT_VIEW))
                 ->setOrder(600)
                 ->setSection('behaviour')
-                ->setType(CalendarViewType::class),
+                ->setType(CalendarViewType::class)
+                ->addConstraint(new NotBlank())
+                ->addConstraint(new Choice(choices: array_values(CalendarViewType::CHOICES))),
 
             (new UserPreference('login_initial_view', HomepageController::DEFAULT_ROUTE))
                 ->setOrder(700)
                 ->setSection('behaviour')
-                ->setType(InitialViewType::class),
+                ->setType(InitialViewType::class)
+                ->addConstraint(new NotBlank())
+                ->addConstraint(new Length(['max' => 150])),
 
             (new UserPreference('favorite_routes', ''))
                 ->setOrder(710)

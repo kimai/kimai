@@ -166,6 +166,10 @@
         <source>Duration cannot be negative.</source>
         <target state="translated">Tidslängden kan inte vara negativ.</target>
       </trans-unit>
+      <trans-unit id="EDEDQtZ" resname="These characters are not allowed: {{ chars }}" xml:space="preserve">
+        <source>These characters are not allowed: {{ chars }}</source>
+        <target state="translated">Följande tecken är inte tillåtna: {{ chars }}</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

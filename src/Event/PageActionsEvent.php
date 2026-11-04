@@ -188,10 +188,23 @@ class PageActionsEvent extends ThemeEvent
         $this->addAction('settings', ['url' => $url, 'title' => 'settings']);
     }
 
-    public function addDelete(string $url, bool $remoteConfirm = true): void
+    public function addDelete(string $url, bool $remoteConfirm = true, ?string $apiEvent = null): void
     {
         if ($remoteConfirm) {
             $this->addAction('trash', ['url' => $url, 'class' => 'modal-ajax-form text-red', 'title' => 'trash']);
+        } elseif ($apiEvent !== null) {
+            $this->addAction('trash', [
+                'url' => $url,
+                'class' => 'api-link text-red',
+                'attr' => [
+                    'data-event' => $apiEvent,
+                    'data-method' => 'DELETE',
+                    'data-question' => 'confirm.delete',
+                    'data-msg-error' => 'action.delete.error',
+                    'data-msg-success' => 'action.delete.success'
+                ],
+                'title' => 'trash'
+            ]);
         } else {
             $this->addAction('trash', ['url' => $url, 'class' => 'confirmation-link text-red', 'attr' => ['data-question' => 'confirm.delete'], 'title' => 'trash']);
         }

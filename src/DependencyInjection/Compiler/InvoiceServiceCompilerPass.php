@@ -11,9 +11,9 @@ namespace App\DependencyInjection\Compiler;
 
 use App\Invoice\CalculatorInterface;
 use App\Invoice\InvoiceItemRepositoryInterface;
+use App\Invoice\InvoiceService;
 use App\Invoice\NumberGeneratorInterface;
 use App\Invoice\RendererInterface;
-use App\Invoice\ServiceInvoice;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -25,7 +25,7 @@ final class InvoiceServiceCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        $definition = $container->findDefinition(ServiceInvoice::class);
+        $definition = $container->findDefinition(InvoiceService::class);
 
         $taggedRenderer = $container->findTaggedServiceIds(RendererInterface::class);
         foreach ($taggedRenderer as $id => $tags) {

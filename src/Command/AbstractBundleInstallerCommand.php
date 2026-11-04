@@ -44,7 +44,7 @@ abstract class AbstractBundleInstallerCommand extends Command
         return false;
     }
 
-    private function hasMigrations(SymfonyStyle $io): bool
+    private function hasMigrations(): bool
     {
         $config = $this->getMigrationConfigFilename();
 
@@ -129,9 +129,9 @@ abstract class AbstractBundleInstallerCommand extends Command
             \sprintf('Starting installation of plugin: %s ...', $bundleName)
         );
 
-        if (!$onlyAssets && $this->hasMigrations($io)) {
+        if (!$onlyAssets && $this->hasMigrations()) {
             try {
-                $this->importMigrations($io, $output);
+                $this->importMigrations($io);
             } catch (\Exception $ex) {
                 $io->error(
                     \sprintf('Failed to install database for bundle %s. %s', $bundleName, $ex->getMessage())
@@ -174,7 +174,7 @@ abstract class AbstractBundleInstallerCommand extends Command
         $io->writeln('');
     }
 
-    private function importMigrations(SymfonyStyle $io, OutputInterface $output): void
+    private function importMigrations(SymfonyStyle $io): void
     {
         $config = $this->getMigrationConfigFilename();
 
@@ -203,7 +203,11 @@ abstract class AbstractBundleInstallerCommand extends Command
 
         if (!$process->isSuccessful()) {
             $io->error('Failed to install bundle database: ' . PHP_EOL . $config);
-            $io->error($process->getErrorOutput());
+            $o = $process->getErrorOutput();
+            if (trim($o) === '') {
+                $o = $process->getOutput();
+            }
+            $io->error($o);
             throw new \Exception('Problem occurred while executing migrations.');
         }
 

@@ -8,7 +8,7 @@
       </trans-unit>
       <trans-unit id="CLHaByy" resname="End date must not be earlier then start date." xml:space="preserve">
         <source>The end date must not be earlier than the start date.</source>
-        <target state="needs-translation">Конечная дата не может быть установлена ранее начальной даты.</target>
+        <target state="translated">Конечная дата не может быть установлена ранее начальной даты.</target>
       </trans-unit>
       <trans-unit id="VJSZSD0" resname="The given value is not a valid time.">
         <source>The given value is not a valid time.</source>
@@ -165,6 +165,10 @@
       <trans-unit id="mveJ4vW" resname="Selected period cannot be locked: unconfirmed absence requests are pending." xml:space="preserve">
         <source>Selected period cannot be locked: unconfirmed absence requests are pending.</source>
         <target state="translated">Выбранный период не может быть заблокирован: есть неподтвержденные заявки на отсутствие.</target>
+      </trans-unit>
+      <trans-unit id="EDEDQtZ" resname="These characters are not allowed: {{ chars }}" xml:space="preserve">
+        <source>These characters are not allowed: {{ chars }}</source>
+        <target state="translated">Данные цыфры/буквы не разрешены: {{ chars }}</target>
       </trans-unit>
     </body>
   </file>

@@ -9,17 +9,22 @@
 
 namespace App\API;
 
+use App\API\Serializer\BudgetExclusionStrategy;
 use App\Entity\Project;
+use App\Entity\ProjectComment;
 use App\Entity\ProjectRate;
 use App\Entity\User;
+use App\Form\API\CommentApiForm;
 use App\Form\API\ProjectApiEditForm;
 use App\Form\API\ProjectRateApiForm;
+use App\Project\ProjectDuplicationService;
 use App\Project\ProjectService;
 use App\Repository\CustomerRepository;
 use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\ProjectQuery;
 use App\Utils\SearchTerm;
+use App\Validator\MetaFieldValidator;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
@@ -28,7 +33,9 @@ use OpenApi\Attributes as OA;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\GoneHttpException;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints;
 
@@ -37,16 +44,54 @@ use Symfony\Component\Validator\Constraints;
 #[OA\Tag(name: 'Project')]
 final class ProjectController extends BaseApiController
 {
-    public const GROUPS_ENTITY = ['Default', 'Entity', 'Project', 'Project_Entity'];
-    public const GROUPS_COLLECTION = ['Default', 'Collection', 'Project'];
-    public const GROUPS_RATE = ['Default', 'Entity', 'Project_Rate'];
+    private const GROUPS_COMMENT = ['Default', 'Not_Expanded'];
+    private const GROUPS_ENTITY = ['Default', 'Entity', 'Project', 'Project_Entity'];
+    private const GROUPS_COLLECTION = ['Default', 'Collection', 'Project'];
+    private const GROUPS_RATE = ['Default', 'Entity', 'Project_Rate'];
 
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
         private readonly ProjectRepository $repository,
         private readonly ProjectRateRepository $projectRateRepository,
-        private readonly ProjectService $projectService
+        private readonly ProjectService $projectService,
+        private readonly AuthorizationCheckerInterface $security
     ) {
+    }
+
+    /**
+     * The budget groups are always requested, the per-record permission filtering
+     * is applied by the BudgetExclusionStrategy.
+     *
+     * @param array<string> $groups
+     */
+    private function renderBudgetAwareView(View $view, array $groups): Response
+    {
+        $context = $view->getContext();
+        $context->setGroups(array_merge($groups, ['Budget_Money', 'Budget_Time']));
+        $context->addExclusionStrategy(new BudgetExclusionStrategy($this->security));
+
+        return $this->viewHandler->handle($view);
+    }
+
+    private function renderEntity(Project $project): Response
+    {
+        return $this->renderBudgetAwareView(new View($project, Response::HTTP_OK), self::GROUPS_ENTITY);
+    }
+
+    /**
+     * Duplicate a project and all of it's activities
+     */
+    #[IsGranted('edit', 'project')]
+    #[IsGranted('create_project')]
+    #[IsGranted('create_activity')]
+    #[OA\Post(description: 'Creates a copy of the project, including its teams, rates, meta fields and activities.', responses: [new OA\Response(response: 201, description: 'Returns the new project', content: new OA\JsonContent(ref: '#/components/schemas/ProjectEntity'))], x: ['internal' => true])]
+    #[OA\Parameter(name: 'id', description: 'Project ID to duplicate', in: 'path', required: true)]
+    #[Route(path: '/{id}/duplicate', name: 'post_project_duplicate', requirements: ['id' => '\d+'], methods: ['POST'])]
+    public function duplicateAction(Project $project, ProjectDuplicationService $projectDuplicationService): Response
+    {
+        $newProject = $projectDuplicationService->duplicate($project, $project->getName() . ' [COPY]');
+
+        return $this->renderBudgetAwareView(new View($newProject, Response::HTTP_CREATED), self::GROUPS_ENTITY);
     }
 
     /**
@@ -85,15 +130,14 @@ final class ProjectController extends BaseApiController
 
         /** @var array<int> $customers */
         $customers = $paramFetcher->get('customers');
-        $customer = $paramFetcher->get('customer');
-        if (\is_string($customer) && $customer !== '') {
-            $customers[] = $customer;
+        $cu = $paramFetcher->get('customer');
+        if (\is_string($cu) && $cu !== '') {
+            $customers[] = $cu;
         }
 
-        foreach (array_unique($customers) as $customerId) {
-            $customer = $customerRepository->find($customerId);
-            if ($customer === null) {
-                throw $this->createNotFoundException('Unknown customer: ' . $customerId);
+        foreach ($customerRepository->findByIds(array_unique($customers)) as $customer) {
+            if (!$this->isGranted('access', $customer)) {
+                throw $this->createAccessDeniedException('Cannot access Customer: ' . $customer->getId());
             }
             $query->addCustomer($customer);
         }
@@ -140,10 +184,8 @@ final class ProjectController extends BaseApiController
 
         $query->setIsApiCall(true);
         $data = $this->repository->getProjectsForQuery($query);
-        $view = new View($data, 200);
-        $view->getContext()->setGroups(self::GROUPS_COLLECTION);
 
-        return $this->viewHandler->handle($view);
+        return $this->renderBudgetAwareView(new View($data, Response::HTTP_OK), self::GROUPS_COLLECTION);
     }
 
     /**
@@ -154,10 +196,7 @@ final class ProjectController extends BaseApiController
     #[IsGranted('view', 'project')]
     public function getAction(Project $project): Response
     {
-        $view = new View($project, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($project);
     }
 
     /**
@@ -181,21 +220,15 @@ final class ProjectController extends BaseApiController
             'include_time' => $this->isGranted('time', $project),
         ]);
 
-        $form->submit($request->request->all());
+        $form->submit($request->request->all(), false);
 
-        if ($form->isValid()) {
-            $this->projectService->saveProject($project);
-
-            $view = new View($project, 200);
-            $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-            return $this->viewHandler->handle($view);
+        if (false === $form->isValid()) {
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
-        $view = new View($form);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
+        $this->projectService->saveProject($project);
 
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($project);
     }
 
     /**
@@ -221,25 +254,19 @@ final class ProjectController extends BaseApiController
         $form->submit($request->request->all(), false);
 
         if (false === $form->isValid()) {
-            $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-            return $this->viewHandler->handle($view);
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
         $this->projectService->saveProject($project);
 
-        $view = new View($project, Response::HTTP_OK);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($project);
     }
 
     /**
      * Delete project
      *
      * [DANGER] This will also delete ALL linked activities and timesheets.
-     * Do you want to use `PATCH` instead and mark it as inactive with `{visible: false}` instead?
+     * Do you want to use `PATCH` instead and mark it as inactive with `{visible: false}`?
      */
     #[IsGranted('delete', 'project')]
     #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Delete one project')])]
@@ -261,9 +288,9 @@ final class ProjectController extends BaseApiController
     #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/ProjectEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Project record ID to set the meta-field value for', required: true)]
     #[Route(methods: ['PATCH'], path: '/{id}/meta', requirements: ['id' => '\d+'])]
-    #[Rest\RequestParam(name: 'name', strict: true, nullable: false, description: 'The meta-field name')]
+    #[Rest\RequestParam(name: 'name', requirements: [new Constraints\Type('string')], strict: true, nullable: false, description: 'The meta-field name')]
     #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
-    public function metaAction(Project $project, ParamFetcherInterface $paramFetcher): Response
+    public function metaAction(Project $project, ParamFetcherInterface $paramFetcher, MetaFieldValidator $metaFieldValidator): Response
     {
         $this->projectService->loadMetaFields($project);
 
@@ -274,14 +301,12 @@ final class ProjectController extends BaseApiController
             throw $this->createNotFoundException('Unknown meta-field requested');
         }
 
+        $metaFieldValidator->validate($project, $meta, $value);
         $meta->setValue($value);
 
         $this->projectService->saveProject($project);
 
-        $view = new View($project, 200);
-        $view->getContext()->setGroups(self::GROUPS_ENTITY);
-
-        return $this->viewHandler->handle($view);
+        return $this->renderEntity($project);
     }
 
     /**
@@ -343,10 +368,7 @@ final class ProjectController extends BaseApiController
         $form->submit($request->request->all(), false);
 
         if (false === $form->isValid()) {
-            $view = new View($form, Response::HTTP_OK);
-            $view->getContext()->setGroups(self::GROUPS_RATE);
-
-            return $this->viewHandler->handle($view);
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
         }
 
         $this->projectRateRepository->saveRate($rate);
@@ -355,5 +377,117 @@ final class ProjectController extends BaseApiController
         $view->getContext()->setGroups(self::GROUPS_RATE);
 
         return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Fetch comments for project
+     */
+    #[IsGranted('view', 'project')]
+    #[IsGranted('comments', 'project')]
+    #[OA\Response(response: 200, description: 'Returns a collection of project comments', content: new OA\JsonContent(type: 'array', items: new OA\Items(ref: '#/components/schemas/Comment')))]
+    #[OA\Parameter(name: 'id', description: 'The project whose comments will be returned', in: 'path', required: true)]
+    #[Route(path: '/{id}/comments', name: 'get_project_comments', requirements: ['id' => '\d+'], methods: ['GET'])]
+    public function getCommentsAction(#[MapEntity(mapping: ['id' => 'id'])] Project $project): Response
+    {
+        $comments = $this->repository->getComments($project);
+
+        $view = new View($comments, 200);
+        $view->getContext()->setGroups(self::GROUPS_COMMENT);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Add comment for project
+     */
+    #[IsGranted('view', 'project')]
+    #[IsGranted('comments', 'project')]
+    #[OA\Post(responses: [new OA\Response(response: 200, description: 'Returns the newly created project comment', content: new OA\JsonContent(ref: '#/components/schemas/Comment'))])]
+    #[OA\Parameter(name: 'id', description: 'The project to add the comment for', in: 'path', required: true)]
+    #[OA\RequestBody(required: true, content: new OA\JsonContent(ref: '#/components/schemas/CommentForm'))]
+    #[Route(path: '/{id}/comments', name: 'post_project_comment', requirements: ['id' => '\d+'], methods: ['POST'])]
+    public function postCommentAction(#[MapEntity(mapping: ['id' => 'id'])] Project $project, Request $request): Response
+    {
+        $comment = new ProjectComment($project);
+        $comment->setCreatedBy($this->getUser());
+
+        $form = $this->createForm(CommentApiForm::class, $comment, [
+            'method' => 'POST',
+        ]);
+
+        $form->setData($comment);
+        $form->submit($request->request->all(), false);
+
+        if (false === $form->isValid()) {
+            return $this->viewHandler->handle(new View($form, Response::HTTP_BAD_REQUEST));
+        }
+
+        $this->repository->saveComment($comment);
+
+        $view = new View($comment, 200);
+        $view->getContext()->setGroups(self::GROUPS_COMMENT);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Pin project comment
+     *
+     * This toggles the `pinned` status of the given comment.
+     */
+    #[IsGranted('view', 'project')]
+    #[IsGranted('edit', 'project')]
+    #[IsGranted('comments', 'project')]
+    #[OA\Patch(responses: [new OA\Response(response: 200, description: 'Returns the updated project comment', content: new OA\JsonContent(ref: '#/components/schemas/Comment'))])]
+    #[OA\Parameter(name: 'id', description: 'The project whose comment will be pinned or unpinned', in: 'path', required: true)]
+    #[OA\Parameter(name: 'comment', description: 'The comment whose pinned status will be toggled', in: 'path', required: true)]
+    #[Route(path: '/{id}/comments/{comment}/pin', name: 'toggle_project_comment_pin', requirements: ['id' => '\d+', 'comment' => '\d+'], methods: ['PATCH'])]
+    public function toggleCommentPin(#[MapEntity(mapping: ['id' => 'id'])] Project $project, #[MapEntity(mapping: ['comment' => 'id'])] ProjectComment $comment): Response
+    {
+        if ($comment->getProject() !== $project) {
+            throw $this->createAccessDeniedException(\sprintf('Comment %s does not belong to project %s', $comment->getId(), $project->getId()));
+        }
+
+        $comment->setPinned(!$comment->isPinned());
+        $this->repository->saveComment($comment);
+
+        $view = new View($comment, 200);
+        $view->getContext()->setGroups(self::GROUPS_COMMENT);
+
+        return $this->viewHandler->handle($view);
+    }
+
+    /**
+     * Delete project comment
+     */
+    #[IsGranted('view', 'project')]
+    #[IsGranted('edit', 'project')]
+    #[IsGranted('comments', 'project')]
+    #[OA\Delete(responses: [new OA\Response(response: 204, description: 'Returns no content: 204 on successful delete')])]
+    #[OA\Parameter(name: 'id', description: 'The project whose comment will be removed', in: 'path', required: true)]
+    #[OA\Parameter(name: 'comment', description: 'The comment to remove', in: 'path', required: true)]
+    #[Route(path: '/{id}/comments/{comment}', name: 'delete_project_comment', requirements: ['id' => '\d+', 'comment' => '\d+'], methods: ['DELETE'])]
+    public function deleteCommentAction(#[MapEntity(mapping: ['id' => 'id'])] Project $project, #[MapEntity(mapping: ['comment' => 'id'])] ProjectComment $comment): Response
+    {
+        if ($comment->getProject() !== $project) {
+            throw $this->createAccessDeniedException(\sprintf('Comment %s does not belong to project %s', $comment->getId(), $project->getId()));
+        }
+
+        $this->repository->deleteComment($comment);
+
+        return $this->viewHandler->handle(new View(null, Response::HTTP_NO_CONTENT));
+    }
+
+    /**
+     * Create team for project
+     *
+     * REMOVED: this endpoint was removed, use `POST /api/teams/` instead.
+     */
+    #[OA\Post(description: 'REMOVED: this endpoint was removed, use `POST /api/teams/` instead.', responses: [new OA\Response(response: 410, description: 'This endpoint was removed')], deprecated: true)]
+    #[OA\Parameter(name: 'id', description: 'The project to create a default team for', in: 'path', required: true)]
+    #[Route(path: '/{id}/team', name: 'post_project_team', requirements: ['id' => '\d+'], methods: ['POST'])]
+    public function postDefaultTeamAction(): Response
+    {
+        throw new GoneHttpException('This endpoint was removed, use "POST /api/teams/" instead.');
     }
 }

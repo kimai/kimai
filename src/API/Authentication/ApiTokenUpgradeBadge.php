@@ -13,6 +13,9 @@ use Symfony\Component\Security\Core\Exception\LogicException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\BadgeInterface;
 
+/**
+ * @deprecated since 2.54 - see https://www.kimai.org/en/blog/2026/removing-api-passwords
+ */
 final class ApiTokenUpgradeBadge implements BadgeInterface
 {
     public function __construct(private ?string $plaintextApiToken, private readonly PasswordUpgraderInterface $passwordUpgrader)

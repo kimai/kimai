@@ -41,8 +41,10 @@ class CustomerTest extends AbstractEntityTestCase
         self::assertNull($sut->getFormattedAddress());
         self::assertNull($sut->getCity());
         self::assertNull($sut->getPostCode());
+        self::assertNull($sut->getInvoiceEmail());
         self::assertNull($sut->getBuyerReference());
         self::assertNull($sut->getCountry());
+        self::assertEquals('en', $sut->getLanguage());
         self::assertEquals('EUR', $sut->getCurrency());
         self::assertEquals('EUR', Customer::DEFAULT_CURRENCY);
         self::assertNull($sut->getPhone());
@@ -140,11 +142,20 @@ class CustomerTest extends AbstractEntityTestCase
         $sut->setCountry(null);
         self::assertNull($sut->getCountry());
 
+        $sut->setLanguage('es');
+        self::assertEquals('es', $sut->getLanguage());
+
         $sut->setCurrency('USD');
         self::assertEquals('USD', $sut->getCurrency());
 
         $sut->setCurrency(null);
         self::assertNull($sut->getCurrency());
+
+        $sut->setInvoiceEmail('invoice@example.com');
+        self::assertEquals('invoice@example.com', $sut->getInvoiceEmail());
+
+        $sut->setInvoiceEmail(null);
+        self::assertNull($sut->getInvoiceEmail());
 
         $sut->setBuyerReference('BR-876876876876');
         self::assertEquals('BR-876876876876', $sut->getBuyerReference());
@@ -271,6 +282,7 @@ zip 12345 looney toon', $sut->getFormattedAddress());
             ['postcode', 'string'],
             ['city', 'string'],
             ['country', 'string'],
+            ['language', 'string'],
             ['currency', 'string'],
             ['timezone', 'string'],
             ['budget', 'float'],
@@ -280,6 +292,7 @@ zip 12345 looney toon', $sut->getFormattedAddress());
             ['visible', 'boolean'],
             ['comment', 'string'],
             ['billable', 'boolean'],
+            ['invoice_email', 'string'],
             ['buyerReference', 'string'],
         ];
 

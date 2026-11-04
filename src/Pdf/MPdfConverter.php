@@ -13,6 +13,8 @@ use App\Constants;
 use App\Utils\FileHelper;
 use Mpdf\Config\ConfigVariables;
 use Mpdf\Config\FontVariables;
+use Mpdf\Container\SimpleContainer;
+use Mpdf\Http\ClientInterface;
 use Mpdf\Mpdf;
 use Mpdf\Output\Destination;
 
@@ -20,7 +22,8 @@ final class MPdfConverter implements HtmlToPdfConverter
 {
     public function __construct(
         private readonly FileHelper $fileHelper,
-        private readonly string $cacheDirectory
+        private readonly string $cacheDirectory,
+        private readonly ?ClientInterface $httpClient = null,
     )
     {
     }
@@ -116,10 +119,34 @@ final class MPdfConverter implements HtmlToPdfConverter
             unset($options['additional_xmp_rdf']);
         }
 
-        $mpdf = new Mpdf($options);
+        // Inject a safe HTTP client into mPDF (via its service container) so
+        // remote resources referenced from Twig templates — typically `<img
+        // src="...">` for company logos — cannot be abused to probe private
+        // networks. The configured Symfony client is decorated with
+        // NoPrivateNetworkHttpClient at the service-container level.
+        // @see https://github.com/kimai/kimai/security/advisories/GHSA-pj8j-p4g4-4vw8
+        $container = $this->httpClient !== null
+            ? new SimpleContainer(['httpClient' => $this->httpClient])
+            : null;
+
+        $mpdf = new Mpdf($options, $container);
         $mpdf->creator = Constants::SOFTWARE;
+        $mpdf->shrink_tables_to_fit = 1;
 
         if (\count($associatedFiles) > 0) {
+            // remove "path" so mPDF will not use file_get_contents() on local files
+            // callers must pre-read and pass the bytes via "content"
+            $associatedFiles = array_map(static function ($entry): array {
+                if (!\is_array($entry)) {
+                    return [];
+                }
+
+                if (\array_key_exists('path', $entry)) {
+                    unset($entry['path']);
+                }
+
+                return $entry;
+            }, $associatedFiles);
             $mpdf->SetAssociatedFiles($associatedFiles);
         }
 

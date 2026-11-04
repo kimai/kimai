@@ -114,6 +114,16 @@ class TeamRepository extends EntityRepository
     }
 
     /**
+     * Returns a Team loader, that can be used to hydrate the full dependency tree.
+     *
+     * Use this when you e.g. have a Team entity, which was fetched via #[MapEntity] parameter.
+     */
+    public function createTeamLoader(bool $withCustomer = false, bool $withUserPreferences = false): TeamLoader
+    {
+        return new TeamLoader($this->getEntityManager(), $withCustomer, $withUserPreferences);
+    }
+
+    /**
      * @return Team[]
      */
     public function getTeamsForQuery(TeamQuery $query): iterable

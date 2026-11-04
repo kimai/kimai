@@ -91,7 +91,7 @@ final class ReloadCommand extends Command
         $environment = $this->kernelEnvironment;
 
         // flush the cache, in case values from the database are cached
-        $cacheResult = $this->rebuildCaches($environment, $io, $input, $output);
+        $cacheResult = $this->rebuildCaches($environment, $io, $output);
 
         chdir($path);
 
@@ -116,7 +116,7 @@ final class ReloadCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function rebuildCaches(string $environment, SymfonyStyle $io, InputInterface $input, OutputInterface $output): int
+    private function rebuildCaches(string $environment, SymfonyStyle $io, OutputInterface $output): int
     {
         $io->text('Rebuilding your cache, please be patient ...');
 

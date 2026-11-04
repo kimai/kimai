@@ -67,10 +67,35 @@ final class DashboardSubscriber extends AbstractActionsSubscriber
                     continue;
                 }
 
-                $event->addActionToSubmenu('widget_add', $widget->getId(), ['url' => $this->path('dashboard_add', ['widget' => $widget->getId()]), 'title' => $widget->getTitle(), 'translation_domain' => $widget->getTranslationDomain()]);
+                $event->addActionToSubmenu('widget_add', $widget->getId(), [
+                    'url' => '#',
+                    'class' => 'api-link',
+                    'attr' => [
+                        'data-href' => $this->path('post_dashboard_widget', ['widget' => $widget->getId()]),
+                        'data-method' => 'POST',
+                        'data-event' => 'kimai.dashboardUpdate',
+                        'data-msg-error' => 'action.update.error',
+                        'data-msg-success' => 'action.update.success',
+                    ],
+                    'title' => $widget->getTitle(),
+                    'translation_domain' => $widget->getTranslationDomain()
+                ]);
             }
 
-            $event->addAction('reset', ['title' => 'action.reset', 'url' => $this->path('dashboard_reset'), 'icon' => 'delete', 'class' => 'confirmation-link', 'attr' => ['data-question' => 'confirm.delete']]);
+            $event->addAction('reset', [
+                'title' => 'action.reset',
+                'url' => '#',
+                'icon' => 'delete',
+                'class' => 'api-link',
+                'attr' => [
+                    'data-href' => $this->path('delete_dashboard_widgets'),
+                    'data-method' => 'DELETE',
+                    'data-event' => 'kimai.dashboardUpdate',
+                    'data-question' => 'confirm.delete',
+                    'data-msg-error' => 'action.delete.error',
+                    'data-msg-success' => 'action.delete.success',
+                ]
+            ]);
         }
     }
 }

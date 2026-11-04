@@ -9,25 +9,34 @@
 
 namespace App\Tests\Controller;
 
+use App\DataFixtures\UserFixtures;
 use App\Entity\Activity;
 use App\Entity\ActivityMeta;
 use App\Entity\ActivityRate;
 use App\Entity\Project;
 use App\Entity\ProjectMeta;
 use App\Entity\ProjectRate;
+use App\Entity\Role;
+use App\Entity\RolePermission;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Entity\UserPreference;
 use App\Tests\DataFixtures\ActivityFixtures;
+use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\ProjectTestMetaFieldSubscriberMock;
+use App\Tests\Mocks\ProjectTestUrlMetaFieldSubscriberMock;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
+use Symfony\Component\DomCrawler\Field\FormField;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 #[Group('integration')]
@@ -131,6 +140,92 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
         $this->assertExcelExportResponse($client, 'kimai-projects_');
     }
 
+    /**
+     * Regression test for GHSA-hr8v-m742-9mph.
+     *
+     * The export is protected by "listing" only. It must apply the same budget rules as the
+     * listing table, which hides those columns unless the budget permissions are granted.
+     */
+    public function testExportHidesBudgetsWithoutPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->grantPermissions(User::ROLE_USER, 'TEST_PROJECT_LISTING_ONLY', ['view_project']);
+
+        $em = $this->getEntityManager();
+        /** @var Project $entity */
+        $entity = $em->getRepository(Project::class)->find(1);
+        $entity->setBudget(123456.78);
+        $entity->setTimeBudget(987654);
+        $entity->setBudgetType('month');
+        $em->persist($entity);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/admin/project/export');
+        $content = $this->getExcelExportContent($client);
+
+        self::assertStringNotContainsString('123456.78', $content);
+        self::assertStringNotContainsString('987654', $content);
+        self::assertStringNotContainsString('month', $content);
+    }
+
+    public function testExportShowsBudgetsWithPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $em = $this->getEntityManager();
+        /** @var Project $entity */
+        $entity = $em->getRepository(Project::class)->find(1);
+        $entity->setBudget(123456.78);
+        $entity->setTimeBudget(987654);
+        $entity->setBudgetType('month');
+        $em->persist($entity);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/admin/project/export');
+        $content = $this->getExcelExportContent($client);
+
+        self::assertStringContainsString('123456.78', $content);
+        self::assertStringContainsString('987654', $content);
+        self::assertStringContainsString('month', $content);
+    }
+
+    /**
+     * The permission is evaluated per record, not once for the whole export: a teamlead sees
+     * the budget of the projects they lead and nothing for the others.
+     */
+    public function testExportHidesBudgetsPerRecord(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $this->grantPermissions(User::ROLE_TEAMLEAD, 'TEST_PROJECT_BUDGET_TEAMLEAD', ['view_project', 'budget_teamlead_project']);
+
+        $em = $this->getEntityManager();
+
+        /** @var Project $visible */
+        $visible = $em->getRepository(Project::class)->find(1);
+        $visible->setBudget(111111.11);
+        $em->persist($visible);
+
+        $hidden = new Project();
+        $hidden->setName('not my project');
+        $hidden->setCustomer($visible->getCustomer());
+        $hidden->setBudget(222222.22);
+        $em->persist($hidden);
+
+        // the teamlead only leads the team of the first project
+        $team = new Team('budget team');
+        $team->addTeamlead($this->getUserByRole(User::ROLE_TEAMLEAD));
+        $team->addProject($visible);
+        $em->persist($team);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/admin/project/export');
+        $content = $this->getExcelExportContent($client);
+
+        self::assertStringContainsString('not my project', $content, 'Both projects have to be listed');
+        self::assertStringContainsString('111111.11', $content);
+        self::assertStringNotContainsString('222222.22', $content);
+    }
+
     public function testExportActionWithSearchTermQuery(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
@@ -184,6 +279,49 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
         $this->assertDetailsPage($client);
     }
 
+    /**
+     * @return array<int, array<string>>
+     */
+    public static function getUrlMetaFieldValues(): array
+    {
+        return [
+            ['javascript:alert(1)', 'href="javascript:alert(1)"'],
+            ['JavaScript://%0Aalert(1)', 'href="JavaScript://%0Aalert(1)"'],
+            ['data:text/html,test', 'href="data:text/html,test"'],
+            ['https://www.kimai.org', '<a href="https://www.kimai.org" target="_blank" rel="noopener noreferrer">https://www.kimai.org</a>'],
+        ];
+    }
+
+    /**
+     * Values might have been stored before validation was in place (or by plugins without URL constraint).
+     */
+    #[DataProvider('getUrlMetaFieldValues')]
+    public function testDetailsActionRendersOnlySafeUrlMetaFieldsAsLink(string $value, string $html): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new ProjectTestUrlMetaFieldSubscriberMock());
+
+        $em = $this->getEntityManager();
+        /** @var Project $project */
+        $project = $em->getRepository(Project::class)->find(1);
+        $project->setMetaField((new ProjectMeta())->setName('homepage')->setValue($value)->setIsVisible(true));
+        $em->persist($project);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/admin/project/1/details');
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        self::assertStringContainsString($value, $content);
+
+        if (str_starts_with($value, 'https://')) {
+            self::assertStringContainsString($html, $content);
+        } else {
+            self::assertStringNotContainsString($html, $content);
+        }
+    }
+
     private function assertDetailsPage(HttpKernelBrowser $client)
     {
         self::assertHasProgressbar($client);
@@ -210,6 +348,24 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
         $this->assertAddRate($client, 123.45, 1);
+    }
+
+    public function testEditRateActionDeniesForeignRate(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $project = $this->importFixture(new ProjectFixtures(1))[0];
+        $rate = new ProjectRate();
+        $rate->setProject($project);
+        $rate->setRate(123.45);
+
+        $em = $this->getEntityManager();
+        $em->persist($rate);
+        $em->flush();
+
+        $this->request($client, '/admin/project/1/rate/' . $rate->getId());
+
+        $this->assertAccessDenied($client);
     }
 
     public function assertAddRate(HttpKernelBrowser $client, $rate, $projectId): void
@@ -258,11 +414,17 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
         $em->persist($rate);
         $em->flush();
 
-        $token = $this->getCsrfToken($client, 'project.duplicate');
+        // duplicating is an API call, the views reload themselves through "kimai.projectDuplicate"
+        $this->requestPure($client, '/api/projects/1/duplicate', 'POST');
+        self::assertEquals(Response::HTTP_CREATED, $client->getResponse()->getStatusCode());
 
-        $this->request($client, '/admin/project/1/duplicate/' . $token);
-        $this->assertIsRedirect($client, '/details');
-        $client->followRedirect();
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        $result = json_decode($content, true);
+        self::assertIsArray($result);
+        self::assertIsInt($result['id']);
+
+        $this->request($client, '/admin/project/' . $result['id'] . '/details');
         $node = $client->getCrawler()->filter('div.card#project_rates_box');
         self::assertEquals(1, $node->count());
         $node = $client->getCrawler()->filter('div.card#project_rates_box table.dataTable tbody tr:not(.summary)');
@@ -270,23 +432,31 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
         self::assertStringContainsString('123.45', $node->text(null, true));
     }
 
-    public function testDuplicateActionWithInvalidCsrf(): void
+    /**
+     * The details page only renders the API URL, the duplication itself is an API call.
+     */
+    public function testDuplicateActionPointsToTheApi(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        /** @var EntityManager $em */
-        $em = $this->getEntityManager();
-        $project = $em->find(Project::class, 1);
-        $project->setMetaField((new ProjectMeta())->setName('foo')->setValue('bar'));
-        $project->setEnd(new \DateTime());
-        $em->persist($project);
-        $activity = new Activity();
-        $activity->setName('blub');
-        $activity->setProject($project);
-        $activity->setMetaField((new ActivityMeta())->setName('blub')->setValue('blab'));
-        $em->persist($activity);
-        $em->flush();
+        $this->assertAccessIsGranted($client, '/admin/project/1/details');
 
-        $this->assertInvalidCsrfToken($client, '/admin/project/1/duplicate/rsetdzfukgli78t6r5uedtjfzkugl', $this->createUrl('/admin/project/1/details'));
+        $copy = $client->getCrawler()->filter('a.api-link[href="/api/projects/1/duplicate"]');
+        self::assertGreaterThan(0, $copy->count(), 'Could not find the duplicate action');
+        self::assertEquals('POST', $copy->first()->attr('data-method'));
+        self::assertEquals('kimai.projectDuplicate', $copy->first()->attr('data-event'));
+    }
+
+    public function testDuplicateActionIsNotPossibleWithGet(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $this->request($client, '/admin/project/1/duplicate/rsetdzfukgli78t6r5uedtjfzkugl');
+        self::assertEquals(Response::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
+
+        $this->requestPure($client, '/api/projects/1/duplicate');
+        self::assertEquals(Response::HTTP_METHOD_NOT_ALLOWED, $client->getResponse()->getStatusCode());
+
+        self::assertEquals(1, $this->getEntityManager()->getRepository(Project::class)->count(['name' => 'Test']));
     }
 
     public function testAddCommentAction(): void
@@ -308,73 +478,6 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
         $this->assertAccessIsGranted($client, '/admin/project/1/details');
         $node = $client->getCrawler()->filter('div.card#comments_box .direct-chat-text');
         self::assertStringContainsString('<p>A beautiful and long comment <strong>with some</strong> markdown formatting</p>', $node->html());
-    }
-
-    public function testDeleteCommentAction(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/project/1/details');
-        $form = $client->getCrawler()->filter('form[name=project_comment_form]')->form();
-        $client->submit($form, [
-            'project_comment_form' => [
-                'message' => 'Foo bar blub',
-            ]
-        ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
-        self::assertStringContainsString('Foo bar blub', $node->html());
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.delete-comment-link');
-
-        $this->request($client, $node->attr('href'));
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
-        self::assertStringContainsString('There were no comments posted yet', $node->html());
-    }
-
-    public function testPinCommentAction(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/project/1/details');
-        $form = $client->getCrawler()->filter('form[name=project_comment_form]')->form();
-        $client->submit($form, [
-            'project_comment_form' => [
-                'message' => 'Foo bar blub',
-            ]
-        ]);
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body');
-        self::assertStringContainsString('Foo bar blub', $node->html());
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.pin-comment-link.active');
-        self::assertEquals(0, $node->count());
-
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.pin-comment-link');
-        self::assertEquals(1, $node->count());
-        $this->request($client, $node->attr('href'));
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#comments_box .card-body a.pin-comment-link.active');
-        self::assertEquals(1, $node->count());
-        self::assertStringContainsString('/admin/project/', $node->attr('href'));
-        self::assertStringContainsString('/comment_pin/', $node->attr('href'));
-    }
-
-    public function testCreateDefaultTeamAction(): void
-    {
-        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
-        $this->assertAccessIsGranted($client, '/admin/project/1/details');
-        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-body');
-        self::assertStringContainsString('Visible to everyone, as no team was assigned yet.', $node->text(null, true));
-
-        $this->request($client, '/admin/project/1/create_team');
-        $this->assertIsRedirect($client, $this->createUrl('/admin/project/1/details'));
-        $client->followRedirect();
-        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-title');
-        self::assertStringContainsString('Only visible to the following teams and all admins.', $node->text(null, true));
-        $node = $client->getCrawler()->filter('div.card#team_listing_box .card-body table tbody tr');
-        self::assertEquals(1, $node->count());
     }
 
     public function testActivitiesAction(): void
@@ -401,6 +504,32 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
 
         $node = $client->getCrawler()->filter('div.card#activity_list_box .card-body table tbody tr');
         self::assertEquals(5, $node->count());
+    }
+
+    public function testCreateWithCustomerActionDeniesUserWithoutEditCustomerPermission(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
+
+        $customer = $this->importFixture(new CustomerFixtures(1))[0];
+
+        $em = $this->getEntityManager();
+
+        $role = (new Role())->setName('TEST_CREATE_PROJECT_ONLY');
+        $permission = (new RolePermission())->setRole($role)->setPermission('create_project')->setAllowed(true);
+
+        $roleName = $role->getName();
+        self::assertNotNull($roleName);
+        $user->addRole($roleName);
+
+        $em->persist($role);
+        $em->persist($permission);
+        $em->persist($user);
+        $em->flush();
+
+        $this->request($client, '/admin/project/create/' . $customer->getId());
+
+        $this->assertAccessDenied($client);
     }
 
     public function testCreateAction(): void
@@ -482,6 +611,111 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
         /** @var Project $project */
         $project = $em->getRepository(Project::class)->find(1);
         self::assertEquals(2, $project->getTeams()->count());
+    }
+
+    public function testCreateTeamActionIsSecure(): void
+    {
+        $this->assertUrlIsSecuredForRole(User::ROLE_USER, '/admin/project/1/team-create');
+    }
+
+    /**
+     * "create_team" alone is not enough, the caller also has to be allowed to manage the
+     * permissions of the project the team is created for.
+     */
+    public function testCreateTeamActionNeedsProjectPermissions(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->grantPermissions(User::ROLE_USER, 'TEST_PROJECT_TEAM_CREATE_ONLY', ['create_team', 'view_project']);
+
+        $this->request($client, '/admin/project/1/team-create');
+        $this->assertAccessDenied($client);
+    }
+
+    /**
+     * Regression test for GHSA-hvq2-5gh2-rgvv.
+     *
+     * The endpoint once looked up a team by the project name and reused it, which made the
+     * caller a teamlead of an unrelated team that happened to share that name. A team is now
+     * always created from scratch, so an existing team with the same name must stay untouched.
+     */
+    public function testCreateTeamActionDoesNotTouchForeignTeamWithSameName(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $em = $this->getEntityManager();
+
+        /** @var Project $project */
+        $project = $em->getRepository(Project::class)->find(1);
+        $name = $project->getName();
+        self::assertIsString($name);
+
+        // a pre-existing team with the very same name, led by somebody else
+        $victimId = $this->getUserByRole(User::ROLE_USER)->getId();
+        $foreignTeam = new Team($name);
+        $foreignTeam->addTeamlead($this->getUserByRole(User::ROLE_USER));
+        $em->persist($foreignTeam);
+        $em->flush();
+
+        $foreignTeamId = $foreignTeam->getId();
+        self::assertIsInt($foreignTeamId);
+
+        $this->assertAccessIsGranted($client, '/admin/project/1/team-create');
+        $form = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
+        $client->submit($form);
+
+        // the team name is unique, so the collision surfaces as a validation error
+        self::assertFalse($client->getResponse()->isRedirect());
+
+        $em->clear();
+
+        $reloaded = $em->getRepository(Team::class)->find($foreignTeamId);
+        self::assertInstanceOf(Team::class, $reloaded);
+
+        $memberIds = array_map(static function (User $user) { return $user->getId(); }, $reloaded->getUsers());
+        self::assertEquals([$victimId], $memberIds, 'The foreign team must not have gained a member');
+
+        $boundProjects = [];
+        foreach ($reloaded->getProjects() as $boundProject) {
+            $boundProjects[] = $boundProject->getId();
+        }
+        self::assertEquals([], $boundProjects, 'The foreign team must not have been bound to the project');
+
+        /** @var Project $reloadedProject */
+        $reloadedProject = $em->getRepository(Project::class)->find(1);
+        self::assertEquals(0, $reloadedProject->getTeams()->count());
+    }
+
+    public function testCreateTeamAction(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $em = $this->getEntityManager();
+
+        /** @var Project $project */
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertEquals(0, $project->getTeams()->count());
+
+        $this->assertAccessIsGranted($client, '/admin/project/1/team-create');
+        $form = $client->getCrawler()->filter('form[name=team_edit_form]')->form();
+        self::assertEquals('Test', $form->get('team_edit_form[name]')->getValue());
+
+        $client->submit($form);
+
+        $location = $this->assertIsModalRedirect($client, '/admin/project/1/details');
+        $this->requestPure($client, $location);
+        $this->assertHasFlashSuccess($client);
+
+        $em->clear();
+
+        /** @var Project $project */
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertEquals(1, $project->getTeams()->count());
+
+        $team = $em->getRepository(Team::class)->findOneBy(['name' => 'Test']);
+        self::assertInstanceOf(Team::class, $team);
+        self::assertTrue($team->hasProject($project));
+
+        $teamleads = $team->getTeamleads();
+        self::assertCount(1, $teamleads);
+        self::assertEquals($this->getUserByRole(User::ROLE_ADMIN)->getId(), $teamleads[0]->getId());
     }
 
     public function testDeleteAction(): void
@@ -627,5 +861,163 @@ class ProjectControllerTest extends AbstractControllerBaseTestCase
                 ]
             ],
         ];
+    }
+
+    public function testCreateActionWithLockedUntil(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/project/create');
+
+        $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
+        self::assertTrue($form->has('project_edit_form[lockedUntil]'));
+
+        $client->submit($form, [
+            'project_edit_form' => [
+                'name' => 'A locked project',
+                'customer' => 1,
+                // the date picker uses the locale format of the logged-in user
+                'lockedUntil' => '6/30/2020',
+            ]
+        ]);
+
+        $location = $this->assertIsModalRedirect($client, '/details');
+        $this->requestPure($client, $location);
+        $this->assertHasFlashSuccess($client);
+
+        $em = $this->getEntityManager();
+        $project = $em->getRepository(Project::class)->findOneBy(['name' => 'A locked project']);
+        self::assertInstanceOf(Project::class, $project);
+
+        $lockedUntil = $project->getLockedUntil();
+        self::assertInstanceOf(\DateTimeImmutable::class, $lockedUntil);
+        // the form stores the plain day
+        self::assertEquals('2020-06-30', $lockedUntil->format('Y-m-d'));
+
+        self::assertTrue($project->isLockedAtDate(new \DateTime('2020-06-30 22:00:00')));
+        self::assertFalse($project->isLockedAtDate(new \DateTime('2020-07-01 00:00:00')));
+    }
+
+    /**
+     * @return \Generator<array{0: string, 1: string}>
+     */
+    public static function getEditorTimezones(): \Generator
+    {
+        yield ['Europe/Vienna', 'Pacific/Tahiti'];
+        yield ['Pacific/Tahiti', 'Europe/Vienna'];
+        yield ['Pacific/Kiritimati', 'Pacific/Midway'];
+        yield ['UTC', 'Asia/Tokyo'];
+    }
+
+    /**
+     * A user from another timezone, who saves the project without touching the lock date,
+     * must not move the locked period - not even by a single day.
+     */
+    #[DataProvider('getEditorTimezones')]
+    public function testLockedUntilDoesNotShiftWhenSavedFromAnotherTimezone(string $first, string $second): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $em = $this->getEntityManager();
+
+        $switchTimezone = function (string $timezone) use ($em, $client): void {
+            $user = $em->getRepository(User::class)->findOneBy(['username' => UserFixtures::USERNAME_ADMIN]);
+            self::assertInstanceOf(User::class, $user);
+            $user->setPreferenceValue(UserPreference::TIMEZONE, $timezone);
+            $em->persist($user);
+            $em->flush();
+            // the browser is a KernelBrowser, which can re-authenticate without booting a new kernel
+            self::assertInstanceOf(KernelBrowser::class, $client);
+            $client->loginUser($user, 'secured_area');
+        };
+
+        // the first user sets the lock date
+        $switchTimezone($first);
+        $this->request($client, '/admin/project/1/edit');
+        $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
+        $client->submit($form, ['project_edit_form' => ['lockedUntil' => '8/6/2026']]);
+
+        $stored = $em->getConnection()->fetchOne('SELECT locked_until FROM kimai2_projects WHERE id = 1');
+        self::assertEquals('2026-08-06', $stored);
+
+        // the second user opens the project, sees the same day and saves without touching it
+        $switchTimezone($second);
+        $this->request($client, '/admin/project/1/edit');
+        $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
+        $field = $form->get('project_edit_form[lockedUntil]');
+        self::assertInstanceOf(FormField::class, $field);
+        self::assertEquals('8/6/2026', $field->getValue(), 'The lock date is displayed differently in ' . $second);
+
+        $client->submit($form, ['project_edit_form' => ['name' => 'renamed in ' . $second]]);
+
+        $stored = $em->getConnection()->fetchOne('SELECT locked_until FROM kimai2_projects WHERE id = 1');
+        self::assertEquals('2026-08-06', $stored, 'The lock date moved when saved from ' . $second);
+
+        // and the locked period is still exactly the same for everyone
+        $em->clear();
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $project);
+        foreach ([$first, $second] as $timezone) {
+            $zone = new \DateTimeZone($timezone);
+            self::assertTrue($project->isLockedAtDate(new \DateTime('2026-08-06 10:00:00', $zone)), $timezone);
+            self::assertFalse($project->isLockedAtDate(new \DateTime('2026-08-07 10:00:00', $zone)), $timezone);
+        }
+    }
+
+    public function testEditActionCanRemoveLockedUntil(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $em = $this->getEntityManager();
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $project);
+        $project->setLockedUntil(new \DateTimeImmutable('2020-06-30 23:59:59'));
+        $em->persist($project);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/admin/project/1/edit');
+        $form = $client->getCrawler()->filter('form[name=project_edit_form]')->form();
+        $field = $form->get('project_edit_form[lockedUntil]');
+        self::assertInstanceOf(FormField::class, $field);
+        self::assertEquals('6/30/2020', $field->getValue());
+
+        $client->submit($form, [
+            'project_edit_form' => [
+                'lockedUntil' => '',
+            ]
+        ]);
+
+        $em->clear();
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $project);
+        self::assertNull($project->getLockedUntil());
+    }
+
+    public function testProjectFormShowsDateHelpTexts(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->assertAccessIsGranted($client, '/admin/project/create');
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+
+        self::assertStringContainsString('Times before this date cannot be recorded.', $content);
+        self::assertStringContainsString('Times after this date cannot be recorded.', $content);
+        self::assertStringContainsString('Times up to and including this date can neither be created nor changed.', $content);
+    }
+
+    public function testDetailsPageShowsLockedUntil(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+
+        $em = $this->getEntityManager();
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $project);
+        $project->setLockedUntil(new \DateTimeImmutable('2020-06-30 23:59:59'));
+        $em->persist($project);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/admin/project/1/details');
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        self::assertStringContainsString('Times locked until', $content);
     }
 }
