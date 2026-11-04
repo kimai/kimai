@@ -429,6 +429,29 @@ class UserControllerTest extends APIControllerBaseTestCase
         ]);
     }
 
+    /**
+     * @return array<int, array{array<string>|false}>
+     */
+    public static function getInvalidPreferenceNames(): array
+    {
+        return [
+            [['X']],
+            [false],
+        ];
+    }
+
+    /**
+     * @param array<string>|false $name
+     */
+    #[DataProvider('getInvalidPreferenceNames')]
+    public function testUpdateUserPreferenceThrowsExceptionOnInvalidName(array|false $name): void
+    {
+        $this->assertExceptionForPatchAction(User::ROLE_SUPER_ADMIN, '/api/users/1/preferences', [['name' => $name, 'value' => 'X']], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
     public function testUpdateUserPreferenceThrowsExceptionOnMissingValue(): void
     {
         $this->assertExceptionForPatchAction(User::ROLE_SUPER_ADMIN, '/api/users/1/preferences', [['name' => 'X']], [
@@ -615,7 +638,7 @@ class UserControllerTest extends APIControllerBaseTestCase
     }
 
     /**
-     * @return array<int, array{string, string|int|null}>
+     * @return array<int, array{string, string|int|array<string>|null}>
      */
     public static function getInvalidPreferenceValues(): array
     {
@@ -643,11 +666,20 @@ class UserControllerTest extends APIControllerBaseTestCase
             ['public_holiday_group', str_repeat('x', 251)],
             ['work_start_day', 'foo'],
             ['work_last_day', '2026-13-01'],
+            // non-scalar values, the last one has no constraints
+            ['timezone', ['Europe/Berlin']],
+            ['work_start_day', ['2026-01-01']],
+            ['favorite_routes', ['timesheet']],
+            ['hourly_rate', ['10']],
+            ['update_browser_title', ['1']],
         ];
     }
 
+    /**
+     * @param string|int|array<string>|null $value
+     */
     #[DataProvider('getInvalidPreferenceValues')]
-    public function testUpdateUserPreferenceRejectsInvalidValue(string $name, string|int|null $value): void
+    public function testUpdateUserPreferenceRejectsInvalidValue(string $name, string|int|array|null $value): void
     {
         $role = User::ROLE_SUPER_ADMIN;
         $id = $this->getAuthenticatedUserId($role);

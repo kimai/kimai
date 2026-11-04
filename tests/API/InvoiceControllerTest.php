@@ -24,6 +24,7 @@ use App\Tests\Mocks\InvoiceTestMetaFieldSubscriberMock;
 use App\Tests\Mocks\InvoiceTestUrlMetaFieldSubscriberMock;
 use App\User\PermissionService;
 use App\Utils\FileHelper;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -300,6 +301,32 @@ class InvoiceControllerTest extends APIControllerBaseTestCase
         ]);
     }
 
+    /**
+     * @return array<int, array{array<string>|false}>
+     */
+    public static function getInvalidMetaFieldNames(): array
+    {
+        return [
+            [['X']],
+            [false],
+        ];
+    }
+
+    /**
+     * @param array<string>|false $name
+     */
+    #[DataProvider('getInvalidMetaFieldNames')]
+    public function testUpdateInvoiceMetaFieldsThrowsExceptionOnInvalidName(array|false $name): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+
+        $this->assertExceptionForPatchAction($client, '/api/invoices/' . $id . '/custom-fields', [['name' => $name, 'value' => 'X']], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
     public function testUpdateInvoiceMetaFieldsThrowsExceptionOnMissingValue(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
@@ -368,6 +395,27 @@ class InvoiceControllerTest extends APIControllerBaseTestCase
         /** @var Invoice $invoice */
         $invoice = $em->getRepository(Invoice::class)->find($id);
         self::assertNull($invoice->getMetaField('homepage'));
+    }
+
+    public function testUpdateInvoiceMetaFieldsRejectsNonScalarValue(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $id = $this->importInvoiceFixtures(1)[0]->getId();
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new InvoiceTestUrlMetaFieldSubscriberMock());
+
+        $data = [
+            [
+                'name' => 'homepage',
+                'value' => ['https://www.kimai.org']
+            ],
+        ];
+        $this->request($client, '/api/invoices/' . $id . '/custom-fields', 'PATCH', [], (string) json_encode($data));
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['homepage']);
     }
 
     public function testUpdateInvoiceMetaFieldsAcceptsValidUrl(): void

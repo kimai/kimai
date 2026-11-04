@@ -137,6 +137,10 @@ final class InvoiceController extends BaseApiController
                 throw new BadRequestHttpException('Missing required parameter "name" or "value"');
             }
 
+            if (!\is_string($preference['name'])) {
+                throw new BadRequestHttpException('Invalid parameter "name", string expected');
+            }
+
             $name = $preference['name'];
             $value = $preference['value'];
 
