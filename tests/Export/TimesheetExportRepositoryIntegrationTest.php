@@ -266,6 +266,13 @@ class TimesheetExportRepositoryIntegrationTest extends AbstractRepositoryTestCas
         self::assertSame(1, $query->getMaxResults());
     }
 
+    public function testPreviewLimitCountsTimesheetsInsteadOfJoinedRows(): void
+    {
+        $preview = $this->createSut()->getPreview($this->createQuery('foo:~'), 2);
+
+        self::assertCount(2, $preview->getExportItems());
+    }
+
     public function testPreviewWithoutResults(): void
     {
         $query = $this->createQuery();

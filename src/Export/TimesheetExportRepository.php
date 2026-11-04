@@ -72,6 +72,8 @@ final class TimesheetExportRepository implements ExportRepositoryInterface, Expo
             ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
             ->addSelect('COALESCE(SUM(t.rate), 0) as rate')
             ->groupBy('p.customer')
+            // a limit would cut off customers, the statistic always covers all matching timesheets
+            ->setMaxResults(null)
         ;
 
         if (!\in_array('p', $qb->getAllAliases(), true)) {

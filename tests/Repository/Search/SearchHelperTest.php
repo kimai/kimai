@@ -19,6 +19,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\Query\Expr\Andx;
 use Doctrine\ORM\Query\Expr\Comparison;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\Query\Expr\Orx;
 use Doctrine\ORM\Query\Parameter;
 use Doctrine\ORM\QueryBuilder;
@@ -198,6 +199,58 @@ class SearchHelperTest extends TestCase
         $sut = new SearchHelper($configuration);
 
         $sut->addSearchTerm($qb, $query);
+    }
+
+    /**
+     * @return array<string, array{0: string, 1: array<string>}>
+     */
+    public static function provideMetaFieldJoins(): array
+    {
+        return [
+            'value' => ['foo:bar', ['meta0']],
+            'excluded value' => ['foo:!bar', ['meta0']],
+            'exists' => ['foo:*', ['meta0']],
+            'missing' => ['foo:~', ['meta0']],
+            'empty' => ['foo:""', ['meta0']],
+            'multiple' => ['foo:~ bar:"" baz:*', ['meta0', 'meta1', 'meta2']],
+        ];
+    }
+
+    /**
+     * Without the name condition, a search returns one row per meta-field of the entity.
+     *
+     * @param array<string> $expectedAliases
+     */
+    #[DataProvider('provideMetaFieldJoins')]
+    public function testMetaFieldJoinIsLimitedToSearchedName(string $term, array $expectedAliases): void
+    {
+        $em = $this->createMock(EntityManagerInterface::class);
+        $em->method('getExpressionBuilder')->willReturn(new Expr());
+        $qb = new QueryBuilder($em);
+        $qb->from(Timesheet::class, 'testFoo');
+
+        $query = new BaseQuery();
+        $query->setSearchTerm(new SearchTerm($term));
+        $configuration = new SearchConfiguration(['bar'], 'MetaFieldClass', 'metaFieldName');
+        $configuration->setEntityFieldName('entityFieldName');
+
+        $sut = new SearchHelper($configuration);
+        $sut->addSearchTerm($qb, $query);
+
+        $joins = $qb->getDQLPart('join');
+        self::assertIsArray($joins);
+        self::assertArrayHasKey('testFoo', $joins);
+        self::assertCount(\count($expectedAliases), $joins['testFoo']);
+
+        foreach ($expectedAliases as $i => $alias) {
+            $join = $joins['testFoo'][$i];
+            self::assertInstanceOf(Join::class, $join);
+            self::assertSame(Join::LEFT_JOIN, $join->getJoinType());
+            self::assertSame('testFoo.entityFieldName', $join->getJoin());
+            self::assertSame($alias, $join->getAlias());
+            self::assertSame(Join::WITH, $join->getConditionType());
+            self::assertSame($alias . '.name = :metaName' . $i, (string) $join->getCondition());
+        }
     }
 
     public static function provideMaliciousMetaFieldPayloads(): array

@@ -19,6 +19,7 @@ use App\Entity\RateInterface;
 use App\Entity\Tag;
 use App\Entity\Team;
 use App\Entity\Timesheet;
+use App\Entity\TimesheetMeta;
 use App\Entity\User;
 use App\Repository\ActivityRepository;
 use App\Repository\ProjectRepository;
@@ -26,6 +27,7 @@ use App\Repository\Query\TimesheetQuery;
 use App\Repository\Query\TimesheetQueryHint;
 use App\Repository\TimesheetRepository;
 use App\Utils\Pagination;
+use App\Utils\SearchTerm;
 use Doctrine\ORM\PersistentCollection;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
@@ -104,6 +106,75 @@ class TimesheetRepositoryTest extends AbstractRepositoryTestCase
 
         self::assertCount($amount, $collected);
         self::assertCount($amount, array_unique($collected), 'Pagination returned the same timesheet on more than one page');
+    }
+
+    public function testGetQueryBuilderForQuery(): void
+    {
+        /** @var TimesheetRepository $repository */
+        $repository = $this->getEntityManager()->getRepository(Timesheet::class);
+
+        $query = new TimesheetQuery();
+        $query->setMaxResults(7);
+        $query->setOrderBy('customer');
+        $query->setSearchTerm(new SearchTerm('foo:~'));
+
+        $qb = $repository->getQueryBuilderForQuery($query);
+
+        self::assertSame([Timesheet::class], $qb->getRootEntities());
+        self::assertSame(['t'], $qb->getRootAliases());
+        self::assertSame(7, $qb->getMaxResults());
+        // joins which are required for sorting and searching
+        self::assertContains('p', $qb->getAllAliases());
+        self::assertContains('c', $qb->getAllAliases());
+        self::assertContains('meta0', $qb->getAllAliases());
+        self::assertSame('foo', $qb->getParameter('metaName0')?->getValue());
+        // the builder is a valid query, which can be modified by the caller
+        self::assertIsArray($qb->getQuery()->getResult());
+    }
+
+    public function testTimesheetResultCountsEveryTimesheetOnceForMissingMetaField(): void
+    {
+        $em = $this->getEntityManager();
+        /** @var ActivityRepository $activityRepository */
+        $activityRepository = $em->getRepository(Activity::class);
+        $activity = $activityRepository->find(1);
+        /** @var ProjectRepository $projectRepository */
+        $projectRepository = $em->getRepository(Project::class);
+        $project = $projectRepository->find(1);
+        $user = $this->getUserByRole(User::ROLE_USER);
+
+        // every timesheet has several meta-fields, the last one is not matched by the search
+        foreach ([['one', 'two', 'three'], ['one', 'two'], ['one', 'foo']] as $names) {
+            $timesheet = new Timesheet();
+            $timesheet
+                ->setBegin(new \DateTime('2015-07-15 10:00:00'))
+                ->setEnd(new \DateTime('2015-07-15 11:00:00'))
+                ->setUser($user)
+                ->setActivity($activity)
+                ->setProject($project);
+            foreach ($names as $name) {
+                $meta = new TimesheetMeta();
+                $meta->setName($name);
+                $meta->setValue('value');
+                $timesheet->setMetaField($meta);
+            }
+            $em->persist($timesheet);
+        }
+        $em->flush();
+        $em->clear();
+
+        $query = new TimesheetQuery();
+        $query->setBegin(new \DateTime('2015-07-15 00:00:00'));
+        $query->setEnd(new \DateTime('2015-07-15 23:59:59'));
+        $query->setSearchTerm(new SearchTerm('foo:~'));
+
+        /** @var TimesheetRepository $repository */
+        $repository = $em->getRepository(Timesheet::class);
+        $result = $repository->getTimesheetResult($query);
+
+        self::assertCount(2, $result->getResults());
+        self::assertSame(2, $result->getStatistic()->getCount());
+        self::assertSame(7200, $result->getStatistic()->getDuration());
     }
 
     public function testSave(): void

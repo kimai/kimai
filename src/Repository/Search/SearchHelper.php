@@ -11,6 +11,7 @@ namespace App\Repository\Search;
 
 use App\Repository\Query\BaseQuery;
 use App\Repository\RepositoryException;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 
 final class SearchHelper
@@ -58,9 +59,11 @@ final class SearchHelper
                     continue;
                 }
                 $alias = 'meta' . $j++;
-                $qb->leftJoin($metaFieldRef, $alias);
                 $metaValue = $part->getTerm();
                 $paramName = 'metaName' . $i++;
+                // an entity has at most one meta-field per name: limiting the join to this name
+                // guarantees that the search does not return the entity in multiple rows
+                $qb->leftJoin($metaFieldRef, $alias, Join::WITH, $qb->expr()->eq($alias . '.name', ':' . $paramName));
                 $paramValue = 'metaValue' . $c++;
                 $subqueryName = 'metaNotExists' . $k++;
                 $field = $alias . '.value';
