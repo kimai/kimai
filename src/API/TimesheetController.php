@@ -27,6 +27,7 @@ use App\Repository\UserRepository;
 use App\Timesheet\TimesheetService;
 use App\Timesheet\TrackingMode\TrackingModeInterface;
 use App\Utils\SearchTerm;
+use App\Validator\MetaFieldValidator;
 use App\Validator\ValidationFailedException;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -570,20 +571,22 @@ final class TimesheetController extends BaseApiController
     #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/TimesheetEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Timesheet ID to set the meta-field value for', required: true)]
     #[Route(methods: ['PATCH'], path: '/{id}/meta', requirements: ['id' => '\d+'])]
-    #[Rest\RequestParam(name: 'name', strict: true, nullable: false, description: 'The meta-field name')]
+    #[Rest\RequestParam(name: 'name', requirements: [new Constraints\Type('string')], strict: true, nullable: false, description: 'The meta-field name')]
     #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
-    public function metaAction(Timesheet $timesheet, ParamFetcherInterface $paramFetcher): Response
+    public function metaAction(Timesheet $timesheet, ParamFetcherInterface $paramFetcher, MetaFieldValidator $metaFieldValidator): Response
     {
         $event = new TimesheetMetaDefinitionEvent($timesheet);
         $this->dispatcher->dispatch($event);
 
         $name = $paramFetcher->get('name');
+        $value = $paramFetcher->get('value');
 
         if (!\is_string($name) || null === ($meta = $timesheet->getMetaField($name))) {
             throw $this->createNotFoundException('Unknown meta-field requested');
         }
 
-        $meta->setValue($paramFetcher->get('value'));
+        $metaFieldValidator->validate($timesheet, $meta, $value);
+        $meta->setValue($value);
 
         $this->service->saveTimesheet($timesheet);
 

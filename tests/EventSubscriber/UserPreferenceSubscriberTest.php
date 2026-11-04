@@ -9,6 +9,7 @@
 
 namespace App\Tests\EventSubscriber;
 
+use App\Configuration\LocaleService;
 use App\Entity\User;
 use App\Entity\UserPreference;
 use App\Event\PrepareUserEvent;
@@ -45,6 +46,21 @@ class UserPreferenceSubscriberTest extends TestCase
         $methodName = $events[PrepareUserEvent::class][0];
         self::assertIsString($methodName);
         self::assertTrue(method_exists(UserPreferenceSubscriber::class, $methodName));
+    }
+
+    public function testPreferencesRegisterConstraints(): void
+    {
+        $sut = $this->getSubscriber(true);
+        $withoutConstraints = [];
+
+        foreach ($sut->getDefaultPreferences(new User()) as $pref) {
+            if (\count($pref->getConstraints()) === 0) {
+                $withoutConstraints[] = $pref->getName();
+            }
+        }
+
+        // the value of these is normalized in UserPreference::setValue()
+        self::assertEquals(['update_browser_title', 'daily_stats', 'export_decimal'], $withoutConstraints);
     }
 
     public function testWithHourlyRateAllowed(): void
@@ -147,6 +163,11 @@ class UserPreferenceSubscriberTest extends TestCase
             ]
         ]);
 
-        return new UserPreferenceSubscriber($eventMock, $authMock, $formConfigMock);
+        $locales = new LocaleService([
+            'en' => ['date' => 'dd.MM.yyyy', 'time' => 'HH:mm', 'translation' => true],
+            'de_AT' => ['date' => 'dd.MM.yyyy', 'time' => 'HH:mm', 'translation' => false],
+        ]);
+
+        return new UserPreferenceSubscriber($eventMock, $authMock, $formConfigMock, $locales);
     }
 }
