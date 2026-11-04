@@ -254,9 +254,10 @@ final class ServiceExport
             } else {
                 @trigger_error(\sprintf('Export repository "%s" is deprecated, implement ExportableRepositoryInterface', $repository->getType()), E_USER_DEPRECATED);
                 $repoItems = $repository->getExportItemsForQuery($query);
+                $statistic = (new ExportableArrayResult($repoItems))->getStatistic(); // @phpstan-ignore argument.type
                 $repoItems = \array_slice($repoItems, 0, $maxItems); // @phpstan-ignore argument.type
                 $count = \count($repoItems);
-                $result = new ExportableArrayResult($repoItems);
+                $result = new ExportablePreviewResult($repoItems, $statistic);
             }
 
             $maxItems = $maxItems - $count;
