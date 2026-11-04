@@ -18,16 +18,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class FirstWeekDayType extends AbstractType
 {
+    public const CHOICES = [
+        'Monday' => 'monday',
+        'Sunday' => 'sunday'
+    ];
+
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $choices = [
-            'Monday' => 'monday',
-            'Sunday' => 'sunday'
-        ];
-
         $resolver->setDefaults([
             'multiple' => false,
-            'choices' => $choices,
+            'choices' => self::CHOICES,
             'label' => 'first_weekday',
             'translation_domain' => 'system-configuration',
             'search' => false,

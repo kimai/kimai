@@ -16,9 +16,12 @@ use App\Repository\UserRepository;
 use App\Tests\Mocks\SystemConfigurationFactory;
 use App\User\UserService;
 use App\WorkingTime\Calculator\WorkingTimeCalculatorDay;
+use App\WorkingTime\Mode\WorkingTimeModeDay;
+use App\WorkingTime\Mode\WorkingTimeModeFactory;
 use App\WorkingTime\Mode\WorkingTimeModeNone;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -32,7 +35,7 @@ class UserServiceTest extends TestCase
         $dispatcher = new EventDispatcher();
         $voter = $this->createMock(AuthorizationCheckerInterface::class);
         $voter->method('isGranted')->with('contract', self::isInstanceOf(User::class))->willReturn(true);
-        $dispatcher->addSubscriber(new WorkContractPreferenceSubscriber($voter));
+        $dispatcher->addSubscriber(new WorkContractPreferenceSubscriber($voter, new WorkingTimeModeFactory([new WorkingTimeModeNone(), new WorkingTimeModeDay()], $this->createMock(LoggerInterface::class))));
 
         $sut = new UserService(
             $this->createMock(UserRepository::class),

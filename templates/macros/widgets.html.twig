@@ -376,7 +376,11 @@
     {% elseif 'EmailType' in type %}
         <a href="mailto:{{ value }}">{{ value }}</a>
     {% elseif 'UrlType' in type %}
-        <a href="{{ value }}" target="_blank">{{ value }}</a>
+        {% if value matches '{^https?://}i' %}
+            <a href="{{ value }}" target="_blank" rel="noopener noreferrer">{{ value }}</a>
+        {% else %}
+            {{ value }}
+        {% endif %}
     {% else %}
         {{ value }}
     {% endif %}

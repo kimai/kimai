@@ -22,6 +22,7 @@ use App\Repository\CustomerRateRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\Query\CustomerQuery;
 use App\Utils\SearchTerm;
+use App\Validator\MetaFieldValidator;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
@@ -34,6 +35,7 @@ use Symfony\Component\HttpKernel\Exception\GoneHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Validator\Constraints;
 
 #[Route(path: '/customers')]
 #[IsGranted('API')]
@@ -50,7 +52,7 @@ final class CustomerController extends BaseApiController
         private readonly CustomerRepository $repository,
         private readonly CustomerRateRepository $customerRateRepository,
         private readonly CustomerService $customerService,
-        private readonly AuthorizationCheckerInterface $security,
+        private readonly AuthorizationCheckerInterface $security
     ) {
     }
 
@@ -220,9 +222,9 @@ final class CustomerController extends BaseApiController
     #[OA\Response(response: 200, description: 'Sets the value of an existing/configured meta-field. You cannot create unknown meta-fields, if the given name is not a configured meta-field, this will return an exception.', content: new OA\JsonContent(ref: '#/components/schemas/CustomerEntity'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Customer record ID to set the meta-field value for', required: true)]
     #[Route(methods: ['PATCH'], path: '/{id}/meta', requirements: ['id' => '\d+'])]
-    #[Rest\RequestParam(name: 'name', strict: true, nullable: false, description: 'The meta-field name')]
+    #[Rest\RequestParam(name: 'name', requirements: [new Constraints\Type('string')], strict: true, nullable: false, description: 'The meta-field name')]
     #[Rest\RequestParam(name: 'value', strict: true, nullable: false, description: 'The meta-field value')]
-    public function metaAction(Customer $customer, ParamFetcherInterface $paramFetcher): Response
+    public function metaAction(Customer $customer, ParamFetcherInterface $paramFetcher, MetaFieldValidator $metaFieldValidator): Response
     {
         $this->customerService->loadMetaFields($customer);
 
@@ -233,6 +235,7 @@ final class CustomerController extends BaseApiController
             throw $this->createNotFoundException('Unknown meta-field requested');
         }
 
+        $metaFieldValidator->validate($customer, $meta, $value);
         $meta->setValue($value);
 
         $this->customerService->saveCustomer($customer);

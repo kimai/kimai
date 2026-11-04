@@ -23,6 +23,7 @@ use App\Repository\ProjectRateRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\Query\VisibilityInterface;
 use App\Tests\Mocks\ProjectTestMetaFieldSubscriberMock;
+use App\Tests\Mocks\ProjectTestUrlMetaFieldSubscriberMock;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -654,6 +655,14 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         ]);
     }
 
+    public function testMetaActionThrowsExceptionOnNonScalarName(): void
+    {
+        $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/projects/1/meta', ['name' => ['X'], 'value' => 'X'], [
+            'code' => Response::HTTP_BAD_REQUEST,
+            'message' => 'Bad Request'
+        ]);
+    }
+
     public function testMetaActionThrowsExceptionOnMissingValue(): void
     {
         $this->assertExceptionForPatchAction(User::ROLE_ADMIN, '/api/projects/1/meta', ['name' => 'X'], [
@@ -689,6 +698,93 @@ class ProjectControllerTest extends APIControllerBaseTestCase
         /** @var Project $project */
         $project = $em->getRepository(Project::class)->find(1);
         self::assertEquals('another,testing,bar', $project->getMetaField('metatestmock')->getValue());
+    }
+
+    public function testMetaActionValidatesConfiguredConstraints(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new ProjectTestMetaFieldSubscriberMock());
+
+        $data = [
+            'name' => 'metatestmock',
+            'value' => str_repeat('x', 201)
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/projects/1/meta', 'PATCH', [], $json);
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['metatestmock']);
+    }
+
+    public function testMetaActionRejectsUnsafeUrl(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new ProjectTestUrlMetaFieldSubscriberMock());
+
+        $data = [
+            'name' => 'homepage',
+            'value' => 'javascript:alert(1)'
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/projects/1/meta', 'PATCH', [], $json);
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['homepage']);
+
+        $em = $this->getEntityManager();
+        $em->clear();
+        /** @var Project $project */
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertNull($project->getMetaField('homepage'));
+    }
+
+    public function testMetaActionRejectsNonScalarValue(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new ProjectTestUrlMetaFieldSubscriberMock());
+
+        $json = json_encode(['name' => 'homepage', 'value' => ['https://www.kimai.org']]);
+        self::assertIsString($json);
+        $this->request($client, '/api/projects/1/meta', 'PATCH', [], $json);
+
+        $response = $client->getResponse();
+        self::assertEquals(400, $response->getStatusCode());
+        $this->assertApiCallValidationError($response, ['homepage']);
+    }
+
+    public function testMetaActionAcceptsValidUrl(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        /** @var EventDispatcher $dispatcher */
+        $dispatcher = static::getContainer()->get('event_dispatcher');
+        $dispatcher->addSubscriber(new ProjectTestUrlMetaFieldSubscriberMock());
+
+        $data = [
+            'name' => 'homepage',
+            'value' => 'https://www.kimai.org'
+        ];
+        $json = json_encode($data);
+        self::assertIsString($json);
+        $this->request($client, '/api/projects/1/meta', 'PATCH', [], $json);
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $em = $this->getEntityManager();
+        /** @var Project $project */
+        $project = $em->getRepository(Project::class)->find(1);
+        $meta = $project->getMetaField('homepage');
+        self::assertNotNull($meta);
+        self::assertEquals('https://www.kimai.org', $meta->getValue());
     }
 
     // ------------------------------- [DELETE] -------------------------------

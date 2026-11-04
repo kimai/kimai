@@ -19,6 +19,7 @@ use App\Repository\InvoiceDocumentRepository;
 use App\Repository\InvoiceRepository;
 use App\Repository\InvoiceTemplateRepository;
 use App\Repository\Query\InvoiceArchiveQuery;
+use App\Validator\MetaFieldValidator;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
@@ -43,6 +44,7 @@ final class InvoiceController extends BaseApiController
     public function __construct(
         private readonly ViewHandlerInterface $viewHandler,
         private readonly InvoiceRepository $repository,
+        private readonly MetaFieldValidator $metaFieldValidator,
     ) {
     }
 
@@ -135,6 +137,10 @@ final class InvoiceController extends BaseApiController
                 throw new BadRequestHttpException('Missing required parameter "name" or "value"');
             }
 
+            if (!\is_string($preference['name'])) {
+                throw new BadRequestHttpException('Invalid parameter "name", string expected');
+            }
+
             $name = $preference['name'];
             $value = $preference['value'];
 
@@ -142,6 +148,7 @@ final class InvoiceController extends BaseApiController
                 throw $this->createNotFoundException(\sprintf('Unknown custom-field "%s" requested', $name));
             }
 
+            $this->metaFieldValidator->validate($invoice, $meta, $value);
             $meta->setValue($value);
             $dirty = true;
         }
