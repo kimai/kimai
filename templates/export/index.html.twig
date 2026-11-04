@@ -397,12 +397,16 @@
             }, false);
 
             {% if showMarkAsExportedButton %}
-                document.getElementById('markAsExportedCheck').addEventListener('change', function(event) {
+            let mrkExpBtn = document.getElementById('markAsExportedCheck');
+            if (mrkExpBtn !== null) {
+                mrkExpBtn.addEventListener('change', function (event) {
                     document.getElementById('markAsExported').value = event.target.checked ? 1 : 0;
                 });
+            }
             {% endif %}
         });
 
+        {% dump(showToggleButton) %}
         {% if showToggleButton %}
             function confirmToggleState(doExport)
             {
@@ -426,9 +430,13 @@
                 });
             }
 
-            document.getElementById('toggle-button').addEventListener('click', function (event) {
-                confirmToggleState({% if form.exported.vars.value == '5' %}true{% else %}false{% endif %});
-            }, false);
+            let tglBtn = document.getElementById('toggle-button');
+
+            if (tglBtn !== null) {
+                tglBtn.addEventListener('click', function (event) {
+                    confirmToggleState({% if form.exported.vars.value == '5' %}true{% else %}false{% endif %});
+                }, false);
+            }
         {% endif %}
     </script>
 {% endblock %}
