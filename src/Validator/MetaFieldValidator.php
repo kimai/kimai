@@ -15,6 +15,7 @@ use App\Entity\User;
 use App\Entity\UserPreference;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -53,6 +54,12 @@ final class MetaFieldValidator
         // like the form layer: empty strings are converted to null before validation,
         // the API receives null as empty string, as the JSON decoder converts all scalar values to strings
         $value = $value === '' ? null : $value;
+
+        // only scalar values can be stored, setValue() would silently drop or convert anything else.
+        // registered constraints are written for scalar values, so they don't need to handle these
+        if ($value !== null && !\is_scalar($value)) {
+            $constraints = [new Type('scalar')];
+        }
 
         // the entity is used as validation root, so constraints can access it via the execution context
         $violations = $this->validator->validate($root, new Callback(

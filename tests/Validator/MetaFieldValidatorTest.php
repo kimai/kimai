@@ -92,6 +92,71 @@ class MetaFieldValidatorTest extends TestCase
         }
     }
 
+    /**
+     * @return array<int, array<mixed>>
+     */
+    public static function getNonScalarValues(): array
+    {
+        return [
+            [['https://www.kimai.org']],
+            [[]],
+            [new \stdClass()],
+        ];
+    }
+
+    #[DataProvider('getNonScalarValues')]
+    public function testValidateRejectsNonScalarValues(mixed $value): void
+    {
+        $meta = (new CustomerMeta())->setName('homepage')->setType(UrlType::class)->addConstraint(new Url())->addConstraint(new Length(['max' => 200]));
+
+        try {
+            $this->createSut()->validate(new Customer('foo'), $meta, $value);
+            self::fail('Expected ValidationFailedException');
+        } catch (ValidationFailedException $ex) {
+            self::assertCount(1, $ex->getViolations());
+            self::assertEquals('homepage', $ex->getViolations()->get(0)->getPropertyPath());
+        }
+    }
+
+    public function testValidateDoesNotRunRegisteredConstraintsForNonScalarValues(): void
+    {
+        $called = false;
+        $meta = (new CustomerMeta())->setName('homepage')->setType(TextType::class)->addConstraint(new Callback(function () use (&$called): void {
+            $called = true;
+        }));
+
+        try {
+            $this->createSut()->validate(new Customer('foo'), $meta, ['foo']);
+            self::fail('Expected ValidationFailedException');
+        } catch (ValidationFailedException) {
+            self::assertFalse($called);
+        }
+    }
+
+    #[DataProvider('getNonScalarValues')]
+    public function testValidateRejectsNonScalarValuesWithoutConstraints(mixed $value): void
+    {
+        $meta = (new CustomerMeta())->setName('homepage')->setType(TextType::class);
+
+        $this->expectException(ValidationFailedException::class);
+
+        $this->createSut()->validate(new Customer('foo'), $meta, $value);
+    }
+
+    #[DataProvider('getNonScalarValues')]
+    public function testValidateUserPreferenceRejectsNonScalarValues(mixed $value): void
+    {
+        $preference = (new UserPreference('foo'))->addConstraint(new Length(['max' => 200]));
+
+        try {
+            $this->createSut()->validateUserPreference(new User(), $preference, $value);
+            self::fail('Expected ValidationFailedException');
+        } catch (ValidationFailedException $ex) {
+            self::assertCount(1, $ex->getViolations());
+            self::assertEquals('foo', $ex->getViolations()->get(0)->getPropertyPath());
+        }
+    }
+
     public function testValidateRunsAllRegisteredConstraints(): void
     {
         $meta = (new CustomerMeta())
