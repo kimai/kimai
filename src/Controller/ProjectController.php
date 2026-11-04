@@ -112,12 +112,12 @@ final class ProjectController extends AbstractController
         $table->addColumn('visible', ['class' => 'd-none text-center w-min']);
         $table->addColumn('actions', ['class' => 'actions']);
 
-        $page = $this->createPageSetup();
-        $page->setDataTable($table);
-        $page->setActionName('projects');
+        $pageSetup = $this->createPageSetup();
+        $pageSetup->setDataTable($table);
+        $pageSetup->setActionName('projects');
 
         return $this->render('project/index.html.twig', [
-            'page_setup' => $page,
+            'page_setup' => $pageSetup,
             'dataTable' => $table,
             'metaColumns' => $metaColumns,
             'now' => $this->getDateTimeFactory()->createDateTime(),
@@ -322,13 +322,13 @@ final class ProjectController extends AbstractController
         $dispatcher->dispatch($event);
         $boxes = $event->getController();
 
-        $page = $this->createPageSetup();
-        $page->setActionName('project');
-        $page->setActionView('project_details');
-        $page->setActionPayload(['project' => $project]);
+        $pageSetup = $this->createPageSetup();
+        $pageSetup->setActionName('project');
+        $pageSetup->setActionView('project_details');
+        $pageSetup->setActionPayload(['project' => $project]);
 
         return $this->render('project/details.html.twig', [
-            'page_setup' => $page,
+            'page_setup' => $pageSetup,
             'project' => $project,
             'comments' => $comments,
             'commentForm' => $commentForm,

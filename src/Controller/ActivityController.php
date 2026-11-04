@@ -103,12 +103,12 @@ final class ActivityController extends AbstractController
         $table->addColumn('visible', ['class' => 'd-none text-center w-min']);
         $table->addColumn('actions', ['class' => 'actions']);
 
-        $page = $this->createPageSetup();
-        $page->setDataTable($table);
-        $page->setActionName('activities');
+        $pageSetup = $this->createPageSetup();
+        $pageSetup->setDataTable($table);
+        $pageSetup->setActionName('activities');
 
         return $this->render('activity/index.html.twig', [
-            'page_setup' => $page,
+            'page_setup' => $pageSetup,
             'dataTable' => $table,
             'metaColumns' => $metaColumns,
             'defaultCurrency' => $configuration->getDefaultCurrency(),
@@ -162,13 +162,13 @@ final class ActivityController extends AbstractController
         $dispatcher->dispatch($event);
         $boxes = $event->getController();
 
-        $page = $this->createPageSetup();
-        $page->setActionName('activity');
-        $page->setActionView('activity_details');
-        $page->setActionPayload(['activity' => $activity]);
+        $pageSetup = $this->createPageSetup();
+        $pageSetup->setActionName('activity');
+        $pageSetup->setActionView('activity_details');
+        $pageSetup->setActionPayload(['activity' => $activity]);
 
         return $this->render('activity/details.html.twig', [
-            'page_setup' => $page,
+            'page_setup' => $pageSetup,
             'activity' => $activity,
             'stats' => $stats,
             'rates' => $rates,

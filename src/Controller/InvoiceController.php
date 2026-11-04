@@ -349,12 +349,12 @@ final class InvoiceController extends AbstractController
         $table->addColumn('total_rate', ['class' => 'd-none d-md-table-cell text-end w-min']);
         $table->addColumn('actions', ['class' => 'actions']);
 
-        $page = $this->createPageSetup('all_invoices');
-        $page->setDataTable($table);
-        $page->setActionName('invoice_archive');
+        $pageSetup = $this->createPageSetup('all_invoices');
+        $pageSetup->setDataTable($table);
+        $pageSetup->setActionName('invoice_archive');
 
         return $this->render('invoice/listing.html.twig', [
-            'page_setup' => $page,
+            'page_setup' => $pageSetup,
             'dataTable' => $table,
             'download' => $invoice,
             'metaColumns' => $metaColumns,
@@ -411,12 +411,12 @@ final class InvoiceController extends AbstractController
         $table->addColumn('language', ['class' => 'd-none text-nowrap', 'orderBy' => false]);
         $table->addColumn('actions', ['class' => 'actions']);
 
-        $page = $this->createPageSetup('admin_invoice_template.title');
-        $page->setDataTable($table);
-        $page->setActionName('invoice_templates');
+        $pageSetup = $this->createPageSetup('admin_invoice_template.title');
+        $pageSetup->setDataTable($table);
+        $pageSetup->setActionName('invoice_templates');
 
         return $this->render('invoice/templates.html.twig', [
-            'page_setup' => $page,
+            'page_setup' => $pageSetup,
             'dataTable' => $table,
         ]);
     }
@@ -565,10 +565,10 @@ final class InvoiceController extends AbstractController
             }
         }
 
-        $page = $this->createPageSetup('admin_invoice_template.title');
+        $pageSetup = $this->createPageSetup('admin_invoice_template.title');
 
         return $this->render('invoice/document_upload.html.twig', [
-            'page_setup' => $page,
+            'page_setup' => $pageSetup,
             'error_replacer' => ['%max%' => $event->getMaximumAllowedDocuments(), '%dir%' => $dir],
             'upload_error' => $uploadError,
             'can_upload' => $canUpload,
@@ -656,10 +656,10 @@ final class InvoiceController extends AbstractController
             }
         }
 
-        $page = $this->createPageSetup('admin_invoice_template.title');
+        $pageSetup = $this->createPageSetup('admin_invoice_template.title');
 
         return $this->render('invoice/template_edit.html.twig', [
-            'page_setup' => $page,
+            'page_setup' => $pageSetup,
             'template' => $template,
             'form' => $editForm->createView()
         ]);

@@ -113,12 +113,12 @@ abstract class TimesheetAbstractController extends AbstractController
         $table->addColumn('exported', ['class' => 'text-center d-none w-min']);
         $table->addColumn('actions', ['class' => 'actions']);
 
-        $page = $this->createPageSetup();
-        $page->setActionName($this->getActionName());
+        $pageSetup = $this->createPageSetup();
+        $pageSetup->setActionName($this->getActionName());
 
         return $this->render('timesheet/index.html.twig', [
             'view_rate' => $canSeeRate,
-            'page_setup' => $page,
+            'page_setup' => $pageSetup,
             'dataTable' => $table,
             'action_single' => $this->getActionNameSingle(),
             'stats' => $result->getStatistic(),

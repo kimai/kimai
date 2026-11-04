@@ -117,12 +117,12 @@ final class CustomerController extends AbstractController
         $table->addColumn('visible', ['class' => 'd-none text-center w-min']);
         $table->addColumn('actions', ['class' => 'actions']);
 
-        $page = $this->createPageSetup();
-        $page->setDataTable($table);
-        $page->setActionName('customers');
+        $pageSetup = $this->createPageSetup();
+        $pageSetup->setDataTable($table);
+        $pageSetup->setActionName('customers');
 
         return $this->render('customer/index.html.twig', [
-            'page_setup' => $page,
+            'page_setup' => $pageSetup,
             'dataTable' => $table,
             'metaColumns' => $metaColumns,
             'now' => $this->getDateTimeFactory()->createDateTime(),
@@ -300,13 +300,13 @@ final class CustomerController extends AbstractController
         $dispatcher->dispatch($event);
         $boxes = $event->getController();
 
-        $page = $this->createPageSetup();
-        $page->setActionName('customer');
-        $page->setActionView('customer_details');
-        $page->setActionPayload(['customer' => $customer]);
+        $pageSetup = $this->createPageSetup();
+        $pageSetup->setActionName('customer');
+        $pageSetup->setActionView('customer_details');
+        $pageSetup->setActionPayload(['customer' => $customer]);
 
         return $this->render('customer/details.html.twig', [
-            'page_setup' => $page,
+            'page_setup' => $pageSetup,
             'customer' => $customer,
             'comments' => $comments,
             'commentForm' => $commentForm,
