@@ -10,7 +10,9 @@
 namespace App\Export;
 
 use App\Entity\ExportableItem;
+use Symfony\Component\DependencyInjection\Attribute\Exclude;
 
+#[Exclude]
 final class ExportablePreviewResult implements ExportableResultInterface
 {
     /**

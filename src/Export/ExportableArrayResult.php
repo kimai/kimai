@@ -11,7 +11,9 @@ namespace App\Export;
 
 use App\Entity\Customer;
 use App\Entity\ExportableItem;
+use Symfony\Component\DependencyInjection\Attribute\Exclude;
 
+#[Exclude]
 final class ExportableArrayResult implements ExportableResultInterface
 {
     /**

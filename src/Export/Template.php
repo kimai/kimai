@@ -10,7 +10,9 @@
 namespace App\Export;
 
 use App\Repository\Query\TimesheetQuery;
+use Symfony\Component\DependencyInjection\Attribute\Exclude;
 
+#[Exclude]
 final class Template implements TemplateInterface
 {
     private ?string $locale = null;

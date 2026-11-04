@@ -50,7 +50,7 @@ final class ExportController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid() && ($query->hasBookmark() || $request->query->has('performSearch'))) {
-            $preview = $this->getPreview($query, 500);
+            $preview = $this->getPreview($query);
         }
 
         $page = new PageSetup('export');
@@ -180,11 +180,11 @@ final class ExportController extends AbstractController
         return $this->export->getExportItems($query);
     }
 
-    private function getPreview(ExportQuery $query, int $maxItems): ExportableResultInterface
+    private function getPreview(ExportQuery $query): ExportableResultInterface
     {
         $this->sanitizeQuery($query);
 
-        return $this->export->getExportPreview($query, $maxItems);
+        return $this->export->getExportPreview($query, 500);
     }
 
     /**
