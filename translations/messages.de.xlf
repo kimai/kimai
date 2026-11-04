@@ -1688,7 +1688,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target state="translated">Aus- und Weiterbildung, sonstige betriebliche oder private Verhinderungen (z. B. Umzug, familiäre Anlässe) etc.</target>
+        <target state="translated">Aus- und Weiterbildung, sonstige betriebliche oder private Verhinderungen etc.</target>
       </trans-unit>
       <trans-unit id="TTnaBm4" resname="day_full">
         <source>day_full</source>
@@ -2217,6 +2217,18 @@
       <trans-unit id="_cQHZDu" resname="fill_day.help">
         <source>fill_day.help</source>
         <target>Wird keine Dauer angegeben, wird die verbleibende Sollzeit des Tages verwendet.</target>
+      </trans-unit>
+      <trans-unit id="dIuCbHU" resname="absence_type.overbooking">
+        <source>absence_type.overbooking</source>
+        <target>Überbuchung erlauben bis</target>
+      </trans-unit>
+      <trans-unit id="Y9NoM.U" resname="absence_type.overbooking.help.holiday">
+        <source>absence_type.overbooking.help.holiday</source>
+        <target>0 = keine Überbuchung erlaubt. Anzahl Tage, die über die verfügbaren Urlaubstage hinaus gebucht werden dürfen.</target>
+      </trans-unit>
+      <trans-unit id="c1z3ItA" resname="absence_type.overbooking.help.time_off">
+        <source>absence_type.overbooking.help.time_off</source>
+        <target>0 = keine Überbuchung erlaubt. Anzahl Stunden, die das Arbeitszeitkonto ins Minus gehen darf.</target>
       </trans-unit>
     </body>
   </file>

@@ -190,6 +190,10 @@
         <source>The new password must be different from the current password.</source>
         <target>Das neue Passwort muss sich vom aktuellen Passwort unterscheiden.</target>
       </trans-unit>
+      <trans-unit id="Y38WSIo" resname="Half days cannot be combined with filling up to the expected working time.">
+        <source>Half days cannot be combined with filling up to the expected working time.</source>
+        <target>Halbe Tage können nicht mit dem Auffüllen auf die Sollstunden kombiniert werden.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

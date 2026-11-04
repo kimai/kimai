@@ -1688,7 +1688,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro">
         <source>absence_other.intro</source>
-        <target>Family events, moving house, weather chaos etc.</target>
+        <target>Training, continuing education and other work-related or personal commitments.</target>
       </trans-unit>
       <trans-unit id="TTnaBm4" resname="day_full">
         <source>day_full</source>
@@ -2217,6 +2217,18 @@
       <trans-unit id="_cQHZDu" resname="fill_day.help">
         <source>fill_day.help</source>
         <target>If no duration is entered, the remaining expected working time of the day is used.</target>
+      </trans-unit>
+      <trans-unit id="dIuCbHU" resname="absence_type.overbooking">
+        <source>absence_type.overbooking</source>
+        <target>Allow overbooking up to</target>
+      </trans-unit>
+      <trans-unit id="Y9NoM.U" resname="absence_type.overbooking.help.holiday">
+        <source>absence_type.overbooking.help.holiday</source>
+        <target>0 = overbooking is not allowed. Number of days that can be booked beyond the available vacation days.</target>
+      </trans-unit>
+      <trans-unit id="c1z3ItA" resname="absence_type.overbooking.help.time_off">
+        <source>absence_type.overbooking.help.time_off</source>
+        <target>0 = overbooking is not allowed. Number of hours the working time account may go into the negative.</target>
       </trans-unit>
     </body>
   </file>
