@@ -259,7 +259,7 @@ final class UserController extends BaseApiController
     /**
      * Update user preferences
      */
-    #[IsGranted('edit', 'profile')]
+    #[IsGranted('preferences', 'profile')]
     #[OA\Response(response: 200, description: 'Sets the value of a configured preference. You cannot create unknown or update disabled preferences.', content: new OA\JsonContent(ref: '#/components/schemas/UserEntity'))]
     #[OA\Parameter(name: 'id', description: 'User ID to set the custom-field value for', in: 'path', required: true)]
     #[OA\RequestBody(required: true, content: new OA\JsonContent(type: 'array', items: new OA\Items(new Model(type: UserPreference::class))))]
