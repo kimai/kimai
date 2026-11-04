@@ -30,7 +30,7 @@ final class ExportableArrayResult implements ExportableResultInterface
      * @param array<string, bool|string|int>|null $options
      * @return array<ExportableResultStatisticInterface>
      */
-    public function getStatistic(array $options = null): array
+    public function getStatistic(?array $options = null): array
     {
         if ($this->statistic === null) {
             /** @var array<int, array{customer: Customer, count: non-negative-int, rate: float, duration: int}> $byCustomer */

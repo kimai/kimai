@@ -31,7 +31,7 @@ final class ExportableResult implements ExportableResultInterface
      * @param array<string, bool|string|int>|null $options
      * @return array<ExportableResultStatisticInterface>
      */
-    public function getStatistic(array $options = null): array
+    public function getStatistic(?array $options = null): array
     {
         if ($this->statistics === null) {
             $statistics = [];
