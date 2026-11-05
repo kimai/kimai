@@ -1,24 +1,3 @@
 {% embed 'reporting/customer/monthly_projects_data.html.twig' with {'decimal': true, 'stats': stats, 'dataType': dataType} only %}
     {% set rowspanStyle = 'vertical-align:center' %}
-    {% block user_activity %}
-        {% if dataType == 'rate' or dataType == 'internalRate' %}
-            {{ value|money(currency) }}
-        {% else %}
-            {{ value|duration(true) }}
-        {% endif %}
-    {% endblock %}
-    {% block project_activity %}
-        {% if dataType == 'rate' or dataType == 'internalRate' %}
-            {{ value|money(currency) }}
-        {% else %}
-            {{ value|duration(true) }}
-        {% endif %}
-    {% endblock %}
-    {% block project_total %}
-        {% if dataType == 'rate' or dataType == 'internalRate' %}
-            {{ value|money(currency) }}
-        {% else %}
-            {{ value|duration(true) }}
-        {% endif %}
-    {% endblock %}
 {% endembed %}
