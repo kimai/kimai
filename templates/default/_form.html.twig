@@ -7,7 +7,7 @@
 {% endif %}
 {% set _back = back is defined and back is not same as (false) ? back : false %}
 {% set _reset = reset is defined and reset is same as (false) ? false : true %}
-<div class="card mb-3">
+<div class="card">
     {% block form_before %}{% endblock %}
     {{ form_start(form, formStartOptions|default({})) }}
     <div class="card-header">
@@ -32,13 +32,13 @@
     </div>
     <div class="card-footer">
         {% block submit_button %}
-            <input type="submit" data-loading-text="{{ (submit_button|default('action.save'))|trans }}…" value="{{ (submit_button|default('action.save'))|trans }}" class="btn btn-primary" />
+            <button type="submit" data-loading-text="{{ (submit_button|default('action.save'))|trans }}…" class="btn btn-primary">{{ (submit_button|default('action.save'))|trans }}</button>
         {% endblock %}
         {% if _back is not same as (false) %}
             <a href="{{ _back }}" class="btn btn-link">{{ 'back'|trans }}</a>
         {% endif %}
         {% if _reset is not same as (false) %}
-            <input type="reset" value="{{ 'action.reset'|trans }}" class="btn btn-link pull-right" />
+            <button type="reset" class="btn btn-link pull-right">{{ 'action.reset'|trans }}</button>
         {% endif %}
     </div>
     {{ form_end(form) }}
