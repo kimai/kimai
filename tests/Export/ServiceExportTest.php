@@ -186,7 +186,14 @@ class ServiceExportTest extends TestCase
     private function createExportableRepository(ExportQuery $query, int $expectedMaxItems, ExportableResultInterface $result): ExportRepositoryInterface
     {
         $repository = $this->createMockForIntersectionOfInterfaces([ExportRepositoryInterface::class, ExportableRepositoryInterface::class]);
-        $repository->expects($this->once())->method('getPreview')->with($query, $expectedMaxItems)->willReturn($result);
+        if ($expectedMaxItems > 0) {
+            $repository->expects($this->once())->method('getPreview')->with(
+                $query,
+                $expectedMaxItems
+            )->willReturn($result);
+        } else {
+            $repository->expects($this->never())->method('getPreview');
+        }
         $repository->expects($this->never())->method('getExportItemsForQuery');
         self::assertInstanceOf(ExportRepositoryInterface::class, $repository);
 
