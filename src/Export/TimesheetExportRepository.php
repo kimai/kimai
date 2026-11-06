@@ -105,6 +105,9 @@ final class TimesheetExportRepository implements ExportRepositoryInterface, Expo
         return $statistics;
     }
 
+    /**
+     * @param positive-int $maxItems
+     */
     public function getPreview(ExportQuery $query, int $maxItems): ExportableResultInterface
     {
         $statistics = $this->getStatistic($query);
