@@ -49,8 +49,10 @@ final class ExportController extends AbstractController
             return $this->redirectToRoute('export');
         }
 
+        $maxItems = $this->export->getMaximumResults($query) ?? PHP_INT_MAX;
+
         if ($form->isSubmitted() && $form->isValid() && ($query->hasBookmark() || $request->query->has('performSearch'))) {
-            $preview = $this->getPreview($query);
+            $preview = $this->getPreview($query, min(500, $maxItems));
         }
 
         $page = new PageSetup('export');
@@ -87,7 +89,7 @@ final class ExportController extends AbstractController
             'preview' => $preview,
             'form' => $form->createView(),
             'buttons' => $buttons,
-            'max_export_items' => $this->export->getMaximumResults($query),
+            'max_export_items' => $maxItems,
             'show_rates' => $showRates,
         ]);
     }
@@ -180,11 +182,14 @@ final class ExportController extends AbstractController
         return $this->export->getExportItems($query);
     }
 
-    private function getPreview(ExportQuery $query): ExportableResultInterface
+    /**
+     * @param positive-int $maxItems
+     */
+    private function getPreview(ExportQuery $query, int $maxItems): ExportableResultInterface
     {
         $this->sanitizeQuery($query);
 
-        return $this->export->getExportPreview($query, 500);
+        return $this->export->getExportPreview($query, $maxItems);
     }
 
     /**

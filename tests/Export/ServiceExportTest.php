@@ -230,9 +230,77 @@ class ServiceExportTest extends TestCase
         $query->setMaxResults(2);
 
         $this->expectException(TooManyItemsExportException::class);
-        $this->expectExceptionMessage('Limit reached! Expected max. 2 items but got 3');
+        $this->expectExceptionMessage('Limit reached! Found more than the allowed maximum of 2 items for export');
 
         $sut->getExportItems($query);
+    }
+
+    /**
+     * @param positive-int $limit
+     */
+    private function createLimitingEventDispatcher(int $limit): EventDispatcher
+    {
+        $eventDispatcher = new EventDispatcher();
+        $eventDispatcher->addListener(ExportItemsQueryEvent::class, function (ExportItemsQueryEvent $event) use ($limit): void {
+            $event->getExportQuery()->setMaxResults($limit);
+        });
+
+        return $eventDispatcher;
+    }
+
+    public function testGetExportItemsIsNotLimitedByDefault(): void
+    {
+        $items = [new Timesheet(), new Timesheet(), new Timesheet()];
+
+        $repository = $this->createMock(ExportRepositoryInterface::class);
+        $repository->expects($this->once())->method('getExportItemsForQuery')->willReturnCallback(function (ExportQuery $query) use ($items): array {
+            self::assertNull($query->getMaxResults());
+
+            return $items;
+        });
+
+        $sut = $this->createSut();
+        $sut->addExportRepository($repository);
+
+        self::assertSame($items, $sut->getExportItems(new ExportQuery()));
+    }
+
+    public function testGetExportItemsThrowsIfTheLimitFromTheEventIsExceeded(): void
+    {
+        $repository = $this->createMock(ExportRepositoryInterface::class);
+        $repository->method('getExportItemsForQuery')->willReturn([new Timesheet(), new Timesheet(), new Timesheet()]);
+
+        $sut = $this->createSut(false, 1, $this->createLimitingEventDispatcher(2));
+        $sut->addExportRepository($repository);
+
+        $this->expectException(TooManyItemsExportException::class);
+        $this->expectExceptionMessage('Limit reached! Found more than the allowed maximum of 2 items for export');
+
+        $sut->getExportItems(new ExportQuery());
+    }
+
+    public function testGetExportPreviewShowsLessItemsIfTheEventLimitIsLower(): void
+    {
+        $query = new ExportQuery();
+
+        $sut = $this->createSut(false, 1, $this->createLimitingEventDispatcher(3));
+        $sut->addExportRepository($this->createExportableRepository($query, 3, new ExportablePreviewResult([], [])));
+
+        $sut->getExportPreview($query, 3);
+
+        self::assertNull($query->getMaxResults());
+    }
+
+    public function testGetExportPreviewKeepsItsLimitIfTheEventLimitIsHigher(): void
+    {
+        $query = new ExportQuery();
+
+        $sut = $this->createSut(false, 1, $this->createLimitingEventDispatcher(1000));
+        $sut->addExportRepository($this->createExportableRepository($query, 500, new ExportablePreviewResult([], [])));
+
+        $sut->getExportPreview($query, 500);
+
+        self::assertNull($query->getMaxResults());
     }
 
     public function testGetExportPreviewWithoutRepositories(): void
@@ -326,7 +394,7 @@ class ServiceExportTest extends TestCase
 
     public function testGetMaximumResultsWithoutLimitIsUnlimited(): void
     {
-        self::assertSame(PHP_INT_MAX, $this->createSut()->getMaximumResults(new ExportQuery()));
+        self::assertNull($this->createSut()->getMaximumResults(new ExportQuery()));
     }
 
     public function testGetMaximumResultsUsesLimitFromQuery(): void

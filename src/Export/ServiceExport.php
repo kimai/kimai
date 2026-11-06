@@ -227,21 +227,28 @@ final class ServiceExport
         $items = [];
 
         $max = $this->getMaximumResults($query);
+        if ($max !== null) {
+            $query->setMaxResults($max + 1);
+        }
         $count = 0;
 
         foreach ($this->repositories as $repository) {
             $repoItems = $repository->getExportItemsForQuery($query);
-            if (($count += \count($repoItems)) > $max) {  // @phpstan-ignore argument.type
+            if ($max !== null && ($count += \count($repoItems)) > $max) {  // @phpstan-ignore argument.type
                 throw new TooManyItemsExportException(
-                    \sprintf('Limit reached! Expected max. %s items but got %s', $max, $count)
+                    \sprintf('Limit reached! Found more than the allowed maximum of %s items for export.', $max)
                 );
             }
+
             $items = array_merge($items, $repoItems);
         }
 
         return $items;
     }
 
+    /**
+     * @param positive-int $maxItems
+     */
     public function getExportPreview(ExportQuery $query, int $maxItems): ExportableResultInterface
     {
         /** @var array<ExportableResultInterface> $results */
@@ -260,9 +267,11 @@ final class ServiceExport
                 $result = new ExportablePreviewResult($repoItems, $statistic);
             }
 
-            $maxItems = $maxItems - $count;
-
             $results[] = $result;
+            $maxItems = $maxItems - $count;
+            if ($maxItems <= 0) {
+                break;
+            }
         }
 
         return new ExportableResult($results);
@@ -275,11 +284,14 @@ final class ServiceExport
         }
     }
 
-    public function getMaximumResults(ExportQuery $query): int
+    /**
+     * @return positive-int|null
+     */
+    public function getMaximumResults(ExportQuery $query): ?int
     {
         $event = new ExportItemsQueryEvent($query);
         $this->eventDispatcher->dispatch($event);
 
-        return $event->getExportQuery()->getMaxResults() ?? PHP_INT_MAX;
+        return $event->getExportQuery()->getMaxResults();
     }
 }
