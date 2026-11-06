@@ -13,16 +13,27 @@ use App\Utils\StringHelper;
 
 final class TextFormatter implements CellFormatterInterface
 {
+    /**
+     * Excel has a max length per cell
+     *
+     * See OpenSpout\Writer\XLSX\Manager\WorksheetManager::MAX_CHARACTERS_PER_CELL
+     */
+    public const MAX_CHARACTERS_PER_CELL = 32767;
+
     public function __construct(private readonly bool $sanitizeDde)
     {
     }
 
     public function formatValue(mixed $value): mixed
     {
-        if ($this->sanitizeDde && \is_string($value)) {
+        if (!\is_string($value)) {
+            return $value;
+        }
+
+        if ($this->sanitizeDde) {
             $value = StringHelper::sanitizeDDE($value);
         }
 
-        return $value;
+        return StringHelper::ensureMaxLength($value, self::MAX_CHARACTERS_PER_CELL);
     }
 }

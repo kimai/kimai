@@ -42,23 +42,18 @@ final class TimesheetResult
     public function getStatistic(): TimesheetResultStatistic
     {
         if ($this->statisticCache === null) {
-            $withDuration = $this->timesheetQuery->countFilter() > 0;
             $qb = clone $this->statisticQb;
             $qb
                 ->resetDQLPart('select')
                 ->resetDQLPart('orderBy')
                 ->select('COUNT(t.id) as counter')
+                ->addSelect('COALESCE(SUM(t.duration), 0) as duration')
             ;
-
-            if ($withDuration) {
-                $qb->addSelect('COALESCE(SUM(t.duration), 0) as duration');
-            }
 
             /** @var array{'duration': int<0, max>, 'counter': int<0, max>} $result */
             $result = $qb->getQuery()->getArrayResult()[0];
-            $duration = $withDuration ? $result['duration'] : 0;
 
-            $this->statisticCache = new TimesheetResultStatistic($result['counter'], $duration);
+            $this->statisticCache = new TimesheetResultStatistic($result['counter'], $result['duration']);
         }
 
         return $this->statisticCache;

@@ -13,11 +13,15 @@ use App\Entity\ExportTemplate;
 use App\Entity\Team;
 use App\Entity\Timesheet;
 use App\Entity\User;
+use App\Event\ExportItemsQueryEvent;
+use App\Export\TooManyItemsExportException;
 use App\Tests\DataFixtures\ExportTemplateFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\Attributes\Group;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\DomCrawler\Field\FormField;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 #[Group('integration')]
@@ -189,6 +193,105 @@ class ExportControllerTest extends AbstractControllerBaseTestCase
         $buttons = $client->getCrawler()->filter('form#export-form button[type="submit"]');
         self::assertGreaterThan(1, $buttons->count());
         self::assertEquals('performSearch', $buttons->first()->attr('name'));
+    }
+
+    private function importTimesheetsForCurrentMonth(int $amount): void
+    {
+        $fixture = new TimesheetFixtures();
+        $fixture
+            ->setUser($this->getUserByRole(User::ROLE_USER))
+            ->setAmount($amount)
+            ->setStartDate(new \DateTime('first day of this month'))
+        ;
+        $this->importFixture($fixture);
+    }
+
+    /**
+     * Simulates a plugin that limits the amount of exported items.
+     * @param positive-int $limit
+     */
+    private function limitExportItems(int $limit): void
+    {
+        $eventDispatcher = self::getContainer()->get('event_dispatcher');
+        self::assertInstanceOf(EventDispatcherInterface::class, $eventDispatcher);
+        $eventDispatcher->addListener(ExportItemsQueryEvent::class, function (ExportItemsQueryEvent $event) use ($limit): void {
+            $event->getExportQuery()->setMaxResults($limit);
+        });
+    }
+
+    public function testIndexActionIsNotLimitedByDefault(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->importTimesheetsForCurrentMonth(5);
+
+        $this->request($client, '/export/?performSearch=performSearch');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $crawler = $client->getCrawler();
+        self::assertCount(0, $crawler->filter('div.alert-danger'));
+        self::assertCount(1, $crawler->filter('#export-buttons'));
+        // 5 rows + the summary footer
+        self::assertCount(6, $crawler->filter('section.content table.dataTable tbody tr:not(.warning)'));
+    }
+
+    public function testIndexActionBelowLimitAllowsExport(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->importTimesheetsForCurrentMonth(5);
+        $this->limitExportItems(5);
+
+        $this->request($client, '/export/?performSearch=performSearch');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $crawler = $client->getCrawler();
+        self::assertCount(0, $crawler->filter('div.alert-danger'));
+        self::assertCount(1, $crawler->filter('#export-buttons'));
+    }
+
+    public function testIndexActionAboveLimitBlocksExportAndReportsRealCount(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        $this->importTimesheetsForCurrentMonth(5);
+        $this->limitExportItems(3);
+
+        $this->request($client, '/export/?performSearch=performSearch');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $crawler = $client->getCrawler();
+        self::assertCount(0, $crawler->filter('#export-buttons'));
+        $callout = $crawler->filter('div.alert-danger')->text();
+        // the statistic covers all matching items: the user has to know how far the search must be narrowed down
+        self::assertStringContainsString('returns 5 results', $callout);
+        self::assertStringContainsString('maximum of 3 entries', $callout);
+        // the preview does not show more than the limit: 3 rows + the summary footer
+        self::assertCount(4, $crawler->filter('section.content table.dataTable tbody tr:not(.warning)'));
+    }
+
+    public function testExportActionAboveLimitIsRejectedAndNothingIsMarkedAsExported(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+        self::assertInstanceOf(KernelBrowser::class, $client);
+        // the listener belongs to the booted kernel
+        $client->disableReboot();
+        $this->importTimesheetsForCurrentMonth(5);
+        $this->limitExportItems(3);
+
+        $this->request($client, '/export/');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $client->catchExceptions(false);
+        try {
+            $this->submitExport($client, ['renderer' => 'print', 'markAsExported' => 1]);
+            self::fail('Expected that the export is rejected');
+        } catch (TooManyItemsExportException $ex) {
+            self::assertStringContainsString('Limit reached! Found more than the allowed maximum of 3 items for export', $ex->getMessage());
+        }
+
+        $timesheets = $this->getEntityManager()->getRepository(Timesheet::class)->findAll();
+        self::assertCount(5, $timesheets);
+        foreach ($timesheets as $timesheet) {
+            self::assertFalse($timesheet->isExported());
+        }
     }
 
     public function testExportActionWithMissingRenderer(): void

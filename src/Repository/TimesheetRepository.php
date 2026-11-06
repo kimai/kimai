@@ -607,7 +607,7 @@ class TimesheetRepository extends EntityRepository
         return $timesheets;
     }
 
-    private function getQueryBuilderForQuery(TimesheetQuery $query): QueryBuilder
+    public function getQueryBuilderForQuery(TimesheetQuery $query): QueryBuilder
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
