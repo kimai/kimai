@@ -30,9 +30,11 @@ use App\Repository\Query\CustomerFormTypeQuery;
 use App\Timesheet\Calculator\BillableCalculator;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -42,6 +44,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class TimesheetEditForm extends AbstractType
 {
     use FormTrait;
+
+    private const BEGIN_PREFILLED = 'begin_prefilled';
+    private const BEGIN_PREFILLED_FORMAT = 'Y-m-d H:i';
 
     public function __construct(
         private readonly CustomerRepository $customers,
@@ -190,6 +195,16 @@ class TimesheetEditForm extends AbstractType
             ]
         ]));
 
+        // a new entry is prefilled with the current time when the form is rendered: remember that value,
+        // so a timer started with the prefilled begin starts when the form is saved and not when it was opened
+        $data = $options['data'] ?? null;
+        if ($data instanceof Timesheet && $data->getId() === null) {
+            $builder->add(self::BEGIN_PREFILLED, HiddenType::class, [
+                'mapped' => false,
+                'required' => false,
+            ]);
+        }
+
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
             function (FormEvent $event): void {
@@ -198,8 +213,13 @@ class TimesheetEditForm extends AbstractType
                 $begin = $timesheet->getBegin();
 
                 if (null !== $begin) {
-                    $event->getForm()->get('begin_date')->setData($begin);
-                    $event->getForm()->get('begin_time')->setData($begin);
+                    $form = $event->getForm();
+                    $form->get('begin_date')->setData($begin);
+                    $form->get('begin_time')->setData($begin);
+
+                    if ($form->has(self::BEGIN_PREFILLED) && $this->isCurrentTime($begin)) {
+                        $form->get(self::BEGIN_PREFILLED)->setData($begin->format(self::BEGIN_PREFILLED_FORMAT));
+                    }
                 }
             }
         );
@@ -230,11 +250,54 @@ class TimesheetEditForm extends AbstractType
                 $newDate = clone $date;
                 $newDate->setTime((int) $time->format('H'), (int) $time->format('i'), (int) $seconds);
 
+                // the prefilled begin was not changed: keep the begin that was prepared for this request
+                if ($data->getBegin() !== null && $this->isUnchangedPrefilledBegin($event->getForm(), $data, $newDate)) {
+                    return;
+                }
+
                 if ($data->getBegin() === null || $data->getBegin()->getTimestamp() !== $newDate->getTimestamp()) {
                     $data->setBegin($newDate);
                 }
             }
         );
+    }
+
+    /**
+     * Whether the begin of a new entry is the current time, as prefilled by the tracking mode (and its rounding),
+     * and not a value from the request (e.g. a day clicked in the calendar) or copied from another entry.
+     */
+    private function isCurrentTime(\DateTimeInterface $begin): bool
+    {
+        $window = max(1, $this->systemConfiguration->getTimesheetDefaultRoundingBegin()) * 60;
+
+        return abs(time() - $begin->getTimestamp()) < $window;
+    }
+
+    /**
+     * Whether a new running entry was submitted with the begin that was prefilled when the form was rendered.
+     */
+    private function isUnchangedPrefilledBegin(FormInterface $form, Timesheet $timesheet, \DateTimeInterface $begin): bool
+    {
+        if ($timesheet->getId() !== null || !$form->has(self::BEGIN_PREFILLED)) {
+            return false;
+        }
+
+        $prefilled = $form->get(self::BEGIN_PREFILLED)->getData();
+        if (!\is_string($prefilled) || $prefilled !== $begin->format(self::BEGIN_PREFILLED_FORMAT)) {
+            return false;
+        }
+
+        // with an end or a duration, the begin is part of a time range and must be used as entered
+        if ($form->has('end_time') && $form->get('end_time')->getData() instanceof \DateTimeInterface) {
+            return false;
+        }
+
+        $duration = $form->has('duration') ? $form->get('duration')->getData() : null;
+        if ($duration !== null && $duration > 0) {
+            return false;
+        }
+
+        return true;
     }
 
     protected function addEnd(FormBuilderInterface $builder, array $dateTimeOptions, array $options = []): void
