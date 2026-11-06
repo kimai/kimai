@@ -115,6 +115,72 @@ class SecurityControllerTest extends AbstractControllerBaseTestCase
         self::assertStringContainsString('<div class="alert alert-important alert-danger">Invalid credentials.</div>', $client->getResponse()->getContent());
     }
 
+    /**
+     * A CSRF token stays valid for the lifetime of the session, so it cannot be the only protection.
+     */
+    public function testLoginCheckIsNotReachableWithDeactivatedLoginForm(): void
+    {
+        $client = self::createClient();
+        $this->request($client, '/login');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        // the token was fetched before the login form was deactivated
+        $token = $client->getCrawler()->filter('input[name="_csrf_token"]')->attr('value');
+        self::assertNotEmpty($token);
+
+        $this->setSystemConfiguration('saml.activate', true);
+        $this->setSystemConfiguration('user.login', false);
+
+        $client->request('POST', $this->createUrl('/login_check'), [
+            '_username' => UserFixtures::USERNAME_SUPER_ADMIN,
+            '_password' => UserFixtures::DEFAULT_PASSWORD,
+            '_csrf_token' => $token,
+        ]);
+        self::assertSame(404, $client->getResponse()->getStatusCode());
+
+        $this->request($client, '/homepage');
+        $this->assertIsRedirect($client, $this->createUrl('/login'));
+    }
+
+    public function testLoginPositiveWithSamlAndActivatedLoginForm(): void
+    {
+        $client = self::createClient();
+        $this->setSystemConfiguration('saml.activate', true);
+        $this->setSystemConfiguration('user.login', true);
+
+        $this->request($client, '/login');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('body form')->form();
+        $client->submit($form, [
+            '_username' => UserFixtures::USERNAME_SUPER_ADMIN,
+            '_password' => UserFixtures::DEFAULT_PASSWORD
+        ]);
+
+        $this->assertIsRedirect($client); // redirect to root URL
+        $client->followRedirect();
+
+        $this->assertIsRedirect($client, '/homepage'); // redirect to homepage
+    }
+
+    /**
+     * LDAP users authenticate with the login form, so it cannot be deactivated.
+     */
+    public function testLoginCheckIsReachableWithLdap(): void
+    {
+        $client = self::createClient();
+        $this->setSystemConfiguration('saml.activate', true);
+        $this->setSystemConfiguration('user.login', false);
+        $this->setSystemConfiguration('ldap.activate', true);
+
+        // the missing CSRF token rejects the login, before a connection to the LDAP server would be opened
+        $client->request('POST', $this->createUrl('/login_check'), [
+            '_username' => UserFixtures::USERNAME_SUPER_ADMIN,
+            '_password' => UserFixtures::DEFAULT_PASSWORD,
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/login'));
+    }
+
     public function testCheckAction(): void
     {
         $this->expectException(\RuntimeException::class);
