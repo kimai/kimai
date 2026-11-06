@@ -10,7 +10,9 @@
 namespace App\Configuration;
 
 use App\Constants;
+use Symfony\Bundle\FrameworkBundle\Routing\Attribute\AsRoutingConditionService;
 
+#[AsRoutingConditionService(alias: 'system_configuration')]
 final class SystemConfiguration
 {
     private bool $initialized = false;
