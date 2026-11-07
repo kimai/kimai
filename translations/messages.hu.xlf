@@ -1424,7 +1424,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target state="translated">Családi események, költözés, szélsőséges időjárás, stb.</target>
+        <target state="needs-translation">Családi események, költözés, szélsőséges időjárás, stb.</target>
       </trans-unit>
       <trans-unit id="TTnaBm4" resname="day_full" xml:space="preserve">
         <source>day_full</source>

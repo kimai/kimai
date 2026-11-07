@@ -1480,7 +1480,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target state="translated">Evenimente de familie, mutare, haos meteorologic etc.</target>
+        <target state="needs-translation">Evenimente de familie, mutare, haos meteorologic etc.</target>
       </trans-unit>
       <trans-unit id="q1EATp1" resname="days" xml:space="preserve">
         <source>days</source>

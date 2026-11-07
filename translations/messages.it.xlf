@@ -1558,9 +1558,9 @@
         <source>You have submitted %used% of your available %days% vacation days so far.</source>
         <target state="final">Finora hai usato %used% dei tuoi %days% giorni di ferie disponibili.</target>
       </trans-unit>
-      <trans-unit id="YPO294a" resname="absence_other.intro" approved="yes">
+      <trans-unit id="YPO294a" resname="absence_other.intro" approved="no">
         <source>absence_other.intro</source>
-        <target state="final">Eventi familiari, trasloco, calamità naturali, ecc.</target>
+        <target state="needs-translation">Eventi familiari, trasloco, calamità naturali, ecc.</target>
       </trans-unit>
       <trans-unit id="DA1.Ln_" resname="time_off.intro" approved="yes">
         <source>time_off.intro</source>

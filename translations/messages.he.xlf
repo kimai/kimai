@@ -1544,7 +1544,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro">
         <source>absence_other.intro</source>
-        <target state="translated">אירועים משפחתיים, מעבר דירה, תנאי מזג אוויר קשים וכו׳.</target>
+        <target state="needs-translation">אירועים משפחתיים, מעבר דירה, תנאי מזג אוויר קשים וכו׳.</target>
       </trans-unit>
       <trans-unit id="TTnaBm4" resname="day_full">
         <source>day_full</source>

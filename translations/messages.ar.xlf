@@ -1780,7 +1780,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target state="translated">المناسبات العائلية، والانتقال إلى منزل جديد، وفوضى الطقس وما إلى ذلك.</target>
+        <target state="needs-translation">المناسبات العائلية، والانتقال إلى منزل جديد، وفوضى الطقس وما إلى ذلك.</target>
       </trans-unit>
       <trans-unit id="IalLD5Q" resname="manual_bookings.work_contract_intro" xml:space="preserve">
         <source>manual_bookings.work_contract_intro</source>
