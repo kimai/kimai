@@ -381,9 +381,10 @@ final class CustomerController extends AbstractController
 
     #[Route(path: '/{id}/delete', name: 'admin_customer_delete', methods: ['GET', 'POST'])]
     #[IsGranted('delete', 'customer')]
-    public function deleteAction(Customer $customer, Request $request, CustomerStatisticService $statisticService, CustomerService $customerService): Response
+    public function deleteAction(Customer $customer, Request $request, CustomerStatisticService $statisticService, CustomerService $customerService, ProjectRepository $projectRepository): Response
     {
         $stats = $statisticService->getCustomerStatistics($customer);
+        $projects = $projectRepository->count(['customer' => $customer]);
 
         $deleteForm = $this->createFormBuilder(null, [
                 'attr' => [
@@ -419,6 +420,7 @@ final class CustomerController extends AbstractController
             'page_setup' => $this->createPageSetup(),
             'customer' => $customer,
             'stats' => $stats,
+            'projects' => $projects,
             'form' => $deleteForm->createView(),
         ]);
     }
