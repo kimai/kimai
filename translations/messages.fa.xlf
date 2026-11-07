@@ -1776,7 +1776,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target state="translated">رویدادهای خانوادگی، خانه تکانی، هرج و مرج آب و هوا و غیره.</target>
+        <target state="needs-translation">رویدادهای خانوادگی، خانه تکانی، هرج و مرج آب و هوا و غیره.</target>
       </trans-unit>
       <trans-unit id="TTnaBm4" resname="day_full" xml:space="preserve">
         <source>day_full</source>

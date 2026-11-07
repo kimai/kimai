@@ -186,6 +186,14 @@
         <source>The project is locked for the selected times.</source>
         <target state="translated">Le projet est verrouillé pour les temps sélectionnés.</target>
       </trans-unit>
+      <trans-unit id="5Yso.63" resname="The new password must be different from the current password.">
+        <source>The new password must be different from the current password.</source>
+        <target state="translated">Le nouveau mot de passe doit être différent du mot de passe actuel.</target>
+      </trans-unit>
+      <trans-unit id="Y38WSIo" resname="Half days cannot be combined with filling up to the expected working time.">
+        <source>Half days cannot be combined with filling up to the expected working time.</source>
+        <target state="translated">Les demi-journées ne peuvent pas être cumulées pour atteindre la durée de travail prévue.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

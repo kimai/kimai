@@ -564,7 +564,7 @@
       </trans-unit>
       <trans-unit id="86KyrKO" resname="invoice.subtotal">
         <source>invoice.subtotal</source>
-        <target>Total HT</target>
+        <target state="translated">Total HT</target>
       </trans-unit>
       <trans-unit id="EO57yXg" resname="invoice.tax">
         <source>invoice.tax</source>
@@ -876,7 +876,7 @@
       </trans-unit>
       <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>
-        <target>Semaine civile %week%</target>
+        <target state="translated">Semaine calendaire %week%</target>
       </trans-unit>
       <trans-unit id="lfSTZGe" resname="stats.workingTimeToday">
         <source>stats.workingTimeToday</source>
@@ -1020,7 +1020,7 @@
       </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
-        <target state="translated">Un courriel a été envoyé. Suivez le lien s'y trouvant pour réinitialiser votre mot de passe. Remarque : Vous ne pouvez demander un nouveau mot de passe qu'une fois toutes les %tokenLifetime% heures. Si vous ne recevez pas de courriel, vérifiez vos spams ou réessayez.</target>
+        <target state="translated">Un e-mail contenant un lien pour réinitialiser votre mot de passe vous a été envoyé. Remarque : vous ne pouvez demander un nouveau mot de passe qu'une fois toutes les %tokenLifetime% heures. Si vous ne recevez pas cet e-mail, veuillez vérifier votre dossier de courrier indésirable ou réessayer.</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>
@@ -1468,7 +1468,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target state="translated">Evènements familiaux, déménagement, catastrophes climatiques, etc.</target>
+        <target state="translated">Formation, formation continue et autres engagements professionnels ou personnels.</target>
       </trans-unit>
       <trans-unit id="8yqaKzX" resname="confirmed_by_at">
         <source>confirmed_by_at</source>
@@ -2213,6 +2213,22 @@
       <trans-unit id="_cQHZDu" resname="fill_day.help">
         <source>fill_day.help</source>
         <target state="translated">Si aucune durée n'est saisie, c'est le temps de travail restant prévu pour la journée qui est pris en compte.</target>
+      </trans-unit>
+      <trans-unit id="fxkWjGQ" resname="password_current">
+        <source>password_current</source>
+        <target state="translated">Mot de passe actuel</target>
+      </trans-unit>
+      <trans-unit id="dIuCbHU" resname="absence_type.overbooking">
+        <source>absence_type.overbooking</source>
+        <target state="translated">Autoriser la surréservation jusqu'à</target>
+      </trans-unit>
+      <trans-unit id="Y9NoM.U" resname="absence_type.overbooking.help.holiday">
+        <source>absence_type.overbooking.help.holiday</source>
+        <target state="translated">0 = la surréservation n'est pas autorisée. Nombre de jours pouvant être réservés au-delà des jours de congé disponibles.</target>
+      </trans-unit>
+      <trans-unit id="c1z3ItA" resname="absence_type.overbooking.help.time_off">
+        <source>absence_type.overbooking.help.time_off</source>
+        <target state="translated">0 = la surréservation n'est pas autorisée. Nombre d'heures pendant lesquelles le compte de temps de travail peut être négatif.</target>
       </trans-unit>
     </body>
   </file>

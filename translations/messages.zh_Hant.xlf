@@ -1214,9 +1214,9 @@
         <source>export.page_of</source>
         <target state="final">%page% / %pages% 頁</target>
       </trans-unit>
-      <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve" approved="yes">
+      <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve" approved="no">
         <source>absence_other.intro</source>
-        <target state="final">家庭活動、搬家、天氣惡劣、等。</target>
+        <target state="needs-translation">家庭活動、搬家、天氣惡劣、等。</target>
       </trans-unit>
       <trans-unit id="DXcvOMM" resname="stats.userDurationWeek" xml:space="preserve" approved="yes">
         <source>stats.userDurationWeek</source>

@@ -1572,7 +1572,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target state="translated">Việc gia đình, chuyển nhà, nguyên do thời tiết, v.v.</target>
+        <target state="needs-translation">Việc gia đình, chuyển nhà, nguyên do thời tiết, v.v.</target>
       </trans-unit>
       <trans-unit id="Nw2x5hI" resname="sickness_child" xml:space="preserve">
         <source>Sickness of a relative</source>

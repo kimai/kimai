@@ -112,7 +112,7 @@
       </trans-unit>
       <trans-unit id="TRpwk3n" resname="board.private" approved="no">
         <source>board.private</source>
-        <target state="needs-translation">Forum privé</target>
+        <target state="translated">Tableau privé</target>
       </trans-unit>
       <trans-unit id="K.9A2XH" resname="board.close_task" approved="no">
         <source>board.close_task</source>
@@ -136,7 +136,7 @@
       </trans-unit>
       <trans-unit id="SPiQMlQ" resname="board.column.limit" approved="no">
         <source>board.column.limit</source>
-        <target state="needs-translation">Limite des travaux en cours</target>
+        <target state="translated">Limite des travaux en cours</target>
       </trans-unit>
       <trans-unit id="ad2nQdr" resname="board.columns_invalid" approved="no">
         <source>board.columns_invalid</source>
@@ -149,6 +149,34 @@
       <trans-unit id="9rA4ixj" resname="board.only_mine" approved="no">
         <source>board.only_mine</source>
         <target state="translated">Mes tâches uniquement</target>
+      </trans-unit>
+      <trans-unit id="hZFps4G" resname="board" approved="no">
+        <source>board</source>
+        <target state="translated">Tableau</target>
+      </trans-unit>
+      <trans-unit id="aF2ajw." resname="boards" approved="no">
+        <source>boards</source>
+        <target state="translated">Tableaux</target>
+      </trans-unit>
+      <trans-unit id="Wq09TUJ" resname="board.empty_state" approved="no">
+        <source>board.empty_state</source>
+        <target state="translated">Vous n'avez encore aucun tableau. Créez-en un pour commencer.</target>
+      </trans-unit>
+      <trans-unit id="7lJ6pzI" resname="board.limit_reached" approved="no">
+        <source>board.limit_reached</source>
+        <target state="translated">Vous avez atteint la limite de %limit% tableaux privés.</target>
+      </trans-unit>
+      <trans-unit id="Hj3qdDA" resname="board.delete_confirm" approved="no">
+        <source>board.delete_confirm</source>
+        <target state="translated">Supprimer ce tableau ?</target>
+      </trans-unit>
+      <trans-unit id="TuoG.8m" resname="board.remove_task" approved="no">
+        <source>board.remove_task</source>
+        <target state="translated">Supprimer du tableau</target>
+      </trans-unit>
+      <trans-unit id="e3APxiK" resname="board.remove_task_confirm" approved="no">
+        <source>board.remove_task_confirm</source>
+        <target state="translated">Souhaitez-vous supprimer cette tâche du tableau ?</target>
       </trans-unit>
     </body>
   </file>

@@ -1648,7 +1648,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target state="translated">Esdeveniments familiars, mudança, caos meteorològic, etc.</target>
+        <target state="needs-translation">Esdeveniments familiars, mudança, caos meteorològic, etc.</target>
       </trans-unit>
       <trans-unit id="TTnaBm4" resname="day_full" xml:space="preserve">
         <source>day_full</source>

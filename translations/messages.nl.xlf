@@ -1508,7 +1508,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro">
         <source>absence_other.intro</source>
-        <target state="translated">Familieomstandigheden, verhuizing, weersomstandigheden enz.</target>
+        <target state="translated">Training, doorlopende educatie en andere wer-gerelateerde of persoonlijke verplichtingen.</target>
       </trans-unit>
       <trans-unit id="TTnaBm4" resname="day_full">
         <source>day_full</source>
@@ -2217,6 +2217,22 @@
       <trans-unit id="fxkWjGQ" resname="password_current">
         <source>password_current</source>
         <target state="translated">Huidig wachtwoord</target>
+      </trans-unit>
+      <trans-unit id="dIuCbHU" resname="absence_type.overbooking">
+        <source>absence_type.overbooking</source>
+        <target state="translated">Sta overboeken toe tot aan</target>
+      </trans-unit>
+      <trans-unit id="Y9NoM.U" resname="absence_type.overbooking.help.holiday">
+        <source>absence_type.overbooking.help.holiday</source>
+        <target state="translated">0 = overboeken is niet toegestaan. Aantal dagen dat geboekt kan worden bovenop de beschikbare vakantiedagen.</target>
+      </trans-unit>
+      <trans-unit id="c1z3ItA" resname="absence_type.overbooking.help.time_off">
+        <source>absence_type.overbooking.help.time_off</source>
+        <target state="translated">0 = overboeken is niet toegestaan. Aantal uren dat de werktijdaccount negatief mag staan.</target>
+      </trans-unit>
+      <trans-unit id="8MwThZv" resname="export.too_many_entries">
+        <source>export.too_many_entries</source>
+        <target state="translated">De aangevraagde zoekopdracht geeft %count% resultaten. Aangezien maximaal %limit% items tegelijkertijd geëxporteerd kunnen worden moet de zoekopdracht verder verfijnd worden.</target>
       </trans-unit>
     </body>
   </file>

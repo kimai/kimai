@@ -1428,7 +1428,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro">
         <source>absence_other.intro</source>
-        <target state="translated">Семейные события, переезд, непогода и т. д.</target>
+        <target state="needs-translation">Семейные события, переезд, непогода и т. д.</target>
       </trans-unit>
       <trans-unit id="ojfv7Jl" resname="invoice_form.title">
         <source>invoice_form.title</source>

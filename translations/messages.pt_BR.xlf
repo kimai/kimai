@@ -1536,7 +1536,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro">
         <source>absence_other.intro</source>
-        <target state="translated">Eventos de família, mudança de casa, caos climático, etc.</target>
+        <target state="translated">Formação, formação contínua e outros compromissos relacionados com o trabalho ou pessoais.</target>
       </trans-unit>
       <trans-unit id="TTnaBm4" resname="day_full">
         <source>day_full</source>
@@ -2213,6 +2213,26 @@
       <trans-unit id="ukwjp0C" resname="absence_type.date_range">
         <source>absence_type.date_range</source>
         <target state="translated">Permitir o agendamento de vários dias</target>
+      </trans-unit>
+      <trans-unit id="fxkWjGQ" resname="password_current">
+        <source>password_current</source>
+        <target state="translated">Senha atual</target>
+      </trans-unit>
+      <trans-unit id="8MwThZv" resname="export.too_many_entries">
+        <source>export.too_many_entries</source>
+        <target state="translated">A busca solicitada retorna %count% resultados. Uma vez que um máximo de entradas %limit% pode ser exportado em um momento, a busca deve ser mais estreitada.</target>
+      </trans-unit>
+      <trans-unit id="dIuCbHU" resname="absence_type.overbooking">
+        <source>absence_type.overbooking</source>
+        <target state="translated">Permitir overbooking até</target>
+      </trans-unit>
+      <trans-unit id="Y9NoM.U" resname="absence_type.overbooking.help.holiday">
+        <source>absence_type.overbooking.help.holiday</source>
+        <target state="translated">0 = overbooking não é permitido. Número de dias que podem ser reservados além dos dias de férias disponíveis.</target>
+      </trans-unit>
+      <trans-unit id="c1z3ItA" resname="absence_type.overbooking.help.time_off">
+        <source>absence_type.overbooking.help.time_off</source>
+        <target state="translated">0 = overbooking não é permitido. Número de horas a conta de tempo de trabalho pode entrar no negativo.</target>
       </trans-unit>
     </body>
   </file>
