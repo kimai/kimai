@@ -35,7 +35,7 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
     private array $activities = [];
     private int $state = self::STATE_ALL;
     private int $exported = self::STATE_ALL;
-    /** @var positive-int|null */
+    /** @var int<0, max>|null */
     private ?int $maxResults = null;
     private ?\DateTimeInterface $modifiedAfter = null;
     /**
@@ -90,7 +90,7 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
     }
 
     /**
-     * @return positive-int|null
+     * @return int<0, max>|null
      */
     public function getMaxResults(): ?int
     {
@@ -98,7 +98,7 @@ class TimesheetQuery extends ActivityQuery implements BillableInterface, DateRan
     }
 
     /**
-     * @param positive-int|null $maxResults
+     * @param int<0, max>|null $maxResults
      */
     public function setMaxResults(?int $maxResults): void
     {
