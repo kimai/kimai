@@ -106,7 +106,7 @@ class TagRepository extends EntityRepository
      * - amount
      *
      * @param TagQuery $query
-     * @return Pagination
+     * @return Pagination<Tag>
      */
     public function getTagCount(TagQuery $query): Pagination
     {

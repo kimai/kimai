@@ -530,6 +530,9 @@ class TimesheetRepository extends EntityRepository
         return $aliases;
     }
 
+    /**
+     * @return Pagination<Timesheet>
+     */
     public function getPagerfantaForQuery(TimesheetQuery $query): Pagination
     {
         return new Pagination($this->getPaginatorForQuery($query), $query);

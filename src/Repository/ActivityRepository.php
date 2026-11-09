@@ -354,6 +354,9 @@ class ActivityRepository extends EntityRepository
         return (int) $qb->getQuery()->getSingleScalarResult(); // @phpstan-ignore-line
     }
 
+    /**
+     * @return Pagination<Activity>
+     */
     public function getPagerfantaForQuery(ActivityQuery $query): Pagination
     {
         return new Pagination($this->getPaginatorForQuery($query), $query);

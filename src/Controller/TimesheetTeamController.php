@@ -288,6 +288,9 @@ final class TimesheetTeamController extends TimesheetAbstractController
         return 'timesheet_team';
     }
 
+    /**
+     * @return PageSetup<Timesheet>
+     */
     protected function createPageSetup(): PageSetup
     {
         $page = new PageSetup('all_times');

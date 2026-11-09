@@ -64,6 +64,9 @@ final class ProfileController extends AbstractController
         return $this->redirectToRoute('user_profile', ['username' => $this->getUser()->getUserIdentifier()]);
     }
 
+    /**
+     * @return PageSetup<User>
+     */
     private function getPageSetup(User $profile, string $view): PageSetup
     {
         $page = new PageSetup('users');
