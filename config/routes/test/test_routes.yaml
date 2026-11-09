@@ -1,5 +1,0 @@
-app.test.active_entries:
-    path: /{_locale}/layou/active_entries
-    controller: App\Controller\LayoutController::activeEntries
-    defaults:
-        _locale: '%locale%'
