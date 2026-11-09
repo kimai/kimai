@@ -211,11 +211,16 @@ class Invoice implements EntityWithMetaFields
     #[Serializer\Groups(['Default'])]
     public function isOverdue(): bool
     {
-        if (null === $this->getDueDate()) {
+        $dueDate = $this->getDueDate();
+        if (null === $dueDate) {
             return false;
         }
 
-        return $this->getDueDate()->getTimestamp() < (new \DateTime('now', new \DateTimeZone($this->timezone)))->getTimestamp();
+        if ($this->isPaid() || $this->isCanceled()) {
+            return false;
+        }
+
+        return $dueDate->getTimestamp() < (new \DateTime('now', new \DateTimeZone($this->timezone)))->getTimestamp();
     }
 
     public function setFilename(string $filename): Invoice
