@@ -13,7 +13,13 @@ use App\Repository\Query\BaseQuery;
 use Pagerfanta\Adapter\AdapterInterface;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
+use Pagerfanta\PagerfantaInterface;
 
+/**
+ * @template T
+ *
+ * @implements PagerfantaInterface<T>
+ */
 final class Pagination extends Pagerfanta
 {
     public function __construct(AdapterInterface $adapter, ?BaseQuery $query = null)
