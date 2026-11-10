@@ -21,7 +21,10 @@ use App\Repository\Query\InvoiceQuery;
 use App\Tests\Invoice\DebugFormatter;
 use App\Tests\Mocks\InvoiceModelFactoryFactory;
 use App\Timesheet\RateCalculator\ClassicRateCalculator;
+use App\Timesheet\RateCalculator\DecimalRateCalculator;
+use App\Timesheet\RateCalculator\RateCalculatorMode;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 #[CoversClass(DefaultCalculator::class)]
 #[CoversClass(AbstractCalculator::class)]
@@ -160,5 +163,91 @@ class DefaultCalculatorTest extends AbstractCalculatorTestCase
         self::assertSame(1234.0, $sut->getSubtotal());
         self::assertSame(234.0, $sut->getTax());
         self::assertSame(1468.0, $sut->getTotal());
+    }
+
+    /**
+     * Boundary values for both rate calculator modes:
+     * - halves (778.125 / 51.875)
+     * - floating point noise (103.75 x 0.42h = 43.574999999999996, 67.89 x 3438s = 64.83494999999999)
+     * - Classic: rounded twice (4 decimals when stored, then to the currency), so the invoice line
+     *   matches the rate of the timesheet (67.89 x 92s = 1.73497 => 1.735 => 1.74)
+     *
+     * @return iterable<string, array{RateCalculatorMode, array<float>, float, float, float, int}>
+     */
+    public static function getBoundaryRoundingData(): iterable
+    {
+        yield 'classic' => [
+            new ClassicRateCalculator(),
+            [778.13, 51.88, 1.74, 64.84, 43.06],
+            939.65,
+            178.53,
+            1118.18,
+            33824,
+        ];
+        yield 'decimal' => [
+            new DecimalRateCalculator(),
+            [778.13, 51.88, 2.04, 65.17, 43.58],
+            940.80,
+            178.75,
+            1119.55,
+            33876,
+        ];
+    }
+
+    /**
+     * @param array<float> $expectedLines
+     */
+    #[DataProvider('getBoundaryRoundingData')]
+    public function testBoundaryRoundingWithRateCalculatorMode(RateCalculatorMode $mode, array $expectedLines, float $subtotal, float $tax, float $total, int $timeWorked): void
+    {
+        $customer = new Customer('foo');
+        $template = new InvoiceTemplate();
+        $template->setVat(19);
+
+        $records = [
+            [103.75, 27000],
+            [103.75, 1800],
+            [67.89, 92],
+            [67.89, 3438],
+            [103.75, 1494],
+        ];
+
+        $entries = [];
+        foreach ($records as $i => [$hourlyRate, $duration]) {
+            $timesheet = new Timesheet();
+            $timesheet->setBegin(new \DateTime('2026-11-0' . ($i + 1) . ' 08:00:00'));
+            $timesheet->setDuration($duration);
+            $timesheet->setHourlyRate($hourlyRate);
+            // like the RateService would store it
+            $timesheet->setRate($mode->calculateRate($hourlyRate, $duration, 'EUR'));
+            $timesheet->setActivity(new Activity());
+            $entries[] = $timesheet;
+        }
+
+        $model = (new InvoiceModelFactoryFactory($this))->create($mode)->createModel(new DebugFormatter(), $customer, $template, new InvoiceQuery());
+        $model->addEntries($entries);
+
+        $sut = $this->getCalculator();
+        $sut->setModel($model);
+
+        $lines = [];
+        $sum = 0.0;
+        foreach ($sut->getEntries() as $entry) {
+            $lines[] = $entry->getRate();
+            $sum += $entry->getRate();
+        }
+
+        self::assertSame($expectedLines, $lines);
+        // the subtotal must always be the sum of the (rounded) lines
+        self::assertSame($subtotal, round($sum, 2));
+        self::assertSame($subtotal, $sut->getSubtotal());
+        self::assertSame($tax, $sut->getTax());
+        self::assertSame($total, $sut->getTotal());
+        self::assertSame($timeWorked, $sut->getTimeWorked());
+
+        $rows = $sut->getTaxRows();
+        self::assertCount(1, $rows);
+        self::assertSame($subtotal, $rows[0]->getBasePrice());
+        self::assertSame($tax, $rows[0]->getAmount());
     }
 }

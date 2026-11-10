@@ -43,6 +43,9 @@ class TaxRowTest extends TestCase
         yield [7.0, 0.08, 0.01];
         yield [0.0, 1234.56, 0.0];
         yield [19.0, -100.50, -19.10];
+        // floating point noise: PHP >= 8.4 round() would return the lower value
+        yield [21.0, 9.50, 2.0];
+        yield [21.0, 25.50, 5.36];
     }
 
     #[DataProvider('getAmountData')]

@@ -38,6 +38,30 @@ class ClassicRateCalculatorTest extends TestCase
         ];
     }
 
+    /**
+     * @return iterable<string, array{float, int, float}>
+     */
+    public static function provideBoundaryRates(): iterable
+    {
+        // exact 778.125 - must be kept with 4 decimals
+        yield '103.75 x 7.5h' => [103.75, 27000, 778.125];
+        yield '103.75 x 0.5h' => [103.75, 1800, 51.875];
+        // exact 1.734966... - rounded to 4 decimals
+        yield '67.89 x 92s' => [67.89, 92, 1.735];
+        // exact 64.83495, float is 64.83494999999999 - PHP >= 8.4 round() would return 64.8349
+        yield '67.89 x 3438s float noise' => [67.89, 3438, 64.835];
+        yield '99.99 x 618s float noise' => [99.99, 618, 17.165];
+    }
+
+    #[DataProvider('provideBoundaryRates')]
+    public function testCalculateRateWithBoundaryValues(float $hourlyRate, int $seconds, float $expected): void
+    {
+        $sut = new ClassicRateCalculator();
+
+        self::assertSame($expected, $sut->calculateRate($hourlyRate, $seconds));
+        self::assertSame($expected, $sut->calculateRate($hourlyRate, $seconds, 'EUR'));
+    }
+
     public function testCalculateRateIgnoresCurrency(): void
     {
         $sut = new ClassicRateCalculator();

@@ -43,6 +43,45 @@ class MoneyRoundingTest extends TestCase
         yield [1.2345, 'CHF', 1.23];
         yield [1.235, '', 1.24];
         yield [1.235, 'UNKNOWN', 1.24];
+        // floating point noise: PHP >= 8.4 round() would return the lower value
+        yield [103.75 * 0.42, 'EUR', 43.58];        // 43.574999999999996
+        yield [9.5 * 0.21, 'EUR', 2.0];             // 1.9949999999999999
+        yield [25.5 * 0.21, 'EUR', 5.36];           // 5.3549999999999995
+        yield [-(103.75 * 0.42), 'EUR', -43.58];
+        // values close to a half, which must not be rounded up
+        yield [67.89 * 92 / 3600, 'EUR', 1.73];      // 1.7349666...
+        yield [1.7349999, 'EUR', 1.73];
+        yield [43.5749, 'EUR', 43.57];
+        // large and small amounts
+        yield [1234567.125, 'EUR', 1234567.13];
+        yield [12345678.124, 'EUR', 12345678.12];
+        yield [0.005, 'EUR', 0.01];
+        yield [0.00499, 'EUR', 0.0];
+    }
+
+    /**
+     * @return iterable<array{float, int, float}>
+     */
+    public static function getRoundToDecimalsData(): iterable
+    {
+        yield [64.835, 4, 64.835];
+        // 64.83494999999999 - ClassicRateCalculator for 67.89/h and 3438 seconds
+        yield [67.89 * (3438 / 3600), 4, 64.835];
+        yield [67.89 * (92 / 3600), 4, 1.735];
+        yield [778.125, 4, 778.125];
+        yield [778.125, 2, 778.13];
+        yield [778.125, 0, 778.0];
+        yield [778.5, 0, 779.0];
+        yield [-778.5, 0, -779.0];
+        yield [1.23456789, 6, 1.234568];
+        yield [0.0, 2, 0.0];
+        yield [-0.00001, 4, 0.0];
+    }
+
+    #[DataProvider('getRoundToDecimalsData')]
+    public function testRoundToDecimals(float $amount, int $decimals, float $expected): void
+    {
+        self::assertSame($expected, MoneyRounding::roundToDecimals($amount, $decimals));
     }
 
     #[DataProvider('getRoundData')]
