@@ -9,6 +9,8 @@
 
 namespace App\Timesheet;
 
+use App\Utils\MoneyRounding;
+
 /**
  * @deprecated use RateCalculatorMode instead
  */
@@ -25,7 +27,7 @@ final class Util
     {
         $rate = $hourlyRate * round(($seconds / 3600), 2, PHP_ROUND_HALF_UP);
 
-        return round($rate, 2, PHP_ROUND_HALF_UP);
+        return MoneyRounding::round($rate);
     }
 
     /**

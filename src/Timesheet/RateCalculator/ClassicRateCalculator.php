@@ -13,8 +13,11 @@ final class ClassicRateCalculator implements RateCalculatorMode
 {
     /**
      * Calculates the rate by an hourly rate and a given duration in seconds.
+     *
+     * The currency is ignored on purpose: the classic mode keeps 4 decimals and leaves
+     * the rounding to the currency precision to the consumer (e.g. invoice calculator).
      */
-    public function calculateRate(float $hourlyRate, int $seconds): float
+    public function calculateRate(float $hourlyRate, int $seconds, ?string $currency = null): float
     {
         $rate = $hourlyRate * ($seconds / 3600);
 

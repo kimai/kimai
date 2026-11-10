@@ -38,6 +38,28 @@ class DecimalRateCalculatorTest extends TestCase
         ];
     }
 
+    /**
+     * @return iterable<string, array{float, int, ?string, float}>
+     */
+    public static function provideRatesWithCurrency(): iterable
+    {
+        yield 'no currency' => [1234.56, 3600, null, 1234.56];
+        yield 'EUR' => [1234.56, 3600, 'EUR', 1234.56];
+        yield 'EUR commercial rounding' => [103.75, 27000, 'EUR', 778.13];
+        yield 'JPY without decimals' => [1234.56, 3600, 'JPY', 1235.0];
+        yield 'JPY lowercase' => [1234.49, 3600, 'jpy', 1234.0];
+        yield 'KWD with 3 decimals' => [12.3456, 3600, 'KWD', 12.346];
+        yield 'unknown currency' => [12.3456, 3600, 'UNKNOWN', 12.35];
+    }
+
+    #[DataProvider('provideRatesWithCurrency')]
+    public function testCalculateRateRoundsToCurrencyPrecision(float $hourlyRate, int $seconds, ?string $currency, float $expected): void
+    {
+        $sut = new DecimalRateCalculator();
+
+        self::assertSame($expected, $sut->calculateRate($hourlyRate, $seconds, $currency));
+    }
+
     public function testRoundDurationKeepsOriginalSeconds(): void
     {
         $sut = new DecimalRateCalculator();

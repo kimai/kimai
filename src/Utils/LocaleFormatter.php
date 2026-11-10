@@ -165,6 +165,8 @@ final class LocaleFormatter
         if (false === $withCurrency) {
             if (null === $this->moneyFormatterNoCurrency) {
                 $this->moneyFormatterNoCurrency = new NumberFormatter($this->locale, NumberFormatter::CURRENCY);
+                // commercial rounding, intl defaults to "half even" (see MoneyRounding)
+                $this->moneyFormatterNoCurrency->setAttribute(NumberFormatter::ROUNDING_MODE, NumberFormatter::ROUND_HALFUP);
                 $this->moneyFormatterNoCurrency->setTextAttribute(NumberFormatter::POSITIVE_PREFIX, '');
                 $this->moneyFormatterNoCurrency->setTextAttribute(NumberFormatter::POSITIVE_SUFFIX, '');
                 $this->moneyFormatterNoCurrency->setTextAttribute(NumberFormatter::NEGATIVE_PREFIX, '-');
@@ -176,6 +178,8 @@ final class LocaleFormatter
 
         if (null === $this->moneyFormatter) {
             $this->moneyFormatter = new NumberFormatter($this->locale, NumberFormatter::CURRENCY);
+            // commercial rounding, intl defaults to "half even" (see MoneyRounding)
+            $this->moneyFormatter->setAttribute(NumberFormatter::ROUNDING_MODE, NumberFormatter::ROUND_HALFUP);
         }
 
         return $this->moneyFormatter->formatCurrency($amount, $currency);

@@ -38,6 +38,16 @@ class ClassicRateCalculatorTest extends TestCase
         ];
     }
 
+    public function testCalculateRateIgnoresCurrency(): void
+    {
+        $sut = new ClassicRateCalculator();
+
+        self::assertSame(1234.5678, $sut->calculateRate(1234.5678, 3600));
+        self::assertSame(1234.5678, $sut->calculateRate(1234.5678, 3600, 'EUR'));
+        self::assertSame(1234.5678, $sut->calculateRate(1234.5678, 3600, 'JPY'));
+        self::assertSame(778.125, $sut->calculateRate(103.75, 27000, 'EUR'));
+    }
+
     public function testRoundDurationKeepsOriginalSeconds(): void
     {
         $sut = new ClassicRateCalculator();
