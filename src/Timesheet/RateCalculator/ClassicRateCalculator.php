@@ -9,6 +9,8 @@
 
 namespace App\Timesheet\RateCalculator;
 
+use App\Utils\MoneyRounding;
+
 final class ClassicRateCalculator implements RateCalculatorMode
 {
     /**
@@ -21,7 +23,7 @@ final class ClassicRateCalculator implements RateCalculatorMode
     {
         $rate = $hourlyRate * ($seconds / 3600);
 
-        return round($rate, 4);
+        return MoneyRounding::roundToDecimals($rate, 4);
     }
 
     /**

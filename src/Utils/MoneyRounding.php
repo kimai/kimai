@@ -21,6 +21,7 @@ use Symfony\Component\Intl\Currencies;
 final class MoneyRounding
 {
     public const DEFAULT_FRACTION_DIGITS = 2;
+    private const SIGNIFICANT_DIGITS = 15;
 
     private function __construct()
     {
@@ -31,7 +32,27 @@ final class MoneyRounding
      */
     public static function round(float $amount, ?string $currency = null): float
     {
-        $rounded = round($amount, self::getFractionDigits($currency), PHP_ROUND_HALF_UP);
+        return self::roundToDecimals($amount, self::getFractionDigits($currency));
+    }
+
+    /**
+     * Commercial rounding to the given amount of decimals, robust against floating point noise.
+     *
+     * Use this only if you need a precision that does not depend on a currency (e.g. stored rates with 4 decimals).
+     */
+    public static function roundToDecimals(float $amount, int $decimals): float
+    {
+        // Remove floating point noise first, e.g. 103.75 * 0.42 = 43.574999999999996 instead of 43.575.
+        // PHP 8.2 and 8.3 did such a "pre-rounding" internally and return 43.58, PHP 8.5 returns 43.57.
+        // Pre-rounding to 15 significant digits (the precision of a double) gives the same result on all versions.
+        if ($amount !== 0.0 && is_finite($amount)) {
+            $precision = self::SIGNIFICANT_DIGITS - 1 - (int) floor(log10(abs($amount)));
+            if ($precision > $decimals) {
+                $amount = round($amount, $precision, PHP_ROUND_HALF_UP);
+            }
+        }
+
+        $rounded = round($amount, $decimals, PHP_ROUND_HALF_UP);
 
         // prevent "-0.00" in rendered documents
         if ($rounded === 0.0) {
