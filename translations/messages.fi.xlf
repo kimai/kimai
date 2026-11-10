@@ -1324,7 +1324,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro">
         <source>absence_other.intro</source>
-        <target state="translated">Perhetapahtumat, muutto, sääolosuhteet tms.</target>
+        <target state="needs-translation">Perhetapahtumat, muutto, sääolosuhteet tms.</target>
       </trans-unit>
       <trans-unit id="DXcvOMM" resname="stats.userDurationWeek">
         <source>stats.userDurationWeek</source>

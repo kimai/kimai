@@ -1772,7 +1772,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target state="translated">Aus- und Weiterbildung, sonstige betriebliche oder private Verhinderungen (z. B. Umzug, familiäre Anlässe) etc.</target>
+        <target state="needs-translation">Aus- und Weiterbildung, sonstige betriebliche oder private Verhinderungen (z. B. Umzug, familiäre Anlässe) etc.</target>
       </trans-unit>
       <trans-unit id="TTnaBm4" resname="day_full" xml:space="preserve">
         <source>day_full</source>

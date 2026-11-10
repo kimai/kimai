@@ -1344,7 +1344,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target state="translated">Acara keluarga, pindahan rumah, cuaca buruk, dll.</target>
+        <target state="needs-translation">Acara keluarga, pindahan rumah, cuaca buruk, dll.</target>
       </trans-unit>
       <trans-unit id="Eml59KV" resname="day_half" xml:space="preserve">
         <source>day_half</source>

@@ -1524,7 +1524,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target state="translated">Οικογενειακά γεγονότα, μετακόμιση, καιρικό χάος κ.λπ.</target>
+        <target state="needs-translation">Οικογενειακά γεγονότα, μετακόμιση, καιρικό χάος κ.λπ.</target>
       </trans-unit>
       <trans-unit id="JmpBuQ1" resname="Translations" xml:space="preserve">
         <source>Translations</source>
