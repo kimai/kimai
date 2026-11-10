@@ -98,13 +98,16 @@ security:
         - {path: '^/auth', roles: PUBLIC_ACCESS}
         - {path: '^/login', roles: PUBLIC_ACCESS}
         - {path: '^/logout', roles: PUBLIC_ACCESS}
-        - {path: '^/{_locale}$', role: PUBLIC_ACCESS}
-        - {path: '^/{_locale}/auth', role: PUBLIC_ACCESS}
-        - {path: '^/{_locale}/login', role: PUBLIC_ACCESS}
-        - {path: '^/{_locale}/register', role: PUBLIC_ACCESS}
-        - {path: '^/{_locale}/resetting', role: PUBLIC_ACCESS}
-        - {path: '^/{_locale}/', roles: ROLE_USER}
         - {path: '^/api', roles: IS_AUTHENTICATED_REMEMBERED}
+        # Paths are plain regular expressions, route placeholders like {_locale} are NOT replaced here.
+        # The allowed locales are restricted by the router (see "enabled_locales"), so a generic pattern is enough.
+        # The ^/api rule must stay above, as "api" matches the locale pattern.
+        - {path: '^/[a-z]{2,3}(?:_[A-Za-z]{2,4})*$', role: PUBLIC_ACCESS}
+        - {path: '^/[a-z]{2,3}(?:_[A-Za-z]{2,4})*/auth', role: PUBLIC_ACCESS}
+        - {path: '^/[a-z]{2,3}(?:_[A-Za-z]{2,4})*/login', role: PUBLIC_ACCESS}
+        - {path: '^/[a-z]{2,3}(?:_[A-Za-z]{2,4})*/register', role: PUBLIC_ACCESS}
+        - {path: '^/[a-z]{2,3}(?:_[A-Za-z]{2,4})*/resetting', role: PUBLIC_ACCESS}
+        - {path: '^/[a-z]{2,3}(?:_[A-Za-z]{2,4})*/', roles: ROLE_USER}
 
 when@test:
     # this configuration simplifies testing URLs protected by the security mechanism
