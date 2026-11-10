@@ -38,6 +38,13 @@ class StrictPolicyTestCase extends TestCase
         $this->expectNotToPerformAssertions();
     }
 
+    public function testCheckSecurityAllowsReconciliationFilters(): void
+    {
+        $sut = $this->createPolicy();
+        $sut->checkSecurity([], ['duration_decimal_value', 'duration_decimal_format', 'money_value'], []);
+        $this->expectNotToPerformAssertions();
+    }
+
     public function testCheckPropertyAllowed(): void
     {
         $sut = $this->createPolicy();
