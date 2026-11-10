@@ -76,6 +76,41 @@ class MoneyRoundingTest extends TestCase
         yield [1.23456789, 6, 1.234568];
         yield [0.0, 2, 0.0];
         yield [-0.00001, 4, 0.0];
+        // large amounts: real digits below the half-unit boundary must not be rounded up
+        yield [123456789012.345, 2, 123456789012.35];
+        yield [123456789012.3451, 2, 123456789012.35];
+        // too large to represent a half cent: unchanged
+        yield [123456789012345.67, 2, 123456789012345.67];
+        yield [1.0e300, 2, 1.0e300];
+        yield [-1.0e300, 2, -1.0e300];
+        // negative decimals
+        yield [1234.5, -1, 1230.0];
+        yield [1235.0, -1, 1240.0];
+    }
+
+    /**
+     * Values up to 4 ULPs below the half-unit boundary are floating point noise, values further away are real.
+     */
+    public function testHalfUnitTolerance(): void
+    {
+        self::assertSame(43.58, MoneyRounding::round(43.575));
+        self::assertSame(43.58, MoneyRounding::round(self::ulpsBelow(43.575, 1)));
+        self::assertSame(43.58, MoneyRounding::round(self::ulpsBelow(43.575, 4)));
+        self::assertSame(43.58, MoneyRounding::round(self::ulpsBelow(43.575, 4)));
+        self::assertSame(-43.58, MoneyRounding::round(-self::ulpsBelow(43.575, 4)));
+        self::assertSame(-43.58, MoneyRounding::round(-self::ulpsBelow(43.575, 4)));
+        // 123456789012.3449 is 7 ULPs below 123456789012.345
+        self::assertSame(123456789012.35, MoneyRounding::round(123456789012.3449));
+    }
+
+    private static function ulpsBelow(float $value, int $ulps): float
+    {
+        /** @var array{1: int} $bits */
+        $bits = unpack('q', pack('d', $value));
+        /** @var array{1: float} $result */
+        $result = unpack('d', pack('q', $bits[1] - $ulps));
+
+        return $result[1];
     }
 
     #[DataProvider('getRoundToDecimalsData')]
