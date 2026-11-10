@@ -234,7 +234,7 @@ final class TimesheetFixtures extends Fixture implements FixtureGroupInterface
 
             $duration = $end->getTimestamp() - $start->getTimestamp();
             $hourlyRate = (float) $user->getPreferenceValue(UserPreference::HOURLY_RATE);
-            $rate = $calculatorMode->calculateRate($hourlyRate, $duration);
+            $rate = $calculatorMode->calculateRate($hourlyRate, $duration, $entry->getProject()?->getCustomer()?->getCurrency());
 
             $entry->setEnd($end);
             $entry->setRate($rate);

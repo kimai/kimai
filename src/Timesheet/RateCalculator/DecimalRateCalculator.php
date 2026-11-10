@@ -9,16 +9,18 @@
 
 namespace App\Timesheet\RateCalculator;
 
+use App\Utils\MoneyRounding;
+
 final class DecimalRateCalculator implements RateCalculatorMode
 {
     /**
      * Calculates the rate by an hourly rate and a given duration in seconds.
      */
-    public function calculateRate(float $hourlyRate, int $seconds): float
+    public function calculateRate(float $hourlyRate, int $seconds, ?string $currency = null): float
     {
         $rate = $hourlyRate * round(($seconds / 3600), 2, PHP_ROUND_HALF_UP);
 
-        return round($rate, 2, PHP_ROUND_HALF_UP);
+        return MoneyRounding::round($rate, $currency);
     }
 
     /**

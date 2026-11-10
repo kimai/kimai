@@ -67,6 +67,48 @@ class LocaleFormatterTest extends TestCase
         self::assertSame('2,345.01', $sut->money(2345.009, 'EUR', false));
     }
 
+    /**
+     * Money must use commercial rounding (half away from zero) and not the intl default "half even".
+     */
+    public function testMoneyUsesCommercialRounding(): void
+    {
+        $sut = $this->getSut('en');
+
+        self::assertSame('€778.13', $sut->money(778.125, 'EUR'));
+        self::assertSame('€51.88', $sut->money(51.875, 'EUR'));
+        self::assertSame('€0.29', $sut->money(0.285, 'EUR'));
+        self::assertSame('€7,438.41', $sut->money(7438.405, 'EUR'));
+        self::assertSame('-€19.10', $sut->money(-19.095, 'EUR'));
+        self::assertSame('¥1,235', $sut->money(1234.5, 'JPY'));
+        self::assertSame('778.13', $sut->money(778.125, 'EUR', false));
+        self::assertSame('0.29', $sut->money(0.285, null));
+    }
+
+    /**
+     * Without a currency symbol, the decimals of the given currency must be used (and not the ones of the locale).
+     * The formatter is cached, so switching currencies must work as well.
+     */
+    public function testMoneyWithoutCurrencySymbolUsesCurrencyFractionDigits(): void
+    {
+        $sut = $this->getSut('en');
+
+        self::assertSame('1.234', $sut->money(1.234, 'KWD', false));
+        self::assertSame('2.468', $sut->money(2.468, 'KWD', false));
+        self::assertSame('0.29', $sut->money(0.285, null));
+        self::assertSame('1,235', $sut->money(1234.5, 'JPY', false));
+        self::assertSame('778.13', $sut->money(778.125, 'EUR', false));
+        self::assertSame('1,234.500', $sut->money(1234.5, 'kwd', false));
+        self::assertSame('0.29', $sut->money(0.285, null));
+        self::assertSame('778.13', $sut->money(778.125, 'EUR', false));
+
+        $sut = $this->getSut('de');
+
+        self::assertSame('1,234', $sut->money(1.234, 'KWD', false));
+        self::assertSame('778,13', $sut->money(778.125, 'EUR', false));
+        self::assertSame('1.235', $sut->money(1234.5, 'JPY', false));
+        self::assertSame('778,13', $sut->money(778.125, null));
+    }
+
     public function testCurrencyFormattingFallsBackToInput(): void
     {
         $sut = $this->getSut('de');
