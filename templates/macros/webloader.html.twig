@@ -2,6 +2,7 @@
     {% set fdow = app.user is not null ? app.user.firstDayOfWeek : 'monday' %}
     {% set configurations = javascript_configurations(app.user, app.request.locale)|merge({
         login: path('login'),
+        timesheetEdit: path('timesheet_edit', {'id': '000'}),
         direction: tabler_bundle.rightToLeft ? 'rtl' : 'ltr',
         first_dow_iso: iso_day_by_name(fdow),
     }) %}
