@@ -396,6 +396,57 @@ class ActivityControllerTest extends AbstractControllerBaseTestCase
         self::assertEquals('Test 2', $editForm->get('activity_edit_form[name]')->getValue());
     }
 
+    public function testEditActionKeepsProjectOfForeignTeam(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
+        $em = $this->getEntityManager();
+
+        $project = $em->getRepository(Project::class)->find(1);
+        self::assertInstanceOf(Project::class, $project);
+        $activity = $this->importFixture((new ActivityFixtures(1))->setProjects([$project]))[0];
+        $id = $activity->getId();
+
+        // the project belongs to a team, the user is not a member
+        $team = new Team('foreign team');
+        $team->addProject($project);
+        $em->persist($team);
+
+        // a role that can create and edit every activity, but does not include view_all_data
+        $role = (new Role())->setName('TEST_EDIT_ACTIVITY');
+        $em->persist($role);
+        foreach (['view_activity', 'create_activity', 'edit_activity'] as $name) {
+            $em->persist((new RolePermission())->setRole($role)->setPermission($name)->setAllowed(true));
+        }
+
+        $roleName = $role->getName();
+        self::assertNotNull($roleName);
+        $user->addRole($roleName);
+        $em->persist($user);
+        $em->flush();
+
+        // a new activity cannot be assigned to the project
+        $this->assertAccessIsGranted($client, '/admin/activity/create');
+        $form = $client->getCrawler()->filter('form[name=activity_edit_form]');
+        self::assertEquals(0, $form->filter('select#activity_edit_form_project option[value="' . $project->getId() . '"]')->count());
+
+        // an existing activity keeps its project
+        $this->assertAccessIsGranted($client, '/admin/activity/' . $id . '/edit');
+        $form = $client->getCrawler()->filter('form[name=activity_edit_form]');
+        self::assertEquals(1, $form->filter('select#activity_edit_form_project option[selected][value="' . $project->getId() . '"]')->count());
+
+        $client->submit($form->form(), [
+            'activity_edit_form' => ['name' => 'Renamed activity']
+        ]);
+        $this->assertIsRedirect($client, $this->createUrl('/admin/activity/' . $id . '/details'));
+
+        $em->clear();
+        $reloaded = $em->getRepository(Activity::class)->find($id);
+        self::assertInstanceOf(Activity::class, $reloaded);
+        self::assertEquals('Renamed activity', $reloaded->getName());
+        self::assertEquals($project->getId(), $reloaded->getProject()?->getId(), 'The activity lost its project.');
+    }
+
     public function testEditActionForGlobalActivity(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);

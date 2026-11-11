@@ -76,9 +76,11 @@ class ActivityEditForm extends AbstractType
                 ->add('project', ProjectType::class, [
                     'required' => false,
                     'help' => 'help.globalActivity',
-                    'query_builder' => function (ProjectRepository $repo) use ($builder, $project, $customer) {
+                    'query_builder' => function (ProjectRepository $repo) use ($builder, $project, $customer, $isNew) {
                         $query = new ProjectFormTypeQuery($project, $customer);
                         $query->setUser($builder->getOption('user'));
+                        // an existing activity keeps its project, even if the user has no team access to it
+                        $query->setAllowProjectPreselect(!$isNew);
                         $query->setIgnoreDate(true);
                         $query->setWithCustomer(true);
 
