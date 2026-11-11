@@ -6,6 +6,7 @@
     <title>{{ invoice['invoice.number'] }}-{{ invoice['customer.company']|default(invoice['customer.name'])|u.snake }}</title>
     <style>
         {{ encore_entry_css_source('invoice')|raw }}
+        {{ branding_accent_css(['table.invoice th'], ['.page-header'])|raw }}
     </style>
 </head>
 <body class="invoice_print">
@@ -15,7 +16,12 @@
             <div class="row">
                 <div class="col-xs-12">
                     <h2 class="page-header">
-                        <span contenteditable="true">{{ invoice['template.title'] }}</span>
+                        {% set logoImg = branding_logo_img('', 40, false) %}
+                        {% if logoImg is not empty %}
+                            {{ logoImg|raw }}
+                        {% else %}
+                            <span contenteditable="true">{{ invoice['template.title'] }}</span>
+                        {% endif %}
                     </h2>
                 </div>
             </div>
