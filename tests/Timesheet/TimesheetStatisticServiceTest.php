@@ -143,4 +143,38 @@ class TimesheetStatisticServiceTest extends KernelTestCase
         self::assertEquals([$teamlead->getId() => 1, $member->getId() => 3], $this->countActivitiesByUser($sut->getDailyStatisticsGrouped($query)));
         self::assertEquals([$teamlead->getId() => 1, $member->getId() => 3], $this->countActivitiesByUser($sut->getMonthlyStatisticsGrouped($query)));
     }
+
+    /**
+     * Only the customer is limited to a team, projects and activities have no team.
+     */
+    public function testStatisticsAreLimitedByCustomerTeam(): void
+    {
+        [$teamlead, $member] = $this->createCustomerRestrictedTimesheets();
+        $admin = $this->getUserByRole(User::ROLE_SUPER_ADMIN);
+        $sut = $this->getSut();
+
+        // the teamlead sees his own record, but not the one of his team member
+        $query = $this->createQuery([$teamlead, $member], $teamlead);
+        $expected = [$teamlead->getId() => 3600, $member->getId() => 3600];
+        self::assertEquals($expected, $this->getDurationByUser($sut->getDailyStatistics($query)));
+        self::assertEquals($expected, $this->getDurationByUser($sut->getMonthlyStats($query)));
+        self::assertEquals([$teamlead->getId() => 1, $member->getId() => 1], $this->countActivitiesByUser($sut->getDailyStatisticsGrouped($query)));
+        self::assertEquals([$teamlead->getId() => 1, $member->getId() => 1], $this->countActivitiesByUser($sut->getMonthlyStatisticsGrouped($query)));
+
+        // own records are not limited
+        $query = $this->createQuery([$member], $member);
+        $expected = [$member->getId() => 7200];
+        self::assertEquals($expected, $this->getDurationByUser($sut->getDailyStatistics($query)));
+        self::assertEquals($expected, $this->getDurationByUser($sut->getMonthlyStats($query)));
+        self::assertEquals([$member->getId() => 2], $this->countActivitiesByUser($sut->getDailyStatisticsGrouped($query)));
+        self::assertEquals([$member->getId() => 2], $this->countActivitiesByUser($sut->getMonthlyStatisticsGrouped($query)));
+
+        // users with the permission to see all data are not limited
+        $query = $this->createQuery([$teamlead, $member], $admin);
+        $expected = [$teamlead->getId() => 3600, $member->getId() => 7200];
+        self::assertEquals($expected, $this->getDurationByUser($sut->getDailyStatistics($query)));
+        self::assertEquals($expected, $this->getDurationByUser($sut->getMonthlyStats($query)));
+        self::assertEquals([$teamlead->getId() => 1, $member->getId() => 2], $this->countActivitiesByUser($sut->getDailyStatisticsGrouped($query)));
+        self::assertEquals([$teamlead->getId() => 1, $member->getId() => 2], $this->countActivitiesByUser($sut->getMonthlyStatisticsGrouped($query)));
+    }
 }

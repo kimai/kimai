@@ -169,6 +169,66 @@ abstract class AbstractUserPeriodControllerTestCase extends AbstractControllerBa
     }
 
     /**
+     * Only the customer is limited to a team the teamlead is not part of,
+     * project and activity have no team.
+     */
+    public function testUserPeriodReportHidesRecordsOfForeignTeamCustomer(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        [$teamlead, $member] = $this->createCustomerRestrictedTimesheets();
+
+        $query = \sprintf('?user=%s&date=2020-05-13', $member->getId());
+        $this->assertAccessIsGranted($client, $this->getReportUrl() . $query);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        self::assertStringContainsString('Free project', $content);
+        self::assertStringContainsString('Free activity', $content);
+        self::assertStringNotContainsString('Shielded project', $content);
+        self::assertStringNotContainsString('Shielded activity', $content);
+        self::assertStringNotContainsString('Shielded customer', $content);
+
+        $this->assertAccessIsGranted($client, $this->getExportUrl() . $query);
+        $content = $this->getExcelExportContent($client);
+        self::assertStringContainsString('Free project', $content);
+        self::assertStringNotContainsString('Shielded project', $content);
+        self::assertStringNotContainsString('Shielded activity', $content);
+
+        // users always see all of their own records
+        $query = \sprintf('?user=%s&date=2020-05-13', $teamlead->getId());
+        $this->assertAccessIsGranted($client, $this->getReportUrl() . $query);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        self::assertStringContainsString('Kept project', $content);
+        self::assertStringContainsString('Kept activity', $content);
+
+        $this->assertAccessIsGranted($client, $this->getExportUrl() . $query);
+        self::assertStringContainsString('Kept project', $this->getExcelExportContent($client));
+    }
+
+    /**
+     * Control for testUserPeriodReportHidesRecordsOfForeignTeamCustomer(): users with the
+     * permission to see all data are not limited.
+     */
+    public function testUserPeriodReportShowsRecordsOfForeignTeamCustomerToAdmin(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        [$teamlead, $member] = $this->createCustomerRestrictedTimesheets();
+        $query = \sprintf('?user=%s&date=2020-05-13', $member->getId());
+
+        $this->assertAccessIsGranted($client, $this->getReportUrl() . $query);
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        self::assertStringContainsString('Free project', $content);
+        self::assertStringContainsString('Shielded project', $content);
+        self::assertStringContainsString('Shielded activity', $content);
+
+        $this->assertAccessIsGranted($client, $this->getExportUrl() . $query);
+        $content = $this->getExcelExportContent($client);
+        self::assertStringContainsString('Free project', $content);
+        self::assertStringContainsString('Shielded project', $content);
+    }
+
+    /**
      * The record was created for a project of the own team, which was moved to another team later on.
      */
     public function testUserPeriodReportHidesRecordsAfterProjectWasMovedToForeignTeam(): void

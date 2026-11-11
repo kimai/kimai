@@ -18,7 +18,7 @@ use App\Entity\User;
 
 /**
  * Fixtures for tests, which make sure that a teamlead does not see the records of
- * his team members for projects and activities of teams he is not part of.
+ * his team members for customers, projects and activities of teams he is not part of.
  */
 trait TeamRestrictedTimesheetTrait
 {
@@ -54,12 +54,13 @@ trait TeamRestrictedTimesheetTrait
 
     /**
      * Creates a stopped record with a duration of one hour on wednesday 2020-05-13,
-     * using a new project and activity, which are limited to the given teams.
+     * using a new customer, project and activity, which are limited to the given teams.
      *
      * @param array<Team> $projectTeams
      * @param array<Team> $activityTeams
+     * @param array<Team> $customerTeams
      */
-    protected function createTeamTimesheet(User $user, string $project, string $activity, array $projectTeams = [], array $activityTeams = []): Timesheet
+    protected function createTeamTimesheet(User $user, string $project, string $activity, array $projectTeams = [], array $activityTeams = [], array $customerTeams = []): Timesheet
     {
         $em = $this->getEntityManager();
 
@@ -67,6 +68,9 @@ trait TeamRestrictedTimesheetTrait
         $customer = new Customer(str_replace(' project', ' customer', $project));
         $customer->setCountry('DE');
         $customer->setTimezone('Europe/Berlin');
+        foreach ($customerTeams as $team) {
+            $team->addCustomer($customer);
+        }
         $em->persist($customer);
 
         $projectEntity = new Project();
@@ -117,6 +121,27 @@ trait TeamRestrictedTimesheetTrait
         $this->createTeamTimesheet($member, 'Foreign project', 'Foreign activity', [$foreignTeam]);
         $this->createTeamTimesheet($member, 'Open project', 'Restricted activity', [], [$foreignTeam]);
         $this->createTeamTimesheet($teamlead, 'Lost project', 'Lost activity', [$foreignTeam]);
+
+        return [$teamlead, $member];
+    }
+
+    /**
+     * Only customers are limited to a team, projects and activities have no team at all.
+     * The team member has two records: one for a customer without team and one for a customer
+     * of the foreign team. The teamlead has one record for another customer of the foreign team.
+     *
+     * @return array{0: User, 1: User}
+     */
+    protected function createCustomerRestrictedTimesheets(): array
+    {
+        [$ownTeam, $foreignTeam] = $this->createOwnAndForeignTeam();
+
+        $teamlead = $this->getUserByRole(User::ROLE_TEAMLEAD);
+        $member = $this->getUserByRole(User::ROLE_USER);
+
+        $this->createTeamTimesheet($member, 'Free project', 'Free activity');
+        $this->createTeamTimesheet($member, 'Shielded project', 'Shielded activity', [], [], [$foreignTeam]);
+        $this->createTeamTimesheet($teamlead, 'Kept project', 'Kept activity', [], [], [$foreignTeam]);
 
         return [$teamlead, $member];
     }

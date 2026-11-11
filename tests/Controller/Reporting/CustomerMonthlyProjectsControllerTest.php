@@ -133,6 +133,34 @@ class CustomerMonthlyProjectsControllerTest extends AbstractControllerBaseTestCa
     }
 
     /**
+     * Only the customer is limited to a team the teamlead is not part of,
+     * project and activity have no team.
+     */
+    public function testReportHidesRecordsOfForeignTeamCustomer(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $this->createCustomerRestrictedTimesheets();
+
+        $this->assertAccessIsGranted($client, '/reporting/customer/monthly_projects/view?date=2020-05-01');
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        self::assertStringContainsString('Free project', $content);
+        self::assertStringContainsString('Free activity', $content);
+        // users always see all of their own records
+        self::assertStringContainsString('Kept project', $content);
+        self::assertStringNotContainsString('Shielded project', $content);
+        self::assertStringNotContainsString('Shielded activity', $content);
+        self::assertStringNotContainsString('Shielded customer', $content);
+
+        $this->assertAccessIsGranted($client, '/reporting/customer/monthly_projects/export?date=2020-05-01');
+        $content = $this->getExcelExportContent($client);
+        self::assertStringContainsString('Free project', $content);
+        self::assertStringContainsString('Kept project', $content);
+        self::assertStringNotContainsString('Shielded project', $content);
+        self::assertStringNotContainsString('Shielded activity', $content);
+    }
+
+    /**
      * Control for testReportHidesRecordsOfForeignTeams(): users with the permission
      * to see all data are not limited.
      */
