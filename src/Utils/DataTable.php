@@ -210,7 +210,11 @@ final class DataTable implements \Countable, \IteratorAggregate
 
     public function getIterator(): Traversable
     {
-        return $this->pagination?->getIterator();
+        if ($this->pagination === null) {
+            throw new \Exception('Must call setPagination() before getIterator()');
+        }
+
+        return $this->pagination->getIterator();
     }
 
     public function count(): int

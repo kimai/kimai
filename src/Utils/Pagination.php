@@ -18,7 +18,7 @@ use Pagerfanta\PagerfantaInterface;
 /**
  * @template T
  *
- * @extendw PagerfantaInterface<T>
+ * @extends Pagerfanta<T>
  */
 final class Pagination extends Pagerfanta
 {
