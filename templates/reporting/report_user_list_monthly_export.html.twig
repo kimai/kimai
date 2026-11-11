@@ -15,7 +15,7 @@
         {{ total|duration(true) }}
     {%- endblock %}
     {% block rate %}
-        {{ period.totalRate }}
+        {{ period.billableRate }}
     {% endblock %}
     {% block total_rate %}
         {{ absoluteRate }}
