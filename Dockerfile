@@ -216,6 +216,23 @@ COPY --from=php-ext-gd /usr/local/lib/php/extensions/no-debug-non-zts-20250925/g
 COPY --from=php-ext-intl /usr/local/etc/php/conf.d/docker-php-ext-intl.ini /usr/local/etc/php/conf.d/docker-php-ext-intl.ini
 COPY --from=php-ext-intl /usr/local/lib/php/extensions/no-debug-non-zts-20250925/intl.so /usr/local/lib/php/extensions/no-debug-non-zts-20250925/intl.so
 
+# ICU timezone data
+# ICU (used by IntlDateFormatter) ships its own copy of the timezone database, which usually differs from the one
+# bundled with PHP. Different rules lead to wrong formatted dates (e.g. Africa/Cairo DST), so we load the ICU timezone
+# data of the same release as PHP's at runtime (PHP "2026.5" = tzdata "2026e"):
+# https://unicode-org.github.io/icu/userguide/datetime/timezone/#icu4c-tz-update-with-drop-in-res-files-icu-54-and-newer
+# Files are taken from https://github.com/unicode-org/icu-data/tree/main/tzdata/icunew
+# The "44/le" files work for all little-endian platforms (linux/amd64 and linux/arm64).
+# The build fails if the release is not available or if ICU does not use the downloaded files.
+ENV ICU_TIMEZONE_FILES_DIR=/usr/local/share/icu/tzdata
+RUN ICU_TZDATA=$(php -r 'if (preg_match("/^(\d{4})\.(\d{1,2})$/", timezone_version_get(), $m) !== 1 || (int) $m[2] < 1 || (int) $m[2] > 26) { fwrite(STDERR, "Unsupported PHP timezone version " . timezone_version_get() . PHP_EOL); exit(1); } echo $m[1] . chr(96 + (int) $m[2]);') && \
+    echo "Using ICU timezone data ${ICU_TZDATA}" && \
+    mkdir -p ${ICU_TIMEZONE_FILES_DIR} && \
+    for file in metaZones timezoneTypes windowsZones zoneinfo64; do \
+        curl -fsSL -o "${ICU_TIMEZONE_FILES_DIR}/${file}.res" "https://raw.githubusercontent.com/unicode-org/icu-data/main/tzdata/icunew/${ICU_TZDATA}/44/le/${file}.res" || exit 1; \
+    done && \
+    php -r 'if (IntlTimeZone::getTZDataVersion() !== $argv[1]) { fwrite(STDERR, "ICU timezone data " . IntlTimeZone::getTZDataVersion() . " does not match " . $argv[1] . PHP_EOL); exit(1); }' "${ICU_TZDATA}"
+
 ###########################
 # global base build
 ###########################
