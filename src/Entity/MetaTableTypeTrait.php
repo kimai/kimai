@@ -110,6 +110,16 @@ trait MetaTableTypeTrait
 
     private function convertToDateTime(mixed $value): mixed
     {
+        // DatePickerType, DateType and DateTimeType with "input" => "string" expect the stored string,
+        // DateTimePickerType is compound and always works with DateTime objects
+        if ($this->isStringInput()) {
+            if (!$value instanceof \DateTimeInterface) {
+                return $value;
+            }
+
+            return $value->format($this->getDateTimeStorageFormat());
+        }
+
         if (!\is_string($value) || $value === '') {
             return $value;
         }
@@ -117,7 +127,10 @@ trait MetaTableTypeTrait
         $date = \DateTime::createFromFormat(self::DATETIME_FORMAT, $value);
 
         if ($date !== false) {
-            return $date;
+            $errors = \DateTime::getLastErrors();
+            if ($errors === false || ($errors['warning_count'] === 0 && $errors['error_count'] === 0)) {
+                return $date;
+            }
         }
 
         // BC for values stored without timezone (e.g. 'Y-m-d H:i:s')
@@ -126,6 +139,22 @@ trait MetaTableTypeTrait
         } catch (\Exception) {
             return $value;
         }
+    }
+
+    private function isStringInput(): bool
+    {
+        return $this->type !== DateTimePickerType::class && ($this->options['input'] ?? null) === 'string';
+    }
+
+    private function getDateTimeStorageFormat(): string
+    {
+        if (!$this->isStringInput()) {
+            return self::DATETIME_FORMAT;
+        }
+
+        $format = $this->options['format'] ?? null;
+
+        return \is_string($format) && $format !== '' ? $format : 'Y-m-d H:i:s';
     }
 
     /**
@@ -151,7 +180,7 @@ trait MetaTableTypeTrait
         if ($value === null) {
             $this->value = $value;
         } elseif ($value instanceof \DateTimeInterface) {
-            $this->value = $value->format(self::DATETIME_FORMAT);
+            $this->value = $value->format($this->getDateTimeStorageFormat());
         } elseif (\is_scalar($value)) {
             $this->value = (string) $value;
         }

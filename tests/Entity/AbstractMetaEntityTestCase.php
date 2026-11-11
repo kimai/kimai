@@ -113,18 +113,89 @@ abstract class AbstractMetaEntityTestCase extends TestCase
         $sut->setType($type);
         $sut->setValue($date);
 
+        // the DateTime object must be persisted as string
+        $property = new \ReflectionProperty($sut, 'value');
+        self::assertSame($stored, $property->getValue($sut));
+
         $result = $sut->getValue();
         self::assertInstanceOf(\DateTime::class, $result);
-        self::assertEquals($stored, $result->format(MetaTableTypeInterface::DATETIME_FORMAT));
+        self::assertSame($stored, $result->format(MetaTableTypeInterface::DATETIME_FORMAT));
 
-        // emulates a freshly hydrated entity: persisted string must restore to DateTime
+        // emulates a freshly hydrated entity: the persisted string must restore a DateTime
         $fresh = $this->getMetaEntity();
         $fresh->setType($type);
-        $fresh->setValue($stored);
+        $property->setValue($fresh, $stored);
 
         $restored = $fresh->getValue();
         self::assertInstanceOf(\DateTime::class, $restored);
-        self::assertEquals($stored, $restored->format(MetaTableTypeInterface::DATETIME_FORMAT));
+        self::assertSame($stored, $restored->format(MetaTableTypeInterface::DATETIME_FORMAT));
+    }
+
+    public function testDateTimeKeepsUtcOffsetOnDstChange(): void
+    {
+        // 2026-10-25 02:30:00 happens twice in Europe/Berlin (end of DST),
+        // the stored UTC offset keeps the timestamp unambiguous
+        $date = \DateTime::createFromFormat('Y-m-d H:i:s P', '2026-10-25 02:30:00 +01:00');
+        self::assertInstanceOf(\DateTime::class, $date);
+
+        $sut = $this->getMetaEntity();
+        $sut->setType(DateTimePickerType::class);
+        $sut->setValue($date);
+
+        $property = new \ReflectionProperty($sut, 'value');
+        $stored = $property->getValue($sut);
+        self::assertSame('2026-10-25 02:30:00 +01:00', $stored);
+
+        $fresh = $this->getMetaEntity();
+        $fresh->setType(DateTimePickerType::class);
+        $property->setValue($fresh, $stored);
+
+        $restored = $fresh->getValue();
+        self::assertInstanceOf(\DateTime::class, $restored);
+        self::assertSame($date->getTimestamp(), $restored->getTimestamp());
+    }
+
+    public function testDateValueWithStringInput(): void
+    {
+        $sut = $this->getMetaEntity();
+        $sut->setType(DatePickerType::class);
+        $sut->setOptions(['input' => 'string']);
+        $sut->setValue('15.01.2026');
+
+        self::assertSame('15.01.2026', $sut->getValue());
+
+        // emulates a freshly hydrated entity
+        $fresh = $this->getMetaEntity();
+        $fresh->setType(DatePickerType::class);
+        $fresh->setOptions(['input' => 'string']);
+        $property = new \ReflectionProperty($fresh, 'value');
+        $property->setValue($fresh, '15.01.2026');
+
+        self::assertSame('15.01.2026', $fresh->getValue());
+    }
+
+    public function testDateValueWithStringInputAndFormat(): void
+    {
+        $sut = $this->getMetaEntity();
+        $sut->setType(DatePickerType::class);
+        $sut->setOptions(['input' => 'string', 'format' => 'Y-m-d']);
+        $sut->setValue(new \DateTime('2026-01-15 14:30:00'));
+
+        self::assertSame('2026-01-15', $sut->getValue());
+
+        $property = new \ReflectionProperty($sut, 'value');
+        self::assertSame('2026-01-15', $property->getValue($sut));
+    }
+
+    public function testDateTimePickerWithStringInputStillReturnsDateTime(): void
+    {
+        // DateTimePickerType is compound and does not support string input
+        $sut = $this->getMetaEntity();
+        $sut->setType(DateTimePickerType::class);
+        $sut->setOptions(['input' => 'string']);
+        $sut->setValue(new \DateTime('2026-01-15 14:30:00'));
+
+        self::assertInstanceOf(\DateTime::class, $sut->getValue());
     }
 
     public function testDateTimeGetValueWithNull(): void
