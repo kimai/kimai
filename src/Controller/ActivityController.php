@@ -480,6 +480,9 @@ final class ActivityController extends AbstractController
         ]);
     }
 
+    /**
+     * @return PageSetup<Activity>
+     */
     private function createPageSetup(): PageSetup
     {
         $page = new PageSetup('activities');

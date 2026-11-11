@@ -534,6 +534,9 @@ final class ProjectController extends AbstractController
         ]);
     }
 
+    /**
+     * @return PageSetup<Project>
+     */
     private function createPageSetup(): PageSetup
     {
         $page = new PageSetup('projects');

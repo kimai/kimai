@@ -523,6 +523,9 @@ final class CustomerController extends AbstractController
         ]);
     }
 
+    /**
+     * @return PageSetup<Customer>
+     */
     private function createPageSetup(): PageSetup
     {
         $page = new PageSetup('customers');

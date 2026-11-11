@@ -100,6 +100,20 @@ class InvoiceVoterTest extends AbstractVoterTestCase
         yield [self::getUser(4, User::ROLE_SUPER_ADMIN), $invoice, 'edit_invoice', VoterInterface::ACCESS_GRANTED];
         yield [self::getUser(4, User::ROLE_SUPER_ADMIN), $invoice, 'delete_invoice', VoterInterface::ACCESS_DENIED];
 
+        $customer = new Customer('Foo');
+
+        yield [self::getUser(0, 'foo'), $customer, 'view_invoice', VoterInterface::ACCESS_DENIED];
+        yield [self::getUser(1, User::ROLE_USER), $customer, 'view_invoice', VoterInterface::ACCESS_DENIED];
+        yield [self::getUser(2, User::ROLE_TEAMLEAD), $customer, 'view_invoice', VoterInterface::ACCESS_GRANTED];
+        yield [self::getUser(2, User::ROLE_TEAMLEAD), $customer, 'edit_invoice', VoterInterface::ACCESS_GRANTED];
+        yield [self::getUser(2, User::ROLE_TEAMLEAD), $customer, 'delete_invoice', VoterInterface::ACCESS_DENIED];
+        yield [self::getUser(3, User::ROLE_ADMIN), $customer, 'view_invoice', VoterInterface::ACCESS_GRANTED];
+        yield [self::getUser(3, User::ROLE_ADMIN), $customer, 'edit_invoice', VoterInterface::ACCESS_GRANTED];
+        yield [self::getUser(3, User::ROLE_ADMIN), $customer, 'delete_invoice', VoterInterface::ACCESS_DENIED];
+        yield [self::getUser(4, User::ROLE_SUPER_ADMIN), $customer, 'view_invoice', VoterInterface::ACCESS_GRANTED];
+        yield [self::getUser(4, User::ROLE_SUPER_ADMIN), $customer, 'edit_invoice', VoterInterface::ACCESS_GRANTED];
+        yield [self::getUser(4, User::ROLE_SUPER_ADMIN), $customer, 'delete_invoice', VoterInterface::ACCESS_DENIED];
+
         $result = VoterInterface::ACCESS_ABSTAIN;
         yield [self::getUser(2, User::ROLE_TEAMLEAD), $invoice, 'view', $result];
         yield [self::getUser(2, User::ROLE_TEAMLEAD), new \stdClass(), 'view_invoice', $result];

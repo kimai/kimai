@@ -183,7 +183,7 @@ final class ExportController extends AbstractController
     }
 
     /**
-     * @param positive-int $maxItems
+     * @param non-negative-int $maxItems
      */
     private function getPreview(ExportQuery $query, int $maxItems): ExportableResultInterface
     {

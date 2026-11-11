@@ -106,7 +106,7 @@ final class TimesheetExportRepository implements ExportRepositoryInterface, Expo
     }
 
     /**
-     * @param positive-int $maxItems
+     * @param non-negative-int $maxItems
      */
     public function getPreview(ExportQuery $query, int $maxItems): ExportableResultInterface
     {

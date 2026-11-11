@@ -247,7 +247,7 @@ final class ServiceExport
     }
 
     /**
-     * @param positive-int $maxItems
+     * @param non-negative-int $maxItems
      */
     public function getExportPreview(ExportQuery $query, int $maxItems): ExportableResultInterface
     {
@@ -255,6 +255,7 @@ final class ServiceExport
         $results = [];
 
         foreach ($this->repositories as $repository) {
+            $maxItems = max(0, $maxItems);
             if ($repository instanceof ExportableRepositoryInterface) {
                 $result = $repository->getPreview($query, $maxItems);
                 $count = \count($result->getExportItems());
@@ -269,9 +270,6 @@ final class ServiceExport
 
             $results[] = $result;
             $maxItems = $maxItems - $count;
-            if ($maxItems <= 0) {
-                break;
-            }
         }
 
         return new ExportableResult($results);
@@ -285,7 +283,7 @@ final class ServiceExport
     }
 
     /**
-     * @return positive-int|null
+     * @return non-negative-int|null
      */
     public function getMaximumResults(ExportQuery $query): ?int
     {

@@ -20,10 +20,12 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Users can control their working time statistics
  */
+#[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
 final class ContractController extends AbstractController
 {
     #[Route(path: '/contract', name: 'user_contract', methods: ['GET', 'POST'])]

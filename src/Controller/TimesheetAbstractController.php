@@ -633,6 +633,9 @@ abstract class TimesheetAbstractController extends AbstractController
         return 'timesheet';
     }
 
+    /**
+     * @return PageSetup<Timesheet>
+     */
     protected function createPageSetup(): PageSetup
     {
         $page = new PageSetup('timesheet.title');

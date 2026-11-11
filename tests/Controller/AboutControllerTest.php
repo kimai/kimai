@@ -15,6 +15,11 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('integration')]
 class AboutControllerTest extends AbstractControllerBaseTestCase
 {
+    public function testIndexActionIsProtected(): void
+    {
+        $this->assertUrlIsSecured('/about');
+    }
+
     public function testIndexAction(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);

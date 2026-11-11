@@ -268,4 +268,28 @@ class InvoiceTest extends AbstractEntityTestCase
         self::assertEquals(3, $sut->getMetaFields()->count());
         self::assertCount(2, $sut->getVisibleMetaFields());
     }
+
+    public function testOverdue(): void
+    {
+        $sut = new Invoice();
+        self::assertFalse($sut->isOverdue());
+
+        $sut->setCreatedAt(new \DateTime('-10 days'));
+        self::assertFalse($sut->isOverdue());
+
+        $sut->setDueDays(9);
+        self::assertTrue($sut->isOverdue());
+
+        $sut->setDueDays(14);
+        self::assertFalse($sut->isOverdue());
+
+        $sut->setDueDays(8);
+        self::assertTrue($sut->isOverdue());
+
+        $sut->setIsNew();
+        self::assertTrue($sut->isOverdue());
+
+        $sut->setIsPaid();
+        self::assertFalse($sut->isOverdue());
+    }
 }

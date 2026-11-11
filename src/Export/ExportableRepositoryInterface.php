@@ -15,7 +15,7 @@ use App\Repository\Query\ExportQuery;
 interface ExportableRepositoryInterface
 {
     /**
-     * @param positive-int $maxItems
+     * @param non-negative-int $maxItems
      */
     public function getPreview(ExportQuery $query, int $maxItems): ExportableResultInterface;
 

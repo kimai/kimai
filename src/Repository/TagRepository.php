@@ -106,7 +106,7 @@ class TagRepository extends EntityRepository
      * - amount
      *
      * @param TagQuery $query
-     * @return Pagination
+     * @return Pagination<array<string, mixed>>
      */
     public function getTagCount(TagQuery $query): Pagination
     {
@@ -123,6 +123,7 @@ class TagRepository extends EntityRepository
 
         $paginator = new QueryPaginator($qb1->getQuery(), $counter);
 
+        /** @var Pagination<array<string, mixed>> $pager */
         $pager = new Pagination($paginator);
         $pager->setMaxPerPage($query->getPageSize());
         $pager->setCurrentPage($query->getPage());

@@ -411,7 +411,7 @@ final class InvoiceController extends AbstractController
         $table->addColumn('language', ['class' => 'd-none text-nowrap', 'orderBy' => false]);
         $table->addColumn('actions', ['class' => 'actions']);
 
-        $page = $this->createPageSetup('admin_invoice_template.title');
+        $page = $this->createPageSetupTemplates('admin_invoice_template.title');
         $page->setDataTable($table);
         $page->setActionName('invoice_templates');
 
@@ -565,7 +565,7 @@ final class InvoiceController extends AbstractController
             }
         }
 
-        $page = $this->createPageSetup('admin_invoice_template.title');
+        $page = $this->createPageSetupTemplates('admin_invoice_template.title');
 
         return $this->render('invoice/document_upload.html.twig', [
             'page_setup' => $page,
@@ -656,7 +656,7 @@ final class InvoiceController extends AbstractController
             }
         }
 
-        $page = $this->createPageSetup('admin_invoice_template.title');
+        $page = $this->createPageSetupTemplates('admin_invoice_template.title');
 
         return $this->render('invoice/template_edit.html.twig', [
             'page_setup' => $page,
@@ -735,7 +735,21 @@ final class InvoiceController extends AbstractController
         ]);
     }
 
+    /**
+     * @return PageSetup<Invoice>
+     */
     private function createPageSetup(string $title = 'invoices'): PageSetup
+    {
+        $page = new PageSetup($title);
+        $page->setHelp('invoices.html');
+
+        return $page;
+    }
+
+    /**
+     * @return PageSetup<InvoiceTemplate>
+     */
+    private function createPageSetupTemplates(string $title = 'invoices'): PageSetup
     {
         $page = new PageSetup($title);
         $page->setHelp('invoices.html');

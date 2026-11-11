@@ -18,11 +18,13 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Exception\RuntimeException;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * This does not go into the API, because it is ONLY related to the Web UI.
  */
 #[Route(path: '/bookmark')]
+#[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
 final class BookmarkController extends AbstractController
 {
     public const DATATABLE_TOKEN = 'datatable_update';
