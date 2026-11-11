@@ -1,4 +1,5 @@
 {% set type = options.type|default('bar') %}
+{% set groupBy = options.groupBy|default('day') %}
 {% set chart_id = options.id %}
 {% set backgroundColor = config('theme.chart.background_color') %}
 {% set gridColor = config('theme.chart.grid_color') %}
@@ -19,13 +20,17 @@
                 data: {
                     labels: [
                         {% for day in data -%}
-                        '{{ day.day|date_format('d.') }} {{ day.day|month_name(true) }}'
+                        {% if groupBy == 'week' -%}
+                        '{{ 'stats.workingTimeWeekShort'|trans({'%week%': day.day|date_format('W/Y')})|e('js') }}'
+                        {%- else -%}
+                        '{{ (day.day|date_format('d.') ~ ' ' ~ day.day|month_name(true))|e('js') }}'
+                        {%- endif %}
                         {% if not loop.last %},{% endif -%}
                         {%- endfor %}
                     ],
                     datasets: [
                         {% for activityId, activity in activities -%}
-                        {% set activityColor = activity.activity|color|default(activity.project|color|default(backgroundColor)) %}
+                        {% set activityColor = activity.project.customer|color|default(activity.project|color|default(activity.activity|color|default(backgroundColor))) %}
                         {% set activityName = activity.activity.name %}
                         {
                             label: '{{ activityName }}',
@@ -102,16 +107,28 @@
                             callbacks: {
                                 label: function(tooltipItem) {
                                     const tooltipData = tooltipItem.dataset.realData[tooltipItem.dataIndex];
-                                    return ' ' + tooltipData.duration + ': ' + tooltipData.activity;
+                                    if (!tooltipData) {
+                                        return '';
+                                    }
+                                    if (tooltipData.activity !== undefined) {
+                                        return ' ' + tooltipData.duration + ': ' + tooltipData.activity;
+                                    }
+                                    return '';
                                 },
                                 beforeTitle: function(tooltipItems) {
                                     const tooltipItem = tooltipItems[0];
                                     const tooltipData = tooltipItem.dataset.realData[tooltipItem.dataIndex];
+                                    if (!tooltipData || tooltipData.customer === undefined) {
+                                        return '';
+                                    }
                                     return tooltipData.customer;
                                 },
                                 title: function(tooltipItems) {
                                     const tooltipItem = tooltipItems[0];
                                     const tooltipData = tooltipItem.dataset.realData[tooltipItem.dataIndex];
+                                    if (!tooltipData || tooltipData.project === undefined) {
+                                        return '';
+                                    }
                                     return tooltipData.project;
                                 },
                                 afterTitle: function(tooltipItems) {
@@ -120,6 +137,9 @@
                                 footer: function(tooltipItems) {
                                     const tooltipItem = tooltipItems[0];
                                     const tooltipData = tooltipItem.dataset.realData[tooltipItem.dataIndex];
+                                    if (!tooltipData) {
+                                        return '';
+                                    }
                                     return '{{ 'stats.durationTotal'|trans }}: ' + tooltipData.total + '\n{{ 'billable'|trans }}: ' + tooltipData.billable;
                                 },
                                 beforeFooter: function(tooltipItems) {
