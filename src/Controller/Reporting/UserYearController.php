@@ -126,7 +126,10 @@ final class UserYearController extends AbstractUserReportController
 
     protected function getStatisticDataRaw(DateTimeInterface $begin, DateTimeInterface $end, User $user): array
     {
-        return $this->statisticService->getMonthlyStatisticsGrouped(new TimesheetStatisticQuery($begin, $end, [$user]));
+        $query = new TimesheetStatisticQuery($begin, $end, [$user]);
+        $query->setCurrentUser($this->getUser());
+
+        return $this->statisticService->getMonthlyStatisticsGrouped($query);
     }
 
     protected function createStatisticModel(DateTimeInterface $begin, DateTimeInterface $end, User $user): DateStatisticInterface

@@ -92,7 +92,7 @@ final class CustomerMonthlyProjectsController extends AbstractController
         $next = clone $start;
         $next->modify('+1 month');
 
-        $stats = $repository->getGroupedByCustomerProjectActivityUser($start, $end, $allUsers, $values->getCustomer());
+        $stats = $repository->getGroupedByCustomerProjectActivityUser($start, $end, $allUsers, $values->getCustomer(), $currentUser);
 
         return [
             'dataType' => $values->getSumType(),

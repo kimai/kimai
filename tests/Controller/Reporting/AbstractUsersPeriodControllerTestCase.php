@@ -12,6 +12,7 @@ namespace App\Tests\Controller\Reporting;
 use App\Entity\User;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
 use App\Tests\DataFixtures\TimesheetFixtures;
+use App\Tests\TeamRestrictedTimesheetTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -19,6 +20,8 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 #[Group('integration')]
 abstract class AbstractUsersPeriodControllerTestCase extends AbstractControllerBaseTestCase
 {
+    use TeamRestrictedTimesheetTrait;
+
     protected function importReportingFixture(string $role): void
     {
         $fixture = new TimesheetFixtures();
@@ -85,5 +88,42 @@ abstract class AbstractUsersPeriodControllerTestCase extends AbstractControllerB
         self::assertEquals('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $response->headers->get('Content-Type'));
         self::assertStringContainsString('attachment; filename=kimai-export-users-', $response->headers->get('Content-Disposition'));
         self::assertStringContainsString('.xlsx', $response->headers->get('Content-Disposition'));
+    }
+
+    /**
+     * The totals of a team member do not include the records, which the teamlead cannot see
+     * in the report of that user: the ones for projects and activities of foreign teams.
+     */
+    public function testUsersPeriodReportHidesRecordsOfForeignTeams(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        [$teamlead, $member] = $this->createTeamRestrictedTimesheets();
+
+        $this->assertAccessIsGranted($client, \sprintf('%s?date=2020-05-13', $this->getReportUrl()));
+
+        $total = $client->getCrawler()->filterXPath(\sprintf("//td/a[contains(@href, 'user=%s')]", $member->getId()));
+        self::assertGreaterThanOrEqual(1, $total->count());
+        self::assertEquals('1:00', trim($total->first()->text()));
+
+        // users always see all of their own records
+        $total = $client->getCrawler()->filterXPath(\sprintf("//td/a[contains(@href, 'user=%s')]", $teamlead->getId()));
+        self::assertGreaterThanOrEqual(1, $total->count());
+        self::assertEquals('1:00', trim($total->first()->text()));
+    }
+
+    /**
+     * Control for testUsersPeriodReportHidesRecordsOfForeignTeams(): users with the
+     * permission to see all data are not limited.
+     */
+    public function testUsersPeriodReportShowsRecordsOfForeignTeamsToAdmin(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        [$teamlead, $member] = $this->createTeamRestrictedTimesheets();
+
+        $this->assertAccessIsGranted($client, \sprintf('%s?date=2020-05-13', $this->getReportUrl()));
+
+        $total = $client->getCrawler()->filterXPath(\sprintf("//td/a[contains(@href, 'user=%s')]", $member->getId()));
+        self::assertGreaterThanOrEqual(1, $total->count());
+        self::assertEquals('3:00', trim($total->first()->text()));
     }
 }
