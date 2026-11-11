@@ -46,6 +46,8 @@ final class QuickEntryWeekType extends AbstractType
             }
 
             $projectOptions['projects'] = [$data->getProject()];
+            // existing rows keep their project, it is not taken from the request
+            $projectOptions['pre_select_project'] = true;
 
             $event->getForm()->add('project', ProjectType::class, $projectOptions);
         };
@@ -69,6 +71,8 @@ final class QuickEntryWeekType extends AbstractType
 
             $activityOptions['activities'] = [$data->getActivity()];
             $activityOptions['projects'] = [$data->getProject()];
+            // existing rows keep their activity, it is not taken from the request
+            $activityOptions['pre_select_activity'] = true;
 
             $event->getForm()->add('activity', ActivityType::class, $activityOptions);
         };
@@ -85,6 +89,11 @@ final class QuickEntryWeekType extends AbstractType
 
                 if (!empty($data['activity'])) {
                     $activityOptions['activities'] = [$data['activity']];
+
+                    // the activity of an existing row stays selectable, every other submitted ID is checked for team permissions
+                    $model = $event->getForm()->getData();
+                    $current = $model instanceof QuickEntryModel ? $model->getActivity()?->getId() : null;
+                    $activityOptions['pre_select_activity'] = $current !== null && \is_scalar($data['activity']) && (string) $current === (string) $data['activity'];
                 }
             }
 

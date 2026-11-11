@@ -19,6 +19,7 @@ final class ProjectFormTypeQuery extends BaseFormTypeQuery
     private ?Project $projectToIgnore = null;
     private bool $ignoreDate = false;
     private bool $withCustomer = false;
+    private bool $allowProjectPreselect = false;
 
     /**
      * @param Project|array<Project>|int|null $project
@@ -42,6 +43,23 @@ final class ProjectFormTypeQuery extends BaseFormTypeQuery
 
         $this->projectStart = new \DateTime();
         $this->projectEnd = clone $this->projectStart;
+    }
+
+    /**
+     * Whether the given projects are included, even if the user has no team access to them.
+     */
+    public function isAllowProjectPreselect(): bool
+    {
+        return $this->allowProjectPreselect;
+    }
+
+    /**
+     * Only activate for projects which are taken from an already stored entity (e.g. the project of an existing timesheet).
+     * Never activate it for IDs that were taken from the request, otherwise the team permission check can be bypassed.
+     */
+    public function setAllowProjectPreselect(bool $allowProjectPreselect): void
+    {
+        $this->allowProjectPreselect = $allowProjectPreselect;
     }
 
     /**

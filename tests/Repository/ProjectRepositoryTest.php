@@ -11,7 +11,10 @@ namespace App\Tests\Repository;
 
 use App\Entity\Customer;
 use App\Entity\Project;
+use App\Entity\Team;
+use App\Entity\User;
 use App\Repository\ProjectRepository;
+use App\Repository\Query\ProjectFormTypeQuery;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -41,6 +44,95 @@ class ProjectRepositoryTest extends AbstractRepositoryTestCase
         self::assertIsInt($id);
 
         return $id;
+    }
+
+    private function createTeamProject(string $name, ?Team $team): void
+    {
+        $em = $this->getEntityManager();
+
+        $customer = new Customer('preselect customer ' . $name);
+        $customer->setCountry('DE');
+        $customer->setCurrency('EUR');
+        $customer->setTimezone(date_default_timezone_get());
+        $em->persist($customer);
+
+        $project = new Project();
+        $project->setName('preselect project ' . $name);
+        $project->setCustomer($customer);
+        $project->setVisible(false);
+        $em->persist($project);
+
+        $team?->addProject($project);
+    }
+
+    private function getProjectId(string $name): int
+    {
+        $project = $this->getEntityManager()->getRepository(Project::class)->findOneBy(['name' => $name]);
+        self::assertInstanceOf(Project::class, $project);
+        $id = $project->getId();
+        self::assertIsInt($id);
+
+        return $id;
+    }
+
+    /**
+     * @return array<int|null>
+     */
+    private function getFormTypeProjectIds(ProjectFormTypeQuery $query): array
+    {
+        $repository = $this->getEntityManager()->getRepository(Project::class);
+        self::assertInstanceOf(ProjectRepository::class, $repository);
+
+        /** @var array<Project> $projects */
+        $projects = $repository->getQueryBuilderForFormType($query)->getQuery()->getResult();
+
+        return array_map(function (Project $project) {
+            return $project->getId();
+        }, $projects);
+    }
+
+    /**
+     * A requested project ID may skip the visibility filter, but never the team permissions.
+     */
+    public function testFormTypeQueryChecksTeamPermissionsForRequestedProjects(): void
+    {
+        $em = $this->getEntityManager();
+
+        $own = new Team('preselect own team');
+        $own->addUser($this->getUserByRole(User::ROLE_USER));
+        $em->persist($own);
+        $foreign = new Team('preselect foreign team');
+        $em->persist($foreign);
+
+        $this->createTeamProject('foreign', $foreign);
+        $this->createTeamProject('own', $own);
+        $em->flush();
+        $em->clear();
+
+        $foreignId = $this->getProjectId('preselect project foreign');
+        $ownId = $this->getProjectId('preselect project own');
+        $user = $this->getUserByRole(User::ROLE_USER);
+
+        // IDs as they are taken from a request
+        $query = new ProjectFormTypeQuery();
+        $query->setProjects([$foreignId, $ownId]);
+        $query->setUser($user);
+        $ids = $this->getFormTypeProjectIds($query);
+        self::assertNotContains($foreignId, $ids, 'A project of a foreign team was added by its ID.');
+        self::assertContains($ownId, $ids, 'An invisible project of the own team can still be requested by its ID.');
+
+        // the opt-in, which is used for the project of an already stored record
+        $query = new ProjectFormTypeQuery();
+        $query->setProjects([$foreignId]);
+        $query->setUser($user);
+        $query->setAllowProjectPreselect(true);
+        self::assertContains($foreignId, $this->getFormTypeProjectIds($query));
+
+        // users who can see all data are not restricted
+        $query = new ProjectFormTypeQuery();
+        $query->setProjects([$foreignId]);
+        $query->setUser($this->getUserByRole(User::ROLE_SUPER_ADMIN));
+        self::assertContains($foreignId, $this->getFormTypeProjectIds($query));
     }
 
     /**

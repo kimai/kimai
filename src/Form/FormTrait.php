@@ -51,6 +51,8 @@ trait FormTrait
         $builder->add('project', ProjectType::class, array_merge($options, [
             'projects' => $project,
             'customers' => $customer,
+            // an existing record keeps its project, even if the user has no access to it (any longer)
+            'pre_select_project' => !$isNew,
         ]));
 
         // replaces the project select after submission, to make sure only projects for the selected customer are displayed
@@ -81,6 +83,7 @@ trait FormTrait
 
                         $query = new ProjectFormTypeQuery($project, $customer);
                         $query->setUser($builder->getOption('user'));
+                        $query->setAllowProjectPreselect(!$isNew);
                         $query->setWithCustomer(true);
 
                         return $repo->getQueryBuilderForFormType($query);
