@@ -19,8 +19,8 @@
         <target>Activez votre compte</target>
       </trans-unit>
       <trans-unit id="IkjnHoP" resname="registration.intro">
-        <source>registration.intro</source>
-        <target>Vous vous êtes inscrit·e sur Kimai avec le courriel %email%. Veuillez activer votre compte dans les prochaines heures, avant que le lien expire.</target>
+        <source>You signed up at the Kimai time-tracker with the e-mail address %email%. Please activate your account in the next few hours, before the link expires.</source>
+        <target state="translated">Vous vous êtes inscrit·e sur Kimai avec le courriel %email%. Veuillez activer votre compte dans les prochaines heures, avant que le lien n'expire.</target>
       </trans-unit>
       <trans-unit id="1ZLD_Y0" resname="reset.subject" xml:space="preserve">
         <source>reset.subject</source>
@@ -52,7 +52,7 @@ Please review them at: %url%</source>
 
 %list%
 
-Veuillez les examiner à l'adresse suivante : %url%</target>
+Veuillez les examiner à l'adresse suivante : %url%</target>
       </trans-unit>
       <trans-unit id="U.JjI9R" resname="approval_rejected_message" xml:space="preserve">
         <source>approval_rejected_message</source>

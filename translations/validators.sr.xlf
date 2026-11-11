@@ -190,6 +190,10 @@
         <source>The new password must be different from the current password.</source>
         <target state="translated">Нова лозинка мора да се разликује од тренутне лозинке.</target>
       </trans-unit>
+      <trans-unit id="Y38WSIo" resname="Half days cannot be combined with filling up to the expected working time.">
+        <source>Half days cannot be combined with filling up to the expected working time.</source>
+        <target state="translated">Половина радног дана не може се комбиновати са допуњавањем до очекиваног радног времена.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

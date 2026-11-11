@@ -1656,7 +1656,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target state="translated">Породични догађаји, селидба, временске непогоде и сл.</target>
+        <target state="translated">Обуке, стручно усавршавање и друге пословне или личне обавезе.</target>
       </trans-unit>
       <trans-unit id="TTnaBm4" resname="day_full" xml:space="preserve">
         <source>day_full</source>
@@ -2217,6 +2217,22 @@
       <trans-unit id="fxkWjGQ" resname="password_current">
         <source>password_current</source>
         <target state="translated">Тренутна лозинка</target>
+      </trans-unit>
+      <trans-unit id="dIuCbHU" resname="absence_type.overbooking">
+        <source>absence_type.overbooking</source>
+        <target state="translated">Дозволи прекорачење до</target>
+      </trans-unit>
+      <trans-unit id="Y9NoM.U" resname="absence_type.overbooking.help.holiday">
+        <source>absence_type.overbooking.help.holiday</source>
+        <target state="translated">0 = прекорачење није дозвољено. Број дана који се може евидентирати преко расположивих дана годишњег одмора.</target>
+      </trans-unit>
+      <trans-unit id="c1z3ItA" resname="absence_type.overbooking.help.time_off">
+        <source>absence_type.overbooking.help.time_off</source>
+        <target state="translated">0 = прекорачење није дозвољено. Број сати за који салдо радног времена може да оде у минус.</target>
+      </trans-unit>
+      <trans-unit id="8MwThZv" resname="export.too_many_entries">
+        <source>export.too_many_entries</source>
+        <target state="translated">Тражена претрага враћа %count% резултата. Пошто се одједном може извести највише %limit% уноса, потребно је додатно сузити претрагу.</target>
       </trans-unit>
     </body>
   </file>

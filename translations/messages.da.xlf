@@ -1776,7 +1776,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target state="translated">Familiebegivenheder, flytning, farligt vejr, osv.</target>
+        <target state="needs-translation">Familiebegivenheder, flytning, farligt vejr, osv.</target>
       </trans-unit>
       <trans-unit id="TTnaBm4" resname="day_full" xml:space="preserve">
         <source>day_full</source>

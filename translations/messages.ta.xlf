@@ -1688,7 +1688,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve" approved="no">
         <source>absence_other.intro</source>
-        <target state="translated">குடும்ப நிகழ்வுகள், வீடு மாற்றம், வானிலை குழப்பம் போன்றவை.</target>
+        <target state="needs-translation">குடும்ப நிகழ்வுகள், வீடு மாற்றம், வானிலை குழப்பம் போன்றவை.</target>
       </trans-unit>
       <trans-unit id="TTnaBm4" resname="day_full" xml:space="preserve" approved="no">
         <source>day_full</source>

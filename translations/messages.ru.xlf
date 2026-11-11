@@ -1428,7 +1428,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro">
         <source>absence_other.intro</source>
-        <target state="translated">Семейные события, переезд, непогода и т. д.</target>
+        <target state="translated">Обучение, повышение квалификации и другие рабочие или личные обязательства.</target>
       </trans-unit>
       <trans-unit id="ojfv7Jl" resname="invoice_form.title">
         <source>invoice_form.title</source>
@@ -2217,6 +2217,22 @@
       <trans-unit id="_cQHZDu" resname="fill_day.help">
         <source>fill_day.help</source>
         <target state="translated">Если длительность не указана, используется оставшееся ожидаемое рабочее время дня.</target>
+      </trans-unit>
+      <trans-unit id="8MwThZv" resname="export.too_many_entries">
+        <source>export.too_many_entries</source>
+        <target state="translated">Запрошенный поиск возвращает результатов: %count%. Поскольку за один раз можно экспортировать не более %limit% записей, поиск нужно дополнительно сузить.</target>
+      </trans-unit>
+      <trans-unit id="dIuCbHU" resname="absence_type.overbooking">
+        <source>absence_type.overbooking</source>
+        <target state="translated">Разрешить перебронирование до</target>
+      </trans-unit>
+      <trans-unit id="Y9NoM.U" resname="absence_type.overbooking.help.holiday">
+        <source>absence_type.overbooking.help.holiday</source>
+        <target state="translated">0 = перебронирование не разрешено. Число дней, которые можно забронировать сверх доступных дней отпуска.</target>
+      </trans-unit>
+      <trans-unit id="c1z3ItA" resname="absence_type.overbooking.help.time_off">
+        <source>absence_type.overbooking.help.time_off</source>
+        <target state="translated">0 = перебронирование не разрешено. Число часов, на которое счёт рабочего времени может уйти в минус.</target>
       </trans-unit>
     </body>
   </file>

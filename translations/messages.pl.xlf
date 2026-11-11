@@ -1712,7 +1712,7 @@
       </trans-unit>
       <trans-unit id="YPO294a" resname="absence_other.intro" xml:space="preserve">
         <source>absence_other.intro</source>
-        <target state="translated">Imprezy rodzinne, przeprowadzka, chaos pogodowy itp.</target>
+        <target state="needs-translation">Imprezy rodzinne, przeprowadzka, chaos pogodowy itp.</target>
       </trans-unit>
       <trans-unit id="b712axp" resname="Translation" xml:space="preserve">
         <source>Translation</source>
