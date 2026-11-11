@@ -15,6 +15,7 @@ use App\Entity\User;
 final class TimesheetStatisticQuery
 {
     private ?Project $project = null;
+    private ?User $currentUser = null;
 
     /**
      * @param array<User> $users
@@ -53,5 +54,18 @@ final class TimesheetStatisticQuery
     public function setProject(?Project $project): void
     {
         $this->project = $project;
+    }
+
+    public function getCurrentUser(): ?User
+    {
+        return $this->currentUser;
+    }
+
+    /**
+     * The user who looks at the statistics: records of other users will be limited to the ones he is allowed to see.
+     */
+    public function setCurrentUser(?User $currentUser): void
+    {
+        $this->currentUser = $currentUser;
     }
 }

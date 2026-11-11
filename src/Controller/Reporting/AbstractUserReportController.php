@@ -38,7 +38,10 @@ abstract class AbstractUserReportController extends AbstractController
 
     protected function getStatisticDataRaw(DateTimeInterface $begin, DateTimeInterface $end, User $user): array
     {
-        return $this->statisticService->getDailyStatisticsGrouped(new TimesheetStatisticQuery($begin, $end, [$user]));
+        $query = new TimesheetStatisticQuery($begin, $end, [$user]);
+        $query->setCurrentUser($this->getUser());
+
+        return $this->statisticService->getDailyStatisticsGrouped($query);
     }
 
     protected function createStatisticModel(DateTimeInterface $begin, DateTimeInterface $end, User $user): DateStatisticInterface

@@ -20,6 +20,7 @@ use App\Tests\DataFixtures\CustomerFixtures;
 use App\Tests\DataFixtures\ProjectFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\Tests\Mocks\QuickEntryMetaFieldSubscriberMock;
+use App\Tests\TeamRestrictedTimesheetTrait;
 use App\User\PermissionService;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -27,6 +28,8 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 #[Group('integration')]
 class QuickEntryControllerTest extends AbstractControllerBaseTestCase
 {
+    use TeamRestrictedTimesheetTrait;
+
     public function testIsSecure(): void
     {
         $this->assertUrlIsSecured('/quick_entry/');
@@ -309,5 +312,45 @@ class QuickEntryControllerTest extends AbstractControllerBaseTestCase
         $this->importFixture($timesheets);
 
         return $victim;
+    }
+
+    /**
+     * A teamlead can open the weekly hours of his team members, but he must not see their
+     * records for projects and activities, which are limited to teams he is not part of.
+     */
+    public function testQuickEntryHidesRecordsOfForeignTeams(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        [$teamlead, $member] = $this->createTeamRestrictedTimesheets();
+
+        $this->request($client, '/quick_entry/?user=' . $member->getId() . '&date=2020-05-13');
+        self::assertTrue($client->getResponse()->isSuccessful());
+        $option = $client->getCrawler()->filterXPath("//select[@id='user']/option[@selected]");
+        self::assertEquals($member->getId(), $option->attr('value'));
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        self::assertStringContainsString('Own project', $content);
+        self::assertStringNotContainsString('Foreign project', $content);
+        self::assertStringNotContainsString('Foreign activity', $content);
+        self::assertStringNotContainsString('Restricted activity', $content);
+    }
+
+    /**
+     * Control for testQuickEntryHidesRecordsOfForeignTeams(): users see all of their own
+     * records, even if they do not have access to the project (like in their own timesheet).
+     */
+    public function testQuickEntryShowsOwnRecordsOfForeignTeams(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+        $this->createTeamRestrictedTimesheets();
+
+        $this->request($client, '/quick_entry/?date=2020-05-13');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        self::assertStringContainsString('Lost project', $content);
+        self::assertStringContainsString('Lost activity', $content);
     }
 }
