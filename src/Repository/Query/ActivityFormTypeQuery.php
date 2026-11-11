@@ -15,6 +15,7 @@ use App\Entity\Project;
 final class ActivityFormTypeQuery extends BaseFormTypeQuery
 {
     private ?Activity $activityToIgnore = null;
+    private bool $allowActivityPreselect = false;
 
     /**
      * @param Activity|array<Activity>|int|null $activity
@@ -35,6 +36,23 @@ final class ActivityFormTypeQuery extends BaseFormTypeQuery
             }
             $this->setProjects($project);
         }
+    }
+
+    /**
+     * Whether the given activities are included, even if the user has no team access to them.
+     */
+    public function isAllowActivityPreselect(): bool
+    {
+        return $this->allowActivityPreselect;
+    }
+
+    /**
+     * Only activate for activities which are taken from an already stored entity (e.g. the activity of an existing timesheet).
+     * Never activate it for IDs that were taken from the request, otherwise the team permission check can be bypassed.
+     */
+    public function setAllowActivityPreselect(bool $allowActivityPreselect): void
+    {
+        $this->allowActivityPreselect = $allowActivityPreselect;
     }
 
     /**

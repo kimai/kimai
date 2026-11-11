@@ -300,12 +300,16 @@ trait ToolbarFormTrait
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) use ($name, $multiProject, $activityOptions, $options): void {
+            function (FormEvent $event) use ($builder, $name, $multiProject, $activityOptions, $options): void {
                 /** @var array<string, mixed> $data */
                 $data = $event->getData();
                 $event->getForm()->add($name, ActivityType::class, array_merge($activityOptions, [
-                    'query_builder' => function (ActivityRepository $repo) use ($name, $data, $multiProject) {
+                    'query_builder' => function (ActivityRepository $repo) use ($builder, $name, $data, $multiProject) {
                         $query = new ActivityFormTypeQuery();
+                        $tu = $builder->getOption('user');
+                        if ($tu instanceof User) {
+                            $query->setUser($tu);
+                        }
 
                         if (\array_key_exists($name, $data) && $data[$name] !== null && $data[$name] !== '') {
                             // we need to pre-fetch the activities to see if they are global, see ActivityFormTypeQuery::isGlobalsOnly()

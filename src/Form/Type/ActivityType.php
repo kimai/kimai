@@ -79,6 +79,8 @@ final class ActivityType extends AbstractType
             'projects' => null,
             // @var Activity|Activity[]|int|int[]|null
             'activities' => null,
+            // include the given "activities" without checking team permissions, only use it for activities of an already stored entity
+            'pre_select_activity' => false,
             // @var Activity|null
             'ignore_activity' => null,
             'allow_create' => false,
@@ -96,6 +98,10 @@ final class ActivityType extends AbstractType
             return function (ActivityRepository $repo) use ($options) {
                 $query = new ActivityFormTypeQuery($options['activities'], $options['projects']);
                 $query->setUser($options['user']);
+
+                if (true === $options['pre_select_activity']) {
+                    $query->setAllowActivityPreselect(true);
+                }
 
                 if (null !== $options['ignore_activity']) {
                     $query->setActivityToIgnore($options['ignore_activity']);
