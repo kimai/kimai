@@ -9,6 +9,7 @@
 
 namespace App\Tests\Controller\Reporting;
 
+use App\Entity\Team;
 use App\Entity\User;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
 use App\Tests\DataFixtures\ActivityFixtures;
@@ -59,5 +60,31 @@ class ProjectDetailsControllerTest extends AbstractControllerBaseTestCase
 
         $rows = $client->getCrawler()->filterXPath("//div[@id='reporting-content']//ul[contains(@class, 'nav-pills')]");
         self::assertGreaterThan(1, $rows->count());
+    }
+
+    public function testReportDoesNotDiscloseProjectOfForeignTeam(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_TEAMLEAD);
+
+        $customers = new CustomerFixtures();
+        $customers->setIsVisible(true);
+        $customers->setAmount(1);
+        $customers = $this->importFixture($customers);
+
+        $projects = new ProjectFixtures();
+        $projects->setCustomers($customers);
+        $projects->setAmount(1);
+        $projects->setIsVisible(true);
+        $projects = $this->importFixture($projects);
+
+        $em = $this->getEntityManager();
+        $projects[0]->setName('foreign team project');
+        $team = new Team('foreign team');
+        $team->addProject($projects[0]);
+        $em->persist($team);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/reporting/project_details?project=' . $projects[0]->getId());
+        self::assertStringNotContainsString('foreign team project', (string) $client->getResponse()->getContent());
     }
 }

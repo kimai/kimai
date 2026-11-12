@@ -34,6 +34,10 @@ class ProjectFormTypeQueryTest extends AbstractBaseFormTypeQueryTestCase
         $sut->setProjectToIgnore($project);
         self::assertSame($project, $sut->getProjectToIgnore());
 
+        self::assertFalse($sut->isAllowProjectPreselect());
+        $sut->setAllowProjectPreselect(true);
+        self::assertTrue($sut->isAllowProjectPreselect());
+
         self::assertNotNull($sut->getProjectStart());
         self::assertNotNull($sut->getProjectEnd());
 

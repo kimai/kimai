@@ -1199,6 +1199,83 @@ class TimesheetControllerTest extends AbstractControllerBaseTestCase
         self::assertEquals($own->getId(), $reloaded->getProject()?->getId(), 'A record was bulk-moved into a project of a foreign team.');
     }
 
+    public function testFilterDoesNotDiscloseProjectsAndActivitiesOfForeignTeams(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $em = $this->getEntityManager();
+
+        // an invisible project of team B with an invisible activity, the user is not a member
+        [$foreign, $foreignActivity] = $this->createLockedProjectWithTimesheet($this->getUserByRole(User::ROLE_ADMIN), null, '-2 hours', '-1 hour', ' foreign');
+        $foreign->setVisible(false);
+        $foreignActivity->setVisible(false);
+        $customer = $foreign->getCustomer();
+        self::assertNotNull($customer);
+        $teamB = new Team('team B');
+        $teamB->addCustomer($customer);
+        $teamB->addProject($foreign);
+        $em->persist($teamB);
+        $em->flush();
+
+        // the IDs are not rendered in any choice list, so they are added to the URL directly
+        $this->assertAccessIsGranted($client, '/timesheet/?performSearch=performSearch&projects[]=' . $foreign->getId());
+        $content = (string) $client->getResponse()->getContent();
+        self::assertStringNotContainsString('locked project foreign', $content);
+        self::assertStringNotContainsString('locked customer foreign', $content);
+
+        $this->assertAccessIsGranted($client, '/timesheet/?performSearch=performSearch&activities[]=' . $foreignActivity->getId());
+        $content = (string) $client->getResponse()->getContent();
+        self::assertStringNotContainsString('locked activity foreign', $content);
+        self::assertStringNotContainsString('locked project foreign', $content);
+
+        $this->assertAccessIsGranted($client, '/timesheet/?performSearch=performSearch&projects[]=' . $foreign->getId() . '&activities[]=' . $foreignActivity->getId());
+        $content = (string) $client->getResponse()->getContent();
+        self::assertStringNotContainsString('locked activity foreign', $content);
+        self::assertStringNotContainsString('locked project foreign', $content);
+    }
+
+    public function testFilterStillAcceptsInvisibleProjectOfOwnTeam(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
+        $em = $this->getEntityManager();
+
+        [$own, $ownActivity] = $this->createLockedProjectWithTimesheet($user, null, '-2 hours', '-1 hour', ' own');
+        $own->setVisible(false);
+        $ownActivity->setVisible(false);
+        $teamA = new Team('team A');
+        $teamA->addUser($user);
+        $teamA->addProject($own);
+        $em->persist($teamA);
+        $em->flush();
+
+        $this->assertAccessIsGranted($client, '/timesheet/?performSearch=performSearch&projects[]=' . $own->getId() . '&activities[]=' . $ownActivity->getId());
+        $form = $client->getCrawler()->filter('form.searchform');
+        self::assertEquals(1, $form->filter('option[selected][value="' . $own->getId() . '"]')->count());
+        self::assertEquals(1, $form->filter('option[selected][value="' . $ownActivity->getId() . '"]')->count());
+    }
+
+    public function testEditFormKeepsProjectAndActivityOfForeignTeam(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $user = $this->getUserByRole(User::ROLE_USER);
+        $em = $this->getEntityManager();
+
+        // the user recorded the time, afterwards project and activity were handed over to team B
+        [$project, $activity, $timesheet] = $this->createLockedProjectWithTimesheet($user, null, '-2 hours', '-1 hour', ' handover');
+        $teamB = new Team('team B');
+        $teamB->addProject($project);
+        $teamB->addActivity($activity);
+        $em->persist($teamB);
+        $em->flush();
+
+        $this->request($client, '/timesheet/' . $timesheet->getId() . '/edit');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('form[name=timesheet_edit_form]');
+        self::assertEquals(1, $form->filter('select#timesheet_edit_form_project option[selected][value="' . $project->getId() . '"]')->count());
+        self::assertEquals(1, $form->filter('select#timesheet_edit_form_activity option[selected][value="' . $activity->getId() . '"]')->count());
+    }
+
     public function testTimesheetActionsAreHiddenForLockedProjectPeriod(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);

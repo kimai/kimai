@@ -135,6 +135,8 @@ class TimesheetEditForm extends AbstractType
         //$allowCreate = (bool) $this->systemConfiguration->find('activity.allow_inline_create');
         $this->addActivity($builder, $activity, $project, [
             'allow_create' => false,
+            // an existing record keeps its activity, even if the user has no access to it (any longer)
+            'pre_select_activity' => !$isNew,
             // 'allow_create' => $allowCreate && $options['create_activity'],
         ]);
 

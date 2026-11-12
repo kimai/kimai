@@ -85,6 +85,8 @@ final class ProjectType extends AbstractType
             'customers' => null,
             // @var Project|Project[]|int|int[]|null
             'projects' => null,
+            // include the given "projects" without checking team permissions, only use it for projects of an already stored entity
+            'pre_select_project' => false,
             // @var DateTime|null
             'project_date_start' => null,
             // @var DateTime|null
@@ -95,6 +97,10 @@ final class ProjectType extends AbstractType
             return function (ProjectRepository $repo) use ($options) {
                 $query = new ProjectFormTypeQuery($options['projects'], $options['customers']);
                 $query->setUser($options['user']);
+
+                if (true === $options['pre_select_project']) {
+                    $query->setAllowProjectPreselect(true);
+                }
 
                 if (true === $options['ignore_date']) {
                     $query->setIgnoreDate(true);

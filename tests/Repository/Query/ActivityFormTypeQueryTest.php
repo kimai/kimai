@@ -28,6 +28,10 @@ class ActivityFormTypeQueryTest extends AbstractBaseFormTypeQueryTestCase
 
         self::assertFalse($sut->isGlobalsOnly());
 
+        self::assertFalse($sut->isAllowActivityPreselect());
+        $sut->setAllowActivityPreselect(true);
+        self::assertTrue($sut->isAllowActivityPreselect());
+
         $activity = new Activity();
         self::assertNull($sut->getActivityToIgnore());
         self::assertInstanceOf(ActivityFormTypeQuery::class, $sut->setActivityToIgnore($activity));

@@ -189,7 +189,13 @@ class ProjectRepository extends EntityRepository
         $outerQuery = $qb->expr()->orX();
 
         if ($query->hasProjects()) {
-            $outerQuery->add($qb->expr()->in('p.id', ':project'));
+            $preselect = $qb->expr()->andX($qb->expr()->in('p.id', ':project'));
+            // requested IDs skip the visibility and date filter, but they must not skip the team permissions,
+            // otherwise a user could manipulate the query and inject IDs that would be hidden otherwise
+            if (!$query->isAllowProjectPreselect() && $permissions->count() > 0) {
+                $preselect->add($permissions);
+            }
+            $outerQuery->add($preselect);
             $qb->setParameter('project', $query->getProjects());
         }
 

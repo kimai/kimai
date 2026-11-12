@@ -167,13 +167,19 @@ class ActivityRepository extends EntityRepository
         $mainQuery->add($qb->expr()->eq('a.visible', ':visible'));
         $qb->setParameter('visible', true, ParameterType::BOOLEAN);
 
-        if (!$query->isGlobalsOnly()) {
+        // requested IDs skip the visibility filter, but they must not skip the team permissions (of the activity, its
+        // project and customer), otherwise a user could manipulate the query and inject IDs that would be hidden otherwise
+        $restrictPreselect = $query->hasActivities() && !$query->isAllowActivityPreselect();
+
+        if (!$query->isGlobalsOnly() || $restrictPreselect) {
             $qb
                 ->addSelect('p')
                 ->addSelect('c')
                 ->leftJoin('a.project', 'p')
                 ->leftJoin('p.customer', 'c');
+        }
 
+        if (!$query->isGlobalsOnly()) {
             $mainQuery->add(
                 $qb->expr()->orX(
                     $qb->expr()->isNull('a.project'),
@@ -223,7 +229,14 @@ class ActivityRepository extends EntityRepository
         $outerQuery = $qb->expr()->orX();
 
         if ($query->hasActivities()) {
-            $outerQuery->add($qb->expr()->in('a.id', ':activity'));
+            $preselect = $qb->expr()->andX($qb->expr()->in('a.id', ':activity'));
+            if ($restrictPreselect) {
+                $preselectPermissions = $this->getPermissionCriteria($qb, $query->getUser(), $query->getTeams());
+                if ($preselectPermissions->count() > 0) {
+                    $preselect->add($preselectPermissions);
+                }
+            }
+            $outerQuery->add($preselect);
             $qb->setParameter('activity', $query->getActivities());
         }
 
