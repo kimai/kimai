@@ -54,7 +54,7 @@
     "calendar": {
       "js": [
         "/build/runtime.35744075.js",
-        "/build/calendar.0f46b004.js"
+        "/build/calendar.b67a3f2c.js"
       ],
       "css": [
         "/build/calendar.287b9d06.css"
@@ -92,7 +92,7 @@
     "/build/invoice-pdf.273b01cf.js": "sha384-tpBmIBDBLoh+8/xzBiwNdwISdr4hkIiB43S8GJjXcM2kmkLebqsa8V91MgPY4bUb",
     "/build/invoice-pdf.2b749265.css": "sha384-DXXgkz2WWnrWnfBnXX5fmfPQSPb98upMnWxYKwTGYS04EhrPIWfDCutB2unIrWh7",
     "/build/chart.b15d006e.js": "sha384-dxNUvwCcMjf3+6RHVYlXBOnRdIUU5AyHfU7QS/2OzzPGySPjL7jSr5ENSTF6NpAu",
-    "/build/calendar.0f46b004.js": "sha384-TGLQonjYdUwxbR5maHHsJUca+todhj1tJjlrOqcsjgFUAEz55ngy3E/iUxadsbLS",
+    "/build/calendar.b67a3f2c.js": "sha384-aVT+2oTUN+aaGtny3jX3J8Gs4iljAcg7Y7Roz+gWkT/q3g5EdLcnCUSuzpMBUH71",
     "/build/calendar.287b9d06.css": "sha384-U1MhUddqhzynvw0SfqX+rVSrWakw85c2KAJgM+F3EtQ7b7rAJzBvakX0Apwy7Vu0",
     "/build/dashboard.5ca33aee.js": "sha384-AEf1YgdZ+bea+zXCzML0GCnNggSD8fO88sOQuYHlELHsO6bggdSd4QCYYGeEAjYc",
     "/build/dashboard.b7129fa1.css": "sha384-2nn5hLA+3YedgHYBpge62S8Losj8aoPwK9Zk9EvN1xEYatvOUQ7H3rIR2UUJAGOS",
