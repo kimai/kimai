@@ -105,6 +105,7 @@ final class ReportUsersWeekController extends AbstractController
         if (!empty($allUsers)) {
             $statsQuery = new TimesheetStatisticQuery($start, $end, $allUsers);
             $statsQuery->setProject($values->getProject());
+            $statsQuery->setCurrentUser($currentUser);
             $dayStats = $statisticService->getDailyStatistics($statsQuery);
         }
 

@@ -117,6 +117,11 @@ final class QuickEntryController extends AbstractController
         $query->setEnd($endWeek);
         $query->setName('quickEntryForm');
         $query->setUser($user);
+        if ($user !== $this->getUser()) {
+            // users see all of their own records, but the ones from other users are limited
+            // to the customers, projects and activities the current user is allowed to access
+            $query->setCurrentUser($this->getUser());
+        }
 
         $result = $this->repository->getTimesheetResult($query);
 
