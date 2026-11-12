@@ -23,6 +23,7 @@ use OTPHP\TOTP;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 
@@ -124,6 +125,64 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         $client = $this->getClientForAuthenticatedUser();
         $this->request($client, '/profile/' . UserFixtures::USERNAME_TEAMLEAD);
         self::assertFalse($client->getResponse()->isSuccessful());
+    }
+
+    /**
+     * @return iterable<string, array{0: string, 1: string}>
+     */
+    public static function getProfileUrlsForUnknownAndForbiddenUsers(): iterable
+    {
+        $routes = [
+            'view' => ['', 'GET'],
+            'edit' => ['/edit', 'GET'],
+            'password' => ['/password', 'GET'],
+            'create-access-token' => ['/create-access-token', 'GET'],
+            'api-token' => ['/api-token', 'GET'],
+            'roles' => ['/roles', 'GET'],
+            'contract' => ['/contract', 'GET'],
+            'teams' => ['/teams', 'GET'],
+            'prefs' => ['/prefs', 'GET'],
+            '2fa' => ['/2fa', 'GET'],
+            '2fa_deactivate' => ['/2fa_deactivate', 'POST'],
+        ];
+
+        $identifiers = [
+            'existing username' => UserFixtures::USERNAME_TEAMLEAD,
+            'existing email' => 'tony_teamlead@example.com',
+            'unknown username' => 'unknown_b51d0e10',
+            'unknown email' => 'unknown_b51d0e10@example.com',
+        ];
+
+        foreach ($routes as $routeName => [$suffix, $method]) {
+            foreach ($identifiers as $identifierName => $identifier) {
+                yield $routeName . ' with ' . $identifierName => ['/profile/' . urlencode($identifier) . $suffix, $method];
+            }
+        }
+    }
+
+    /**
+     * A user who cannot access other profiles must not be able to tell existing and unknown accounts apart.
+     */
+    #[DataProvider('getProfileUrlsForUnknownAndForbiddenUsers')]
+    public function testUnknownAndForbiddenProfilesAreIndistinguishable(string $url, string $method): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_USER);
+        $this->request($client, $url, $method);
+        self::assertEquals(Response::HTTP_FORBIDDEN, $client->getResponse()->getStatusCode());
+        $this->assertAccessDenied($client);
+    }
+
+    public function testUnknownProfileDoesNotRedirectToLoginForAdmin(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->request($client, '/profile/unknown_b51d0e10');
+        self::assertEquals(Response::HTTP_FORBIDDEN, $client->getResponse()->getStatusCode());
+        $this->assertAccessDenied($client);
+    }
+
+    public function testUnknownProfileIsSecured(): void
+    {
+        $this->assertUrlIsSecured('/profile/unknown_b51d0e10');
     }
 
     public function testEditAction(): void

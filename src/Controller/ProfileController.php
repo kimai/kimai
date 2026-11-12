@@ -30,6 +30,7 @@ use App\Repository\TeamRepository;
 use App\Repository\TimesheetRepository;
 use App\Repository\UserRepository;
 use App\Timesheet\TimesheetStatisticService;
+use App\User\ProfileValueResolver;
 use App\User\UserService;
 use App\Utils\PageSetup;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -40,11 +41,11 @@ use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
 use Endroid\QrCode\Writer\PngWriter;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Totp\TotpAuthenticatorInterface;
-use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\ValueResolver;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -81,7 +82,7 @@ final class ProfileController extends AbstractController
     #[Route(path: '/{username}', name: 'user_profile', methods: ['GET'])]
     #[IsGranted('view', 'profile')]
     public function indexAction(
-        #[MapEntity(mapping: ['username' => 'username'])]
+        #[ValueResolver(ProfileValueResolver::class)]
         User $profile,
         TimesheetRepository $repository,
         TimesheetStatisticService $statisticService
@@ -118,7 +119,7 @@ final class ProfileController extends AbstractController
     #[Route(path: '/{username}/edit', name: 'user_profile_edit', methods: ['GET', 'POST'])]
     #[IsGranted('edit', 'profile')]
     public function editAction(
-        #[MapEntity(mapping: ['username' => 'username'])]
+        #[ValueResolver(ProfileValueResolver::class)]
         User $profile,
         Request $request,
         UserRepository $userRepository
@@ -152,7 +153,7 @@ final class ProfileController extends AbstractController
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[IsGranted('password', 'profile')]
     public function passwordAction(
-        #[MapEntity(mapping: ['username' => 'username'])]
+        #[ValueResolver(ProfileValueResolver::class)]
         User $profile,
         Request $request,
         UserService $userService
@@ -181,7 +182,7 @@ final class ProfileController extends AbstractController
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[IsGranted('api-token', 'profile')]
     public function createAccessToken(
-        #[MapEntity(mapping: ['username' => 'username'])]
+        #[ValueResolver(ProfileValueResolver::class)]
         User $profile,
         Request $request,
         AccessTokenRepository $accessTokenRepository
@@ -215,7 +216,7 @@ final class ProfileController extends AbstractController
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[IsGranted('api-token', 'profile')]
     public function apiTokenAction(
-        #[MapEntity(mapping: ['username' => 'username'])]
+        #[ValueResolver(ProfileValueResolver::class)]
         User $profile,
         Request $request,
         UserService $userService,
@@ -263,7 +264,7 @@ final class ProfileController extends AbstractController
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[IsGranted('roles', 'profile')]
     public function rolesAction(
-        #[MapEntity(mapping: ['username' => 'username'])]
+        #[ValueResolver(ProfileValueResolver::class)]
         User $profile,
         Request $request,
         UserRepository $userRepository
@@ -300,7 +301,7 @@ final class ProfileController extends AbstractController
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[IsGranted('contract', 'profile')]
     public function contractAction(
-        #[MapEntity(mapping: ['username' => 'username'])]
+        #[ValueResolver(ProfileValueResolver::class)]
         User $profile,
         Request $request,
         UserRepository $userRepository
@@ -331,7 +332,7 @@ final class ProfileController extends AbstractController
     #[Route(path: '/{username}/teams', name: 'user_profile_teams', methods: ['GET', 'POST'])]
     #[IsGranted('teams', 'profile')]
     public function teamsAction(
-        #[MapEntity(mapping: ['username' => 'username'])]
+        #[ValueResolver(ProfileValueResolver::class)]
         User $profile,
         Request $request,
         UserRepository $userRepository,
@@ -373,7 +374,7 @@ final class ProfileController extends AbstractController
     #[Route(path: '/{username}/prefs', name: 'user_profile_preferences', methods: ['GET', 'POST'])]
     #[IsGranted('preferences', 'profile')]
     public function preferencesAction(
-        #[MapEntity(mapping: ['username' => 'username'])]
+        #[ValueResolver(ProfileValueResolver::class)]
         User $profile,
         Request $request,
         EventDispatcherInterface $dispatcher,
@@ -507,7 +508,7 @@ final class ProfileController extends AbstractController
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[IsGranted('2fa', 'profile')]
     public function twoFactorAction(
-        #[MapEntity(mapping: ['username' => 'username'])]
+        #[ValueResolver(ProfileValueResolver::class)]
         User $profile,
         Request $request,
         UserService $userService,
@@ -585,7 +586,7 @@ final class ProfileController extends AbstractController
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[IsGranted('2fa', 'profile')]
     public function deactivateTwoFactorAction(
-        #[MapEntity(mapping: ['username' => 'username'])]
+        #[ValueResolver(ProfileValueResolver::class)]
         User $profile,
         Request $request,
         UserService $userService
