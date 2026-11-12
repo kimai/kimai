@@ -1514,6 +1514,10 @@
         <source>delete_warning.short_stats</source>
         <target>Currently %records% time-records exists, which sum up to a total duration of %duration%.</target>
       </trans-unit>
+      <trans-unit id="pRjLnk4" resname="delete_warning.linked_projects">
+        <source>delete_warning.linked_projects</source>
+        <target>%count% projects are linked to this customer.</target>
+      </trans-unit>
       <trans-unit id="Zif614Q" resname="add_user.label">
         <source>add_user.label</source>
         <target>Add user</target>

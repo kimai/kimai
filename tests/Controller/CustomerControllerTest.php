@@ -553,6 +553,30 @@ class CustomerControllerTest extends AbstractControllerBaseTestCase
         self::assertFalse($client->getResponse()->isSuccessful());
     }
 
+    public function testDeleteActionWithProjectsShowsWarning(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);
+
+        $fixture = new CustomerFixtures();
+        $fixture->setAmount(1);
+        $customers = $this->importFixture($fixture);
+        $customer = $customers[0];
+        $id = $customer->getId();
+
+        $fixture = new ProjectFixtures();
+        $fixture->setAmount(3);
+        $fixture->setCustomers([$customer]);
+        $this->importFixture($fixture);
+
+        $this->request($client, '/admin/customer/' . $id . '/delete');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $content = $client->getResponse()->getContent();
+        self::assertIsString($content);
+        self::assertStringNotContainsString('This item can be safely deleted.', $content);
+        self::assertStringContainsString('3 projects are linked to this customer.', $content);
+    }
+
     public function testDeleteActionWithTimesheetEntries(): void
     {
         $client = $this->getClientForAuthenticatedUser(User::ROLE_ADMIN);

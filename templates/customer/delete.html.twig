@@ -6,10 +6,10 @@
         '%duration%': stats.duration|duration
     } %}
     {{ include(kimai_context.modalRequest ? 'default/_form_delete_modal.html.twig' : 'default/_form_delete.html.twig', {
-        'message': ("delete_warning.short_stats"|trans(params) ~ " " ~ "admin_entity.delete_confirm"|trans),
+        'message': ("delete_warning.short_stats"|trans(params) ~ " " ~ "delete_warning.linked_projects"|trans({'%count%': projects}) ~ " " ~ "admin_entity.delete_confirm"|trans),
         'form': form,
         'delete_item_name': customer.name,
-        'used': (stats.counter > 0),
+        'used': (stats.counter > 0 or projects > 0),
         'back': path('admin_customer')
     }) }}
 {% endblock %}
