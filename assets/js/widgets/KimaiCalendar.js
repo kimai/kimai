@@ -171,7 +171,7 @@ export default class KimaiCalendar {
             datesSet: (dateInfo) => {
                 document.dispatchEvent(new CustomEvent('kimai.calendar.changeDate', {detail: {
                     view: this.toExternalViewName(dateInfo.view.type),
-                    date: dateInfo.start.toISOString().split('T')[0],
+                    date: dateInfo.view.currentStart.toISOString().split('T')[0],
                 }}));
             },
 
