@@ -172,7 +172,7 @@
       </trans-unit>
       <trans-unit id="qbD0dHa" resname="timeBudget" xml:space="preserve">
         <source>timeBudget</source>
-        <target state="translated">Kvot per timme</target>
+        <target state="translated">Budget (antal timmar)</target>
       </trans-unit>
       <trans-unit id="BlGGO.X" resname="activity" xml:space="preserve">
         <source>activity</source>
