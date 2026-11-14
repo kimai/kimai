@@ -172,7 +172,9 @@ mpdf-->
     {% for taxRow in invoice['invoice.tax_rows'] %}
         {% if taxRow['note'] is not null %}
             <p>
+                {% if taxRow['show'] %}
                 <sup>[{{ taxRow['counter'] }}]</sup>
+                {% endif %}
                 {{ taxRow['note']|trans }}
             </p>
         {% endif %}
