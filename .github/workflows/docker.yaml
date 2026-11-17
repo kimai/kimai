@@ -19,7 +19,15 @@ jobs:
     build:
         name: Docker images
         runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            packages: write
         steps:
+            - name: Determine image name
+              env:
+                  REPOSITORY: ${{ github.repository }}
+              run: echo "image_name=ghcr.io/${REPOSITORY,,}" >> "$GITHUB_ENV"
+
             - name: Determine version
               env:
                   GITHUB_EVENT_INPUTS_KIMAI_TAG: ${{ github.event.inputs.kimai_tag }}
@@ -52,13 +60,13 @@ jobs:
             - name: Install buildx
               uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
 
-            - name: Login to DockerHub
+            - name: Login to GitHub Container Registry
               uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550 # v4.8.0
               with:
-                  username: ${{secrets.DOCKERHUB_USERNAME}}
-                  password: ${{secrets.DOCKERHUB_PASSWORD}}
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
 
-            # TODO 3.0 remove kimai/kimai2:apache and kimai/kimai2:apache-<version>
             - name: Apache image
               uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
               with:
@@ -70,10 +78,10 @@ jobs:
                   target: prod
                   platforms: linux/amd64,linux/arm64
                   tags: |
-                      kimai/kimai2:stable
-                      kimai/kimai2:apache
-                      kimai/kimai2:2
-                      kimai/kimai2:${{ env.kimai_version }}
+                      ${{ env.image_name }}:stable
+                      ${{ env.image_name }}:apache
+                      ${{ env.image_name }}:2
+                      ${{ env.image_name }}:${{ env.kimai_version }}
                   push: true
 
             # TODO 3.0 remove the deprecated FPM build
@@ -88,8 +96,8 @@ jobs:
                   target: prod
                   platforms: linux/amd64,linux/arm64
                   tags: |
-                      kimai/kimai2:latest
-                      kimai/kimai2:fpm
+                      ${{ env.image_name }}:latest
+                      ${{ env.image_name }}:fpm
                   push: true
 
             - name: Development image
@@ -103,5 +111,5 @@ jobs:
                   target: dev
                   platforms: linux/amd64,linux/arm64
                   tags: |
-                      kimai/kimai2:dev
+                      ${{ env.image_name }}:dev
                   push: true
