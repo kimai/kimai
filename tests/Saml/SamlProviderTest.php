@@ -110,6 +110,112 @@ class SamlProviderTest extends TestCase
         self::assertEquals('foo2@example.com', $tokenUser->getUserIdentifier());
         self::assertEquals('Tralalala', $tokenUser->getTitle());
         self::assertEquals('foo@example.com', $tokenUser->getEmail());
+        // a new user needs a plain password to pass the validation in UserService
+        self::assertNotEmpty($tokenUser->getPlainPassword());
+        self::assertSame('', $tokenUser->getPassword());
+    }
+
+    public function testFindUserIgnoresMappedPasswordAndAuth(): void
+    {
+        $mapping = [
+            'mapping' => [
+                ['saml' => '$Email', 'kimai' => 'email'],
+                // a misconfigured (or manipulated) mapping must not allow the identity
+                // provider to define the local password or the authentication type
+                ['saml' => '$secret', 'kimai' => 'password'],
+                ['saml' => '$secret', 'kimai' => 'plainPassword'],
+                ['saml' => '$kimai_auth', 'kimai' => 'auth'],
+            ],
+            'roles' => [
+                'attribute' => '',
+                'mapping' => []
+            ]
+        ];
+
+        $token = new SamlLoginAttributes();
+        $token->setUserIdentifier('foo3@example.com');
+        $token->setAttributes([
+            'Email' => ['foo@example.com'],
+            'secret' => ['i-know-your-password'],
+            'kimai_auth' => [User::AUTH_INTERNAL],
+        ]);
+
+        $sut = $this->getSamlProvider($mapping);
+        $tokenUser = $sut->findUser($token);
+
+        self::assertTrue($tokenUser->isSamlUser());
+        self::assertSame('', $tokenUser->getPassword());
+        self::assertNotEquals('i-know-your-password', $tokenUser->getPlainPassword());
+    }
+
+    public function testFindUserIgnoresMappedCredentialsForExistingSamlUser(): void
+    {
+        $mapping = [
+            'mapping' => [
+                ['saml' => '$Email', 'kimai' => 'email'],
+                // the auth does not change for existing SAML users, so the password is not reset:
+                // the mapping must be ignored, independent of the case of the field name
+                ['saml' => '$kimai_auth', 'kimai' => 'auth'],
+                ['saml' => '$secret', 'kimai' => 'PlainPassword'],
+                ['saml' => '$secret', 'kimai' => 'password'],
+                ['saml' => '$secret', 'kimai' => 'apiToken'],
+                ['saml' => '$secret', 'kimai' => 'totpSecret'],
+            ],
+            'roles' => [
+                'attribute' => '',
+                'mapping' => []
+            ]
+        ];
+
+        $user = new User();
+        // an already persisted user
+        (new \ReflectionProperty(User::class, 'id'))->setValue($user, 13);
+        $user->setUserIdentifier('foo3@example.com');
+        $user->setAuth(User::AUTH_SAML);
+        $user->setPassword('existing-hash');
+        $user->eraseCredentials();
+
+        $token = new SamlLoginAttributes();
+        $token->setUserIdentifier('foo3@example.com');
+        $token->setAttributes([
+            'Email' => ['foo@example.com'],
+            'secret' => ['i-know-your-password'],
+            'kimai_auth' => [User::AUTH_SAML],
+        ]);
+
+        $sut = $this->getSamlProvider($mapping, $user);
+        $tokenUser = $sut->findUser($token);
+
+        self::assertSame($user, $tokenUser);
+        self::assertTrue($tokenUser->isSamlUser());
+        self::assertEquals('foo@example.com', $tokenUser->getEmail());
+        self::assertEquals('existing-hash', $tokenUser->getPassword());
+        self::assertNull($tokenUser->getPlainPassword());
+        self::assertNull($tokenUser->getApiToken()); // @phpstan-ignore method.deprecated
+        self::assertNull($tokenUser->getTotpSecret());
+    }
+
+    public function testFindUserInvalidatesPasswordOfInternalUser(): void
+    {
+        // an existing internal user, which is switched to SAML on the first SAML login
+        $user = new User();
+        (new \ReflectionProperty(User::class, 'id'))->setValue($user, 14);
+        $user->setUserIdentifier('foo4@example.com');
+        $user->setPassword('hash-of-the-internal-password');
+
+        $token = new SamlLoginAttributes();
+        $token->setUserIdentifier('foo4@example.com');
+        $token->setAttributes([
+            'Email' => ['foo4@example.com'],
+            'title' => ['Tralalala'],
+        ]);
+
+        $sut = $this->getSamlProvider(null, $user);
+        $tokenUser = $sut->findUser($token);
+
+        self::assertTrue($tokenUser->isSamlUser());
+        self::assertSame('', $tokenUser->getPassword());
+        self::assertNotEmpty($tokenUser->getPlainPassword());
     }
 
     public function testFindUserRemovesInvalidAvatar(): void

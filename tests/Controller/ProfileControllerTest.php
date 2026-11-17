@@ -18,6 +18,7 @@ use App\Repository\AccessTokenRepository;
 use App\Tests\DataFixtures\TeamFixtures;
 use App\Tests\DataFixtures\TimesheetFixtures;
 use App\User\PermissionService;
+use App\User\UserService;
 use App\WorkingTime\Mode\WorkingTimeModeDay;
 use OTPHP\TOTP;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -248,9 +249,10 @@ class ProfileControllerTest extends AbstractControllerBaseTestCase
         $user = $this->loadUserFromDatabase($username);
         $user->setAuth(User::AUTH_LDAP);
         $user->setPreferenceValue('ldap_dn', 'uid=' . $username . ',ou=users,dc=kimai,dc=org');
-        $em = $this->getEntityManager();
-        $em->persist($user);
-        $em->flush();
+        // like the LDAP login: the UserService hashes the random password, which was set by setAuth()
+        /** @var UserService $userService */
+        $userService = self::getContainer()->get(UserService::class);
+        $userService->updateUser($user);
     }
 
     public function testEditActionHidesAuthWithoutSystemConfiguration(): void
