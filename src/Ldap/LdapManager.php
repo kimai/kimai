@@ -12,6 +12,7 @@ namespace App\Ldap;
 use App\Configuration\LdapConfiguration;
 use App\Entity\User;
 use App\Security\RoleService;
+use Psr\Log\LoggerInterface;
 
 /**
  * @final
@@ -19,7 +20,12 @@ use App\Security\RoleService;
  */
 class LdapManager
 {
-    public function __construct(private LdapDriver $driver, private LdapConfiguration $config, private RoleService $roles)
+    public function __construct(
+        private readonly LdapDriver $driver,
+        private readonly LdapConfiguration $config,
+        private readonly RoleService $roles,
+        private readonly LoggerInterface $logger
+    )
     {
     }
 
@@ -175,11 +181,7 @@ class LdapManager
             $user->setEmail($user->getUserIdentifier());
         }
 
-        // fill them after hydrating account, so they can't be overwritten
-        // by the mapping attributes
-        if ($user->getId() === null) {
-            $user->setPassword('');
-        }
+        // switching from another authentication invalidates the local password (see User::setAuth())
         $user->setAuth(User::AUTH_LDAP);
         $user->setPreferenceValue('ldap_dn', $ldapEntry['dn']);
     }
@@ -271,7 +273,12 @@ class LdapManager
                 throw new \Exception('Unknown mapping method: ' . $attr['user_method']);
             }
 
-            $user->{$attr['user_method']}($value);
+            if (!$user->isExternalMappingAllowed($attr['user_method'])) {
+                // the LDAP server must never define e.g. local credentials or the authentication type
+                $this->logger->warning('Ignoring forbidden LDAP mapping: ' . $attr['user_method']);
+            } else {
+                $user->{$attr['user_method']}($value);
+            }
         }
 
         if (!$sawUsername) {

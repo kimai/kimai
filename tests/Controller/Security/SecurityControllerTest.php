@@ -16,6 +16,7 @@ use App\DataFixtures\UserFixtures;
 use App\Entity\User;
 use App\Tests\Configuration\TestConfigLoader;
 use App\Tests\Controller\AbstractControllerBaseTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
@@ -161,6 +162,51 @@ class SecurityControllerTest extends AbstractControllerBaseTestCase
         $client->followRedirect();
 
         $this->assertIsRedirect($client, '/homepage'); // redirect to homepage
+    }
+
+    /**
+     * @return array<string, array{0: string}>
+     */
+    public static function getExternalAuthTypes(): array
+    {
+        return [
+            'saml' => [User::AUTH_SAML],
+            'ldap' => [User::AUTH_LDAP],
+        ];
+    }
+
+    /**
+     * Accounts which were switched to SAML or LDAP by older versions still own their internal password hash:
+     * they must not be able to log in with the form login (LDAP is deactivated, so no bind() is executed).
+     */
+    #[DataProvider('getExternalAuthTypes')]
+    public function testLoginNegativeForExternalUserWithOldPassword(string $auth): void
+    {
+        $client = self::createClient();
+        $this->setSystemConfiguration('saml.activate', true);
+        $this->setSystemConfiguration('user.login', true);
+
+        $user = $this->loadUserFromDatabase(UserFixtures::USERNAME_USER);
+        // simulates the migration of an old version: User::setAuth() would invalidate the password
+        (new \ReflectionProperty(User::class, 'auth'))->setValue($user, $auth);
+        $em = $this->getEntityManager();
+        $em->persist($user);
+        $em->flush();
+
+        $this->request($client, '/login');
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $form = $client->getCrawler()->filter('body form')->form();
+        $client->submit($form, [
+            '_username' => UserFixtures::USERNAME_USER,
+            '_password' => UserFixtures::DEFAULT_PASSWORD
+        ]);
+
+        $this->assertIsRedirect($client); // redirect to root URL
+        $client->followRedirect();
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+        self::assertStringContainsString('<div class="alert alert-important alert-danger">Invalid credentials.</div>', (string) $client->getResponse()->getContent());
     }
 
     /**
