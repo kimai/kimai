@@ -17,7 +17,7 @@ final class Constants
     /**
      * The current release version
      */
-    public const VERSION = '2.72.0';
+    public const VERSION = '2.73.0';
     /**
      * The current release: major * 10000 + minor * 100 + patch
      */
