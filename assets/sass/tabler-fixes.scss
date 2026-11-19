@@ -50,6 +50,12 @@ fieldset.form-fieldset > legend {
     }
 }
 
+/* Links in dark mode use the plain primary color, which has a contrast below 4.5:1 on dark surfaces - https://github.com/kimai/kimai/issues/6261 */
+[data-bs-theme=dark] {
+    --#{$prefix}link-color: color-mix(in srgb, var(--#{$prefix}primary), white 40%);
+    --#{$prefix}link-hover-color: color-mix(in srgb, var(--#{$prefix}primary), white 60%);
+}
+
 /* Highlighted text is not visible - https://github.com/tabler/tabler/issues/2603 */
 [data-bs-theme=dark] {
     ::selection,
