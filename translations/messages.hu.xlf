@@ -1970,6 +1970,22 @@
         <source>user_access_all</source>
         <target state="translated">Hozzáférés engedélyezése minden felhasználónak</target>
       </trans-unit>
+      <trans-unit id="DAMFhpR" resname="lock">
+        <source>lock</source>
+        <target state="translated">Lezár</target>
+      </trans-unit>
+      <trans-unit id="LfO_otF" resname="reopen">
+        <source>reopen</source>
+        <target state="translated">Újra nyit</target>
+      </trans-unit>
+      <trans-unit id="kwC00lZ" resname="assign">
+        <source>assign</source>
+        <target state="translated">Hozzárendel</target>
+      </trans-unit>
+      <trans-unit id="DI8vH1J" resname="copy_to_clipboard">
+        <source>copy_to_clipboard</source>
+        <target state="translated">Vágólapra másol</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

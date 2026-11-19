@@ -2102,6 +2102,42 @@
         <source>electronic_invoice</source>
         <target state="translated">电子发票</target>
       </trans-unit>
+      <trans-unit id="fxkWjGQ" resname="password_current">
+        <source>password_current</source>
+        <target state="translated">当前密码</target>
+      </trans-unit>
+      <trans-unit id="udkGKEU" resname="authentication">
+        <source>authentication</source>
+        <target state="translated">认证</target>
+      </trans-unit>
+      <trans-unit id="4YKqwfo" resname="absence_type.half_day">
+        <source>absence_type.half_day</source>
+        <target state="translated">允许半天</target>
+      </trans-unit>
+      <trans-unit id="j6S5GDf" resname="absence_type.duration">
+        <source>absence_type.duration</source>
+        <target state="translated">允许输入一个时间段</target>
+      </trans-unit>
+      <trans-unit id="DI8vH1J" resname="copy_to_clipboard">
+        <source>copy_to_clipboard</source>
+        <target state="translated">复制到剪贴板</target>
+      </trans-unit>
+      <trans-unit id="BmDRYT." resname="sending_company.help">
+        <source>sending_company.help</source>
+        <target state="translated">此公司会在发票上显示为签发者，并使用其名称、地址与税收信息。</target>
+      </trans-unit>
+      <trans-unit id="Mi7y8Q3" resname="tax.type.exempt">
+        <source>tax.type.exempt</source>
+        <target state="translated">免税</target>
+      </trans-unit>
+      <trans-unit id="lU1Njcy" resname="tax.type.standard">
+        <source>tax.type.standard</source>
+        <target state="translated">应纳税</target>
+      </trans-unit>
+      <trans-unit id="6w8kS.m" resname="user_access_all">
+        <source>user_access_all</source>
+        <target state="translated">允许所有用户访问</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
