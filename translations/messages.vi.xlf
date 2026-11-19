@@ -1886,6 +1886,14 @@
         <source>status.todo</source>
         <target state="translated">Cần làm</target>
       </trans-unit>
+      <trans-unit id="fxkWjGQ" resname="password_current">
+        <source>password_current</source>
+        <target state="translated">Mật khẩu hiện tại</target>
+      </trans-unit>
+      <trans-unit id="8MwThZv" resname="export.too_many_entries">
+        <source>export.too_many_entries</source>
+        <target state="needs-translation">Mục tìm kiếm được yêu cầu trả %count% kết quả.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
