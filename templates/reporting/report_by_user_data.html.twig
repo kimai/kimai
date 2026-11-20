@@ -60,7 +60,7 @@
                 {% set dateKey = column.date|report_date %}
                 {% set customerTotalsDuration = customerTotalsDuration|merge({(dateKey): (customerTotalsDuration[dateKey] + column.duration)}) %}
                 {% set customerTotalsInternalRate = customerTotalsInternalRate|merge({(dateKey): (customerTotalsInternalRate[dateKey] + column.internalRate)}) %}
-                {% set customerTotalsRate = customerTotalsRate|merge({(dateKey): (customerTotalsRate[dateKey] + column.rate)}) %}
+                {% set customerTotalsRate = customerTotalsRate|merge({(dateKey): (customerTotalsRate[dateKey] + column.billableRate)}) %}
             {% endfor %}
         {% endfor %}
         <tr class="summary">
@@ -68,7 +68,7 @@
             <td class="text-center total">
                 {% if with_links %}<a href="{{ widgets.search_filter(filter_route, filter_options|merge({'customer': data.customer.id})) }}">{% endif %}
                 {% if dataType == 'rate' %}
-                    {{ data.rate|money(currency) }}
+                    {{ data.billableRate|money(currency) }}
                 {% elseif dataType == 'internalRate' %}
                     {{ data.internalRate|money(currency) }}
                 {% else %}
@@ -94,7 +94,7 @@
         {% for project in data.projects %}
             {% set absoluteDuration = absoluteDuration + project.duration %}
             {% set absoluteInternalRate = absoluteInternalRate + project.internalRate %}
-            {% set absoluteRate = absoluteRate + project.rate %}
+            {% set absoluteRate = absoluteRate + project.billableRate %}
             <tr class="project">
                 <td class="text-nowrap">
                     <strong>{{ widgets.label_project(project.project) }}</strong>
@@ -102,7 +102,7 @@
                 <td class="text-nowrap text-center total">
                     {% if with_links %}<a href="{{ widgets.search_filter(filter_route, filter_options|merge({'project': project.project.id})) }}">{% endif %}
                     {%- if dataType == 'rate' -%}
-                        {{ project.rate|money(currency) }}
+                        {{ project.billableRate|money(currency) }}
                     {%- elseif dataType == 'internalRate' -%}
                         {{ project.internalRate|money(currency) }}
                     {%- else -%}
@@ -113,10 +113,10 @@
                 {% for column in project.data.data %}
                     {% set dateKey = column.date|report_date %}
                     <td class="text-nowrap text-center day-total {% block column_classes_project %}{% endblock %}">
-                        {% if column.duration != 0 or column.rate != 0 or column.internalRate != 0 %}
+                        {% if column.duration != 0 or column.billableRate != 0 or column.internalRate != 0 %}
                             {% if dataType == 'rate' %}
-                                {% set totalsRate = totalsRate|merge({(dateKey): (totalsRate[dateKey] + column.rate)}) %}
-                                <strong>{{ column.rate|money(currency) }}</strong>
+                                {% set totalsRate = totalsRate|merge({(dateKey): (totalsRate[dateKey] + column.billableRate)}) %}
+                                <strong>{{ column.billableRate|money(currency) }}</strong>
                             {% elseif dataType == 'internalRate' %}
                                 {% set totalsInternalRate = totalsInternalRate|merge({(dateKey): (totalsInternalRate[dateKey] + column.internalRate)}) %}
                                 <strong>{{ column.internalRate|money(currency) }}</strong>
@@ -136,7 +136,7 @@
                     <td class="text-nowrap text-center">
                         {% if with_links %}<a href="{{ widgets.search_filter(filter_route, filter_options|merge({'activity': activity.activity.id})) }}">{% endif %}
                         {% if dataType == 'rate' %}
-                            {{ activity.rate|money(currency) }}
+                            {{ activity.billableRate|money(currency) }}
                         {% elseif dataType == 'internalRate' %}
                             {{ activity.internalRate|money(currency) }}
                         {% else %}
@@ -146,9 +146,9 @@
                     </td>
                     {% for column in activity.data.data %}
                         <td class="text-nowrap text-center day-total {% block column_classes_activity %}{% endblock %}">
-                            {% if column.duration != 0 or column.rate != 0 or column.internalRate != 0 %}
+                            {% if column.duration != 0 or column.billableRate != 0 or column.internalRate != 0 %}
                                 {% if dataType == 'rate' %}
-                                    {{ column.rate|money(currency) }}
+                                    {{ column.billableRate|money(currency) }}
                                 {% elseif dataType == 'internalRate' %}
                                     {{ column.internalRate|money(currency) }}
                                 {% else %}
