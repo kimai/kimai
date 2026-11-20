@@ -32,6 +32,7 @@ use App\Tests\Mocks\Export\CsvRendererFactoryMock;
 use App\Tests\Mocks\Export\HtmlRendererFactoryMock;
 use App\Tests\Mocks\Export\PdfRendererFactoryMock;
 use App\Tests\Mocks\Export\XlsxRendererFactoryMock;
+use App\Tests\Mocks\SystemConfigurationFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -85,6 +86,7 @@ class ServiceExportTest extends TestCase
             (new XlsxRendererFactoryMock($this))->create(),
             $repository,
             $logger,
+            SystemConfigurationFactory::createStub(['export' => ['show_default_templates' => true]]),
         );
     }
 
