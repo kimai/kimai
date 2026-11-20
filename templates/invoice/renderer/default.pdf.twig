@@ -5,6 +5,7 @@
     <title>{{ invoice['invoice.number'] }}-{{ invoice['customer.company']|default(invoice['customer.name'])|u.snake }}</title>
     <style>
         {{ encore_entry_css_source('invoice-pdf')|raw }}
+        {{ branding_accent_css(['table.invoice th'], ['table.header', 'table.footer'])|raw }}
     </style>
 </head>
 <body>
@@ -13,7 +14,12 @@
     <table class="header">
         <tr>
             <td class="title">
-                {{ invoice['template.title'] }}
+                {% set logoImg = branding_logo_img('', 30) %}
+                {% if logoImg is not empty %}
+                    {{ logoImg|raw }}
+                {% else %}
+                    {{ invoice['template.title'] }}
+                {% endif %}
             </td>
             <td class="date text-right">
                 {{ 'date'|trans }}: {{ invoice['invoice.date'] }}

@@ -1,4 +1,4 @@
-{% set logo = config('theme.branding.logo') %}
+{% set logo = branding_logo_url() %}
 {% set company = config('theme.branding.company') %}
 {% if logo is not empty %}
     <img src="{{ logo }}" style="max-width: 300px;">
