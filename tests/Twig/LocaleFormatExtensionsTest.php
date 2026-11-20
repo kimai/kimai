@@ -438,6 +438,7 @@ class LocaleFormatExtensionsTest extends TestCase
             'defaultColor' => '#d2d6de',
             'twentyFourHours' => false,
             'updateBrowserTitle' => false,
+            'editAfterStop' => false,
             'timezone' => 'America/Edmonton',
             'locale' => 'en',
             'language' => 'de',
@@ -460,6 +461,22 @@ class LocaleFormatExtensionsTest extends TestCase
         self::assertEquals($expected, $sut->getJavascriptConfiguration($user));
     }
 
+    public function testJavascriptConfigurationsEditAfterStop(): void
+    {
+        $user = new User();
+        $user->setUserIdentifier('foo');
+        $user->setPreferenceValue('edit_after_stop', true);
+        $sut = $this->getSut('en', $this->localeEn);
+        self::assertTrue($sut->getJavascriptConfiguration($user)['editAfterStop']);
+
+        $user->getPreference('edit_after_stop')?->setEnabled(false);
+        self::assertFalse($sut->getJavascriptConfiguration($user)['editAfterStop']);
+
+        $user->getPreference('edit_after_stop')?->setEnabled(true);
+        $user->setPreferenceValue('edit_after_stop', false);
+        self::assertFalse($sut->getJavascriptConfiguration($user)['editAfterStop']);
+    }
+
     public function testJavascriptConfigurationsForAnonymous(): void
     {
         $expected = [
@@ -468,6 +485,7 @@ class LocaleFormatExtensionsTest extends TestCase
             'defaultColor' => '#d2d6de',
             'twentyFourHours' => false,
             'updateBrowserTitle' => false,
+            'editAfterStop' => false,
             'timezone' => 'Europe/Vienna',
             'locale' => 'en',
             'language' => 'en',
