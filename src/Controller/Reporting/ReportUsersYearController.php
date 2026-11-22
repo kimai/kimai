@@ -9,7 +9,6 @@
 
 namespace App\Controller\Reporting;
 
-use App\Configuration\SystemConfiguration;
 use App\Controller\AbstractController;
 use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
 use App\Export\Spreadsheet\Writer\XlsxWriter;
@@ -32,18 +31,18 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class ReportUsersYearController extends AbstractController
 {
     #[Route(path: '/year', name: 'report_yearly_users', methods: ['GET', 'POST'])]
-    public function report(Request $request, SystemConfiguration $systemConfiguration, TimesheetStatisticService $statisticService, UserRepository $userRepository): Response
+    public function report(Request $request, TimesheetStatisticService $statisticService, UserRepository $userRepository): Response
     {
         return $this->render(
             'reporting/report_user_list_monthly.html.twig',
-            $this->getData($request, $systemConfiguration, $statisticService, $userRepository)
+            $this->getData($request, $statisticService, $userRepository)
         );
     }
 
     #[Route(path: '/year_export', name: 'report_yearly_users_export', methods: ['GET', 'POST'])]
-    public function export(Request $request, SystemConfiguration $systemConfiguration, TimesheetStatisticService $statisticService, UserRepository $userRepository): Response
+    public function export(Request $request, TimesheetStatisticService $statisticService, UserRepository $userRepository): Response
     {
-        $data = $this->getData($request, $systemConfiguration, $statisticService, $userRepository);
+        $data = $this->getData($request, $statisticService, $userRepository);
 
         $content = $this->renderView('reporting/report_user_list_monthly_export.html.twig', $data);
 
@@ -55,16 +54,12 @@ final class ReportUsersYearController extends AbstractController
         return $writer->getFileResponse($spreadsheet);
     }
 
-    private function getData(Request $request, SystemConfiguration $systemConfiguration, TimesheetStatisticService $statisticService, UserRepository $userRepository): array
+    private function getData(Request $request, TimesheetStatisticService $statisticService, UserRepository $userRepository): array
     {
         $currentUser = $this->getUser();
         $dateTimeFactory = $this->getDateTimeFactory();
 
         $defaultDate = $dateTimeFactory->createStartOfYear();
-
-        if (null !== ($financialYear = $systemConfiguration->getFinancialYearStart())) {
-            $defaultDate = $this->getDateTimeFactory()->createStartOfFinancialYear($financialYear);
-        }
 
         $values = new YearlyUserList();
         $values->setDate(clone $defaultDate);
@@ -97,12 +92,9 @@ final class ReportUsersYearController extends AbstractController
             $values->setDate(clone $defaultDate);
         }
 
-        /** @var \DateTime $start */
-        $start = $values->getDate();
-
-        // there is a potential edge case bug for financial years:
-        // the last month will be skipped, if the financial year started on a different day than the first
-        $end = $dateTimeFactory->createEndOfFinancialYear($start);
+        // normalize to the full calendar year, no matter which date was submitted
+        $start = $dateTimeFactory->createStartOfYear($values->getDate());
+        $end = $dateTimeFactory->createEndOfYear($start);
 
         $monthStats = [];
         $hasData = true;

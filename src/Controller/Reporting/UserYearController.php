@@ -9,7 +9,6 @@
 
 namespace App\Controller\Reporting;
 
-use App\Configuration\SystemConfiguration;
 use App\Entity\User;
 use App\Export\Spreadsheet\Writer\BinaryFileResponseWriter;
 use App\Export\Spreadsheet\Writer\XlsxWriter;
@@ -32,15 +31,15 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class UserYearController extends AbstractUserReportController
 {
     #[Route(path: '/year', name: 'report_user_year', methods: ['GET', 'POST'])]
-    public function yearByUser(Request $request, SystemConfiguration $systemConfiguration): Response
+    public function yearByUser(Request $request): Response
     {
-        return $this->render('reporting/report_by_user_year.html.twig', $this->getData($request, $systemConfiguration));
+        return $this->render('reporting/report_by_user_year.html.twig', $this->getData($request));
     }
 
     #[Route(path: '/year_export', name: 'report_user_year_export', methods: ['GET', 'POST'])]
-    public function export(Request $request, SystemConfiguration $systemConfiguration): Response
+    public function export(Request $request): Response
     {
-        $data = $this->getData($request, $systemConfiguration, true);
+        $data = $this->getData($request, true);
 
         $content = $this->renderView('reporting/report_by_user_year_export.html.twig', $data);
 
@@ -52,7 +51,7 @@ final class UserYearController extends AbstractUserReportController
         return $writer->getFileResponse($spreadsheet);
     }
 
-    private function getData(Request $request, SystemConfiguration $systemConfiguration, bool $export = false): array
+    private function getData(Request $request, bool $export = false): array
     {
         $currentUser = $this->getUser();
         $dateTimeFactory = $this->getDateTimeFactory($currentUser);
@@ -63,10 +62,6 @@ final class UserYearController extends AbstractUserReportController
         $values->setUser($currentUser);
 
         $defaultDate = $dateTimeFactory->createStartOfYear();
-
-        if (null !== ($financialYear = $systemConfiguration->getFinancialYearStart())) {
-            $defaultDate = $this->getDateTimeFactory()->createStartOfFinancialYear($financialYear);
-        }
 
         $values->setDate(clone $defaultDate);
 
@@ -90,11 +85,9 @@ final class UserYearController extends AbstractUserReportController
             $values->setDate(clone $defaultDate);
         }
 
-        /** @var \DateTimeInterface $start */
-        $start = $values->getDate();
-        // there is a potential edge case bug for financial years:
-        // the last month will be skipped, if the financial year started on a different day than the first
-        $end = $dateTimeFactory->createEndOfFinancialYear($start);
+        // normalize to the full calendar year, no matter which date was submitted
+        $start = $dateTimeFactory->createStartOfYear($values->getDate());
+        $end = $dateTimeFactory->createEndOfYear($start);
 
         $selectedUser = $values->getUser();
 

@@ -531,7 +531,7 @@ abstract class AbstractControllerBaseTestCase extends WebTestCase
 
         foreach ($spreadsheet->getActiveSheet()->toArray(null, false, false, false) as $row) {
             foreach ($row as $cell) {
-                if ($cell === null) {
+                if (!\is_scalar($cell)) {
                     continue;
                 }
                 $content .= (string) $cell . "\n";

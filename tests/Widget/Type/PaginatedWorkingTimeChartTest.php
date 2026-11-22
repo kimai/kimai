@@ -13,7 +13,6 @@ use App\Entity\Activity;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Repository\TimesheetRepository;
-use App\Tests\Mocks\SystemConfigurationFactory;
 use App\Widget\Type\AbstractWidgetType;
 use App\Widget\Type\PaginatedWorkingTimeChart;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -27,9 +26,8 @@ class PaginatedWorkingTimeChartTest extends TestCase
     public function createSut(): PaginatedWorkingTimeChart
     {
         $repository = $this->createMock(TimesheetRepository::class);
-        $configuration = SystemConfigurationFactory::createStub();
 
-        $sut = new PaginatedWorkingTimeChart($repository, $configuration);
+        $sut = new PaginatedWorkingTimeChart($repository);
         $sut->setUser(new User());
 
         return $sut;
@@ -70,12 +68,10 @@ class PaginatedWorkingTimeChartTest extends TestCase
         $repository = $this->createMock(TimesheetRepository::class);
 
         $expectedKeys = [
-            'begin', 'end', 'dateYear', 'thisMonth', 'lastWeekInYear', 'lastWeekInLastYear', 'day', 'week', 'month', 'year', 'financial', 'financialBegin'
+            'begin', 'end', 'dateYear', 'thisMonth', 'lastWeekInYear', 'lastWeekInLastYear', 'day', 'week', 'month', 'year'
         ];
 
-        $configuration = SystemConfigurationFactory::createStub(['company' => ['financial_year' => null]]);
-
-        $sut = new PaginatedWorkingTimeChart($repository, $configuration);
+        $sut = new PaginatedWorkingTimeChart($repository);
 
         $sut->setUser(new User());
         $data = $sut->getData($sut->getOptions());
@@ -84,34 +80,5 @@ class PaginatedWorkingTimeChartTest extends TestCase
         foreach ($expectedKeys as $key) {
             self::assertArrayHasKey($key, $data);
         }
-        self::assertNull($data['financialBegin']);
-    }
-
-    public function testGetDataWithFinancialYear(): void
-    {
-        $activity = $this->createMock(Activity::class);
-        $activity->method('getId')->willReturn(42);
-
-        $project = $this->createMock(Project::class);
-        $project->method('getId')->willReturn(4711);
-
-        $repository = $this->createMock(TimesheetRepository::class);
-
-        $expectedKeys = [
-            'begin', 'end', 'dateYear', 'thisMonth', 'lastWeekInYear', 'lastWeekInLastYear', 'day', 'week', 'month', 'year', 'financial', 'financialBegin'
-        ];
-
-        $configuration = SystemConfigurationFactory::createStub(['company' => ['financial_year' => '2020-01-01']]);
-
-        $sut = new PaginatedWorkingTimeChart($repository, $configuration);
-
-        $sut->setUser(new User());
-        $data = $sut->getData($sut->getOptions());
-
-        self::assertCount(\count($expectedKeys), $data);
-        foreach ($expectedKeys as $key) {
-            self::assertArrayHasKey($key, $data);
-        }
-        self::assertInstanceOf(\DateTime::class, $data['financialBegin']);
     }
 }
