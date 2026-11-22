@@ -9,7 +9,6 @@
 
 namespace App\Widget\Type;
 
-use App\Configuration\SystemConfiguration;
 use App\Repository\TimesheetRepository;
 use App\Timesheet\DateTimeFactory;
 use App\Widget\WidgetException;
@@ -18,7 +17,7 @@ use DateTime;
 
 final class PaginatedWorkingTimeChart extends AbstractWidget
 {
-    public function __construct(private TimesheetRepository $repository, private SystemConfiguration $systemConfiguration)
+    public function __construct(private readonly TimesheetRepository $repository)
     {
     }
 
@@ -132,15 +131,6 @@ final class PaginatedWorkingTimeChart extends AbstractWidget
         $yearEnd = $dateTimeFactory->createDateTime(\sprintf('31 december %s 23:59:59', $year));
         $yearData = $this->repository->getDurationForTimeRange($yearBegin, $yearEnd, $user);
 
-        $financialYearData = null;
-        $financialYearBegin = null;
-
-        if (null !== ($financialYear = $this->systemConfiguration->getFinancialYearStart())) {
-            $financialYearBegin = $dateTimeFactory->createStartOfFinancialYear($financialYear);
-            $financialYearEnd = $dateTimeFactory->createEndOfFinancialYear($financialYearBegin);
-            $financialYearData = $this->repository->getDurationForTimeRange($financialYearBegin, $financialYearEnd, $user);
-        }
-
         return [
             'begin' => clone $weekBegin,
             'end' => clone $weekEnd,
@@ -152,8 +142,6 @@ final class PaginatedWorkingTimeChart extends AbstractWidget
             'week' => $this->repository->getDurationForTimeRange($weekBegin, $weekEnd, $user),
             'month' => $this->repository->getDurationForTimeRange($monthBegin, $monthEnd, $user),
             'year' => $yearData,
-            'financial' => $financialYearData,
-            'financialBegin' => $financialYearBegin,
         ];
     }
 
