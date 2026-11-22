@@ -32,7 +32,7 @@ class UserYearControllerTest extends AbstractUserPeriodControllerTestCase
 
     /**
      * This report always shows a full calendar year, even if a date in the middle
-     * of the year was submitted. It must never be shifted by a financial year.
+     * of the year was submitted.
      */
     public function testReportShowsFullCalendarYear(): void
     {
