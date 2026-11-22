@@ -9,6 +9,7 @@
 
 namespace App\Tests\Controller\Reporting;
 
+use App\Entity\User;
 use PHPUnit\Framework\Attributes\Group;
 
 #[Group('integration')]
@@ -27,5 +28,21 @@ class UserYearControllerTest extends AbstractUserPeriodControllerTestCase
     protected function getBoxId(): string
     {
         return 'user-year-reporting-box';
+    }
+
+    /**
+     * This report always shows a full calendar year, even if a date in the middle
+     * of the year was submitted. It must never be shifted by a financial year.
+     */
+    public function testReportShowsFullCalendarYear(): void
+    {
+        $client = $this->getClientForAuthenticatedUser(User::ROLE_SUPER_ADMIN);
+        $this->assertAccessIsGranted($client, $this->getReportUrl() . '?date=2023-05-17');
+
+        $columns = $client->getCrawler()->filterXPath('//div[contains(@class, "user-year-reporting-box")]//thead//th/a');
+
+        self::assertEquals(12, $columns->count());
+        self::assertEquals('January 2023', $columns->first()->text());
+        self::assertEquals('December 2023', $columns->last()->text());
     }
 }
