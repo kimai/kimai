@@ -170,10 +170,6 @@
         <source>timesheet.default_begin</source>
         <target>Predvolený čas spustenia (nepoužíva sa vo všetkých režimoch sledovania času)</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target state="translated">Účtovný rok</target>
-      </trans-unit>
       <trans-unit id="LmOfuE5" resname="customer.number_format" xml:space="preserve">
         <source>customer.number_format</source>
         <target state="needs-translation">Formát čísla zákazníka</target>

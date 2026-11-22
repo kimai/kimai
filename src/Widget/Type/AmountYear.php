@@ -9,7 +9,6 @@
 
 namespace App\Widget\Type;
 
-use App\Configuration\SystemConfiguration;
 use App\Event\RevenueStatisticEvent;
 use App\Model\Revenue;
 use App\Repository\TimesheetRepository;
@@ -19,9 +18,8 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 
 final class AmountYear extends AbstractCounterYear
 {
-    public function __construct(private TimesheetRepository $repository, SystemConfiguration $systemConfiguration, private EventDispatcherInterface $dispatcher)
+    public function __construct(private readonly TimesheetRepository $repository, private readonly EventDispatcherInterface $dispatcher)
     {
-        parent::__construct($systemConfiguration);
     }
 
     /**
@@ -62,11 +60,6 @@ final class AmountYear extends AbstractCounterYear
     public function getId(): string
     {
         return 'AmountYear';
-    }
-
-    protected function getFinancialYearTitle(): string
-    {
-        return 'stats.amountFinancialYear';
     }
 
     public function getTemplateName(): string

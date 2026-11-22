@@ -58,10 +58,6 @@
         <source>stats.workingTimeYear</source>
         <target state="translated">முழு ஆண்டு %year%</target>
       </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear" xml:space="preserve" approved="no">
-        <source>stats.workingTimeFinancialYear</source>
-        <target state="translated">நிதியாண்டு</target>
-      </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve" approved="no">
         <source>Working hours</source>
         <target state="translated">வேலை நேரம்</target>
@@ -85,10 +81,6 @@
       <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve" approved="no">
         <source>stats.durationYear</source>
         <target state="translated">இந்த ஆண்டு</target>
-      </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve" approved="no">
-        <source>stats.durationFinancialYear</source>
-        <target state="translated">நிதியாண்டு</target>
       </trans-unit>
       <trans-unit id="DXcvOMM" resname="stats.userDurationWeek" xml:space="preserve" approved="no">
         <source>stats.userDurationWeek</source>
@@ -125,10 +117,6 @@
       <trans-unit id="bQZyZaO" resname="stats.amountYear" xml:space="preserve" approved="no">
         <source>stats.amountYear</source>
         <target state="translated">இந்த ஆண்டு வருவாய்</target>
-      </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear" xml:space="preserve" approved="no">
-        <source>stats.amountFinancialYear</source>
-        <target state="translated">இந்தப் பொருள் ஆண்டு வருவாய்</target>
       </trans-unit>
       <trans-unit id="mQMcndl" resname="stats.userAmountToday" xml:space="preserve" approved="no">
         <source>stats.userAmountToday</source>
@@ -393,10 +381,6 @@
       <trans-unit id="xvdsZsS" resname="stats.userAmountYear" xml:space="preserve" approved="no">
         <source>stats.userAmountYear</source>
         <target state="translated">இந்த ஆண்டு எனது வருவாய்</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear" xml:space="preserve" approved="no">
-        <source>stats.activeUsersFinancialYear</source>
-        <target state="translated">இந்தப் பொருள் ஆண்டு செயலில் உள்ள பயனர்கள்</target>
       </trans-unit>
       <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal" xml:space="preserve" approved="no">
         <source>stats.activeUsersTotal</source>

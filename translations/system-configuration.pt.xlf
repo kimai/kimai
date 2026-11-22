@@ -234,10 +234,6 @@
         <source>timesheet.duration_increment</source>
         <target>Seleção de minutos para a duração</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target>Exercício financeiro</target>
-      </trans-unit>
       <trans-unit id="wrnXs_a" resname="timesheet.rules.lockdown_period_timezone">
         <source>timesheet.rules.lockdown_period_timezone</source>
         <target>Fuso horário (se vazio, é utilizado o fuso horário do respetivo utilizador)</target>

@@ -514,10 +514,6 @@
         <source>revenue</source>
         <target state="translated">درآمد</target>
       </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
-        <source>stats.amountFinancialYear</source>
-        <target state="translated">درآمد این سال مالی</target>
-      </trans-unit>
       <trans-unit id="ov4OQOh" resname="invoice.filter">
         <source>invoice.filter</source>
         <target state="translated">داده های فاکتور را فیلتر کنید</target>
@@ -614,10 +610,6 @@
         <source>stats.workingTimeWeekShort</source>
         <target state="translated">هفته %week%</target>
       </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
-        <source>stats.workingTimeFinancialYear</source>
-        <target state="translated">سال مالی</target>
-      </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
         <source>Working hours</source>
         <target>زمان کار</target>
@@ -638,10 +630,6 @@
         <source>stats.durationYear</source>
         <target state="translated">ساعت کاری امسال</target>
       </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
-        <source>stats.durationFinancialYear</source>
-        <target state="translated">سال مالی</target>
-      </trans-unit>
       <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
         <target state="translated">کل</target>
@@ -661,10 +649,6 @@
       <trans-unit id="bQZyZaO" resname="stats.amountYear">
         <source>stats.amountYear</source>
         <target state="translated">درآمد امسال</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target state="translated">کاربران فعال در این سال مالی</target>
       </trans-unit>
       <trans-unit id="Bor.76M" resname="stats.activityTotal">
         <source>stats.activityTotal</source>

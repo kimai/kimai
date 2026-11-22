@@ -190,10 +190,6 @@
         <source>timesheet.default_begin</source>
         <target>默认开始时间（并非在所有时间追踪模式中使用）</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target>财政年度</target>
-      </trans-unit>
       <trans-unit id="RLgv62J" resname="timesheet.rules.lockdown_grace_period">
         <source>timesheet.rules.lockdown_grace_period</source>
         <target>锁定宽限期结束（PHP相对于锁定期结束的日期）</target>

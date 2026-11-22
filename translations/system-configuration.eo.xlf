@@ -194,10 +194,6 @@
         <source>theme.color_choices</source>
         <target>Permesataj koloroj</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target>Financjaro</target>
-      </trans-unit>
       <trans-unit id="5RSshEN" resname="user_auth_password_reset">
         <source>user_auth_password_reset</source>
         <target>Forgesis pasvorton</target>

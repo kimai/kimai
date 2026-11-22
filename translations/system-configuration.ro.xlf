@@ -234,10 +234,6 @@
         <source>timesheet.duration_increment</source>
         <target>Selecție de minute pentru Durată</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target>Exercițiul financiar</target>
-      </trans-unit>
       <trans-unit id="wrnXs_a" resname="timesheet.rules.lockdown_period_timezone">
         <source>timesheet.rules.lockdown_period_timezone</source>
         <target>Fusul orar (dacă este gol, se utilizează fusul orar al utilizatorului respectiv)</target>

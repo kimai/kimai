@@ -910,10 +910,6 @@
         <source>error.too_many_entries</source>
         <target>Không thể xử lý yêu cầu. Quá nhiều kết quả đã được tìm thấy.</target>
       </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target state="translated">Hoạt động của người dùng trong năm tài chính này</target>
-      </trans-unit>
       <trans-unit id="GzWKgBk" resname="error.directory_missing">
         <source>The directory “%dir%” does not exist and could not be created.</source>
         <target>Thư mục “%dir%” không tồn tại và không thể tạo được.</target>
@@ -962,14 +958,6 @@
         <source>stats.workingTimeMonth</source>
         <target>%month% %year%</target>
       </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
-        <source>stats.workingTimeFinancialYear</source>
-        <target>Năm tài chính</target>
-      </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
-        <source>stats.amountFinancialYear</source>
-        <target>Doanh thu năm tài chính này</target>
-      </trans-unit>
       <trans-unit id="XdYs3I8" resname="stats.workingTimeWeek">
         <source>stats.workingTimeWeek</source>
         <target>Tuần theo lịch %week%</target>
@@ -981,10 +969,6 @@
       <trans-unit id="Nx9_QiO" resname="revenue">
         <source>revenue</source>
         <target>Doanh thu</target>
-      </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
-        <source>stats.durationFinancialYear</source>
-        <target state="needs-translation">Tổng số giờ làm việc trong năm tài chính này</target>
       </trans-unit>
       <trans-unit id="CiA4s9E" resname="set_as_default">
         <source>set_as_default</source>

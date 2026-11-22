@@ -990,18 +990,6 @@
         <source>last_record_before</source>
         <target state="final">Nessuna prenotazione di tempo da</target>
       </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear" approved="yes">
-        <source>stats.activeUsersFinancialYear</source>
-        <target state="final">Utenti attivi in quest'anno finanziario</target>
-      </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" approved="yes" xml:space="preserve">
-        <source>stats.durationFinancialYear</source>
-        <target state="final">Anno finanziario</target>
-      </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear" approved="yes">
-        <source>stats.workingTimeFinancialYear</source>
-        <target state="final">Anno finanziario</target>
-      </trans-unit>
       <trans-unit id="_cY.wHP" resname="resetting.check_email" approved="yes" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="final">È stata inviata un'e-mail con un collegamento per reimpostare la password. Nota: puoi richiedere una nuova password solo una volta ogni %tokenLifetime% ore. Se non ricevi l'e-mail, controlla la cartella spam o riprova.</target>
@@ -1009,10 +997,6 @@
       <trans-unit id=".ndupSK" resname="registration.check_email" approved="yes">
         <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
         <target state="final">È stata inviata un'e-mail a %email%. Contiene un collegamento su cui devi fare clic per attivare l'account.</target>
-      </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear" approved="yes">
-        <source>stats.amountFinancialYear</source>
-        <target state="final">Entrate in quest'anno finanziario</target>
       </trans-unit>
       <trans-unit id="Nx9_QiO" resname="revenue" approved="yes">
         <source>revenue</source>

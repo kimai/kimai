@@ -203,56 +203,6 @@ class DateTimeFactoryTest extends TestCase
         self::assertTrue(2 >= $difference);
     }
 
-    public function testCreateStartOfFinancialYearWithoutConfig(): void
-    {
-        $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
-        $dateTime = $sut->createStartOfFinancialYear();
-        $expected = $sut->createDateTime('01 january this year 00:00:00');
-
-        self::assertEquals(self::TEST_TIMEZONE, $dateTime->getTimezone()->getName());
-        self::assertInstanceOf(DateTime::class, $dateTime);
-        self::assertEquals($expected, $dateTime);
-    }
-
-    public function testCreateStartOfFinancialYearWithConfig(): void
-    {
-        $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
-
-        $future = $sut->createDateTime('+10 days');
-        $past = $sut->createDateTime('-10 days');
-
-        $financial = $sut->createStartOfFinancialYear($future->format('Y-m-d'));
-
-        $future->modify('-1 year');
-        $future->setTime(0, 0, 0);
-
-        self::assertEquals($future, $financial);
-
-        $financial = $sut->createStartOfFinancialYear($past->format('Y-m-d'));
-
-        $past->setTime(0, 0, 0);
-        self::assertEquals($past, $financial);
-    }
-
-    public function testCreateEndOfFinancialYearWithConfig(): void
-    {
-        $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);
-
-        $now = $sut->createDateTime();
-        $expected = $sut->createDateTime();
-        $expected = $expected->setDate((int) $expected->format('Y'), 7, 22);
-        $expected = $expected->setTime(23, 59, 59);
-
-        if ($now > $expected) {
-            $expected->modify('+1 year');
-        }
-
-        $financial = $sut->createStartOfFinancialYear('2018-07-23 00:00:00');
-        $end = $sut->createEndOfFinancialYear($financial);
-
-        self::assertEquals($expected, $end);
-    }
-
     public function testCreateStartOfYear(): void
     {
         $sut = $this->createDateTimeFactory(self::TEST_TIMEZONE);

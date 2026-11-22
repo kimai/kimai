@@ -524,15 +524,15 @@ final class SystemConfiguration
 
     // ========== Company configurations ==========
 
+    /**
+     * @deprecated will be removed in 3.0
+     * @phpstan-ignore return.unusedType
+     */
     public function getFinancialYearStart(): ?string
     {
-        $start = $this->find('company.financial_year');
+        @trigger_error('The method "SystemConfiguration::getFinancialYearStart()" is deprecated', E_USER_DEPRECATED);
 
-        if (empty($start)) {
-            return null;
-        }
-
-        return (string) $start;
+        return null;
     }
 
     // ========== Theme configurations ==========

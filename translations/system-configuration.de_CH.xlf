@@ -22,10 +22,6 @@
         <source>calendar.businessHours.end</source>
         <target state="translated">Ende der normalen Geschäftszeiten (wird hervorgehoben)</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target state="translated">Geschäftsjahr</target>
-      </trans-unit>
       <trans-unit id="ZMvZTTx" resname="timesheet.rounding.default.begin">
         <source>timesheet.rounding.default.begin</source>
         <target state="translated">Rundung der Startzeit in Minuten (0 = deaktiviert)</target>

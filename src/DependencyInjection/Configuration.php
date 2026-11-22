@@ -50,7 +50,6 @@ final class Configuration implements ConfigurationInterface
                 ->append($this->getExportNode())
                 ->append($this->getCalendarNode())
                 ->append($this->getThemeNode())
-                ->append($this->getCompanyNode())
                 ->append($this->getDefaultsNode())
                 ->append($this->getPermissionsNode())
                 ->append($this->getLdapNode())
@@ -522,22 +521,6 @@ final class Configuration implements ConfigurationInterface
                 ->booleanNode('avatar_url')
                     ->defaultFalse()
                 ->end()
-            ->end()
-        ;
-
-        return $node;
-    }
-
-    private function getCompanyNode(): ArrayNodeDefinition
-    {
-        $builder = new TreeBuilder('company');
-        /** @var ArrayNodeDefinition $node */
-        $node = $builder->getRootNode();
-
-        $node
-            ->addDefaultsIfNotSet()
-            ->children()
-                ->scalarNode('financial_year')->defaultNull()->end()
             ->end()
         ;
 

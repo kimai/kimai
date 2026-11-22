@@ -194,10 +194,6 @@
         <source>help.theme.color_choices</source>
         <target>قائمة رموز ألوان HTML مفصولة بفواصل. يمكن تعيين أسماء الألوان عن طريق إضافة اسم و | المحدد ، على سبيل المثال: أبيض | # ffffff ، أسود | # 000000.</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target>السنة المالية</target>
-      </trans-unit>
       <trans-unit id="SnkW0Pk" resname="theme.avatar_url">
         <source>theme.avatar_url</source>
         <target>السماح باستخدام عناوين URL للصور الرمزية</target>

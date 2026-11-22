@@ -122,10 +122,6 @@
         <source>theme.branding.company</source>
         <target state="translated">Име на фирма</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year" xml:space="preserve">
-        <source>company.financial_year</source>
-        <target state="translated">Фискална година</target>
-      </trans-unit>
       <trans-unit id="Gdb5M4w" resname="rounding" xml:space="preserve">
         <source>rounding</source>
         <target state="translated">Заокружување на времето</target>

@@ -430,10 +430,6 @@
         <source>stats.workingTimeYear</source>
         <target state="translated">%year% рік</target>
       </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
-        <source>stats.workingTimeFinancialYear</source>
-        <target state="translated">Фінансовий рік</target>
-      </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
         <source>Working hours</source>
         <target>Робочий час</target>
@@ -457,10 +453,6 @@
       <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve">
         <source>stats.durationYear</source>
         <target state="translated">Цього року</target>
-      </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
-        <source>stats.durationFinancialYear</source>
-        <target state="translated">Фінансовий рік</target>
       </trans-unit>
       <trans-unit id="YtvPnl1" resname="stats.durationTotal" xml:space="preserve">
         <source>stats.durationTotal</source>
@@ -486,10 +478,6 @@
         <source>stats.amountYear</source>
         <target state="translated">Дохід в цьому році</target>
       </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
-        <source>stats.amountFinancialYear</source>
-        <target state="translated">Доходи в цьому фінансовому році</target>
-      </trans-unit>
       <trans-unit id="Z0fz23v" resname="stats.amountTotal">
         <source>stats.amountTotal</source>
         <target state="translated">Загальний дохід</target>
@@ -509,10 +497,6 @@
       <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
         <source>stats.activeUsersYear</source>
         <target state="translated">Активні користувачі в цьому році</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target state="translated">Активні користувачі в цьому фінансовому році</target>
       </trans-unit>
       <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">
         <source>stats.activeUsersTotal</source>

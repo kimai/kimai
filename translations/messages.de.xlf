@@ -934,10 +934,6 @@
         <source>stats.workingTimeYear</source>
         <target>Gesamtes Jahr %year%</target>
       </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
-        <source>stats.workingTimeFinancialYear</source>
-        <target>Geschäftsjahr</target>
-      </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve" approved="yes">
         <source>Working hours</source>
         <target state="final">Arbeitszeit</target>
@@ -961,10 +957,6 @@
       <trans-unit id="WqF84KR" resname="stats.durationYear">
         <source>stats.durationYear</source>
         <target>Dieses Jahr</target>
-      </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear">
-        <source>stats.durationFinancialYear</source>
-        <target>Geschäftsjahr</target>
       </trans-unit>
       <trans-unit id="YtvPnl1" resname="stats.durationTotal">
         <source>stats.durationTotal</source>
@@ -1010,10 +1002,6 @@
         <source>stats.amountYear</source>
         <target>Umsatz dieses Jahr</target>
       </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
-        <source>stats.amountFinancialYear</source>
-        <target>Umsatz dieses Geschäftsjahr</target>
-      </trans-unit>
       <trans-unit id="Z0fz23v" resname="stats.amountTotal">
         <source>stats.amountTotal</source>
         <target>Umsatz gesamt</target>
@@ -1053,10 +1041,6 @@
       <trans-unit id="lGuZo7g" resname="stats.activeUsersYear">
         <source>stats.activeUsersYear</source>
         <target>Aktive Benutzer dieses Jahr</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>Aktive Benutzer dieses Geschäftsjahr</target>
       </trans-unit>
       <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal">
         <source>stats.activeUsersTotal</source>

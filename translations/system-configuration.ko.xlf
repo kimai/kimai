@@ -206,10 +206,6 @@
         <source>timesheet.rules.lockdown_period_timezone</source>
         <target>시간대 (비어 있으면 해당 사용자의 시간대가 사용됨)</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target>회계 연도</target>
-      </trans-unit>
       <trans-unit id="nqWKu27" resname="timesheet.duration_increment">
         <source>timesheet.duration_increment</source>
         <target>지속시간의 분 선택</target>

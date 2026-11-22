@@ -565,9 +565,6 @@ class ConfigurationTest extends TestCase
                 ],
                 'provider' => 'default',
             ],
-            'company' => [
-                'financial_year' => null,
-            ],
             'quick_entry' => [
                 'recent_activities' => 5,
                 'recent_activity_weeks' => null,

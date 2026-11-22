@@ -194,10 +194,6 @@
         <source>theme.color_choices</source>
         <target>İzin verilen renkler</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target>Mali yıl</target>
-      </trans-unit>
       <trans-unit id="vg5G_9i" resname="timesheet.rules.long_running_duration">
         <source>timesheet.rules.long_running_duration</source>
         <target>Kaydetme reddedilmeden önce bir zaman çizelgesi kaydının dakika cinsinden azami süresi (0 = devre dışı)</target>

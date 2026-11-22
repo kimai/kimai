@@ -190,10 +190,6 @@
         <source>timesheet.duration_increment</source>
         <target>Seleção de minutos para a duração</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target>Ano fiscal</target>
-      </trans-unit>
       <trans-unit id="2KUm56c" resname="timesheet.rules.allow_overbooking_budget">
         <source>timesheet.rules.allow_overbooking_budget</source>
         <target>Permitir o overbooking (a reserva em excesso) dos orçamentos acumulados</target>

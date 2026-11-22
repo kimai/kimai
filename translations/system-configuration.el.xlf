@@ -194,10 +194,6 @@
         <source>help.theme.color_choices</source>
         <target>Λίστα διαχωρισμένων με κόμμα κωδικών χρώματος HTML. Τα ονόματα των χρωμάτων μπορούν να οριστούν προσθέτοντας τον κωδικό χρώματος με ένα όνομα και τον χαρακτήρα οριοθέτησης | , π.χ.: White|#ffffff,Black|#000000.</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target>Οικονομικό έτος</target>
-      </trans-unit>
       <trans-unit id="tuPXa0S" resname="lockdown_period">
         <source>lockdown_period</source>
         <target>Περίοδος αποκλεισμού</target>
