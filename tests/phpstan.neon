@@ -2460,7 +2460,7 @@ parameters:
             path: Widget/Type/UserDurationYearTest.php
         -
           message: '''
-                    #^Access to constant on deprecated class App\\Timesheet\\Util\:
+                    #^Fetching class constant class of deprecated class App\\Timesheet\\Util\:
                     use RateCalculatorMode instead$#
                 '''
           identifier: classConstant.deprecatedClass
