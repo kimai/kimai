@@ -42,31 +42,23 @@ final class MonthlyStatistic implements DateStatisticInterface
             return;
         }
 
+        // every month is identified by the first day of that month: statistics are
+        // always grouped by calendar months, no matter which days the range starts and ends on
+        $month = DateTime::createFromInterface($this->begin);
+        $month->setDate((int) $month->format('Y'), (int) $month->format('m'), 1);
+        $month->setTime(0, 0, 0);
+
+        $lastMonth = DateTime::createFromInterface($this->end);
+        $lastMonth->setDate((int) $lastMonth->format('Y'), (int) $lastMonth->format('m'), 1);
+        $lastMonth->setTime(0, 0, 0);
+
         $years = [];
-        $begin = DateTime::createFromInterface($this->begin);
-        $begin->setTime(0, 0, 0);
 
-        $tmp = clone $begin;
-        $day = (int) $begin->format('d');
-
-        while ($tmp < $this->end) {
-            $curYear = $tmp->format('Y');
-            if (!isset($years[$curYear])) {
-                $year = [];
-                for ($i = 1; $i < 13; $i++) {
-                    $date = clone $begin;
-                    // financial years do NOT start at the first of the month, do not reset day to 1
-                    $date->setDate((int) $curYear, $i, $day);
-                    $date->setTime(0, 0, 0);
-                    if ($date < $begin || $date > $this->end) {
-                        continue;
-                    }
-                    $year[$i] = new StatisticDate($date);
-                }
-                $years[$curYear] = $year;
-            }
-            $tmp->modify('+1 month');
+        while ($month <= $lastMonth) {
+            $years[$month->format('Y')][(int) $month->format('n')] = new StatisticDate(clone $month);
+            $month->modify('+1 month');
         }
+
         $this->years = $years; // @phpstan-ignore assign.propertyType
     }
 

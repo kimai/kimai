@@ -10,7 +10,6 @@
 namespace App\Ldap;
 
 use App\Configuration\LdapConfiguration;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -26,7 +25,7 @@ use Symfony\Component\Security\Http\EntryPoint\Exception\NotAnEntryPointExceptio
  */
 final class LdapAuthenticator implements AuthenticationEntryPointInterface, InteractiveAuthenticatorInterface
 {
-    public function __construct(private AuthenticatorInterface $authenticator, private LdapConfiguration $configuration, private LoggerInterface $logger)
+    public function __construct(private readonly AuthenticatorInterface $authenticator, private readonly LdapConfiguration $configuration)
     {
     }
 
@@ -37,9 +36,10 @@ final class LdapAuthenticator implements AuthenticationEntryPointInterface, Inte
         }
 
         if (!class_exists('Laminas\Ldap\Ldap')) {
-            $this->logger->debug('Failed loading LDAP authenticator, missing Laminas dependency');
-
-            return false;
+            throw new \Exception(
+                'Laminas\Ldap\Ldap is missing, install it with "composer require laminas/laminas-ldap" ' .
+                'or deactivate LDAP, see https://www.kimai.org/documentation/ldap.html'
+            );
         }
 
         return $this->authenticator->supports($request);
