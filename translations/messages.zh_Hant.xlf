@@ -558,10 +558,6 @@
         <source>stats.workingTimeYear</source>
         <target state="final">%year% 年</target>
       </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear" xml:space="preserve" approved="yes">
-        <source>stats.workingTimeFinancialYear</source>
-        <target state="final">會計年度</target>
-      </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve" approved="yes">
         <source>Working hours</source>
         <target state="final">工作時數</target>
@@ -581,10 +577,6 @@
       <trans-unit id="uaOwf_P" resname="stats.durationMonth" xml:space="preserve" approved="no">
         <source>stats.durationMonth</source>
         <target state="translated">本月工時</target>
-      </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve" approved="no">
-        <source>stats.durationFinancialYear</source>
-        <target state="translated">本會計年度工時</target>
       </trans-unit>
       <trans-unit id="WqF84KR" resname="stats.durationYear" xml:space="preserve" approved="no">
         <source>stats.durationYear</source>
@@ -614,10 +606,6 @@
         <source>stats.amountYear</source>
         <target state="final">本年度營收</target>
       </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear" xml:space="preserve" approved="yes">
-        <source>stats.amountFinancialYear</source>
-        <target state="final">本會計年度營收</target>
-      </trans-unit>
       <trans-unit id="Z0fz23v" resname="stats.amountTotal" xml:space="preserve" approved="yes">
         <source>stats.amountTotal</source>
         <target state="final">總營收</target>
@@ -633,10 +621,6 @@
       <trans-unit id="lGuZo7g" resname="stats.activeUsersYear" xml:space="preserve" approved="yes">
         <source>stats.activeUsersYear</source>
         <target state="final">本年度活躍使用者</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear" xml:space="preserve" approved="yes">
-        <source>stats.activeUsersFinancialYear</source>
-        <target state="final">本會計年度活躍使用者</target>
       </trans-unit>
       <trans-unit id="HzICegM" resname="stats.activeUsersToday" xml:space="preserve" approved="yes">
         <source>stats.activeUsersToday</source>

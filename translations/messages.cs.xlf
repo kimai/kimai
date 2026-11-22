@@ -962,10 +962,6 @@
         <source>stats.workingTimeWeekShort</source>
         <target>Týden %week%</target>
       </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
-        <source>stats.workingTimeFinancialYear</source>
-        <target state="translated">Účetní rok</target>
-      </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
         <source>Working hours</source>
         <target>Pracovní doba</target>
@@ -973,14 +969,6 @@
       <trans-unit id="Nx9_QiO" resname="revenue">
         <source>revenue</source>
         <target>Příjmy</target>
-      </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
-        <source>stats.durationFinancialYear</source>
-        <target state="translated">Účetní rok</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target state="translated">Aktivní uživatelé tento účetní rok</target>
       </trans-unit>
       <trans-unit id="crrlEUA" resname="preview.skipped_rows">
         <source>preview.skipped_rows</source>
@@ -1073,10 +1061,6 @@
       <trans-unit id="_cY.wHP" resname="resetting.check_email" xml:space="preserve">
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="translated">Byl vám zaslán e-mail s odkazem na obnovení hesla. Poznámka: O nové heslo můžete požádat pouze jednou za %tokenLifetime% hodin. Pokud e-mail neobdržíte, zkontrolujte složku se spamem nebo to zkuste znovu.</target>
-      </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
-        <source>stats.amountFinancialYear</source>
-        <target state="translated">Příjem tento účetní rok</target>
       </trans-unit>
       <trans-unit id="gT9W2pZ" resname="status.canceled">
         <source>status.canceled</source>

@@ -42,10 +42,6 @@
         <source>daterangepicker.lastMonth</source>
         <target state="final">Il mese scorso</target>
       </trans-unit>
-      <trans-unit id="mgJ2Z7M" resname="daterangepicker.thisFinancialYear" xml:space="preserve" approved="yes">
-        <source>daterangepicker.thisFinancialYear</source>
-        <target state="final">Questo anno finanziario</target>
-      </trans-unit>
     </body>
   </file>
 </xliff>

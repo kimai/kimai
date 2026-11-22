@@ -994,10 +994,6 @@
         <source>revenue</source>
         <target>Inkomsten</target>
       </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
-        <source>stats.amountFinancialYear</source>
-        <target state="translated">Omzet dit boekjaar</target>
-      </trans-unit>
       <trans-unit id="xN7MfSA" resname="stats.percentUsed_month">
         <source>stats.percentUsed_month</source>
         <target>%percent%% gebruikt deze maand</target>
@@ -1014,10 +1010,6 @@
         <source>An email has been sent with a link to reset your password. Note: You can only request a new password once every %tokenLifetime% hours. If you don't receive the email, please check your spam folder or try again.</source>
         <target state="translated">Een email werd verzonden, je kan je wachtwoord opnieuw instellen via de link die daarin kan terugvinden. Opmerking: Je kan slechts elke %tokenLifetime% uur een nieuw wachtwoord aanvragen. Als je geen email hebt ontvangen, kijk dan je spammap na of probeer het later nog een keer.</target>
       </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
-        <source>stats.workingTimeFinancialYear</source>
-        <target>Boekjaar</target>
-      </trans-unit>
       <trans-unit id="W92QGbY" resname="export.warn_result_amount">
         <source>export.warn_result_amount</source>
         <target state="translated">Uw zoekopdracht geeft %count% resultaten. Als de export faalt, dan moet u de zoekopdracht verder verfijnen.</target>
@@ -1025,14 +1017,6 @@
       <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
         <source>Working hours</source>
         <target>Werktijd</target>
-      </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
-        <source>stats.durationFinancialYear</source>
-        <target state="translated">Boekjaar</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>Actieve gebruikers dit boekjaar</target>
       </trans-unit>
       <trans-unit id="fVA3M2x" resname="choice_pattern">
         <source>Display of entries in selection lists</source>

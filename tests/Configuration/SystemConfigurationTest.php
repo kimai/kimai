@@ -159,12 +159,10 @@ class SystemConfigurationTest extends TestCase
             (new Configuration())->setName('timesheet.rules.allow_future_times')->setValue(''),
             (new Configuration())->setName('saml.activate')->setValue(true),
             (new Configuration())->setName('theme.color_choices')->setValue(''),
-            (new Configuration())->setName('company.financial_year')->setValue('2020-03-27'),
         ]);
         self::assertFalse($sut->find('timesheet.rules.allow_future_times'));
         self::assertTrue($sut->isSamlActive());
         self::assertEquals(['Silver' => '#c0c0c0'], $sut->getThemeColors());
-        self::assertEquals('2020-03-27', $sut->getFinancialYearStart());
     }
 
     public function testIsUserAuthChangeAllowed(): void
@@ -248,7 +246,6 @@ class SystemConfigurationTest extends TestCase
         self::assertEquals('blue', $sut->getUserDefaultTheme());
         self::assertEquals('IT', $sut->getUserDefaultLanguage());
         self::assertEquals('IT', $sut->getUserDefaultLocale());
-        self::assertNull($sut->getFinancialYearStart());
     }
 
     public function testUserDefaultLocaleFallsBackToLanguage(): void

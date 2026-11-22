@@ -998,25 +998,9 @@
         <source>stats.percentUsed_month</source>
         <target>%percent%% usado este mês</target>
       </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>Utilizadores ativos neste ano financeiro</target>
-      </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
-        <source>stats.amountFinancialYear</source>
-        <target>Receita deste ano financeiro</target>
-      </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
-        <source>stats.durationFinancialYear</source>
-        <target state="translated">Ano fiscal</target>
-      </trans-unit>
       <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
         <source>Working hours</source>
         <target>Tempo de trabalho</target>
-      </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
-        <source>stats.workingTimeFinancialYear</source>
-        <target>Exercício financeiro</target>
       </trans-unit>
       <trans-unit id="Nx9_QiO" resname="revenue">
         <source>revenue</source>

@@ -954,22 +954,6 @@
         <source>invoice.payment_date</source>
         <target>Дата платежа</target>
       </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>Активных пользователей в этом финансовом году</target>
-      </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
-        <source>stats.amountFinancialYear</source>
-        <target>Выручка в этом финансовом году</target>
-      </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
-        <source>stats.durationFinancialYear</source>
-        <target state="translated">Финансовый год</target>
-      </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
-        <source>stats.workingTimeFinancialYear</source>
-        <target>Финансовый год</target>
-      </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email" xml:space="preserve">
         <source>An e-mail has been sent to %email%. It contains a link you must click to activate your account.</source>
         <target state="translated">Письмо было отправлено на %email%. Чтобы активировать аккаунт, нажмите на ссылку в тексте письма.</target>

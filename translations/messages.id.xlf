@@ -1010,10 +1010,6 @@
         <source>stats.activeUsersYear</source>
         <target state="translated">Pengguna aktif tahun ini</target>
       </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear" xml:space="preserve">
-        <source>stats.activeUsersFinancialYear</source>
-        <target state="translated">Pengguna aktif tahun fiskal ini</target>
-      </trans-unit>
       <trans-unit id="8FFVmiv" resname="stats.activeUsersTotal" xml:space="preserve">
         <source>stats.activeUsersTotal</source>
         <target state="translated">Pengguna aktif sejauh ini</target>
@@ -1193,10 +1189,6 @@
       <trans-unit id="qtjPKUT" resname="export.mark_all" xml:space="preserve">
         <source>export.mark_all</source>
         <target state="translated">Tandai semua riwayat sebagai dibersihkan?</target>
-      </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
-        <source>stats.durationFinancialYear</source>
-        <target state="translated">Tahun Keuangan</target>
       </trans-unit>
       <trans-unit id="9Wt8Pp_" resname="help.batch_meta_fields" xml:space="preserve">
         <source>help.batch_meta_fields</source>
@@ -1386,10 +1378,6 @@
         <source>stats.amountToday</source>
         <target state="translated">Pendapatan Hari ini</target>
       </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear" xml:space="preserve">
-        <source>stats.amountFinancialYear</source>
-        <target state="translated">Pendapatan tahun fiskal ini</target>
-      </trans-unit>
       <trans-unit id="Z0fz23v" resname="stats.amountTotal" xml:space="preserve">
         <source>stats.amountTotal</source>
         <target state="translated">Total pendapatan</target>
@@ -1537,10 +1525,6 @@
       <trans-unit id="cR5DD88" resname="invoice_number_generator.date" xml:space="preserve">
         <source>invoice_number_generator.date</source>
         <target state="translated">Tanggal</target>
-      </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear" xml:space="preserve">
-        <source>stats.workingTimeFinancialYear</source>
-        <target state="translated">Tahun Keuangan</target>
       </trans-unit>
       <trans-unit id="EI5gPkp" resname="stats.userDurationToday" xml:space="preserve">
         <source>stats.userDurationToday</source>

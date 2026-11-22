@@ -230,10 +230,6 @@
         <source>timesheet.time_increment</source>
         <target>Выбор минут для С &amp; По</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target>Финансовый год</target>
-      </trans-unit>
       <trans-unit id="wrnXs_a" resname="timesheet.rules.lockdown_period_timezone">
         <source>timesheet.rules.lockdown_period_timezone</source>
         <target>Часовой пояс (если пусто, используется часовой пояс соответствующего пользователя)</target>

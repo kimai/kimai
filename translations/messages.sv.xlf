@@ -1002,25 +1002,9 @@
         <source>Working hours</source>
         <target>Arbetstid</target>
       </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
-        <source>stats.durationFinancialYear</source>
-        <target state="translated">Budgetår</target>
-      </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
-        <source>stats.workingTimeFinancialYear</source>
-        <target>Budgetår</target>
-      </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>Aktiva användare under budgetåret</target>
-      </trans-unit>
       <trans-unit id="Nx9_QiO" resname="revenue">
         <source>revenue</source>
         <target>Intäkter</target>
-      </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
-        <source>stats.amountFinancialYear</source>
-        <target>Intäkter detta räkenskapsåret</target>
       </trans-unit>
       <trans-unit id=".ndupSK" resname="registration.check_email">
         <source>registration.check_email</source>

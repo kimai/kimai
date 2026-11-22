@@ -270,10 +270,6 @@
         <source>quick_entry.minimum_rows</source>
         <target state="translated">Número mínimo de filas</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target state="translated">Año fiscal</target>
-      </trans-unit>
       <trans-unit id="BGHQ8YO" resname="user_auth_login">
         <source>user_auth_login</source>
         <target state="translated">Formulario de inscripción</target>

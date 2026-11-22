@@ -146,10 +146,6 @@
         <source>theme.avatar_url</source>
         <target>Tillad brugen af URL'er for avatar billeder</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year" xml:space="preserve">
-        <source>company.financial_year</source>
-        <target state="translated">Finans år</target>
-      </trans-unit>
       <trans-unit id="ZCg9UVM" resname="timesheet.rules.allow_overlapping_records" xml:space="preserve">
         <source>timesheet.rules.allow_overlapping_records</source>
         <target state="translated">Tillad overlappende tidsregistreringer</target>

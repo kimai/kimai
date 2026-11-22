@@ -194,10 +194,6 @@
         <source>theme.color_choices</source>
         <target>Couleurs autorisées</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target>Année fiscale</target>
-      </trans-unit>
       <trans-unit id="vg5G_9i" resname="timesheet.rules.long_running_duration">
         <source>timesheet.rules.long_running_duration</source>
         <target>Durée maximale d'un enregistrement de feuille de temps en minutes avant que la sauvegarde soit rejetée (0 = désactivé)</target>

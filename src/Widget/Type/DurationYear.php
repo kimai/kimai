@@ -9,16 +9,14 @@
 
 namespace App\Widget\Type;
 
-use App\Configuration\SystemConfiguration;
 use App\Repository\TimesheetRepository;
 use App\Widget\WidgetException;
 use App\Widget\WidgetInterface;
 
 final class DurationYear extends AbstractCounterYear
 {
-    public function __construct(private TimesheetRepository $repository, SystemConfiguration $systemConfiguration)
+    public function __construct(private readonly TimesheetRepository $repository)
     {
-        parent::__construct($systemConfiguration);
     }
 
     /**
@@ -50,11 +48,6 @@ final class DurationYear extends AbstractCounterYear
     public function getPermissions(): array
     {
         return ['view_other_timesheet'];
-    }
-
-    protected function getFinancialYearTitle(): string
-    {
-        return 'stats.durationFinancialYear';
     }
 
     public function getTemplateName(): string

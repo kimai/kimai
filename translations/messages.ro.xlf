@@ -1006,18 +1006,6 @@
         <source>stats.percentUsed_month</source>
         <target>%percent%%% folosit în această lună</target>
       </trans-unit>
-      <trans-unit id="_Pym9RO" resname="stats.activeUsersFinancialYear">
-        <source>stats.activeUsersFinancialYear</source>
-        <target>Utilizatori activi în acest exercițiu financiar</target>
-      </trans-unit>
-      <trans-unit id="wuUWovn" resname="stats.amountFinancialYear">
-        <source>stats.amountFinancialYear</source>
-        <target>Venituri în acest exercițiu financiar</target>
-      </trans-unit>
-      <trans-unit id="xkugSAA" resname="stats.durationFinancialYear" xml:space="preserve">
-        <source>stats.durationFinancialYear</source>
-        <target state="needs-translation">Ore de lucru în acest exercițiu financiar</target>
-      </trans-unit>
       <trans-unit id="Nx9_QiO" resname="revenue">
         <source>revenue</source>
         <target>Venituri</target>
@@ -1025,10 +1013,6 @@
       <trans-unit id="BXBFJP8" resname="stats.workingTime" xml:space="preserve">
         <source>Working hours</source>
         <target state="translated">Ore de lucru</target>
-      </trans-unit>
-      <trans-unit id="HWB4OGJ" resname="stats.workingTimeFinancialYear">
-        <source>stats.workingTimeFinancialYear</source>
-        <target>Exercițiul financiar</target>
       </trans-unit>
       <trans-unit id="XQ2.pq2" resname="error.too_many_entries">
         <source>error.too_many_entries</source>

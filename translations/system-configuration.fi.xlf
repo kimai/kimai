@@ -266,10 +266,6 @@
         <source>timesheet.rules.lockdown_period_timezone</source>
         <target state="translated">Aikavyöhyke (jos tyhjä, käytetään vastaavan käyttäjän aikavyöhykettä)</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target state="translated">Tilikausi</target>
-      </trans-unit>
       <trans-unit id="winWMI1" resname="calendar.title_pattern">
         <source>calendar.title_pattern</source>
         <target state="translated">Kalenterimerkintöjen otsikoiden näyttö</target>

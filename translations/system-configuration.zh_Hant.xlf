@@ -198,10 +198,6 @@
         <source>calendar.week_numbers</source>
         <target state="final">顯示週數</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year" xml:space="preserve" approved="yes">
-        <source>company.financial_year</source>
-        <target state="final">會計年度</target>
-      </trans-unit>
       <trans-unit id="AUc43eR" resname="timesheet.rounding.default.end" xml:space="preserve" approved="yes">
         <source>timesheet.rounding.default.end</source>
         <target state="final">結束時間取整至分鐘（0 = 停用）</target>

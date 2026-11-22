@@ -126,10 +126,6 @@
         <source>theme.branding.company</source>
         <target>Unternehmensname</target>
       </trans-unit>
-      <trans-unit id="AzOiQES" resname="company.financial_year">
-        <source>company.financial_year</source>
-        <target>Geschäftsjahr</target>
-      </trans-unit>
       <trans-unit id="Gdb5M4w" resname="rounding">
         <source>rounding</source>
         <target>Zeitenrundung</target>
