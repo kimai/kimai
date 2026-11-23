@@ -50,9 +50,11 @@ fieldset.form-fieldset > legend {
     }
 }
 
-/* Links in dark mode use the plain primary color, which has a contrast below 4.5:1 on dark surfaces - https://github.com/kimai/kimai/issues/6261 */
+/* Links in dark mode use the plain primary color, which has a contrast below 4.5:1 on dark surfaces - https://github.com/kimai/kimai/issues/6261
+TODO remove this rule when Tabler is updated to a new version
+*/
 [data-bs-theme=dark] {
-    --#{$prefix}link-color: color-mix(in srgb, var(--#{$prefix}primary), white 40%);
+    --#{$prefix}link-color: light-dark(var(--tblr-primary), color-mix(in oklab, var(--tblr-white) 40%, var(--tblr-primary)));
     --#{$prefix}link-hover-color: color-mix(in srgb, var(--#{$prefix}primary), white 60%);
 }
 
